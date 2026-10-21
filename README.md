@@ -30,6 +30,7 @@ Po uruchomieniu serwera można wykonać pełny test w Chromium (wymaga pakietu P
 ```sh
 python3 tests/harborlight-browser-smoke.py
 python3 tests/harborlight-animation-smoke.py
+python3 tests/harborlight-coastal-smoke.py
 ```
 
 Inny adres serwera lub plik wykonywalny Chromium ustawiają `HARBORLIGHT_BASE_URL` oraz `HARBORLIGHT_CHROMIUM`. Test korzysta z osobnej sesji przeglądarki i nie usuwa zapisu gracza.

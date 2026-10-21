@@ -46,17 +46,19 @@ Kryteria odbioru:
 
 ### FE-04 — Żywa wyspa — animacje świata
 
-Status: zrealizowane i zamknięte jako completed; test dziewięciu grup ruchu i końcowe regresje zaliczone, publiczna piaskownica opublikowana i sprawdzona. Zakres doprecyzowany przez użytkownika do frontendu i grafiki. GitHub Issue: [#10](https://github.com/ksobczak321-oss/gra/issues/10). Szczegóły: [animacje świata](WORLD-ANIMATION.md).
+Status: poprawki po ocenie użytkownika w toku; wcześniejsze testy i publikacja nie stanowiły pełnego odbioru czytelności ruchu ani fal przy całym brzegu. Zadanie ponownie wymaga odbioru. Zakres doprecyzowany przez użytkownika do frontendu i grafiki. GitHub Issue: [#10](https://github.com/ksobczak321-oss/gra/issues/10). Szczegóły: [animacje świata](WORLD-ANIMATION.md).
 
 Kryteria odbioru:
 
 - Wiatrak ma obracające się łopaty, bez drugiego nieruchomego wirnika pod spodem.
-- Dym unosi się z kominów; mewy latają, a chmury przesuwają się nad dalekim planem.
-- Woda płynie w wodospadach, a fale są widoczne na morzu i nie przesuwają lądu.
-- Mieszkańcy chodzą po ścieżkach; zwierzęta poruszają się w obrębie farmy.
+- Dym powstaje przy wylocie komina, unosi się, rozszerza i zanika w czytelny sposób; mewy latają, a chmury przesuwają się nad dalekim planem.
+- Woda płynie w wodospadach. Fale i przybój obejmują wszystkie widoczne odcinki brzegu, port, wodę pomiędzy pomostami i skały; nie przesuwają lądu ani budowli.
+- Mieszkańcy przemieszczają się po ścieżkach o widoczny dystans w ciągu kilku sekund, z chodem i krótkim postojem. Zwierzęta chodzą pomiędzy miejscami wypasu i mają ruch podczas postoju.
+- Wybrane nieruchome postacie i zwierzęta z tła są zastąpione miejscowymi maskami przed narysowaniem animacji; faktyczny zakres tych masek jest opisany w dokumentacji.
 - Plac budowy sprawia wrażenie pracy: dźwig, lina lub hak poruszają się przy budowie.
 - Pauza, tempo i ograniczenie ruchu sterują animacjami; niewidoczna karta nie zużywa zasobów na aktywną animację.
 - Efekty zachowują styl zaakceptowanego obrazu, nie zasłaniają HUD ani kontrolek i są sprawdzone na komputerze oraz telefonie.
+- Test potwierdza przemieszczenie aktorów i pokrycie nazwanych stref brzegu, nie tylko zmianę dowolnych pikseli w wybranych fragmentach sceny.
 
 FE-02 nadal obejmuje pełne rozdzielenie assetów świata. Integrację lokalnego zapisu z API, obsługę braku połączenia i konfliktu wersji należy zaplanować oddzielnie po BE-01 i BE-03; zakres backendu nie wchodzi do obecnej iteracji animacji.
 

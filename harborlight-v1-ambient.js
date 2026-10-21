@@ -1,5 +1,7 @@
-import { drawWater } from './harborlight-v1-water.js';
-import { drawLife } from './harborlight-v1-life.js';
+import { drawWater } from './harborlight-v1-water.js?v=coast-life-2';
+import { drawLife } from './harborlight-v1-life.js?v=coast-life-2';
+import { drawSmoke } from './harborlight-v1-smoke.js?v=coast-life-2';
+import { createInhabitantsBackground } from './harborlight-v1-inhabitants.js?v=coast-life-2';
 
 const WIDTH = 1672;
 const HEIGHT = 941;
@@ -25,17 +27,6 @@ function clipWorld(ctx) {
   ctx.rect(0, 607, 300, 334);
   ctx.rect(1323, 470, 349, 471);
   ctx.clip();
-}
-function smokeSprite() {
-  const sprite = canvas(80, 80);
-  const ctx = sprite.getContext('2d');
-  const glow = ctx.createRadialGradient(40, 40, 2, 40, 40, 36);
-  glow.addColorStop(0, 'rgba(246,240,221,.55)');
-  glow.addColorStop(.4, 'rgba(237,235,223,.29)');
-  glow.addColorStop(1, 'rgba(229,233,226,0)');
-  ctx.fillStyle = glow;
-  ctx.fillRect(0, 0, 80, 80);
-  return sprite;
 }
 function cloudSprite(seed) {
   const sprite = canvas(320, 96);
@@ -98,19 +89,6 @@ function drawWindmill(ctx, plate, t) {
   ctx.fillStyle = '#d9b371'; ctx.beginPath(); ctx.arc(-1, -1, 2, 0, Math.PI * 2); ctx.fill();
   ctx.restore();
 }
-function drawSmoke(ctx, sprite, t) {
-  const chimneys = [[518, 215, 1], [750, 176, .82], [464, 413, .95], [1298, 194, .65], [428, 514, .88]];
-  for (const [index, [x, y, scale]] of chimneys.entries()) {
-    for (let puff = 0; puff < 11; puff++) {
-      const age = ((t * .21 + puff / 11 + index * .27) % 1);
-      const drift = age * 21 + Math.sin(t * .45 + puff) * age * 4;
-      const size = (8 + age * 37) * scale;
-      ctx.globalAlpha = Math.sin(age * Math.PI) * .76;
-      ctx.drawImage(sprite, x + drift - size / 2, y - age * 62 * scale - size / 2, size, size);
-    }
-  }
-  ctx.globalAlpha = 1;
-}
 function drawClouds(ctx, sprites, t) {
   ctx.save();
   ctx.beginPath();
@@ -163,15 +141,15 @@ export function createAmbientScene(stage, getState) {
   surface.id = 'island-ambient';
   surface.setAttribute('aria-hidden', 'true');
   surface.dataset.effectGroups = EFFECTS;
+  surface.dataset.revision = 'coast-life-2';
   surface.dataset.time = '0';
   surface.dataset.frames = '0';
   surface.dataset.mode = 'loading';
   stage.append(surface);
   const ctx = surface.getContext('2d', { alpha: true });
   const media = matchMedia('(prefers-reduced-motion: reduce)');
-  const smoke = smokeSprite();
   const clouds = [cloudSprite(1), cloudSprite(3), cloudSprite(7)];
-  let source, plate;
+  let source, plate, inhabitants;
   let time = 0, frames = 0, frame = 0, last = 0, lastPaint = 0;
   let destroyed = false;
   let scale = 1;
@@ -194,10 +172,11 @@ export function createAmbientScene(stage, getState) {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
     ctx.save();
     clipWorld(ctx);
+    ctx.drawImage(inhabitants, 0, 0);
     drawWater(ctx, source, time);
     drawClouds(ctx, clouds, time);
     drawWindmill(ctx, plate, time);
-    drawSmoke(ctx, smoke, time);
+    drawSmoke(ctx, time);
     drawCrane(ctx, time, !!document.querySelector('.world-pulse'));
     drawLife(ctx, time, { motion: true, construction: true });
     ctx.restore();
@@ -231,9 +210,10 @@ export function createAmbientScene(stage, getState) {
   document.addEventListener('visibilitychange', resume);
   media.addEventListener('change', resume);
   stage.addEventListener('island-statechange', syncMode);
-  const ready = Promise.all([image('./assets/harborlight-v1-approved.png'), image('./assets/harborlight-windmill-clean.png')]).then(values => {
+  const ready = Promise.all([image('./assets/harborlight-v1-approved.png'), image('./assets/harborlight-windmill-clean.png'), image('./assets/harborlight-inhabitants-clean.png')]).then(values => {
     source = values[0];
     plate = makeWindmillPlate(values[1]);
+    inhabitants = createInhabitantsBackground(values[2]);
     size();
     surface.dataset.ready = 'true';
     resume();

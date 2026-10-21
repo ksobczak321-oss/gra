@@ -52,3 +52,19 @@ Status: implementacja, komplet regresji, publikacja i sprawdzenie publicznego po
 - Publiczny [podgląd animacji](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=de2b13b) sprawdzono po publikacji w Chromium: HTTP 200, oba PNG i dziewięć grup efektów załadowane, czas renderera postępuje, 51 kontrolek oraz ustawienia działają, pauza zatrzymuje ruch, wznowienie go przywraca. Bez błędów JavaScript i HTTP.
 - Oryginalny asset zachował identyczne bajty; SHA-256: `4063f003002f95dd7b00f77a8d6d610b04f134766e52afc97e8a10712fd6d823`.
 - Zadanie [FE-04 / #10](https://github.com/ksobczak321-oss/gra/issues/10) zamknięto jako completed w milestone `frontend #3`. [Komentarz odbioru](https://github.com/ksobczak321-oss/gra/issues/10#issuecomment-6323516165) zawiera commity, wynik publikacji, testy, link publiczny i granice obecnej bazy graficznej. FE-02 / #8 pozostaje otwarte.
+
+## 2026-10-21 — frontend: poprawki czytelności ruchu i całej linii brzegowej
+
+Status: poprawki zintegrowane i rozszerzone testy lokalne zaliczone; publikacja w toku.
+
+- Użytkownik ponownie wskazał chodzenie ludzi, ruch zwierząt i dymienie domów oraz doprecyzował ruch wody przy brzegach „wszędzie”. Poprzednie zaliczone testy dowodziły działania renderera, lecz nie pełnego zasięgu przyboju ani wystarczającej czytelności ruchu w normalnym widoku.
+- Przegląd wykazał cztery wybrane obszary falowania oraz powolne ruchome postacie nad obrazem, który zawierał nadal nieruchomych ludzi i zwierzęta. Rozszerzono kryteria FE-04 o wszystkie widoczne odcinki brzegu, rzeczywiste przemieszczenie aktorów i dym emitowany przy kominach.
+- Zaplanowano miejscowe wykorzystanie pomocniczego tła bez wybranych nieruchomych postaci, zwierząt i smug, z zachowaniem oryginalnego obrazu bazowego. Faktyczny asset, maski i ich zakres zostaną opisane po integracji; nie oznacza to pełnego rozdzielenia assetów FE-02.
+- Nowy wynik testów, stan zgłoszenia GitHub oraz commit i publikacja tej poprawki wymagają osobnego potwierdzenia. Nie zmieniono historycznych wyników poprzednich testów w dowód spełnienia nowych kryteriów.
+
+- Zintegrowano `harborlight-v1-inhabitants.js` z miejscowymi, nieprzezroczystymi maskami 48 wybranych sylwetek, 6 zwierząt i 2 starych smug. Nowy pomocniczy PNG powstał przez edycję grafiki; oryginalny asset nie jest nadpisywany.
+- Poprawiono sześć punktów emisji dymu po oględzinach kominów. Nowy moduł `harborlight-v1-smoke.js` tworzy unoszące się, rozszerzające i gasnące kłęby.
+- Woda otrzymała 13 nazwanych sektorów przyboju i pełniejszą maskę wody z odrzucaniem kolorów lądu/obiektów. Ludzie chodzą stałym tempem, zwierzęta przechodzą między punktami wypasu.
+- Zaliczono `tests/harborlight-coastal-smoke.py`: zmiana pikseli we wszystkich 13 sektorach, faktyczny dystans ludzi i zwierząt, cykl 6 źródeł dymu, nieprzezroczyste środki masek sylwetek i brak efektów w chronionych próbkach UI/lądu. Sprawdzono również powiększenie placu i całą scenę.
+- Ponownie zaliczono 9 testów gospodarki, test dziewięciu grup animacji z pauzą/ograniczeniem ruchu/telefonem oraz pełną regresję gry: trzy ekspedycje, gospodarka, zapis i 29 tras paneli w trzech rozdzielczościach. Bez błędów JavaScript i HTTP. Nowa publikacja wymaga osobnego potwierdzenia.
+- Zadanie [#10](https://github.com/ksobczak321-oss/gra/issues/10) ponownie otwarto w milestone frontend #3; [komentarz po uwagach użytkownika](https://github.com/ksobczak321-oss/gra/issues/10#issuecomment-6323676169) opisuje dodatkowe kryteria. Zgłoszenie pozostaje otwarte do oceny wizualnej poprawionej wersji.
