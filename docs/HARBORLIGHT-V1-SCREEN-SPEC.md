@@ -8,7 +8,7 @@ The generated HARBORLIGHT v1 visual mockup is the reference direction. The imple
 
 The main screen must communicate three things within the first 3 seconds:
 
-1. This is a rich living island the player wants to grow.
+1. This is a rich, living island the player wants to grow.
 2. The player has an active settlement economy with resources, population and happiness.
 3. There is always a clear next objective or expedition.
 
@@ -18,7 +18,7 @@ The island is the hero. UI must support the world, not cover it.
 
 Target orientation: landscape first, mobile/tablet friendly.
 
-Reference canvas: 1600 x 900 logical units.
+Reference canvas: 1600 × 900 logical units.
 
 Primary composition:
 
@@ -160,7 +160,7 @@ Required terrain elements:
 - crates, barrels and carts.
 
 Visual density rule:
-- every 100 x 100 logical units should normally contain at least one meaningful prop, vegetation cluster or terrain feature,
+- every 100 × 100 logical units should normally contain at least one meaningful prop, vegetation cluster or terrain feature,
 - large empty areas should exist only to preserve readability around major buildings.
 
 ## 5. World animation
@@ -212,16 +212,16 @@ HUD should use compact rounded chips with a light premium-mobile style and remai
 
 Persistent vertical buttons:
 
-1. Wyspa
-2. Ekspedycje
-3. Zadania
-4. Mieszkańcy
-5. Osiągnięcia / collection later
-6. Settings button near bottom-left
+1. Island
+2. Expeditions
+3. Tasks
+4. Residents
+5. Achievements / Collection later
+6. Settings near the bottom-left
 
 The active tab is strongly highlighted.
 
-Notification badge can appear on Expeditions, Tasks and Residents.
+Notification badges can appear on Expeditions, Tasks and Residents.
 
 ## 8. Right objective stack
 
@@ -229,10 +229,10 @@ Right side contains two contextual cards.
 
 ### Main objective card
 
-Always visible on island screen.
+Always visible on the island screen.
 
 Contains:
-- section title `GŁÓWNY CEL`,
+- section title `MAIN OBJECTIVE`,
 - objective title,
 - short description,
 - progress bar,
@@ -240,7 +240,7 @@ Contains:
 - optional small visual preview of the upgraded lighthouse.
 
 Example:
-`Obudź starą latarnię`
+`Awaken the Old Lighthouse`
 
 Prerequisites:
 - Lumber Camp 0/1,
@@ -258,7 +258,7 @@ Contains:
 - short objective,
 - required or recommended resources/tools,
 - rewards,
-- large primary button `ROZPOCZNIJ`.
+- large primary button `START`.
 
 This card is the bridge between the settlement layer and the puzzle layer.
 
@@ -267,10 +267,10 @@ This card is the bridge between the settlement layer and the puzzle layer.
 Persistent but collapsible.
 
 Tabs:
-- Budynki,
-- Surowce / Produkcja,
-- Dekoracje,
-- Ścieżki.
+- Buildings,
+- Resources / Production,
+- Decorations,
+- Paths.
 
 Each build card contains:
 - attractive miniature building art,
@@ -339,7 +339,7 @@ Visual happiness cues:
 ## 12. Camera behavior
 
 Desktop / tablet:
-- default zoom shows almost entire starter island,
+- default zoom shows almost the entire starter island,
 - mouse/touch drag to pan,
 - wheel/pinch zoom.
 
@@ -347,7 +347,7 @@ Mobile:
 - pinch zoom,
 - drag pan,
 - double tap important building to focus,
-- UI remains screen-fixed while world moves underneath.
+- UI remains screen-fixed while the world moves underneath.
 
 Camera constraints must prevent losing the island completely off-screen.
 
@@ -410,6 +410,6 @@ For the next implementation pass, do not change these without an explicit produc
 - no PvP attacks,
 - rich colorful semi-isometric visual style,
 - lighthouse as first major chapter objective,
-- two-layer loop: puzzle expedition -> resources/blueprints -> settlement growth,
-- population and happiness visible in main HUD,
+- two-layer loop: puzzle expedition → resources/blueprints → settlement growth,
+- population and happiness visible in the main HUD,
 - premium-mobile UI density similar to the approved v1 visual mockup.
