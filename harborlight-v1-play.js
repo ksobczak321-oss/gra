@@ -1,4 +1,5 @@
 import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, taskReady, totalWorkers } from './harborlight-v1-state.js';
+import { createAmbientScene } from './harborlight-v1-ambient.js';
 
 const SAVE_KEY = 'harborlight-v1-interactive-save';
 const stage = document.getElementById('stage');
@@ -160,8 +161,10 @@ function renderHUD() {
     node.setAttribute('aria-label', `${titleOf(id)}, poziom ${value.level}${value.ready ? ', produkcja gotowa do odbioru' : ''}`);
   }
   document.body.classList.toggle('reduce-motion', !state.settings.motion);
+  document.body.classList.toggle('world-paused', state.paused);
   refreshLivePanel();
   renderWorldAdditions();
+  stage.dispatchEvent(new Event('island-statechange'));
 }
 function svgNode(name, attributes = {}, ...children) {
   const node = document.createElementNS('http://www.w3.org/2000/svg', name);
@@ -409,6 +412,10 @@ function renderPanel() {
 }
 
 renderHUD();
+createAmbientScene(stage, () => state).ready.catch(error => {
+  console.error(error);
+  toast('Nie udało się wczytać animacji wyspy. Odśwież stronę, aby spróbować ponownie.');
+});
 setInterval(() => {
   const now = performance.now();
   const elapsed = Math.min((now - lastTick) / 1000, 5);

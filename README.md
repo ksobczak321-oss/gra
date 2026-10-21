@@ -29,6 +29,7 @@ Po uruchomieniu serwera można wykonać pełny test w Chromium (wymaga pakietu P
 
 ```sh
 python3 tests/harborlight-browser-smoke.py
+python3 tests/harborlight-animation-smoke.py
 ```
 
 Inny adres serwera lub plik wykonywalny Chromium ustawiają `HARBORLIGHT_BASE_URL` oraz `HARBORLIGHT_CHROMIUM`. Test korzysta z osobnej sesji przeglądarki i nie usuwa zapisu gracza.
@@ -38,6 +39,7 @@ Publikację GitHub Pages wykonuje istniejący workflow `.github/workflows/pages.
 ## Dokumentacja
 
 - [Interaktywna wyspa: funkcje, sterowanie, zapis, sprawdzenia](docs/INTERACTIVE-ISLAND.md)
+- [Animacje świata: zakres frontendu, warstwy i odbiór](docs/WORLD-ANIMATION.md)
 - [Dziennik implementacji](docs/IMPLEMENTATION-LOG.md)
 - [Backlog Frontend i Backend](docs/BACKLOG.md)
 - [Koncepcja gry i pętla rozgrywki](docs/HARBORLIGHT-CONCEPT.md)

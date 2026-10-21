@@ -1,5 +1,7 @@
 /* Interactive controls stay over the original artwork without repainting the island. */
 #semanticLayer{pointer-events:none;z-index:10}
+#island-ambient{position:absolute;inset:0;width:1672px;height:941px;z-index:6;pointer-events:none;contain:strict}
+body.world-paused .lighthouse-beam{animation-play-state:paused}
 #semanticLayer [hidden],#island-dialog [hidden],.island-toast[hidden],.placement-banner[hidden]{display:none!important}
 .island-hotspot{position:absolute;display:block;pointer-events:auto;appearance:none;background:transparent;border:2px solid transparent;border-radius:12px;padding:0;color:#fff;cursor:pointer;touch-action:manipulation;transition:background .16s,border-color .16s,box-shadow .16s;outline:none}
 .island-hotspot:hover,.island-hotspot:focus-visible{background:rgba(255,215,112,.08);border-color:rgba(255,220,125,.95);box-shadow:inset 0 0 18px rgba(255,216,114,.22),0 0 0 2px rgba(8,29,45,.6)}

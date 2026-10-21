@@ -2,6 +2,8 @@
 
 Stan dokumentu: 2026-10-21. Dotyczy `harborlight-v1-layered.html`. Stan publikacji i wyniki kolejnych sprawdzeń są w [dzienniku implementacji](IMPLEMENTATION-LOG.md).
 
+Bieżący priorytet: frontend i grafika. Dziewięć animacji świata z [FE-04](WORLD-ANIMATION.md) działa lokalnie i przeszło test ruchu; końcowa regresja i publikacja są dokumentowane oddzielnie od wcześniejszej klikalnej wersji.
+
 ## Co działa
 
 Interaktywny prototyp zachowuje zaakceptowane tło wyspy i dodaje rzeczywiste kontrolki HTML: 51 obszarów interakcji na scenie oraz dodatkowe, niepomniejszane menu na telefonie. Kliknięcie budynku otwiera jego panel, a operacje zmieniają wspólny stan gospodarki. Kontrolki mają etykiety dla czytników ekranu, obsługę klawiatury oraz widoczny fokus. Dialogi dostosowują się do szerokości ekranu.
@@ -54,8 +56,12 @@ Koszty kolejnych poziomów budynków rosną wraz z poziomem. Źródłem aktualny
 | `harborlight-v1-play.js` | Obszary kliknięć, panele, HUD, plansze ekspedycji i zapis przeglądarkowy |
 | `harborlight-v1-play.css` | Interakcje, fokus, dialogi, plansze, układ mobilny i ograniczenie ruchu |
 | `harborlight-v1-state.js` | Czysty silnik: stan, walidacja, koszty, produkcja, nagrody i postęp |
+| `harborlight-v1-ambient.js` | Osobna warstwa Canvas, wspólny czas, wiatrak, dym, chmury i budowa |
+| `harborlight-v1-water.js` | Maskowana animacja morza, fal i dwóch wodospadów |
+| `harborlight-v1-life.js` | Ruch mieszkańców, zwierząt i mew |
 | `tests/harborlight-state.test.mjs` | Testy reguł gospodarki i normalizacji zapisu |
 | `tests/harborlight-browser-smoke.py` | Regresja całej gry przez rzeczywiste kliknięcia w Chromium |
+| `tests/harborlight-animation-smoke.py` | Ruch grup efektów, maski interfejsu i zatrzymywanie animacji |
 
 ## Zapis
 
@@ -82,6 +88,7 @@ Uruchomienie z katalogu repozytorium:
 python3 -m http.server 8002 --bind 127.0.0.1
 node --test tests/harborlight-state.test.mjs
 python3 tests/harborlight-browser-smoke.py
+python3 tests/harborlight-animation-smoke.py
 ```
 
 Test przeglądarkowy wymaga Python Playwright i Chromium (domyślnie `/usr/bin/chromium`). Serwer musi działać w osobnym terminalu. Inny port/adres oraz Chromium ustawia się przez `HARBORLIGHT_BASE_URL` i `HARBORLIGHT_CHROMIUM`.
@@ -91,5 +98,7 @@ Sprawdzenie w przeglądarce powinno obejmować: otwarcie każdej głównej kontr
 ## Granice tej wersji
 
 Scena nadal wykorzystuje wycinki zatwierdzonego obrazu oraz kontrolki i oznaczenia stanu. Poziomy budynków, dodane dekoracje SVG, ulepszone ścieżki i światło naprawionej latarni mają osobne oznaczenia nad bazową grafiką. Nie jest to jeszcze komplet niezależnych grafik terenu, budynków, mieszkańców i efektów. Pełne stany budowy, swobodne rozmieszczanie nowych budynków oraz kamera z pan/zoom pozostają oddzielnymi pracami Frontend. Prototyp ma trzy plansze ekspedycji i uproszczoną gospodarkę.
+
+Nowa warstwa Canvas dodaje obracający się wiatrak, dym z pięciu kominów, trzy warstwy chmur, fale i dwie kaskady, 14 chodzących mieszkańców, 7 zwierząt, 7 mew oraz pracujące wciągniki na budowie. Ruch respektuje pauzę, tempo i ograniczenie animacji; efekty nie blokują kontrolek. Szczegóły assetu pomocniczego wiatraka i ograniczeń obecnego wspólnego tła są w dokumencie animacji świata.
 
 Nie ma backendu, logowania, synchronizacji urządzeń ani serwerowej walidacji gospodarki. Prace te są opisane w [backlogu](BACKLOG.md). Nie dodajemy PvP, płatności ani wymuszonych reklam w ramach tej iteracji.

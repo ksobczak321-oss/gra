@@ -34,3 +34,16 @@ Status: implementacja, weryfikacja i publikacja interaktywnej piaskownicy zakoń
 
 - Potwierdzono utworzenie i przypisanie zgłoszeń: Frontend [#7](https://github.com/ksobczak321-oss/gra/issues/7), [#8](https://github.com/ksobczak321-oss/gra/issues/8), [#9](https://github.com/ksobczak321-oss/gra/issues/9), [#10](https://github.com/ksobczak321-oss/gra/issues/10) w milestone `frontend #3`; Backend [#11](https://github.com/ksobczak321-oss/gra/issues/11), [#12](https://github.com/ksobczak321-oss/gra/issues/12), [#13](https://github.com/ksobczak321-oss/gra/issues/13), [#14](https://github.com/ksobczak321-oss/gra/issues/14) w `backend #4`.
 - Zgłoszenie FE-01 / #7 zamknięto jako completed z [dowodami testów i publikacji](https://github.com/ksobczak321-oss/gra/issues/7#issuecomment-6323171303). Pozostałe siedem zgłoszeń pozostaje otwartych. Backend jest planem prac, nie działającą usługą tej wersji.
+
+## 2026-10-21 — frontend: animacje świata
+
+Status: implementacja lokalna oraz komplet regresji zaliczone; publikacja w toku.
+
+- Użytkownik ustalił priorytet frontendu i grafiki oraz dziewięć wymaganych animacji: wiatrak, dym, mewy, wodospady, fale, mieszkańcy, chmury, budowa z pracującym dźwigiem i zwierzęta na farmie.
+- Doprecyzowano FE-04 / #10 do animacji świata. Integracja zapisu z API pozostaje oddzielną przyszłą pracą, zależną od BE-01 i BE-03.
+- Dodano [dokument animacji świata](WORLD-ANIMATION.md) z kryteriami odbioru, podziałem warstw i wymaganiami wobec czasu, masek interfejsu oraz ograniczenia ruchu.
+- Dodano osobną warstwę Canvas `#island-ambient` oraz moduły wody i życia wyspy. Zawiera wiatrak, dym z pięciu kominów, trzy warstwy chmur, fale, dwie kaskady, 14 mieszkańców, 7 zwierząt, 7 mew i dwa pracujące wciągniki z ładunkami oraz pyłem.
+- Pomocniczy `assets/harborlight-windmill-clean.png` (1672×941) powstał przez edycję oryginału narzędziem generowania grafiki w celu usunięcia łopat. Ponieważ wynik zmienił również inne fragmenty, runtime korzysta wyłącznie z miejscowego wycinka 114×116 i miękkiej maski przy wiatraku. Oryginalny PNG pozostaje bez zmian.
+- Wspólna pętla renderuje do 30 klatek/s na komputerze i 24 na małym ekranie z buforem 40–100% skali. Pauza, ustawienia animacji, systemowe ograniczenie ruchu i niewidoczna karta zatrzymują aktywną pętlę bez nadrabiania czasu po wznowieniu.
+- `tests/harborlight-animation-smoke.py` zaliczył porównanie ruchu dziewięciu grup, w tym odizolowanych mieszkańców, zwierząt i mew. Chronione regiony HUD i kart miały zero narysowanych pikseli efektów. Sprawdzono 51 przycisków, telefon w obu orientacjach, pauzę/wznowienie, ustawienie animacji i `prefers-reduced-motion`, bez błędów JavaScript ani HTTP.
+- Po ostatniej optymalizacji pętli ponownie zaliczono `node --test tests/harborlight-state.test.mjs` (9 testów), `python3 tests/harborlight-animation-smoke.py` oraz `python3 tests/harborlight-browser-smoke.py` (trzy ekspedycje z premiami za skrzynie, pełna gospodarka, zapis, produkcja i 29 tras paneli przy trzech rozdzielczościach). Bez błędów JavaScript i HTTP. Publikacja będzie potwierdzona oddzielnym wpisem.

@@ -44,16 +44,21 @@ Kryteria odbioru:
 - Stały HUD i dialogi pozostają czytelne przy zmianie orientacji; dialogi nie wychodzą poza ekran.
 - Cała główna pętla działa z klawiatury, fokus jest zachowywany, a ograniczenie animacji jest respektowane.
 
-### FE-04 — Żywa wyspa i integracja z API postępu
+### FE-04 — Żywa wyspa — animacje świata
 
-Status: zaplanowane. Zależności: FE-02 oraz kontrakt BE-01; integracja zapisu wymaga BE-03. GitHub Issue: [#10](https://github.com/ksobczak321-oss/gra/issues/10).
+Status: implementacja lokalna, test dziewięciu grup ruchu i końcowe regresje zaliczone; publikacja w toku. Zakres doprecyzowany przez użytkownika do frontendu i grafiki. GitHub Issue: [#10](https://github.com/ksobczak321-oss/gra/issues/10). Szczegóły: [animacje świata](WORLD-ANIMATION.md).
 
 Kryteria odbioru:
 
-- Mieszkańcy poruszają się po ścieżkach; produkcja ma dyskretne efekty, a naprawiona latarnia widoczne światło.
-- Efekty oceanu, wodospadu, młyna i portu nie zasłaniają interfejsu i można ograniczyć ich ruch.
-- Adapter zapisu obsługuje lokalny prototyp i API bez zmiany reguł widoku.
-- Stan ładowania, brak połączenia i konflikt zapisu mają konkretne komunikaty oraz ścieżkę odzyskania postępu.
+- Wiatrak ma obracające się łopaty, bez drugiego nieruchomego wirnika pod spodem.
+- Dym unosi się z kominów; mewy latają, a chmury przesuwają się nad dalekim planem.
+- Woda płynie w wodospadach, a fale są widoczne na morzu i nie przesuwają lądu.
+- Mieszkańcy chodzą po ścieżkach; zwierzęta poruszają się w obrębie farmy.
+- Plac budowy sprawia wrażenie pracy: dźwig, lina lub hak poruszają się przy budowie.
+- Pauza, tempo i ograniczenie ruchu sterują animacjami; niewidoczna karta nie zużywa zasobów na aktywną animację.
+- Efekty zachowują styl zaakceptowanego obrazu, nie zasłaniają HUD ani kontrolek i są sprawdzone na komputerze oraz telefonie.
+
+FE-02 nadal obejmuje pełne rozdzielenie assetów świata. Integrację lokalnego zapisu z API, obsługę braku połączenia i konfliktu wersji należy zaplanować oddzielnie po BE-01 i BE-03; zakres backendu nie wchodzi do obecnej iteracji animacji.
 
 ## Backend
 
