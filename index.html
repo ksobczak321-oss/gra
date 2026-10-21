@@ -3,66 +3,148 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
-  <meta name="theme-color" content="#0d1321" />
-  <title>PANIC PETS: LAST LIFT</title>
-  <link rel="stylesheet" href="panic-pets.css?v=3" />
+  <meta name="theme-color" content="#14261f" />
+  <title>HARBORLIGHT</title>
+  <link rel="stylesheet" href="harborlight-v01.css" />
 </head>
 <body>
   <main class="app">
     <header class="hero">
       <div>
-        <div class="kicker">STORM RESCUE // LEVEL 01</div>
-        <h1>PANIC PETS</h1>
-        <div class="sub">LAST LIFT</div>
+        <div class="eyebrow">ISLAND 01 // THE RETURN</div>
+        <h1>HARBORLIGHT</h1>
+        <p class="tagline">Rozwiązuj ekspedycje. Zbieraj surowce. Odbuduj wyspę.</p>
       </div>
-      <div class="score"><span>URATOWANE</span><strong id="rescuedCount">0/7</strong></div>
+      <div class="lighthouse-mini" aria-label="postęp latarni">
+        <span>LATARNIA</span>
+        <strong id="beaconStage">0 / 1</strong>
+      </div>
     </header>
 
-    <section class="mission">
-      <div><strong>🌊 WODA ROŚNIE OD DOŁU</strong><span>Ratuj najniższe piętra najpierw. Winda mieści <b>3 miejsca</b>.</span></div>
-      <button id="restartBtn" type="button">↻ RESTART</button>
+    <section class="resource-bar" aria-label="surowce">
+      <div><span>🪵</span><small>KŁODY</small><strong id="resLogs">0</strong></div>
+      <div><span>🪨</span><small>KAMIEŃ</small><strong id="resStone">0</strong></div>
+      <div><span>🪚</span><small>DESKI</small><strong id="resPlanks">0</strong></div>
+      <div><span>🍞</span><small>ŻYWNOŚĆ</small><strong id="resFood">0</strong></div>
+      <div><span>👥</span><small>LUDZIE</small><strong id="resPop">0 / 0</strong></div>
     </section>
 
-    <section class="game-grid">
-      <div class="building" id="building">
-        <div class="water" id="water"><span>🌊</span></div>
-        <div class="rooms" id="floors"></div>
-        <div class="shaft">
-          <div class="shaft-label">WINDA</div>
-          <div class="elevator" id="elevator">
-            <div id="cargo" class="cargo"></div>
-            <div class="capacity" id="capacity">0/3</div>
+    <nav class="tabs" aria-label="widoki gry">
+      <button id="tabIsland" class="active" type="button">🏝️ WYSPA</button>
+      <button id="tabExpeditions" type="button">🧭 EKSPEDYCJE <span id="expBadge" class="badge">!</span></button>
+    </nav>
+
+    <section id="islandView" class="view">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">GŁÓWNY CEL</div>
+          <h2 id="goalTitle">Odbuduj fundament latarni</h2>
+          <p id="goalText">Potrzebujesz tartaku, domu i odnalezionego fragmentu soczewki.</p>
+        </div>
+        <div class="goal-progress"><div id="goalProgress"></div></div>
+      </div>
+
+      <div class="island-layout">
+        <section class="island-map" id="islandMap" aria-label="mapa wyspy">
+          <div class="sea sea-a"></div><div class="sea sea-b"></div>
+          <button class="plot lighthouse-plot" data-building="lighthouse" type="button">
+            <span class="plot-icon">🗼</span><b>STARA LATARNIA</b><small id="plotLighthouse">ruina</small>
+          </button>
+          <button class="plot camp built" data-building="camp" type="button">
+            <span class="plot-icon">⛺</span><b>OBÓZ</b><small>3 osadników</small>
+          </button>
+          <button class="plot forest-plot" data-building="lumber" type="button">
+            <span class="plot-icon">🌲</span><b>LAS</b><small id="plotLumber">miejsce pod drwala</small>
+          </button>
+          <button class="plot coast-plot" data-building="sawmill" type="button">
+            <span class="plot-icon">⚙️</span><b>ZATOKA</b><small id="plotSawmill">miejsce pod tartak</small>
+          </button>
+          <button class="plot village-plot" data-building="house" type="button">
+            <span class="plot-icon">🌿</span><b>ŁĄKA</b><small id="plotHouse">miejsce pod dom</small>
+          </button>
+          <div class="plot future-plot"><span class="plot-icon">🌾</span><b>POLA</b><small>odblokuje się później</small></div>
+          <div class="plot future-plot barn"><span class="plot-icon">🐄</span><b>PASTWISKO</b><small>odblokuje się później</small></div>
+        </section>
+
+        <aside class="economy-panel">
+          <div class="panel-title">GOSPODARKA</div>
+          <div id="buildCards" class="build-cards"></div>
+          <div id="productionPanel" class="production-panel"></div>
+        </aside>
+      </div>
+
+      <section class="timeline">
+        <div class="timeline-head"><b>CO TERAZ?</b><span id="nextHint">Zbuduj obóz drwali.</span></div>
+        <div class="chain">
+          <div id="chainLumber"><span>🌲</span><b>DRWAL</b><small>kłody</small></div>
+          <i>→</i>
+          <div id="chainSawmill"><span>⚙️</span><b>TARTAK</b><small>deski</small></div>
+          <i>→</i>
+          <div id="chainHouse"><span>🏠</span><b>DOM</b><small>więcej ludzi</small></div>
+          <i>→</i>
+          <div id="chainBeacon"><span>🗼</span><b>LATARNIA</b><small>nowy rozdział</small></div>
+        </div>
+      </section>
+    </section>
+
+    <section id="expeditionsView" class="view" hidden>
+      <div class="section-head compact">
+        <div>
+          <div class="section-kicker">EKSPEDYCJE</div>
+          <h2>Rozwiązuj trasę po swojemu</h2>
+          <p>Liczy się czas, liczba kroków, użyte narzędzia i dodatkowe skrytki.</p>
+        </div>
+      </div>
+      <div id="expeditionCards" class="expedition-cards"></div>
+    </section>
+
+    <section id="puzzleView" class="view" hidden>
+      <div class="puzzle-top">
+        <button id="backToExpeditions" class="back-btn" type="button">← WRÓĆ</button>
+        <div>
+          <div class="section-kicker">EKSPEDYCJA</div>
+          <h2 id="puzzleTitle">—</h2>
+        </div>
+        <div class="puzzle-stats">
+          <div><small>CZAS</small><b id="puzzleTime">0:00</b></div>
+          <div><small>KROKI</small><b id="puzzleSteps">0</b></div>
+          <div><small>SPRYT</small><b id="puzzleIngenuity">100</b></div>
+        </div>
+      </div>
+
+      <div class="puzzle-layout">
+        <section>
+          <div id="puzzleBoard" class="puzzle-board" aria-label="plansza ekspedycji"></div>
+          <div class="puzzle-help">Dotknij sąsiedniego pola, aby się poruszyć. Przeszkodę możesz pokonać tylko odpowiednim narzędziem.</div>
+        </section>
+        <aside class="tool-panel">
+          <div class="panel-title">EKWIPUNEK</div>
+          <div id="toolList" class="tool-list"></div>
+          <div class="legend-list">
+            <div><span>🧭</span> Ty</div><div><span>🏁</span> Cel</div><div><span>🎒</span> Skrytka</div><div><span>🔑</span> Klucz</div>
           </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-title">GDZIE JEDZIESZ?</div>
-        <div class="floor-buttons" id="floorButtons"></div>
-        <div class="legend">
-          <div><span>🐶</span><b>2 miejsca</b></div>
-          <div><span>🐱 🐰</span><b>1 miejsce</b></div>
-        </div>
-        <div class="hint" id="hint">👇 Zacznij od 1. piętra.</div>
+          <div class="par-box">PAR: <b id="puzzlePar">—</b> kroków</div>
+          <button id="restartPuzzle" class="secondary-btn" type="button">OD NOWA</button>
+        </aside>
       </div>
     </section>
 
-    <section class="status" id="status">
-      <strong id="statusTitle">START NA DACHU 🚁</strong>
-      <span id="statusText">Kliknij „1”, zjedź windą i dotknij zwierzaków, aby je zabrać.</span>
+    <section id="modal" class="modal" hidden>
+      <div class="modal-card">
+        <div id="modalIcon" class="modal-icon">🎉</div>
+        <h2 id="modalTitle">Gotowe</h2>
+        <p id="modalText"></p>
+        <div id="modalScore" class="modal-score"></div>
+        <button id="modalButton" class="primary-btn" type="button">WRÓĆ NA WYSPĘ</button>
+      </div>
     </section>
 
-    <div class="overlay" id="overlay" hidden>
-      <div class="result">
-        <div class="result-icon" id="resultIcon">🎉</div>
-        <h2 id="resultTitle"></h2>
-        <p id="resultText"></p>
-        <button id="playAgainBtn" type="button">JESZCZE RAZ</button>
-      </div>
-    </div>
-
-    <footer>PROTOTYP 0.2 · GRAFIKA TYMCZASOWA · DOTYK / MYSZ</footer>
+    <footer>
+      HARBORLIGHT v0.1 · prototype loop: puzzle → resource → building → new possibility
+      <button id="resetAll" type="button">reset save</button>
+    </footer>
   </main>
-  <script src="panic-pets.js?v=3"></script>
+
+  <script src="harborlight-v01.js"></script>
 </body>
 </html>
