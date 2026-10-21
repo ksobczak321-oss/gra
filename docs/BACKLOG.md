@@ -1,6 +1,6 @@
 # Backlog HARBORLIGHT
 
-Stan: 2026-10-21. Zadania są podzielone według istniejących milestone’ów [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3) i [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Poniższe identyfikatory są identyfikatorami dokumentacji, nie numerami GitHub Issues. Linki do zgłoszeń należy dopisać po potwierdzonym utworzeniu zgłoszeń. Tworzenie Issues jest obecnie zablokowane przez brak aktywnego dostępu proxy do `api.github.com`; wpisy w tym pliku nie oznaczają utworzonych zgłoszeń.
+Stan: 2026-10-21. Zadania są podzielone według istniejących milestone’ów [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3) i [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Utworzono i potwierdzono osiem GitHub Issues z przypisaniem do milestone’ów. Identyfikatory FE/BE porządkują dokumentację; numery i linki rzeczywistych zgłoszeń są podane przy zadaniach.
 
 Utrzymujemy spokojną rozbudowę wyspy i pętlę ekspedycja → zasoby → osada. Zachowujemy zaakceptowany kierunek wizualny. Backend nie jest wymagany do uruchomienia obecnego statycznego prototypu.
 
@@ -8,7 +8,7 @@ Utrzymujemy spokojną rozbudowę wyspy i pętlę ekspedycja → zasoby → osada
 
 ### FE-01 — Interaktywna wyspa na zaakceptowanym ekranie
 
-Status: zaimplementowane i sprawdzone lokalnie; publikacja w toku. Milestone: frontend #3. GitHub Issue: oczekuje utworzenia.
+Status: zrealizowane, sprawdzone lokalnie i na publicznej piaskownicy; zgłoszenie zamknięte jako completed. Milestone: frontend #3. GitHub Issue: [#7](https://github.com/ksobczak321-oss/gra/issues/7).
 
 Zakres: menu, HUD, dzielnice, budynki, produkcja, mieszkańcy, handel, zadania, cel latarni, ekspedycje i zapis przeglądarkowy. Implementacja w plikach `harborlight-v1-play.*` i `harborlight-v1-state.js`.
 
@@ -22,7 +22,7 @@ Kryteria odbioru:
 
 ### FE-02 — Niezależne warstwy świata i stany budynków
 
-Status: zaplanowane. Zależność: FE-01. GitHub Issue: do uzupełnienia.
+Status: zaplanowane. Zależność: FE-01. GitHub Issue: [#8](https://github.com/ksobczak321-oss/gra/issues/8).
 
 Zakres: zastąpienie wycinków wspólnego obrazu osobnymi assetami terenu, dróg, roślinności i budynków zgodnie z [specyfikacją v1](HARBORLIGHT-V1-SCREEN-SPEC.md).
 
@@ -35,7 +35,7 @@ Kryteria odbioru:
 
 ### FE-03 — Obsługa dotyku, kamera i dostępność
 
-Status: zaplanowane; dialogi responsywne i etykiety kontrolek są częściowo wdrożone w FE-01. GitHub Issue: do uzupełnienia.
+Status: zaplanowane; dialogi responsywne i etykiety kontrolek są częściowo wdrożone w FE-01. GitHub Issue: [#9](https://github.com/ksobczak321-oss/gra/issues/9).
 
 Kryteria odbioru:
 
@@ -46,7 +46,7 @@ Kryteria odbioru:
 
 ### FE-04 — Żywa wyspa i integracja z API postępu
 
-Status: zaplanowane. Zależności: FE-02 oraz kontrakt BE-01; integracja zapisu wymaga BE-03. GitHub Issue: do uzupełnienia.
+Status: zaplanowane. Zależności: FE-02 oraz kontrakt BE-01; integracja zapisu wymaga BE-03. GitHub Issue: [#10](https://github.com/ksobczak321-oss/gra/issues/10).
 
 Kryteria odbioru:
 
@@ -59,7 +59,7 @@ Kryteria odbioru:
 
 ### BE-01 — Kontrakt API i model postępu gracza
 
-Status: zaplanowane; backend nie jest jeszcze zaimplementowany. GitHub Issue: do uzupełnienia.
+Status: zaplanowane; backend nie jest jeszcze zaimplementowany. GitHub Issue: [#11](https://github.com/ksobczak321-oss/gra/issues/11).
 
 Zakres: opisać kontrakt przed wyborem technologii. Obecne `version: 1` jest punktem wyjścia, nie gotowym modelem serwerowym.
 
@@ -72,7 +72,7 @@ Kryteria odbioru:
 
 ### BE-02 — Tożsamość gracza i bezpieczne sesje
 
-Status: zaplanowane. Zależność: BE-01. GitHub Issue: do uzupełnienia.
+Status: zaplanowane. Zależność: BE-01. GitHub Issue: [#12](https://github.com/ksobczak321-oss/gra/issues/12).
 
 Kryteria odbioru:
 
@@ -83,7 +83,7 @@ Kryteria odbioru:
 
 ### BE-03 — Trwały zapis i synchronizacja wyspy
 
-Status: zaplanowane. Zależności: BE-01, BE-02. GitHub Issue: do uzupełnienia.
+Status: zaplanowane. Zależności: BE-01, BE-02. GitHub Issue: [#13](https://github.com/ksobczak321-oss/gra/issues/13).
 
 Kryteria odbioru:
 
@@ -94,7 +94,7 @@ Kryteria odbioru:
 
 ### BE-04 — Serwerowe reguły gospodarki i wyników ekspedycji
 
-Status: zaplanowane. Zależność: BE-01; zapis i autoryzacja wymagają BE-02 i BE-03. GitHub Issue: do uzupełnienia.
+Status: zaplanowane. Zależność: BE-01; zapis i autoryzacja wymagają BE-02 i BE-03. GitHub Issue: [#14](https://github.com/ksobczak321-oss/gra/issues/14).
 
 Kryteria odbioru:
 
