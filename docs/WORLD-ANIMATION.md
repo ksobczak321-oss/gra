@@ -1,6 +1,6 @@
 # Żywa wyspa — animacje świata
 
-Stan: 2026-10-21, druga iteracja poprawek jest opublikowana i sprawdzona publicznie; oczekuje oceny wizualnej użytkownika. Poprzednia wersja została opublikowana i przeszła opisane niżej testy techniczne, ale nie spełniła oczekiwania wyraźnego chodu, ruchu zwierząt, dymienia i fal przy całej widocznej linii brzegowej. Zadanie [FE-04 / #10](https://github.com/ksobczak321-oss/gra/issues/10) ponownie wymaga odbioru, milestone [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3). Commity i faktyczne wyniki publikacji zapisujemy w [dzienniku implementacji](IMPLEMENTATION-LOG.md).
+Stan: 2026-10-21, trzecia iteracja usuwa cały nieruchomy tłum i stare smugi ze świata; implementacja i przegląd wizualny gotowe lokalnie, publikacja w toku. Poprzednia wersja została opublikowana i przeszła opisane niżej testy techniczne, ale nie spełniła oczekiwania wyraźnego chodu, ruchu zwierząt, dymienia i fal przy całej widocznej linii brzegowej. Zadanie [FE-04 / #10](https://github.com/ksobczak321-oss/gra/issues/10) ponownie wymaga odbioru, milestone [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3). Commity i faktyczne wyniki publikacji zapisujemy w [dzienniku implementacji](IMPLEMENTATION-LOG.md).
 
 ## Cel tej iteracji
 
@@ -95,7 +95,7 @@ Pełne rozdzielenie wszystkich budynków, terenu i mieszkańców na niezależne 
 Liczby mieszkańców, zwierząt i mew dotyczą ruchomych obiektów, nie wszystkich postaci widocznych na obrazie referencyjnym. Obraz nadal zawiera nieruchome elementy świata. Nowa poprawka ma usuwać wybrane najbardziej widoczne nieruchome postacie i zwierzęta miejscowymi maskami, a nie zastępować cały obraz generowaną wersją. Pełny rozdział assetów pozostaje FE-02. Budowa otrzymała wizualną aktywność; ta zmiana nie dodaje kolejek czasowych ani nie zmienia zasad wydawania zasobów przy ulepszeniu budynku.
 
 
-## Druga iteracja: czytelny ruch i pełny brzeg
+## Druga iteracja (historyczna): czytelny ruch i pełny brzeg
 
 Zmiany są opublikowane i sprawdzone także na publicznym adresie. Wyniki regresji i publikacji są zapisane w dzienniku.
 
@@ -114,3 +114,20 @@ python3 tests/harborlight-coastal-smoke.py
 ```
 
 Test mierzy zmianę obrazu osobno dla 13 sektorów, rzeczywiste położenie postaci i zwierząt, wznoszenie/rozszerzanie/zanikanie dymu, nieprzezroczyste zakrycie starych sylwetek oraz brak malowania wody na chronionych fragmentach interfejsu i lądu. Nie zastępuje oględzin w normalnej skali.
+
+
+## Trzecia iteracja: bez nieruchomych kopii ludzi i dymu
+
+Po ponownej uwadze użytkownika przegląd obrazu ujawnił dwie przyczyny: częściowe maski zostawiały figury poza inwentarzem oraz większa smuga ratusza pochodziła z bocznego komina `(820,208)`, którego wcześniej nie zastąpiono w całości. Duża liczba nakładających się miękkich cząstek sprawiała ponadto wrażenie prawie nieruchomej mgły.
+
+Bieżący renderer korzysta z całego oczyszczonego obrazu świata `assets/harborlight-inhabitants-clean.png` wewnątrz maski świata; zatwierdzony interfejs pozostaje z oryginalnego obrazu. Oczyszczone tło nie zawiera widocznych ludzi, zwierząt ani smug z kominów. Nie pobieramy już miejscowych wycinków tylko z 48 pozycji. Ta sama czysta grafika służy do próbkowania wody, aby nie wrysować ponownie fragmentów dawnych sylwetek. Również wycinek pomocniczego tła wiatraka sprawdzono pod kątem braku postaci.
+
+Źródło jest wygenerowaną, oczyszczoną wersją wzorca, więc nie deklarujemy zgodności piksel w piksel całego świata z oryginałem. Układ i styl wyspy są zachowane, oryginalny asset nie jest nadpisywany. Ponieważ oczyszczanie usunęło figurę fontanny, dodano prostą kamienną misę z wodą bez sylwetki przypominającej nieruchomego NPC.
+
+- Wszystkie **24 widoczne postacie świata są animowane**. Idą ze stałą prędkością; nie mają zaprogramowanych postojów. Na końcu trasy zawracają.
+- Dym pochodzi z **9 kominów**: `(533,207)`, `(792,154)`, `(820,208)`, `(491,311)`, `(701,300)`, `(690,352)`, `(477,409)`, `(445,516)`, `(1349,179)`.
+- Co 0,68 s rodzi się osobny kłąb; żyje 3,8 s, przemieszcza się w górę z prędkością ok. 24–30 px/s, rośnie, dryfuje i zanika. Widoczne są poszczególne jasne kłęby, zamiast jednolitej kolumny. Test śledzi identyfikator tego samego kłębu między klatkami.
+- Wersja wejścia, CSS i modułów to `living-world-3`, aby stary cache nie podmieniał nowych efektów.
+- Nagranie [pełnego widoku i zbliżenia](../assets/previews/living-world-v3.webm) pochodzi z przeglądarki. Zawiera 7 s widoku całej sceny i 9 s zbliżenia, zapisanych w 10 klatkach/s. Przybliżenie dotyczy nagrania kontrolnego, nie nowej funkcji kamery w grze.
+
+Przegląd wizualny po zwiększeniu jasności i rozmiaru kłębów potwierdził, że dym jest widoczny także przy oknie szerokości 1200 px i wyraźnie przemieszcza się między klatkami oddalonymi o 0,9 s. W tle nie znaleziono widocznych nieruchomych sylwetek. Test odbioru wymaga teraz 24 stale idących postaci, nieprzezroczystego pokrycia całego świata oraz ruchu tych samych kłębów o co najmniej 23 px w sekundę, oprócz sprawdzenia wszystkich stref brzegu i wcześniejszych regresji.

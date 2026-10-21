@@ -46,7 +46,7 @@ Kryteria odbioru:
 
 ### FE-04 — Żywa wyspa — animacje świata
 
-Status: druga iteracja poprawek opublikowana i sprawdzona lokalnie oraz na publicznej stronie. Zgłoszenie pozostaje otwarte do wizualnej oceny poprawki przez użytkownika; wcześniejsze testy nie wystarczały do odbioru czytelności ruchu i pełnego brzegu. Zakres doprecyzowany przez użytkownika do frontendu i grafiki. GitHub Issue: [#10](https://github.com/ksobczak321-oss/gra/issues/10). Szczegóły: [animacje świata](WORLD-ANIMATION.md).
+Status: trzecia iteracja przygotowana po ponownej uwadze o nieruchomych ludziach i dymie; przegląd wizualny lokalny zaliczony, publikacja w toku. Zgłoszenie pozostaje otwarte do wizualnej oceny poprawki przez użytkownika; wcześniejsze testy nie wystarczały do odbioru czytelności ruchu i pełnego brzegu. Zakres doprecyzowany przez użytkownika do frontendu i grafiki. GitHub Issue: [#10](https://github.com/ksobczak321-oss/gra/issues/10). Szczegóły: [animacje świata](WORLD-ANIMATION.md).
 
 Kryteria odbioru:
 

@@ -1,7 +1,7 @@
-import { drawWater } from './harborlight-v1-water.js?v=coast-life-2';
-import { drawLife } from './harborlight-v1-life.js?v=coast-life-2';
-import { drawSmoke } from './harborlight-v1-smoke.js?v=coast-life-2';
-import { createInhabitantsBackground } from './harborlight-v1-inhabitants.js?v=coast-life-2';
+import { drawWater } from './harborlight-v1-water.js?v=living-world-3';
+import { drawLife } from './harborlight-v1-life.js?v=living-world-3';
+import { drawSmoke } from './harborlight-v1-smoke.js?v=living-world-3';
+import { createInhabitantsBackground } from './harborlight-v1-inhabitants.js?v=living-world-3';
 
 const WIDTH = 1672;
 const HEIGHT = 941;
@@ -141,7 +141,7 @@ export function createAmbientScene(stage, getState) {
   surface.id = 'island-ambient';
   surface.setAttribute('aria-hidden', 'true');
   surface.dataset.effectGroups = EFFECTS;
-  surface.dataset.revision = 'coast-life-2';
+  surface.dataset.revision = 'living-world-3';
   surface.dataset.time = '0';
   surface.dataset.frames = '0';
   surface.dataset.mode = 'loading';
@@ -211,7 +211,9 @@ export function createAmbientScene(stage, getState) {
   media.addEventListener('change', resume);
   stage.addEventListener('island-statechange', syncMode);
   const ready = Promise.all([image('./assets/harborlight-v1-approved.png'), image('./assets/harborlight-windmill-clean.png'), image('./assets/harborlight-inhabitants-clean.png')]).then(values => {
-    source = values[0];
+    // All texture sampling must use the clean world too: sampling the old
+    // reference could paint blue clothing or baked smoke back into the scene.
+    source = values[2];
     plate = makeWindmillPlate(values[1]);
     inhabitants = createInhabitantsBackground(values[2]);
     size();

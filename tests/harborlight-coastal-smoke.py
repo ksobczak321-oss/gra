@@ -16,11 +16,11 @@ with sync_playwright() as p:
     page.on('response', lambda response: failures.append((response.status, response.url)) if response.status >= 400 else None)
     assert page.goto(BASE + '/harborlight-v1-layered.html').status == 200
     page.wait_for_function("document.getElementById('island-ambient')?.dataset.ready==='true'")
-    assert page.locator('#island-ambient').get_attribute('data-revision') == 'coast-life-2'
+    assert page.locator('#island-ambient').get_attribute('data-revision') == 'living-world-3'
     report = page.evaluate("""async () => {
       const {drawWater,COASTAL_ZONES} = await import('./harborlight-v1-water.js');
       const {sampleLifePositions} = await import('./harborlight-v1-life.js');
-      const {drawSmoke,smokeParticle,SMOKE_SOURCES} = await import('./harborlight-v1-smoke.js');
+      const {drawSmoke,smokeParticle,sampleSmoke,SMOKE_SOURCES} = await import('./harborlight-v1-smoke.js');
       const {createInhabitantsBackground,ORIGINAL_PEOPLE,ORIGINAL_ANIMALS} = await import('./harborlight-v1-inhabitants.js');
       const image = new Image(); image.src='./assets/harborlight-v1-approved.png'; await image.decode();
       const clean = new Image(); clean.src='./assets/harborlight-inhabitants-clean.png'; await clean.decode();
@@ -55,7 +55,13 @@ with sync_playwright() as p:
       const coveredPeople=ORIGINAL_PEOPLE.filter(([x,y])=>pixels[((y-9)*1672+x)*4+3]>200).length;
       const coveredAnimals=ORIGINAL_ANIMALS.filter(([x,y])=>pixels[((y-7)*1672+x)*4+3]>200).length;
       const opaquePeople=ORIGINAL_PEOPLE.every(([x,y])=>[-16,-9,-2].every(dy=>[-3,0,3].every(dx=>pixels[((y+dy)*1672+x+dx)*4+3]>240)));
-      return {shores,protectedAreas,people,animals,smoke,coveredPeople,coveredAnimals,opaquePeople};
+      let cleanWorldPixels=0;for(let i=3;i<pixels.length;i+=4)if(pixels[i]===255)cleanWorldPixels++;
+      const walkingSamples=Array.from({length:11},(_,i)=>sampleLifePositions(i/10).residents);
+      const allWalking=walkingSamples.every(sample=>sample.length===24 && sample.every(actor=>actor.moving));
+      const walkingDistance=walkingSamples[0].map((actor,id)=>walkingSamples.slice(1).reduce((sum,sample,i)=>sum+Math.hypot(sample[id].x-walkingSamples[i][id].x,sample[id].y-walkingSamples[i][id].y),0));
+      const puffA=sampleSmoke(2),puffB=sampleSmoke(3);
+      const flyingPuffs=puffA.filter(a=>a.age<.65).map(a=>({a,b:puffB.find(b=>b.id===a.id)})).filter(pair=>pair.b);
+      return {shores,protectedAreas,people,animals,smoke,coveredPeople,coveredAnimals,opaquePeople,cleanWorldPixels,allWalking,walkingDistance,flyingPuffs};
     }""")
     for zone in report['shores']:
         assert zone['painted'] >= 30 and zone['changed'] >= 25, zone
@@ -63,6 +69,7 @@ with sync_playwright() as p:
     assert all(value == 0 for value in report['protectedAreas'].values()), report['protectedAreas']
     assert sum(value >= 10 for value in report['people']) >= len(report['people']) * .8, report['people']
     assert all(value >= 8 for value in report['animals']), report['animals']
+    assert report['allWalking'] and all(value >= 6 for value in report['walkingDistance']), report['walkingDistance']
     print('PASS real translation: residents >=10px in2sec; every animal travels >=8px over its grazing cycle')
     for source in report['smoke']:
         assert source['changed'] > 25, source
@@ -70,7 +77,11 @@ with sync_playwright() as p:
         assert source['late']['size'] > source['early']['size'] and source['end']['alpha'] == 0, source
     assert report['coveredPeople'] == 48 and report['coveredAnimals'] == 6, report
     assert report['opaquePeople'], 'Old figures need opaque coverage, not a translucent fade through their bodies'
-    print('PASS six smoking chimneys: emission rises, expands and fades; frozen inhabitants have clean-background coverage')
+    assert report['cleanWorldPixels'] == 1672 * 941, 'Use the complete people-free world; partial patches leave frozen figures outside the inventory'
+    assert len(report['smoke']) == 9 and len(report['flyingPuffs']) >= 9
+    assert all(pair['a']['y'] - pair['b']['y'] >= 23 for pair in report['flyingPuffs']), report['flyingPuffs']
+    print('PASS all24residents continually walk; complete people-free background covers unlisted frozen figures too')
+    print('PASS nine smoking chimneys: the SAME individual billows rise >=23px/second, expand and fade')
     assert not errors, errors
     assert not failures, failures
     print('PASS no JavaScript/HTTP errors; water leaves UI, sampled houses, farmland and lighthouse untouched')

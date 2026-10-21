@@ -1,5 +1,6 @@
-// Local clean-background samples remove the frozen figures before animated
-// residents/livestock are drawn. The approved reference itself is unchanged.
+// Inventory retained for regression checks. Rendering now uses the entire
+// people-free WORLD plate so figures outside this inventory cannot stay frozen.
+// The parent clips it away from the unchanged approved screen-space interface.
 export const ORIGINAL_PEOPLE = Object.freeze([
   [567,373],[585,389],[602,402],[629,407],[648,422],[688,418],
   [712,425],[712,448],[668,444],[643,452],[622,441],[589,419],
@@ -16,34 +17,21 @@ export const ORIGINAL_ANIMALS = Object.freeze([
   [342,474,25,24],[303,357,24,20],[372,329,24,20],
 ].map(point => Object.freeze(point)));
 
-function patch(ctx, source, x, y, width, height, inset = 3) {
-  const stamp = document.createElement('canvas');
-  stamp.width = width;
-  stamp.height = height;
-  const paint = stamp.getContext('2d');
-  paint.drawImage(source, x, y, width, height, 0, 0, width, height);
-  paint.globalCompositeOperation = 'destination-in';
-  paint.translate(width / 2, height / 2);
-  paint.scale(width / 2, height / 2);
-  const feather = paint.createRadialGradient(0, 0, Math.max(.3, 1 - inset / Math.min(width, height) * 2), 0, 0, 1);
-  feather.addColorStop(0, '#fff');
-  feather.addColorStop(1, 'rgba(255,255,255,0)');
-  paint.fillStyle = feather;
-  paint.fillRect(-1, -1, 2, 2);
-  ctx.drawImage(stamp, x, y);
-}
-
 export function createInhabitantsBackground(source) {
   const surface = document.createElement('canvas');
   surface.width = 1672;
   surface.height = 941;
   const ctx = surface.getContext('2d');
-  // Fully opaque cores cover heads, feet and their short ground shadows.
-  // Feathering is outside the figure rather than fading through its body.
-  for (const [x,y] of ORIGINAL_PEOPLE) patch(ctx, source, x - 11, y - 25, 24, 31, 2);
-  for (const [x,y,width,height] of ORIGINAL_ANIMALS) patch(ctx, source, x - width / 2 - 7, y - height - 2, width + 14, height + 12, 3);
-  // These are the conspicuous baked smoke columns, not the chimney masonry.
-  patch(ctx, source, 532, 157, 32, 50, 5);
-  patch(ctx, source, 792, 83, 45, 72, 6);
+  ctx.drawImage(source, 0, 0, 1672, 941);
+  // A small stone fountain replaces the pedestal removed during cleanup.
+  // It contains no human-shaped statue that could look like another frozen NPC.
+  ctx.fillStyle = '#766e5860';
+  ctx.beginPath(); ctx.ellipse(614, 441, 17, 6, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#b6b5a1';
+  ctx.beginPath(); ctx.ellipse(614, 437, 15, 5, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#66a5ac';
+  ctx.beginPath(); ctx.ellipse(614, 436, 11, 3, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#e3dbc2'; ctx.lineWidth = 1.4;
+  ctx.beginPath(); ctx.ellipse(614, 436, 14, 4, 0, 0, Math.PI * 2); ctx.stroke();
   return surface;
 }

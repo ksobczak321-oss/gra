@@ -73,3 +73,15 @@ Status: poprawki zintegrowane, rozszerzone testy lokalne i publiczne zaliczone, 
 - `HARBORLIGHT_BASE_URL=https://ksobczak321-oss.github.io/gra python3 tests/harborlight-coastal-smoke.py` zaliczono na publicznej stronie: wszystkie 13 sektorów wykazało ruch, postacie i każde zwierzę miały rzeczywiste przemieszczenie, 6 kominów emitowało wznoszący i zanikający dym. Potwierdzono zakrycie środków 48 sylwetek i 6 zwierząt, brak błędów JavaScript/HTTP i brak efektów w chronionych próbkach UI/lądu.
 - Aktualny [podgląd poprawki](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=42b6285) używa wersji modułów i CSS `coast-life-2`. Zgłoszenie #10 pozostaje otwarte do oceny wizualnej po publikacji; techniczne testy nie zastępują oceny odbiorcy.
 - Wyniki i link do poprawki dopisano do [zgłoszenia #10](https://github.com/ksobczak321-oss/gra/issues/10#issuecomment-6323959176). Zgłoszenie zachowuje milestone frontend #3 i stan otwarty.
+
+
+## 2026-10-21 — frontend: pełny świat bez nieruchomych ludzi i rzeczywiście lecący dym
+
+Status: implementacja, oględziny i komplet regresji lokalnych zaliczone; publikacja w toku.
+
+- Użytkownik wskazał, że nie wszyscy ludzie chodzą i dym nadal nie leci. Oględziny pokazały, że częściowe maski nie obejmowały wszystkich figur, a duża smuga przy ratuszu miała źródło w bocznym kominie `(820,208)`, a nie tylko na wieży.
+- Cały świat otrzymuje teraz oczyszczone tło bez ludzi i smug; zatwierdzony interfejs zachowano. Woda próbkuje tę samą czystą grafikę. Sprawdzono, że wycinek tła wiatraka również nie zawiera postaci. Zamiast usuniętej figury fontanny narysowano kamienną misę bez sylwetki NPC.
+- Dodano 24 stale chodzące postacie bez postojów. Dym jest emitowany z 9 sprawdzonych kominów jako odrębne jasne kłęby, co 0,68 s, z czasem życia 3,8 s i prędkością wznoszenia ok. 24–30 px/s. Wzmocniono jasny rdzeń i rozmiar po oględzinach w zwykłym widoku.
+- Niezależny przegląd wizualny w świeżej sesji przeglądarki potwierdził czytelny ruch dymu przy szerokości 1200 px, wyraźne przemieszczenie w ciągu 0,9 s oraz brak widocznych nieruchomych sylwetek w tle. Przygotowano nagranie pełnej sceny i zbliżenia `assets/previews/living-world-v3.webm`.
+- Rozszerzono test o nieprzerwane chodzenie wszystkich 24 postaci, pełne pokrycie oczyszczonego świata oraz śledzenie tych samych kłębów między klatkami. Wynik końcowych testów i publiczny podgląd wymagają jeszcze potwierdzenia.
+- Ponownie zaliczono 9 testów gospodarki, pełną regresję gry (3 ekspedycje, 29 tras dialogów × 3 rozmiary ekranu), test animacji z pauzą/ustawieniami/telefonem oraz wzmocniony test wybrzeża, wszystkich 24 pieszych i śledzenia tych samych kłębów z 9 kominów. Brak błędów JavaScript i HTTP. Nagranie ma 16 sekund, 1280×720 i rozmiar 1 343 525 bajtów.

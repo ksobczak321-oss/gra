@@ -1,5 +1,5 @@
 import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, taskReady, totalWorkers } from './harborlight-v1-state.js';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=coast-life-2';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=living-world-3';
 
 const SAVE_KEY = 'harborlight-v1-interactive-save';
 const stage = document.getElementById('stage');
