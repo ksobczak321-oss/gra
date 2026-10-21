@@ -46,15 +46,15 @@ Kryteria odbioru:
 
 ### FE-04 — Żywa wyspa — animacje świata
 
-Status: trzecia iteracja przygotowana po ponownej uwadze o nieruchomych ludziach i dymie; przegląd wizualny lokalny zaliczony, publikacja w toku. Zgłoszenie pozostaje otwarte do wizualnej oceny poprawki przez użytkownika; wcześniejsze testy nie wystarczały do odbioru czytelności ruchu i pełnego brzegu. Zakres doprecyzowany przez użytkownika do frontendu i grafiki. GitHub Issue: [#10](https://github.com/ksobczak321-oss/gra/issues/10). Szczegóły: [animacje świata](WORLD-ANIMATION.md).
+Status: trzecia iteracja opublikowana w `0816d27`; przegląd wizualny, regresje lokalne i rozszerzony test publicznej strony zaliczone. Zgłoszenie pozostaje otwarte do wizualnej oceny poprawki przez użytkownika; wcześniejsze testy nie wystarczały do odbioru czytelności ruchu i pełnego brzegu. Zakres doprecyzowany przez użytkownika do frontendu i grafiki. GitHub Issue i dowody: [#10](https://github.com/ksobczak321-oss/gra/issues/10#issuecomment-6324387868). Szczegóły: [animacje świata](WORLD-ANIMATION.md).
 
 Kryteria odbioru:
 
 - Wiatrak ma obracające się łopaty, bez drugiego nieruchomego wirnika pod spodem.
 - Dym powstaje przy wylocie komina, unosi się, rozszerza i zanika w czytelny sposób; mewy latają, a chmury przesuwają się nad dalekim planem.
 - Woda płynie w wodospadach. Fale i przybój obejmują wszystkie widoczne odcinki brzegu, port, wodę pomiędzy pomostami i skały; nie przesuwają lądu ani budowli.
-- Mieszkańcy przemieszczają się po ścieżkach o widoczny dystans w ciągu kilku sekund, z chodem i krótkim postojem. Zwierzęta chodzą pomiędzy miejscami wypasu i mają ruch podczas postoju.
-- Wybrane nieruchome postacie i zwierzęta z tła są zastąpione miejscowymi maskami przed narysowaniem animacji; faktyczny zakres tych masek jest opisany w dokumentacji.
+- Wszystkie 24 postacie świata przemieszczają się po ścieżkach bez postojów, o widoczny dystans w ciągu kilku sekund. Zwierzęta chodzą pomiędzy miejscami wypasu i mają ruch podczas postoju.
+- Nieruchome postacie, zwierzęta i smugi dymu z tła są zastąpione oczyszczonym obrazem całego świata przed narysowaniem animacji; interfejs zachowuje oryginalną grafikę, a ograniczenia oczyszczonego obrazu są opisane w dokumentacji.
 - Plac budowy sprawia wrażenie pracy: dźwig, lina lub hak poruszają się przy budowie.
 - Pauza, tempo i ograniczenie ruchu sterują animacjami; niewidoczna karta nie zużywa zasobów na aktywną animację.
 - Efekty zachowują styl zaakceptowanego obrazu, nie zasłaniają HUD ani kontrolek i są sprawdzone na komputerze oraz telefonie.

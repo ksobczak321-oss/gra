@@ -1,6 +1,6 @@
 # Żywa wyspa — animacje świata
 
-Stan: 2026-10-21, trzecia iteracja usuwa cały nieruchomy tłum i stare smugi ze świata; implementacja i przegląd wizualny gotowe lokalnie, publikacja w toku. Poprzednia wersja została opublikowana i przeszła opisane niżej testy techniczne, ale nie spełniła oczekiwania wyraźnego chodu, ruchu zwierząt, dymienia i fal przy całej widocznej linii brzegowej. Zadanie [FE-04 / #10](https://github.com/ksobczak321-oss/gra/issues/10) ponownie wymaga odbioru, milestone [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3). Commity i faktyczne wyniki publikacji zapisujemy w [dzienniku implementacji](IMPLEMENTATION-LOG.md).
+Stan: 2026-10-21, trzecia iteracja usuwa cały nieruchomy tłum i stare smugi ze świata; opublikowana w commicie `0816d27`, sprawdzona wizualnie i testem publicznej strony. [Aktualna wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=0816d27) oraz [nagranie pełnego widoku i zbliżenia](https://ksobczak321-oss.github.io/gra/assets/previews/living-world-v3.webm). Zadanie [FE-04 / #10](https://github.com/ksobczak321-oss/gra/issues/10) pozostaje otwarte do oceny użytkownika, milestone [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3). Dowody publikacji zapisano w [dzienniku implementacji](IMPLEMENTATION-LOG.md).
 
 ## Cel tej iteracji
 
@@ -16,20 +16,20 @@ Warunki odbioru tej poprawki:
 - Zwierzęta przechodzą pomiędzy miejscami wypasu i mają ruch nóg, głowy lub ogona; nie ograniczamy odbioru do zmiany pojedynczych pikseli.
 - Przybój i falowanie obejmują wszystkie widoczne odcinki brzegu: zatoki północne, zachodni klif, port i wodę między pomostami, ujście południowe, plażę, wschodni brzeg oraz małe skały. Oddzielne maski mają chronić ląd, pomosty i interfejs.
 - Dym powstaje przy wylocie komina, unosi się, rozszerza, dryfuje i zanika. Efekt musi być czytelny w normalnym widoku wyspy.
-- Wybrane nieruchome postacie, zwierzęta i stare smugi z obrazu bazowego są zastępowane miejscowymi fragmentami tła przed rysowaniem ruchomych obiektów. Zakres usunięcia trzeba opisać zgodnie z faktycznymi maskami; nie oznacza to pełnego rozdzielenia całego obrazu.
+- Nieruchome postacie, zwierzęta i stare smugi z obrazu bazowego są zastępowane oczyszczonym tłem całego świata przed rysowaniem ruchomych obiektów. Nie oznacza to pełnego rozdzielenia wszystkich budynków i terenu na assety.
 
-Nowe wyniki testów i publikacja tej poprawki nie są jeszcze potwierdzone. Poprzedni zaliczony test pozostaje dowodem działania poprzedniego renderera, nie odbioru tych rozszerzonych warunków.
+Komplet regresji lokalnych oraz rozszerzony test publicznej strony zaliczono dla trzeciej iteracji. Przegląd wizualny i nagranie uzupełniają testy; zgłoszenie pozostaje otwarte do oceny użytkownika.
 
 | Element | Oczekiwane zachowanie | Stan odbioru |
 | --- | --- | --- |
-| Wiatrak | Łopaty obracają się wokół osi; miejscowe tło zastępuje stare łopaty przed rysowaniem wirnika | Wdrożone lokalnie; ruch sprawdzony |
-| Dym z domów | Ciągłe emisje z wylotów kominów unoszą się, rozszerzają, dryfują i zanikają | Ciągła emisja z 6 sprawdzonych kominów; lokalne testy zaliczone |
-| Mewy | Siedem mew przelatuje nad światem i porusza skrzydłami | Wdrożone lokalnie; ruch sprawdzony |
-| Wodospady | Dwie kaskady mają opadającą teksturę, strugi, pianę i rozprysk | Wdrożone lokalnie; ruch sprawdzony |
-| Fale | Przybój przesuwa się przy wszystkich widocznych odcinkach brzegu i skałach, z ruchem wody pomiędzy pomostami | 13 sektorów brzegu; ruch wody i przyboju sprawdzony lokalnie |
-| Mieszkańcy | Postacie wyraźnie przemieszczają się po ścieżkach; położenie i chód są sprawdzane osobno | Stałe tempo 6,8–9,1 px/s, wyraźny chód i krótkie postoje |
-| Chmury | Trzy warstwy chmur przesuwają się nad niebem i dalekim planem | Wdrożone lokalnie; ruch sprawdzony |
-| Budowa | Dwa wciągniki poruszają linami i ładunkiem; pył pokazuje pracę na budowie | Wdrożone lokalnie; ruch sprawdzony |
+| Wiatrak | Łopaty obracają się wokół osi; miejscowe tło zastępuje stare łopaty przed rysowaniem wirnika | Opublikowane; ruch sprawdzony |
+| Dym z domów | Osobne kłęby z wylotów kominów unoszą się, rozszerzają, dryfują i zanikają | 9 kominów; test śledzi te same kłęby między klatkami także na publicznej stronie |
+| Mewy | Siedem mew przelatuje nad światem i porusza skrzydłami | Opublikowane; ruch sprawdzony |
+| Wodospady | Dwie kaskady mają opadającą teksturę, strugi, pianę i rozprysk | Opublikowane; ruch sprawdzony |
+| Fale | Przybój przesuwa się przy wszystkich widocznych odcinkach brzegu i skałach, z ruchem wody pomiędzy pomostami | 13 sektorów brzegu; test lokalny i publiczny zaliczony |
+| Mieszkańcy | Postacie wyraźnie przemieszczają się po ścieżkach; położenie i chód są sprawdzane osobno | Wszystkie 24 postacie idą bez postojów, w tempie 6,8–9,1 px/s; test lokalny i publiczny zaliczony |
+| Chmury | Trzy warstwy chmur przesuwają się nad niebem i dalekim planem | Opublikowane; ruch sprawdzony |
+| Budowa | Dwa wciągniki poruszają linami i ładunkiem; pył pokazuje pracę na budowie | Opublikowane; ruch sprawdzony |
 | Zwierzęta | Zwierzęta przechodzą pomiędzy miejscami wypasu, poruszają nogami i wykonują ruchy podczas postoju | Przejścia między punktami wypasu, pasienie i ruch uszu/ogona; test pełnego cyklu zaliczony |
 
 ## Architektura renderowania
@@ -40,7 +40,9 @@ Podział odpowiedzialności:
 
 | Plik | Rola |
 | --- | --- |
-| `harborlight-v1-ambient.js` | Wspólny zegar i pętla renderowania, wiatrak, dym, chmury i aktywność budowy |
+| `harborlight-v1-ambient.js` | Wspólny zegar i pętla renderowania, wiatrak, chmury i aktywność budowy |
+| `harborlight-v1-smoke.js` | Emisja i cykl życia kłębów z 9 kominów |
+| `harborlight-v1-inhabitants.js` | Nieprzezroczyste oczyszczone tło świata i misa fontanny |
 | `harborlight-v1-water.js` | Maskowana powierzchnia morza, fale, wodospady, piana i rozprysk |
 | `harborlight-v1-life.js` | Trasy mieszkańców, ruch zwierząt i lot mew |
 | `harborlight-v1-play.js` | Przekazanie aktualnego stanu pauzy, tempa i ustawień gracza do warstwy animacji |
@@ -92,7 +94,7 @@ Po ostatniej optymalizacji zatrzymywania pętli ponownie zaliczono test animacji
 
 Pełne rozdzielenie wszystkich budynków, terenu i mieszkańców na niezależne assety pozostaje w [FE-02 / #8](https://github.com/ksobczak321-oss/gra/issues/8). Integracja zapisu z przyszłym API jest oddzielną pracą zależną od kontraktu BE-01 i trwałego zapisu BE-03. Ta iteracja nie dodaje backendu.
 
-Liczby mieszkańców, zwierząt i mew dotyczą ruchomych obiektów, nie wszystkich postaci widocznych na obrazie referencyjnym. Obraz nadal zawiera nieruchome elementy świata. Nowa poprawka ma usuwać wybrane najbardziej widoczne nieruchome postacie i zwierzęta miejscowymi maskami, a nie zastępować cały obraz generowaną wersją. Pełny rozdział assetów pozostaje FE-02. Budowa otrzymała wizualną aktywność; ta zmiana nie dodaje kolejek czasowych ani nie zmienia zasad wydawania zasobów przy ulepszeniu budynku.
+Liczby mieszkańców, zwierząt i mew dotyczą ruchomych obiektów. Trzecia iteracja zastępuje tło świata oczyszczoną grafiką bez nieruchomych ludzi, zwierząt i smug; zatwierdzony interfejs pozostaje oryginalny. Szczegóły i ograniczenia oczyszczonego obrazu opisano niżej. Pełny rozdział budynków i terenu na assety pozostaje FE-02. Budowa otrzymała wizualną aktywność; ta zmiana nie dodaje kolejek czasowych ani nie zmienia zasad wydawania zasobów przy ulepszeniu budynku.
 
 
 ## Druga iteracja (historyczna): czytelny ruch i pełny brzeg
