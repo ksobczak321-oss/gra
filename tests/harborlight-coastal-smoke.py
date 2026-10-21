@@ -16,6 +16,7 @@ with sync_playwright() as p:
     page.on('response', lambda response: failures.append((response.status, response.url)) if response.status >= 400 else None)
     assert page.goto(BASE + '/harborlight-v1-layered.html').status == 200
     page.wait_for_function("document.getElementById('island-ambient')?.dataset.ready==='true'")
+    assert page.locator('#island-ambient').get_attribute('data-revision') == 'coast-life-2'
     report = page.evaluate("""async () => {
       const {drawWater,COASTAL_ZONES} = await import('./harborlight-v1-water.js');
       const {sampleLifePositions} = await import('./harborlight-v1-life.js');

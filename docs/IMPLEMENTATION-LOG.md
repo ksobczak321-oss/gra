@@ -55,7 +55,7 @@ Status: implementacja, komplet regresji, publikacja i sprawdzenie publicznego po
 
 ## 2026-10-21 — frontend: poprawki czytelności ruchu i całej linii brzegowej
 
-Status: poprawki zintegrowane i rozszerzone testy lokalne zaliczone; publikacja w toku.
+Status: poprawki zintegrowane, rozszerzone testy lokalne i publiczne zaliczone, publikacja zakończona.
 
 - Użytkownik ponownie wskazał chodzenie ludzi, ruch zwierząt i dymienie domów oraz doprecyzował ruch wody przy brzegach „wszędzie”. Poprzednie zaliczone testy dowodziły działania renderera, lecz nie pełnego zasięgu przyboju ani wystarczającej czytelności ruchu w normalnym widoku.
 - Przegląd wykazał cztery wybrane obszary falowania oraz powolne ruchome postacie nad obrazem, który zawierał nadal nieruchomych ludzi i zwierzęta. Rozszerzono kryteria FE-04 o wszystkie widoczne odcinki brzegu, rzeczywiste przemieszczenie aktorów i dym emitowany przy kominach.
@@ -68,3 +68,8 @@ Status: poprawki zintegrowane i rozszerzone testy lokalne zaliczone; publikacja 
 - Zaliczono `tests/harborlight-coastal-smoke.py`: zmiana pikseli we wszystkich 13 sektorach, faktyczny dystans ludzi i zwierząt, cykl 6 źródeł dymu, nieprzezroczyste środki masek sylwetek i brak efektów w chronionych próbkach UI/lądu. Sprawdzono również powiększenie placu i całą scenę.
 - Ponownie zaliczono 9 testów gospodarki, test dziewięciu grup animacji z pauzą/ograniczeniem ruchu/telefonem oraz pełną regresję gry: trzy ekspedycje, gospodarka, zapis i 29 tras paneli w trzech rozdzielczościach. Bez błędów JavaScript i HTTP. Nowa publikacja wymaga osobnego potwierdzenia.
 - Zadanie [#10](https://github.com/ksobczak321-oss/gra/issues/10) ponownie otwarto w milestone frontend #3; [komentarz po uwagach użytkownika](https://github.com/ksobczak321-oss/gra/issues/10#issuecomment-6323676169) opisuje dodatkowe kryteria. Zgłoszenie pozostaje otwarte do oceny wizualnej poprawionej wersji.
+
+- Implementację opublikowano w commicie [`42b6285`](https://github.com/ksobczak321-oss/gra/commit/42b6285). Workflow [39656338266](https://github.com/ksobczak321-oss/gra/actions/runs/39656338266) zakończył się Success.
+- `HARBORLIGHT_BASE_URL=https://ksobczak321-oss.github.io/gra python3 tests/harborlight-coastal-smoke.py` zaliczono na publicznej stronie: wszystkie 13 sektorów wykazało ruch, postacie i każde zwierzę miały rzeczywiste przemieszczenie, 6 kominów emitowało wznoszący i zanikający dym. Potwierdzono zakrycie środków 48 sylwetek i 6 zwierząt, brak błędów JavaScript/HTTP i brak efektów w chronionych próbkach UI/lądu.
+- Aktualny [podgląd poprawki](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=42b6285) używa wersji modułów i CSS `coast-life-2`. Zgłoszenie #10 pozostaje otwarte do oceny wizualnej po publikacji; techniczne testy nie zastępują oceny odbiorcy.
+- Wyniki i link do poprawki dopisano do [zgłoszenia #10](https://github.com/ksobczak321-oss/gra/issues/10#issuecomment-6323959176). Zgłoszenie zachowuje milestone frontend #3 i stan otwarty.

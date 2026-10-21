@@ -1,6 +1,6 @@
 # Żywa wyspa — animacje świata
 
-Stan: 2026-10-21, poprawki po ocenie użytkownika w toku. Poprzednia wersja została opublikowana i przeszła opisane niżej testy techniczne, ale nie spełniła oczekiwania wyraźnego chodu, ruchu zwierząt, dymienia i fal przy całej widocznej linii brzegowej. Zadanie [FE-04 / #10](https://github.com/ksobczak321-oss/gra/issues/10) ponownie wymaga odbioru, milestone [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3). Commity i faktyczne wyniki publikacji zapisujemy w [dzienniku implementacji](IMPLEMENTATION-LOG.md).
+Stan: 2026-10-21, druga iteracja poprawek jest opublikowana i sprawdzona publicznie; oczekuje oceny wizualnej użytkownika. Poprzednia wersja została opublikowana i przeszła opisane niżej testy techniczne, ale nie spełniła oczekiwania wyraźnego chodu, ruchu zwierząt, dymienia i fal przy całej widocznej linii brzegowej. Zadanie [FE-04 / #10](https://github.com/ksobczak321-oss/gra/issues/10) ponownie wymaga odbioru, milestone [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3). Commity i faktyczne wyniki publikacji zapisujemy w [dzienniku implementacji](IMPLEMENTATION-LOG.md).
 
 ## Cel tej iteracji
 
@@ -97,7 +97,7 @@ Liczby mieszkańców, zwierząt i mew dotyczą ruchomych obiektów, nie wszystki
 
 ## Druga iteracja: czytelny ruch i pełny brzeg
 
-Zmiany są zintegrowane lokalnie; wynik ponowienia regresji i publikacji opisujemy w dzienniku.
+Zmiany są opublikowane i sprawdzone także na publicznym adresie. Wyniki regresji i publikacji są zapisane w dzienniku.
 
 - `harborlight-v1-water.js` definiuje 13 `COASTAL_ZONES`: zatoki północne, zachodni klif, dwa sektory portu, ujście, południowe i wschodnie skały, plażę, skały północno-wschodnie oraz dwie grupy wysepek. Przybój narasta, przesuwa się do brzegu i zanika. Drobne falowanie oryginalnej tekstury obejmuje wodę wewnątrz pełnej maski, zamiast czterech izolowanych plam.
 - Maskę wody tworzą obwiednie przestrzenne i kolory pikseli źródła. Z maski wyłączone są interfejs, łodzie i pomosty. Błękitne dachy oraz pola pozostają poza animacją. Sprawdzane są także próbki budynków, pól i latarni.
