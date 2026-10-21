@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#090b12" />
+  <title>BLACKOUT</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">GRID RECOVERY // SECTOR <span id="sectorNo">01</span></div>
+        <h1>BLACKOUT</h1>
+      </div>
+      <div class="hud">
+        <div><span class="hud-label">MOVES</span><strong id="moves">0</strong></div>
+        <div><span class="hud-label">PAR</span><strong id="par">0</strong></div>
+        <div><span class="hud-label">STARS</span><strong id="stars">0</strong></div>
+      </div>
+    </header>
+
+    <section class="mission-card">
+      <div>
+        <div class="mission-kicker">MISSION</div>
+        <div id="missionText">Restore power from SOURCE to CORE.</div>
+      </div>
+      <button id="resetBtn" class="ghost-btn" type="button">RESET</button>
+    </section>
+
+    <section class="board-wrap">
+      <div id="board" class="board" aria-label="BLACKOUT puzzle board"></div>
+      <div id="pulse" class="pulse" hidden></div>
+    </section>
+
+    <section class="status-row">
+      <div id="statusText">Tap tiles to rotate them 90°.</div>
+      <button id="nextBtn" class="primary-btn" type="button" hidden>NEXT SECTOR</button>
+    </section>
+
+    <section class="progress-card">
+      <div class="progress-head">
+        <span>GRID STABILITY</span>
+        <span id="progressText">0 / 5</span>
+      </div>
+      <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
+    </section>
+
+    <footer>
+      Prototype 0.1 · touch / mouse · no ads · no account
+    </footer>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>
