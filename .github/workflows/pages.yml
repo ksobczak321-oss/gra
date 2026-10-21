@@ -26,7 +26,17 @@ jobs:
 
       - name: Build island image asset
         run: |
-          base64 --decode harborlight-island-v02-small.b64 > harborlight-island-v02.jpg
+          python3 - <<'PY'
+          import base64, re
+          src = open('harborlight-island-v02-small.b64', 'r', encoding='utf-8').read()
+          cleaned = re.sub(r'[^A-Za-z0-9+/=]', '', src)
+          cleaned += '=' * ((4 - len(cleaned) % 4) % 4)
+          data = base64.b64decode(cleaned, validate=False)
+          if not data.startswith(b'\xff\xd8'):
+              raise SystemExit('decoded asset is not a JPEG')
+          open('harborlight-island-v02.jpg', 'wb').write(data)
+          print('JPEG bytes:', len(data))
+          PY
           test -s harborlight-island-v02.jpg
           file harborlight-island-v02.jpg
 
