@@ -37,7 +37,7 @@ Status: implementacja, weryfikacja i publikacja interaktywnej piaskownicy zakoń
 
 ## 2026-10-21 — frontend: animacje świata
 
-Status: implementacja lokalna oraz komplet regresji zaliczone; publikacja w toku.
+Status: implementacja, komplet regresji, publikacja i sprawdzenie publicznego podglądu zakończone.
 
 - Użytkownik ustalił priorytet frontendu i grafiki oraz dziewięć wymaganych animacji: wiatrak, dym, mewy, wodospady, fale, mieszkańcy, chmury, budowa z pracującym dźwigiem i zwierzęta na farmie.
 - Doprecyzowano FE-04 / #10 do animacji świata. Integracja zapisu z API pozostaje oddzielną przyszłą pracą, zależną od BE-01 i BE-03.
@@ -46,4 +46,9 @@ Status: implementacja lokalna oraz komplet regresji zaliczone; publikacja w toku
 - Pomocniczy `assets/harborlight-windmill-clean.png` (1672×941) powstał przez edycję oryginału narzędziem generowania grafiki w celu usunięcia łopat. Ponieważ wynik zmienił również inne fragmenty, runtime korzysta wyłącznie z miejscowego wycinka 114×116 i miękkiej maski przy wiatraku. Oryginalny PNG pozostaje bez zmian.
 - Wspólna pętla renderuje do 30 klatek/s na komputerze i 24 na małym ekranie z buforem 40–100% skali. Pauza, ustawienia animacji, systemowe ograniczenie ruchu i niewidoczna karta zatrzymują aktywną pętlę bez nadrabiania czasu po wznowieniu.
 - `tests/harborlight-animation-smoke.py` zaliczył porównanie ruchu dziewięciu grup, w tym odizolowanych mieszkańców, zwierząt i mew. Chronione regiony HUD i kart miały zero narysowanych pikseli efektów. Sprawdzono 51 przycisków, telefon w obu orientacjach, pauzę/wznowienie, ustawienie animacji i `prefers-reduced-motion`, bez błędów JavaScript ani HTTP.
-- Po ostatniej optymalizacji pętli ponownie zaliczono `node --test tests/harborlight-state.test.mjs` (9 testów), `python3 tests/harborlight-animation-smoke.py` oraz `python3 tests/harborlight-browser-smoke.py` (trzy ekspedycje z premiami za skrzynie, pełna gospodarka, zapis, produkcja i 29 tras paneli przy trzech rozdzielczościach). Bez błędów JavaScript i HTTP. Publikacja będzie potwierdzona oddzielnym wpisem.
+- Po ostatniej optymalizacji pętli ponownie zaliczono `node --test tests/harborlight-state.test.mjs` (9 testów), `python3 tests/harborlight-animation-smoke.py` oraz `python3 tests/harborlight-browser-smoke.py` (trzy ekspedycje z premiami za skrzynie, pełna gospodarka, zapis, produkcja i 29 tras paneli przy trzech rozdzielczościach). Bez błędów JavaScript i HTTP. Potwierdzenie publikacji znajduje się poniżej.
+
+- Implementacja: commit [`b3f5bf1`](https://github.com/ksobczak321-oss/gra/commit/b3f5bf1); odświeżenie wersji CSS i modułu wejściowego w cache: [`de2b13b`](https://github.com/ksobczak321-oss/gra/commit/de2b13b). Publikacja GitHub Pages [39652870761](https://github.com/ksobczak321-oss/gra/actions/runs/39652870761) zakończyła się Success.
+- Publiczny [podgląd animacji](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=de2b13b) sprawdzono po publikacji w Chromium: HTTP 200, oba PNG i dziewięć grup efektów załadowane, czas renderera postępuje, 51 kontrolek oraz ustawienia działają, pauza zatrzymuje ruch, wznowienie go przywraca. Bez błędów JavaScript i HTTP.
+- Oryginalny asset zachował identyczne bajty; SHA-256: `4063f003002f95dd7b00f77a8d6d610b04f134766e52afc97e8a10712fd6d823`.
+- Zadanie [FE-04 / #10](https://github.com/ksobczak321-oss/gra/issues/10) zamknięto jako completed w milestone `frontend #3`. [Komentarz odbioru](https://github.com/ksobczak321-oss/gra/issues/10#issuecomment-6323516165) zawiera commity, wynik publikacji, testy, link publiczny i granice obecnej bazy graficznej. FE-02 / #8 pozostaje otwarte.

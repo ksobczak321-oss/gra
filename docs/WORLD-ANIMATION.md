@@ -1,6 +1,6 @@
 # Żywa wyspa — animacje świata
 
-Stan: 2026-10-21, implementacja lokalna gotowa, test animacji zaliczony. Końcowe regresje gospodarki, rozgrywki i animacji zaliczono; publikacja jest w toku. Zadanie [FE-04 / #10](https://github.com/ksobczak321-oss/gra/issues/10), milestone [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3). Commit i wynik publikacji dopisujemy po potwierdzeniu w [dzienniku implementacji](IMPLEMENTATION-LOG.md).
+Stan: 2026-10-21, implementacja i testy zakończone; animowana wersja jest opublikowana i sprawdzona publicznie. Zadanie [FE-04 / #10](https://github.com/ksobczak321-oss/gra/issues/10), milestone [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3). Commity, udaną publikację oraz sprawdzenie podglądu zapisano w [dzienniku implementacji](IMPLEMENTATION-LOG.md).
 
 ## Cel tej iteracji
 
@@ -72,7 +72,7 @@ Test wymaga Python Playwright i Chromium. `HARBORLIGHT_BASE_URL` i `HARBORLIGHT_
 
 Potwierdzony przebieg testu wykazał ruch wszystkich dziewięciu grup przez porównanie pikseli w odpowiednich regionach. Dla mieszkańców, zwierząt i mew sprawdzono również odizolowane grupy. W chronionych regionach HUD i kart interfejsu liczba narysowanych pikseli warstwy efektów wyniosła zero. Sprawdzono 51 przycisków, telefon w obu orientacjach, zatrzymanie i wznowienie przez pauzę, ustawienie animacji oraz systemowe ograniczenie ruchu. Nie wystąpiły błędy JavaScript ani nieudane żądania zasobów.
 
-Po ostatniej optymalizacji zatrzymywania pętli ponownie zaliczono test animacji, 9 testów ekonomii oraz regresję rozgrywki: trzy ekspedycje, gospodarkę i 29 przejść do paneli w trzech rozmiarach ekranu. Publiczna publikacja wymaga osobnego potwierdzenia w dzienniku.
+Po ostatniej optymalizacji zatrzymywania pętli ponownie zaliczono test animacji, 9 testów ekonomii oraz regresję rozgrywki: trzy ekspedycje, gospodarkę i 29 przejść do paneli w trzech rozmiarach ekranu. Po udanej publikacji sprawdzono również publiczną stronę: HTTP 200, oba obrazy PNG, działający zegar animacji, 51 kontrolek, ustawienia i pauzę/wznowienie, bez błędów JavaScript ani HTTP. Dowody publikacji są w dzienniku.
 
 ## Dalszy zakres
 

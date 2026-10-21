@@ -46,7 +46,7 @@ Kryteria odbioru:
 
 ### FE-04 — Żywa wyspa — animacje świata
 
-Status: implementacja lokalna, test dziewięciu grup ruchu i końcowe regresje zaliczone; publikacja w toku. Zakres doprecyzowany przez użytkownika do frontendu i grafiki. GitHub Issue: [#10](https://github.com/ksobczak321-oss/gra/issues/10). Szczegóły: [animacje świata](WORLD-ANIMATION.md).
+Status: zrealizowane i zamknięte jako completed; test dziewięciu grup ruchu i końcowe regresje zaliczone, publiczna piaskownica opublikowana i sprawdzona. Zakres doprecyzowany przez użytkownika do frontendu i grafiki. GitHub Issue: [#10](https://github.com/ksobczak321-oss/gra/issues/10). Szczegóły: [animacje świata](WORLD-ANIMATION.md).
 
 Kryteria odbioru:
 
