@@ -6,6 +6,8 @@ Stan: 2026-10-21, trzecia iteracja usuwa cały nieruchomy tłum i stare smugi ze
 
 Ożywić zaakceptowaną wyspę HARBORLIGHT przy zachowaniu układu, skali i palety istniejącej grafiki. Praca obejmuje frontend i efekty świata. Obecna gospodarka, lokalny zapis oraz działające kontrolki pozostają podstawą interaktywnego prototypu.
 
+Od FE-05 górne 70 px interfejsu przykrywa rzeczywisty pasek HTML z poziomem, szczęściem, pięcioma zasobami i populacją. Opisy zachowania oryginalnej grafiki interfejsu w historycznych iteracjach dotyczą pozostałych kart i nawigacji; maska animacji nadal nie maluje na górnym pasku. Zasady licznika mieszkańców są w [instrukcji prototypu](INTERACTIVE-ISLAND.md); 24 animowane sylwetki pozostają wizualizacją osady, niezależną od tego licznika.
+
 ## Poprawki po ocenie użytkownika
 
 Sama zmiana pikseli w pojedynczym regionie nie jest wystarczającym odbiorem grafiki. W pierwszej wersji fale obejmowały cztery wybrane obszary morza, postacie poruszały się powoli nad tłem zawierającym również nieruchomych ludzi i zwierzęta, a dym był mało wyraźny. Użytkownik ponownie wskazał te cztery elementy jako wymagające poprawy.

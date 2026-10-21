@@ -2,7 +2,7 @@
 
 Stan dokumentu: 2026-10-21. Dotyczy `harborlight-v1-layered.html`. Stan publikacji i wyniki kolejnych sprawdzeń są w [dzienniku implementacji](IMPLEMENTATION-LOG.md).
 
-Bieżący priorytet: frontend, grafika i reguły osady. Dziewięć animacji świata z [FE-04](WORLD-ANIMATION.md) jest opublikowanych. Nowy pasek poziomu, szczęścia i populacji z FE-05 przeszedł testy lokalne; wyniki publikacji zapisujemy oddzielnie w dzienniku.
+Bieżący priorytet: frontend, grafika i reguły osady. Dziewięć animacji świata z [FE-04](WORLD-ANIMATION.md) oraz pasek poziomu, szczęścia i populacji z FE-05 są opublikowane i sprawdzone na publicznym Pages. Wyniki i dowody publikacji zapisano w dzienniku.
 
 ## Co działa
 

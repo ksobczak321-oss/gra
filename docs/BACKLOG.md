@@ -64,7 +64,7 @@ FE-02 nadal obejmuje pełne rozdzielenie assetów świata. Integrację lokalnego
 
 ### FE-05 — Poziom ratusza, szczęście i populacja
 
-Status: implementacja, przegląd wizualny i komplet testów lokalnych zakończone; publikacja niepotwierdzona. Milestone: frontend #3. GitHub Issue: [#15](https://github.com/ksobczak321-oss/gra/issues/15).
+Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone: frontend #3. GitHub Issue i dowody: [#15](https://github.com/ksobczak321-oss/gra/issues/15#issuecomment-6324709772).
 
 Zakres: górny pasek HTML pokazuje poziom, szczęście, mieszkańców i wszystkie zasoby; panel mieszkańców wyjaśnia zmianę populacji. Reguły, przykłady i migracja zapisu są opisane w [instrukcji prototypu](INTERACTIVE-ISLAND.md).
 
