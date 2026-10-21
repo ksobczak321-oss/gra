@@ -3,97 +3,58 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
-  <meta name="theme-color" content="#14261f" />
-  <title>HARBORLIGHT</title>
-  <link rel="stylesheet" href="harborlight-v01.css?v=hl01" />
+  <meta name="theme-color" content="#0d4f78" />
+  <title>HARBORLIGHT v0.2</title>
+  <link rel="stylesheet" href="harborlight-v02.css" />
 </head>
 <body>
-  <main class="app">
-    <header class="hero">
-      <div>
-        <div class="eyebrow">ISLAND 01 // THE RETURN</div>
-        <h1>HARBORLIGHT</h1>
-        <p class="tagline">Rozwiązuj ekspedycje. Zbieraj surowce. Odbuduj wyspę.</p>
+  <main id="game" class="game-shell">
+    <section class="world" id="world">
+      <div class="world-art" aria-hidden="true"></div>
+      <div class="vignette" aria-hidden="true"></div>
+      <header class="hud-top">
+        <div class="profile-chip"><div class="avatar">🧭</div><div><small>POZIOM</small><strong>12</strong></div></div>
+        <div class="hud-chip population"><span>👥</span><b id="hudPopulation">6/8</b></div>
+        <div class="hud-chip happiness"><span id="happyFace">🙂</span><div class="happy-track"><i id="happyFill"></i></div><b id="hudHappiness">72%</b></div>
+        <div class="hud-spacer"></div>
+        <div class="hud-chip resource"><span>🪵</span><b id="hudLogs">80</b></div>
+        <div class="hud-chip resource"><span>🪨</span><b id="hudStone">40</b></div>
+        <div class="hud-chip resource"><span>🪚</span><b id="hudPlanks">20</b></div>
+        <div class="hud-chip resource"><span>🍞</span><b id="hudFood">30</b></div>
+        <div class="hud-chip resource coin"><span>🪙</span><b id="hudCoins">240</b></div>
+      </header>
+      <nav class="left-rail">
+        <button class="rail-btn active" data-panel="island" type="button"><span>🏝️</span><b>Wyspa</b></button>
+        <button class="rail-btn" data-panel="expeditions" type="button"><span>🧭</span><b>Ekspedycje</b><i id="expNotify">!</i></button>
+        <button class="rail-btn" data-panel="tasks" type="button"><span>📜</span><b>Zadania</b></button>
+        <button class="rail-btn" data-panel="people" type="button"><span>👥</span><b>Mieszkańcy</b></button>
+      </nav>
+      <div id="toastHost" class="toast-host" aria-live="polite"></div>
+      <div class="hotspots" id="hotspots">
+        <button class="hotspot hs-lumber" data-site="lumber" type="button" aria-label="Obóz drwali"><span>🌲</span><em>+</em><b>DRWAL</b></button>
+        <button class="hotspot hs-sawmill" data-site="sawmill" type="button" aria-label="Tartak"><span>🪚</span><em>+</em><b>TARTAK</b></button>
+        <button class="hotspot hs-house" data-site="house" type="button" aria-label="Dom"><span>🏠</span><em>+</em><b>DOM</b></button>
+        <button class="hotspot hs-barn" data-site="barn" type="button" aria-label="Stodoła"><span>🐄</span><em>+</em><b>STODOŁA</b></button>
+        <button class="hotspot hs-lighthouse" data-site="lighthouse" type="button" aria-label="Latarnia"><span>🗼</span><em>+</em><b>LATARNIA</b></button>
+        <button class="decor-spot ds1" data-decor="decor" type="button">✦</button><button class="decor-spot ds2" data-decor="decor" type="button">✦</button><button class="decor-spot ds3" data-decor="decor" type="button">✦</button><button class="decor-spot ds4" data-decor="decor" type="button">✦</button>
       </div>
-      <div class="lighthouse-mini" aria-label="postęp latarni"><span>LATARNIA</span><strong id="beaconStage">0 / 1</strong></div>
-    </header>
-
-    <section class="resource-bar" aria-label="surowce">
-      <div><span>🪵</span><small>KŁODY</small><strong id="resLogs">0</strong></div>
-      <div><span>🪨</span><small>KAMIEŃ</small><strong id="resStone">0</strong></div>
-      <div><span>🪚</span><small>DESKI</small><strong id="resPlanks">0</strong></div>
-      <div><span>🍞</span><small>ŻYWNOŚĆ</small><strong id="resFood">0</strong></div>
-      <div><span>👥</span><small>LUDZIE</small><strong id="resPop">0 / 0</strong></div>
-    </section>
-
-    <nav class="tabs" aria-label="widoki gry">
-      <button id="tabIsland" class="active" type="button">🏝️ WYSPA</button>
-      <button id="tabExpeditions" type="button">🧭 EKSPEDYCJE <span id="expBadge" class="badge">!</span></button>
-    </nav>
-
-    <section id="islandView" class="view">
-      <div class="section-head">
-        <div><div class="section-kicker">GŁÓWNY CEL</div><h2 id="goalTitle">Odbuduj fundament latarni</h2><p id="goalText">Potrzebujesz tartaku, domu i odnalezionego fragmentu soczewki.</p></div>
-        <div class="goal-progress"><div id="goalProgress"></div></div>
-      </div>
-
-      <div class="island-layout">
-        <section class="island-map" id="islandMap" aria-label="mapa wyspy">
-          <div class="sea sea-a"></div><div class="sea sea-b"></div>
-          <button class="plot lighthouse-plot" data-building="lighthouse" type="button"><span class="plot-icon">🗼</span><b>STARA LATARNIA</b><small id="plotLighthouse">ruina</small></button>
-          <button class="plot camp built" data-building="camp" type="button"><span class="plot-icon">⛺</span><b>OBÓZ</b><small>3 osadników</small></button>
-          <button class="plot forest-plot" data-building="lumber" type="button"><span class="plot-icon">🌲</span><b>LAS</b><small id="plotLumber">miejsce pod drwala</small></button>
-          <button class="plot coast-plot" data-building="sawmill" type="button"><span class="plot-icon">⚙️</span><b>ZATOKA</b><small id="plotSawmill">miejsce pod tartak</small></button>
-          <button class="plot village-plot" data-building="house" type="button"><span class="plot-icon">🌿</span><b>ŁĄKA</b><small id="plotHouse">miejsce pod dom</small></button>
-          <div class="plot future-plot"><span class="plot-icon">🌾</span><b>POLA</b><small>odblokuje się później</small></div>
-          <div class="plot future-plot barn"><span class="plot-icon">🐄</span><b>PASTWISKO</b><small>odblokuje się później</small></div>
-        </section>
-
-        <aside class="economy-panel">
-          <div class="panel-title">GOSPODARKA</div>
-          <div id="buildCards" class="build-cards"></div>
-          <div id="productionPanel" class="production-panel"></div>
-        </aside>
-      </div>
-
-      <section class="timeline">
-        <div class="timeline-head"><b>CO TERAZ?</b><span id="nextHint">Zbuduj obóz drwali.</span></div>
-        <div class="chain">
-          <div id="chainLumber"><span>🌲</span><b>DRWAL</b><small>kłody</small></div><i>→</i>
-          <div id="chainSawmill"><span>⚙️</span><b>TARTAK</b><small>deski</small></div><i>→</i>
-          <div id="chainHouse"><span>🏠</span><b>DOM</b><small>więcej ludzi</small></div><i>→</i>
-          <div id="chainBeacon"><span>🗼</span><b>LATARNIA</b><small>nowy rozdział</small></div>
+      <div class="walker w1">🧑‍🌾</div><div class="walker w2">👩‍🌾</div><div class="walker w3">🧑‍🔧</div><div class="walker w4">🧑‍🍳</div>
+      <section class="quest-card" id="questCard">
+        <div class="quest-kicker">GŁÓWNY CEL</div><h2 id="questTitle">Obudź starą latarnię</h2><p id="questText">Rozwiń osadę, popraw szczęście i przygotuj materiały.</p>
+        <div class="quest-progress"><i id="questFill"></i></div>
+        <div class="quest-milestones"><span id="qM1">○ Drwal</span><span id="qM2">○ Tartak</span><span id="qM3">○ Dom</span><span id="qM4">○ 75% szczęścia</span></div>
+      </section>
+      <section class="bottom-dock" id="buildDock"><div class="dock-tabs"><button class="dock-tab active" data-build-tab="buildings" type="button">Budynki</button><button class="dock-tab" data-build-tab="decor" type="button">Dekoracje</button><button class="dock-tab" data-build-tab="roads" type="button">Ścieżki</button></div><div class="dock-list" id="dockList"></div></section>
+      <aside class="side-panel" id="sidePanel" hidden><button class="panel-close" id="panelClose" type="button">×</button><div id="panelContent"></div></aside>
+      <section class="puzzle-overlay" id="puzzleOverlay" hidden>
+        <div class="puzzle-window"><header class="puzzle-head"><div><small>EKSPEDYCJA</small><h2 id="puzzleTitle">Zawalony trakt</h2></div><div class="puzzle-score"><span>⏱ <b id="puzzleTime">0:00</b></span><span>👣 <b id="puzzleSteps">0</b></span><span>💡 <b id="puzzleCreative">100</b></span></div><button id="puzzleClose" type="button">×</button></header>
+          <div class="puzzle-body"><div class="puzzle-board" id="puzzleBoard"></div><aside class="puzzle-tools"><h3>Ekwipunek</h3><div id="puzzleTools"></div><div class="puzzle-goals"><b>Cel:</b><p id="puzzleGoal">Dotrzyj do skrzyni.</p></div><button id="puzzleReset" type="button">↻ Od nowa</button></aside></div>
         </div>
       </section>
+      <section class="result-overlay" id="resultOverlay" hidden><div class="result-card"><div class="result-stars" id="resultStars">★★★</div><h2 id="resultTitle">Ekspedycja ukończona!</h2><p id="resultText"></p><div class="result-reward" id="resultReward"></div><button id="resultBack" type="button">WRÓĆ NA WYSPĘ</button></div></section>
     </section>
-
-    <section id="expeditionsView" class="view" hidden>
-      <div class="section-head compact"><div><div class="section-kicker">EKSPEDYCJE</div><h2>Rozwiązuj trasę po swojemu</h2><p>Liczy się czas, liczba kroków, użyte narzędzia i dodatkowe skrytki.</p></div></div>
-      <div id="expeditionCards" class="expedition-cards"></div>
-    </section>
-
-    <section id="puzzleView" class="view" hidden>
-      <div class="puzzle-top">
-        <button id="backToExpeditions" class="back-btn" type="button">← WRÓĆ</button>
-        <div><div class="section-kicker">EKSPEDYCJA</div><h2 id="puzzleTitle">—</h2></div>
-        <div class="puzzle-stats"><div><small>CZAS</small><b id="puzzleTime">0:00</b></div><div><small>KROKI</small><b id="puzzleSteps">0</b></div><div><small>SPRYT</small><b id="puzzleIngenuity">100</b></div></div>
-      </div>
-
-      <div class="puzzle-layout">
-        <section><div id="puzzleBoard" class="puzzle-board" aria-label="plansza ekspedycji"></div><div class="puzzle-help">Dotknij sąsiedniego pola, aby się poruszyć. Przeszkodę możesz pokonać tylko odpowiednim narzędziem.</div></section>
-        <aside class="tool-panel">
-          <div class="panel-title">EKWIPUNEK</div><div id="toolList" class="tool-list"></div>
-          <div class="legend-list"><div><span>🧭</span> Ty</div><div><span>🏁</span> Cel</div><div><span>🎒</span> Skrytka</div><div><span>🔑</span> Klucz</div></div>
-          <div class="par-box">PAR: <b id="puzzlePar">—</b> kroków</div>
-          <button id="restartPuzzle" class="secondary-btn" type="button">OD NOWA</button>
-        </aside>
-      </div>
-    </section>
-
-    <section id="modal" class="modal" hidden><div class="modal-card"><div id="modalIcon" class="modal-icon">🎉</div><h2 id="modalTitle">Gotowe</h2><p id="modalText"></p><div id="modalScore" class="modal-score"></div><button id="modalButton" class="primary-btn" type="button">WRÓĆ NA WYSPĘ</button></div></section>
-
-    <footer>HARBORLIGHT v0.1 · prototype loop: puzzle → resource → building → new possibility <button id="resetAll" type="button">reset save</button></footer>
   </main>
-  <script src="harborlight-v01.js?v=hl01"></script>
+  <script src="harborlight-v02-loader.js?v=hl02"></script>
+  <script src="harborlight-v02.js?v=hl02"></script>
 </body>
 </html>
