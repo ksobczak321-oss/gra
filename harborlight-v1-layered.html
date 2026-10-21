@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#0877b4">
+<title>HARBORLIGHT v1 — Layered Screen</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0877b4;color:#fff}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0877b4}
+body{background:radial-gradient(circle at 50% 42%,#21add5 0%,#0877b4 58%,#045c91 100%)}
+#viewport{position:fixed;inset:0;overflow:hidden;display:grid;place-items:center}
+#stage{position:absolute;width:1672px;height:941px;transform-origin:center center;background:#0877b4;overflow:hidden}
+.layer{position:absolute;inset:0;pointer-events:none}
+.slice{position:absolute;display:block;overflow:hidden;image-rendering:auto}
+.slice canvas{display:block;width:100%;height:100%}
+#loading{position:absolute;inset:0;z-index:99;display:grid;place-items:center;background:#0877b4;font-weight:800;letter-spacing:.05em}
+#loading[hidden]{display:none}
+.error{padding:18px 24px;border-radius:16px;background:#0b2940;border:1px solid #ffd56a}
+.debug .slice{outline:2px solid rgba(255,255,255,.8);outline-offset:-2px}
+.debug .slice::after{content:attr(data-label);position:absolute;left:6px;top:6px;padding:4px 7px;border-radius:6px;background:rgba(5,20,30,.8);font-size:12px;font-weight:900;color:#fff}
+</style>
+</head>
+<body>
+<div id="viewport">
+  <div id="stage" aria-label="HARBORLIGHT v1 layered visual screen">
+    <div id="worldLayer" class="layer" data-layer="world"></div>
+    <div id="uiLayer" class="layer" data-layer="ui"></div>
+    <div id="semanticLayer" class="layer" data-layer="semantic">
+      <div data-component="lighthouse"></div>
+      <div data-component="village"></div>
+      <div data-component="forestry"></div>
+      <div data-component="farm"></div>
+      <div data-component="quarry"></div>
+      <div data-component="harbor"></div>
+    </div>
+    <div id="loading">Loading approved v1 visual…</div>
+  </div>
+</div>
+<script>
+(() => {
+  const LOGICAL_W = 1672;
+  const LOGICAL_H = 941;
+  const stage = document.getElementById('stage');
+  const world = document.getElementById('worldLayer');
+  const ui = document.getElementById('uiLayer');
+  const loading = document.getElementById('loading');
+
+  // Non-overlapping partition of the approved screen.
+  // Every visible pixel belongs to one independent component.
+  const slices = [
+    // Top band
+    {name:'hud-left',      layer:ui,    x:0,    y:0,   w:600,  h:70},
+    {name:'world-top',     layer:world, x:600,  y:0,   w:370,  h:70},
+    {name:'hud-resources', layer:ui,    x:970,  y:0,   w:702,  h:70},
+
+    // Main band
+    {name:'left-nav',      layer:ui,    x:0,    y:70,  w:115,  h:630},
+    {name:'world-main',    layer:world, x:115,  y:70,  w:1185, h:630},
+    {name:'right-stack',   layer:ui,    x:1300, y:70,  w:372,  h:630},
+
+    // Bottom band
+    {name:'world-bottom-left',  layer:world, x:0,    y:700, w:250,  h:241},
+    {name:'build-dock',         layer:ui,    x:250,  y:700, w:1050, h:241},
+    {name:'world-bottom-right', layer:world, x:1300, y:700, w:372,  h:241}
+  ];
+
+  function resize(){
+    const scale = Math.min(innerWidth / LOGICAL_W, innerHeight / LOGICAL_H);
+    stage.style.transform = `scale(${scale})`;
+  }
+  addEventListener('resize', resize, {passive:true});
+  resize();
+
+  const params = new URLSearchParams(location.search);
+  if(params.get('debug') === '1') stage.classList.add('debug');
+
+  function makeSlice(source, s){
+    const el = document.createElement('div');
+    el.className = 'slice';
+    el.dataset.label = s.name;
+    el.dataset.component = s.name;
+    Object.assign(el.style, {left:s.x+'px', top:s.y+'px', width:s.w+'px', height:s.h+'px'});
+
+    const canvas = document.createElement('canvas');
+    canvas.width = s.w;
+    canvas.height = s.h;
+    const ctx = canvas.getContext('2d');
+
+    const sx = s.x / LOGICAL_W * source.naturalWidth;
+    const sy = s.y / LOGICAL_H * source.naturalHeight;
+    const sw = s.w / LOGICAL_W * source.naturalWidth;
+    const sh = s.h / LOGICAL_H * source.naturalHeight;
+    ctx.drawImage(source, sx, sy, sw, sh, 0, 0, s.w, s.h);
+
+    el.appendChild(canvas);
+    s.layer.appendChild(el);
+  }
+
+  fetch('assets/harborlight-v1-approved.jpg?v=layered1101', {cache:'no-store'})
+    .then(r => { if(!r.ok) throw new Error('reference asset HTTP '+r.status); return r.text(); })
+    .then(encoded => {
+      const source = new Image();
+      source.onload = () => {
+        slices.forEach(s => makeSlice(source, s));
+        loading.hidden = true;
+      };
+      source.onerror = () => { throw new Error('approved reference could not be decoded'); };
+      // The repository asset intentionally stores JPEG bytes as base64 text.
+      source.src = 'data:image/jpeg;base64,' + encoded.replace(/\s+/g,'');
+    })
+    .catch(err => {
+      console.error(err);
+      loading.innerHTML = '<div class="error">Approved v1 visual could not be loaded.</div>';
+    });
+})();
+</script>
+</body>
+</html>
