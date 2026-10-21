@@ -47,20 +47,13 @@ body{background:radial-gradient(circle at 50% 42%,#21add5 0%,#0877b4 58%,#045c91
   const ui = document.getElementById('uiLayer');
   const loading = document.getElementById('loading');
 
-  // Non-overlapping partition of the approved screen.
-  // Every visible pixel belongs to one independent component.
   const slices = [
-    // Top band
     {name:'hud-left',      layer:ui,    x:0,    y:0,   w:600,  h:70},
     {name:'world-top',     layer:world, x:600,  y:0,   w:370,  h:70},
     {name:'hud-resources', layer:ui,    x:970,  y:0,   w:702,  h:70},
-
-    // Main band
     {name:'left-nav',      layer:ui,    x:0,    y:70,  w:115,  h:630},
     {name:'world-main',    layer:world, x:115,  y:70,  w:1185, h:630},
     {name:'right-stack',   layer:ui,    x:1300, y:70,  w:372,  h:630},
-
-    // Bottom band
     {name:'world-bottom-left',  layer:world, x:0,    y:700, w:250,  h:241},
     {name:'build-dock',         layer:ui,    x:250,  y:700, w:1050, h:241},
     {name:'world-bottom-right', layer:world, x:1300, y:700, w:372,  h:241}
@@ -98,22 +91,15 @@ body{background:radial-gradient(circle at 50% 42%,#21add5 0%,#0877b4 58%,#045c91
     s.layer.appendChild(el);
   }
 
-  fetch('assets/harborlight-v1-approved.jpg?v=layered1101', {cache:'no-store'})
-    .then(r => { if(!r.ok) throw new Error('reference asset HTTP '+r.status); return r.text(); })
-    .then(encoded => {
-      const source = new Image();
-      source.onload = () => {
-        slices.forEach(s => makeSlice(source, s));
-        loading.hidden = true;
-      };
-      source.onerror = () => { throw new Error('approved reference could not be decoded'); };
-      // The repository asset intentionally stores JPEG bytes as base64 text.
-      source.src = 'data:image/jpeg;base64,' + encoded.replace(/\s+/g,'');
-    })
-    .catch(err => {
-      console.error(err);
-      loading.innerHTML = '<div class="error">Approved v1 visual could not be loaded.</div>';
-    });
+  const source = new Image();
+  source.onload = () => {
+    slices.forEach(s => makeSlice(source, s));
+    loading.hidden = true;
+  };
+  source.onerror = () => {
+    loading.innerHTML = '<div class="error">Approved v1 visual could not be loaded.</div>';
+  };
+  source.src = 'assets/harborlight-v1-approved.jpg?v=layered1201';
 })();
 </script>
 </body>
