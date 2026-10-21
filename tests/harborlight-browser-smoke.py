@@ -144,6 +144,29 @@ def gameplay_checks(browser, errors, failed):
     expect(page.locator('[data-collect="farm"]')).to_be_disabled()
     close_panel(page)
 
+    # Earn the construction budget through real expedition play from the 100-each start.
+    for expedition in EXPEDITIONS:
+        page.locator("#hit-nav-expeditions").click()
+        expedition_card = page.locator(".info-card").filter(
+            has=page.get_by_role("heading", name=expedition["name"], exact=True)
+        )
+        before = saved(page)
+        expedition_card.get_by_role("button", name="Wyrusz", exact=True).click()
+        expect(page.locator(".puzzle-cell")).to_have_count(36)
+        # Distant squares are explicitly unavailable until reached legitimately.
+        expect(page.locator('.puzzle-cell[data-row="5"][data-col="5"]')).to_be_disabled()
+        route, caches = solution(expedition)
+        for row, col in route:
+            page.locator(f'.puzzle-cell[data-row="{row}"][data-col="{col}"]').click()
+        after = saved(page)
+        assert after["expeditions"][expedition["id"]]["completed"] is True
+        for resource, amount in expedition["reward"].items():
+            bonus = caches * 10 if resource == "coins" else 0
+            assert after["resources"][resource] == before["resources"][resource] + amount + bonus
+        page.get_by_role("button", name="Wróć na wyspę", exact=True).click()
+        print(f"PASS expedition: {expedition['id']} ({len(route)} moves, {caches} chests)")
+
+
     # A real placement click confirms the upgrade and charges the displayed cost.
     before = saved(page)
     page.locator("#hit-dock-house").click()
@@ -152,7 +175,8 @@ def gameplay_checks(browser, errors, failed):
     page.locator("#hit-world-house").click()
     after = saved(page)
     assert after["buildings"]["house"]["level"] == 3
-    assert after["capacity"] == 32
+    assert after["capacity"] == 24
+    assert after["population"] == 12
     for resource, amount in {"coins": 300, "wood": 120, "stone": 60, "planks": 30}.items():
         assert after["resources"][resource] == before["resources"][resource] - amount
     expect(page.locator("#hit-world-house .world-level")).to_have_text("Poz. 3")
@@ -192,27 +216,6 @@ def gameplay_checks(browser, errors, failed):
     expect(page.get_by_role("button", name="Latarnia odbudowana", exact=True)).to_be_disabled()
     close_panel(page)
 
-    for expedition in EXPEDITIONS:
-        page.locator("#hit-nav-expeditions").click()
-        expedition_card = page.locator(".info-card").filter(
-            has=page.get_by_role("heading", name=expedition["name"], exact=True)
-        )
-        before = saved(page)
-        expedition_card.get_by_role("button", name="Wyrusz", exact=True).click()
-        expect(page.locator(".puzzle-cell")).to_have_count(36)
-        # Distant squares are explicitly unavailable until reached legitimately.
-        expect(page.locator('.puzzle-cell[data-row="5"][data-col="5"]')).to_be_disabled()
-        route, caches = solution(expedition)
-        for row, col in route:
-            page.locator(f'.puzzle-cell[data-row="{row}"][data-col="{col}"]').click()
-        after = saved(page)
-        assert after["expeditions"][expedition["id"]]["completed"] is True
-        for resource, amount in expedition["reward"].items():
-            bonus = caches * 10 if resource == "coins" else 0
-            assert after["resources"][resource] == before["resources"][resource] + amount + bonus
-        page.get_by_role("button", name="Wróć na wyspę", exact=True).click()
-        print(f"PASS expedition: {expedition['id']} ({len(route)} moves, {caches} chests)")
-
     before = saved(page)
     page.reload()
     page.wait_for_selector("#hit-nav-tasks")
@@ -246,7 +249,7 @@ def gameplay_checks(browser, errors, failed):
 def navigation_checks(browser, errors, failed):
     routes = [
         "home", "settings", "resource-coins", "resource-wood", "resource-stone",
-        "resource-food", "population", "clock", "menu", "nav-expeditions",
+        "resource-food", "resource-planks", "level", "happiness", "population", "clock", "menu", "nav-expeditions",
         "nav-tasks", "nav-residents", "nav-map", "objective-title",
         "objective-wood", "objective-stone", "expedition-preview", "expedition-start",
         "category-buildings", "category-resources", "category-decorations", "category-paths",

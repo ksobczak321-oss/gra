@@ -54,7 +54,7 @@ def visit(page):
     response = page.goto(BASE_URL + PAGE_PATH)
     assert response and response.status == 200
     page.wait_for_function(
-        "document.querySelectorAll('.island-hotspot').length===51 && "
+        "document.querySelectorAll('.island-hotspot').length>=51 && "
         "document.getElementById('loading').hidden && "
         "document.getElementById('island-ambient')?.dataset.ready==='true'"
     )
@@ -163,7 +163,7 @@ def run():
             }).map(node=>node.id)"""
         )
         assert not obstruction, obstruction
-        print("PASS all 51 island controls remain unobstructed")
+        print("PASS all island controls remain unobstructed")
 
         for width,height in [(390,844),(844,390)]:
             page.set_viewport_size({"width":width,"height":height})

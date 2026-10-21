@@ -1,4 +1,4 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, taskReady, totalWorkers } from './harborlight-v1-state.js';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, taskReady, totalWorkers, populationRate } from './harborlight-v1-state.js?v=population-v2';
 import { createAmbientScene } from './harborlight-v1-ambient.js?v=living-world-3';
 
 const SAVE_KEY = 'harborlight-v1-interactive-save';
@@ -22,6 +22,13 @@ const productionBuildings = Object.keys(BUILDINGS).filter(id => BUILDINGS[id].re
 const worldAdditions = el('div', { class: 'world-additions', 'aria-hidden': 'true' });
 stage.append(worldAdditions);
 let worldSignature = '';
+
+function settleActiveTick(allowHidden = false) {
+  const now = performance.now();
+  const elapsed = Math.min((now - lastTick) / 1000, 5);
+  lastTick = now;
+  if (!document.hidden || allowHidden) tick(state, elapsed);
+}
 
 function el(tag, attributes = {}, ...children) {
   const node = document.createElement(tag);
@@ -54,6 +61,8 @@ function toast(message) {
   toastTimer = setTimeout(() => { toastElement.hidden = true; }, 3500);
 }
 function perform(action) {
+  // Settle the preceding time under its old pause, speed and happiness values.
+  settleActiveTick();
   const focused = dialog.contains(document.activeElement) ? document.activeElement : null;
   const focusKey = focused?.getAttribute('data-collect');
   const focusLabel = focused?.textContent;
@@ -126,27 +135,73 @@ for (const [index, id] of ['house', 'farm', 'sawmill', 'quarry', 'dock', 'wareho
 }
 
 const hud = {};
-for (const [id, x, width] of [['coins', 513, 63], ['wood', 634, 63], ['stone', 745, 63], ['food', 860, 61], ['population', 970, 77]]) {
-  hud[id] = el('span', { class: 'live-resource', 'aria-hidden': 'true', style: { left: `${x}px`, top: '21px', width: `${width}px`, height: '23px' } });
-  layer.append(hud[id]);
+const topbar = el('nav', { class: 'island-topbar', 'aria-label': 'Poziom, szczęście i zasoby wyspy' });
+layer.append(topbar);
+function toolbarButton(id, label, className, ...children) {
+  const node = document.getElementById(`hit-${id}`);
+  node.classList.add('topbar-button', ...className.split(' ').filter(Boolean));
+  node.removeAttribute('style');
+  node.setAttribute('aria-label', label);
+  node.replaceChildren(...children);
+  topbar.append(node);
+  return node;
 }
-hud.clock = el('span', { class: 'live-clock', 'aria-hidden': 'true', style: { left: '1416px', top: '13px', width: '68px', height: '37px' } });
-layer.append(hud.clock);
+function toolbarStat(id, label, icon, className = '') {
+  hud[id] = el('strong', { 'data-hud': id }, '—');
+  return [el('span', { class: 'topbar-icon', 'aria-hidden': 'true' }, icon), el('span', { class: `topbar-copy ${className}` }, el('small', {}, label), hud[id])];
+}
+toolbarButton('home', 'HARBORLIGHT — podsumowanie wyspy', 'topbar-brand', el('span', { class: 'topbar-emblem', 'aria-hidden': 'true' }, '♜'), el('span', {}, 'HARBORLIGHT', el('small', {}, 'TWOJA WYSPA')));
+hotspot('level', 'Poziom wyspy — ratusz', [0, 0, 0, 0], () => openPanel('building', 'townhall'));
+toolbarButton('level', 'Poziom wyspy — ratusz', 'topbar-level', ...toolbarStat('level', 'Poziom', '♜'));
+hotspot('happiness', 'Szczęście i zmiana populacji', [0, 0, 0, 0], () => openPanel('residents'));
+toolbarButton('happiness', 'Szczęście i zmiana populacji', 'topbar-happiness', ...toolbarStat('happiness', 'Szczęście', '☀︎'));
+hotspot('resource-planks', 'Deski — zapasy', [0, 0, 0, 0], () => openPanel('resources', 'planks'));
+for (const [id, icon] of [['coins', '◉'], ['wood', '▰'], ['stone', '◆'], ['food', '✦'], ['planks', '▤']]) {
+  toolbarButton(`resource-${id}`, `${nameOf(id)} — zapasy`, `topbar-resource topbar-${id}`, ...toolbarStat(id, nameOf(id), icon));
+}
+toolbarButton('population', 'Mieszkańcy i przydział pracowników', 'topbar-population', ...toolbarStat('population', 'Mieszkańcy', '♟︎'));
+hud.clock = el('strong', { 'data-hud': 'clock' }, '—');
+toolbarButton('clock', 'Dzień i czas na wyspie', 'topbar-clock', hud.clock);
+for (const [id, icon, label] of [['pause', 'Ⅱ', 'Wstrzymaj upływ czasu'], ['play', '▶︎', 'Wznów upływ czasu'], ['speed', '1×', 'Zmień prędkość czasu'], ['settings', '⚙︎', 'Ustawienia'], ['menu', '☰', 'Menu gry']]) {
+  const control = toolbarButton(id, label, 'topbar-control', el('span', { 'aria-hidden': 'true' }, icon));
+  if (id === 'speed') hud.speed = control.firstChild;
+}
+const mobileHud = el('nav', { class: 'mobile-island-hud', 'aria-label': 'Stan wyspy' });
+const mobileSummary = el('div', { class: 'mobile-hud-summary' });
+const mobileResources = el('div', { class: 'mobile-hud-resources' });
+const mobileHudValues = {};
+for (const [id, label, action] of [['level', 'Poziom', () => openPanel('building', 'townhall')], ['happiness', 'Szczęście', () => openPanel('residents')], ['population', 'Mieszkańcy', () => openPanel('residents')], ...Object.keys(RESOURCES).map(id => [id, nameOf(id), () => openPanel('resources', id)])]) {
+  mobileHudValues[id] = el('strong', { 'data-mobile-hud': id }, '—');
+  const node = button(label, action, { class: 'mobile-hud-item' });
+  node.replaceChildren(el('small', {}, label), mobileHudValues[id]);
+  (['level', 'happiness', 'population'].includes(id) ? mobileSummary : mobileResources).append(node);
+}
+mobileHud.append(mobileSummary, mobileResources);
+document.body.append(mobileHud);
 for (const [id, y] of [['repair', 150], ['wood', 179], ['stone', 207]]) {
   hud[`objective-${id}`] = el('span', { class: 'live-objective', 'aria-hidden': 'true', style: { left: '1603px', top: `${y}px`, width: '45px', height: '20px' } });
   layer.append(hud[`objective-${id}`]);
 }
-hud.speed = el('span', { class: 'control-state', 'aria-hidden': 'true', hidden: true, style: { left: '1581px', top: '30px', width: '28px' } });
-layer.append(hud.speed);
+const happinessText = () => `${state.happiness > 0 ? '+' : state.happiness < 0 ? '−' : ''}${Math.abs(state.happiness)}%`;
 function renderHUD() {
-  for (const id of ['coins', 'wood', 'stone', 'food']) hud[id].textContent = count(state.resources[id]);
+  for (const id of Object.keys(RESOURCES)) {
+    hud[id].textContent = count(state.resources[id]);
+    document.getElementById(`hit-resource-${id}`).setAttribute('aria-label', `${nameOf(id)}: ${count(state.resources[id])} — zapasy`);
+  }
   hud.population.textContent = `${state.population} / ${state.capacity}`;
+  hud.level.textContent = state.buildings.townhall.level;
+  hud.happiness.textContent = happinessText();
+  document.getElementById('hit-level').setAttribute('aria-label', `Poziom ${state.buildings.townhall.level} — ratusz; limit ${state.capacity} mieszkańców`);
+  document.getElementById('hit-happiness').setAttribute('aria-label', `Szczęście: ${happinessText()} — mieszkańcy i zmiana populacji`);
+  document.getElementById('hit-happiness').dataset.sentiment = state.happiness > 0 ? 'positive' : state.happiness < 0 ? 'negative' : 'neutral';
+  document.getElementById('hit-population').setAttribute('aria-label', `Mieszkańcy: ${state.population} z ${state.capacity} — przydział pracowników`);
+  for (const id of Object.keys(mobileHudValues)) mobileHudValues[id].textContent = hud[id].textContent;
+  mobileHudValues.happiness.dataset.sentiment = document.getElementById('hit-happiness').dataset.sentiment;
   hud.clock.textContent = `Dzień ${state.day}\n${String(Math.floor(state.minutes / 60)).padStart(2, '0')}:${String(Math.floor(state.minutes % 60)).padStart(2, '0')}`;
   hud['objective-repair'].textContent = state.objective.repaired ? '1/1' : '0/1';
   hud['objective-wood'].textContent = `${state.objective.wood}/50`;
   hud['objective-stone'].textContent = `${state.objective.stone}/30`;
   hud.speed.textContent = `${state.speed}×`;
-  hud.speed.hidden = state.speed === 1;
   document.getElementById('hit-pause').classList.toggle('is-selected', state.paused);
   document.getElementById('hit-pause').setAttribute('aria-pressed', String(state.paused));
   document.getElementById('hit-play').setAttribute('aria-pressed', String(!state.paused));
@@ -199,6 +254,13 @@ function refreshLivePanel() {
   dialog.querySelectorAll('[data-ready]').forEach(node => { node.textContent = count(state.buildings[node.dataset.ready].ready); });
   dialog.querySelectorAll('[data-stock]').forEach(node => { node.textContent = count(state.resources[node.dataset.stock]); });
   dialog.querySelectorAll('[data-collect]').forEach(node => { node.disabled = !state.buildings[node.dataset.collect].ready; });
+  const live = { population: `${state.population} / ${state.capacity}`, workers: totalWorkers(state), happiness: happinessText(), level: state.buildings.townhall.level, growth: populationDescription() };
+  dialog.querySelectorAll('[data-population-stat]').forEach(node => { node.textContent = live[node.dataset.populationStat]; });
+  dialog.querySelectorAll('[data-worker-count]').forEach(node => { node.textContent = state.buildings[node.dataset.workerCount].workers; });
+  dialog.querySelectorAll('[data-worker-building]').forEach(node => {
+    const building = state.buildings[node.dataset.workerBuilding];
+    node.disabled = Number(node.dataset.workerDelta) < 0 ? building.workers === 0 : totalWorkers(state) >= state.population || building.workers >= building.level * 2 + 2 || building.level === 0;
+  });
 }
 
 function openPanel(kind, id) {
@@ -283,12 +345,30 @@ function resourcesPanel(selected) {
       button('Odbierz', () => perform({ type: 'collect', building: id }), { disabled: !state.buildings[id].ready, 'data-collect': id }), button('Zarządzaj', () => openPanel('building', id), { class: 'action secondary' })))));
 }
 function residentsPanel() {
-  return el('div', {}, el('div', { class: 'stat-grid' }, stat('Mieszkańcy', `${state.population}/${state.capacity}`), stat('Przydzieleni', totalWorkers(state)), stat('Szczęście', `${state.happiness}%`)),
-    note('Wolni mieszkańcy mogą pracować w produkcji. Domy zwiększają miejsce w osadzie; dekoracje poprawiają szczęście.'),
-    el('div', { class: 'panel-grid' }, productionBuildings.map(id => card(el('h3', {}, titleOf(id)), el('p', {}, `Pracownicy: ${state.buildings[id].workers}`),
-      button('− Pracownik', () => perform({ type: 'assign', building: id, delta: -1 }), { class: 'action secondary', disabled: !state.buildings[id].workers }),
-      button('+ Pracownik', () => perform({ type: 'assign', building: id, delta: 1 }))))),
-    button('Rozbuduj domy', () => openPanel('building', 'house')));
+  const liveStat = (label, id, value) => stat(label, el('span', { 'data-population-stat': id }, value));
+  return el('div', {}, el('div', { class: 'stat-grid' }, liveStat('Poziom ratusza', 'level', state.buildings.townhall.level), liveStat('Mieszkańcy', 'population', `${state.population} / ${state.capacity}`), liveStat('Przydzieleni', 'workers', totalWorkers(state)), liveStat('Szczęście', 'happiness', happinessText())),
+    card(el('h3', {}, 'Rozwój populacji'), el('p', { class: 'population-growth', 'data-population-stat': 'growth' }, populationDescription()),
+      note('Przy 0% szczęścia populacja się nie zmienia. Dodatnie szczęście daje nowych mieszkańców, ujemne powoduje ubytek. Minimum to 6 osób.'),
+      el('div', { class: 'population-rate-table' }, ...[['Szczęście', 'Zmiana o 1 osobę'], ['±25%', 'co 12 h'], ['±50%', 'co 6 h'], ['±75%', 'co ok. 1 h 43 min'], ['±100%', 'co 1 h']].map(([label, value]) => el('div', {}, el('span', {}, label), el('strong', {}, value)))),
+      note('Godziny oznaczają rzeczywisty czas aktywnej gry w widocznej karcie. Pauza zatrzymuje zmianę populacji; tempo 1× / 2× / 4× nie skraca tych godzin. Po ukryciu karty lub zamknięciu gry licznik czeka.'),
+      button('Rozbuduj ratusz', () => openPanel('building', 'townhall')),
+      el('p', { class: 'cost' }, 'Poziom wyspy = poziom ratusza. Limit mieszkańców = 24 × poziom; ulepszenie ratusza dodaje 24 miejsca.')),
+    note('Wolnych mieszkańców przydzielasz do produkcji. Dekoracje, ścieżki i rozbudowa kaplicy poprawiają szczęście. Ulepszenie domu nie dodaje mieszkańców ani nie zwiększa limitu.'),
+    el('div', { class: 'panel-grid' }, productionBuildings.map(id => card(el('h3', {}, titleOf(id)), el('p', {}, 'Pracownicy: ', el('span', { 'data-worker-count': id }, state.buildings[id].workers)),
+      button('− Pracownik', () => perform({ type: 'assign', building: id, delta: -1 }), { class: 'action secondary', disabled: !state.buildings[id].workers, 'data-worker-building': id, 'data-worker-delta': -1 }),
+      button('+ Pracownik', () => perform({ type: 'assign', building: id, delta: 1 }), { disabled: totalWorkers(state) >= state.population || state.buildings[id].workers >= state.buildings[id].level * 2 + 2 || state.buildings[id].level === 0, 'data-worker-building': id, 'data-worker-delta': 1 })))));
+}
+function populationDescription() {
+  const rate = populationRate(state.happiness);
+  if (!rate) return '0% szczęścia · brak przyrostu i ubytku mieszkańców.';
+  if (rate > 0 && state.population >= state.capacity) return `Osiągnięto limit ${state.capacity} mieszkańców. Rozbuduj ratusz, aby stworzyć nowe miejsca.`;
+  if (rate < 0 && state.population <= 6) return 'Osiągnięto minimum 6 mieszkańców. Populacja nie spadnie niżej; produkcja i rozwój pozostają dostępne.';
+  const direction = Math.sign(rate);
+  const progress = state.populationDirection === direction ? state.populationProgress : 0;
+  const seconds = Math.max(0, Math.ceil((1 - progress) * 3600 / Math.abs(rate)));
+  const hours = Math.floor(seconds / 3600), minutes = Math.floor(seconds % 3600 / 60), remainder = seconds % 60;
+  const time = `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min ` : ''}${remainder} s`;
+  return `${rate > 0 ? 'Nowy mieszkaniec' : 'Ubytek 1 mieszkańca'} za ${time}.${state.paused ? ' Licznik zatrzymany — pauza.' : ''}`;
 }
 function tradePanel() {
   return el('div', {}, note('Port wymienia zasoby na monety. Przed transakcją widzisz jej wynik i aktualny stan zapasów.'), resourceList(),
@@ -317,7 +397,7 @@ function settingsPanel() {
 }
 function timePanel() {
   return el('div', {}, stat('Dzień na wyspie', state.day), stat('Tempo', state.paused ? 'Pauza' : `${state.speed}×`),
-    note('Pauza zatrzymuje zegar i produkcję. Zwiększenie tempa przyspiesza oba procesy.'),
+    note('Pauza zatrzymuje zegar, produkcję i zmianę populacji. Zwiększenie tempa przyspiesza zegar i produkcję. Populacja zmienia się według rzeczywistego czasu aktywnej gry.'),
     button(state.paused ? 'Wznów' : 'Pauza', () => perform({ type: 'pause' })),
     [1, 2, 4].map(speed => button(`${speed}×`, () => perform({ type: 'speed', speed }), { class: 'action secondary' })));
 }
@@ -402,7 +482,7 @@ function renderPanel() {
     })))); break;
     case 'reset': body = el('div', {}, note('Rozpoczęcie nowej wyspy usunie obecny postęp tego trybu w tej przeglądarce.'), button('Tak, rozpocznij od nowa', () => { state = createState(); puzzle = null; save(); renderHUD(); openPanel('home'); toast('Nowa wyspa jest gotowa.'); }, { class: 'action danger' }), button('Zachowaj moją wyspę', () => openPanel('settings'), { class: 'action secondary' })); break;
     default: body = el('div', {}, note('Odbuduj latarnię, zarządzaj osadą i zdobywaj materiały podczas ekspedycji.'),
-      el('div', { class: 'stat-grid' }, stat('Mieszkańcy', `${state.population}/${state.capacity}`), stat('Szczęście', `${state.happiness}%`), stat('Dzień', state.day)),
+      el('div', { class: 'stat-grid' }, stat('Poziom ratusza', el('span', { 'data-population-stat': 'level' }, state.buildings.townhall.level)), stat('Mieszkańcy', el('span', { 'data-population-stat': 'population' }, `${state.population} / ${state.capacity}`)), stat('Szczęście', el('span', { 'data-population-stat': 'happiness' }, happinessText())), stat('Dzień', state.day)),
       el('div', { class: 'panel-grid' }, [['objective', 'Główny cel'], ['buildings', 'Budynki'], ['expeditions', 'Ekspedycje'], ['tasks', 'Zadania'], ['residents', 'Mieszkańcy'], ['resources', 'Magazyn'], ['trade', 'Handel'], ['settings', 'Ustawienia']].map(([kind, label]) => button(label, () => openPanel(kind)))),
       button('Wróć na wyspę', closePanel, { class: 'action secondary' }));
   }
@@ -417,12 +497,12 @@ createAmbientScene(stage, () => state).ready.catch(error => {
   toast('Nie udało się wczytać animacji wyspy. Odśwież stronę, aby spróbować ponownie.');
 });
 setInterval(() => {
-  const now = performance.now();
-  const elapsed = Math.min((now - lastTick) / 1000, 5);
-  lastTick = now;
-  tick(state, elapsed);
+  settleActiveTick();
   renderHUD();
 }, 1000);
 setInterval(save, 10000);
-window.addEventListener('pagehide', save);
-document.addEventListener('visibilitychange', () => { if (document.hidden) save(); lastTick = performance.now(); });
+window.addEventListener('pagehide', () => { settleActiveTick(); save(); });
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { settleActiveTick(true); save(); }
+  else lastTick = performance.now();
+});

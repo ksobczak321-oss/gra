@@ -2,6 +2,8 @@
 
 Spokojna gra o rozwoju wyspy: rozwiązuj ekspedycje, zdobywaj materiały i odbuduj latarnię. Repozytorium zawiera statyczny prototyp przeglądarkowy w HTML, CSS i JavaScript, bez zależności do instalowania i bez backendu.
 
+Reguły rozwijanej osady: poziom odpowiada ratuszowi, limit mieszkańców wynosi 24 na poziom, a szczęście od −100% do +100% steruje wzrostem lub spadkiem populacji. Nowa wyspa zaczyna z 12 mieszkańcami, szczęściem 0% i po 100 każdego zasobu. Szczegóły czasu, limitów i zapisu opisano w [instrukcji prototypu](docs/INTERACTIVE-ISLAND.md); stan wdrożenia jest w dzienniku.
+
 ## Podgląd
 
 - [Interaktywna wyspa — adres GitHub Pages](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html)
