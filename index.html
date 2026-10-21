@@ -3,65 +3,66 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
-  <meta name="theme-color" content="#101522" />
+  <meta name="theme-color" content="#0d1321" />
   <title>PANIC PETS: LAST LIFT</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="panic-pets.css?v=3" />
 </head>
 <body>
-  <main class="app-shell">
-    <header class="topbar">
+  <main class="app">
+    <header class="hero">
       <div>
-        <div class="eyebrow">STORM RESCUE // PROTOTYPE 0.1</div>
+        <div class="kicker">STORM RESCUE // LEVEL 01</div>
         <h1>PANIC PETS</h1>
-        <div class="subtitle">LAST LIFT</div>
+        <div class="sub">LAST LIFT</div>
       </div>
-      <div class="score-card"><span>URATOWANE</span><strong id="rescuedCount">0 / 7</strong></div>
+      <div class="score"><span>URATOWANE</span><strong id="rescuedCount">0/7</strong></div>
     </header>
 
-    <section class="mission-card">
-      <div>
-        <b>🚨 WODA SIĘ PODNOSI</b>
-        <div>Jedź windą, zabierz zwierzaki i dowieź je na <strong>DACH 🚁</strong>.</div>
-      </div>
-      <button id="restartBtn" type="button">OD NOWA</button>
+    <section class="mission">
+      <div><strong>🌊 WODA ROŚNIE OD DOŁU</strong><span>Ratuj najniższe piętra najpierw. Winda mieści <b>3 miejsca</b>.</span></div>
+      <button id="restartBtn" type="button">↻ RESTART</button>
     </section>
 
-    <section class="game-area">
+    <section class="game-grid">
       <div class="building" id="building">
-        <div class="water" id="water"><span>POWÓDŹ</span></div>
-        <div class="floors" id="floors"></div>
+        <div class="water" id="water"><span>🌊</span></div>
+        <div class="rooms" id="floors"></div>
         <div class="shaft">
+          <div class="shaft-label">WINDA</div>
           <div class="elevator" id="elevator">
-            <div class="lift-title">WINDA</div>
-            <div class="cargo" id="cargo"></div>
-            <div class="capacity" id="capacity">0 / 3</div>
+            <div id="cargo" class="cargo"></div>
+            <div class="capacity" id="capacity">0/3</div>
           </div>
         </div>
       </div>
 
-      <aside class="controls">
-        <div class="controls-title">WYBIERZ PIĘTRO</div>
-        <div id="floorButtons" class="floor-buttons"></div>
-        <div class="tip" id="tip">👇 Jedź najpierw na piętro 1.</div>
-      </aside>
-    </section>
-
-    <section class="status" id="status">
-      <strong id="statusTitle">URATUJ WSZYSTKIE!</strong>
-      <span id="statusText">Winda mieści 3 miejsca. 🐶 zajmuje 2.</span>
-    </section>
-
-    <section class="overlay" id="overlay" hidden>
-      <div class="result-card">
-        <div class="result-icon" id="resultIcon">🎉</div>
-        <h2 id="resultTitle">WSZYSTKIE BEZPIECZNE!</h2>
-        <p id="resultText"></p>
-        <button id="playAgainBtn" type="button">ZAGRAJ JESZCZE RAZ</button>
+      <div class="panel">
+        <div class="panel-title">GDZIE JEDZIESZ?</div>
+        <div class="floor-buttons" id="floorButtons"></div>
+        <div class="legend">
+          <div><span>🐶</span><b>2 miejsca</b></div>
+          <div><span>🐱 🐰</span><b>1 miejsce</b></div>
+        </div>
+        <div class="hint" id="hint">👇 Zacznij od 1. piętra.</div>
       </div>
     </section>
 
-    <footer>Prototype · bez reklam · dotyk / mysz · grafika tymczasowa</footer>
+    <section class="status" id="status">
+      <strong id="statusTitle">START NA DACHU 🚁</strong>
+      <span id="statusText">Kliknij „1”, zjedź windą i dotknij zwierzaków, aby je zabrać.</span>
+    </section>
+
+    <div class="overlay" id="overlay" hidden>
+      <div class="result">
+        <div class="result-icon" id="resultIcon">🎉</div>
+        <h2 id="resultTitle"></h2>
+        <p id="resultText"></p>
+        <button id="playAgainBtn" type="button">JESZCZE RAZ</button>
+      </div>
+    </div>
+
+    <footer>PROTOTYP 0.2 · GRAFIKA TYMCZASOWA · DOTYK / MYSZ</footer>
   </main>
-  <script src="game.js"></script>
+  <script src="panic-pets.js?v=3"></script>
 </body>
 </html>
