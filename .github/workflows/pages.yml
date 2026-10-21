@@ -1,4 +1,4 @@
-name: Deploy BLACKOUT to GitHub Pages
+name: Deploy HARBORLIGHT to GitHub Pages
 
 on:
   push:
@@ -23,6 +23,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Build island image asset
+        run: |
+          base64 --decode harborlight-island-v02-small.b64 > harborlight-island-v02.jpg
+          test -s harborlight-island-v02.jpg
+          file harborlight-island-v02.jpg
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
