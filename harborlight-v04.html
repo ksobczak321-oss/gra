@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#0d4f78" />
+  <title>HARBORLIGHT v0.4</title>
+  <link rel="stylesheet" href="harborlight-v021.css?v=0401" />
+  <style>
+    .world-art{
+      position:absolute;inset:0;
+      background-image:url('assets/harborlight-island-v04.jpg?v=0401') !important;
+      background-size:cover !important;
+      background-position:center center !important;
+      background-repeat:no-repeat !important;
+      transform:scale(1.015);
+    }
+  </style>
+</head>
+<body>
+  <main id="game" class="game-shell">
+    <section class="world" id="world">
+      <div class="world-art" aria-hidden="true"></div>
+      <div class="ambient seagull sg1">🕊️</div><div class="ambient seagull sg2">🕊️</div>
+      <div class="ambient smoke sm1">☁️</div><div class="ambient smoke sm2">☁️</div>
+      <div class="ambient glow gl1"></div><div class="ambient glow gl2"></div><div class="ambient glow gl3"></div>
+      <div class="vignette" aria-hidden="true"></div>
+
+      <header class="hud-top">
+        <div class="profile-chip"><div class="avatar">🧭</div><div><small>POZIOM</small><strong>12</strong></div></div>
+        <div class="hud-chip population"><span>👥</span><b id="hudPopulation">6/8</b></div>
+        <div class="hud-chip happiness"><span id="happyFace">🙂</span><div class="happy-track"><i id="happyFill"></i></div><b id="hudHappiness">72%</b></div>
+        <div class="hud-spacer"></div>
+        <div class="hud-chip resource"><span>🪵</span><b id="hudLogs">80</b></div>
+        <div class="hud-chip resource"><span>🪨</span><b id="hudStone">40</b></div>
+        <div class="hud-chip resource"><span>🪚</span><b id="hudPlanks">20</b></div>
+        <div class="hud-chip resource"><span>🍞</span><b id="hudFood">30</b></div>
+        <div class="hud-chip resource coin"><span>🪙</span><b id="hudCoins">240</b></div>
+      </header>
+
+      <nav class="left-rail">
+        <button class="rail-btn active" data-panel="island" type="button"><span>🏝️</span><b>Wyspa</b></button>
+        <button class="rail-btn" data-panel="expeditions" type="button"><span>🧭</span><b>Ekspedycje</b><i id="expNotify">!</i></button>
+        <button class="rail-btn" data-panel="tasks" type="button"><span>📜</span><b>Zadania</b></button>
+        <button class="rail-btn" data-panel="people" type="button"><span>👥</span><b>Mieszkańcy</b></button>
+      </nav>
+
+      <div id="toastHost" class="toast-host" aria-live="polite"></div>
+
+      <div class="hotspots" id="hotspots">
+        <button class="hotspot hs-lumber" data-site="lumber" type="button" aria-label="Obóz drwali"><span>🌲</span><em>+</em><b>DRWAL</b></button>
+        <button class="hotspot hs-sawmill" data-site="sawmill" type="button" aria-label="Tartak"><span>🪚</span><em>+</em><b>TARTAK</b></button>
+        <button class="hotspot hs-house" data-site="house" type="button" aria-label="Dom"><span>🏠</span><em>+</em><b>DOM</b></button>
+        <button class="hotspot hs-barn" data-site="barn" type="button" aria-label="Stodoła"><span>🐄</span><em>+</em><b>STODOŁA</b></button>
+        <button class="hotspot hs-lighthouse" data-site="lighthouse" type="button" aria-label="Latarnia"><span>🗼</span><em>+</em><b>LATARNIA</b></button>
+        <button class="decor-spot ds1" data-decor="decor" type="button">✦</button>
+        <button class="decor-spot ds2" data-decor="decor" type="button">✦</button>
+        <button class="decor-spot ds3" data-decor="decor" type="button">✦</button>
+        <button class="decor-spot ds4" data-decor="decor" type="button">✦</button>
+      </div>
+
+      <div class="walker w1">🧑‍🌾</div><div class="walker w2">👩‍🌾</div><div class="walker w3">🧑‍🔧</div><div class="walker w4">🧑‍🍳</div>
+
+      <section class="quest-card" id="questCard">
+        <div class="quest-kicker">GŁÓWNY CEL</div>
+        <h2 id="questTitle">Obudź starą latarnię</h2>
+        <p id="questText">Rozwiń osadę, popraw szczęście i przygotuj materiały.</p>
+        <div class="quest-progress"><i id="questFill"></i></div>
+        <div class="quest-milestones"><span id="qM1">○ Drwal</span><span id="qM2">○ Tartak</span><span id="qM3">○ Dom</span><span id="qM4">○ 75% szczęścia</span></div>
+      </section>
+
+      <section class="bottom-dock" id="buildDock">
+        <div class="dock-tabs">
+          <button class="dock-tab active" data-build-tab="buildings" type="button">Budynki</button>
+          <button class="dock-tab" data-build-tab="decor" type="button">Dekoracje</button>
+          <button class="dock-tab" data-build-tab="roads" type="button">Ścieżki</button>
+        </div>
+        <div class="dock-list" id="dockList"></div>
+      </section>
+
+      <aside class="side-panel" id="sidePanel" hidden><button class="panel-close" id="panelClose" type="button">×</button><div id="panelContent"></div></aside>
+
+      <section class="puzzle-overlay" id="puzzleOverlay" hidden>
+        <div class="puzzle-window">
+          <header class="puzzle-head"><div><small>EKSPEDYCJA</small><h2 id="puzzleTitle">Zawalony trakt</h2></div><div class="puzzle-score"><span>⏱ <b id="puzzleTime">0:00</b></span><span>👣 <b id="puzzleSteps">0</b></span><span>💡 <b id="puzzleCreative">100</b></span></div><button id="puzzleClose" type="button">×</button></header>
+          <div class="puzzle-body"><div class="puzzle-board" id="puzzleBoard"></div><aside class="puzzle-tools"><h3>Ekwipunek</h3><div id="puzzleTools"></div><div class="puzzle-goals"><b>Cel:</b><p id="puzzleGoal">Dotrzyj do skrzyni.</p></div><button id="puzzleReset" type="button">↻ Od nowa</button></aside></div>
+        </div>
+      </section>
+
+      <section class="result-overlay" id="resultOverlay" hidden><div class="result-card"><div class="result-stars" id="resultStars">★★★</div><h2 id="resultTitle">Ekspedycja ukończona!</h2><p id="resultText"></p><div class="result-reward" id="resultReward"></div><button id="resultBack" type="button">WRÓĆ NA WYSPĘ</button></div></section>
+    </section>
+  </main>
+  <script src="harborlight-v02.js?v=0401"></script>
+</body>
+</html>
