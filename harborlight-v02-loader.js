@@ -1,13 +1,9 @@
-fetch('harborlight-island-v02-small.b64?v=hl02')
-  .then(r => {
-    if (!r.ok) throw new Error('island art not available');
-    return r.text();
-  })
-  .then(b64 => {
-    const art = document.querySelector('.world-art');
-    if (art) art.style.backgroundImage = `url(data:image/jpeg;base64,${b64.trim()})`;
-  })
-  .catch(() => {
-    const art = document.querySelector('.world-art');
-    if (art) art.style.background = 'linear-gradient(145deg,#44a76d,#1499c4)';
-  });
+(function(){
+  const art = document.querySelector('.world-art');
+  if(!art) return;
+
+  art.style.backgroundImage = "url('harborlight-island-v02.jpg?v=hl03')";
+  art.style.backgroundPosition = 'center center';
+  art.style.backgroundSize = 'cover';
+  art.style.backgroundRepeat = 'no-repeat';
+})();
