@@ -158,7 +158,7 @@ Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zam
 
 ### FE-13 — Indywidualne szczęście, głód, bezrobocie i pełne procenty
 
-Status: implementacja i lokalna weryfikacja zaliczone; publikacja i test publicznej wersji oczekują na potwierdzenie w dzienniku. Milestone frontend #3. GitHub Issue: [#24](https://github.com/ksobczak321-oss/gra/issues/24).
+Status: zamknięte jako completed; implementacja, 93 testy reguł, osiem lokalnych zestawów przeglądarkowych, publikacja i trzy zestawy publicznej wersji zaliczone. Dowody są w dzienniku. Milestone frontend #3. GitHub Issue: [#24](https://github.com/ksobczak321-oss/gra/issues/24).
 
 - Trwała tożsamość każdej osoby, indywidualne szczęście, przydział, powrót i niezależne liczniki ciągłego głodu oraz bezrobocia, zapis schematu 7 bez utraty zasobów i wcześniejszego postępu.
 - +1 punkt procentowy/os./h za jedzenie i +1 za przydział. Każdy brak po 12 h daje osobne −5 punktów/h, bez kary wstecz. Jedzenie i ponowne zatrudnienie resetują wyłącznie odpowiadający licznik.
