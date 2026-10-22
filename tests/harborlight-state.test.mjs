@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createState, normalizeState, act, tick, totalWorkers, workerLimit, freeWorkers, taxRate, housingCapacity, unhousedResidents, populationRate, updateHappiness, happinessGroups, recordVisit, WORKPLACE_IDS, RESOURCES, EXPEDITIONS, MAX_BUILDING_LEVEL, buildingCost, upgradeEligibility } from '../harborlight-v1-state.js';
+import { createState, normalizeState, act, tick, totalWorkers, workerLimit, freeWorkers, taxRate, housingCapacity, unhousedResidents, populationRate, updateHappiness, happinessGroups, recordVisit, WORKPLACE_IDS, RESOURCES, EXPEDITIONS, MAX_BUILDING_LEVEL, buildingCost, upgradeEligibility, synchronizeResidents } from '../harborlight-v1-state.js';
 import { producerCapacity, warehouseLimits, warehouseUsed, stockRoom, storagePenalty, updateStorageStatus, marketCapacity, marketUsed, MATERIAL_IDS, constructionCounts, premiumActive, promoteConstructionQueue, estimateMaterialsSeconds } from '../harborlight-v1-logistics.js';
 
 const close = (a,b,tolerance=1e-7) => assert.ok(Math.abs(a-b)<tolerance, `${a} != ${b}`);
@@ -10,15 +10,18 @@ function idle(level=1,population=12,happiness=0) {
   state.population=population;state.capacity=level*24;
   state.baseHappiness=happiness;state.happiness=happiness;
   for(const building of Object.values(state.buildings)){building.workers=0;building.workProgress=[];}
-  return state;
+  state.version=6;delete state.residents;
+  return normalizeState(state);
 }
-function crew(state,id,count){state.buildings[id].workers=count;state.buildings[id].workProgress=Array(count).fill(0);}
+function crew(state,id,count){synchronizeResidents(state);const delta=count-state.buildings[id].workers;if(delta)assert.equal(act(state,{type:'assign',building:id,delta}).ok,true,`assign ${count} to ${id}`);}
+function intrinsic(state,value){for(const resident of state.residents)resident.happiness=value;updateHappiness(state);}
+function intrinsicMean(state){return state.residents.reduce((sum,resident)=>sum+resident.happiness,0)/state.population;}
 function funded(level=4){const state=idle(level);state.buildings.warehouse.level=level;state.resources.coins=10000;for(const id of MATERIAL_IDS)state.resources[id]=500*level;state.resources.food=Math.min(warehouseLimits(state).perResource,500*level+2000);return state;}
 function finish(state,id){const project=state.buildings[id].construction;assert.ok(project);const transport=Math.ceil(project.goodsRemaining/state.buildings.warehouse.workers)*60;tick(state,transport);tick(state,state.buildings[id].construction?.buildRemaining||0);}
 function saved(state){return normalizeState(JSON.parse(JSON.stringify(state)));}
 
 test('fresh island has six resources, six unlocked workers and no passive chapel bonus',()=>{
- const s=createState();assert.equal(s.version,6);assert.deepEqual(s.resources,Object.fromEntries(Object.keys(RESOURCES).map(id=>[id,100])));
+ const s=createState();assert.equal(s.version,7);assert.deepEqual(s.resources,Object.fromEntries(Object.keys(RESOURCES).map(id=>[id,100])));
  assert.equal(s.population,12);assert.equal(s.capacity,24);assert.equal(housingCapacity(s),24);assert.equal(totalWorkers(s),6);assert.equal(freeWorkers(s),6);assert.equal(taxRate(s),6);assert.equal(s.happiness,0);assert.equal(s.chapelRemaining,0);
  for(const id of Object.keys(s.buildings))assert.equal(s.buildings[id].ready,0);
 });
@@ -26,11 +29,11 @@ test('townhall and house provide their capacities only when real construction fi
  const s=funded(1);crew(s,'warehouse',6);const before=JSON.stringify(s);assert.equal(act(s,{type:'upgrade',building:'house'}).ok,false);assert.equal(JSON.stringify(s),before);
  assert.equal(act(s,{type:'upgrade',building:'townhall'}).ok,true);assert.equal(s.capacity,24);finish(s,'townhall');assert.equal(s.capacity,48);assert.equal(housingCapacity(s),24);
  for(const id of Object.keys(RESOURCES))s.resources[id]=500;s.resources.food=1000;
- assert.equal(act(s,{type:'upgrade',building:'house'}).ok,true);assert.equal(housingCapacity(s),24);finish(s,'house');assert.equal(housingCapacity(s),48);assert.equal(s.population,12);
+ assert.equal(act(s,{type:'upgrade',building:'house'}).ok,true);assert.equal(housingCapacity(s),24);finish(s,'house');assert.equal(housingCapacity(s),48);assert.ok(s.population>=12&&s.population<=s.capacity);
  for(const id of Object.keys(s.buildings).filter(id=>id!=='townhall')){s.buildings[id].level=2;const stock={...s.resources};assert.equal(act(s,{type:'upgrade',building:id}).ok,false,id);assert.deepEqual(s.resources,stock);}
 });
 test('level six works and worker limit uses actual population, not theoretical capacity',()=>{
- const s=funded(5);crew(s,'warehouse',6);assert.equal(act(s,{type:'upgrade',building:'townhall'}).ok,true);finish(s,'townhall');assert.equal(s.capacity,144);assert.equal(workerLimit(s,'farm'),6);
+ const s=funded(5);crew(s,'warehouse',6);assert.equal(act(s,{type:'upgrade',building:'townhall'}).ok,true);finish(s,'townhall');assert.equal(s.capacity,144);assert.equal(workerLimit(s,'farm'),Math.floor(s.population/2));
  s.population=144;s.buildings.house.level=6;assert.equal(workerLimit(s,'farm'),72);
  s.population=13;assert.equal(workerLimit(s,'farm'),6);assert.ok(MAX_BUILDING_LEVEL>=6);
 });
@@ -89,40 +92,39 @@ test('fractional taxes persist and walking home earns none',()=>{
  let s=idle(4);crew(s,'dock',1);tick(s,1800);close(s.taxProgress,.5);s=saved(s);act(s,{type:'assign',building:'dock',delta:-1});tick(s,1800);close(s.taxProgress,.5);assert.equal(s.resources.coins,100);act(s,{type:'assign',building:'market',delta:1});tick(s,1800);assert.equal(s.resources.coins,101);close(s.taxProgress,0);
 });
 test('population-loss tax uses the old crew before the loss and the smaller crew afterward',()=>{
- const s=idle(4,8,-100);crew(s,'farm',4);crew(s,'quarry',4);tick(s,7200);assert.equal(s.population,6);assert.equal(totalWorkers(s),6);assert.equal(s.resources.coins,114);assert.equal(s.statistics.taxCollected,14);for(const id of WORKPLACE_IDS)assert.ok(s.buildings[id].workers<=workerLimit(s,id));
+ const s=idle(4,8,-100);s.resources.food=0;for(const resident of s.residents)resident.hungerSeconds=43200;crew(s,'farm',4);crew(s,'quarry',4);tick(s,7200);assert.equal(s.population,6);assert.equal(totalWorkers(s),6);assert.equal(s.resources.coins,114);assert.equal(s.statistics.taxCollected,14);for(const id of WORKPLACE_IDS)assert.ok(s.buildings[id].workers<=workerLimit(s,id));
 });
 test('approved population-rate anchors remain symmetric',()=>{
- for(const[h,hours]of[[25,12],[50,6],[75,12/7],[100,1]]){close(populationRate(h),1/hours);close(populationRate(-h),-1/hours);for(const sign of[-1,1]){const s=idle(4,12,h*sign);s.resources.food=1000;tick(s,hours*3600);assert.equal(s.population,12+sign);}}
- const s=idle();for(let day=0;day<7;day++){s.resources.food=1000;tick(s,24*3600);}assert.equal(s.population,12);assert.equal(s.happiness,0);
+ for(const[h,hours]of[[25,12],[50,6],[75,12/7],[100,1]]){close(populationRate(h),1/hours);close(populationRate(-h),-1/hours);}assert.equal(populationRate(0),0);const s=idle(4,12);tick(s,3600);close(s.happiness,1);close(s.populationProgress,1/600);assert.equal(s.population,12);
 });
 test('population progress persists and resets when happiness changes sign',()=>{
- let s=idle(4,12,100);tick(s,1800);close(s.populationProgress,.5);s=saved(s);tick(s,1800);assert.equal(s.population,13);s.baseHappiness=-100;updateHappiness(s);tick(s,1800);close(s.populationProgress,.5);s.baseHappiness=0;updateHappiness(s);tick(s,1);assert.equal(s.populationProgress,0);
+ let s=idle(4,12,100);tick(s,1800);close(s.populationProgress,.5);s=saved(s);tick(s,1800);assert.equal(s.population,13);intrinsic(s,-100);s.resources.food=0;s.foodCredit=0;for(const resident of s.residents)resident.hungerSeconds=43200;tick(s,1800);close(s.populationProgress,.5);intrinsic(s,0);for(const resident of s.residents){resident.hungerSeconds=0;resident.unemployedSeconds=0;}tick(s,1);assert.equal(s.populationProgress,0);
 });
 test('population keeps the minimum six and townhall capacity',()=>{
- const low=idle(4,12,-100);tick(low,100*3600);assert.equal(low.population,6);const high=idle(1,12,100);high.resources.food=1000;tick(high,12*3600);assert.equal(high.population,24);tick(high,3600);assert.equal(high.population,24);assert.equal(high.populationProgress,0);
+ const low=idle(4,12,-100);low.resources.food=0;for(const resident of low.residents){resident.hungerSeconds=43200;resident.unemployedSeconds=43200;}tick(low,100*3600);assert.equal(low.population,6);const high=idle(1,12,100);high.resources.food=1000;high.lighthouseRemaining=86400;tick(high,12*3600);assert.equal(high.population,24);tick(high,3600);assert.equal(high.population,24);assert.equal(high.populationProgress,0);
 });
 test('housing shortage continues during construction and ends when the new house opens',()=>{
- const s=funded(4);s.population=78;s.buildings.house.level=3;crew(s,'warehouse',39);assert.equal(unhousedResidents(s),6);tick(s,3600);close(s.happiness,-6);assert.equal(act(s,{type:'upgrade',building:'house'}).ok,true);assert.equal(housingCapacity(s),72);finish(s,'house');assert.equal(housingCapacity(s),96);const happiness=s.happiness;assert.ok(happiness<-6);tick(s,3600);close(s.happiness,happiness);
+ const s=funded(4);s.population=78;s.buildings.house.level=3;synchronizeResidents(s);crew(s,'warehouse',39);assert.equal(unhousedResidents(s),6);tick(s,3600);close(s.happiness,-4.5);assert.equal(act(s,{type:'upgrade',building:'house'}).ok,true);assert.equal(housingCapacity(s),72);finish(s,'house');assert.equal(housingCapacity(s),96);const happiness=s.happiness;assert.ok(happiness<-4.5);tick(s,3600);close(s.happiness,happiness+1.5);
 });
 test('mean happiness weights affected workers rather than applying their penalty to everyone',()=>{
  const s=idle(1,12);crew(s,'lumber',6);s.buildings.lumber.ready=200;updateStorageStatus(s);updateHappiness(s);assert.equal(storagePenalty(s,'lumber'),10);assert.equal(s.happiness,-5);assert.equal(happinessGroups(s).find(g=>g.building==='lumber').happiness,-10);
- s.baseHappiness=-95;updateHappiness(s);assert.equal(s.happiness,-97.5);
+ intrinsic(s,-95);assert.equal(s.happiness,-97.5);
 });
 test('full-store penalty grows each twenty-four hours to minus fifty and clears after unloading',()=>{
  const s=idle(6,144);crew(s,'lumber',6);s.buildings.lumber.ready=1200;updateStorageStatus(s);updateHappiness(s);assert.equal(storagePenalty(s,'lumber'),10);
- for(const expected of[20,30,40,50]){for(let part=0;part<4;part++){s.resources.food=1000;tick(s,21600);}assert.equal(storagePenalty(s,'lumber'),expected);}s.resources.food=1000;tick(s,3600);assert.equal(storagePenalty(s,'lumber'),50);s.buildings.lumber.ready=1199;updateStorageStatus(s);updateHappiness(s);assert.equal(storagePenalty(s,'lumber'),0);assert.equal(s.happiness,0);
+ for(const expected of[20,30,40,50]){for(let part=0;part<4;part++){s.resources.food=1000;tick(s,21600);}assert.equal(storagePenalty(s,'lumber'),expected);}s.resources.food=1000;tick(s,3600);assert.equal(storagePenalty(s,'lumber'),50);s.buildings.lumber.ready=1199;updateStorageStatus(s);updateHappiness(s);assert.equal(storagePenalty(s,'lumber'),0);intrinsic(s,0);assert.equal(s.happiness,0);
 });
 test('full notifications fire on each transition, persist and can be marked read',()=>{
  let s=idle();s.buildings.lumber.ready=200;updateStorageStatus(s);assert.equal(s.notifications.length,1);tick(s,60);assert.equal(s.notifications.length,1);s=saved(s);assert.equal(s.notifications.length,1);act(s,{type:'readNotifications'});assert.ok(s.notifications.every(n=>n.read));s.buildings.lumber.ready=199;updateStorageStatus(s);s.buildings.lumber.ready=200;updateStorageStatus(s);assert.equal(s.notifications.length,2);assert.equal(s.notifications[0].read,false);
 });
 test('chapel upgrade gives ten full bonus hours after completion and exactly double tax',()=>{
- const s=funded(4);crew(s,'dock',1);crew(s,'warehouse',1);assert.equal(act(s,{type:'upgrade',building:'chapel'}).ok,true);assert.equal(s.happiness,0);finish(s,'chapel');assert.equal(s.chapelRemaining,36000);assert.equal(s.happiness,20);act(s,{type:'assign',building:'warehouse',delta:-1});assert.equal(taxRate(s),2);const coins=s.resources.coins;tick(s,36000);assert.equal(s.resources.coins,coins+20);assert.equal(s.happiness,0);assert.equal(taxRate(s),1);assert.equal(s.chapelRemaining,0);
+ const s=funded(4);crew(s,'dock',1);crew(s,'warehouse',1);assert.equal(act(s,{type:'upgrade',building:'chapel'}).ok,true);assert.equal(s.happiness,0);finish(s,'chapel');assert.equal(s.chapelRemaining,36000);close(s.happiness,intrinsicMean(s)+20);act(s,{type:'assign',building:'warehouse',delta:-1});assert.equal(taxRate(s),2);const coins=s.resources.coins;tick(s,36000);assert.equal(s.resources.coins,coins+20);close(s.happiness,intrinsicMean(s));assert.equal(taxRate(s),1);assert.equal(s.chapelRemaining,0);
 });
 test('manual blessing gives fifty of every resource and twenty happiness for one hour with lifetime charges',()=>{
- let s=idle(4);s.buildings.chapel.level=2;const stock={...s.resources};assert.equal(act(s,{type:'blessing'}).ok,true);for(const id of Object.keys(RESOURCES))assert.equal(s.resources[id],stock[id]+50);assert.equal(s.happiness,20);assert.equal(s.blessingsUsed,1);assert.equal(act(s,{type:'blessing'}).ok,false);s=saved(s);tick(s,3600);assert.equal(s.happiness,0);assert.equal(act(s,{type:'blessing'}).ok,true);tick(s,3600);assert.equal(act(s,{type:'blessing'}).ok,false);assert.equal(s.blessingsUsed,2);
+ let s=idle(4);s.buildings.chapel.level=2;const stock={...s.resources};assert.equal(act(s,{type:'blessing'}).ok,true);for(const id of Object.keys(RESOURCES))assert.equal(s.resources[id],stock[id]+50);assert.equal(s.happiness,20);assert.equal(s.blessingsUsed,1);assert.equal(act(s,{type:'blessing'}).ok,false);s=saved(s);tick(s,3600);close(s.happiness,1);assert.equal(act(s,{type:'blessing'}).ok,true);tick(s,3600);assert.equal(act(s,{type:'blessing'}).ok,false);assert.equal(s.blessingsUsed,2);
 });
 test('upgrade bonus and manual blessing can coexist without exceeding person happiness bounds',()=>{
- const s=funded(4);s.baseHappiness=90;updateHappiness(s);act(s,{type:'upgrade',building:'chapel'});act(s,{type:'blessing'});assert.equal(s.happiness,100);assert.ok(happinessGroups(s).every(g=>g.happiness<=100));
+ const s=funded(4);intrinsic(s,90);act(s,{type:'upgrade',building:'chapel'});act(s,{type:'blessing'});assert.equal(s.happiness,100);assert.ok(happinessGroups(s).every(g=>g.happiness<=100));
 });
 test('market capacity and unlocks follow player and own building levels',()=>{
  const s=idle(1);assert.equal(act(s,{type:'marketOrder',resource:'wood',amount:10}).ok,false);s.buildings.townhall.level=2;assert.equal(act(s,{type:'marketOrder',resource:'wood',amount:10}).ok,true);assert.equal(act(s,{type:'trade',resource:'wood',amount:10}).ok,false);for(const[level,cap]of[[1,1000],[2,1500],[3,2250]]){s.buildings.market.level=level;assert.equal(marketCapacity(s),cap);}
@@ -155,7 +157,7 @@ test('expedition and task rewards cannot be claimed twice after reload',()=>{
  const s=idle();assert.equal(act(s,{type:'expeditionComplete',expedition:EXPEDITIONS[0].id,moves:10,caches:1}).ok,true);assert.equal(act(s,{type:'claim',task:'expedition'}).ok,true);const after=saved(s),before=JSON.stringify(after.resources);assert.equal(act(after,{type:'expeditionComplete',expedition:EXPEDITIONS[0].id,moves:10,caches:1}).ok,false);assert.equal(act(after,{type:'claim',task:'expedition'}).ok,false);assert.equal(JSON.stringify(after.resources),before);
 });
 test('lighthouse costs every resource including gold and uses transport plus twice that building time',()=>{
- const s=funded(3);crew(s,'warehouse',6);const stock={...s.resources};assert.deepEqual(buildingCost(s,'lighthouse'),Object.fromEntries(Object.keys(RESOURCES).map(id=>[id,500])));assert.equal(act(s,{type:'repair'}).ok,true);for(const id of Object.keys(RESOURCES))assert.equal(s.resources[id],stock[id]-500);assert.equal(act(s,{type:'repair'}).ok,false);tick(s,25020);assert.equal(s.buildings.lighthouse.construction.stage,'building');close(s.buildings.lighthouse.construction.buildRemaining,50040);assert.equal(s.buildings.lighthouse.level,0);tick(s,50039);assert.equal(s.buildings.lighthouse.level,0);tick(s,1);assert.equal(s.buildings.lighthouse.level,1);assert.equal(s.objective.repaired,true);assert.equal(s.lighthouseRemaining,86400);assert.equal(s.happiness,100);assert.equal(saved(s).buildings.lighthouse.level,1);
+ const s=funded(3);crew(s,'warehouse',6);const stock={...s.resources};assert.deepEqual(buildingCost(s,'lighthouse'),Object.fromEntries(Object.keys(RESOURCES).map(id=>[id,500])));assert.equal(act(s,{type:'repair'}).ok,true);for(const id of Object.keys(RESOURCES))assert.equal(s.resources[id],stock[id]-500);assert.equal(act(s,{type:'repair'}).ok,false);tick(s,25020);assert.equal(s.buildings.lighthouse.construction.stage,'building');close(s.buildings.lighthouse.construction.buildRemaining,50040);assert.equal(s.buildings.lighthouse.level,0);tick(s,50039);assert.equal(s.buildings.lighthouse.level,0);tick(s,1);assert.equal(s.buildings.lighthouse.level,1);assert.equal(s.objective.repaired,true);assert.equal(s.lighthouseRemaining,86400);close(s.happiness,s.residents.reduce((sum,resident)=>sum+Math.min(100,resident.happiness+100),0)/s.population);assert.equal(saved(s).buildings.lighthouse.level,1);
 });
 test('whole and split intervals agree for output, transport, taxes and average happiness',()=>{
  const a=createState(),b=saved(a);tick(a,3600);for(let i=0;i<3600;i++)tick(b,1);assert.deepEqual(a.resources,b.resources);for(const id of WORKPLACE_IDS){assert.equal(a.buildings[id].ready,b.buildings[id].ready);for(let n=0;n<a.buildings[id].workProgress.length;n++)close(a.buildings[id].workProgress[n],b.buildings[id].workProgress[n]);}close(a.happiness,b.happiness);close(a.taxProgress,b.taxProgress);
@@ -203,7 +205,7 @@ test('lighthouse doubles the five material outputs and consumption, but never ta
  const s=idle(4);s.lighthouseRemaining=3600;crew(s,'sawmill',1);crew(s,'windmill',1);crew(s,'farm',1);crew(s,'lumber',1);crew(s,'quarry',1);tick(s,180);for(const id of ['farm','lumber','quarry','sawmill','windmill'])assert.equal(s.buildings[id].ready,1);assert.equal(s.resources.wood,98);assert.equal(s.resources.grain,98);tick(s,3420);assert.equal(s.resources.coins,105);assert.equal(s.lighthouseRemaining,0);assert.equal(s.buildings.farm.ready,20);tick(s,180);assert.equal(s.buildings.farm.ready,20);tick(s,180);assert.equal(s.buildings.farm.ready,21);
 });
 test('lighthouse bonus lasts twenty-four hours per completed level, refreshes and survives save',()=>{
- const s=funded(3);s.buildings.lighthouse.level=1;s.objective.repaired=true;s.lighthouseRemaining=100;crew(s,'warehouse',6);assert.equal(act(s,{type:'upgrade',building:'lighthouse'}).ok,true);finish(s,'lighthouse');assert.equal(s.buildings.lighthouse.level,2);assert.equal(s.lighthouseRemaining,172800);assert.equal(s.happiness,100);s.resources.food=2250;let after=saved(s);close(after.lighthouseRemaining,172800);tick(after,172800);assert.equal(after.lighthouseRemaining,0);assert.equal(after.happiness,0);
+ const s=funded(3);s.buildings.lighthouse.level=1;s.objective.repaired=true;s.lighthouseRemaining=100;crew(s,'warehouse',6);assert.equal(act(s,{type:'upgrade',building:'lighthouse'}).ok,true);finish(s,'lighthouse');assert.equal(s.buildings.lighthouse.level,2);assert.equal(s.lighthouseRemaining,172800);close(s.happiness,s.residents.reduce((sum,resident)=>sum+Math.min(100,resident.happiness+100),0)/s.population);s.resources.food=2250;let after=saved(s);close(after.lighthouseRemaining,172800);tick(after,172800);assert.equal(after.lighthouseRemaining,0);close(after.happiness,intrinsicMean(after));
 });
 test('lighthouse boost preserves unfinished individual units across activation and expiration',()=>{
  const s=idle(2);crew(s,'farm',1);tick(s,300);s.lighthouseRemaining=30;tick(s,30);assert.equal(s.buildings.farm.ready,1);assert.equal(s.lighthouseRemaining,0);tick(s,359);assert.equal(s.buildings.farm.ready,1);tick(s,1);assert.equal(s.buildings.farm.ready,2);

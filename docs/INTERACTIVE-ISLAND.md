@@ -2,7 +2,7 @@
 
 Stan dokumentu: 2026-10-22. Dotyczy `harborlight-v1-layered.html`. Stan publikacji i wyniki kolejnych sprawdzeń są w [dzienniku implementacji](IMPLEMENTATION-LOG.md).
 
-Bieżący priorytet: frontend, grafika i reguły osady. Wersja `economy-v6` obejmuje pracowników, indywidualną produkcję, magazyny, powiadomienia, targ, premie kaplicy i latarni oraz rzeczywistą rozbudowę z kolejką. Szczegółowe, aktualne ceny i reguły pakietu są w [uzgodnionych regułach gospodarki](ECONOMY-RULES.md). Stan sprawdzeń i publikacji zapisujemy osobno w dzienniku; model pakietu nie oznacza uruchomionej sprzedaży.
+Bieżący priorytet: frontend, grafika i reguły osady. Wersja `happiness-v8` rozwija gospodarkę o trwałe osoby z indywidualnym szczęściem, osobne liczniki głodu i bezrobocia oraz połowę wydajności bez jedzenia. Zachowuje pracowników, indywidualną produkcję, magazyny, powiadomienia, targ, premie kaplicy i latarni oraz rzeczywistą rozbudowę z kolejką. Szczegółowe, aktualne ceny i reguły pakietu są w [uzgodnionych regułach gospodarki](ECONOMY-RULES.md). Stan sprawdzeń i publikacji zapisujemy osobno w dzienniku; model pakietu nie oznacza uruchomionej sprzedaży.
 
 ## Co działa
 
@@ -14,18 +14,18 @@ Interaktywny prototyp zachowuje układ i styl zaakceptowanej wyspy i dodaje kont
 | Koło zębate | Ustawienia animacji, zapis i potwierdzany reset wyspy |
 | Pasek zasobów | Pięć materiałów w magazynie centralnym, monety w osobnym skarbcu i przejście do logistyki |
 | Poziom | Poziom ratusza, limit rozbudowy pozostałych budynków i przejście do rozbudowy ratusza |
-| Szczęście | Wartość od −100% do +100% oraz zasady zmiany populacji |
-| Liczba mieszkańców | Populacja, limit ratusza, miejsca w domu, przeludnienie, pracujący, wracający do domu, wolni mieszkańcy i podatki |
+| Szczęście | Średnia indywidualnych wartości od −100% do +100%, wyświetlana jako pełny procent zaokrąglony w górę, oraz zasady zmiany populacji |
+| Liczba mieszkańców | Populacja, indywidualne szczęście, limit ratusza, miejsca w domu, przeludnienie, pracujący, wracający do domu, wolni mieszkańcy i podatki |
 | Zegar, pauza, odtwarzanie, przyspieszenie | Zegar wyspy; tempo kalendarza 1×, 2× lub 4× nie zmienia godzin pracy, transportu ani podatków |
 | Nawigacja boczna | Wyspa, ekspedycje, zadania, mieszkańcy i mapa dzielnic |
 | Główny cel | Dostawy drewna i kamienia oraz naprawa latarni |
 | Karta ekspedycji | Wybór jednej z trzech rozgrywalnych plansz |
-| Budynki na mapie i karty dolnego doku | Szczegóły, koszty i wybór miejsca rozbudowy |
+| Budynki na mapie i karty dolnego doku | Szczegóły, koszty i bezpośrednie ulepszenie wybranego budynku |
 | Statek i przystań | Kupno i sprzedaż towarów |
 | Most, plaża i wodospad | Ścieżki, mosty i dekoracje |
 | Kategorie dolnego doku | Budynki, produkcja, dekoracje i ścieżki |
 
-Silnik obsługuje dom, farmę, tartak, kamieniołom, przystań, magazyn, latarnię, obóz drwali, młyn, ratusz, kaplicę i targ. Pracowników zatrudnia osiem wskazanych miejsc pracy. Produkcja materiałów działa w farmie, młynie, obozie drwali, tartaku i kamieniołomie; przystań, targ i magazyn również przyjmują pracowników, ale nie produkują monet w dawnym cyklu produkcyjnym. Brak wolnych mieszkańców, surowców lub miejsca na gotową produkcję ogranicza odpowiednie operacje.
+Silnik obsługuje dom, farmę, tartak, kamieniołom, przystań, magazyn, latarnię, obóz drwali, młyn, ratusz, kaplicę i targ. [Tabela budynków](BUILDINGS.md) pokazuje osobno logikę, stan, koszty i efekty każdego z nich. Pracowników zatrudnia osiem wskazanych miejsc pracy. Produkcja materiałów działa w farmie, młynie, obozie drwali, tartaku i kamieniołomie; przystań, targ i magazyn również przyjmują pracowników, ale nie produkują monet w dawnym cyklu produkcyjnym. Brak wolnych mieszkańców, surowców lub miejsca na gotową produkcję ogranicza odpowiednie operacje.
 
 ## Start, poziom i szczęście
 
@@ -40,11 +40,11 @@ Teoretyczny limit populacji wynosi `24 × poziom ratusza`: przykładowo poziomy 
 | Ratusz na poziomie 4 | Poziom gry 4, limit 96 mieszkańców, pozostałe budynki najwyżej na poziomie 4 |
 | Dom na poziomie 3 | 72 miejsca mieszkalne |
 | Populacja 78 | 6 mieszkańców bez miejsca, mimo wolnego limitu ratusza |
-| Skutek przeludnienia | Szczęście spada o 6 punktów procentowych na godzinę aktywnej gry, dopóki liczba osób bez miejsca pozostaje równa 6 |
+| Kara za przeludnienie | −6 punktów procentowych/h dla każdej osoby, sumowane z jej innymi efektami, dopóki liczba osób bez miejsca pozostaje równa 6 |
 
-Populacja może przekroczyć liczbę miejsc mieszkalnych i dalej rosnąć do limitu ratusza, jeżeli szczęście jest dodatnie. **Każda osoba bez miejsca obniża szczęście o 1 punkt procentowy na rzeczywistą godzinę aktywnej gry.** Tempo jest liczone z bieżącego przeludnienia: `max(0, populacja − miejsca mieszkalne)` punktów procentowych na godzinę. Spadek jest płynny, a ułamkowa wartość szczęścia zachowuje się po zapisie i odświeżeniu. Rozbudowa domu do odpowiedniej pojemności zatrzymuje dalszą karę, ale nie zwraca już utraconego szczęścia.
+Populacja może przekroczyć liczbę miejsc mieszkalnych i dalej rosnąć do limitu ratusza, jeżeli szczęście jest dodatnie. **Każda osoba bez miejsca obniża szczęście o 1 punkt procentowy na rzeczywistą godzinę aktywnej gry.** Tempo jest liczone z bieżącego przeludnienia: `max(0, populacja − miejsca mieszkalne)` punktów procentowych na godzinę. Kara jest naliczana płynnie każdej osobie i sumuje się z jej pozostałymi efektami; ułamkowa wartość szczęścia zachowuje się po zapisie i odświeżeniu. Rozbudowa domu do odpowiedniej pojemności zatrzymuje dalszą karę, ale nie zwraca już utraconego szczęścia.
 
-Szczęście jest jedyną wartością gospodarczą dopuszczającą znak ujemny. Zasoby, liczby mieszkańców i pozostałe liczniki pozostają nieujemne. Szczęście jest ograniczone do przedziału **−100%…+100%**. Przy 0% populacja się nie zmienia. Dodatnia wartość zwiększa populację, ujemna zmniejsza ją w tym samym tempie:
+Szczęście jest jedyną wartością gospodarczą dopuszczającą znak ujemny. Zasoby, liczby mieszkańców i pozostałe liczniki pozostają nieujemne. Szczęście każdej osoby jest ograniczone do przedziału **−100%…+100%**, a następnie obliczamy średnią populacji. Nowa osoba zaczyna od 0%; nie dziedziczy zgromadzonego szczęścia pozostałych. HUD i lista mieszkańców pokazują pełne procenty zaokrąglone w górę: 20,2% → 21%, −20,2% → −20%. W obliczeniach, zapisie i demografii pozostają dokładne ułamki. Przy dokładnie 0% populacja się nie zmienia. Dodatnia wartość zwiększa populację, ujemna zmniejsza ją w tym samym tempie:
 
 | Wartość bezwzględna szczęścia | Czas na zmianę o jedną osobę |
 | --- | --- |
@@ -58,7 +58,28 @@ Użytkownik zaakceptował proporcjonalne tempo pomiędzy punktami 0%, 50% i 100%
 
 Czas oznacza rzeczywisty czas aktywnej gry na widocznej karcie. Przyspieszenie 1×/2×/4× nie przyspiesza narodzin, ubytku ani kary za przeludnienie; pauza je zatrzymuje. Ukryta karta i czas poza grą nie naliczają postępu. Niepełna część postępu jest zapisywana. Zmiana znaku lub ustawienie 0% zeruje postęp poprzedniego kierunku. Przy maksymalnej populacji nie odkłada się zapas narodzin; przy minimum nie odkłada się ubytek.
 
-Populacja nigdy nie spada poniżej **6 osób**. Po jej spadku przydziały pracowników są ograniczane do liczby mieszkańców, a gracz może dalej rozdzielać pracę, produkować i handlować. Dekoracje i ścieżki podnoszą bazowe szczęście o 1 punkt. Kaplica i latarnia uruchamiają premie czasowe opisane w aktualnych regułach; nie dodają dawnych stałych +3/+10. Głód obniża bazowe szczęście o 25 punktów na aktywną godzinę. Przeludnienie obniża szczęście i może doprowadzić do wartości ujemnej, która uruchamia ubytek mieszkańców.
+Populacja nigdy nie spada poniżej **6 osób**. Po jej spadku przydziały pracowników są ograniczane do liczby mieszkańców, a gracz może dalej rozdzielać pracę, produkować i handlować. Dekoracje i ścieżki podnoszą szczęście obecnych mieszkańców o 1 punkt. Kaplica i latarnia uruchamiają premie czasowe opisane w aktualnych regułach; nie dodają dawnych stałych +3/+10. Głód i bezrobocie mają nowe indywidualne premie oraz kary opisane poniżej, zamiast dawnego zbiorczego −25/h za głód. Przeludnienie obniża szczęście i może doprowadzić do wartości ujemnej, która uruchamia ubytek mieszkańców.
+
+## Jedzenie, praca i indywidualne szczęście
+
+Mieszkaniec dostaje +1 punkt procentowy szczęścia na aktywną godzinę jedzenia oraz osobne +1 za przydział do pracy. Każdy ma dwa osobne liczniki ciągłego braku: jedzenia i pracy. Po 12 godzinach danego braku zaczyna działać kara −5 punktów/h, bez kary wstecz za pierwsze 12 godzin. Jedzenie zeruje licznik głodu, a przydział do pracy licznik bezrobocia. Szczęście osoby zachowuje się przy zwolnieniu, pięciominutowym powrocie oraz ponownym zatrudnieniu; okres powrotu liczy się jako brak pracy.
+
+| Stan osoby, bez dodatkowych efektów | Zmiana szczęścia |
+| --- | --- |
+| Je i pracuje | +2 punkty/h |
+| Je, bezrobotna do 12 h | +1 punkt/h |
+| Je, bezrobotna ponad 12 h | −4 punkty/h: +1 za jedzenie −5 za bezrobocie |
+| Nie je do 12 h, pracuje | +1 punkt/h |
+| Nie je ponad 12 h, pracuje | −4 punkty/h: +1 za pracę −5 za głód |
+| Nie je i nie pracuje, oba braki ponad 12 h | −10 punktów/h |
+
+Przy obu brakach młodszych niż 12 h bilans wynosi 0, a przy tylko jednym przekroczonym progu −5 punktów/h. Liczniki są niezależne, więc osoba może już podlegać karze bezrobocia, a dopiero zaczynać okres głodu. Przykład jednej osoby: 10 h jedzenia i pracy od zera daje 20%; następne 12 h z jedzeniem bez pracy daje 32%; kolejna godzina bezrobocia zmniejsza wynik do 28%.
+
+Każda osoba zjada **1 Food na aktywną godzinę**, również bezrobotna i wracająca. Jedzenie przydziela się automatycznie wyłącznie z magazynu centralnego; lokalna żywność młyna, targ i oczekujące dostawy muszą najpierw dotrzeć centralnie. Cała jednostka rezerwuje się do wspólnego posiłku, a niezużyta część `foodCredit` jest zapisywana i nie może ponownie finansować budowy.
+
+Brak centralnego i już przydzielonego jedzenia **od razu zmniejsza wydajność do połowy**, niezależnie od 12-godzinnego okresu bez kary szczęścia: producent 10 → 5 sztuk/os./h, magazynier i pracownik targu 60 → 30 sztuk/os./h. Dotyczy to również transportu na budowę; podatki przydzielonych osób pozostają 1 moneta/h. Latarnia nadal mnoży produkcję ×2, czyli głodny pracownik z jej premią produkuje 10/h. Zmiany tempa zachowują postęp niedokończonej jednostki.
+
+Czas żywienia i oba liczniki liczą tylko aktywną widoczną grę, bez przyspieszenia gospodarczego, pauzy i czasu offline. Aktualna średnia wyspy jest liczona z indywidualnych wyników po uwzględnieniu dotychczasowych efektów mieszkań, pełnych składów oraz premii. Pełna specyfikacja jest w [regułach gospodarki](ECONOMY-RULES.md).
 
 ## Pracownicy, powrót do domu i podatki
 
@@ -96,7 +117,7 @@ Przystań, targ i ratusz nie produkują dodatkowo monet w dawnych dziesięciosek
 
 ## Produkcja według czasu każdego pracownika
 
-Każdy pracownik jednego z pięciu producentów wytwarza **10 pełnych jednostek na godzinę aktywnej pracy**, czyli jedną co 6 minut. Poziom budynku nie mnoży tej indywidualnej stawki. Produkcja jest rozliczana osobno dla każdej osoby, bez łączenia części niedokończonych sztuk:
+Każdy nakarmiony pracownik jednego z pięciu producentów wytwarza **10 pełnych jednostek na godzinę aktywnej pracy**, czyli jedną co 6 minut. Bez jedzenia stawka wynosi 5/h, a jednostka wymaga 12 minut. Poziom budynku nie mnoży tej indywidualnej stawki. Produkcja jest rozliczana osobno dla każdej osoby, bez łączenia części niedokończonych sztuk:
 
 | Czas pracy osoby przed odwołaniem | Gotowe jednostki | Los niedokończonej sztuki |
 | --- | --- | --- |
@@ -116,7 +137,7 @@ Zboże jest nowym, osobnym materiałem. Łańcuch żywności to **farma → zbo�
 | Tartak | 2 drewna na każdą gotową deskę | Deski |
 | Młyn | 2 zboża na każdą gotową jednostkę żywności | Żywność |
 
-Stawka 10 jednostek na osobę na godzinę dotyczy **produktu wyjściowego**. Pracownik młyna lub tartaku zużywa więc 20 odpowiednich surowców na godzinę pełnej, nieblokowanej produkcji. Surowiec wejściowy jest pobierany, gdy powstaje gotowy produkt. Materiał leżący przy drwalach albo na farmie nie jest jeszcze wejściem dostępnym dla tartaku lub młyna: najpierw musi trafić do magazynu centralnego.
+Stawka 10 jednostek na nakarmioną osobę na godzinę dotyczy **produktu wyjściowego**. Pracownik młyna lub tartaku zużywa więc 20 odpowiednich surowców na godzinę pełnej, nieblokowanej produkcji. Surowiec wejściowy jest pobierany, gdy powstaje gotowy produkt. Materiał leżący przy drwalach albo na farmie nie jest jeszcze wejściem dostępnym dla tartaku lub młyna: najpierw musi trafić do magazynu centralnego.
 
 Nie ma przycisków natychmiastowego odbioru ani ręcznego przetwarzania materiałów. Dawne akcje odbioru i wytwarzania nie mogą ominąć czasu pracy czy transportu. Zadanie pierwszego zbioru wykonuje rzeczywisty transport do magazynu, a zadanie rzemieślnika rzeczywista produkcja młyna lub tartaku.
 
@@ -124,7 +145,7 @@ Nie ma przycisków natychmiastowego odbioru ani ręcznego przetwarzania materia�
 
 Każdy z pięciu producentów ma własny skład lokalny na `200 × poziom ratusza` jednostek swojego produktu. Na poziomie ratusza 1 każdy taki skład mieści 200, a na poziomie 6 — 1200 jednostek. To osobne limity przy budynkach, niezależne od poziomu magazynu centralnego. Towar w składzie lokalnym nie jest jeszcze zasobem, którym można zapłacić za budowę, dekorację, handel czy dostawę do latarni.
 
-Załoga magazynu przewozi gotowe towary automatycznie: **60 jednostek materiału na godzinę na pracownika**, czyli jedną jednostkę na minutę pracy osoby. Bez magazynierów produkcja może wypełniać składy lokalne, ale nie przechodzi z nich do dostępnych centralnie zapasów.
+Załoga magazynu przewozi gotowe towary automatycznie: **60 jednostek materiału na godzinę na nakarmionego pracownika**, czyli jedną jednostkę na minutę pracy osoby. Głodna osoba przewozi 30/h, czyli jedną co dwie minuty. Bez magazynierów produkcja może wypełniać składy lokalne, ale nie przechodzi z nich do dostępnych centralnie zapasów.
 
 Gracz ustala w magazynie lub panelu zasobów kolejność priorytetów dla pięciu materiałów: zboża, drewna, kamienia, żywności i desek. Magazynierzy wybierają zgodnie z tą kolejnością materiał dostępny do przewozu i mieszczący się w centralnym magazynie. Brak towaru albo brak miejsca dla danego rodzaju powoduje przejście do kolejnego priorytetu, zamiast blokowania całego transportu.
 
@@ -155,7 +176,7 @@ Przycisk „Upgrade” zleca aktualny budynek bez wybierania miejsca. Opis źró
 
 1. Przydziel dostępnych ludzi do producentów i magazynu. Każde miejsce przyjmuje najwyżej połowę aktualnej populacji; przydzielone osoby płacą podatek.
 2. Wybierz kolejność przewozu materiałów w magazynie lub zasobach. Obserwuj osobno składy lokalne i dostępne zapasy centralne.
-3. Farma, drwale i kamieniołom pozyskują materiały; młyn i tartak zużywają po 2 surowce centralne na jednostkę swojego produktu. Na gotowe jednostki pracownika czekasz po 6 minut, a magazynier przewozi po jednej sztuce na minutę.
+3. Farma, drwale i kamieniołom pozyskują materiały; młyn i tartak zużywają po 2 surowce centralne na jednostkę swojego produktu. Przy jedzeniu na gotowe jednostki pracownika czekasz po 6 minut, a magazynier przewozi po jednej sztuce na minutę; bez jedzenia oba czasy są dwukrotnie dłuższe.
 4. Zwolniony pracownik wraca do domu przez 5 minut. W tym czasie nie płaci podatku ani nie może dostać nowego przydziału. Przed odwołaniem weź pod uwagę utratę jego niedokończonej jednostki.
 5. Rozbuduj ratusz, aby odblokować poziomy innych budynków i większe składy lokalne. Rozbudowa domu zapewnia miejsca mieszkalne; rozbudowa magazynu zwiększa centralną pojemność na każdy rodzaj i łącznie.
 6. Zgromadź 500 każdego zasobu ze złotem i uruchom budowę latarni. Transport zajmuje T, budowa 2T. Po ukończeniu oba bonusy, +100 szczęścia oraz produkcja materiałów ×2, trwają 24 h × osiągnięty poziom; podatki bez zmian.
@@ -184,6 +205,7 @@ Koszty kolejnych poziomów rosną wraz z poziomem. Źródłem aktualnych liczb i
 | `harborlight-v1-play.css` | Interakcje, fokus, dialogi, plansze, układ mobilny i ograniczenie ruchu |
 | `harborlight-v1-state.js` | Czysty silnik: stan, rozbudowa, miejsca mieszkalne, przeludnienie, limity pracowników, powroty, podatki, indywidualna produkcja, transport i pojemności, szczęście oraz populacja |
 | `harborlight-v1-logistics.js` | Indywidualne fazy pracy, składy, transport, targ, rezerwacje, kolejka budowy, estymaty i lokalny model uprawnienia |
+| `harborlight-v1-residents.js` | Tożsamości mieszkańców, ich indywidualne szczęście, liczniki głodu i bezrobocia, przydziały oraz wydajność zależna od jedzenia |
 | `harborlight-v1-ambient.js` | Osobna warstwa Canvas, wspólny czas, wiatrak, chmury i budowa |
 | `harborlight-v1-smoke.js` | Emisja i cykl życia kłębów dymu z 9 kominów |
 | `harborlight-v1-inhabitants.js` | Oczyszczone tło świata bez nieruchomych ludzi i starych smug |
@@ -192,11 +214,12 @@ Koszty kolejnych poziomów rosną wraz z poziomem. Źródłem aktualnych liczb i
 | `tests/harborlight-state.test.mjs` | Testy reguł gospodarki i normalizacji zapisu |
 | `tests/harborlight-browser-smoke.py` | Regresja całej gry przez rzeczywiste kliknięcia w Chromium |
 | `tests/harborlight-population-smoke.py` | Nowy HUD, start, rzeczywisty licznik czasu, ujemne szczęście i migracja zapisów |
+| `tests/harborlight-happiness-smoke.py` | Indywidualne szczęście i liczniki, zmiany przydziału, pełne procenty, telefon i zapis |
 | `tests/harborlight-animation-smoke.py` | Ruch grup efektów, maski interfejsu i zatrzymywanie animacji |
 
 ## Zapis
 
-Klucz `localStorage`: `harborlight-v1-interactive-save`, wersja schematu `version: 6`. Zapis następuje po udanej operacji, okresowo i przy opuszczeniu strony. „Save now” wymusza zapis; błąd dostępu do pamięci jest komunikowany graczowi. Wcześniejsze robocze etapy v4/v5 nie były publikowane; zbiorcza zmiana używa `economy-v6`.
+Klucz `localStorage`: `harborlight-v1-interactive-save`, wersja schematu `version: 7`. Zapis następuje po udanej operacji, okresowo i przy opuszczeniu strony. „Save now” wymusza zapis; błąd dostępu do pamięci jest komunikowany graczowi. Wcześniejsze robocze etapy v4/v5 nie były publikowane; indywidualne szczęście używa wersji frontendu `happiness-v8`.
 
 Stan zachowuje:
 
@@ -205,15 +228,19 @@ Stan zachowuje:
 - indywidualny postęp niedokończonej jednostki każdej nadal przydzielonej osoby oraz postęp pracy magazynierów;
 - pozostały czas powrotu odwołanych pracowników i kolejność priorytetów transportu;
 - `pendingDeliveries`: materiały czekające na przyjęcie do centralnego magazynu;
-- `population`, `capacity`, `happiness` z częścią ułamkową, `populationProgress`, `populationDirection`;
+- `population`, `capacity`, dokładne średnie `happiness`, `populationProgress`, `populationDirection`;
+- `residents`: trwałe identyfikatory, indywidualne `happiness`, `hungerSeconds`, `unemployedSeconds`, `workplace` i `returnRemaining`, oraz sekwencję identyfikatorów nowych osób;
+- `foodCredit`: niezużyty ułamek wcześniej przydzielonej całej jednostki żywności;
 - `taxProgress`: ułamek niewypłaconej monety, oraz `statistics.taxCollected`: wypłacone monety podatku;
 - dostawy i stan latarni, zadania, ekspedycje, statystyki, dekoracje, ścieżki, kalendarz, tempo, pauzę i ustawienia;
-- bazowe i średnie szczęście, liczniki pełnych magazynów, powiadomienia i przeczytanie;
+- indywidualne i średnie szczęście, liczniki pełnych magazynów, powiadomienia i przeczytanie;
 - stan targu, zlecenia, dostawy blokowane przez godzinę i odbiór;
 - liczniki premii kaplicy i latarni, jednorazowe użycia błogosławieństw, serię dni;
 - listę projektów budowy, rezerwacje, etapy, zależności poziomów i datę ważności lokalnego modelu pakietu.
 
 `normalizeState()` przywraca brakujące wartości, odrzuca nieprawidłowe liczby i dopasowuje przydziały do faktycznej populacji. Zapisy 1/2 zachowują zainwestowane poziomy budynków przez podniesienie ratusza do najwyższego już posiadanego poziomu. Wersje 3 i późniejsze nie otrzymują kolejnego darmowego podniesienia ratusza; poziomy innych budynków są walidowane względem niego. Populacja pozostaje w przedziale od 6 do limitu ratusza, bez obcinania do liczby miejsc mieszkalnych. Naprawiona latarnia zachowuje poziom.
+
+Migracja do schematu 7 odtwarza osoby z dotychczasowego bazowego szczęścia i istniejących przydziałów, z zachowaniem osobnych efektów czasowych i kar za składy. Nie nalicza nieznanej historii głodu ani bezrobocia; nowe liczniki zaczynają od zera. Poprawne indywidualne stany schematu 7 zachowują tożsamości, szczęście i oba liczniki po odświeżeniu.
 
 Migracja nie przyznaje nowego zestawu startowego. Zachowuje wcześniejsze centralne zasoby, a nadwyżki ponad nowe limity przenosi do `pendingDeliveries`, aby nie tracić materiałów i nie czynić ich od razu dostępnymi do wydania. Gotowe, nieodebrane monety dawnej produkcji ratusza, przystani i targu są jednorazowo wypłacane do skarbca i usuwane ze starych buforów. To wcześniejszy zarobek, nie nowy podatek; nie zwiększa statystyki podatku i nie jest wypłacany ponownie przy odświeżeniu nowego zapisu.
 
@@ -233,6 +260,7 @@ python3 tests/harborlight-population-smoke.py
 python3 tests/harborlight-logistics-smoke.py
 python3 tests/harborlight-construction-smoke.py
 python3 tests/harborlight-language-smoke.py
+python3 tests/harborlight-happiness-smoke.py
 python3 tests/harborlight-animation-smoke.py
 ```
 
@@ -240,7 +268,9 @@ Test przeglądarkowy wymaga Python Playwright i Chromium (domyślnie `/usr/bin/c
 
 Sprawdzenie obejmuje dokładnie osiem miejsc pracy i wspólną pulę, poziom 6 przy populacjach 144/100/12, nieparzystą populację, podatki od pracujących oraz zapis ułamka. Produkcja musi potwierdzić po 1 gotowej jednostce po 7 minutach i po 2 po 13 minutach na osobę, brak łączenia indywidualnych ułamków, utratę niedokończonej sztuki przy odwołaniu i powrót przez 5 minut bez podatku oraz możliwości ponownego przydziału.
 
-Test logistyki powinien wykazać 10 jednostek produkcji i 60 jednostek transportu na osobę na godzinę, obie receptury 2:1, lokalne `200 × ratusz`, centralne limity rodzaju i sumy z mnożnikiem 1,5, priorytety z pomijaniem pustych lub pełnych rodzajów oraz brak magazynowej objętości monet. Należy sprawdzić, że wydawane są tylko centralne zapasy, brak ręcznego odbioru/przetwarzania, odrzucony zakup nie pobiera monet, a nadwyżki nagród i starego zapisu czekają bez utraty w dostawach.
+Test logistyki powinien wykazać 10 jednostek produkcji i 60 jednostek transportu na nakarmioną osobę na godzinę oraz odpowiednio 5 i 30 przy głodzie, obie receptury 2:1, lokalne `200 × ratusz`, centralne limity rodzaju i sumy z mnożnikiem 1,5, priorytety z pomijaniem pustych lub pełnych rodzajów oraz brak magazynowej objętości monet. Należy sprawdzić, że wydawane są tylko centralne zapasy, brak ręcznego odbioru/przetwarzania, odrzucony zakup nie pobiera monet, a nadwyżki nagród i starego zapisu czekają bez utraty w dostawach.
+
+Test szczęścia powinien potwierdzić osobne historie osób, +2/h przy jedzeniu i pracy, dokładny próg 12 h, kary −5/h osobno, reset odpowiedniego licznika, przykład 20% →32% →28%, ograniczenie przed średnią, brak naliczania offline i zgodność długich oraz podzielonych kroków. Wyświetlenie musi zaokrąglać w górę bez zmiany dokładnego stanu.
 
 Regresja obejmuje koszty i blokadę rozbudowy przez ratusz, osobne limity ratusza i domu, przeludnienie, minimum 6, zapis, migrację, latarnię, handel, zadania i trzy ekspedycje. Panele muszą działać na komputerze i telefonie, z klawiaturą i ograniczeniem animacji, bez błędów JavaScript ani HTTP. Samo uruchomienie serwera nie jest potwierdzeniem zaliczenia testów.
 

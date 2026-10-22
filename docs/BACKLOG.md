@@ -1,6 +1,6 @@
 # Backlog HARBORLIGHT
 
-Stan: 2026-10-22. Zadania są podzielone według istniejących milestone’ów [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3) i [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Utworzono i potwierdzono siedemnaście GitHub Issues FE/BE z przypisaniem do milestone’ów. Identyfikatory FE/BE porządkują dokumentację; numery i linki rzeczywistych zgłoszeń są podane przy zadaniach.
+Stan: 2026-10-22. Zadania są podzielone według istniejących milestone’ów [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3) i [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Utworzono i potwierdzono osiemnaście GitHub Issues FE/BE z przypisaniem do milestone’ów. Identyfikatory FE/BE porządkują dokumentację; numery i linki rzeczywistych zgłoszeń są podane przy zadaniach.
 
 Utrzymujemy spokojną rozbudowę wyspy i pętlę ekspedycja → zasoby → osada. Zachowujemy zaakceptowany kierunek wizualny. Backend nie jest wymagany do uruchomienia obecnego statycznego prototypu.
 
@@ -126,7 +126,7 @@ Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zam
 - Rezerwacja całego kosztu przy zwykłym zleceniu, przewóz istniejącą załogą magazynu i następnie równie długa budowa. Poziom dopiero po zakończeniu.
 - Ratusz L: L aktywnych i L opłaconych miejsc kolejki, automatyczne przejście i kolejne poziomy tego samego budynku bez równoległego budowania dwóch jego poziomów.
 - Lokalny model pakietu: +4 aktywne, kolejka bez limitu, plany z estymat dostaw. Wygasanie kalendarzowe; rozpoczęte kończą się, opłacone czekają na normalny limit, nieopłacone zachowane i wstrzymane. Sprzedaż nie jest uruchomiona.
-- Latarnia: 500 każdego zasobu ze złotem, transport T + budowa 2T; +100 szczęścia i produkcja pięciu materiałów ×2 przez 24 h × osiągnięty poziom. Podatki bez zmiany. Użytkownik zaakceptował minimum około 35 h zbierania od startu.
+- Latarnia: 500 każdego zasobu ze złotem, transport T + budowa 2T; +100 szczęścia i produkcja pięciu materiałów ×2 przez 24 h × osiągnięty poziom. Podatki bez zmiany. Użytkownik zaakceptował koszt przy historycznej kalkulacji około 35 h zbierania od startu; nie jest to prognoza obecnego modelu żywienia i szczęścia.
 - Panel ratusza: poziom, obecni/limit, podatki/h, bez przydziału i odbioru. Bezpośrednie „Ulepsz”; magazynowe posiadane/wymagane w czerwieni/zieleni. Scenę zachowujemy.
 
 ### FE-10 — Angielski interfejs i pomoc pod ikoną „i”
@@ -144,8 +144,8 @@ Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zam
 
 - Każda osoba zużywa 1 Food/aktywną godzinę. Automatyczny przydział dotyczy wyłącznie magazynu centralnego, bez ręcznej akcji ani bezpośredniego jedzenia lokalnej produkcji.
 - Przydzielona część posiłku jest rezerwowana, a ułamek zachowany w zapisie; nie da się wydać tej samej żywności ponownie.
-- Gdy nie ma centralnego ani już przydzielonego jedzenia, bazowe szczęście spada o 25 punktów na aktywną godzinę. Dostawa zatrzymuje dalszy spadek, bez zwrotu; kara nie jest mnożona przez liczbę ludzi.
-- Zmiana populacji zmienia popyt. Pauza, ukrycie, offline i tempo działają jak w pozostałych godzinowych regułach. Przeludnienie i głód sumują spadki bazowe.
+- Historycznie brak centralnego i przydzielonego jedzenia dawał −25 punktów/h bazowego szczęścia. **FE-13 zastępuje tę karę** indywidualnym licznikiem głodu, okresem 12 h i −5 punktów/os./h; zasady automatycznego jedzenia i zachowania posiłku pozostają aktualne.
+- Zmiana populacji zmienia popyt. Pauza, ukrycie, offline i tempo działają jak w pozostałych godzinowych regułach. Przeludnienie i głód sumują skutki w indywidualnym szczęściu zgodnie z FE-13.
 - Food i Residents pokazują popyt/h, centralny stan i żywienie/głód; testy obejmują zachowanie zasobów i dokładne granice wyczerpania/dostaw.
 
 ### FE-12 — Kompaktowe panele producentów
@@ -156,18 +156,29 @@ Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zam
 - Wyjaśnienia pod „i”, bez powtórzonych dużych kart produkcji i dużych/zbiorczych przycisków pracowników wewnątrz budynku.
 - Wspólna pula, limity, czas powrotu, pełne składy i zatrzymanie wejść pozostają zgodne z gospodarką; panele odświeżają się na żywo i działają na telefonie.
 
+### FE-13 — Indywidualne szczęście, głód, bezrobocie i pełne procenty
+
+Status: implementacja i lokalna weryfikacja zaliczone; publikacja i test publicznej wersji oczekują na potwierdzenie w dzienniku. Milestone frontend #3. GitHub Issue: [#24](https://github.com/ksobczak321-oss/gra/issues/24).
+
+- Trwała tożsamość każdej osoby, indywidualne szczęście, przydział, powrót i niezależne liczniki ciągłego głodu oraz bezrobocia, zapis schematu 7 bez utraty zasobów i wcześniejszego postępu.
+- +1 punkt procentowy/os./h za jedzenie i +1 za przydział. Każdy brak po 12 h daje osobne −5 punktów/h, bez kary wstecz. Jedzenie i ponowne zatrudnienie resetują wyłącznie odpowiadający licznik.
+- Nakarmiony pracownik +2/h; nakarmiony długotrwale bezrobotny i głodny długotrwale pracownik po −4/h; oba długotrwałe braki −10/h. Powrót liczy się jako czas bez pracy, z zachowaniem osobistego szczęścia.
+- Głód od razu zmniejsza produkcję i przewóz do połowy: 10→5 i 60→30 sztuk/os./h, również przy transporcie na budowę; podatki przydzielonych pozostają 1 moneta/h.
+- Osobiste ograniczenie ±100% przed średnią populacji; efekty kaplicy, latarni, pełnych składów i przeludnienia pozostają. Nowa osoba zaczyna od 0% bez historycznych bonusów.
+- HUD, grupy i osoby pokazują pełne procenty zaokrąglone w górę; silnik i zapis zachowują ułamki. Testy obejmują progi i resety, historię osoby, zmianę załogi/populacji, migrację, pauzę, zgodność kroków czasu i interfejs komputer/telefon.
+
 ## Backend
 
 ### BE-01 — Kontrakt API i model postępu gracza
 
 Status: zaplanowane; backend nie jest jeszcze zaimplementowany. GitHub Issue: [#11](https://github.com/ksobczak321-oss/gra/issues/11).
 
-Zakres: opisać kontrakt przed wyborem technologii. Kliencki schemat `version: 6` jest punktem wyjścia, nie gotowym modelem serwerowym.
+Zakres: opisać kontrakt przed wyborem technologii. Kliencki schemat `version: 7` jest punktem wyjścia, nie gotowym modelem serwerowym.
 
 Kryteria odbioru:
 
 - Udokumentowane są odczyt stanu, komendy gry, wyniki ekspedycji i odbiór nagród.
-- Model obejmuje zasoby, budynki, przydziały, cel latarni, zadania, ekspedycje, poziom ratusza, miejsca mieszkalne, przeludnienie, ułamkowe szczęście, postęp populacji, osiem miejsc pracy, limity załóg, ułamek podatku i wersję stanu.
+- Model obejmuje zasoby, budynki, przydziały, cel latarni, zadania, ekspedycje, poziom ratusza, miejsca mieszkalne, przeludnienie, ułamkowe szczęście, postęp populacji, osiem miejsc pracy, limity załóg, ułamek podatku, tożsamości i indywidualne szczęście mieszkańców, osobne liczniki głodu/bezrobocia, rezerwację części posiłku i wersję stanu.
 - Kontrakt określa format błędów, walidację, idempotencję komend i obsługę konfliktu wersji.
 - Są przykłady poprawnych i odrzuconych żądań oraz plan migracji zapisów.
 
@@ -205,6 +216,8 @@ Kryteria odbioru:
 - Serwer sprawdza dokładnie osiem miejsc pracy z FE-07, limit `floor(aktualna populacja / 2)` na budynek oraz wspólną pulę mieszkańców bez podwójnego przydziału. Dom, ratusz, kaplica i latarnia nie zatrudniają załogi.
 - Serwer nalicza 1 monetę podatku za osobę przydzieloną do istniejącego miejsca pracy na rzeczywistą aktywną godzinę, z rozliczeniem zmian załogi i zachowaniem ułamka. Bezrobotni nie płacą; brak osobnej automatycznej produkcji monet w porcie, targu i ratuszu. Handel i nagrody pozostają odrębnymi operacjami. Zasady czasu poza grą wymagają osobnego ustalenia.
 - Serwer odrzuca rozbudowę ponad poziom ratusza bez wydania zasobów. Wylicza osobno limit populacji i miejsca w domu oraz nalicza karę za przeludnienie z FE-06: 1 punkt procentowy szczęścia na osobę bez miejsca na godzinę, z zachowaniem części ułamkowej i spójnej migracji zapisów.
+- Serwer odtwarza indywidualne szczęście i liczniki z FE-13: +1 za jedzenie, +1 za przydział, osobne −5/h po 12 h każdego braku, odpowiednie resety bez utraty historii osoby, ograniczenie każdej osoby przed średnią i nowych mieszkańców od 0%. Ułamki pozostają w obliczeniach, pełne procenty to prezentacja klienta.
+- Serwer rozlicza jedzenie 1 Food/os./h wyłącznie z centralnego magazynu, ułamek przydzielonego posiłku oraz połowę wydajności produkcji i transportu od początku głodu, bez obniżenia podatków.
 - Serwer odtwarza indywidualną produkcję, centralny transport i rezerwacje, targ, czasowe premie kaplicy i latarni, średnią szczęścia oraz kolejkę budowy zgodnie z FE-07/08/09 i [aktualnymi regułami](ECONOMY-RULES.md). Uprawnienia pakietu są częścią BE-05.
 - Walidowane są przejścia planszy, zużycie narzędzi i liczba skrzyń; sam komunikat klienta „ukończono” nie wystarcza do wypłaty.
 - Testy obejmują ujemne ilości, nieprawidłowe liczby, duplikaty komend, wyścigi dwóch sesji i wielokrotny odbiór nagrody.

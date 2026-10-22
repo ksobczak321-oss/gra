@@ -245,3 +245,19 @@ body.reduce-motion .lighthouse-beam{animation:none;transform:rotate(3deg);opacit
   #island-dialog .producer-workers-row { gap: 6px; }
   #island-dialog .producer-workers-row .producer-worker-count { font-size: 18px; }
 }
+
+/* Individual histories are available on demand without lengthening the overview. */
+#island-dialog .happiness-rules-table { width: 100%; margin: 12px 0; border-collapse: collapse; font-size: 12px; }
+#island-dialog .happiness-rules-table caption { padding-bottom: 8px; color: #b9cdd7; text-align: start; }
+#island-dialog .happiness-rules-table th, #island-dialog .happiness-rules-table td { padding: 8px; border-bottom: 1px solid #52718155; text-align: start; font-weight: 400; }
+#island-dialog .happiness-rules-table thead th { color: #ffe5ad; font-weight: 700; }
+#island-dialog .happiness-rules-table td { color: #ffe0a6; white-space: nowrap; font-variant-numeric: tabular-nums; }
+#island-dialog .resident-happiness-list { max-height: 360px; margin: 10px 0 0; padding: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; list-style: none; }
+#island-dialog .resident-happiness-row { margin: 0; padding: 10px 5px; border-bottom: 1px solid #52718155; }
+#island-dialog .resident-summary, #island-dialog .resident-status { display: flex; justify-content: space-between; gap: 12px; }
+#island-dialog .resident-summary { color: #ffe5ad; font-size: 13px; font-variant-numeric: tabular-nums; }
+#island-dialog .resident-status { margin-top: 3px; color: #d1e0e6; font-size: 12px; }
+#island-dialog [data-resident-value], #island-dialog [data-resident-rate] { flex-shrink: 0; white-space: nowrap; }
+#island-dialog [data-resident-timers] { display: block; margin-top: 4px; color: #adc2cd; font-size: 11px; line-height: 1.5; }
+#island-dialog .resident-roster > summary:focus-visible { outline: 2px solid #ffe1a5; outline-offset: 3px; border-radius: 3px; }
+@media (max-width: 480px) { #island-dialog .happiness-rules-table th, #island-dialog .happiness-rules-table td { padding-inline: 4px; } }

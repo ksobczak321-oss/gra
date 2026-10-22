@@ -1,5 +1,5 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, taxRate, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour } from './harborlight-v1-state.js?v=english-v7';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=english-v7';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, taxRate, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=happiness-v8';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=happiness-v8';
 import { createAmbientScene } from './harborlight-v1-ambient.js?v=living-world-3';
 
 const SAVE_KEY = 'harborlight-v1-interactive-save';
@@ -204,10 +204,19 @@ for (const [id, y] of [['repair', 150], ['wood', 179], ['stone', 207]]) {
   hud[`objective-${id}`] = el('span', { class: 'live-objective', 'aria-hidden': 'true', style: { left: '1603px', top: `${y}px`, width: '45px', height: '20px' } });
   layer.append(hud[`objective-${id}`]);
 }
-const happinessText = () => {
-  const rounded = Math.round(Math.abs(state.happiness) * 10) / 10;
-  return `${rounded ? state.happiness > 0 ? '+' : '−' : ''}${rounded.toLocaleString('en-US', { maximumFractionDigits: 1 })}%`;
+const roundUpHappiness = value => {
+  // Exact hourly totals can land a few floating-point bits above an integer.
+  const nearest = Math.round(value);
+  return Math.ceil(Math.abs(value - nearest) <= 1e-9 ? nearest : value);
 };
+const happinessPercent = value => {
+  const rounded = roundUpHappiness(Math.max(-100, Math.min(100, value)));
+  return `${rounded > 0 ? '+' : rounded < 0 ? '−' : ''}${Math.abs(rounded).toLocaleString('en-US')}%`;
+};
+const happinessText = () => happinessPercent(state.happiness);
+const productionSpeed = () => (state.lighthouseRemaining > 0 ? 2 : 1) * productionMultiplier(state);
+const localProductionRate = id => `${state.buildings[id].workers * 10 * productionSpeed()} units/h`;
+const transportRate = id => `${state.buildings[id].workers * 60 * productionMultiplier(state)} units/h`;
 function renderHUD() {
   hud.notifications.textContent = state.notifications.filter(item => !item.read).length;
   for (const id of Object.keys(RESOURCES)) {
@@ -221,7 +230,8 @@ function renderHUD() {
   hud.happiness.textContent = happinessText();
   document.getElementById('hit-level').setAttribute('aria-label', `Level ${state.buildings.townhall.level} — Town Hall; capacity ${state.capacity} residents`);
   document.getElementById('hit-happiness').setAttribute('aria-label', `Happiness: ${happinessText()} — residents and population growth`);
-  document.getElementById('hit-happiness').dataset.sentiment = state.happiness > 0 ? 'positive' : state.happiness < 0 ? 'negative' : 'neutral';
+  const displayedHappiness = roundUpHappiness(state.happiness);
+  document.getElementById('hit-happiness').dataset.sentiment = displayedHappiness > 0 ? 'positive' : displayedHappiness < 0 ? 'negative' : 'neutral';
   document.getElementById('hit-population').setAttribute('aria-label', `Residents: ${state.population}; Town Hall capacity: ${state.capacity}; housing: ${housingCapacity(state)}; unhoused: ${unhousedResidents(state)}; working: ${totalWorkers(state)}; available: ${freeWorkers(state)} — residents and worker assignments`);
   document.getElementById('hit-population').dataset.overcrowded = String(unhousedResidents(state) > 0);
   for (const id of Object.keys(mobileHudValues)) mobileHudValues[id].textContent = hud[id].textContent;
@@ -317,7 +327,7 @@ function refreshLivePanel() {
     node.dataset.value = value;
     node.dataset.limit = producerCapacity(state);
   });
-  dialog.querySelectorAll('[data-local-rate]').forEach(node => { node.textContent = `${state.buildings[node.dataset.localRate].workers * (state.lighthouseRemaining > 0 ? 20 : 10)} units/h`; });
+  dialog.querySelectorAll('[data-local-rate]').forEach(node => { node.textContent = localProductionRate(node.dataset.localRate); });
   dialog.querySelectorAll('[data-work-progress]').forEach(node => { node.textContent = node.classList.contains('producer-next-unit') ? productionTimerText(node.dataset.workProgress) : productionDescription(node.dataset.workProgress); });
   dialog.querySelectorAll('[data-central-resource]').forEach(node => {
     const id = node.dataset.centralResource, limits = warehouseLimits(state);
@@ -336,6 +346,7 @@ function refreshLivePanel() {
   dialog.querySelectorAll('[data-market-locked]').forEach(node => { node.textContent = count(state.market.locked.filter(lot => lot.resource === node.dataset.marketLocked).reduce((sum, lot) => sum + lot.amount, 0)); });
   dialog.querySelectorAll('[data-market-timer]').forEach(node => { node.textContent = state.market.locked.length ? durationText(Math.min(...state.market.locked.map(lot => lot.remaining))) : 'No locked goods'; });
   dialog.querySelectorAll('[data-happiness-breakdown]').forEach(node => { node.replaceChildren(...happinessBreakdown()); });
+  refreshResidentRosters();
   dialog.querySelectorAll('[data-worker-building]').forEach(node => {
     const id = node.dataset.workerBuilding, building = state.buildings[id];
     node.disabled = node.dataset.workerAction === 'clear' || Number(node.dataset.workerDelta) < 0 ? building.workers === 0 : freeWorkers(state) <= 0 || building.workers >= workerLimit(state, id);
@@ -394,7 +405,7 @@ function projectDescription(project) {
   if (project.stage === 'queued') return 'Materials paid and reserved. Waiting for a construction slot or the previous level to finish.';
   if (project.stage === 'building') return `Building level ${project.targetLevel}: remaining ${durationText(project.buildRemaining)}. Transport took ${durationText(project.transportSeconds)}.`;
   const delivered = project.goodsTotal - project.goodsRemaining;
-  const waiting = nextConstruction(state)?.order !== project.order ? 'Waiting for an earlier delivery.' : !state.buildings.warehouse.workers ? 'Assign warehouse workers to resume deliveries.' : `Estimated remaining transport: ${durationText(Math.ceil(project.goodsRemaining / state.buildings.warehouse.workers) * 60)}.`;
+  const waiting = nextConstruction(state)?.order !== project.order ? 'Waiting for an earlier delivery.' : !state.buildings.warehouse.workers ? 'Assign warehouse workers to resume deliveries.' : `Estimated remaining transport: ${durationText(Math.ceil(project.goodsRemaining / state.buildings.warehouse.workers) * 60 / productionMultiplier(state))}.`;
   return `Delivery for level ${project.targetLevel}: ${count(delivered)} / ${count(project.goodsTotal)} units. ${waiting}`;
 }
 function constructionDescription(id) {
@@ -405,7 +416,7 @@ function upgradeTransportDescription(id) {
   const workers = state.buildings.warehouse.workers;
   const goods = MATERIAL_IDS.reduce((sum, resource) => sum + (buildingCost(state, id)?.[resource] || 0), 0);
   const buildingTime = id === 'lighthouse' ? 'twice as long as transport' : 'the same amount of time';
-  return workers ? `Estimated transport: ${durationText(Math.ceil(goods / workers) * 60)}. Construction will take ${buildingTime}. Changing warehouse staffing may affect delivery time.` : `Transport is waiting for warehouse workers (60 units per worker per hour). Construction then takes ${id === 'lighthouse' ? 'twice as long as transport' : 'as long as transport'}.`;
+  return workers ? `Estimated transport: ${durationText(Math.ceil(goods / workers) * 60 / productionMultiplier(state))}. Construction will take ${buildingTime}. Warehouse staffing and hunger may affect delivery time.` : `Transport is waiting for warehouse workers (normally 60 units per worker per hour; 30 while hungry). Construction then takes ${id === 'lighthouse' ? 'twice as long as transport' : 'as long as transport'}.`;
 }
 function constructionPanel() {
   const projects = state.constructionProjects;
@@ -490,16 +501,16 @@ function productionTimerText(id) {
   if (building.ready >= producerCapacity(state)) return 'Storage full';
   if (recipe.input && state.resources[recipe.input] < recipe.amount) return `Waiting for ${nameOf(recipe.input)}`;
   const progress = Math.max(0, ...(building.workProgress || []));
-  return `${state.paused ? 'Paused · ' : ''}Next unit in ${durationText((360 - progress) / (state.lighthouseRemaining > 0 ? 2 : 1))}`;
+  return `${state.paused ? 'Paused · ' : ''}Next unit in ${durationText((360 - progress) / productionSpeed())}`;
 }
 function productionInfo(id) {
   const recipe = PRODUCTION_RECIPES[id];
   const popup = el('div', { id: `production-info-${id}`, class: 'upgrade-info-popover production-info-popover', hidden: true, role: 'region', 'aria-label': 'Production information', 'data-production-help': id, 'data-production-popover': id },
     el('h4', {}, 'Production information'),
     el('p', {}, BUILDINGS[id].description),
-    el('p', {}, `Product: ${nameOf(recipe.output)}. Potential output: `, el('strong', { 'data-local-rate': id }, `${state.buildings[id].workers * (state.lighthouseRemaining > 0 ? 20 : 10)} units/h`)),
+    el('p', {}, `Product: ${nameOf(recipe.output)}. Potential output: `, el('strong', { 'data-local-rate': id }, localProductionRate(id))),
     recipe.input ? el('p', {}, `Each ${nameOf(recipe.output).toLocaleLowerCase('en-US')} requires ${recipe.amount} ${nameOf(recipe.input).toLocaleLowerCase('en-US')} from the central warehouse (2:1).`) : null,
-    el('p', {}, 'Each worker normally completes 1 unit every 6 minutes. The Lighthouse bonus doubles material production. Local storage holds 200 units per Town Hall level; warehouse workers collect finished goods at 60 units per worker per hour.'),
+    el('p', {}, 'Each fed worker normally completes 1 unit every 6 minutes; hunger halves output immediately to 1 every 12 minutes. The Lighthouse bonus doubles material production. Local storage holds 200 units per Town Hall level. Warehouse workers normally carry 60 units per hour, or 30 while hungry.'),
     el('p', { 'data-full-penalty': id }, fullPenaltyDescription(id)),
     el('p', {}, 'Full local storage stops production and lowers worker happiness by 10, then by another 10 every 24 active hours, down to −50. The penalty ends when storage has space again.'),
     el('p', {}, 'Releasing a worker discards their unfinished unit. They take 5 minutes to return home and cannot work, earn taxes or be reassigned during that journey.'));
@@ -591,7 +602,7 @@ function productionCard(id, navigation = false) {
     el('p', {}, 'Product: ', el('strong', {}, nameOf(recipe.output))),
     el('div', { class: 'stat-grid logistics-stats' },
       stat('Local stock', el('span', { 'data-local-buffer': id, 'data-value': state.buildings[id].ready, 'data-limit': producerCapacity(state) }, `${count(state.buildings[id].ready)} / ${count(producerCapacity(state))}`)),
-      stat('Potential output', el('span', { 'data-local-rate': id }, `${state.buildings[id].workers * (state.lighthouseRemaining > 0 ? 20 : 10)} units/h`))),
+      stat('Potential output', el('span', { 'data-local-rate': id }, localProductionRate(id)))),
     el('p', { class: 'production-status', 'data-work-progress': id }, productionDescription(id)),
     recipe.input ? note(`Per unit: ${recipe.amount} ${nameOf(recipe.input).toLocaleLowerCase('en-US')} from the central warehouse → 1 ${nameOf(recipe.output).toLocaleLowerCase('en-US')}.`) : null,
     note('Finished goods wait at the building until warehouse workers deliver them to central storage.'));
@@ -604,7 +615,7 @@ function productionDescription(id) {
   if (building.ready >= producerCapacity(state)) return 'Local storage is full. Production is waiting for carriers to collect the goods.';
   if (recipe.input && state.resources[recipe.input] < recipe.amount) return `Missing central warehouse input: ${recipe.amount} ${nameOf(recipe.input).toLocaleLowerCase('en-US')} per unit.`;
   const progress = Math.max(0, ...(building.workProgress || []));
-  return `Next unit in ${durationText((360 - progress) / (state.lighthouseRemaining > 0 ? 2 : 1))}.${state.paused ? ' Production is paused.' : ''}`;
+  return `Next unit in ${durationText((360 - progress) / productionSpeed())}.${state.paused ? ' Production is paused.' : ''}`;
 }
 function warehouseOverview() {
   const limits = warehouseLimits(state);
@@ -613,14 +624,14 @@ function warehouseOverview() {
       stat('Storage used', el('span', { 'data-logistics-stat': 'used' }, count(warehouseUsed(state)))),
       stat('Total capacity', el('span', { 'data-logistics-stat': 'total' }, count(limits.total))),
       stat('Capacity per resource', el('span', { 'data-logistics-stat': 'per-resource' }, count(limits.perResource))),
-      stat('Transport capacity', el('span', { 'data-logistics-stat': 'carrier-rate' }, `${state.buildings.warehouse.workers * 60} units/h`))),
+      stat('Transport capacity', el('span', { 'data-logistics-stat': 'carrier-rate' }, transportRate('warehouse')))),
     el('div', { class: 'warehouse-stock-list' }, MATERIAL_IDS.map(id => el('div', { class: 'warehouse-stock-row' },
       el('strong', {}, nameOf(id)), el('span', { 'data-central-resource': id, 'data-value': state.resources[id], 'data-limit': limits.perResource }, `${count(state.resources[id])} / ${count(limits.perResource)}`)))),
     el('p', { class: 'warehouse-pending' }, 'Deliveries waiting for space: ', el('strong', { 'data-logistics-stat': 'pending' }, logisticsStatValue('pending'))),
     el('div', { class: 'warehouse-pending-details' }, MATERIAL_IDS.map(id => el('span', {}, `${nameOf(id)}: `, el('span', { 'data-pending-resource': id }, count(state.pendingDeliveries?.[id] || 0))))),
     rules('How the warehouse works',
       note('A level 1 Warehouse holds 4,000 units in total and up to 1,000 of each resource. Each additional level increases both limits by 50%. Coins are kept in a separate treasury.'),
-      note('Each carrier delivers 60 units per active hour. Transport stops when storage is full or no goods are ready. Set the collection priority below.')));
+      note('Each fed carrier delivers 60 units per active hour; a hungry carrier delivers 30. Transport stops when storage is full or no goods are ready. Set the collection priority below.')));
 }
 function transportPriorityPanel() {
   const priority = state.transportPriority || MATERIAL_IDS;
@@ -633,7 +644,7 @@ function transportPriorityPanel() {
 }
 function logisticsStatValue(key) {
   const limits = warehouseLimits(state);
-  const values = { used: count(warehouseUsed(state)), total: count(limits.total), 'per-resource': count(limits.perResource), 'carrier-rate': `${state.buildings.warehouse.workers * 60} units/h`, pending: count(Object.values(state.pendingDeliveries || {}).reduce((sum, value) => sum + value, 0)), returning: (state.returningWorkers || []).length, 'next-return': returnDescription() };
+  const values = { used: count(warehouseUsed(state)), total: count(limits.total), 'per-resource': count(limits.perResource), 'carrier-rate': transportRate('warehouse'), 'market-rate': transportRate('market'), pending: count(Object.values(state.pendingDeliveries || {}).reduce((sum, value) => sum + value, 0)), returning: (state.returningWorkers || []).length, 'next-return': returnDescription() };
   return values[key] ?? '';
 }
 function durationText(seconds) {
@@ -649,7 +660,8 @@ function rules(title, ...children) {
   return el('details', { class: 'island-rules' }, el('summary', {}, title), ...children);
 }
 function foodStatValues() {
-  return { demand: `${foodDemandPerHour(state)} food/h`, status: hasFoodForResidents(state) ? 'Feeding' : 'Hungry', penalty: hungerPenaltyPerHour(state) ? `−${hungerPenaltyPerHour(state)} percentage points/h` : '0 percentage points/h' };
+  const affected = hasFoodForResidents(state) ? 0 : state.residents.filter(resident => resident.hungerSeconds >= 12 * 3600).length;
+  return { demand: `${foodDemandPerHour(state)} food/h`, status: hasFoodForResidents(state) ? 'Feeding' : 'Hungry', penalty: hungerPenaltyPerHour(state) ? `−5 percentage points/h per affected resident (${affected})` : '0 percentage points/h', efficiency: `${productionMultiplier(state) * 100}%` };
 }
 function feedingPanel() {
   const values = foodStatValues();
@@ -657,8 +669,9 @@ function feedingPanel() {
     el('div', { class: 'stat-grid' },
       stat('Food demand', el('span', { 'data-food-stat': 'demand' }, values.demand)),
       stat('Status', el('span', { 'data-food-stat': 'status' }, values.status)),
-      stat('Shortage penalty', el('span', { 'data-food-stat': 'penalty' }, values.penalty))),
-    rules('Food consumption', note('Each resident consumes 1 Food per real active hour, taken only from the central warehouse. Food already allocated to meals remains available to residents even when central stock reaches zero. Once food runs out, base happiness falls by 25 percentage points per active hour until food reaches the central warehouse. New deliveries stop further loss; they do not restore lost happiness. Pausing, hiding the tab or closing the game stops consumption.')));
+      stat('Shortage penalty', el('span', { 'data-food-stat': 'penalty' }, values.penalty)),
+      stat('Work efficiency', el('span', { 'data-food-stat': 'efficiency' }, values.efficiency))),
+    rules('Food consumption', note('Each resident consumes 1 Food per real active hour, taken only from the central warehouse. Food already allocated to meals remains available to residents even when central stock reaches zero. Eating adds 1 happiness point per active hour to each resident. Without food, that bonus stops and work efficiency immediately falls to 50%. After 12 continuous hungry hours, that resident also loses 5 happiness points per active hour. Eating again resets their hunger timer; lost happiness is not refunded. Pausing, hiding the tab or closing the game stops consumption.')));
 }
 function residentsPanel() {
   const liveStat = (label, id, value) => stat(label, el('span', { 'data-population-stat': id }, value));
@@ -671,12 +684,15 @@ function residentsPanel() {
       rules('Work and return rules',
         note('Each of the eight workplaces can employ up to half the current population. Each resident can have only one job. With 144 residents, each building can employ up to 72 people.'),
         note('A released worker takes 5 minutes to return home. During that time they are unavailable, do not work and do not pay taxes. You can assign them again after they return.'),
-        note('Each production worker makes 10 units per hour, completing one every 6 minutes of their own work. They finish 1 unit after 7 minutes and 2 after 13. Releasing a worker discards their unfinished unit.'),
+        note('Each fed production worker makes 10 units per hour, completing one every 6 minutes of their own work. Hunger halves production and transport immediately. Releasing a worker discards their unfinished unit.'),
         note('Each assigned worker pays 1 coin per active hour into the treasury. The Town Hall, House, Chapel and Lighthouse do not employ workers. Pausing or hiding the tab stops taxes.'))),
     el('div', { class: 'panel-grid workforce-grid' }, WORKPLACE_IDS.map(id => workplaceCard(id))),
     card(el('h3', {}, 'Happiness — population average'),
+      note('Every resident keeps their own happiness, from −100% to +100%. The island value is the average of individual values. Percentages are displayed rounded up to whole numbers; partial hours are still counted precisely.'),
+      individualHappinessRules(),
       note('A full store gives its workers −10 happiness, with another −10 every 24 active hours, down to −50. Island happiness is the average across all residents. The penalty ends once the store has space again.'),
-      el('div', { 'data-happiness-breakdown': '' }, happinessBreakdown())),
+      el('div', { 'data-happiness-breakdown': '' }, happinessBreakdown()),
+      residentRoster()),
     card(el('h3', {}, 'Town Hall and housing'),
       el('div', { class: 'stat-grid housing-stats' }, liveStat('Town Hall capacity', 'capacity', state.capacity), liveStat('Housing', 'housing', housingCapacity(state)), liveStat('Unhoused', 'unhoused', unhousedResidents(state)), liveStat('Happiness impact', 'penalty', housingPenaltyText())),
       housingNotice(), note('Population capacity = 24 × Town Hall level. Housing = 24 × House level. Population can exceed housing, up to the Town Hall capacity.'),
@@ -686,8 +702,8 @@ function residentsPanel() {
       note('At 0% happiness, population stays the same. Positive happiness attracts new residents; negative happiness causes departures. At least 6 residents always remain.'),
       el('div', { class: 'population-rate-table' }, ...[['Happiness', 'Change of 1 resident'], ['±25%', 'every 12 h'], ['±50%', 'every 6 h'], ['±75%', 'about every 1 h 43 min'], ['±100%', 'every 1 h']].map(([label, value]) => el('div', {}, el('span', {}, label), el('strong', {}, value)))),
       note('Hours mean real active time in a visible tab. Pausing stops population changes; clock speed 1× / 2× / 4× does not shorten these hours. The timer waits while the tab is hidden or the game is closed.'),
-      note('Overcrowding changes happiness over time, so the next population change is estimated using current happiness.')),
-    el('p', { class: 'notice', 'data-lighthouse-bonus': '' }, lighthouseDescription()), note('Decorations and paths improve base happiness. Chapel and Lighthouse bonuses last for a limited time.'));
+      note('Food, employment and overcrowding change individual happiness over time. The next population change is estimated using the current population average.')),
+    el('p', { class: 'notice', 'data-lighthouse-bonus': '' }, lighthouseDescription()), note('Decorations and paths improve each resident’s happiness. Chapel and Lighthouse bonuses last for a limited time.'));
 }
 function workplaceCard(id) {
   const building = state.buildings[id];
@@ -696,7 +712,7 @@ function workplaceCard(id) {
     el('p', { class: 'workforce-count' }, 'Workers: ', el('strong', { 'data-worker-count': id }, building.workers), ' / ', el('span', { 'data-worker-limit': id }, workerLimit(state, id))),
     el('p', {}, 'Taxes: ', el('span', { 'data-workplace-tax': id }, hourlyCoins(building.workers * (state.chapelRemaining > 0 ? 2 : 1)))),
     el('p', { 'data-full-penalty': id, class: 'full-storage-status' }, fullPenaltyDescription(id)),
-    PRODUCTION_RECIPES[id] ? el('p', { class: 'workplace-production', 'data-work-progress': id }, productionDescription(id)) : id === 'warehouse' ? el('p', {}, 'Transport capacity: ', el('span', { 'data-logistics-stat': 'carrier-rate' }, `${building.workers * 60} units/h`)) : null,
+    PRODUCTION_RECIPES[id] ? el('p', { class: 'workplace-production', 'data-work-progress': id }, productionDescription(id)) : id === 'warehouse' ? el('p', {}, 'Transport capacity: ', el('span', { 'data-logistics-stat': 'carrier-rate' }, transportRate(id))) : null,
     el('div', { class: 'workforce-actions' },
       button('− Worker', () => perform({ type: 'assign', building: id, delta: -1 }), { class: 'action secondary', disabled: !building.workers, 'data-worker-building': id, 'data-worker-delta': -1, 'aria-label': `Release worker: ${titleOf(id)}` }),
       button('+ Worker', () => perform({ type: 'assign', building: id, delta: 1 }), { disabled: freeWorkers(state) <= 0 || building.workers >= workerLimit(state, id), 'data-worker-building': id, 'data-worker-delta': 1, 'aria-label': `Assign worker: ${titleOf(id)}` })),
@@ -758,7 +774,60 @@ function fullPenaltyDescription(id) {
 function happinessBreakdown() {
   return happinessGroups(state).map(group => el('div', { class: 'happiness-row' },
     el('span', {}, group.building ? titleOf(group.building) : 'Available and returning'),
-    el('strong', {}, `${group.count} residents · ${Number(group.happiness.toFixed(1)).toLocaleString('en-US')}%`)));
+    el('strong', {}, `${group.count} ${group.count === 1 ? 'resident' : 'residents'} · ${happinessPercent(group.happiness)}`)));
+}
+function individualHappinessRules() {
+  const rows = [
+    ['Fed and employed', '+2 pp/h'],
+    ['Fed, unemployed for up to 12 h', '+1 pp/h'],
+    ['Fed, unemployed for more than 12 h', '−4 pp/h'],
+    ['Hungry for up to 12 h, employed', '+1 pp/h'],
+    ['Hungry for more than 12 h, employed', '−4 pp/h'],
+    ['Hungry and unemployed, both for more than 12 h', '−10 pp/h']
+  ];
+  return rules('Individual happiness rules',
+    note('Eating adds +1 point per hour and employment adds another +1. Each continuous lack of food or work has its own 12-hour grace period, followed by a −5 point/hour penalty. Eating or starting a job resets the corresponding timer. Returning home counts as unemployment.'),
+    el('table', { class: 'happiness-rules-table' },
+      el('caption', {}, 'Hourly changes before housing, storage and temporary bonuses'),
+      el('thead', {}, el('tr', {}, el('th', { scope: 'col' }, 'Resident state'), el('th', { scope: 'col' }, 'Change'))),
+      el('tbody', {}, rows.map(([label, value]) => el('tr', {}, el('th', { scope: 'row' }, label), el('td', {}, value))))),
+    note('Hunger immediately halves production and transport, even during the grace period. Assigned workers still pay 1 coin per active hour. New residents begin at 0% personal happiness before current island bonuses. All timers stop while paused, hidden or offline.'));
+}
+function residentRoster() {
+  const details = el('details', { class: 'island-rules resident-roster', 'data-resident-roster': '' },
+    el('summary', {}, 'Individual residents (', el('span', { 'data-resident-count': '' }, state.residents.length), ')'),
+    el('ul', { class: 'resident-happiness-list', 'data-resident-list': '', 'aria-label': 'Individual resident happiness' }));
+  details.addEventListener('toggle', () => { if (details.open) refreshResidentRosters(); });
+  return details;
+}
+function residentRow(resident) {
+  return el('li', { class: 'resident-happiness-row', 'data-resident-id': resident.id },
+    el('div', { class: 'resident-summary' }, el('strong', {}, `Resident #${resident.id}`), el('strong', { 'data-resident-value': '' })),
+    el('div', { class: 'resident-status' }, el('span', { 'data-resident-job': '' }), el('span', { 'data-resident-rate': '' })),
+    el('small', { 'data-resident-timers': '' }));
+}
+function refreshResidentRosters() {
+  dialog.querySelectorAll('[data-resident-roster]').forEach(details => {
+    details.querySelector('[data-resident-count]').textContent = state.residents.length;
+    if (!details.open) return;
+    const residents = new Map(state.residents.map(resident => [String(resident.id), resident]));
+    const list = details.querySelector('[data-resident-list]');
+    const signature = state.residents.map(resident => resident.id).join(',');
+    if (list.dataset.residentSignature !== signature) {
+      list.replaceChildren(...state.residents.map(residentRow));
+      list.dataset.residentSignature = signature;
+    }
+    list.querySelectorAll('[data-resident-id]').forEach(row => {
+      const resident = residents.get(row.dataset.residentId);
+      const value = residentHappiness(state, resident);
+      const rate = residentHappinessRate(state, resident);
+      const roundedRate = roundUpHappiness(rate);
+      row.querySelector('[data-resident-value]').textContent = happinessPercent(value);
+      row.querySelector('[data-resident-job]').textContent = resident.workplace ? titleOf(resident.workplace) : resident.returnRemaining > 0 ? 'Returning home' : 'Unemployed';
+      row.querySelector('[data-resident-rate]').textContent = `${roundedRate > 0 ? '+' : roundedRate < 0 ? '−' : ''}${Math.abs(roundedRate)} pp/h${state.paused ? ' · paused' : ''}`;
+      row.querySelector('[data-resident-timers]').textContent = `${hasFoodForResidents(state) ? 'Fed' : `Hungry for ${durationText(resident.hungerSeconds)}`} · ${resident.workplace ? 'Employed' : `Without work for ${durationText(resident.unemployedSeconds)}`}`;
+    });
+  });
 }
 function blessingDescription() {
   const automatic = state.chapelRemaining > 0 ? `Upgrade bonus: ${durationText(state.chapelRemaining)} remaining, +${state.buildings.chapel.level * 10} happiness and taxes ×2.` : 'No active upgrade bonus.';
@@ -783,7 +852,7 @@ function marketPanel() {
   const quantity = el('input', { id: 'market-quantity', type: 'number', min: '10', step: '10', value: '10', 'aria-label': 'Quantity to exchange' });
   return el('div', {}, el('h3', {}, 'Market — barter without coins'),
     note('Raw materials: Wood, Stone, Grain. Processed goods: Planks, Food. Exchange within one category at 1:1 before the 10% fee: 10 units yield 9. There is no limit on the number of exchanges.'),
-    el('div', { class: 'stat-grid' }, stat('Storage used', el('strong', { 'data-market-used': '' }, `${count(marketUsed(state))} / ${count(marketCapacity(state))}`)), stat('Delivery to Market', `${state.buildings.market.workers * 60} units/h`)),
+    el('div', { class: 'stat-grid' }, stat('Storage used', el('strong', { 'data-market-used': '' }, `${count(marketUsed(state))} / ${count(marketCapacity(state))}`)), stat('Delivery to Market', el('span', { 'data-logistics-stat': 'market-rate' }, transportRate('market')))),
     el('p', { class: 'notice', 'data-market-timer': '' }, state.market.locked.length ? durationText(Math.min(...state.market.locked.map(lot => lot.remaining))) : 'No locked goods'),
     note('Market workers bring goods from the central Warehouse. Each delivery is locked for one hour after arrival. After an exchange, request pickup so Warehouse workers can bring the goods back.'),
     card(el('h3', {}, 'Exchange goods'), el('div', { class: 'market-exchange-fields' }, from, to, quantity), button('Exchange — 10% fee', () => perform({ type: 'marketExchange', from: from.value, to: to.value, amount: Number(quantity.value) }), { 'data-market-exchange': '' })),
@@ -877,6 +946,8 @@ function puzzlePanel() {
 }
 function renderPanel() {
   if (!panel) return;
+  const rosterOpen = dialog.querySelector('[data-resident-roster]')?.open;
+  const rosterScroll = dialog.querySelector('[data-resident-list]')?.scrollTop || 0;
   closeInfoPopup(false);
   const titles = { home: 'Your island', menu: 'HARBORLIGHT', buildings: 'Buildings', resources: 'Warehouse and transport', residents: 'Residents', trade: 'Harbor trade', tasks: 'Tasks', objective: 'Restore the Lighthouse', settings: 'Settings', time: 'Island time', expeditions: 'Expeditions', map: 'Island map', decorations: 'Decorations', paths: 'Paths and bridges', reset: 'New island' };
   let title = titles[panel.kind] || titleOf(panel.id);
@@ -912,6 +983,10 @@ function renderPanel() {
   }
   const scroll = dialog.querySelector('.dialog-body')?.scrollTop || 0;
   dialog.replaceChildren(el('header', { class: 'dialog-header' }, el('div', {}, el('span', { class: 'eyebrow' }, 'HARBORLIGHT · ISLAND 01'), el('h2', { id: 'dialog-title' }, title)), button('×', closePanel, { class: 'dialog-close', 'aria-label': 'Close window' })), el('div', { class: 'dialog-body' }, panelNotice ? el('p', { class: 'notice action-feedback', role: 'status' }, panelNotice) : null, body));
+  if (rosterOpen) {
+    const roster = dialog.querySelector('[data-resident-roster]');
+    if (roster) { roster.open = true; refreshResidentRosters(); roster.querySelector('[data-resident-list]').scrollTop = rosterScroll; }
+  }
   dialog.querySelector('.dialog-body').scrollTop = scroll;
 }
 

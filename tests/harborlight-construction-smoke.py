@@ -159,11 +159,11 @@ with sync_playwright() as p:
         data=fixture(workers={'farm':1,'warehouse':1},resources=dict.fromkeys(MATERIALS,100),paused=False)
         data['population']=12;data['constructionProjects']=[project('chapel',2)]
         context,page=visit(browser,data);open_building(page,'chapel');page.clock.run_for(1000)
-        expect(page.locator('[data-hud="happiness"]')).to_have_text('+20%')
+        expect(page.locator('[data-hud="happiness"]')).to_have_text('+21%')
         expect(page.locator('[data-hud="taxes"]')).to_have_text('Taxes: 4/h')
         page.locator('[data-blessing]').click();state=saved(page)
         assert state['blessingsUsed']==1 and state['resources']['grain']==150
-        expect(page.locator('[data-hud="happiness"]')).to_have_text('+40%')
+        expect(page.locator('[data-hud="happiness"]')).to_have_text('+41%')
         expect(page.locator('[data-blessing]')).to_be_disabled()
         page.locator('.dialog-close').click();page.locator('#hit-notifications').click()
         expect(page.locator('#island-dialog')).to_contain_text('Chapel upgrade bonus')

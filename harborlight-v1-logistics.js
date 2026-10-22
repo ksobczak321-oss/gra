@@ -1,4 +1,6 @@
 // Physical goods, individual work phases and hauling. All time is active seconds.
+import { productionMultiplier } from './harborlight-v1-residents.js?v=happiness-v8';
+export const workerEfficiency = productionMultiplier;
 export const MATERIAL_IDS = ['wood', 'stone', 'grain', 'food', 'planks'];
 export const PRODUCTION_RECIPES = {
   farm: { output: 'grain' }, lumber: { output: 'wood' }, quarry: { output: 'stone' },
@@ -76,12 +78,26 @@ function finishConstruction(state, project) {
   notify(state, 'construction-finished', `${buildingNames[id]}: level ${building.level}`, 'Upgrade complete. The new level is now active.');
   syncConstructionPointers(state);
 }
+function forecastWorkerEfficiency(state) {
+  const current = workerEfficiency(state);
+  if (current === 1 || !state.buildings.warehouse.workers || !stockRoom(state, 'food')) return current;
+  const foodAwaitingTransport = state.pendingDeliveries.food + state.buildings.windmill.ready + Math.min(state.market.stock.food, state.market.dispatch.food);
+  const accessibleGrain = state.resources.grain + state.pendingDeliveries.grain + state.buildings.farm.ready + Math.min(state.market.stock.grain, state.market.dispatch.grain);
+  const canMakeFood = state.buildings.windmill.workers > 0 && (accessibleGrain >= PRODUCTION_RECIPES.windmill.amount || state.buildings.farm.workers > 0);
+  // An actual carrier and a food source can restore full efficiency. The
+  // optimistic forecast uses that prospective rate, without promising when
+  // the first meal arrives. Without a recovery route it keeps the hungry rate.
+  return foodAwaitingTransport > 0 || canMakeFood ? 1 : current;
+}
+
 // Optimistic delivery estimate, not a reservation or promise of future goods.
 export function estimateMaterialsSeconds(state, cost) {
   const factor = 1.5 ** Math.max(0, plannedLevel(state, 'warehouse') - 1);
   if (MATERIAL_IDS.some(id => (cost[id] || 0) > Math.floor(1000 * factor)) || MATERIAL_IDS.reduce((sum, id) => sum + (cost[id] || 0), 0) > Math.floor(4000 * factor)) return Infinity;
   let estimate = 0, hauled = 0;
-  const carriers = state.buildings.warehouse.workers * 60;
+  const efficiency = forecastWorkerEfficiency(state);
+  const materialSpeed = efficiency * (state.lighthouseRemaining > 0 ? 2 : 1);
+  const carriers = state.buildings.warehouse.workers * 60 * efficiency;
   for (const [resource, required] of Object.entries(cost)) {
     const missing = Math.max(0, required - state.resources[resource]);
     if (!missing) continue;
@@ -100,7 +116,7 @@ export function estimateMaterialsSeconds(state, cost) {
     if (toProduce && !building.workers) return Infinity;
     if (toProduce) {
       // Residents eat before future Food can accumulate for another use.
-      const output = building.workers * 10 * (state.lighthouseRemaining > 0 ? 2 : 1);
+      const output = building.workers * 10 * materialSpeed;
       const surplus = output - (resource === 'food' ? state.population : 0);
       if (surplus <= 0) return Infinity;
       estimate = Math.max(estimate, toProduce / surplus * 3600);
@@ -111,7 +127,7 @@ export function estimateMaterialsSeconds(state, cost) {
       const upstreamBuilding = state.buildings[upstream];
       const inputToProduce = Math.max(0, inputMissing - upstreamBuilding.ready - state.pendingDeliveries[recipe.input]);
       if (inputToProduce && !upstreamBuilding.workers) return Infinity;
-      if (inputToProduce) estimate = Math.max(estimate, inputToProduce / (upstreamBuilding.workers * 10) * 3600);
+      if (inputToProduce) estimate = Math.max(estimate, inputToProduce / (upstreamBuilding.workers * 10 * materialSpeed) * 3600);
       hauled += inputMissing;
     }
   }
@@ -291,27 +307,27 @@ function marketOrder(state) {
   return state.market.orders.find(order => order.amount > 0 && state.resources[order.resource] > 0) || null;
 }
 
-function activeJobs(state) {
+function activeJobs(state, efficiency = workerEfficiency(state)) {
   const jobs = [];
   for (const [id, recipe] of Object.entries(PRODUCTION_RECIPES)) {
     const building = state.buildings[id];
     if (building.ready >= producerCapacity(state) || (recipe.input && state.resources[recipe.input] < recipe.amount)) continue;
-    for (let index = 0; index < building.workers; index++) jobs.push({ id, index, cycle: 360, speed: state.lighthouseRemaining > 0 ? 2 : 1 });
+    for (let index = 0; index < building.workers; index++) jobs.push({ id, index, cycle: 360, speed: efficiency * (state.lighthouseRemaining > 0 ? 2 : 1) });
   }
   for (const id of ['warehouse', 'market']) {
     const construction = id === 'warehouse' ? nextConstruction(state) : null;
     const remainingGoods = construction ? construction.goodsRemaining : 0;
     const source = id === 'warehouse' ? haulSource(state) : marketOrder(state);
     for (let index = 0; index < state.buildings[id].workers; index++) {
-      if (index < remainingGoods) jobs.push({ id, index, cycle: 60, construction: construction.order });
-      else if (source) jobs.push({ id, index, cycle: 60 });
+      if (index < remainingGoods) jobs.push({ id, index, cycle: 60, speed: efficiency, construction: construction.order });
+      else if (source) jobs.push({ id, index, cycle: 60, speed: efficiency });
     }
   }
   return jobs;
 }
 
-export function nextLogisticsEvent(state) {
-  const jobs = activeJobs(state);
+export function nextLogisticsEvent(state, efficiency = workerEfficiency(state)) {
+  const jobs = activeJobs(state, efficiency);
   let next = Infinity;
   for (const job of jobs) next = Math.min(next, (job.cycle - (state.buildings[job.id].workProgress[job.index] || 0)) / (job.speed || 1));
   for (const time of state.returningWorkers) next = Math.min(next, time);
@@ -363,13 +379,15 @@ function completeJob(state, job) {
   return true;
 }
 
-export function advanceLogistics(state, elapsed) {
+// The state integrator supplies the efficiency at the start of this interval:
+// consuming the last meal must not retroactively slow the work it supported.
+export function advanceLogistics(state, elapsed, efficiency = workerEfficiency(state)) {
   let remaining = elapsed, events = 0;
   promoteConstructionQueue(state);
   updateStorageStatus(state);
   while (remaining > 1e-9 && events++ < 200000) {
-    const jobs = activeJobs(state);
-    const duration = Math.min(remaining, nextLogisticsEvent(state));
+    const jobs = activeJobs(state, efficiency);
+    const duration = Math.min(remaining, nextLogisticsEvent(state, efficiency));
     const transporting = new Set(jobs.filter(job => job.construction).map(job => job.construction));
     for (const project of [...state.constructionProjects]) {
       if (project.stage === 'building') {

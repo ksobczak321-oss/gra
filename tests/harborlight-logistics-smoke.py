@@ -204,7 +204,7 @@ with sync_playwright() as p:
         # Both processors consume central inputs two-to-one, while outputs remain local.
         context, page = visit(browser, fixture(workers={'windmill': 1, 'sawmill': 1},
                                                resources={'grain': 10, 'wood': 10, 'food': 0, 'planks': 0}))
-        page.clock.run_for(360_000)
+        page.clock.run_for(720_000)
         processed = checkpoint(page)
         assert processed['resources']['grain'] == processed['resources']['wood'] == 8
         assert processed['resources']['food'] == processed['resources']['planks'] == 0
@@ -213,7 +213,7 @@ with sync_playwright() as p:
         print('PASS grain→food and wood→planks at 2:1; local products cannot silently enter central stock')
 
         # Player priorities determine which available producer inventory gets hauled first.
-        data = fixture(workers={'warehouse': 1}, resources=dict.fromkeys(MATERIALS, 0),
+        data = fixture(workers={'warehouse': 1}, resources={**dict.fromkeys(MATERIALS, 0), 'food': 1},
                        ready={'farm': 3, 'lumber': 3})
         context, page = visit(browser, data)
         page.locator('#hit-world-warehouse').click()
@@ -301,21 +301,21 @@ with sync_playwright() as p:
         expect(page.locator('[data-food-stat="status"]')).to_have_text('Feeding')
         page.clock.run_for(299_000)
         expect(page.locator('[data-food-stat="status"]')).to_have_text('Hungry')
-        expect(page.locator('[data-food-stat="penalty"]')).to_have_text('−25 percentage points/h')
+        expect(page.locator('[data-food-stat="penalty"]')).to_have_text('0 percentage points/h')
         exhausted = checkpoint(page)
         assert exhausted['resources']['food'] == 0 and exhausted['foodCredit'] < 1e-8
-        assert abs(exhausted['happiness']) < 1e-8
+        assert abs(exhausted['happiness'] - 1 / 12) < 1e-8
         page.clock.run_for(3_600_000)
         hungry = checkpoint(page)
         assert hungry['population'] == 12
-        assert abs(hungry['baseHappiness'] + 25) < 1e-7
-        assert abs(hungry['happiness'] + 25) < 1e-7
+        assert abs(hungry['happiness'] - 1 / 12) < 1e-7
+        assert all(abs(person['hungerSeconds'] - 3600) < 1e-7 for person in hungry['residents'])
         assert hungry['buildings']['windmill']['ready'] == 50
         page.locator('#hit-pause').click()
         page.clock.run_for(60_000)
         assert abs(checkpoint(page)['happiness'] - hungry['happiness']) < 1e-7
         context.close()
-        print('PASS automatic resident food, saved meal credit, exact exhaustion, −25 happiness/hour, central-only supply and pause')
+        print('PASS automatic resident food, saved meal credit, exact exhaustion, individual 12h hunger grace, central-only supply and pause')
 
         # A full active hour at 4x production still taxes exactly one coin per assigned worker.
         context, page = visit(browser)

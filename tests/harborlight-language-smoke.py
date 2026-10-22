@@ -61,7 +61,7 @@ def run():
             close(page);page.locator('#hit-'+id).click();language_check(page,id)
         expect(page.locator('#dialog-title')).to_have_text('Notifications')
         migrated=page.evaluate('(key)=>JSON.parse(localStorage.getItem(key))',KEY)
-        assert migrated['version']==6
+        assert migrated['version']==7
         assert migrated['resources']==data['resources']
         assert [n['id'] for n in migrated['notifications']]==[41,42]
         assert [n['read'] for n in migrated['notifications']]==[True,False]

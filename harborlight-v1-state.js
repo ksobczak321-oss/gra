@@ -1,7 +1,10 @@
 // Economy and progression for the interactive approved-screen prototype.
 // Pure data module: browser UI and Node tests share the same rules.
-import { MATERIAL_IDS, PRODUCTION_RECIPES, receiveMaterials, stockRoom, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue } from './harborlight-v1-logistics.js?v=english-v7';
-export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty } from './harborlight-v1-logistics.js?v=english-v7';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, receiveMaterials, stockRoom, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue } from './harborlight-v1-logistics.js?v=happiness-v8';
+export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty } from './harborlight-v1-logistics.js?v=happiness-v8';
+
+import { normalizeResidents, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=happiness-v8';
+export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=happiness-v8';
 
 export const RESOURCES = {
   coins: { name: 'Coins', short: 'coins', symbol: '◉', price: 1 },
@@ -63,7 +66,7 @@ export function createState() {
     buildings[id] = { level: id === 'lighthouse' ? 0 : 1, workers, ready: 0, workProgress: Array(workers).fill(0) };
   }
   const state = {
-    version: 6,
+    version: 7,
     resources: Object.fromEntries(Object.keys(RESOURCES).map(id => [id, 100])),
     population: 12, capacity: 24, happiness: 0, baseHappiness: 0, chapelRemaining: 0, lighthouseRemaining: 0,
     blessingRemaining: 0, blessingsUsed: 0, loyalty: { lastDay: null, streak: 0 },
@@ -81,6 +84,7 @@ export function createState() {
     lastActionAt: 0
   };
   normalizeLogisticsState(state, state);
+  normalizeResidents(state, { version: 6 });
   return state;
 }
 
@@ -101,8 +105,6 @@ export function taxRate(state) {
 }
 
 export const foodDemandPerHour = state => state.population;
-export const hasFoodForResidents = state => state.foodCredit > 1e-12 || state.resources.food > 0;
-export const hungerPenaltyPerHour = state => hasFoodForResidents(state) ? 0 : 25;
 
 function reserveResidentFood(state) {
   if (state.foodCredit > 1e-12) return;
@@ -116,14 +118,24 @@ function reserveResidentFood(state) {
 }
 
 export function happinessGroups(state) {
-  const bonus = (state.chapelRemaining > 0 ? state.buildings.chapel.level * 10 : 0) + (state.blessingRemaining > 0 ? 20 : 0) + (state.lighthouseRemaining > 0 ? 100 : 0);
-  const groups = [{ count: state.population - totalWorkers(state), offset: bonus }];
-  for (const id of WORKPLACE_IDS) if (workplaceUnlocked(state, id) && state.buildings[id].workers) groups.push({ count: state.buildings[id].workers, offset: bonus - storagePenalty(state, id), building: id });
-  return groups.filter(group => group.count > 0).map(group => ({ ...group, happiness: Math.max(-100, Math.min(100, state.baseHappiness + group.offset)) }));
+  const groups = new Map();
+  for (const person of state.residents) {
+    const key = person.workplace || 'available';
+    if (!groups.has(key)) groups.set(key, { count: 0, total: 0, ...(person.workplace ? { building: person.workplace } : {}) });
+    const group = groups.get(key);
+    group.count++;
+    group.total += residentHappiness(state, person);
+  }
+  return [...groups.values()].map(({ total, ...group }) => ({ ...group, happiness: total / group.count }));
 }
 
 export function updateHappiness(state) {
-  state.happiness = happinessGroups(state).reduce((sum, group) => sum + group.count * group.happiness, 0) / state.population;
+  synchronizeResidents(state);
+  state.baseHappiness = state.residents.reduce((sum, person) => sum + person.happiness, 0) / state.population;
+  state.happiness = state.residents.reduce((sum, person) => sum + residentHappiness(state, person), 0) / state.population;
+  // Event boundaries must be exact: floating point residue near zero must not
+  // repeatedly schedule an interval too small to change a resident's value.
+  for (const boundary of [-100, -50, 0, 50, 100]) if (Math.abs(state.happiness - boundary) < 1e-10) state.happiness = boundary;
 }
 
 export function recordVisit(state, now = Date.now()) {
@@ -234,35 +246,31 @@ function syncPopulationProgress(state) {
 function advancePopulation(state, activeSeconds) {
   state.capacity = state.buildings.townhall.level * 24;
   let remaining = activeSeconds;
-  // Between population/food changes the housing and hunger penalties are constant. Integrate each
-  // linear happiness/rate segment exactly, rather than applying a whole hour at
-  // its starting rate or looping once for every second in a long saved interval.
+  // Each personal need threshold, clamp, delivery and demographic boundary ends
+  // a segment. Integrate its linear mean exactly, including changes of sign.
   while (remaining > 1e-9) {
     reserveResidentFood(state);
     updateStorageStatus(state);
     updateHappiness(state);
     const happiness = state.happiness;
-    const baseSlope = state.baseHappiness > -100 ? -(unhousedResidents(state) + hungerPenaltyPerHour(state)) / 3600 : 0;
-    const groups = happinessGroups(state);
-    const activeWeight = groups.filter(group => state.baseHappiness + group.offset <= 100 && state.baseHappiness + group.offset > -100).reduce((sum, group) => sum + group.count, 0) / state.population;
-    const happinessSlope = baseSlope * activeWeight;
-    let clippingTime = baseSlope < 0 ? (-100 - state.baseHappiness) / baseSlope : Infinity;
-    if (baseSlope < 0) for (const group of groups) {
-      const raw = state.baseHappiness + group.offset;
-      const target = raw > 100 ? 100 - group.offset : raw > -100 ? -100 - group.offset : null;
-      if (target !== null) clippingTime = Math.min(clippingTime, (target - state.baseHappiness) / baseSlope);
-    }
+    const segment = residentSegments(state);
+    const happinessSlope = happiness >= 100 && segment.meanSlope > 0 || happiness <= -100 && segment.meanSlope < 0 ? 0 : segment.meanSlope;
     let boundary = null;
     if (happinessSlope < 0) boundary = happiness > 50 ? 50 : happiness > 0 ? 0 : happiness > -50 ? -50 : -100;
-    const boundaryTime = boundary === null ? Infinity : (boundary - happiness) / happinessSlope;
-    const direction = Math.sign(happiness) || (happinessSlope < 0 ? -1 : 0);
+    else if (happinessSlope > 0) boundary = happiness < -50 ? -50 : happiness < 0 ? 0 : happiness < 50 ? 50 : 100;
+    const boundaryTime = boundary === null || !happinessSlope ? Infinity : (boundary - happiness) / happinessSlope;
+    const direction = Math.sign(happiness) || Math.sign(happinessSlope);
     if (direction !== state.populationDirection || !direction || populationAtLimit(state, direction)) resetPopulationProgress(state, direction);
     const blocked = !direction || populationAtLimit(state, direction);
     const rate = Math.abs(populationRate(happiness)) / 3600;
-    const rateDerivative = Math.abs(happiness) > 50 || (happiness === -50 && happinessSlope < 0) ? 1 / 60 : 1 / 300;
+    const rateDerivative = Math.abs(happiness) > 50 || Math.abs(happiness) === 50 && direction * happinessSlope > 0 ? 1 / 60 : 1 / 300;
     const rateSlope = direction * happinessSlope * rateDerivative / 3600;
     const foodTime = state.foodCredit > 1e-12 ? state.foodCredit * 3600 / foodDemandPerHour(state) : Infinity;
-    let duration = Math.min(remaining, boundaryTime, clippingTime, nextLogisticsEvent(state), foodTime, state.chapelRemaining > 0 ? state.chapelRemaining : Infinity, state.blessingRemaining > 0 ? state.blessingRemaining : Infinity, state.lighthouseRemaining > 0 ? state.lighthouseRemaining : Infinity);
+    const efficiency = productionMultiplier(state);
+    let duration = Math.min(remaining, boundaryTime, segment.nextEvent, nextLogisticsEvent(state, efficiency), foodTime,
+      state.chapelRemaining > 0 ? state.chapelRemaining : Infinity,
+      state.blessingRemaining > 0 ? state.blessingRemaining : Infinity,
+      state.lighthouseRemaining > 0 ? state.lighthouseRemaining : Infinity);
     let changesPopulation = false;
     if (!blocked) {
       const gain = Math.max(0, (rate + rateSlope * duration / 2) * duration);
@@ -276,16 +284,15 @@ function advancePopulation(state, activeSeconds) {
         }
       }
     }
-    // Charge each interval for its actual crew before a population-loss event
-    // releases workers. Production speed does not multiply real hours of work.
     accrueTaxes(state, duration);
+    advanceResidents(segment, duration);
     state.foodCredit = Math.max(0, state.foodCredit - foodDemandPerHour(state) * duration / 3600);
-    state.chapelRemaining = countdown(state.chapelRemaining, duration);
-    state.blessingRemaining = countdown(state.blessingRemaining, duration);
+    const previousChapelLevel = state.buildings.chapel.level;
     const previousLighthouseLevel = state.buildings.lighthouse.level;
-    advanceLogistics(state, duration);
+    state.blessingRemaining = countdown(state.blessingRemaining, duration);
+    advanceLogistics(state, duration, efficiency);
+    if (state.buildings.chapel.level === previousChapelLevel) state.chapelRemaining = countdown(state.chapelRemaining, duration);
     if (state.buildings.lighthouse.level === previousLighthouseLevel) state.lighthouseRemaining = countdown(state.lighthouseRemaining, duration);
-    state.baseHappiness = Math.max(-100, Math.min(100, state.baseHappiness + baseSlope * duration));
     if (!blocked) state.populationProgress = Math.max(0, state.populationProgress + (rate + rateSlope * duration / 2) * duration);
     if (changesPopulation) {
       state.population += direction;
@@ -356,7 +363,8 @@ export function normalizeState(raw) {
   }
   normalizeLogisticsState(state, logisticsRaw);
   trimWorkers(state);
-  if ([4, 5, 6].includes(raw.version)) state.taxProgress = amount(raw.taxProgress, 0, 0.999999999999);
+  normalizeResidents(state, raw);
+  if (raw.version >= 4) state.taxProgress = amount(raw.taxProgress, 0, 0.999999999999);
   state.objective.wood = integer(raw.objective?.wood, 20, 0, 50);
   state.objective.stone = integer(raw.objective?.stone, 12, 0, 30);
   state.objective.repaired = raw.objective?.repaired === true;
@@ -473,6 +481,8 @@ export function act(state, action, now = Date.now()) {
       const nextWorkers = building.workers + action.delta;
       if (!Number.isSafeInteger(nextWorkers) || nextWorkers < 0 || nextWorkers > workerLimit(state, id)) return bad('A building can employ at most half the current population.');
       if (action.delta > freeWorkers(state)) return bad('Not enough available residents.');
+      synchronizeResidents(state);
+      assignResidents(state, id, action.delta);
       syncCrewProgress(state, id, building.workers, nextWorkers);
       building.workers = nextWorkers;
       result = good(`Workers: ${building.workers}.${action.delta < 0 ? ' Dismissed workers take 5 minutes to return home.' : ''}`);
@@ -589,7 +599,7 @@ export function act(state, action, now = Date.now()) {
       if (!canAfford(state, { coins: costs[action.decoration] })) return bad('Not enough coins for this decoration.');
       spend(state, { coins: costs[action.decoration] });
       state.decorations[action.decoration] += 1;
-      state.baseHappiness = Math.min(100, state.baseHappiness + 1);
+      adjustResidentHappiness(state, 1);
       result = good('Decoration added. The island looks even better!');
       break;
     }
@@ -599,7 +609,7 @@ export function act(state, action, now = Date.now()) {
       if (!canAfford(state, cost)) return bad('A path requires 10 stone and 5 wood.');
       spend(state, cost);
       state.paths += 1;
-      state.baseHappiness = Math.min(100, state.baseHappiness + 1);
+      adjustResidentHappiness(state, 1);
       result = good('A new path now connects the settlement.');
       break;
     }

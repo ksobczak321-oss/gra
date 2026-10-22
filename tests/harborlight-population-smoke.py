@@ -58,7 +58,7 @@ with sync_playwright() as p:
         initial = save(page)
         assert initial['population'] == 12 and initial['happiness'] == 0
         assert initial['resources'] == dict.fromkeys(RESOURCES, 100)
-        assert initial['version'] == 6
+        assert initial['version'] == 7
         assert initial['buildings']['house']['level'] == 1
         expect(page.locator('[data-hud="housing"]')).to_have_text('Housing: 24')
         page.locator('#hit-level').click()
@@ -113,7 +113,7 @@ with sync_playwright() as p:
         expect(page.locator('#hit-happiness')).to_have_attribute('data-sentiment', 'negative')
         expect(page.locator('[data-hud="population"]')).to_have_text('30 / 72')
         migrated = save(page)
-        assert migrated['version'] == 6 and migrated['resources'] == dict.fromkeys(RESOURCES, 321)
+        assert migrated['version'] == 7 and migrated['resources'] == dict.fromkeys(RESOURCES, 321)
         context.close()
         print('PASS existing save migration, negative happiness and townhall-derived limit')
 
@@ -141,8 +141,9 @@ with sync_playwright() as p:
         context = browser.new_context(viewport={'width': 1672, 'height': 941}, reduced_motion='reduce')
         page = visit(context, {'version': 6, 'resources': {'coins': 10000, **dict.fromkeys([key for key in RESOURCES if key != 'coins'], 600)},
                                'population': 78, 'happiness': 0, 'speed': 4,
-                               'buildings': {'townhall': {'level': 4, 'workers': 1},
-                                             'house': {'level': 3, 'workers': 0}},
+                               'buildings': {'townhall': {'level': 4, 'workers': 0},
+                                             'house': {'level': 3, 'workers': 0},
+                                             **{key: {'level': 1, 'workers': 0} for key in ['farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'warehouse']}},
                                'settings': {'motion': False}}, clock=True)
         page.locator('#hit-population').click()
         for key, value in [('capacity', '96'), ('housing', '72'), ('unhoused', '6'),
@@ -151,15 +152,15 @@ with sync_playwright() as p:
         expect(page.locator('[data-housing-warning]')).to_have_attribute('data-overcrowded', 'true')
         expect(page.locator('[data-hud="housing"]')).to_have_text('Housing: 72')
         page.clock.run_for(60_000)
-        expect(page.locator('[data-hud="happiness"]')).to_have_text('−0.1%')
+        expect(page.locator('[data-hud="happiness"]')).to_have_text('0%')
         page.clock.run_for(3_540_000)
-        expect(page.locator('[data-hud="happiness"]')).to_have_text('−6%')
+        expect(page.locator('[data-hud="happiness"]')).to_have_text('−5%')
         expect(page.locator('[data-hud="population"]')).to_have_text('78 / 96')
-        expect(page.locator('[data-population-stat="happiness"]')).to_have_text('−6%')
+        expect(page.locator('[data-population-stat="happiness"]')).to_have_text('−5%')
         page.locator('.dialog-close').click()
         page.locator('#hit-pause').click()
         crowded = save(page)
-        assert abs(crowded['happiness'] + 6) < 1e-8
+        assert abs(crowded['happiness'] + 5) < 1e-8
         assert crowded['population'] == 78
 
         # Reach the completion boundary with a saved, already-funded house project.
@@ -190,12 +191,12 @@ with sync_playwright() as p:
         page.locator('#hit-play').click()
         page.clock.run_for(60_000)
         page.locator('#hit-pause').click()
-        assert abs(save(page)['happiness'] - expanded['happiness']) < 1e-8
+        assert abs(save(page)['happiness'] - expanded['happiness'] - 1 / 60) < 1e-8
         page.reload()
         expect(page.locator('[data-hud="housing"]')).to_have_text('Housing: 96')
         expect(page.locator('[data-hud="population"]')).to_have_text('78 / 96')
         context.close()
-        print('PASS townhall4/house3: 96 cap, 72 beds, six unhoused, −6 points/hour; housing changes only on construction completion')
+        print('PASS townhall4/house3: 96 cap, 72 beds, six unhoused, −6 housing +1 feeding = −5 points/hour; housing changes only on construction completion')
 
         # Legacy investment is retained by promoting the townhall once during migration.
         context = browser.new_context(viewport={'width': 1672, 'height': 941}, reduced_motion='reduce')
@@ -207,7 +208,7 @@ with sync_playwright() as p:
         expect(page.locator('[data-hud="housing"]')).to_have_text('Housing: 72')
         expect(page.locator('[data-hud="happiness"]')).to_have_text('0%')
         migrated = save(page)
-        assert migrated['version'] == 6 and migrated['buildings']['townhall']['level'] == 3
+        assert migrated['version'] == 7 and migrated['buildings']['townhall']['level'] == 3
         assert migrated['buildings']['house']['level'] == 3
         assert migrated['resources'] == dict.fromkeys(RESOURCES, 321)
         assert abs(migrated['happiness'] + 0.01) < 1e-10

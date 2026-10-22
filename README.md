@@ -4,11 +4,11 @@ Spokojna gra o rozwoju wyspy: rozwiązuj ekspedycje, zdobywaj materiały i odbud
 
 Reguły rozwijanej osady: poziom ratusza wyznacza poziom gry, maksymalną rozbudowę pozostałych budynków i teoretyczny limit mieszkańców (`24 × poziom ratusza`). Dom daje osobno `24 × poziom domu` miejsc mieszkalnych. Każda osoba bez miejsca obniża szczęście o 1 punkt procentowy na godzinę aktywnej gry; szczęście od −100% do +100% steruje wzrostem lub spadkiem populacji. Nowa wyspa zaczyna z ratuszem i domem na poziomie 1, 12 mieszkańcami, szczęściem 0% i po 100 każdego zasobu.
 
-Pracowników można przydzielać do ośmiu miejsc pracy, najwyżej do połowy aktualnej populacji na budynek i bez podwójnych przydziałów. Każdy przydzielony pracownik daje 1 monetę podatku na godzinę aktywnej gry; bezrobotni nie płacą podatku. Szczegóły czasu, limitów i migracji zapisu opisano w [instrukcji prototypu](docs/INTERACTIVE-ISLAND.md); stan wdrożenia jest w dzienniku.
+Pracowników można przydzielać do ośmiu miejsc pracy, najwyżej do połowy aktualnej populacji na budynek i bez podwójnych przydziałów. Każdy przydzielony pracownik daje 1 monetę podatku na godzinę aktywnej gry; bezrobotni nie płacą podatku. Każdy mieszkaniec ma własne szczęście: +1 punkt procentowy/h za jedzenie i +1 za przydział do pracy. Po 12 godzinach ciągłego głodu lub bezrobocia każdy z tych braków daje osobno −5 punktów/h. Szczęście wyspy jest średnią indywidualnych wartości ograniczonych do ±100%; wyświetlane procenty zaokrąglamy w górę, a obliczenia zachowują ułamki. Szczegóły czasu, limitów i migracji zapisu opisano w [instrukcji prototypu](docs/INTERACTIVE-ISLAND.md); stan wdrożenia jest w dzienniku.
 
 Rozbudowa ma rezerwację, transport i czas budowy, z limitem miejsc oraz kolejką zależnymi od ratusza. Targ wymienia towary bez monet; kaplica i latarnia dają czasowe premie. Model przyszłego płatnego pakietu obsługuje +4 budowy i plany z dostaw, bez uruchamiania sprzedaży. Wszystkie zaakceptowane reguły i ocenę kosztu latarni zapisano w [regułach gospodarki](docs/ECONOMY-RULES.md).
 
-Aktywny interfejs jest po angielsku. Wyjaśnienia rozbudowy otwiera ikona „i” obok Upgrade. Mieszkańcy automatycznie jedzą po 1 Food/os./h z magazynu centralnego; brak jedzenia obniża bazowe szczęście o 25 punktów na aktywną godzinę.
+Aktywny interfejs jest po angielsku. Wyjaśnienia rozbudowy otwiera ikona „i” obok Upgrade. Mieszkańcy automatycznie jedzą po 1 Food/os./h z magazynu centralnego. Brak jedzenia od razu zmniejsza produkcję i transport do połowy; podatki pracujących pozostają bez zmiany. Nowy model szczęścia zastępuje dawną karę głodu −25 punktów/h.
 
 ## Podgląd
 
@@ -41,6 +41,7 @@ python3 tests/harborlight-population-smoke.py
 python3 tests/harborlight-logistics-smoke.py
 python3 tests/harborlight-construction-smoke.py
 python3 tests/harborlight-language-smoke.py
+python3 tests/harborlight-happiness-smoke.py
 python3 tests/harborlight-animation-smoke.py
 python3 tests/harborlight-coastal-smoke.py
 ```
@@ -54,6 +55,7 @@ Publikację GitHub Pages wykonuje istniejący workflow `.github/workflows/pages.
 - [Interaktywna wyspa: funkcje, sterowanie, zapis, sprawdzenia](docs/INTERACTIVE-ISLAND.md)
 - [Animacje świata: zakres frontendu, warstwy i odbiór](docs/WORLD-ANIMATION.md)
 - [Uzgodnione reguły gospodarki, koszty, kolejka i premie](docs/ECONOMY-RULES.md)
+- [Lista 12 budynków: logika, stan, koszty i efekty](docs/BUILDINGS.md)
 - [Dziennik implementacji](docs/IMPLEMENTATION-LOG.md)
 - [Backlog Frontend i Backend](docs/BACKLOG.md)
 - [Koncepcja gry i pętla rozgrywki](docs/HARBORLIGHT-CONCEPT.md)
