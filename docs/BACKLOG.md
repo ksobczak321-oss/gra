@@ -80,7 +80,7 @@ Kryteria odbioru:
 
 ### FE-06 — Rozbudowa zależna od ratusza, mieszkania i przeludnienie
 
-Status: implementacja, przegląd wizualny i komplet testów lokalnych zakończone; publikacja wymaga potwierdzenia. Milestone: frontend #3. GitHub Issue: [#16](https://github.com/ksobczak321-oss/gra/issues/16).
+Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone: frontend #3. GitHub Issue i dowody: [#16](https://github.com/ksobczak321-oss/gra/issues/16#issuecomment-6335468633).
 
 Zakres: ratusz ogranicza poziom rozbudowy pozostałych budynków, a dom wyznacza rzeczywistą liczbę miejsc mieszkalnych. Brak miejsc stopniowo obniża szczęście; gracz widzi osobno limit osady, mieszkania i liczbę osób bez miejsca.
 

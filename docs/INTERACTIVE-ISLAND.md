@@ -2,7 +2,7 @@
 
 Stan dokumentu: 2026-10-22. Dotyczy `harborlight-v1-layered.html`. Stan publikacji i wyniki kolejnych sprawdzeń są w [dzienniku implementacji](IMPLEMENTATION-LOG.md).
 
-Bieżący priorytet: frontend, grafika i reguły osady. Dziewięć animacji świata z [FE-04](WORLD-ANIMATION.md) oraz pasek poziomu, szczęścia i populacji z FE-05 są opublikowane i sprawdzone na publicznym Pages. FE-06 dodaje zależność rozbudowy od ratusza, miejsca w domu i spadek szczęścia przy przeludnieniu; potwierdzenie testów i publikacji tej zmiany zapisujemy oddzielnie w dzienniku.
+Bieżący priorytet: frontend, grafika i reguły osady. Dziewięć animacji świata z [FE-04](WORLD-ANIMATION.md), pasek poziomu i szczęścia z FE-05 oraz zależność rozbudowy od ratusza, miejsca w domu i przeludnienie z FE-06 są opublikowane i sprawdzone na publicznym Pages. Wyniki testów i dowody publikacji zapisano w dzienniku.
 
 ## Co działa
 
