@@ -131,7 +131,7 @@ Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zam
 
 ### FE-10 — Angielski interfejs i pomoc pod ikoną „i”
 
-Status: implementacja i weryfikacja. Milestone frontend #3. GitHub Issue: [#21](https://github.com/ksobczak321-oss/gra/issues/21).
+Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone frontend #3. GitHub Issue: [#21](https://github.com/ksobczak321-oss/gra/issues/21).
 
 - Trzy akapity pomocy z karty rozbudowy są schowane w popupie „i” obok nagłówka Upgrade; koszty, akcja oraz rzeczywiste blokady i postęp pozostają widoczne.
 - Popup działa myszą/dotykiem, klawiaturą i Escape, nie zamyka nadrzędnego dialogu, mieści się na telefonie i ma poprawną etykietę oraz aria-expanded.
@@ -140,7 +140,7 @@ Status: implementacja i weryfikacja. Milestone frontend #3. GitHub Issue: [#21](
 
 ### FE-11 — Automatyczne żywienie i głód
 
-Status: implementacja i weryfikacja. Milestone frontend #3. GitHub Issue: [#22](https://github.com/ksobczak321-oss/gra/issues/22).
+Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone frontend #3. GitHub Issue: [#22](https://github.com/ksobczak321-oss/gra/issues/22).
 
 - Każda osoba zużywa 1 Food/aktywną godzinę. Automatyczny przydział dotyczy wyłącznie magazynu centralnego, bez ręcznej akcji ani bezpośredniego jedzenia lokalnej produkcji.
 - Przydzielona część posiłku jest rezerwowana, a ułamek zachowany w zapisie; nie da się wydać tej samej żywności ponownie.
@@ -150,7 +150,7 @@ Status: implementacja i weryfikacja. Milestone frontend #3. GitHub Issue: [#22](
 
 ### FE-12 — Kompaktowe panele producentów
 
-Status: implementacja i weryfikacja. Milestone frontend #3. GitHub Issue: [#23](https://github.com/ksobczak321-oss/gra/issues/23).
+Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone frontend #3. GitHub Issue: [#23](https://github.com/ksobczak321-oss/gra/issues/23).
 
 - Wszystkie pięć paneli produkcyjnych: pierwszy wiersz Level | Storage z małym czasem do sztuki, drugi Workers aktualni/limit z małym −/+ | Taxes/h.
 - Wyjaśnienia pod „i”, bez powtórzonych dużych kart produkcji i dużych/zbiorczych przycisków pracowników wewnątrz budynku.
