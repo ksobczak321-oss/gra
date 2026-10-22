@@ -149,7 +149,12 @@ body.reduce-motion .lighthouse-beam{animation:none;transform:rotate(3deg);opacit
 .island-topbar .topbar-resource{flex:1 1 98px;min-width:87px;padding-inline:9px}
 .topbar-wood .topbar-icon{color:#c99b69}.topbar-stone .topbar-icon{color:#b8cfdb}.topbar-food .topbar-icon{color:#d5c37c}.topbar-planks .topbar-icon{color:#deb385}
 .island-topbar .topbar-population{width:136px}
-.island-topbar .topbar-population .topbar-copy strong{font-size:18px}
+.island-topbar .topbar-population{padding-block:4px}
+.island-topbar .topbar-population .topbar-copy{gap:2px}
+.island-topbar .topbar-population .topbar-copy strong{font-size:17px}
+.island-topbar .topbar-population .topbar-housing{font-size:9px;line-height:1.1;color:#b6ced9}
+.island-topbar .topbar-population[data-overcrowded="true"]{border-color:#d89773}
+.island-topbar .topbar-population[data-overcrowded="true"] .topbar-housing{color:#ffb89e}
 .island-topbar .topbar-clock{width:100px;padding:6px;font-size:13px;line-height:1.45;white-space:pre-line;text-align:center;font-variant-numeric:tabular-nums}
 .island-topbar .topbar-control{width:41px;padding:5px;font-size:21px;font-weight:700}
 .island-topbar #hit-speed{font-size:18px}
@@ -158,6 +163,7 @@ body.reduce-motion .lighthouse-beam{animation:none;transform:rotate(3deg);opacit
 [data-sentiment="negative"] [data-hud="happiness"],[data-mobile-hud="happiness"][data-sentiment="negative"]{color:#ffa69b}
 .mobile-island-hud{display:none}
 #island-dialog .population-growth{font-weight:700;color:#ffe3a8}
+#island-dialog .housing-notice[data-overcrowded="true"],#island-dialog .building-lock{border-color:#c18a65;background:#623a2840;color:#ffd1b4}
 #island-dialog .population-rate-table{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;margin:15px 0;border:1px solid #61809380;border-radius:9px;overflow:hidden;background:#52718150}
 #island-dialog .population-rate-table>div{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:11px 8px;background:#102d3f;text-align:center;font-size:12px;color:#bcd0db}
 #island-dialog .population-rate-table strong{font-size:12px;color:#ffe0a6;line-height:1.4}
@@ -168,6 +174,8 @@ body.reduce-motion .lighthouse-beam{animation:none;transform:rotate(3deg);opacit
   .mobile-hud-item{appearance:none;min-height:40px;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;margin:0;padding:4px 3px;border:1px solid #60809470;border-radius:7px;background:linear-gradient(#254b60b0,#123448b0);color:#fff0c9;font-family:inherit;cursor:pointer;touch-action:manipulation}
   .mobile-hud-item small{font-size:10px;line-height:1;color:#bfd2dc}
   .mobile-hud-item strong{font-size:14px;line-height:1.1;font-variant-numeric:tabular-nums}
+  .mobile-hud-item .mobile-housing{font-size:9px;line-height:1;color:#b9d0db}
+  .mobile-hud-summary .mobile-hud-item{gap:2px;padding-block:3px}
   .mobile-hud-item:focus-visible{outline:2px solid #ffe1a5;outline-offset:1px}
   .mobile-hud-summary .mobile-hud-item{border-color:#c8a66b66}
 }

@@ -1,6 +1,6 @@
 # Backlog HARBORLIGHT
 
-Stan: 2026-10-21. Zadania są podzielone według istniejących milestone’ów [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3) i [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Utworzono i potwierdzono dziewięć GitHub Issues z przypisaniem do milestone’ów. Identyfikatory FE/BE porządkują dokumentację; numery i linki rzeczywistych zgłoszeń są podane przy zadaniach.
+Stan: 2026-10-22. Zadania są podzielone według istniejących milestone’ów [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3) i [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Utworzono i potwierdzono dziesięć GitHub Issues FE/BE z przypisaniem do milestone’ów. Identyfikatory FE/BE porządkują dokumentację; numery i linki rzeczywistych zgłoszeń są podane przy zadaniach.
 
 Utrzymujemy spokojną rozbudowę wyspy i pętlę ekspedycja → zasoby → osada. Zachowujemy zaakceptowany kierunek wizualny. Backend nie jest wymagany do uruchomienia obecnego statycznego prototypu.
 
@@ -71,12 +71,30 @@ Zakres: górny pasek HTML pokazuje poziom, szczęście, mieszkańców i wszystki
 Kryteria odbioru:
 
 - Nowa wyspa zaczyna na poziomie 1, ze szczęściem 0%, 12 mieszkańcami i po 100 sztuk każdego z pięciu zasobów. Istniejący zapis zachowuje postęp.
-- Poziom jest poziomem ratusza, a limit mieszkańców wynosi `24 × poziom`. Dom nie dodaje miejsca ani nowych mieszkańców przy rozbudowie.
+- Poziom jest poziomem ratusza, a teoretyczny limit mieszkańców wynosi `24 × poziom`. Rozbudowa domu nie dodaje natychmiast nowych mieszkańców; jego miejsca mieszkalne doprecyzowano w FE-06.
 - Szczęście mieści się w zakresie −100%…+100%. Przy 0% populacja się nie zmienia; przy ±50% zmienia się o osobę co 6 godzin, a przy ±100% co godzinę.
 - Przyjęta interpolacja tempa daje zmianę co 12 godzin przy ±25% i co około 1 godzinę 43 minuty przy ±75%. Kierunek zmiany zależy od znaku.
 - Populacja nie spada poniżej 6 i nie przekracza limitu ratusza. Po ubytku pracownicy nie przekraczają liczby mieszkańców; wyspa pozostaje grywalna.
 - Liczony jest rzeczywisty aktywny czas, niezależnie od przyspieszenia; pauza zatrzymuje naliczanie. Nie ma naliczania poza grą. Zapis zachowuje niepełny postęp, ale 0%, odwrócenie znaku i osiągnięcie granicy nie pozwalają gromadzić zmian na później.
 - Górny pasek i panel mieszkańców są czytelne oraz działają na komputerze i telefonie. Testy obejmują granice, progi czasu, zapis, migrację i regresję dotychczasowych akcji.
+
+### FE-06 — Rozbudowa zależna od ratusza, mieszkania i przeludnienie
+
+Status: implementacja, przegląd wizualny i komplet testów lokalnych zakończone; publikacja wymaga potwierdzenia. Milestone: frontend #3. GitHub Issue: [#16](https://github.com/ksobczak321-oss/gra/issues/16).
+
+Zakres: ratusz ogranicza poziom rozbudowy pozostałych budynków, a dom wyznacza rzeczywistą liczbę miejsc mieszkalnych. Brak miejsc stopniowo obniża szczęście; gracz widzi osobno limit osady, mieszkania i liczbę osób bez miejsca.
+
+Kryteria odbioru:
+
+- Pozostałe budynki nie mogą być rozbudowywane powyżej poziomu ratusza, w ramach maksimum 5. Blokada wyjaśnia wymagany poziom i nie wydaje zasobów; sam ratusz można podnosić do następnego poziomu.
+- Teoretyczny limit populacji wynosi `24 × poziom ratusza`, a miejsca mieszkalne `24 × poziom domu`. Rozbudowa jednego nie podnosi drugiego i nie dodaje ludzi natychmiast.
+- Ratusz 4, dom 3 i 78 osób oznaczają limit 96, 72 miejsca i 6 osób bez miejsca. Populacja może przekroczyć miejsca mieszkalne, ale nie limit ratusza.
+- Każda osoba bez miejsca obniża szczęście o 1 punkt procentowy na godzinę aktywnej gry. Dla stałego przeludnienia 6 osób spadek wynosi 6 punktów na godzinę. Część ułamkowa jest zachowywana w zapisie.
+- Rozbudowa domu do wystarczającej pojemności zatrzymuje dalszą karę, bez automatycznego zwracania utraconego szczęścia. Zmieniająca się populacja zmienia tempo kary.
+- Kara respektuje pauzę, widoczność karty i rzeczywisty aktywny czas niezależnie od tempa 1×/2×/4×. Dotychczasowy przelicznik narodzin i ubytku oraz minimum 6 pozostają aktualne.
+- Nowy start ma ratusz 1 i dom 1. Migracja zapisów 1/2 zachowuje zasoby i osiągnięte poziomy: ratusz otrzymuje co najmniej najwyższy posiadany poziom budynku. Schemat 3 waliduje dalszą zgodność poziomów i zapisuje ułamkowe szczęście.
+- Latarnia po pierwszej naprawie do poziomu 1 może być dalej rozbudowywana do poziomu ratusza; zapis nie cofa naprawionej latarni do poziomu 1.
+- Testy obejmują blokady i koszty, odblokowanie po ratuszu, osobne pojemności, naliczanie i zatrzymanie kary, zapis, migrację, działające panele oraz regresję rozgrywki na komputerze i telefonie.
 
 ## Backend
 
@@ -84,12 +102,12 @@ Kryteria odbioru:
 
 Status: zaplanowane; backend nie jest jeszcze zaimplementowany. GitHub Issue: [#11](https://github.com/ksobczak321-oss/gra/issues/11).
 
-Zakres: opisać kontrakt przed wyborem technologii. Kliencki schemat `version: 2` jest punktem wyjścia, nie gotowym modelem serwerowym.
+Zakres: opisać kontrakt przed wyborem technologii. Kliencki schemat `version: 3` jest punktem wyjścia, nie gotowym modelem serwerowym.
 
 Kryteria odbioru:
 
 - Udokumentowane są odczyt stanu, komendy gry, wyniki ekspedycji i odbiór nagród.
-- Model obejmuje zasoby, budynki, przydziały, cel latarni, zadania, ekspedycje, poziom ratusza, szczęście, postęp populacji i wersję stanu.
+- Model obejmuje zasoby, budynki, przydziały, cel latarni, zadania, ekspedycje, poziom ratusza, miejsca mieszkalne, przeludnienie, ułamkowe szczęście, postęp populacji i wersję stanu.
 - Kontrakt określa format błędów, walidację, idempotencję komend i obsługę konfliktu wersji.
 - Są przykłady poprawnych i odrzuconych żądań oraz plan migracji zapisów.
 
@@ -100,7 +118,7 @@ Status: zaplanowane. Zależność: BE-01. GitHub Issue: [#12](https://github.com
 Kryteria odbioru:
 
 - Ustalony jest przepływ gry gościa i przejścia do trwałego konta bez utraty wyspy.
-- Pierwsze utworzenie wyspy po zalogowaniu stosuje start z FE-05: poziom 1, szczęście 0%, 12 mieszkańców i po 100 każdego zasobu. Kolejne logowanie odczytuje postęp zamiast przyznawać start ponownie.
+- Pierwsze utworzenie wyspy po zalogowaniu stosuje start z FE-05/FE-06: ratusz 1, dom 1, szczęście 0%, 12 mieszkańców i po 100 każdego zasobu. Kolejne logowanie odczytuje postęp zamiast przyznawać start ponownie.
 - Użytkownik może odczytać i zmienić wyłącznie własny postęp; testy obejmują próbę dostępu do cudzej wyspy.
 - Sesje mają bezpieczne przechowywanie, wygaśnięcie i wylogowanie; sekrety nie trafiają do plików klienta ani logów.
 - Udokumentowane są minimalne dane konta i ich usuwanie.
@@ -124,6 +142,7 @@ Kryteria odbioru:
 
 - Serwer oblicza koszty, produkcję, upływ czasu oraz nagrody zamiast ufać licznikom klienta.
 - Serwer weryfikuje poziom ratusza, zakres szczęścia i zmianę populacji według FE-05; osobno należy ustalić zasady naliczania poza grą przed ich wdrożeniem.
+- Serwer odrzuca rozbudowę ponad poziom ratusza bez wydania zasobów. Wylicza osobno limit populacji i miejsca w domu oraz nalicza karę za przeludnienie z FE-06: 1 punkt procentowy szczęścia na osobę bez miejsca na godzinę, z zachowaniem części ułamkowej i spójnej migracji zapisów.
 - Walidowane są przejścia planszy, zużycie narzędzi i liczba skrzyń; sam komunikat klienta „ukończono” nie wystarcza do wypłaty.
 - Testy obejmują ujemne ilości, nieprawidłowe liczby, duplikaty komend, wyścigi dwóch sesji i wielokrotny odbiór nagrody.
 - Istnieją testy integracyjne całego przepływu ekspedycja → nagroda → ulepszenie oraz diagnostyka błędów bez danych wrażliwych.

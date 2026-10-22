@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createState, normalizeState, act, tick, buildingCost, totalWorkers, taskReady, populationRate, populationIntervalSeconds, EXPEDITIONS } from '../harborlight-v1-state.js';
+import { createState, normalizeState, act, tick, buildingCost, totalWorkers, taskReady, populationRate, populationIntervalSeconds, housingCapacity, unhousedResidents, buildingLevelLimit, BUILDINGS, EXPEDITIONS } from '../harborlight-v1-state.js';
 
 function fundedState() {
   const state = createState();
@@ -14,9 +14,12 @@ function close(actual, expected, tolerance = 1e-10) {
 
 test('a fresh island starts at townhall level one with 100 of every resource and twelve residents', () => {
   const state = createState();
-  assert.equal(state.version, 2);
+  assert.equal(state.version, 3);
   assert.deepEqual(state.resources, { coins: 100, wood: 100, stone: 100, food: 100, planks: 100 });
   assert.equal(state.buildings.townhall.level, 1);
+  assert.equal(state.buildings.house.level, 1);
+  assert.equal(housingCapacity(state), 24);
+  assert.equal(unhousedResidents(state), 0);
   assert.equal(state.capacity, 24);
   assert.equal(state.population, 12);
   assert.equal(state.happiness, 0);
@@ -25,11 +28,15 @@ test('a fresh island starts at townhall level one with 100 of every resource and
 });
 
 test('construction spends exact cost once without bypassing happiness or townhall population rules', () => {
-  const state = fundedState(), initial = { ...state.resources }, cost = buildingCost(state, 'house');
+  const state = fundedState();
+  state.buildings.townhall.level = 2;
+  state.capacity = 48;
+  const initial = { ...state.resources }, cost = buildingCost(state, 'house');
   assert.equal(act(state, { type: 'upgrade', building: 'house' }).ok, true);
   for (const key of Object.keys(cost)) assert.equal(state.resources[key], initial[key] - cost[key]);
-  assert.equal(state.buildings.house.level, 3);
-  assert.equal(state.capacity, 24);
+  assert.equal(state.buildings.house.level, 2);
+  assert.equal(housingCapacity(state), 48);
+  assert.equal(state.capacity, 48);
   assert.equal(state.population, 12);
   state.resources.coins = 0;
   const before = JSON.stringify(state);
@@ -93,7 +100,7 @@ test('save normalization rejects bad numbers and invalid prototype keys, and cap
   assert.equal(state.resources.coins, 100);
   assert.equal(state.resources.wood, 0);
   assert.equal(state.resources.stone, 100);
-  assert.equal(state.buildings.house.level, 5);
+  assert.equal(state.buildings.house.level, 1);
   assert.equal(state.population, 6);
   assert.equal(totalWorkers(state), 6);
   assert.equal(state.day, 18);
@@ -269,6 +276,8 @@ test('happiness actions immediately clear progress at zero or a sign change, pre
   assert.equal(zero.populationDirection, 0);
 
   const crossed = fundedState();
+  crossed.buildings.townhall.level = 2;
+  crossed.capacity = 48;
   crossed.happiness = -1;
   tick(crossed, 1800);
   assert.equal(act(crossed, { type: 'upgrade', building: 'chapel' }).ok, true);
@@ -366,11 +375,11 @@ test('legacy saves retain earned assets and progression while deriving capacity 
   delete raw.populationProgress;
   delete raw.populationDirection;
   const state = normalizeState(raw);
-  assert.equal(state.version, 2);
+  assert.equal(state.version, 3);
   assert.equal(state.resources.coins, 2480);
   assert.equal(state.buildings.house.level, 5);
-  assert.equal(state.buildings.townhall.level, 2);
-  assert.equal(state.capacity, 48);
+  assert.equal(state.buildings.townhall.level, 5);
+  assert.equal(state.capacity, 120);
   assert.equal(state.population, 32);
   assert.equal(state.happiness, 85);
   assert.equal(state.tasks.collect, true);
@@ -404,4 +413,255 @@ test('save normalization enforces signed happiness, townhall floor and valid fra
   mismatched.populationDirection = 1;
   mismatched.populationProgress = 0.75;
   assert.equal(normalizeState(mismatched).populationProgress, 0);
+});
+
+function crowdedState(population = 78, happiness = 0) {
+  const state = fundedState();
+  state.buildings.townhall.level = 4;
+  state.buildings.house.level = 3;
+  state.capacity = 96;
+  state.population = population;
+  state.happiness = happiness;
+  return state;
+}
+
+test('townhall level limits every other building and rejects locked upgrades without spending', () => {
+  for (const id of Object.keys(BUILDINGS).filter(id => id !== 'townhall')) {
+    const state = fundedState();
+    state.buildings.townhall.level = 4;
+    state.capacity = 96;
+    state.buildings[id].level = 4;
+    if (id === 'lighthouse') state.objective = { wood: 50, stone: 30, repaired: true };
+    assert.equal(buildingLevelLimit(state, id), 4, id);
+    const before = JSON.stringify(state);
+    const result = act(state, { type: 'upgrade', building: id });
+    assert.equal(result.ok, false, `${id} must wait for townhall level five`);
+    assert.match(result.message, /ratusz/i);
+    assert.equal(JSON.stringify(state), before, `${id} must not consume materials or change progress`);
+    for (const resource of Object.keys(state.resources)) state.resources[resource] = 10000;
+    assert.equal(act(state, { type: 'upgrade', building: 'townhall' }).ok, true);
+    assert.equal(buildingLevelLimit(state, id), 5);
+    assert.equal(act(state, { type: 'upgrade', building: id }).ok, true, id);
+    assert.equal(state.buildings[id].level, 5, id);
+  }
+});
+
+test('a missing building may be built at the allowed level but cannot immediately bypass townhall', () => {
+  const state = fundedState();
+  state.buildings.farm = { level: 0, workers: 0, ready: 0 };
+  assert.equal(act(state, { type: 'build', building: 'farm' }).ok, true);
+  assert.equal(state.buildings.farm.level, 1);
+  const before = JSON.stringify(state);
+  assert.equal(act(state, { type: 'upgrade', building: 'farm' }).ok, false);
+  assert.equal(JSON.stringify(state), before);
+  assert.equal(act(state, { type: 'upgrade', building: 'townhall' }).ok, true);
+  assert.equal(act(state, { type: 'upgrade', building: 'farm' }).ok, true);
+  assert.equal(state.buildings.farm.level, 2);
+});
+
+test('townhall and house upgrades change separate limits without creating residents', () => {
+  const state = fundedState();
+  assert.equal(housingCapacity(state), 24);
+  assert.equal(act(state, { type: 'upgrade', building: 'townhall' }).ok, true);
+  assert.equal(state.capacity, 48);
+  assert.equal(housingCapacity(state), 24);
+  assert.equal(state.population, 12);
+  assert.equal(act(state, { type: 'upgrade', building: 'house' }).ok, true);
+  assert.equal(state.capacity, 48);
+  assert.equal(housingCapacity(state), 48);
+  assert.equal(state.population, 12);
+});
+
+test('townhall four permits 96 residents while house three houses only 72', () => {
+  const state = crowdedState();
+  assert.equal(state.capacity, 96);
+  assert.equal(housingCapacity(state), 72);
+  assert.equal(unhousedResidents(state), 6);
+  tick(state, 3600);
+  assert.equal(state.population, 78);
+  close(state.happiness, -6);
+  close(state.populationProgress, 0.01);
+  assert.equal(state.populationDirection, -1);
+});
+
+test('population can grow beyond housing capacity before reaching the townhall limit', () => {
+  const state = crowdedState(72, 100);
+  state.populationDirection = 1;
+  state.populationProgress = 3599 / 3600;
+  tick(state, 1);
+  assert.equal(state.population, 73);
+  assert.equal(state.capacity, 96);
+  assert.equal(unhousedResidents(state), 1);
+  close(state.happiness, 100);
+  tick(state, 3600);
+  assert.equal(state.population, 73);
+  close(state.happiness, 99);
+  assert.ok(state.populationProgress > 0.98 && state.populationProgress < 1);
+});
+
+test('fractional overcrowding penalty persists without rounding away small active ticks', () => {
+  let state = crowdedState();
+  tick(state, 1);
+  close(state.happiness, -6 / 3600);
+  state = normalizeState(JSON.parse(JSON.stringify(state)));
+  close(state.happiness, -6 / 3600);
+  for (let second = 1; second < 3600; second++) tick(state, 1);
+  close(state.happiness, -6, 1e-9);
+  assert.equal(state.population, 78);
+  close(state.populationProgress, 0.01, 1e-9);
+});
+
+test('overcrowding penalty is active real time, unaffected by speed and stopped by pause', () => {
+  for (const speed of [1, 2, 4]) {
+    const state = crowdedState();
+    state.speed = speed;
+    tick(state, 1800);
+    close(state.happiness, -3);
+    act(state, { type: 'pause' });
+    const before = JSON.stringify(state);
+    tick(state, 10000);
+    assert.equal(JSON.stringify(state), before);
+    act(state, { type: 'pause' });
+    tick(state, 1800);
+    close(state.happiness, -6);
+    assert.equal(state.population, 78);
+  }
+});
+
+test('no overcrowding means no housing penalty and expanding house stops future loss', () => {
+  const housed = crowdedState(72);
+  tick(housed, 24 * 3600);
+  assert.equal(housed.happiness, 0);
+  assert.equal(housed.population, 72);
+  assert.equal(unhousedResidents(housed), 0);
+
+  const state = crowdedState();
+  for (const resource of Object.keys(state.resources)) state.resources[resource] = 10000;
+  tick(state, 3600);
+  close(state.happiness, -6);
+  assert.equal(act(state, { type: 'upgrade', building: 'house' }).ok, true);
+  assert.equal(housingCapacity(state), 96);
+  assert.equal(unhousedResidents(state), 0);
+  close(state.happiness, -6); // Housing expansion stops the penalty without refunding lost happiness.
+  tick(state, 3600);
+  close(state.happiness, -6);
+  assert.equal(state.population, 78);
+});
+
+test('overcrowding integrates demographic rate and sign changes consistently for large and split ticks', () => {
+  const whole = crowdedState(78, 1);
+  whole.populationDirection = 1;
+  whole.populationProgress = 0.99;
+  const split = normalizeState(JSON.parse(JSON.stringify(whole)));
+  tick(whole, 3600);
+  for (let second = 0; second < 3600; second++) tick(split, 1);
+  close(whole.happiness, -5);
+  assert.equal(whole.populationDirection, -1);
+  assert.ok(whole.populationProgress < 0.01, 'positive demographic progress must be discarded at zero');
+  assert.equal(split.population, whole.population);
+  close(split.happiness, whole.happiness, 1e-8);
+  close(split.populationProgress, whole.populationProgress, 1e-8);
+
+  const populationEvents = crowdedState(78, 60);
+  const splitEvents = normalizeState(JSON.parse(JSON.stringify(populationEvents)));
+  tick(populationEvents, 30 * 3600);
+  for (let second = 0; second < 30 * 3600; second++) tick(splitEvents, 1);
+  assert.equal(splitEvents.population, populationEvents.population);
+  close(splitEvents.happiness, populationEvents.happiness, 1e-7);
+  close(splitEvents.populationProgress, populationEvents.populationProgress, 1e-7);
+  assert.ok(populationEvents.happiness >= -100 && populationEvents.happiness <= 100);
+});
+
+test('lighthouse repair remains a one-time objective and higher levels follow townhall', () => {
+  const state = fundedState();
+  for (const resource of Object.keys(state.resources)) state.resources[resource] = 10000;
+  state.objective.wood = 50;
+  state.objective.stone = 30;
+  assert.equal(act(state, { type: 'repair' }).ok, true);
+  assert.equal(state.buildings.lighthouse.level, 1);
+  const before = JSON.stringify(state);
+  assert.equal(act(state, { type: 'upgrade', building: 'lighthouse' }).ok, false);
+  assert.equal(JSON.stringify(state), before);
+  assert.equal(act(state, { type: 'upgrade', building: 'townhall' }).ok, true);
+  assert.equal(act(state, { type: 'upgrade', building: 'lighthouse' }).ok, true);
+  assert.equal(state.buildings.lighthouse.level, 2);
+  assert.equal(state.objective.repaired, true);
+  assert.equal(normalizeState(JSON.parse(JSON.stringify(state))).buildings.lighthouse.level, 2);
+  const upgradedResources = { ...state.resources };
+  assert.equal(act(state, { type: 'repair' }).ok, false);
+  assert.deepEqual(state.resources, upgradedResources);
+});
+
+test('legacy version one and two saves preserve investments by promoting townhall once', () => {
+  for (const version of [1, 2]) {
+    const raw = fundedState();
+    raw.version = version;
+    raw.buildings.house.level = 3;
+    raw.buildings.farm.level = 4;
+    raw.buildings.lighthouse.level = 2;
+    raw.buildings.townhall.level = 1;
+    raw.objective = { wood: 50, stone: 30, repaired: true };
+    raw.population = 78;
+    raw.happiness = -3.125;
+    raw.populationDirection = -1;
+    raw.populationProgress = 0.3;
+    const savedResources = { ...raw.resources };
+    const state = normalizeState(raw);
+    assert.equal(state.version, 3);
+    assert.equal(state.buildings.townhall.level, 4);
+    assert.equal(state.buildings.house.level, 3);
+    assert.equal(state.buildings.farm.level, 4);
+    assert.equal(state.buildings.lighthouse.level, 2);
+    assert.equal(state.capacity, 96);
+    assert.equal(housingCapacity(state), 72);
+    assert.equal(state.population, 78);
+    close(state.happiness, -3.125);
+    close(state.populationProgress, 0.3);
+    assert.deepEqual(state.resources, savedResources);
+    assert.deepEqual(normalizeState(JSON.parse(JSON.stringify(state))), state);
+  }
+});
+
+test('current saves clamp levels to townhall without trusting forged capacity or housing values', () => {
+  const raw = fundedState();
+  raw.version = 3;
+  raw.buildings.house.level = 5;
+  raw.buildings.farm.level = 4;
+  raw.buildings.townhall.level = 2;
+  raw.capacity = 99999;
+  raw.housingCapacity = 99999;
+  raw.population = 900;
+  raw.happiness = -0.125;
+  const state = normalizeState(raw);
+  assert.equal(state.buildings.townhall.level, 2);
+  assert.equal(state.buildings.house.level, 2);
+  assert.equal(state.buildings.farm.level, 2);
+  assert.equal(state.capacity, 48);
+  assert.equal(housingCapacity(state), 48);
+  assert.equal(state.population, 48);
+  close(state.happiness, -0.125);
+});
+
+test('a full townhall population still suffers housing pressure while births are blocked', () => {
+  const state = crowdedState(96, 100);
+  state.populationDirection = 1;
+  state.populationProgress = 0.9;
+  tick(state, 3600);
+  assert.equal(state.population, 96);
+  assert.equal(state.capacity, 96);
+  assert.equal(unhousedResidents(state), 24);
+  close(state.happiness, 76);
+  assert.equal(state.populationProgress, 0);
+});
+
+test('extreme elapsed intervals respect negative happiness and population floors without overflow', () => {
+  const state = crowdedState(78, 1);
+  state.buildings.house.level = 0;
+  tick(state, Number.MAX_VALUE);
+  assert.equal(state.happiness, -100);
+  assert.equal(state.population, 6);
+  assert.equal(state.populationProgress, 0);
+  assert.equal(totalWorkers(state), 6);
+  assert.ok(Number.isFinite(state.minutes));
+  assert.ok(Object.values(state.resources).every(value => Number.isFinite(value) && value >= 0));
 });

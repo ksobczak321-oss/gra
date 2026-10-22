@@ -1,4 +1,4 @@
-"""Population HUD, real browser clock and migration acceptance checks.
+"""Population, housing, upgrade locks and browser-clock acceptance checks.
 
 Run the static server first. Uses saved-game fixtures only to reach population
 boundaries; time advances through the browser's real application timers.
@@ -58,7 +58,9 @@ with sync_playwright() as p:
         initial = save(page)
         assert initial['population'] == 12 and initial['happiness'] == 0
         assert initial['resources'] == dict.fromkeys(RESOURCES, 100)
-        assert initial['version'] == 2
+        assert initial['version'] == 3
+        assert initial['buildings']['house']['level'] == 1
+        expect(page.locator('[data-hud="housing"]')).to_have_text('Miejsca: 24')
         page.locator('#hit-level').click()
         expect(page.locator('#dialog-title')).to_have_text('Ratusz')
         page.locator('.dialog-close').click()
@@ -81,7 +83,7 @@ with sync_playwright() as p:
 
         # A full active hour at 4x production still yields exactly one resident.
         context = browser.new_context(viewport={'width': 1672, 'height': 941}, reduced_motion='reduce')
-        page = visit(context, {'version': 2, 'happiness': 100, 'population': 12,
+        page = visit(context, {'version': 3, 'happiness': 100, 'population': 12,
                                'populationProgress': 0, 'populationDirection': 1,
                                'speed': 4, 'settings': {'motion': False}}, clock=True)
         page.locator('#hit-happiness').click()
@@ -92,7 +94,7 @@ with sync_playwright() as p:
         expect(page.locator('[data-population-stat="population"]')).to_have_text('13 / 24')
         page.locator('.dialog-close').click()
         page.locator('#hit-pause').click()
-        page.clock.run_for(3_600_000)
+        page.clock.fast_forward(3_600_000)
         expect(page.locator('[data-hud="population"]')).to_have_text('13 / 24')
         recorded = save(page)
         assert recorded['population'] == 13 and recorded['paused']
@@ -111,13 +113,13 @@ with sync_playwright() as p:
         expect(page.locator('#hit-happiness')).to_have_attribute('data-sentiment', 'negative')
         expect(page.locator('[data-hud="population"]')).to_have_text('30 / 72')
         migrated = save(page)
-        assert migrated['version'] == 2 and migrated['resources'] == dict.fromkeys(RESOURCES, 321)
+        assert migrated['version'] == 3 and migrated['resources'] == dict.fromkeys(RESOURCES, 321)
         context.close()
         print('PASS existing save migration, negative happiness and townhall-derived limit')
 
         # Negative happiness crosses the last allowed boundary through application timers.
         context = browser.new_context(viewport={'width': 1672, 'height': 941}, reduced_motion='reduce')
-        page = visit(context, {'version': 2, 'population': 7, 'happiness': -100,
+        page = visit(context, {'version': 3, 'population': 7, 'happiness': -100,
                                'populationProgress': 3599 / 3600, 'populationDirection': -1,
                                'settings': {'motion': False}}, clock=True)
         page.locator('#hit-happiness').click()
@@ -125,7 +127,7 @@ with sync_playwright() as p:
         expect(page.locator('[data-hud="population"]')).to_have_text('6 / 24')
         expect(page.locator('[data-population-stat="population"]')).to_have_text('6 / 24')
         expect(page.locator('[data-population-stat="growth"]')).to_contain_text('minimum 6')
-        page.clock.run_for(3_600_000)
+        page.clock.fast_forward(3_600_000)
         expect(page.locator('[data-hud="population"]')).to_have_text('6 / 24')
         page.locator('.dialog-close').click()
         at_floor = save(page)
@@ -134,6 +136,99 @@ with sync_playwright() as p:
         assert all(value >= 0 for value in at_floor['resources'].values())
         context.close()
         print('PASS negative happiness, minimum six, live worker trim and nonnegative resources')
+
+        # The user's example distinguishes the townhall cap from actual housing.
+        context = browser.new_context(viewport={'width': 1672, 'height': 941}, reduced_motion='reduce')
+        page = visit(context, {'version': 3, 'resources': dict.fromkeys(RESOURCES, 10000),
+                               'population': 78, 'happiness': 0, 'speed': 4,
+                               'buildings': {'townhall': {'level': 4, 'workers': 1},
+                                             'house': {'level': 3, 'workers': 0}},
+                               'settings': {'motion': False}}, clock=True)
+        page.locator('#hit-population').click()
+        for key, value in [('capacity', '96'), ('housing', '72'), ('unhoused', '6'),
+                           ('penalty', '−6 pkt proc./h')]:
+            expect(page.locator(f'[data-population-stat="{key}"]')).to_have_text(value)
+        expect(page.locator('[data-housing-warning]')).to_have_attribute('data-overcrowded', 'true')
+        expect(page.locator('[data-hud="housing"]')).to_have_text('Miejsca: 72')
+        page.clock.run_for(60_000)
+        expect(page.locator('[data-hud="happiness"]')).to_have_text('−0,1%')
+        page.clock.run_for(3_540_000)
+        expect(page.locator('[data-hud="happiness"]')).to_have_text('−6%')
+        expect(page.locator('[data-hud="population"]')).to_have_text('78 / 96')
+        expect(page.locator('[data-population-stat="happiness"]')).to_have_text('−6%')
+        page.locator('.dialog-close').click()
+        page.locator('#hit-pause').click()
+        crowded = save(page)
+        assert abs(crowded['happiness'] + 6) < 1e-8
+        assert crowded['population'] == 78
+
+        # House expansion supplies beds, does not refund happiness or create people.
+        page.locator('#hit-world-house').click()
+        expect(page.locator('[data-upgrade-building="house"]')).to_be_enabled()
+        before = crowded
+        page.locator('[data-upgrade-building="house"]').click()
+        page.locator('#hit-world-house').click()
+        expect(page.locator('[data-population-stat="housing"]')).to_have_text('96')
+        expect(page.locator('[data-housing-warning]')).to_have_attribute('data-overcrowded', 'false')
+        expect(page.locator('[data-upgrade-building="house"]')).to_be_disabled()
+        expect(page.locator('[data-upgrade-lock="house"]')).to_contain_text('ratusz do poziomu 5')
+        expect(page.locator('[data-hud="housing"]')).to_have_text('Miejsca: 96')
+        page.locator('.dialog-close').click()
+        expanded = save(page)
+        assert expanded['buildings']['house']['level'] == 4
+        assert expanded['population'] == before['population'] == 78
+        assert expanded['happiness'] == before['happiness']
+        assert expanded['capacity'] == 96
+        for resource, amount in {'coins': 400, 'wood': 160, 'stone': 80, 'planks': 40}.items():
+            assert expanded['resources'][resource] == before['resources'][resource] - amount
+        page.locator('#hit-play').click()
+        page.clock.run_for(60_000)
+        expect(page.locator('[data-hud="happiness"]')).to_have_text('−6%')
+        page.locator('#hit-pause').click()
+        assert save(page)['happiness'] == expanded['happiness']
+        page.reload()
+        expect(page.locator('[data-hud="housing"]')).to_have_text('Miejsca: 96')
+        expect(page.locator('[data-hud="population"]')).to_have_text('78 / 96')
+        context.close()
+        print('PASS townhall4/house3: 96 cap, 72 beds, six unhoused, −6 points/hour at 4x; house expansion and level lock')
+
+        # Legacy investment is retained by promoting the townhall once during migration.
+        context = browser.new_context(viewport={'width': 1672, 'height': 941}, reduced_motion='reduce')
+        page = visit(context, {'version': 2, 'resources': dict.fromkeys(RESOURCES, 321),
+                               'population': 30, 'happiness': -0.01, 'paused': True,
+                               'buildings': {'townhall': {'level': 1, 'workers': 1},
+                                             'house': {'level': 3, 'workers': 0}}})
+        expect(page.locator('[data-hud="level"]')).to_have_text('3')
+        expect(page.locator('[data-hud="housing"]')).to_have_text('Miejsca: 72')
+        expect(page.locator('[data-hud="happiness"]')).to_have_text('0%')
+        migrated = save(page)
+        assert migrated['version'] == 3 and migrated['buildings']['townhall']['level'] == 3
+        assert migrated['buildings']['house']['level'] == 3
+        assert migrated['resources'] == dict.fromkeys(RESOURCES, 321)
+        assert migrated['happiness'] == -0.01
+        context.close()
+        print('PASS legacy above-townhall house preserved, assets retained, fractional happiness and no negative zero')
+
+        # A previously repaired lighthouse can be upgraded and keeps that level on reload.
+        context = browser.new_context(viewport={'width': 1672, 'height': 941}, reduced_motion='reduce')
+        page = visit(context, {'version': 3, 'resources': dict.fromkeys(RESOURCES, 10000),
+                               'paused': True, 'buildings': {'townhall': {'level': 3, 'workers': 1},
+                               'lighthouse': {'level': 2, 'workers': 0}},
+                               'objective': {'wood': 50, 'stone': 30, 'repaired': True}})
+        page.locator('#hit-world-lighthouse').click()
+        expect(page.locator('[data-upgrade-building="lighthouse"]')).to_be_enabled()
+        page.locator('[data-upgrade-building="lighthouse"]').click()
+        page.locator('#hit-world-lighthouse').click()
+        expect(page.locator('[data-upgrade-building="lighthouse"]')).to_be_disabled()
+        expect(page.locator('[data-upgrade-lock="lighthouse"]')).to_contain_text('ratusz do poziomu 4')
+        page.locator('.dialog-close').click()
+        upgraded = save(page)
+        assert upgraded['buildings']['lighthouse']['level'] == 3 and upgraded['objective']['repaired']
+        assert upgraded['resources']['coins'] == 9100 and upgraded['resources']['planks'] == 9910
+        page.reload()
+        expect(page.locator('#hit-world-lighthouse .world-level')).to_have_text('Poz. 3')
+        context.close()
+        print('PASS repaired lighthouse upgrades to townhall level and persists after reload')
     finally:
         browser.close()
     assert not errors, errors

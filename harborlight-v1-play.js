@@ -1,4 +1,4 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, taskReady, totalWorkers, populationRate } from './harborlight-v1-state.js?v=population-v2';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility } from './harborlight-v1-state.js?v=housing-v3';
 import { createAmbientScene } from './harborlight-v1-ambient.js?v=living-world-3';
 
 const SAVE_KEY = 'harborlight-v1-interactive-save';
@@ -160,6 +160,8 @@ for (const [id, icon] of [['coins', '◉'], ['wood', '▰'], ['stone', '◆'], [
   toolbarButton(`resource-${id}`, `${nameOf(id)} — zapasy`, `topbar-resource topbar-${id}`, ...toolbarStat(id, nameOf(id), icon));
 }
 toolbarButton('population', 'Mieszkańcy i przydział pracowników', 'topbar-population', ...toolbarStat('population', 'Mieszkańcy', '♟︎'));
+hud.housing = el('small', { class: 'topbar-housing', 'data-hud': 'housing' }, '—');
+document.querySelector('.topbar-population .topbar-copy').append(hud.housing);
 hud.clock = el('strong', { 'data-hud': 'clock' }, '—');
 toolbarButton('clock', 'Dzień i czas na wyspie', 'topbar-clock', hud.clock);
 for (const [id, icon, label] of [['pause', 'Ⅱ', 'Wstrzymaj upływ czasu'], ['play', '▶︎', 'Wznów upływ czasu'], ['speed', '1×', 'Zmień prędkość czasu'], ['settings', '⚙︎', 'Ustawienia'], ['menu', '☰', 'Menu gry']]) {
@@ -174,6 +176,10 @@ for (const [id, label, action] of [['level', 'Poziom', () => openPanel('building
   mobileHudValues[id] = el('strong', { 'data-mobile-hud': id }, '—');
   const node = button(label, action, { class: 'mobile-hud-item' });
   node.replaceChildren(el('small', {}, label), mobileHudValues[id]);
+  if (id === 'population') {
+    mobileHudValues.housing = el('span', { class: 'mobile-housing', 'data-mobile-hud': 'housing' }, '—');
+    node.append(mobileHudValues.housing);
+  }
   (['level', 'happiness', 'population'].includes(id) ? mobileSummary : mobileResources).append(node);
 }
 mobileHud.append(mobileSummary, mobileResources);
@@ -182,19 +188,24 @@ for (const [id, y] of [['repair', 150], ['wood', 179], ['stone', 207]]) {
   hud[`objective-${id}`] = el('span', { class: 'live-objective', 'aria-hidden': 'true', style: { left: '1603px', top: `${y}px`, width: '45px', height: '20px' } });
   layer.append(hud[`objective-${id}`]);
 }
-const happinessText = () => `${state.happiness > 0 ? '+' : state.happiness < 0 ? '−' : ''}${Math.abs(state.happiness)}%`;
+const happinessText = () => {
+  const rounded = Math.round(Math.abs(state.happiness) * 10) / 10;
+  return `${rounded ? state.happiness > 0 ? '+' : '−' : ''}${rounded.toLocaleString('pl-PL', { maximumFractionDigits: 1 })}%`;
+};
 function renderHUD() {
   for (const id of Object.keys(RESOURCES)) {
     hud[id].textContent = count(state.resources[id]);
     document.getElementById(`hit-resource-${id}`).setAttribute('aria-label', `${nameOf(id)}: ${count(state.resources[id])} — zapasy`);
   }
   hud.population.textContent = `${state.population} / ${state.capacity}`;
+  hud.housing.textContent = `Miejsca: ${housingCapacity(state)}`;
   hud.level.textContent = state.buildings.townhall.level;
   hud.happiness.textContent = happinessText();
   document.getElementById('hit-level').setAttribute('aria-label', `Poziom ${state.buildings.townhall.level} — ratusz; limit ${state.capacity} mieszkańców`);
   document.getElementById('hit-happiness').setAttribute('aria-label', `Szczęście: ${happinessText()} — mieszkańcy i zmiana populacji`);
   document.getElementById('hit-happiness').dataset.sentiment = state.happiness > 0 ? 'positive' : state.happiness < 0 ? 'negative' : 'neutral';
-  document.getElementById('hit-population').setAttribute('aria-label', `Mieszkańcy: ${state.population} z ${state.capacity} — przydział pracowników`);
+  document.getElementById('hit-population').setAttribute('aria-label', `Mieszkańcy: ${state.population}; limit ratusza: ${state.capacity}; miejsca w domu: ${housingCapacity(state)}; bez miejsca: ${unhousedResidents(state)} — mieszkańcy i przydział pracowników`);
+  document.getElementById('hit-population').dataset.overcrowded = String(unhousedResidents(state) > 0);
   for (const id of Object.keys(mobileHudValues)) mobileHudValues[id].textContent = hud[id].textContent;
   mobileHudValues.happiness.dataset.sentiment = document.getElementById('hit-happiness').dataset.sentiment;
   hud.clock.textContent = `Dzień ${state.day}\n${String(Math.floor(state.minutes / 60)).padStart(2, '0')}:${String(Math.floor(state.minutes % 60)).padStart(2, '0')}`;
@@ -254,8 +265,9 @@ function refreshLivePanel() {
   dialog.querySelectorAll('[data-ready]').forEach(node => { node.textContent = count(state.buildings[node.dataset.ready].ready); });
   dialog.querySelectorAll('[data-stock]').forEach(node => { node.textContent = count(state.resources[node.dataset.stock]); });
   dialog.querySelectorAll('[data-collect]').forEach(node => { node.disabled = !state.buildings[node.dataset.collect].ready; });
-  const live = { population: `${state.population} / ${state.capacity}`, workers: totalWorkers(state), happiness: happinessText(), level: state.buildings.townhall.level, growth: populationDescription() };
+  const live = { population: `${state.population} / ${state.capacity}`, workers: totalWorkers(state), happiness: happinessText(), level: state.buildings.townhall.level, growth: populationDescription(), capacity: state.capacity, housing: housingCapacity(state), unhoused: unhousedResidents(state), penalty: housingPenaltyText(), 'housing-status': housingDescription() };
   dialog.querySelectorAll('[data-population-stat]').forEach(node => { node.textContent = live[node.dataset.populationStat]; });
+  dialog.querySelectorAll('[data-housing-warning]').forEach(node => { node.dataset.overcrowded = String(unhousedResidents(state) > 0); });
   dialog.querySelectorAll('[data-worker-count]').forEach(node => { node.textContent = state.buildings[node.dataset.workerCount].workers; });
   dialog.querySelectorAll('[data-worker-building]').forEach(node => {
     const building = state.buildings[node.dataset.workerBuilding];
@@ -286,6 +298,11 @@ function cancelPlacement() {
   document.querySelectorAll('.world-pulse').forEach(node => node.classList.remove('world-pulse'));
 }
 function startPlacement(id) {
+  const eligibility = upgradeEligibility(state, id);
+  if (!eligibility.ok) {
+    toast(eligibility.message);
+    return;
+  }
   closePanel();
   placement = id;
   document.getElementById(`hit-world-${id}`).classList.add('world-pulse');
@@ -309,13 +326,26 @@ function buildingPanel(id) {
   const value = state.buildings[id];
   const content = el('div', {}, note(data.description || data.desc || 'Rozwijaj budynek, aby zwiększyć możliwości osady.'),
     el('div', { class: 'stat-grid' }, stat('Poziom', value.level || 'Ruina'), stat('Pracownicy', value.workers), stat('Do odbioru', el('span', { 'data-ready': id }, count(value.ready)))));
-  if (id === 'lighthouse') {
+  if (id === 'house') content.append(card(el('h3', {}, 'Miejsca do zamieszkania'),
+    el('div', { class: 'stat-grid' }, stat('Miejsca w domu', el('span', { 'data-population-stat': 'housing' }, housingCapacity(state))), stat('Limit ratusza', el('span', { 'data-population-stat': 'capacity' }, state.capacity))),
+    housingNotice(), note('Każdy poziom domu daje 24 miejsca. Rozbudowa nie dodaje od razu mieszkańców; usuwa brak miejsc i zatrzymuje dalszą karę za przeludnienie.')));
+  if (id === 'townhall') content.append(card(el('h3', {}, 'Poziom wyspy'),
+    stat('Teoretyczny limit mieszkańców', el('span', { 'data-population-stat': 'capacity' }, state.capacity)),
+    note(`Ratusz wyznacza maksymalny poziom pozostałych budynków: ${value.level}. Ludzie mieszkają w domu, który zapewnia ${housingCapacity(state)} miejsc.`)));
+  if (id === 'lighthouse' && value.level === 0) {
     content.append(objectivePanel());
     return content;
   }
+  if (id === 'lighthouse') content.append(note('Latarnia jest naprawiona i świeci. Możesz rozwijać ją dalej do poziomu ratusza.'));
   const cost = buildingCost(state, id);
   const maxLevel = value.level >= data.maxLevel;
-  content.append(card(el('h3', {}, maxLevel ? 'Budynek w pełni rozwinięty' : value.level ? 'Ulepszenie budynku' : 'Budowa'), maxLevel ? null : el('p', { class: 'cost' }, costText(cost)), button(maxLevel ? 'Maksymalny poziom' : value.level ? 'Wybierz miejsce ulepszenia' : 'Wybierz miejsce budowy', () => startPlacement(id), { disabled: maxLevel })));
+  const eligibility = upgradeEligibility(state, id);
+  const townhallLocked = !maxLevel && !eligibility.ok;
+  content.append(card(el('h3', {}, maxLevel ? 'Budynek w pełni rozwinięty' : value.level ? 'Ulepszenie budynku' : 'Budowa'),
+    maxLevel ? null : el('p', { class: 'cost' }, costText(cost)),
+    townhallLocked ? el('p', { class: 'notice building-lock', 'data-upgrade-lock': id }, eligibility.message) : null,
+    button(maxLevel ? 'Maksymalny poziom' : value.level ? 'Wybierz miejsce ulepszenia' : 'Wybierz miejsce budowy', () => startPlacement(id), { disabled: maxLevel || townhallLocked, 'data-upgrade-building': id }),
+    townhallLocked ? button('Rozbuduj ratusz', () => openPanel('building', 'townhall'), { class: 'action secondary' }) : null));
   if (productionBuildings.includes(id)) {
     content.append(card(el('h3', {}, 'Produkcja'), note('Przydzieleni mieszkańcy pracują, gdy czas na wyspie płynie. Gotowe produkty odbierasz do magazynu.'),
       button('Odbierz produkcję', () => perform({ type: 'collect', building: id }), { disabled: !value.ready, 'data-collect': id }),
@@ -335,7 +365,8 @@ function objectivePanel() {
     button(objective.repaired ? 'Latarnia odbudowana' : 'Odbuduj latarnię', () => perform({ type: 'repair' }), { disabled: objective.repaired || objective.wood < 50 || objective.stone < 30 }));
 }
 function buildingsPanel() {
-  return el('div', { class: 'panel-grid' }, Object.keys(BUILDINGS).map(id => card(el('h3', {}, titleOf(id)), el('p', {}, `Poziom ${state.buildings[id].level}`), button('Szczegóły i rozbudowa', () => openPanel('building', id)))));
+  return el('div', {}, note(`Poziom ratusza ${state.buildings.townhall.level} pozwala rozbudowywać pozostałe budynki do tego samego poziomu.`),
+    el('div', { class: 'panel-grid' }, Object.keys(BUILDINGS).map(id => card(el('h3', {}, titleOf(id)), el('p', {}, `Poziom ${state.buildings[id].level} / ${buildingLevelLimit(state, id)}`), button('Szczegóły i rozbudowa', () => openPanel('building', id))))));
 }
 function resourcesPanel(selected) {
   return el('div', {}, selected ? note(`${nameOf(selected)} — aktualny zapas: ${count(state.resources[selected])}.`) : null,
@@ -347,20 +378,36 @@ function resourcesPanel(selected) {
 function residentsPanel() {
   const liveStat = (label, id, value) => stat(label, el('span', { 'data-population-stat': id }, value));
   return el('div', {}, el('div', { class: 'stat-grid' }, liveStat('Poziom ratusza', 'level', state.buildings.townhall.level), liveStat('Mieszkańcy', 'population', `${state.population} / ${state.capacity}`), liveStat('Przydzieleni', 'workers', totalWorkers(state)), liveStat('Szczęście', 'happiness', happinessText())),
+    card(el('h3', {}, 'Ratusz i miejsca w domu'),
+      el('div', { class: 'stat-grid housing-stats' }, liveStat('Limit ratusza', 'capacity', state.capacity), liveStat('Miejsca w domu', 'housing', housingCapacity(state)), liveStat('Bez miejsca', 'unhoused', unhousedResidents(state)), liveStat('Wpływ na szczęście', 'penalty', housingPenaltyText())),
+      housingNotice(), note('Limit osady = 24 × poziom ratusza. Miejsca do zamieszkania = 24 × poziom domu. Populacja może przekroczyć liczbę miejsc w domu, do limitu ratusza.'),
+      note('Każda osoba bez miejsca obniża szczęście o 1 punkt procentowy na godzinę aktywnej gry. Przykład: 78 osób i 72 miejsca oznaczają −6 punktów procentowych na godzinę. Rozbudowa domu zatrzymuje dalszą karę; nie przywraca automatycznie utraconego szczęścia.'),
+      button('Rozbuduj dom', () => openPanel('building', 'house')), button('Rozbuduj ratusz', () => openPanel('building', 'townhall'), { class: 'action secondary' })),
     card(el('h3', {}, 'Rozwój populacji'), el('p', { class: 'population-growth', 'data-population-stat': 'growth' }, populationDescription()),
       note('Przy 0% szczęścia populacja się nie zmienia. Dodatnie szczęście daje nowych mieszkańców, ujemne powoduje ubytek. Minimum to 6 osób.'),
       el('div', { class: 'population-rate-table' }, ...[['Szczęście', 'Zmiana o 1 osobę'], ['±25%', 'co 12 h'], ['±50%', 'co 6 h'], ['±75%', 'co ok. 1 h 43 min'], ['±100%', 'co 1 h']].map(([label, value]) => el('div', {}, el('span', {}, label), el('strong', {}, value)))),
       note('Godziny oznaczają rzeczywisty czas aktywnej gry w widocznej karcie. Pauza zatrzymuje zmianę populacji; tempo 1× / 2× / 4× nie skraca tych godzin. Po ukryciu karty lub zamknięciu gry licznik czeka.'),
-      button('Rozbuduj ratusz', () => openPanel('building', 'townhall')),
-      el('p', { class: 'cost' }, 'Poziom wyspy = poziom ratusza. Limit mieszkańców = 24 × poziom; ulepszenie ratusza dodaje 24 miejsca.')),
-    note('Wolnych mieszkańców przydzielasz do produkcji. Dekoracje, ścieżki i rozbudowa kaplicy poprawiają szczęście. Ulepszenie domu nie dodaje mieszkańców ani nie zwiększa limitu.'),
+      note('Przy przeludnieniu szczęście zmienia się w czasie, więc czas do kolejnej zmiany populacji jest szacunkiem dla obecnego szczęścia.')),
+    note('Wolnych mieszkańców przydzielasz do produkcji. Dekoracje, ścieżki i rozbudowa kaplicy poprawiają szczęście.'),
     el('div', { class: 'panel-grid' }, productionBuildings.map(id => card(el('h3', {}, titleOf(id)), el('p', {}, 'Pracownicy: ', el('span', { 'data-worker-count': id }, state.buildings[id].workers)),
       button('− Pracownik', () => perform({ type: 'assign', building: id, delta: -1 }), { class: 'action secondary', disabled: !state.buildings[id].workers, 'data-worker-building': id, 'data-worker-delta': -1 }),
       button('+ Pracownik', () => perform({ type: 'assign', building: id, delta: 1 }), { disabled: totalWorkers(state) >= state.population || state.buildings[id].workers >= state.buildings[id].level * 2 + 2 || state.buildings[id].level === 0, 'data-worker-building': id, 'data-worker-delta': 1 })))));
 }
+function housingPenaltyText() {
+  const unhoused = unhousedResidents(state);
+  return unhoused ? `−${unhoused} pkt proc./h` : '0 pkt proc./h';
+}
+function housingDescription() {
+  const unhoused = unhousedResidents(state);
+  return unhoused ? `Przeludnienie: ${unhoused} osób bez miejsca w domu. Szczęście spada o ${unhoused} pkt proc./h aktywnej gry.${state.paused ? ' Kara zatrzymana — pauza.' : ''}` : `Wszyscy mieszkańcy mają miejsce w domu: ${state.population} / ${housingCapacity(state)} zajętych miejsc. Brak kary za przeludnienie.`;
+}
+function housingNotice() {
+  return el('p', { class: 'notice housing-notice', 'data-housing-warning': '', 'data-overcrowded': String(unhousedResidents(state) > 0), 'data-population-stat': 'housing-status' }, housingDescription());
+}
 function populationDescription() {
   const rate = populationRate(state.happiness);
-  if (!rate) return '0% szczęścia · brak przyrostu i ubytku mieszkańców.';
+  const overcrowded = unhousedResidents(state) > 0;
+  if (!rate) return `0% szczęścia · brak przyrostu i ubytku mieszkańców.${overcrowded ? ' Przeludnienie obniża szczęście i może uruchomić ubytek.' : ''}`;
   if (rate > 0 && state.population >= state.capacity) return `Osiągnięto limit ${state.capacity} mieszkańców. Rozbuduj ratusz, aby stworzyć nowe miejsca.`;
   if (rate < 0 && state.population <= 6) return 'Osiągnięto minimum 6 mieszkańców. Populacja nie spadnie niżej; produkcja i rozwój pozostają dostępne.';
   const direction = Math.sign(rate);
@@ -368,7 +415,7 @@ function populationDescription() {
   const seconds = Math.max(0, Math.ceil((1 - progress) * 3600 / Math.abs(rate)));
   const hours = Math.floor(seconds / 3600), minutes = Math.floor(seconds % 3600 / 60), remainder = seconds % 60;
   const time = `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min ` : ''}${remainder} s`;
-  return `${rate > 0 ? 'Nowy mieszkaniec' : 'Ubytek 1 mieszkańca'} za ${time}.${state.paused ? ' Licznik zatrzymany — pauza.' : ''}`;
+  return `${overcrowded ? 'Szacunek przy obecnym szczęściu: ' : ''}${rate > 0 ? 'Nowy mieszkaniec' : 'Ubytek 1 mieszkańca'} za ${time}.${state.paused ? ' Licznik zatrzymany — pauza.' : ''}${overcrowded ? ' Przeludnienie zmienia tempo.' : ''}`;
 }
 function tradePanel() {
   return el('div', {}, note('Port wymienia zasoby na monety. Przed transakcją widzisz jej wynik i aktualny stan zapasów.'), resourceList(),

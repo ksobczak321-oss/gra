@@ -2,7 +2,7 @@
 
 Spokojna gra o rozwoju wyspy: rozwiązuj ekspedycje, zdobywaj materiały i odbuduj latarnię. Repozytorium zawiera statyczny prototyp przeglądarkowy w HTML, CSS i JavaScript, bez zależności do instalowania i bez backendu.
 
-Reguły rozwijanej osady: poziom odpowiada ratuszowi, limit mieszkańców wynosi 24 na poziom, a szczęście od −100% do +100% steruje wzrostem lub spadkiem populacji. Nowa wyspa zaczyna z 12 mieszkańcami, szczęściem 0% i po 100 każdego zasobu. Szczegóły czasu, limitów i zapisu opisano w [instrukcji prototypu](docs/INTERACTIVE-ISLAND.md); stan wdrożenia jest w dzienniku.
+Reguły rozwijanej osady: poziom ratusza wyznacza poziom gry, maksymalną rozbudowę pozostałych budynków i teoretyczny limit mieszkańców (`24 × poziom ratusza`). Dom daje osobno `24 × poziom domu` miejsc mieszkalnych. Każda osoba bez miejsca obniża szczęście o 1 punkt procentowy na godzinę aktywnej gry; szczęście od −100% do +100% steruje wzrostem lub spadkiem populacji. Nowa wyspa zaczyna z ratuszem i domem na poziomie 1, 12 mieszkańcami, szczęściem 0% i po 100 każdego zasobu. Szczegóły czasu, limitów i migracji zapisu opisano w [instrukcji prototypu](docs/INTERACTIVE-ISLAND.md); stan wdrożenia jest w dzienniku.
 
 ## Podgląd
 
@@ -31,6 +31,7 @@ Po uruchomieniu serwera można wykonać pełny test w Chromium (wymaga pakietu P
 
 ```sh
 python3 tests/harborlight-browser-smoke.py
+python3 tests/harborlight-population-smoke.py
 python3 tests/harborlight-animation-smoke.py
 python3 tests/harborlight-coastal-smoke.py
 ```

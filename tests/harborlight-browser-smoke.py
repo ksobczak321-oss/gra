@@ -134,6 +134,14 @@ def gameplay_checks(browser, errors, failed):
     page.locator("#hit-pause").click()
     assert saved(page)["paused"] is True
 
+    # The first townhall level does not allow a second-level house yet.
+    before = saved(page)
+    page.locator("#hit-dock-house").click()
+    expect(page.get_by_role("button", name="Wybierz miejsce ulepszenia", exact=True)).to_be_disabled()
+    expect(page.locator("#island-dialog")).to_contain_text("ratusz")
+    assert saved(page)["resources"] == before["resources"]
+    close_panel(page)
+
     # Production collection spends no currency and awards the actual ready batch.
     before = saved(page)
     page.locator("#hit-world-farm").click()
@@ -142,6 +150,11 @@ def gameplay_checks(browser, errors, failed):
     assert after["resources"]["food"] == before["resources"]["food"] + 12
     assert after["buildings"]["farm"]["ready"] == 0
     expect(page.locator('[data-collect="farm"]')).to_be_disabled()
+    close_panel(page)
+
+    page.locator("#hit-world-lumber").click()
+    page.locator('[data-collect="lumber"]').click()
+    assert saved(page)["resources"]["wood"] == before["resources"]["wood"] + 16
     close_panel(page)
 
     # Earn the construction budget through real expedition play from the 100-each start.
@@ -167,38 +180,66 @@ def gameplay_checks(browser, errors, failed):
         print(f"PASS expedition: {expedition['id']} ({len(route)} moves, {caches} chests)")
 
 
-    # A real placement click confirms the upgrade and charges the displayed cost.
+    # Claim the earned starter reward before buying the townhall and house upgrades.
+    page.locator("#hit-nav-tasks").click()
+    before = saved(page)
+    collect_task = page.locator(".info-card").filter(has=page.get_by_role("heading", name="Pierwsze zbiory", exact=True))
+    collect_task.get_by_role("button", name="Odbierz nagrodę", exact=True).click()
+    after = saved(page)
+    assert after["tasks"]["collect"] is True
+    assert after["resources"]["coins"] == before["resources"]["coins"] + 100
+    assert after["resources"]["wood"] == before["resources"]["wood"] + 20
+    expect(collect_task.get_by_role("button", name="Nagroda odebrana", exact=True)).to_be_disabled()
+    close_panel(page)
+
+    # Townhall upgrades unlock building levels and increase only the theoretical cap.
+    before = saved(page)
+    page.locator("#hit-level").click()
+    page.get_by_role("button", name="Wybierz miejsce ulepszenia", exact=True).click()
+    page.locator("#hit-world-townhall").click()
+    after = saved(page)
+    assert after["buildings"]["townhall"]["level"] == 2
+    assert after["capacity"] == 48 and after["population"] == 12
+    assert after["buildings"]["house"]["level"] == 1
+    for resource, amount in {"coins": 480, "wood": 100, "stone": 100, "planks": 40}.items():
+        assert after["resources"][resource] == before["resources"][resource] - amount
+    expect(page.locator('[data-hud="housing"]')).to_have_text("Miejsca: 24")
+    close_panel(page)
+
+    # A real placement click confirms the now-unlocked house upgrade.
     before = saved(page)
     page.locator("#hit-dock-house").click()
     page.get_by_role("button", name="Wybierz miejsce ulepszenia", exact=True).click()
     expect(page.locator("#placement-banner")).to_be_visible()
     page.locator("#hit-world-house").click()
     after = saved(page)
-    assert after["buildings"]["house"]["level"] == 3
-    assert after["capacity"] == 24
+    assert after["buildings"]["house"]["level"] == 2
+    assert after["capacity"] == 48
     assert after["population"] == 12
-    for resource, amount in {"coins": 300, "wood": 120, "stone": 60, "planks": 30}.items():
+    for resource, amount in {"coins": 200, "wood": 80, "stone": 40, "planks": 20}.items():
         assert after["resources"][resource] == before["resources"][resource] - amount
-    expect(page.locator("#hit-world-house .world-level")).to_have_text("Poz. 3")
+    expect(page.locator("#hit-world-house .world-level")).to_have_text("Poz. 2")
+    expect(page.locator('[data-hud="housing"]')).to_have_text("Miejsca: 48")
     close_panel(page)
 
     page.locator("#hit-nav-tasks").click()
     before = saved(page)
-    page.get_by_role("button", name="Odbierz nagrodę", exact=True).first.click()
+    upgrade_task = page.locator(".info-card").filter(has=page.get_by_role("heading", name="Wyspa rośnie", exact=True))
+    upgrade_task.get_by_role("button", name="Odbierz nagrodę", exact=True).click()
     after = saved(page)
-    assert after["tasks"]["collect"] is True
-    assert after["resources"]["coins"] == before["resources"]["coins"] + 100
-    assert after["resources"]["wood"] == before["resources"]["wood"] + 20
-    expect(page.get_by_role("button", name="Nagroda odebrana", exact=True).first).to_be_disabled()
+    assert after["tasks"]["upgrade"] is True
+    assert after["resources"]["coins"] == before["resources"]["coins"] + 150
+    assert after["resources"]["planks"] == before["resources"]["planks"] + 15
+    expect(upgrade_task.get_by_role("button", name="Nagroda odebrana", exact=True)).to_be_disabled()
     close_panel(page)
 
     page.locator("#hit-resource-coins").click()
     page.get_by_role("button", name="Handluj w porcie", exact=True).click()
     before = saved(page)
-    page.get_by_role("button", name="Sprzedaj 10 → 30 monet", exact=True).click()
+    page.get_by_role("button", name="Sprzedaj 10 → 40 monet", exact=True).click()
     after = saved(page)
-    assert after["resources"]["wood"] == before["resources"]["wood"] - 10
-    assert after["resources"]["coins"] == before["resources"]["coins"] + 30
+    assert after["resources"]["stone"] == before["resources"]["stone"] - 10
+    assert after["resources"]["coins"] == before["resources"]["coins"] + 40
     close_panel(page)
 
     page.locator("#hit-objective-title").click()
@@ -224,7 +265,8 @@ def gameplay_checks(browser, errors, failed):
     after = saved(page)
     assert after["objective"] == before["objective"]
     assert after["expeditions"] == before["expeditions"]
-    assert after["buildings"]["house"]["level"] == 3
+    assert after["buildings"]["house"]["level"] == 2
+    assert after["buildings"]["townhall"]["level"] == 2
     assert after["tasks"]["collect"] is True
     assert after["resources"] == before["resources"]
     close_panel(page)

@@ -9,16 +9,16 @@ export const RESOURCES = {
 };
 
 export const BUILDINGS = {
-  house: { name: 'Dom', description: 'Miejsce życia mieszkańców. Limit ludności wyznacza poziom ratusza, a przyrost zależy od szczęścia.', cost: { coins: 100, wood: 40, stone: 20, planks: 10 }, maxLevel: 5 },
+  house: { name: 'Dom', description: 'Każdy poziom zapewnia 24 miejsca do mieszkania. Osoby bez miejsca obniżają szczęście o 1 punkt procentowy na godzinę każda.', cost: { coins: 100, wood: 40, stone: 20, planks: 10 }, maxLevel: 5 },
   farm: { name: 'Farma', description: 'Rolnicy zbierają żywność. Odbieraj gotowe plony.', cost: { coins: 80, wood: 30, stone: 10 }, resource: 'food', rate: 3, maxLevel: 5 },
   sawmill: { name: 'Tartak', description: 'Przetwarza drewno w deski potrzebne do rozbudowy.', cost: { coins: 120, wood: 45, stone: 25 }, resource: 'planks', rate: 2, input: 'wood', inputRate: 3, maxLevel: 5 },
   quarry: { name: 'Kamieniołom', description: 'Kamieniarze wydobywają surowiec do budowy i naprawy latarni.', cost: { coins: 150, wood: 35, stone: 20 }, resource: 'stone', rate: 3, maxLevel: 5 },
   dock: { name: 'Przystań', description: 'Łączy wyspę z handlem i ekspedycjami. Załoga zarabia monety.', cost: { coins: 200, wood: 60, planks: 25 }, resource: 'coins', rate: 3, maxLevel: 5 },
   warehouse: { name: 'Magazyn', description: 'Chroni zapasy. Każdy poziom zwiększa limit gotowej produkcji.', cost: { coins: 160, wood: 35, stone: 30, planks: 15 }, maxLevel: 5 },
-  lighthouse: { name: 'Latarnia', description: 'Dostarcz drewno i kamień, a potem przywróć światło starej latarni.', cost: { coins: 300, planks: 30 }, maxLevel: 1 },
+  lighthouse: { name: 'Latarnia', description: 'Dostarcz drewno i kamień, a potem przywróć światło starej latarni. Naprawioną latarnię możesz rozbudować do poziomu ratusza.', cost: { coins: 300, planks: 30 }, maxLevel: 5 },
   lumber: { name: 'Obóz drwali', description: 'Drwale pozyskują drewno potrzebne do budowy.', cost: { coins: 90, wood: 25, stone: 15 }, resource: 'wood', rate: 4, maxLevel: 5 },
   windmill: { name: 'Młyn', description: 'Przetwarza zbiory w zapasy żywności dla osady.', cost: { coins: 140, wood: 40, stone: 20, planks: 15 }, resource: 'food', rate: 4, input: 'food', inputRate: 2, maxLevel: 5 },
-  townhall: { name: 'Ratusz', description: 'Poziom ratusza jest poziomem wyspy. Każdy poziom zapewnia limit 24 mieszkańców; zarządcy zbierają podatki.', cost: { coins: 240, wood: 50, stone: 50, planks: 20 }, resource: 'coins', rate: 5, maxLevel: 5 },
+  townhall: { name: 'Ratusz', description: 'Poziom ratusza jest poziomem wyspy i maksymalnym poziomem pozostałych budynków. Każdy poziom daje teoretyczny limit 24 mieszkańców; miejsca do mieszkania zapewnia dom.', cost: { coins: 240, wood: 50, stone: 50, planks: 20 }, resource: 'coins', rate: 5, maxLevel: 5 },
   chapel: { name: 'Kaplica', description: 'Każda rozbudowa podnosi zadowolenie mieszkańców.', cost: { coins: 180, wood: 20, stone: 60, planks: 10 }, maxLevel: 5 },
   market: { name: 'Targ', description: 'Kupcy wymieniają towary i generują monety dla wyspy.', cost: { coins: 130, wood: 35, stone: 15 }, resource: 'coins', rate: 4, maxLevel: 5 }
 };
@@ -51,13 +51,13 @@ const productionIds = Object.keys(BUILDINGS).filter(id => BUILDINGS[id].resource
 
 export function createState() {
   const buildings = {};
-  for (const id of Object.keys(BUILDINGS)) buildings[id] = { level: id === 'lighthouse' ? 0 : id === 'house' ? 2 : 1, workers: BUILDINGS[id].resource ? 1 : 0, ready: 0 };
+  for (const id of Object.keys(BUILDINGS)) buildings[id] = { level: id === 'lighthouse' ? 0 : 1, workers: BUILDINGS[id].resource ? 1 : 0, ready: 0 };
   // Give the first session something tangible to collect immediately.
   buildings.farm.ready = 12;
   buildings.lumber.ready = 16;
   buildings.quarry.ready = 10;
   return {
-    version: 2,
+    version: 3,
     resources: Object.fromEntries(Object.keys(RESOURCES).map(id => [id, 100])),
     population: 12, capacity: 24, happiness: 0,
     populationProgress: 0, populationDirection: 0,
@@ -75,6 +75,27 @@ export function createState() {
 
 export function totalWorkers(state) {
   return Object.values(state.buildings).reduce((sum, building) => sum + building.workers, 0);
+}
+
+export function housingCapacity(state) {
+  return state.buildings.house.level * 24;
+}
+
+export function unhousedResidents(state) {
+  return Math.max(0, state.population - housingCapacity(state));
+}
+
+export function buildingLevelLimit(state, id) {
+  if (!owns(BUILDINGS, id)) return 0;
+  return id === 'townhall' ? BUILDINGS[id].maxLevel : Math.min(BUILDINGS[id].maxLevel, state.buildings.townhall.level);
+}
+
+export function upgradeEligibility(state, id) {
+  if (!owns(BUILDINGS, id)) return bad('Nie ma takiego budynku.');
+  const nextLevel = state.buildings[id].level + 1;
+  if (nextLevel > BUILDINGS[id].maxLevel) return bad('Osiągnięto najwyższy poziom.');
+  if (nextLevel > buildingLevelLimit(state, id)) return bad(`Najpierw rozbuduj ratusz do poziomu ${nextLevel}.`);
+  return good('Rozbudowa jest dostępna.');
 }
 
 // Rates interpolate the agreed anchors: 0%=0, 50%=1/6, 100%=1 person/hour.
@@ -121,16 +142,46 @@ function syncPopulationProgress(state) {
 
 function advancePopulation(state, activeSeconds) {
   state.capacity = state.buildings.townhall.level * 24;
-  const rate = populationRate(state.happiness), direction = syncPopulationProgress(state);
-  if (!direction || populationAtLimit(state, direction)) return;
-  const progress = state.populationProgress + Math.abs(rate) * activeSeconds / 3600;
-  // The epsilon avoids losing an exact birth to repeated fractional-second ticks.
-  const changes = Math.floor(progress + 1e-12);
-  state.populationProgress = Math.max(0, progress - changes);
-  if (!changes) return;
-  state.population = Math.min(state.capacity, Math.max(6, state.population + direction * changes));
-  if (state.population === state.capacity || state.population === 6) resetPopulationProgress(state, direction);
-  if (direction < 0) trimWorkers(state);
+  let remaining = activeSeconds;
+  // Between population changes the housing penalty is constant. Integrate each
+  // linear happiness/rate segment exactly, rather than applying a whole hour at
+  // its starting rate or looping once for every second in a long saved interval.
+  while (remaining > 0) {
+    const happiness = state.happiness;
+    const happinessSlope = happiness > -100 ? -unhousedResidents(state) / 3600 : 0;
+    let boundary = null;
+    if (happinessSlope < 0) boundary = happiness > 50 ? 50 : happiness > 0 ? 0 : happiness > -50 ? -50 : -100;
+    const boundaryTime = boundary === null ? Infinity : (boundary - happiness) / happinessSlope;
+    const direction = Math.sign(happiness) || (happinessSlope < 0 ? -1 : 0);
+    if (direction !== state.populationDirection || !direction || populationAtLimit(state, direction)) resetPopulationProgress(state, direction);
+    const blocked = !direction || populationAtLimit(state, direction);
+    const rate = Math.abs(populationRate(happiness)) / 3600;
+    const rateDerivative = Math.abs(happiness) > 50 || (happiness === -50 && happinessSlope < 0) ? 1 / 60 : 1 / 300;
+    const rateSlope = direction * happinessSlope * rateDerivative / 3600;
+    let duration = Math.min(remaining, boundaryTime);
+    let changesPopulation = false;
+    if (!blocked) {
+      const gain = Math.max(0, (rate + rateSlope * duration / 2) * duration);
+      const needed = 1 - state.populationProgress;
+      if (gain + 1e-12 >= needed) {
+        const discriminant = Math.max(0, rate * rate + 2 * rateSlope * needed);
+        const denominator = rate + Math.sqrt(discriminant);
+        if (denominator > 0) {
+          duration = Math.min(duration, 2 * needed / denominator);
+          changesPopulation = true;
+        }
+      }
+    }
+    state.happiness = Math.max(-100, Math.min(100, boundary !== null && duration === boundaryTime ? boundary : happiness + happinessSlope * duration));
+    if (!blocked) state.populationProgress = Math.max(0, state.populationProgress + (rate + rateSlope * duration / 2) * duration);
+    if (changesPopulation) {
+      state.population += direction;
+      state.populationProgress = 0;
+      if (direction < 0) trimWorkers(state);
+    }
+    syncPopulationProgress(state);
+    remaining = Math.max(0, remaining - duration);
+  }
 }
 
 export function normalizeState(raw) {
@@ -143,9 +194,20 @@ export function normalizeState(raw) {
     const level = integer(saved.level, state.buildings[id].level, id === 'townhall' ? 1 : 0, BUILDINGS[id].maxLevel);
     state.buildings[id] = { level, workers: BUILDINGS[id].resource && level > 0 ? integer(saved.workers, state.buildings[id].workers, 0, level * 2 + 2) : 0, ready: BUILDINGS[id].resource && level > 0 ? integer(saved.ready, 0, 0, 1000) : 0 };
   }
+  if (raw.version !== 3) {
+    // Older versions allowed other buildings above the townhall. Preserve their
+    // paid-for levels by promoting the legacy townhall once during migration.
+    state.buildings.townhall.level = Math.max(state.buildings.townhall.level, ...Object.values(state.buildings).map(building => building.level));
+  }
+  for (const id of Object.keys(BUILDINGS)) {
+    const building = state.buildings[id];
+    building.level = Math.min(building.level, buildingLevelLimit(state, id));
+    building.workers = Math.min(building.workers, building.level ? building.level * 2 + 2 : 0);
+    if (!building.level) building.ready = 0;
+  }
   state.capacity = state.buildings.townhall.level * 24;
   state.population = integer(raw.population, state.population, 6, state.capacity);
-  state.happiness = integer(raw.happiness, 0, -100, 100);
+  state.happiness = typeof raw.happiness === 'number' && Number.isFinite(raw.happiness) ? Math.max(-100, Math.min(100, raw.happiness)) : 0;
   const direction = Math.sign(populationRate(state.happiness));
   state.populationDirection = direction;
   if (direction && raw.populationDirection === direction &&
@@ -159,7 +221,7 @@ export function normalizeState(raw) {
   // Keep the chapter milestone and its visible building level consistent.
   if (state.objective.repaired || state.buildings.lighthouse.level > 0) {
     state.objective = { wood: 50, stone: 30, repaired: true };
-    state.buildings.lighthouse.level = 1;
+    state.buildings.lighthouse.level = Math.max(1, state.buildings.lighthouse.level);
   }
   state.speed = [1, 2, 4].includes(raw.speed) ? raw.speed : 1;
   state.paused = raw.paused === true;
@@ -248,11 +310,12 @@ export function act(state, action, now = Date.now()) {
   switch (action.type) {
     case 'build':
     case 'upgrade': {
-      if (id === 'lighthouse') return act(state, { type: 'repair' }, now);
+      if (id === 'lighthouse' && state.buildings.lighthouse.level === 0) return act(state, { type: 'repair' }, now);
       const building = state.buildings[id], definition = BUILDINGS[id];
       if (action.type === 'build' && building.level > 0) return bad('Ten budynek już istnieje. Wybierz ulepszenie.');
       if (action.type === 'upgrade' && building.level === 0) return bad('Najpierw zbuduj ten budynek.');
-      if (building.level >= definition.maxLevel) return bad('Osiągnięto najwyższy poziom.');
+      const eligibility = upgradeEligibility(state, id);
+      if (!eligibility.ok) return eligibility;
       const cost = buildingCost(state, id);
       if (!canAfford(state, cost)) return bad('Brakuje surowców do rozbudowy.');
       spend(state, cost);
@@ -307,6 +370,8 @@ export function act(state, action, now = Date.now()) {
     }
     case 'repair': {
       if (state.objective.repaired) return bad('Latarnia jest już naprawiona.');
+      const eligibility = upgradeEligibility(state, 'lighthouse');
+      if (!eligibility.ok) return eligibility;
       if (state.objective.wood < 50 || state.objective.stone < 30) return bad('Najpierw dostarcz 50 drewna i 30 kamienia.');
       const cost = BUILDINGS.lighthouse.cost;
       if (!canAfford(state, cost)) return bad('Naprawa wymaga 300 monet i 30 desek.');
