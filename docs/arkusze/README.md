@@ -8,13 +8,13 @@ Wersja 3 uwzględnia nowe reguły Premium, zadania latarni, polecenia i publikac
 
 Nowe części:
 
-- **Premium**: 1 PLN = 10 monet, skrócenia budowy o 25/50/75% za 1 monetę za pełną minutę, transport za 10 monet/kurs i materiały budynku według ceny portowej ×1,25 + czas. Trzy kalkulatory pokazują przykłady oraz nierozstrzygnięte interpretacje.
-- **Zadania latarni**: trzy rozmiary, niezależne terminy 6 h, losowe wymagania i nagrody, wpłaty partiami, premia szybkiej reakcji ×2/×3. Dołączono 12 zamrożonych przykładów narracyjnych i przykłady liczników/wpłat.
+- **Premium**: 1 PLN = 10 monet, skrócenia budowy o 25/50/75% za 1 monetę za pełną minutę, transport za 10 monet za każdy potrzebny kurs, również ostatni niepełny. Materiały budynku wyceniamy proporcjonalnie według bazowych cen zakupu w porcie, z dopłatą 25% tylko do materiałów; koszt monet budynku oraz opłatę czasową doliczamy osobno. Trzy kalkulatory pokazują przykłady oraz pozostałe nierozstrzygnięte interpretacje.
+- **Zadania latarni**: trzy rozmiary, niezależne terminy 6 h, losowe wymagania i nagrody, wpłaty partiami. Pierwsze kliknięcie utrwala ×3 przed upływem 15 s, następnie ×2 przed upływem 5 min; nagrodę otrzymuje się po pełnej wpłacie przed końcem 6 h. Dołączono 12 zamrożonych przykładów narracyjnych i przykłady liczników/wpłat.
 - **Social i polecenia**: podane nagrody monetowe i towarowe oraz lista 11 platform. Aktualnych warunków platform nie potwierdzono online — dostęp do próbowanych oficjalnych źródeł blokowało HTTP 403. Adresy i statusy są w arkuszu.
 - **Ekspedycje**: nagrody wyłącznie w złocie, pula 50 → 100 → 200 → 400…; wypłata na wyspę albo ryzyko utraty puli, dodatkowy czas/ruchy za monety lub reklamę do 30 s. Plansze i szczegóły reklam pozostają do opisania.
 - **Bilans V3**: skutki kosztów zadań wobec 6 h terminu i wspólnej populacji, nagrody przekraczające magazyn, zerowa cena przy niepełnej minucie oraz wykładniczy wzrost puli ekspedycji.
 
-Odpowiedzi na trzy pytania o ostatni niepełny kurs, sposób wyceny materiałów i utrwalenie mnożnika zadania pozostają otwarte. Zastosowane w przykładach warianty są opisane jako modele, nie dodatkowe zatwierdzone zasady.
+Trzy pytania o ostatni niepełny kurs, sposób wyceny materiałów i utrwalenie mnożnika zadania zostały zamknięte zgodnie z potwierdzeniami użytkownika. Wycena w paczkach po 100 pozostaje w kalkulatorze wyłącznie jako odrzucone porównanie dla Premium; zwykły handel portowy nadal odbywa się w paczkach po 100. Inne szczegóły, m.in. zaokrąglenie końcowej ceny i zakres skracanego czasu, pozostają oznaczone osobno.
 
 Najważniejsze doprecyzowania:
 
