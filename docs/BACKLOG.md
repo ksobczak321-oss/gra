@@ -167,6 +167,13 @@ Status: zamknięte jako completed; implementacja, 93 testy reguł, osiem lokalny
 - Osobiste ograniczenie ±100% przed średnią populacji; efekty kaplicy, latarni, pełnych składów i przeludnienia pozostają. Nowa osoba zaczyna od 0% bez historycznych bonusów.
 - HUD, grupy i osoby pokazują pełne procenty zaokrąglone w górę; silnik i zapis zachowują ułamki. Testy obejmują progi i resety, historię osoby, zmianę załogi/populacji, migrację, pauzę, zgodność kroków czasu i interfejs komputer/telefon.
 
+### Otwarte decyzje dotyczące rozbudowy budynków
+
+- Ustalić konkretną korzyść z własnego poziomu farmy, młyna, drwali, tartaku i kamieniołomu. Obecna produkcja działa, ale wydajność zależy od pracowników, jedzenia i latarni, lokalna pojemność od ratusza, a limit pracowników od populacji. Samo ulepszenie producenta nie zwiększa tych wartości.
+- Ustalić efekt kolejnych poziomów przystani i dodatkową rolę jej załogi poza podatkami.
+- Zastąpić tymczasowy koszt kaplicy uzgodnionym cennikiem.
+- Aktualne efekty, koszty, czasy i istniejące notyfikacje zebrano w [rozszerzonej tabeli budynków](BUILDINGS.md). Te otwarte decyzje nie zmieniają zakresu ukończonego FE-13 i nie są jeszcze nowymi regułami.
+
 ## Backend
 
 ### BE-01 — Kontrakt API i model postępu gracza
