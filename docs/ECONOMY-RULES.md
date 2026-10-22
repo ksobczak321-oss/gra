@@ -1,6 +1,6 @@
 # Uzgodnione reguły gospodarki HARBORLIGHT
 
-Stan: 2026-10-22, frontend `economy-v6`, schemat zapisu 6. Ten dokument opisuje bieżące reguły i zastępuje historyczne ceny oraz natychmiastowe ulepszenia z wcześniejszych iteracji. Dowody testów i publikacji są w [dzienniku](IMPLEMENTATION-LOG.md).
+Stan: 2026-10-22, frontend `english-v7`, schemat zapisu 6. Ten dokument opisuje bieżące reguły i zastępuje historyczne ceny oraz natychmiastowe ulepszenia z wcześniejszych iteracji. Dowody testów i publikacji są w [dzienniku](IMPLEMENTATION-LOG.md).
 
 ## Czas, ludzie i podatki
 
@@ -11,6 +11,16 @@ Dokładnie osiem miejsc pracy to farma, młyn, drwale, tartak, kamieniołom, mag
 Każda przydzielona osoba daje 1 monetę za aktywną godzinę. Przydział nadal jest opodatkowany przy chwilowym braku materiałów albo pełnym magazynie. Kaplica może podwoić tę stawkę. Latarnia nie zmienia podatków. Ratusz pokazuje mieszkańców obecni/limit i bieżące podatki na godzinę.
 
 Produkcja, transport, budowa, powroty, premie, szczęście i populacja liczą rzeczywisty czas aktywnej, widocznej karty. Pauza, ukryta karta i zamknięcie gry zatrzymują te systemy. Tempo 1×/2×/4× zmienia zegar oraz animacje; nie skraca godzin gospodarki. **Ważność przyszłego płatnego pakietu jest datą kalendarzową**, więc wygasa również przy pauzie i poza grą.
+
+## Automatyczne żywienie
+
+Każda osoba, również bezrobotna albo wracająca do domu, zużywa **1 Food na aktywną godzinę**. Popyt wyspy wynosi więc aktualna populacja/h. Jedzenie jest przydzielane automatycznie wyłącznie z magazynu centralnego; lokalny zapas młyna, targ i dostawa oczekująca nie są dostępne przed centralnym przyjęciem.
+
+Przy rozpoczęciu jedzenia cała jednostka jest pobierana ze stanu centralnego do wspólnego posiłku, którego pozostała część jest konsumowana proporcjonalnie do czasu i populacji. Pozostały ułamek zachowuje się po zapisie. Przydzielona jednostka nie może być użyta ponownie do rozbudowy albo handlu. Dlatego przy pierwszym aktywnym kroku dostępny Food może od razu spaść o 1; jednostka została już przydzielona mieszkańcom, a nie utracona. Na dokładnym końcu odcinka nie pobiera się dodatkowej porcji na zapas.
+
+Gdy skończy się centralne i już przydzielone jedzenie, bazowe szczęście spada o **25 punktów procentowych na godzinę bez jedzenia**, raz dla populacji, bez mnożenia przez jej liczbę. Dostawa zatrzymuje dalszą karę, bez automatycznego zwrotu utraconych punktów. Kara za przeludnienie może działać równocześnie. Przybycie żywności w środku odcinka czasu i zmiana populacji są rozliczane na rzeczywistych granicach zdarzeń.
+
+Pauza, ukryta karta i czas poza grą zatrzymują żywienie i karę; tempo zegara nie skraca godzin. Food oraz Residents pokazują popyt/h, centralny stan i żywienie albo brak jedzenia. W grze wszystkie te etykiety są po angielsku.
 
 ## Produkcja i magazyny
 
@@ -48,7 +58,7 @@ Użytkownik zaakceptował łagodniejszą **normę kosztową 240 jednostek dzienn
 
 Każdą kwotę mnoży się przez obecny poziom producenta. Drewno i kamień jako produkt sumują się z kosztem bazowym. Podniesienie ratusza, domu, targu, magazynu i przystani kosztuje **500 każdego z sześciu zasobów × obecny poziom**. Monety również są wymagane. Kaplica zachowuje wcześniejszy cennik w `BUILDINGS.chapel.cost`, mnożony przez docelowy poziom; jej nowej ceny użytkownik jeszcze nie określił.
 
-Koszt pochodzi tylko z magazynu centralnego i skarbca. Jest odejmowany i rezerwowany w całości przy zleceniu, także w opłaconej kolejce. Żadna część lokalnej produkcji, targu czy spodziewanej dostawy nie płaci zwykłego zlecenia. Panel pokazuje `posiadane / wymagane`, czerwone przy braku, zielone przy wystarczającym zapasie. **„Ulepsz” zleca bieżący budynek bez dodatkowego wyboru miejsca.**
+Koszt pochodzi tylko z magazynu centralnego i skarbca. Jest odejmowany i rezerwowany w całości przy zleceniu, także w opłaconej kolejce. Żadna część lokalnej produkcji, targu czy spodziewanej dostawy nie płaci zwykłego zlecenia. Panel pokazuje `posiadane / wymagane`, czerwone przy braku, zielone przy wystarczającym zapasie. **„Upgrade” zleca bieżący budynek bez dodatkowego wyboru miejsca.** Opis źródła kosztu, szacunek transportu/budowania i wyjaśnienie braków są schowane pod ikoną „i” obok nagłówka; rzeczywiste blokady i postęp są widoczne na karcie.
 
 Etapy zwykłej rozbudowy:
 
@@ -60,7 +70,7 @@ Przy sześciu magazynierach przewóz 264 materiałów kosztu farmy trwa 44 minut
 
 ### Ocena trudności
 
-Przy pierwotnej normie 12 pracowników na poziom surowcowa rozbudowa wymagałaby minimum około 31 godzin, a przetwórcza około 59 godzin od zera przy 12 mieszkańcach, wspólnej obsadzie produkcji i przewozu. Zaakceptowana norma 240 obniża minimum do około 2,6 godziny surowcowej i 4,9 godziny przetwórczej. To dolne granice dobrej organizacji; przestoje, braki załogi i inne zużycie wydłużają zbieranie. Startowe zapasy mogą skrócić pierwsze zlecenie. Sam transport na budowę i budowanie to dodatkowy czas.
+Przy pierwotnej normie 12 pracowników na poziom surowcowa rozbudowa wymagałaby minimum około 31 godzin, a przetwórcza około 59 godzin od zera przy 12 mieszkańcach, wspólnej obsadzie produkcji i przewozu. Zaakceptowana norma 240 obniżyła minimum do około 2,6 godziny surowcowej i 4,9 godziny przetwórczej przed wprowadzeniem jedzenia. Po dodaniu żywienia 12 osób bez bonusów i nagród wymaga około 4,2 osobogodziny dodatkowej produkcji/przewozu jedzenia na godzinę gry. Dostępne pozostaje 7,8 z 12 osobogodzin; obecne dolne granice zbierania od zera to więc około 4,0 godziny dla producenta surowca i 7,5 godziny dla przetwórcy. To dolne granice dobrej organizacji; przestoje, braki załogi i inne zużycie wydłużają zbieranie. Startowe zapasy mogą skrócić pierwsze zlecenie. Sam transport na budowę i budowanie to dodatkowy czas.
 
 Dla pięciu głównych budynków reguła 500 każdego zasobu jest oddzielną, celowo większą ceną. Nie obniżono jej samowolnie do cennika producentów.
 
@@ -82,7 +92,7 @@ Po wygaśnięciu rozpoczęte budowy kończą się. Kolejne opłacone projekty ru
 
 Pierwsza budowa kosztuje **500 każdego zasobu razem z monetami/złotem**. Dalsze ceny stosują 500 × obecny poziom, tak jak główne budynki. Użytkownik zaakceptował zachowanie pierwszego kosztu po przedstawieniu jego trudności.
 
-Od startowych 100 każdego zasobu potrzeba dodatkowych 400 monet oraz po 400 pięciu materiałów. Deski i żywność wymagają jeszcze po 800 wejściowego drewna/zboża. W sumie jest to 3600 jednostek pracy produkcyjnej, czyli 360 osobogodzin, oraz około 60 osobogodzin przewozu. Przy 12 osobach dolna granica wynosi około **35 godzin aktywnej gry**, bez nagród i bonusów. Faktyczny czas zależy od obsady, pięciominutowych powrotów i blokad. Koszt mieści się w magazynie poziomu 1: 500 na rodzaj i 2500 łącznie.
+Od startowych 100 każdego zasobu potrzeba dodatkowych 400 monet oraz po 400 pięciu materiałów. Deski i żywność wymagają jeszcze po 800 wejściowego drewna/zboża. W sumie jest to 3600 jednostek pracy produkcyjnej, czyli 360 osobogodzin, oraz około 60 osobogodzin przewozu. Przed dodaniem jedzenia dolna granica przy 12 osobach wynosiła około 35 godzin. Nowa reguła żywienia wymaga dodatkowo 12 Food/h, czyli 4,2 osobogodziny produkcji i przewozu na godzinę gry. Obecna dolna granica bez nagród i bonusów to zatem `420 / (12 − 4,2)`, około **54 godziny aktywnej gry**, przed przewozem materiałów na budowę i samym budowaniem. Faktyczny czas zależy od obsady, pięciominutowych powrotów i blokad. Koszt mieści się w magazynie poziomu 1: 500 na rodzaj i 2500 łącznie. Trzeba też zachować osobny bufor Food na czas budowy: zarezerwowanie wszystkich 500 Food zostawi tylko wcześniej przydzieloną część posiłku, więc może szybko uruchomić głód. Ceny nie obniżono bez nowej instrukcji użytkownika.
 
 Latarnia ma dłuższą budowę: transport **T** oraz sama budowa **2T**, razem **3T**. Przy sześciu magazynierach 2500 sztuk jedzie 417 minut, a budowa trwa 834 minuty: 20 godzin 51 minut po zleceniu, niezależnie od wcześniejszego zbierania.
 
@@ -100,3 +110,7 @@ Targ ma pojemność `floor(1000 × 1,5^(poziom−1))`. Jego pracownicy przenosz�
 Kaplica 1 nie daje pasywnej premii. Ukończenie rozbudowy daje wszystkim +10 × nowy poziom szczęścia i podatki ×2 na 10 aktywnych godzin. Kolejna rozbudowa odświeża, zamiast nakładać mnożniki. Ręczne błogosławieństwo jest osobne: +50 każdego z sześciu zasobów i +20 szczęścia każdemu przez godzinę. Nie uruchamia się drugiego podczas trwania pierwszego. Łączna dożywotnia liczba użyć to poziom kaplicy, więc podniesienie poziomu dodaje jedno nowe użycie. Oba rodzaje premii mogą działać równocześnie.
 
 Lojalność zlicza kolejne daty wizyty w strefie Europe/Warsaw do 10. Tego samego dnia nie wzrasta, luka resetuje serię do 1. Nagrody nie są przyznawane: użytkownik ustali je później. Obecna wizyta to lokalny prototyp, a rzeczywiste logowanie i wspólny stan konta są zadaniem backendu.
+
+## Kompaktowe panele produkcyjne
+
+Farm, Windmill, Lumber Camp, Sawmill i Quarry mają identyczny układ: Level oraz Storage w pierwszym wierszu, mały czas do kolejnej sztuki pod magazynem, a niżej Workers aktualni/limit z małym −/+ oraz Taxes/h. Wyjaśnienia produkcji są pod osobną ikoną „i”; pełny magazyn, brak wejść lub pauza są pokazane zamiast obiecanej daty produkcji, kiedy nie da się jej policzyć. Duże zbiorcze akcje i powtórzona karta produkcji nie zajmują tych paneli. Globalny Residents zachowuje zarządzanie całą wyspą.

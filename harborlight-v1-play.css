@@ -211,3 +211,37 @@ body.reduce-motion .lighthouse-beam{animation:none;transform:rotate(3deg);opacit
 .is-affordable { color: #9cdd9d; }
 .is-short { color: #ff9991; }
 @media (max-width: 480px) { .upgrade-costs { grid-template-columns: 1fr; } }
+
+/* Upgrade instructions are available on demand, without crowding the cost card. */
+#island-dialog .upgrade-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 12px; }
+#island-dialog .upgrade-heading h3 { margin: 0; }
+#island-dialog .upgrade-info-toggle { display: inline-flex; flex: 0 0 36px; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border: 1px solid #9ab6c6; border-radius: 50%; background: #12364a; color: #f7dda4; font: 700 20px/1 Georgia, serif; cursor: pointer; touch-action: manipulation; }
+#island-dialog .upgrade-info-toggle:hover, #island-dialog .upgrade-info-toggle[aria-expanded="true"] { background: #295269; border-color: #e4c384; }
+#island-dialog .upgrade-info-toggle:focus-visible { outline: 3px solid #fff0c5; outline-offset: 3px; }
+#island-dialog .upgrade-info-popover { position: fixed; z-index: 5; box-sizing: border-box; max-width: calc(100vw - 32px); max-height: calc(100dvh - 32px); overflow: auto; padding: 18px; border: 1px solid #c7a76b; border-radius: 12px; background: linear-gradient(145deg, #20465a, #0d2a3c); color: #e6eef1; box-shadow: 0 12px 40px #00111dbb; font-size: 14px; line-height: 1.5; }
+#island-dialog .upgrade-info-popover h4 { margin: 0 0 12px; color: #ffe5ad; font-size: 16px; }
+#island-dialog .upgrade-info-popover p { margin: 0 0 10px; color: #c7d8e0; }
+#island-dialog .upgrade-info-popover p:last-child { margin-bottom: 0; }
+@media (pointer: coarse) { #island-dialog .upgrade-info-toggle { flex-basis: 44px; width: 44px; height: 44px; } }
+
+/* Producer summaries keep the live figures and staffing controls together. */
+#island-dialog .producer-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: 10px; margin: 0 0 16px; }
+#island-dialog .producer-summary > .stat { min-width: 0; padding: 12px; }
+#island-dialog .producer-storage-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 24px; }
+#island-dialog .producer-storage .production-info-toggle { flex-basis: 24px; width: 24px; height: 24px; font-size: 16px; }
+#island-dialog .producer-next-unit { display: block; margin-top: 5px; color: #b9cdd7; font-size: 11px; line-height: 1.4; }
+#island-dialog .producer-workers-row { display: flex; align-items: center; flex-wrap: wrap; gap: 7px 12px; margin-top: 5px; }
+#island-dialog .producer-workers-row .producer-worker-count { display: inline-block; margin: 0; white-space: nowrap; }
+#island-dialog .producer-worker-controls { display: inline-flex; gap: 5px; }
+#island-dialog .producer-worker-button { display: inline-grid; place-items: center; flex: 0 0 28px; width: 28px; height: 28px; margin: 0; padding: 0; border: 1px solid #718fa0; border-radius: 6px; background: #1b435a; color: #ffe5ad; font: 600 19px/1 Inter, system-ui, sans-serif; cursor: pointer; touch-action: manipulation; }
+#island-dialog .producer-worker-button:hover { border-color: #e4c384; background: #2b566d; }
+#island-dialog .producer-worker-button:focus-visible { outline: 3px solid #fff0c5; outline-offset: 2px; }
+@media (pointer: coarse) {
+  #island-dialog .producer-storage .production-info-toggle { flex-basis: 32px; width: 32px; height: 32px; }
+  #island-dialog .producer-worker-button { width: 32px; height: 32px; flex-basis: 32px; }
+}
+@media (max-width: 480px) {
+  #island-dialog .producer-summary > .stat { padding: 10px; }
+  #island-dialog .producer-workers-row { gap: 6px; }
+  #island-dialog .producer-workers-row .producer-worker-count { font-size: 18px; }
+}

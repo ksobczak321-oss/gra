@@ -22,8 +22,8 @@ export function stockRoom(state, id) {
 export const marketCapacity = state => Math.floor(Math.min(10000000, 1000 * 1.5 ** Math.max(0, state.buildings.market.level - 1)));
 export const marketUsed = state => MATERIAL_IDS.reduce((sum, id) => sum + state.market.stock[id], 0) + state.market.locked.reduce((sum, lot) => sum + lot.amount, 0);
 export const workplaceUnlocked = (state, id) => state.buildings.townhall.level >= (id === 'market' ? 2 : id === 'dock' ? 4 : 1);
-const buildingNames = { farm: 'Farma', lumber: 'Obóz drwali', quarry: 'Kamieniołom', windmill: 'Młyn', sawmill: 'Tartak', warehouse: 'Magazyn', market: 'Targ', dock: 'Przystań', house: 'Dom', townhall: 'Ratusz', chapel: 'Kaplica', lighthouse: 'Latarnia' };
-const materialNames = { wood: 'drewno', stone: 'kamień', grain: 'zboże', food: 'żywność', planks: 'deski' };
+const buildingNames = { farm: 'Farm', lumber: 'Lumber Camp', quarry: 'Quarry', windmill: 'Windmill', sawmill: 'Sawmill', warehouse: 'Warehouse', market: 'Market', dock: 'Harbor', house: 'House', townhall: 'Town Hall', chapel: 'Chapel', lighthouse: 'Lighthouse' };
+const materialNames = { wood: 'wood', stone: 'stone', grain: 'grain', food: 'food', planks: 'planks' };
 
 export const premiumActive = (state, now = Date.now()) => (state.premium?.expiresAt || 0) > now;
 export function constructionCounts(state) {
@@ -47,14 +47,14 @@ export function promoteConstructionQueue(state) {
     if (project.stage === 'planned' && counts.premium && Object.entries(project.cost).every(([id, value]) => state.resources[id] >= value)) {
       for (const [id, value] of Object.entries(project.cost)) state.resources[id] -= value;
       project.stage = 'queued';
-      notify(state, 'construction-reserved', `${buildingNames[project.building]}: materiały zarezerwowane`, 'Spodziewane materiały są już w magazynie. Pełny koszt został zarezerwowany.');
+      notify(state, 'construction-reserved', `${buildingNames[project.building]}: materials reserved`, 'The expected materials have arrived in the warehouse. The full cost is now reserved.');
     }
     if (project.stage !== 'queued' || slots <= 0) continue;
     const id = project.building, building = state.buildings[id];
     if (project.targetLevel !== building.level + 1 || (id !== 'townhall' && project.targetLevel > state.buildings.townhall.level)) continue;
     if (state.constructionProjects.some(other => other !== project && other.building === id && ['transport', 'building'].includes(other.stage))) continue;
     project.stage = 'transport'; slots--;
-    notify(state, 'construction-promoted', `${buildingNames[id]}: rozbudowa ruszyła`, 'Zwolniło się miejsce budowy. Zarezerwowane materiały czekają na transport.');
+    notify(state, 'construction-promoted', `${buildingNames[id]}: upgrade started`, 'A construction slot is available. Reserved materials are waiting for transport.');
   }
   syncConstructionPointers(state);
 }
@@ -66,14 +66,14 @@ function finishConstruction(state, project) {
   if (id === 'lighthouse') {
     state.objective = { wood: 50, stone: 30, repaired: true };
     state.lighthouseRemaining = 86400 * building.level;
-    notify(state, 'lighthouse-bonus', 'Premia latarni morskiej', `Przez ${24 * building.level} godzin: +100 szczęścia wszystkim i produkcja materiałów ×2. Podatki bez zmian.`);
+    notify(state, 'lighthouse-bonus', 'Lighthouse bonus', `For ${24 * building.level} hours: +100 happiness for everyone and material production ×2. Taxes are unchanged.`);
   }
   if (id === 'chapel') {
     state.chapelRemaining = 36000;
-    notify(state, 'chapel-upgrade', 'Premia za rozbudowę kaplicy', `Przez 10 godzin: +${building.level * 10} szczęścia każdemu mieszkańcowi oraz podatki ×2.`);
+    notify(state, 'chapel-upgrade', 'Chapel upgrade bonus', `For 10 hours: +${building.level * 10} happiness for every resident and taxes ×2.`);
   }
   state.statistics.upgrades = Math.min(10000000, state.statistics.upgrades + 1);
-  notify(state, 'construction-finished', `${buildingNames[id]}: poziom ${building.level}`, 'Rozbudowa zakończona. Nowy poziom już działa.');
+  notify(state, 'construction-finished', `${buildingNames[id]}: level ${building.level}`, 'Upgrade complete. The new level is now active.');
   syncConstructionPointers(state);
 }
 // Optimistic delivery estimate, not a reservation or promise of future goods.
@@ -98,7 +98,13 @@ export function estimateMaterialsSeconds(state, cost) {
     const buffered = building.ready + state.pendingDeliveries[resource] + Math.min(state.market.stock[resource], state.market.dispatch[resource]);
     const toProduce = Math.max(0, missing - buffered);
     if (toProduce && !building.workers) return Infinity;
-    if (toProduce) estimate = Math.max(estimate, toProduce / (building.workers * 10) * 3600);
+    if (toProduce) {
+      // Residents eat before future Food can accumulate for another use.
+      const output = building.workers * 10 * (state.lighthouseRemaining > 0 ? 2 : 1);
+      const surplus = output - (resource === 'food' ? state.population : 0);
+      if (surplus <= 0) return Infinity;
+      estimate = Math.max(estimate, toProduce / surplus * 3600);
+    }
     if (toProduce && recipe.input) {
       const inputMissing = Math.max(0, toProduce * recipe.amount - state.resources[recipe.input]);
       const upstream = Object.keys(PRODUCTION_RECIPES).find(id => PRODUCTION_RECIPES[id].output === recipe.input);
@@ -144,9 +150,9 @@ export function storagePenalty(state, id) {
 export function updateStorageStatus(state, elapsed = 0) {
   const limits = warehouseLimits(state);
   const stores = [
-    ...Object.entries(PRODUCTION_RECIPES).map(([id, recipe]) => [id, state.buildings[id].ready >= producerCapacity(state), `${buildingNames[id]}: magazyn jest pełny`, `Pełny zapas: ${materialNames[recipe.output]}. Produkcja czeka na transport.`]),
-    ['warehouse', warehouseUsed(state) >= limits.total, 'Magazyn centralny jest pełny', 'Brak wspólnego miejsca. Rozbuduj magazyn lub zużyj towary.'],
-    ['market', workplaceUnlocked(state, 'market') && marketUsed(state) >= marketCapacity(state), 'Targ jest pełny', 'Wymień towary albo zleć ich odbiór do magazynu.']
+    ...Object.entries(PRODUCTION_RECIPES).map(([id, recipe]) => [id, state.buildings[id].ready >= producerCapacity(state), `${buildingNames[id]}: storage is full`, `Storage full: ${materialNames[recipe.output]}. Production is waiting for transport.`]),
+    ['warehouse', warehouseUsed(state) >= limits.total, 'The central warehouse is full', 'No shared storage space remains. Upgrade the warehouse or use some goods.'],
+    ['market', workplaceUnlocked(state, 'market') && marketUsed(state) >= marketCapacity(state), 'The market is full', 'Exchange goods or order their collection by warehouse workers.']
   ];
   for (const [id, full, title, message] of stores) {
     const building = state.buildings[id];
@@ -156,9 +162,53 @@ export function updateStorageStatus(state, elapsed = 0) {
   }
   for (const id of MATERIAL_IDS) {
     const full = state.resources[id] >= limits.perResource && limits.perResource > 0;
-    if (full && !state.fullResources[id]) notify(state, 'storage-full', 'Pełna pojemność towaru', `W magazynie centralnym nie ma już miejsca na towar: ${materialNames[id]}.`);
+    if (full && !state.fullResources[id]) notify(state, 'storage-full', 'Material storage limit reached', `The central warehouse has no more space for ${materialNames[id]}.`);
     state.fullResources[id] = full;
   }
+}
+
+// Translate only recognized messages produced by earlier game releases.
+// Unknown/custom notification content and every saved metadata field are preserved.
+const legacyNotificationText = {
+  "plan czeka na dostawy": "plan waiting for deliveries",
+  "materiały zarezerwowane w kolejce": "materials reserved in the queue",
+  "materiały zarezerwowane, oczekiwanie na transport": "materials reserved, waiting for transport",
+  "Błogosławieństwo": "Blessing",
+  "+50 każdego zasobu oraz +20 szczęścia każdemu mieszkańcowi przez godzinę.": "+50 of every resource and +20 happiness for every resident for one hour.",
+  "Spodziewane materiały są już w magazynie. Pełny koszt został zarezerwowany.": "The expected materials have arrived in the warehouse. The full cost is now reserved.",
+  "Zwolniło się miejsce budowy. Zarezerwowane materiały czekają na transport.": "A construction slot is available. Reserved materials are waiting for transport.",
+  "Premia latarni morskiej": "Lighthouse bonus",
+  "Premia za rozbudowę kaplicy": "Chapel upgrade bonus",
+  "Rozbudowa zakończona. Nowy poziom już działa.": "Upgrade complete. The new level is now active.",
+  "Magazyn centralny jest pełny": "The central warehouse is full",
+  "Brak wspólnego miejsca. Rozbuduj magazyn lub zużyj towary.": "No shared storage space remains. Upgrade the warehouse or use some goods.",
+  "Targ jest pełny": "The market is full",
+  "Wymień towary albo zleć ich odbiór do magazynu.": "Exchange goods or order their collection by warehouse workers.",
+  "Pełna pojemność towaru": "Material storage limit reached",
+  "Rozpoczęła się budowa latarni. Potrwa dwa razy tyle co transport.": "Lighthouse construction has started. It will take twice as long as transport.",
+  "Rozpoczęła się budowa. Potrwa tyle samo co transport materiałów.": "Construction has started. It will take as long as material transport."
+};
+const legacyBuildingNames = { 'Farma': 'Farm', 'Obóz drwali': 'Lumber Camp', 'Kamieniołom': 'Quarry', 'Młyn': 'Windmill', 'Tartak': 'Sawmill', 'Magazyn': 'Warehouse', 'Targ': 'Market', 'Przystań': 'Harbor', 'Dom': 'House', 'Ratusz': 'Town Hall', 'Kaplica': 'Chapel', 'Latarnia': 'Lighthouse', 'Latarnia Morska': 'Lighthouse' };
+const legacyMaterialNames = { 'drewno': 'wood', 'kamień': 'stone', 'zboże': 'grain', 'żywność': 'food', 'deski': 'planks' };
+const legacyBuildingSuffixes = { 'materiały zarezerwowane': 'materials reserved', 'rozbudowa ruszyła': 'upgrade started', 'magazyn jest pełny': 'storage is full', 'materiały dostarczone': 'materials delivered' };
+function translateSavedNotificationText(text) {
+  if (Object.hasOwn(legacyNotificationText, text)) return legacyNotificationText[text];
+  for (const [oldName, englishName] of Object.entries(legacyBuildingNames)) {
+    if (!text.startsWith(`${oldName}: `)) continue;
+    const suffix = text.slice(oldName.length + 2);
+    if (Object.hasOwn(legacyBuildingSuffixes, suffix)) return `${englishName}: ${legacyBuildingSuffixes[suffix]}`;
+    const level = /^poziom (\d+)$/.exec(suffix);
+    if (level) return `${englishName}: level ${level[1]}`;
+  }
+  const full = /^Pełny zapas: (drewno|kamień|zboże|żywność|deski)\. Produkcja czeka na transport\.$/.exec(text);
+  if (full) return `Storage full: ${legacyMaterialNames[full[1]]}. Production is waiting for transport.`;
+  const resource = /^W magazynie centralnym nie ma już miejsca na towar: (drewno|kamień|zboże|żywność|deski)\.$/.exec(text);
+  if (resource) return `The central warehouse has no more space for ${legacyMaterialNames[resource[1]]}.`;
+  const chapel = /^Przez 10 godzin: \+(\d+) szczęścia każdemu mieszkańcowi oraz podatki ×2\.$/.exec(text);
+  if (chapel) return `For 10 hours: +${chapel[1]} happiness for every resident and taxes ×2.`;
+  const lighthouse = /^Przez (\d+) godzin: \+100 szczęścia wszystkim i produkcja materiałów ×2\. Podatki bez zmian\.$/.exec(text);
+  if (lighthouse) return `For ${lighthouse[1]} hours: +100 happiness for everyone and material production ×2. Taxes are unchanged.`;
+  return text;
 }
 
 export function normalizeLogisticsState(state, raw) {
@@ -176,7 +226,7 @@ export function normalizeLogisticsState(state, raw) {
   if (Array.isArray(raw.market?.locked)) state.market.locked = raw.market.locked.filter(lot => MATERIAL_IDS.includes(lot.resource) && whole(lot.amount) > 0).slice(0, 10000).map(lot => ({ resource: lot.resource, amount: whole(lot.amount), remaining: clamp(lot.remaining, 0, 3600) }));
   if (Array.isArray(raw.market?.orders)) state.market.orders = raw.market.orders.filter(order => MATERIAL_IDS.includes(order.resource) && whole(order.amount) > 0).slice(0, 100).map(order => ({ resource: order.resource, amount: whole(order.amount) }));
   state.activeSeconds = clamp(raw.activeSeconds, 0, Number.MAX_SAFE_INTEGER);
-  state.notifications = Array.isArray(raw.notifications) ? raw.notifications.slice(0, 100).filter(n => n && typeof n.title === 'string' && typeof n.message === 'string').map(n => ({ id: whole(n.id), kind: String(n.kind || 'info').slice(0, 40), title: n.title.slice(0, 150), message: n.message.slice(0, 400), at: clamp(n.at, 0, Number.MAX_SAFE_INTEGER), read: n.read === true })) : [];
+  state.notifications = Array.isArray(raw.notifications) ? raw.notifications.slice(0, 100).filter(n => n && typeof n.title === 'string' && typeof n.message === 'string').map(n => ({ id: whole(n.id), kind: String(n.kind || 'info').slice(0, 40), title: translateSavedNotificationText(n.title.slice(0, 150)), message: translateSavedNotificationText(n.message.slice(0, 400)), at: clamp(n.at, 0, Number.MAX_SAFE_INTEGER), read: n.read === true })) : [];
   state.notificationSequence = Math.max(whole(raw.notificationSequence), ...state.notifications.map(n => n.id), 0);
   state.fullResources = Object.fromEntries(MATERIAL_IDS.map(id => [id, raw.fullResources?.[id] === true]));
   for (const [id, building] of Object.entries(state.buildings)) {
@@ -287,7 +337,7 @@ function completeJob(state, job) {
       if (!construction.goodsRemaining) {
         construction.stage = 'building';
         construction.buildRemaining = construction.transportSeconds * (construction.building === 'lighthouse' ? 2 : 1);
-        notify(state, 'construction-delivered', `${buildingNames[construction.building]}: materiały dostarczone`, construction.building === 'lighthouse' ? 'Rozpoczęła się budowa latarni. Potrwa dwa razy tyle co transport.' : 'Rozpoczęła się budowa. Potrwa tyle samo co transport materiałów.');
+        notify(state, 'construction-delivered', `${buildingNames[construction.building]}: materials delivered`, construction.building === 'lighthouse' ? 'Lighthouse construction has started. It will take twice as long as transport.' : 'Construction has started. It will take as long as material transport.');
       }
       building.workProgress[job.index] = 0;
       return true;

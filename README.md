@@ -8,6 +8,8 @@ Pracowników można przydzielać do ośmiu miejsc pracy, najwyżej do połowy ak
 
 Rozbudowa ma rezerwację, transport i czas budowy, z limitem miejsc oraz kolejką zależnymi od ratusza. Targ wymienia towary bez monet; kaplica i latarnia dają czasowe premie. Model przyszłego płatnego pakietu obsługuje +4 budowy i plany z dostaw, bez uruchamiania sprzedaży. Wszystkie zaakceptowane reguły i ocenę kosztu latarni zapisano w [regułach gospodarki](docs/ECONOMY-RULES.md).
 
+Aktywny interfejs jest po angielsku. Wyjaśnienia rozbudowy otwiera ikona „i” obok Upgrade. Mieszkańcy automatycznie jedzą po 1 Food/os./h z magazynu centralnego; brak jedzenia obniża bazowe szczęście o 25 punktów na aktywną godzinę.
+
 ## Podgląd
 
 - [Interaktywna wyspa — adres GitHub Pages](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html)
@@ -28,7 +30,7 @@ Otwórz lokalnie stronę `harborlight-v1-layered.html`. Serwer HTTP jest wymagan
 Testy ekonomii i zapisu wymagają Node.js z obsługą modułów ES i wbudowanego runnera:
 
 ```sh
-node --test tests/harborlight-state.test.mjs
+node --test tests/harborlight-state.test.mjs tests/harborlight-hunger.test.mjs
 ```
 
 Po uruchomieniu serwera można wykonać pełny test w Chromium (wymaga pakietu Python `playwright` i Chromium):
@@ -38,6 +40,7 @@ python3 tests/harborlight-browser-smoke.py
 python3 tests/harborlight-population-smoke.py
 python3 tests/harborlight-logistics-smoke.py
 python3 tests/harborlight-construction-smoke.py
+python3 tests/harborlight-language-smoke.py
 python3 tests/harborlight-animation-smoke.py
 python3 tests/harborlight-coastal-smoke.py
 ```

@@ -9,7 +9,7 @@ Requires Python Playwright and Chromium; never mutates application state directl
 from collections import deque
 import json
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 from playwright.sync_api import expect, sync_playwright
 
@@ -22,21 +22,21 @@ PAGE_PATH = "/harborlight-v1-layered.html"
 EXPEDITIONS = [
     {
         "id": "misty",
-        "name": "Mgliste Wyspy",
+        "name": "Misty Isles",
         "map": ["S..T..", ".WWT..", ".W.TC.", ".W....", ".TTTW.", "...W.G"],
         "tools": (1, 1, 0),
         "reward": {"coins": 180, "wood": 50, "planks": 20},
     },
     {
         "id": "quarry",
-        "name": "Zapomniany kamieniołom",
+        "name": "Forgotten Quarry",
         "map": ["S.R...", ".TRR..", "..R.C.", ".TT...", ".R.RT.", "C...G."],
         "tools": (0, 1, 1),
         "reward": {"coins": 220, "stone": 80, "wood": 25},
     },
     {
         "id": "ruins",
-        "name": "Ruiny strażnicy",
+        "name": "Watchtower Ruins",
         "map": ["S.TW..", ".R.WC.", ".K.W..", ".R.D..", ".TT...", "....G."],
         "tools": (1, 1, 1),
         "reward": {"coins": 300, "planks": 40, "stone": 50},
@@ -132,7 +132,7 @@ def gameplay_checks(browser, errors, failed):
     page = context.new_page()
     attach_observers(page, errors, failed)
     now = datetime(2026, 10, 22, 12, 0, 0, tzinfo=timezone.utc)
-    page.clock.install(time=now)
+    page.clock.install(time=now - timedelta(seconds=5))
     page.clock.pause_at(now)
     visit(page)
     page.locator("#hit-pause").click()
@@ -141,8 +141,8 @@ def gameplay_checks(browser, errors, failed):
     # The first townhall level does not allow a second-level house yet.
     before = saved(page)
     page.locator("#hit-dock-house").click()
-    expect(page.get_by_role("button", name="Ulepsz", exact=True)).to_be_disabled()
-    expect(page.locator("#island-dialog")).to_contain_text("ratusz")
+    expect(page.get_by_role("button", name="Upgrade", exact=True)).to_be_disabled()
+    expect(page.locator("#island-dialog")).to_contain_text("Town Hall")
     assert saved(page)["resources"] == before["resources"]
     close_panel(page)
 
@@ -166,7 +166,7 @@ def gameplay_checks(browser, errors, failed):
             has=page.get_by_role("heading", name=expedition["name"], exact=True)
         )
         before = saved(page)
-        expedition_card.get_by_role("button", name="Wyrusz", exact=True).click()
+        expedition_card.get_by_role("button", name="Depart", exact=True).click()
         expect(page.locator(".puzzle-cell")).to_have_count(36)
         # Distant squares are explicitly unavailable until reached legitimately.
         expect(page.locator('.puzzle-cell[data-row="5"][data-col="5"]')).to_be_disabled()
@@ -178,20 +178,20 @@ def gameplay_checks(browser, errors, failed):
         for resource, amount in expedition["reward"].items():
             bonus = caches * 10 if resource == "coins" else 0
             assert after["resources"][resource] == before["resources"][resource] + amount + bonus
-        page.get_by_role("button", name="Wróć na wyspę", exact=True).click()
+        page.get_by_role("button", name="Return to island", exact=True).click()
         print(f"PASS expedition: {expedition['id']} ({len(route)} moves, {caches} chests)")
 
 
     # Claim the earned starter reward before buying the townhall and house upgrades.
     page.locator("#hit-nav-tasks").click()
     before = saved(page)
-    collect_task = page.locator(".info-card").filter(has=page.get_by_role("heading", name="Pierwsze zbiory", exact=True))
-    collect_task.get_by_role("button", name="Odbierz nagrodę", exact=True).click()
+    collect_task = page.locator(".info-card").filter(has=page.get_by_role("heading", name="First Harvest", exact=True))
+    collect_task.get_by_role("button", name="Claim reward", exact=True).click()
     after = saved(page)
     assert after["tasks"]["collect"] is True
     assert after["resources"]["coins"] == before["resources"]["coins"] + 100
     assert after["resources"]["wood"] == before["resources"]["wood"] + 20
-    expect(collect_task.get_by_role("button", name="Nagroda odebrana", exact=True)).to_be_disabled()
+    expect(collect_task.get_by_role("button", name="Reward claimed", exact=True)).to_be_disabled()
     close_panel(page)
 
     # New expensive upgrades cannot start from local stock or the expedition budget.
@@ -200,15 +200,15 @@ def gameplay_checks(browser, errors, failed):
     expect(page.locator('[data-upgrade-building="townhall"]')).to_be_disabled()
     expect(page.locator('#island-dialog')).to_contain_text('500')
     assert saved(page)['resources'] == before['resources']
-    page.get_by_role('button', name='Budowy i kolejka', exact=True).click()
-    expect(page.locator('[data-construction-summary]')).to_contain_text('Budowy: 0 / 1')
+    page.get_by_role('button', name='Construction and queue', exact=True).click()
+    expect(page.locator('[data-construction-summary]')).to_contain_text('Construction: 0 / 1')
     close_panel(page)
     page.locator('#hit-resource-coins').click()
-    page.get_by_role('button', name='Handluj w porcie', exact=True).click()
-    expect(page.locator('#island-dialog')).to_contain_text('poziomu ratusza 4')
+    page.get_by_role('button', name='Trade at the harbor', exact=True).click()
+    expect(page.locator('#island-dialog')).to_contain_text('Town Hall level 4')
     close_panel(page)
     page.locator('#hit-objective-title').click()
-    page.get_by_role('button', name='Latarnia Morska — budowa i rozbudowa', exact=True).click()
+    page.locator('#island-dialog').get_by_role('button', name='Lighthouse — construction and upgrades', exact=True).click()
     expect(page.locator('[data-upgrade-building="lighthouse"]')).to_be_disabled()
     expect(page.locator('#island-dialog')).to_contain_text('500')
     close_panel(page)
@@ -217,7 +217,7 @@ def gameplay_checks(browser, errors, failed):
     page.reload()
     page.wait_for_selector("#hit-nav-tasks")
     page.locator("#hit-settings").click()
-    page.get_by_role("button", name="Zapisz teraz", exact=True).click()
+    page.get_by_role("button", name="Save now", exact=True).click()
     after = saved(page)
     assert after["objective"] == before["objective"]
     assert after["expeditions"] == before["expeditions"]
@@ -277,9 +277,9 @@ def navigation_checks(browser, errors, failed):
             assert bounds["height"] >= 44 and bounds["width"] >= 44, bounds
             menu.click()
             within_viewport(page)
-            page.locator("#island-dialog").get_by_role("button", name="Budynki", exact=True).click()
+            page.locator("#island-dialog").get_by_role("button", name="Buildings", exact=True).click()
             within_viewport(page)
-            expect(page.locator("#dialog-title")).to_have_text("Budynki")
+            expect(page.locator("#dialog-title")).to_have_text("Buildings")
             close_panel(page)
         print(f"PASS navigation: {len(routes)} dialogs at {width}x{height}")
         context.close()

@@ -31,7 +31,7 @@ Silnik obsługuje dom, farmę, tartak, kamieniołom, przystań, magazyn, latarni
 
 Nowa wyspa zaczyna z **100 monet, 100 zboża, 100 drewna, 100 kamienia, 100 żywności i 100 desek**, **12 mieszkańcami**, **szczęściem 0%**, **ratuszem na poziomie 1** i **domem na poziomie 1**. W obecnym prototypie oznacza to pierwszą wizytę bez zapisu albo potwierdzone rozpoczęcie nowej wyspy. Logowanie do konta jest przyszłym zakresem backendu; odświeżenie strony zachowuje istniejący postęp. Na starcie wszystkie lokalne składy producentów są puste. Pięć materiałów zajmuje łącznie 500 miejsc magazynu centralnego, a 100 monet znajduje się osobno w skarbcu.
 
-Poziom gracza jest zawsze poziomem ratusza. **Każdy pozostały budynek można rozbudować najwyżej do poziomu ratusza**, w ramach technicznego maksimum 100. Ratusz sam można podnosić do następnego poziomu. Zablokowana rozbudowa wskazuje wymagany poziom ratusza i nie pobiera zasobów. Latarnia najpierw wymaga dostaw i naprawy do poziomu 1; późniejsze poziomy podlegają tej samej zasadzie co pozostałe budynki.
+Poziom gracza jest zawsze poziomem ratusza. **Każdy pozostały budynek można rozbudować najwyżej do poziomu ratusza**, w ramach technicznego maksimum 100. Ratusz sam można podnosić do następnego poziomu. Zablokowana rozbudowa wskazuje wymagany poziom ratusza i nie pobiera zasobów. Latarnia najpierw wymaga opłaconej budowy poziomu 1; późniejsze poziomy podlegają tej samej zasadzie co pozostałe budynki.
 
 Teoretyczny limit populacji wynosi `24 × poziom ratusza`: przykładowo poziomy 1–6 pozwalają na 24, 48, 72, 96, 120 i 144 mieszkańców. W aktualnym prototypie wspólne techniczne maksimum poziomu budynku i ratusza wynosi 100; wcześniejszy limit 5 nie blokuje już poziomu 6. Rzeczywista liczba miejsc mieszkalnych wynosi osobno `24 × poziom domu`. Ulepszenie ratusza zwiększa limit osady, ale nie dodaje miejsc w domu. Ulepszenie domu zwiększa miejsca mieszkalne, ale nie zmienia limitu ratusza i nie dodaje od razu ludzi.
 
@@ -58,7 +58,7 @@ Użytkownik zaakceptował proporcjonalne tempo pomiędzy punktami 0%, 50% i 100%
 
 Czas oznacza rzeczywisty czas aktywnej gry na widocznej karcie. Przyspieszenie 1×/2×/4× nie przyspiesza narodzin, ubytku ani kary za przeludnienie; pauza je zatrzymuje. Ukryta karta i czas poza grą nie naliczają postępu. Niepełna część postępu jest zapisywana. Zmiana znaku lub ustawienie 0% zeruje postęp poprzedniego kierunku. Przy maksymalnej populacji nie odkłada się zapas narodzin; przy minimum nie odkłada się ubytek.
 
-Populacja nigdy nie spada poniżej **6 osób**. Po jej spadku przydziały pracowników są ograniczane do liczby mieszkańców, a gracz może dalej rozdzielać pracę, produkować i handlować. Dekoracje i ścieżki podnoszą szczęście o 1 punkt procentowy, rozbudowa kaplicy o 3, a pierwsza naprawa latarni o 10. Przeludnienie obniża szczęście i może doprowadzić do wartości ujemnej, która uruchamia ubytek mieszkańców.
+Populacja nigdy nie spada poniżej **6 osób**. Po jej spadku przydziały pracowników są ograniczane do liczby mieszkańców, a gracz może dalej rozdzielać pracę, produkować i handlować. Dekoracje i ścieżki podnoszą bazowe szczęście o 1 punkt. Kaplica i latarnia uruchamiają premie czasowe opisane w aktualnych regułach; nie dodają dawnych stałych +3/+10. Głód obniża bazowe szczęście o 25 punktów na aktywną godzinę. Przeludnienie obniża szczęście i może doprowadzić do wartości ujemnej, która uruchamia ubytek mieszkańców.
 
 ## Pracownicy, powrót do domu i podatki
 
@@ -143,9 +143,13 @@ Przykładowo na poziomie 1 cztery rodzaje po 1000 jednostek wyczerpują limit ws
 
 Nagrody i starsze zapisy nie tracą materiałów przez nowe ograniczenia pojemności. Nadwyżki trafiają do kolejki dostaw `pendingDeliveries`: czekają na miejsce i transport magazynierów, a przed przyjęciem do centralnego magazynu nie są dostępne do wydania. Zakup w porcie, który nie zmieściłby się w centralnym magazynie, jest odrzucany bez pobierania monet.
 
+## Kompaktowi producenci
+
+Pięć paneli produkcji ma układ2×2: Level | Storage, a niżej Workers aktualni/limit z małym −/+ | Taxes. Pod magazynem jest mały czas do następnej sztuki lub przyczyna zatrzymania. Osobne „i” pokazuje reguły produkcji. Duże akcje zbiorcze i powtórzona karta nie są wyświetlane w budynku; ogólne zarządzanie pozostaje w Residents.
+
 ## Rozbudowa, premie i powiadomienia
 
-Przycisk „Ulepsz” zleca aktualny budynek bez wybierania miejsca. Koszty pokazują stan centralny / wymagane, czerwone przy braku i zielone przy wystarczającym zapasie. Ratusz pokazuje poziom, mieszkańców obecni/limit i podatki na godzinę. Widok „Budowy i kolejka” jest dostępny z każdego budynku i menu. Limity miejsc, ceny, estymaty, wygaśnięcie pakietu, targ, indywidualne kary i obie premie latarni opisano w [aktualnych regułach](ECONOMY-RULES.md).
+Przycisk „Upgrade” zleca aktualny budynek bez wybierania miejsca. Opis źródła materiałów i czasu rozbudowy jest dostępny w popupie pod ikoną „i” obok nagłówka; nie zajmuje trzech akapitów pod kosztami. Aktywny interfejs używa angielskiego, także w komunikatach i historycznych znanych powiadomieniach. Koszty pokazują stan centralny / wymagane, czerwone przy braku i zielone przy wystarczającym zapasie. Ratusz pokazuje poziom, mieszkańców obecni/limit i podatki na godzinę. Widok „Construction and queue” jest dostępny z każdego budynku i menu. Limity miejsc, ceny, estymaty, wygaśnięcie pakietu, targ, indywidualne kary i obie premie latarni opisano w [aktualnych regułach](ECONOMY-RULES.md).
 
 ## Jak grać
 
@@ -192,7 +196,7 @@ Koszty kolejnych poziomów rosną wraz z poziomem. Źródłem aktualnych liczb i
 
 ## Zapis
 
-Klucz `localStorage`: `harborlight-v1-interactive-save`, wersja schematu `version: 6`. Zapis następuje po udanej operacji, okresowo i przy opuszczeniu strony. „Zapisz teraz” wymusza zapis; błąd dostępu do pamięci jest komunikowany graczowi. Wcześniejsze robocze etapy v4/v5 nie były publikowane; zbiorcza zmiana używa `economy-v6`.
+Klucz `localStorage`: `harborlight-v1-interactive-save`, wersja schematu `version: 6`. Zapis następuje po udanej operacji, okresowo i przy opuszczeniu strony. „Save now” wymusza zapis; błąd dostępu do pamięci jest komunikowany graczowi. Wcześniejsze robocze etapy v4/v5 nie były publikowane; zbiorcza zmiana używa `economy-v6`.
 
 Stan zachowuje:
 
@@ -223,11 +227,12 @@ Uruchomienie z katalogu repozytorium:
 
 ```sh
 python3 -m http.server 8002 --bind 127.0.0.1
-node --test tests/harborlight-state.test.mjs
+node --test tests/harborlight-state.test.mjs tests/harborlight-hunger.test.mjs
 python3 tests/harborlight-browser-smoke.py
 python3 tests/harborlight-population-smoke.py
 python3 tests/harborlight-logistics-smoke.py
 python3 tests/harborlight-construction-smoke.py
+python3 tests/harborlight-language-smoke.py
 python3 tests/harborlight-animation-smoke.py
 ```
 

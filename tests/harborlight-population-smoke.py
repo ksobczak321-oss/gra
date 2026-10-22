@@ -5,7 +5,7 @@ boundaries; time advances through the browser's real application timers.
 """
 import json
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 from playwright.sync_api import expect, sync_playwright
 
@@ -27,7 +27,7 @@ def visit(context, fixture=None, clock=False):
         }''' % json.dumps(json.dumps(fixture)))
     if clock:
         now = datetime(2026, 10, 21, 12, 0, 0, tzinfo=timezone.utc)
-        page.clock.install(time=now)
+        page.clock.install(time=now - timedelta(seconds=5))
         page.clock.pause_at(now)
     assert page.goto(BASE + '/harborlight-v1-layered.html').status == 200
     page.wait_for_selector('[data-hud="level"]')
@@ -37,7 +37,7 @@ def visit(context, fixture=None, clock=False):
 
 def save(page):
     page.locator('#hit-settings').click()
-    page.get_by_role('button', name='Zapisz teraz', exact=True).click()
+    page.get_by_role('button', name='Save now', exact=True).click()
     page.locator('.dialog-close').click()
     return json.loads(page.evaluate('key => localStorage.getItem(key)', SAVE_KEY))
 
@@ -48,7 +48,7 @@ with sync_playwright() as p:
     try:
         # Fresh sessions really use the new starter kit, including grain.
         context = browser.new_context(viewport={'width': 1672, 'height': 941}, reduced_motion='reduce')
-        page = visit(context)
+        page = visit(context, clock=True)
         page.locator('#hit-pause').click()
         expect(page.locator('[data-hud="level"]')).to_have_text('1')
         expect(page.locator('[data-hud="happiness"]')).to_have_text('0%')
@@ -60,12 +60,12 @@ with sync_playwright() as p:
         assert initial['resources'] == dict.fromkeys(RESOURCES, 100)
         assert initial['version'] == 6
         assert initial['buildings']['house']['level'] == 1
-        expect(page.locator('[data-hud="housing"]')).to_have_text('Miejsca: 24')
+        expect(page.locator('[data-hud="housing"]')).to_have_text('Housing: 24')
         page.locator('#hit-level').click()
-        expect(page.locator('#dialog-title')).to_have_text('Ratusz')
+        expect(page.locator('#dialog-title')).to_have_text('Town Hall')
         page.locator('.dialog-close').click()
         page.locator('#hit-happiness').click()
-        expect(page.locator('[data-population-stat="growth"]')).to_contain_text('brak przyrostu i ubytku')
+        expect(page.locator('[data-population-stat="growth"]')).to_contain_text('no population growth or decline')
         page.locator('.dialog-close').click()
         for width, height in [(390, 844), (844, 390)]:
             page.set_viewport_size({'width': width, 'height': height})
@@ -126,7 +126,7 @@ with sync_playwright() as p:
         page.clock.run_for(2_000)
         expect(page.locator('[data-hud="population"]')).to_have_text('6 / 24')
         expect(page.locator('[data-population-stat="population"]')).to_have_text('6 / 24')
-        expect(page.locator('[data-population-stat="growth"]')).to_contain_text('minimum 6')
+        expect(page.locator('[data-population-stat="growth"]')).to_contain_text('Minimum population of 6')
         page.clock.fast_forward(3_600_000)
         expect(page.locator('[data-hud="population"]')).to_have_text('6 / 24')
         page.locator('.dialog-close').click()
@@ -146,12 +146,12 @@ with sync_playwright() as p:
                                'settings': {'motion': False}}, clock=True)
         page.locator('#hit-population').click()
         for key, value in [('capacity', '96'), ('housing', '72'), ('unhoused', '6'),
-                           ('penalty', '−6 pkt proc./h')]:
+                           ('penalty', '−6 percentage points/h')]:
             expect(page.locator(f'[data-population-stat="{key}"]')).to_have_text(value)
         expect(page.locator('[data-housing-warning]')).to_have_attribute('data-overcrowded', 'true')
-        expect(page.locator('[data-hud="housing"]')).to_have_text('Miejsca: 72')
+        expect(page.locator('[data-hud="housing"]')).to_have_text('Housing: 72')
         page.clock.run_for(60_000)
-        expect(page.locator('[data-hud="happiness"]')).to_have_text('−0,1%')
+        expect(page.locator('[data-hud="happiness"]')).to_have_text('−0.1%')
         page.clock.run_for(3_540_000)
         expect(page.locator('[data-hud="happiness"]')).to_have_text('−6%')
         expect(page.locator('[data-hud="population"]')).to_have_text('78 / 96')
@@ -178,21 +178,21 @@ with sync_playwright() as p:
         page.reload()
         page.wait_for_selector('[data-hud="housing"]')
         page.clock.run_for(1_000)
-        expect(page.locator('[data-hud="housing"]')).to_have_text('Miejsca: 96')
+        expect(page.locator('[data-hud="housing"]')).to_have_text('Housing: 96')
         page.locator('#hit-pause').click()
         expanded = save(page)
         assert expanded['buildings']['house']['level'] == 4
         assert expanded['happiness'] <= crowded['happiness']
         page.locator('#hit-world-house').click()
         expect(page.locator('[data-upgrade-building="house"]')).to_be_disabled()
-        expect(page.locator('[data-upgrade-lock="house"]')).to_contain_text('ratusz do poziomu 5')
+        expect(page.locator('[data-upgrade-lock="house"]')).to_contain_text('Town Hall to level 5')
         page.locator('.dialog-close').click()
         page.locator('#hit-play').click()
         page.clock.run_for(60_000)
         page.locator('#hit-pause').click()
         assert abs(save(page)['happiness'] - expanded['happiness']) < 1e-8
         page.reload()
-        expect(page.locator('[data-hud="housing"]')).to_have_text('Miejsca: 96')
+        expect(page.locator('[data-hud="housing"]')).to_have_text('Housing: 96')
         expect(page.locator('[data-hud="population"]')).to_have_text('78 / 96')
         context.close()
         print('PASS townhall4/house3: 96 cap, 72 beds, six unhoused, −6 points/hour; housing changes only on construction completion')
@@ -204,7 +204,7 @@ with sync_playwright() as p:
                                'buildings': {'townhall': {'level': 1, 'workers': 1},
                                              'house': {'level': 3, 'workers': 0}}})
         expect(page.locator('[data-hud="level"]')).to_have_text('3')
-        expect(page.locator('[data-hud="housing"]')).to_have_text('Miejsca: 72')
+        expect(page.locator('[data-hud="housing"]')).to_have_text('Housing: 72')
         expect(page.locator('[data-hud="happiness"]')).to_have_text('0%')
         migrated = save(page)
         assert migrated['version'] == 6 and migrated['buildings']['townhall']['level'] == 3

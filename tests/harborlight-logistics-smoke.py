@@ -1,11 +1,11 @@
-"""Browser acceptance for work, individual output, hauling and central storage.
+"""Browser acceptance for work, individual output, hauling, storage and resident food.
 
 Saved-game fixtures reach expensive population/storage boundaries. Every action
 uses public controls, and browser timers account for every simulated work minute.
 """
 import json
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 from playwright.sync_api import expect, sync_playwright
 
@@ -28,8 +28,8 @@ def fixture(population=12, level=1, workers=None, resources=None, ready=None):
             'returningWorkers': [], 'taxProgress': 0, 'settings': {'motion': False}}
 
 
-def visit(browser, data=None, width=1672, height=941):
-    context = browser.new_context(viewport={'width': width, 'height': height}, reduced_motion='reduce')
+def visit(browser, data=None, width=1672, height=941, has_touch=False):
+    context = browser.new_context(viewport={'width': width, 'height': height}, reduced_motion='reduce', has_touch=has_touch)
     page = context.new_page()
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.on('response', lambda response: failures.append((response.status, response.url)) if response.status >= 400 else None)
@@ -40,7 +40,7 @@ def visit(browser, data=None, width=1672, height=941):
           sessionStorage.setItem('logistics-fixture', '1');
         }''' % json.dumps(json.dumps(data)))
     now = datetime(2026, 10, 22, 12, 0, 0, tzinfo=timezone.utc)
-    page.clock.install(time=now)
+    page.clock.install(time=now - timedelta(seconds=5))
     page.clock.pause_at(now)
     assert page.goto(BASE + '/harborlight-v1-layered.html').status == 200
     page.wait_for_selector('[data-hud="grain"]')
@@ -56,7 +56,7 @@ def checkpoint(page):
     if page.locator('#island-dialog').is_visible():
         close(page)
     page.locator('#hit-settings').click()
-    page.get_by_role('button', name='Zapisz teraz', exact=True).click()
+    page.get_by_role('button', name='Save now', exact=True).click()
     close(page)
     return json.loads(page.evaluate('key => localStorage.getItem(key)', SAVE_KEY))
 
@@ -69,6 +69,63 @@ with sync_playwright() as p:
     browser = p.chromium.launch(executable_path=CHROMIUM, args=['--no-sandbox'])
     errors, failures = [], []
     try:
+        # All five producer panels share the same compact, live 2×2 summary.
+        for producer in ['farm', 'windmill', 'lumber', 'sawmill', 'quarry']:
+            data = fixture(level=2, workers={producer: 1})
+            data['paused'] = True
+            context, page = visit(browser, data, has_touch=True)
+            page.locator('#hit-world-' + producer).click()
+            grid = page.locator(f'[data-production-summary="{producer}"]')
+            expect(grid).to_be_visible()
+            cells = grid.locator(':scope > *')
+            expect(cells).to_have_count(4)
+            for index, label in enumerate(['Level', 'Storage', 'Workers', 'Taxes']):
+                expect(cells.nth(index)).to_contain_text(label)
+            positions = cells.evaluate_all('(nodes) => nodes.map(node => { const box = node.getBoundingClientRect(); return [box.x, box.y]; })')
+            assert abs(positions[0][1] - positions[1][1]) <= 1, positions
+            assert abs(positions[2][1] - positions[3][1]) <= 1, positions
+            assert positions[2][1] > positions[0][1] and positions[1][0] > positions[0][0], positions
+            expect(page.locator(f'[data-local-buffer="{producer}"]')).to_have_count(1)
+            expect(page.locator(f'[data-local-buffer="{producer}"]')).to_have_text('0 / 400')
+            phase = page.locator(f'[data-work-progress="{producer}"]')
+            expect(phase).to_have_count(1)
+            expect(phase).to_be_visible()
+            assert grid.evaluate('(node, phase) => node.contains(document.querySelector(phase))', f'[data-work-progress="{producer}"]')
+            assert phase.evaluate('(node) => parseFloat(getComputedStyle(node).fontSize)') <= 13
+            expect(page.locator('[data-worker-action]')).to_have_count(0)
+            minus = page.locator(f'[data-worker-building="{producer}"][data-worker-delta="-1"]')
+            plus = page.locator(f'[data-worker-building="{producer}"][data-worker-delta="1"]')
+            expect(minus).to_have_count(1)
+            expect(plus).to_have_count(1)
+            expect(page.locator(f'[data-worker-count="{producer}"]')).to_have_text('1')
+            expect(page.locator(f'[data-worker-limit="{producer}"]')).to_have_text('6')
+            minus.click()
+            expect(minus).to_be_disabled()
+            expect(page.locator(f'[data-worker-count="{producer}"]')).to_have_text('0')
+            for _ in range(6): plus.click()
+            expect(plus).to_be_disabled()
+            expect(page.locator(f'[data-worker-count="{producer}"]')).to_have_text('6')
+            expect(cells.nth(3)).to_contain_text('6 coins/h')
+            production_info = page.locator(f'[data-production-info="{producer}"]')
+            production_help = page.locator(f'[data-production-help="{producer}"]')
+            expect(production_help).not_to_be_visible()
+            production_info.click()
+            expect(production_help).to_be_visible()
+            assert 'warehouse' in production_help.inner_text().lower()
+            page.keyboard.press('Escape')
+            expect(production_help).not_to_be_visible()
+            expect(page.locator('#island-dialog')).to_be_visible()
+            expect(production_info).to_be_focused()
+            page.set_viewport_size({'width': 390, 'height': 844})
+            production_info.tap()
+            expect(production_help).to_be_visible()
+            bounds = production_help.bounding_box()
+            assert bounds['x'] >= 0 and bounds['x'] + bounds['width'] <= 391, bounds
+            production_info.tap()
+            expect(production_help).not_to_be_visible()
+            context.close()
+        print('PASS all five compact producer grids, single storage/clock, inline staffing limits/taxes and production help on keyboard/touch')
+
         # Actual population, not townhall capacity, limits every workplace.
         context, page = visit(browser, fixture(population=144, level=6))
         page.locator('#hit-world-farm').click()
@@ -83,8 +140,14 @@ with sync_playwright() as p:
         control(page, 'warehouse', 'max').click()
         expect(page.locator('[data-worker-count="warehouse"]')).to_have_text('72')
         expect(page.locator('[data-population-stat="free"]')).to_have_text('0')
-        expect(page.locator('[data-population-stat="taxes"]')).to_have_text('144 monet/h')
+        expect(page.locator('[data-population-stat="taxes"]')).to_have_text('144 coins/h')
         expect(control(page, 'windmill', 'max')).to_be_disabled()
+        close(page)
+        page.locator('#hit-world-quarry').click()
+        expect(page.locator('[data-worker-building="quarry"][data-worker-delta="1"]')).to_be_disabled()
+        expect(page.locator('[data-worker-building="quarry"][data-worker-delta="-1"]')).to_be_disabled()
+        close(page)
+        page.locator('#hit-population').click()
         control(page, 'farm', 'clear').click()
         expect(page.locator('[data-population-stat="returning"]')).to_have_text('72')
         expect(page.locator('[data-population-stat="free"]')).to_have_text('0')
@@ -112,7 +175,7 @@ with sync_playwright() as p:
         expect(page.locator('[data-collect]')).to_have_count(0)
         page.clock.run_for(420_000)
         expect(page.locator('[data-local-buffer="farm"]')).to_have_text('1 / 200')
-        control(page, 'farm', 'clear').click()
+        page.locator('[data-worker-building="farm"][data-worker-delta="-1"]').click()
         first = checkpoint(page)
         assert first['buildings']['farm']['ready'] == 1
         assert first['buildings']['farm']['workProgress'] == []
@@ -169,7 +232,7 @@ with sync_playwright() as p:
 
         # A local plank balance cannot fund construction until centrally hauled.
         data = fixture(level=2, workers={'warehouse': 1},
-                       resources={'coins': 1000, **dict.fromkeys(MATERIALS, 500), 'planks': 480},
+                       resources={'coins': 1000, **dict.fromkeys(MATERIALS, 500), 'planks': 480, 'food': 600},
                        ready={'sawmill': 20})
         data['buildings']['house']['level'] = 1
         data['transportPriority'] = ['planks', 'wood', 'stone', 'grain', 'food']
@@ -206,7 +269,8 @@ with sync_playwright() as p:
         full = checkpoint(page)
         assert sum(full['resources'][key] for key in MATERIALS) == 4000
         assert full['resources']['stone'] == 1000 and full['resources']['wood'] == 1000
-        assert full['resources']['planks'] == 0
+        assert full['resources']['planks'] == 1
+        assert full['resources']['food'] == 999  # Eating freed a shared storage place.
         assert full['buildings']['quarry']['ready'] == 4
         context.close()
         print('PASS independent per-resource and shared warehouse capacity, with full-priority skipping')
@@ -220,12 +284,45 @@ with sync_playwright() as p:
         context.close()
         print('PASS local storage follows townhall level while central storage follows warehouse level at +50%')
 
+        # Food is automatically reserved and consumed at one unit/resident/hour.
+        # A saved partial meal remains available even with zero central units.
+        context, page = visit(browser, fixture(resources={'food': 1}, ready={'windmill': 50}))
+        page.locator('#hit-resource-food').click()
+        expect(page.locator('[data-food-stat="demand"]')).to_have_text('12 food/h')
+        expect(page.locator('[data-food-stat="status"]')).to_have_text('Feeding')
+        page.clock.run_for(1_000)
+        expect(page.locator('[data-food-stat="status"]')).to_have_text('Feeding')
+        meal = checkpoint(page)
+        assert meal['resources']['food'] == 0
+        assert abs(meal['foodCredit'] - (1 - 12 / 3600)) < 1e-8
+        page.reload()
+        page.wait_for_selector('[data-hud="food"]')
+        page.locator('#hit-resource-food').click()
+        expect(page.locator('[data-food-stat="status"]')).to_have_text('Feeding')
+        page.clock.run_for(299_000)
+        expect(page.locator('[data-food-stat="status"]')).to_have_text('Hungry')
+        expect(page.locator('[data-food-stat="penalty"]')).to_have_text('−25 percentage points/h')
+        exhausted = checkpoint(page)
+        assert exhausted['resources']['food'] == 0 and exhausted['foodCredit'] < 1e-8
+        assert abs(exhausted['happiness']) < 1e-8
+        page.clock.run_for(3_600_000)
+        hungry = checkpoint(page)
+        assert hungry['population'] == 12
+        assert abs(hungry['baseHappiness'] + 25) < 1e-7
+        assert abs(hungry['happiness'] + 25) < 1e-7
+        assert hungry['buildings']['windmill']['ready'] == 50
+        page.locator('#hit-pause').click()
+        page.clock.run_for(60_000)
+        assert abs(checkpoint(page)['happiness'] - hungry['happiness']) < 1e-7
+        context.close()
+        print('PASS automatic resident food, saved meal credit, exact exhaustion, −25 happiness/hour, central-only supply and pause')
+
         # A full active hour at 4x production still taxes exactly one coin per assigned worker.
         context, page = visit(browser)
         page.locator('#hit-speed').click()
         page.locator('#hit-speed').click()
         page.locator('#hit-population').click()
-        expect(page.locator('[data-population-stat="taxes"]')).to_have_text('6 monet/h')
+        expect(page.locator('[data-population-stat="taxes"]')).to_have_text('6 coins/h')
         page.clock.run_for(3_600_000)
         page.locator('.dialog-close').click()
         page.locator('#hit-pause').click()

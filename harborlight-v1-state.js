@@ -1,15 +1,15 @@
 // Economy and progression for the interactive approved-screen prototype.
 // Pure data module: browser UI and Node tests share the same rules.
-import { MATERIAL_IDS, PRODUCTION_RECIPES, receiveMaterials, stockRoom, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue } from './harborlight-v1-logistics.js?v=economy-v6';
-export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty } from './harborlight-v1-logistics.js?v=economy-v6';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, receiveMaterials, stockRoom, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue } from './harborlight-v1-logistics.js?v=english-v7';
+export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty } from './harborlight-v1-logistics.js?v=english-v7';
 
 export const RESOURCES = {
-  coins: { name: 'Monety', short: 'monet', symbol: '◉', price: 1 },
-  wood: { name: 'Drewno', short: 'drewna', symbol: '▰', price: 3 },
-  stone: { name: 'Kamień', short: 'kamienia', symbol: '◆', price: 4 },
-  grain: { name: 'Zboże', short: 'zboża', symbol: '❧', price: 1 },
-  food: { name: 'Żywność', short: 'żywności', symbol: '✦', price: 2 },
-  planks: { name: 'Deski', short: 'desek', symbol: '▤', price: 6 }
+  coins: { name: 'Coins', short: 'coins', symbol: '◉', price: 1 },
+  wood: { name: 'Wood', short: 'wood', symbol: '▰', price: 3 },
+  stone: { name: 'Stone', short: 'stone', symbol: '◆', price: 4 },
+  grain: { name: 'Grain', short: 'grain', symbol: '❧', price: 1 },
+  food: { name: 'Food', short: 'food', symbol: '✦', price: 2 },
+  planks: { name: 'Planks', short: 'planks', symbol: '▤', price: 6 }
 };
 
 export const MAX_BUILDING_LEVEL = 100;
@@ -17,18 +17,18 @@ export const WORKPLACE_IDS = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry',
 export const CONSTRUCTION_IDS = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'townhall', 'house', 'market', 'warehouse', 'dock', 'chapel', 'lighthouse'];
 
 export const BUILDINGS = {
-  house: { name: 'Dom', description: 'Każdy poziom zapewnia 24 miejsca do mieszkania. Osoby bez miejsca obniżają szczęście o 1 punkt procentowy na godzinę każda.', cost: { coins: 100, wood: 40, stone: 20, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
-  farm: { name: 'Farma', description: 'Każdy rolnik produkuje 10 zboża na godzinę pracy. Plony trafiają do magazynu przy farmie i czekają na transport.', cost: { coins: 80, wood: 30, stone: 10 }, resource: 'grain', rate: 10, maxLevel: MAX_BUILDING_LEVEL },
-  sawmill: { name: 'Tartak', description: 'Każdy pracownik produkuje 10 desek na godzinę. Jedna deska wymaga 2 drewna z magazynu centralnego.', cost: { coins: 120, wood: 45, stone: 25 }, resource: 'planks', rate: 10, input: 'wood', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
-  quarry: { name: 'Kamieniołom', description: 'Każdy kamieniarz wydobywa 10 kamienia na godzinę pracy. Surowiec czeka przy kamieniołomie na transport.', cost: { coins: 150, wood: 35, stone: 20 }, resource: 'stone', rate: 10, maxLevel: MAX_BUILDING_LEVEL },
-  dock: { name: 'Przystań', description: 'Łączy wyspę z handlem i ekspedycjami. Przydzielona załoga płaci podatek od pracy.', cost: { coins: 200, wood: 60, planks: 25 }, maxLevel: MAX_BUILDING_LEVEL },
-  warehouse: { name: 'Magazyn', description: 'Każdy magazynier przewozi 60 jednostek na godzinę. Poziom 1 mieści 1000 każdego materiału i 4000 łącznie; każdy kolejny poziom zwiększa oba limity o 50%.', cost: { coins: 160, wood: 35, stone: 30, planks: 15 }, maxLevel: MAX_BUILDING_LEVEL },
-  lighthouse: { name: 'Latarnia Morska', description: 'Po ukończeniu każdego poziomu daje +100 szczęścia i produkcję materiałów ×2 przez 24 godziny × nowy poziom. Podatki pozostają bez zmian. Budowa trwa dwa razy tyle co transport.', cost: { coins: 300, planks: 30 }, maxLevel: MAX_BUILDING_LEVEL },
-  lumber: { name: 'Obóz drwali', description: 'Każdy drwal pozyskuje 10 drewna na godzinę pracy. Drewno trafia do miejscowego magazynu i czeka na transport.', cost: { coins: 90, wood: 25, stone: 15 }, resource: 'wood', rate: 10, maxLevel: MAX_BUILDING_LEVEL },
-  windmill: { name: 'Młyn', description: 'Każdy młynarz produkuje 10 żywności na godzinę. Jedna żywność wymaga 2 zboża z magazynu centralnego.', cost: { coins: 140, wood: 40, stone: 20, planks: 15 }, resource: 'food', rate: 10, input: 'grain', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
-  townhall: { name: 'Ratusz', description: 'Poziom ratusza jest poziomem wyspy i limitem rozbudowy innych budynków. Każdy poziom pozwala na 24 mieszkańców; miejsca mieszkalne zapewnia dom.', cost: { coins: 240, wood: 50, stone: 50, planks: 20 }, maxLevel: MAX_BUILDING_LEVEL },
-  chapel: { name: 'Kaplica', description: 'Ukończona rozbudowa daje na 10 godzin +10 szczęścia × nowy poziom i podatki ×2. Osobne jednorazowe błogosławieństwa dają +50 każdego zasobu i +20 szczęścia na godzinę.', cost: { coins: 180, wood: 20, stone: 60, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
-  market: { name: 'Targ', description: 'Kupcy wymieniają towary. Przydzieleni pracownicy płacą podatek od pracy.', cost: { coins: 130, wood: 35, stone: 15 }, maxLevel: MAX_BUILDING_LEVEL }
+  house: { name: 'House', description: 'Each level provides housing for 24 residents. Every resident without a home reduces happiness by 1 percentage point per hour.', cost: { coins: 100, wood: 40, stone: 20, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
+  farm: { name: 'Farm', description: 'Each farmer produces 10 grain per working hour. Harvests wait in the farm storage until warehouse workers collect them.', cost: { coins: 80, wood: 30, stone: 10 }, resource: 'grain', rate: 10, maxLevel: MAX_BUILDING_LEVEL },
+  sawmill: { name: 'Sawmill', description: 'Each worker produces 10 planks per hour. Each plank requires 2 wood from the central warehouse.', cost: { coins: 120, wood: 45, stone: 25 }, resource: 'planks', rate: 10, input: 'wood', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
+  quarry: { name: 'Quarry', description: 'Each quarry worker produces 10 stone per working hour. Stone waits at the quarry for transport.', cost: { coins: 150, wood: 35, stone: 20 }, resource: 'stone', rate: 10, maxLevel: MAX_BUILDING_LEVEL },
+  dock: { name: 'Harbor', description: 'Connects the island to trade and expeditions. Assigned workers pay employment taxes.', cost: { coins: 200, wood: 60, planks: 25 }, maxLevel: MAX_BUILDING_LEVEL },
+  warehouse: { name: 'Warehouse', description: 'Each warehouse worker carries 60 items per hour. Level 1 holds 1,000 of each material and 4,000 in total. Each additional level increases both limits by 50%.', cost: { coins: 160, wood: 35, stone: 30, planks: 15 }, maxLevel: MAX_BUILDING_LEVEL },
+  lighthouse: { name: 'Lighthouse', description: 'Completing a level grants +100 happiness and doubles material production for 24 hours × the new level. Taxes are unchanged. Construction takes twice as long as transport.', cost: { coins: 300, planks: 30 }, maxLevel: MAX_BUILDING_LEVEL },
+  lumber: { name: 'Lumber Camp', description: 'Each lumberjack produces 10 wood per working hour. Wood waits in local storage for transport.', cost: { coins: 90, wood: 25, stone: 15 }, resource: 'wood', rate: 10, maxLevel: MAX_BUILDING_LEVEL },
+  windmill: { name: 'Windmill', description: 'Each miller produces 10 food per hour. Each food requires 2 grain from the central warehouse.', cost: { coins: 140, wood: 40, stone: 20, planks: 15 }, resource: 'food', rate: 10, input: 'grain', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
+  townhall: { name: 'Town Hall', description: 'The Town Hall determines the island level and the upgrade limit for other buildings. Each level allows 24 residents; the House provides their housing.', cost: { coins: 240, wood: 50, stone: 50, planks: 20 }, maxLevel: MAX_BUILDING_LEVEL },
+  chapel: { name: 'Chapel', description: 'Completing an upgrade grants +10 happiness × the new level and doubles taxes for 10 hours. Separate one-use blessings give +50 of every resource and +20 happiness for one hour.', cost: { coins: 180, wood: 20, stone: 60, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
+  market: { name: 'Market', description: 'Merchants exchange goods. Assigned workers pay employment taxes.', cost: { coins: 130, wood: 35, stone: 15 }, maxLevel: MAX_BUILDING_LEVEL }
 };
 
 // Alias used by view components when presenting production summaries.
@@ -37,22 +37,23 @@ for (const definition of Object.values(BUILDINGS)) {
 }
 
 export const EXPEDITIONS = [
-  { id: 'misty', name: 'Mgliste Wyspy', description: 'Odszukaj szlak do portu. Most pozwoli przekroczyć jedną wodną przeszkodę.', reward: { coins: 180, wood: 50, planks: 20 }, par: 10, tools: { bridge: 1, axe: 1, dynamite: 0 }, map: ['S..T..', '.WWT..', '.W.TC.', '.W....', '.TTTW.', '...W.G'] },
-  { id: 'quarry', name: 'Zapomniany kamieniołom', description: 'Zabierz zapasy z opuszczonej kopalni i znajdź wyjście.', reward: { coins: 220, stone: 80, wood: 25 }, par: 13, tools: { bridge: 0, axe: 1, dynamite: 1 }, map: ['S.R...', '.TRR..', '..R.C.', '.TT...', '.R.RT.', 'C...G.'] },
-  { id: 'ruins', name: 'Ruiny strażnicy', description: 'Zdobądź klucz do bramy i wróć z zapasami dla latarni.', reward: { coins: 300, planks: 40, stone: 50 }, par: 14, tools: { bridge: 1, axe: 1, dynamite: 1 }, map: ['S.TW..', '.R.WC.', '.K.W..', '.R.D..', '.TT...', '....G.'] }
+  { id: 'misty', name: 'Misty Isles', description: 'Find a route to the harbor. A bridge lets you cross one water obstacle.', reward: { coins: 180, wood: 50, planks: 20 }, par: 10, tools: { bridge: 1, axe: 1, dynamite: 0 }, map: ['S..T..', '.WWT..', '.W.TC.', '.W....', '.TTTW.', '...W.G'] },
+  { id: 'quarry', name: 'Forgotten Quarry', description: 'Collect supplies from the abandoned mine and find the exit.', reward: { coins: 220, stone: 80, wood: 25 }, par: 13, tools: { bridge: 0, axe: 1, dynamite: 1 }, map: ['S.R...', '.TRR..', '..R.C.', '.TT...', '.R.RT.', 'C...G.'] },
+  { id: 'ruins', name: 'Watchtower Ruins', description: 'Find the gate key and return with supplies for the lighthouse.', reward: { coins: 300, planks: 40, stone: 50 }, par: 14, tools: { bridge: 1, axe: 1, dynamite: 1 }, map: ['S.TW..', '.R.WC.', '.K.W..', '.R.D..', '.TT...', '....G.'] }
 ];
 
 export const TASKS = [
-  { id: 'collect', name: 'Pierwsze zbiory', description: 'Odbierz co najmniej jedną partię gotowej produkcji.', reward: { coins: 100, wood: 20 } },
-  { id: 'upgrade', name: 'Wyspa rośnie', description: 'Ulepsz dowolny budynek osady.', reward: { coins: 150, planks: 15 } },
-  { id: 'expedition', name: 'Poza horyzont', description: 'Ukończ ekspedycję i wróć z nagrodą.', reward: { coins: 200, food: 40 } },
-  { id: 'craft', name: 'Dobry rzemieślnik', description: 'Przetwórz surowce w tartaku lub młynie.', reward: { coins: 100, stone: 20 } },
-  { id: 'lighthouse', name: 'Światło wraca', description: 'Dostarcz materiały i napraw starą latarnię.', reward: { coins: 500, planks: 50 } }
+  { id: 'collect', name: 'First Harvest', description: 'Have warehouse workers collect at least one batch of finished goods.', reward: { coins: 100, wood: 20 } },
+  { id: 'upgrade', name: 'Growing Island', description: 'Upgrade any settlement building.', reward: { coins: 150, planks: 15 } },
+  { id: 'expedition', name: 'Beyond the Horizon', description: 'Complete an expedition and return with its reward.', reward: { coins: 200, food: 40 } },
+  { id: 'craft', name: 'Skilled Craftsperson', description: 'Process materials in the sawmill or windmill.', reward: { coins: 100, stone: 20 } },
+  { id: 'lighthouse', name: 'The Light Returns', description: 'Deliver the materials and complete the lighthouse.', reward: { coins: 500, planks: 50 } }
 ];
 
 const owns = (object, key) => object !== null && typeof object === 'object' && Object.hasOwn(object, key);
 const integer = (value, fallback = 0, min = 0, max = 10000000) => typeof value === 'number' && Number.isFinite(value) ? Math.min(max, Math.max(min, Math.floor(value))) : fallback;
 const amount = (value, fallback = 0, max = 10000000) => typeof value === 'number' && Number.isFinite(value) ? Math.min(max, Math.max(0, value)) : fallback;
+const countdown = (remaining, elapsed) => remaining - elapsed > 1e-9 ? remaining - elapsed : 0;
 const good = message => ({ ok: true, message });
 const bad = message => ({ ok: false, message });
 export function createState() {
@@ -66,7 +67,7 @@ export function createState() {
     resources: Object.fromEntries(Object.keys(RESOURCES).map(id => [id, 100])),
     population: 12, capacity: 24, happiness: 0, baseHappiness: 0, chapelRemaining: 0, lighthouseRemaining: 0,
     blessingRemaining: 0, blessingsUsed: 0, loyalty: { lastDay: null, streak: 0 },
-    populationProgress: 0, populationDirection: 0, taxProgress: 0,
+    populationProgress: 0, populationDirection: 0, taxProgress: 0, foodCredit: 0,
     returningWorkers: [], transportPriority: [...MATERIAL_IDS],
     pendingDeliveries: Object.fromEntries(MATERIAL_IDS.map(id => [id, 0])),
     buildings,
@@ -97,6 +98,21 @@ export function freeWorkers(state) {
 
 export function taxRate(state) {
   return totalWorkers(state) * (state.chapelRemaining > 0 ? 2 : 1);
+}
+
+export const foodDemandPerHour = state => state.population;
+export const hasFoodForResidents = state => state.foodCredit > 1e-12 || state.resources.food > 0;
+export const hungerPenaltyPerHour = state => hasFoodForResidents(state) ? 0 : 25;
+
+function reserveResidentFood(state) {
+  if (state.foodCredit > 1e-12) return;
+  state.foodCredit = 0;
+  if (state.resources.food >= 1) {
+    // One whole warehouse unit is allocated to meals. Only its unused fraction
+    // remains available to residents; buildings cannot spend that unit again.
+    state.resources.food -= 1;
+    state.foodCredit = 1;
+  }
 }
 
 export function happinessGroups(state) {
@@ -136,15 +152,15 @@ export function buildingLevelLimit(state, id) {
 }
 
 export function upgradeEligibility(state, id) {
-  if (!owns(BUILDINGS, id)) return bad('Nie ma takiego budynku.');
-  if (!workplaceUnlocked(state, id)) return bad(`Ten budynek jest dostępny od poziomu ${id === 'market' ? 2 : 4}.`);
+  if (!owns(BUILDINGS, id)) return bad('This building does not exist.');
+  if (!workplaceUnlocked(state, id)) return bad(`This building unlocks at level ${id === 'market' ? 2 : 4}.`);
   const nextLevel = plannedLevel(state, id) + 1;
-  if (nextLevel > BUILDINGS[id].maxLevel) return bad('Osiągnięto najwyższy poziom.');
+  if (nextLevel > BUILDINGS[id].maxLevel) return bad('Maximum level reached.');
   const limit = id === 'townhall' ? MAX_BUILDING_LEVEL : premiumActive(state) ? plannedLevel(state, 'townhall') : buildingLevelLimit(state, id);
-  if (nextLevel > limit) return bad(`Najpierw rozbuduj ratusz do poziomu ${nextLevel}.`);
+  if (nextLevel > limit) return bad(`Upgrade the Town Hall to level ${nextLevel} first.`);
   const construction = constructionCounts(state);
-  if (construction.active >= construction.limit && construction.queued >= construction.queueLimit) return bad(`Budowy i kolejka są pełne (${construction.limit} + ${construction.limit}). Zaczekaj na zakończenie rozbudowy.`);
-  return good('Rozbudowa jest dostępna.');
+  if (construction.active >= construction.limit && construction.queued >= construction.queueLimit) return bad(`Construction slots and the queue are full (${construction.limit} + ${construction.limit}). Wait for an upgrade to finish.`);
+  return good('An upgrade is available.');
 }
 
 // Rates interpolate the agreed anchors: 0%=0, 50%=1/6, 100%=1 person/hour.
@@ -218,14 +234,15 @@ function syncPopulationProgress(state) {
 function advancePopulation(state, activeSeconds) {
   state.capacity = state.buildings.townhall.level * 24;
   let remaining = activeSeconds;
-  // Between population changes the housing penalty is constant. Integrate each
+  // Between population/food changes the housing and hunger penalties are constant. Integrate each
   // linear happiness/rate segment exactly, rather than applying a whole hour at
   // its starting rate or looping once for every second in a long saved interval.
-  while (remaining > 0) {
+  while (remaining > 1e-9) {
+    reserveResidentFood(state);
     updateStorageStatus(state);
     updateHappiness(state);
     const happiness = state.happiness;
-    const baseSlope = state.baseHappiness > -100 ? -unhousedResidents(state) / 3600 : 0;
+    const baseSlope = state.baseHappiness > -100 ? -(unhousedResidents(state) + hungerPenaltyPerHour(state)) / 3600 : 0;
     const groups = happinessGroups(state);
     const activeWeight = groups.filter(group => state.baseHappiness + group.offset <= 100 && state.baseHappiness + group.offset > -100).reduce((sum, group) => sum + group.count, 0) / state.population;
     const happinessSlope = baseSlope * activeWeight;
@@ -244,7 +261,8 @@ function advancePopulation(state, activeSeconds) {
     const rate = Math.abs(populationRate(happiness)) / 3600;
     const rateDerivative = Math.abs(happiness) > 50 || (happiness === -50 && happinessSlope < 0) ? 1 / 60 : 1 / 300;
     const rateSlope = direction * happinessSlope * rateDerivative / 3600;
-    let duration = Math.min(remaining, boundaryTime, clippingTime, nextLogisticsEvent(state), state.chapelRemaining > 0 ? state.chapelRemaining : Infinity, state.blessingRemaining > 0 ? state.blessingRemaining : Infinity, state.lighthouseRemaining > 0 ? state.lighthouseRemaining : Infinity);
+    const foodTime = state.foodCredit > 1e-12 ? state.foodCredit * 3600 / foodDemandPerHour(state) : Infinity;
+    let duration = Math.min(remaining, boundaryTime, clippingTime, nextLogisticsEvent(state), foodTime, state.chapelRemaining > 0 ? state.chapelRemaining : Infinity, state.blessingRemaining > 0 ? state.blessingRemaining : Infinity, state.lighthouseRemaining > 0 ? state.lighthouseRemaining : Infinity);
     let changesPopulation = false;
     if (!blocked) {
       const gain = Math.max(0, (rate + rateSlope * duration / 2) * duration);
@@ -261,11 +279,12 @@ function advancePopulation(state, activeSeconds) {
     // Charge each interval for its actual crew before a population-loss event
     // releases workers. Production speed does not multiply real hours of work.
     accrueTaxes(state, duration);
-    state.chapelRemaining = Math.max(0, state.chapelRemaining - duration);
-    state.blessingRemaining = Math.max(0, state.blessingRemaining - duration);
+    state.foodCredit = Math.max(0, state.foodCredit - foodDemandPerHour(state) * duration / 3600);
+    state.chapelRemaining = countdown(state.chapelRemaining, duration);
+    state.blessingRemaining = countdown(state.blessingRemaining, duration);
     const previousLighthouseLevel = state.buildings.lighthouse.level;
     advanceLogistics(state, duration);
-    if (state.buildings.lighthouse.level === previousLighthouseLevel) state.lighthouseRemaining = Math.max(0, state.lighthouseRemaining - duration);
+    if (state.buildings.lighthouse.level === previousLighthouseLevel) state.lighthouseRemaining = countdown(state.lighthouseRemaining, duration);
     state.baseHappiness = Math.max(-100, Math.min(100, state.baseHappiness + baseSlope * duration));
     if (!blocked) state.populationProgress = Math.max(0, state.populationProgress + (rate + rateSlope * duration / 2) * duration);
     if (changesPopulation) {
@@ -315,6 +334,7 @@ export function normalizeState(raw) {
   state.population = integer(raw.population, state.population, 6, state.capacity);
   state.happiness = typeof raw.happiness === 'number' && Number.isFinite(raw.happiness) ? Math.max(-100, Math.min(100, raw.happiness)) : 0;
   state.baseHappiness = typeof raw.baseHappiness === 'number' && Number.isFinite(raw.baseHappiness) ? Math.max(-100, Math.min(100, raw.baseHappiness)) : state.happiness;
+  state.foodCredit = amount(raw.foodCredit, 0, 1);
   state.chapelRemaining = amount(raw.chapelRemaining, 0, 36000);
   state.lighthouseRemaining = amount(raw.lighthouseRemaining, 0, 8640000);
   state.blessingRemaining = amount(raw.blessingRemaining, 0, 3600);
@@ -417,188 +437,188 @@ export function tick(state, elapsedSeconds) {
 }
 
 export function act(state, action, now = Date.now()) {
-  if (!action || typeof action !== 'object') return bad('Nieznane działanie.');
+  if (!action || typeof action !== 'object') return bad('Unknown action.');
   const id = action.building;
-  if (['build', 'upgrade', 'collect', 'assign', 'craft'].includes(action.type) && !owns(BUILDINGS, id)) return bad('Nie ma takiego budynku.');
+  if (['build', 'upgrade', 'collect', 'assign', 'craft'].includes(action.type) && !owns(BUILDINGS, id)) return bad('This building does not exist.');
   let result;
   switch (action.type) {
     case 'build':
     case 'upgrade': {
       const building = state.buildings[id], definition = BUILDINGS[id];
-      if (action.type === 'build' && building.level > 0) return bad('Ten budynek już istnieje. Wybierz ulepszenie.');
-      if (action.type === 'upgrade' && building.level === 0) return bad('Najpierw zbuduj ten budynek.');
+      if (action.type === 'build' && building.level > 0) return bad('This building already exists. Choose Upgrade.');
+      if (action.type === 'upgrade' && building.level === 0) return bad('Build this building first.');
       const eligibility = upgradeEligibility(state, id);
       if (!eligibility.ok) return eligibility;
       const cost = buildingCost(state, id);
       const affordable = canAfford(state, cost);
-      if (!affordable && !premiumActive(state)) return bad('Brakuje surowców do rozbudowy.');
+      if (!affordable && !premiumActive(state)) return bad('Not enough resources for this upgrade.');
       if (affordable) spend(state, cost);
       const goodsTotal = MATERIAL_IDS.reduce((sum, resource) => sum + (cost[resource] || 0), 0);
       const targetLevel = plannedLevel(state, id) + 1;
       const project = { building: id, targetLevel, goodsTotal, goodsRemaining: goodsTotal, transportSeconds: 0, buildRemaining: 0, stage: affordable ? 'queued' : 'planned', order: ++state.constructionSequence, cost };
       state.constructionProjects.push(project);
       promoteConstructionQueue(state);
-      const status = project.stage === 'planned' ? 'plan czeka na dostawy' : project.stage === 'queued' ? 'materiały zarezerwowane w kolejce' : 'materiały zarezerwowane, oczekiwanie na transport';
-      notify(state, 'construction-start', `${definition.name}: poziom ${targetLevel}`, status);
+      const status = project.stage === 'planned' ? 'plan waiting for deliveries' : project.stage === 'queued' ? 'materials reserved in the queue' : 'materials reserved, waiting for transport';
+      notify(state, 'construction-start', `${definition.name}: level ${targetLevel}`, status);
       result = good(`${definition.name}: ${status}.`);
       break;
     }
     case 'collect': {
-      return bad('Towary przewożą magazynierzy. Przydziel pracowników do magazynu i ustaw priorytet transportu.');
+      return bad('Warehouse workers carry goods. Assign workers to the warehouse and set transport priorities.');
     }
     case 'assign': {
       const building = state.buildings[id];
-      if (!WORKPLACE_IDS.includes(id) || !building.level) return bad('Ten budynek nie zatrudnia pracowników.');
-      if (!Number.isSafeInteger(action.delta) || action.delta === 0) return bad('Podaj niezerową całkowitą liczbę pracowników.');
+      if (!WORKPLACE_IDS.includes(id) || !building.level) return bad('This building does not employ workers.');
+      if (!Number.isSafeInteger(action.delta) || action.delta === 0) return bad('Enter a nonzero whole number of workers.');
       const nextWorkers = building.workers + action.delta;
-      if (!Number.isSafeInteger(nextWorkers) || nextWorkers < 0 || nextWorkers > workerLimit(state, id)) return bad('Budynkowi można przydzielić najwyżej połowę obecnej populacji.');
-      if (action.delta > freeWorkers(state)) return bad('Brakuje wolnych mieszkańców.');
+      if (!Number.isSafeInteger(nextWorkers) || nextWorkers < 0 || nextWorkers > workerLimit(state, id)) return bad('A building can employ at most half the current population.');
+      if (action.delta > freeWorkers(state)) return bad('Not enough available residents.');
       syncCrewProgress(state, id, building.workers, nextWorkers);
       building.workers = nextWorkers;
-      result = good(`Pracownicy: ${building.workers}.${action.delta < 0 ? ' Zwolnieni wracają do domu przez 5 minut.' : ''}`);
+      result = good(`Workers: ${building.workers}.${action.delta < 0 ? ' Dismissed workers take 5 minutes to return home.' : ''}`);
       break;
     }
     case 'blessing': {
-      if (!state.buildings.chapel.level) return bad('Najpierw zbuduj kaplicę.');
-      if (state.blessingRemaining > 0) return bad('Błogosławieństwo już działa. Zaczekaj do jego zakończenia.');
-      if (state.blessingsUsed >= state.buildings.chapel.level) return bad('Wykorzystano błogosławieństwa dostępne na tym poziomie kaplicy.');
+      if (!state.buildings.chapel.level) return bad('Build the chapel first.');
+      if (state.blessingRemaining > 0) return bad('A blessing is already active. Wait for it to end.');
+      if (state.blessingsUsed >= state.buildings.chapel.level) return bad('All blessings available at this chapel level have been used.');
       state.blessingRemaining = 3600;
       state.blessingsUsed += 1;
       reward(state, Object.fromEntries(Object.keys(RESOURCES).map(id => [id, 50])));
-      notify(state, 'blessing', 'Błogosławieństwo', '+50 każdego zasobu oraz +20 szczęścia każdemu mieszkańcowi przez godzinę.');
-      result = good('Przyznano +50 każdego zasobu i +20 szczęścia na godzinę.');
+      notify(state, 'blessing', 'Blessing', '+50 of every resource and +20 happiness for every resident for one hour.');
+      result = good('Granted +50 of every resource and +20 happiness for one hour.');
       break;
     }
     case 'readNotifications': {
       for (const notification of state.notifications) notification.read = true;
-      result = good('Powiadomienia oznaczono jako przeczytane.');
+      result = good('Notifications marked as read.');
       break;
     }
     case 'marketOrder': {
-      if (!workplaceUnlocked(state, 'market')) return bad('Targ jest dostępny od poziomu ratusza 2.');
+      if (!workplaceUnlocked(state, 'market')) return bad('The market unlocks at Town Hall level 2.');
       const { resource, amount: quantity } = action;
-      if (!MATERIAL_IDS.includes(resource) || !Number.isSafeInteger(quantity) || quantity < 1 || quantity > 1000) return bad('Nieprawidłowy towar lub ilość.');
+      if (!MATERIAL_IDS.includes(resource) || !Number.isSafeInteger(quantity) || quantity < 1 || quantity > 1000) return bad('Invalid material or quantity.');
       const ordered = state.market.orders.reduce((sum, order) => sum + order.amount, 0);
       const same = state.market.orders.filter(order => order.resource === resource).reduce((sum, order) => sum + order.amount, 0);
-      if (state.resources[resource] - same < quantity) return bad('Brakuje wolnego towaru w magazynie centralnym.');
-      if (marketUsed(state) + ordered + quantity > marketCapacity(state)) return bad('Brakuje miejsca na targu.');
+      if (state.resources[resource] - same < quantity) return bad('Not enough unreserved goods in the central warehouse.');
+      if (marketUsed(state) + ordered + quantity > marketCapacity(state)) return bad('Not enough space in the market.');
       state.market.orders.push({ resource, amount: quantity });
-      result = good('Zlecono transport na targ. Po dostarczeniu towar czeka godzinę przed wymianą.');
+      result = good('Market delivery ordered. Goods must wait one hour after arrival before they can be exchanged.');
       break;
     }
     case 'marketExchange': {
-      if (!workplaceUnlocked(state, 'market')) return bad('Targ jest dostępny od poziomu ratusza 2.');
+      if (!workplaceUnlocked(state, 'market')) return bad('The market unlocks at Town Hall level 2.');
       const { from, to, amount: quantity } = action;
       const groups = [['wood', 'stone', 'grain'], ['planks', 'food']];
-      if (from === to || !groups.some(group => group.includes(from) && group.includes(to))) return bad('Wybierz różne towary z tej samej kategorii.');
-      if (!Number.isSafeInteger(quantity) || quantity < 10 || quantity % 10 !== 0) return bad('Wymieniaj partie po 10 sztuk: po marży otrzymasz 9 sztuk.');
-      if (state.market.stock[from] - state.market.dispatch[from] < quantity) return bad('Brakuje odblokowanego towaru na targu.');
+      if (from === to || !groups.some(group => group.includes(from) && group.includes(to))) return bad('Choose different goods from the same category.');
+      if (!Number.isSafeInteger(quantity) || quantity < 10 || quantity % 10 !== 0) return bad('Exchange in batches of 10: you receive 9 after the fee.');
+      if (state.market.stock[from] - state.market.dispatch[from] < quantity) return bad('Not enough unlocked goods in the market.');
       const output = quantity * 9 / 10;
       state.market.stock[from] -= quantity;
       state.market.stock[to] += output;
       state.statistics.traded += 1;
-      result = good(`Wymieniono ${quantity} ${RESOURCES[from].short} na ${output} ${RESOURCES[to].short}. Marża targu: 10%.`);
+      result = good(`Exchanged ${quantity} ${RESOURCES[from].short} for ${output} ${RESOURCES[to].short}. Market fee: 10%.`);
       break;
     }
     case 'marketDispatch': {
       const { resource, amount: quantity } = action;
-      if (!workplaceUnlocked(state, 'market') || !MATERIAL_IDS.includes(resource) || !Number.isSafeInteger(quantity) || quantity < 1) return bad('Nieprawidłowe zlecenie odbioru.');
-      if (state.market.stock[resource] - state.market.dispatch[resource] < quantity) return bad('Brakuje odblokowanego towaru na targu.');
+      if (!workplaceUnlocked(state, 'market') || !MATERIAL_IDS.includes(resource) || !Number.isSafeInteger(quantity) || quantity < 1) return bad('Invalid collection order.');
+      if (state.market.stock[resource] - state.market.dispatch[resource] < quantity) return bad('Not enough unlocked goods in the market.');
       state.market.dispatch[resource] += quantity;
-      result = good('Towary czekają na odbiór przez magazynierów.');
+      result = good('Goods are waiting for collection by warehouse workers.');
       break;
     }
     case 'craft': {
-      return bad('Przetwarzaniem zajmują się przypisani pracownicy. Produkcja wymaga czasu i surowców w magazynie centralnym.');
+      return bad('Assigned workers process materials. Production requires time and inputs from the central warehouse.');
     }
     case 'transportPriority': {
-      if (!MATERIAL_IDS.includes(action.resource) || ![-1, 1].includes(action.direction)) return bad('Nieprawidłowa zmiana priorytetu transportu.');
+      if (!MATERIAL_IDS.includes(action.resource) || ![-1, 1].includes(action.direction)) return bad('Invalid transport priority change.');
       const index = state.transportPriority.indexOf(action.resource), target = index + action.direction;
-      if (target < 0 || target >= state.transportPriority.length) return bad('Towar jest już na skraju listy priorytetów.');
+      if (target < 0 || target >= state.transportPriority.length) return bad('This material is already at the end of the priority list.');
       [state.transportPriority[index], state.transportPriority[target]] = [state.transportPriority[target], state.transportPriority[index]];
-      result = good('Zmieniono priorytet transportu.');
+      result = good('Transport priority updated.');
       break;
     }
-    case 'deliver': return bad('Latarnia wymaga teraz pełnego kosztu w magazynie. Uruchom jej budowę w panelu budynku.');
+    case 'deliver': return bad('The full lighthouse cost must be in the warehouse. Start construction from its building panel.');
     case 'repair': {
-      if (state.buildings.lighthouse.level || state.buildings.lighthouse.construction) return bad('Latarnia jest już zbudowana lub jej budowa trwa.');
+      if (state.buildings.lighthouse.level || state.buildings.lighthouse.construction) return bad('The lighthouse is already built or under construction.');
       return act(state, { type: 'build', building: 'lighthouse' }, now);
     }
     case 'claim': {
       const task = TASKS.find(item => item.id === action.task);
-      if (!task || !taskReady(state, task.id)) return bad('To zadanie nie jest ukończone albo nagroda została już odebrana.');
+      if (!task || !taskReady(state, task.id)) return bad('This task is incomplete or its reward has already been claimed.');
       state.tasks[task.id] = true; reward(state, task.reward);
-      result = good(`Odebrano nagrodę: ${task.name}.`);
+      result = good(`Reward claimed: ${task.name}.`);
       break;
     }
     case 'trade': {
       const resource = action.resource, quantity = action.amount === undefined ? 10 : action.amount;
-      if (!owns(RESOURCES, resource) || resource === 'coins' || typeof quantity !== 'number' || !Number.isSafeInteger(quantity) || quantity < 1 || quantity > 1000) return bad('Nieprawidłowy towar lub ilość.');
-      if (!state.buildings.dock.level || !workplaceUnlocked(state, 'dock')) return bad('Handel za monety w przystani jest dostępny od poziomu ratusza 4.');
+      if (!owns(RESOURCES, resource) || resource === 'coins' || typeof quantity !== 'number' || !Number.isSafeInteger(quantity) || quantity < 1 || quantity > 1000) return bad('Invalid material or quantity.');
+      if (!state.buildings.dock.level || !workplaceUnlocked(state, 'dock')) return bad('Harbor trading with coins unlocks at Town Hall level 4.');
       const buying = action.direction === 'buy';
-      if (action.direction !== undefined && !['buy', 'sell'].includes(action.direction)) return bad('Nieznany rodzaj handlu.');
+      if (action.direction !== undefined && !['buy', 'sell'].includes(action.direction)) return bad('Unknown trade type.');
       const price = RESOURCES[resource].price * quantity * (buying ? 2 : 1);
       const cost = buying ? { coins: price } : { [resource]: quantity };
-      if (!canAfford(state, cost)) return bad(buying ? 'Brakuje monet na zakup.' : 'Nie masz tylu towarów na sprzedaż.');
-      if (buying && stockRoom(state, resource) < quantity) return bad('Brakuje miejsca w magazynie centralnym na ten zakup.');
+      if (!canAfford(state, cost)) return bad(buying ? 'Not enough coins for this purchase.' : 'You do not have enough goods to sell.');
+      if (buying && stockRoom(state, resource) < quantity) return bad('Not enough space in the central warehouse for this purchase.');
       spend(state, cost); reward(state, buying ? { [resource]: quantity } : { coins: price });
       state.statistics.traded += 1;
-      result = good(buying ? `Kupiono ${quantity} ${RESOURCES[resource].short} za ${price} monet.` : `Sprzedano ${quantity} ${RESOURCES[resource].short} za ${price} monet.`);
+      result = good(buying ? `Bought ${quantity} ${RESOURCES[resource].short} for ${price} coins.` : `Sold ${quantity} ${RESOURCES[resource].short} for ${price} coins.`);
       break;
     }
     case 'expeditionComplete': {
       const expedition = EXPEDITIONS.find(item => item.id === action.expedition);
-      if (!expedition || !Number.isSafeInteger(action.moves) || action.moves < 1 || action.moves > 100000) return bad('Nieprawidłowy wynik ekspedycji.');
+      if (!expedition || !Number.isSafeInteger(action.moves) || action.moves < 1 || action.moves > 100000) return bad('Invalid expedition result.');
       const caches = action.caches === undefined ? 0 : action.caches;
       const availableCaches = expedition.map.reduce((sum, row) => sum + [...row].filter(tile => tile === 'C').length, 0);
-      if (!Number.isSafeInteger(caches) || caches < 0 || caches > availableCaches) return bad('Nieprawidłowa liczba skrzyń ekspedycji.');
+      if (!Number.isSafeInteger(caches) || caches < 0 || caches > availableCaches) return bad('Invalid expedition chest count.');
       const old = state.expeditions[expedition.id];
       // A completed run has a single settlement reward; UI clears the run after this action.
-      if (old?.completed) return bad('Nagroda za tę ekspedycję została już odebrana. Wybierz kolejną wyspę.');
+      if (old?.completed) return bad('This expedition reward has already been claimed. Choose another island.');
       reward(state, expedition.reward);
       if (caches > 0) reward(state, { coins: caches * 10 });
       state.expeditions[expedition.id] = { completed: true, runs: 1, bestMoves: action.moves };
       state.statistics.expeditions += 1;
-      result = good(`Ekspedycja „${expedition.name}” ukończona! Nagroda trafiła do magazynu.${caches > 0 ? ` Bonus za skrzynie: ${caches * 10} monet.` : ''}`);
+      result = good(`Expedition “${expedition.name}” complete! The reward has been sent to the warehouse.${caches > 0 ? ` Chest bonus: ${caches * 10} coins.` : ''}`);
       break;
     }
     case 'decorate': {
       const costs = { flowers: 25, lamp: 40, bench: 35 };
-      if (!owns(costs, action.decoration)) return bad('Nie ma takiej dekoracji.');
-      if (state.decorations[action.decoration] >= 100) return bad('Osiągnięto limit dekoracji tego rodzaju.');
-      if (!canAfford(state, { coins: costs[action.decoration] })) return bad('Brakuje monet na dekorację.');
+      if (!owns(costs, action.decoration)) return bad('This decoration does not exist.');
+      if (state.decorations[action.decoration] >= 100) return bad('The limit for this decoration has been reached.');
+      if (!canAfford(state, { coins: costs[action.decoration] })) return bad('Not enough coins for this decoration.');
       spend(state, { coins: costs[action.decoration] });
       state.decorations[action.decoration] += 1;
       state.baseHappiness = Math.min(100, state.baseHappiness + 1);
-      result = good('Dekoracja dodana. Wyspa jest jeszcze piękniejsza!');
+      result = good('Decoration added. The island looks even better!');
       break;
     }
     case 'path': {
-      if (state.paths >= 100) return bad('Wszystkie ścieżki są już rozbudowane.');
+      if (state.paths >= 100) return bad('All paths have already been upgraded.');
       const cost = { stone: 10, wood: 5 };
-      if (!canAfford(state, cost)) return bad('Ścieżka wymaga 10 kamienia i 5 drewna.');
+      if (!canAfford(state, cost)) return bad('A path requires 10 stone and 5 wood.');
       spend(state, cost);
       state.paths += 1;
       state.baseHappiness = Math.min(100, state.baseHappiness + 1);
-      result = good('Nowa ścieżka połączyła osadę.');
+      result = good('A new path now connects the settlement.');
       break;
     }
     case 'pause':
       state.paused = !state.paused;
-      result = good(state.paused ? 'Symulacja wstrzymana.' : 'Wyspa znów żyje.');
+      result = good(state.paused ? 'Simulation paused.' : 'Island activity resumed.');
       break;
     case 'speed':
-      if (![1, 2, 4].includes(action.speed)) return bad('Dostępne tempo: 1×, 2× lub 4×.');
+      if (![1, 2, 4].includes(action.speed)) return bad('Available speeds: 1×, 2× or 4×.');
       state.speed = action.speed;
-      result = good(`Tempo wyspy: ${state.speed}×.`);
+      result = good(`Island speed: ${state.speed}×.`);
       break;
     case 'setting':
-      if (!['sound', 'motion'].includes(action.key) || typeof action.value !== 'boolean') return bad('Nieprawidłowe ustawienie.');
+      if (!['sound', 'motion'].includes(action.key) || typeof action.value !== 'boolean') return bad('Invalid setting.');
       state.settings[action.key] = action.value;
-      result = good('Zapisano ustawienia.');
+      result = good('Settings saved.');
       break;
     default:
-      return bad('Nieznane działanie.');
+      return bad('Unknown action.');
   }
   updateStorageStatus(state);
   updateHappiness(state);

@@ -1,6 +1,6 @@
 # Backlog HARBORLIGHT
 
-Stan: 2026-10-22. Zadania są podzielone według istniejących milestone’ów [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3) i [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Utworzono i potwierdzono czternaście GitHub Issues FE/BE z przypisaniem do milestone’ów. Identyfikatory FE/BE porządkują dokumentację; numery i linki rzeczywistych zgłoszeń są podane przy zadaniach.
+Stan: 2026-10-22. Zadania są podzielone według istniejących milestone’ów [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3) i [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Utworzono i potwierdzono siedemnaście GitHub Issues FE/BE z przypisaniem do milestone’ów. Identyfikatory FE/BE porządkują dokumentację; numery i linki rzeczywistych zgłoszeń są podane przy zadaniach.
 
 Utrzymujemy spokojną rozbudowę wyspy i pętlę ekspedycja → zasoby → osada. Zachowujemy zaakceptowany kierunek wizualny. Backend nie jest wymagany do uruchomienia obecnego statycznego prototypu.
 
@@ -128,6 +128,33 @@ Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zam
 - Lokalny model pakietu: +4 aktywne, kolejka bez limitu, plany z estymat dostaw. Wygasanie kalendarzowe; rozpoczęte kończą się, opłacone czekają na normalny limit, nieopłacone zachowane i wstrzymane. Sprzedaż nie jest uruchomiona.
 - Latarnia: 500 każdego zasobu ze złotem, transport T + budowa 2T; +100 szczęścia i produkcja pięciu materiałów ×2 przez 24 h × osiągnięty poziom. Podatki bez zmiany. Użytkownik zaakceptował minimum około 35 h zbierania od startu.
 - Panel ratusza: poziom, obecni/limit, podatki/h, bez przydziału i odbioru. Bezpośrednie „Ulepsz”; magazynowe posiadane/wymagane w czerwieni/zieleni. Scenę zachowujemy.
+
+### FE-10 — Angielski interfejs i pomoc pod ikoną „i”
+
+Status: implementacja i weryfikacja. Milestone frontend #3. GitHub Issue: [#21](https://github.com/ksobczak321-oss/gra/issues/21).
+
+- Trzy akapity pomocy z karty rozbudowy są schowane w popupie „i” obok nagłówka Upgrade; koszty, akcja oraz rzeczywiste blokady i postęp pozostają widoczne.
+- Popup działa myszą/dotykiem, klawiaturą i Escape, nie zamyka nadrzędnego dialogu, mieści się na telefonie i ma poprawną etykietę oraz aria-expanded.
+- Cały aktywny interfejs, nazwy, zadania, ekspedycje, komunikaty i znane historyczne powiadomienia są po angielsku. Formatowanie jest angielskie; identyfikatory, postęp i reguły pozostają zachowane.
+- Grafika zaakceptowanego ekranu ma już angielskie napisy; archiwalne eksperymenty nie wchodzą w zakres aktywnego interfejsu.
+
+### FE-11 — Automatyczne żywienie i głód
+
+Status: implementacja i weryfikacja. Milestone frontend #3. GitHub Issue: [#22](https://github.com/ksobczak321-oss/gra/issues/22).
+
+- Każda osoba zużywa 1 Food/aktywną godzinę. Automatyczny przydział dotyczy wyłącznie magazynu centralnego, bez ręcznej akcji ani bezpośredniego jedzenia lokalnej produkcji.
+- Przydzielona część posiłku jest rezerwowana, a ułamek zachowany w zapisie; nie da się wydać tej samej żywności ponownie.
+- Gdy nie ma centralnego ani już przydzielonego jedzenia, bazowe szczęście spada o 25 punktów na aktywną godzinę. Dostawa zatrzymuje dalszy spadek, bez zwrotu; kara nie jest mnożona przez liczbę ludzi.
+- Zmiana populacji zmienia popyt. Pauza, ukrycie, offline i tempo działają jak w pozostałych godzinowych regułach. Przeludnienie i głód sumują spadki bazowe.
+- Food i Residents pokazują popyt/h, centralny stan i żywienie/głód; testy obejmują zachowanie zasobów i dokładne granice wyczerpania/dostaw.
+
+### FE-12 — Kompaktowe panele producentów
+
+Status: implementacja i weryfikacja. Milestone frontend #3. GitHub Issue: [#23](https://github.com/ksobczak321-oss/gra/issues/23).
+
+- Wszystkie pięć paneli produkcyjnych: pierwszy wiersz Level | Storage z małym czasem do sztuki, drugi Workers aktualni/limit z małym −/+ | Taxes/h.
+- Wyjaśnienia pod „i”, bez powtórzonych dużych kart produkcji i dużych/zbiorczych przycisków pracowników wewnątrz budynku.
+- Wspólna pula, limity, czas powrotu, pełne składy i zatrzymanie wejść pozostają zgodne z gospodarką; panele odświeżają się na żywo i działają na telefonie.
 
 ## Backend
 

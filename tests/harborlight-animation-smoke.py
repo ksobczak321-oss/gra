@@ -146,7 +146,7 @@ def run():
         print("PASS simulation pause freezes actual animation pixels and resume restarts it")
 
         page.locator("#hit-settings").click()
-        motion = page.locator("#island-dialog").get_by_role("checkbox", name="Animacje i podświetlenia")
+        motion = page.locator("#island-dialog").get_by_role("checkbox", name="Animations and highlights")
         motion.uncheck()
         frozen(page,"reduced")
         motion.check()
@@ -167,7 +167,7 @@ def run():
 
         for width,height in [(390,844),(844,390)]:
             page.set_viewport_size({"width":width,"height":height})
-            page.get_by_role("button", name="Otwórz menu wyspy").click()
+            page.get_by_role("button", name="Open island menu").click()
             expect(page.locator("#dialog-title")).to_have_text("HARBORLIGHT")
             bounds=page.locator("#island-dialog").bounding_box()
             assert bounds["x"]>=-1 and bounds["y"]>=-1
