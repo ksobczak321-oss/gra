@@ -1,4 +1,5 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility } from './harborlight-v1-state.js?v=housing-v3';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, CONSTRUCTION_IDS, WORKPLACE_IDS, workerLimit, freeWorkers, taxRate, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit } from './harborlight-v1-state.js?v=economy-v6';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=economy-v6';
 import { createAmbientScene } from './harborlight-v1-ambient.js?v=living-world-3';
 
 const SAVE_KEY = 'harborlight-v1-interactive-save';
@@ -42,7 +43,7 @@ function el(tag, attributes = {}, ...children) {
   for (const child of children.flat()) if (child != null) node.append(child instanceof Node ? child : document.createTextNode(String(child)));
   return node;
 }
-const nameOf = id => RESOURCES[id]?.name || ({ coins: 'Monety', wood: 'Drewno', stone: 'Kamień', food: 'Żywność', planks: 'Deski' }[id]) || id;
+const nameOf = id => RESOURCES[id]?.name || ({ coins: 'Monety', wood: 'Drewno', stone: 'Kamień', food: 'Żywność', planks: 'Deski', grain: 'Zboże' }[id]) || id;
 const count = value => Math.floor(value || 0).toLocaleString('en-US');
 const titleOf = id => BUILDINGS[id]?.name || id;
 const costText = cost => Object.entries(cost || {}).map(([id, value]) => `${nameOf(id)}: ${count(value)}`).join(' · ');
@@ -64,15 +65,19 @@ function perform(action) {
   // Settle the preceding time under its old pause, speed and happiness values.
   settleActiveTick();
   const focused = dialog.contains(document.activeElement) ? document.activeElement : null;
-  const focusKey = focused?.getAttribute('data-collect');
+  const focusPriority = focused?.dataset.priorityResource;
+  const focusPriorityDirection = focused?.dataset.priorityDirection;
   const focusLabel = focused?.textContent;
+  const focusWorker = focused?.dataset.workerBuilding;
+  const focusWorkerAction = focused?.dataset.workerAction;
+  const focusWorkerDelta = focused?.dataset.workerDelta;
   const result = act(state, action);
   panelNotice = result.message;
   if (result.ok) { save(); renderHUD(); }
   toast(result.message);
   if (panel && dialog.open) {
     renderPanel();
-    const target = focusKey ? dialog.querySelector(`[data-collect="${focusKey}"]`) : [...dialog.querySelectorAll('button,input')].find(node => node.textContent === focusLabel && !node.disabled);
+    const target = focusPriority ? dialog.querySelector(`[data-priority-resource="${focusPriority}"][data-priority-direction="${focusPriorityDirection}"]`) : focusWorker ? dialog.querySelector(`[data-worker-building="${focusWorker}"][${focusWorkerAction ? `data-worker-action="${focusWorkerAction}"` : `data-worker-delta="${focusWorkerDelta}"`}]`) : [...dialog.querySelectorAll('button,input')].find(node => node.textContent === focusLabel && !node.disabled);
     (target && !target.disabled ? target : dialog.querySelector('.dialog-close'))?.focus({ preventScroll: true });
   }
   return result.ok;
@@ -156,10 +161,13 @@ toolbarButton('level', 'Poziom wyspy — ratusz', 'topbar-level', ...toolbarStat
 hotspot('happiness', 'Szczęście i zmiana populacji', [0, 0, 0, 0], () => openPanel('residents'));
 toolbarButton('happiness', 'Szczęście i zmiana populacji', 'topbar-happiness', ...toolbarStat('happiness', 'Szczęście', '☀︎'));
 hotspot('resource-planks', 'Deski — zapasy', [0, 0, 0, 0], () => openPanel('resources', 'planks'));
-for (const [id, icon] of [['coins', '◉'], ['wood', '▰'], ['stone', '◆'], ['food', '✦'], ['planks', '▤']]) {
+hotspot('resource-grain', 'Zboże — zapasy', [0, 0, 0, 0], () => openPanel('resources', 'grain'));
+for (const [id, icon] of [['coins', '◉'], ['wood', '▰'], ['stone', '◆'], ['grain', '♧'], ['food', '✦'], ['planks', '▤']]) {
   toolbarButton(`resource-${id}`, `${nameOf(id)} — zapasy`, `topbar-resource topbar-${id}`, ...toolbarStat(id, nameOf(id), icon));
 }
 toolbarButton('population', 'Mieszkańcy i przydział pracowników', 'topbar-population', ...toolbarStat('population', 'Mieszkańcy', '♟︎'));
+hud.taxes = el('small', { class: 'topbar-tax', 'data-hud': 'taxes' }, '—');
+document.querySelector('.topbar-coins .topbar-copy').append(hud.taxes);
 hud.housing = el('small', { class: 'topbar-housing', 'data-hud': 'housing' }, '—');
 document.querySelector('.topbar-population .topbar-copy').append(hud.housing);
 hud.clock = el('strong', { 'data-hud': 'clock' }, '—');
@@ -168,6 +176,9 @@ for (const [id, icon, label] of [['pause', 'Ⅱ', 'Wstrzymaj upływ czasu'], ['p
   const control = toolbarButton(id, label, 'topbar-control', el('span', { 'aria-hidden': 'true' }, icon));
   if (id === 'speed') hud.speed = control.firstChild;
 }
+hotspot('notifications', 'Powiadomienia', [0, 0, 0, 0], () => openPanel('notifications'));
+hud.notifications = el('span', { 'data-notification-count': '' }, '0');
+toolbarButton('notifications', 'Powiadomienia', 'topbar-control notification-button', el('span', { 'aria-hidden': 'true' }, '🔔'), hud.notifications);
 const mobileHud = el('nav', { class: 'mobile-island-hud', 'aria-label': 'Stan wyspy' });
 const mobileSummary = el('div', { class: 'mobile-hud-summary' });
 const mobileResources = el('div', { class: 'mobile-hud-resources' });
@@ -176,6 +187,10 @@ for (const [id, label, action] of [['level', 'Poziom', () => openPanel('building
   mobileHudValues[id] = el('strong', { 'data-mobile-hud': id }, '—');
   const node = button(label, action, { class: 'mobile-hud-item' });
   node.replaceChildren(el('small', {}, label), mobileHudValues[id]);
+  if (id === 'coins') {
+    mobileHudValues.taxes = el('span', { class: 'mobile-tax', 'data-mobile-hud': 'taxes' }, '—');
+    node.append(mobileHudValues.taxes);
+  }
   if (id === 'population') {
     mobileHudValues.housing = el('span', { class: 'mobile-housing', 'data-mobile-hud': 'housing' }, '—');
     node.append(mobileHudValues.housing);
@@ -193,25 +208,28 @@ const happinessText = () => {
   return `${rounded ? state.happiness > 0 ? '+' : '−' : ''}${rounded.toLocaleString('pl-PL', { maximumFractionDigits: 1 })}%`;
 };
 function renderHUD() {
+  hud.notifications.textContent = state.notifications.filter(item => !item.read).length;
   for (const id of Object.keys(RESOURCES)) {
     hud[id].textContent = count(state.resources[id]);
     document.getElementById(`hit-resource-${id}`).setAttribute('aria-label', `${nameOf(id)}: ${count(state.resources[id])} — zapasy`);
   }
   hud.population.textContent = `${state.population} / ${state.capacity}`;
+  hud.taxes.textContent = `Podatki: ${taxRate(state)}/h`;
   hud.housing.textContent = `Miejsca: ${housingCapacity(state)}`;
   hud.level.textContent = state.buildings.townhall.level;
   hud.happiness.textContent = happinessText();
   document.getElementById('hit-level').setAttribute('aria-label', `Poziom ${state.buildings.townhall.level} — ratusz; limit ${state.capacity} mieszkańców`);
   document.getElementById('hit-happiness').setAttribute('aria-label', `Szczęście: ${happinessText()} — mieszkańcy i zmiana populacji`);
   document.getElementById('hit-happiness').dataset.sentiment = state.happiness > 0 ? 'positive' : state.happiness < 0 ? 'negative' : 'neutral';
-  document.getElementById('hit-population').setAttribute('aria-label', `Mieszkańcy: ${state.population}; limit ratusza: ${state.capacity}; miejsca w domu: ${housingCapacity(state)}; bez miejsca: ${unhousedResidents(state)} — mieszkańcy i przydział pracowników`);
+  document.getElementById('hit-population').setAttribute('aria-label', `Mieszkańcy: ${state.population}; limit ratusza: ${state.capacity}; miejsca w domu: ${housingCapacity(state)}; bez miejsca: ${unhousedResidents(state)}; pracuje: ${totalWorkers(state)}; wolni: ${freeWorkers(state)} — mieszkańcy i przydział pracowników`);
   document.getElementById('hit-population').dataset.overcrowded = String(unhousedResidents(state) > 0);
   for (const id of Object.keys(mobileHudValues)) mobileHudValues[id].textContent = hud[id].textContent;
   mobileHudValues.happiness.dataset.sentiment = document.getElementById('hit-happiness').dataset.sentiment;
   hud.clock.textContent = `Dzień ${state.day}\n${String(Math.floor(state.minutes / 60)).padStart(2, '0')}:${String(Math.floor(state.minutes % 60)).padStart(2, '0')}`;
   hud['objective-repair'].textContent = state.objective.repaired ? '1/1' : '0/1';
-  hud['objective-wood'].textContent = `${state.objective.wood}/50`;
-  hud['objective-stone'].textContent = `${state.objective.stone}/30`;
+  const lighthouseCost = buildingCost(state, 'lighthouse');
+  hud['objective-wood'].textContent = `${Math.min(state.resources.wood, lighthouseCost.wood)}/${lighthouseCost.wood}`;
+  hud['objective-stone'].textContent = `${Math.min(state.resources.stone, lighthouseCost.stone)}/${lighthouseCost.stone}`;
   hud.speed.textContent = `${state.speed}×`;
   document.getElementById('hit-pause').classList.toggle('is-selected', state.paused);
   document.getElementById('hit-pause').setAttribute('aria-pressed', String(state.paused));
@@ -224,7 +242,13 @@ function renderHUD() {
       if (!badge) { badge = el('span', { class: 'world-level' }); node.append(badge); }
       badge.textContent = `Poz. ${value.level}`;
     } else badge?.remove();
-    node.setAttribute('aria-label', `${titleOf(id)}, poziom ${value.level}${value.ready ? ', produkcja gotowa do odbioru' : ''}`);
+    node.classList.toggle('under-construction', !!value.construction);
+    let constructionBadge = node.querySelector('.construction-badge');
+    if (value.construction) {
+      if (!constructionBadge) { constructionBadge = el('span', { class: 'construction-badge' }); node.append(constructionBadge); }
+      constructionBadge.textContent = value.construction.stage === 'transport' ? '▰ Transport' : value.construction.stage === 'building' ? '⚒ Budowa' : '◷ Kolejka';
+    } else constructionBadge?.remove();
+    node.setAttribute('aria-label', `${titleOf(id)}, poziom ${value.level}${value.construction ? ', trwa rozbudowa' : value.ready ? ', produkcja gotowa do odbioru' : ''}`);
   }
   document.body.classList.toggle('reduce-motion', !state.settings.motion);
   document.body.classList.toggle('world-paused', state.paused);
@@ -262,16 +286,54 @@ function renderWorldAdditions() {
   }
 }
 function refreshLivePanel() {
-  dialog.querySelectorAll('[data-ready]').forEach(node => { node.textContent = count(state.buildings[node.dataset.ready].ready); });
+  if (panel?.kind === 'construction' && dialog.open) {
+    const signature = constructionSignature();
+    if (dialog.querySelector('[data-construction-signature]')?.dataset.constructionSignature !== signature) renderPanel();
+  }
+  dialog.querySelectorAll('[data-lighthouse-bonus]').forEach(node => { node.textContent = lighthouseDescription(); });
+  dialog.querySelectorAll('[data-project-status]').forEach(node => { const project = state.constructionProjects.find(item => item.order === Number(node.dataset.projectStatus)); node.textContent = project ? projectDescription(project) : 'Zakończono'; });
+  dialog.querySelectorAll('[data-construction-summary]').forEach(node => { node.textContent = constructionSummary(); });
+  if (panel?.kind === 'building' && dialog.open) {
+    const current = state.buildings[panel.id];
+    const signature = `${current.level}:${current.construction?.stage || ''}`;
+    if (dialog.querySelector('[data-building-signature]')?.dataset.buildingSignature !== signature) renderPanel();
+  }
+  dialog.querySelectorAll('[data-construction-status]').forEach(node => { node.textContent = constructionDescription(node.dataset.constructionStatus); });
+  dialog.querySelectorAll('[data-upgrade-building]').forEach(node => { const id = node.dataset.upgradeBuilding; node.disabled = !upgradeEligibility(state, id).ok || (!premiumActive(state) && !canAfford(state, buildingCost(state, id))); });
+  dialog.querySelectorAll('[data-upgrade-cost]').forEach(node => { const available = state.resources[node.dataset.upgradeCost], required = Number(node.dataset.required); node.textContent = `${count(available)} / ${count(required)}`; node.classList.toggle('is-affordable', available >= required); node.classList.toggle('is-short', available < required); node.setAttribute('aria-label', `${nameOf(node.dataset.upgradeCost)}: w magazynie ${count(available)}, potrzeba ${count(required)}; ${available >= required ? 'wystarcza' : 'brakuje'}`); });
   dialog.querySelectorAll('[data-stock]').forEach(node => { node.textContent = count(state.resources[node.dataset.stock]); });
-  dialog.querySelectorAll('[data-collect]').forEach(node => { node.disabled = !state.buildings[node.dataset.collect].ready; });
-  const live = { population: `${state.population} / ${state.capacity}`, workers: totalWorkers(state), happiness: happinessText(), level: state.buildings.townhall.level, growth: populationDescription(), capacity: state.capacity, housing: housingCapacity(state), unhoused: unhousedResidents(state), penalty: housingPenaltyText(), 'housing-status': housingDescription() };
+  const live = { population: `${state.population} / ${state.capacity}`, workers: totalWorkers(state), free: freeWorkers(state), returning: (state.returningWorkers || []).length, 'next-return': returnDescription(), 'worker-limit': Math.floor(state.population / 2), taxes: `${taxRate(state)} monet/h`, 'tax-countdown': taxDescription(), happiness: happinessText(), level: state.buildings.townhall.level, growth: populationDescription(), capacity: state.capacity, housing: housingCapacity(state), unhoused: unhousedResidents(state), penalty: housingPenaltyText(), 'housing-status': housingDescription() };
   dialog.querySelectorAll('[data-population-stat]').forEach(node => { node.textContent = live[node.dataset.populationStat]; });
   dialog.querySelectorAll('[data-housing-warning]').forEach(node => { node.dataset.overcrowded = String(unhousedResidents(state) > 0); });
+  dialog.querySelectorAll('[data-logistics-stat]').forEach(node => { node.textContent = logisticsStatValue(node.dataset.logisticsStat); });
+  dialog.querySelectorAll('[data-local-buffer],[data-local-overview]').forEach(node => {
+    const value = state.buildings[(node.dataset.localBuffer || node.dataset.localOverview)].ready;
+    node.textContent = `${count(value)} / ${count(producerCapacity(state))}`;
+    node.dataset.value = value;
+    node.dataset.limit = producerCapacity(state);
+  });
+  dialog.querySelectorAll('[data-local-rate]').forEach(node => { node.textContent = `${state.buildings[node.dataset.localRate].workers * (state.lighthouseRemaining > 0 ? 20 : 10)} szt./h`; });
+  dialog.querySelectorAll('[data-work-progress]').forEach(node => { node.textContent = productionDescription(node.dataset.workProgress); });
+  dialog.querySelectorAll('[data-central-resource]').forEach(node => {
+    const id = node.dataset.centralResource, limits = warehouseLimits(state);
+    node.textContent = `${count(state.resources[id])} / ${count(limits.perResource)}`;
+    node.dataset.value = state.resources[id]; node.dataset.limit = limits.perResource;
+  });
+  dialog.querySelectorAll('[data-pending-resource]').forEach(node => { node.textContent = count(state.pendingDeliveries?.[node.dataset.pendingResource] || 0); });
   dialog.querySelectorAll('[data-worker-count]').forEach(node => { node.textContent = state.buildings[node.dataset.workerCount].workers; });
+  dialog.querySelectorAll('[data-worker-limit]').forEach(node => { node.textContent = workerLimit(state, node.dataset.workerLimit); });
+  dialog.querySelectorAll('[data-workplace-tax]').forEach(node => { node.textContent = `${state.buildings[node.dataset.workplaceTax].workers * (state.chapelRemaining > 0 ? 2 : 1)} monet/h`; });
+  dialog.querySelectorAll('[data-full-penalty]').forEach(node => { node.textContent = fullPenaltyDescription(node.dataset.fullPenalty); });
+  dialog.querySelectorAll('[data-chapel-time]').forEach(node => { node.textContent = blessingDescription(); });
+  dialog.querySelectorAll('[data-blessing]').forEach(node => { node.disabled = state.blessingRemaining > 0 || state.blessingsUsed >= state.buildings.chapel.level; });
+  dialog.querySelectorAll('[data-market-used]').forEach(node => { node.textContent = `${count(marketUsed(state))} / ${count(marketCapacity(state))}`; });
+  dialog.querySelectorAll('[data-market-stock]').forEach(node => { node.textContent = count(state.market.stock[node.dataset.marketStock]); });
+  dialog.querySelectorAll('[data-market-locked]').forEach(node => { node.textContent = count(state.market.locked.filter(lot => lot.resource === node.dataset.marketLocked).reduce((sum, lot) => sum + lot.amount, 0)); });
+  dialog.querySelectorAll('[data-market-timer]').forEach(node => { node.textContent = state.market.locked.length ? durationText(Math.min(...state.market.locked.map(lot => lot.remaining))) : 'Brak zablokowanych towarów'; });
+  dialog.querySelectorAll('[data-happiness-breakdown]').forEach(node => { node.replaceChildren(...happinessBreakdown()); });
   dialog.querySelectorAll('[data-worker-building]').forEach(node => {
-    const building = state.buildings[node.dataset.workerBuilding];
-    node.disabled = Number(node.dataset.workerDelta) < 0 ? building.workers === 0 : totalWorkers(state) >= state.population || building.workers >= building.level * 2 + 2 || building.level === 0;
+    const id = node.dataset.workerBuilding, building = state.buildings[id];
+    node.disabled = node.dataset.workerAction === 'clear' || Number(node.dataset.workerDelta) < 0 ? building.workers === 0 : freeWorkers(state) <= 0 || building.workers >= workerLimit(state, id);
   });
 }
 
@@ -297,18 +359,6 @@ function cancelPlacement() {
   placementBanner.hidden = true;
   document.querySelectorAll('.world-pulse').forEach(node => node.classList.remove('world-pulse'));
 }
-function startPlacement(id) {
-  const eligibility = upgradeEligibility(state, id);
-  if (!eligibility.ok) {
-    toast(eligibility.message);
-    return;
-  }
-  closePanel();
-  placement = id;
-  document.getElementById(`hit-world-${id}`).classList.add('world-pulse');
-  placementBanner.replaceChildren(el('span', {}, `Kliknij podświetlone miejsce: ${titleOf(id)}. `), button('Anuluj', cancelPlacement, { class: 'action secondary' }));
-  placementBanner.hidden = false;
-}
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape') cancelPlacement();
   const direction = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] }[event.key];
@@ -321,63 +371,192 @@ document.addEventListener('keydown', event => {
 function resourceList(resources = state.resources) {
   return el('div', { class: 'resource-list' }, Object.entries(resources).map(([id, value]) => el('div', { class: 'row' }, el('span', {}, nameOf(id)), el('strong', { 'data-stock': id }, count(value)))));
 }
+function constructionSummary() {
+  const counts = constructionCounts(state);
+  return `Budowy: ${counts.active} / ${counts.limit} · Kolejka: ${counts.queued} / ${counts.premium ? 'bez limitu' : counts.queueLimit}${counts.premium ? ' · Pakiet aktywny' : ''}`;
+}
+function constructionSignature() { return JSON.stringify([premiumActive(state), state.buildings.townhall.level, state.constructionProjects.map(p => [p.order, p.stage])]); }
+function projectDescription(project) {
+  if (project.stage === 'planned') {
+    if (!premiumActive(state)) return 'Plan czeka na ponowną aktywację pakietu. Materiały nie są zarezerwowane.';
+    const estimate = estimateMaterialsSeconds(state, project.cost);
+    return Number.isFinite(estimate) ? `Czeka na materiały. Najwcześniejsza szacowana dostawa: ${durationText(estimate)}; inne zużycie zasobów może ją opóźnić.` : 'Czeka na materiały. Brakuje produkcji, transportu lub miejsca na potrzebne dostawy.';
+  }
+  if (project.stage === 'queued') return 'Materiały opłacone i zarezerwowane. Czeka na miejsce budowy lub zakończenie wcześniejszego poziomu.';
+  if (project.stage === 'building') return `Budowa poziomu ${project.targetLevel}: pozostało ${durationText(project.buildRemaining)}. Transport trwał ${durationText(project.transportSeconds)}.`;
+  const delivered = project.goodsTotal - project.goodsRemaining;
+  const waiting = nextConstruction(state)?.order !== project.order ? 'Czeka na wcześniejszy transport.' : !state.buildings.warehouse.workers ? 'Przydziel magazynierów, aby wznowić dostawy.' : `Szacowany pozostały transport: ${durationText(Math.ceil(project.goodsRemaining / state.buildings.warehouse.workers) * 60)}.`;
+  return `Transport na poziom ${project.targetLevel}: ${count(delivered)} / ${count(project.goodsTotal)} sztuk. ${waiting}`;
+}
+function constructionDescription(id) {
+  const project = state.buildings[id].construction;
+  if (project) return projectDescription(project);
+  const workers = state.buildings.warehouse.workers;
+  const goods = MATERIAL_IDS.reduce((sum, resource) => sum + (buildingCost(state, id)?.[resource] || 0), 0);
+  return workers ? `Szacowany transport: ${durationText(Math.ceil(goods / workers) * 60)}. Budowa potrwa ${id === 'lighthouse' ? 'dwa razy tyle co transport' : 'drugie tyle'}. Przydział magazynierów może zmienić czas transportu.` : 'Transport czeka na przydzielenie magazynierów (60 sztuk/osobę/h). Potem budowa potrwa tyle samo co transport.';
+}
+function constructionPanel() {
+  const projects = state.constructionProjects;
+  return el('div', { 'data-construction-signature': constructionSignature() },
+    el('p', { class: 'notice', 'data-construction-summary': '' }, constructionSummary()),
+    note('Zwykły limit budów i kolejki jest równy poziomowi ratusza. Materiały w opłaconej kolejce są już zarezerwowane. Magazynierzy dostarczają najpierw materiały na wcześniejsze budowy, a potem odbierają produkcję.'),
+    premiumActive(state) ? note(`Pakiet daje +4 miejsca budowy, kolejkę bez limitu i plany z przyszłych dostaw. Ważny do ${new Date(state.premium.expiresAt).toLocaleString('pl-PL')}.`) : note('Przyszły pakiet: +4 miejsca budowy, kolejka bez limitu i planowanie z dostaw. Zakup i cena będą zdefiniowane później.'),
+    ...projects.map(project => card(el('h3', {}, `${titleOf(project.building)} → poziom ${project.targetLevel}`),
+      el('p', { 'data-project-status': project.order }, projectDescription(project)),
+      el('p', { class: 'cost' }, costText(project.cost)),
+      button('Budynek', () => openPanel('building', project.building), { class: 'action secondary' }))),
+    !projects.length ? note('Brak zaplanowanych rozbudów. Wybierz budynek na wyspie.') : null);
+}
+function upgradeCostView(cost) {
+  return el('div', { class: 'upgrade-costs', 'aria-label': 'Zasoby w magazynie względem kosztu rozbudowy' }, Object.entries(cost).map(([id, required]) => {
+    const available = state.resources[id];
+    return el('div', { class: 'upgrade-cost-row' }, el('span', {}, nameOf(id)), el('strong', { class: available >= required ? 'is-affordable' : 'is-short', 'data-upgrade-cost': id, 'data-required': required, 'aria-label': `${nameOf(id)}: w magazynie ${count(available)}, potrzeba ${count(required)}; ${available >= required ? 'wystarcza' : 'brakuje'}` }, `${count(available)} / ${count(required)}`));
+  }));
+}
 function buildingPanel(id) {
   const data = BUILDINGS[id];
   const value = state.buildings[id];
-  const content = el('div', {}, note(data.description || data.desc || 'Rozwijaj budynek, aby zwiększyć możliwości osady.'),
-    el('div', { class: 'stat-grid' }, stat('Poziom', value.level || 'Ruina'), stat('Pracownicy', value.workers), stat('Do odbioru', el('span', { 'data-ready': id }, count(value.ready)))));
+  const content = el('div', { 'data-building-signature': `${value.level}:${value.construction?.stage || ''}` }, note(data.description || data.desc || 'Rozwijaj budynek, aby zwiększyć możliwości osady.'),
+    el('div', { class: 'stat-grid' }, stat('Poziom', value.level || 'Ruina'), id === 'townhall' ? stat('Mieszkańcy', el('span', { 'data-population-stat': 'population' }, `${state.population} / ${state.capacity}`)) : null, id === 'townhall' ? stat('Podatki na godzinę', el('span', { 'data-population-stat': 'taxes' }, `${taxRate(state)} monet/h`)) : null, productionBuildings.includes(id) ? stat('Bufor przy budynku', el('span', { 'data-local-overview': id, 'data-value': value.ready, 'data-limit': producerCapacity(state) }, `${count(value.ready)} / ${count(producerCapacity(state))}`)) : null));
+  if (WORKPLACE_IDS.includes(id)) content.append(workplaceCard(id));
+  if (id === 'warehouse') content.append(warehouseOverview(), transportPriorityPanel());
+  if (id === 'market') content.append(marketPanel());
+  if (id === 'chapel') content.append(blessingPanel());
   if (id === 'house') content.append(card(el('h3', {}, 'Miejsca do zamieszkania'),
     el('div', { class: 'stat-grid' }, stat('Miejsca w domu', el('span', { 'data-population-stat': 'housing' }, housingCapacity(state))), stat('Limit ratusza', el('span', { 'data-population-stat': 'capacity' }, state.capacity))),
     housingNotice(), note('Każdy poziom domu daje 24 miejsca. Rozbudowa nie dodaje od razu mieszkańców; usuwa brak miejsc i zatrzymuje dalszą karę za przeludnienie.')));
-  if (id === 'townhall') content.append(card(el('h3', {}, 'Poziom wyspy'),
-    stat('Teoretyczny limit mieszkańców', el('span', { 'data-population-stat': 'capacity' }, state.capacity)),
-    note(`Ratusz wyznacza maksymalny poziom pozostałych budynków: ${value.level}. Ludzie mieszkają w domu, który zapewnia ${housingCapacity(state)} miejsc.`)));
-  if (id === 'lighthouse' && value.level === 0) {
-    content.append(objectivePanel());
-    return content;
-  }
+  if (id === 'townhall') content.append(note(`Dom zapewnia ${housingCapacity(state)} miejsc mieszkalnych.`));
+  if (id === 'lighthouse') content.append(el('p', { class: 'notice', 'data-lighthouse-bonus': '' }, lighthouseDescription()));
   if (id === 'lighthouse') content.append(note('Latarnia jest naprawiona i świeci. Możesz rozwijać ją dalej do poziomu ratusza.'));
   const cost = buildingCost(state, id);
   const maxLevel = value.level >= data.maxLevel;
   const eligibility = upgradeEligibility(state, id);
   const townhallLocked = !maxLevel && !eligibility.ok;
-  content.append(card(el('h3', {}, maxLevel ? 'Budynek w pełni rozwinięty' : value.level ? 'Ulepszenie budynku' : 'Budowa'),
-    maxLevel ? null : el('p', { class: 'cost' }, costText(cost)),
-    townhallLocked ? el('p', { class: 'notice building-lock', 'data-upgrade-lock': id }, eligibility.message) : null,
-    button(maxLevel ? 'Maksymalny poziom' : value.level ? 'Wybierz miejsce ulepszenia' : 'Wybierz miejsce budowy', () => startPlacement(id), { disabled: maxLevel || townhallLocked, 'data-upgrade-building': id }),
-    townhallLocked ? button('Rozbuduj ratusz', () => openPanel('building', 'townhall'), { class: 'action secondary' }) : null));
-  if (productionBuildings.includes(id)) {
-    content.append(card(el('h3', {}, 'Produkcja'), note('Przydzieleni mieszkańcy pracują, gdy czas na wyspie płynie. Gotowe produkty odbierasz do magazynu.'),
-      button('Odbierz produkcję', () => perform({ type: 'collect', building: id }), { disabled: !value.ready, 'data-collect': id }),
-      id === 'sawmill' ? el('p', { class: 'cost' }, '10 drewna → 6 desek') : id === 'windmill' ? el('p', { class: 'cost' }, '4 żywności + 2 monety → 10 żywności') : null,
-      id === 'sawmill' || id === 'windmill' ? button(id === 'sawmill' ? 'Przerób drewno na deski' : 'Zmiel ziarno — przygotuj żywność', () => perform({ type: 'craft', building: id }), { class: 'action secondary' }) : null));
+  if (value.construction) {
+    content.append(card(el('h3', {}, `Rozbudowa do poziomu ${value.construction.targetLevel}`),
+      el('p', { class: 'construction-status', 'data-construction-status': id }, constructionDescription(id)),
+      note('Dotychczasowy poziom działa do zakończenia rozbudowy. Pauza i ukrycie karty zatrzymują oba etapy.')));
   }
-  content.append(button('Przydziel pracowników', () => openPanel('residents'), { class: 'action secondary' }));
+  content.append(card(el('h3', {}, maxLevel ? 'Budynek w pełni rozwinięty' : value.construction ? `Kolejny poziom: ${plannedLevel(state, id) + 1}` : value.level ? 'Ulepszenie budynku' : 'Budowa'),
+    maxLevel ? null : upgradeCostView(cost),
+    maxLevel ? null : note('Materiały na rozbudowę pochodzą z magazynu centralnego, a monety ze skarbca.'),
+    !maxLevel && CONSTRUCTION_IDS.includes(id) ? el('p', { class: 'notice', 'data-construction-status': id }, constructionDescription(id)) : null,
+    !maxLevel && !canAfford(state, cost) ? note(premiumActive(state) ? 'Pakiet pozwala dodać plan oczekujący na dostawy. Koszt zostanie pobrany po zgromadzeniu całości.' : 'Zgromadź cały koszt w magazynie centralnym, aby rozpocząć rozbudowę.') : null,
+    townhallLocked ? el('p', { class: 'notice building-lock', 'data-upgrade-lock': id }, eligibility.message) : null,
+    button(maxLevel ? 'Maksymalny poziom' : value.level ? 'Ulepsz' : 'Buduj', () => perform({ type: value.level ? 'upgrade' : 'build', building: id }), { disabled: maxLevel || townhallLocked || (!premiumActive(state) && !canAfford(state, cost)), 'data-upgrade-building': id }),
+    townhallLocked ? button('Rozbuduj ratusz', () => openPanel('building', 'townhall'), { class: 'action secondary' }) : null));
+  content.append(el('p', { class: 'notice', 'data-construction-summary': '' }, constructionSummary()), button('Budowy i kolejka', () => openPanel('construction'), { class: 'action secondary' }));
+  if (productionBuildings.includes(id)) content.append(productionCard(id));
+  if (WORKPLACE_IDS.includes(id)) content.append(button('Zarządzaj wszystkimi pracownikami', () => openPanel('residents'), { class: 'action secondary' }));
   return content;
 }
 function stat(label, value) { return el('div', { class: 'stat' }, el('small', {}, label), el('strong', {}, value)); }
+function lighthouseDescription() {
+  return state.lighthouseRemaining > 0 ? `Premia latarni: +100 szczęścia i produkcja materiałów ×2. Pozostało ${durationText(state.lighthouseRemaining)}. Podatki bez zmian.` : 'Ukończ budowę lub rozbudowę: +100 szczęścia oraz produkcja materiałów ×2 przez 24 h × osiągnięty poziom.';
+}
 function objectivePanel() {
-  const objective = state.objective;
-  return el('div', {}, note(objective.repaired ? 'Latarnia znów świeci. Kontynuuj rozwój wyspy i odkrywaj kolejne ekspedycje.' : 'Przywróć światło starej latarni. Dostarcz materiały, a potem potwierdź naprawę.'),
-    card(el('h3', {}, 'Drewno'), el('p', {}, `${objective.wood} / 50`), button('Dostarcz brakujące drewno', () => perform({ type: 'deliver', resource: 'wood' }), { disabled: objective.wood >= 50 })),
-    card(el('h3', {}, 'Kamień'), el('p', {}, `${objective.stone} / 30`), button('Dostarcz brakujący kamień', () => perform({ type: 'deliver', resource: 'stone' }), { disabled: objective.stone >= 30 })),
-    objective.repaired ? null : el('p', { class: 'cost' }, 'Naprawa po dostawach: 300 monet i 30 desek.'),
-    button(objective.repaired ? 'Latarnia odbudowana' : 'Odbuduj latarnię', () => perform({ type: 'repair' }), { disabled: objective.repaired || objective.wood < 50 || objective.stone < 30 }));
+  return el('div', {}, note(state.objective.repaired ? 'Latarnia znów świeci. Rozbuduj ją, aby uruchomić kolejną premię.' : 'Zgromadź po 500 każdego zasobu, również złota. Magazynierzy przewiozą materiały, a budowa potrwa dwa razy tyle co transport.'),
+    el('p', { class: 'notice', 'data-lighthouse-bonus': '' }, lighthouseDescription()),
+    button('Latarnia Morska — budowa i rozbudowa', () => openPanel('building', 'lighthouse')),
+    button('Budowy i kolejka', () => openPanel('construction'), { class: 'action secondary' }));
 }
 function buildingsPanel() {
   return el('div', {}, note(`Poziom ratusza ${state.buildings.townhall.level} pozwala rozbudowywać pozostałe budynki do tego samego poziomu.`),
     el('div', { class: 'panel-grid' }, Object.keys(BUILDINGS).map(id => card(el('h3', {}, titleOf(id)), el('p', {}, `Poziom ${state.buildings[id].level} / ${buildingLevelLimit(state, id)}`), button('Szczegóły i rozbudowa', () => openPanel('building', id))))));
 }
 function resourcesPanel(selected) {
-  return el('div', {}, selected ? note(`${nameOf(selected)} — aktualny zapas: ${count(state.resources[selected])}.`) : null,
-    resourceList(), button('Handluj w porcie', () => openPanel('trade')),
-    el('h3', {}, 'Łańcuchy produkcji'), note('Las → drewno → tartak → deski. Kamieniołom → kamień. Farma i młyn → żywność.'),
-    el('div', { class: 'panel-grid' }, productionBuildings.map(id => card(el('h3', {}, titleOf(id)), el('p', {}, 'Gotowe: ', el('span', { 'data-ready': id }, count(state.buildings[id].ready))),
-      button('Odbierz', () => perform({ type: 'collect', building: id }), { disabled: !state.buildings[id].ready, 'data-collect': id }), button('Zarządzaj', () => openPanel('building', id), { class: 'action secondary' })))));
+  return el('div', {}, selected ? note(`${nameOf(selected)} — zapas w ${selected === 'coins' ? 'skarbcu' : 'magazynie centralnym'}: ${count(state.resources[selected])}.`) : null,
+    selected === 'coins' ? card(el('h3', {}, 'Skarbiec i podatki'),
+      stat('Monety', el('span', { 'data-stock': 'coins' }, count(state.resources.coins))),
+      stat('Wpływy podatkowe', el('span', { 'data-population-stat': 'taxes' }, `${taxRate(state)} monet/h`)),
+      el('p', { class: 'workforce-income', 'data-population-stat': 'tax-countdown' }, taxDescription()),
+      note('Monety są przechowywane osobno i nie zajmują miejsca na towary.'),
+      button('Zarządzaj pracownikami', () => openPanel('residents'), { class: 'action secondary' })) : null,
+    warehouseOverview(),
+    button('Handluj w porcie', () => openPanel('trade')), button('Magazyn i przewoźnicy', () => openPanel('building', 'warehouse'), { class: 'action secondary' }),
+    el('h3', {}, 'Produkcja i transport'),
+    note('Farma → zboże → młyn → żywność. Las → drewno → tartak → deski. Kamieniołom → kamień. Przewoźnicy zabierają gotowe towary z budynków do magazynu.'),
+    el('div', { class: 'panel-grid' }, productionBuildings.map(id => productionCard(id, true))), transportPriorityPanel());
+}
+function productionCard(id, navigation = false) {
+  const recipe = PRODUCTION_RECIPES[id];
+  const content = card(el('h3', {}, titleOf(id)),
+    el('p', {}, 'Towar: ', el('strong', {}, nameOf(recipe.output))),
+    el('div', { class: 'stat-grid logistics-stats' },
+      stat('Przy budynku', el('span', { 'data-local-buffer': id, 'data-value': state.buildings[id].ready, 'data-limit': producerCapacity(state) }, `${count(state.buildings[id].ready)} / ${count(producerCapacity(state))}`)),
+      stat('Możliwe tempo', el('span', { 'data-local-rate': id }, `${state.buildings[id].workers * (state.lighthouseRemaining > 0 ? 20 : 10)} szt./h`))),
+    el('p', { class: 'production-status', 'data-work-progress': id }, productionDescription(id)),
+    recipe.input ? note(`Na każdą sztukę: ${recipe.amount} ${nameOf(recipe.input).toLocaleLowerCase('pl-PL')} z magazynu centralnego → 1 ${nameOf(recipe.output).toLocaleLowerCase('pl-PL')}.`) : null,
+    note('Gotowy towar czeka przy budynku. Do magazynu centralnego przewożą go wyłącznie pracownicy magazynu.'));
+  if (navigation) content.append(button('Pracownicy i szczegóły', () => openPanel('building', id), { class: 'action secondary' }));
+  return content;
+}
+function productionDescription(id) {
+  const building = state.buildings[id], recipe = PRODUCTION_RECIPES[id];
+  if (!building.workers) return 'Przydziel pracowników, aby rozpocząć produkcję.';
+  if (building.ready >= producerCapacity(state)) return 'Bufor przy budynku jest pełny. Produkcja czeka na odbiór przez przewoźników.';
+  if (recipe.input && state.resources[recipe.input] < recipe.amount) return `Brakuje surowca w magazynie centralnym: ${recipe.amount} ${nameOf(recipe.input).toLocaleLowerCase('pl-PL')} na sztukę.`;
+  const progress = Math.max(0, ...(building.workProgress || []));
+  return `Najbliższa sztuka za ${durationText((360 - progress) / (state.lighthouseRemaining > 0 ? 2 : 1))}.${state.paused ? ' Produkcja zatrzymana — pauza.' : ''}`;
+}
+function warehouseOverview() {
+  const limits = warehouseLimits(state);
+  return card(el('h3', {}, 'Magazyn centralny'),
+    el('div', { class: 'stat-grid logistics-stats' },
+      stat('Zajęte miejsce', el('span', { 'data-logistics-stat': 'used' }, count(warehouseUsed(state)))),
+      stat('Łączna pojemność', el('span', { 'data-logistics-stat': 'total' }, count(limits.total))),
+      stat('Limit jednego towaru', el('span', { 'data-logistics-stat': 'per-resource' }, count(limits.perResource))),
+      stat('Możliwy transport', el('span', { 'data-logistics-stat': 'carrier-rate' }, `${state.buildings.warehouse.workers * 60} szt./h`))),
+    el('div', { class: 'warehouse-stock-list' }, MATERIAL_IDS.map(id => el('div', { class: 'warehouse-stock-row' },
+      el('strong', {}, nameOf(id)), el('span', { 'data-central-resource': id, 'data-value': state.resources[id], 'data-limit': limits.perResource }, `${count(state.resources[id])} / ${count(limits.perResource)}`)))),
+    el('p', { class: 'warehouse-pending' }, 'Towary oczekujące na miejsce: ', el('strong', { 'data-logistics-stat': 'pending' }, logisticsStatValue('pending'))),
+    el('div', { class: 'warehouse-pending-details' }, MATERIAL_IDS.map(id => el('span', {}, `${nameOf(id)}: `, el('span', { 'data-pending-resource': id }, count(state.pendingDeliveries?.[id] || 0))))),
+    rules('Jak działa magazyn',
+      note('Magazyn na poziomie 1 mieści łącznie 4000 sztuk i najwyżej 1000 sztuk jednego towaru. Każdy kolejny poziom zwiększa oba limity o 50%. Monety są w osobnym skarbcu.'),
+      note('Jeden przewoźnik może dostarczyć 60 sztuk na godzinę aktywnej gry. Pełny magazyn lub brak gotowych towarów zatrzymuje transport. Wybierz kolejność odbioru poniżej.')));
+}
+function transportPriorityPanel() {
+  const priority = state.transportPriority || MATERIAL_IDS;
+  return card(el('h3', {}, 'Kolejność transportu'),
+    note('Przewoźnicy odbierają najpierw towary wyżej na liście. Gdy zabraknie towaru lub miejsca, przechodzą do kolejnego.'),
+    el('ol', { class: 'transport-priority', 'data-transport-priority-list': '' }, priority.map((id, index) => el('li', { 'data-priority-row': id },
+      el('span', {}, nameOf(id)), el('div', { class: 'priority-actions' },
+        button('↑', () => perform({ type: 'transportPriority', resource: id, direction: -1 }), { class: 'action secondary', disabled: index === 0, 'aria-label': `Wyżej: ${nameOf(id)}`, 'data-priority-resource': id, 'data-priority-direction': -1 }),
+        button('↓', () => perform({ type: 'transportPriority', resource: id, direction: 1 }), { class: 'action secondary', disabled: index === priority.length - 1, 'aria-label': `Niżej: ${nameOf(id)}`, 'data-priority-resource': id, 'data-priority-direction': 1 }))))));
+}
+function logisticsStatValue(key) {
+  const limits = warehouseLimits(state);
+  const values = { used: count(warehouseUsed(state)), total: count(limits.total), 'per-resource': count(limits.perResource), 'carrier-rate': `${state.buildings.warehouse.workers * 60} szt./h`, pending: count(Object.values(state.pendingDeliveries || {}).reduce((sum, value) => sum + value, 0)), returning: (state.returningWorkers || []).length, 'next-return': returnDescription() };
+  return values[key] ?? '';
+}
+function durationText(seconds) {
+  const value = Math.max(0, Math.ceil(seconds));
+  const hours = Math.floor(value / 3600), minutes = Math.floor(value % 3600 / 60), remainder = value % 60;
+  return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min ` : ''}${remainder} s`;
+}
+function returnDescription() {
+  const returning = state.returningWorkers || [];
+  return returning.length ? `Najbliższy powrót za ${durationText(Math.min(...returning))}` : 'Nikt nie wraca do domu.';
+}
+function rules(title, ...children) {
+  return el('details', { class: 'island-rules' }, el('summary', {}, title), ...children);
 }
 function residentsPanel() {
   const liveStat = (label, id, value) => stat(label, el('span', { 'data-population-stat': id }, value));
   return el('div', {}, el('div', { class: 'stat-grid' }, liveStat('Poziom ratusza', 'level', state.buildings.townhall.level), liveStat('Mieszkańcy', 'population', `${state.population} / ${state.capacity}`), liveStat('Przydzieleni', 'workers', totalWorkers(state)), liveStat('Szczęście', 'happiness', happinessText())),
+    card(el('h3', {}, 'Praca i podatki'),
+      el('div', { class: 'stat-grid workforce-summary' }, liveStat('Wolni', 'free', freeWorkers(state)), liveStat('Wracają do domu', 'returning', (state.returningWorkers || []).length), liveStat('Limit na budynek', 'worker-limit', Math.floor(state.population / 2)), liveStat('Podatki', 'taxes', `${taxRate(state)} monet/h`)),
+      el('p', { class: 'returning-status', 'data-population-stat': 'next-return' }, returnDescription()),
+      el('p', { class: 'workforce-income', 'data-population-stat': 'tax-countdown' }, taxDescription()),
+      rules('Zasady pracy i powrotów',
+        note('Każdy z ośmiu budynków gospodarczych może zatrudnić do połowy aktualnej populacji. Jeden człowiek pracuje tylko w jednym miejscu. Przy 144 mieszkańcach limit wynosi 72 osoby na budynek.'),
+        note('Zwolniony pracownik wraca do domu przez 5 minut. W tym czasie nie jest wolny, nie pracuje i nie płaci podatków. Po powrocie możesz go przydzielić ponownie.'),
+        note('Każdy pracownik produkcyjny wytwarza 10 sztuk na godzinę, po jednej co 6 minut własnej pracy. Po 7 minutach to 1 sztuka, a po 13 minutach 2 sztuki. Zwolnienie przerywa rozpoczętą sztukę.'),
+        note('Przydzielony pracownik płaci 1 monetę za godzinę aktywnej gry. Podatki trafiają do skarbca. Ratusz, dom, kaplica i latarnia nie zatrudniają mieszkańców. Pauza i ukryta karta zatrzymują naliczanie.'))),
+    el('div', { class: 'panel-grid workforce-grid' }, WORKPLACE_IDS.map(id => workplaceCard(id))),
+    card(el('h3', {}, 'Szczęście — średnia mieszkańców'),
+      note('Pełny magazyn daje pracującej przy nim osobie −10 szczęścia, po każdej kolejnej dobie −10, maksymalnie −50. Wartość na górze jest średnią wszystkich osób. Po opróżnieniu magazynu kara za przestój ustaje.'),
+      el('div', { 'data-happiness-breakdown': '' }, happinessBreakdown())),
     card(el('h3', {}, 'Ratusz i miejsca w domu'),
       el('div', { class: 'stat-grid housing-stats' }, liveStat('Limit ratusza', 'capacity', state.capacity), liveStat('Miejsca w domu', 'housing', housingCapacity(state)), liveStat('Bez miejsca', 'unhoused', unhousedResidents(state)), liveStat('Wpływ na szczęście', 'penalty', housingPenaltyText())),
       housingNotice(), note('Limit osady = 24 × poziom ratusza. Miejsca do zamieszkania = 24 × poziom domu. Populacja może przekroczyć liczbę miejsc w domu, do limitu ratusza.'),
@@ -388,10 +567,37 @@ function residentsPanel() {
       el('div', { class: 'population-rate-table' }, ...[['Szczęście', 'Zmiana o 1 osobę'], ['±25%', 'co 12 h'], ['±50%', 'co 6 h'], ['±75%', 'co ok. 1 h 43 min'], ['±100%', 'co 1 h']].map(([label, value]) => el('div', {}, el('span', {}, label), el('strong', {}, value)))),
       note('Godziny oznaczają rzeczywisty czas aktywnej gry w widocznej karcie. Pauza zatrzymuje zmianę populacji; tempo 1× / 2× / 4× nie skraca tych godzin. Po ukryciu karty lub zamknięciu gry licznik czeka.'),
       note('Przy przeludnieniu szczęście zmienia się w czasie, więc czas do kolejnej zmiany populacji jest szacunkiem dla obecnego szczęścia.')),
-    note('Wolnych mieszkańców przydzielasz do produkcji. Dekoracje, ścieżki i rozbudowa kaplicy poprawiają szczęście.'),
-    el('div', { class: 'panel-grid' }, productionBuildings.map(id => card(el('h3', {}, titleOf(id)), el('p', {}, 'Pracownicy: ', el('span', { 'data-worker-count': id }, state.buildings[id].workers)),
-      button('− Pracownik', () => perform({ type: 'assign', building: id, delta: -1 }), { class: 'action secondary', disabled: !state.buildings[id].workers, 'data-worker-building': id, 'data-worker-delta': -1 }),
-      button('+ Pracownik', () => perform({ type: 'assign', building: id, delta: 1 }), { disabled: totalWorkers(state) >= state.population || state.buildings[id].workers >= state.buildings[id].level * 2 + 2 || state.buildings[id].level === 0, 'data-worker-building': id, 'data-worker-delta': 1 })))));
+    el('p', { class: 'notice', 'data-lighthouse-bonus': '' }, lighthouseDescription()), note('Dekoracje i ścieżki poprawiają bazowe szczęście. Premie kaplicy i latarni działają przez określony czas.'));
+}
+function workplaceCard(id) {
+  const building = state.buildings[id];
+  const content = card(el('h3', {}, titleOf(id)),
+    !workplaceUnlocked(state, id) ? note(`Dostępne od poziomu ratusza ${id === 'market' ? 2 : 4}.`) : null,
+    el('p', { class: 'workforce-count' }, 'Pracownicy: ', el('strong', { 'data-worker-count': id }, building.workers), ' / ', el('span', { 'data-worker-limit': id }, workerLimit(state, id))),
+    el('p', {}, 'Podatki: ', el('span', { 'data-workplace-tax': id }, `${building.workers * (state.chapelRemaining > 0 ? 2 : 1)} monet/h`)),
+    el('p', { 'data-full-penalty': id, class: 'full-storage-status' }, fullPenaltyDescription(id)),
+    PRODUCTION_RECIPES[id] ? el('p', { class: 'workplace-production', 'data-work-progress': id }, productionDescription(id)) : id === 'warehouse' ? el('p', {}, 'Możliwy transport: ', el('span', { 'data-logistics-stat': 'carrier-rate' }, `${building.workers * 60} szt./h`)) : null,
+    el('div', { class: 'workforce-actions' },
+      button('− Pracownik', () => perform({ type: 'assign', building: id, delta: -1 }), { class: 'action secondary', disabled: !building.workers, 'data-worker-building': id, 'data-worker-delta': -1, 'aria-label': `Zwolnij pracownika: ${titleOf(id)}` }),
+      button('+ Pracownik', () => perform({ type: 'assign', building: id, delta: 1 }), { disabled: freeWorkers(state) <= 0 || building.workers >= workerLimit(state, id), 'data-worker-building': id, 'data-worker-delta': 1, 'aria-label': `Przydziel pracownika: ${titleOf(id)}` })),
+    el('div', { class: 'workforce-actions workforce-bulk-actions' },
+      button('Do limitu', () => adjustWorkforce(id, 'max'), { class: 'action secondary', disabled: freeWorkers(state) <= 0 || building.workers >= workerLimit(state, id), 'data-worker-building': id, 'data-worker-action': 'max', 'aria-label': `Przydziel do limitu: ${titleOf(id)}` }),
+      button('Zwolnij wszystkich', () => adjustWorkforce(id, 'clear'), { class: 'action secondary', disabled: !building.workers, 'data-worker-building': id, 'data-worker-action': 'clear', 'aria-label': `Zwolnij wszystkich: ${titleOf(id)}` })));
+  content.dataset.workplace = id;
+  return content;
+}
+function adjustWorkforce(id, action) {
+  settleActiveTick();
+  const building = state.buildings[id];
+  const delta = action === 'clear' ? -building.workers : Math.min(freeWorkers(state), workerLimit(state, id) - building.workers);
+  if (delta) perform({ type: 'assign', building: id, delta });
+}
+function taxDescription() {
+  const rate = taxRate(state);
+  if (!rate) return 'Brak pracujących mieszkańców — podatki nie są naliczane.';
+  const seconds = Math.max(0, Math.ceil((1 - state.taxProgress) * 3600 / rate));
+  const hours = Math.floor(seconds / 3600), minutes = Math.floor(seconds % 3600 / 60), remainder = seconds % 60;
+  return `Do kolejnej monety z podatków: ${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min ` : ''}${remainder} s.${state.paused ? ' Licznik zatrzymany — pauza.' : ''}`;
 }
 function housingPenaltyText() {
   const unhoused = unhousedResidents(state);
@@ -418,10 +624,54 @@ function populationDescription() {
   return `${overcrowded ? 'Szacunek przy obecnym szczęściu: ' : ''}${rate > 0 ? 'Nowy mieszkaniec' : 'Ubytek 1 mieszkańca'} za ${time}.${state.paused ? ' Licznik zatrzymany — pauza.' : ''}${overcrowded ? ' Przeludnienie zmienia tempo.' : ''}`;
 }
 function tradePanel() {
+  if (!workplaceUnlocked(state, 'dock')) return el('div', {}, note('Przystań i handel za monety są dostępne od poziomu ratusza 4.'), button('Targ — wymiana towarów', () => openPanel('market')), button('Rozbuduj ratusz', () => openPanel('building', 'townhall'), { class: 'action secondary' }));
   return el('div', {}, note('Port wymienia zasoby na monety. Przed transakcją widzisz jej wynik i aktualny stan zapasów.'), resourceList(),
-    el('div', { class: 'panel-grid' }, ['wood', 'stone', 'food', 'planks'].map(id => card(el('h3', {}, nameOf(id)),
+    button('Przejdź na targ — towary za towary', () => openPanel('market')),
+    el('div', { class: 'panel-grid' }, MATERIAL_IDS.map(id => card(el('h3', {}, nameOf(id)),
       button(`Sprzedaj 10 → ${RESOURCES[id].price * 10} monet`, () => perform({ type: 'trade', resource: id, amount: 10 })),
       button(`Kup 10 za ${RESOURCES[id].price * 20} monet`, () => perform({ type: 'trade', resource: id, amount: 10, direction: 'buy' }), { class: 'action secondary' })))));
+}
+function fullPenaltyDescription(id) {
+  const penalty = storagePenalty(state, id);
+  return penalty ? `Pełny magazyn: −${penalty} szczęścia każdej pracującej tu osoby. Praca czeka na miejsce.` : 'Brak kary za pełny magazyn.';
+}
+function happinessBreakdown() {
+  return happinessGroups(state).map(group => el('div', { class: 'happiness-row' },
+    el('span', {}, group.building ? titleOf(group.building) : 'Wolni i wracający'),
+    el('strong', {}, `${group.count} osób · ${Number(group.happiness.toFixed(1)).toLocaleString('pl-PL')}%`)));
+}
+function blessingDescription() {
+  const automatic = state.chapelRemaining > 0 ? `Premia rozbudowy: ${durationText(state.chapelRemaining)}, +${state.buildings.chapel.level * 10} szczęścia i podatki ×2.` : 'Brak aktywnej premii za rozbudowę.';
+  const manual = state.blessingRemaining > 0 ? `Błogosławieństwo: +20 szczęścia jeszcze ${durationText(state.blessingRemaining)}.` : `Pozostałe użycia: ${Math.max(0, state.buildings.chapel.level - state.blessingsUsed)}.`;
+  return `${automatic} ${manual}`;
+}
+function blessingPanel() {
+  return card(el('h3', {}, 'Kaplica i błogosławieństwa'),
+    note('Rozbudowa kaplicy daje wszystkim +10 szczęścia na osiągnięty poziom i podwaja podatki przez 10 godzin. Poziom 1 nie daje tej premii.'),
+    el('p', { 'data-chapel-time': '', class: 'notice' }, blessingDescription()),
+    note('Ręczne błogosławieństwo daje +50 każdego zasobu i +20 szczęścia wszystkim przez godzinę. Łączna liczba jednorazowych użyć odpowiada poziomowi kaplicy. W trakcie błogosławieństwa kolejne jest zablokowane.'),
+    button('Aktywuj błogosławieństwo', () => perform({ type: 'blessing' }), { disabled: state.blessingRemaining > 0 || state.blessingsUsed >= state.buildings.chapel.level, 'data-blessing': '' }));
+}
+function marketPanel() {
+  if (!workplaceUnlocked(state, 'market')) return note('Targ jest dostępny od poziomu ratusza 2.');
+  const rows = MATERIAL_IDS.map(id => card(el('h3', {}, nameOf(id)),
+    el('div', { class: 'stat-grid' }, stat('Na targu, gotowe', el('span', { 'data-market-stock': id }, count(state.market.stock[id]))), stat('Zablokowane na godzinę', el('span', { 'data-market-locked': id }, count(state.market.locked.filter(lot => lot.resource === id).reduce((sum, lot) => sum + lot.amount, 0))))),
+    button('Przynieś 10 na targ', () => perform({ type: 'marketOrder', resource: id, amount: 10 }), { class: 'action secondary', 'data-market-order': id }),
+    button('Zleć odbiór do magazynu', () => perform({ type: 'marketDispatch', resource: id, amount: Math.max(0, state.market.stock[id] - state.market.dispatch[id]) }), { class: 'action secondary', 'data-market-dispatch': id })));
+  const from = el('select', { id: 'market-from', 'aria-label': 'Towar oddawany' }, MATERIAL_IDS.map(id => el('option', { value: id }, nameOf(id))));
+  const to = el('select', { id: 'market-to', 'aria-label': 'Towar otrzymywany' }, MATERIAL_IDS.map(id => el('option', { value: id, selected: id === 'stone' }, nameOf(id))));
+  const quantity = el('input', { id: 'market-quantity', type: 'number', min: '10', step: '10', value: '10', 'aria-label': 'Liczba sztuk do wymiany' });
+  return el('div', {}, el('h3', {}, 'Targ — wymiana bez monet'),
+    note('Surowce: drewno, kamień, zboże. Wyroby: deski, żywność. Wymiana w tej samej kategorii, 1:1 przed marżą 10%: 10 sztuk daje 9. Ilość wymian jest nieograniczona.'),
+    el('div', { class: 'stat-grid' }, stat('Zajęte miejsce', el('strong', { 'data-market-used': '' }, `${count(marketUsed(state))} / ${count(marketCapacity(state))}`)), stat('Transport na targ', `${state.buildings.market.workers * 60} szt./h`)),
+    el('p', { class: 'notice', 'data-market-timer': '' }, state.market.locked.length ? durationText(Math.min(...state.market.locked.map(lot => lot.remaining))) : 'Brak zablokowanych towarów'),
+    note('Pracownicy targu przynoszą towary z magazynu centralnego. Każda dostawa czeka godzinę od przybycia. Po wymianie zleć odbiór — magazynierzy przewiozą towar do magazynu centralnego.'),
+    card(el('h3', {}, 'Wymień towary'), el('div', { class: 'market-exchange-fields' }, from, to, quantity), button('Wymień — marża 10%', () => perform({ type: 'marketExchange', from: from.value, to: to.value, amount: Number(quantity.value) }), { 'data-market-exchange': '' })),
+    el('div', { class: 'panel-grid' }, rows));
+}
+function notificationsPanel() {
+  return el('div', {}, button('Oznacz wszystkie jako przeczytane', () => perform({ type: 'readNotifications' }), { class: 'action secondary' }),
+    state.notifications.length ? state.notifications.map(item => card(el('h3', {}, item.title), el('p', {}, item.message), el('small', {}, item.read ? 'Przeczytane' : 'Nowe'))) : note('Brak powiadomień. Tutaj pojawią się informacje o pełnych magazynach.'));
 }
 function tasksPanel() {
   return el('div', {}, button('Główny cel: stara latarnia', () => openPanel('objective')),
@@ -444,7 +694,7 @@ function settingsPanel() {
 }
 function timePanel() {
   return el('div', {}, stat('Dzień na wyspie', state.day), stat('Tempo', state.paused ? 'Pauza' : `${state.speed}×`),
-    note('Pauza zatrzymuje zegar, produkcję i zmianę populacji. Zwiększenie tempa przyspiesza zegar i produkcję. Populacja zmienia się według rzeczywistego czasu aktywnej gry.'),
+    note('Pauza zatrzymuje zegar, pracę, powroty do domu, transport, podatki i zmianę populacji. Tempo 1× / 2× / 4× przyspiesza wyłącznie zegar wyspy; rzeczywiste godziny produkcji, transportu, podatków i populacji nie są skracane.'),
     button(state.paused ? 'Wznów' : 'Pauza', () => perform({ type: 'pause' })),
     [1, 2, 4].map(speed => button(`${speed}×`, () => perform({ type: 'speed', speed }), { class: 'action secondary' })));
 }
@@ -507,7 +757,7 @@ function puzzlePanel() {
 }
 function renderPanel() {
   if (!panel) return;
-  const titles = { home: 'Twoja wyspa', menu: 'HARBORLIGHT', buildings: 'Budynki', resources: 'Magazyn i produkcja', residents: 'Mieszkańcy', trade: 'Handel w porcie', tasks: 'Zadania', objective: 'Przywróć światło latarni', settings: 'Ustawienia', time: 'Czas na wyspie', expeditions: 'Ekspedycje', map: 'Mapa wyspy', decorations: 'Dekoracje', paths: 'Ścieżki i mosty', reset: 'Nowa wyspa' };
+  const titles = { home: 'Twoja wyspa', menu: 'HARBORLIGHT', buildings: 'Budynki', resources: 'Magazyn i transport', residents: 'Mieszkańcy', trade: 'Handel w porcie', tasks: 'Zadania', objective: 'Przywróć światło latarni', settings: 'Ustawienia', time: 'Czas na wyspie', expeditions: 'Ekspedycje', map: 'Mapa wyspy', decorations: 'Dekoracje', paths: 'Ścieżki i mosty', reset: 'Nowa wyspa' };
   let title = titles[panel.kind] || titleOf(panel.id);
   let body;
   switch (panel.kind) {
@@ -516,6 +766,9 @@ function renderPanel() {
     case 'resources': body = resourcesPanel(panel.id); break;
     case 'residents': body = residentsPanel(); break;
     case 'trade': body = tradePanel(); break;
+    case 'market': title = 'Targ'; body = marketPanel(); break;
+    case 'construction': title = 'Budowy i kolejka'; body = constructionPanel(); break;
+    case 'notifications': title = 'Powiadomienia'; body = notificationsPanel(); break;
     case 'tasks': body = tasksPanel(); break;
     case 'objective': body = objectivePanel(); break;
     case 'settings': body = settingsPanel(); break;
@@ -529,6 +782,9 @@ function renderPanel() {
     })))); break;
     case 'reset': body = el('div', {}, note('Rozpoczęcie nowej wyspy usunie obecny postęp tego trybu w tej przeglądarce.'), button('Tak, rozpocznij od nowa', () => { state = createState(); puzzle = null; save(); renderHUD(); openPanel('home'); toast('Nowa wyspa jest gotowa.'); }, { class: 'action danger' }), button('Zachowaj moją wyspę', () => openPanel('settings'), { class: 'action secondary' })); break;
     default: body = el('div', {}, note('Odbuduj latarnię, zarządzaj osadą i zdobywaj materiały podczas ekspedycji.'),
+      stat('Lojalność — kolejne dni', `${state.loyalty.streak} / 10`),
+      button('Budowy i kolejka', () => openPanel('construction'), { class: 'action secondary' }),
+      button('Powiadomienia', () => openPanel('notifications'), { class: 'action secondary' }),
       el('div', { class: 'stat-grid' }, stat('Poziom ratusza', el('span', { 'data-population-stat': 'level' }, state.buildings.townhall.level)), stat('Mieszkańcy', el('span', { 'data-population-stat': 'population' }, `${state.population} / ${state.capacity}`)), stat('Szczęście', el('span', { 'data-population-stat': 'happiness' }, happinessText())), stat('Dzień', state.day)),
       el('div', { class: 'panel-grid' }, [['objective', 'Główny cel'], ['buildings', 'Budynki'], ['expeditions', 'Ekspedycje'], ['tasks', 'Zadania'], ['residents', 'Mieszkańcy'], ['resources', 'Magazyn'], ['trade', 'Handel'], ['settings', 'Ustawienia']].map(([kind, label]) => button(label, () => openPanel(kind)))),
       button('Wróć na wyspę', closePanel, { class: 'action secondary' }));
@@ -538,6 +794,8 @@ function renderPanel() {
   dialog.querySelector('.dialog-body').scrollTop = scroll;
 }
 
+recordVisit(state);
+save();
 renderHUD();
 createAmbientScene(stage, () => state).ready.catch(error => {
   console.error(error);

@@ -9,6 +9,7 @@ Requires Python Playwright and Chromium; never mutates application state directl
 from collections import deque
 import json
 import os
+from datetime import datetime, timezone
 
 from playwright.sync_api import expect, sync_playwright
 
@@ -127,9 +128,12 @@ def within_viewport(page):
 
 
 def gameplay_checks(browser, errors, failed):
-    context = browser.new_context(viewport={"width": 1672, "height": 941})
+    context = browser.new_context(viewport={"width": 1672, "height": 941}, reduced_motion="reduce")
     page = context.new_page()
     attach_observers(page, errors, failed)
+    now = datetime(2026, 10, 22, 12, 0, 0, tzinfo=timezone.utc)
+    page.clock.install(time=now)
+    page.clock.pause_at(now)
     visit(page)
     page.locator("#hit-pause").click()
     assert saved(page)["paused"] is True
@@ -137,24 +141,22 @@ def gameplay_checks(browser, errors, failed):
     # The first townhall level does not allow a second-level house yet.
     before = saved(page)
     page.locator("#hit-dock-house").click()
-    expect(page.get_by_role("button", name="Wybierz miejsce ulepszenia", exact=True)).to_be_disabled()
+    expect(page.get_by_role("button", name="Ulepsz", exact=True)).to_be_disabled()
     expect(page.locator("#island-dialog")).to_contain_text("ratusz")
     assert saved(page)["resources"] == before["resources"]
     close_panel(page)
 
-    # Production collection spends no currency and awards the actual ready batch.
-    before = saved(page)
+    # Work and carrier timers, rather than a collect shortcut, unlock the first reward.
+    page.locator("#hit-play").click()
+    page.clock.run_for(420_000)
+    page.locator("#hit-pause").click()
+    produced = saved(page)
+    assert produced["statistics"]["collected"] > 0
+    assert produced["statistics"]["crafted"] > 0
+    assert all(produced["buildings"][id]["ready"] >= 0 for id in ["farm", "lumber", "quarry", "windmill", "sawmill"])
     page.locator("#hit-world-farm").click()
-    page.locator('[data-collect="farm"]').click()
-    after = saved(page)
-    assert after["resources"]["food"] == before["resources"]["food"] + 12
-    assert after["buildings"]["farm"]["ready"] == 0
-    expect(page.locator('[data-collect="farm"]')).to_be_disabled()
-    close_panel(page)
-
-    page.locator("#hit-world-lumber").click()
-    page.locator('[data-collect="lumber"]').click()
-    assert saved(page)["resources"]["wood"] == before["resources"]["wood"] + 16
+    expect(page.locator('[data-collect]')).to_have_count(0)
+    expect(page.locator('[data-local-buffer="farm"]')).to_be_visible()
     close_panel(page)
 
     # Earn the construction budget through real expedition play from the 100-each start.
@@ -192,69 +194,23 @@ def gameplay_checks(browser, errors, failed):
     expect(collect_task.get_by_role("button", name="Nagroda odebrana", exact=True)).to_be_disabled()
     close_panel(page)
 
-    # Townhall upgrades unlock building levels and increase only the theoretical cap.
+    # New expensive upgrades cannot start from local stock or the expedition budget.
     before = saved(page)
-    page.locator("#hit-level").click()
-    page.get_by_role("button", name="Wybierz miejsce ulepszenia", exact=True).click()
-    page.locator("#hit-world-townhall").click()
-    after = saved(page)
-    assert after["buildings"]["townhall"]["level"] == 2
-    assert after["capacity"] == 48 and after["population"] == 12
-    assert after["buildings"]["house"]["level"] == 1
-    for resource, amount in {"coins": 480, "wood": 100, "stone": 100, "planks": 40}.items():
-        assert after["resources"][resource] == before["resources"][resource] - amount
-    expect(page.locator('[data-hud="housing"]')).to_have_text("Miejsca: 24")
+    page.locator('#hit-level').click()
+    expect(page.locator('[data-upgrade-building="townhall"]')).to_be_disabled()
+    expect(page.locator('#island-dialog')).to_contain_text('500')
+    assert saved(page)['resources'] == before['resources']
+    page.get_by_role('button', name='Budowy i kolejka', exact=True).click()
+    expect(page.locator('[data-construction-summary]')).to_contain_text('Budowy: 0 / 1')
     close_panel(page)
-
-    # A real placement click confirms the now-unlocked house upgrade.
-    before = saved(page)
-    page.locator("#hit-dock-house").click()
-    page.get_by_role("button", name="Wybierz miejsce ulepszenia", exact=True).click()
-    expect(page.locator("#placement-banner")).to_be_visible()
-    page.locator("#hit-world-house").click()
-    after = saved(page)
-    assert after["buildings"]["house"]["level"] == 2
-    assert after["capacity"] == 48
-    assert after["population"] == 12
-    for resource, amount in {"coins": 200, "wood": 80, "stone": 40, "planks": 20}.items():
-        assert after["resources"][resource] == before["resources"][resource] - amount
-    expect(page.locator("#hit-world-house .world-level")).to_have_text("Poz. 2")
-    expect(page.locator('[data-hud="housing"]')).to_have_text("Miejsca: 48")
+    page.locator('#hit-resource-coins').click()
+    page.get_by_role('button', name='Handluj w porcie', exact=True).click()
+    expect(page.locator('#island-dialog')).to_contain_text('poziomu ratusza 4')
     close_panel(page)
-
-    page.locator("#hit-nav-tasks").click()
-    before = saved(page)
-    upgrade_task = page.locator(".info-card").filter(has=page.get_by_role("heading", name="Wyspa rośnie", exact=True))
-    upgrade_task.get_by_role("button", name="Odbierz nagrodę", exact=True).click()
-    after = saved(page)
-    assert after["tasks"]["upgrade"] is True
-    assert after["resources"]["coins"] == before["resources"]["coins"] + 150
-    assert after["resources"]["planks"] == before["resources"]["planks"] + 15
-    expect(upgrade_task.get_by_role("button", name="Nagroda odebrana", exact=True)).to_be_disabled()
-    close_panel(page)
-
-    page.locator("#hit-resource-coins").click()
-    page.get_by_role("button", name="Handluj w porcie", exact=True).click()
-    before = saved(page)
-    page.get_by_role("button", name="Sprzedaj 10 → 40 monet", exact=True).click()
-    after = saved(page)
-    assert after["resources"]["stone"] == before["resources"]["stone"] - 10
-    assert after["resources"]["coins"] == before["resources"]["coins"] + 40
-    close_panel(page)
-
-    page.locator("#hit-objective-title").click()
-    expect(page.get_by_role("button", name="Odbuduj latarnię", exact=True)).to_be_disabled()
-    for _ in range(3):
-        page.get_by_role("button", name="Dostarcz brakujące drewno", exact=True).click()
-    for _ in range(2):
-        page.get_by_role("button", name="Dostarcz brakujący kamień", exact=True).click()
-    before = saved(page)
-    page.get_by_role("button", name="Odbuduj latarnię", exact=True).click()
-    after = saved(page)
-    assert after["objective"]["repaired"] is True
-    assert after["resources"]["coins"] == before["resources"]["coins"] - 300
-    assert after["resources"]["planks"] == before["resources"]["planks"] - 30
-    expect(page.get_by_role("button", name="Latarnia odbudowana", exact=True)).to_be_disabled()
+    page.locator('#hit-objective-title').click()
+    page.get_by_role('button', name='Latarnia Morska — budowa i rozbudowa', exact=True).click()
+    expect(page.locator('[data-upgrade-building="lighthouse"]')).to_be_disabled()
+    expect(page.locator('#island-dialog')).to_contain_text('500')
     close_panel(page)
 
     before = saved(page)
@@ -265,33 +221,34 @@ def gameplay_checks(browser, errors, failed):
     after = saved(page)
     assert after["objective"] == before["objective"]
     assert after["expeditions"] == before["expeditions"]
-    assert after["buildings"]["house"]["level"] == 2
-    assert after["buildings"]["townhall"]["level"] == 2
+    assert after["buildings"]["house"]["level"] == 1
+    assert after["buildings"]["townhall"]["level"] == 1
     assert after["tasks"]["collect"] is True
     assert after["resources"] == before["resources"]
     close_panel(page)
 
-    # Live production must update an open panel, including the disabled action.
+    # An open local-stock panel updates on the six-minute worker cycle.
+    page.locator("#hit-world-farm").click()
+    before = saved(page)
+    expect(page.locator('[data-collect]')).to_have_count(0)
+    close_panel(page)
     page.locator("#hit-play").click()
     page.locator("#hit-world-farm").click()
-    expect(page.locator('[data-ready="farm"]')).to_have_text("0")
-    expect(page.locator('[data-collect="farm"]')).to_be_disabled()
-    page.wait_for_function(
-        "Number(document.querySelector('[data-ready=\"farm\"]').textContent) > 0",
-        timeout=20000,
-    )
-    expect(page.locator('[data-collect="farm"]')).to_be_enabled()
-    page.locator('[data-collect="farm"]').click()
-    assert saved(page)["buildings"]["farm"]["ready"] == 0
+    page.clock.run_for(360_000)
+    expect(page.locator('[data-local-buffer="farm"]')).to_be_visible()
     close_panel(page)
-    print("PASS gameplay: collection, upgrade cost/placement, claim, trade, repair, persistence, live production")
+    page.locator("#hit-pause").click()
+    after = saved(page)
+    assert after["statistics"]["collected"] > before["statistics"]["collected"]
+    assert after["buildings"]["farm"]["workProgress"] != before["buildings"]["farm"]["workProgress"] or after["resources"] != before["resources"]
+    print("PASS gameplay: real production/hauling, upgrade costs/locks, queue navigation, claim, port/lighthouse gates, persistence and live local-stock panel")
     context.close()
 
 
 def navigation_checks(browser, errors, failed):
     routes = [
         "home", "settings", "resource-coins", "resource-wood", "resource-stone",
-        "resource-food", "resource-planks", "level", "happiness", "population", "clock", "menu", "nav-expeditions",
+        "resource-food", "resource-planks", "resource-grain", "notifications", "level", "happiness", "population", "clock", "menu", "nav-expeditions",
         "nav-tasks", "nav-residents", "nav-map", "objective-title",
         "objective-wood", "objective-stone", "expedition-preview", "expedition-start",
         "category-buildings", "category-resources", "category-decorations", "category-paths",

@@ -2,21 +2,21 @@
 
 Stan dokumentu: 2026-10-22. Dotyczy `harborlight-v1-layered.html`. Stan publikacji i wyniki kolejnych sprawdzeń są w [dzienniku implementacji](IMPLEMENTATION-LOG.md).
 
-Bieżący priorytet: frontend, grafika i reguły osady. Dziewięć animacji świata z [FE-04](WORLD-ANIMATION.md), pasek poziomu i szczęścia z FE-05 oraz zależność rozbudowy od ratusza, miejsca w domu i przeludnienie z FE-06 są opublikowane i sprawdzone na publicznym Pages. Wyniki testów i dowody publikacji zapisano w dzienniku.
+Bieżący priorytet: frontend, grafika i reguły osady. Wersja `economy-v6` obejmuje pracowników, indywidualną produkcję, magazyny, powiadomienia, targ, premie kaplicy i latarni oraz rzeczywistą rozbudowę z kolejką. Szczegółowe, aktualne ceny i reguły pakietu są w [uzgodnionych regułach gospodarki](ECONOMY-RULES.md). Stan sprawdzeń i publikacji zapisujemy osobno w dzienniku; model pakietu nie oznacza uruchomionej sprzedaży.
 
 ## Co działa
 
-Interaktywny prototyp zachowuje układ i styl zaakceptowanej wyspy i dodaje 54 kontrolki HTML na scenie oraz dodatkowy czytelny pasek i menu na telefonie. Kliknięcie budynku otwiera jego panel, a operacje zmieniają wspólny stan gospodarki. Kontrolki mają etykiety dla czytników ekranu, obsługę klawiatury oraz widoczny fokus. Dialogi dostosowują się do szerokości ekranu.
+Interaktywny prototyp zachowuje układ i styl zaakceptowanej wyspy i dodaje kontrolki HTML na scenie oraz dodatkowy czytelny pasek i menu na telefonie. Kliknięcie budynku otwiera jego panel, a operacje zmieniają wspólny stan gospodarki. Kontrolki mają etykiety dla czytników ekranu, obsługę klawiatury oraz widoczny fokus. Dialogi dostosowują się do szerokości ekranu.
 
 | Element ekranu | Działanie |
 | --- | --- |
 | Logo i menu | Podsumowanie wyspy oraz przejście do funkcji gry |
 | Koło zębate | Ustawienia animacji, zapis i potwierdzany reset wyspy |
-| Pasek zasobów | Wszystkie pięć zasobów, magazyn i przejście do handlu |
+| Pasek zasobów | Pięć materiałów w magazynie centralnym, monety w osobnym skarbcu i przejście do logistyki |
 | Poziom | Poziom ratusza, limit rozbudowy pozostałych budynków i przejście do rozbudowy ratusza |
 | Szczęście | Wartość od −100% do +100% oraz zasady zmiany populacji |
-| Liczba mieszkańców | Populacja, teoretyczny limit ratusza, miejsca w domu, przeludnienie i przydział pracowników |
-| Zegar, pauza, odtwarzanie, przyspieszenie | Zegar i produkcja; tempo 1×, 2× lub 4× |
+| Liczba mieszkańców | Populacja, limit ratusza, miejsca w domu, przeludnienie, pracujący, wracający do domu, wolni mieszkańcy i podatki |
+| Zegar, pauza, odtwarzanie, przyspieszenie | Zegar wyspy; tempo kalendarza 1×, 2× lub 4× nie zmienia godzin pracy, transportu ani podatków |
 | Nawigacja boczna | Wyspa, ekspedycje, zadania, mieszkańcy i mapa dzielnic |
 | Główny cel | Dostawy drewna i kamienia oraz naprawa latarni |
 | Karta ekspedycji | Wybór jednej z trzech rozgrywalnych plansz |
@@ -25,15 +25,15 @@ Interaktywny prototyp zachowuje układ i styl zaakceptowanej wyspy i dodaje 54 k
 | Most, plaża i wodospad | Ścieżki, mosty i dekoracje |
 | Kategorie dolnego doku | Budynki, produkcja, dekoracje i ścieżki |
 
-Silnik obsługuje dom, farmę, tartak, kamieniołom, przystań, magazyn, latarnię, obóz drwali, młyn, ratusz, kaplicę i targ. Budynki produkcyjne zatrudniają pracowników; brak wolnych mieszkańców, surowców lub miejsca na produkcję ogranicza wykonanie operacji.
+Silnik obsługuje dom, farmę, tartak, kamieniołom, przystań, magazyn, latarnię, obóz drwali, młyn, ratusz, kaplicę i targ. Pracowników zatrudnia osiem wskazanych miejsc pracy. Produkcja materiałów działa w farmie, młynie, obozie drwali, tartaku i kamieniołomie; przystań, targ i magazyn również przyjmują pracowników, ale nie produkują monet w dawnym cyklu produkcyjnym. Brak wolnych mieszkańców, surowców lub miejsca na gotową produkcję ogranicza odpowiednie operacje.
 
 ## Start, poziom i szczęście
 
-Nowa wyspa zaczyna z **100 monet, 100 drewna, 100 kamienia, 100 żywności i 100 desek**, **12 mieszkańcami**, **szczęściem 0%**, **ratuszem na poziomie 1** i **domem na poziomie 1**. W obecnym prototypie oznacza to pierwszą wizytę bez zapisu albo potwierdzone rozpoczęcie nowej wyspy. Logowanie do konta jest przyszłym zakresem backendu; odświeżenie strony zachowuje istniejący postęp.
+Nowa wyspa zaczyna z **100 monet, 100 zboża, 100 drewna, 100 kamienia, 100 żywności i 100 desek**, **12 mieszkańcami**, **szczęściem 0%**, **ratuszem na poziomie 1** i **domem na poziomie 1**. W obecnym prototypie oznacza to pierwszą wizytę bez zapisu albo potwierdzone rozpoczęcie nowej wyspy. Logowanie do konta jest przyszłym zakresem backendu; odświeżenie strony zachowuje istniejący postęp. Na starcie wszystkie lokalne składy producentów są puste. Pięć materiałów zajmuje łącznie 500 miejsc magazynu centralnego, a 100 monet znajduje się osobno w skarbcu.
 
-Poziom gracza jest zawsze poziomem ratusza. **Każdy pozostały budynek można rozbudować najwyżej do poziomu ratusza**, w ramach obecnego maksimum 5. Ratusz sam można podnosić do następnego poziomu. Zablokowana rozbudowa wskazuje wymagany poziom ratusza i nie pobiera zasobów. Latarnia najpierw wymaga dostaw i naprawy do poziomu 1; późniejsze poziomy podlegają tej samej zasadzie co pozostałe budynki.
+Poziom gracza jest zawsze poziomem ratusza. **Każdy pozostały budynek można rozbudować najwyżej do poziomu ratusza**, w ramach technicznego maksimum 100. Ratusz sam można podnosić do następnego poziomu. Zablokowana rozbudowa wskazuje wymagany poziom ratusza i nie pobiera zasobów. Latarnia najpierw wymaga dostaw i naprawy do poziomu 1; późniejsze poziomy podlegają tej samej zasadzie co pozostałe budynki.
 
-Teoretyczny limit populacji wynosi `24 × poziom ratusza`: poziomy 1–5 pozwalają na 24, 48, 72, 96 i 120 mieszkańców. Rzeczywista liczba miejsc mieszkalnych wynosi osobno `24 × poziom domu`. Ulepszenie ratusza zwiększa limit osady, ale nie dodaje miejsc w domu. Ulepszenie domu zwiększa miejsca mieszkalne, ale nie zmienia limitu ratusza i nie dodaje od razu ludzi.
+Teoretyczny limit populacji wynosi `24 × poziom ratusza`: przykładowo poziomy 1–6 pozwalają na 24, 48, 72, 96, 120 i 144 mieszkańców. W aktualnym prototypie wspólne techniczne maksimum poziomu budynku i ratusza wynosi 100; wcześniejszy limit 5 nie blokuje już poziomu 6. Rzeczywista liczba miejsc mieszkalnych wynosi osobno `24 × poziom domu`. Ulepszenie ratusza zwiększa limit osady, ale nie dodaje miejsc w domu. Ulepszenie domu zwiększa miejsca mieszkalne, ale nie zmienia limitu ratusza i nie dodaje od razu ludzi.
 
 | Przykład | Wartość |
 | --- | --- |
@@ -60,27 +60,115 @@ Czas oznacza rzeczywisty czas aktywnej gry na widocznej karcie. Przyspieszenie 1
 
 Populacja nigdy nie spada poniżej **6 osób**. Po jej spadku przydziały pracowników są ograniczane do liczby mieszkańców, a gracz może dalej rozdzielać pracę, produkować i handlować. Dekoracje i ścieżki podnoszą szczęście o 1 punkt procentowy, rozbudowa kaplicy o 3, a pierwsza naprawa latarni o 10. Przeludnienie obniża szczęście i może doprowadzić do wartości ujemnej, która uruchamia ubytek mieszkańców.
 
+## Pracownicy, powrót do domu i podatki
+
+Pracowników można przydzielać dokładnie do ośmiu miejsc pracy:
+
+| Miejsce pracy | Rola |
+| --- | --- |
+| Farma | Produkuje zboże do lokalnego składu |
+| Młyn | Zużywa 2 zboża na 1 żywność, odkładaną lokalnie |
+| Obóz drwali | Produkuje drewno do lokalnego składu |
+| Tartak | Zużywa 2 drewna na 1 deskę, odkładaną lokalnie |
+| Kamieniołom | Produkuje kamień do lokalnego składu |
+| Magazyn | Jego załoga przewozi materiały do magazynu centralnego |
+| Przystań | Obsługa portu, handlu i ekspedycji |
+| Targ | Obsługa handlu |
+
+Dom, ratusz, kaplica i latarnia nie zatrudniają pracowników. Limit **każdego** miejsca pracy wynosi `floor(aktualna populacja / 2)`. Nie jest to połowa teoretycznego limitu ratusza. Każda osoba może mieć tylko jeden przydział; suma pracujących i wracających do domu nie przekracza populacji. Dodawanie załogi wykorzystuje wyłącznie dostępnych, nieprzydzielonych mieszkańców. Budowa i ulepszenie budynku nie zatrudniają automatycznie dodatkowych osób.
+
+| Przykład | Limit jednego miejsca pracy | Wspólna pula mieszkańców |
+| --- | --- | --- |
+| Ratusz 6, faktycznie 144 mieszkańców | 72 | Po przydzieleniu 72 do farmy pozostaje najwyżej 72 do innych miejsc |
+| Ratusz 6, faktycznie 100 mieszkańców | 50 | Do wszystkich miejsc łącznie najwyżej 100 |
+| Ratusz 6, faktycznie 12 mieszkańców | 6 | Poziom 6 sam nie zapewnia 144 osób |
+| Faktycznie 13 mieszkańców | 6 | Połowę populacji zaokrąglamy w dół |
+
+Przyciski „Do limitu” i „Zwolnij wszystkich” pozwalają zmienić załogę zbiorczo, z zachowaniem wolnej puli i limitu danego miejsca. Zwolnienie uruchamia **5 minut powrotu do domu**. Taka osoba nie pracuje, nie płaci podatku i nie może dostać nowego przydziału. Po zakończeniu powrotu jest dostępna, ale nie zostaje automatycznie zatrudniona. Pozostały czas powrotu jest zapisywany i zatrzymuje się podczas pauzy, ukrycia karty i czasu poza grą.
+
+Po spadku populacji silnik dopasowuje zarówno załogę każdego budynku do nowej połowy populacji, jak i wspólną pulę mieszkańców. Na nowej wyspie pracuje po jednej osobie w pięciu producentach i magazynie: **6 pracujących, 0 wracających i 6 dostępnych**. Targ i przystań pozostają bez załogi do odblokowania.
+
+**Jeden przydzielony pracownik generuje 1 monetę podatku na rzeczywistą godzinę aktywnej gry.** Osiem osób pracujących przez godzinę daje 8 monet; 72 osoby dają 72 monety na godzinę. Bezrobotni i osoby wracające do domu nie płacą podatku. W tym modelu podatnik to osoba przydzielona do istniejącego miejsca pracy: pozostaje podatnikiem również przy pełnym składzie lub braku surowca wejściowego.
+
+Podatek trafia automatycznie do osobnego skarbca w pełnych monetach. Niewypłacony ułamek jest zachowywany w `taxProgress`: pół godziny pracy jednej osoby daje postęp 0,5 monety, który nie ginie po odświeżeniu. Zmiana przydziału lub ubytek populacji rozlicza czas poprzedniej i nowej załogi. Tempo kalendarza 1×/2×/4× nie przyspiesza podatku; pauza, ukryta karta i czas poza grą zatrzymują naliczanie.
+
+Przystań, targ i ratusz nie produkują dodatkowo monet w dawnych dziesięciosekundowych cyklach. Sprzedaż towarów oraz nagrody z zadań i ekspedycji pozostają odrębnymi źródłami monet.
+
+## Produkcja według czasu każdego pracownika
+
+Każdy pracownik jednego z pięciu producentów wytwarza **10 pełnych jednostek na godzinę aktywnej pracy**, czyli jedną co 6 minut. Poziom budynku nie mnoży tej indywidualnej stawki. Produkcja jest rozliczana osobno dla każdej osoby, bez łączenia części niedokończonych sztuk:
+
+| Czas pracy osoby przed odwołaniem | Gotowe jednostki | Los niedokończonej sztuki |
+| --- | --- | --- |
+| 7 minut | 1 | Pozostała minuta postępu przepada |
+| 13 minut | 2 | Pozostała minuta postępu przepada |
+| 2 osoby po 7 minut | Po 1 na osobę, razem 2 | Nie sumujemy ich niedokończonych części |
+
+Gotowe jednostki pozostają w lokalnym składzie po zwolnieniu pracownika. Jego postęp niedokończonej sztuki przepada przy odwołaniu. Postęp osób nadal przydzielonych zachowuje się po zapisie i odświeżeniu. Pełny lokalny skład lub brak składnika wejściowego blokuje wytworzenie kolejnych pełnych jednostek; do ponownego uruchomienia potrzebny jest transport lub dostępny surowiec.
+
+Zboże jest nowym, osobnym materiałem. Łańcuch żywności to **farma → zboże → młyn → żywność**. Przetwarzanie ma proporcję **2 surowce na 1 produkt**:
+
+| Producent | Materiał wejściowy zużywany z magazynu centralnego | Gotowy produkt w składzie lokalnym |
+| --- | --- | --- |
+| Farma | Brak | Zboże |
+| Obóz drwali | Brak | Drewno |
+| Kamieniołom | Brak | Kamień |
+| Tartak | 2 drewna na każdą gotową deskę | Deski |
+| Młyn | 2 zboża na każdą gotową jednostkę żywności | Żywność |
+
+Stawka 10 jednostek na osobę na godzinę dotyczy **produktu wyjściowego**. Pracownik młyna lub tartaku zużywa więc 20 odpowiednich surowców na godzinę pełnej, nieblokowanej produkcji. Surowiec wejściowy jest pobierany, gdy powstaje gotowy produkt. Materiał leżący przy drwalach albo na farmie nie jest jeszcze wejściem dostępnym dla tartaku lub młyna: najpierw musi trafić do magazynu centralnego.
+
+Nie ma przycisków natychmiastowego odbioru ani ręcznego przetwarzania materiałów. Dawne akcje odbioru i wytwarzania nie mogą ominąć czasu pracy czy transportu. Zadanie pierwszego zbioru wykonuje rzeczywisty transport do magazynu, a zadanie rzemieślnika rzeczywista produkcja młyna lub tartaku.
+
+## Składy lokalne i magazyn centralny
+
+Każdy z pięciu producentów ma własny skład lokalny na `200 × poziom ratusza` jednostek swojego produktu. Na poziomie ratusza 1 każdy taki skład mieści 200, a na poziomie 6 — 1200 jednostek. To osobne limity przy budynkach, niezależne od poziomu magazynu centralnego. Towar w składzie lokalnym nie jest jeszcze zasobem, którym można zapłacić za budowę, dekorację, handel czy dostawę do latarni.
+
+Załoga magazynu przewozi gotowe towary automatycznie: **60 jednostek materiału na godzinę na pracownika**, czyli jedną jednostkę na minutę pracy osoby. Bez magazynierów produkcja może wypełniać składy lokalne, ale nie przechodzi z nich do dostępnych centralnie zapasów.
+
+Gracz ustala w magazynie lub panelu zasobów kolejność priorytetów dla pięciu materiałów: zboża, drewna, kamienia, żywności i desek. Magazynierzy wybierają zgodnie z tą kolejnością materiał dostępny do przewozu i mieszczący się w centralnym magazynie. Brak towaru albo brak miejsca dla danego rodzaju powoduje przejście do kolejnego priorytetu, zamiast blokowania całego transportu.
+
+Magazyn centralny ma jednocześnie limit na pojedynczy rodzaj materiału i limit wspólny dla wszystkich pięciu. Oba zwiększają się o 50% za każdy kolejny poziom magazynu, z procentem składanym i zaokrągleniem w dół:
+
+- limit rodzaju: `floor(1000 × 1,5^(poziom magazynu − 1))`;
+- limit łączny: `floor(4000 × 1,5^(poziom magazynu − 1))`.
+
+| Poziom magazynu | Maksymalnie jednego rodzaju | Wszystkie materiały łącznie |
+| --- | --- | --- |
+| 1 | 1000 | 4000 |
+| 2 | 1500 | 6000 |
+| 3 | 2250 | 9000 |
+
+Przykładowo na poziomie 1 cztery rodzaje po 1000 jednostek wyczerpują limit wspólny, nawet jeżeli piąty rodzaj ma zapas 0. Transport kolejnego materiału czeka, dopóki nie powstanie miejsce. **Monety są w osobnym skarbcu i nie zajmują miejsca magazynu.** Wszystkie koszty pobierają materiały wyłącznie z magazynu centralnego, a monety ze skarbca.
+
+Nagrody i starsze zapisy nie tracą materiałów przez nowe ograniczenia pojemności. Nadwyżki trafiają do kolejki dostaw `pendingDeliveries`: czekają na miejsce i transport magazynierów, a przed przyjęciem do centralnego magazynu nie są dostępne do wydania. Zakup w porcie, który nie zmieściłby się w centralnym magazynie, jest odrzucany bez pobierania monet.
+
+## Rozbudowa, premie i powiadomienia
+
+Przycisk „Ulepsz” zleca aktualny budynek bez wybierania miejsca. Koszty pokazują stan centralny / wymagane, czerwone przy braku i zielone przy wystarczającym zapasie. Ratusz pokazuje poziom, mieszkańców obecni/limit i podatki na godzinę. Widok „Budowy i kolejka” jest dostępny z każdego budynku i menu. Limity miejsc, ceny, estymaty, wygaśnięcie pakietu, targ, indywidualne kary i obie premie latarni opisano w [aktualnych regułach](ECONOMY-RULES.md).
+
 ## Jak grać
 
-1. Wybierz budynek produkcyjny i odbierz gotowe towary. Pierwsze partie drewna, żywności i kamienia są dostępne od początku.
-2. W mieszkańcach przydziel pracowników. Produkcja działa w cyklach czasu symulacji, a pauza zatrzymuje również produkcję.
-3. Najpierw rozbuduj ratusz, aby odblokować kolejny poziom pozostałych budynków. W panelu budynku sprawdź koszt ulepszenia, wybierz rozbudowę i kliknij podświetlone miejsce na mapie. Anulowanie lub blokada poziomu nie pobiera zasobów. Pilnuj poziomu domu: wolny limit ratusza nie zastępuje miejsc mieszkalnych.
-4. W głównym celu dostarczaj materiały do latarni partiami po maksymalnie 10 sztuk. Potrzeba łącznie 50 drewna i 30 kamienia; początkowy postęp to 20/50 i 12/30.
-5. Po dostawach napraw latarnię za 300 monet i 30 desek. Odbierz nagrodę w zadaniach.
-6. Rozwiązuj ekspedycje: przejdź z obozu `S` do celu `G`, używając ograniczonych narzędzi. Nagroda za każdą planszę jest przyznawana raz. Skrzynie `C` dają dodatkowo po 10 monet przy pierwszym ukończeniu.
+1. Przydziel dostępnych ludzi do producentów i magazynu. Każde miejsce przyjmuje najwyżej połowę aktualnej populacji; przydzielone osoby płacą podatek.
+2. Wybierz kolejność przewozu materiałów w magazynie lub zasobach. Obserwuj osobno składy lokalne i dostępne zapasy centralne.
+3. Farma, drwale i kamieniołom pozyskują materiały; młyn i tartak zużywają po 2 surowce centralne na jednostkę swojego produktu. Na gotowe jednostki pracownika czekasz po 6 minut, a magazynier przewozi po jednej sztuce na minutę.
+4. Zwolniony pracownik wraca do domu przez 5 minut. W tym czasie nie płaci podatku ani nie może dostać nowego przydziału. Przed odwołaniem weź pod uwagę utratę jego niedokończonej jednostki.
+5. Rozbuduj ratusz, aby odblokować poziomy innych budynków i większe składy lokalne. Rozbudowa domu zapewnia miejsca mieszkalne; rozbudowa magazynu zwiększa centralną pojemność na każdy rodzaj i łącznie.
+6. Zgromadź 500 każdego zasobu ze złotem i uruchom budowę latarni. Transport zajmuje T, budowa 2T. Po ukończeniu oba bonusy, +100 szczęścia oraz produkcja materiałów ×2, trwają 24 h × osiągnięty poziom; podatki bez zmian.
+7. Rozwiązuj trzy ekspedycje, przechodząc od `S` do `G`. Nagroda każdej planszy jest przyznawana raz; skrzynie `C` dodają po 10 monet. Materiały z nagród, które nie mieszczą się w magazynie, czekają w kolejce dostaw.
 
 Przykładowe operacje gospodarcze:
 
 | Operacja | Zmiana zasobów |
 | --- | --- |
-| Przetwarzanie w tartaku | 10 drewna → 6 desek |
-| Przetwarzanie w młynie | 4 żywności + 2 monety → 10 żywności |
-| Sprzedaż 10 drewna / kamienia / żywności / desek | +30 / +40 / +20 / +60 monet |
-| Zakup 10 drewna / kamienia / żywności / desek | −60 / −80 / −40 / −120 monet |
+| Gotowa deska w tartaku | −2 centralnego drewna, +1 lokalna deska |
+| Gotowa żywność w młynie | −2 centralnego zboża, +1 lokalna żywność |
+| Transport materiału | −1 ze składu lokalnego lub oczekującej dostawy, +1 centralnie |
+| Godzina pracy jednej przydzielonej osoby | +1 moneta podatku |
 | Kwiaty / lampa / ławka | −25 / −40 / −35 monet i +1 szczęścia, maksymalnie 100% |
-| Ulepszenie ścieżek | −5 drewna, −10 kamienia i +1 szczęścia |
+| Ulepszenie ścieżek | −5 centralnego drewna, −10 centralnego kamienia i +1 szczęścia |
 
-Koszty kolejnych poziomów budynków rosną wraz z poziomem. Źródłem aktualnych liczb jest `BUILDINGS` w `harborlight-v1-state.js`; interfejs korzysta z tych samych danych.
+Koszty kolejnych poziomów rosną wraz z poziomem. Źródłem aktualnych liczb i cen handlu są definicje w `harborlight-v1-state.js`; interfejs korzysta z tych samych danych.
 
 ## Pliki i podział odpowiedzialności
 
@@ -90,7 +178,8 @@ Koszty kolejnych poziomów budynków rosną wraz z poziomem. Źródłem aktualny
 | `assets/harborlight-v1-approved.png` | Oryginalny zaakceptowany PNG, bez zmiany pikseli |
 | `harborlight-v1-play.js` | Obszary kliknięć, panele, HUD, plansze ekspedycji i zapis przeglądarkowy |
 | `harborlight-v1-play.css` | Interakcje, fokus, dialogi, plansze, układ mobilny i ograniczenie ruchu |
-| `harborlight-v1-state.js` | Czysty silnik: stan, limit rozbudowy ratusza, miejsca mieszkalne, przeludnienie, koszty, produkcja, szczęście, populacja, nagrody i postęp |
+| `harborlight-v1-state.js` | Czysty silnik: stan, rozbudowa, miejsca mieszkalne, przeludnienie, limity pracowników, powroty, podatki, indywidualna produkcja, transport i pojemności, szczęście oraz populacja |
+| `harborlight-v1-logistics.js` | Indywidualne fazy pracy, składy, transport, targ, rezerwacje, kolejka budowy, estymaty i lokalny model uprawnienia |
 | `harborlight-v1-ambient.js` | Osobna warstwa Canvas, wspólny czas, wiatrak, chmury i budowa |
 | `harborlight-v1-smoke.js` | Emisja i cykl życia kłębów dymu z 9 kominów |
 | `harborlight-v1-inhabitants.js` | Oczyszczone tło świata bez nieruchomych ludzi i starych smug |
@@ -103,24 +192,30 @@ Koszty kolejnych poziomów budynków rosną wraz z poziomem. Źródłem aktualny
 
 ## Zapis
 
-Klucz `localStorage`: `harborlight-v1-interactive-save`, wersja schematu `version: 3`. Zapis następuje po udanej operacji, okresowo oraz przy opuszczeniu strony. Przycisk „Zapisz teraz” pozwala wymusić zapis. Błąd dostępu do pamięci przeglądarki jest komunikowany graczowi.
+Klucz `localStorage`: `harborlight-v1-interactive-save`, wersja schematu `version: 6`. Zapis następuje po udanej operacji, okresowo i przy opuszczeniu strony. „Zapisz teraz” wymusza zapis; błąd dostępu do pamięci jest komunikowany graczowi. Wcześniejsze robocze etapy v4/v5 nie były publikowane; zbiorcza zmiana używa `economy-v6`.
 
-Stan zawiera:
+Stan zachowuje:
 
-- `resources`: monety, drewno, kamień, żywność i deski;
-- `buildings`: poziom, pracownicy i produkcja czekająca na odbiór;
-- `population`, `capacity`, `happiness` (z zachowaniem części ułamkowej), `populationProgress`, `populationDirection`; miejsca mieszkalne i przeludnienie są wyliczane z domu i populacji;
-- `objective`: dostawy i stan latarni;
-- `tasks`, `expeditions`, `statistics`: odebrane nagrody i postęp;
-- `decorations`, `paths`;
-- `day`, `minutes`, `productionSeconds`, `speed`, `paused`;
-- `settings` i `lastActionAt`.
+- `resources`: monety w skarbcu oraz centralne zboże, drewno, kamień, żywność i deski;
+- `buildings`: poziom, przydział i lokalne gotowe materiały producenta;
+- indywidualny postęp niedokończonej jednostki każdej nadal przydzielonej osoby oraz postęp pracy magazynierów;
+- pozostały czas powrotu odwołanych pracowników i kolejność priorytetów transportu;
+- `pendingDeliveries`: materiały czekające na przyjęcie do centralnego magazynu;
+- `population`, `capacity`, `happiness` z częścią ułamkową, `populationProgress`, `populationDirection`;
+- `taxProgress`: ułamek niewypłaconej monety, oraz `statistics.taxCollected`: wypłacone monety podatku;
+- dostawy i stan latarni, zadania, ekspedycje, statystyki, dekoracje, ścieżki, kalendarz, tempo, pauzę i ustawienia;
+- bazowe i średnie szczęście, liczniki pełnych magazynów, powiadomienia i przeczytanie;
+- stan targu, zlecenia, dostawy blokowane przez godzinę i odbiór;
+- liczniki premii kaplicy i latarni, jednorazowe użycia błogosławieństw, serię dni;
+- listę projektów budowy, rezerwacje, etapy, zależności poziomów i datę ważności lokalnego modelu pakietu.
 
-`normalizeState()` przywraca brakujące wartości, odrzuca nieprawidłowe liczby oraz ogranicza poziomy, przydziały i ilości. Stare zapisy wersji 1 i 2 zachowują zasoby, poziomy budynków i dotychczasowy postęp. Jeżeli budynek był wyższy niż ratusz, migracja podnosi ratusz do najwyższego posiadanego poziomu, zamiast cofać zakupioną rozbudowę. Przykładowo stary dom na poziomie 2 przy ratuszu 1 zostaje zachowany, a ratusz otrzymuje poziom 2. Migracja nie dodaje mieszkańców ani zasobów.
+`normalizeState()` przywraca brakujące wartości, odrzuca nieprawidłowe liczby i dopasowuje przydziały do faktycznej populacji. Zapisy 1/2 zachowują zainwestowane poziomy budynków przez podniesienie ratusza do najwyższego już posiadanego poziomu. Wersje 3 i późniejsze nie otrzymują kolejnego darmowego podniesienia ratusza; poziomy innych budynków są walidowane względem niego. Populacja pozostaje w przedziale od 6 do limitu ratusza, bez obcinania do liczby miejsc mieszkalnych. Naprawiona latarnia zachowuje poziom.
 
-W zapisach wersji 3 poziomy pozostałych budynków są walidowane względem ratusza. Populacja jest dostosowywana do minimum 6 i teoretycznego limitu; nie obcinamy jej do liczby miejsc mieszkalnych. Nowe wartości startowe nie nadpisują istniejącej wyspy. Pole `capacity` jest wyliczane z ratusza, zamiast przyjmować zapisany limit. Brakujące szczęście przyjmuje wartość 0%, a brakujący postęp populacji zaczyna od zera. Naprawiona latarnia zachowuje osiągnięty poziom 1–5 po odświeżeniu.
+Migracja nie przyznaje nowego zestawu startowego. Zachowuje wcześniejsze centralne zasoby, a nadwyżki ponad nowe limity przenosi do `pendingDeliveries`, aby nie tracić materiałów i nie czynić ich od razu dostępnymi do wydania. Gotowe, nieodebrane monety dawnej produkcji ratusza, przystani i targu są jednorazowo wypłacane do skarbca i usuwane ze starych buforów. To wcześniejszy zarobek, nie nowy podatek; nie zwiększa statystyki podatku i nie jest wypłacany ponownie przy odświeżeniu nowego zapisu.
 
-Operacje nie pozwalają odebrać tej samej nagrody ponownie po odświeżeniu. To ochrona integralności prototypu, a nie zabezpieczenie przed świadomą edycją stanu przez właściciela przeglądarki. Zapis nie jest kontem użytkownika ani kopią w chmurze. Usunięcie danych witryny usuwa postęp.
+Przydziały spoza ośmiu miejsc pracy są usuwane, a pozostałe załogi dopasowywane do połowy faktycznej populacji i wspólnej puli. Brakujące zboże starszego zapisu nie oznacza ponownego przyznania całego zestawu startowego. Postęp jednostki jest zachowywany tylko dla nadal przydzielonego pracownika; odwołanie usuwa niedokończoną sztukę i zapisuje 5 minut powrotu. Poprawne ułamki podatku i pozostałe czasy powrotu zachowują się po odświeżeniu.
+
+Operacje nie pozwalają wielokrotnie odebrać tej samej nagrody. To integralność prototypu, nie serwerowa ochrona przed ręczną edycją zapisu przez właściciela przeglądarki. Zapis nie jest kontem użytkownika ani kopią w chmurze; usunięcie danych witryny usuwa postęp.
 
 ## Sprawdzanie zmian
 
@@ -131,17 +226,23 @@ python3 -m http.server 8002 --bind 127.0.0.1
 node --test tests/harborlight-state.test.mjs
 python3 tests/harborlight-browser-smoke.py
 python3 tests/harborlight-population-smoke.py
+python3 tests/harborlight-logistics-smoke.py
+python3 tests/harborlight-construction-smoke.py
 python3 tests/harborlight-animation-smoke.py
 ```
 
 Test przeglądarkowy wymaga Python Playwright i Chromium (domyślnie `/usr/bin/chromium`). Serwer musi działać w osobnym terminalu. Inny port/adres oraz Chromium ustawia się przez `HARBORLIGHT_BASE_URL` i `HARBORLIGHT_CHROMIUM`.
 
-Sprawdzenie powinno obejmować: nowy start, blokadę rozbudowy powyżej ratusza bez pobrania zasobów, odblokowanie po rozbudowie ratusza, osobne miejsca w domu i limit osady, przykład 96/72/78, płynną karę −6 punktów procentowych na godzinę przy 6 osobach bez miejsca, zachowanie ułamka szczęścia oraz zatrzymanie kary po rozbudowie domu. Odbiór obejmuje też kolejne poziomy latarni i migrację starszych budynków bez ich cofania. Regresja demografii sprawdza dodatnią i ujemną populację dla zaakceptowanych progów, brak zmiany przy 0% bez przeludnienia, minimum 6, zapis i odświeżenie. Regresja gry obejmuje otwarcie kontrolek, odbiór produkcji, koszt rozbudowy, handel, ekspedycję z nagrodą oraz brak ponownego odbioru nagrody. Sprawdź telefon w obu orientacjach, ograniczenie animacji, fokus klawiatury i błędy konsoli. Wyników nie należy uznawać za zaliczone na podstawie samego uruchomienia serwera.
+Sprawdzenie obejmuje dokładnie osiem miejsc pracy i wspólną pulę, poziom 6 przy populacjach 144/100/12, nieparzystą populację, podatki od pracujących oraz zapis ułamka. Produkcja musi potwierdzić po 1 gotowej jednostce po 7 minutach i po 2 po 13 minutach na osobę, brak łączenia indywidualnych ułamków, utratę niedokończonej sztuki przy odwołaniu i powrót przez 5 minut bez podatku oraz możliwości ponownego przydziału.
+
+Test logistyki powinien wykazać 10 jednostek produkcji i 60 jednostek transportu na osobę na godzinę, obie receptury 2:1, lokalne `200 × ratusz`, centralne limity rodzaju i sumy z mnożnikiem 1,5, priorytety z pomijaniem pustych lub pełnych rodzajów oraz brak magazynowej objętości monet. Należy sprawdzić, że wydawane są tylko centralne zapasy, brak ręcznego odbioru/przetwarzania, odrzucony zakup nie pobiera monet, a nadwyżki nagród i starego zapisu czekają bez utraty w dostawach.
+
+Regresja obejmuje koszty i blokadę rozbudowy przez ratusz, osobne limity ratusza i domu, przeludnienie, minimum 6, zapis, migrację, latarnię, handel, zadania i trzy ekspedycje. Panele muszą działać na komputerze i telefonie, z klawiaturą i ograniczeniem animacji, bez błędów JavaScript ani HTTP. Samo uruchomienie serwera nie jest potwierdzeniem zaliczenia testów.
 
 ## Granice tej wersji
 
-Scena nadal wykorzystuje wycinki zatwierdzonego obrazu oraz kontrolki i oznaczenia stanu. Poziomy budynków, dodane dekoracje SVG, ulepszone ścieżki i światło naprawionej latarni mają osobne oznaczenia nad bazową grafiką. Nie jest to jeszcze komplet niezależnych grafik terenu, budynków, mieszkańców i efektów. Pełne stany budowy, swobodne rozmieszczanie nowych budynków oraz kamera z pan/zoom pozostają oddzielnymi pracami Frontend. Prototyp ma trzy plansze ekspedycji i uproszczoną gospodarkę.
+Scena nadal wykorzystuje wycinki zatwierdzonego obrazu oraz kontrolki i oznaczenia stanu. Poziomy budynków, dodane dekoracje SVG, ulepszone ścieżki i światło naprawionej latarni mają osobne oznaczenia nad bazową grafiką. Nie jest to jeszcze komplet niezależnych grafik terenu, budynków, mieszkańców i efektów. Osobne pełne grafiki etapów budowy, swobodne rozmieszczanie nowych budynków oraz kamera z pan/zoom pozostają oddzielnymi pracami Frontend. Prototyp ma trzy plansze ekspedycji i uproszczoną gospodarkę.
 
 Warstwa Canvas dodaje obracający się wiatrak, dym z 9 kominów, trzy warstwy chmur, fale i dwie kaskady, 24 chodzące sylwetki mieszkańców, 7 zwierząt, 7 mew oraz pracujące wciągniki na budowie. Sylwetki są obecnie dekoracją świata i nie odwzorowują licznika populacji 1:1. Ruch respektuje pauzę, tempo i ograniczenie animacji; efekty nie blokują kontrolek. Tło świata oczyszczono z nieruchomych postaci i starych smug. Szczegóły assetów i ograniczeń są w [dokumencie animacji świata](WORLD-ANIMATION.md).
 
-Nie ma backendu, logowania, synchronizacji urządzeń ani serwerowej walidacji gospodarki. Prace te są opisane w [backlogu](BACKLOG.md). Nie dodajemy PvP, płatności ani wymuszonych reklam w ramach tej iteracji.
+Nie ma backendu, logowania, synchronizacji urządzeń ani serwerowej walidacji gospodarki. Prace te są opisane w [backlogu](BACKLOG.md). Model uprawnienia pakietu działa lokalnie i podlega testom, ale nie sprzedaje pakietu ani nie weryfikuje płatności. Nie dodano PvP ani reklam.

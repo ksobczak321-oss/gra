@@ -148,6 +148,9 @@ body.reduce-motion .lighthouse-beam{animation:none;transform:rotate(3deg);opacit
 .island-topbar .topbar-happiness{width:119px}
 .island-topbar .topbar-resource{flex:1 1 98px;min-width:87px;padding-inline:9px}
 .topbar-wood .topbar-icon{color:#c99b69}.topbar-stone .topbar-icon{color:#b8cfdb}.topbar-food .topbar-icon{color:#d5c37c}.topbar-planks .topbar-icon{color:#deb385}
+.island-topbar .topbar-coins{padding-block:4px}
+.island-topbar .topbar-coins .topbar-copy{gap:2px}
+.island-topbar .topbar-coins .topbar-tax{font-size:9px;line-height:1.1;color:#b6ced9}
 .island-topbar .topbar-population{width:136px}
 .island-topbar .topbar-population{padding-block:4px}
 .island-topbar .topbar-population .topbar-copy{gap:2px}
@@ -162,7 +165,21 @@ body.reduce-motion .lighthouse-beam{animation:none;transform:rotate(3deg);opacit
 [data-sentiment="positive"] [data-hud="happiness"],[data-mobile-hud="happiness"][data-sentiment="positive"]{color:#a7dfac}
 [data-sentiment="negative"] [data-hud="happiness"],[data-mobile-hud="happiness"][data-sentiment="negative"]{color:#ffa69b}
 .mobile-island-hud{display:none}
+.island-topbar .topbar-brand{width:190px}
+.island-topbar .topbar-resource{min-width:78px;padding-inline:6px;gap:5px}
+.notification-button{position:relative}
+[data-notification-count]{position:absolute;right:0;top:0;min-width:16px;padding:1px 3px;border-radius:8px;background:#c96c3d;color:#fff;font-size:10px;text-align:center}
+.happiness-row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #52718155}
+.full-storage-status{font-size:12px!important;color:#d5b98b!important}
+.market-exchange-fields{display:grid;grid-template-columns:1fr 1fr 100px;gap:10px;margin:12px 0}
+.market-exchange-fields select,.market-exchange-fields input{min-width:0;width:100%;padding:12px 9px;border:1px solid #7593a4;border-radius:8px;background:#12384d;color:#fff;font:inherit}
+@media(max-width:520px){.market-exchange-fields{grid-template-columns:1fr}.happiness-row{font-size:12px}}
 #island-dialog .population-growth{font-weight:700;color:#ffe3a8}
+#island-dialog .workforce-income{font-weight:700;color:#ffe3a8}
+#island-dialog .workforce-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+#island-dialog .workforce-actions .action{padding:9px 6px;min-width:0;font-size:12px}
+#island-dialog .workforce-bulk-actions .action{font-size:11px}
+#island-dialog .workforce-count strong{color:#ffe0a2;font-size:20px;font-variant-numeric:tabular-nums}
 #island-dialog .housing-notice[data-overcrowded="true"],#island-dialog .building-lock{border-color:#c18a65;background:#623a2840;color:#ffd1b4}
 #island-dialog .population-rate-table{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;margin:15px 0;border:1px solid #61809380;border-radius:9px;overflow:hidden;background:#52718150}
 #island-dialog .population-rate-table>div{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:11px 8px;background:#102d3f;text-align:center;font-size:12px;color:#bcd0db}
@@ -170,11 +187,12 @@ body.reduce-motion .lighthouse-beam{animation:none;transform:rotate(3deg);opacit
 @media(max-width:900px),(max-height:500px){
   .mobile-island-hud{position:fixed;z-index:30;top:max(7px,env(safe-area-inset-top));left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));display:grid;gap:5px;padding:5px;border:1px solid #9f915d;border-radius:13px;background:linear-gradient(140deg,#173c52f5,#092b40f5);box-shadow:0 5px 22px #00233b55;font-family:Inter,ui-sans-serif,system-ui,sans-serif}
   .mobile-hud-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
-  .mobile-hud-resources{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+  .mobile-hud-resources{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}
   .mobile-hud-item{appearance:none;min-height:40px;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;margin:0;padding:4px 3px;border:1px solid #60809470;border-radius:7px;background:linear-gradient(#254b60b0,#123448b0);color:#fff0c9;font-family:inherit;cursor:pointer;touch-action:manipulation}
   .mobile-hud-item small{font-size:10px;line-height:1;color:#bfd2dc}
   .mobile-hud-item strong{font-size:14px;line-height:1.1;font-variant-numeric:tabular-nums}
   .mobile-hud-item .mobile-housing{font-size:9px;line-height:1;color:#b9d0db}
+  .mobile-hud-item .mobile-tax{font-size:9px;line-height:1;color:#b9d0db}
   .mobile-hud-summary .mobile-hud-item{gap:2px;padding-block:3px}
   .mobile-hud-item:focus-visible{outline:2px solid #ffe1a5;outline-offset:1px}
   .mobile-hud-summary .mobile-hud-item{border-color:#c8a66b66}
@@ -183,3 +201,13 @@ body.reduce-motion .lighthouse-beam{animation:none;transform:rotate(3deg);opacit
   #island-dialog .population-rate-table{grid-template-columns:repeat(2,minmax(0,1fr))}
   #island-dialog .population-rate-table>div:first-child{grid-column:1/-1;flex-direction:row;justify-content:space-between;padding:9px 12px}
 }
+.world-hotspot.under-construction { outline: 2px dashed #e9bd65; outline-offset: -5px; }
+.construction-badge { position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); padding: 5px 9px; border: 1px solid #d4b26b; border-radius: 4px; background: #443827ed; color: #ffe5af; white-space: nowrap; font: 600 13px Georgia, serif; pointer-events: none; }
+.construction-status { color: #ffe0a0; line-height: 1.6; }
+
+.upgrade-costs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 22px; margin: 12px 0 18px; }
+.upgrade-cost-row { display: flex; gap: 10px; justify-content: space-between; align-items: baseline; padding-bottom: 5px; border-bottom: 1px solid #d5bc7d20; }
+.upgrade-cost-row strong { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.is-affordable { color: #9cdd9d; }
+.is-short { color: #ff9991; }
+@media (max-width: 480px) { .upgrade-costs { grid-template-columns: 1fr; } }

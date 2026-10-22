@@ -1,6 +1,6 @@
 # Backlog HARBORLIGHT
 
-Stan: 2026-10-22. Zadania są podzielone według istniejących milestone’ów [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3) i [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Utworzono i potwierdzono dziesięć GitHub Issues FE/BE z przypisaniem do milestone’ów. Identyfikatory FE/BE porządkują dokumentację; numery i linki rzeczywistych zgłoszeń są podane przy zadaniach.
+Stan: 2026-10-22. Zadania są podzielone według istniejących milestone’ów [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3) i [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Utworzono i potwierdzono czternaście GitHub Issues FE/BE z przypisaniem do milestone’ów. Identyfikatory FE/BE porządkują dokumentację; numery i linki rzeczywistych zgłoszeń są podane przy zadaniach.
 
 Utrzymujemy spokojną rozbudowę wyspy i pętlę ekspedycja → zasoby → osada. Zachowujemy zaakceptowany kierunek wizualny. Backend nie jest wymagany do uruchomienia obecnego statycznego prototypu.
 
@@ -86,7 +86,7 @@ Zakres: ratusz ogranicza poziom rozbudowy pozostałych budynków, a dom wyznacza
 
 Kryteria odbioru:
 
-- Pozostałe budynki nie mogą być rozbudowywane powyżej poziomu ratusza, w ramach maksimum 5. Blokada wyjaśnia wymagany poziom i nie wydaje zasobów; sam ratusz można podnosić do następnego poziomu.
+- Pozostałe budynki nie mogą być rozbudowywane powyżej poziomu ratusza, w ramach bieżącego maksimum 100 (rozszerzenie w FE-07). Blokada wyjaśnia wymagany poziom i nie wydaje zasobów; sam ratusz można podnosić do następnego poziomu.
 - Teoretyczny limit populacji wynosi `24 × poziom ratusza`, a miejsca mieszkalne `24 × poziom domu`. Rozbudowa jednego nie podnosi drugiego i nie dodaje ludzi natychmiast.
 - Ratusz 4, dom 3 i 78 osób oznaczają limit 96, 72 miejsca i 6 osób bez miejsca. Populacja może przekroczyć miejsca mieszkalne, ale nie limit ratusza.
 - Każda osoba bez miejsca obniża szczęście o 1 punkt procentowy na godzinę aktywnej gry. Dla stałego przeludnienia 6 osób spadek wynosi 6 punktów na godzinę. Część ułamkowa jest zachowywana w zapisie.
@@ -96,18 +96,51 @@ Kryteria odbioru:
 - Latarnia po pierwszej naprawie do poziomu 1 może być dalej rozbudowywana do poziomu ratusza; zapis nie cofa naprawionej latarni do poziomu 1.
 - Testy obejmują blokady i koszty, odblokowanie po ratuszu, osobne pojemności, naliczanie i zatrzymanie kary, zapis, migrację, działające panele oraz regresję rozgrywki na komputerze i telefonie.
 
+### FE-07 — Pracownicy, podatki i fizyczny transport
+
+Status: implementacja i lokalne testy zaliczone; publikacja zostanie potwierdzona w dzienniku. Milestone frontend #3. GitHub Issue: [#17](https://github.com/ksobczak321-oss/gra/issues/17).
+
+- Dokładnie osiem miejsc pracy, limit połowy faktycznej populacji i wspólna pula; ratusz, dom, kaplica i latarnia bez załogi.
+- Sześciu zatrudnionych na starcie, targ od 2 i przystań od 4; minimum populacji 6 oraz przykład ratusza 6 bez ograniczenia dawnego maksimum 5.
+- Podatek 1/os./aktywną godzinę, bez automatycznej produkcji monet; zwolnieni wracają 5 minut i nie mogą ponownie pracować w tym czasie.
+- Produkcja 10/os./h, osobne niełączone fazy, utrata niedokończonej sztuki; młyn i tartak 2:1.
+- Lokalne składy 200 × ratusz; przewóz 60/os./h, zapisane priorytety i centralne limity 1000/4000 × 1,5^(poziom−1), monety poza objętością.
+- Centralne koszty bez ręcznego obejścia logistyki; bezstratna migracja zapasów i wcześniejszych gotowych monet.
+- Zapis schematu 6, testy jednostkowe i przeglądarkowe; pełne reguły w [instrukcji](ECONOMY-RULES.md).
+
+### FE-08 — Szczęście załogi, powiadomienia, targ i kaplica
+
+Status: implementacja i weryfikacja. Milestone frontend #3. GitHub Issue: [#18](https://github.com/ksobczak321-oss/gra/issues/18).
+
+- Pełny skład zatrzymuje produkcję; −10 szczęścia jego załogi i kolejne −10/24 h do −50, z resetem po opróżnieniu. Średnia szczęścia obejmuje całą populację.
+- Powiadomienie przy każdym ponownym zapełnieniu, przeczytanie i stan zachowane w zapisie.
+- Targ: dwie grupy towarów, 10% marży, bez monet, dostawy 60/os./h, godzina blokady od przybycia, odbiór magazynierów; pojemność 1000,1500,2250…
+- Kaplica: bez pasywnego efektu poziomu 1; ukończenie rozbudowy daje +10 × poziom i podatki ×2/10 h. Ręcznie +50 wszystkich zasobów i +20 szczęścia/1 h, liczba jednorazowych użyć = poziom.
+- Lokalna seria kolejnych dni do 10 bez wymyślania nagrody; docelowe logowanie pozostaje backendem.
+
+### FE-09 — Rozbudowa, kolejka, uprawnienia pakietu i latarnia
+
+Status: implementacja i weryfikacja. Milestone frontend #3. GitHub Issue: [#19](https://github.com/ksobczak321-oss/gra/issues/19).
+
+- Zaakceptowane koszty producentów 72 drewna +72 kamienia +120 produktu, razy obecny poziom; sumowanie powtórzonego produktu. Główne budynki 500 każdego zasobu wraz z monetami × obecny poziom.
+- Rezerwacja całego kosztu przy zwykłym zleceniu, przewóz istniejącą załogą magazynu i następnie równie długa budowa. Poziom dopiero po zakończeniu.
+- Ratusz L: L aktywnych i L opłaconych miejsc kolejki, automatyczne przejście i kolejne poziomy tego samego budynku bez równoległego budowania dwóch jego poziomów.
+- Lokalny model pakietu: +4 aktywne, kolejka bez limitu, plany z estymat dostaw. Wygasanie kalendarzowe; rozpoczęte kończą się, opłacone czekają na normalny limit, nieopłacone zachowane i wstrzymane. Sprzedaż nie jest uruchomiona.
+- Latarnia: 500 każdego zasobu ze złotem, transport T + budowa 2T; +100 szczęścia i produkcja pięciu materiałów ×2 przez 24 h × osiągnięty poziom. Podatki bez zmiany. Użytkownik zaakceptował minimum około 35 h zbierania od startu.
+- Panel ratusza: poziom, obecni/limit, podatki/h, bez przydziału i odbioru. Bezpośrednie „Ulepsz”; magazynowe posiadane/wymagane w czerwieni/zieleni. Scenę zachowujemy.
+
 ## Backend
 
 ### BE-01 — Kontrakt API i model postępu gracza
 
 Status: zaplanowane; backend nie jest jeszcze zaimplementowany. GitHub Issue: [#11](https://github.com/ksobczak321-oss/gra/issues/11).
 
-Zakres: opisać kontrakt przed wyborem technologii. Kliencki schemat `version: 3` jest punktem wyjścia, nie gotowym modelem serwerowym.
+Zakres: opisać kontrakt przed wyborem technologii. Kliencki schemat `version: 6` jest punktem wyjścia, nie gotowym modelem serwerowym.
 
 Kryteria odbioru:
 
 - Udokumentowane są odczyt stanu, komendy gry, wyniki ekspedycji i odbiór nagród.
-- Model obejmuje zasoby, budynki, przydziały, cel latarni, zadania, ekspedycje, poziom ratusza, miejsca mieszkalne, przeludnienie, ułamkowe szczęście, postęp populacji i wersję stanu.
+- Model obejmuje zasoby, budynki, przydziały, cel latarni, zadania, ekspedycje, poziom ratusza, miejsca mieszkalne, przeludnienie, ułamkowe szczęście, postęp populacji, osiem miejsc pracy, limity załóg, ułamek podatku i wersję stanu.
 - Kontrakt określa format błędów, walidację, idempotencję komend i obsługę konfliktu wersji.
 - Są przykłady poprawnych i odrzuconych żądań oraz plan migracji zapisów.
 
@@ -118,7 +151,7 @@ Status: zaplanowane. Zależność: BE-01. GitHub Issue: [#12](https://github.com
 Kryteria odbioru:
 
 - Ustalony jest przepływ gry gościa i przejścia do trwałego konta bez utraty wyspy.
-- Pierwsze utworzenie wyspy po zalogowaniu stosuje start z FE-05/FE-06: ratusz 1, dom 1, szczęście 0%, 12 mieszkańców i po 100 każdego zasobu. Kolejne logowanie odczytuje postęp zamiast przyznawać start ponownie.
+- Pierwsze utworzenie wyspy po zalogowaniu stosuje start z FE-05/FE-06/FE-07: ratusz 1, dom 1, szczęście 0%, 12 mieszkańców i po 100 każdego zasobu; 6 osób pracuje po jednej w pięciu producentach i magazynie, a 6 pozostaje wolnych. Kolejne logowanie odczytuje postęp zamiast przyznawać start ponownie.
 - Użytkownik może odczytać i zmienić wyłącznie własny postęp; testy obejmują próbę dostępu do cudzej wyspy.
 - Sesje mają bezpieczne przechowywanie, wygaśnięcie i wylogowanie; sekrety nie trafiają do plików klienta ani logów.
 - Udokumentowane są minimalne dane konta i ich usuwanie.
@@ -142,10 +175,22 @@ Kryteria odbioru:
 
 - Serwer oblicza koszty, produkcję, upływ czasu oraz nagrody zamiast ufać licznikom klienta.
 - Serwer weryfikuje poziom ratusza, zakres szczęścia i zmianę populacji według FE-05; osobno należy ustalić zasady naliczania poza grą przed ich wdrożeniem.
+- Serwer sprawdza dokładnie osiem miejsc pracy z FE-07, limit `floor(aktualna populacja / 2)` na budynek oraz wspólną pulę mieszkańców bez podwójnego przydziału. Dom, ratusz, kaplica i latarnia nie zatrudniają załogi.
+- Serwer nalicza 1 monetę podatku za osobę przydzieloną do istniejącego miejsca pracy na rzeczywistą aktywną godzinę, z rozliczeniem zmian załogi i zachowaniem ułamka. Bezrobotni nie płacą; brak osobnej automatycznej produkcji monet w porcie, targu i ratuszu. Handel i nagrody pozostają odrębnymi operacjami. Zasady czasu poza grą wymagają osobnego ustalenia.
 - Serwer odrzuca rozbudowę ponad poziom ratusza bez wydania zasobów. Wylicza osobno limit populacji i miejsca w domu oraz nalicza karę za przeludnienie z FE-06: 1 punkt procentowy szczęścia na osobę bez miejsca na godzinę, z zachowaniem części ułamkowej i spójnej migracji zapisów.
+- Serwer odtwarza indywidualną produkcję, centralny transport i rezerwacje, targ, czasowe premie kaplicy i latarni, średnią szczęścia oraz kolejkę budowy zgodnie z FE-07/08/09 i [aktualnymi regułami](ECONOMY-RULES.md). Uprawnienia pakietu są częścią BE-05.
 - Walidowane są przejścia planszy, zużycie narzędzi i liczba skrzyń; sam komunikat klienta „ukończono” nie wystarcza do wypłaty.
 - Testy obejmują ujemne ilości, nieprawidłowe liczby, duplikaty komend, wyścigi dwóch sesji i wielokrotny odbiór nagrody.
 - Istnieją testy integracyjne całego przepływu ekspedycja → nagroda → ulepszenie oraz diagnostyka błędów bez danych wrażliwych.
+
+### BE-05 — Płatny pakiet i serwerowa walidacja kolejki
+
+Status: zaplanowane, bez implementacji płatności. Milestone backend #4. GitHub Issue: [#20](https://github.com/ksobczak321-oss/gra/issues/20). Cena i warianty długości wymagają przyszłej definicji użytkownika.
+
+- Serwer nadaje datę ważności po zweryfikowanej płatności; klient nie stanowi dowodu zakupu.
+- Walidacja limitu L+4, kolejki bez limitu i planów dostaw; atomowa, idempotentna rezerwacja dopiero rzeczywiście dostępnych centralnych materiałów.
+- Zależności kolejnych poziomów i ratusza, odporność na powtórzenie komend, konflikt sesji i zmianę zegara klienta.
+- Kalendarzowe wygaśnięcie oraz zachowanie już rozpoczętych i opłaconych projektów zgodnie z [regułami](ECONOMY-RULES.md).
 
 ## Aktualizowanie planu
 

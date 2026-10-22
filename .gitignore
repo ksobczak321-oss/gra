@@ -1,0 +1,3 @@
+setup-checks/
+__pycache__/
+*.pyc
