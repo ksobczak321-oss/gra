@@ -1,3 +1,20 @@
 shakomat na komórkę z kólką 
 ekspedycje 
 wyzwania do latarni 
+ustalmy że 1 PLN = 10 monet 
+za przyspieszenie budynku user musi zapłacić 1 montetę za jedną pełną minutę, ma możłiwość skrócić budowę o 25%, 50% i 75% 
+z produkcji wysłanie całego magazynu = ilość pełnych kursów tragaża x 10 monet 
+z magazynu na budowę jak wyżej 
+z magzynu do z targu portu jak wyżej 
+kupno budynku bez zasobów = cenie tych zasobów w porcie x 1.25
+
+prawy górny róg aktualne zadania 
+wyświetlasz 3 randomowe zadania dla latarni 
+zadania zawsze są trzy małe średnie u duże 
+zadanie małe = 2 produkty, w ilości od 2 godzinnej do 6 h produkcji z maksymalnym aktualnym lewelem czyli jeżeli drwal na 1 może mieć 12 ludzi to od (12x2x10) do 12x6x10) 
+średnie = od 3 do 8 (ale nie mniejsze niż aktualne małe) 
+duże = od 4 do 10 (ale nie mniejsze niż aktualne średnie) 
+nagrody zawsze mają sie wyświetlać 
+zadania sie zmieniają w czasie co 6 h jest nowe, zawsze jakieś jest, licznik bijej dla każdego i
+jeżeli kliknę zadanie w ciągu 
+w każdym 
