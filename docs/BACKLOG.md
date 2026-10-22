@@ -98,7 +98,7 @@ Kryteria odbioru:
 
 ### FE-07 — Pracownicy, podatki i fizyczny transport
 
-Status: implementacja i lokalne testy zaliczone; publikacja zostanie potwierdzona w dzienniku. Milestone frontend #3. GitHub Issue: [#17](https://github.com/ksobczak321-oss/gra/issues/17).
+Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone frontend #3. GitHub Issue: [#17](https://github.com/ksobczak321-oss/gra/issues/17).
 
 - Dokładnie osiem miejsc pracy, limit połowy faktycznej populacji i wspólna pula; ratusz, dom, kaplica i latarnia bez załogi.
 - Sześciu zatrudnionych na starcie, targ od 2 i przystań od 4; minimum populacji 6 oraz przykład ratusza 6 bez ograniczenia dawnego maksimum 5.
@@ -110,7 +110,7 @@ Status: implementacja i lokalne testy zaliczone; publikacja zostanie potwierdzon
 
 ### FE-08 — Szczęście załogi, powiadomienia, targ i kaplica
 
-Status: implementacja i weryfikacja. Milestone frontend #3. GitHub Issue: [#18](https://github.com/ksobczak321-oss/gra/issues/18).
+Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone frontend #3. GitHub Issue: [#18](https://github.com/ksobczak321-oss/gra/issues/18).
 
 - Pełny skład zatrzymuje produkcję; −10 szczęścia jego załogi i kolejne −10/24 h do −50, z resetem po opróżnieniu. Średnia szczęścia obejmuje całą populację.
 - Powiadomienie przy każdym ponownym zapełnieniu, przeczytanie i stan zachowane w zapisie.
@@ -120,7 +120,7 @@ Status: implementacja i weryfikacja. Milestone frontend #3. GitHub Issue: [#18](
 
 ### FE-09 — Rozbudowa, kolejka, uprawnienia pakietu i latarnia
 
-Status: implementacja i weryfikacja. Milestone frontend #3. GitHub Issue: [#19](https://github.com/ksobczak321-oss/gra/issues/19).
+Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone frontend #3. GitHub Issue: [#19](https://github.com/ksobczak321-oss/gra/issues/19).
 
 - Zaakceptowane koszty producentów 72 drewna +72 kamienia +120 produktu, razy obecny poziom; sumowanie powtórzonego produktu. Główne budynki 500 każdego zasobu wraz z monetami × obecny poziom.
 - Rezerwacja całego kosztu przy zwykłym zleceniu, przewóz istniejącą załogą magazynu i następnie równie długa budowa. Poziom dopiero po zakończeniu.
