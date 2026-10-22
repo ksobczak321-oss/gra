@@ -1,10 +1,20 @@
 # Arkusz zasad HARBORLIGHT
 
-[Pobierz aktualny Excel — HARBORLIGHT3-zasady.xlsx](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT3-zasady.xlsx)
+[Pobierz aktualny Excel — HARBORLIGHT5-zasady.xlsx](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT5-zasady.xlsx)
 
 Jeżeli przeglądarka pokazuje stronę pliku na GitHubie, wybierz **Download raw file**. Pobrany plik można otworzyć w Excelu lub LibreOffice Calc albo zaimportować do Arkuszy Google.
 
-Wersja 3 uwzględnia nowe reguły Premium, zadania latarni, polecenia i publikacje oraz ekspedycje. Zachowuje poprzednie ustalenia i wpisy użytkownika. Zawiera 29 zakładek oraz rejestr 182 ustaleń i uwag. Oryginalne wpisy z `docs/arkusze/pomysły` są zachowane dosłownie w „Zrodlo v3”.
+Wersja 5 scala 37 wpisów z przesłanego `HARBORLIGHT4-zasady.xlsx` z tekstowym plikiem `pomysły`, pełnymi dodatkami wersji 3 i trzema późniejszymi potwierdzeniami. Plik 4 był edytowany na bazie wersji 2, dlatego porównanie wykonano z tą bazą. Zawiera 30 zakładek i rejestr 200 ustaleń. Dokładne wpisy zachowano w „Twoje wpisy v4”, a tekst pomysłów w „Zrodlo v3”. Oryginalny plik 4 pozostaje bez zmian.
+
+Najnowsze doprecyzowania z pliku 4:
+
+- Młyn, drwale, tartak i kamieniołom: koszty rozbudowy ×2; farma bez zmian. Przeliczono koszty, ładunki i czasy, również dla kolejki +10%.
+- Podatek zaczyna się po dotarciu do zakładu i płynie także podczas przestoju. Przestój ma jedną karę −10…−50; licznik resetuje się w drodze do domu. Bonus szczęścia za pracę podczas postoju i zakres osobistego minimum pozostają oznaczone do doprecyzowania.
+- Rezerwa i ratunkowy próg Food: 50 × poziom magazynu. Przy gotowej żywności w młynie i niedoborze w centrali nie można ręcznie wycofać całej obsady transportu.
+- Płatne błogosławieństwo: 100 × poziom kaplicy monet, maksymalnie jedno na 4 h, z dotychczasowym efektem. To cena użycia, nie rozbudowy kaplicy.
+- Zwiedzanie latarni: 4 h pobytu, do 2 × poziom latarni osób z domu, brak podatku i normalne jedzenie. Osobiste szczęście 100% przez 24 h i premia populacji; zapis „na 6” odczytano jako 6 h i jawnie oznaczono jako interpretację.
+- Po premii latarni wracamy do stanu szczęścia sprzed premii. Ranking aktualizuje się co pełną godzinę. Doprecyzowano kolejność odejść i wymaganie usunięcia ikon stop/play/przewijania.
+- Rejs portowy zawsze trwa 5 min; zakup pobiera monety w momencie transakcji. Dokładny punkt zatwierdzenia transakcji pozostaje opisanym szczegółem.
 
 Nowe części:
 
@@ -26,6 +36,6 @@ Najważniejsze doprecyzowania:
 
 Niewybrane szczegóły są oznaczone w zakładce „Decyzje i konflikty”. Wpisy źródłowe zachowano osobno; stare zasady zastąpione nowymi są opisane jako historyczne. Ceny globalnego pakietu budowlanego i szczegóły nowych błogosławieństw pozostają odłożone.
 
-Poprzednie pliki pozostają dostępne: [pierwszy arkusz](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT-zasady.xlsx), [wersja z wpisami użytkownika](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT1-zasady.xlsx) oraz [wersja 2](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT2-zasady.xlsx).
+Poprzednie pliki pozostają dostępne: [pierwszy arkusz](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT-zasady.xlsx), [wersja z wpisami użytkownika](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT1-zasady.xlsx), [wersja 2](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT2-zasady.xlsx), [wersja 3](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT3-zasady.xlsx) oraz [oryginalny plik 4 użytkownika](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT4-zasady.xlsx).
 
 Plik to dokument projektu. Udostępnienie arkusza nie zmienia kodu, zasad ani zapisów działającej gry.
