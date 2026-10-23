@@ -1,42 +1,36 @@
 # Arkusz zasad HARBORLIGHT
 
-[Pobierz aktualny Excel — HARBORLIGHT5-zasady.xlsx](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT5-zasady.xlsx)
+[Pobierz aktualny Excel — HARBORLIGHT7-zasady.xlsx](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT7-zasady.xlsx)
 
-Jeżeli przeglądarka pokazuje stronę pliku na GitHubie, wybierz **Download raw file**. Pobrany plik można otworzyć w Excelu lub LibreOffice Calc albo zaimportować do Arkuszy Google.
+Jeżeli GitHub pokazuje stronę pliku, wybierz **Download raw file**. Plik otworzysz w Excelu lub LibreOffice Calc; można go też zaimportować do Arkuszy Google.
 
-Wersja 5 scala 37 wpisów z przesłanego `HARBORLIGHT4-zasady.xlsx` z tekstowym plikiem `pomysły`, pełnymi dodatkami wersji 3 i trzema późniejszymi potwierdzeniami. Plik 4 był edytowany na bazie wersji 2, dlatego porównanie wykonano z tą bazą. Zawiera 30 zakładek i rejestr 200 ustaleń. Dokładne wpisy zachowano w „Twoje wpisy v4”, a tekst pomysłów w „Zrodlo v3”. Oryginalny plik 4 pozostaje bez zmian.
+Wersja 7 uwzględnia przesłany `HARBORLIGHT6-zasady.xlsx` oraz wszystkie 17 późniejszych decyzji użytkownika z 23.10.2026. Zawiera **36 zakładek, 217 wpisów w rejestrze zasad i katalog 100 narracji zadań latarni**. Właściwe tabele i kalkulatory zostały zaktualizowane; wcześniejsze pytania nie pozostają oznaczone jako nierozstrzygnięte, jeżeli uzyskano odpowiedź.
 
-Najnowsze doprecyzowania z pliku 4:
+Oryginalny plik 6 pozostał niezmieniony. Wszystkie 85 różnic względem poprzedniego pliku 5 zachowano dosłownie w „Twoje wpisy v6”, a poprzednie 200 wpisów rejestru w „Rejestr historyczny v6”. Wpisy źródłowe i 48 komentarzy zachowano; najnowsza rozmowa ma pierwszeństwo przed starszymi opisami wizyt znajdującymi się w przesłanej kopii.
 
-- Młyn, drwale, tartak i kamieniołom: koszty rozbudowy ×2; farma bez zmian. Przeliczono koszty, ładunki i czasy, również dla kolejki +10%.
-- Podatek zaczyna się po dotarciu do zakładu i płynie także podczas przestoju. Przestój ma jedną karę −10…−50; licznik resetuje się w drodze do domu. Bonus szczęścia za pracę podczas postoju i zakres osobistego minimum pozostają oznaczone do doprecyzowania.
-- Rezerwa i ratunkowy próg Food: 50 × poziom magazynu. Przy gotowej żywności w młynie i niedoborze w centrali nie można ręcznie wycofać całej obsady transportu.
-- Płatne błogosławieństwo: 100 × poziom kaplicy monet, maksymalnie jedno na 4 h, z dotychczasowym efektem. To cena użycia, nie rozbudowy kaplicy.
-- Zwiedzanie latarni: 4 h pobytu, bez czasu dojścia i możliwości wycofania, do 2 × poziom latarni osób jednocześnie z domu. Premie zaczynają się po powrocie: uczestnicy mają 100% szczęścia przez 24 h i nie można ich ponownie wysłać przez te 24 h. Miejsce zwalnia się po powrocie, więc mogą wyruszyć inne osoby. Zwiedzający nie płacą podatku, jedzą normalnie.
-- Każda osobna wysłana grupa daje populacji +10 pp; premie grup sumują się przez czas nakładania. Dwie osoby wysłane razem dają +10 pp; dwa oddzielne wysłania po jednej osobie mogą dawać łącznie +20 pp. Długość globalnej premii pozostaje do doprecyzowania: wcześniej 6 h, nowy przykład 16:00–20:00 wskazuje 4 h. Terminy 6 h zadań latarni pozostają bez zmian.
-- Po premii latarni wracamy do stanu szczęścia sprzed premii. Ranking aktualizuje się co pełną godzinę. Doprecyzowano kolejność odejść i wymaganie usunięcia ikon stop/play/przewijania.
-- Rejs portowy zawsze trwa 5 min; zakup pobiera monety w momencie transakcji. Dokładny punkt zatwierdzenia transakcji pozostaje opisanym szczegółem.
+## Najnowsze decyzje
 
-Nowe części:
+- **Latarnia:** pobyt 4 h bez dojścia i wycofania. Od powrotu uczestnicy mają 100% szczęścia i indywidualną blokadę ponownej wizyty przez 24 h. Każda osobno wysłana grupa daje populacji +10 pp przez **6 h**; premie grup sumują się. Jednocześnie jest 2 × poziom latarni miejsc, a darmowa pula wynosi 2 × poziom wejść w ruchomych 24 h. Można dokupić do trzech pakietów, każdy po 2L wejść, za 300 × numer pakietu (2, 3, 4) × poziom latarni monet.
+- **Dom:** raz na 24 h pula pełnych punktów równa populacji w chwili odnowienia. Punkty dodają osobiste szczęście i nie kasują kar ani ich liczników. Po 23 h 58 min automat rozdaje wyłącznie niewykorzystaną resztę najmniej szczęśliwym, losując przy remisie.
+- **Nowi mieszkańcy:** przez pierwsze 24 h mają zamrożone 0% szczęścia, również podczas premii. Potem zwykłe naliczanie od 0%. Początkowa dwunastka nie podlega zamrożeniu.
+- **Przestój:** podatek płynie, ale nie ma +1 pp/h za pracę ani dodatkowej kary bezrobocia. Limit −50 dotyczy samej kary przestoju; suma z innymi karami może być niższa.
+- **Kaplica:** płatne błogosławieństwo kosztuje 100 × poziom kaplicy monet. Kolejne można uruchomić 4 h po końcu godzinnego efektu: aktywacja o 12:00, koniec o 13:00, następne od 17:00. Zatwierdzony koszt rozbudowy: nowy poziom × (180 monet + 20 drewna + 60 kamienia + 10 desek).
+- **Zadania:** zawsze trzy; start małe/średnie/duże, dalej nowe losowego rozmiaru na końcu FIFO. Mogą zostać trzy małe lub trzy duże. Początkowy termin wynosi 6 h; pierwsze ukończenie każdego łańcucha ustala jego niezależną dobową godzinę odnowienia w strefie Europe/Warsaw. Następcy pojawiają się natychmiast, zachowując kotwicę. Nagrody są zamrożone przy generowaniu i skalowane względem poziomu ratusza 3. Towarów w nagrodzie: 1/2/3 rodzaje. Wpłaty chronią rezerwę żywności, a nadmiar nagrody czeka w buforze i automatycznie uzupełnia centralę.
+- **Premium:** pakiet budowlany kosztuje 1000 × poziom ratusza monet za 24 h. Kolejka nadal +10%; prognoza wymaga aktywnego pakietu oraz dopłaty 25% bazowej portowej wartości braków po koszcie kolejki. Pełny zakup budynku kosztuje wszystkie materiały według proporcjonalnych cen zakupu portu +25%, nominalne monety budynku i natychmiastowy transport. Nie zabiera własnych materiałów; budynek jest gotowy po **10 sekundach**. Przyspieszenie: zawsze `max(5, pełne minuty skrócenia)` monet.
+- **Port:** osobny licznik podwyżek dla każdego rodzaju produktu w ruchomych 3 h; cena zamrożona przy kliknięciu zamówienia. Zakup drewna nie podnosi ceny kamienia.
 
-- **Premium**: 1 PLN = 10 monet, skrócenia budowy o 25/50/75% za 1 monetę za pełną minutę, transport za 10 monet za każdy potrzebny kurs, również ostatni niepełny. Materiały budynku wyceniamy proporcjonalnie według bazowych cen zakupu w porcie, z dopłatą 25% tylko do materiałów; koszt monet budynku oraz opłatę czasową doliczamy osobno. Trzy kalkulatory pokazują przykłady oraz pozostałe nierozstrzygnięte interpretacje.
-- **Zadania latarni**: trzy rozmiary, niezależne terminy 6 h, losowe wymagania i nagrody, wpłaty partiami. Pierwsze kliknięcie utrwala ×3 przed upływem 15 s, następnie ×2 przed upływem 5 min; nagrodę otrzymuje się po pełnej wpłacie przed końcem 6 h. Dołączono 12 zamrożonych przykładów narracyjnych i przykłady liczników/wpłat.
-- **Social i polecenia**: podane nagrody monetowe i towarowe oraz lista 11 platform. Aktualnych warunków platform nie potwierdzono online — dostęp do próbowanych oficjalnych źródeł blokowało HTTP 403. Adresy i statusy są w arkuszu.
-- **Ekspedycje**: nagrody wyłącznie w złocie, pula 50 → 100 → 200 → 400…; wypłata na wyspę albo ryzyko utraty puli, dodatkowy czas/ruchy za monety lub reklamę do 30 s. Plansze i szczegóły reklam pozostają do opisania.
-- **Bilans V3**: skutki kosztów zadań wobec 6 h terminu i wspólnej populacji, nagrody przekraczające magazyn, zerowa cena przy niepełnej minucie oraz wykładniczy wzrost puli ekspedycji.
+Nagrody monetowe zachowują kolejność **małe < średnie < duże wśród aktualnych ofert**. Nowy rozmiar losujemy tylko spośród tych, których skalowany zakres pasuje do już pokazanych, zamrożonych nagród; rozmiary nie muszą być jednakowo prawdopodobne. Warunki godzinowe sprawdzamy przy generowaniu. Nowe małe może wymagać więcej godzin niż stare średnie — nie oznacza to większej nagrody monetowej.
 
-Trzy pytania o ostatni niepełny kurs, sposób wyceny materiałów i utrwalenie mnożnika zadania zostały zamknięte zgodnie z potwierdzeniami użytkownika. Wycena w paczkach po 100 pozostaje w kalkulatorze wyłącznie jako odrzucone porównanie dla Premium; zwykły handel portowy nadal odbywa się w paczkach po 100. Inne szczegóły, m.in. zaokrąglenie końcowej ceny i zakres skracanego czasu, pozostają oznaczone osobno.
+## Kalkulatory i sprawdzenie
 
-Najważniejsze doprecyzowania:
+Przeliczono i zapisano wyniki **2161 formuł**. Kontrola objęła 74 warianty kosztów, kursów i czasów budowy oraz nowe kalkulatory przyspieszeń, zakupu całego budynku, prognoz dostaw i skalowania nagród. Sprawdzono 3164 warunki: brak błędów formuł i brak pustych wyników.
 
-- Zatrudnienie: do 12 × poziom danego budynku, z ograniczeniem do faktycznie wolnych ludzi. Produkcja na osobę: 10, 12, 13, 14… szt./h.
-- Transport: 60 sztuk jednego towaru na kurs na poziomie 1; pełny kurs z powrotem trwa 5 minut. Kalkulator rozdziela ładunki poszczególnych materiałów i uwzględnia dopłatę +10% dla kolejki.
-- Estymaty obejmują wyłącznie transport i budowanie. Sprawdzono 74 warianty kosztów i czasów. Założenia kalkulatora, w tym liczba dostępnych tragarzy i sposób wzrostu ładunku, są jawnie opisane.
-- Ceny portowe za 100 sztuk: podstawowe 40 sprzedaż / 50 zakup, przetworzone 140 / 150. Targ pozostaje wymianą towar za towar z marżą 10%, bez monet.
-- Wszystkie mechaniki mają działać również offline, według czasu zegarowego.
+Przykład prognozy: bazowe 300 kamienia → kolejka 330; przy 200 w centrali brakuje 130. Dopłata 25% bazowej wartości zakupu tych 130 sztuk wynosi 16,25 monety, a cena w pełnych monetach 17. Wpis źródłowy z wcześniejszą różnicą 100 zachowano w archiwum.
 
-Niewybrane szczegóły są oznaczone w zakładce „Decyzje i konflikty”. Wpisy źródłowe zachowano osobno; stare zasady zastąpione nowymi są opisane jako historyczne. Ceny globalnego pakietu budowlanego i szczegóły nowych błogosławieństw pozostają odłożone.
+Estymaty czasu obejmują **wyłącznie transport i budowanie**, przy jawnie opisanej obsadzie. Nie obejmują zbierania, karmienia, oczekiwania w kolejce ani wcześniejszych rozbudów. Wspólna populacja, przetwarzanie 2:1 i potrzeba wcześniejszych zapasów nadal mają znaczenie dla balansu.
 
-Poprzednie pliki pozostają dostępne: [pierwszy arkusz](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT-zasady.xlsx), [wersja z wpisami użytkownika](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT1-zasady.xlsx), [wersja 2](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT2-zasady.xlsx), [wersja 3](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT3-zasady.xlsx) oraz [oryginalny plik 4 użytkownika](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT4-zasady.xlsx).
+## Zakres odłożony
 
-Plik to dokument projektu. Udostępnienie arkusza nie zmienia kodu, zasad ani zapisów działającej gry.
+Zakładka „Na pozniej” oddziela reguły projektu od brakujących integracji: prawdziwe konta i płatności, weryfikacja social i poleceń, reklamy z hasłem, docelowy balans oraz ratowanie ekspedycji, osobna wizyta modlitewna i wartości nagród lojalnościowych. Kwoty pomysłów pozostają zapisane. Arkusz nie oznacza uruchomienia płatności ani integracji Facebook/Google. Stan wdrożenia frontendowego i testów opisuje [dziennik implementacji](../IMPLEMENTATION-LOG.md).
+
+Poprzednie pliki pozostają dostępne: [oryginał 6 użytkownika](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT6-zasady.xlsx), [wersja 5](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT5-zasady.xlsx), [oryginał 4](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT4-zasady.xlsx), [wersja 3](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT3-zasady.xlsx), [wersja 2](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT2-zasady.xlsx), [oryginał 1](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT1-zasady.xlsx) i [pierwszy arkusz](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT-zasady.xlsx).
