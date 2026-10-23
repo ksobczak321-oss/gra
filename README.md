@@ -24,13 +24,13 @@ Link `?profile=new-player` tworzy przy pierwszym otwarciu normalny start z po 10
 
 ## Podgląd
 
-- [Interaktywna wyspa — dotychczasowy zapis i jednorazowa pomoc do testów budowy](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html)
-- [Nowy gracz — normalny start, oddzielny zapis](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player)
+- [Interaktywna wyspa — dotychczasowy zapis i jednorazowa pomoc do testów budowy](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v12)
+- [Nowy gracz — normalny start, oddzielny zapis](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v12)
 - [Arkusz zasad, wersja 8](docs/arkusze/HARBORLIGHT8-zasady.xlsx)
 - [Logowanie i rejestracja po opublikowaniu zmian](https://ksobczak321-oss.github.io/gra/harborlight-auth.html)
 - [Zaakceptowany wzorzec wizualny](https://ksobczak321-oss.github.io/gra/harborlight-v1-screen.html)
 
-Ostatni pełny odbiór sprzed bieżącego pakietu dotyczy frontendu-v11: commit `43348df`, publikacja Pages `39936929230`, 225 testów modelu, 12 lokalnych zestawów Chromium i 3 powtórzone zestawy na publicznym adresie. Bieżący pakiet i Excel 8 są w trakcie końcowej weryfikacji; historyczne wyniki nie zastępują sprawdzenia tej wersji. Publiczny adres pokazuje ostatnią udaną publikację `main`. Obecność plików w lokalnym środowisku nie potwierdza wdrożenia; wyniki publikacji zapisujemy w [dzienniku implementacji](docs/IMPLEMENTATION-LOG.md).
+Aktualny frontend-v12: gra `137d1cf`, Excel 8 `00967f1`, udane Pages `39945595611`. Zaliczone 270/270 testów modelu i 14/14 lokalnych zestawów Chromium oraz ponownie frontend-v12, new-player i motion-v10 na publicznym adresie. Excel 8 ma 45 arkuszy, 3601 przeliczonych formuł i 231 zgodnych sprawdzeń; pobrany plik potwierdzono bajt po bajcie. Publiczny adres pokazuje ostatnią udaną publikację `main`. Obecność plików w lokalnym środowisku nie potwierdza wdrożenia; wyniki publikacji zapisujemy w [dzienniku implementacji](docs/IMPLEMENTATION-LOG.md).
 
 ## Uruchomienie i sprawdzenia
 

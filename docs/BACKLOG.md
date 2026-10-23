@@ -1,6 +1,6 @@
 # Backlog HARBORLIGHT
 
-Stan: 2026-10-23. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Bazą są decyzje arkusza 7; najnowsze zmiany zbiera [HARBORLIGHT8-zasady.xlsx](arkusze/HARBORLIGHT8-zasady.xlsx). Excel 7 pozostaje zachowany bez zmian. Ostatni pełny odbiór frontendu v11 dotyczy `43348df`; bieżący pakiet jest w końcowej weryfikacji. [Dziennik](IMPLEMENTATION-LOG.md) oddziela historyczne wyniki, obecne prace i backend.
+Stan: 2026-10-23. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Bazą są decyzje arkusza 7; najnowsze zmiany zbiera [HARBORLIGHT8-zasady.xlsx](arkusze/HARBORLIGHT8-zasady.xlsx). Excel 7 pozostaje zachowany bez zmian. Aktualny frontend v12 opublikowano w `137d1cf`, a Excel 8 w `00967f1`; odbiór lokalny i publiczny jest zakończony. [Dziennik](IMPLEMENTATION-LOG.md) oddziela historyczne wyniki, obecne prace i backend.
 
 Zachowujemy zaakceptowany wygląd wyspy i jej animacje. Reguły działają w przeglądarce bez backendu. Docelowe trzy sposoby gry — web, Android, iPhone — wymagają wspólnego konta, trwałego stanu i serwerowego rozliczania postępu; obecny lokalny zapis tego nie zapewnia.
 
@@ -8,7 +8,7 @@ Zachowujemy zaakceptowany wygląd wyspy i jej animacje. Reguły działają w prz
 
 ### FE-17 — atrakcje, ścieżki, efekty i Excel 8 — [#27](https://github.com/ksobczak321-oss/gra/issues/27)
 
-Status: realizacja zatwierdzona ostatnim „go”, implementacja i końcowa weryfikacja w toku. Zgłoszenie [#27](https://github.com/ksobczak321-oss/gra/issues/27), milestone frontend #3. [Aktualna macierz odbioru](FRONTEND-REVIEW.md) oddziela nowy pakiet od historycznego v11.
+Status: completed — cały pakiet wdrożony i publicznie sprawdzony; 270/270 testów modelu, 14/14 lokalnych zestawów Chromium oraz 3 ponowione zestawy na Pages. Excel 8 pobrany i porównany z zatwierdzonym plikiem. Workflow `39945595611`: success. Zgłoszenie [#27](https://github.com/ksobczak321-oss/gra/issues/27), milestone frontend #3. [Aktualna macierz odbioru](FRONTEND-REVIEW.md) oddziela nowy pakiet od historycznego v11.
 
 - Mniejszy Level po lewej, Storage i Workers po prawej z podpisami poszczególnych wartości. Podatki są usunięte ze wszystkich widoków, bez zmiany naliczania przez silnik.
 - Pięć kart Resources zachowuje górną aktywną obsadę, a pod ilustracją pokazuje lokalny zapas produktu / jego zapas centralny. Przy budowie osobne Transport · ETA i Construction · ETA.

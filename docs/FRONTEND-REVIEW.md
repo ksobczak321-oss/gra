@@ -2,7 +2,7 @@
 
 ## Bieżący pakiet „go” i Excel 8 — [FE-17 / #27](https://github.com/ksobczak321-oss/gra/issues/27)
 
-**Status: implementacja i końcowa weryfikacja w toku.** Poniższa tabela opisuje najnowszy zakres zaakceptowany przez użytkownika po kolejnej serii uwag. Wyniki v11 poniżej są dowodem wcześniejszego wydania, nie wynikiem tej aktualizacji. Aktualny commit, łączna regresja, wynik publikacji oraz publiczne testy zostaną dopisane do [dziennika](IMPLEMENTATION-LOG.md) po ich wykonaniu. Nowe ustalenia zbiera [Excel 8](arkusze/HARBORLIGHT8-zasady.xlsx); oryginalny Excel 7 pozostaje niezmieniony.
+**Status: wdrożone i publicznie zweryfikowane jako frontend-v12.** Gra [`137d1cf`](https://github.com/ksobczak321-oss/gra/commit/137d1cf), Excel 8 [`00967f1`](https://github.com/ksobczak321-oss/gra/commit/00967f1), [udane Pages](https://github.com/ksobczak321-oss/gra/actions/runs/39945595611). Zaliczone 270 testów modelu i 14 lokalnych zestawów Chromium; na publicznej stronie ponownie frontend-v12, new-player i motion-v10. Excel 8: 45 arkuszy, 3601 przeliczonych formuł i 231 zgodnych sprawdzeń. Poniższa tabela opisuje najnowszy zakres zaakceptowany przez użytkownika po kolejnej serii uwag. Wyniki v11 poniżej są dowodem wcześniejszego wydania, nie wynikiem tej aktualizacji. Aktualne commity, łączna regresja, wynik publikacji oraz publiczne testy są zapisane w [dzienniku](IMPLEMENTATION-LOG.md). Nowe ustalenia zbiera [Excel 8](arkusze/HARBORLIGHT8-zasady.xlsx); oryginalny Excel 7 pozostaje niezmieniony.
 
 | Wymaganie | Zachowanie do odbioru | Scenariusz weryfikacji |
 | --- | --- | --- |

@@ -281,7 +281,7 @@ Status: ukończono i opublikowano pełny pakiet screenów i komentarzy, [FE-16 /
 
 ## 2026-10-23 — kolejny pakiet „go”, atrakcje, ścieżki i Excel 8
 
-Status: implementacja i końcowa weryfikacja w toku; [FE-17 / #27](https://github.com/ksobczak321-oss/gra/issues/27), milestone frontend. Użytkownik wznowił prace poleceniem „go” i zlecił nowy arkusz 8 na podstawie niezmienionego arkusza 7. Późniejsza prośba dodała osobny link nowego gracza. Historia v11 powyżej pozostaje dowodem wcześniejszej publikacji; nie jest wynikiem tego pakietu.
+Status: ukończono, opublikowano i sprawdzono publiczny adres; [FE-17 / #27](https://github.com/ksobczak321-oss/gra/issues/27), milestone frontend. Użytkownik wznowił prace poleceniem „go” i zlecił nowy arkusz 8 na podstawie niezmienionego arkusza 7. Późniejsza prośba dodała osobny link nowego gracza. Historia v11 powyżej pozostaje dowodem wcześniejszej publikacji; nie jest wynikiem tego pakietu.
 
 - Najnowsza uwaga usuwa informacje o podatkach ze wszystkich widoków interfejsu, także nagłówka, kart załóg i objaśnień. Naliczanie 1 monety za godzinę przybyłego pracownika i dotychczasowy mnożnik kaplicy pozostają w silniku.
 - Mniejszy Level po lewej, Storage i Workers po prawej; oddzielne podpisy In stock / Current cap. / Next level cap. oraz Assigned / Free at home / Max workers. Resources pod ilustracją pokazuje lokalny / centralny zapas produktu, a górny licznik nadal rzeczywistych pracowników.
@@ -302,3 +302,12 @@ Status: implementacja i końcowa weryfikacja w toku; [FE-17 / #27](https://githu
 - Obejrzano zrzuty desktop/mobile: układ bez poziomego przepełnienia, pięć kart zamiast dialogów Decorations/Paths, podpisane statystyki, aktywne efekty i ekran ukończenia. Brak błędów JavaScript/HTTP. Wibracja jest wywoływana przez obsługujące ją przeglądarki; wsparcie Safari iOS pozostaje ograniczeniem platformy.
 - Dodatkowy niezależny audyt 75 scenariuszy do 48 godzin potwierdził zgodność czasu ciągłego, dzielonego i wczytanego zapisu. Ścieżki zmieniają wyłącznie kursy tragarzy, a premia atrakcji wygasa bez trwałego dopisywania szczęścia.
 - Wyniki publicznej wersji i identyfikatory publikacji zostaną dopisane po wdrożeniu; lokalny wynik nie stanowi potwierdzenia aktualizacji Pages.
+
+### Publikacja i odbiór frontendu v12 oraz Excela 8
+
+- Gra: commit [`137d1cf`](https://github.com/ksobczak321-oss/gra/commit/137d1cf). Excel 8, skrypt odtwarzający i instrukcja: [`00967f1`](https://github.com/ksobczak321-oss/gra/commit/00967f1). Udane Pages: [`39945595611`](https://github.com/ksobczak321-oss/gra/actions/runs/39945595611).
+- Po publikacji na rzeczywistym `https://ksobczak321-oss.github.io/gra` ponownie PASS: `harborlight-frontend-v12-smoke.py`, `harborlight-new-player-smoke.py` i `harborlight-motion-v10-smoke.py`. Pełny nowy interfejs, wszystkie 12 paneli i pomoc bez informacji o podatkach, oba magazyny na kartach Resources, atrakcje i drogi, Construction, świętowanie i bonus 500 raz, osobny start, telefon oraz rzeczywisty ruch wody/dymu sprawdzone bez błędów JavaScript/HTTP.
+- HTML, CSS i wszystkie podstawowe moduły zwracają 200 i korzystają ze spójnej wersji `frontend-v12`; stare odnośniki cache nie są używane. Zrzuty publicznej strony obejrzano dla nowych kart, ścieżek i mobilnego popupu.
+- Excel 8: **45 arkuszy, 265 reguł, 48 nowych wpisów V8, 20 atrakcji, 100 narracji, wszystkie 48 komentarzy źródłowych, 3601 przeliczonych formuł i 231 sprawdzeń TRUE**. Formuły przeliczono LibreOffice; osobna kontrola openpyxl potwierdziła brak błędów i brakujących zapisanych wyników. Oryginalny Excel 7 zachowuje identyczne bajty.
+- Pobrano rzeczywisty plik z GitHuba: HTTP 200, 289075 bajtów, poprawny ZIP/XLSX, SHA-256 `74ea3cc586d8d889ff34de8819694430503f45ed5fa2743873c9ad0c0b83cc3e`, zgodny z lokalnym plikiem. [Pobierz Excel 8](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT8-zasady.xlsx).
+- Linki: [bieżąca wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v12), [osobny profil nowego gracza](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v12), [warunki odbioru](FRONTEND-REVIEW.md). FE-17 / #27 ukończone w milestone frontend; serwerowe rozliczenia i integracje nadal pozostają zadaniami backendu.
