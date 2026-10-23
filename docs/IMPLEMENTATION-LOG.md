@@ -315,7 +315,7 @@ Status: ukończono, opublikowano i sprawdzono publiczny adres; [FE-17 / #27](htt
 
 ## 2026-10-23 — 58 decyzji V9, 19 uwag frontendowych i uproszczony Excel 9
 
-Status: implementacja i odbiór lokalny zakończone, cache `frontend-v13`; publikacja i publiczny odbiór oczekują na wykonanie. Użytkownik po przeglądzie logiki zatwierdził 58 kolejnych rozstrzygnięć oraz nowy pakiet ekranów i udzielił „go”. Manifest `docs/decisions-v9.json` jest źródłem reguł; wcześniejsze wpisy v7/v8/v12 są historią swoich wydań.
+Status: implementacja, odbiór lokalny, publikacja i odbiór publiczny zakończone, cache `frontend-v13`. Użytkownik po przeglądzie logiki zatwierdził 58 kolejnych rozstrzygnięć oraz nowy pakiet ekranów i udzielił „go”. Manifest `docs/decisions-v9.json` jest źródłem reguł; wcześniejsze wpisy v7/v8/v12 są historią swoich wydań.
 
 - Zmieniono potrzeby mieszkańców, zamrożenie nowej osoby i odtwarzanie nakładających się efektów 100%; atrakcje kierowane do najmniej szczęśliwych uprawnionych, cena według rzeczywistych odbiorców i reset ofert o północy.
 - Rzeczywisty T od pierwszego odbioru do ostatniej dostawy obejmuje przerwy. Fizyczne rezerwacje nadal zajmują centralę, prognozy używają FIFO, miejsce 50×poziom Magazynu chroni Food; anulowanie i wszystkie nadmiary zwrotów/nagród zachowują towary.
@@ -325,14 +325,14 @@ Status: implementacja i odbiór lokalny zakończone, cache `frontend-v13`; publi
 - Samouczek 25 lekcji przez pięć aktywnych dni, jawnie projektowe kwoty 1000 monet i 400 materiałów łącznie. Aktywna widoczna akcja odnawia bonus na 5 min; reguły social/referral są czystymi punktami integracji, a nie połączeniem z dostawcą. Lojalność ma serię/koniec, bez nieustalonych wypłat.
 - Frontend: usunięty lewy pasek, nowy nagłówek, ustalone 12 kart, zasoby z wszystkimi przewozami w nawiasie, EN/PL, filtry powiadomień, rozwijane jednowierszowe efekty, Donation/Donate i polskie odpowiedniki, potwierdzenia ścieżek, usunięte pola otoczenia i poprawki animacji.
 - Excel 9 powstaje z niezmienionego 8: cztery widoczne zakładki (Jak działa gra, Budynki v9, Do decyzji, Kalkulator), 45 zakładek źródła zachowanych jako ukryta historia, 48 komentarzy i wszystkie formuły. Pełny manifest, lekcje i kontrole są dodatkowymi ukrytymi szczegółami. Arkusz nie zmienia plików 7 i 8.
-- Przepisano bieżące README, reguły, budynki, instrukcję i macierz odbioru, a backlog odróżnia nowy zakres od ukończonego v12. Wyniki lokalnych testów i suma kontrolna arkusza są poniżej; commit oraz publiczne Pages zostaną wpisane po wykonaniu. Lokalne pliki nie są dowodem publikacji.
+- Przepisano bieżące README, reguły, budynki, instrukcję i macierz odbioru, a backlog odróżnia nowy zakres od ukończonego v12. Wyniki testów, suma kontrolna arkusza, commit, workflow oraz potwierdzenie rzeczywistego publicznego Pages są zapisane poniżej.
 
 ### Weryfikacja lokalna Excela 9
 
 - Plik ma **52 arkusze, cztery widoczne zakładki, 46 mechanik opisanych najwyżej trzema zdaniami, wszystkie 58 decyzji i 19 wymagań frontendu oraz 25 lekcji samouczka**. Pięć tematów na później jest oddzielonych od podjętych decyzji i jawnych założeń projektu.
 - Zachowano 45 źródłowych zakładek Excela 8 z identycznymi wartościami, formułami i wszystkimi 48 komentarzami; w nowym pliku są ukrytą historią. Oryginały 7 i 8 zachowują identyczne bajty.
 - LibreOffice przeliczył wszystkie **3693 formuły** i zapisał wyniki. Kontrola openpyxl nie znalazła błędów ani brakujących wyników; **30 nowych i 231 historycznych sprawdzeń daje TRUE**. Skrypt `scripts/build_workbook_v9.py --validate-only` sprawdza też pełne pokrycie manifestu oraz integralność ZIP/XLSX.
-- Lokalny Excel 9 ma **329612 bajtów**, SHA-256 `3fc10a5d84df001e67e217dbc8c045cc5025b7777f91239c60b6694966864cc8`. Publikacja na GitHubie i sprawdzenie pobrania zostaną potwierdzone osobno; powyższy wynik dotyczy pliku lokalnego.
+- Lokalny Excel 9 ma **329612 bajtów**, SHA-256 `3fc10a5d84df001e67e217dbc8c045cc5025b7777f91239c60b6694966864cc8`. Publikacja na GitHubie i sprawdzenie pobrania tego samego pliku są potwierdzone w sekcji publicznego odbioru poniżej.
 
 ### Końcowy odbiór lokalny frontendu v13
 
@@ -340,4 +340,13 @@ Status: implementacja i odbiór lokalny zakończone, cache `frontend-v13`; publi
 - Zaliczone pięć zestawów Chromium: `tests/harborlight-frontend-v13-smoke.py`, `tests/harborlight-new-player-smoke.py`, `tests/harborlight-auth-smoke.py` i `tests/harborlight-v13-auth-motion-smoke.py` oraz `scripts/harborlight-v13-extra-acceptance.py`. Dodatkowy odbiór zaliczył sześć grup wymagań, w tym 24 widoki budynków EN/PL. Nowy profil zaczyna od 12 osób i po 100 zasobów, pozostaje odrębny od dotychczasowej wyspy i nie ponawia testowego grantu.
 - Niezależny przegląd sprawdził wszystkie 12 paneli i pięć kart Resources w EN/PL, komplet wymagań F01–F19 i brak informacji podatkowych w interfejsie. Obejrzano rzeczywiste zrzuty desktopowe i mobilne, w tym kompaktowy Ratusz i Dom po polsku; sprawdzono formularze oraz ruch wody/dymu i odtworzenie animacji.
 - Końcowe `python3 scripts/build_workbook_v9.py --validate-only` ponownie PASS, bez przebudowy arkusza. SHA-256 Excela 9 pozostaje `3fc10a5d84df001e67e217dbc8c045cc5025b7777f91239c60b6694966864cc8`; pliki 7 i 8 nadal są niezmienione.
-- Powyższe są wynikami lokalnymi. Commit, workflow Pages, publiczne scenariusze i pobranie Excela z GitHuba zostaną potwierdzone osobno po wykonaniu; sam parametr `frontend-v13` w linku nie stanowi publikacji.
+- Powyższe są wynikami lokalnymi; odrębny publiczny odbiór, commit, workflow i pobranie Excela z GitHuba potwierdzono poniżej. Sam parametr wersji w linku nie stanowi dowodu publikacji.
+
+### Publikacja frontendu v13 i Excela 9
+
+- Commit [8025f3d2a482d20ad419b95963a7f03135c7f2c1](https://github.com/ksobczak321-oss/gra/commit/8025f3d2a482d20ad419b95963a7f03135c7f2c1) jest na `main`. Workflow [Pages 40012462614](https://github.com/ksobczak321-oss/gra/actions/runs/40012462614) zakończył się `success`.
+- Anonimowe pobranie Excela 9 z GitHub raw i Pages zwraca **HTTP 200, 329612 bajtów**, poprawny ZIP/XLSX i identyczny SHA-256 `3fc10a5d84df001e67e217dbc8c045cc5025b7777f91239c60b6694966864cc8`. Plik publiczny jest dokładnie plikiem poddanym walidacji; nie przebudowywano arkusza.
+- Wszystkie **17 bieżących plików HTML/CSS/JavaScript** zwraca HTTP 200 i ma sumę kontrolną zgodną z lokalnym wydaniem, ze spójnym `frontend-v13`. Jest to potwierdzenie publikacji plików, odrębne od testów kliknięć w przeglądarce.
+- Na rzeczywistym `https://ksobczak321-oss.github.io/gra` ponownie **PASS wszystkie trzy zestawy**: `tests/harborlight-frontend-v13-smoke.py`, `scripts/harborlight-v13-extra-acceptance.py` i `tests/harborlight-new-player-smoke.py`. Dodatkowy odbiór zaliczył sześć grup wymagań, w tym komplet 24 widoków budynków EN/PL. Brak błędów JavaScript/HTTP i nieoczekiwanych zewnętrznych wywołań udostępniania.
+
+- Publiczne linki końcowe: [bieżąca wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v13), [oddzielny nowy gracz](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v13), [Excel 9](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT9-zasady.xlsx). Potwierdzony nowy profil nie usuwa dotychczasowej wyspy i nie przyznaje testowego grantu.

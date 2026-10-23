@@ -1,30 +1,30 @@
 # Odbiór frontendu v13 i decyzji V9
 
-Stan wydania **frontend-v13 / Excel 9**: implementacja i odbiór lokalny zakończone — **388/388 testów modelu PASS** oraz zaliczone testy interfejsu, nowego gracza, formularzy i animacji. Publikacja i sprawdzenie rzeczywistego Pages pozostają do potwierdzenia w [dzienniku](IMPLEMENTATION-LOG.md); lokalny wynik nie potwierdza publicznej wersji. Historyczne wyniki v12 są oddzielone od v13.
+Stan wydania **frontend-v13 / Excel 9**: implementacja, odbiór lokalny, publikacja i odbiór publiczny zakończone — **388/388 testów modelu PASS**, pięć lokalnych zestawów przeglądarkowych i trzy zestawy rzeczywistego Pages PASS. Udane [Pages 40012462614](https://github.com/ksobczak321-oss/gra/actions/runs/40012462614); publiczny Excel i 17 plików gry zwracają HTTP 200 oraz zgadzają się z lokalnymi sumami kontrolnymi. Dowody są w [dzienniku](IMPLEMENTATION-LOG.md); wyniki v12 są historią osobnego wydania.
 
 Źródło kompletności: [manifest](decisions-v9.json). Poniższa tabela opisuje wszystkie 19 nowych wymagań; samo istnienie tabeli nie potwierdza wyniku testów. Weryfikacja obejmuje również 58 reguł, migrację zapisu, zachowanie czasu offline i dotychczasowe animacje.
 
 | ID | Wymaganie | Kryterium odbioru | Stan weryfikacji |
 |---|---|---|---|
-| F01 | Lewy pasek | Usunąć cały lewy pasek nawigacji i pozostawić dostęp do funkcji przez inne dostępne elementy interfejsu. | PASS lokalnie; publiczny odbiór oczekuje |
-| F02 | Górny pasek | Usunąć pięć liczników materiałów; dodać faktycznie pracujących, czas do nowego mieszkańca i Punkty. Monety, poziom, szczęście i ludność pozostają. | PASS lokalnie; publiczny odbiór oczekuje |
-| F03 | Kolejność budynków | Ratusz, Dom, Farma, Młyn, Kamieniołom, Drwale, Tartak, Magazyn, Targ, Port, Kaplica, Latarnia. | PASS lokalnie; publiczny odbiór oczekuje |
-| F04 | Kafelki budynków | U góry własny poziom; na dole liczba faktycznie pracujących oraz osobno (+n) idących do pracy i (−n) odwołanych. Ratusz, Dom, Kaplica i Latarnia mają tylko poziom. | PASS lokalnie; publiczny odbiór oczekuje |
-| F05 | Kafelki zasobów | Pięć materiałów pokazuje pracujących na górze i stan lokalny / centralny (w transporcie) na dole. Nawias obejmuje wszystkie fizyczne przewozy tego zasobu, w tym budowy, targ i port. | PASS lokalnie; publiczny odbiór oczekuje |
-| F06 | Język | W ustawieniach wybór angielskiego lub polskiego. Przełączenie obejmuje cały widoczny interfejs, liczby, komunikaty i podpowiedzi. | PASS lokalnie; publiczny odbiór oczekuje |
-| F07 | Samouczek | 25 mikrozadań, po pięć przez pierwszych pięć aktywnych dni gry, z nagrodami i trwałym postępem. Zadania uczą obsady, transportu, jedzenia, szczęścia, rozbudowy i pozostałych podstaw. | PASS lokalnie; publiczny odbiór oczekuje |
-| F08 | Premia aktywności | Rzeczywista akcja w aktywnym widocznym oknie odnawia pięciominutowy bonus ×2 produkcji materiałów i podatków. Czas się nie sumuje; mnożnik działa razem z latarnią i kaplicą, bez przyspieszania transportu. | PASS lokalnie; publiczny odbiór oczekuje |
-| F09 | Przestoje | Przyczyny zatrzymania produkcji, np. brak wejścia, trafiają do powiadomień bez powtarzania co sekundę. | PASS lokalnie; publiczny odbiór oczekuje |
-| F10 | Ścieżki | Udane ulepszenie odcinka daje krótkie wizualne potwierdzenie/fajerwerki, z uwzględnieniem ustawienia animacji. | PASS lokalnie; publiczny odbiór oczekuje |
-| F11 | Powiadomienia | Gracz wybiera kategorie widocznych powiadomień. Historia mechanik nie ginie przez zmianę filtra. | PASS lokalnie; publiczny odbiór oczekuje |
-| F12 | Pola otoczenia | Usunąć klikalne pola otoczenia takie jak plaża, zachowując ilustrację wyspy. | PASS lokalnie; publiczny odbiór oczekuje |
-| F13 | Trwałość animacji | Usunąć przyczynę zatrzymywania animacji podczas dłuższej gry i po przywróceniu karty. | PASS lokalnie; publiczny odbiór oczekuje |
-| F14 | Nazewnictwo zadań | Deposit zmienić na Donation/Donate w angielskim oraz Darowizna/Przekaż w polskim. | PASS lokalnie; publiczny odbiór oczekuje |
-| F15 | Efekty | Każda aktywna premia lub kara zajmuje jeden wiersz: nazwa, wartość, czas/status i ⓘ na końcu. Kliknięcie rozwija szczegóły zakresu i warunku zakończenia. | PASS lokalnie; publiczny odbiór oczekuje |
-| F16 | Kupno mieszkańców | Jedna kupiona osoba kosztuje tyle co najbliższa rozbudowa Ratusza: 500 × obecny poziom każdego z sześciu zasobów. Zakup ograniczają wolne miejsca w Domu i limit Ratusza; nowe osoby podlegają regułom pierwszych 24 godzin. | PASS lokalnie; publiczny odbiór oczekuje |
-| F17 | Dom i Ratusz | Uprościć i uporządkować obie karty: najważniejsze liczby od razu, oszczędne ramki i opisy pod ⓘ. | PASS lokalnie; publiczny odbiór oczekuje |
-| F18 | Punkty | Punkty = poziom Ratusza × stan monet, według migawki przeliczanej o pełnej godzinie zegarowej. | PASS lokalnie; publiczny odbiór oczekuje |
-| F19 | Tempo zasobów | Pokazać ↑ dodatni, ↓ ujemny lub → zerowy bilans godzinowy produkcji i zużycia. Sam transport między składami nie zwiększa ani nie zmniejsza bilansu całej wyspy. | PASS lokalnie; publiczny odbiór oczekuje |
+| F01 | Lewy pasek | Usunąć cały lewy pasek nawigacji i pozostawić dostęp do funkcji przez inne dostępne elementy interfejsu. | PASS lokalnie i na Pages |
+| F02 | Górny pasek | Usunąć pięć liczników materiałów; dodać faktycznie pracujących, czas do nowego mieszkańca i Punkty. Monety, poziom, szczęście i ludność pozostają. | PASS lokalnie i na Pages |
+| F03 | Kolejność budynków | Ratusz, Dom, Farma, Młyn, Kamieniołom, Drwale, Tartak, Magazyn, Targ, Port, Kaplica, Latarnia. | PASS lokalnie i na Pages |
+| F04 | Kafelki budynków | U góry własny poziom; na dole liczba faktycznie pracujących oraz osobno (+n) idących do pracy i (−n) odwołanych. Ratusz, Dom, Kaplica i Latarnia mają tylko poziom. | PASS lokalnie i na Pages |
+| F05 | Kafelki zasobów | Pięć materiałów pokazuje pracujących na górze i stan lokalny / centralny (w transporcie) na dole. Nawias obejmuje wszystkie fizyczne przewozy tego zasobu, w tym budowy, targ i port. | PASS lokalnie i na Pages |
+| F06 | Język | W ustawieniach wybór angielskiego lub polskiego. Przełączenie obejmuje cały widoczny interfejs, liczby, komunikaty i podpowiedzi. | PASS lokalnie i na Pages |
+| F07 | Samouczek | 25 mikrozadań, po pięć przez pierwszych pięć aktywnych dni gry, z nagrodami i trwałym postępem. Zadania uczą obsady, transportu, jedzenia, szczęścia, rozbudowy i pozostałych podstaw. | PASS lokalnie i na Pages |
+| F08 | Premia aktywności | Rzeczywista akcja w aktywnym widocznym oknie odnawia pięciominutowy bonus ×2 produkcji materiałów i podatków. Czas się nie sumuje; mnożnik działa razem z latarnią i kaplicą, bez przyspieszania transportu. | PASS lokalnie i na Pages |
+| F09 | Przestoje | Przyczyny zatrzymania produkcji, np. brak wejścia, trafiają do powiadomień bez powtarzania co sekundę. | PASS lokalnie i na Pages |
+| F10 | Ścieżki | Udane ulepszenie odcinka daje krótkie wizualne potwierdzenie/fajerwerki, z uwzględnieniem ustawienia animacji. | PASS lokalnie i na Pages |
+| F11 | Powiadomienia | Gracz wybiera kategorie widocznych powiadomień. Historia mechanik nie ginie przez zmianę filtra. | PASS lokalnie i na Pages |
+| F12 | Pola otoczenia | Usunąć klikalne pola otoczenia takie jak plaża, zachowując ilustrację wyspy. | PASS lokalnie i na Pages |
+| F13 | Trwałość animacji | Usunąć przyczynę zatrzymywania animacji podczas dłuższej gry i po przywróceniu karty. | PASS lokalnie i na Pages |
+| F14 | Nazewnictwo zadań | Deposit zmienić na Donation/Donate w angielskim oraz Darowizna/Przekaż w polskim. | PASS lokalnie i na Pages |
+| F15 | Efekty | Każda aktywna premia lub kara zajmuje jeden wiersz: nazwa, wartość, czas/status i ⓘ na końcu. Kliknięcie rozwija szczegóły zakresu i warunku zakończenia. | PASS lokalnie i na Pages |
+| F16 | Kupno mieszkańców | Jedna kupiona osoba kosztuje tyle co najbliższa rozbudowa Ratusza: 500 × obecny poziom każdego z sześciu zasobów. Zakup ograniczają wolne miejsca w Domu i limit Ratusza; nowe osoby podlegają regułom pierwszych 24 godzin. | PASS lokalnie i na Pages |
+| F17 | Dom i Ratusz | Uprościć i uporządkować obie karty: najważniejsze liczby od razu, oszczędne ramki i opisy pod ⓘ. | PASS lokalnie i na Pages |
+| F18 | Punkty | Punkty = poziom Ratusza × stan monet, według migawki przeliczanej o pełnej godzinie zegarowej. | PASS lokalnie i na Pages |
+| F19 | Tempo zasobów | Pokazać ↑ dodatni, ↓ ujemny lub → zerowy bilans godzinowy produkcji i zużycia. Sam transport między składami nie zwiększa ani nie zmniejsza bilansu całej wyspy. | PASS lokalnie i na Pages |
 
 ## Odbiór mechanik
 
@@ -40,6 +40,6 @@ Stan wydania **frontend-v13 / Excel 9**: implementacja i odbiór lokalny zakońc
 
 ## Pliki testowe i dowody
 
-Bieżące scenariusze nowych reguł: [activities-v9](../tests/harborlight-v9-activities.test.mjs), [residents-leisure-v9](../tests/harborlight-v9-residents-leisure.test.mjs), [logistics-v9](../tests/harborlight-v9-logistics.test.mjs), [progression-v13](../tests/harborlight-progression-v13.test.mjs), [frontend-v13](../tests/harborlight-frontend-v13-smoke.py). Końcowy wynik lokalny: **388/388 PASS, 0 błędów i 0 pominiętych**. Zaliczone [frontend-v13](../tests/harborlight-frontend-v13-smoke.py), [new-player](../tests/harborlight-new-player-smoke.py), [auth](../tests/harborlight-auth-smoke.py) i [v13-auth-motion](../tests/harborlight-v13-auth-motion-smoke.py) oraz [dodatkowy odbiór](../scripts/harborlight-v13-extra-acceptance.py): sześć grup wymagań, w tym wszystkie 24 widoki budynków w EN/PL oraz pięć zasobów. Obejrzano desktop i telefon, w tym Ratusz i Dom po polsku. Publikację i wynik rzeczywistego Pages zapisuje [dziennik](IMPLEMENTATION-LOG.md) dopiero po sprawdzeniu.
+Bieżące scenariusze nowych reguł: [activities-v9](../tests/harborlight-v9-activities.test.mjs), [residents-leisure-v9](../tests/harborlight-v9-residents-leisure.test.mjs), [logistics-v9](../tests/harborlight-v9-logistics.test.mjs), [progression-v13](../tests/harborlight-progression-v13.test.mjs), [frontend-v13](../tests/harborlight-frontend-v13-smoke.py). Końcowy wynik lokalny: **388/388 PASS, 0 błędów i 0 pominiętych**. Zaliczone [frontend-v13](../tests/harborlight-frontend-v13-smoke.py), [new-player](../tests/harborlight-new-player-smoke.py), [auth](../tests/harborlight-auth-smoke.py) i [v13-auth-motion](../tests/harborlight-v13-auth-motion-smoke.py) oraz [dodatkowy odbiór](../scripts/harborlight-v13-extra-acceptance.py): sześć grup wymagań, w tym wszystkie 24 widoki budynków w EN/PL oraz pięć zasobów. Obejrzano desktop i telefon, w tym Ratusz i Dom po polsku. Publikacja i zgodność 17 plików gry oraz Excela są potwierdzone w [dzienniku](IMPLEMENTATION-LOG.md). Na rzeczywistym Pages ponownie PASS: frontend-v13, dodatkowy odbiór sześciu grup wymagań (w tym wszystkie 24 widoki budynków EN/PL) i new-player. Brak błędów JavaScript/HTTP oraz nieoczekiwanych zewnętrznych wywołań udostępniania.
 
 Historycznie v12 zaliczyło 270 testów modelu, 14 lokalnych zestawów Chromium i 3 publiczne zestawy; wynik ten nie jest automatycznym potwierdzeniem zmienionej wersji v13.

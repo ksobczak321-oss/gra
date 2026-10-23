@@ -2,7 +2,7 @@
 
 [Pobierz Excel 9 — HARBORLIGHT9-zasady.xlsx](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT9-zasady.xlsx)
 
-Jeżeli GitHub pokazuje stronę pliku, wybierz **Download raw file**. Plik otworzysz w Excelu lub LibreOffice Calc; można go też zaimportować do Arkuszy Google. Lokalna walidacja pliku jest zakończona; także gra zaliczyła 388/388 testów modelu i pięć scenariuszy przeglądarkowych. Publikacja wersji 9 i sprawdzenie publicznego pobrania są odnotowywane dopiero po wykonaniu w [dzienniku implementacji](../IMPLEMENTATION-LOG.md).
+Jeżeli GitHub pokazuje stronę pliku, wybierz **Download raw file**. Plik otworzysz w Excelu lub LibreOffice Calc; można go też zaimportować do Arkuszy Google. Lokalna walidacja pliku jest zakończona; także gra zaliczyła 388/388 testów modelu i pięć lokalnych i trzy publiczne scenariusze przeglądarkowe. Wersję 9 opublikowano w [commicie 8025f3d](https://github.com/ksobczak321-oss/gra/commit/8025f3d2a482d20ad419b95963a7f03135c7f2c1). Anonimowe pobranie z GitHuba i Pages zwraca HTTP 200, poprawny XLSX i sumę SHA-256 identyczną z plikiem lokalnym; [dziennik implementacji](../IMPLEMENTATION-LOG.md) zawiera dowód publikacji.
 
 Wersja **9** upraszcza arkusz do **czterech widocznych zakładek**. Obejmuje wszystkie **58 rozstrzygnięć logiki i 19 wymagań frontendu** z [manifestu](../decisions-v9.json), wcześniejsze obowiązujące reguły oraz jawnie opisane założenia wdrożenia. Każda z 46 podstawowych mechanik ma najwyżej trzy zdania. Pliki 7 i 8 nie zostały zmienione.
 

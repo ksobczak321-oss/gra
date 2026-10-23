@@ -1,6 +1,6 @@
 # Backlog HARBORLIGHT
 
-Bieżący zakres: **58 decyzji V9, 19 uwag frontendu oraz uproszczony Excel 9**, wydanie docelowe frontend-v13. Implementacja i odbiór lokalny zakończone: 388/388 testów modelu PASS, pięć zestawów przeglądarkowych i przegląd wizualny zaliczone. Commit, publikację i publiczny wynik zapisuje dziennik po potwierdzeniu. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4).
+Bieżący zakres: **58 decyzji V9, 19 uwag frontendu oraz uproszczony Excel 9**, wydanie docelowe frontend-v13. Implementacja i odbiór lokalny zakończone: 388/388 testów modelu PASS, pięć zestawów przeglądarkowych i przegląd wizualny zaliczone. Commit 8025f3d i udane Pages 40012462614 potwierdzają publikację; publiczne sumy kontrolne gry i Excela są zgodne. Końcowy odbiór rzeczywistego Pages: trzy zestawy PASS; dowody zapisuje dziennik. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4).
 
 ## Bieżąca iteracja V9
 

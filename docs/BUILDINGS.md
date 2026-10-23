@@ -1,6 +1,6 @@
 # Budynki i mieszkaniec — wersja 9
 
-Stan wydania **frontend-v13 / Excel 9**: implementacja i odbiór lokalny zakończone — **388/388 testów modelu PASS** oraz zaliczone testy interfejsu, nowego gracza, formularzy i animacji. Publikacja i sprawdzenie rzeczywistego Pages pozostają do potwierdzenia w [dzienniku](IMPLEMENTATION-LOG.md); lokalny wynik nie potwierdza publicznej wersji. Historyczne wyniki v12 są oddzielone od v13.
+Stan wydania **frontend-v13 / Excel 9**: implementacja, odbiór lokalny, publikacja i odbiór publiczny zakończone — **388/388 testów modelu PASS**, pięć lokalnych zestawów przeglądarkowych i trzy zestawy rzeczywistego Pages PASS. Udane [Pages 40012462614](https://github.com/ksobczak321-oss/gra/actions/runs/40012462614); publiczny Excel i 17 plików gry zwracają HTTP 200 oraz zgadzają się z lokalnymi sumami kontrolnymi. Dowody są w [dzienniku](IMPLEMENTATION-LOG.md); wyniki v12 są historią osobnego wydania.
 
 Źródłem bieżących reguł jest [manifest 58 decyzji i 19 wymagań frontendu](decisions-v9.json), zatwierdzony w rozmowie po Excelu 8. Nowsze rozstrzygnięcia zastępują wcześniejsze opisy. Pliki 7 i 8 zachowują identyczne bajty; ich źródła i wszystkie 48 komentarzy zachowano w ukrytym archiwum Excela 9.
 
