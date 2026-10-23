@@ -1,36 +1,68 @@
 # Arkusz zasad HARBORLIGHT
 
-[Pobierz aktualny Excel — HARBORLIGHT7-zasady.xlsx](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT7-zasady.xlsx)
+[Pobierz Excel 8 — HARBORLIGHT8-zasady.xlsx](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT8-zasady.xlsx)
 
 Jeżeli GitHub pokazuje stronę pliku, wybierz **Download raw file**. Plik otworzysz w Excelu lub LibreOffice Calc; można go też zaimportować do Arkuszy Google.
 
-Wersja 7 uwzględnia przesłany `HARBORLIGHT6-zasady.xlsx` oraz wszystkie 17 późniejszych decyzji użytkownika z 23.10.2026. Zawiera **36 zakładek, 217 wpisów w rejestrze zasad i katalog 100 narracji zadań latarni**. Właściwe tabele i kalkulatory zostały zaktualizowane; wcześniejsze pytania nie pozostają oznaczone jako nierozstrzygnięte, jeżeli uzyskano odpowiedź.
+Wersja **8** powstała na podstawie niezmienionego pliku 7 oraz wszystkich późniejszych zaakceptowanych zmian z rozmowy: obu pakietów wcześniejszego frontendu, najnowszych uwag do ekranów, atrakcji, dróg i efektów. Zawiera **45 zakładek, 265 wpisów w rejestrze zasad, 48 nowych pozycji V8, 20 atrakcji oraz zachowany katalog 100 narracji zadań latarni**. Zaktualizowano właściwe tabele i kalkulatory, a nie tylko dopisano osobną listę zmian.
 
-Oryginalny plik 6 pozostał niezmieniony. Wszystkie 85 różnic względem poprzedniego pliku 5 zachowano dosłownie w „Twoje wpisy v6”, a poprzednie 200 wpisów rejestru w „Rejestr historyczny v6”. Wpisy źródłowe i 48 komentarzy zachowano; najnowsza rozmowa ma pierwszeństwo przed starszymi opisami wizyt znajdującymi się w przesłanej kopii.
+Oryginał **HARBORLIGHT7-zasady.xlsx nie został zmieniony**. Zachowano wszystkie 48 komentarzy użytkownika, źródłowe notatki w komórkach oraz archiwalne zakładki. Nowy „Rejestr historyczny v7” przechowuje poprzedni stan 217 reguł. Wcześniejsze różnice i źródła pozostają w swoich zakładkach; nowsze decyzje w „Zmiany v8” mają pierwszeństwo.
 
-## Najnowsze decyzje
+## Najnowsze zasady V8
 
-- **Latarnia:** pobyt 4 h bez dojścia i wycofania. Od powrotu uczestnicy mają 100% szczęścia i indywidualną blokadę ponownej wizyty przez 24 h. Każda osobno wysłana grupa daje populacji +10 pp przez **6 h**; premie grup sumują się. Jednocześnie jest 2 × poziom latarni miejsc, a darmowa pula wynosi 2 × poziom wejść w ruchomych 24 h. Można dokupić do trzech pakietów, każdy po 2L wejść, za 300 × numer pakietu (2, 3, 4) × poziom latarni monet.
-- **Dom:** raz na 24 h pula pełnych punktów równa populacji w chwili odnowienia. Punkty dodają osobiste szczęście i nie kasują kar ani ich liczników. Po 23 h 58 min automat rozdaje wyłącznie niewykorzystaną resztę najmniej szczęśliwym, losując przy remisie.
-- **Nowi mieszkańcy:** przez pierwsze 24 h mają zamrożone 0% szczęścia, również podczas premii. Potem zwykłe naliczanie od 0%. Początkowa dwunastka nie podlega zamrożeniu.
-- **Przestój:** podatek płynie, ale nie ma +1 pp/h za pracę ani dodatkowej kary bezrobocia. Limit −50 dotyczy samej kary przestoju; suma z innymi karami może być niższa.
-- **Kaplica:** płatne błogosławieństwo kosztuje 100 × poziom kaplicy monet. Kolejne można uruchomić 4 h po końcu godzinnego efektu: aktywacja o 12:00, koniec o 13:00, następne od 17:00. Zatwierdzony koszt rozbudowy: nowy poziom × (180 monet + 20 drewna + 60 kamienia + 10 desek).
-- **Zadania:** zawsze trzy; start małe/średnie/duże, dalej nowe losowego rozmiaru na końcu FIFO. Mogą zostać trzy małe lub trzy duże. Początkowy termin wynosi 6 h; pierwsze ukończenie każdego łańcucha ustala jego niezależną dobową godzinę odnowienia w strefie Europe/Warsaw. Następcy pojawiają się natychmiast, zachowując kotwicę. Nagrody są zamrożone przy generowaniu i skalowane względem poziomu ratusza 3. Towarów w nagrodzie: 1/2/3 rodzaje. Wpłaty chronią rezerwę żywności, a nadmiar nagrody czeka w buforze i automatycznie uzupełnia centralę.
-- **Premium:** pakiet budowlany kosztuje 1000 × poziom ratusza monet za 24 h. Kolejka nadal +10%; prognoza wymaga aktywnego pakietu oraz dopłaty 25% bazowej portowej wartości braków po koszcie kolejki. Pełny zakup budynku kosztuje wszystkie materiały według proporcjonalnych cen zakupu portu +25%, nominalne monety budynku i natychmiastowy transport. Nie zabiera własnych materiałów; budynek jest gotowy po **10 sekundach**. Przyspieszenie: zawsze `max(5, pełne minuty skrócenia)` monet.
-- **Port:** osobny licznik podwyżek dla każdego rodzaju produktu w ruchomych 3 h; cena zamrożona przy kliknięciu zamówienia. Zakup drewna nie podnosi ceny kamienia.
+- **Bufory i ludzie:** lokalny magazyn producenta ma `200 × własny poziom`, a limit pracy pozostaje `12 × własny poziom zakładu`. Norma wymagań zadań nie została zmieniona. Storage ma podpisy `In stock / Current cap. / Next level cap.`, a Workers: `Assigned / Free at home / Max workers`.
+- **Podatki:** wszystkie informacje podatkowe usunięte z interfejsu. Sam rachunek pozostaje: 1 moneta/os./h od dotarcia do zakładu, także podczas przestoju; czasowa premia kaplicy nadal podwaja podatek. Excel opisuje tę mechanikę.
+- **Resources:** pięć kart produktów. Mały górny numerek pokazuje osoby faktycznie pracujące u producenta; dolna para to **zapas lokalny / zapas tego produktu w centrali**. Kliknięcie otwiera ten sam panel producenta co budynek na wyspie.
+- **Budynki:** właściwy status u góry każdego panelu, produkt/ilość/czas najbliższej produkcji, objaśnienia pod „i”. U pięciu producentów Upgrade, osobne czasy i sąsiednia ramka Premium z dwoma przyciskami. Etykieta budowy ma dwa wiersze: `Transport · ETA` oraz `Construction · ETA`.
+- **Zarządzanie:** Construction and queue tylko w ratuszu; Manage all workers tylko z domu. Dom pokazuje populację, limit ratusza, łóżka i przyrost/spadek; opisy Housing capacity i House happiness pod „i”.
+- **Priorytety:** najwyżej trzy wybrane spośród pięciu produktów oraz **Construction**, we wspólnej numeracji 1/2/3. Powtarzane bloki rzeczywistych kursów: 8 + 2 losowe; 5 + 3 + 2 losowe; albo 5/3/2. Wybór działa bezterminowo, a ratunkowy transport żywności zachowuje ochronę.
+- **Podgląd tragarzy:** aktualne przypisanie, towar, ilość, źródło → cel i pozostały czas; odrębnie dojście i oczekiwanie. Odwołanie nie przenosi starego ładunku na nową osobę ani nie usuwa towaru.
+- **Zadania:** zawsze trzy oferty, tylko jedno aktywne zadanie. Podświetlenie i postęp każdego produktu w obu widokach; pozostałe karty są wyszarzone. Zachowane stare wpłaty, terminy i mnożniki.
+- **Ukończenie zadania:** fajerwerki i krótka wibracja na obsługującym ją telefonie. Ekran Share your achievement można pominąć. Kliknięcie Share on Facebook daje **500 monet, jeden raz na ukończone zadanie**, bez rzeczywistej integracji Facebook. Skip zachowuje normalną nagrodę.
+- **Atrakcje:** pięć ofert z katalogu 20 dekoracji i wydarzeń, wymienianych co 24 h. Y jest losową liczbą całkowitą 5–100; koszt to `Y × aktualny poziom ratusza L` monet. Premia: `Y × współczynnik` pp dla L osób przez 6 h. Przyzwyczajanie osobno na rodzaj: 100%, 75%, 50%, 25%, 0%; reset po 24 h bez jego zakupu. Przy zerowej skuteczności zakup jest zablokowany. Dokładne składniki mogą być ułamkowe, prezentacja H pozostaje zaokrąglona w górę do pełnego procentu.
+- **Ścieżki:** 100 odcinków, start 0, maksimum 5. Jeden odcinek o jeden poziom kosztuje 100 kamienia z centrali i działa po kliknięciu. Kolejny poziom dopiero po ukończeniu całej setki poprzedniego. Ukończone poziomy 1–5 dają +10/+20/+30/+40/+50% szybkości; od poziomu 3 także +10/+20/+30% ładunku. Premia działa na tragarzy magazynu, targu i portu; nie na rejs statku czy dojście do pracy. Koszt pełnego poziomu: 10 000 kamienia, wszystkich pięciu: 50 000.
+- **Efekty:** błogosławieństwa, premie i kary w powiadomieniach oraz na górze karty Town Hall. Źródło, wartość, odbiorcy i czas albo warunek zakończenia. Wpis przy aktywacji, zmianie lub końcu, bez ponawiania co odświeżenie.
+- **Nowy gracz i testy:** zwykły start to 12 mieszkańców i po 100 zasobów. Osobny link `profile=new-player` ma niezależny zapis i zachowuje istniejącą wyspę. Jednorazowe pełne materiały i minimum 10 000 monet dotyczą wcześniejszego podglądu testowego, a nie zwykłego startu.
+- **Grafika i animacje:** poprawiona geometria nagłówka i lewej nawigacji. Jawne włączenie animacji w grze działa również przy systemowym ograniczeniu ruchu i jest zapisywane. Aktywny interfejs pozostaje po angielsku.
 
-Nagrody monetowe zachowują kolejność **małe < średnie < duże wśród aktualnych ofert**. Nowy rozmiar losujemy tylko spośród tych, których skalowany zakres pasuje do już pokazanych, zamrożonych nagród; rozmiary nie muszą być jednakowo prawdopodobne. Warunki godzinowe sprawdzamy przy generowaniu. Nowe małe może wymagać więcej godzin niż stare średnie — nie oznacza to większej nagrody monetowej.
+## Zakładki do przeglądu
 
-## Kalkulatory i sprawdzenie
+| Zakładka | Zawartość |
+|---|---|
+| Start | Nawigacja po całym pliku i pierwszeństwo nowych decyzji |
+| Zmiany v8 | 48 nowych pozycji ze skutkiem i uwagami |
+| Frontend v8 | Finalne podpisy, wartości i zachowanie widoków |
+| Budynki / Czlowiek | Poprawione bieżące reguły budynków i mieszkańca |
+| Atrakcje | Katalog 20 dekoracji i wydarzeń |
+| Atrakcje - kalkulator | 100 przykładów ceny, przyzwyczajania i prezentacji premii |
+| Sciezki | Koszty i bonusy każdego ukończonego poziomu |
+| Sciezki - transport | 24 scenariusze własnego poziomu i dróg, głód oraz cena przewozu Premium |
+| Efekty i notyfikacje | Źródła, wartości, odbiorcy i terminy efektów |
+| Sprawdzenia v8 | 231 jawnych porównań formuł z niezależnymi wartościami oczekiwanymi |
+| Ustalenia - uwagi | Pełny bieżący rejestr 265 reguł |
+| Rejestr historyczny v7 / v6 | Zachowane wcześniejsze wersje rejestru |
 
-Przeliczono i zapisano wyniki **2161 formuł**. Kontrola objęła 74 warianty kosztów, kursów i czasów budowy oraz nowe kalkulatory przyspieszeń, zakupu całego budynku, prognoz dostaw i skalowania nagród. Sprawdzono 3164 warunki: brak błędów formuł i brak pustych wyników.
+## Kalkulatory i weryfikacja
 
-Przykład prognozy: bazowe 300 kamienia → kolejka 330; przy 200 w centrali brakuje 130. Dopłata 25% bazowej wartości zakupu tych 130 sztuk wynosi 16,25 monety, a cena w pełnych monetach 17. Wpis źródłowy z wcześniejszą różnicą 100 zachowano w archiwum.
+Przeliczono i zapisano wyniki **3601 formuł**, bez błędów ani pustych wyników. Wszystkie **231 sprawdzeń** z zakładki „Sprawdzenia v8” dają TRUE. Walidacja sprawdza też źródłowe komórki, 48 komentarzy, integralność XLSX oraz niezmieniony SHA-256 pliku 7.
 
-Estymaty czasu obejmują **wyłącznie transport i budowanie**, przy jawnie opisanej obsadzie. Nie obejmują zbierania, karmienia, oczekiwania w kolejce ani wcześniejszych rozbudów. Wspólna populacja, przetwarzanie 2:1 i potrzeba wcześniejszych zapasów nadal mają znaczenie dla balansu.
+Istniejące 74 warianty kosztów i czasów budowy uwzględniają nowy parametr ukończonego poziomu dróg; domyślnie jest to **0**, więc porównawcze wyniki V7 pozostają takie same. Nowe kalkulatory pokazują zależność od dróg jawnie. Estymaty obejmują transport i budowę przy opisanej obsadzie; zbieranie, żywienie, wcześniejsze ulepszenia i czekanie w kolejce nie są doliczane. Konkurujące dostawy w rzeczywistej grze mogą wydłużyć czas.
 
-## Zakres odłożony
+Skrypt odtwarzający plik i weryfikację: [scripts/build_workbook_v8.py](../../scripts/build_workbook_v8.py). Wymaga `openpyxl` i LibreOffice:
 
-Zakładka „Na pozniej” oddziela reguły projektu od brakujących integracji: prawdziwe konta i płatności, weryfikacja social i poleceń, reklamy z hasłem, docelowy balans oraz ratowanie ekspedycji, osobna wizyta modlitewna i wartości nagród lojalnościowych. Kwoty pomysłów pozostają zapisane. Arkusz nie oznacza uruchomienia płatności ani integracji Facebook/Google. Stan wdrożenia frontendowego i testów opisuje [dziennik implementacji](../IMPLEMENTATION-LOG.md).
+```sh
+python3 scripts/build_workbook_v8.py
+python3 scripts/build_workbook_v8.py --validate-only
+```
 
-Poprzednie pliki pozostają dostępne: [oryginał 6 użytkownika](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT6-zasady.xlsx), [wersja 5](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT5-zasady.xlsx), [oryginał 4](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT4-zasady.xlsx), [wersja 3](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT3-zasady.xlsx), [wersja 2](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT2-zasady.xlsx), [oryginał 1](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT1-zasady.xlsx) i [pierwszy arkusz](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT-zasady.xlsx).
+Opcja `--no-recalc` jest wyłącznie robocza i nie przygotowuje pliku do publikacji, ponieważ nie zapisuje wyników formuł.
+
+SHA-256 niezmienionego źródła 7: `bf49eef3b43ba81e0492c6eb187940c99177bbb8ae925ceca2b09ab0a2b9e945`.
+
+## Zachowane decyzje i zakres odłożony
+
+Wszystkie 17 decyzji D01–D17 nadal jest zachowanych: terminy i limity wizyt latarni, pula domu, zamrożenie nowych mieszkańców, osobne kary przestoju, kaplica, kolejka i prognozy, ceny i terminy portowe oraz koszty i czasy Premium. Późniejsze zmiany V8 zastępują tylko wskazane reguły i widoki; nie kasują tych ustaleń.
+
+Prawdziwe konta, OAuth, płatności, reklamy z hasłem, starsze zasady weryfikacji poleceń i publikacji, docelowy balans ekspedycji, osobna modlitwa oraz wartości nagród lojalnościowych pozostają oddzielnym zakresem. Nowy bonus 500 monet za kliknięcie Share po zadaniu jest wyraźnym wyjątkiem prototypu, zgodnie z najnowszą instrukcją. Arkusz nie oznacza uruchomienia integracji Facebook/Google ani prawdziwych płatności. Stan gry, testów i wdrożenia opisuje [dziennik implementacji](../IMPLEMENTATION-LOG.md).
+
+Poprzednie pliki: [wersja 7](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT7-zasady.xlsx), [oryginał 6 użytkownika](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT6-zasady.xlsx), [wersja 5](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT5-zasady.xlsx), [wersja 4](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT4-zasady.xlsx), [wersja 3](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT3-zasady.xlsx), [wersja 2](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT2-zasady.xlsx), [wersja 1](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT1-zasady.xlsx), [pierwszy arkusz](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT-zasady.xlsx).
