@@ -12,7 +12,8 @@ Najnowsze doprecyzowania z pliku 4:
 - Podatek zaczyna się po dotarciu do zakładu i płynie także podczas przestoju. Przestój ma jedną karę −10…−50; licznik resetuje się w drodze do domu. Bonus szczęścia za pracę podczas postoju i zakres osobistego minimum pozostają oznaczone do doprecyzowania.
 - Rezerwa i ratunkowy próg Food: 50 × poziom magazynu. Przy gotowej żywności w młynie i niedoborze w centrali nie można ręcznie wycofać całej obsady transportu.
 - Płatne błogosławieństwo: 100 × poziom kaplicy monet, maksymalnie jedno na 4 h, z dotychczasowym efektem. To cena użycia, nie rozbudowy kaplicy.
-- Zwiedzanie latarni: 4 h pobytu, do 2 × poziom latarni osób z domu, brak podatku i normalne jedzenie. Osobiste szczęście 100% przez 24 h i premia populacji; zapis „na 6” odczytano jako 6 h i jawnie oznaczono jako interpretację.
+- Zwiedzanie latarni: 4 h pobytu, bez czasu dojścia i możliwości wycofania, do 2 × poziom latarni osób jednocześnie z domu. Premie zaczynają się po powrocie: uczestnicy mają 100% szczęścia przez 24 h i nie można ich ponownie wysłać przez te 24 h. Miejsce zwalnia się po powrocie, więc mogą wyruszyć inne osoby. Zwiedzający nie płacą podatku, jedzą normalnie.
+- Każda osobna wysłana grupa daje populacji +10 pp; premie grup sumują się przez czas nakładania. Dwie osoby wysłane razem dają +10 pp; dwa oddzielne wysłania po jednej osobie mogą dawać łącznie +20 pp. Długość globalnej premii pozostaje do doprecyzowania: wcześniej 6 h, nowy przykład 16:00–20:00 wskazuje 4 h. Terminy 6 h zadań latarni pozostają bez zmian.
 - Po premii latarni wracamy do stanu szczęścia sprzed premii. Ranking aktualizuje się co pełną godzinę. Doprecyzowano kolejność odejść i wymaganie usunięcia ikon stop/play/przewijania.
 - Rejs portowy zawsze trwa 5 min; zakup pobiera monety w momencie transakcji. Dokładny punkt zatwierdzenia transakcji pozostaje opisanym szczegółem.
 
