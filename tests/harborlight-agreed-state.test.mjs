@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createState, normalizeState, tick, advanceTo, act, workerLimit, freeWorkers, taxRate, buildingCost, canAfford, updateHappiness, requestUpgrade, applyBuildTestStock, BUILD_TEST_STOCK_VERSION } from '../harborlight-v1-state.js';
+import { centralAvailable, centralReserved } from '../harborlight-v1-inventory.js';
+import { nextWarsawMidnightMs } from '../harborlight-v1-calendar.js';
 import { advanceLogistics, updateStorageStatus, storagePenalty, warehouseLimits, warehouseUsed, MATERIAL_IDS } from '../harborlight-v1-logistics.js';
 
 const NOW = Date.UTC(2026, 9, 23, 12, 0, 0);
@@ -25,7 +27,7 @@ function reload(state) { return normalizeState(JSON.parse(JSON.stringify(state))
 
 test('new islands start at Home with no preassigned economy crew', () => {
   const state = createState(NOW);
-  assert.equal(state.version, 8);
+  assert.equal(state.version, 9);
   assert.equal(state.population, 12);
   assert.equal(freeWorkers(state), 12);
   assert.ok(Object.values(state.buildings).every(building => building.workers === 0));
@@ -111,8 +113,12 @@ test('queued upgrade reserves its complete cost with a ten percent surcharge', (
   const project = state.constructionProjects.find(p => p.building === 'quarry');
   assert.equal(project.stage, 'queued');
   assert.deepEqual(project.cost, quote);
-  assert.equal(before.wood - state.resources.wood, 159);
-  assert.equal(before.stone - state.resources.stone, 423);
+  assert.equal(state.resources.wood, before.wood);
+  assert.equal(state.resources.stone, before.stone);
+  assert.equal(project.reservedMaterials.wood, 159);
+  assert.equal(project.reservedMaterials.stone, 423);
+  assert.equal(centralAvailable(state, 'wood'), before.wood - centralReserved(state, 'wood'));
+  assert.equal(centralAvailable(state, 'stone'), before.stone - centralReserved(state, 'stone'));
 });
 
 test('construction spending preserves the protected central food reserve', () => {
@@ -122,7 +128,9 @@ test('construction spending preserves the protected central food reserve', () =>
   assert.equal(act(state, { type: 'upgrade', building: 'townhall' }).ok, false);
   state.resources.food = 550;
   assert.equal(act(state, { type: 'upgrade', building: 'townhall' }).ok, true);
-  assert.equal(state.resources.food, 50);
+  assert.equal(state.resources.food, 550);
+  assert.equal(centralAvailable(state, 'food'), 50);
+  assert.equal(state.buildings.townhall.construction.reservedMaterials.food, 500);
 });
 
 test('last Food carrier cannot be manually recalled while Food waits and reserve is low', () => {
@@ -180,14 +188,17 @@ test('manual House points are consumed once without clearing unemployment penalt
 test('House auto distribution spends only its remaining pool and refreshes once', () => {
   const state = island({ population: 6 });
   state.houseHappinessPool.points = 3;
+  const midnight = nextWarsawMidnightMs(NOW);
+  state.worldTimeMs = state.lastSimulatedAt = midnight - 121000;
+  state.houseHappinessPool.nextRefreshAt = midnight;
   state.houseHappinessPool.autoRemaining = 1;
-  state.houseHappinessPool.refreshRemaining = 3;
+  state.houseHappinessPool.refreshRemaining = 121;
   const initial = state.residents.reduce((sum, p) => sum + p.happiness, 0);
   tick(state, 1);
   assert.equal(state.houseHappinessPool.points, 0);
   assert.equal(state.houseHappinessPool.autoDone, true);
   close(state.residents.reduce((sum, p) => sum + p.happiness, 0) - initial, 3 + 6 / 3600);
-  tick(state, 2);
+  tick(state, 120);
   assert.equal(state.houseHappinessPool.generation, 2);
   assert.equal(state.houseHappinessPool.points, 6);
   assert.equal(state.houseHappinessPool.grantPopulation, 6);
@@ -199,7 +210,11 @@ test('House random ties are reproducible through save/reload', () => {
   const state = island({ population: 6 });
   state.houseHappinessPool.points = 1;
   state.houseHappinessPool.randomSeed = 13579;
+  const midnight = nextWarsawMidnightMs(NOW);
+  state.worldTimeMs = state.lastSimulatedAt = midnight - 121000;
+  state.houseHappinessPool.nextRefreshAt = midnight;
   state.houseHappinessPool.autoRemaining = 1;
+  state.houseHappinessPool.refreshRemaining = 121;
   const saved = reload(state);
   tick(state, 1); tick(saved, 1);
   assert.deepEqual(state.residents.map(p => p.happiness), saved.residents.map(p => p.happiness));
@@ -268,8 +283,11 @@ test('a fully paid Premium building needs no carrier or own materials and takes 
   const result = act(state, { type: 'premiumBuyBuilding', building: 'farm' });
   assert.equal(result.ok, true, result.message);
   assert.equal(state.buildings.warehouse.workers, 0);
-  assert.equal(state.buildings.farm.construction.stage, 'building');
-  assert.equal(state.buildings.farm.construction.buildRemaining, 10);
+  assert.equal(state.buildings.farm.construction ?? null, null);
+  assert.equal(state.constructionProjects.length, 0);
+  assert.equal(state.buildings.farm.premiumService.stage, 'building');
+  assert.equal(state.buildings.farm.premiumService.buildRemaining, 10);
+  assert.equal(state.premiumServices.length, 1);
   assert.equal(state.resources.wood, 0);
   assert.equal(state.resources.stone, 0);
   assert.equal(state.resources.grain, 0);
@@ -279,41 +297,50 @@ test('a fully paid Premium building needs no carrier or own materials and takes 
   assert.equal(state.buildings.farm.level, 2);
 });
 
+function reservedForecast(state, reservedCoins = 0) {
+  const cost = Object.fromEntries(['coins', ...MATERIAL_IDS].map(id => [id, 330]));
+  const project = { building: 'warehouse', targetLevel: 2, cost, stage: 'planned', forecast: true,
+    order: ++state.constructionSequence, reservationVersion: 9, reservedCoins,
+    reservedMaterials: Object.fromEntries(MATERIAL_IDS.map(id => [id, 330])),
+    remainingMaterials: Object.fromEntries(MATERIAL_IDS.map(id => [id, 330])),
+    delivered: Object.fromEntries(MATERIAL_IDS.map(id => [id, 0])),
+    goodsTotal: 1650, goodsRemaining: 1650, transportSeconds: 0, buildRemaining: 0 };
+  for (const id of MATERIAL_IDS) state.resources[id] = 330 + (id === 'food' ? 50 : 0);
+  state.constructionProjects.push(project);
+  state.buildings.warehouse.construction = project;
+  return project;
+}
+
 test('Premium purchase reserves its coin price before other forecast plans can reserve money', () => {
-  const raw = createState(NOW);
-  raw.buildings.townhall.level = 4; raw.buildings.house.level = 4;
-  raw.resources = { coins: 500, wood: 250, stone: 300, grain: 300, food: 350, planks: 300 };
-  raw.premium.expiresAt = NOW + 86400000;
-  const state = normalizeState(raw, NOW);
-  assign(state, 'warehouse', 1); tick(state, 300);
-  state.resources.food = 350;
-  state.buildings.lumber.ready = 50;
-  assert.equal(act(state, { type: 'forecastPlan', building: 'warehouse' }).ok, true);
-  assert.equal(state.resources.coins, 493);
-  assert.equal(act(state, { type: 'paidBlessing' }).ok, true);
-  assert.equal(state.resources.coins, 443);
+  const state = island();
+  state.buildings.warehouse.level = 1;
+  state.premium.expiresAt = NOW + 86400000;
+  const forecast = reservedForecast(state);
+  state.resources.coins = 554; // 225 for the service plus 329 of a 330-coin forecast.
+  const before = { ...state.resources };
   const bought = act(state, { type: 'premiumBuyBuilding', building: 'farm' });
   assert.equal(bought.ok, true, bought.message);
   assert.equal(bought.coins, 225);
-  assert.equal(state.resources.coins, 218);
-  assert.equal(state.buildings.warehouse.construction.stage, 'planned');
-  assert.equal(state.buildings.farm.construction.stage, 'building');
-  assert.equal(state.resources.wood, 300); // Still unreserved by the waiting plan.
+  assert.equal(state.resources.coins, 329);
+  assert.equal(forecast.stage, 'planned');
+  assert.equal(state.buildings.farm.premiumService.stage, 'building');
+  assert.equal(state.constructionProjects.length, 1, 'paid services consume no ordinary project slot');
+  assert.equal(state.resources.wood, before.wood);
+  assert.equal(centralAvailable(state, 'wood'), 0, 'pledged material remains physically stored but unavailable');
+  tick(state, 1);
+  assert.equal(forecast.reservedCoins, 329);
+  assert.equal(state.resources.coins, 0);
+  assert.equal(forecast.stage, 'planned', 'the final forecast coin cannot be spent twice');
 });
 
 test('taxes fund a forecast at their exact threshold without retroactive construction transport', () => {
-  const raw = createState(NOW);
-  raw.buildings.townhall.level = 4; raw.buildings.house.level = 4;
-  raw.resources = { coins: 356, wood: 250, stone: 300, grain: 300, food: 350, planks: 300 };
-  raw.premium.expiresAt = NOW + 86400000;
-  const whole = normalizeState(raw, NOW);
+  const whole = island();
+  whole.buildings.warehouse.level = 1;
+  whole.premium.expiresAt = NOW + 86400000;
   assign(whole, 'warehouse', 7); tick(whole, 300);
-  whole.resources.food = 350; whole.buildings.lumber.ready = 50;
-  assert.equal(act(whole, { type: 'forecastPlan', building: 'warehouse' }).ok, true);
-  assert.equal(act(whole, { type: 'paidBlessing' }).ok, true);
-  whole.buildings.lumber.ready = 0;
-  assert.equal(whole.resources.coins, 299);
-  assert.equal(whole.buildings.warehouse.construction.stage, 'planned');
+  reservedForecast(whole, 329);
+  whole.resources.coins = 0;
+  whole.taxProgress = 0;
   const split = structuredClone(whole), fundingTime = 3600 / 7;
   tick(whole, fundingTime);
   for (let n = 0; n < Math.floor(fundingTime); n++) tick(split, 1);
@@ -321,14 +348,15 @@ test('taxes fund a forecast at their exact threshold without retroactive constru
   for (const state of [whole, split]) {
     const project = state.buildings.warehouse.construction;
     assert.equal(state.resources.coins, 0);
+    assert.equal(project.reservedCoins, 330);
     assert.equal(project.stage, 'transport');
     assert.equal(project.transportSeconds, 0);
-    assert.equal(project.goodsRemaining, 1500);
+    assert.equal(project.goodsRemaining, 1650);
     assert.equal(state.haulTrips.warehouse.length, 0);
     close(state.taxProgress, 0);
     tick(state, 300);
     assert.equal(project.transportSeconds, 300);
-    assert.equal(project.goodsRemaining, 1080);
+    assert.equal(project.goodsRemaining, 1260); // Six Wood loads (last30) and one Stone load.
   }
   assert.deepEqual(whole.resources, split.resources);
 });

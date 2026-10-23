@@ -27,7 +27,7 @@ function advance(state, seconds) {
   }
 }
 function hire(state, id, count, arrived = false) {
-  assignResidents(state, id, count); state.buildings[id].workers += count;
+  assignResidents(state, id, count);
   state.buildings[id].workProgress = Array(state.buildings[id].workers).fill(0);
   if (arrived) { for (const p of state.residents.filter(p => p.workplace === id)) p.arrivalRemaining = 0; settleResidentEvents(state); }
 }
@@ -54,7 +54,7 @@ test('walking to a workplace takes five minutes and starts work only on arrival'
 test('dismissal preserves identity and happiness, resets blockage, and reserves the five-minute return', () => {
   const s = fixture(); hire(s, 'lumber', 1, true);
   const p = s.residents.find(p => p.workplace === 'lumber'); p.happiness = -17; p.blockedSeconds = 2 * 86400;
-  assignResidents(s, 'lumber', -1); s.buildings.lumber.workers--;
+  assignResidents(s, 'lumber', -1);
   assert.equal(p.workplace, null); assert.equal(p.returnRemaining, 300);
   assert.equal(p.happiness, -17); assert.equal(p.blockedSeconds, 0); assert.equal(availableResidentCount(s), 11);
   advance(s, 300); assert.equal(availableResidentCount(s), 12); assert.ok(s.residents.includes(p));
@@ -91,7 +91,10 @@ test('each absence has its own grace clock and hunger immediately halves through
   const p = s.residents[0]; assert.equal(productionMultiplier(s), .5);
   advance(s, 12 * HOUR); assert.equal(residentHappinessRate(s, p), -10);
   s.resources.food = 1; settleResidentConditions(s);
-  assert.equal(p.hungerSeconds, 0); assert.equal(residentHappinessRate(s, p), -4);
+  assert.equal(p.hungerSeconds, 12 * HOUR, 'a brief meal pauses prior hunger rather than erasing it');
+  assert.equal(residentHappinessRate(s, p), -4); assert.equal(productionMultiplier(s), 1);
+  advance(s, HOUR - 1); assert.equal(p.hungerSeconds, 12 * HOUR);
+  advance(s, 1); assert.equal(p.hungerSeconds, 0, 'one uninterrupted fed hour completes recovery');
 });
 
 test('a two-person visit is one group, cannot be withdrawn, and starts rewards on return', () => {
@@ -157,7 +160,7 @@ test('Lighthouse construction forces 100% even from negative happiness and resto
 test('departure removes home and travel residents first and never removes visitors', () => {
   const s = fixture(); const protectedIds = s.residents.slice(0, 2).map(p => p.id); visit(s, protectedIds);
   hire(s, 'lumber', 1);
-  const walking = s.residents.find(p => p.workplace === 'lumber');
+  const walking = s.residents.find(p => p.workplace === 'lumber'); walking.happiness = -90;
   assert.equal(removeResidentForDeparture(s), true);
   assert.equal(s.residents.some(p => p.id === walking.id), false);
   assert.ok(protectedIds.every(id => s.residents.some(p => p.id === id)));
@@ -233,6 +236,8 @@ test('quota histories and unused paid entries survive reload', () => {
 
 test('a departing carrier leaves loaded cargo in flight without an assigned worker', () => {
   const s = fixture(); hire(s, 'warehouse', 12, true);
+  const carrier = s.residents.filter(person => person.workplace === 'warehouse')[11];
+  carrier.happiness = -90; // The chosen crew loses its least happy member.
   s.haulTrips = { warehouse: [{ worker: 11, amount: 40, resource: 'wood', remaining: 10 }] };
   assert.equal(removeResidentForDeparture(s), true);
   assert.equal(s.haulTrips.warehouse[0].worker, -1);
@@ -263,10 +268,11 @@ test('initial residents are not frozen, while demographic additions get a full t
   assert.equal(residentHappinessRate(s, baby), 0);
   advance(s, 86399); assert.equal(residentHappiness(s, baby), 0); assert.equal(baby.happiness, 0);
   advance(s, 1); assert.equal(baby.newbornRemaining, 0); assert.equal(residentHappiness(s, baby), 0);
-  advance(s, HOUR); assert.equal(baby.happiness, -4, 'normal food and matured unemployment rules start after the freeze');
+  advance(s, HOUR); assert.equal(baby.happiness, 1, 'food growth begins after the freeze; unemployment starts its own fresh grace clock');
+  assert.equal(baby.unemployedSeconds, HOUR);
 });
 
-test('newborn zero overrides all bonuses and ignores house happiness grants without resetting need clocks', () => {
+test('newborn zero overrides all bonuses, ignores house grants and keeps both need clocks frozen', () => {
   const s = fixture(); s.population++; synchronizeResidents(s); const baby = s.residents.at(-1);
   s.chapelRemaining = 200000; s.blessingRemaining = 200000;
   s.lighthouseVisitBonuses = [{ groupId: 99, amount: 10, remaining: 200000 }];
@@ -276,7 +282,7 @@ test('newborn zero overrides all bonuses and ignores house happiness grants with
   assert.equal(s.residents[0].happiness, 0, 'individual grant must not affect other people');
   baby.hungerSeconds = 36000; baby.unemployedSeconds = 36000; s.resources.food = 0;
   advance(s, HOUR);
-  assert.equal(baby.hungerSeconds, 39600); assert.equal(baby.unemployedSeconds, 39600);
+  assert.equal(baby.hungerSeconds, 0); assert.equal(baby.unemployedSeconds, 0);
   assert.equal(baby.happiness, 0); assert.equal(residentHappiness(s, baby), 0);
 });
 
@@ -285,8 +291,8 @@ test('an offline-length advance ends the newborn freeze exactly and never backch
   s.resources.food = 0;
   advance(s, 25 * HOUR);
   assert.equal(baby.newbornRemaining, 0);
-  assert.equal(baby.hungerSeconds, 25 * HOUR); assert.equal(baby.unemployedSeconds, 25 * HOUR);
-  assert.equal(baby.happiness, -10, 'only the hour after the freeze applies matured penalties');
+  assert.equal(baby.hungerSeconds, HOUR); assert.equal(baby.unemployedSeconds, HOUR);
+  assert.equal(baby.happiness, 0, 'after the freeze both absences start a fresh twelve-hour grace period');
 });
 
 test('newborn freeze survives reload and expiry resumes active bonuses from a zero base', () => {
@@ -300,5 +306,6 @@ test('newborn freeze survives reload and expiry resumes active bonuses from a ze
   assert.equal(baby.happiness, 0); assert.equal(baby.newbornRemaining, HOUR); assert.equal(nextResidentEvent(restored), HOUR);
   advance(restored, HOUR);
   assert.equal(baby.happiness, 0); assert.equal(residentHappiness(restored, baby), 30);
-  advance(restored, HOUR); assert.equal(baby.happiness, -4, 'expired freeze resumes normal food and unemployment rates');
+  advance(restored, HOUR); assert.equal(baby.happiness, 1, 'expired freeze resumes food growth with a new unemployment grace period');
+  assert.equal(baby.unemployedSeconds, HOUR);
 });

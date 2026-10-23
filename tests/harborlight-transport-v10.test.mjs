@@ -18,6 +18,13 @@ function island() {
   normalizeLogisticsState(state,structuredClone(state));
   return state;
 }
+function reserveProject(state, project) {
+  project.reservationVersion = 9;
+  project.reservedMaterials = { ...project.remainingMaterials };
+  for (const resource of MATERIAL_IDS) state.resources[resource] += project.reservedMaterials[resource] || 0;
+  return project;
+}
+
 function priorities(state, selected) {
   assert.equal(logisticsAction(state,{type:'warehousePriority',priorities:selected}).ok,true);
 }
@@ -80,6 +87,7 @@ test('Construction joins the same three priorities and receives five-three-two d
   state.constructionProjects.push({building:'house',targetLevel:11,cost:{wood:600,stone:600},goodsTotal:1200,goodsRemaining:1200,
     remainingMaterials:{wood:600,stone:600,grain:0,food:0,planks:0},delivered:{wood:0,stone:0,grain:0,food:0,planks:0},
     transportSeconds:0,buildRemaining:0,stage:'transport',order:1});
+  reserveProject(state, state.constructionProjects.at(-1));
   priorities(state,['food','construction']);
   nextLogisticsEvent(state);
   const trips=state.haulTrips.warehouse;
@@ -193,7 +201,7 @@ test('resource priorities apply to real construction courses and reserved materi
   const state=island();priorities(state,['wood']);
   for(const id of Object.keys(PRODUCTION_RECIPES))state.buildings[id].ready=0;
   const project={building:'house',targetLevel:11,cost:{wood:70,stone:12},goodsTotal:82,goodsRemaining:82,remainingMaterials:{wood:70,stone:12,grain:0,food:0,planks:0},delivered:{wood:0,stone:0,grain:0,food:0,planks:0},transportSeconds:0,buildRemaining:0,stage:'transport',order:1};
-  state.constructionProjects.push(project);
+  state.constructionProjects.push(reserveProject(state,project));
   const trips=[course(state),course(state),course(state)];
   assert.deepEqual(trips.map(trip=>[trip.resource,trip.amount]),[['wood',66],['wood',4],['stone',12]]);
   assert.equal(project.goodsRemaining,0);assert.equal(project.stage,'building');
@@ -233,7 +241,7 @@ function upgradePreviewIsland() {
   const project={building:'farm',targetLevel:2,cost:{wood:66},goodsTotal:66,goodsRemaining:66,
     remainingMaterials:{wood:66,stone:0,grain:0,food:0,planks:0},delivered:{wood:0,stone:0,grain:0,food:0,planks:0},
     transportSeconds:0,buildRemaining:0,stage:'transport',order:1};
-  state.constructionProjects.push(project);state.constructionSequence=1;
+  state.constructionProjects.push(reserveProject(state,project));state.constructionSequence=1;
   return {state,project};
 }
 

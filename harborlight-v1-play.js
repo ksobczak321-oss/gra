@@ -1,14 +1,17 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v12';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v12';
-import * as State from './harborlight-v1-state.js?v=frontend-v12';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v12';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v12';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v12';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v12';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v12';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v12';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v13';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v13';
+import * as State from './harborlight-v1-state.js?v=frontend-v13';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v13';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v13';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v13';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v13';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v13';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v13';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v13';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v13';
 
 const NEW_PLAYER_PROFILE = new URLSearchParams(location.search).get('profile') === 'new-player';
+const OFFICIAL_GAME_URL = 'https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html';
 const SAVE_KEY = NEW_PLAYER_PROFILE ? 'harborlight-v1-new-player-save' : 'harborlight-v1-interactive-save';
 document.documentElement.dataset.profile = NEW_PLAYER_PROFILE ? 'new-player' : 'preview';
 const stage = document.getElementById('stage');
@@ -19,6 +22,7 @@ const placementBanner = document.getElementById('placement-banner');
 let state;
 try { state = normalizeState(JSON.parse(localStorage.getItem(SAVE_KEY))); }
 catch { state = createState(); }
+try { const preferred = localStorage.getItem('harborlight-language'); if (['en','pl'].includes(preferred)) state.settings.language = preferred; } catch {}
 let panel = null;
 let placement = null;
 let puzzle = null;
@@ -27,6 +31,11 @@ let previousFocus;
 let panelNotice = '';
 let lastTick = Date.now();
 let activitySignature = "";
+let taskAcceptanceDialog = null;
+let confirmationDialog = null;
+let lastInputAt = -Infinity;
+let lastRoadCelebration = 0;
+let mobileDockSignature = '';
 let estimateFrame = 0;
 const estimateCache = new Map();
 const initialLevels = Object.fromEntries(Object.entries(createState().buildings).map(([id, value]) => [id, value.level]));
@@ -55,7 +64,10 @@ function el(tag, attributes = {}, ...children) {
   return node;
 }
 const nameOf = id => RESOURCES[id]?.name || ({ coins: 'Coins', wood: 'Wood', stone: 'Stone', food: 'Food', planks: 'Planks', grain: 'Grain', construction: 'Construction' }[id]) || id;
-const count = value => Math.floor(value || 0).toLocaleString('en-US');
+const language = () => state.settings.language === 'pl' ? 'pl' : 'en';
+const count = value => I18n.formatNumber(Math.floor(value || 0), language());
+const text = value => I18n.translate(String(value), language());
+function localize(root = document.body) { I18n.translateDOM(root, language()); document.documentElement.lang = language(); }
 const titleOf = id => BUILDINGS[id]?.name || id;
 const costText = cost => Object.entries(cost || {}).map(([id, value]) => `${nameOf(id)}: ${count(value)}`).join(' · ');
 const button = (label, fn, attributes = {}) => el('button', { type: 'button', class: 'action', onclick: fn, ...attributes }, label);
@@ -67,7 +79,7 @@ function save() {
   catch { toast('Your browser cannot save progress. You can keep playing until this tab is closed.'); }
 }
 function toast(message) {
-  toastElement.textContent = omitTaxInformation(message) || 'Island updated.';
+  toastElement.textContent = text(omitTaxInformation(message) || 'Island updated.');
   toastElement.hidden = false;
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { toastElement.hidden = true; }, 3500);
@@ -83,10 +95,11 @@ function perform(action) {
   const focusWorker = focused?.dataset.workerBuilding;
   const focusWorkerAction = focused?.dataset.workerAction;
   const focusWorkerDelta = focused?.dataset.workerDelta;
+  const previousRoad = Leisure.roadSummary?.(state)?.level || 0;
   const previousAchievements = new Set((state.taskAchievements || []).map(item => item.id));
   const result = act(state, action);
   panelNotice = omitTaxInformation(result.message);
-  if (result.ok) { save(); renderHUD(); }
+  if (result.ok) { if (action.type === 'setting' && action.key === 'language') { try { localStorage.setItem('harborlight-language', state.settings.language); } catch {} } save(); renderHUD(); }
   toast(result.message);
   if (panel && dialog.open) {
     renderPanel();
@@ -96,6 +109,7 @@ function perform(action) {
   if (result.ok) {
     const achievement = (state.taskAchievements || []).find(item => !previousAchievements.has(item.id));
     if (achievement) showTaskCelebration(achievement);
+    if (action.type === 'upgradeRoad') showRoadSuccess((Leisure.roadSummary?.(state)?.level || 0) > previousRoad);
   }
   return result.ok;
 }
@@ -124,9 +138,6 @@ hotspot('population', 'Residents and worker assignments', [925, 8, 130, 49], () 
 hotspot('clock', 'Island day and time', [1363, 7, 131, 49], () => openPanel('time'));
 hotspot('account', 'Sign in or create an account', [0, 0, 0, 0], () => { location.href = 'harborlight-auth.html'; });
 hotspot('menu', 'Game menu', [1623, 7, 43, 50], () => openPanel('menu'));
-for (const [id, label, y] of [['island', 'Island', 108], ['expeditions', 'Expeditions', 205], ['tasks', 'Tasks', 301], ['residents', 'Residents', 401], ['map', 'Island map', 502]]) {
-  hotspot(`nav-${id}`, label, [6, y, 103, 91], () => id === 'island' ? returnToIsland() : openPanel(id));
-}
 hotspot('objective-title', 'Main objective — rebuild the lighthouse', [1405, 76, 260, 65], () => openPanel('objective'));
 hotspot('objective-repair', 'Build the lighthouse', [1412, 143, 245, 31], () => openPanel('building', 'lighthouse'));
 hotspot('objective-wood', 'Lighthouse wood requirements', [1412, 175, 245, 28], () => openPanel('objective'));
@@ -143,34 +154,21 @@ for (const [id, region] of Object.entries(buildingRegions)) {
     } else openPanel('building', id);
   }, 'world-hotspot');
 }
-hotspot('bridge', 'Bridge and paths — upgrades', [815, 445, 192, 76], () => { closePanel(); setDockCategory('paths'); });
-hotspot('waterfall', 'Waterfall — nature and decorations', [808, 526, 129, 148], () => { closePanel(); setDockCategory('decorations'); });
 hotspot('boat', 'Ship — harbor trade', [215, 635, 219, 137], () => openPanel('trade'));
-hotspot('village', 'Village square — residents', [559, 397, 187, 106], () => openPanel('residents'));
-hotspot('beach', 'Beach — decorations', [1208, 672, 187, 96], () => { closePanel(); setDockCategory('decorations'); });
 const dockCategories = [['buildings', 'Buildings', 471, 167], ['resources', 'Production and resources', 648, 158], ['decorations', 'Decorations', 815, 170], ['paths', 'Paths', 991, 171]];
 for (const [id, label, x, width] of dockCategories) hotspot(`category-${id}`, label, [x, 780, width, 41], () => setDockCategory(id));
-for (const [index, id] of ['house', 'farm', 'sawmill', 'quarry', 'dock', 'warehouse', 'lighthouse'].entries()) {
-  hotspot(`dock-${id}`, `${titleOf(id)} — construction and upgrades`, [329 + index * 139, 830, 126, 104], () => openPanel('building', id));
+const BUILDING_DOCK_ORDER = ['townhall', 'house', 'farm', 'windmill', 'quarry', 'lumber', 'sawmill', 'warehouse', 'market', 'dock', 'chapel', 'lighthouse'];
+const buildingDock = el('nav', { class: 'building-dock-cards', 'aria-label': 'Buildings', 'data-building-dock': '' });
+for (const id of BUILDING_DOCK_ORDER) {
+  const [x,y,w,h] = buildingRegions[id];
+  const scale = Math.min(72 / w, 43 / h);
+  const picture = el('span', { class: 'building-dock-picture', 'aria-hidden': 'true', style: { backgroundImage: 'url("assets/harborlight-v1-approved.png")', backgroundSize: `${1672 * scale}px ${941 * scale}px`, backgroundPosition: `${-x * scale}px ${-y * scale}px`, width: `${w * scale}px`, height: `${h * scale}px` } });
+  const control = button('', () => openPanel('building', id), { id: `hit-dock-${id}`, class: 'building-dock-card', 'data-dock-building': id, 'aria-label': `${titleOf(id)} — construction and upgrades` });
+  control.append(el('small', { class: 'building-dock-level', 'data-dock-level': id }, `Lv. ${state.buildings[id].level}`), picture, el('span', { class: 'building-dock-name' }, titleOf(id)));
+  if (WORKPLACE_IDS.includes(id)) control.append(el('span', { class: 'building-dock-workers', 'data-dock-workers': id }));
+  buildingDock.append(control);
 }
-
-const navigationIcons = {
-  island: '<path d="M9 34L28 14L47 34L28 45Z" fill="#f2db9a"/><path d="M28 10V33M28 12L40 27H28M25 18L15 29H25" fill="#fff0bd" stroke="#ad8142" stroke-width="2"/><path d="M11 35Q28 43 45 35" fill="none" stroke="#bd8a41" stroke-width="3"/>',
-  expeditions: '<circle cx="28" cy="27" r="20" fill="#16384a" stroke="#e9c779" stroke-width="3"/><path d="M28 8V47M8 27H48" stroke="#b18b52"/><path d="M35 14L32 31L21 40L24 23Z" fill="#f5dda0" stroke="#9d763d" stroke-width="2"/>',
-  tasks: '<path d="M14 10H42L37 42H10Z" fill="#efd79b" stroke="#a78148" stroke-width="2"/><path d="M14 10Q8 11 10 18H37Q44 19 43 12" fill="#e7be70" stroke="#a78148" stroke-width="2"/><path d="M17 23H33M16 29H31M15 35H27" stroke="#805d31" stroke-width="2"/>',
-  residents: '<circle cx="27" cy="17" r="8" fill="#f7dfa0"/><circle cx="11" cy="22" r="6" fill="#dab974"/><circle cx="44" cy="22" r="6" fill="#dab974"/><path d="M15 43V33Q16 24 27 24Q38 24 39 33V43ZM2 43V34Q2 27 11 28L14 30V43ZM41 43V31L44 28Q53 28 54 35V43Z" fill="#e6c27e"/>',
-  map: '<path d="M5 15L20 8L36 15L51 8V40L36 47L20 40L5 47Z" fill="#ebd096" stroke="#a88346" stroke-width="2"/><path d="M20 9V40M36 15V46" stroke="#9e793e" stroke-width="2"/><path d="M12 25L17 21L26 31L32 26L43 31" fill="none" stroke="#6f7144" stroke-width="3"/>'
-};
-const leftNavigation = el('nav', { class: 'island-left-nav', 'aria-label': 'Island navigation' });
-for (const [id, title] of [['island', 'Island'], ['expeditions', 'Expeditions'], ['tasks', 'Tasks'], ['residents', 'Residents'], ['map', 'Map']]) {
-  const control = document.getElementById(`hit-nav-${id}`);
-  control.removeAttribute('style');
-  const picture = svgNode('svg', { viewBox: '0 0 56 54', class: 'left-nav-illustration', 'aria-hidden': 'true' });
-  picture.innerHTML = navigationIcons[id];
-  control.replaceChildren(picture, el('span', {}, title));
-  leftNavigation.append(control);
-}
-layer.append(leftNavigation);
+layer.append(buildingDock);
 const resourceIllustrations = {
   wood: '<path d="M15 57L58 33L83 46L40 72Z" fill="#76502e"/><path d="M16 50L58 26L83 39L41 64Z" fill="#b48045"/><path d="M17 45L58 21L83 34L42 59Z" fill="#d4a064"/><ellipse cx="31" cy="54" rx="13" ry="9" transform="rotate(29 31 54)" fill="#eed2a0" stroke="#815832" stroke-width="2"/><ellipse cx="31" cy="54" rx="7" ry="4" transform="rotate(29 31 54)" fill="none" stroke="#b38850"/><path d="M43 38L66 24M48 45L74 30M43 52L71 37" stroke="#80562e" stroke-width="2"/>',
   planks: '<path d="M13 56L61 26L86 39L38 70Z" fill="#9a6536"/><path d="M13 48L61 18L86 31L38 62Z" fill="#dfb278" stroke="#83572f" stroke-width="2"/><path d="M13 41L61 11L86 24L38 55Z" fill="#e8c28d" stroke="#976a3a" stroke-width="2"/><path d="M26 40L65 17M37 47L76 23M27 54L58 35M39 61L71 42" stroke="#b98850" stroke-width="2"/>',
@@ -189,7 +187,7 @@ for (const id of Object.keys(resourceProductionBuildings)) {
   control.replaceChildren(
     el('small', { class: 'resource-dock-active', 'data-dock-active': id, title: 'Residents currently producing at this building', 'aria-label': 'Active workers' }, count(workingProducerCount(producer))),
     picture, el('span', { class: 'resource-dock-name' }, nameOf(id)),
-    el('span', { class: 'resource-dock-staffing', 'data-dock-staffing': id, 'data-dock-stock': id, 'aria-label': 'Producer local stock / central warehouse stock' }, el('span', { 'data-dock-local': id }, count(state.buildings[producer].ready)), ' / ', el('span', { 'data-dock-central': id }, count(state.resources[id]))));
+    el('span', { class: 'resource-dock-staffing', 'data-dock-staffing': id, 'data-dock-stock': id, 'aria-label': 'Local stock / central warehouse stock (all goods in transit)' }, el('span', { 'data-dock-local': id }, count(state.buildings[producer].ready)), ' / ', el('span', { 'data-dock-central': id }, count(state.resources[id])), ' (', el('span', { 'data-dock-transit': id }, '0'), ')'), el('span', { class: 'resource-dock-trend', 'data-resource-trend': id, title: 'Current hourly balance' }, '→ 0 units/h'));
   resourceDock.append(control);
 }
 layer.append(resourceDock);
@@ -201,7 +199,7 @@ function setDockCategory(id) {
   activeDockCategory = id;
   resourceDock.hidden = id !== 'resources';
   leisureDock.hidden = !['decorations', 'paths'].includes(id);
-  for (const building of ['house', 'farm', 'sawmill', 'quarry', 'dock', 'warehouse', 'lighthouse']) document.getElementById(`hit-dock-${building}`).hidden = id !== 'buildings';
+  buildingDock.hidden = id !== 'buildings';
   for (const category of ['buildings', 'resources', 'decorations', 'paths']) {
     const node = document.getElementById(`hit-category-${category}`);
     node.textContent = { buildings: 'Buildings', resources: 'Resources', decorations: 'Decorations', paths: 'Paths' }[category];
@@ -209,6 +207,8 @@ function setDockCategory(id) {
     node.setAttribute('aria-pressed', String(category === id));
   }
   renderLeisureDock(true);
+  renderMobileDock(true);
+  localize();
 }
 function renderLeisureDock(force = false) {
   if (leisureDock.hidden) return;
@@ -262,7 +262,6 @@ function pathIllustration(level) {
   picture.innerHTML = `<path d="M14 55L42 5H69L87 55Z" fill="${colors[level - 1]}" stroke="#8e7857" stroke-width="2"/><path d="M26 35H79M35 19H74M51 5L42 55M66 19L68 55" stroke="#6f6c59" stroke-width="2"/><path d="M12 55L40 5M89 55L71 5" stroke="#81905c" stroke-width="4"/>`;
   return picture;
 }
-setDockCategory('buildings');
 
 const hud = {};
 const topbar = el('nav', { class: 'island-topbar', 'aria-label': 'Island level, happiness and resources' });
@@ -285,17 +284,21 @@ hotspot('level', 'Island level — Town Hall', [0, 0, 0, 0], () => openPanel('bu
 toolbarButton('level', 'Island level — Town Hall', 'topbar-level', ...toolbarStat('level', 'Level', '♜'));
 hotspot('happiness', 'Happiness and population growth', [0, 0, 0, 0], () => openPanel('residents'));
 toolbarButton('happiness', 'Happiness and population growth', 'topbar-happiness', ...toolbarStat('happiness', 'Happiness', '☀︎'));
-hotspot('resource-planks', 'Planks — stock', [0, 0, 0, 0], () => openPanel('resources', 'planks'));
-hotspot('resource-grain', 'Grain — stock', [0, 0, 0, 0], () => openPanel('resources', 'grain'));
-for (const [id, icon] of [['coins', '◉'], ['wood', '▰'], ['stone', '◆'], ['grain', '♧'], ['food', '✦'], ['planks', '▤']]) {
-  toolbarButton(`resource-${id}`, `${nameOf(id)} — stock`, `topbar-resource topbar-${id}`, ...toolbarStat(id, nameOf(id), icon));
-}
+toolbarButton('resource-coins', 'Coins — stock', 'topbar-resource topbar-coins', ...toolbarStat('coins', 'Coins', '◉'));
+for (const id of MATERIAL_IDS) document.getElementById(`hit-resource-${id}`)?.remove();
+hotspot('working', 'Actual working residents', [0, 0, 0, 0], () => openPanel('workers'));
+toolbarButton('working', 'Actual working residents', 'topbar-working', ...toolbarStat('working', 'Working', '⚒'));
+hotspot('arrival', 'Next population change', [0, 0, 0, 0], () => openPanel('residents'));
+toolbarButton('arrival', 'Next population change at current happiness', 'topbar-arrival', ...toolbarStat('arrival', 'New resident', '♟'));
+hotspot('points', 'Hourly points: Town Hall level × coins', [0, 0, 0, 0], () => openPanel('settings'));
+toolbarButton('points', 'Hourly points: Town Hall level × coins', 'topbar-points', ...toolbarStat('points', 'Points', '★'));
+hotspot('tutorial', 'Tutorial', [0, 0, 0, 0], () => openPanel('tutorial'));
 toolbarButton('population', 'Residents and worker assignments', 'topbar-population', ...toolbarStat('population', 'Residents', '♟︎'));
 hud.housing = el('small', { class: 'topbar-housing', 'data-hud': 'housing' }, '—');
 document.querySelector('.topbar-population .topbar-copy').append(hud.housing);
 hud.clock = el('strong', { 'data-hud': 'clock' }, '—');
 toolbarButton('clock', 'Island day and time', 'topbar-clock', hud.clock);
-for (const [id, icon, label] of [['account', '♙', 'Sign in or create an account'], ['settings', '⚙︎', 'Settings'], ['menu', '☰', 'Game menu']]) {
+for (const [id, icon, label] of [['tutorial', '?', 'Tutorial'], ['account', '♙', 'Sign in or create an account'], ['settings', '⚙︎', 'Settings'], ['menu', '☰', 'Game menu']]) {
   const control = toolbarButton(id, label, 'topbar-control', el('span', { 'aria-hidden': 'true' }, icon));
 
 }
@@ -306,14 +309,10 @@ const mobileHud = el('nav', { class: 'mobile-island-hud', 'aria-label': 'Island 
 const mobileSummary = el('div', { class: 'mobile-hud-summary' });
 const mobileResources = el('div', { class: 'mobile-hud-resources' });
 const mobileHudValues = {};
-for (const [id, label, action] of [['level', 'Level', () => openPanel('building', 'townhall')], ['happiness', 'Happiness', () => openPanel('residents')], ['population', 'Residents', () => openPanel('residents')], ...Object.keys(RESOURCES).map(id => [id, nameOf(id), () => openPanel('resources', id)])]) {
+for (const [id, label, action] of [['level', 'Level', () => openPanel('building', 'townhall')], ['happiness', 'Happiness', () => openPanel('residents')], ['population', 'Residents', () => openPanel('residents')], ['coins', 'Coins', () => openPanel('resources', 'coins')], ['working', 'Working', () => openPanel('workers')], ['arrival', 'New resident', () => openPanel('residents')], ['points', 'Points', () => openPanel('settings')]]) {
   mobileHudValues[id] = el('strong', { 'data-mobile-hud': id }, '—');
   const node = button(label, action, { class: 'mobile-hud-item' });
   node.replaceChildren(el('small', {}, label), mobileHudValues[id]);
-  if (id === 'population') {
-    mobileHudValues.housing = el('span', { class: 'mobile-housing', 'data-mobile-hud': 'housing' }, '—');
-    node.append(mobileHudValues.housing);
-  }
   (['level', 'happiness', 'population'].includes(id) ? mobileSummary : mobileResources).append(node);
 }
 mobileHud.append(mobileSummary, mobileResources);
@@ -328,7 +327,7 @@ const happinessPercent = value => {
   return `${rounded > 0 ? '+' : rounded < 0 ? '−' : ''}${Math.abs(rounded).toLocaleString('en-US')}%`;
 };
 const happinessText = () => happinessPercent(state.happiness);
-const productionSpeed = () => (state.lighthouseRemaining > 0 ? 2 : 1) * productionMultiplier(state);
+const productionSpeed = () => (state.lighthouseRemaining > 0 ? 2 : 1) * productionMultiplier(state) * (Progression.activePlayMultiplier?.(state) || 1);
 const activeCrew = id => Residents.activeWorkerCount?.(state, id) ?? state.buildings[id].workers;
 function workingProducerCount(id) {
   return state.residents.filter(person => person.workplace === id && Residents.residentIsWorking(state, person)).length;
@@ -348,14 +347,19 @@ function renderHUD() {
     const producer = resourceProductionBuildings[node.dataset.dockStaffing];
     node.querySelector('[data-dock-local]').textContent = count(state.buildings[producer].ready);
     node.querySelector('[data-dock-central]').textContent = count(state.resources[node.dataset.dockStaffing]);
+    node.querySelector('[data-dock-transit]').textContent = count(resourceInTransit(node.dataset.dockStaffing));
   });
   hud.notifications.textContent = visibleNotifications().filter(item => !item.read).length;
-  for (const id of Object.keys(RESOURCES)) {
-    hud[id].textContent = count(state.resources[id]);
-    document.getElementById(`hit-resource-${id}`).setAttribute('aria-label', `${nameOf(id)}: ${count(state.resources[id])} — stock`);
-  }
+  hud.coins.textContent = count(state.resources.coins);
+  document.getElementById('hit-resource-coins').setAttribute('aria-label', `Coins: ${count(state.resources.coins)} — stock`);
+  hud.working.textContent = count(state.residents.filter(person => Residents.residentIsWorking(state, person)).length);
+  hud.arrival.textContent = nextResidentText();
+  hud.points.textContent = count(state.ranking?.score ?? state.buildings.townhall.level * state.resources.coins);
+  refreshDockBadges();
+  refreshResourceTrends();
+  renderMobileDock();
   hud.population.textContent = `${state.population} / ${state.capacity}`;
-  hud.housing.textContent = `Housing: ${housingCapacity(state)}`;
+  hud.housing.textContent = `Beds: ${housingCapacity(state)}`;
   hud.level.textContent = state.buildings.townhall.level;
   hud.happiness.textContent = happinessText();
   document.getElementById('hit-level').setAttribute('aria-label', `Level ${state.buildings.townhall.level} — Town Hall; capacity ${state.capacity} residents`);
@@ -376,13 +380,14 @@ function renderHUD() {
       if (!badge) { badge = el('span', { class: 'world-level' }); node.append(badge); }
       badge.textContent = `Lv. ${value.level}`;
     } else badge?.remove();
-    node.classList.toggle('under-construction', !!value.construction);
+    const worldProject = value.construction || value.premiumService;
+    node.classList.toggle('under-construction', !!worldProject);
     let constructionBadge = node.querySelector('.construction-badge');
-    if (value.construction) {
+    if (worldProject) {
       if (!constructionBadge) { constructionBadge = el('span', { class: 'construction-badge' }); node.append(constructionBadge); }
-      refreshConstructionBadge(constructionBadge, id, value.construction);
+      refreshConstructionBadge(constructionBadge, id, worldProject);
     } else constructionBadge?.remove();
-    node.setAttribute('aria-label', `${titleOf(id)}, level ${value.level}${value.construction ? ', upgrade in progress' : value.ready ? ', goods awaiting pickup' : ''}`);
+    node.setAttribute('aria-label', `${titleOf(id)}, level ${value.level}${worldProject ? ', upgrade in progress' : value.ready ? ', goods awaiting pickup' : ''}`);
   }
   document.body.classList.toggle('reduce-motion', !state.settings.motion);
   document.body.classList.toggle('motion-override', state.settings.motionOverride === true && state.settings.motion);
@@ -392,6 +397,9 @@ function renderHUD() {
   refreshLivePanel();
   renderWorldAdditions();
   stage.dispatchEvent(new Event('island-statechange'));
+  refreshTaskAcceptance();
+  refreshExpeditionPresence();
+  localize();
 }
 function refreshConstructionBadge(node, id, project) {
   const estimate = scheduledConstructionEstimate(id, project);
@@ -408,7 +416,7 @@ function refreshConstructionBadge(node, id, project) {
 let taskCelebration = null;
 let celebrationFocus = null;
 function showTaskCelebration(achievement) {
-  if (!achievement || achievement.seen || achievement.shared || achievement.skipped) return;
+  if (!achievement || achievement.shared || achievement.skipped) return;
   const viewed = act(state, { type: 'seeTaskAchievement', id: achievement.id });
   if (viewed.ok) save();
   if (taskCelebration?.open) taskCelebration.close();
@@ -454,7 +462,7 @@ function finishTaskCelebration(achievement, type) {
   popup?.close(); popup?.remove(); taskCelebration = null;
   if (celebrationFocus?.isConnected) celebrationFocus.focus({ preventScroll: true });
   else if (dialog.open) dialog.querySelector('.dialog-close')?.focus({ preventScroll: true });
-  else document.getElementById('hit-nav-tasks')?.focus({ preventScroll: true });
+  else document.querySelector('.mobile-activities')?.focus({ preventScroll: true });
 }
 
 function svgNode(name, attributes = {}, ...children) {
@@ -494,9 +502,10 @@ function refreshLivePanel() {
   dialog.querySelectorAll('[data-task-accept]').forEach(node => { const task = (state.lighthouseTasks || []).find(t => taskId(t) === node.dataset.taskAccept); if (task) { const status = statusOfTask(task); node.textContent = taskActionLabel(task); node.disabled = status.active || !status.canActivate; } });
   dialog.querySelectorAll('[data-task]').forEach(node => { const task = (state.lighthouseTasks || []).find(t => taskId(t) === node.dataset.task); if (task) { const active = taskIsActive(task); node.dataset.taskActive = String(active); node.classList.toggle('is-active-task', active); } });
   dialog.querySelectorAll('[data-task-countdown]').forEach(node => { const task = (state.lighthouseTasks || []).find(t => taskId(t) === node.dataset.taskCountdown); if (task) node.textContent = durationText(statusOfTask(task).remaining); });
-  dialog.querySelectorAll('[data-project-delivery]').forEach(node => { const project = state.constructionProjects.find(p => p.order === Number(node.dataset.projectDelivery)); if (project) node.textContent = `${count(project.delivered?.[node.dataset.deliveryResource] || 0)} / ${count(project.cost?.[node.dataset.deliveryResource])}`; });
+  dialog.querySelectorAll('[data-project-delivery]').forEach(node => { const project = [...state.constructionProjects, ...(state.premiumServices || [])].find(p => p.order === Number(node.dataset.projectDelivery)); if (project) node.textContent = `${count(project.delivered?.[node.dataset.deliveryResource] || 0)} / ${count(project.cost?.[node.dataset.deliveryResource])}`; });
   dialog.querySelectorAll('[data-visit-group]').forEach(node => { const group = (state.lighthouseVisits || []).find(g => String(g.id) === node.dataset.visitGroup); node.textContent = group ? `${group.residentIds.length} visitors return in ${durationText(group.remaining)}. This visit cannot be recalled.` : 'Visitors have returned home. Their rewards are now active.'; });
-  dialog.querySelectorAll('[data-expedition-live]').forEach(node => { const run = expeditionRun(node.dataset.expeditionLive); node.textContent = expeditionStatusText(run); if (puzzle && run?.status === 'lost' && !puzzle.complete) { puzzle.complete = true; puzzle.message = 'Time expired. The unclaimed pot was lost.'; renderPanel(); } });
+  dialog.querySelectorAll('[data-expedition-pot]').forEach(node => { const run = expeditionRun(node.dataset.expeditionPot); node.textContent = `${count(Activities.expeditionRoundStatus?.(state, run)?.potentialPot ?? run?.pot)} coins`; });
+  dialog.querySelectorAll('[data-expedition-live]').forEach(node => { const run = expeditionRun(node.dataset.expeditionLive); node.textContent = expeditionStatusText(run); if (puzzle && run?.status === 'lost' && !puzzle.complete) { puzzle.complete = true; puzzle.message = run.lossReason === 'presence-timeout' ? 'Presence was not confirmed. The unclaimed pot was lost.' : 'Overtime consumed the potential pot.'; renderPanel(); } });
   const foodStats = foodStatValues();
   dialog.querySelectorAll('[data-food-stat]').forEach(node => { node.textContent = foodStats[node.dataset.foodStat]; });
   dialog.querySelectorAll('[data-upgrade-transport]').forEach(node => { node.textContent = upgradeTransportDescription(node.dataset.upgradeTransport); });
@@ -506,16 +515,17 @@ function refreshLivePanel() {
     if (dialog.querySelector('[data-construction-signature]')?.dataset.constructionSignature !== signature) renderPanel();
   }
   dialog.querySelectorAll('[data-lighthouse-bonus]').forEach(node => { node.textContent = lighthouseDescription(); });
-  dialog.querySelectorAll('[data-project-status]').forEach(node => { const project = state.constructionProjects.find(item => item.order === Number(node.dataset.projectStatus)); node.textContent = project ? projectDescription(project) : 'Completed'; });
+  dialog.querySelectorAll('[data-cancel-project]').forEach(node => { const project = state.constructionProjects.find(project => project.order === Number(node.dataset.cancelProject)); node.disabled = !project || !canCancelProject(project); });
+  dialog.querySelectorAll('[data-project-status]').forEach(node => { const project = [...state.constructionProjects, ...(state.premiumServices || [])].find(item => item.order === Number(node.dataset.projectStatus)); node.textContent = project ? projectDescription(project) : 'Completed'; });
   dialog.querySelectorAll('[data-construction-summary]').forEach(node => { node.textContent = constructionSummary(); });
   if (panel?.kind === 'building' && dialog.open) {
     const current = state.buildings[panel.id];
-    const signature = `${current.level}:${current.construction?.stage || ''}`;
+    const signature = `${current.level}:${(current.construction || current.premiumService)?.stage || ''}`;
     if (dialog.querySelector('[data-building-signature]')?.dataset.buildingSignature !== signature) renderPanel();
   }
   dialog.querySelectorAll('[data-construction-status]').forEach(node => { node.textContent = constructionDescription(node.dataset.constructionStatus); });
   dialog.querySelectorAll('[data-upgrade-building]').forEach(node => { const id = node.dataset.upgradeBuilding; node.disabled = !upgradeEligibility(state, id).ok || !canAfford(state, buildingCost(state, id)); });
-  dialog.querySelectorAll('[data-upgrade-cost]').forEach(node => { const available = spendable(node.dataset.upgradeCost), required = panel?.kind === 'building' ? buildingCost(state, panel.id)?.[node.dataset.upgradeCost] ?? Number(node.dataset.required) : Number(node.dataset.required); node.dataset.required = required; node.textContent = `${count(available)} / ${count(required)}`; node.classList.toggle('is-affordable', available >= required); node.classList.toggle('is-short', available < required); node.setAttribute('aria-label', `${nameOf(node.dataset.upgradeCost)}: in storage ${count(available)}, required ${count(required)}; ${available >= required ? 'enough' : 'short'}`); });
+  dialog.querySelectorAll('[data-upgrade-cost]').forEach(node => { const available = spendable(node.dataset.upgradeCost), required = node.dataset.costSource === 'resident' ? State.residentPurchaseQuote?.(state)?.cost?.[node.dataset.upgradeCost] ?? Number(node.dataset.required) : panel?.kind === 'building' ? buildingCost(state, panel.id)?.[node.dataset.upgradeCost] ?? Number(node.dataset.required) : Number(node.dataset.required); node.dataset.required = required; node.textContent = `${count(available)} / ${count(required)}`; node.classList.toggle('is-affordable', available >= required); node.classList.toggle('is-short', available < required); node.setAttribute('aria-label', `${nameOf(node.dataset.upgradeCost)}: in storage ${count(available)}, required ${count(required)}; ${available >= required ? 'enough' : 'short'}`); });
   dialog.querySelectorAll('[data-stock]').forEach(node => { node.textContent = count(state.resources[node.dataset.stock]); });
   const live = { population: `${state.population} / ${state.capacity}`, 'current-population': count(state.population), workers: totalWorkers(state), free: freeWorkers(state), returning: (state.returningWorkers || []).length, 'next-return': returnDescription(), 'worker-limit': '12 × building level', happiness: happinessText(), level: state.buildings.townhall.level, growth: populationDescription(), 'growth-rate': populationGrowthRateText(), capacity: state.capacity, housing: housingCapacity(state), unhoused: unhousedResidents(state), penalty: housingPenaltyText(), 'housing-status': housingDescription() };
   dialog.querySelectorAll('[data-population-stat]').forEach(node => { node.textContent = live[node.dataset.populationStat]; });
@@ -552,6 +562,7 @@ function refreshLivePanel() {
   dialog.querySelectorAll('[data-market-locked]').forEach(node => { node.textContent = count(state.market.locked.filter(lot => lot.resource === node.dataset.marketLocked).reduce((sum, lot) => sum + lot.amount, 0)); });
   dialog.querySelectorAll('[data-market-timer]').forEach(node => { node.textContent = state.market.locked.length ? durationText(Math.min(...state.market.locked.map(lot => lot.remaining))) : 'No locked goods'; });
   dialog.querySelectorAll('[data-happiness-breakdown]').forEach(node => { node.replaceChildren(...happinessBreakdown()); });
+  dialog.querySelectorAll('[data-buy-resident]').forEach(node => { const quote = State.residentPurchaseQuote?.(state); node.disabled = !quote?.ok; node.title = quote?.message || ''; });
   refreshActiveEffects();
   refreshResidentRosters();
   dialog.querySelectorAll('[data-worker-building]').forEach(node => {
@@ -561,6 +572,7 @@ function refreshLivePanel() {
 }
 
 function openPanel(kind, id) {
+  if (expeditionSession() && !['puzzle', 'expeditions'].includes(kind) && dialog.open) { requestExpeditionExit(() => openPanel(kind, id)); return; }
   if (placement) cancelPlacement();
   if (!dialog.open) previousFocus = document.activeElement;
   panel = { kind, id };
@@ -569,7 +581,8 @@ function openPanel(kind, id) {
   if (!dialog.open) dialog.showModal();
   dialog.querySelector('.dialog-close')?.focus();
 }
-function closePanel() {
+function closePanel(force = false) {
+  if (force !== true && expeditionSession()) { requestExpeditionExit(() => closePanel(true)); return; }
   closeInfoPopup(false);
   dialog.close();
   panel = null;
@@ -577,7 +590,7 @@ function closePanel() {
 }
 dialog.addEventListener('cancel', event => {
   if (closeInfoPopup(true)) { event.preventDefault(); return; }
-  panel = null;
+  event.preventDefault(); closePanel();
 });
 dialog.addEventListener('click', event => { if (event.target === dialog) closePanel(); });
 function returnToIsland() { if (dialog.open) closePanel(); cancelPlacement(); toast('Your island. Select a building, residents or a menu item.'); }
@@ -589,7 +602,7 @@ function cancelPlacement() {
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape') cancelPlacement();
   const direction = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] }[event.key];
-  if (direction && dialog.open && panel?.kind === 'puzzle' && puzzle && !puzzle.complete) {
+  if (direction && !taskAcceptanceDialog?.open && !confirmationDialog?.open && dialog.open && panel?.kind === 'puzzle' && puzzle && !puzzle.complete) {
     event.preventDefault();
     move(puzzle.row + direction[0], puzzle.col + direction[1]);
   }
@@ -624,7 +637,7 @@ function scheduledConstructionEstimate(id, projectOrCost) {
   return value;
 }
 function constructionDescription(id) {
-  const project = state.buildings[id].construction;
+  const project = state.buildings[id].construction || state.buildings[id].premiumService;
   return project ? projectDescription(project) : upgradeTransportDescription(id);
 }
 function upgradeTransportDescription(id) {
@@ -639,17 +652,18 @@ function constructionPanel() {
   return el('div', { 'data-construction-signature': constructionSignature() },
     el('p', { class: 'notice', 'data-construction-summary': '' }, constructionSummary()),
     note('Your Town Hall level sets both the active construction limit and the regular queue limit. Paid queue entries already have reserved materials. Warehouse workers normally replenish central storage before supplying construction; you can change priorities.'),
-    premiumActive(state) ? note(`The package adds 4 construction slots, an unlimited queue and plans based on future deliveries. Expires ${new Date(state.premium.expiresAt).toLocaleString('en-US')}.`) : button('View construction package', () => openPanel('premium'), { class: 'action secondary' }),
+    premiumActive(state) ? note(`The package adds 4 construction slots, an unlimited queue and plans based on future deliveries. Expires ${I18n.formatDateTime(state.premium.expiresAt, language())}.`) : button('View construction package', () => openPanel('premium'), { class: 'action secondary' }),
     ...projects.map(project => card(el('h3', {}, `${titleOf(project.building)} → level ${project.targetLevel}`),
       el('p', { 'data-project-status': project.order }, projectDescription(project)),
       el('p', { class: 'cost' }, costText(project.cost)), projectDeliveryView(project),
-      button('Building', () => openPanel('building', project.building), { class: 'action secondary' }))),
+      button('Building', () => openPanel('building', project.building), { class: 'action secondary' }),
+      button('Cancel construction', () => perform({ type: 'cancelConstruction', order: project.order }), { class: 'action secondary', disabled: !canCancelProject(project), 'data-cancel-project': project.order, title: 'Available only before the first pickup or building phase; cancel later upgrades first.' }))),
     !projects.length ? note('No upgrades planned. Select a building on the island.') : null);
 }
-function upgradeCostView(cost) {
+function upgradeCostView(cost, source = 'building') {
   return el('div', { class: 'upgrade-costs', 'aria-label': 'Available resources compared with upgrade costs' }, Object.entries(cost).map(([id, required]) => {
     const available = spendable(id);
-    return el('div', { class: 'upgrade-cost-row' }, el('span', {}, nameOf(id)), el('strong', { class: available >= required ? 'is-affordable' : 'is-short', 'data-upgrade-cost': id, 'data-required': required, 'aria-label': `${nameOf(id)}: in storage ${count(available)}, required ${count(required)}; ${available >= required ? 'enough' : 'short'}` }, `${count(available)} / ${count(required)}`));
+    return el('div', { class: 'upgrade-cost-row' }, el('span', {}, nameOf(id)), el('strong', { class: available >= required ? 'is-affordable' : 'is-short', 'data-upgrade-cost': id, 'data-cost-source': source, 'data-required': required, 'aria-label': `${nameOf(id)}: in storage ${count(available)}, required ${count(required)}; ${available >= required ? 'enough' : 'short'}` }, `${count(available)} / ${count(required)}`));
   }));
 }
 let activeInfoPopup = null;
@@ -875,35 +889,28 @@ function buildingPanel(id) {
   const data = BUILDINGS[id];
   const value = state.buildings[id];
   const isProducer = productionBuildings.includes(id);
-  const content = el('div', { 'data-building-signature': `${value.level}:${value.construction?.stage || ''}` },
+  const content = el('div', { 'data-building-signature': `${value.level}:${(value.construction || value.premiumService)?.stage || ''}` },
+    ['townhall', 'house'].includes(id) ? compactSettlementSummary(id) : null,
+    id === 'townhall' ? levelSharePanel() : null,
     id === 'townhall' ? activeEffectsPanel() : null,
-    buildingStatusBanner(id),
+    ['townhall', 'house'].includes(id) ? null : buildingStatusBanner(id),
     isProducer ? producerSummary(id) : null,
-    !isProducer ? el('div', { class: 'stat-grid' }, stat('Level', value.level || 'Ruins'), id === 'townhall' ? stat('Residents', el('span', { 'data-population-stat': 'population' }, `${state.population} / ${state.capacity}`)) : null, null) : null);
+    !isProducer && !['townhall', 'house'].includes(id) ? el('div', { class: 'stat-grid' }, stat('Level', value.level || 'Ruins'), id === 'townhall' ? stat('Residents', el('span', { 'data-population-stat': 'population' }, `${state.population} / ${state.capacity}`)) : null, null) : null);
   if (WORKPLACE_IDS.includes(id) && !isProducer) content.append(workplaceCard(id));
   if (id === 'warehouse') content.append(carrierJobsPanel(), warehouseOverview(), transportPriorityPanel());
   if (id === 'market') content.append(marketPanel());
   if (id === 'chapel') content.append(blessingPanel());
-  if (id === 'house') content.append(card(informationHeading('housing', 'Housing capacity',
-    data.description || 'Each House level provides housing for 24 residents.',
-    housingDescription(),
-    'Each House level provides 24 beds. Upgrading does not add residents immediately; it increases housing. Every resident without a bed lowers happiness by 1 percentage point per hour. Population can grow up to the Town Hall limit.'),
-    el('div', { class: 'stat-grid housing-capacity-summary' },
-      stat('Residents', el('span', { 'data-population-stat': 'current-population' }, count(state.population))),
-      stat('Town Hall capacity', el('span', { 'data-population-stat': 'capacity' }, count(state.capacity))),
-      stat('Beds available', el('span', { 'data-population-stat': 'housing' }, count(housingCapacity(state)))),
-      stat('Population change', el('span', { 'data-population-stat': 'growth-rate' }, populationGrowthRateText())))));
-  if (id === 'townhall') content.append(note(`The House provides ${housingCapacity(state)} beds.`));
+  if (id === 'house') content.append(residentPurchasePanel());
   if (id === 'lighthouse') content.append(el('p', { class: 'notice', 'data-lighthouse-bonus': '' }, lighthouseDescription()));
   if (id === 'lighthouse' && value.level > 0) content.append(visitsPanel());
-  if (id === 'house') content.append(button('Manage all workers', () => openPanel('workers'), { class: 'action secondary', 'data-manage-workers': '' }), houseHappinessPanel(), visitsPanel(), residentRoster());
+  if (id === 'house') content.append(button('Manage all workers', () => openPanel('workers'), { class: 'action secondary', 'data-manage-workers': '' }), houseHappinessPanel(), rules('Lighthouse visits', visitsPanel()), residentRoster());
   if (id === 'dock') content.append(button('Open Harbor orders', () => openPanel('trade')));
   const cost = buildingCost(state, id);
   const maxLevel = value.level >= data.maxLevel;
   const eligibility = upgradeEligibility(state, id);
   const townhallLocked = !maxLevel && !eligibility.ok;
-  if (value.construction) {
-    content.append(card(el('h3', {}, `Upgrade to level ${value.construction.targetLevel}`),
+  if (value.construction || value.premiumService) {
+    content.append(card(el('h3', {}, `Upgrade to level ${(value.construction || value.premiumService).targetLevel}`),
       el('p', { class: 'construction-status', 'data-construction-status': id }, constructionDescription(id))));
   }
   const upgradeButton = button(maxLevel ? 'Maximum level' : value.level ? 'Upgrade' : 'Build', () => perform({ type: value.level ? 'upgrade' : 'build', building: id }), { disabled: maxLevel || townhallLocked || !canAfford(state, cost), 'data-upgrade-building': id });
@@ -1036,12 +1043,8 @@ function logisticsStatValue(key) {
   const values = { used: count(warehouseUsed(state)), total: count(limits.total), 'per-resource': count(limits.perResource), 'carrier-rate': transportRate('warehouse'), 'market-rate': transportRate('market'), pending: count(Object.values(state.pendingDeliveries || {}).reduce((sum, value) => sum + value, 0)), returning: (state.returningWorkers || []).length, 'next-return': returnDescription() };
   return values[key] ?? '';
 }
-function durationText(seconds) {
-  if (!Number.isFinite(seconds)) return 'Waiting for carriers';
-  const value = Math.max(0, Math.ceil(seconds));
-  const hours = Math.floor(value / 3600), minutes = Math.floor(value % 3600 / 60), remainder = value % 60;
-  return `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min ` : ''}${remainder} s`;
-}
+function durationText(seconds) { return I18n.formatDuration(seconds, language()); }
+
 function returnDescription() {
   const returning = state.returningWorkers || [];
   return returning.length ? `Next worker returns in ${durationText(Math.min(...returning))}` : 'No workers are returning home.';
@@ -1126,9 +1129,10 @@ function activeEffectsPanel() {
 function refreshActiveEffects(root = dialog) {
   const rows = Effects.activeEffects(state);
   root.querySelectorAll('[data-active-effects]').forEach(node => {
-    node.replaceChildren(...rows.map(effect => el('div', { class: `active-effect active-effect-${effect.polarity}`, 'data-effect': effect.id },
-      el('div', { class: 'active-effect-heading' }, el('strong', {}, effect.title), el('span', {}, effect.remaining == null ? 'Ongoing' : durationText(effect.remaining))),
-      el('p', {}, effect.effect), el('small', {}, `${effect.scope} · ${effect.remaining == null ? effect.endCondition : 'Until the timer ends'}`))));
+    const opened = new Set([...node.querySelectorAll('details[open]')].map(item => item.dataset.effect));
+    node.replaceChildren(...rows.map(effect => el('details', { class: `active-effect active-effect-${effect.polarity}`, 'data-effect': effect.id, open: opened.has(effect.id) },
+      el('summary', { class: 'active-effect-line' }, el('strong', {}, effect.title), el('span', { class: 'effect-value' }, effect.effect), el('span', { class: 'effect-time' }, effect.remaining == null ? 'Ongoing' : durationText(effect.remaining)), el('span', { class: 'effect-info', 'aria-label': 'More information' }, 'i')),
+      el('div', { class: 'active-effect-details' }, el('p', {}, effect.explain || effect.effect), el('p', {}, effect.scope), el('small', {}, effect.endCondition || 'Until the timer ends')))));
     if (!rows.length) node.append(el('p', { class: 'active-effects-empty' }, 'No active bonuses or penalties.'));
   });
 }
@@ -1149,7 +1153,7 @@ function populationGrowthRateText() {
   if (rate > 0 && state.population >= state.capacity) return 'At population limit · 0/h';
   if (rate < 0 && state.population <= 6) return 'Minimum population · 0/h';
   if (!rate) return 'Stable · 0 residents/h';
-  const amount = Math.abs(rate) < 0.01 ? '<0.01' : Math.abs(rate).toLocaleString('en-US', { maximumFractionDigits: 2 });
+  const amount = Math.abs(rate) < 0.01 ? '<0.01' : I18n.formatNumber(Math.abs(rate), language(), { maximumFractionDigits: 2 });
   return `${rate > 0 ? 'Growth' : 'Decline'} · ${rate > 0 ? '+' : '−'}${amount} residents/h`;
 }
 function populationDescription() {
@@ -1283,7 +1287,7 @@ function marketPanel() {
     el('div', { class: 'panel-grid' }, rows));
 }
 function visibleNotifications() {
-  return state.notifications.map(item => ({ ...item, title: omitTaxInformation(item.title), message: omitTaxInformation(item.message) })).filter(item => item.title || item.message);
+  return state.notifications.filter(item => state.settings.notificationCategories?.[notificationCategory(item)] !== false).map(item => ({ ...item, title: omitTaxInformation(item.title), message: omitTaxInformation(item.message) })).filter(item => item.title || item.message);
 }
 function omitTaxInformation(text = '') {
   const value = String(text)
@@ -1293,7 +1297,7 @@ function omitTaxInformation(text = '') {
 }
 
 function notificationsPanel() {
-  return el('div', {}, button('Mark all as read', () => perform({ type: 'readNotifications' }), { class: 'action secondary' }),
+  return el('div', {}, ...(Activities.pendingTaskAchievements?.(state) || []).map(achievement => card(el('h3', {}, achievement.title), note('Your task reward is already received. Choose Share for the prototype 500-coin bonus or Skip.'), button('Review sharing reward', () => showTaskCelebration(achievement)))), button('Mark all as read', () => perform({ type: 'readNotifications' }), { class: 'action secondary' }),
     visibleNotifications().length ? visibleNotifications().map(item => card(el('h3', {}, item.title), el('p', {}, item.message), el('small', {}, item.read ? 'Read' : 'New'))) : note('No notifications. Bonuses, penalties and storage alerts will appear here.'));
 }
 function quoteCoins(quote) { return Number(quote?.coins ?? quote?.price ?? quote?.totalCoins ?? NaN); }
@@ -1317,7 +1321,7 @@ function premiumTransportButton(action) {
   return quotedButton(labels[action.route] || 'Instant transport', () => Activities.quoteTransport?.(state, action), { type: 'premiumTransport', ...action }, { class: 'action secondary', 'data-premium-route': action.route });
 }
 function refreshUpgradeEstimate(node, id) {
-  const project = state.buildings[id].construction;
+  const project = state.buildings[id].construction || state.buildings[id].premiumService;
   const estimate = scheduledConstructionEstimate(id, project || buildingCost(state, id));
   const total = project?.stage === 'building' ? project.buildRemaining : estimate?.total;
   node.querySelector('[data-estimate-total]').textContent = Number.isFinite(total) ? durationText(total) : estimate?.reason ? 'Estimate unavailable' : 'Waiting for carriers';
@@ -1329,7 +1333,7 @@ function upgradeEstimateView(id) {
   return node;
 }
 function refreshProducerUpgradeTimes(node, id) {
-  const project = state.buildings[id].construction;
+  const project = state.buildings[id].construction || state.buildings[id].premiumService;
   const estimate = scheduledConstructionEstimate(id, project || buildingCost(state, id));
   const transport = project?.stage === 'building' ? 0 : estimate?.transport;
   const construction = project?.stage === 'building' ? project.buildRemaining : estimate?.building;
@@ -1364,10 +1368,10 @@ function premiumInformationParagraphs() {
   ];
 }
 function appendProjectPremiumControls(content, id) {
-  const project = state.buildings[id].construction;
+  const project = state.buildings[id].construction || state.buildings[id].premiumService;
   if (project) {
     const progress = el('div', { class: 'upgrade-project-controls' }, el('p', { 'data-project-status': project.order }, projectDescription(project)), projectDeliveryView(project));
-    if (project.stage === 'building') progress.append(el('div', { class: 'premium-options' }, [25, 50, 75, 100].map(percent => quotedButton(percent === 100 ? 'Finish construction now' : `Shorten building time by ${percent}%`, () => Activities.quoteAcceleration?.(state, project.order, percent), { type: 'premiumAccelerate', project: project.order, percent }, { class: 'action secondary', 'data-premium-percent': percent }))));
+    if (project.stage === 'building' && !project.premiumService) progress.append(el('div', { class: 'premium-options' }, [25, 50, 75, 100].map(percent => quotedButton(percent === 100 ? 'Finish construction now' : `Shorten building time by ${percent}%`, () => Activities.quoteAcceleration?.(state, project.order, percent), { type: 'premiumAccelerate', project: project.order, percent }, { class: 'action secondary', 'data-premium-percent': percent }))));
     if (project.stage === 'transport') progress.append(premiumTransportButton({ route: 'construction', project: project.order }));
     content.append(progress);
   }
@@ -1414,16 +1418,16 @@ function taskCard(task, compact = false) {
     el('p', { class: 'task-reward', 'data-task-reward': id }, `Reward: ${costText(rewardForTask(task))}`));
   if (compact) {
     if (active) content.append(el('div', { class: 'task-compact-progress' }, Object.entries(task.requirements || {}).map(([resource, required]) => el('div', {}, el('span', {}, nameOf(resource)), el('strong', { 'data-task-progress': id, 'data-task-resource': resource }, `${count(task.deposited?.[resource] || 0)} / ${count(required)}`)))));
-    content.append(button(active ? 'Active · deliver goods' : status.canActivate ? taskActionLabel(task) : 'View task', () => { if (!taskIsActive(task) && statusOfTask(task).canActivate) perform({ type: 'taskAccept', task: task.id }); openPanel('tasks'); }, { class: `activity-task-button${inactive ? ' inactive-task-view' : ''}`, 'data-task-open': id, 'data-task-start-disabled': String(inactive) }));
+    content.append(button(active ? 'Active · deliver goods' : status.canActivate ? taskActionLabel(task) : 'View task', () => { if (!taskIsActive(task) && statusOfTask(task).canActivate) openTaskAcceptance(task); else openPanel('tasks'); }, { class: `activity-task-button${inactive ? ' inactive-task-view' : ''}`, 'data-task-open': id, 'data-task-start-disabled': String(inactive) }));
   } else {
-    content.append(button(taskActionLabel(task), () => perform({ type: 'taskAccept', task: task.id }), { disabled: active || !status.canActivate, 'data-task-accept': id }));
+    content.append(button(taskActionLabel(task), () => openTaskAcceptance(task), { disabled: active || !status.canActivate, 'data-task-accept': id }));
     for (const [resource, required] of Object.entries(task.requirements || {})) {
       const delivered = task.deposited?.[resource] || 0;
       const quantity = el('input', { type: 'number', min: '1', step: '1', value: String(Math.max(1, Math.min(required - delivered, Math.floor(spendable(resource))))), disabled: !active, 'aria-label': `${nameOf(resource)} contribution for ${task.title}`, 'data-task-input': `${id}-${resource}` });
       content.append(el('div', { class: 'task-deposit-row' }, el('div', {}, el('strong', {}, nameOf(resource)), el('span', { 'data-task-progress': id, 'data-task-resource': resource }, `${count(delivered)} / ${count(required)}`)), quantity,
-        button('Deposit', () => perform({ type: 'taskDeposit', task: task.id, resource, amount: Number(quantity.value) }), { class: 'action secondary', disabled: !active || delivered >= required || spendable(resource) < 1, 'data-task-deposit': `${id}-${resource}` })));
+        button('Donate', () => perform({ type: 'taskDeposit', task: task.id, resource, amount: Number(quantity.value) }), { class: 'action secondary', disabled: !active || delivered >= required || spendable(resource) < 1, 'data-task-deposit': `${id}-${resource}` })));
     }
-    content.append(note(active ? 'Deposited goods cannot be withdrawn. Complete every requirement before the deadline to receive the displayed reward.' : state.activeTaskId ? 'Finish the active task before starting another one.' : 'Start this task to begin contributing goods. Only one task can be active.'));
+    content.append(note(active ? 'Donated goods cannot be withdrawn. Complete every requirement before the deadline to receive the displayed reward.' : state.activeTaskId ? 'Finish the active task before starting another one.' : 'Start this task to begin donating goods. Only one task can be active.'));
   }
   return content;
 }
@@ -1482,7 +1486,7 @@ function visitsPanel() {
   return content;
 }
 function tasksPanel() {
-  return el('div', { 'data-task-list': (state.lighthouseTasks || []).map(taskId).join(',') }, note('Only one task can be active. Deliver goods from central storage in instalments. Deposits are irreversible and are lost when the deadline expires. Food below the protected reserve cannot be donated. Each task shows its own expiry time.'),
+  return el('div', { 'data-task-list': (state.lighthouseTasks || []).map(taskId).join(',') }, note('Only one task can be active. Deliver goods from central storage in instalments. Donations are irreversible and are lost when the deadline expires. Food below the protected reserve cannot be donated. Each task shows its own expiry time.'),
     button('Lighthouse — visits and upgrades', () => openPanel('building', 'lighthouse'), { class: 'action secondary' }),
     ...(state.lighthouseTasks || []).map(task => taskCard(task)));
 }
@@ -1503,8 +1507,9 @@ function pathsPanel() {
 function effectiveAnimationsEnabled() { return !!state.settings.motion && (!matchMedia('(prefers-reduced-motion: reduce)').matches || state.settings.motionOverride === true); }
 function settingsPanel() {
   const checkbox = (key, label) => el('label', { class: 'setting-row' }, el('span', {}, label), el('input', { type: 'checkbox', checked: key === 'motion' ? effectiveAnimationsEnabled() : !!state.settings[key], onchange: event => perform({ type: 'setting', key, value: event.target.checked }) }));
+  const languageSelect = el('select', { 'aria-label': 'Language', onchange: event => { perform({ type: 'setting', key: 'language', value: event.target.value }); renderLeisureDock(true); localize(); renderMobileDock(true); } }, el('option', { value: 'en', selected: language() === 'en' }, 'English'), el('option', { value: 'pl', selected: language() === 'pl' }, 'Polski'));
   const ranking = state.ranking?.score ?? state.rankingScore ?? state.buildings.townhall.level * state.resources.coins;
-  return el('div', {}, checkbox('motion', 'Animations and highlights'),
+  return el('div', {}, el('label', { class: 'setting-row' }, el('span', {}, 'Language'), languageSelect), notificationFilterSettings(), button('Tutorial', () => openPanel('tutorial'), { class: 'action secondary' }), checkbox('motion', 'Animations and highlights'),
     !effectiveAnimationsEnabled() ? note(state.settings.motion ? 'Animations are paused by your system’s reduced-motion preference. Enable the checkbox to turn on water, smoke and island movement.' : 'Animations are off. Enable the checkbox to turn on water, smoke and island movement.') : null,
     note('Your island continues in real time, including while you are away. Progress is saved in this browser.'),
     card(el('h3', {}, 'Ranking'), stat('Hourly score', count(ranking)), note('Town Hall level × coins, recorded on each full hour.')),
@@ -1520,20 +1525,20 @@ function timePanel() {
 
 function expeditionRun(id) { return state.expeditionRuns?.[id] || null; }
 function expeditionsPanel() {
-  return el('div', {}, note('Expeditions award coins only. Win the first level for 50 coins, then choose to cash out or risk the whole unclaimed pot. Each next win doubles the pot; a loss clears it.'),
+  return el('div', {}, note('Expeditions award coins only. Each timely win adds 50 coins to the actual pot. Cash out or risk the entire remainder on the next level. Overtime removes 10 coins per whole second; a loss clears the pot.'),
     ...EXPEDITIONS.map(expedition => {
       const run = expeditionRun(expedition.id);
       const pot = run && ['active', 'decision'].includes(run.status) ? run.pot : 0;
       return card(el('h3', {}, expedition.name), el('p', {}, expedition.description),
-        el('div', { class: 'stat-grid' }, stat('Current pot', `${count(pot)} coins`), stat('Next win', `${count(run?.status === 'decision' ? pot * 2 : 50 * 2 ** Math.max(0, (run?.level || 1) - 1))} coins`)),
+        el('div', { class: 'stat-grid' }, stat('Current pot', `${count(pot)} coins`), stat('Next win', `${count(run?.status === 'decision' ? pot + 50 : Activities.expeditionRoundStatus?.(state, run)?.potentialPot ?? 50)} coins`)),
         run?.status === 'decision' ? expeditionDecisionControls(expedition.id, run) : button(run?.status === 'active' ? 'Resume expedition' : 'Start expedition', () => startExpedition(expedition.id)),
         run?.status === 'lost' ? note('The last expedition was lost. Its unclaimed pot was cleared.') : null);
     }));
 }
 function expeditionDecisionControls(id, run) {
   return el('div', { class: 'expedition-decision' },
-    button(`Cash out ${count(run.pot)} coins`, () => perform({ type: 'expeditionCashout', expedition: id, runId: run.id }), { 'data-expedition-cashout': id }),
-    button(`Risk ${count(run.pot)} for ${count(run.pot * 2)}`, () => {
+    button(`Cash out ${count(run.pot)} coins`, () => { if (perform({ type: 'expeditionCashout', expedition: id, runId: run.id })) { puzzle = null; closePanel(true); } }, { 'data-expedition-cashout': id }),
+    button(`Risk ${count(run.pot)} for ${count(run.pot + 50)}`, () => {
       if (perform({ type: 'expeditionContinue', expedition: id, runId: run.id })) beginPuzzle(id);
     }, { class: 'action secondary', 'data-expedition-continue': id }));
 }
@@ -1557,6 +1562,7 @@ function move(row, col) {
   settleActiveTick();
   const expedition = EXPEDITIONS.find(item => item.id === puzzle.id), run = expeditionRun(puzzle.id);
   if (!run || run.status !== 'active' || run.id !== puzzle.runId || run.level !== puzzle.stage) { puzzle.complete = true; puzzle.message = 'This expedition attempt has ended.'; renderPanel(); return; }
+  if (Activities.expeditionRoundStatus?.(state, run)?.presenceRequired) return;
   const id = `${row},${col}`, terrain = puzzle.cleared.has(id) ? '.' : expedition.map[row]?.[col];
   if (terrain == null) return;
   if (terrain === 'D' && !puzzle.key) { puzzle.message = 'Find the key to open the gate.'; renderPanel(); return; }
@@ -1570,7 +1576,7 @@ function move(row, col) {
     puzzle.complete = true;
     const result = act(state, { type: 'expeditionWin', expedition: puzzle.id, runId: puzzle.runId, stage: puzzle.stage, path: puzzle.path });
     puzzle.message = result.message; save(); renderHUD(); toast(result.message);
-  } else if (run.mode === 'moves' && Number.isFinite(run.moveLimit) && puzzle.moves >= run.moveLimit) {
+  } else if (!Activities.expeditionRoundStatus && run.mode === 'moves' && Number.isFinite(run.moveLimit) && puzzle.moves >= run.moveLimit) {
     const result = act(state, { type: 'expeditionLose', expedition: puzzle.id, runId: puzzle.runId });
     puzzle.complete = true; puzzle.message = result.message; save(); renderHUD();
   }
@@ -1588,16 +1594,18 @@ function puzzlePanel() {
     board.append(button(isPlayer ? '●' : icons[tile], () => move(row, col), { class: `puzzle-cell${isPlayer ? ' is-player' : ''}${reachable ? ' reachable' : ''}`, 'data-tile': tile, 'aria-label': `${isPlayer ? 'Your position' : names[tile]}, row ${row + 1}, column ${col + 1}`, disabled: puzzle.complete || !reachable || run?.status !== 'active', 'data-row': row, 'data-col': col }));
   }));
   return el('div', {},
-    el('div', { class: 'stat-grid' }, stat('Level', run?.level || puzzle.stage), stat('Unclaimed pot', `${count(run?.pot)} coins`)),
+    el('div', { class: 'stat-grid' }, stat('Level', run?.level || puzzle.stage), stat('Potential pot', el('span', { 'data-expedition-pot': puzzle.id }, `${count(Activities.expeditionRoundStatus?.(state, run)?.potentialPot ?? run?.pot)} coins`))),
     el('div', { class: 'puzzle-tools', 'data-expedition-live': puzzle.id }, expeditionStatusText(run)),
     board, el('p', { class: 'puzzle-status', role: 'status' }, puzzle.message),
-    run?.status === 'decision' ? expeditionDecisionControls(puzzle.id, run) : run?.status === 'active' ? button('Leave attempt — lose the pot', () => { if (perform({ type: 'expeditionLose', expedition: puzzle.id, runId: run.id })) openPanel('expeditions'); }, { class: 'action danger' }) : button('Return to island', closePanel),
+    run?.status === 'decision' ? expeditionDecisionControls(puzzle.id, run) : run?.status === 'active' ? button('Leave attempt — lose the pot', () => requestExpeditionExit(() => { puzzle = null; openPanel('expeditions'); }), { class: 'action danger' }) : button('Return to island', closePanel),
     note('Move up, down, left or right. Every win increases the unclaimed coin pot; cash out to transfer it to the island.'),
-    note('Additional time, moves and rewarded ads will become available when their rules are finalized.'),
-    button('Expedition list', () => openPanel('expeditions'), { class: 'action secondary' }));
+    note('Overtime costs 10 coins from the potential reward per whole second. Ads are a future integration.'),
+    !['active','decision'].includes(run?.status) ? button('Expedition list', () => openPanel('expeditions'), { class: 'action secondary' }) : null);
 }
 function expeditionStatusText(run) {
   if (!run) return 'No active attempt';
+  const status = Activities.expeditionRoundStatus?.(state, run);
+  if (status?.active) return `${status.remaining > 0 ? `Time left: ${durationText(status.remaining)}` : `Overtime: ${durationText(status.overtimeSeconds || 0)}`} · Potential pot: ${count(status.potentialPot)} coins${status.overtimePenalty ? ` · Penalty: −${count(status.overtimePenalty)} coins` : ''}`;
   return run.status === 'active' ? (run.mode === 'time' ? `Time left: ${durationText(run.remaining)}` : `Moves used: ${puzzle?.moves || 0}${Number.isFinite(run.moveLimit) ? ` / ${run.moveLimit}` : ' · Practice: move limit pending'}`) : run.status === 'decision' ? 'Choose to cash out or continue.' : 'Attempt ended';
 }
 
@@ -1620,6 +1628,7 @@ function renderPanel() {
     case 'construction': title = 'Construction and queue'; body = constructionPanel(); break;
     case 'notifications': title = 'Notifications'; body = notificationsPanel(); break;
     case 'tasks': body = tasksPanel(); break;
+    case 'tutorial': title = 'Tutorial'; body = tutorialPanel(); break;
     case 'objective': body = objectivePanel(); break;
     case 'settings': body = settingsPanel(); break;
     case 'time': body = timePanel(); break;
@@ -1639,7 +1648,7 @@ function renderPanel() {
       button('Sign in or create an account', () => { location.href = 'harborlight-auth.html'; }, { class: 'action secondary' }),
       button('Premium options', () => openPanel('premium'), { class: 'action secondary' }),
       el('div', { class: 'stat-grid' }, stat('Town Hall level', el('span', { 'data-population-stat': 'level' }, state.buildings.townhall.level)), stat('Residents', el('span', { 'data-population-stat': 'population' }, `${state.population} / ${state.capacity}`)), stat('Happiness', el('span', { 'data-population-stat': 'happiness' }, happinessText())), stat('Day', state.day)),
-      el('div', { class: 'panel-grid' }, [['objective', 'Main objective'], ['buildings', 'Buildings'], ['expeditions', 'Expeditions'], ['tasks', 'Tasks'], ['residents', 'Residents'], ['resources', 'Warehouse'], ['trade', 'Trade'], ['settings', 'Settings']].map(([kind, label]) => button(label, () => openPanel(kind)))),
+      el('div', { class: 'panel-grid' }, [['objective', 'Main objective'], ['buildings', 'Buildings'], ['expeditions', 'Expeditions'], ['tasks', 'Tasks'], ['residents', 'Residents'], ['resources', 'Warehouse'], ['trade', 'Trade'], ['map', 'Island map'], ['tutorial', 'Tutorial'], ['settings', 'Settings']].map(([kind, label]) => button(label, () => openPanel(kind)))),
       button('Return to island', closePanel, { class: 'action secondary' }));
   }
   const scroll = dialog.querySelector('.dialog-body')?.scrollTop || 0;
@@ -1649,12 +1658,220 @@ function renderPanel() {
     if (roster) { roster.open = true; refreshResidentRosters(); roster.querySelector('[data-resident-list]').scrollTop = rosterScroll; }
   }
   dialog.querySelector('.dialog-body').scrollTop = scroll;
+  localize(dialog);
 }
 
+function levelSharePanel() {
+  const level = state.buildings.townhall.level;
+  if (level < 2) return null;
+  const verified = Progression.socialSummary?.(state)?.levelShares?.includes(level) === true;
+  return el('section', { class: 'milestone-share-row' },
+    el('div', {}, el('strong', {}, `Town Hall level ${level}`), el('small', {}, verified ? 'Milestone publication verified' : '500 coins after verified publication')),
+    button(verified ? 'Already verified' : 'Share milestone', () => openLevelShare(level), { class: 'action secondary', disabled: verified, 'data-share-level': level }));
+}
+function openLevelShare(level) {
+  const nickname = String(state.player?.nickname || state.profile?.nickname || state.nickname || text('Island explorer')).slice(0,80);
+  const prepared = language() === 'pl' ? `${nickname} ma już ratusz na poziomie ${level} w HARBORLIGHT! Zbuduj własną wyspę: ${OFFICIAL_GAME_URL}` : `${nickname} reached Town Hall level ${level} in HARBORLIGHT! Build your own island: ${OFFICIAL_GAME_URL}`;
+  const field = el('textarea', { readonly: true, rows: 4, 'aria-label': 'Prepared milestone post', 'data-share-post': '' }); field.value = prepared;
+  const status = el('p', { class: 'share-intent-status', role: 'status', 'data-share-status': '' });
+  const popup = createFlowDialog('milestone-share', 'Share your level milestone', el('div', {}, note('You control what is published. The 500-coin reward requires verified publication; verification is not connected yet. Opening or copying this post does not award coins.'), field, status));
+  const dispose = () => { popup.close(); popup.remove(); };
+  const actions = el('div', { class: 'flow-actions share-intent-actions' });
+  if (typeof navigator.share === 'function') actions.append(button('Open share dialog', async () => {
+    try { await navigator.share({ title:'HARBORLIGHT', text:prepared, url:OFFICIAL_GAME_URL }); status.textContent = 'The share dialog closed. Publication verification is not connected; no coins were awarded.'; }
+    catch (error) { status.textContent = error?.name === 'AbortError' ? 'Sharing cancelled. No coins were awarded.' : 'Use Copy post or the Facebook sharing link.'; }
+    localize(popup);
+  }, { 'data-native-share': '' }));
+  actions.append(button('Copy post', async () => {
+    try { if (!navigator.clipboard?.writeText) throw new Error('clipboard'); await navigator.clipboard.writeText(prepared); status.textContent = 'Post copied. Publish it yourself; no coins were awarded.'; }
+    catch { field.focus(); field.select(); status.textContent = 'Select and copy the prepared post.'; }
+    localize(popup);
+  }, { class:'action secondary', 'data-copy-share': '' }));
+  const facebook = new URL('https://www.facebook.com/sharer/sharer.php'); facebook.searchParams.set('u',OFFICIAL_GAME_URL); facebook.searchParams.set('quote',prepared);
+  actions.append(el('a', { class:'action secondary', href:facebook.href, target:'_blank', rel:'noopener noreferrer', 'data-facebook-share': '' }, 'Open Facebook sharing dialog'), button('Back to island', dispose, { class:'action secondary', 'data-close-share': '' }));
+  popup.querySelector('.flow-body').append(actions); popup.addEventListener('cancel',event=>{event.preventDefault();dispose();}); localize(popup); popup.showModal(); field.focus();
+}
+
+function canCancelProject(project) {
+  return project.stage !== 'building' && !project.transportStarted && !(project.transportSeconds > 0) && !Object.values(project.delivered || {}).some(value => value > 0) && !(state.haulTrips?.warehouse || []).some(trip => trip.projectOrder === project.order) && !state.constructionProjects.some(other => other.building === project.building && other.targetLevel > project.targetLevel);
+}
+
+function resourceInTransit(resource) {
+  return Object.values(state.haulTrips || {}).flat().reduce((sum, trip) => sum + (trip.resource === resource ? Number(trip.amount || 0) : 0), 0);
+}
+function refreshResourceTrends() {
+  const rates = State.resourceRates?.(state) || {};
+  resourceDock.querySelectorAll('[data-resource-trend]').forEach(node => {
+    const value = Number(rates[node.dataset.resourceTrend]?.net ?? rates[node.dataset.resourceTrend] ?? 0);
+    const absolute = I18n.formatNumber(Math.abs(value), language(), { maximumFractionDigits: 2 });
+    node.textContent = `${value > 0.0001 ? '↑ +' : value < -0.0001 ? '↓ −' : '→ '}${Math.abs(value) < 0.0001 ? '0' : absolute} units/h`;
+    node.dataset.trend = value > 0.0001 ? 'positive' : value < -0.0001 ? 'negative' : 'neutral';
+  });
+}
+function nextResidentText() {
+  const rate = populationRate(state.happiness);
+  if (!rate) return '0 · Stable';
+  if (rate > 0 && state.population >= state.capacity) return 'Capacity reached';
+  if (rate < 0 && state.population <= 6) return 'Minimum: 6';
+  const progress = state.populationDirection === Math.sign(rate) ? state.populationProgress : 0;
+  const remaining = Math.max(0, (1 - progress) * 3600 / Math.abs(rate));
+  const compact = remaining >= 31536000 ? `${count(Math.floor(remaining / 31536000))} yr` : remaining >= 86400 ? `${count(Math.floor(remaining / 86400))} d ${Math.floor(remaining % 86400 / 3600)} h` : durationText(remaining);
+  return `${rate < 0 ? '−1 · ' : '+1 · '}${compact}`;
+}
+function refreshDockBadges() {
+  buildingDock.querySelectorAll('[data-dock-level]').forEach(node => { node.textContent = `Lv. ${state.buildings[node.dataset.dockLevel].level}`; });
+  buildingDock.querySelectorAll('[data-dock-workers]').forEach(node => {
+    const id = node.dataset.dockWorkers;
+    const working = state.residents.filter(person => person.workplace === id && Residents.residentIsWorking(state, person)).length;
+    const arriving = state.residents.filter(person => person.workplace === id && person.arrivalRemaining > 0).length;
+    const returning = state.residents.filter(person => person.workplace === id && person.pendingRelease || (person.returnFrom === id || person.returningFrom === id || person.previousWorkplace === id) && person.returnRemaining > 0).length;
+    node.textContent = `${working}${arriving ? ` (+${arriving})` : ''}${returning ? ` (−${returning})` : ''}`;
+    node.setAttribute('aria-label', `Working: ${working}${arriving ? `, arriving: ${arriving}` : ''}${returning ? `, returning home: ${returning}` : ''}`);
+  });
+}
+function compactSettlementSummary(id) {
+  return el('section', { class: 'settlement-summary', 'data-settlement-summary': id },
+    stat('Level', state.buildings[id].level), stat('Residents', `${state.population} / ${state.capacity}`), stat('Beds', housingCapacity(state)),
+    id === 'house' ? stat('Population change', nextResidentText()) : null);
+}
+function residentPurchasePanel() {
+  const quote = State.residentPurchaseQuote?.(state);
+  if (!quote) return card(el('h3', {}, 'Invite a resident'), note('Resident purchases are unavailable.'));
+  return card(informationHeading('invite-resident', 'Invite a resident', 'A resident costs the full next Town Hall upgrade price in all six resources. An available House bed and Town Hall population place are required. New residents stay at 0% happiness for 24 hours.'),
+    upgradeCostView(quote.cost || quote.price || {}, 'resident'), button('Invite resident', () => perform({ type: 'buyResident' }), { disabled: !quote.ok, title: quote.message || '', 'data-buy-resident': '' }));
+}
+const NOTIFICATION_CATEGORIES = [['bonuses', 'Bonuses'], ['penalties', 'Penalties'], ['storage', 'Storage'], ['construction', 'Construction'], ['trade', 'Trade'], ['tasks', 'Tasks'], ['expeditions', 'Expeditions'], ['system', 'Other notifications']];
+function notificationCategory(item) {
+  const kind = `${item.kind || ''} ${item.title || ''}`.toLowerCase();
+  if (/effect|bonus|penalty/.test(kind)) return /penalty|shortage|unemployment|blockage|not enough beds|familiarity/.test(kind) ? 'penalties' : 'bonuses';
+  if (/storage|warehouse-full|producer-full/.test(kind)) return 'storage';
+  if (/construction|upgrade|build/.test(kind)) return 'construction';
+  if (/trade|market|harbor|port/.test(kind)) return 'trade';
+  if (/task|quest/.test(kind)) return 'tasks';
+  if (/expedition/.test(kind)) return 'expeditions';
+  return 'system';
+}
+function notificationFilterSettings() {
+  return rules('Notification categories', note('Choose which categories are shown. All events remain in your island history.'), ...NOTIFICATION_CATEGORIES.map(([id, label]) => el('label', { class: 'setting-row' }, el('span', {}, label), el('input', { type: 'checkbox', checked: state.settings.notificationCategories?.[id] !== false, 'data-notification-category': id, onchange: event => perform({ type: 'setting', key: 'notificationCategories', value: { ...(state.settings.notificationCategories || {}), [id]: event.target.checked } }) }))));
+}
+function tutorialPanel() {
+  const rows = Progression.tutorialRows?.(state) || [];
+  return el('div', { class: 'tutorial-panel' }, note('Learn the island in 25 short steps: five tasks on each of your first five active days. Complete tasks and claim their displayed rewards.'),
+    progressionOverview(),
+    ...[1,2,3,4,5].map(day => el('section', { class: 'tutorial-day', 'data-tutorial-day': day }, el('h3', {}, `Day ${day}`), ...rows.filter(row => row.day === day).map(row => card(
+      el('h4', {}, row.title), el('p', {}, row.description), el('p', { class: 'task-reward' }, `Reward: ${costText(row.reward)}`),
+      row.claimed ? el('span', { class: 'badge' }, 'Reward claimed') : !row.unlocked ? el('span', { class: 'badge' }, 'Available on this active day') : row.canClaim ? button('Claim reward', () => perform({ type: 'claimTutorial', taskId: row.id }), { 'data-tutorial-claim': row.id }) : row.canObserve ? button('Read and complete', () => perform({ type: 'tutorialObserve', taskId: row.id }), { 'data-tutorial-observe': row.id }) : el('span', { class: 'badge' }, row.lockedReason || (row.completed ? 'Completed' : 'In progress')))))));
+}
+function progressionOverview() {
+  const loyalty = Progression.loyaltyStatus?.(state), engagement = Progression.engagementStatus?.(state);
+  return card(el('h3', {}, 'Your progress'),
+    el('div', { class: 'stat-grid' }, stat('Active tutorial days', `${state.tutorial?.activeDays?.length || 0} / 5`), stat('Tutorial rewards claimed', `${Object.keys(state.tutorial?.claimed || {}).length} / 25`)),
+    engagement?.active ? note(`Active play: production ×2 for ${durationText(engagement.remaining)}. Meaningful activity renews this five-minute bonus.`) : note('Meaningful activity activates a five-minute production ×2 bonus.'),
+    loyalty ? el('details', { class: 'island-rules' }, el('summary', {}, 'Introductory loyalty calendar'),
+      el('div', { class: 'loyalty-calendar' }, ...Array.from({length:10}, (_,index) => el('span', { class: `loyalty-day${loyalty.claimedDays.includes(index+1) ? ' is-claimed' : ''}${index+1 === loyalty.streak ? ' is-current' : ''}` }, index+1))), note(loyalty.message)) : null,
+    rules('Community rewards', note(Progression.socialSummary?.(state)?.message || 'Verified social sharing is not connected yet.'), ...(Progression.referralRows?.(state) || []).map(row => el('p', {}, `${row.activeDayCount} / 3 active days · ${durationText(row.remaining)}`))));
+}
+const mobileDock = el('nav', { class: 'mobile-bottom-dock', 'aria-label': 'Island building and resource dock' });
+document.body.append(mobileDock);
+function renderMobileDock(force = false) {
+  if (!matchMedia('(max-width:900px),(max-height:500px)').matches) return;
+  const signature = JSON.stringify([language(), activeDockCategory, BUILDING_DOCK_ORDER.map(id => [state.buildings[id].level, state.buildings[id].workers]), MATERIAL_IDS.map(id => [Math.floor(state.resources[id]), Math.floor(state.buildings[resourceProductionBuildings[id]].ready)]), [...buildingDock.querySelectorAll('[data-dock-workers]')].map(node => node.textContent)]);
+  if (!force && signature === mobileDockSignature) return;
+  mobileDockSignature = signature;
+  const scrolled = mobileDock.querySelector('.mobile-dock-scroll')?.scrollLeft || 0;
+  const tabs = el('div', { class: 'mobile-dock-tabs' }, ...[['buildings','Buildings'],['resources','Resources'],['decorations','Decorations'],['paths','Paths']].map(([id,label]) => button(label, () => setDockCategory(id), { class: `mobile-dock-tab${activeDockCategory===id?' is-selected':''}`, 'aria-pressed': activeDockCategory===id })));
+  const cards = el('div', { class: 'mobile-dock-scroll' });
+  if (activeDockCategory === 'buildings') {
+    for (const source of buildingDock.children) {
+      const id = source.dataset.dockBuilding;
+      const control = button('', () => openPanel('building', id), { class: 'building-dock-card', 'data-mobile-building': id, 'aria-label': titleOf(id) });
+      control.append(...[...source.children].map(node => node.cloneNode(true))); cards.append(control);
+    }
+  } else if (activeDockCategory === 'resources') {
+    for (const source of resourceDock.children) {
+      const resource = source.dataset.dockResource;
+      const control = button('', () => openPanel('building', resourceProductionBuildings[resource]), { class: 'resource-dock-card', 'data-mobile-resource': resource, 'aria-label': nameOf(resource) });
+      control.append(...[...source.children].map(node => node.cloneNode(true))); cards.append(control);
+    }
+  } else {
+    for (const source of leisureDock.children) {
+      const control = button('', () => source.click(), { class: source.className, disabled: source.disabled, 'aria-label': source.getAttribute('aria-label') });
+      control.append(...[...source.children].map(node => node.cloneNode(true))); cards.append(control);
+    }
+  }
+  mobileDock.replaceChildren(tabs,cards); cards.scrollLeft = scrolled; localize(mobileDock);
+}
+
+function showRoadSuccess(levelComplete) {
+  const banner = el('div', { class: 'road-success', role: 'status' }, el('strong', {}, levelComplete ? 'Path network level complete!' : 'Path section upgraded'), el('span', {}, '✓'));
+  if (effectiveAnimationsEnabled()) {
+    const burst = el('div', { class: 'celebration-fireworks', 'aria-hidden': 'true' });
+    for (let i=0;i<3;i++) { const spray = el('span', { class: 'firework-burst', style: { '--burst-x': `${25+i*25}%`, '--burst-y': '50%', '--burst-delay': `${i*.12}s`, '--burst-color': '#f4d48d' } }); for(let ray=0;ray<12;ray++)spray.append(el('i',{style:{'--ray':ray}})); burst.append(spray); }
+    banner.append(burst);
+  }
+  document.body.append(banner); localize(banner); setTimeout(() => banner.remove(), 2200);
+}
+function createFlowDialog(id, title, description) {
+  const popup = el('dialog', { id, class: 'island-flow-dialog', 'aria-labelledby': `${id}-title` }, el('header', {}, el('h2', { id: `${id}-title` }, title)), el('div', { class: 'flow-body' }, description));
+  document.body.append(popup); return popup;
+}
+function confirmChoice(title, description, confirmLabel, action) {
+  if (confirmationDialog?.open) return;
+  const popup = createFlowDialog('island-confirmation', title, note(description)); confirmationDialog = popup;
+  const dispose = () => { popup.close(); popup.remove(); if (confirmationDialog === popup) confirmationDialog = null; };
+  popup.querySelector('.flow-body').append(el('div', { class: 'flow-actions' }, button(confirmLabel, () => { dispose(); action(); }, { 'data-confirm-choice': '' }), button('Keep playing', dispose, { class: 'action secondary', 'data-cancel-choice': '' })));
+  popup.addEventListener('cancel', event => { event.preventDefault(); dispose(); }); localize(popup); popup.showModal(); popup.querySelector('[data-cancel-choice]').focus();
+}
+function expeditionSession() { return Activities.activeExpeditionRun?.(state) || Object.values(state.expeditionRuns || {}).find(run => ['active','decision'].includes(run.status)); }
+function requestExpeditionExit(after = () => closePanel(true)) {
+  const run = expeditionSession(); if (!run) { after(); return; }
+  const won = run.status === 'decision';
+  confirmChoice(won ? 'Cash out and leave?' : 'Leave this expedition?', won ? `Leaving now pays ${count(run.pot)} coins into your island treasury.` : `Leaving during this round loses the unclaimed pot of ${count(run.pot)} coins.`, won ? 'Cash out and leave' : 'Leave and lose the pot', () => { if (perform({ type: won ? 'expeditionCashout' : 'expeditionLose', expedition: run.expedition, runId: run.id })) { puzzle = null; after(); } });
+}
+function openTaskAcceptance(task) {
+  if (taskAcceptanceDialog?.open) return;
+  if (!perform({ type: 'beginTaskAcceptance', task: task.id })) return;
+  const status = Activities.taskAcceptanceStatus?.(state); if (!status?.pending) return;
+  const popup = createFlowDialog('task-acceptance', 'Confirm Lighthouse task', el('div', {}, el('h3', {}, task.title), note('The reward multiplier was saved when you opened this offer. Confirm within 60 seconds to start the task. Only one task can be active.'), el('p', { class: 'acceptance-countdown', 'data-acceptance-time': '' }), el('p', { class: 'task-reward' }, `Reward ×${status.multiplier}: ${costText(Activities.taskReward?.({ ...task, multiplier: status.multiplier }) || task.reward)}`), resourceList(task.requirements)));
+  taskAcceptanceDialog = popup;
+  const cancel = () => { act(state, { type: 'cancelTaskAcceptance', task: task.id }); save(); popup.close(); popup.remove(); taskAcceptanceDialog = null; renderHUD(); };
+  popup.querySelector('.flow-body').append(el('div', { class: 'flow-actions' }, button('Confirm and start', () => { if (perform({ type: 'confirmTaskAcceptance', task: task.id })) { popup.close(); popup.remove(); taskAcceptanceDialog = null; openPanel('tasks'); } }, { 'data-confirm-task': task.id }), button('Cancel', cancel, { class: 'action secondary' })));
+  popup.addEventListener('cancel', event => { event.preventDefault(); cancel(); }); popup.addEventListener('click', event => { if (event.target === popup) cancel(); }); refreshTaskAcceptance(); localize(popup); popup.showModal(); popup.querySelector('[data-confirm-task]').focus();
+}
+function refreshTaskAcceptance() {
+  if (!taskAcceptanceDialog) return;
+  const status = Activities.taskAcceptanceStatus?.(state);
+  const clock = taskAcceptanceDialog.querySelector('[data-acceptance-time]');
+  if (clock) clock.textContent = status?.pending ? `Confirm in ${durationText(status.remaining)}` : 'This confirmation has expired. Open the task again.';
+  const confirm = taskAcceptanceDialog.querySelector('[data-confirm-task]'); if (confirm) confirm.disabled = !status?.canConfirm;
+}
+function refreshExpeditionPresence() {
+  const run = expeditionSession(); const status = run && Activities.expeditionRoundStatus?.(state, run);
+  if (!status?.presenceRequired) { document.getElementById('expedition-presence')?.remove(); return; }
+  let popup = document.getElementById('expedition-presence');
+  if (!popup) {
+    popup = createFlowDialog('expedition-presence', 'Are you still playing?', el('div', {}, note('Confirm your presence to continue. Round time and overtime charges continue while this prompt is open.'), el('p', { 'data-presence-countdown': '' }), button('I am here', () => { if (perform({ type: 'expeditionPresenceConfirm', runId: run.id })) { popup.close(); popup.remove(); } }, { 'data-presence-confirm': '' })));
+    popup.addEventListener('cancel', event => event.preventDefault()); localize(popup); popup.showModal(); popup.querySelector('[data-presence-confirm]').focus();
+  }
+  popup.querySelector('[data-presence-countdown]').textContent = `Confirm in ${durationText(status.presenceRemaining)}`;
+}
+function meaningfulInput(event) {
+  if (document.hidden || !document.hasFocus() || event.type === 'keydown' && ['Shift','Control','Alt','Meta','Tab'].includes(event.key)) return;
+  const now = Date.now(); if (now - lastInputAt < 250) return; lastInputAt = now;
+  settleActiveTick(); const result = act(state, { type: 'userActivity', visible: true, focused: true }); if (result.ok) save();
+}
+document.addEventListener('pointerdown', meaningfulInput, { capture: true, passive: true });
+document.addEventListener('keydown', meaningfulInput, { capture: true });
+
+setDockCategory('buildings');
 settleActiveTick();
 if (!NEW_PLAYER_PROFILE) State.applyBuildTestStock?.(state);
 recordVisit(state);
 save();
+const restoredExpedition = expeditionSession();
+if (restoredExpedition?.status === 'active') beginPuzzle(restoredExpedition.expedition);
+else if (restoredExpedition?.status === 'decision') openPanel('expeditions');
+else if (Activities.taskAcceptanceStatus?.(state)?.pending) { const pending = state.lighthouseTasks.find(task => task.id === state.taskAcceptanceDraft.taskId); if (pending) openTaskAcceptance(pending); }
 renderHUD();
 createAmbientScene(stage, () => state).ready.catch(error => {
   console.error(error);

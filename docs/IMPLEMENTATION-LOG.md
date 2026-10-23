@@ -311,3 +311,33 @@ Status: ukończono, opublikowano i sprawdzono publiczny adres; [FE-17 / #27](htt
 - Excel 8: **45 arkuszy, 265 reguł, 48 nowych wpisów V8, 20 atrakcji, 100 narracji, wszystkie 48 komentarzy źródłowych, 3601 przeliczonych formuł i 231 sprawdzeń TRUE**. Formuły przeliczono LibreOffice; osobna kontrola openpyxl potwierdziła brak błędów i brakujących zapisanych wyników. Oryginalny Excel 7 zachowuje identyczne bajty.
 - Pobrano rzeczywisty plik z GitHuba: HTTP 200, 289075 bajtów, poprawny ZIP/XLSX, SHA-256 `74ea3cc586d8d889ff34de8819694430503f45ed5fa2743873c9ad0c0b83cc3e`, zgodny z lokalnym plikiem. [Pobierz Excel 8](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT8-zasady.xlsx).
 - Linki: [bieżąca wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v12), [osobny profil nowego gracza](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v12), [warunki odbioru](FRONTEND-REVIEW.md). FE-17 / #27 ukończone w milestone frontend; serwerowe rozliczenia i integracje nadal pozostają zadaniami backendu.
+
+
+## 2026-10-23 — 58 decyzji V9, 19 uwag frontendowych i uproszczony Excel 9
+
+Status: implementacja i odbiór lokalny zakończone, cache `frontend-v13`; publikacja i publiczny odbiór oczekują na wykonanie. Użytkownik po przeglądzie logiki zatwierdził 58 kolejnych rozstrzygnięć oraz nowy pakiet ekranów i udzielił „go”. Manifest `docs/decisions-v9.json` jest źródłem reguł; wcześniejsze wpisy v7/v8/v12 są historią swoich wydań.
+
+- Zmieniono potrzeby mieszkańców, zamrożenie nowej osoby i odtwarzanie nakładających się efektów 100%; atrakcje kierowane do najmniej szczęśliwych uprawnionych, cena według rzeczywistych odbiorców i reset ofert o północy.
+- Rzeczywisty T od pierwszego odbioru do ostatniej dostawy obejmuje przerwy. Fizyczne rezerwacje nadal zajmują centralę, prognozy używają FIFO, miejsce 50×poziom Magazynu chroni Food; anulowanie i wszystkie nadmiary zwrotów/nagród zachowują towary.
+- Pełne kupno budynku jest osobną usługą 10 s poza zwykłą kolejką. Dowóz Premium nie zeruje fazy budowania i działa bez obsady z jednym hipotetycznym tragarzem; opłata dotyczy wyłącznie wybranego etapu.
+- Zadanie ma potwierdzenie 60 s z utrwaleniem szybkiego mnożnika przy otwarciu; po pierwszym sukcesie terminy przechodzą na północ. Share/Skip pozostaje w powiadomieniach bezterminowo, z +500 tylko raz na ukończenie.
+- Ekspedycje dodają po 50 monet do rzeczywistej puli zamiast historycznego podwojenia, po limicie odejmują 10 monet/s i kończą serię przy zerze. Jedna seria blokuje zarządzanie wyspą; obecność po 5 min i 60 s na odpowiedź, rzeczywisty zegar także offline, po wygranej zamknięcie oznacza potwierdzoną wypłatę.
+- Samouczek 25 lekcji przez pięć aktywnych dni, jawnie projektowe kwoty 1000 monet i 400 materiałów łącznie. Aktywna widoczna akcja odnawia bonus na 5 min; reguły social/referral są czystymi punktami integracji, a nie połączeniem z dostawcą. Lojalność ma serię/koniec, bez nieustalonych wypłat.
+- Frontend: usunięty lewy pasek, nowy nagłówek, ustalone 12 kart, zasoby z wszystkimi przewozami w nawiasie, EN/PL, filtry powiadomień, rozwijane jednowierszowe efekty, Donation/Donate i polskie odpowiedniki, potwierdzenia ścieżek, usunięte pola otoczenia i poprawki animacji.
+- Excel 9 powstaje z niezmienionego 8: cztery widoczne zakładki (Jak działa gra, Budynki v9, Do decyzji, Kalkulator), 45 zakładek źródła zachowanych jako ukryta historia, 48 komentarzy i wszystkie formuły. Pełny manifest, lekcje i kontrole są dodatkowymi ukrytymi szczegółami. Arkusz nie zmienia plików 7 i 8.
+- Przepisano bieżące README, reguły, budynki, instrukcję i macierz odbioru, a backlog odróżnia nowy zakres od ukończonego v12. Wyniki lokalnych testów i suma kontrolna arkusza są poniżej; commit oraz publiczne Pages zostaną wpisane po wykonaniu. Lokalne pliki nie są dowodem publikacji.
+
+### Weryfikacja lokalna Excela 9
+
+- Plik ma **52 arkusze, cztery widoczne zakładki, 46 mechanik opisanych najwyżej trzema zdaniami, wszystkie 58 decyzji i 19 wymagań frontendu oraz 25 lekcji samouczka**. Pięć tematów na później jest oddzielonych od podjętych decyzji i jawnych założeń projektu.
+- Zachowano 45 źródłowych zakładek Excela 8 z identycznymi wartościami, formułami i wszystkimi 48 komentarzami; w nowym pliku są ukrytą historią. Oryginały 7 i 8 zachowują identyczne bajty.
+- LibreOffice przeliczył wszystkie **3693 formuły** i zapisał wyniki. Kontrola openpyxl nie znalazła błędów ani brakujących wyników; **30 nowych i 231 historycznych sprawdzeń daje TRUE**. Skrypt `scripts/build_workbook_v9.py --validate-only` sprawdza też pełne pokrycie manifestu oraz integralność ZIP/XLSX.
+- Lokalny Excel 9 ma **329612 bajtów**, SHA-256 `3fc10a5d84df001e67e217dbc8c045cc5025b7777f91239c60b6694966864cc8`. Publikacja na GitHubie i sprawdzenie pobrania zostaną potwierdzone osobno; powyższy wynik dotyczy pliku lokalnego.
+
+### Końcowy odbiór lokalny frontendu v13
+
+- `node --test --test-concurrency=1 --test-isolation=none tests/*.test.mjs`: **388/388 PASS, 0 błędów i 0 pominiętych**, 10,29 s. Zachowano osobny 10-sekundowy watchdog testu długiej symulacji 96 h; optymalizacja silnika skróciła ją do 6,27 s bez rozluźniania warunków testu.
+- Zaliczone pięć zestawów Chromium: `tests/harborlight-frontend-v13-smoke.py`, `tests/harborlight-new-player-smoke.py`, `tests/harborlight-auth-smoke.py` i `tests/harborlight-v13-auth-motion-smoke.py` oraz `scripts/harborlight-v13-extra-acceptance.py`. Dodatkowy odbiór zaliczył sześć grup wymagań, w tym 24 widoki budynków EN/PL. Nowy profil zaczyna od 12 osób i po 100 zasobów, pozostaje odrębny od dotychczasowej wyspy i nie ponawia testowego grantu.
+- Niezależny przegląd sprawdził wszystkie 12 paneli i pięć kart Resources w EN/PL, komplet wymagań F01–F19 i brak informacji podatkowych w interfejsie. Obejrzano rzeczywiste zrzuty desktopowe i mobilne, w tym kompaktowy Ratusz i Dom po polsku; sprawdzono formularze oraz ruch wody/dymu i odtworzenie animacji.
+- Końcowe `python3 scripts/build_workbook_v9.py --validate-only` ponownie PASS, bez przebudowy arkusza. SHA-256 Excela 9 pozostaje `3fc10a5d84df001e67e217dbc8c045cc5025b7777f91239c60b6694966864cc8`; pliki 7 i 8 nadal są niezmienione.
+- Powyższe są wynikami lokalnymi. Commit, workflow Pages, publiczne scenariusze i pobranie Excela z GitHuba zostaną potwierdzone osobno po wykonaniu; sam parametr `frontend-v13` w linku nie stanowi publikacji.

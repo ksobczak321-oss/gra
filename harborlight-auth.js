@@ -1,5 +1,66 @@
 // Account screen only. No authentication service or social integration is connected.
 // Credentials never leave this form and are never written to browser storage.
+import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v13';
+
+registerTranslations({
+  'HARBORLIGHT — Welcome Home': 'HARBORLIGHT — Witaj na wyspie',
+  'Welcome to HARBORLIGHT. Sign in, create an account, or continue exploring your island as a guest.': 'Witaj w HARBORLIGHT. Zaloguj się, załóż konto lub odkrywaj wyspę jako gość.',
+  'Skip to account': 'Przejdź do konta',
+  'HARBORLIGHT — return to your island': 'HARBORLIGHT — wróć na swoją wyspę',
+  'A little island. A world to build.': 'Mała wyspa. Świat do zbudowania.',
+  'Back to island': 'Wróć na wyspę',
+  'Language': 'Język',
+  'YOUR OWN CORNER OF THE WORLD': 'TWÓJ WŁASNY ZAKĄTEK ŚWIATA',
+  'An island worth': 'Wyspa, na którą',
+  'coming home to.': 'chce się wracać.',
+  'Build a village, care for your people, and bring the lighthouse back to life.': 'Zbuduj osadę, zadbaj o mieszkańców i przywróć blask latarni.',
+  'Make yourself at home.': 'Poczuj się jak w domu.',
+  'Your island is ready to explore.': 'Twoja wyspa czeka na odkrycie.',
+  'Account options': 'Opcje konta',
+  'Sign in': 'Zaloguj się',
+  'Create account': 'Załóż konto',
+  'WELCOME TO HARBORLIGHT': 'WITAJ W HARBORLIGHT',
+  'Welcome back.': 'Witaj ponownie.',
+  'Return to the island you call home.': 'Wróć na wyspę, która jest Twoim domem.',
+  'Your island starts here.': 'Tutaj zaczyna się Twoja wyspa.',
+  'A new adventure, a place to call your own.': 'Nowa przygoda i Twoje własne miejsce na świecie.',
+  'Social sign-in options': 'Logowanie przez inne serwisy',
+  'Continue with Google': 'Kontynuuj przez Google',
+  'Continue with Facebook': 'Kontynuuj przez Facebook',
+  'Soon': 'Wkrótce',
+  'Account sign-in is coming soon. You can play as a guest today.': 'Logowanie do konta będzie dostępne wkrótce. Już teraz możesz grać jako gość.',
+  'or use your email': 'lub użyj adresu e-mail',
+  'Account details': 'Dane konta',
+  'Your name': 'Twoja nazwa',
+  'What should we call you?': 'Jak mamy się do Ciebie zwracać?',
+  'Email address': 'Adres e-mail',
+  'Password': 'Hasło',
+  'Enter your password': 'Wpisz hasło',
+  'Choose a password': 'Wybierz hasło',
+  'Show password': 'Pokaż hasło',
+  'Hide password': 'Ukryj hasło',
+  'Show': 'Pokaż',
+  'Hide': 'Ukryj',
+  'Use at least 8 characters.': 'Użyj co najmniej 8 znaków.',
+  'Confirm password': 'Powtórz hasło',
+  'Enter your password again': 'Wpisz hasło ponownie',
+  'Enable JavaScript to preview account forms, or continue to the island as a guest.': 'Włącz JavaScript, aby obejrzeć formularze konta, lub przejdź na wyspę jako gość.',
+  'Your island is waiting.': 'Twoja wyspa czeka.',
+  'Continue as a guest': 'Kontynuuj jako gość',
+  'Build slowly. Dream a little bigger.': 'Buduj spokojnie. Sięgaj marzeniami dalej.',
+  'Enter a name with at least 2 characters.': 'Podaj nazwę zawierającą co najmniej 2 znaki.',
+  'Enter your email address.': 'Wpisz adres e-mail.',
+  'Enter a valid email address.': 'Wpisz prawidłowy adres e-mail.',
+  'Enter your password.': 'Wpisz hasło.',
+  'Use at least 8 characters for your password.': 'Hasło musi mieć co najmniej 8 znaków.',
+  'The passwords do not match.': 'Hasła nie są takie same.',
+  'Check the highlighted fields to continue.': 'Sprawdź zaznaczone pola, aby kontynuować.',
+  'Google sign-in is coming soon. You can continue as a guest to play today.': 'Logowanie przez Google będzie dostępne wkrótce. Już teraz możesz grać jako gość.',
+  'Facebook sign-in is coming soon. You can continue as a guest to play today.': 'Logowanie przez Facebook będzie dostępne wkrótce. Już teraz możesz grać jako gość.',
+  'Account creation is coming soon. Your account has not been created. Continue as a guest to explore your island.': 'Zakładanie kont będzie dostępne wkrótce. Twoje konto nie zostało utworzone. Kontynuuj jako gość, aby odkrywać wyspę.',
+  'Account sign-in is coming soon. Continue as a guest to explore your island.': 'Logowanie do konta będzie dostępne wkrótce. Kontynuuj jako gość, aby odkrywać wyspę.'
+});
+
 (() => {
   'use strict';
   const form = document.getElementById('account-form');
@@ -12,13 +73,26 @@
   const password = document.getElementById('password');
   const confirm = document.getElementById('confirm-password');
   const visibility = document.getElementById('password-visibility');
+  const languagePicker = document.getElementById('auth-language');
+  const preferenceKey = 'harborlight-language';
+  let language = 'en';
+  try { language = localStorage.getItem(preferenceKey) === 'pl' ? 'pl' : 'en'; } catch { /* Keep the form usable without storage. */ }
   const errorIds = new Map([[name, 'name-error'], [email, 'email-error'], [password, 'password-error'], [confirm, 'confirm-error']]);
   let mode = 'login';
+
+  function applyLanguage() {
+    if (languagePicker) languagePicker.value = language;
+    document.title = 'HARBORLIGHT — Welcome Home';
+    const description = document.querySelector('meta[name="description"]');
+    if (description) description.content = translate('Welcome to HARBORLIGHT. Sign in, create an account, or continue exploring your island as a guest.', language);
+    translateDOM(document, language);
+  }
 
   function announce(message, kind = 'info') {
     status.textContent = message;
     status.dataset.kind = kind;
     status.hidden = false;
+    translateDOM(status, language);
   }
   function clearError(input) {
     input.removeAttribute('aria-invalid');
@@ -31,12 +105,14 @@
     const error = document.getElementById(errorIds.get(input));
     error.textContent = message;
     error.hidden = false;
+    translateDOM(error, language);
   }
   function setPasswordVisible(visible) {
     password.type = visible ? 'text' : 'password';
     visibility.textContent = visible ? 'Hide' : 'Show';
     visibility.setAttribute('aria-label', visible ? 'Hide password' : 'Show password');
     visibility.setAttribute('aria-pressed', String(visible));
+    translateDOM(visibility, language);
   }
   function changeMode(nextMode, updateHash = true) {
     mode = nextMode === 'register' ? 'register' : 'login';
@@ -69,6 +145,7 @@
     status.hidden = true;
     status.textContent = '';
     if (updateHash) history.replaceState(null, '', `#${mode}`);
+    applyLanguage();
   }
 
   for (const tab of tabs) {
@@ -119,6 +196,14 @@
   addEventListener('hashchange', () => changeMode(location.hash === '#register' ? 'register' : 'login', false));
   const requestedMode = new URLSearchParams(location.search).get('mode');
   changeMode(requestedMode === 'register' || location.hash === '#register' ? 'register' : 'login', false);
+  languagePicker?.addEventListener('change', () => {
+    language = languagePicker.value === 'pl' ? 'pl' : 'en';
+    try { localStorage.setItem(preferenceKey, language); } catch { /* Language still works for this visit. */ }
+    applyLanguage();
+  });
+  addEventListener('storage', event => {
+    if (event.key === preferenceKey) { language = event.newValue === 'pl' ? 'pl' : 'en'; applyLanguage(); }
+  });
   // With JavaScript unavailable the disabled fieldset prevents accidental form submission.
   fields.disabled = false;
 })();

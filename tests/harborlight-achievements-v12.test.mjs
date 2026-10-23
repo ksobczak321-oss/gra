@@ -15,7 +15,9 @@ function island() {
 }
 function finish(state) {
   const task = state.lighthouseTasks[0];
-  assert.equal(act(state, { type: 'taskAccept', task: task.id }, NOW).ok, true);
+  const draft = act(state, { type: 'taskAccept', task: task.id }, NOW);
+  assert.equal(draft.ok, true); assert.equal(draft.draft, true);
+  assert.equal(act(state, { type: 'confirmTaskAcceptance', task: task.id }, NOW).ok, true);
   assert.equal(act(state, { type: 'taskDeposit', task: task.id, resource: 'wood', amount: 20 }, NOW).ok, true);
   const result = act(state, { type: 'taskDeposit', task: task.id, resource: 'stone', amount: 10 }, NOW);
   assert.equal(result.ok, true, result.message);

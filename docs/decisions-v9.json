@@ -1,0 +1,489 @@
+{
+  "version": 9,
+  "release": "frontend-v13",
+  "baseWorkbook": "HARBORLIGHT8-zasady.xlsx",
+  "timeZone": "Europe/Warsaw",
+  "dailyBoundary": "00:00",
+  "userBaseUnchanged": true,
+  "decisions": [
+    {
+      "id": 1,
+      "title": "Głód i ponowne karmienie",
+      "rule": "Jedzenie natychmiast zatrzymuje karę głodu i przywraca pełną wydajność. Licznik wcześniejszego głodu zeruje dopiero pełna godzina nieprzerwanego karmienia; krótszy posiłek tylko go wstrzymuje.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 2,
+      "title": "Pierwsze 24 godziny nowej osoby",
+      "rule": "Nowy mieszkaniec ma zamrożone 0% szczęścia przez 24 godziny. Nadal je i może pracować, ale liczniki głodu i bezrobocia zaczynają biec dopiero po tym okresie; startowa dwunastka jest wyłączona.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 3,
+      "title": "Nakładające się efekty 100%",
+      "rule": "Wspólny stan osobistego szczęścia zapisujemy przed pierwszym z nakładających się efektów 100%. Każdy efekt ma własny zegar, a stan przywracamy dopiero po zakończeniu ostatniego, uwzględniając nadal aktywne dodatki i kary.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 4,
+      "title": "Kolejna rozbudowa podczas premii",
+      "rule": "Premia kolejnej rozbudowy tego samego budynku zastępuje poprzednią nową wartością i pełnym nowym czasem. Czasów ani mnożników nie dodajemy.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 5,
+      "title": "Odbiorcy atrakcji",
+      "rule": "Atrakcję otrzymują uprawnieni mieszkańcy o najniższym efektywnym szczęściu. Przy remisie losujemy; pomijamy osoby już na 100% oraz nowe osoby z zamrożonym 0%.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 6,
+      "title": "Cena atrakcji przy mniejszej liczbie odbiorców",
+      "rule": "Atrakcja kosztuje Y razy rzeczywista liczba odbiorców, najwyżej poziom Ratusza osób. Brak odbiorców blokuje zakup.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 7,
+      "title": "Nakładanie atrakcji",
+      "rule": "Każdy zakup daje osobny efekt na sześć godzin. Aktywne efekty sumują się, a końcowe szczęście każdej osoby mieści się między −100% i +100%.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 8,
+      "title": "Odnowienie ofert atrakcji",
+      "rule": "Pierwsze oferty trwają do najbliższej północy czasu polskiego. Następne odnowienia przypadają o 00:00 Europe/Warsaw, także offline; przyzwyczajenie do atrakcji nadal zeruje się po 24 godzinach bez jej zakupu.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 9,
+      "title": "Rzeczywisty czas transportu i obsada",
+      "rule": "Zegar T biegnie od pierwszego faktycznego odbioru materiałów do ostatniej dostawy, łącznie z przerwami pomiędzy kursami. Obsada i priorytety zmieniają ETA; zmiana magazynierów daje powiadomienie, a czas samej budowy wynika z zakończonego T i mnożnika budynku.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 10,
+      "title": "Kupno kompletnego budynku",
+      "rule": "Pełny zakup za monety kończy się po 10 sekundach w osobnym zleceniu usługowym. Nie zajmuje zwykłych miejsc budowy ani kolejki, lecz zachowuje limit Ratusza i kolejność poziomów tego samego budynku.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 11,
+      "title": "Rezerwacje prognozowanych dostaw",
+      "rule": "Dostępne materiały przypisujemy planom według kolejności zlecenia. Zarezerwowane towary nie mogą opłacić kolejnego planu, a dopłata 25% dotyczy faktycznie brakujących materiałów po naliczeniu kolejki +10%.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 12,
+      "title": "Anulowanie budowy lub planu",
+      "rule": "Zlecenie można anulować tylko przed pierwszym transportem i rozpoczęciem budowania. Wracają faktycznie zarezerwowane materiały i monety wraz z dopłatą kolejki; opłata planowania prognozy pozostaje bezzwrotna.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 13,
+      "title": "Nadmiar zwrotu",
+      "rule": "Zwrot wypełnia magazyn zgodnie z limitami. Nadwyżka czeka bezterminowo i wchodzi automatycznie po zwolnieniu miejsca, bez tragarzy; przed przyjęciem nie można jej wydać.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 14,
+      "title": "Miejsce na żywność",
+      "rule": "Oprócz ochrony wydawania 50 × poziom Magazynu żywności rezerwujemy tyle samo pojemności łącznej wyłącznie dla żywności. Pozostałe towary, zwroty i nagrody nie mogą zająć tego miejsca.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 15,
+      "title": "Etapy transportu Premium",
+      "rule": "Jedna opłata obsługuje wyłącznie wskazany etap trasy. Każdy potrzebny kurs, także niepełny, kosztuje 10 monet; dowóz do portu i załadunek na statek są osobnymi etapami.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 16,
+      "title": "Nieodwołalne zadanie",
+      "rule": "Przyjęcie zadania wymaga potwierdzenia braku możliwości rezygnacji. Po potwierdzeniu zadanie trwa do ukończenia albo wygaśnięcia; wpłat nie można wycofać.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 17,
+      "title": "Szybka akceptacja i potwierdzenie",
+      "rule": "Mnożnik nagrody zapisujemy przy otwarciu potwierdzenia: ×3 przed 15 sekundami, ×2 przed pięcioma minutami, później ×1. Potwierdzenie ma 60 sekund i wymaga nadal ważnej oferty; zamknięcie lub brak potwierdzenia usuwa szkic bez przyjęcia zadania.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 18,
+      "title": "Odłożone udostępnienie zadania",
+      "rule": "Nierozstrzygnięta propozycja Share/Skip pozostaje bezterminowo w powiadomieniach. Share daje 500 monet tylko raz na ukończone zadanie, Skip zachowuje zwykłą nagrodę; prototyp nie potwierdza publikacji Facebook.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 19,
+      "title": "Odwołanie tragarza z ładunkiem",
+      "rule": "Odwołany tragarz kończy aktualną dostawę i nie dostaje następnego kursu. Do końca dostawy nadal pracuje, następnie wraca do domu przez pięć minut i dopiero wtedy jest wolny.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 20,
+      "title": "Kolejność materiałów budowy",
+      "rule": "Kursy Construction najpierw obsługują najstarszą aktywną budowę. Gdy wszystkie jej ładunki zostały wysłane, kolejne kursy mogą obsługiwać następną budowę, bez czekania na ukończenie budowania.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 21,
+      "title": "Ryzykowana pula ekspedycji",
+      "rule": "Na kolejną rundę stawiasz całą niewypłaconą pulę. Kolejne terminowe wygrane dają łącznie 50, 100, 150, 200 monet; przegrana zeruje pulę, a wcześniejsze wypłaty pozostają.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 22,
+      "title": "Nowa seria ekspedycji",
+      "rule": "Nowa seria jest bezpłatna i zaczyna się od pierwszej rundy oraz pustej puli. Pierwsza terminowa wygrana daje 50 monet.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 23,
+      "title": "Długość serii",
+      "rule": "Seria nie ma ostatniego poziomu. Kończy ją wypłata, przegrana albo ustalona nieobecność.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 24,
+      "title": "Ostrzeżenie o nieobecności",
+      "rule": "Po pięciu minutach bez aktywności pokazujemy pytanie o obecność. Brak odpowiedzi przez kolejne 60 sekund kończy serię przegraną i utratą niewypłaconej puli.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 25,
+      "title": "Aktywna karta i blokada wyspy",
+      "rule": "Aktywność oznacza rzeczywiste działanie w widocznej, aktywnej karcie gry. Otwarty challenge zasłania i blokuje wyspę, która nadal działa w tle; podczas niego nie można zmieniać obsady ani zarządzać wyspą.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 26,
+      "title": "Jedna seria jednocześnie",
+      "rule": "Może trwać jedna seria ekspedycji na konto/profil. Pozostałe ekspedycje są zablokowane do wypłaty albo przegranej.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 27,
+      "title": "Wyjście podczas rundy",
+      "rule": "Wyjście w trakcie rundy wymaga potwierdzenia utraty niewypłaconej puli. Ukrycie karty lub zamknięcie przeglądarki nadal podlega rzeczywistemu zegarowi rundy i zasadzie nieobecności.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 28,
+      "title": "Zegar rundy",
+      "rule": "Zegar biegnie również w tle, po zamknięciu gry oraz podczas pytania o obecność. Dawne natychmiastowe przegranie przy końcu czasu zastępuje reguła potrąceń z punktu 30.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 29,
+      "title": "Trudność minigier",
+      "rule": "Każda następna runda jest trudniejsza, a nowa seria zaczyna od najłatwiejszej. Konkretne plansze i docelowe limity czasu pozostają do osobnego zaprojektowania.",
+      "status": "ustalone ramy; szczegóły integracji/projektu odłożone"
+    },
+    {
+      "id": 30,
+      "title": "Spóźnienie w rundzie",
+      "rule": "Po przekroczeniu limitu runda trwa dalej, a potencjalna łączna wypłata maleje o 10 monet za sekundę opóźnienia. Wyzerowanie potencjalnej puli oznacza przegraną; nie ma dodatkowego przycisku kupowania czasu za monety.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 31,
+      "title": "Następna runda po potrąceniu",
+      "rule": "Każda wygrana dodaje 50 monet do faktycznie pozostałej puli. Jeżeli zostało 170 monet, kolejna runda ma potencjalną wypłatę 220 monet przed potrąceniami.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 32,
+      "title": "Reklamy w ekspedycjach",
+      "rule": "Reklama może dodawać czas lub np. podwajać wygraną. Konkretne wartości, limity, hasło i sposób weryfikacji reklamy pozostają na później.",
+      "status": "ustalone ramy; szczegóły integracji/projektu odłożone"
+    },
+    {
+      "id": 33,
+      "title": "Trzeci dzień poleconego",
+      "rule": "Premia wymaga aktywności poleconego gracza w trzech różnych dniach w ciągu 30 dni od jego rejestracji. Przerwy są dozwolone; dzień zaliczamy po działaniu wpływającym na grę.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 34,
+      "title": "Wspólna granica dnia",
+      "rule": "Wszystkie odnowienia dzienne i dni aktywności używają północy Europe/Warsaw. Czasy sześciu godzin, blokady 24 godzin i termin 30 dni liczymy nadal od zdarzenia.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 35,
+      "title": "Przerwa w lojalności",
+      "rule": "Lojalność wymaga kolejnych dni logowania bez przerwy. Pominięcie dnia powoduje rozpoczęcie nowej serii od dnia pierwszego.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 36,
+      "title": "Koniec programu lojalnościowego",
+      "rule": "Program kończy się po osiągnięciu Ratusza 4 albo odebraniu dziesiątej kolejnej dziennej nagrody, zależnie od tego, co nastąpi wcześniej. Kwoty nagród pozostają nieustalone.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 37,
+      "title": "Pierwsze udostępnienie gry",
+      "rule": "1000 monet za informację o graniu otrzymuje się raz na konto, na wybranej platformie. Kolejne platformy nie odnawiają tej premii.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 38,
+      "title": "Udostępnienie awansu",
+      "rule": "Udostępnienie każdego osiągniętego poziomu Ratusza od poziomu 2 daje 500 monet. Każdy awans można nagrodzić raz na konto, niezależnie od platformy.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 39,
+      "title": "Potwierdzenie publikacji",
+      "rule": "Docelowa nagroda za awans wymaga opublikowania wpisu, nie samego otwarcia Share. Wpis przygotowuje nick, poziom i linki do gry oraz oficjalnego profilu; potwierdzanie publikacji zależy od przyszłej integracji.",
+      "status": "ustalone ramy; szczegóły integracji/projektu odłożone"
+    },
+    {
+      "id": 40,
+      "title": "Sumowanie premii społecznościowych",
+      "rule": "Nagrody sumują się, gdy jedna publikacja spełnia kilka warunków. Pierwsza publikacja będąca pochwaleniem awansu daje 1000 + 500 monet, każdą premię tylko raz za zdarzenie.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 41,
+      "title": "Co trzeci post",
+      "rule": "Do licznika zaliczamy najwyżej jeden opublikowany wpis dziennie, łącznie ze wszystkich platform. Postęp zachowujemy między dniami; trzeci, szósty, dziewiąty i każdy kolejny trzeci zaliczony wpis daje 1000 monet.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 42,
+      "title": "Przypisanie polecenia",
+      "rule": "Polecenie dotyczy nowego konta utworzonego z indywidualnego linku. Rejestracja przypisuje jednego polecającego na stałe; późniejsze linki tego nie zmieniają.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 43,
+      "title": "Zawartość nagrody polecającego",
+      "rule": "Polecający dostaje 1000 monet po pierwszym logowaniu nowego gracza. Po jego trzecim aktywnym dniu dostaje dodatkowo po 500 drewna, desek, kamienia, zboża i żywności.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 44,
+      "title": "Wszystkie nagrody rzeczowe",
+      "rule": "Każda nagroda rzeczowa przestrzega limitów centrali. Nadwyżka czeka bezterminowo, automatycznie uzupełnia magazyn bez tragarzy i staje się wydawalna dopiero po przyjęciu.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 45,
+      "title": "Fizyczna rezerwacja",
+      "rule": "Zarezerwowane na budowę materiały są niedostępne dla innych wydatków. Nadal zajmują miejsce w centrali aż do faktycznego odbioru przez tragarza.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 46,
+      "title": "Wspólne karmienie",
+      "rule": "Jedzenie rozdzielamy równomiernie między całą populację. Jedna sztuka żywności wystarcza dwunastu osobom na pięć minut; po wyczerpaniu zapasu wszystkich obejmuje stan braku jedzenia.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 47,
+      "title": "Północ i zadania latarni",
+      "rule": "Początkowe zadania mają sześć godzin. Po pierwszym ukończeniu w danym ciągu następcy wygasają o północy Europe/Warsaw; wcześniejsze ukończenie daje od razu kolejne zadanie z tym samym terminem.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 48,
+      "title": "Osoba opuszczająca wyspę",
+      "rule": "Zachowujemy wcześniej ustaloną kolejność grup i załóg. W wybranej grupie odchodzi osoba o najniższym efektywnym szczęściu; remisy rozstrzygamy losowo.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 49,
+      "title": "Niezrealizowany ubytek",
+      "rule": "Gdy wszyscy kandydaci są chronieni, np. zwiedzają latarnię, nikt nie odchodzi i ubytek przepada. Nie gromadzimy długu odejść na chwilę ich powrotu.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 50,
+      "title": "Wejście do produkcji",
+      "rule": "Młyn i tartak pobierają dostępne surowce dopiero przy powstaniu gotowej sztuki, w stosunku 2 do 1. Brak wejścia lub miejsca wstrzymuje postęp bez jego kasowania; zwolnienie pracownika kasuje jego niedokończoną sztukę.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 51,
+      "title": "Paczki targowe",
+      "rule": "Wymieniamy pełne wielokrotności dziesięciu sztuk w obrębie zatwierdzonych dwóch grup. Dziesięć sztuk daje dziewięć, dwadzieścia daje osiemnaście.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 52,
+      "title": "Ważność partii handlowej",
+      "rule": "Każda fizyczna partia targowa i portowa ma 24 godziny od przybycia. Faktyczny odbiór przed końcem terminu chroni rozpoczęty kurs; pozostawiony towar po terminie przepada.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 53,
+      "title": "Targ bez pracowników",
+      "rule": "Dostarczony i odblokowany towar można wymienić przy zerowej obsadzie targu. Załoga odpowiada za transport w obie strony, a wynik wymiany pozostaje na targu do odbioru.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 54,
+      "title": "Premium dowóz a budowanie",
+      "rule": "Natychmiastowy dowóz skraca wyłącznie dostawę materiałów. Czas budowania zamrażamy przy zakupie według już minionego transportu i normalnej estymaty pozostałej dostawy; przyspieszenie budowania opłaca się osobno.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 55,
+      "title": "Premium przy zerowej obsadzie",
+      "rule": "Natychmiastowy dowóz jest dostępny także bez magazynierów. Do wyznaczenia czasu budowy przyjmujemy wtedy jednego hipotetycznego tragarza z aktualnymi parametrami magazynu, dróg i wyżywienia, bez zatrudniania osoby.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 56,
+      "title": "Darmowe i płatne błogosławieństwo",
+      "rule": "Czterogodzinna blokada dotyczy następnego płatnego użycia. Darmowe można wykorzystać w tym czasie bez przesuwania blokady, lecz jednocześnie może działać tylko jedno błogosławieństwo.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 57,
+      "title": "Dzienna pula Domu",
+      "rule": "O 23:58 automat rozdaje niewykorzystane punkty uprawnionym mieszkańcom według ustalonej zasady. Reszta przepada o północy, gdy powstaje nowa pula równa aktualnej populacji; punkty nie kumulują się.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": 58,
+      "title": "Powrót między rundami",
+      "rule": "Powrót do zarządzania wyspą wymaga wypłaty całej puli i kończy serię. Zamknięcie okna po wygranej pokazuje potwierdzenie wypłaty; do decyzji challenge nadal blokuje wyspę.",
+      "status": "uzgodnione"
+    }
+  ],
+  "frontend": [
+    {
+      "id": "F01",
+      "title": "Lewy pasek",
+      "rule": "Usunąć cały lewy pasek nawigacji i pozostawić dostęp do funkcji przez inne dostępne elementy interfejsu.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": "F02",
+      "title": "Górny pasek",
+      "rule": "Usunąć pięć liczników materiałów; dodać faktycznie pracujących, czas do nowego mieszkańca i Punkty. Monety, poziom, szczęście i ludność pozostają.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": "F03",
+      "title": "Kolejność budynków",
+      "rule": "Ratusz, Dom, Farma, Młyn, Kamieniołom, Drwale, Tartak, Magazyn, Targ, Port, Kaplica, Latarnia.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": "F04",
+      "title": "Kafelki budynków",
+      "rule": "U góry własny poziom; na dole liczba faktycznie pracujących oraz osobno (+n) idących do pracy i (−n) odwołanych. Ratusz, Dom, Kaplica i Latarnia mają tylko poziom.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": "F05",
+      "title": "Kafelki zasobów",
+      "rule": "Pięć materiałów pokazuje pracujących na górze i stan lokalny / centralny (w transporcie) na dole. Nawias obejmuje wszystkie fizyczne przewozy tego zasobu, w tym budowy, targ i port.",
+      "status": "wdrażane założenie zgodne z GO; doprecyzowanie ogłoszone przed pracą"
+    },
+    {
+      "id": "F06",
+      "title": "Język",
+      "rule": "W ustawieniach wybór angielskiego lub polskiego. Przełączenie obejmuje cały widoczny interfejs, liczby, komunikaty i podpowiedzi.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": "F07",
+      "title": "Samouczek",
+      "rule": "25 mikrozadań, po pięć przez pierwszych pięć aktywnych dni gry, z nagrodami i trwałym postępem. Zadania uczą obsady, transportu, jedzenia, szczęścia, rozbudowy i pozostałych podstaw.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": "F08",
+      "title": "Premia aktywności",
+      "rule": "Rzeczywista akcja w aktywnym widocznym oknie odnawia pięciominutowy bonus ×2 produkcji materiałów i podatków. Czas się nie sumuje; mnożnik działa razem z latarnią i kaplicą, bez przyspieszania transportu.",
+      "status": "wdrażane założenie zgodne z GO; doprecyzowanie ogłoszone przed pracą"
+    },
+    {
+      "id": "F09",
+      "title": "Przestoje",
+      "rule": "Przyczyny zatrzymania produkcji, np. brak wejścia, trafiają do powiadomień bez powtarzania co sekundę.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": "F10",
+      "title": "Ścieżki",
+      "rule": "Udane ulepszenie odcinka daje krótkie wizualne potwierdzenie/fajerwerki, z uwzględnieniem ustawienia animacji.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": "F11",
+      "title": "Powiadomienia",
+      "rule": "Gracz wybiera kategorie widocznych powiadomień. Historia mechanik nie ginie przez zmianę filtra.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": "F12",
+      "title": "Pola otoczenia",
+      "rule": "Usunąć klikalne pola otoczenia takie jak plaża, zachowując ilustrację wyspy.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": "F13",
+      "title": "Trwałość animacji",
+      "rule": "Usunąć przyczynę zatrzymywania animacji podczas dłuższej gry i po przywróceniu karty.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": "F14",
+      "title": "Nazewnictwo zadań",
+      "rule": "Deposit zmienić na Donation/Donate w angielskim oraz Darowizna/Przekaż w polskim.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": "F15",
+      "title": "Efekty",
+      "rule": "Każda aktywna premia lub kara zajmuje jeden wiersz: nazwa, wartość, czas/status i ⓘ na końcu. Kliknięcie rozwija szczegóły zakresu i warunku zakończenia.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": "F16",
+      "title": "Kupno mieszkańców",
+      "rule": "Jedna kupiona osoba kosztuje tyle co najbliższa rozbudowa Ratusza: 500 × obecny poziom każdego z sześciu zasobów. Zakup ograniczają wolne miejsca w Domu i limit Ratusza; nowe osoby podlegają regułom pierwszych 24 godzin.",
+      "status": "wdrażane założenie zgodne z GO; doprecyzowanie ogłoszone przed pracą"
+    },
+    {
+      "id": "F17",
+      "title": "Dom i Ratusz",
+      "rule": "Uprościć i uporządkować obie karty: najważniejsze liczby od razu, oszczędne ramki i opisy pod ⓘ.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": "F18",
+      "title": "Punkty",
+      "rule": "Punkty = poziom Ratusza × stan monet, według migawki przeliczanej o pełnej godzinie zegarowej.",
+      "status": "uzgodnione"
+    },
+    {
+      "id": "F19",
+      "title": "Tempo zasobów",
+      "rule": "Pokazać ↑ dodatni, ↓ ujemny lub → zerowy bilans godzinowy produkcji i zużycia. Sam transport między składami nie zwiększa ani nie zmniejsza bilansu całej wyspy.",
+      "status": "uzgodnione"
+    }
+  ],
+  "futureOnly": [
+    "Docelowe plansze i limity czasu minigier; krzywa prototypu musi być jawnie oznaczona jako projektowa.",
+    "Zewnętrzne reklamy, dodawanie czasu/podwajanie, hasło i limity.",
+    "Wysokości premii lojalnościowych i odbiór po konfiguracji.",
+    "Osobna aktywność modlitewna.",
+    "Prawdziwe konta/OAuth, płatności i serwerowa weryfikacja publikacji/poleceń."
+  ],
+  "implementationDefaults": {
+    "expeditionInitialSeconds": 180,
+    "expeditionTimeFormula": "180 / (1 + 0.1 * (stage - 1))",
+    "overtimeRounding": "pełne upłynięte sekundy",
+    "activeBonusStacks": "mnożnik ×2 z latarnią (produkcja ×4) lub kaplicą (podatki ×4)",
+    "tutorialRewardStatus": "kwoty dobrane projektowo przy wdrożeniu; nie mylić z nieustalonymi nagrodami lojalnościowymi",
+    "cancelDependencyPolicy": "najpierw anuluj późniejsze poziomy tego samego budynku; bez niejawnego kaskadowego anulowania"
+  }
+}

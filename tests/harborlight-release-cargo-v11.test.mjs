@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createState, normalizeState, act, tick } from '../harborlight-v1-state.js';
+import { centralAvailable } from '../harborlight-v1-inventory.js';
 import { warehouseCarrierJobs } from '../harborlight-v1-logistics.js';
 
 const NOW = Date.UTC(2026, 9, 23, 12);
@@ -23,24 +24,34 @@ for (const workplace of ['warehouse', 'market', 'dock']) {
     assert.ok(state.haulTrips[workplace].every(trip => Math.abs(trip.remaining - 299) < 1e-7));
     assert.equal(act(state, { type: 'assign', building: workplace, delta: -1 }).ok, true);
     assert.equal(act(state, { type: 'assign', building: workplace, delta: 1 }).ok, true);
-    const hired = state.residents.find(person => person.workplace === workplace && person.id !== firstId);
+    const hired = state.residents.find(person => person.workplace === workplace && person.id !== firstId && person.id !== dismissedId);
     assert.notEqual(hired.id, dismissedId);
     close(hired.arrivalRemaining, 300);
     const cargo = state.haulTrips[workplace];
-    assert.equal(cargo.filter(trip => trip.worker === -1).length, 1);
+    assert.equal(cargo.filter(trip => trip.worker === -1).length, 0);
+    const recalled = state.residents.find(person => person.id === dismissedId);
+    assert.equal(recalled.workplace, workplace);
+    assert.equal(recalled.pendingRelease, true);
+    assert.equal(recalled.returnRemaining, 0, 'the home journey cannot begin before the loaded delivery finishes');
     assert.equal(cargo.filter(trip => trip.worker === 0).length, 1);
     assert.equal(cargo.reduce((sum, trip) => sum + trip.amount, 0), 120);
     if (workplace === 'warehouse') {
       const rows = warehouseCarrierJobs(state);
       assert.equal(rows.find(row => row.residentId === firstId).status, 'delivering');
       assert.equal(rows.find(row => row.residentId === hired.id).status, 'walking');
-      assert.equal(rows.find(row => row.residentId === null).amount, 60);
+      assert.equal(rows.find(row => row.residentId === dismissedId).amount, 60);
+      assert.equal(rows.find(row => row.residentId === dismissedId).status, 'delivering');
     }
     state = normalizeState(JSON.parse(JSON.stringify(state)), state.lastSimulatedAt);
-    assert.equal(state.haulTrips[workplace].filter(trip => trip.worker === -1).length, 1);
+    assert.equal(state.haulTrips[workplace].filter(trip => trip.worker === -1).length, 0);
+    assert.equal(state.residents.find(person => person.id === dismissedId).pendingRelease, true);
     tick(state, 299);
     close(state.residents.find(person => person.id === hired.id).arrivalRemaining, 1);
     assert.equal(state.haulTrips[workplace].length, 0);
+    const returning = state.residents.find(person => person.id === dismissedId);
+    assert.equal(returning.workplace, null);
+    close(returning.returnRemaining, 300);
+    assert.equal(returning.pendingRelease, false);
     if (workplace === 'warehouse') {
       assert.equal(state.resources.wood, 520);
       assert.equal(state.buildings.lumber.ready, 60);
@@ -50,7 +61,8 @@ for (const workplace of ['warehouse', 'market', 'dock']) {
     } else {
       assert.equal(state.dock.stock.wood, 120);
       assert.equal(state.dock.orders[0].remainingToPort, 80);
-      assert.equal(state.resources.wood, 200);
+      assert.equal(state.resources.wood, 280);
+      assert.equal(centralAvailable(state, 'wood'), 200, 'the uncollected port reservation cannot be spent elsewhere');
     }
   });
 }

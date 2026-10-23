@@ -4,7 +4,7 @@ import {
   normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction,
   quoteAcceleration, quoteTransport, quotePremiumBuilding, quoteForecastPlan,
   quoteConstructionPackage, taskReward, taskStatus, taskRewardScale,
-  TASK_NARRATIVES, verifyExpeditionPath, expeditionPot, nextDailyTaskDeadline
+  TASK_NARRATIVES, verifyExpeditionPath, expeditionPot, nextDailyTaskDeadline, expeditionRoundStatus
 } from '../harborlight-v1-activities.js';
 import { normalizeLogisticsState, MATERIAL_IDS } from '../harborlight-v1-logistics.js';
 
@@ -37,8 +37,16 @@ function smallTask(state, requirements = { wood: 20, stone: 10 }, reward = { coi
   task.reward = { ...reward };
   return task;
 }
+function accept(state, task) {
+  const draft = activityAction(state, { type: 'taskAccept', task: task.id });
+  assert.equal(draft.ok, true, draft.message);
+  assert.equal(draft.draft, true);
+  assert.equal(state.taskAcceptanceDraft.taskId, task.id);
+  const confirmed = activityAction(state, { type: 'confirmTaskAcceptance', task: task.id });
+  assert.equal(confirmed.ok, true, confirmed.message);
+}
 function contribute(state, task) {
-  assert.equal(activityAction(state, { type: 'taskAccept', task: task.id }).ok, true);
+  accept(state, task);
   for (const [resource, amount] of Object.entries(task.requirements)) {
     const result = activityAction(state, { type: 'taskDeposit', task: task.id, resource, amount });
     assert.equal(result.ok, true, result.message);
@@ -172,7 +180,7 @@ test('acceptance locks exact reaction windows and survives reload', () => {
     let s = island(), task = smallTask(s);
     advanceActivities(s, seconds);
     assert.equal(taskStatus(s, task).multiplier, expected);
-    assert.equal(activityAction(s, { type: 'taskAccept', task: task.id }).ok, true);
+    accept(s, task);
     advanceActivities(s, 600);
     s = refresh(s);
     task = s.lighthouseTasks.find(t => t.id === task.id);
@@ -184,7 +192,7 @@ test('acceptance locks exact reaction windows and survives reload', () => {
 test('contributions are whole, irreversible and draw only unprotected central goods', () => {
   const s = island(), task = smallTask(s, { food: 60, stone: 10 });
   assert.equal(activityAction(s, { type: 'taskDeposit', task: task.id, resource: 'food', amount: 1 }).ok, false);
-  activityAction(s, { type: 'taskAccept', task: task.id });
+  accept(s, task);
   const before = JSON.stringify(s);
   assert.equal(activityAction(s, { type: 'taskDeposit', task: task.id, resource: 'food', amount: 51 }).ok, false);
   assert.equal(JSON.stringify(s), before);
@@ -195,7 +203,7 @@ test('contributions are whole, irreversible and draw only unprotected central go
 });
 test('expiry forfeits partial contributions and moves a random replacement to FIFO end', () => {
   const s = island(), task = smallTask(s), secondId = s.lighthouseTasks[1].id;
-  activityAction(s, { type: 'taskAccept', task: task.id });
+  accept(s, task);
   activityAction(s, { type: 'taskDeposit', task: task.id, resource: 'wood', amount: 5 });
   advanceActivities(s, 6 * HOUR);
   assert.equal(s.resources.wood, 95);
@@ -205,7 +213,7 @@ test('expiry forfeits partial contributions and moves a random replacement to FI
   assert.ok(s.notifications.some(n => n.kind === 'lighthouse-task-expired'));
   assert.equal(activityAction(s, { type: 'taskAccept', task: task.id }).ok, false);
 });
-test('first completion anchors that chain daily and an early second success keeps its deadline', () => {
+test('first completion enables midnight deadlines and an early second success keeps that midnight', () => {
   const s = island(), first = smallTask(s), untouched = s.lighthouseTasks[1].id;
   advanceActivities(s, HOUR + 12 * 60); // First success at13:12 Warsaw.
   const at = s.activityClock;
@@ -214,7 +222,7 @@ test('first completion anchors that chain daily and an early second success keep
   let next = s.lighthouseTasks.at(-1);
   assert.equal(next.chainId, first.chainId);
   assert.equal(next.anchorAt, at);
-  assert.equal(next.expiresAt, at + DAY);
+  assert.equal(s.activityEpochMs + next.expiresAt * 1000, Date.parse('2026-10-23T22:00:00Z')); // Midnight Warsaw.
   const deadline = next.expiresAt;
   next.requirements = { wood: 1, stone: 1 }; next.deposited = { wood: 0, stone: 0 };
   advanceActivities(s, 48 * 60);
@@ -223,10 +231,10 @@ test('first completion anchors that chain daily and an early second success keep
   assert.equal(next.expiresAt, deadline);
   assert.equal(next.anchorAt, at);
 });
-test('daily deadlines retain Warsaw clock through autumn and spring DST changes', () => {
+test('daily deadlines use Warsaw midnight across25-hour and23-hour DST days', () => {
   for (const [epoch, next] of [
-    ['2026-10-24T11:12:00Z', '2026-10-25T12:12:00Z'],
-    ['2027-03-27T12:12:00Z', '2027-03-28T11:12:00Z']
+    ['2026-10-24T22:00:00Z', '2026-10-25T23:00:00Z'],
+    ['2027-03-27T23:00:00Z', '2027-03-28T22:00:00Z']
   ]) {
     const s = island();
     s.activityEpochMs = Date.parse(epoch); s.activityClock = 0;
@@ -240,9 +248,9 @@ test('offline return preserves the real daily appearance time and does not refre
   contribute(s, first);
   advanceActivities(s, DAY + HOUR);
   const current = s.lighthouseTasks.find(t => t.chainId === chain);
-  assert.equal(current.createdAt, anchor + DAY);
-  assert.equal(s.activityEpochMs + current.expiresAt * 1000, Date.parse('2026-10-25T12:12:00Z'));
-  assert.equal(taskStatus(s, current).age, HOUR);
+  assert.equal(s.activityEpochMs + current.createdAt * 1000, Date.parse('2026-10-23T22:00:00Z'));
+  assert.equal(s.activityEpochMs + current.expiresAt * 1000, Date.parse('2026-10-24T22:00:00Z'));
+  assert.equal(taskStatus(s, current).age, 14 * HOUR + 12 * 60);
   assert.equal(taskStatus(s, current).multiplier, 1);
 });
 test('task reward overflow is retained and auto-filled after space becomes available', () => {
@@ -263,7 +271,7 @@ test('task reward overflow is retained and auto-filled after space becomes avail
 });
 test('normalization preserves accepted tasks, de-duplicates IDs and is safe in place', () => {
   const s = island(), task = smallTask(s);
-  activityAction(s, { type: 'taskAccept', task: task.id });
+  accept(s, task);
   const id = task.id;
   normalizeActivities(s, s);
   assert.equal(s.lighthouseTasks[0].id, id);
@@ -408,30 +416,43 @@ test('path verification enforces adjacent steps, obstacles, tools and keys', () 
   assert.equal(verifyExpeditionPath({ map: ['SDG'], tools: {} }, [[0,1],[0,2]]), false);
   assert.deepEqual(verifyExpeditionPath({ map: ['SKDG'], tools: {} }, [[0,1],[0,2],[0,3]]), { moves: 3 });
 });
-test('expeditionpotsdouble, settleonlyonce, payonlycoins andwithdrawonlytotheisland', () => {
+test('expedition pots add50perwin, settleonlyonce, payonlycoins andwithdrawonlytotheisland', () => {
   const s = island(), coins = s.resources.coins, materials = MATERIAL_IDS.map(id => s.resources[id]), run = startRun(s);
   assert.equal(win(s, run).ok, true); assert.equal(run.pot, 50); assert.equal(s.resources.coins, coins);
   assert.equal(win(s, run).ok, false);
   assert.equal(activityAction(s, { type: 'expeditionContinue', runId: run.id }, context).ok, true);
   assert.equal(win(s, run).ok, true); assert.equal(run.pot, 100);
+  assert.equal(activityAction(s, { type: 'expeditionContinue', runId: run.id }, context).ok, true);
+  assert.equal(win(s, run).ok, true); assert.equal(run.pot, 150);
   assert.equal(activityAction(s, { type: 'expeditionCashout', runId: run.id }, context).ok, true);
-  assert.equal(s.resources.coins, coins + 100);
+  assert.equal(s.resources.coins, coins + 150);
   assert.deepEqual(MATERIAL_IDS.map(id => s.resources[id]), materials);
   assert.equal(activityAction(s, { type: 'expeditionCashout', runId: run.id }, context).ok, false);
 });
-test('expeditionfailurelosesonlytheunclaimedpot andmovementlimitcountsactualpathsteps', () => {
-  const s = island(), coins = s.resources.coins, run = startRun(s, { limit: 2 });
-  const result = win(s, run);
+test('expedition failure loses only the unclaimed pot and never takes earlier island coins', () => {
+  const s = island(), coins = s.resources.coins, run = startRun(s);
+  assert.equal(win(s, run).outcome, 'won');
+  assert.equal(run.pot, 50);
+  assert.equal(activityAction(s, { type: 'expeditionContinue', runId: run.id }, context).ok, true);
+  const result = activityAction(s, { type: 'expeditionLose', runId: run.id }, context);
   assert.equal(result.outcome, 'lost'); assert.equal(run.pot, 0); assert.equal(s.resources.coins, coins);
   assert.equal(activityAction(s, { type: 'expeditionContinue', runId: run.id }, context).ok, false);
 });
-test('timedexpeditionstexpireofflineandunknownadrewardscannotgrantfreecoins', () => {
-  let s = island(), run = startRun(s, { mode: 'time', limit: 60 });
+test('timed expedition overtime continues offline at10coinspersecond until the potential pot reaches zero', () => {
+  let s = island(), run = startRun(s, { limit: 60 });
+  const coins = s.resources.coins;
   assert.equal(nextActivitiesEvent(s), 60);
   advanceActivities(s, 59); assert.equal(run.status, 'active');
   s = refresh(s); run = s.expeditionRuns.proof;
   advanceActivities(s, 1);
+  assert.equal(run.status, 'active'); assert.equal(expeditionRoundStatus(s, run).potentialPot, 50);
+  advanceActivities(s, 1);
+  assert.equal(run.status, 'active'); assert.equal(expeditionRoundStatus(s, run).potentialPot, 40);
+  s = refresh(s); run = s.expeditionRuns.proof;
+  assert.equal(expeditionRoundStatus(s, run).overtimePenalty, 10);
+  advanceActivities(s, 4);
   assert.equal(run.status, 'lost'); assert.equal(run.pot, 0);
+  assert.equal(s.resources.coins, coins);
   assert.equal(activityAction(s, { type: 'expeditionAdReward', runId: run.id }).ok, false);
-  assert.equal(expeditionPot(20), 26214400); assert.equal(expeditionPot(49), null);
+  assert.equal(expeditionPot(20), 1000); assert.equal(expeditionPot(49), 2450);
 });

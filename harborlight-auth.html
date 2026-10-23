@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#102f43">
   <meta name="description" content="Welcome to HARBORLIGHT. Sign in, create an account, or continue exploring your island as a guest.">
   <title>HARBORLIGHT — Welcome Home</title>
-  <link rel="stylesheet" href="harborlight-auth.css?v=accounts-1">
-  <script src="harborlight-auth.js?v=accounts-1" defer></script>
+  <link rel="stylesheet" href="harborlight-auth.css?v=frontend-v13">
+  <script type="module" src="harborlight-auth.js?v=frontend-v13"></script>
 </head>
 <body>
   <a class="skip-link" href="#account">Skip to account</a>
@@ -16,7 +16,10 @@
       <svg class="brand-mark" viewBox="0 0 40 48" fill="none" aria-hidden="true"><path d="M13 41h14l-3-25h-8l-3 25Z" stroke="currentColor" stroke-width="2"/><path d="M11 41h18v4H11zM13 11h14v5H13zM15 11V7l5-4 5 4v4M18 21h4v5h-4zM10 19l-7 3m27-3 7 3M9 9 3 6m28 3 6-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span>HARBORLIGHT<small>A little island. A world to build.</small></span>
     </a>
-    <a class="back-link" href="harborlight-v1-layered.html"><span aria-hidden="true">←</span> Back to island</a>
+    <div class="header-actions">
+      <label class="auth-language"><span>Language</span><select id="auth-language" data-i18n-ignore><option value="en">English</option><option value="pl">Polski</option></select></label>
+      <a class="back-link" href="harborlight-v1-layered.html"><span aria-hidden="true">←</span> Back to island</a>
+    </div>
   </header>
 
   <main class="auth-layout">

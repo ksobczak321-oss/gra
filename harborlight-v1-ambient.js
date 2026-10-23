@@ -146,16 +146,19 @@ export function createAmbientScene(stage, getState) {
   surface.dataset.frames = '0';
   surface.dataset.mode = 'loading';
   stage.append(surface);
-  const ctx = surface.getContext('2d', { alpha: true });
+  let ctx = surface.getContext('2d', { alpha: true });
   const media = matchMedia('(prefers-reduced-motion: reduce)');
   const clouds = [cloudSprite(1), cloudSprite(3), cloudSprite(7)];
   let source, plate, inhabitants;
   let time = 0, frames = 0, frame = 0, last = 0, lastPaint = 0;
-  let destroyed = false;
+  let destroyed = false, contextLost = false, pageSuspended = false;
   let scale = 1;
   let previousMode = '';
+  let lastCallbackAt = performance.now(), lastReportedError = '';
+  surface.dataset.recoveries = '0';
 
   function size() {
+    if (destroyed || contextLost || !ctx) return;
     scale = Math.min(1, Math.max(.4, Math.min(innerWidth / WIDTH, innerHeight / HEIGHT) * Math.min(devicePixelRatio || 1, 2)));
     surface.width = Math.round(WIDTH * scale);
     surface.height = Math.round(HEIGHT * scale);
@@ -163,15 +166,17 @@ export function createAmbientScene(stage, getState) {
     if (source) paint();
   }
   function mode() {
-    if (document.hidden) return 'hidden';
-    const state = getState();
+    if (contextLost) return 'context-lost';
+    if (document.hidden || pageSuspended) return 'hidden';
+    const settings = getState()?.settings || {};
     // Respect the system preference by default, but let an explicit in-game
     // choice enable the island. Previously the checkbox could be checked while
     // every effect stayed frozen because the media query always won.
-    if (state.settings.motion === false || media.matches && state.settings.motionOverride !== true) return 'reduced';
+    if (settings.motion === false || media.matches && settings.motionOverride !== true) return 'reduced';
     return 'running';
   }
   function paint() {
+    if (destroyed || contextLost || !ctx || !source) return;
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
     ctx.save();
     clipWorld(ctx);
@@ -187,37 +192,82 @@ export function createAmbientScene(stage, getState) {
     surface.dataset.frames = String(++frames);
   }
   function loop(now) {
+    frame = 0;
     if (destroyed) return;
+    lastCallbackAt = performance.now();
     const nextMode = mode();
     surface.dataset.mode = nextMode;
     const delta = last ? Math.min((now - last) / 1000, .12) : 0;
     last = now;
-    if (nextMode === 'running') {
-      // Island motion follows real elapsed time. Obsolete saved pause/speed
-      // fields must not freeze the entire world or amplify its visual effects.
-      time += delta;
-      const fps = innerWidth < 900 ? 24 : 30;
-      if (now - lastPaint >= 1000 / fps) { paint(); lastPaint = now; }
-    } else if (previousMode !== nextMode) paint();
+    try {
+      if (nextMode === 'running') {
+        // Island motion follows real elapsed time. Obsolete saved pause/speed
+        // fields must not freeze the entire world or amplify its visual effects.
+        time += delta;
+        const fps = innerWidth < 900 ? 24 : 30;
+        if (now - lastPaint >= 1000 / fps) { paint(); lastPaint = now; }
+      } else if (previousMode !== nextMode) paint();
+      lastReportedError = '';
+      delete surface.dataset.renderError;
+    } catch (error) {
+      // A dropped frame or recovered browser context must not permanently end
+      // the animation chain. The lightweight watchdog retries a failed frame.
+      surface.dataset.renderError = String(error?.message || error);
+      if (surface.dataset.renderError !== lastReportedError) console.error(error);
+      lastReportedError = surface.dataset.renderError;
+      surface.dataset.mode = 'error';
+      return;
+    }
     previousMode = nextMode;
     if (nextMode === 'running') frame = requestAnimationFrame(loop);
   }
   function resume() {
     if (!source || destroyed) return;
     cancelAnimationFrame(frame);
-    last = 0;
+    frame = 0; last = 0;
+    const nextMode = mode();
+    surface.dataset.mode = nextMode;
+    if (nextMode !== 'running') {
+      if (previousMode !== nextMode) paint();
+      previousMode = nextMode;
+      return;
+    }
     frame = requestAnimationFrame(loop);
   }
   function syncMode() {
-    if (mode() !== previousMode) resume();
+    if (mode() !== previousMode || mode() === 'running' && !frame) resume();
   }
+  function pageShow() { pageSuspended = false; resume(); }
+  function pageHide() { pageSuspended = true; resume(); }
+  function loseContext(event) {
+    event.preventDefault(); contextLost = true;
+    cancelAnimationFrame(frame); frame = 0; last = 0;
+    surface.dataset.mode = 'context-lost';
+  }
+  function restoreContext() {
+    contextLost = false;
+    ctx = surface.getContext('2d', { alpha: true });
+    size(); resume();
+  }
+  const watchdog = setInterval(() => {
+    if (!destroyed && source && mode() === 'running' && (!frame || performance.now() - lastCallbackAt > 1500)) {
+      surface.dataset.recoveries = String(Number(surface.dataset.recoveries) + 1);
+      resume();
+    }
+  }, 1000);
   addEventListener('resize', size, { passive: true });
+  addEventListener('pageshow', pageShow);
+  addEventListener('pagehide', pageHide);
+  addEventListener('focus', resume);
   document.addEventListener('visibilitychange', resume);
   media.addEventListener('change', resume);
   stage.addEventListener('island-statechange', syncMode);
+  surface.addEventListener('contextlost', loseContext);
+  surface.addEventListener('contextrestored', restoreContext);
   const ready = Promise.all([image('./assets/harborlight-v1-approved.png'), image('./assets/harborlight-windmill-clean.png'), image('./assets/harborlight-inhabitants-clean.png')]).then(values => {
     // All texture sampling must use the clean world too: sampling the old
     // reference could paint blue clothing or baked smoke back into the scene.
+    if (destroyed) return;
     source = values[2];
     plate = makeWindmillPlate(values[1]);
     inhabitants = createInhabitantsBackground(values[2]);
@@ -227,11 +277,17 @@ export function createAmbientScene(stage, getState) {
   }).catch(error => { surface.dataset.mode = 'error'; surface.remove(); throw error; });
   return { ready, destroy() {
     destroyed = true;
+    clearInterval(watchdog);
     cancelAnimationFrame(frame);
     removeEventListener('resize', size);
+    removeEventListener('pageshow', pageShow);
+    removeEventListener('pagehide', pageHide);
+    removeEventListener('focus', resume);
     document.removeEventListener('visibilitychange', resume);
     media.removeEventListener('change', resume);
     stage.removeEventListener('island-statechange', syncMode);
+    surface.removeEventListener('contextlost', loseContext);
+    surface.removeEventListener('contextrestored', restoreContext);
     surface.remove();
   } };
 }

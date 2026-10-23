@@ -28,6 +28,9 @@ function reload(state, legacy = false) {
 function accept(state, task) {
   const result = activityAction(state, { type: 'taskAccept', task: task.id });
   assert.equal(result.ok, true, result.message);
+  assert.equal(result.draft, true);
+  const confirmed = activityAction(state, { type: 'confirmTaskAcceptance', task: task.id });
+  assert.equal(confirmed.ok, true, confirmed.message);
 }
 function deposit(state, task, resource, amount) {
   const result = activityAction(state, { type: 'taskDeposit', task: task.id, resource, amount });
@@ -111,9 +114,9 @@ test('legacy multiple accepts choose largest deposits, preserve dormant work and
   let state = island();
   state.activityClock = 600;
   const [first, second, third] = state.lighthouseTasks;
-  first.acceptedAt = 10; first.multiplier = 3; first.deposited.wood = 2;
-  second.acceptedAt = 100; second.multiplier = 2; second.deposited.wood = 8;
-  third.acceptedAt = 0; third.multiplier = 3; third.deposited.wood = 3;
+  first.acceptedAt = 10; first.bonusLockedAt = 10; first.multiplier = 3; first.deposited.wood = 2;
+  second.acceptedAt = 100; second.bonusLockedAt = 100; second.multiplier = 2; second.deposited.wood = 8;
+  third.acceptedAt = 0; third.bonusLockedAt = 0; third.multiplier = 3; third.deposited.wood = 3;
   const before = structuredClone(state.lighthouseTasks);
   state = reload(state, true);
   assert.equal(state.activeTaskId, second.id);

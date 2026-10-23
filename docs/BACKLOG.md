@@ -1,10 +1,18 @@
 # Backlog HARBORLIGHT
 
-Stan: 2026-10-23. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Bazą są decyzje arkusza 7; najnowsze zmiany zbiera [HARBORLIGHT8-zasady.xlsx](arkusze/HARBORLIGHT8-zasady.xlsx). Excel 7 pozostaje zachowany bez zmian. Aktualny frontend v12 opublikowano w `137d1cf`, a Excel 8 w `00967f1`; odbiór lokalny i publiczny jest zakończony. [Dziennik](IMPLEMENTATION-LOG.md) oddziela historyczne wyniki, obecne prace i backend.
+Bieżący zakres: **58 decyzji V9, 19 uwag frontendu oraz uproszczony Excel 9**, wydanie docelowe frontend-v13. Implementacja i odbiór lokalny zakończone: 388/388 testów modelu PASS, pięć zestawów przeglądarkowych i przegląd wizualny zaliczone. Commit, publikację i publiczny wynik zapisuje dziennik po potwierdzeniu. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4).
 
-Zachowujemy zaakceptowany wygląd wyspy i jej animacje. Reguły działają w przeglądarce bez backendu. Docelowe trzy sposoby gry — web, Android, iPhone — wymagają wspólnego konta, trwałego stanu i serwerowego rozliczania postępu; obecny lokalny zapis tego nie zapewnia.
+## Bieżąca iteracja V9
 
-## Bieżący frontend
+- [Manifest 58+19](decisions-v9.json) jest kompletem uzgodnień, a [macierz odbioru](FRONTEND-REVIEW.md) pokazuje wymagania końcowe. Nie otwieramy ponownie rozstrzygniętych zasad.
+- Model: nowe liczniki potrzeb, premie i odbiorcy, realny T i rezerwacje, anulowanie, Food, pełne zakupy i dowóz Premium, potwierdzanie zadań, seria ekspedycji, kalendarz, samouczek i potwierdzone zdarzenia przyszłych integracji.
+- UI: usunięty lewy pasek, nowy nagłówek, 12 uporządkowanych budynków i pięć zasobów z przewozami, EN/PL, filtry powiadomień, zwarte efekty, bezpieczne potwierdzenia i ciągłe animacje.
+- Arkusz: cztery widoczne zakładki, każda mechanika do trzech zdań, tylko pięć prawdziwych tematów przyszłych. Całe 45 zakładek źródła i 48 komentarzy pozostaje ukrytym archiwum; pliki 7 i 8 bez zmian.
+- Kwoty samouczka oraz krzywa czasu minigier są jawnie projektowe. Kwoty lojalnościowe nadal nieustalone; brak rzeczywistych integracji kont, płatności, reklam, publikacji i kont poleconych.
+
+Nowy numer zadania GitHub dopisujemy dopiero po faktycznym utworzeniu. Historyczne zgłoszenia poniżej zachowują własny zakres i dowody, a backend pozostaje odrębny.
+
+## Historyczne wydania v12 i wcześniejsze
 
 ### FE-17 — atrakcje, ścieżki, efekty i Excel 8 — [#27](https://github.com/ksobczak321-oss/gra/issues/27)
 

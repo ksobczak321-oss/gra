@@ -1,6 +1,8 @@
 // Daily attractions and completed road tiers. All clocks use elapsed world
 // seconds, so the same rules apply while the island is open and offline.
 // This module intentionally imports no state, residents or logistics module.
+import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v13';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v13';
 
 export const LEISURE_DAY_SECONDS = 86400;
 export const ATTRACTION_EFFECT_SECONDS = 21600;
@@ -68,22 +70,26 @@ function rotateOffers(state, emit = true) {
     const [id] = pool.splice(choice, 1);
     state.leisure.offers.push({ id, y: 5 + Math.floor(random(state) * 96) });
   }
-  state.leisure.rotationRemaining = LEISURE_DAY_SECONDS;
-  if (emit) notify(state, 'attractions-renewed', 'New daily attractions', 'Five new decorations and events are available for the next 24 hours.');
+  state.leisure.nextRotationAt = nextWarsawMidnightMs(state.leisure.clockMs);
+  state.leisure.rotationRemaining = (state.leisure.nextRotationAt - state.leisure.clockMs) / 1000;
+  if (emit) notify(state, 'attractions-renewed', 'New daily attractions', 'Five new decorations and events are available until midnight in Europe/Warsaw.');
 }
 
 export function normalizeLeisure(state, raw = {}) {
   const saved = object(raw.leisure) ? raw.leisure : {};
   const seed = integer(saved.seed, 0, 0xffffffff) >>> 0;
   const initialSeed = (Math.floor(state.worldTimeMs || 0) ^ 0x51ed270b) >>> 0;
-  state.leisure = { seed: seed || initialSeed || 1,
-    rotationRemaining: bounded(saved.rotationRemaining, LEISURE_DAY_SECONDS, LEISURE_DAY_SECONDS),
+  const clockMs = finite(state.worldTimeMs) ? state.worldTimeMs : finite(saved.clockMs) ? saved.clockMs : 0;
+  // Older rolling-day offers retain their current identities and prices until
+  // the next local midnight. New saves preserve the exact calendar boundary.
+  const nextRotationAt = finite(saved.nextRotationAt) && saved.nextRotationAt > clockMs ? saved.nextRotationAt : nextWarsawMidnightMs(clockMs);
+  state.leisure = { seed: seed || initialSeed || 1, clockMs, nextRotationAt,
+    rotationRemaining: (nextRotationAt - clockMs) / 1000,
     offers: [], habits: {}, effects: [], sequence: integer(saved.sequence) };
   const offers = Array.isArray(saved.offers) ? saved.offers : [];
   if (offers.length === 5 && new Set(offers.map(item => item?.id)).size === 5 && offers.every(item =>
     item && ids.has(item.id) && Number.isInteger(item.y) && item.y >= 5 && item.y <= 100)) {
     state.leisure.offers = offers.map(({ id, y }) => ({ id, y }));
-    if (state.leisure.rotationRemaining <= EPS) rotateOffers(state, false);
   } else rotateOffers(state, false);
   for (const id of ids) {
     const habit = saved.habits?.[id];
@@ -113,7 +119,7 @@ export function normalizeLeisure(state, raw = {}) {
 }
 
 function eligibleResidents(state) {
-  return (state.residents || []).filter(person => positiveId(person.id) && !(person.newbornRemaining > EPS));
+  return (state.residents || []).filter(person => positiveId(person.id) && !(person.newbornRemaining > EPS) && estimatedHappiness(state, person) < 100 - EPS);
 }
 
 export function residentLeisureBonus(state, person) {
@@ -130,7 +136,7 @@ function estimatedHappiness(state, person) {
   const workplace = state.buildings?.[person.workplace];
   const input = producer[person.workplace];
   const blocked = own(producer, person.workplace) && workplace && !(person.arrivalRemaining > EPS) &&
-    (workplace.ready >= 200 * workplace.level || input && (state.resources?.[input] || 0) < 2);
+    (workplace.ready >= 200 * workplace.level || input && centralAvailable(state, input) < 2);
   const storagePenalty = blocked ? Math.min(50, 10 * (1 + Math.floor(((person.blockedSeconds || 0) + EPS) / LEISURE_DAY_SECONDS))) : 0;
   return Math.max(-100, Math.min(100, (person.happiness || 0) + blessings + visits - storagePenalty + residentLeisureBonus(state, person)));
 }
@@ -141,12 +147,13 @@ export function leisureOffers(state) {
     const habit = state.leisure.habits[offer.id];
     const uses = habit?.resetRemaining > EPS ? Math.min(4, habit.uses) : 0;
     const multiplier = ATTRACTION_MULTIPLIERS[uses];
-    const price = offer.y * tier(state), affordable = (state.resources?.coins || 0) >= price;
+    const residentCount = Math.min(tier(state), availablePeople);
+    const price = offer.y * residentCount, affordable = (state.resources?.coins || 0) >= price;
     return { ...catalog.get(offer.id), y: offer.y, price, amount: offer.y * multiplier,
-      residentCount: Math.min(tier(state), availablePeople), level: tier(state), multiplier,
+      residentCount, level: tier(state), multiplier,
       uses, remaining: state.leisure.rotationRemaining, nextReset: habit?.resetRemaining || 0,
       affordable, available: multiplier > 0 && affordable && availablePeople > 0,
-      reason: multiplier <= 0 ? 'Residents need a 24-hour break from this attraction.' : !availablePeople ? 'No residents can receive this happiness bonus yet.' : !affordable ? 'Not enough coins.' : '' };
+      reason: multiplier <= 0 ? 'Residents need a 24-hour break from this attraction.' : !availablePeople ? 'No eligible residents can gain happiness from this attraction.' : !affordable ? 'Not enough coins.' : '' };
   });
 }
 
@@ -175,9 +182,13 @@ export function leisureAction(state, action) {
     const quote = leisureOffers(state).find(offer => offer.id === action.id);
     if (!quote) return bad('This attraction is not in today’s selection.');
     if (!quote.available) return bad(quote.reason);
-    // Selection was unspecified; target the least happy eligible residents,
-    // with stable resident IDs breaking ties. Newborns retain frozen 0%.
-    const residents = eligibleResidents(state).sort((a, b) => estimatedHappiness(state, a) - estimatedHappiness(state, b) || a.id - b.id).slice(0, quote.residentCount);
+    const pool = eligibleResidents(state), residents = [];
+    while (residents.length < quote.residentCount) {
+      const lowest = Math.min(...pool.map(person => estimatedHappiness(state, person)));
+      const tied = pool.filter(person => Math.abs(estimatedHappiness(state, person) - lowest) <= EPS);
+      const person = tied.length === 1 ? tied[0] : tied[Math.floor(random(state) * tied.length)];
+      residents.push(person); pool.splice(pool.indexOf(person), 1);
+    }
     const residentIds = residents.map(person => person.id);
     state.resources.coins -= quote.price;
     state.leisure.habits[action.id] = { uses: Math.min(4, quote.uses + 1), resetRemaining: LEISURE_DAY_SECONDS };
@@ -192,7 +203,7 @@ export function leisureAction(state, action) {
   const desired = own(action, 'level') ? action.level : summary.nextLevel;
   if (!Number.isInteger(desired) || desired < 1 || desired > ROAD_MAX_LEVEL) return bad('Choose a path level from 1 to 5.');
   if (desired !== summary.nextLevel) return bad(`Upgrade all 100 paths to level ${summary.nextLevel} before starting a higher level.`);
-  if (!finite(state.resources?.stone) || state.resources.stone < ROAD_SECTION_COST) return bad('Upgrading one path section costs 100 stone from the central Warehouse.');
+  if (centralAvailable(state, 'stone') < ROAD_SECTION_COST) return bad('Upgrading one path section costs 100 unreserved stone from the central Warehouse.');
   const index = state.roads.segments.findIndex(level => level < desired);
   if (index < 0) return bad('This path level is already complete.');
   state.resources.stone -= ROAD_SECTION_COST;
@@ -218,7 +229,8 @@ export function advanceLeisure(state, seconds) {
   let remaining = seconds;
   while (remaining > EPS) {
     const duration = Math.min(remaining, state.leisure.rotationRemaining);
-    state.leisure.rotationRemaining = Math.max(0, state.leisure.rotationRemaining - duration);
+    state.leisure.clockMs += duration * 1000;
+    state.leisure.rotationRemaining = Math.max(0, (state.leisure.nextRotationAt - state.leisure.clockMs) / 1000);
     for (const [id, habit] of Object.entries(state.leisure.habits)) {
       habit.resetRemaining = Math.max(0, habit.resetRemaining - duration);
       if (habit.resetRemaining <= EPS) delete state.leisure.habits[id];

@@ -9,12 +9,15 @@ import {
 
 const HOUR = 3600;
 const GRACE = 12 * HOUR;
+// Hunger scenarios start at Warsaw midnight so automatic House points at
+// 23:58 cannot accidentally alter their first-day personal happiness totals.
+const START = Date.parse('2026-01-05T23:00:00Z');
 const close = (actual, expected, tolerance = 1e-7) => {
   assert.ok(Math.abs(actual - expected) < tolerance, `${actual} != ${expected}`);
 };
 
 function island({ population = 12, happiness = 0, food = 100 } = {}) {
-  const raw = createState();
+  const raw = createState(START);
   raw.version = 6;
   delete raw.residents;
   raw.buildings.townhall.level = 4;
@@ -28,7 +31,7 @@ function island({ population = 12, happiness = 0, food = 100 } = {}) {
     building.workers = 0;
     building.workProgress = [];
   }
-  return normalizeState(raw);
+  return normalizeState(raw, START);
 }
 
 function worker(state, id, count = 1) {
@@ -45,7 +48,7 @@ function worker(state, id, count = 1) {
 }
 
 function reload(state) {
-  return normalizeState(JSON.parse(JSON.stringify(state)));
+  return normalizeState(JSON.parse(JSON.stringify(state)), state.lastSimulatedAt);
 }
 
 function person(state, id) {
@@ -146,35 +149,78 @@ test('hunger starts only after central meals are exhausted', () => {
   for (const resident of state.residents) close(resident.hungerSeconds, HOUR);
 });
 
-test('a central food delivery resets each hunger timer and starts earning food happiness again', () => {
+test('a short central meal pauses mature hunger and immediately restores food happiness without resetting its timer', () => {
   const state = island({ population: 6, food: 0 });
   matureHunger(state);
   tick(state, HOUR);
   close(state.happiness, -5);
   state.resources.food = 1;
-  tick(state, 600);
+  tick(state, 599);
+  close(state.happiness, -5 + 599 / HOUR);
+  for (const resident of state.residents) {
+    close(resident.hungerSeconds, GRACE + HOUR);
+    close(resident.fedRecoverySeconds, 599);
+  }
+  tick(state, 1);
   close(state.happiness, -5 + 600 / HOUR);
-  assert.ok(state.residents.every(resident => resident.hungerSeconds === 0));
+  assert.ok(state.residents.every(resident => resident.hungerSeconds === GRACE + HOUR && resident.fedRecoverySeconds === 0));
   tick(state, HOUR);
-  close(state.happiness, -5 + 600 / HOUR);
-  assert.ok(state.residents.every(resident => Math.abs(resident.hungerSeconds - HOUR) < 1e-7));
+  close(state.happiness, -10 + 600 / HOUR);
+  for (const resident of state.residents) {
+    close(resident.hungerSeconds, GRACE + 2 * HOUR);
+    assert.equal(resident.fedRecoverySeconds, 0);
+  }
 });
 
-test('local mill output, market goods and pending deliveries do not feed residents', () => {
+test('a full continuous hour of food resets mature hunger at its exact boundary and survives reload', () => {
+  const state = island({ population: 6, food: 0 });
+  matureHunger(state);
+  tick(state, HOUR);
+  state.resources.food = 6;
+  tick(state, HOUR - 1);
+  for (const resident of state.residents) {
+    close(resident.hungerSeconds, GRACE + HOUR);
+    close(resident.fedRecoverySeconds, HOUR - 1);
+  }
+  const saved = reload(state);
+  tick(saved, 1);
+  for (const resident of saved.residents) {
+    assert.equal(resident.hungerSeconds, 0);
+    // The final meal expires at the same boundary; the completed hour has
+    // cleared hunger, and the next recovery streak has not started.
+    assert.equal(resident.fedRecoverySeconds, 0);
+  }
+  close(saved.happiness, -4);
+  tick(saved, HOUR);
+  close(saved.happiness, -4);
+  assert.ok(saved.residents.every(resident => resident.hungerSeconds === HOUR));
+});
+
+test('local mill output and market goods do not feed residents before reaching the central warehouse', () => {
   const state = island({ food: 0 });
   matureHunger(state);
   state.buildings.windmill.ready = 100;
   state.market.stock.food = 100;
-  state.pendingDeliveries.food = 100;
   tick(state, HOUR);
   close(state.happiness, -5);
   assert.equal(state.resources.food, 0);
   assert.equal(state.buildings.windmill.ready, 100);
   assert.equal(state.market.stock.food, 100);
-  assert.equal(state.pendingDeliveries.food, 100);
 });
 
-test('a hungry warehouse worker takes ten minutes for a five-minute trip and the meal resets mature hunger', () => {
+test('food in the nonphysical refund buffer automatically enters free warehouse space and feeds residents without carriers', () => {
+  const state = island({ food: 0 });
+  matureHunger(state);
+  state.pendingDeliveries.food = 100;
+  assert.equal(state.buildings.warehouse.workers, 0);
+  tick(state, HOUR);
+  assert.equal(state.pendingDeliveries.food, 0);
+  assert.equal(state.resources.food, 88);
+  close(state.happiness, 1);
+  assert.ok(state.residents.every(resident => resident.hungerSeconds === 0));
+});
+
+test('a hungry warehouse worker takes ten minutes for a five-minute trip and its short meal only pauses mature hunger', () => {
   const state = island({ food: 0 });
   matureHunger(state);
   worker(state, 'warehouse');
@@ -184,8 +230,10 @@ test('a hungry warehouse worker takes ten minutes for a five-minute trip and the
   assert.equal(state.resources.food, 0);
   close(state.foodCredit, 0);
   close(person(state, id).happiness, (-4 * 600 + 2 * 300) / HOUR);
+  close(person(state, id).hungerSeconds, GRACE + 600);
   tick(state, 1);
-  close(person(state, id).happiness, (-4 * 600 + 2 * 300 + 1) / HOUR);
+  close(person(state, id).happiness, (-4 * 600 + 2 * 300 - 4) / HOUR);
+  close(person(state, id).hungerSeconds, GRACE + 601);
 });
 
 test('an arrival at interval end is available but is not prefetched until active time resumes', () => {
@@ -215,6 +263,9 @@ test('birth and departure events change meal demand at their exact time', () => 
   assert.ok(newborn);
   assert.equal(newborn.happiness, 0);
   close(newborn.newbornRemaining, 23 * HOUR);
+  assert.equal(newborn.hungerSeconds, 0);
+  assert.equal(newborn.unemployedSeconds, 0);
+  assert.equal(newborn.fedRecoverySeconds, 0);
   // The newborn's zero happiness lowers the Lighthouse-boosted mean to 1200/13.
   // The next birth therefore takes another 9000/17 seconds after the two-hour mark.
   close(growing.happiness, 1200 / 13);
@@ -287,7 +338,7 @@ test('legacy saves preserve stock and initialize meals and individual timers saf
   delete old.residents;
   delete old.foodCredit;
   const migrated = reload(old);
-  assert.equal(migrated.version, 8);
+  assert.equal(migrated.version, 9);
   assert.equal(migrated.foodCredit, 0);
   assert.equal(migrated.resources.food, old.resources.food);
   assert.equal(migrated.residents.length, old.population);

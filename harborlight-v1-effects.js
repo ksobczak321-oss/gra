@@ -1,5 +1,6 @@
 // One read-only view of active benefits and penalties, shared by Town Hall and
 // transition notifications. Countdown changes alone never create a new notice.
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v13';
 const EPS = 1e-7;
 const GRACE = 12 * 3600;
 const workplaceNames = { farm: 'Farm', windmill: 'Windmill', lumber: 'Lumber Camp', sawmill: 'Sawmill', quarry: 'Quarry', warehouse: 'Warehouse', market: 'Market', dock: 'Harbor' };
@@ -13,7 +14,7 @@ function blocked(state, person) {
   const building = state.buildings?.[person.workplace];
   if (!building) return false;
   const input = recipes[person.workplace];
-  return finite(building.ready) >= 200 * finite(building.level) || !!input && finite(state.resources?.[input]) < 2;
+  return finite(building.ready) >= 200 * finite(building.level) || !!input && centralAvailable(state, input) < 2;
 }
 const idsOf = people => people.map(person => person.id).filter(Number.isSafeInteger).sort((a, b) => a - b);
 function scopeOf(selected, everyone) {
@@ -59,14 +60,19 @@ export function activeEffects(state = {}) {
     }));
     if (frozen(person)) effects.push(effectRow(`new-resident-${person.id}`, 'New resident settling in', 'neutral', 'Happiness stays at 0%', `Resident #${person.id}`, {
       amount: 0, residentIds: [person.id], remaining: person.newbornRemaining,
-      explain: 'Every new resident starts with 24 hours of frozen 0% happiness; normal calculation begins afterwards.'
+      explain: 'Every new resident starts with 24 hours of frozen 0% happiness. Hunger and unemployment counters also start only after this period.'
     }));
   }
 
-  const fed = finite(state.foodCredit) > 1e-12 || finite(state.resources?.food) >= 1;
+  const fed = finite(state.foodCredit) > 1e-12 || centralAvailable(state, 'food') >= 1;
   if (fed && eligible.length) effects.push(effectRow('regular-meals', 'Regular meals', 'positive', '+1 pp happiness / h', allScope, {
     amount: 1, residentIds: allIds, endCondition: 'While Food is available in central storage',
-    explain: 'Food is assigned automatically. Each resident consumes one Food per hour.'
+    explain: 'Food is shared equally and assigned automatically. Each resident consumes one Food per hour; a full uninterrupted hour of feeding resets the hunger counter.'
+  }));
+  const recovering = fed ? eligible.filter(person => finite(person.hungerSeconds) > EPS && finite(person.fedRecoverySeconds) < 3600 - EPS) : [];
+  if (recovering.length) effects.push(effectRow('hunger-recovery', 'Recovering from hunger', 'neutral', 'Hunger penalty paused · timer recovering', scopeOf(recovering, people), {
+    amount: 0, residentIds: idsOf(recovering), remaining: Math.max(...recovering.map(person => 3600 - finite(person.fedRecoverySeconds))),
+    explain: 'The penalty stops as soon as food is available. The remembered hunger timer resets after one uninterrupted hour of feeding; a short meal pauses it without clearing it.'
   }));
   const working = eligible.filter(person => arrived(person) && !blocked(state, person));
   if (working.length) effects.push(effectRow('employment', 'Working residents', 'positive', '+1 pp happiness / h', scopeOf(working, people), {
@@ -81,7 +87,7 @@ export function activeEffects(state = {}) {
     const hungry = eligible.filter(person => finite(person.hungerSeconds) >= GRACE - EPS);
     if (hungry.length) effects.push(effectRow('hunger', 'Hunger penalty', 'negative', '−5 pp happiness / h', scopeOf(hungry, people), {
       amount: -5, residentIds: idsOf(hungry), endCondition: 'Until these residents receive Food',
-      explain: 'The penalty begins after twelve continuous hours without food. Earlier hours are not penalized retrospectively.'
+      explain: 'Unfed time accumulates until a full uninterrupted hour of feeding clears it. After twelve hours the penalty applies only while food is unavailable, without backcharging the first twelve hours.'
     }));
   }
   const unemployed = eligible.filter(person => (!person.workplace || finite(person.arrivalRemaining) > EPS) && finite(person.unemployedSeconds) >= GRACE - EPS);
@@ -136,6 +142,11 @@ export function activeEffects(state = {}) {
     }));
   }
   const now = finite(state.worldTimeMs, finite(state.lastSimulatedAt));
+  const activityRemaining = (finite(state.engagement?.activeUntil) - now) / 1000;
+  if (activityRemaining > EPS) effects.push(effectRow('active-play', 'Active play', 'positive', 'Material production ×2', 'All material production', {
+    amount: 2, remaining: activityRemaining,
+    explain: 'Meaningful activity in the focused visible game keeps this benefit active for five minutes. It combines with the Lighthouse production bonus.'
+  }));
   const packageRemaining = (finite(state.premium?.expiresAt) - now) / 1000;
   if (packageRemaining > EPS) effects.push(effectRow('construction-package', 'Construction package', 'positive', '+4 active builds · unlimited queue · delivery planning', 'Island construction', {
     amount: 4, remaining: packageRemaining,

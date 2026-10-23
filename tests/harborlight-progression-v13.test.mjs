@@ -1,0 +1,401 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {
+  ACTIVE_PLAY_SECONDS, REFERRAL_WINDOW_SECONDS, TUTORIAL_LESSONS,
+  normalizeProgression, progressionAction, registerMeaningfulActivity,
+  activePlayMultiplier, engagementStatus, advanceProgression, nextProgressionEvent,
+  tutorialRows, recordProgressionAction, recordProgressionLogin, loyaltyStatus,
+  socialSummary, referralRows
+} from '../harborlight-v1-progression.js';
+import { receiveMaterials } from '../harborlight-v1-logistics.js';
+import { warsawDayKey } from '../harborlight-v1-calendar.js';
+
+const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
+const START = Date.parse('2026-10-23T12:00:00Z');
+const context = { receiveMaterials };
+function island(now = START) {
+  const state = {
+    worldTimeMs: now, activityClock: 0, activeSeconds: 0,
+    resources: { coins: 100, ...Object.fromEntries(MATERIALS.map(id => [id, 100])) },
+    pendingDeliveries: Object.fromEntries(MATERIALS.map(id => [id, 0])),
+    buildings: { townhall: { level: 1 }, warehouse: { level: 1 } },
+    residents: Array.from({ length: 12 }, (_, index) => ({ id: index + 1, workplace: null, newbornRemaining: 0, arrivalRemaining: 0 })),
+    warehousePriorities: [], statistics: { collected: 0 }, notifications: [], loyalty: { lastDay: null, streak: 0 }
+  };
+  normalizeProgression(state, {});
+  return state;
+}
+function activity(state) { return progressionAction(state, { type: 'userActivity', visible: true, focused: true }); }
+function advance(state, seconds) {
+  state.worldTimeMs += seconds * 1000;
+  state.activityClock += seconds;
+  advanceProgression(state, seconds);
+}
+function reload(state) {
+  const raw = structuredClone(state), restored = structuredClone(raw);
+  normalizeProgression(restored, raw);
+  return restored;
+}
+function observe(state, taskId) { return progressionAction(state, { type: 'tutorialObserve', taskId }, context); }
+function claim(state, taskId) { return progressionAction(state, { type: 'claimTutorial', taskId }, context); }
+const verifiedSocial = { verifiedSocialEvent: true, accountId: 'owner', receiveMaterials };
+const verifiedAccount = { verifiedAccountEvent: true, accountId: 'owner', receiveMaterials };
+function publication(state, id, extra = {}) { return progressionAction(state, { type: 'socialPublication', id, ...extra }, verifiedSocial); }
+function registerReferral(state, id = 'friend', extra = {}) { return progressionAction(state, { type: 'referralRegistration', accountId: id, inviterId: 'owner', ...extra }, verifiedAccount); }
+function loginReferral(state, id = 'friend') { return progressionAction(state, { type: 'referralLogin', accountId: id }, verifiedAccount); }
+function referralDay(state, id = 'friend', extra = {}) { return progressionAction(state, { type: 'referralActiveDay', accountId: id, active: true, ...extra }, verifiedAccount); }
+
+test('only meaningful input from a visible focused game enables the five-minute bonus', () => {
+  const state = island();
+  for (const proof of [{}, { visible: true }, { focused: true }, { visible: false, focused: true }, { visible: true, focused: false }]) {
+    const before = JSON.stringify(state);
+    assert.equal(registerMeaningfulActivity(state, proof), false);
+    assert.equal(JSON.stringify(state), before);
+  }
+  assert.equal(activePlayMultiplier(state), 1);
+  assert.equal(activity(state).ok, true);
+  assert.equal(activePlayMultiplier(state), 2);
+  assert.equal(state.engagement.activeUntil, START + ACTIVE_PLAY_SECONDS * 1000);
+  assert.equal(state.lastMeaningfulActivityAt, 0);
+  assert.deepEqual(state.tutorial.activeDays, ['2026-10-23']);
+});
+
+test('each interaction refreshes rather than stacks five minutes and activity expiration is exact', () => {
+  const state = island(); activity(state);
+  advance(state, 200);
+  activity(state);
+  assert.equal(state.engagement.activeUntil, START + 500000);
+  assert.equal(state.lastMeaningfulActivityAt, 200);
+  assert.equal(nextProgressionEvent(state), 300);
+  advance(state, 299.999);
+  assert.equal(activePlayMultiplier(state), 2);
+  advance(state, 0.001);
+  assert.equal(activePlayMultiplier(state), 1);
+  assert.equal(engagementStatus(state).remaining, 0);
+});
+
+test('active bonus and clocks survive reload without extending the window', () => {
+  const state = island(); activity(state); advance(state, 90);
+  const restored = reload(state);
+  assert.deepEqual(restored.engagement, state.engagement);
+  assert.equal(engagementStatus(restored).remaining, 210);
+  advance(restored, 210);
+  assert.equal(activePlayMultiplier(restored), 1);
+  assert.equal(activePlayMultiplier(reload(restored)), 1);
+});
+
+test('offline time does not create tutorial active days or renew activity', () => {
+  const state = island(); activity(state);
+  advance(state, 3 * 86400);
+  assert.equal(activePlayMultiplier(state), 1);
+  assert.deepEqual(state.tutorial.activeDays, ['2026-10-23']);
+  assert.equal(tutorialRows(state).filter(row => row.unlocked).length, 5);
+  activity(state);
+  assert.deepEqual(state.tutorial.activeDays, ['2026-10-23', '2026-10-26']);
+  assert.equal(tutorialRows(state).filter(row => row.unlocked).length, 10);
+});
+
+test('tutorial has exactly five lessons for each of the first five active Warsaw days', () => {
+  const state = island();
+  assert.equal(TUTORIAL_LESSONS.length, 25);
+  for (let day = 1; day <= 5; day++) {
+    activity(state);
+    activity(state);
+    assert.equal(state.tutorial.activeDays.length, day);
+    assert.equal(TUTORIAL_LESSONS.filter(row => row.day === day).length, 5);
+    assert.equal(tutorialRows(state).filter(row => row.unlocked).length, day * 5);
+    advance(state, 86400);
+  }
+  activity(state);
+  assert.equal(state.tutorial.activeDays.length, 5);
+});
+
+test('a real Warsaw midnight rather than a rolling 24-hour clock unlocks the next tutorial day', () => {
+  const state = island(Date.parse('2026-03-28T22:59:00Z'));
+  activity(state);
+  assert.equal(warsawDayKey(state.worldTimeMs), '2026-03-28');
+  advance(state, 120); activity(state);
+  assert.deepEqual(state.tutorial.activeDays, ['2026-03-28', '2026-03-29']);
+  advance(state, 23 * 3600); activity(state);
+  assert.deepEqual(state.tutorial.activeDays, ['2026-03-28', '2026-03-29', '2026-03-30']);
+});
+
+test('locked days and missing prerequisite lessons cannot be observed or claimed', () => {
+  const state = island();
+  assert.equal(observe(state, 'island-level').ok, false);
+  assert.equal(claim(state, 'island-level').ok, false);
+  activity(state);
+  assert.equal(observe(state, 'residents-home').ok, false);
+  assert.equal(observe(state, 'central-food').ok, false);
+  assert.equal(claim(state, 'island-level').ok, false);
+  assert.equal(state.resources.coins, 100);
+  assert.equal(observe(state, 'island-level').ok, true);
+  assert.equal(observe(state, 'residents-home').ok, true);
+});
+
+test('tutorial observation, genuine gameplay conditions and once-only claiming remain distinct', () => {
+  const state = island(); activity(state);
+  observe(state, 'island-level'); observe(state, 'residents-home');
+  assert.equal(observe(state, 'first-job').ok, false);
+  recordProgressionAction(state, { type: 'assign', building: 'quarry', delta: 1 }, { ok: false });
+  assert.equal(tutorialRows(state).find(row => row.id === 'first-job').completed, false);
+  state.residents[0].workplace = 'quarry'; state.residents[0].arrivalRemaining = 300;
+  recordProgressionAction(state, { type: 'assign', building: 'quarry', delta: 1 }, { ok: true });
+  assert.equal(tutorialRows(state).find(row => row.id === 'first-job').completed, true);
+  assert.equal(observe(state, 'workplace-journey').ok, true);
+  assert.equal(claim(state, 'first-job').ok, true);
+  assert.equal(state.resources.coins, 125);
+  assert.equal(state.resources.grain, 110);
+  assert.equal(claim(state, 'first-job').ok, false);
+  const restored = reload(state);
+  assert.equal(claim(restored, 'first-job').ok, false);
+  assert.equal(restored.resources.coins, 125);
+});
+
+test('tutorial material overflow uses the existing conservation-preserving delivery buffer', () => {
+  const state = island(); activity(state); observe(state, 'island-level');
+  for (const id of MATERIALS) state.resources[id] = 800;
+  assert.equal(claim(state, 'island-level').ok, true);
+  assert.equal(state.resources.wood, 800);
+  assert.equal(state.pendingDeliveries.wood, 10);
+  assert.equal(state.resources.coins, 125);
+});
+
+test('missing material receiver cannot mark a tutorial reward claimed or add partial coins', () => {
+  const state = island(); activity(state); observe(state, 'island-level');
+  const before = JSON.stringify(state);
+  assert.equal(progressionAction(state, { type: 'claimTutorial', taskId: 'island-level' }).ok, false);
+  assert.equal(JSON.stringify(state), before);
+});
+
+test('delivery lesson checks actual delivered goods and priorities require accepted actions', () => {
+  const state = island(); activity(state); advance(state, 86400); activity(state);
+  recordProgressionAction(state, { type: 'assign', building: 'warehouse', delta: 1 }, { ok: true });
+  assert.equal(tutorialRows(state).find(row => row.id === 'warehouse-job').completed, true);
+  assert.equal(tutorialRows(state).find(row => row.id === 'first-delivery').completed, false);
+  state.statistics.collected = 1; advanceProgression(state);
+  assert.equal(tutorialRows(state).find(row => row.id === 'first-delivery').completed, true);
+  state.warehousePriorities = ['construction'];
+  recordProgressionAction(state, { type: 'warehousePriority', resource: 'construction' }, { ok: true });
+  assert.equal(tutorialRows(state).find(row => row.id === 'transport-priority').completed, true);
+});
+
+test('social dialogs and caller-supplied verified fields never grant verified-publication rewards', () => {
+  const state = island();
+  const before = JSON.stringify(state);
+  for (const action of [
+    { type: 'socialPublication', id: 'p1' },
+    { type: 'socialPublication', id: 'p2', verified: true },
+    { type: 'socialPublication', id: 'p3', verifiedSocialEvent: true }
+  ]) assert.equal(progressionAction(state, action, {}).ok, false);
+  assert.equal(JSON.stringify(state), before);
+});
+
+test('the first verified publication grants 1000 once across platforms and replays are rejected', () => {
+  const state = island();
+  assert.equal(publication(state, 'facebook-p1', { platform: 'facebook' }).reward.coins, 1000);
+  assert.equal(state.resources.coins, 1100);
+  assert.equal(publication(state, 'facebook-p1').ok, false);
+  assert.equal(publication(state, 'instagram-p1', { platform: 'instagram' }).reward.coins, 0);
+  assert.equal(state.socialRewards.postDays.length, 1);
+  const restored = reload(state);
+  assert.equal(publication(restored, 'facebook-p1').ok, false);
+  assert.equal(restored.resources.coins, 1100);
+});
+
+test('a qualifying verified level post stacks first-share1000 and per-level500 without paying unseen levels', () => {
+  const state = island(); state.buildings.townhall.level = 3;
+  assert.equal(publication(state, 'level2', { kind: 'level', level: 2 }).reward.coins, 1500);
+  assert.equal(publication(state, 'same-level', { kind: 'level', level: 2 }).reward.coins, 0);
+  assert.equal(publication(state, 'future-level', { kind: 'level', level: 4 }).reward.coins, 0);
+  assert.equal(publication(state, 'level3', { kind: 'level', level: 3 }).reward.coins, 500);
+  assert.deepEqual(state.socialRewards.levelShares, [2, 3]);
+  assert.equal(state.socialRewards.postDays.length, 1);
+  assert.equal(state.resources.coins, 2100);
+});
+
+test('only one verified post per Warsaw day counts globally; every third counts reward1000', () => {
+  const state = island();
+  const payouts = [];
+  for (let day = 1; day <= 6; day++) {
+    payouts.push(publication(state, `daily-${day}`).reward.coins);
+    assert.equal(publication(state, `extra-${day}`, { platform: 'other' }).counted, false);
+    advance(state, 86400);
+  }
+  assert.deepEqual(payouts, [1000, 0, 1000, 0, 0, 1000]);
+  assert.deepEqual(state.socialRewards.thirdPostRewards, [3, 6]);
+  assert.equal(socialSummary(state).nextPostRewardAt, 9);
+  assert.equal(state.resources.coins, 3100);
+});
+
+test('verified social events are account-bound and cannot be future-dated', () => {
+  const state = island(); publication(state, 'p1');
+  const before = JSON.stringify(state);
+  assert.equal(progressionAction(state, { type: 'socialPublication', id: 'p2' }, { verifiedSocialEvent: true, accountId: 'other' }).ok, false);
+  assert.equal(publication(state, 'future', { at: START + 1 }).ok, false);
+  assert.equal(JSON.stringify(state), before);
+});
+
+test('a referral needs trusted account events and has one immutable inviter', () => {
+  const state = island();
+  assert.equal(progressionAction(state, { type: 'referralRegistration', accountId: 'friend', inviterId: 'owner', verified: true }, {}).ok, false);
+  assert.equal(registerReferral(state).ok, true);
+  assert.equal(registerReferral(state).ok, false);
+  assert.equal(progressionAction(state, { type: 'referralRegistration', accountId: 'friend', inviterId: 'other' }, { ...verifiedAccount, accountId: 'other' }).ok, false);
+  assert.equal(registerReferral(state, 'owner').ok, false);
+  assert.equal(state.referrals.entries.length, 1);
+});
+
+test('referral first login grants1000once; active days cannot precede that login', () => {
+  const state = island(); registerReferral(state);
+  assert.equal(referralDay(state).ok, false);
+  assert.equal(loginReferral(state).reward.coins, 1000);
+  assert.equal(loginReferral(state).ok, false);
+  assert.equal(state.resources.coins, 1100);
+  const restored = reload(state);
+  assert.equal(loginReferral(restored).ok, false);
+  assert.equal(restored.resources.coins, 1100);
+});
+
+test('three distinct active days with gaps within30days grant500ofeachmaterial once', () => {
+  const state = island(); registerReferral(state); loginReferral(state);
+  for (const id of MATERIALS) state.resources[id] = 800;
+  assert.equal(referralDay(state).rewarded, false);
+  assert.equal(referralDay(state).ok, false);
+  advance(state, 4 * 86400);
+  assert.equal(referralDay(state).rewarded, false);
+  advance(state, 10 * 86400);
+  assert.equal(referralDay(state).rewarded, true);
+  for (const id of MATERIALS) {
+    assert.equal(state.resources[id], 800);
+    assert.equal(state.pendingDeliveries[id], 500);
+  }
+  assert.equal(referralRows(state)[0].activeDayCount, 3);
+  assert.equal(referralDay(state).ok, false);
+  const restored = reload(state);
+  assert.equal(referralDay(restored).ok, false);
+  assert.deepEqual(restored.pendingDeliveries, state.pendingDeliveries);
+});
+
+test('referral day30boundary, inactive proof and future dates cannot obtain material reward', () => {
+  const state = island(); registerReferral(state); loginReferral(state);
+  assert.equal(referralDay(state, 'friend', { active: false }).ok, false);
+  assert.equal(referralDay(state, 'friend', { at: START + 1 }).ok, false);
+  referralDay(state); advance(state, 86400); referralDay(state);
+  advance(state, 29 * 86400);
+  assert.equal(state.referrals.entries[0].expired, true);
+  assert.equal(referralDay(state).ok, false);
+  for (const id of MATERIALS) assert.equal(state.pendingDeliveries[id], 0);
+});
+
+test('referral material delivery failure does not consume the third eligible day', () => {
+  const state = island(); registerReferral(state); loginReferral(state); referralDay(state);
+  advance(state, 86400); referralDay(state); advance(state, 86400);
+  const action = { type: 'referralActiveDay', accountId: 'friend', active: true };
+  assert.equal(progressionAction(state, action, { verifiedAccountEvent: true, accountId: 'owner' }).ok, false);
+  assert.equal(state.referrals.entries[0].activeDays.length, 2);
+  assert.equal(referralDay(state).rewarded, true);
+});
+
+test('loyalty counts consecutive Warsaw login days once and resets its streak after a gap', () => {
+  const state = island();
+  assert.equal(recordProgressionLogin(state), true);
+  assert.equal(state.loyalty.streak, 1);
+  assert.equal(recordProgressionLogin(state), false);
+  advance(state, 86400); recordProgressionLogin(state);
+  assert.equal(state.loyalty.streak, 2);
+  advance(state, 2 * 86400); recordProgressionLogin(state);
+  assert.equal(state.loyalty.streak, 1);
+  assert.equal(loyaltyStatus(state).rewardConfigured, false);
+  const before = state.resources.coins;
+  assert.equal(progressionAction(state, { type: 'claimLoyalty' }, context).ok, false);
+  assert.equal(state.resources.coins, before);
+});
+
+test('loyalty permanently closes atTownHall4 even if later data lowers the level', () => {
+  const state = island(); recordProgressionLogin(state);
+  state.buildings.townhall.level = 4; advanceProgression(state);
+  assert.equal(state.loyalty.closed, true);
+  assert.equal(state.loyalty.closedReason, 'townhall-level-4');
+  state.buildings.townhall.level = 1;
+  const restored = reload(state);
+  advance(restored, 86400);
+  assert.equal(recordProgressionLogin(restored), false);
+  assert.equal(loyaltyStatus(restored).closed, true);
+});
+
+test('ten already-claimed loyalty rewards permanently close the introductory programme', () => {
+  const state = island();
+  state.loyalty.claimedDays = Array.from({ length: 10 }, (_, i) => i + 1);
+  const restored = reload(state);
+  assert.equal(restored.loyalty.closed, true);
+  assert.equal(restored.loyalty.closedReason, 'ten-rewards');
+  assert.equal(progressionAction(restored, { type: 'claimLoyalty' }, context).ok, false);
+});
+
+test('normalization keeps durable progress while rejecting unknown lessons and future activity clocks', () => {
+  const state = island(); activity(state); observe(state, 'island-level'); claim(state, 'island-level');
+  state.engagement.activeUntil = START + 100 * 86400000;
+  state.tutorial.completed.unknown = true;
+  state.tutorial.claimed.unknown = true;
+  const restored = reload(state);
+  assert.equal(restored.engagement.activeUntil, START + 300000);
+  assert.equal(restored.tutorial.claimed['island-level'], true);
+  assert.equal(restored.tutorial.claimed.unknown, undefined);
+  assert.equal(restored.tutorial.completed.unknown, undefined);
+  assert.equal(restored.resources.coins, 125);
+});
+
+
+test('all25 lessons can finish on level1 through achievable actions and award1000coins total once', () => {
+  const state = island();
+  for (let day = 1; day <= 5; day++) {
+    activity(state);
+    for (const item of TUTORIAL_LESSONS.filter(item => item.day === day)) {
+      if (item.kind === 'observe') assert.equal(observe(state, item.id).ok, true, item.id);
+      else if (item.subject === 'delivery') { state.statistics.collected = 1; advanceProgression(state); }
+      else {
+        let action;
+        if (item.subject === 'assign-producer') {
+          state.residents[0].workplace = 'quarry'; state.residents[0].arrivalRemaining = 300;
+          action = { type: 'assign', building: 'quarry', delta: 1 };
+        } else if (item.subject === 'assign-warehouse') action = { type: 'assign', building: 'warehouse', delta: 1 };
+        else if (item.subject === 'transport-priority') { state.warehousePriorities = ['food']; action = { type: 'warehousePriority', resource: 'food' }; }
+        else if (item.subject === 'task-accept') action = { type: 'confirmTaskAcceptance', task: 'lighthouse-1' };
+        else if (item.subject === 'release-worker') action = { type: 'assign', building: 'quarry', delta: -1 };
+        else action = { type: 'setting', key: 'motion', value: false };
+        recordProgressionAction(state, action, { ok: true });
+      }
+      assert.equal(claim(state, item.id).ok, true, item.id);
+    }
+    if (day < 5) advance(state, 86400);
+  }
+  assert.equal(state.buildings.townhall.level, 1);
+  assert.equal(tutorialRows(state).filter(row => row.claimed).length, 25);
+  assert.equal(state.resources.coins, 1100);
+  assert.equal(MATERIALS.reduce((sum, id) => sum + state.resources[id], 0), 900);
+  const restored = reload(state);
+  for (const row of tutorialRows(restored)) assert.equal(claim(restored, row.id).ok, false);
+  assert.equal(restored.resources.coins, 1100);
+});
+
+test('a third counted publication can stack with a newly reached level reward', () => {
+  const state = island(); state.buildings.townhall.level = 2;
+  publication(state, 'day1'); advance(state, 86400); publication(state, 'day2'); advance(state, 86400);
+  const result = publication(state, 'day3-level2', { kind: 'level', level: 2 });
+  assert.equal(result.reward.coins, 1500);
+  assert.equal(result.thirdPostReward, true);
+  assert.equal(result.levelReward, true);
+  assert.equal(state.resources.coins, 2600);
+});
+
+
+test('opening a task acceptance draft is not the tutorial acceptance action', () => {
+  const state = island(); activity(state);
+  recordProgressionAction(state, { type: 'taskAccept', task: 'lighthouse-1' }, { ok: true, draft: true });
+  assert.equal(state.tutorial.events['task-accept'], undefined);
+  recordProgressionAction(state, { type: 'confirmTaskAcceptance', task: 'lighthouse-1' }, { ok: false });
+  assert.equal(state.tutorial.events['task-accept'], undefined);
+  recordProgressionAction(state, { type: 'confirmTaskAcceptance', task: 'lighthouse-1' }, { ok: true });
+  assert.equal(state.tutorial.events['task-accept'], true);
+});

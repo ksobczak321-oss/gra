@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { centralAvailable } from '../harborlight-v1-inventory.js';
 import {
   MATERIAL_IDS, normalizeLogisticsState, advanceLogistics, logisticsAction,
   productionRate, haulCapacity, foodReserve, constructionEstimate,
@@ -11,7 +12,7 @@ function island(level=4) {
   normalizeLogisticsState(s,structuredClone(s));return s;
 }
 function crew(s,id,count,arrival=0){s.buildings[id].workers=count;s.buildings[id].workProgress=Array(count).fill(0);for(const p of s.residents.filter(p=>!p.workplace).slice(0,count)){p.workplace=id;p.arrivalRemaining=arrival;}}
-function project(s,cost={wood:60},building='house',targetLevel=2){const p={building,targetLevel,cost,goodsTotal:Object.values(cost).reduce((a,b)=>a+b,0),goodsRemaining:Object.values(cost).reduce((a,b)=>a+b,0),remainingMaterials:Object.fromEntries(MATERIAL_IDS.map(id=>[id,cost[id]||0])),delivered:Object.fromEntries(MATERIAL_IDS.map(id=>[id,0])),transportSeconds:0,buildRemaining:0,stage:'transport',order:1};s.constructionProjects.push(p);return p;}
+function project(s,cost={wood:60},building='house',targetLevel=2){const p={building,targetLevel,cost,goodsTotal:Object.values(cost).reduce((a,b)=>a+b,0),goodsRemaining:Object.values(cost).reduce((a,b)=>a+b,0),remainingMaterials:Object.fromEntries(MATERIAL_IDS.map(id=>[id,cost[id]||0])),delivered:Object.fromEntries(MATERIAL_IDS.map(id=>[id,0])),transportSeconds:0,buildRemaining:0,stage:'transport',order:1};p.reservationVersion=9;p.reservedMaterials={...p.remainingMaterials};for(const id of MATERIAL_IDS)s.resources[id]+=p.reservedMaterials[id];s.constructionProjects.push(p);return p;}
 
 test('production uses own producer level and individual complete units',()=>{
  const s=island();s.buildings.farm.level=2;crew(s,'farm',2);
@@ -36,7 +37,7 @@ test('construction estimates count courses separately per material',()=>{
 });
 test('warehouse replenishment precedes construction unless explicitly reprioritized',()=>{
  const s=island();crew(s,'warehouse',1);s.buildings.lumber.ready=60;const p=project(s);
- advanceLogistics(s,300);assert.equal(s.resources.wood,60);assert.equal(p.goodsRemaining,60);
+ advanceLogistics(s,300);assert.equal(s.resources.wood,120);assert.equal(centralAvailable(s,'wood'),60);assert.equal(p.goodsRemaining,60);
  const t=island();crew(t,'warehouse',1);t.buildings.lumber.ready=60;const q=project(t);logisticsAction(t,{type:'transportPriority',target:'construction:1'});advanceLogistics(t,300);assert.equal(q.goodsRemaining,0);assert.equal(t.resources.wood,0);
 });
 test('urgent food receives a carrier despite construction priority',()=>{
@@ -52,8 +53,8 @@ test('market uncollected stock expires after24h fromarrival',()=>{
 test('harbor price is per100 with linear rolling inflation frozenatorder',()=>{
  const s=island();const a=logisticsAction(s,{type:'trade',direction:'buy',resource:'wood',amount:100});const b=logisticsAction(s,{type:'trade',direction:'buy',resource:'wood',amount:100});assert.equal(a.price,50);assert.equal(b.price,55);assert.equal(s.dock.orders[0].price,50);assert.equal(quoteTrade(s,{direction:'buy',resource:'wood',amount:100}).price,60);assert.equal(quoteTrade(s,{direction:'sell',resource:'planks',amount:100}).ok,false);advanceLogistics(s,10800);assert.equal(quoteTrade(s,{direction:'buy',resource:'wood',amount:100}).price,50);
 });
-test('harbor sale consumes central goods onconfirmation andpays onlyatdeparture',()=>{
- const s=island();s.resources.wood=100;crew(s,'dock',1);const result=logisticsAction(s,{type:'trade',direction:'sell',resource:'wood',amount:100});assert.equal(result.ok,true);assert.equal(s.resources.wood,0);assert.equal(s.resources.coins,10000);advanceLogistics(s,1199);assert.equal(s.resources.coins,10000);advanceLogistics(s,1);assert.equal(s.resources.coins,10040);assert.equal(s.dock.orders[0].stage,'voyage');advanceLogistics(s,300);assert.equal(s.dock.orders[0].stage,'complete');assert.equal(s.resources.coins,10040);
+test('harbor sale reserves physical central goods on confirmation and pays only at departure',()=>{
+ const s=island();s.resources.wood=100;crew(s,'dock',1);const result=logisticsAction(s,{type:'trade',direction:'sell',resource:'wood',amount:100});assert.equal(result.ok,true);assert.equal(s.resources.wood,100);assert.equal(centralAvailable(s,'wood'),0);assert.equal(s.resources.coins,10000);advanceLogistics(s,1199);assert.equal(s.resources.coins,10000);advanceLogistics(s,1);assert.equal(s.resources.coins,10040);assert.equal(s.dock.orders[0].stage,'voyage');advanceLogistics(s,300);assert.equal(s.dock.orders[0].stage,'complete');assert.equal(s.resources.coins,10040);
 });
 test('harbor purchase pays immediately, has5min voyage, unloads andcarrieswithowncrew',()=>{
  const s=island();crew(s,'dock',1);assert.equal(logisticsAction(s,{type:'trade',direction:'buy',resource:'stone',amount:100}).ok,true);assert.equal(s.resources.coins,9950);advanceLogistics(s,299);assert.equal(s.resources.stone,0);assert.equal(s.dock.orders[0].stage,'voyage');advanceLogistics(s,1);assert.equal(s.dock.orders[0].stage,'unloading');advanceLogistics(s,1200);assert.equal(s.resources.stone,100);assert.equal(s.dock.orders[0].stage,'complete');assert.equal(s.buildings.warehouse.workers,0);

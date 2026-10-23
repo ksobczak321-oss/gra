@@ -1,17 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { centralAvailable, centralReserved } from '../harborlight-v1-inventory.js';
 import { createState, normalizeState, act, tick, totalWorkers, workerLimit, freeWorkers, taxRate, housingCapacity, unhousedResidents, populationRate, updateHappiness, happinessGroups, recordVisit, WORKPLACE_IDS, RESOURCES, EXPEDITIONS, MAX_BUILDING_LEVEL, buildingCost, upgradeEligibility, synchronizeResidents, advanceTo } from '../harborlight-v1-state.js';
 import { producerCapacity, warehouseLimits, warehouseUsed, stockRoom, storagePenalty, updateStorageStatus, marketCapacity, marketUsed, MATERIAL_IDS, constructionCounts, premiumActive, promoteConstructionQueue, estimateMaterialsSeconds } from '../harborlight-v1-logistics.js';
 
 const close = (a,b,tolerance=1e-7) => assert.ok(Math.abs(a-b)<tolerance, `${a} != ${b}`);
 function idle(level=1,population=12,happiness=0) {
-  const state=createState();
+  const state=createState(Date.UTC(2026,9,23,0));
   state.buildings.townhall.level=level;state.buildings.house.level=level;
   state.population=population;state.capacity=level*24;
   state.baseHappiness=happiness;state.happiness=happiness;
   for(const building of Object.values(state.buildings)){building.workers=0;building.workProgress=[];}
   state.version=6;delete state.residents;
-  return normalizeState(state);
+  return normalizeState(state,state.lastSimulatedAt);
 }
 // These tests isolate work and transport after the separately tested outbound walk.
 function crew(state,id,count){
@@ -31,10 +32,10 @@ function finish(state,id){
  }
  if(state.constructionProjects.includes(project))tick(state,project.buildRemaining);
 }
-function saved(state){return normalizeState(JSON.parse(JSON.stringify(state)));}
+function saved(state){return normalizeState(JSON.parse(JSON.stringify(state)),state.lastSimulatedAt);}
 
 test('fresh island has six resources, twelve residents at home and no passive chapel bonus',()=>{
- const s=createState();assert.equal(s.version,8);assert.deepEqual(s.resources,Object.fromEntries(Object.keys(RESOURCES).map(id=>[id,100])));
+ const s=createState();assert.equal(s.version,9);assert.deepEqual(s.resources,Object.fromEntries(Object.keys(RESOURCES).map(id=>[id,100])));
  assert.equal(s.population,12);assert.equal(s.capacity,24);assert.equal(housingCapacity(s),24);assert.equal(totalWorkers(s),0);assert.equal(freeWorkers(s),12);assert.equal(taxRate(s),0);assert.equal(s.happiness,0);assert.equal(s.chapelRemaining,0);
  for(const building of Object.values(s.buildings))assert.equal(building.ready,0);
 });
@@ -80,7 +81,7 @@ test('processors consume two central inputs for one local product',()=>{
  const s=idle();crew(s,'sawmill',1);crew(s,'windmill',1);tick(s,360);assert.equal(s.resources.wood,98);assert.equal(s.resources.grain,98);assert.equal(s.resources.planks,100);close(s.resources.food+s.foodCredit,100-12*360/3600);assert.equal(s.buildings.sawmill.ready,1);assert.equal(s.buildings.windmill.ready,1);assert.equal(s.statistics.crafted,2);
 });
 test('local production capacity follows its own building level and full stores stop output',()=>{
- const s=idle(6,144);s.resources.food=1000;crew(s,'lumber',1);s.buildings.lumber.level=1;s.buildings.lumber.ready=200;tick(s,3600);assert.equal(producerCapacity(s,'lumber'),200);assert.equal(s.buildings.lumber.ready,200);assert.equal(s.buildings.lumber.workProgress[0],0);
+ const s=idle(6,144);s.resources.food=1000;crew(s,'lumber',1);s.buildings.lumber.level=1;s.buildings.lumber.ready=200;tick(s,3600);assert.equal(producerCapacity(s,'lumber'),200);assert.equal(s.buildings.lumber.ready,200);assert.ok(s.buildings.lumber.workProgress.every(progress=>progress===0));
  s.buildings.lumber.level=2;assert.equal(producerCapacity(s,'lumber'),400);assert.equal(producerCapacity(s,'farm'),200);tick(s,300);assert.equal(s.buildings.lumber.ready,201);
 });
 test('manual collecting and crafting cannot bypass work and transport',()=>{
@@ -102,7 +103,7 @@ test('warehouse capacity scales by fifty percent per building level; coins use n
 });
 test('construction spends local goods only after they reach the central warehouse',()=>{
  const s=idle(2);for(const id of Object.keys(RESOURCES))s.resources[id]=500;s.resources.food=600;s.resources.planks=480;s.buildings.house.level=1;s.buildings.sawmill.ready=20;crew(s,'warehouse',1);s.transportPriority=['planks','wood','stone','grain','food'];
- assert.equal(act(s,{type:'upgrade',building:'house'}).ok,false);tick(s,299);assert.equal(s.resources.planks,480);tick(s,1);assert.equal(s.resources.planks,500);assert.equal(act(s,{type:'upgrade',building:'house'}).ok,true);assert.equal(s.resources.planks,0);assert.equal(s.buildings.sawmill.ready,0);assert.equal(s.buildings.house.level,1);
+ assert.equal(act(s,{type:'upgrade',building:'house'}).ok,false);tick(s,299);assert.equal(s.resources.planks,480);tick(s,1);assert.equal(s.resources.planks,500);assert.equal(act(s,{type:'upgrade',building:'house'}).ok,true);assert.equal(s.resources.planks,500);assert.equal(centralAvailable(s,'planks'),0);assert.equal(s.buildings.house.construction.reservedMaterials.planks,500);assert.equal(s.buildings.sawmill.ready,0);assert.equal(s.buildings.house.level,1);
 });
 test('taxes use real worker-hours and legacy speed or pause settings cannot stop the clock',()=>{
  for(const speed of [1,2,4]){const s=idle(4);crew(s,'dock',1);s.speed=speed;tick(s,3600);assert.equal(s.resources.coins,101);assert.equal(s.statistics.taxCollected,1);
@@ -171,19 +172,19 @@ test('market exchanges only within groups, charges ten percent and never uses mo
  const s=idle(2);s.market.stock.wood=10;s.market.stock.planks=10;const coins=s.resources.coins;assert.equal(act(s,{type:'marketExchange',from:'planks',to:'stone',amount:10}).ok,false);assert.equal(act(s,{type:'marketExchange',from:'wood',to:'stone',amount:10}).ok,true);assert.equal(s.market.stock.stone,9);assert.equal(s.market.stock.wood,0);assert.equal(s.resources.stone,100);assert.equal(s.resources.coins,coins);assert.equal(act(s,{type:'marketExchange',from:'coins',to:'wood',amount:10}).ok,false);
 });
 test('market output returns to usable stock through its own crew after a collection request',()=>{
- const s=idle(2);crew(s,'warehouse',1);s.market.stock.stone=9;tick(s,60);assert.equal(s.resources.stone,100);assert.equal(act(s,{type:'marketDispatch',resource:'stone',amount:9}).ok,true);tick(s,300);assert.equal(s.resources.stone,100);crew(s,'market',1);tick(s,299);assert.equal(s.resources.stone,100);tick(s,1);assert.equal(s.resources.stone,109);assert.equal(s.market.stock.stone,0);
+ const s=idle(2);crew(s,'warehouse',1);s.market.stock.stone=9;s.market.lots.push({resource:'stone',amount:9,remaining:86400});tick(s,60);assert.equal(s.resources.stone,100);assert.equal(act(s,{type:'marketDispatch',resource:'stone',amount:9}).ok,true);tick(s,300);assert.equal(s.resources.stone,100);crew(s,'market',1);tick(s,299);assert.equal(s.resources.stone,100);tick(s,1);assert.equal(s.resources.stone,109);assert.equal(s.market.stock.stone,0);
 });
 test('market over-capacity orders and unavailable locked inventory do not change balances',()=>{
  const s=idle(2);s.market.stock.food=995;const before=JSON.stringify(s);assert.equal(act(s,{type:'marketOrder',resource:'wood',amount:10}).ok,false);assert.equal(JSON.stringify(s),before);assert.equal(act(s,{type:'marketExchange',from:'wood',to:'stone',amount:10}).ok,false);
 });
 test('daily loyalty uses Warsaw calendar days, never repeats a same-day visit and caps at ten',()=>{
- const s=createState();assert.equal(recordVisit(s,'2026-10-21T22:30:00Z'),true);assert.equal(s.loyalty.lastDay,'2026-10-22');assert.equal(s.loyalty.streak,1);assert.equal(recordVisit(s,'2026-10-22T12:00:00Z'),false);for(let day=23;day<=31;day++)recordVisit(s,`2026-10-${day}T12:00:00Z`);assert.equal(s.loyalty.streak,10);recordVisit(s,'2026-11-02T12:00:00Z');assert.equal(s.loyalty.streak,1);assert.equal(s.resources.coins,100);
+ const s=createState(Date.parse('2026-10-21T22:30:00Z'));assert.equal(recordVisit(s,Date.parse('2026-10-21T22:30:00Z')),true);assert.equal(s.loyalty.lastDay,'2026-10-22');assert.equal(s.loyalty.streak,1);assert.equal(recordVisit(s,Date.parse('2026-10-22T12:00:00Z')),false);for(let day=23;day<=31;day++)recordVisit(s,Date.parse(`2026-10-${day}T12:00:00Z`));assert.equal(s.loyalty.streak,10);recordVisit(s,Date.parse('2026-11-02T12:00:00Z'));assert.equal(s.loyalty.streak,1);assert.equal(s.resources.coins,100);
 });
-test('overflow rewards and migrated stock wait for transport without becoming spendable',()=>{
- const raw=idle();raw.resources={coins:100,wood:1000,stone:1000,grain:1000,food:1000,planks:500};let s=saved(raw);assert.equal(warehouseUsed(s),4000);assert.equal(s.resources.planks,0);assert.equal(s.pendingDeliveries.planks,500);assert.equal(stockRoom(s,'planks'),0);crew(s,'warehouse',1);s.resources.wood-=1;tick(s,299);assert.equal(s.resources.planks,0);assert.equal(s.pendingDeliveries.planks,498);assert.equal(s.haulTrips.warehouse[0].amount,2);tick(s,1);assert.equal(s.resources.planks,2);assert.equal(s.pendingDeliveries.planks,498);assert.equal(s.resources.planks+s.pendingDeliveries.planks,500);
+test('overflow rewards wait outside central stock and automatically use free room without carriers',()=>{
+ const raw=idle();raw.resources={coins:100,wood:1000,stone:1000,grain:1000,food:1000,planks:500};let s=saved(raw);assert.equal(warehouseUsed(s),4000);assert.equal(s.resources.planks,0);assert.equal(s.pendingDeliveries.planks,500);assert.equal(stockRoom(s,'planks'),0);assert.equal(s.buildings.warehouse.workers,0);s.resources.wood-=10;tick(s,1);assert.equal(s.resources.planks,11);assert.equal(s.pendingDeliveries.planks,489);assert.equal(s.haulTrips.warehouse.length,0);assert.equal(s.resources.planks+s.pendingDeliveries.planks,500);assert.equal(warehouseUsed(s),4000);s=saved(s);assert.equal(s.resources.planks+s.pendingDeliveries.planks,500);
 });
 test('legacy farm food and unclaimed coin batches preserve their types and settle once',()=>{
- const raw=idle();raw.version=3;delete raw.resources.grain;raw.buildings.farm.ready=12;raw.buildings.dock.ready=20;raw.buildings.market.ready=30;raw.buildings.townhall.ready=40;let s=normalizeState(raw);assert.equal(s.resources.coins,190);assert.equal(s.resources.grain,0);assert.equal(s.pendingDeliveries.food,12);assert.equal(s.buildings.farm.ready,0);s=saved(s);assert.equal(s.resources.coins,190);assert.equal(s.pendingDeliveries.food,12);
+ const raw=idle();raw.version=3;delete raw.resources.grain;raw.buildings.farm.ready=12;raw.buildings.dock.ready=20;raw.buildings.market.ready=30;raw.buildings.townhall.ready=40;let s=normalizeState(raw);assert.equal(s.resources.coins,190);assert.equal(s.resources.grain,0);assert.equal(s.pendingDeliveries.food,0);assert.equal(s.resources.food,112);assert.equal(s.buildings.farm.ready,0);s=saved(s);assert.equal(s.resources.coins,190);assert.equal(s.pendingDeliveries.food,0);assert.equal(s.resources.food,112);
 });
 test('legacy over-level buildings keep investments by promoting the old townhall once',()=>{
  const raw=idle();raw.version=2;raw.buildings.house.level=5;raw.buildings.townhall.level=1;const s=normalizeState(raw);assert.equal(s.buildings.house.level,5);assert.equal(s.buildings.townhall.level,5);const current=saved({...raw,version:6});assert.equal(current.buildings.house.level,1);
@@ -195,7 +196,7 @@ test('obsolete expedition and task reward endpoints are rejected before and afte
  const start=act(s,{type:'expeditionStart',expedition:EXPEDITIONS[0].id});assert.equal(start.ok,true);assert.equal(act(s,{type:'expeditionLose',runId:start.runId}).ok,true);assert.equal(act(s,{type:'expeditionCashout',runId:start.runId}).ok,false);assert.equal(s.resources.coins,100);
 });
 test('lighthouse costs all six resources and requires transport plus four times transport to build',()=>{
- const s=funded(3);crew(s,'warehouse',6);const stock={...s.resources};assert.deepEqual(buildingCost(s,'lighthouse'),Object.fromEntries(Object.keys(RESOURCES).map(id=>[id,500])));assert.equal(act(s,{type:'repair'}).ok,true);for(const id of Object.keys(RESOURCES))assert.equal(s.resources[id],stock[id]-500);assert.equal(act(s,{type:'repair'}).ok,false);
+ const s=funded(3);crew(s,'warehouse',6);const stock={...s.resources};assert.deepEqual(buildingCost(s,'lighthouse'),Object.fromEntries(Object.keys(RESOURCES).map(id=>[id,500])));assert.equal(act(s,{type:'repair'}).ok,true);for(const id of Object.keys(RESOURCES))assert.equal(id==='coins'?s.resources[id]:centralAvailable(s,id),stock[id]-500);assert.equal(act(s,{type:'repair'}).ok,false);
  // Five material types, seven 72-unit loads each, six carriers: six five-minute waves.
  tick(s,1799);assert.equal(s.buildings.lighthouse.level,0);tick(s,1);assert.equal(s.buildings.lighthouse.construction.stage,'building');close(s.buildings.lighthouse.construction.buildRemaining,7200);tick(s,7199);assert.equal(s.buildings.lighthouse.level,0);tick(s,1);assert.equal(s.buildings.lighthouse.level,1);assert.equal(s.objective.repaired,true);assert.equal(s.lighthouseRemaining,86400);assert.equal(s.happiness,100);assert.equal(saved(s).buildings.lighthouse.level,1);
 });
@@ -211,7 +212,7 @@ test('production upgrade costs use current level, overlap outputs and double fou
  for(const[id,each]of[['house',1500],['townhall',1500],['market',900],['warehouse',900],['dock',1200]]){s.buildings[id].level=3;assert.deepEqual(buildingCost(s,id),Object.fromEntries(Object.keys(RESOURCES).map(resource=>[resource,each])));}
 });
 test('production upgrade reserves full materials, transports discrete five-minute loads and builds for T',()=>{
- const s=funded(2);crew(s,'warehouse',6);const stock={...s.resources};assert.equal(act(s,{type:'upgrade',building:'farm'}).ok,true);assert.equal(s.resources.wood,stock.wood-72);assert.equal(s.resources.grain,stock.grain-120);assert.equal(s.buildings.farm.level,1);
+ const s=funded(2);crew(s,'warehouse',6);const stock={...s.resources};assert.equal(act(s,{type:'upgrade',building:'farm'}).ok,true);assert.equal(s.resources.wood,stock.wood);assert.equal(s.resources.grain,stock.grain);assert.equal(centralAvailable(s,'wood'),stock.wood-72);assert.equal(centralAvailable(s,'grain'),stock.grain-120);assert.equal(s.buildings.farm.level,1);
  // 66-unit carriers need six loads for the three materials, delivered in one wave.
  tick(s,299);assert.equal(s.buildings.farm.construction.goodsRemaining,264);tick(s,1);assert.equal(s.buildings.farm.construction.stage,'building');close(s.buildings.farm.construction.buildRemaining,300);tick(s,299);assert.equal(s.buildings.farm.level,1);tick(s,1);assert.equal(s.buildings.farm.level,2);assert.equal(s.statistics.upgrades,1);assert.equal(s.constructionProjects.length,0);
 });
@@ -236,12 +237,12 @@ test('paid pipeline can reserve more future levels than the regular queue capaci
  assert.equal(s.constructionProjects.length,50);assert.equal(constructionCounts(s).active,2);assert.equal(constructionCounts(s).queued,48);assert.equal(s.constructionProjects.at(-1).targetLevel,26);assert.ok(s.resources.wood>0);assert.equal(warehouseUsed(s)<=warehouseLimits(s).total,true);
 });
 test('paid forecast waits for actual central arrival, charges a fee and reserves materials once',()=>{
- const s=idle(2);s.premium.expiresAt=s.worldTimeMs+3600000;s.resources.grain=110;s.buildings.farm.ready=10;crew(s,'warehouse',1);const coins=s.resources.coins;assert.equal(act(s,{type:'forecastPlan',building:'farm'}).ok,true);assert.equal(s.buildings.farm.construction.stage,'planned');assert.equal(s.resources.wood,100);assert.ok(s.resources.coins<coins);assert.ok(Number.isFinite(estimateMaterialsSeconds(s,s.buildings.farm.construction.cost)));tick(s,299);assert.equal(s.buildings.farm.construction.stage,'planned');tick(s,1);assert.equal(s.buildings.farm.construction.stage,'transport');assert.equal(s.resources.wood,28);assert.equal(s.resources.grain,0);const after=saved(s);assert.equal(after.resources.wood,28);assert.equal(after.buildings.farm.construction.stage,'transport');
+ const s=idle(2);s.premium.expiresAt=s.worldTimeMs+3600000;s.resources.grain=122;s.buildings.farm.ready=10;crew(s,'warehouse',1);const coins=s.resources.coins;assert.equal(act(s,{type:'forecastPlan',building:'farm'}).ok,true);assert.equal(s.buildings.farm.construction.stage,'planned');assert.equal(s.resources.wood,100);assert.ok(s.resources.coins<coins);assert.ok(Number.isFinite(estimateMaterialsSeconds(s,s.buildings.farm.construction.cost)));tick(s,299);assert.equal(s.buildings.farm.construction.stage,'planned');tick(s,1);assert.equal(s.buildings.farm.construction.stage,'transport');assert.equal(s.resources.wood,100);assert.equal(centralAvailable(s,'wood'),20);assert.equal(s.resources.grain,132);assert.equal(centralAvailable(s,'grain'),0);const after=saved(s);assert.equal(after.resources.wood,100);assert.equal(centralAvailable(after,'wood'),20);assert.equal(after.buildings.farm.construction.stage,'transport');
 });
 test('premium expiry preserves active projects and holds unfunded forecast plans',()=>{
  const s=funded(2);s.resources.stone=1100;s.premium.expiresAt=s.worldTimeMs+3600000;for(const id of ['farm','windmill','lumber','quarry','sawmill','chapel'])assert.equal(act(s,{type:'upgrade',building:id}).ok,true,id);
  // A finite local delivery route is required even while the package is active.
- const cost=buildingCost(s,'market');for(const id of MATERIAL_IDS){s.resources[id]=cost[id]+(id==='food'?100:0);}s.resources.wood=cost.wood-10;s.buildings.lumber.ready=10;crew(s,'warehouse',1);assert.equal(act(s,{type:'forecastPlan',building:'market'}).ok,true);
+ const cost=buildingCost(s,'market');for(const id of MATERIAL_IDS){s.resources[id]=centralReserved(s,id)+cost[id]+(id==='food'?100:0);}s.resources.wood=centralReserved(s,'wood')+cost.wood-10;s.buildings.lumber.ready=10;crew(s,'warehouse',1);assert.equal(act(s,{type:'forecastPlan',building:'market'}).ok,true);
  s.premium.expiresAt=0;tick(s,1);assert.equal(constructionCounts(s).active,6);assert.equal(constructionCounts(s).limit,2);assert.equal(s.buildings.market.construction.stage,'planned');for(const id of Object.keys(RESOURCES))s.resources[id]=1000;tick(s,1);assert.equal(s.buildings.market.construction.stage,'planned');const restored=saved(s);assert.equal(constructionCounts(restored).active,6);assert.equal(restored.buildings.market.construction.stage,'planned');
 });
 test('queued reservations and real-clock progress survive reload and ignore legacy pause or speed',()=>{

@@ -1,8 +1,10 @@
 // Persistent residents and visits. Every duration is a real elapsed second.
-import { residentLeisureBonus } from './harborlight-v1-leisure.js?v=frontend-v12';
+import { residentLeisureBonus } from './harborlight-v1-leisure.js?v=frontend-v13';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v13';
 export const RESIDENT_WORKPLACES = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'warehouse', 'dock', 'market'];
 export const NEED_GRACE_SECONDS = 12 * 3600;
 export const NEED_PENALTY = 5;
+export const FED_RECOVERY_SECONDS = 3600;
 export const WALK_SECONDS = 300;
 export const LIGHTHOUSE_VISIT_SECONDS = 4 * 3600;
 export const LIGHTHOUSE_PERSONAL_SECONDS = 24 * 3600;
@@ -15,7 +17,7 @@ const bounded = (value, fallback = 0, min = 0, max = Number.MAX_SAFE_INTEGER) =>
   typeof value === 'number' && Number.isFinite(value) ? Math.min(max, Math.max(min, value)) : fallback;
 const elapsed = (clock, seconds) => clock - seconds > EPS ? clock - seconds : 0;
 export const clampHappiness = value => Math.max(-100, Math.min(100, value));
-export const hasFoodForResidents = state => state.foodCredit > 1e-12 || state.resources.food >= 1;
+export const hasFoodForResidents = state => state.foodCredit > 1e-12 || centralAvailable(state, 'food') >= 1;
 export const productionMultiplier = state => hasFoodForResidents(state) ? 1 : 0.5;
 const unlocked = (state, id) => state.buildings[id]?.level > 0 && state.buildings.townhall.level >= (id === 'market' ? 2 : id === 'dock' ? 4 : 1);
 const reachedGrace = seconds => seconds >= NEED_GRACE_SECONDS - EPS;
@@ -51,7 +53,7 @@ export function residentProductionBlocked(state, person) {
   if (!person.workplace || person.arrivalRemaining > EPS || !Object.hasOwn(producerRecipes, person.workplace)) return false;
   const building = state.buildings[person.workplace];
   const input = producerRecipes[person.workplace];
-  return !!(building.ready >= 200 * building.level || (input && state.resources[input] < 2));
+  return !!(building.ready >= 200 * building.level || (input && centralAvailable(state, input) < 2));
 }
 export const residentIsWorking = (state, person) => !!person.workplace && person.arrivalRemaining <= EPS && !person.visitGroup && !residentProductionBlocked(state, person);
 
@@ -62,13 +64,15 @@ function allocateId(state, used = new Set((state.residents || []).map(person => 
   return id;
 }
 function newResident(state, happiness = 0, newborn = false) {
-  return { id: allocateId(state), happiness, hungerSeconds: 0, unemployedSeconds: 0,
+  return { id: allocateId(state), happiness, hungerSeconds: 0, fedRecoverySeconds: 0, unemployedSeconds: 0,
     newbornRemaining: newborn ? NEWBORN_HAPPINESS_SECONDS : 0,
-    workplace: null, arrivalRemaining: 0, returnRemaining: 0, blockedSeconds: 0,
+    workplace: null, arrivalRemaining: 0, returnRemaining: 0, returnFrom: null, blockedSeconds: 0,
     visitGroup: null, prayerRemaining: 0, visitHappinessRemaining: 0, visitCooldownRemaining: 0,
+    pendingRelease: false, forcedHappinessSnapshot: state.lighthouseRemaining > EPS ? happiness : null,
     preVisitHappiness: null, globalLighthouseSnapshot: state.lighthouseRemaining > EPS ? happiness : null };
 }
-function releaseResident(state, person) {
+function releaseResidentNow(state, person) {
+  const workplace = person.workplace;
   const crewIndex = state.residents.filter(resident => resident.workplace === person.workplace).indexOf(person);
   // Loaded cargo completes its course independently after a recall. Do not
   // attach it to a new resident who later occupies the same crew index.
@@ -76,8 +80,25 @@ function releaseResident(state, person) {
     if (trip.worker === crewIndex) trip.worker = -1;
     else if (trip.worker > crewIndex) trip.worker--;
   }
+  if (state.buildings[workplace]?.workProgress && crewIndex >= 0) state.buildings[workplace].workProgress.splice(crewIndex, 1);
   person.workplace = null; person.arrivalRemaining = 0; person.returnRemaining = WALK_SECONDS;
-  person.unemployedSeconds = 0; person.blockedSeconds = 0;
+  person.returnFrom = workplace;
+  person.pendingRelease = false; person.blockedSeconds = 0;
+  if (state.buildings[workplace]) state.buildings[workplace].workers = state.residents.filter(resident => resident.workplace === workplace).length;
+}
+function loadedTrip(state, person) {
+  const crewIndex = state.residents.filter(resident => resident.workplace === person.workplace).indexOf(person);
+  return (state.haulTrips?.[person.workplace] || []).find(trip => trip.remaining > EPS &&
+    (trip.residentId === person.id || !trip.residentId && trip.worker === crewIndex));
+}
+function releaseResident(state, person) {
+  if (loadedTrip(state, person)) { person.pendingRelease = true; return; }
+  releaseResidentNow(state, person);
+}
+// Call after the interval's resident clocks have advanced. A carrier finishes
+// the already loaded trip before beginning a fresh five-minute walk home.
+export function settleRecalledCarriers(state) {
+  for (const person of state.residents || []) if (person.pendingRelease && !loadedTrip(state, person)) releaseResidentNow(state, person);
 }
 function emit(state, kind, title, message) {
   state.notificationSequence = (state.notificationSequence || 0) + 1;
@@ -86,31 +107,31 @@ function emit(state, kind, title, message) {
   state.notifications.length = Math.min(100, state.notifications.length);
 }
 
-// A global Lighthouse upgrade and a personal visit both force effective 100%.
-// Their snapshots preserve the explicitly agreed value from before the effect.
-function settleLighthouseSnapshot(state) {
-  const active = state.lighthouseRemaining > EPS;
-  if (active && !state.lighthouseSnapshotActive) {
-    for (const person of state.residents || []) person.globalLighthouseSnapshot = person.happiness;
-    state.lighthouseSnapshotActive = true;
-  } else if (!active && state.lighthouseSnapshotActive) {
-    for (const person of state.residents || []) {
-      if (typeof person.globalLighthouseSnapshot === 'number') person.happiness = clampHappiness(person.globalLighthouseSnapshot);
-      person.globalLighthouseSnapshot = null;
-    }
-    state.lighthouseSnapshotActive = false;
+// Every continuously overlapping 100% effect shares the same original balance.
+// Its independent timers do not create nested snapshots or restore early.
+function settlePersonLighthouseSnapshot(state, person, global) {
+  const active = global || person.visitHappinessRemaining > EPS;
+  if (active && typeof person.forcedHappinessSnapshot !== 'number') person.forcedHappinessSnapshot = person.happiness;
+  else if (!active && typeof person.forcedHappinessSnapshot === 'number') {
+    person.happiness = clampResidentBalance(state, person, person.forcedHappinessSnapshot);
+    person.forcedHappinessSnapshot = null;
   }
+  // Legacy aliases remain readable to migrate existing saves and avoid
+  // duplicating ownership: both point at the one active snapshot.
+  person.globalLighthouseSnapshot = global ? person.forcedHappinessSnapshot : null;
+  person.preVisitHappiness = person.visitHappinessRemaining > EPS ? person.forcedHappinessSnapshot : null;
+}
+function settleLighthouseSnapshot(state) {
+  const global = state.lighthouseRemaining > EPS;
+  for (const person of state.residents || []) settlePersonLighthouseSnapshot(state, person, global);
+  state.lighthouseSnapshotActive = global;
 }
 export function beginLighthouseBonus(state, durationSeconds = 86400 * state.buildings.lighthouse.level) {
-  if (!state.lighthouseSnapshotActive) {
-    for (const person of state.residents || []) person.globalLighthouseSnapshot = person.happiness;
-    state.lighthouseSnapshotActive = true;
-  }
   state.lighthouseRemaining = Math.max(0, durationSeconds);
+  settleLighthouseSnapshot(state);
 }
 
 export function settleResidentEvents(state) {
-  settleLighthouseSnapshot(state);
   if (!Array.isArray(state.lighthouseVisits)) state.lighthouseVisits = [];
   if (!Array.isArray(state.lighthouseVisitBonuses)) state.lighthouseVisitBonuses = [];
   state.visitEntryHistory = (state.visitEntryHistory || []).filter(entry => entry.remaining > EPS);
@@ -121,7 +142,6 @@ export function settleResidentEvents(state) {
     const visitors = (state.residents || []).filter(person => person.visitGroup === group.id && group.residentIds.includes(person.id));
     for (const person of visitors) {
       person.visitGroup = null;
-      person.preVisitHappiness = person.happiness;
       person.visitHappinessRemaining = LIGHTHOUSE_PERSONAL_SECONDS;
       person.visitCooldownRemaining = LIGHTHOUSE_PERSONAL_SECONDS;
       person.returnRemaining = 0;
@@ -133,12 +153,12 @@ export function settleResidentEvents(state) {
     }
   }
   if (complete.length) state.lighthouseVisits = state.lighthouseVisits.filter(group => group.remaining > EPS);
+  settleLighthouseSnapshot(state);
+  settleRecalledCarriers(state);
   for (const person of state.residents || []) {
     if (residentHappinessFrozen(person)) person.happiness = 0;
-    if (person.visitHappinessRemaining <= EPS && typeof person.preVisitHappiness === 'number') {
-      person.happiness = clampHappiness(person.preVisitHappiness); person.preVisitHappiness = null;
-    }
-    if (person.arrivalRemaining <= EPS && person.workplace) person.unemployedSeconds = 0;
+    if (person.returnRemaining <= EPS) person.returnFrom = null;
+    if (!residentHappinessFrozen(person) && person.arrivalRemaining <= EPS && person.workplace) person.unemployedSeconds = 0;
     if (!residentProductionBlocked(state, person)) person.blockedSeconds = 0;
   }
   state.returningWorkers = (state.residents || []).filter(person => !person.workplace && person.returnRemaining > EPS).map(person => person.returnRemaining);
@@ -178,8 +198,10 @@ export function synchronizeResidents(state) {
 }
 
 export function normalizeResidents(state, raw = {}) {
+  if (raw === state) raw = structuredClone(raw);
   const legacyReturnClocks = [...(state.returningWorkers || [])];
   state.residentSequence = Math.floor(bounded(raw.residentSequence));
+  state.residentRandomSeed = (Math.floor(bounded(raw.residentRandomSeed, (Math.floor(state.worldTimeMs || 0) ^ 0x76a42d11) >>> 0, 0, 0xffffffff)) >>> 0) || 1;
   state.lighthouseSnapshotActive = raw.lighthouseSnapshotActive === true;
   state.lighthouseVisitPopulationSeconds = bounded(raw.lighthouseVisitPopulationSeconds, LIGHTHOUSE_POPULATION_SECONDS, 1, 86400);
   state.lighthouseVisitSequence = Math.floor(bounded(raw.lighthouseVisitSequence));
@@ -198,14 +220,22 @@ export function normalizeResidents(state, raw = {}) {
     if (!id || seen.has(id)) id = allocateId(state, seen);
     seen.add(id); state.residentSequence = Math.max(state.residentSequence, id);
     const newbornRemaining = bounded(saved.newbornRemaining, 0, 0, NEWBORN_HAPPINESS_SECONDS);
-    state.residents.push({ id, happiness: newbornRemaining > EPS ? 0 : bounded(saved.happiness, 0, -100, 100), newbornRemaining,
-      hungerSeconds: bounded(saved.hungerSeconds), unemployedSeconds: bounded(saved.unemployedSeconds),
+    const frozen = newbornRemaining > EPS;
+    const snapshot = typeof saved.forcedHappinessSnapshot === 'number' ? saved.forcedHappinessSnapshot :
+      state.lighthouseRemaining > EPS && typeof saved.globalLighthouseSnapshot === 'number' ? saved.globalLighthouseSnapshot :
+      saved.visitHappinessRemaining > EPS && typeof saved.preVisitHappiness === 'number' ? saved.preVisitHappiness : null;
+    state.residents.push({ id, happiness: frozen ? 0 : bounded(saved.happiness, 0, -10000000, 10000000), newbornRemaining,
+      hungerSeconds: frozen ? 0 : bounded(saved.hungerSeconds), fedRecoverySeconds: frozen ? 0 : bounded(saved.fedRecoverySeconds, 0, 0, FED_RECOVERY_SECONDS),
+      unemployedSeconds: frozen ? 0 : bounded(saved.unemployedSeconds),
       workplace: RESIDENT_WORKPLACES.includes(saved.workplace) && unlocked(state, saved.workplace) ? saved.workplace : null,
       arrivalRemaining: bounded(saved.arrivalRemaining, 0, 0, WALK_SECONDS), returnRemaining: bounded(saved.returnRemaining, 0, 0, WALK_SECONDS),
+      returnFrom: saved.returnRemaining > EPS && RESIDENT_WORKPLACES.includes(saved.returnFrom) ? saved.returnFrom : null,
       prayerRemaining: bounded(saved.prayerRemaining),
       blockedSeconds: bounded(saved.blockedSeconds, 0, 0, 432000), visitGroup: Number.isSafeInteger(saved.visitGroup) && saved.visitGroup > 0 ? saved.visitGroup : null,
       visitHappinessRemaining: bounded(saved.visitHappinessRemaining, 0, 0, LIGHTHOUSE_PERSONAL_SECONDS),
       visitCooldownRemaining: bounded(saved.visitCooldownRemaining, 0, 0, LIGHTHOUSE_PERSONAL_SECONDS),
+      pendingRelease: saved.pendingRelease === true && ['warehouse', 'market', 'dock'].includes(saved.workplace),
+      forcedHappinessSnapshot: snapshot === null ? null : bounded(snapshot, 0, -10000000, 10000000),
       preVisitHappiness: typeof saved.preVisitHappiness === 'number' ? bounded(saved.preVisitHappiness, 0, -100, 100) : null,
       globalLighthouseSnapshot: typeof saved.globalLighthouseSnapshot === 'number' ? bounded(saved.globalLighthouseSnapshot, 0, -100, 100) : null });
   }
@@ -235,20 +265,26 @@ export function normalizeResidents(state, raw = {}) {
 export function assignResidents(state, id, delta) {
   if (delta > 0) {
     const assigned = state.residents.filter(residentAtHome).slice(0, delta);
-    for (const person of assigned) { person.workplace = id; person.arrivalRemaining = WALK_SECONDS; person.returnRemaining = 0; person.blockedSeconds = 0; }
+    for (const person of assigned) { person.workplace = id; person.arrivalRemaining = WALK_SECONDS; person.returnRemaining = 0; person.returnFrom = null; person.blockedSeconds = 0; }
     state.residents = state.residents.filter(person => !assigned.includes(person)).concat(assigned);
   } else {
-    const assigned = state.residents.filter(person => person.workplace === id);
+    const assigned = state.residents.filter(person => person.workplace === id && !person.pendingRelease);
     for (const person of assigned.slice(delta)) releaseResident(state, person);
   }
+  if (state.buildings[id]) state.buildings[id].workers = state.residents.filter(person => person.workplace === id).length;
   settleResidentEvents(state);
 }
 
 export function settleResidentConditions(state) {
   const fed = hasFoodForResidents(state);
   for (const person of state.residents || []) {
-    if (fed) person.hungerSeconds = 0;
-    if (person.workplace && person.arrivalRemaining <= EPS) person.unemployedSeconds = 0;
+    if (residentHappinessFrozen(person)) {
+      person.hungerSeconds = 0; person.unemployedSeconds = 0; person.fedRecoverySeconds = 0;
+    } else {
+      if (!fed) person.fedRecoverySeconds = 0;
+      if (fed && (person.fedRecoverySeconds || 0) >= FED_RECOVERY_SECONDS - EPS) person.hungerSeconds = 0;
+      if (person.workplace && person.arrivalRemaining <= EPS) person.unemployedSeconds = 0;
+    }
   }
   settleResidentEvents(state);
 }
@@ -260,10 +296,25 @@ export function residentOffset(state, person) {
   if (residentProductionBlocked(state, person)) offset -= Math.min(50, 10 * (1 + Math.floor((person.blockedSeconds + EPS) / 86400)));
   return offset;
 }
+// The public limit applies to the final personal happiness. A negative cause
+// must not prevent a House point or ordinary gain merely because the stored
+// balance has reached 100 before applying that cause.
+export function residentHappinessBounds(state, person) {
+  return happinessBoundsForOffset(residentOffset(state, person));
+}
+const happinessBoundsForOffset = offset => ({ min: -100 - Math.max(0, offset), max: 100 - Math.min(0, offset) });
+function clampResidentBalance(state, person, value) {
+  const bounds = residentHappinessBounds(state, person);
+  return Math.max(bounds.min, Math.min(bounds.max, value));
+}
 export function residentHappiness(state, person) {
-  settleLighthouseSnapshot(state);
+  const global = state.lighthouseRemaining > EPS;
+  // Population averages read every resident. Settling only the queried person
+  // keeps that read linear; event boundaries still settle the entire group.
+  settlePersonLighthouseSnapshot(state, person, global);
+  state.lighthouseSnapshotActive = global;
   if (residentHappinessFrozen(person)) return 0;
-  if (state.lighthouseRemaining > EPS || person.visitHappinessRemaining > EPS) return 100;
+  if (global || person.visitHappinessRemaining > EPS) return 100;
   return clampHappiness(person.happiness + residentOffset(state, person));
 }
 export function residentHappinessRate(state, person) {
@@ -281,11 +332,14 @@ export const unemploymentPenaltyPerHour = state => state.population ?
 
 export function nextResidentEvent(state) {
   let next = Infinity;
+  const fed = hasFoodForResidents(state);
   const consider = value => { if (value > EPS) next = Math.min(next, value); };
   for (const person of state.residents || []) {
     consider(person.newbornRemaining);
     consider(person.arrivalRemaining); consider(person.returnRemaining); consider(person.prayerRemaining); consider(person.visitHappinessRemaining); consider(person.visitCooldownRemaining);
     if (residentProductionBlocked(state, person) && person.blockedSeconds < 4 * 86400 - EPS) consider(86400 - person.blockedSeconds % 86400);
+    if (!residentHappinessFrozen(person) && fed && person.hungerSeconds > EPS && (person.fedRecoverySeconds || 0) < FED_RECOVERY_SECONDS - EPS)
+      consider(FED_RECOVERY_SECONDS - (person.fedRecoverySeconds || 0));
   }
   for (const group of state.lighthouseVisits || []) consider(group.remaining);
   for (const bonus of state.lighthouseVisitBonuses || []) consider(bonus.remaining);
@@ -299,30 +353,38 @@ export function residentSegments(state) {
   let nextEvent = nextResidentEvent(state), meanSlope = 0;
   const fed = hasFoodForResidents(state);
   const people = state.residents.map(person => {
+    const frozen = residentHappinessFrozen(person);
     const rate = residentHappinessRate(state, person) / 3600;
-    const slope = person.happiness >= 100 && rate >= 0 || person.happiness <= -100 && rate <= 0 ? 0 : rate;
-    const forced = residentHappinessFrozen(person) || state.lighthouseRemaining > EPS || person.visitHappinessRemaining > EPS;
-    const raw = person.happiness + residentOffset(state, person);
+    const offset = residentOffset(state, person);
+    const bounds = happinessBoundsForOffset(offset);
+    const slope = person.happiness >= bounds.max && rate >= 0 || person.happiness <= bounds.min && rate <= 0 ? 0 : rate;
+    const forced = frozen || state.lighthouseRemaining > EPS || person.visitHappinessRemaining > EPS;
+    const raw = person.happiness + offset;
     const effectiveSlope = forced || raw > 100 || raw < -100 || raw === 100 && slope >= 0 || raw === -100 && slope <= 0 ? 0 : slope;
     meanSlope += effectiveSlope / state.population;
     if (slope) {
-      const intrinsicTime = ((slope > 0 ? 100 : -100) - person.happiness) / slope;
+      const intrinsicTime = ((slope > 0 ? bounds.max : bounds.min) - person.happiness) / slope;
       if (intrinsicTime > EPS) nextEvent = Math.min(nextEvent, intrinsicTime);
       if (!forced) for (const limit of [-100, 100]) { const time = (limit - raw) / slope; if (time > EPS) nextEvent = Math.min(nextEvent, time); }
     }
-    if (!fed && !reachedGrace(person.hungerSeconds)) nextEvent = Math.min(nextEvent, NEED_GRACE_SECONDS - person.hungerSeconds);
-    if ((!person.workplace || person.arrivalRemaining > EPS) && !reachedGrace(person.unemployedSeconds)) nextEvent = Math.min(nextEvent, NEED_GRACE_SECONDS - person.unemployedSeconds);
-    return { person, slope, blocked: residentProductionBlocked(state, person), employed: !!person.workplace && person.arrivalRemaining <= EPS };
+    if (!frozen && !fed && !reachedGrace(person.hungerSeconds)) nextEvent = Math.min(nextEvent, NEED_GRACE_SECONDS - person.hungerSeconds);
+    if (!frozen && (!person.workplace || person.arrivalRemaining > EPS) && !reachedGrace(person.unemployedSeconds)) nextEvent = Math.min(nextEvent, NEED_GRACE_SECONDS - person.unemployedSeconds);
+    return { person, slope, frozen, blocked: residentProductionBlocked(state, person), employed: !!person.workplace && person.arrivalRemaining <= EPS };
   });
   return { people, nextEvent, meanSlope, fed, state };
 }
 export function advanceResidents(segment, seconds) {
   const state = segment.state;
-  for (const { person, slope, blocked, employed } of segment.people) {
-    person.happiness = residentHappinessFrozen(person) ? 0 : clampHappiness(person.happiness + slope * seconds);
+  for (const { person, slope, frozen = residentHappinessFrozen(person), blocked, employed } of segment.people) {
+    person.happiness = frozen ? 0 : clampResidentBalance(state, person, person.happiness + slope * seconds);
     person.newbornRemaining = elapsed(person.newbornRemaining || 0, seconds);
-    person.hungerSeconds = segment.fed ? 0 : Math.min(Number.MAX_SAFE_INTEGER, person.hungerSeconds + seconds);
-    person.unemployedSeconds = employed ? 0 : Math.min(Number.MAX_SAFE_INTEGER, person.unemployedSeconds + seconds);
+    if (frozen) { person.hungerSeconds = 0; person.unemployedSeconds = 0; person.fedRecoverySeconds = 0; }
+    else {
+      person.fedRecoverySeconds = segment.fed ? Math.min(FED_RECOVERY_SECONDS, (person.fedRecoverySeconds || 0) + seconds) : 0;
+      if (!segment.fed) person.hungerSeconds = Math.min(Number.MAX_SAFE_INTEGER, person.hungerSeconds + seconds);
+      else if (person.fedRecoverySeconds >= FED_RECOVERY_SECONDS - EPS) person.hungerSeconds = 0;
+      person.unemployedSeconds = employed ? 0 : Math.min(Number.MAX_SAFE_INTEGER, person.unemployedSeconds + seconds);
+    }
     person.blockedSeconds = blocked ? Math.min(432000, person.blockedSeconds + seconds) : 0;
     person.prayerRemaining = elapsed(person.prayerRemaining || 0, seconds);
     person.arrivalRemaining = elapsed(person.arrivalRemaining, seconds); person.returnRemaining = elapsed(person.returnRemaining, seconds);
@@ -338,21 +400,31 @@ export function adjustResidentHappiness(state, amount, residentIds = null) {
   const selected = residentIds ? new Set(residentIds) : null;
   for (const person of state.residents) {
     if (residentHappinessFrozen(person) || selected && !selected.has(person.id)) continue;
-    person.happiness = clampHappiness(person.happiness + amount);
+    person.happiness = clampResidentBalance(state, person, person.happiness + amount);
   }
 }
 
 const DEPARTURE_ORDER = ['dock', 'market', 'sawmill', 'quarry', 'lumber', 'farm', 'windmill', 'warehouse'];
+function leastHappyCandidate(state, people) {
+  if (!people.length) return null;
+  const lowest = Math.min(...people.map(person => residentHappiness(state, person)));
+  const tied = people.filter(person => Math.abs(residentHappiness(state, person) - lowest) <= EPS);
+  if (tied.length === 1) return tied[0];
+  let seed = state.residentRandomSeed >>> 0 || 1;
+  seed ^= seed << 13; seed ^= seed >>> 17; seed ^= seed << 5;
+  state.residentRandomSeed = seed >>> 0 || 1;
+  return tied[Math.floor(state.residentRandomSeed / 0x100000000 * tied.length)];
+}
 function departureCandidate(state) {
   const eligible = (state.residents || []).filter(person => !person.visitGroup && !person.prayerRemaining);
   const home = eligible.filter(person => !person.workplace || person.arrivalRemaining > EPS || person.returnRemaining > EPS);
-  if (home.length) return home.at(-1);
-  let selected = null, size = 0;
+  if (home.length) return leastHappyCandidate(state, home);
+  let selected = [], size = 0;
   for (const id of DEPARTURE_ORDER) {
     const crew = eligible.filter(person => person.workplace === id);
-    if (crew.length > size) { selected = crew.at(-1); size = crew.length; }
+    if (crew.length > size) { selected = crew; size = crew.length; }
   }
-  return selected;
+  return leastHappyCandidate(state, selected);
 }
 function removePerson(state, person, decrement = true) {
   if (person.workplace) {

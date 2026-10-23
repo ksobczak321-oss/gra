@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   ATTRACTIONS, ATTRACTION_EFFECT_SECONDS, LEISURE_DAY_SECONDS,
-  normalizeLeisure, leisureAction, advanceLeisure, nextLeisureEvent,
+  normalizeLeisure, leisureAction, advanceLeisure as advanceLeisureClock, nextLeisureEvent,
   leisureOffers, residentLeisureBonus, roadSummary, roadSpeedMultiplier,
   roadCapacityMultiplier
 } from '../harborlight-v1-leisure.js';
@@ -18,6 +18,12 @@ function island(level = 3) {
   normalizeLeisure(state, state);
   return state;
 }
+// Pure leisure time is advanced alongside the shared world clock, as the state integrator does.
+function advanceLeisure(state, seconds) {
+  advanceLeisureClock(state, seconds);
+  state.worldTimeMs = state.leisure.clockMs;
+}
+
 const buy = (state, id = state.leisure.offers[0].id) => leisureAction(state, { type: 'buyAttraction', id });
 const road = (state, level) => leisureAction(state, { type: 'upgradeRoad', level });
 const roundTrip = state => {
@@ -128,9 +134,11 @@ test('each purchase has an independent six-hour duration and expires without rem
   assert.deepEqual(state.residents.map(person => person.happiness), personal);
 });
 
-test('five offers change after exactly 24 hours and returning to the tab does not reroll', () => {
+test('first offers change at Warsaw midnight and returning to the tab does not reroll', () => {
   const state = island(), old = structuredClone(state.leisure.offers);
-  advanceLeisure(state, 86399);
+  const firstWindow = state.leisure.rotationRemaining;
+  assert.equal(firstWindow, 22 * 3600, '00:00 UTC is02:00 inWarsaw on23October');
+  advanceLeisure(state, firstWindow - 1);
   assert.deepEqual(state.leisure.offers, old);
   assert.equal(nextLeisureEvent(state), 1);
   advanceLeisure(state, 1);
