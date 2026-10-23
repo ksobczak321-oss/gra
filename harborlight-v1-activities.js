@@ -1,13 +1,15 @@
 // Agreed activities and coin services. Timers are elapsed world seconds, including offline time.
-// This module has no network integrations and never grants coins for unverified social actions.
+// No network integrations. The approved task-achievement click bonus is local;
+// other community rewards remain unavailable until their integrations exist.
 import {
   MATERIAL_IDS, stockRoom, receiveMaterials, notify,
   quoteInstantTransport, instantTransport, estimateMaterialsSeconds
-} from './harborlight-v1-logistics.js?v=frontend-v11';
+} from './harborlight-v1-logistics.js?v=frontend-v12';
 
 const HOUR = 3600;
 const QUEST_LIFE = 6 * HOUR;
 const DAY = 24 * HOUR;
+export const TASK_SHARE_BONUS = 500;
 const SAFE = Number.MAX_SAFE_INTEGER;
 const SIZES = ['small', 'medium', 'large'];
 const CONFIG = {
@@ -242,6 +244,18 @@ export function normalizeActivities(state, raw = {}) {
   state.activityEpochMs = validNumber(raw.activityEpochMs) ? raw.activityEpochMs : (validNumber(state.worldTimeMs) ? state.worldTimeMs : Date.now()) - state.activityClock * 1000;
   state.activitySeed = integer(raw.activitySeed, ((Date.now() ^ 0x5f3759df) >>> 0), 0xffffffff) || 1;
   state.taskSequence = integer(raw.taskSequence);
+  state.taskAchievements = [];
+  const achievementIds = new Set();
+  for (const item of Array.isArray(raw.taskAchievements) ? raw.taskAchievements : []) {
+    if (!plain(item) || typeof item.taskId !== 'string' || !/^lighthouse-\d+$/.test(item.taskId) || item.id !== 'achievement-' + item.taskId || achievementIds.has(item.id)) continue;
+    achievementIds.add(item.id);
+    state.taskSequence = Math.max(state.taskSequence, integer(Number(item.taskId.slice(11))));
+    const shared = item.shared === true;
+    state.taskAchievements.push({ id: item.id, taskId: item.taskId,
+      title: typeof item.title === 'string' ? item.title.slice(0, 300) : 'Lighthouse task complete',
+      createdAt: nonnegative(item.createdAt), reward: Object.fromEntries(entries(item.reward).filter(([id]) => id === 'coins' || MATERIAL_IDS.includes(id)).map(([id, value]) => [id, integer(value)])),
+      shared, skipped: !shared && item.skipped === true, seen: shared || item.skipped === true || item.seen === true });
+  }
   state.expeditionSequence = integer(raw.expeditionSequence);
   state.activitySettings = {
     taskMode: 'queue'
@@ -509,6 +523,24 @@ function ownCoins(state, price) {
 export function activityAction(state, action, context = {}) {
   if (!plain(action) || typeof action.type !== 'string') return null;
   const type = action.type;
+  if (['seeTaskAchievement', 'shareTaskAchievement', 'skipTaskAchievement'].includes(type)) {
+    const achievement = (state.taskAchievements || []).find(item => item.id === action.id);
+    if (!achievement) return bad('This completed task achievement is not available.');
+    if (type === 'seeTaskAchievement') {
+      achievement.seen = true;
+      return good('Achievement opened.');
+    }
+    if (achievement.shared || achievement.skipped) return bad('This achievement has already been resolved.');
+    if (type === 'shareTaskAchievement') {
+      if (!Number.isSafeInteger(integer(state.resources.coins) + TASK_SHARE_BONUS)) return bad('Your coin balance cannot hold this bonus.');
+      state.resources.coins += TASK_SHARE_BONUS;
+      achievement.shared = true; achievement.seen = true;
+      signal(state, 'task-sharing-bonus', 'Achievement bonus received', `+${TASK_SHARE_BONUS} coins for choosing to share your completed task. Facebook publishing is not connected yet.`);
+      return good(`Achievement bonus received: ${TASK_SHARE_BONUS} coins.`, { bonus: TASK_SHARE_BONUS });
+    }
+    achievement.skipped = true; achievement.seen = true;
+    return good('Sharing skipped. Your task reward is already yours.');
+  }
   if (type === 'taskAccept' || type === 'taskDeposit') {
     const index = state.lighthouseTasks?.findIndex(task => task.id === action.task) ?? -1;
     if (index < 0) return bad('This lighthouse task is no longer available.');
@@ -536,8 +568,14 @@ export function activityAction(state, action, context = {}) {
     task.deposited[resource] += quantity;
     if (complete) {
       grantTaskReward(state, task);
+      const achievementId = 'achievement-' + task.id;
+      state.taskAchievements ||= [];
+      if (!state.taskAchievements.some(item => item.id === achievementId)) state.taskAchievements.push({
+        id: achievementId, taskId: task.id, title: task.title, createdAt: currentClock(state),
+        reward: taskReward(task), shared: false, skipped: false, seen: false
+      });
       replaceTask(state, index, currentClock(state), true);
-      return good('Lighthouse task complete. Reward received and a new task is available.', { completed: true });
+      return good('Lighthouse task complete. Reward received and a new task is available.', { completed: true, achievementId });
     }
     return good('Contribution delivered. Contributions cannot be withdrawn.');
   }

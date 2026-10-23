@@ -16,6 +16,20 @@ KEY = 'harborlight-v1-interactive-save'
 PATH = '/harborlight-v1-layered.html'
 
 
+def employment_tax_rate(page):
+    # Tax remains an engine rule although the UI no longer displays it.
+    page.evaluate("window.dispatchEvent(new Event('pagehide'))")
+    return page.evaluate("""async key => {
+      const {taxRate} = await import('./harborlight-v1-state.js');
+      return taxRate(JSON.parse(localStorage.getItem(key)));
+    }""", 'harborlight-v1-interactive-save')
+
+
+def assert_storage(page, building, current, capacity, next_capacity):
+    for selector, value in [('data-local-current', current), ('data-local-capacity', capacity), ('data-local-next', next_capacity)]:
+        expect(page.locator(f'[{selector}="{building}"]')).to_have_text(format(value, ','))
+
+
 def visit(page):
     response = page.goto(BASE + PATH)
     assert response and response.ok
@@ -86,7 +100,8 @@ with sync_playwright() as playwright:
     page.screenshot(path='/tmp/harborlight-agreed-desktop.png')
     expect(page.locator('#hit-pause,#hit-play,#hit-speed')).to_have_count(0)
     expect(page.locator('[data-hud="population"]')).to_have_text('12 / 24')
-    expect(page.locator('[data-hud="taxes"]')).to_have_text('Taxes: 0/h')
+    expect(page.locator('[data-hud="taxes"]')).to_have_count(0)
+    assert employment_tax_rate(page) == 0
     assert all(person['workplace'] is None for person in saved(page)['residents'])
 
     # First specific task click locks the early reward before any contribution.
@@ -106,14 +121,17 @@ with sync_playwright() as playwright:
     page.locator('[data-worker-building="farm"][data-worker-delta="1"]').click()
     expect(page.locator('[data-worker-count="farm"]')).to_have_text('1')
     expect(page.locator('[data-worker-limit="farm"]')).to_have_text('12')
-    expect(page.locator('[data-workplace-tax="farm"]')).to_have_text('0 coins/h')
+    expect(page.locator('[data-workplace-tax="farm"]')).to_have_count(0)
+    assert employment_tax_rate(page) == 0
     expect(page.locator('[data-work-progress="farm"]')).to_contain_text('Workers arrive')
     page.clock.fast_forward(300000)
-    expect(page.locator('[data-workplace-tax="farm"]')).to_have_text('1 coin/h')
+    expect(page.locator('[data-workplace-tax="farm"]')).to_have_count(0)
+    assert employment_tax_rate(page) == 1
     page.clock.fast_forward(360000)
     assert saved(page)['buildings']['farm']['ready']>=1
     page.locator('[data-worker-building="farm"][data-worker-delta="-1"]').click()
-    expect(page.locator('[data-workplace-tax="farm"]')).to_have_text('0 coins/h')
+    expect(page.locator('[data-workplace-tax="farm"]')).to_have_count(0)
+    assert employment_tax_rate(page) == 0
     assert saved(page)['residents'][-1]['returnRemaining']>0
     close(page)
 

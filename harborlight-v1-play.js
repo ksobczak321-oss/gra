@@ -1,10 +1,12 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, taxRate, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v11';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v11';
-import * as State from './harborlight-v1-state.js?v=frontend-v11';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v11';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v11';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v11';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v11';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v12';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v12';
+import * as State from './harborlight-v1-state.js?v=frontend-v12';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v12';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v12';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v12';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v12';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v12';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v12';
 
 const NEW_PLAYER_PROFILE = new URLSearchParams(location.search).get('profile') === 'new-player';
 const SAVE_KEY = NEW_PLAYER_PROFILE ? 'harborlight-v1-new-player-save' : 'harborlight-v1-interactive-save';
@@ -45,20 +47,19 @@ function el(tag, attributes = {}, ...children) {
   for (const [key, value] of Object.entries(attributes)) {
     if (key === 'class') node.className = value;
     else if (key === 'text') node.textContent = value;
-    else if (key === 'style') Object.assign(node.style, value);
+    else if (key === 'style') { for (const [property, setting] of Object.entries(value)) property.startsWith('--') ? node.style.setProperty(property, setting) : node.style[property] = setting; }
     else if (key.startsWith('on')) node.addEventListener(key.slice(2).toLowerCase(), value);
     else if (value !== false && value != null) node.setAttribute(key, value === true ? '' : String(value));
   }
   for (const child of children.flat()) if (child != null) node.append(child instanceof Node ? child : document.createTextNode(String(child)));
   return node;
 }
-const nameOf = id => RESOURCES[id]?.name || ({ coins: 'Coins', wood: 'Wood', stone: 'Stone', food: 'Food', planks: 'Planks', grain: 'Grain' }[id]) || id;
+const nameOf = id => RESOURCES[id]?.name || ({ coins: 'Coins', wood: 'Wood', stone: 'Stone', food: 'Food', planks: 'Planks', grain: 'Grain', construction: 'Construction' }[id]) || id;
 const count = value => Math.floor(value || 0).toLocaleString('en-US');
 const titleOf = id => BUILDINGS[id]?.name || id;
-const hourlyCoins = amount => `${amount} ${amount === 1 ? 'coin' : 'coins'}/h`;
 const costText = cost => Object.entries(cost || {}).map(([id, value]) => `${nameOf(id)}: ${count(value)}`).join(' · ');
 const button = (label, fn, attributes = {}) => el('button', { type: 'button', class: 'action', onclick: fn, ...attributes }, label);
-const note = text => el('p', { class: 'notice' }, text);
+const note = text => el('p', { class: 'notice' }, omitTaxInformation(text));
 const card = (...children) => el('section', { class: 'info-card' }, ...children);
 
 function save() {
@@ -66,7 +67,7 @@ function save() {
   catch { toast('Your browser cannot save progress. You can keep playing until this tab is closed.'); }
 }
 function toast(message) {
-  toastElement.textContent = message;
+  toastElement.textContent = omitTaxInformation(message) || 'Island updated.';
   toastElement.hidden = false;
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { toastElement.hidden = true; }, 3500);
@@ -82,14 +83,19 @@ function perform(action) {
   const focusWorker = focused?.dataset.workerBuilding;
   const focusWorkerAction = focused?.dataset.workerAction;
   const focusWorkerDelta = focused?.dataset.workerDelta;
+  const previousAchievements = new Set((state.taskAchievements || []).map(item => item.id));
   const result = act(state, action);
-  panelNotice = result.message;
+  panelNotice = omitTaxInformation(result.message);
   if (result.ok) { save(); renderHUD(); }
   toast(result.message);
   if (panel && dialog.open) {
     renderPanel();
     const target = focusWarehousePriority ? dialog.querySelector(`[data-warehouse-priority="${focusWarehousePriority}"]`) : focusPriority ? dialog.querySelector(`[data-priority-resource="${focusPriority}"][data-priority-direction="${focusPriorityDirection}"]`) : focusWorker ? dialog.querySelector(`[data-worker-building="${focusWorker}"][${focusWorkerAction ? `data-worker-action="${focusWorkerAction}"` : `data-worker-delta="${focusWorkerDelta}"`}]`) : [...dialog.querySelectorAll('button,input')].find(node => node.textContent === focusLabel && !node.disabled);
     (target && !target.disabled ? target : dialog.querySelector('.dialog-close'))?.focus({ preventScroll: true });
+  }
+  if (result.ok) {
+    const achievement = (state.taskAchievements || []).find(item => !previousAchievements.has(item.id));
+    if (achievement) showTaskCelebration(achievement);
   }
   return result.ok;
 }
@@ -137,13 +143,13 @@ for (const [id, region] of Object.entries(buildingRegions)) {
     } else openPanel('building', id);
   }, 'world-hotspot');
 }
-hotspot('bridge', 'Bridge and paths — upgrades', [815, 445, 192, 76], () => openPanel('paths'));
-hotspot('waterfall', 'Waterfall — nature and decorations', [808, 526, 129, 148], () => openPanel('decorations'));
+hotspot('bridge', 'Bridge and paths — upgrades', [815, 445, 192, 76], () => { closePanel(); setDockCategory('paths'); });
+hotspot('waterfall', 'Waterfall — nature and decorations', [808, 526, 129, 148], () => { closePanel(); setDockCategory('decorations'); });
 hotspot('boat', 'Ship — harbor trade', [215, 635, 219, 137], () => openPanel('trade'));
 hotspot('village', 'Village square — residents', [559, 397, 187, 106], () => openPanel('residents'));
-hotspot('beach', 'Beach — decorations', [1208, 672, 187, 96], () => openPanel('decorations'));
+hotspot('beach', 'Beach — decorations', [1208, 672, 187, 96], () => { closePanel(); setDockCategory('decorations'); });
 const dockCategories = [['buildings', 'Buildings', 471, 167], ['resources', 'Production and resources', 648, 158], ['decorations', 'Decorations', 815, 170], ['paths', 'Paths', 991, 171]];
-for (const [id, label, x, width] of dockCategories) hotspot(`category-${id}`, label, [x, 780, width, 41], () => ['buildings', 'resources'].includes(id) ? setDockCategory(id) : openPanel(id));
+for (const [id, label, x, width] of dockCategories) hotspot(`category-${id}`, label, [x, 780, width, 41], () => setDockCategory(id));
 for (const [index, id] of ['house', 'farm', 'sawmill', 'quarry', 'dock', 'warehouse', 'lighthouse'].entries()) {
   hotspot(`dock-${id}`, `${titleOf(id)} — construction and upgrades`, [329 + index * 139, 830, 126, 104], () => openPanel('building', id));
 }
@@ -183,19 +189,78 @@ for (const id of Object.keys(resourceProductionBuildings)) {
   control.replaceChildren(
     el('small', { class: 'resource-dock-active', 'data-dock-active': id, title: 'Residents currently producing at this building', 'aria-label': 'Active workers' }, count(workingProducerCount(producer))),
     picture, el('span', { class: 'resource-dock-name' }, nameOf(id)),
-    el('span', { class: 'resource-dock-staffing', 'data-dock-staffing': id, 'aria-label': 'Free residents at Home / workplace limit' }, `${count(freeWorkers(state))} / ${count(workerLimit(state, producer))}`));
+    el('span', { class: 'resource-dock-staffing', 'data-dock-staffing': id, 'data-dock-stock': id, 'aria-label': 'Producer local stock / central warehouse stock' }, el('span', { 'data-dock-local': id }, count(state.buildings[producer].ready)), ' / ', el('span', { 'data-dock-central': id }, count(state.resources[id]))));
   resourceDock.append(control);
 }
 layer.append(resourceDock);
+let activeDockCategory = 'buildings';
+let leisureDockSignature = '';
+const leisureDock = el('div', { class: 'resource-dock-cards leisure-dock-cards', 'data-leisure-dock': '', hidden: true, 'aria-label': 'Island attractions and paths' });
+layer.append(leisureDock);
 function setDockCategory(id) {
+  activeDockCategory = id;
   resourceDock.hidden = id !== 'resources';
-  for (const building of ['house', 'farm', 'sawmill', 'quarry', 'dock', 'warehouse', 'lighthouse']) document.getElementById(`hit-dock-${building}`).hidden = id === 'resources';
-  for (const category of ['buildings', 'resources']) {
+  leisureDock.hidden = !['decorations', 'paths'].includes(id);
+  for (const building of ['house', 'farm', 'sawmill', 'quarry', 'dock', 'warehouse', 'lighthouse']) document.getElementById(`hit-dock-${building}`).hidden = id !== 'buildings';
+  for (const category of ['buildings', 'resources', 'decorations', 'paths']) {
     const node = document.getElementById(`hit-category-${category}`);
-    node.textContent = category === 'buildings' ? 'Buildings' : 'Resources';
+    node.textContent = { buildings: 'Buildings', resources: 'Resources', decorations: 'Decorations', paths: 'Paths' }[category];
     node.classList.toggle('is-selected', category === id);
     node.setAttribute('aria-pressed', String(category === id));
   }
+  renderLeisureDock(true);
+}
+function renderLeisureDock(force = false) {
+  if (leisureDock.hidden) return;
+  const offers = activeDockCategory === 'decorations' ? Leisure.leisureOffers(state) : Leisure.roadSummary(state).levels;
+  const signature = JSON.stringify([activeDockCategory, offers.map(offer => ({ ...offer, remaining: undefined, nextReset: undefined })), state.resources.coins, state.resources.stone]);
+  if (!force && signature === leisureDockSignature) return;
+  leisureDockSignature = signature;
+  leisureDock.dataset.leisureDock = activeDockCategory;
+  if (activeDockCategory === 'decorations') {
+    leisureDock.replaceChildren(...offers.map(offer => {
+      const image = attractionIllustration(offer);
+      const control = button('', () => perform({ type: 'buyAttraction', id: offer.id }), {
+        class: 'resource-dock-card attraction-dock-card', 'data-attraction': offer.id,
+        disabled: !offer.available || state.resources.coins < offer.price,
+        'aria-label': `${offer.name}: ${offer.price} coins, +${Math.ceil(offer.amount)} happiness for ${offer.residentCount} ${offer.residentCount === 1 ? 'resident' : 'residents'} for 6 hours`,
+        title: offer.multiplier === 0 ? `Full benefit returns in ${durationText(offer.nextReset)}` : `+${Math.ceil(offer.amount)} pp for ${offer.residentCount} ${offer.residentCount === 1 ? 'resident' : 'residents'} · 6 h. Offers refresh in ${durationText(state.leisure.rotationRemaining)}`
+      });
+      control.replaceChildren(image, el('span', { class: 'resource-dock-name' }, offer.name),
+        el('span', { class: 'attraction-effect', 'data-attraction-effect': offer.id }, `+${Math.ceil(offer.amount)} pp · ${offer.residentCount} ${offer.residentCount === 1 ? 'resident' : 'residents'} · 6 h`),
+        el('span', { class: 'attraction-price', 'data-attraction-price': offer.id }, `${count(offer.price)} coins`));
+      return control;
+    }));
+  } else {
+    const summary = Leisure.roadSummary(state);
+    leisureDock.replaceChildren(...offers.map(tier => {
+      const control = button('', () => perform({ type: 'upgradeRoad', level: tier.level }), {
+        class: `resource-dock-card path-dock-card${tier.complete ? ' is-complete' : ''}`, 'data-road-level': tier.level,
+        disabled: !tier.unlocked || tier.complete || state.resources.stone < 100,
+        'aria-label': `Paths level ${tier.level}: ${tier.count} of 100 sections. Upgrade one section for 100 Stone`,
+        title: !tier.unlocked ? `Finish all 100 sections of level ${tier.level - 1} first.` : tier.complete ? 'All 100 sections completed.' : 'Upgrade one section instantly for 100 Stone from central storage.'
+      });
+      control.replaceChildren(pathIllustration(tier.level), el('span', { class: 'resource-dock-name' }, `Level ${tier.level}`),
+        el('span', { class: 'path-progress', 'data-road-progress': tier.level }, `${tier.count} / 100`),
+        el('span', { class: 'path-bonus' }, `+${tier.level * 10}% speed${tier.level >= 3 ? ` · +${(tier.level - 2) * 10}% load` : ''}`),
+        el('span', { class: 'path-price' }, tier.complete ? 'Complete' : tier.unlocked ? '100 Stone' : 'Locked'));
+      return control;
+    }));
+    leisureDock.setAttribute('aria-label', `Paths: level ${summary.level}, +${summary.speedPercent}% carrier speed, +${summary.capacityPercent}% load`);
+  }
+}
+function attractionIllustration(offer) {
+  const picture = svgNode('svg', { viewBox: '0 0 100 70', class: 'leisure-dock-illustration', 'aria-hidden': 'true' });
+  const event = offer.kind === 'event';
+  const color = ['#dcb66c', '#d79675', '#a6c080', '#80b2bf'][Math.abs([...offer.id].reduce((sum, char) => sum + char.charCodeAt(0), 0)) % 4];
+  picture.innerHTML = event ? `<ellipse cx="50" cy="62" rx="35" ry="5" fill="#041d2d" opacity=".5"/><path d="M18 57V35L50 10L82 35V57Z" fill="${color}" stroke="#805a36" stroke-width="2"/><path d="M18 35L50 10L37 35ZM50 10L64 35H82Z" fill="#f3e0ac"/><path d="M39 57V39Q50 30 61 39V57" fill="#123247"/><path d="M50 10V2L68 7L50 9" fill="#e5c87f"/><path d="M14 35H86" stroke="#edd49a" stroke-width="3"/>` : `<ellipse cx="50" cy="62" rx="35" ry="5" fill="#041d2d" opacity=".5"/><path d="M19 52Q50 69 81 52L75 61H25Z" fill="#a77e43"/><path d="M29 55V25M50 57V17M70 54V29" stroke="#719557" stroke-width="4"/><g fill="${color}" stroke="#a67c3a" stroke-width="1.5"><path d="M29 18C13 5 12 28 25 28C9 35 33 46 34 30C49 39 48 16 34 21C44 3 22 5 29 18Z"/><path d="M50 10C34-3 34 20 46 20C31 27 54 38 55 22C71 31 70 8 56 13C65-5 43-3 50 10Z"/><path d="M70 22C55 9 54 32 66 32C51 39 75 50 76 34C91 43 90 20 76 25C85 7 63 9 70 22Z"/></g>`;
+  return picture;
+}
+function pathIllustration(level) {
+  const picture = svgNode('svg', { viewBox: '0 0 100 60', class: 'leisure-dock-illustration', 'aria-hidden': 'true' });
+  const colors = ['#ae9272', '#b7a48b', '#c8bba1', '#d4c69f', '#e3d2a8'];
+  picture.innerHTML = `<path d="M14 55L42 5H69L87 55Z" fill="${colors[level - 1]}" stroke="#8e7857" stroke-width="2"/><path d="M26 35H79M35 19H74M51 5L42 55M66 19L68 55" stroke="#6f6c59" stroke-width="2"/><path d="M12 55L40 5M89 55L71 5" stroke="#81905c" stroke-width="4"/>`;
+  return picture;
 }
 setDockCategory('buildings');
 
@@ -226,8 +291,6 @@ for (const [id, icon] of [['coins', '◉'], ['wood', '▰'], ['stone', '◆'], [
   toolbarButton(`resource-${id}`, `${nameOf(id)} — stock`, `topbar-resource topbar-${id}`, ...toolbarStat(id, nameOf(id), icon));
 }
 toolbarButton('population', 'Residents and worker assignments', 'topbar-population', ...toolbarStat('population', 'Residents', '♟︎'));
-hud.taxes = el('small', { class: 'topbar-tax', 'data-hud': 'taxes' }, '—');
-document.querySelector('.topbar-coins .topbar-copy').append(hud.taxes);
 hud.housing = el('small', { class: 'topbar-housing', 'data-hud': 'housing' }, '—');
 document.querySelector('.topbar-population .topbar-copy').append(hud.housing);
 hud.clock = el('strong', { 'data-hud': 'clock' }, '—');
@@ -247,10 +310,6 @@ for (const [id, label, action] of [['level', 'Level', () => openPanel('building'
   mobileHudValues[id] = el('strong', { 'data-mobile-hud': id }, '—');
   const node = button(label, action, { class: 'mobile-hud-item' });
   node.replaceChildren(el('small', {}, label), mobileHudValues[id]);
-  if (id === 'coins') {
-    mobileHudValues.taxes = el('span', { class: 'mobile-tax', 'data-mobile-hud': 'taxes' }, '—');
-    node.append(mobileHudValues.taxes);
-  }
   if (id === 'population') {
     mobileHudValues.housing = el('span', { class: 'mobile-housing', 'data-mobile-hud': 'housing' }, '—');
     node.append(mobileHudValues.housing);
@@ -287,15 +346,15 @@ function renderHUD() {
   });
   resourceDock.querySelectorAll('[data-dock-staffing]').forEach(node => {
     const producer = resourceProductionBuildings[node.dataset.dockStaffing];
-    node.textContent = `${count(freeWorkers(state))} / ${count(workerLimit(state, producer))}`;
+    node.querySelector('[data-dock-local]').textContent = count(state.buildings[producer].ready);
+    node.querySelector('[data-dock-central]').textContent = count(state.resources[node.dataset.dockStaffing]);
   });
-  hud.notifications.textContent = state.notifications.filter(item => !item.read).length;
+  hud.notifications.textContent = visibleNotifications().filter(item => !item.read).length;
   for (const id of Object.keys(RESOURCES)) {
     hud[id].textContent = count(state.resources[id]);
     document.getElementById(`hit-resource-${id}`).setAttribute('aria-label', `${nameOf(id)}: ${count(state.resources[id])} — stock`);
   }
   hud.population.textContent = `${state.population} / ${state.capacity}`;
-  hud.taxes.textContent = `Taxes: ${taxRate(state)}/h`;
   hud.housing.textContent = `Housing: ${housingCapacity(state)}`;
   hud.level.textContent = state.buildings.townhall.level;
   hud.happiness.textContent = happinessText();
@@ -321,18 +380,83 @@ function renderHUD() {
     let constructionBadge = node.querySelector('.construction-badge');
     if (value.construction) {
       if (!constructionBadge) { constructionBadge = el('span', { class: 'construction-badge' }); node.append(constructionBadge); }
-      constructionBadge.textContent = value.construction.stage === 'transport' ? '▰ Transport' : value.construction.stage === 'building' ? '⚒ Building' : '◷ Queued';
+      refreshConstructionBadge(constructionBadge, id, value.construction);
     } else constructionBadge?.remove();
     node.setAttribute('aria-label', `${titleOf(id)}, level ${value.level}${value.construction ? ', upgrade in progress' : value.ready ? ', goods awaiting pickup' : ''}`);
   }
   document.body.classList.toggle('reduce-motion', !state.settings.motion);
   document.body.classList.toggle('motion-override', state.settings.motionOverride === true && state.settings.motion);
   document.body.classList.remove('world-paused');
+  renderLeisureDock();
   renderActivityStack();
   refreshLivePanel();
   renderWorldAdditions();
   stage.dispatchEvent(new Event('island-statechange'));
 }
+function refreshConstructionBadge(node, id, project) {
+  const estimate = scheduledConstructionEstimate(id, project);
+  const transport = project.stage === 'building' ? 0 : estimate?.transport;
+  const building = project.stage === 'building' ? project.buildRemaining : estimate?.building;
+  const unavailable = !Number.isFinite(transport) || !Number.isFinite(building);
+  const fallback = project.stage === 'queued' || project.stage === 'planned' ? 'Queued' : estimate?.reason?.includes('carrier') ? 'Waiting for carriers' : 'Unavailable';
+  node.replaceChildren(
+    el('span', { 'data-world-transport-eta': id }, `Transport · ETA: ${Number.isFinite(transport) ? durationText(transport) : fallback}`),
+    el('span', { 'data-world-building-eta': id }, `Construction · ETA: ${Number.isFinite(building) ? durationText(building) : fallback}`));
+  node.title = unavailable ? estimate?.reason || 'Waiting for an available construction slot and carriers.' : 'Estimated remaining transport time and subsequent building phase.';
+}
+
+let taskCelebration = null;
+let celebrationFocus = null;
+function showTaskCelebration(achievement) {
+  if (!achievement || achievement.seen || achievement.shared || achievement.skipped) return;
+  const viewed = act(state, { type: 'seeTaskAchievement', id: achievement.id });
+  if (viewed.ok) save();
+  if (taskCelebration?.open) taskCelebration.close();
+  taskCelebration?.remove();
+  celebrationFocus = document.activeElement;
+  const fireworks = el('div', { class: 'celebration-fireworks', 'aria-hidden': 'true' });
+  for (let burst = 0; burst < 5; burst++) {
+    const spray = el('span', { class: 'firework-burst', style: { '--burst-x': `${12 + burst * 19}%`, '--burst-y': `${20 + (burst % 3) * 21}%`, '--burst-delay': `${burst * .18}s`, '--burst-color': ['#ffe2a2', '#a9d4ba', '#9ccbe7', '#efb4ad', '#e6ce87'][burst] } });
+    for (let ray = 0; ray < 12; ray++) spray.append(el('i', { style: { '--ray': ray } }));
+    fireworks.append(spray);
+  }
+  const popup = el('dialog', { id: 'task-celebration', class: 'task-celebration', 'aria-labelledby': 'task-celebration-title', 'aria-describedby': 'task-celebration-description', 'data-achievement': achievement.id },
+    fireworks,
+    el('div', { class: 'task-celebration-content' },
+      el('span', { class: 'celebration-medallion', 'aria-hidden': 'true' }, '★'),
+      el('p', { class: 'celebration-eyebrow' }, 'Lighthouse task complete'),
+      el('h2', { id: 'task-celebration-title' }, 'Well done, island keeper!'),
+      el('p', { id: 'task-celebration-description' }, achievement.title),
+      el('p', { class: 'celebration-earned' }, 'Reward received: ', el('strong', {}, costText(achievement.reward))),
+      el('section', { class: 'achievement-share-screen', 'data-share-screen': '' },
+        el('h3', {}, 'Share your achievement'),
+        el('p', {}, 'Celebrate your progress and collect 500 extra coins.'),
+        el('div', { class: 'celebration-actions' },
+          button('Share on Facebook · +500 coins', () => finishTaskCelebration(achievement, 'shareTaskAchievement'), { 'data-task-share': achievement.id }),
+          button('Skip', () => finishTaskCelebration(achievement, 'skipTaskAchievement'), { class: 'action secondary', 'data-task-skip': achievement.id })),
+        el('small', { class: 'achievement-share-note' }, 'Facebook sharing is coming soon. This preview awards the bonus when you choose Share; nothing is posted.'))));
+  taskCelebration = popup;
+  popup.addEventListener('cancel', event => { event.preventDefault(); finishTaskCelebration(achievement, 'skipTaskAchievement'); });
+  popup.addEventListener('click', event => { if (event.target === popup) finishTaskCelebration(achievement, 'skipTaskAchievement'); });
+  document.body.append(popup);
+  popup.showModal();
+  popup.querySelector('[data-task-share]')?.focus();
+  if (matchMedia('(pointer: coarse)').matches && typeof navigator.vibrate === 'function') {
+    try { navigator.vibrate([80, 60, 120]); } catch { /* Haptics remain optional on unsupported devices. */ }
+  }
+}
+function finishTaskCelebration(achievement, type) {
+  const result = act(state, { type, id: achievement.id });
+  if (result.ok) { save(); renderHUD(); }
+  toast(result.message);
+  if (!result.ok) return;
+  const popup = taskCelebration;
+  popup?.close(); popup?.remove(); taskCelebration = null;
+  if (celebrationFocus?.isConnected) celebrationFocus.focus({ preventScroll: true });
+  else if (dialog.open) dialog.querySelector('.dialog-close')?.focus({ preventScroll: true });
+  else document.getElementById('hit-nav-tasks')?.focus({ preventScroll: true });
+}
+
 function svgNode(name, attributes = {}, ...children) {
   const node = document.createElementNS('http://www.w3.org/2000/svg', name);
   for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, value);
@@ -393,13 +517,13 @@ function refreshLivePanel() {
   dialog.querySelectorAll('[data-upgrade-building]').forEach(node => { const id = node.dataset.upgradeBuilding; node.disabled = !upgradeEligibility(state, id).ok || !canAfford(state, buildingCost(state, id)); });
   dialog.querySelectorAll('[data-upgrade-cost]').forEach(node => { const available = spendable(node.dataset.upgradeCost), required = panel?.kind === 'building' ? buildingCost(state, panel.id)?.[node.dataset.upgradeCost] ?? Number(node.dataset.required) : Number(node.dataset.required); node.dataset.required = required; node.textContent = `${count(available)} / ${count(required)}`; node.classList.toggle('is-affordable', available >= required); node.classList.toggle('is-short', available < required); node.setAttribute('aria-label', `${nameOf(node.dataset.upgradeCost)}: in storage ${count(available)}, required ${count(required)}; ${available >= required ? 'enough' : 'short'}`); });
   dialog.querySelectorAll('[data-stock]').forEach(node => { node.textContent = count(state.resources[node.dataset.stock]); });
-  const live = { population: `${state.population} / ${state.capacity}`, 'current-population': count(state.population), workers: totalWorkers(state), free: freeWorkers(state), returning: (state.returningWorkers || []).length, 'next-return': returnDescription(), 'worker-limit': '12 × building level', taxes: hourlyCoins(taxRate(state)), 'tax-countdown': taxDescription(), happiness: happinessText(), level: state.buildings.townhall.level, growth: populationDescription(), 'growth-rate': populationGrowthRateText(), capacity: state.capacity, housing: housingCapacity(state), unhoused: unhousedResidents(state), penalty: housingPenaltyText(), 'housing-status': housingDescription() };
+  const live = { population: `${state.population} / ${state.capacity}`, 'current-population': count(state.population), workers: totalWorkers(state), free: freeWorkers(state), returning: (state.returningWorkers || []).length, 'next-return': returnDescription(), 'worker-limit': '12 × building level', happiness: happinessText(), level: state.buildings.townhall.level, growth: populationDescription(), 'growth-rate': populationGrowthRateText(), capacity: state.capacity, housing: housingCapacity(state), unhoused: unhousedResidents(state), penalty: housingPenaltyText(), 'housing-status': housingDescription() };
   dialog.querySelectorAll('[data-population-stat]').forEach(node => { node.textContent = live[node.dataset.populationStat]; });
   dialog.querySelectorAll('[data-housing-warning]').forEach(node => { node.dataset.overcrowded = String(unhousedResidents(state) > 0); });
   dialog.querySelectorAll('[data-logistics-stat]').forEach(node => { node.textContent = logisticsStatValue(node.dataset.logisticsStat); });
   dialog.querySelectorAll('[data-local-buffer],[data-local-overview]').forEach(node => {
     const id = node.dataset.localBuffer || node.dataset.localOverview, value = state.buildings[id].ready;
-    node.textContent = localStorageText(id);
+    updateLocalStockValues(node, id);
     node.dataset.value = value;
     node.dataset.limit = producerCapacity(state, id);
   });
@@ -419,7 +543,6 @@ function refreshLivePanel() {
   dialog.querySelectorAll('[data-carrier-jobs]').forEach(node => refreshCarrierJobs(node));
   dialog.querySelectorAll('[data-priority-progress]').forEach(node => { node.textContent = priorityProgressText(); });
   dialog.querySelectorAll('[data-worker-limit]').forEach(node => { node.textContent = workerLimit(state, node.dataset.workerLimit); });
-  dialog.querySelectorAll('[data-workplace-tax]').forEach(node => { node.textContent = hourlyCoins(activeCrew(node.dataset.workplaceTax) * (state.chapelRemaining > 0 ? 2 : 1)); });
   dialog.querySelectorAll('[data-full-penalty]').forEach(node => { node.textContent = fullPenaltyDescription(node.dataset.fullPenalty); });
   dialog.querySelectorAll('[data-chapel-time]').forEach(node => { node.textContent = blessingDescription(); });
   dialog.querySelectorAll('[data-paid-blessing]').forEach(node => { node.disabled = state.blessingRemaining > 0 || state.resources.coins < 100 * state.buildings.chapel.level || (state.paidBlessingCooldownRemaining || 0) > 0; });
@@ -429,6 +552,7 @@ function refreshLivePanel() {
   dialog.querySelectorAll('[data-market-locked]').forEach(node => { node.textContent = count(state.market.locked.filter(lot => lot.resource === node.dataset.marketLocked).reduce((sum, lot) => sum + lot.amount, 0)); });
   dialog.querySelectorAll('[data-market-timer]').forEach(node => { node.textContent = state.market.locked.length ? durationText(Math.min(...state.market.locked.map(lot => lot.remaining))) : 'No locked goods'; });
   dialog.querySelectorAll('[data-happiness-breakdown]').forEach(node => { node.replaceChildren(...happinessBreakdown()); });
+  refreshActiveEffects();
   refreshResidentRosters();
   dialog.querySelectorAll('[data-worker-building]').forEach(node => {
     const id = node.dataset.workerBuilding, building = state.buildings[id];
@@ -507,7 +631,7 @@ function upgradeTransportDescription(id) {
   const cost = buildingCost(state, id);
   const temporary = { building: id, targetLevel: plannedLevel(state, id) + 1, cost, remainingMaterials: Object.fromEntries(MATERIAL_IDS.map(resource => [resource, cost[resource] || 0])), delivered: {}, stage: 'transport', goodsRemaining: MATERIAL_IDS.reduce((sum, resource) => sum + (cost[resource] || 0), 0) };
   const estimate = scheduledConstructionEstimate(id, temporary);
-  return estimate ? `Estimated transport: ${durationText(estimate.transport)}. Building phase: ${durationText(estimate.building)}. Total: ${durationText(estimate.total)}. Changes to staffing or delivery priorities recalculate this estimate.` : 'Assign warehouse carriers to estimate transport and construction time. Each carrier completes a 5-minute round trip with one material.';
+  return estimate ? `Estimated transport: ${durationText(estimate.transport)}. Building phase: ${durationText(estimate.building)}. Total: ${durationText(estimate.total)}. Changes to staffing or delivery priorities recalculate this estimate.` : 'Assign warehouse carriers to estimate transport and construction time. The base carrier round trip takes 5 minutes with one material. Completed path levels increase transport speed.';
 }
 
 function constructionPanel() {
@@ -668,14 +792,14 @@ function buildingStatus(id) {
       return { kind: 'waiting', label: 'Waiting for workers', detail: arrivals.length ? `Arriving in ${durationText(Math.min(...arrivals.map(person => person.arrivalRemaining)))}` : 'Assign free residents from Home.' };
     }
     const trips = state.haulTrips?.[id] || [];
-    if (trips.length) return { kind: 'working', label: 'Delivering', detail: `${trips.length} ${trips.length === 1 ? 'delivery' : 'deliveries'} in progress · next completes in ${durationText(Math.min(...trips.map(trip => trip.remaining)) / productionMultiplier(state))}` };
+    if (trips.length) return { kind: 'working', label: 'Delivering', detail: `${trips.length} ${trips.length === 1 ? 'delivery' : 'deliveries'} in progress · next completes in ${durationText(Math.min(...trips.map(trip => trip.remaining)) / (Logistics.transportEfficiency?.(state) || productionMultiplier(state)))}` };
     if (id === 'warehouse' && warehouseUsed(state) >= warehouseLimits(state).total) return { kind: 'blocked', label: 'Storage full', detail: 'Carriers are waiting for space or a delivery order.' };
     return { kind: 'waiting', label: 'Waiting for goods', detail: `${activeCrew(id)} carriers ready for their next delivery.` };
   }
   if (id === 'house') return { kind: unhousedResidents(state) ? 'blocked' : 'ready', label: unhousedResidents(state) ? 'Overcrowded' : 'Housing available', detail: `${count(state.population)} residents · ${count(housingCapacity(state))} beds` };
   if (id === 'chapel') return { kind: state.blessingRemaining > 0 || state.chapelRemaining > 0 ? 'working' : 'ready', label: state.blessingRemaining > 0 ? 'Blessing active' : state.chapelRemaining > 0 ? 'Upgrade bonus active' : 'Ready for a blessing', detail: blessingDescription() };
   if (id === 'lighthouse') { const visitors = (state.lighthouseVisits || []).reduce((sum, group) => sum + group.residentIds.length, 0); return { kind: visitors ? 'working' : 'ready', label: visitors ? 'Welcoming visitors' : 'Ready for visitors', detail: `${count(visitors)} residents visiting${state.lighthouseRemaining > 0 ? ' · Upgrade bonus active' : ''}` }; }
-  return { kind: 'ready', label: 'Managing the island', detail: `Level ${state.buildings.townhall.level} · ${hourlyCoins(taxRate(state))} tax income` };
+  return { kind: 'ready', label: 'Managing the island', detail: `Level ${state.buildings.townhall.level} · ${count(state.population)} residents` };
 }
 function updateBuildingStatus(node, id) {
   const status = buildingStatus(id);
@@ -688,15 +812,36 @@ function buildingStatusBanner(id) {
   updateBuildingStatus(node, id);
   return node;
 }
-function workerStat(id) {
+function workerStat(id, readonly = false) {
   const building = state.buildings[id];
   return el('div', { class: 'stat producer-workers' }, el('small', {}, 'Workers'),
     el('div', { class: 'producer-workers-row' },
-      el('strong', { class: 'producer-worker-count', 'aria-label': 'Assigned workers / free residents at Home / building worker limit' }, el('span', { 'data-worker-count': id }, building.workers), ' / ', el('span', { 'data-worker-free': id }, freeWorkers(state)), ' / ', el('span', { 'data-worker-limit': id }, workerLimit(state, id))),
-      el('div', { class: 'producer-worker-controls' },
+      el('div', { class: 'labelled-values worker-values', 'aria-label': 'Assigned workers / free residents at Home / building worker limit' },
+        labelledValue(building.workers, 'Assigned', { 'data-worker-count': id }),
+        labelledValue(freeWorkers(state), 'Free at home', { 'data-worker-free': id }),
+        labelledValue(workerLimit(state, id), 'Max workers', { 'data-worker-limit': id })),
+      readonly ? null : el('div', { class: 'producer-worker-controls' },
         button('−', () => perform({ type: 'assign', building: id, delta: -1 }), { class: 'producer-worker-button', disabled: !building.workers, 'data-worker-building': id, 'data-worker-delta': -1, 'aria-label': `Release worker: ${titleOf(id)}` }),
         button('+', () => perform({ type: 'assign', building: id, delta: 1 }), { class: 'producer-worker-button', disabled: freeWorkers(state) <= 0 || building.workers >= workerLimit(state, id), 'data-worker-building': id, 'data-worker-delta': 1, 'aria-label': `Assign worker: ${titleOf(id)}` }))));
 }
+function labelledValue(value, label, attrs = {}) {
+  return el('span', { class: 'labelled-value' }, el('strong', attrs, count(value)), el('small', {}, label));
+}
+function localStockValues(id) {
+  const building = state.buildings[id];
+  return el('div', { class: 'labelled-values storage-values', 'data-local-buffer': id, 'data-value': building.ready, 'data-limit': producerCapacity(state, id), 'aria-label': 'In stock / current capacity / capacity after the next upgrade' },
+    labelledValue(building.ready, 'In stock', { 'data-local-current': id }),
+    labelledValue(producerCapacity(state, id), 'Current cap.', { 'data-local-capacity': id }),
+    labelledValue(producerCapacity(state, id, building.level + 1), 'Next level cap.', { 'data-local-next': id }));
+}
+function updateLocalStockValues(node, id) {
+  const current = node.querySelector('[data-local-current]');
+  if (!current) { node.textContent = localStorageText(id); return; }
+  current.textContent = count(state.buildings[id].ready);
+  node.querySelector('[data-local-capacity]').textContent = count(producerCapacity(state, id));
+  node.querySelector('[data-local-next]').textContent = count(producerCapacity(state, id, state.buildings[id].level + 1));
+}
+
 function productionInfo(id) {
   const recipe = PRODUCTION_RECIPES[id];
   const popup = el('div', { id: `production-info-${id}`, class: 'upgrade-info-popover production-info-popover', hidden: true, role: 'region', 'aria-label': 'Production information', 'data-production-help': id, 'data-production-popover': id },
@@ -704,10 +849,10 @@ function productionInfo(id) {
     el('p', {}, BUILDINGS[id].description),
     el('p', {}, `Product: ${nameOf(recipe.output)}. Potential output: `, el('strong', { 'data-local-rate': id }, localProductionRate(id))),
     recipe.input ? el('p', {}, `Each ${nameOf(recipe.output).toLocaleLowerCase('en-US')} requires ${recipe.amount} ${nameOf(recipe.input).toLocaleLowerCase('en-US')} from the central warehouse (2:1).`) : null,
-    el('p', {}, `Each fed worker produces ${ownProductionRate(id)} units per hour at this building level. Hunger halves output immediately. The Lighthouse bonus doubles material production. Local storage holds 200 units per building level. Storage shows current stock / current capacity / capacity after one upgrade. Carriers carry one material per 5-minute round trip; their load grows with their workplace level.`),
+    el('p', {}, `Each fed worker produces ${ownProductionRate(id)} units per hour at this building level. Hunger halves output immediately. The Lighthouse bonus doubles material production. Local storage holds 200 units per building level. Storage shows current stock / current capacity / capacity after one upgrade. Carriers carry one material per trip. The base round trip takes 5 minutes; path levels increase carrier speed and, from level 3, load. Workplace upgrades also increase load.`),
     el('p', { 'data-full-penalty': id }, fullPenaltyDescription(id)),
-    el('p', {}, 'A production blockage gives its assigned workers −10 happiness, then another −10 every 24 hours, down to −50 from this penalty. They keep paying taxes. Releasing a worker resets their blockage timer while they return home.'),
-    el('p', {}, 'Releasing a worker discards their unfinished unit. They take 5 minutes to return home and cannot work, earn taxes or be reassigned during that journey.'));
+    el('p', {}, 'A production blockage gives its assigned workers −10 happiness, then another −10 every 24 hours, down to −50 from this penalty. Releasing a worker resets their blockage timer while they return home.'),
+    el('p', {}, 'Releasing a worker discards their unfinished unit. They take 5 minutes to return home and cannot work or be reassigned during that journey.'));
   const trigger = button('i', () => activateInfoPopup(trigger, popup), { class: 'upgrade-info-toggle production-info-toggle', 'aria-label': 'Production information', 'aria-expanded': 'false', 'aria-controls': popup.id, 'data-production-info': id });
   bindInfoTrigger(trigger, popup);
   return [trigger, popup];
@@ -715,23 +860,26 @@ function productionInfo(id) {
 function producerSummary(id) {
   const building = state.buildings[id];
   const [info, popup] = productionInfo(id);
+  const level = stat('Level', building.level);
+  level.classList.add('producer-level');
   return el('div', { class: 'stat-grid producer-summary', 'data-production-summary': id },
-    stat('Level', building.level),
+    level,
     el('div', { class: 'stat producer-storage' },
       el('div', { class: 'producer-storage-heading' }, el('small', {}, 'Storage'), info),
-      el('strong', { 'data-local-buffer': id, 'data-value': building.ready, 'data-limit': producerCapacity(state, id) }, localStorageText(id)),
+      localStockValues(id),
       el('small', { class: 'producer-next-unit', 'data-work-progress': id }, productionTimerText(id)), popup),
-    workerStat(id),
-    stat('Taxes per hour', el('span', { 'data-workplace-tax': id }, hourlyCoins(activeCrew(id) * (state.chapelRemaining > 0 ? 2 : 1)))));
+    workerStat(id));
 }
+
 function buildingPanel(id) {
   const data = BUILDINGS[id];
   const value = state.buildings[id];
   const isProducer = productionBuildings.includes(id);
   const content = el('div', { 'data-building-signature': `${value.level}:${value.construction?.stage || ''}` },
+    id === 'townhall' ? activeEffectsPanel() : null,
     buildingStatusBanner(id),
     isProducer ? producerSummary(id) : null,
-    !isProducer ? el('div', { class: 'stat-grid' }, stat('Level', value.level || 'Ruins'), id === 'townhall' ? stat('Residents', el('span', { 'data-population-stat': 'population' }, `${state.population} / ${state.capacity}`)) : null, id === 'townhall' ? stat('Taxes per hour', el('span', { 'data-population-stat': 'taxes' }, hourlyCoins(taxRate(state)))) : null) : null);
+    !isProducer ? el('div', { class: 'stat-grid' }, stat('Level', value.level || 'Ruins'), id === 'townhall' ? stat('Residents', el('span', { 'data-population-stat': 'population' }, `${state.population} / ${state.capacity}`)) : null, null) : null);
   if (WORKPLACE_IDS.includes(id) && !isProducer) content.append(workplaceCard(id));
   if (id === 'warehouse') content.append(carrierJobsPanel(), warehouseOverview(), transportPriorityPanel());
   if (id === 'market') content.append(marketPanel());
@@ -772,9 +920,9 @@ function buildingPanel(id) {
   if (!isProducer) content.append(premiumBuildingPanel(id));
   return content;
 }
-function stat(label, value) { return el('div', { class: 'stat' }, el('small', {}, label), el('strong', {}, value)); }
+function stat(label, value) { return el('div', { class: label === 'Level' ? 'stat level-stat' : 'stat' }, el('small', {}, label), el('strong', {}, value)); }
 function lighthouseDescription() {
-  return state.lighthouseRemaining > 0 ? `Lighthouse upgrade bonus: everyone has 100% happiness and material production ×2. Remaining: ${durationText(state.lighthouseRemaining)}. Taxes are unchanged.` : 'Complete a Lighthouse level to give everyone 100% happiness and material production ×2 for 24 hours × that level.';
+  return state.lighthouseRemaining > 0 ? `Lighthouse upgrade bonus: everyone has 100% happiness and material production ×2. Remaining: ${durationText(state.lighthouseRemaining)}.` : 'Complete a Lighthouse level to give everyone 100% happiness and material production ×2 for 24 hours × that level.';
 }
 
 function objectivePanel() {
@@ -788,10 +936,8 @@ function buildingsPanel() {
 }
 function resourcesPanel(selected) {
   return el('div', {}, selected === 'food' ? feedingPanel() : null, selected ? note(`${nameOf(selected)} — stock in the ${selected === 'coins' ? 'treasury' : 'central warehouse'}: ${count(state.resources[selected])}.`) : null,
-    selected === 'coins' ? card(el('h3', {}, 'Treasury and taxes'),
+    selected === 'coins' ? card(el('h3', {}, 'Treasury'),
       stat('Coins', el('span', { 'data-stock': 'coins' }, count(state.resources.coins))),
-      stat('Tax income', el('span', { 'data-population-stat': 'taxes' }, hourlyCoins(taxRate(state)))),
-      el('p', { class: 'workforce-income', 'data-population-stat': 'tax-countdown' }, taxDescription()),
       note('Coins are stored separately and do not use goods storage.'),
       button('Open House', () => openPanel('building', 'house'), { class: 'action secondary' })) : null,
     warehouseOverview(),
@@ -805,7 +951,7 @@ function productionCard(id, navigation = false) {
   const content = card(el('h3', {}, titleOf(id)),
     el('p', {}, 'Product: ', el('strong', {}, nameOf(recipe.output))),
     el('div', { class: 'stat-grid logistics-stats' },
-      stat('Local stock', el('span', { 'data-local-buffer': id, 'data-value': state.buildings[id].ready, 'data-limit': producerCapacity(state, id) }, localStorageText(id))),
+      el('div', { class: 'stat producer-storage' }, el('small', {}, 'Storage'), localStockValues(id)),
       stat('Potential output', el('span', { 'data-local-rate': id }, localProductionRate(id)))),
     el('p', { class: 'production-status', 'data-work-progress': id }, productionDescription(id)),
     recipe.input ? note(`Per unit: ${recipe.amount} ${nameOf(recipe.input).toLocaleLowerCase('en-US')} from the central warehouse → 1 ${nameOf(recipe.output).toLocaleLowerCase('en-US')}.`) : null,
@@ -836,7 +982,7 @@ function warehouseOverview() {
     el('div', { class: 'warehouse-pending-details' }, MATERIAL_IDS.map(id => el('span', {}, `${nameOf(id)}: `, el('span', { 'data-pending-resource': id }, count(state.pendingDeliveries?.[id] || 0))))),
     rules('How the warehouse works',
       note('A level 1 Warehouse holds 4,000 units in total and up to 1,000 of each resource. Each additional level increases both limits by 50%. Coins are kept in a separate treasury.'),
-      note('A carrier takes one material per 5-minute round trip, including a partial load. Level 1 carries 60 units per trip. Hunger halves effective transport. Central replenishment comes before construction unless you change priorities. Food reserve: 50 × Warehouse level.')));
+      note('A carrier takes one material per trip, including a partial load. The base round trip is 5 minutes; completed path levels reduce it. Level 1 carries 60 units per trip. Hunger halves effective transport. Central replenishment comes before construction unless you change priorities. Food reserve: 50 × Warehouse level.')));
 }
 function carrierJobRows() {
   return Logistics.warehouseCarrierJobs?.(state) || [];
@@ -873,13 +1019,13 @@ function priorityProgressText() {
 function transportPriorityPanel() {
   const selected = state.warehousePriorities || [];
   return card(informationHeading('transport-priority', 'Transport priority',
-    'Choose up to three materials in priority order. Selected priorities stay highlighted and numbered. Click a selected material to remove it; the remaining priorities move up.',
+    'Choose up to three priorities from goods and Construction. Selected priorities stay highlighted and numbered. Click a selected priority to remove it; the remaining priorities move up.',
     'Each repeating block contains 10 trips: one priority gets 8 trips and 2 random; two priorities get 5 + 3 and 2 random; three get 5 + 3 + 2. Priorities stay active until you change them. Unavailable goods are skipped so carriers can continue with an available delivery.'),
-    el('div', { class: 'material-priority-options', 'data-transport-priority-list': '' }, MATERIAL_IDS.map(id => {
+    el('div', { class: 'material-priority-options', 'data-transport-priority-list': '' }, [...MATERIAL_IDS, 'construction'].map(id => {
       const index = selected.indexOf(id), active = index >= 0;
       return button('', () => perform({ type: 'warehousePriority', resource: id }), { class: `material-priority-button${active ? ' is-active' : ''}`, disabled: !active && selected.length >= 3, 'aria-pressed': String(active), 'aria-label': active ? `${nameOf(id)}: priority ${index + 1}, remove priority` : `Prioritize ${nameOf(id)}`, 'data-warehouse-priority': id, 'data-priority-number': active ? index + 1 : '' });
     }).map((node, index) => {
-      const id = MATERIAL_IDS[index], number = selected.indexOf(id) + 1;
+      const id = [...MATERIAL_IDS, 'construction'][index], number = selected.indexOf(id) + 1;
       node.append(el('span', { class: 'material-priority-number', 'aria-hidden': 'true' }, number || '−'), el('span', {}, nameOf(id)));
       return node;
     })),
@@ -921,15 +1067,14 @@ function residentsPanel(manageWorkers = false) {
   const liveStat = (label, id, value) => stat(label, el('span', { 'data-population-stat': id }, value));
   return el('div', {}, el('div', { class: 'stat-grid' }, liveStat('Town Hall level', 'level', state.buildings.townhall.level), liveStat('Residents', 'population', `${state.population} / ${state.capacity}`), liveStat('Assigned', 'workers', totalWorkers(state)), liveStat('Happiness', 'happiness', happinessText())),
     feedingPanel(),
-    card(el('h3', {}, 'Work and taxes'),
-      el('div', { class: 'stat-grid workforce-summary' }, liveStat('Available', 'free', freeWorkers(state)), liveStat('Returning home', 'returning', (state.returningWorkers || []).length), liveStat('Workplace limit', 'worker-limit', '12 × building level'), liveStat('Taxes', 'taxes', hourlyCoins(taxRate(state)))),
+    card(el('h3', {}, 'Workforce'),
+      el('div', { class: 'stat-grid workforce-summary' }, liveStat('Available', 'free', freeWorkers(state)), liveStat('Returning home', 'returning', (state.returningWorkers || []).length), liveStat('Workplace limit', 'worker-limit', '12 × building level')),
       el('p', { class: 'returning-status', 'data-population-stat': 'next-return' }, returnDescription()),
-      el('p', { class: 'workforce-income', 'data-population-stat': 'tax-countdown' }, taxDescription()),
       rules('Work and return rules',
         note('Each workplace can employ up to 12 × its own building level, limited by free residents at home. Each resident has one assignment. Workers shows assigned / free at Home / this building’s limit.'),
-        note('A released worker takes 5 minutes to return home. During that time they are unavailable, do not work and do not pay taxes. You can assign them again after they return.'),
+        note('A released worker takes 5 minutes to return home. During that time they are unavailable and do not work. You can assign them again after they return.'),
         note('Production per worker is 10, 12, 13, 14… units per hour by the workplace’s own level. Hunger halves production and transport immediately. Releasing a worker discards their unfinished unit.'),
-        note('A resident starts working and paying 1 coin per hour after the 5-minute walk to work. Assigned workers keep paying during production blockages. The Town Hall, House, Chapel and Lighthouse have no employees. Taxes continue offline.'))),
+        note('A resident starts working after the 5-minute walk to work. The Town Hall, House, Chapel and Lighthouse have no employees.'))),
     manageWorkers ? null : button('Open House', () => openPanel('building', 'house'), { class: 'action secondary', 'data-workers-house-link': '' }),
     el('div', { class: 'panel-grid workforce-grid' }, WORKPLACE_IDS.map(id => manageWorkers ? workplaceCard(id, true) : workplaceOverviewCard(id))),
     card(el('h3', {}, 'Happiness — population average'),
@@ -946,25 +1091,20 @@ function residentsPanel(manageWorkers = false) {
     card(el('h3', {}, 'Population growth'), el('p', { class: 'population-growth', 'data-population-stat': 'growth' }, populationDescription()),
       note('At 0% happiness, population stays the same. Positive happiness attracts new residents; negative happiness causes departures. At least 6 residents always remain.'),
       el('div', { class: 'population-rate-table' }, ...[['Happiness', 'Change of 1 resident'], ['±25%', 'every 12 h'], ['±50%', 'every 6 h'], ['±75%', 'about every 1 h 43 min'], ['±100%', 'every 1 h']].map(([label, value]) => el('div', {}, el('span', {}, label), el('strong', {}, value)))),
-      note('Hours mean real elapsed time. Production, feeding, taxes, happiness, population and all delivery/building timers continue while the game is closed.'),
+      note('Hours mean real elapsed time. Production, feeding, happiness, population and all delivery/building timers continue while the game is closed.'),
       note('Food, employment and overcrowding change individual happiness over time. The next population change is estimated using the current population average.')),
-    el('p', { class: 'notice', 'data-lighthouse-bonus': '' }, lighthouseDescription()), note('Decorations and paths improve each resident’s happiness. Chapel and Lighthouse bonuses last for a limited time.'));
+    el('p', { class: 'notice', 'data-lighthouse-bonus': '' }, lighthouseDescription()), note('Attractions grant temporary happiness to selected residents. Upgraded paths improve transport. Chapel and Lighthouse bonuses last for a limited time.'));
 }
 function workplaceOverviewCard(id) {
-  const workers = el('span', {},
-    el('span', { 'data-worker-count': id }, state.buildings[id].workers), ' / ',
-    el('span', { 'data-worker-free': id }, freeWorkers(state)), ' / ',
-    el('span', { 'data-worker-limit': id }, workerLimit(state, id)));
-  const taxes = el('span', { 'data-workplace-tax': id }, hourlyCoins(activeCrew(id) * (state.chapelRemaining > 0 ? 2 : 1)));
-  return card(el('h3', {}, titleOf(id)),
-    el('div', { class: 'stat-grid' }, stat('Workers', workers), stat('Taxes per hour', taxes)),
+  return card(el('h3', {}, titleOf(id)), workerStat(id, true),
     button('View building', () => openPanel('building', id), { class: 'action secondary' }));
 }
+
 function workplaceCard(id, bulk = false) {
   const building = state.buildings[id];
   const content = card(el('h3', {}, titleOf(id)),
     !workplaceUnlocked(state, id) ? note(`Available from Town Hall level ${id === 'market' ? 2 : 4}.`) : null,
-    el('div', { class: 'stat-grid producer-summary' }, workerStat(id), stat('Taxes per hour', el('span', { 'data-workplace-tax': id }, hourlyCoins(activeCrew(id) * (state.chapelRemaining > 0 ? 2 : 1))))),
+    workerStat(id),
     el('p', { 'data-full-penalty': id, class: 'full-storage-status' }, fullPenaltyDescription(id)));
   if (bulk) content.append(el('div', { class: 'workforce-actions workforce-bulk-actions' },
     button('Assign to limit', () => adjustWorkforce(id, 'max'), { class: 'action secondary', disabled: freeWorkers(state) <= 0 || building.workers >= workerLimit(state, id), 'data-worker-building': id, 'data-worker-action': 'max', 'aria-label': `Assign to limit: ${titleOf(id)}` }),
@@ -978,13 +1118,21 @@ function adjustWorkforce(id, action) {
   const delta = action === 'clear' ? -building.workers : Math.min(freeWorkers(state), workerLimit(state, id) - building.workers);
   if (delta) perform({ type: 'assign', building: id, delta });
 }
-function taxDescription() {
-  const rate = taxRate(state);
-  if (!rate) return 'No residents are working, so no taxes are collected.';
-  const seconds = Math.max(0, Math.ceil((1 - state.taxProgress) * 3600 / rate));
-  const hours = Math.floor(seconds / 3600), minutes = Math.floor(seconds % 3600 / 60), remainder = seconds % 60;
-  return `Next tax coin in: ${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min ` : ''}${remainder} s.`;
+function activeEffectsPanel() {
+  const node = card(el('h3', {}, 'Active bonuses and penalties'), el('div', { class: 'active-effects-list', 'data-active-effects': '' }));
+  refreshActiveEffects(node);
+  return node;
 }
+function refreshActiveEffects(root = dialog) {
+  const rows = Effects.activeEffects(state);
+  root.querySelectorAll('[data-active-effects]').forEach(node => {
+    node.replaceChildren(...rows.map(effect => el('div', { class: `active-effect active-effect-${effect.polarity}`, 'data-effect': effect.id },
+      el('div', { class: 'active-effect-heading' }, el('strong', {}, effect.title), el('span', {}, effect.remaining == null ? 'Ongoing' : durationText(effect.remaining))),
+      el('p', {}, effect.effect), el('small', {}, `${effect.scope} · ${effect.remaining == null ? effect.endCondition : 'Until the timer ends'}`))));
+    if (!rows.length) node.append(el('p', { class: 'active-effects-empty' }, 'No active bonuses or penalties.'));
+  });
+}
+
 function housingPenaltyText() {
   const unhoused = unhousedResidents(state);
   return unhoused ? `−${unhoused} percentage points/h` : '0 percentage points/h';
@@ -1063,7 +1211,7 @@ function individualHappinessRules() {
       el('caption', {}, 'Hourly changes before housing, storage and temporary bonuses'),
       el('thead', {}, el('tr', {}, el('th', { scope: 'col' }, 'Resident state'), el('th', { scope: 'col' }, 'Change'))),
       el('tbody', {}, rows.map(([label, value]) => el('tr', {}, el('th', { scope: 'row' }, label), el('td', {}, value))))),
-    note('Hunger immediately halves production and transport, even during the grace period. Arrived, assigned workers keep paying 1 coin per hour during blockages. Timers continue offline.'));
+    note('Hunger immediately halves production and transport, even during the grace period. Timers continue offline.'));
 }
 function residentRoster() {
   const details = el('details', { class: 'island-rules resident-roster', 'data-resident-roster': '' },
@@ -1102,13 +1250,13 @@ function refreshResidentRosters() {
   });
 }
 function blessingDescription() {
-  const automatic = state.chapelRemaining > 0 ? `Upgrade bonus: ${durationText(state.chapelRemaining)} remaining, +${state.buildings.chapel.level * 10} happiness and taxes ×2.` : 'No active upgrade bonus.';
+  const automatic = state.chapelRemaining > 0 ? `Upgrade bonus: ${durationText(state.chapelRemaining)} remaining, +${state.buildings.chapel.level * 10} happiness.` : 'No active upgrade bonus.';
   const manual = state.blessingRemaining > 0 ? `Blessing: +20 happiness for ${durationText(state.blessingRemaining)}.` : `Uses remaining: ${Math.max(0, state.buildings.chapel.level - state.blessingsUsed)}.`;
   return `${automatic} ${manual}${state.paidBlessingCooldownRemaining > 0 ? ` Next paid blessing in ${durationText(state.paidBlessingCooldownRemaining)}.` : ''}`;
 }
 function blessingPanel() {
   return card(el('h3', {}, 'Chapel and blessings'),
-    note('Completing a Chapel upgrade gives everyone +10 happiness per new level and doubles taxes for 10 hours. Level 1 has no passive bonus.'),
+    note('Completing a Chapel upgrade gives everyone +10 happiness per new level for 10 hours. Level 1 has no passive bonus.'),
     el('p', { 'data-chapel-time': '', class: 'notice' }, blessingDescription()),
     note('A manual blessing grants +50 of every resource and +20 happiness to everyone for one hour. The Chapel level determines the total number of one-time uses. Only one manual blessing can be active at a time.'),
     button('Activate free blessing', () => perform({ type: 'blessing' }), { disabled: state.blessingRemaining > 0 || state.blessingsUsed >= state.buildings.chapel.level, 'data-blessing': '' }),
@@ -1134,9 +1282,19 @@ function marketPanel() {
     ...(state.market.orders || []).map(order => card(el('h3', {}, `Delivery to Market: ${nameOf(order.resource)}`), el('p', {}, `${count(order.amount)} remaining`), premiumTransportButton({ route: 'marketInbound', resource: order.resource }))),
     el('div', { class: 'panel-grid' }, rows));
 }
+function visibleNotifications() {
+  return state.notifications.map(item => ({ ...item, title: omitTaxInformation(item.title), message: omitTaxInformation(item.message) })).filter(item => item.title || item.message);
+}
+function omitTaxInformation(text = '') {
+  const value = String(text)
+    .replace(/\s+and\s+doubles?\s+taxes\s+for\s+(\d+\s+hours?)/gi, ' for $1')
+    .replace(/\s*(?:,?\s*and\s+)?taxes\s*×\s*2/gi, '');
+  return value.split(/(?<=[.!?])\s+/).filter(sentence => !/\btax(?:es)?\b/i.test(sentence)).join(' ').replace(/\s{2,}/g, ' ').trim();
+}
+
 function notificationsPanel() {
   return el('div', {}, button('Mark all as read', () => perform({ type: 'readNotifications' }), { class: 'action secondary' }),
-    state.notifications.length ? state.notifications.map(item => card(el('h3', {}, item.title), el('p', {}, item.message), el('small', {}, item.read ? 'Read' : 'New'))) : note('No notifications. Full-storage alerts will appear here.'));
+    visibleNotifications().length ? visibleNotifications().map(item => card(el('h3', {}, item.title), el('p', {}, item.message), el('small', {}, item.read ? 'Read' : 'New'))) : note('No notifications. Bonuses, penalties and storage alerts will appear here.'));
 }
 function quoteCoins(quote) { return Number(quote?.coins ?? quote?.price ?? quote?.totalCoins ?? NaN); }
 function quotedButton(label, quoteFn, action, attrs = {}) {
@@ -1229,7 +1387,7 @@ function projectDeliveryView(project) {
     el('span', {}, nameOf(id)), el('strong', { 'data-project-delivery': project.order, 'data-delivery-resource': id }, `${count(project.delivered?.[id] || 0)} / ${count(project.cost[id])}`))));
 }
 function premiumPanel() {
-  return el('div', {}, note('Premium uses the same coins as taxes, trade and expedition rewards. 1 PLN = 10 coins. Real-money purchases are not connected.'),
+  return el('div', {}, note('Premium uses coins earned through island activity, trade and expedition rewards. 1 PLN = 10 coins. Real-money purchases are not connected.'),
     el('div', { class: 'stat-grid' }, stat('Treasury', `${count(state.resources.coins)} coins`), stat('Construction package', premiumActive(state) ? 'Active' : 'Not active')),
     note('Building acceleration charges 1 coin per full minute saved, with a minimum of 5 coins. Choose 25%, 50%, 75% or instant completion. The current quoted price is shown before you choose.'),
     note('Instant transport costs 10 coins per necessary trip, including a partial last trip. Each material and each Harbor transport stage is priced separately.'),
@@ -1330,13 +1488,18 @@ function tasksPanel() {
 }
 
 function decorationsPanel() {
-  return el('div', {}, note('Decorations improve resident happiness. Each purchase is saved as part of your island progress.'),
-    el('div', { class: 'panel-grid' }, [['flowers', 'Flowers by the houses', 25], ['lamp', 'Path lamps', 40], ['bench', 'Village benches', 35]].map(([id, name, cost]) => card(el('h3', {}, name), el('p', {}, `Coins: ${cost} · owned: ${state.decorations?.[id] || 0}`), button('Add decoration', () => perform({ type: 'decorate', decoration: id }))))));
+  return el('div', {}, note('Five attractions are available in the bottom dock. Offers refresh every 24 hours. Each purchase grants its displayed happiness to the displayed residents for six hours.'),
+    note('Buying the same attraction repeatedly grants 100%, 75%, 50%, 25%, then 0% of its original benefit. A 24-hour break restores its full benefit.'),
+    button('View daily attractions', () => { closePanel(); setDockCategory('decorations'); }));
 }
+
 function pathsPanel() {
-  return el('div', {}, note('Connect the island districts. Each path upgrade costs 5 Wood and 10 Stone and adds 1 happiness point.'),
-    stat('Upgraded sections', state.paths || 0), button('Upgrade paths and bridge', () => perform({ type: 'path' })));
+  const summary = Leisure.roadSummary(state);
+  return el('div', {}, note('Upgrade 100 path sections through five levels. Each section upgrade costs 100 Stone and is immediate. All 100 sections must reach the previous level before you start the next.'),
+    stat('Completed path level', summary.level), stat('Carrier speed bonus', `+${summary.speedPercent}%`), stat('Carrier load bonus', `+${summary.capacityPercent}%`),
+    button('View path upgrades', () => { closePanel(); setDockCategory('paths'); }));
 }
+
 function effectiveAnimationsEnabled() { return !!state.settings.motion && (!matchMedia('(prefers-reduced-motion: reduce)').matches || state.settings.motionOverride === true); }
 function settingsPanel() {
   const checkbox = (key, label) => el('label', { class: 'setting-row' }, el('span', {}, label), el('input', { type: 'checkbox', checked: key === 'motion' ? effectiveAnimationsEnabled() : !!state.settings[key], onchange: event => perform({ type: 'setting', key, value: event.target.checked }) }));
@@ -1352,7 +1515,7 @@ function settingsPanel() {
 }
 
 function timePanel() {
-  return el('div', {}, stat('Island day', state.day), note('Island activity follows real elapsed time. Production, travel, transport, meals, taxes, happiness and construction continue offline.'), button('Town Hall', () => openPanel('building', 'townhall')));
+  return el('div', {}, stat('Island day', state.day), note('Island activity follows real elapsed time. Production, travel, transport, meals, happiness and construction continue offline.'), button('Town Hall', () => openPanel('building', 'townhall')));
 }
 
 function expeditionRun(id) { return state.expeditionRuns?.[id] || null; }

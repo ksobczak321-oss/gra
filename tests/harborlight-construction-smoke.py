@@ -15,6 +15,20 @@ MATERIALS=['wood','stone','grain','food','planks']
 NOW=datetime(2026,10,22,12,0,0,tzinfo=timezone.utc)
 errors=[]; failures=[]
 
+def employment_tax_rate(page):
+    # Tax remains an engine rule although the UI no longer displays it.
+    page.evaluate("window.dispatchEvent(new Event('pagehide'))")
+    return page.evaluate("""async key => {
+      const {taxRate} = await import('./harborlight-v1-state.js');
+      return taxRate(JSON.parse(localStorage.getItem(key)));
+    }""", 'harborlight-v1-interactive-save')
+
+
+def assert_storage(page, building, current, capacity, next_capacity):
+    for selector, value in [('data-local-current', current), ('data-local-capacity', capacity), ('data-local-next', next_capacity)]:
+        expect(page.locator(f'[{selector}="{building}"]')).to_have_text(format(value, ','))
+
+
 def fixture(level=2,workers=None,resources=None):
     buildings={id:{'level':0 if id=='lighthouse' else 1,'workers':(workers or {}).get(id,0),'ready':0,'workProgress':[]} for id in IDS}
     buildings['townhall']['level']=level; buildings['house']['level']=level; buildings['warehouse']['level']=level
@@ -54,7 +68,8 @@ with sync_playwright() as p:
         data['population']=23
         context,page=visit(browser,data,has_touch=True);open_building(page,'townhall')
         expect(page.locator('[data-population-stat="population"]')).to_have_text('23 / 48')
-        expect(page.locator('[data-population-stat="taxes"]')).to_have_text('5 coins/h')
+        expect(page.locator('[data-population-stat="taxes"]')).to_have_count(0)
+        assert employment_tax_rate(page) == 5
         expect(page.locator('[data-worker-building]')).to_have_count(0)
         expect(page.locator('[data-local-buffer]')).to_have_count(0)
         expect(page.locator('[data-upgrade-cost="wood"]')).to_have_text('100 / 1,000')
@@ -158,14 +173,15 @@ with sync_playwright() as p:
         state=saved(page);assert state['lighthouseRemaining']==172800;assert state['buildings']['lighthouse']['level']==2
         open_building(page,'farm')
         expect(page.locator('[data-local-rate]')).to_have_text('20 units/h')
-        page.clock.fast_forward(180000);expect(page.locator('[data-local-buffer="farm"]')).to_have_text('1 / 200 / 400')
+        page.clock.fast_forward(180000);assert_storage(page, 'farm', 1, 200, 400)
         context.close();print('PASS lighthouse completion: both bonuses for 48h at level2, actual doubled production, no tax multiplier')
 
         data=fixture(workers={'farm':1,'warehouse':1},resources=dict.fromkeys(MATERIALS,100))
         data['population']=12;data['constructionProjects']=[project('chapel',2)]
         context,page=visit(browser,data);open_building(page,'chapel');page.clock.fast_forward(1000)
         expect(page.locator('[data-hud="happiness"]')).to_have_text('+21%')
-        expect(page.locator('[data-hud="taxes"]')).to_have_text('Taxes: 4/h')
+        expect(page.locator('[data-hud="taxes"]')).to_have_count(0)
+        assert employment_tax_rate(page) == 4
         page.locator('[data-blessing]').click();state=saved(page)
         assert state['blessingsUsed']==1 and state['resources']['grain']==150
         expect(page.locator('[data-hud="happiness"]')).to_have_text('+41%')

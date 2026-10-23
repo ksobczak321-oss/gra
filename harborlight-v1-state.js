@@ -1,12 +1,14 @@
 // Economy and progression for the interactive approved-screen prototype.
 // Pure data module: browser UI and Node tests share the same rules.
-import { MATERIAL_IDS, PRODUCTION_RECIPES, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction } from './harborlight-v1-logistics.js?v=frontend-v11';
-export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty } from './harborlight-v1-logistics.js?v=frontend-v11';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction } from './harborlight-v1-logistics.js?v=frontend-v12';
+export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty } from './harborlight-v1-logistics.js?v=frontend-v12';
 
-import { normalizeResidents, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, nextResidentEvent, settleResidentEvents, residentVisitAction, removeResidentForDeparture } from './harborlight-v1-residents.js?v=frontend-v11';
-export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v11';
+import { normalizeResidents, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, nextResidentEvent, settleResidentEvents, residentVisitAction, removeResidentForDeparture } from './harborlight-v1-residents.js?v=frontend-v12';
+export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v12';
 
-import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction } from './harborlight-v1-activities.js?v=frontend-v11';
+import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction } from './harborlight-v1-activities.js?v=frontend-v12';
+import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v12';
+import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v12';
 
 export const RESOURCES = {
   coins: { name: 'Coins', short: 'coins', symbol: '◉', price: 1 },
@@ -26,14 +28,14 @@ export const BUILDINGS = {
   farm: { name: 'Farm', description: 'Each farmer produces 10 grain per working hour. Harvests wait in the farm storage until warehouse workers collect them.', cost: { coins: 80, wood: 30, stone: 10 }, resource: 'grain', rate: 10, maxLevel: MAX_BUILDING_LEVEL },
   sawmill: { name: 'Sawmill', description: 'Each worker produces 10 planks per hour. Each plank requires 2 wood from the central warehouse.', cost: { coins: 120, wood: 45, stone: 25 }, resource: 'planks', rate: 10, input: 'wood', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
   quarry: { name: 'Quarry', description: 'Each quarry worker produces 10 stone per working hour. Stone waits at the quarry for transport.', cost: { coins: 150, wood: 35, stone: 20 }, resource: 'stone', rate: 10, maxLevel: MAX_BUILDING_LEVEL },
-  dock: { name: 'Harbor', description: 'Connects the island to trade and expeditions. Assigned workers pay employment taxes.', cost: { coins: 200, wood: 60, planks: 25 }, maxLevel: MAX_BUILDING_LEVEL },
+  dock: { name: 'Harbor', description: 'Connects the island to trade and expeditions.', cost: { coins: 200, wood: 60, planks: 25 }, maxLevel: MAX_BUILDING_LEVEL },
   warehouse: { name: 'Warehouse', description: 'Each warehouse worker carries up to 60 items per five-minute round trip at level 1. Level 1 holds 1,000 of each material and 4,000 in total. Each additional level increases both limits by 50%.', cost: { coins: 160, wood: 35, stone: 30, planks: 15 }, maxLevel: MAX_BUILDING_LEVEL },
-  lighthouse: { name: 'Lighthouse', description: 'Completing a level sets everyone’s happiness to 100% and doubles material production for 24 hours × the new level. Taxes are unchanged. Construction takes four times as long as transport.', cost: { coins: 300, planks: 30 }, maxLevel: MAX_BUILDING_LEVEL },
+  lighthouse: { name: 'Lighthouse', description: 'Completing a level sets everyone’s happiness to 100% and doubles material production for 24 hours × the new level. Construction takes four times as long as transport.', cost: { coins: 300, planks: 30 }, maxLevel: MAX_BUILDING_LEVEL },
   lumber: { name: 'Lumber Camp', description: 'Each lumberjack produces 10 wood per working hour. Wood waits in local storage for transport.', cost: { coins: 90, wood: 25, stone: 15 }, resource: 'wood', rate: 10, maxLevel: MAX_BUILDING_LEVEL },
   windmill: { name: 'Windmill', description: 'Each miller produces 10 food per hour. Each food requires 2 grain from the central warehouse.', cost: { coins: 140, wood: 40, stone: 20, planks: 15 }, resource: 'food', rate: 10, input: 'grain', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
   townhall: { name: 'Town Hall', description: 'The Town Hall determines the island level and the upgrade limit for other buildings. Each level allows 24 residents; the House provides their housing.', cost: { coins: 240, wood: 50, stone: 50, planks: 20 }, maxLevel: MAX_BUILDING_LEVEL },
-  chapel: { name: 'Chapel', description: 'Completing an upgrade grants +10 happiness × the new level and doubles taxes for 10 hours. Separate one-use blessings give +50 of every resource and +20 happiness for one hour.', cost: { coins: 180, wood: 20, stone: 60, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
-  market: { name: 'Market', description: 'Merchants exchange goods. Assigned workers pay employment taxes.', cost: { coins: 130, wood: 35, stone: 15 }, maxLevel: MAX_BUILDING_LEVEL }
+  chapel: { name: 'Chapel', description: 'Completing an upgrade grants +10 happiness × the new level for 10 hours. Separate one-use blessings give +50 of every resource and +20 happiness for one hour.', cost: { coins: 180, wood: 20, stone: 60, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
+  market: { name: 'Market', description: 'Merchants exchange goods without coins.', cost: { coins: 130, wood: 35, stone: 15 }, maxLevel: MAX_BUILDING_LEVEL }
 };
 
 // Alias used by view components when presenting production summaries.
@@ -92,6 +94,8 @@ export function createState(now = Date.now()) {
   normalizeResidents(state, { version: 6 });
   normalizeActivities(state, {});
   normalizeHouseHappiness(state, {});
+  normalizeLeisure(state, state);
+  normalizeEffectNotifications(state);
   return state;
 }
 
@@ -317,7 +321,7 @@ function advancePopulation(state, elapsedSeconds) {
     const rankingTime = state.nextRankingAt > state.worldTimeMs ? (state.nextRankingAt - state.worldTimeMs) / 1000 : Infinity;
     const houseTime = nextHouseHappinessEvent(state);
     const premiumTime = state.premium?.expiresAt > state.worldTimeMs ? (state.premium.expiresAt - state.worldTimeMs) / 1000 : Infinity;
-    let duration = Math.min(remaining, boundaryTime, segment.nextEvent, nextResidentEvent(state), logisticsEvent, nextActivitiesEvent(state), foodTime, taxFundingTime, rankingTime, premiumTime, houseTime,
+    let duration = Math.min(remaining, boundaryTime, segment.nextEvent, nextResidentEvent(state), logisticsEvent, nextActivitiesEvent(state), nextLeisureEvent(state), foodTime, taxFundingTime, rankingTime, premiumTime, houseTime,
       state.chapelRemaining > 0 ? state.chapelRemaining : Infinity,
       state.blessingRemaining > 0 ? state.blessingRemaining : Infinity,
       state.paidBlessingCooldownRemaining > 0 ? state.paidBlessingCooldownRemaining : Infinity,
@@ -349,6 +353,7 @@ function advancePopulation(state, elapsedSeconds) {
     if (state.buildings.chapel.level === previousChapelLevel) state.chapelRemaining = countdown(state.chapelRemaining, duration);
     if (state.buildings.lighthouse.level === previousLighthouseLevel) state.lighthouseRemaining = countdown(state.lighthouseRemaining, duration);
     advanceResidents(segment, duration);
+    advanceLeisure(state, duration);
     if (!previouslyForcedLighthouse && state.lighthouseSnapshotActive && state.buildings.lighthouse.level !== previousLighthouseLevel) {
       for (const person of state.residents) person.globalLighthouseSnapshot = person.happiness;
     }
@@ -371,6 +376,7 @@ function advancePopulation(state, elapsedSeconds) {
     settleResidentEvents(state);
     updateHappiness(state);
     syncPopulationProgress(state);
+    syncEffectNotifications(state);
     remaining = Math.max(0, remaining - duration);
   }
 }
@@ -471,9 +477,11 @@ export function normalizeState(raw, now = Date.now()) {
   state.ranking = raw.ranking && typeof raw.ranking === 'object' ? { score: integer(raw.ranking.score, 0, 0, Number.MAX_SAFE_INTEGER), level: integer(raw.ranking.level, state.buildings.townhall.level, 1, MAX_BUILDING_LEVEL), coins: integer(raw.ranking.coins, state.resources.coins, 0, Number.MAX_SAFE_INTEGER), at: amount(raw.ranking.at, state.worldTimeMs, Number.MAX_SAFE_INTEGER) } : { score: Math.min(Number.MAX_SAFE_INTEGER, state.buildings.townhall.level * state.resources.coins), level: state.buildings.townhall.level, coins: state.resources.coins, at: state.worldTimeMs };
   normalizeActivities(state, raw);
   normalizeHouseHappiness(state, raw);
+  normalizeLeisure(state, raw);
   settleResidentEvents(state);
   updateStorageStatus(state);
   updateHappiness(state);
+  normalizeEffectNotifications(state);
   return state;
 }
 
@@ -583,6 +591,7 @@ function manualHouseHappiness(state, action) {
     if (total > pool.points) return bad('Not enough House points to give this amount to everyone.');
     for (const { person, points } of allocations) person.happiness = Math.min(100, person.happiness + points);
     pool.points -= total;
+    notify(state, 'house-happiness', 'House happiness distributed', `${total} happiness points were given to ${eligible.length} residents.`);
     return good(`Distributed ${total} House happiness points.`);
   }
   const person = state.residents.find(person => person.id === action.residentId);
@@ -592,6 +601,7 @@ function manualHouseHappiness(state, action) {
   const used = Math.min(amountRequested, Math.ceil(100 - person.happiness));
   if (used > pool.points) return bad('Not enough happiness points remain in the House pool.');
   person.happiness = Math.min(100, person.happiness + used); pool.points -= used;
+  notify(state, 'house-happiness', 'House happiness distributed', `Resident ${person.id} received ${used} happiness points.`);
   return good(`Resident ${person.id} received ${used} happiness points.`);
 }
 
@@ -666,12 +676,13 @@ export function act(state, action, now = Date.now()) {
   const id = action.building;
   if (['build', 'upgrade', 'collect', 'assign', 'craft'].includes(action.type) && !owns(BUILDINGS, id)) return bad('This building does not exist.');
   let result = residentVisitAction(state, action);
+  if (result === null) result = leisureAction(state, action);
   if (result === null) result = logisticsAction(state, action, state.worldTimeMs);
   if (result === null) result = activityAction(state, action, { buildingCost, requestUpgrade: request => requestUpgrade(state, request), expeditions: EXPEDITIONS });
   if (result !== null) {
     if (result.ok) {
       if (action.type === 'premiumAccelerate') for (const project of [...state.constructionProjects]) if (project.stage === 'building' && project.buildRemaining <= 1e-8) finishConstruction(state, project);
-      updateStorageStatus(state); updateHappiness(state); syncPopulationProgress(state); state.lastActionAt = integer(now, state.lastActionAt, 0, Number.MAX_SAFE_INTEGER); }
+      updateStorageStatus(state); updateHappiness(state); syncPopulationProgress(state); syncEffectNotifications(state); state.lastActionAt = integer(now, state.lastActionAt, 0, Number.MAX_SAFE_INTEGER); }
     return result;
   }
   switch (action.type) {
@@ -802,25 +813,10 @@ export function act(state, action, now = Date.now()) {
     }
     case 'expeditionComplete': return bad('Start an expedition run and submit its completed route before claiming a reward.');
     case 'decorate': {
-      const costs = { flowers: 25, lamp: 40, bench: 35 };
-      if (!owns(costs, action.decoration)) return bad('This decoration does not exist.');
-      if (state.decorations[action.decoration] >= 100) return bad('The limit for this decoration has been reached.');
-      if (!canAfford(state, { coins: costs[action.decoration] })) return bad('Not enough coins for this decoration.');
-      spend(state, { coins: costs[action.decoration] });
-      state.decorations[action.decoration] += 1;
-      adjustResidentHappiness(state, 1);
-      result = good('Decoration added. The island looks even better!');
-      break;
+      return bad('Choose one of the five daily attractions in Decorations.');
     }
     case 'path': {
-      if (state.paths >= 100) return bad('All paths have already been upgraded.');
-      const cost = { stone: 10, wood: 5 };
-      if (!canAfford(state, cost)) return bad('A path requires 10 stone and 5 wood.');
-      spend(state, cost);
-      state.paths += 1;
-      adjustResidentHappiness(state, 1);
-      result = good('A new path now connects the settlement.');
-      break;
+      return act(state, { type: 'upgradeRoad', ...(action.level !== undefined ? { level: action.level } : {}) }, now);
     }
     case 'pause':
     case 'speed':
@@ -837,6 +833,7 @@ export function act(state, action, now = Date.now()) {
   updateStorageStatus(state);
   updateHappiness(state);
   syncPopulationProgress(state);
+  syncEffectNotifications(state);
   state.lastActionAt = integer(now, state.lastActionAt, 0, Number.MAX_SAFE_INTEGER);
   return result;
 }

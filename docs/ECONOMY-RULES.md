@@ -1,6 +1,6 @@
 # Uzgodnione reguły gospodarki HARBORLIGHT
 
-Stan: 2026-10-23, lokalny prototyp, schemat zapisu 8. Źródłem bazowym są HARBORLIGHT6 i decyzje D01–D17 z [HARBORLIGHT7-zasady.xlsx](arkusze/HARBORLIGHT7-zasady.xlsx), uzupełnione późniejszym pakietem frontendu zatwierdzonym „go”. Najnowsza rozmowa zmieniła lokalną pojemność na zależną od samego producenta; limit pracy nadal wynika z własnego poziomu danego miejsca pracy. Oryginalnego arkusza 7 nie zmieniano. Wcześniejsze wpisy dziennika zachowują historyczne reguły i wyniki publikacji. Bieżące sprawdzenia oraz stan wdrożenia zapisujemy w [dzienniku](IMPLEMENTATION-LOG.md).
+Stan: 2026-10-23, lokalny prototyp, schemat zapisu 8. Bazą są HARBORLIGHT6 i decyzje D01–D17 z [HARBORLIGHT7-zasady.xlsx](arkusze/HARBORLIGHT7-zasady.xlsx). Bieżący [HARBORLIGHT8-zasady.xlsx](arkusze/HARBORLIGHT8-zasady.xlsx) zbiera również oba pakiety frontendu i późniejsze „go”: atrakcje, ścieżki, efekty, prezentację zasobów, nowy profil startowy i bonus po zadaniu. Arkusz 7 pozostaje niezmieniony. Lokalna pojemność zależy od własnego poziomu producenta; limit pracy nadal od własnego poziomu miejsca pracy. Wcześniejsze wpisy dziennika zachowują historyczne reguły i wyniki publikacji. Bieżące sprawdzenia oraz stan wdrożenia zapisujemy w [dzienniku](IMPLEMENTATION-LOG.md).
 
 ## Czas i start
 
@@ -8,13 +8,13 @@ Wszystkie mechaniki używają rzeczywistego czasu, również przy ukrytej karcie
 
 Nowa wyspa: ratusz 1, dom 1, 12 osób w domu, **0 pracowników**, szczęście 0%, po 100 monet, drewna, kamienia, zboża, żywności i desek. Startowa dwunastka nie podlega blokadzie szczęścia noworodków. Starszy zapis zachowuje istniejący postęp; migracja do schematu 8 rozpoczyna nowy model czasu od chwili migracji, bez dopisywania nieznanej historii offline.
 
-Wyłącznie dla testowania budowy w tej piaskownicy aktualizacja ma jednorazowo uzupełnić materiały centralne przy następnym otwarciu. Oba limity pojemności obowiązują. Saldo monet jest uzupełniane do minimum **10 000**, bez obniżania większego salda; poziomy i istniejący postęp pozostają zachowane. Zapisane wykonanie uniemożliwia ponowny grant po samym odświeżeniu. Zwykła reguła startu po 100 pozostaje odrębna.
+Wyłącznie dla testowania budowy w tej piaskownicy aktualizacja ma jednorazowo uzupełnić materiały centralne przy następnym otwarciu. Oba limity pojemności obowiązują. Saldo monet jest uzupełniane do minimum **10 000**, bez obniżania większego salda; poziomy i istniejący postęp pozostają zachowane. Zapisane wykonanie uniemożliwia ponowny grant po samym odświeżeniu. Zwykła reguła startu po 100 pozostaje odrębna. Link `harborlight-v1-layered.html?profile=new-player` używa oddzielnego klucza `harborlight-v1-new-player-save`, pomija testowy grant i zachowuje dotychczasowy profil `harborlight-v1-interactive-save`. Pierwsze wejście zakłada wyspę startową, kolejne kontynuują jej postęp; reset dotyczy wybranego profilu.
 
 Poziom ratusza jest poziomem gry i maksymalnym poziomem pozostałych budynków. Limit populacji wynosi `24 × poziom ratusza`, miejsca mieszkalne `24 × poziom domu`. Minimum populacji to 6; techniczne maksimum poziomu wynosi 100.
 
 ## Człowiek, praca i podatki
 
-Każda osoba ma trwałe ID, indywidualne szczęście, stan miejsca pobytu i własne liczniki. Dokładnie osiem miejsc pracy: farma, młyn, drwale, tartak, kamieniołom, magazyn, targ i przystań. Limit każdego miejsca pracy to **12 × własny poziom budynku**. Ratusz nadal ogranicza rozbudowę budynku; liczba wolnych osób w domu ogranicza rzeczywisty nowy przydział. W panelu są trzy liczby: przypisani / wolni w domu / limit, a podatek dotyczy tego miejsca pracy. Ratusz, dom, kaplica i latarnia nie zatrudniają.
+Każda osoba ma trwałe ID, indywidualne szczęście, stan miejsca pobytu i własne liczniki. Dokładnie osiem miejsc pracy: farma, młyn, drwale, tartak, kamieniołom, magazyn, targ i przystań. Limit każdego miejsca pracy to **12 × własny poziom budynku**. Ratusz nadal ogranicza rozbudowę budynku; liczba wolnych osób w domu ogranicza rzeczywisty nowy przydział. W panelu są trzy liczby z podpisami Assigned / Free at home / Max workers: przypisani / wolni w domu / limit. Najnowsza decyzja usuwa wszelkie informacje o podatku z interfejsu, także nagłówka, kart budynków i zarządzania pracownikami. Zasady samego naliczania opisane poniżej pozostają zachowane. Ratusz, dom, kaplica i latarnia nie zatrudniają.
 
 Manage all workers jest zbiorczym narzędziem otwieranym wyłącznie z domu. Globalny Residents pokazuje informacje o mieszkańcach i kieruje do domu, a w poszczególnych miejscach pracy pozostają własne małe −/+. To organizacja dostępu w interfejsie, bez zmiany limitów, kosztów czy czasu dojścia.
 
@@ -69,15 +69,15 @@ Wydajność nakarmionego pracownika na kolejnych poziomach producenta wynosi **1
 | Młyn | 2 zboża | 1 żywność |
 | Tartak | 2 drewna | 1 deska |
 
-Lokalny skład producenta mieści `200 × własny poziom producenta`. Rozbudowa ratusza sama nie zwiększa już jego bufora. Pojemność w panelu to zapas / obecny limit / limit po następnym ulepszeniu; przy poziomie 1 przykład wynosi 50 / 200 / 400. Zboże i drewno muszą przejść przez centralę przed przetworzeniem. Nie ma ręcznego odbioru omijającego transport. Produkcyjny status podaje, dlaczego budynek pracuje lub czeka, oraz najbliższy produkt, liczbę sztuk i czas odłożenia do lokalnego magazynu.
+Lokalny skład producenta mieści `200 × własny poziom producenta`. Rozbudowa ratusza sama nie zwiększa już jego bufora. Pojemność w panelu to zapas / obecny limit / limit po następnym ulepszeniu; przy poziomie 1 przykład wynosi 50 / 200 / 400, z podpisami In stock / Current cap. / Next level cap. Mniejszy Level jest po lewej, Storage po prawej, a Workers pod Storage. Zboże i drewno muszą przejść przez centralę przed przetworzeniem. Nie ma ręcznego odbioru omijającego transport. Produkcyjny status podaje, dlaczego budynek pracuje lub czeka, oraz najbliższy produkt, liczbę sztuk i czas odłożenia do lokalnego magazynu.
 
-Resources w dolnym pasku ma dokładnie pięć kart produktów: Wood, Planks, Stone, Grain, Food. Każda otwiera panel właściwego producenta. Górny znacznik liczy osoby już przybyłe i faktycznie pracujące bez blokady; dolny pokazuje wolne osoby w domu / dotychczasowy limit zakładu. Ten widok nie zmienia receptur ani normy wymagań zadań. Monety są walutą skarbca, bez osobnej karty produktu w tym pasku.
+Resources w dolnym pasku ma dokładnie pięć kart produktów: Wood, Planks, Stone, Grain, Food. Każda otwiera panel właściwego producenta. Górny znacznik liczy osoby już przybyłe i faktycznie pracujące bez blokady; dolny pokazuje ilość produktu w lokalnym składzie producenta / ilość tego samego produktu w magazynie głównym. Nie jest to obsada ani pojemność. Ten widok nie zmienia receptur ani normy wymagań zadań. Monety są walutą skarbca, bez osobnej karty produktu w tym pasku.
 
-Pełny kurs z powrotem trwa **5 minut**, a głodnemu pracownikowi efektywnie 10 minut. Każdy kurs niesie jeden rodzaj materiału; pracownik zabiera dostępny częściowy ładunek i nie czeka na zapełnienie. Ładunek magazynu, targu i portu to `floor(60 × 1,1^(własny poziom−1))`: 60, 66, 72… Jedna osoba na poziomie 1 może wykonać 12 kursów, czyli przewieźć do 720 szt./h przy stale pełnych ładunkach. Dawne 60 szt./h zastąpiono tym modelem.
+Bazowy pełny kurs z powrotem trwa **300 sekund**. Przy ukończonym poziomie ścieżek `R` i współczynniku jedzenia `F` równym 1 albo 0,5 czas wynosi `300 / ((1 + 0,1R) × F)`. Każdy kurs niesie jeden rodzaj materiału; pracownik zabiera dostępny częściowy ładunek i nie czeka na zapełnienie. Bazowy ładunek magazynu, targu i portu to `floor(60 × 1,1^(własny poziom−1))`: 60, 66, 72… Po premii ścieżek ładunek wynosi `floor(bazowy ładunek × (1 + 0,1 × max(0,R−2)))`. Bez premii ścieżek jedna nakarmiona osoba na poziomie 1 może wykonać 12 kursów i przewieźć do 720 szt./h przy stale pełnych ładunkach. Dawne 60 szt./h zastąpiono tym modelem.
 
 Kursy liczymy jako **sumę `ceil(ilość danego materiału / ładunek)`**, nie sufit sumy wszystkich materiałów. Przykład: 61 drewna i 1 kamień przy ładunku 60 wymagają 3 kursów. Domyślnie zaopatrzenie centrali poprzedza budowy; można wskazać konkretną budowę. Ratunkowy Food ma pierwszeństwo. Towar opuszcza źródło przy zabraniu i staje się dostępny w celu po zakończeniu kursu. Panel Warehouse pokazuje każdego magazyniera, ładunek, trasę i pozostały czas; wolna osoba jest oznaczona jako oczekująca.
 
-Użytkownik wybiera do trzech materiałów jako podświetlone priorytety 1/2/3. Podział dziesięciu rzeczywistych kursów wynosi:
+Użytkownik wybiera najwyżej trzy podświetlone priorytety 1/2/3 spośród materiałów oraz osobnej pozycji Construction. Construction kieruje przypadające mu kursy na dostępne materiały aktywnych budów; zajmuje jedno z tych samych trzech miejsc. Dotychczasowe priorytety materiałowe i ratunkowa żywność zachowują zasady. Podział dziesięciu rzeczywistych kursów wynosi:
 
 | Liczba priorytetów | Przydział kursów |
 | --- | --- |
@@ -88,6 +88,52 @@ Użytkownik wybiera do trzech materiałów jako podświetlone priorytety 1/2/3. 
 Liczymy także ostatni niepełny kurs. Jeżeli wskazany towar nie jest gotowy albo nie ma dla niego miejsca, magazynier podejmuje inny dostępny przewóz; priorytet nie zatrzymuje całej załogi. Ładunki i stan rozdziału muszą przetrwać wczytanie bez ponownego zabierania towaru.
 
 Zgodnie z doprecyzowaniem użytkownika wybór **nie wygasa po 10 kursach**. Podział powtarza się w kolejnych dziesiątkach, dopóki gracz nie zmieni priorytetów. Stan bieżącego bloku oraz losowania jest zapisywany, aby ponowne wczytanie nie zaczynało stale od priorytetu 1.
+
+## Atrakcje: dekoracje i wydarzenia
+
+Decorations przełącza cały dolny pasek na **pięć kart**, bez otwierania dawnego okna. Pula ma 20 atrakcji, a zestaw zmienia się co 24 h rzeczywistego czasu, również offline. Wylosowana oferta i jej Y pozostają zapisane; odświeżenie nie losuje nowej ceny ani nie odnawia czasu.
+
+Dla oferty losujemy całkowite `Y` od 5 do 100. `L` oznacza bieżący poziom ratusza. Cena wynosi `Y × L` monet, a podstawowy efekt `+Y` pp szczęścia dla `L` osób na 6 h. Każdy zakup ma własny zegar. Premie różnych zakupów mogą się sumować, z indywidualnym ograniczeniem szczęścia do ±100% przed obliczeniem średniej wyspy. Obliczenia zachowują ułamki; ekran zaokrągla szczęście w górę do pełnych procentów.
+
+Przyzwyczajenie jest **osobne dla każdego rodzaju atrakcji**: kolejne zakupy mają mnożniki 100%, 75%, 50%, 25%, następnie 0% podstawowej premii. Cena pozostaje `Y × L`; przy 0% zakup jest zablokowany bez pobrania monet. Pełna skuteczność wraca po 24 h bez kupowania tej atrakcji, licząc od ostatniego skutecznego zakupu; codzienna wymiana ofert nie zeruje jej licznika.
+
+Wybór odbiorców jest doprecyzowaniem implementacji: najpierw osoby o najmniejszym bieżącym efektywnym szczęściu, potem stabilne ID przy remisie. Osoby z zamrożonym 0% przez pierwsze 24 h nie otrzymują premii. Gdy uprawnionych jest mniej niż `L`, efekt obejmuje dostępną liczbę; gdy nie ma żadnej, zakup jest niedostępny. Żaden zakup nie usuwa istniejącej historii kar.
+
+| Dekoracje | Wydarzenia |
+| --- | --- |
+| Flower beds | Travelling circus |
+| Village benches | Theatre troupe |
+| Lantern strings | Folk concert |
+| Harbor flags | Puppet show |
+| Village fountain | Harvest festival |
+| Garden pond | Fishing contest |
+| Wooden sculptures | Storytelling evening |
+| Seaside mural | Village dance |
+| Lighthouse garden | Fireworks night |
+| Ornamental sails | Harbor fair |
+
+## Ścieżki i premie transportu
+
+Wyspa ma **100 odcinków**, zaczynających od poziomu 0 i ulepszanych najwyżej do 5. Paths przełącza dolny pasek na pięć kafelków poziomów z postępem, np. 37 / 100. Kliknięcie ulepsza jeden odcinek do wskazanego dostępnego poziomu za **100 kamienia z magazynu głównego**, natychmiast. Kolejny poziom jest zablokowany, dopóki wszystkie 100 odcinków nie osiągną poprzedniego.
+
+Premia wynika z **najniższego poziomu wszystkich odcinków**, więc 99 odcinków poziomu 1 nie daje jeszcze premii poziomu 1. Cały poziom kosztuje 10 000 kamienia, pięć poziomów 50 000. Wcześniej opłacone odcinki starszego zapisu są zachowywane przy migracji zamiast kasowania zakupów.
+
+| Ukończony poziom wszystkich ścieżek R | Szybkość kursów | Ładowność tragarzy |
+| --- | --- | --- |
+| 0 | Bez premii | Bez premii |
+| 1 | +10% | Bez premii |
+| 2 | +20% | Bez premii |
+| 3 | +30% | +10% |
+| 4 | +40% | +20% |
+| 5 | +50% | +30% |
+
+Szybkość +10% oznacza czas podzielony przez 1,1, nie odjęcie 10% czasu. Premie dotyczą fizycznych kursów tragarzy magazynu, targu i portu, również dowozu budowy. Nie przyspieszają produkcji, pięciominutowego dojścia/powrotu mieszkańca ani rejsu statku. Głód nadal mnoży wydajność przewozu przez 0,5. Ładunek już zabrany pozostaje zachowany; większa pojemność dotyczy kolejnych załadunków.
+
+## Widoczność premii i kar
+
+Na górze karty Town Hall jest aktualna lista efektów, niezależnie od źródła: błogosławieństwa, kaplica, latarnia, wizyty, atrakcje i przyzwyczajenie, ścieżki, pakiet budowlany, jedzenie/praca, głód, bezrobocie, przestoje, przeludnienie i ograniczenia nowych osób. Każdy wpis wskazuje źródło, wartość, zakres mieszkańców lub mechanikę, pozostały czas albo warunek zakończenia. Informacje o podatku pozostają ukryte w interfejsie także przy opisie kaplicy.
+
+Uruchomienie, istotna zmiana wartości lub zakresu oraz koniec efektu trafiają do Notifications. Zmiana samej odliczanej sekundy nie tworzy kolejnego powiadomienia. Pierwsze odtworzenie zapisu nie dopisuje ponownie historii aktywacji. Natychmiastowe przyznania punktów domu i nagród mają swoje zdarzenia; nie są udawane jako bonus z pozostałym czasem.
 
 ## Magazyn, targ i port
 
@@ -129,13 +175,13 @@ Kaplica ma **zatwierdzony**, pełnoprawny koszt: 1→2 to 360 monet, 40 drewna, 
 
 Zwykłe zlecenie rezerwuje od razu pełny koszt z centrali i skarbca, z zachowaniem rezerwy Food. Lokalny towar nie opłaca budowy przed dostawą. Zlecenie trafiające do kolejki kosztuje **+10% każdego składnika, zaokrąglone w górę**. Dopłata zwiększa również ilość przewożonych materiałów.
 
-`T` oznacza rzeczywisty czas transportu materiałów tej budowy. Standard: transport `T` + budowanie `T` = `2T`. Latarnia: `T + 4T = 5T`. Kaplica: `T + 3T × (N−1)`, czyli 4T, 7T, 10T dla docelowych poziomów 2, 3, 4. Monety nie jadą na budowę. Przy stałych nakarmionych `W` tragarzach i gotowych materiałach minimum transportu wynosi `ceil(suma kursów / W) × 5 min`. Faktyczne `T` uwzględnia obsadę, priorytety i blokady; ETA aktualizuje się po ich zmianie. Czas samej budowy opiera się na zakończonym przewozie. Zbieranie surowców, wcześniejsze rozbudowy i oczekiwanie w kolejce są poza takim zestawieniem czasu transport + budowa.
+`T` oznacza rzeczywisty czas transportu materiałów tej budowy. Standard: transport `T` + budowanie `T` = `2T`. Latarnia: `T + 4T = 5T`. Kaplica: `T + 3T × (N−1)`, czyli 4T, 7T, 10T dla docelowych poziomów 2, 3, 4. Monety nie jadą na budowę. Przy stałych nakarmionych `W` tragarzach, gotowych materiałach i poziomie ścieżek `R` minimum transportu wynosi `ceil(suma kursów / W) × 300 / (1 + 0,1R)` sekund. Ładunek użyty do wyznaczenia liczby kursów także uwzględnia ścieżki. Faktyczne `T` uwzględnia obsadę, priorytety i blokady; ETA aktualizuje się po ich zmianie. Czas samej budowy opiera się na zakończonym przewozie. Zbieranie surowców, wcześniejsze rozbudowy i oczekiwanie w kolejce są poza takim zestawieniem czasu transport + budowa.
 
 Ratusz `L` daje `L` aktywnych budów oraz `L` opłaconych miejsc kolejki. Nowy poziom i jego skutki działają po ukończeniu. Przed większą rozbudową trzeba zapewnić pojemność magazynu dla całego kosztu i rezerwy Food; zależność od wcześniejszej rozbudowy magazynu jest zamierzona.
 
 Zarządzanie Construction and queue oraz licznik zajętości są dostępne wyłącznie w ratuszu. Każdy budynek nadal pozwala zamówić własną rozbudowę. U pięciu producentów obok Upgrade są małe, oddzielne Delivery time i Building time oraz ramka Premium z dwoma głównymi przyciskami, w obrębie Building upgrade. Opisy monet, usług i sposobu rozbudowy są pod „i” rozbudowy; osobna dolna sekcja Premium building options jest usunięta z producentów. Brak drogi, materiałów lub magazynierów nie jest wyświetlany jako natychmiastowa budowa.
 
-Estymator odtwarza bieżący plan dostaw na kopii stanu: uwzględnia priorytety, ładunki już w drodze, dostępność i dojście magazynierów oraz konkurujące przewozy. Nie zużywa prawdziwych zasobów ani nie zmienia losowania. Podaje oddzielnie transport i budowę przy obecnych warunkach pracy; zbieranie oraz oczekiwanie w kolejce nie wchodzą do tych dwóch czasów. Ograniczona symulacja albo niemożliwa dostawa daje opis przyczyny zamiast fałszywego zera.
+Estymator odtwarza bieżący plan dostaw na kopii stanu: uwzględnia priorytety, ładunki już w drodze, dostępność i dojście magazynierów oraz konkurujące przewozy. Nie zużywa prawdziwych zasobów ani nie zmienia losowania. Podaje oddzielnie transport i budowę przy obecnych warunkach pracy; zbieranie oraz oczekiwanie w kolejce nie wchodzą do tych dwóch czasów. Ograniczona symulacja albo niemożliwa dostawa daje opis przyczyny zamiast fałszywego zera. Etykieta trwającej budowy na wyspie ma dwa wiersze: Transport · ETA i Construction · ETA. Pierwszy dotyczy pozostałego dowozu, drugi fazy budowania; przy ukończonym transporcie nie sugeruje się dalszego przewozu.
 
 ## Kaplica i latarnia
 
@@ -167,6 +213,8 @@ Kliknięcie przyjęcia przed upływem 15 s zapisuje ×3; od 15 s do przed 5 min 
 
 Każdy z trzech łańcuchów ma osobny termin. Przed pierwszym ukończeniem zadania mają 6 h. Pierwsze ukończenie zapisuje stałą dobową godzinę odnowienia danego łańcucha w Europe/Warsaw; następny termin wypada o tej godzinie kolejnego dnia. Kolejne zadanie po ukończeniu pojawia się od razu. Powrót offline nie odnawia okna reakcji ×3 ani nie zwraca przeterminowanych wpłat.
 
+Po ukończeniu zadania pojawia się dostępny popup z fajerwerkami i propozycją Share your achievement. Telefon otrzymuje krótką wibrację, jeśli przeglądarka wspiera tę funkcję; dostępność wibracji nie warunkuje nagrody. Share on Facebook przyznaje **500 dodatkowych monet raz na ukończone zadanie**, zgodnie z osobną odpowiedzią użytkownika. Skip zachowuje pełną zwykłą nagrodę bez dodatkowych monet. Stan obsłużenia i przyznania jest zapisywany, aby odświeżenie albo ponowne kliknięcie nie powielały premii. Nie ma integracji Facebook, potwierdzania publikacji ani wysyłania posta; jest to lokalny bonus za kliknięcie w prototypie.
+
 ## Ekspedycje, ranking i lojalność
 
 Ekspedycje mają osobne plansze i wypłacają **wyłącznie monety**. Pierwszy ukończony etap daje pulę 50, następne 100, 200, 400… Gracz wypłaca do skarbca albo ryzykuje całą pulę na kolejnym etapie. Porażka lub wygaśnięcie czasu traci niewypłaconą pulę. Tryb ma limit ruchów albo czasu; wynik sprawdza poprawną trasę i etap bieżącego przebiegu. Ponowne rozliczenie zamkniętego etapu lub wypłaty jest odrzucane. W lokalnym prototypie weryfikacja klienta nie zastępuje serwera.
@@ -183,7 +231,7 @@ Monety i złoto to jedna waluta. Uzgodniono `1 PLN = 10 monet`; nie oznacza to d
 - Pakiet budowlany: `1000 × poziom ratusza` monet na 24 h, kolejne kupno przedłuża ważność. Daje +4 aktywne budowy i kolejkę bez limitu. Nie znosi +10% kosztu kolejki.
 - Plan z prognozy wymaga aktywnego pakietu i wykonalnej produkcji/dostawy. Dodatkowo kosztuje 25% bazowej portowej wartości **brakujących** materiałów, liczonych po dopłacie kolejki. Przykład: baza 300, kolejka 330, centrala 200 — dopłata dotyczy 130. Plan nie tworzy towaru; pełna rezerwacja i start czekają na fizyczne dostawy, z ochroną Food. Po wygaśnięciu pakietu aktywne budowy kończą się, opłacona kolejka podlega zwykłym limitom, a nieopłacone plany czekają.
 
-Zapisano przyszłe nagrody: 1000 monet za informację o grze, 500 za informację o nowym poziomie, 1000 za poleconego logującego się gracza, 500 każdego materiału po jego trzecim aktywnym dniu i 1000 za każdy trzeci post FB. **Nie przyznajemy ich z niezweryfikowanego kliknięcia.** Warunki integracji, reklam do 30 s, dokupowania czasu/ruchów i ukrytego kodu pozostają odłożone. Tak samo nie uruchomiono OAuth Google/Facebook ani płatności zewnętrznych.
+Zapisano przyszłe nagrody: 1000 monet za informację o grze, 500 za informację o nowym poziomie, 1000 za poleconego logującego się gracza, 500 każdego materiału po jego trzecim aktywnym dniu i 1000 za każdy trzeci post FB. Pozostają odłożone do weryfikacji integracji. Osobny, później zatwierdzony wyjątek prototypu to **500 monet za kliknięcie Share on Facebook po ukończeniu zadania**, raz na to ukończenie; nie jest to potwierdzenie faktycznego posta ani uruchomiona integracja Facebook. Warunki integracji, reklam do 30 s, dokupowania czasu/ruchów i ukrytego kodu pozostają odłożone. Tak samo nie uruchomiono OAuth Google/Facebook ani płatności zewnętrznych.
 
 ## Rozstrzygnięcia 23 października — D01–D17
 

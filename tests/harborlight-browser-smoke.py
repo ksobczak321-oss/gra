@@ -294,13 +294,19 @@ def navigation_checks(browser, errors, failed):
         assert not blocked, (width, height, blocked)
         for route in routes:
             page.locator("#hit-" + route).click()
-            if route in ['category-buildings', 'category-resources']:
+            if route in ['category-buildings', 'category-resources', 'category-decorations', 'category-paths']:
                 expect(page.locator('#island-dialog')).not_to_be_visible()
                 expect(page.locator('#hit-' + route)).to_have_attribute('aria-pressed', 'true')
                 if route == 'category-resources':
                     expect(page.locator('[data-resource-dock]')).to_be_visible()
                     expect(page.locator('[data-dock-resource]')).to_have_count(5)
-                    page.locator('#hit-category-buildings').click()
+                if route == 'category-decorations':
+                    expect(page.locator('[data-leisure-dock="decorations"]')).to_be_visible()
+                    expect(page.locator('[data-attraction]')).to_have_count(5)
+                if route == 'category-paths':
+                    expect(page.locator('[data-leisure-dock="paths"]')).to_be_visible()
+                    expect(page.locator('[data-road-level]')).to_have_count(5)
+                page.locator('#hit-category-buildings').click()
                 expect(page.locator('[data-resource-dock]')).not_to_be_visible()
                 continue
             within_viewport(page)
@@ -337,7 +343,7 @@ def navigation_checks(browser, errors, failed):
             within_viewport(page)
             expect(page.locator("#dialog-title")).to_have_text("Buildings")
             close_panel(page)
-        print(f"PASS navigation: {len(routes)-2} dialogs and two dock tabs at {width}x{height}")
+        print(f"PASS navigation: {len(routes)-4} dialogs and four dock tabs at {width}x{height}")
         context.close()
 
 

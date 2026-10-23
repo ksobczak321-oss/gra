@@ -1,4 +1,5 @@
 // Persistent residents and visits. Every duration is a real elapsed second.
+import { residentLeisureBonus } from './harborlight-v1-leisure.js?v=frontend-v12';
 export const RESIDENT_WORKPLACES = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'warehouse', 'dock', 'market'];
 export const NEED_GRACE_SECONDS = 12 * 3600;
 export const NEED_PENALTY = 5;
@@ -255,6 +256,7 @@ export function residentOffset(state, person) {
   if (residentHappinessFrozen(person)) return 0;
   let offset = (state.chapelRemaining > EPS ? state.buildings.chapel.level * 10 : 0) + (state.blessingRemaining > EPS ? 20 : 0);
   offset += (state.lighthouseVisitBonuses || []).reduce((sum, bonus) => sum + (bonus.remaining > EPS ? 10 : 0), 0);
+  offset += residentLeisureBonus(state, person);
   if (residentProductionBlocked(state, person)) offset -= Math.min(50, 10 * (1 + Math.floor((person.blockedSeconds + EPS) / 86400)));
   return offset;
 }

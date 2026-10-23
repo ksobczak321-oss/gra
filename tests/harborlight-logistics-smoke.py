@@ -17,6 +17,20 @@ WORKPLACES = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'warehouse', 'd
 BUILDINGS = ['house', *WORKPLACES, 'townhall', 'chapel', 'lighthouse']
 
 
+def employment_tax_rate(page):
+    # Tax remains an engine rule although the UI no longer displays it.
+    page.evaluate("window.dispatchEvent(new Event('pagehide'))")
+    return page.evaluate("""async key => {
+      const {taxRate} = await import('./harborlight-v1-state.js');
+      return taxRate(JSON.parse(localStorage.getItem(key)));
+    }""", 'harborlight-v1-interactive-save')
+
+
+def assert_storage(page, building, current, capacity, next_capacity):
+    for selector, value in [('data-local-current', current), ('data-local-capacity', capacity), ('data-local-next', next_capacity)]:
+        expect(page.locator(f'[{selector}="{building}"]')).to_have_text(format(value, ','))
+
+
 def fixture(population=12, level=1, workers=None, resources=None, ready=None):
     workers, resources, ready = workers or {}, resources or {}, ready or {}
     buildings = {key: {'level': 0 if key == 'lighthouse' else level if key in ['house', 'townhall'] else 1,
@@ -77,7 +91,7 @@ with sync_playwright() as p:
     browser = p.chromium.launch(executable_path=CHROMIUM, args=['--no-sandbox'])
     errors, failures = [], []
     try:
-        # All five producer panels share the same compact, live 2×2 summary.
+        # All five producer panels share labelled storage/workers on the right; taxes stay hidden.
         for producer in ['farm', 'windmill', 'lumber', 'sawmill', 'quarry']:
             data = fixture(level=2, workers={producer: 1})
             context, page = visit(browser, data, has_touch=True)
@@ -85,15 +99,16 @@ with sync_playwright() as p:
             grid = page.locator(f'[data-production-summary="{producer}"]')
             expect(grid).to_be_visible()
             cells = grid.locator(':scope > *')
-            expect(cells).to_have_count(4)
-            for index, label in enumerate(['Level', 'Storage', 'Workers', 'Taxes']):
+            expect(cells).to_have_count(3)
+            for index, label in enumerate(['Level', 'Storage', 'Workers']):
                 expect(cells.nth(index)).to_contain_text(label)
             positions = cells.evaluate_all('(nodes) => nodes.map(node => { const box = node.getBoundingClientRect(); return [box.x, box.y]; })')
             assert abs(positions[0][1] - positions[1][1]) <= 1, positions
-            assert abs(positions[2][1] - positions[3][1]) <= 1, positions
-            assert positions[2][1] > positions[0][1] and positions[1][0] > positions[0][0], positions
+            assert positions[2][1] > positions[1][1] and positions[1][0] > positions[0][0], positions
+            assert abs(positions[1][0] - positions[2][0]) <= 1, positions
+            expect(page.locator('[data-workplace-tax]')).to_have_count(0)
             expect(page.locator(f'[data-local-buffer="{producer}"]')).to_have_count(1)
-            expect(page.locator(f'[data-local-buffer="{producer}"]')).to_have_text('0 / 200 / 400')
+            assert_storage(page, producer, 0, 200, 400)
             phase = page.locator(f'[data-work-progress="{producer}"]')
             expect(phase).to_have_count(1)
             expect(phase).to_be_visible()
@@ -112,9 +127,9 @@ with sync_playwright() as p:
             for _ in range(11): plus.click()
             expect(plus).to_be_disabled()
             expect(page.locator(f'[data-worker-count="{producer}"]')).to_have_text('11')
-            expect(cells.nth(3)).to_contain_text('0 coins/h')
+            assert employment_tax_rate(page) == 0
             page.clock.fast_forward(300_000)
-            expect(cells.nth(3)).to_contain_text('11 coins/h')
+            assert employment_tax_rate(page) == 11
             production_info = page.locator(f'[data-production-info="{producer}"]')
             production_help = page.locator(f'[data-production-help="{producer}"]')
             expect(production_help).not_to_be_visible()
@@ -133,7 +148,7 @@ with sync_playwright() as p:
             production_info.tap()
             expect(production_help).not_to_be_visible()
             context.close()
-        print('PASS all five compact producer grids, single storage/clock, inline staffing limits/taxes and production help on keyboard/touch')
+        print('PASS all five compact producer grids, single storage/clock, inline staffing limits, hidden tax information and production help on keyboard/touch')
 
         # Own workplace level defines employment and storage capacity; free residents are shared.
         data = fixture(population=144, level=6)
@@ -141,7 +156,7 @@ with sync_playwright() as p:
         data['buildings']['quarry']['level'] = 2
         context, page = visit(browser, data)
         page.locator('#hit-world-farm').click()
-        expect(page.locator('[data-local-buffer="farm"]')).to_have_text('0 / 1,200 / 1,400')
+        assert_storage(page, 'farm', 0, 1200, 1400)
         close(page)
         open_workers(page)
         expect(page.locator('[data-workplace]')).to_have_count(8)
@@ -152,9 +167,11 @@ with sync_playwright() as p:
         control(page, 'warehouse', 'max').click()
         expect(page.locator('[data-worker-count="warehouse"]')).to_have_text('72')
         expect(page.locator('[data-population-stat="free"]')).to_have_text('0')
-        expect(page.locator('[data-population-stat="taxes"]')).to_have_text('0 coins/h')
+        expect(page.locator('[data-population-stat="taxes"]')).to_have_count(0)
+        assert employment_tax_rate(page) == 0
         page.clock.fast_forward(300_000)
-        expect(page.locator('[data-population-stat="taxes"]')).to_have_text('144 coins/h')
+        expect(page.locator('[data-population-stat="taxes"]')).to_have_count(0)
+        assert employment_tax_rate(page) == 144
         expect(control(page, 'windmill', 'max')).to_be_disabled()
         close(page)
         page.locator('#hit-world-quarry').click()
@@ -188,7 +205,7 @@ with sync_playwright() as p:
         page.locator('#hit-world-farm').click()
         expect(page.locator('[data-collect]')).to_have_count(0)
         page.clock.fast_forward(420_000)
-        expect(page.locator('[data-local-buffer="farm"]')).to_have_text('1 / 200 / 400')
+        assert_storage(page, 'farm', 1, 200, 400)
         page.locator('[data-worker-building="farm"][data-worker-delta="-1"]').click()
         first = checkpoint(page)
         assert first['buildings']['farm']['ready'] == 1
@@ -203,9 +220,9 @@ with sync_playwright() as p:
         page.locator('[data-worker-building="farm"][data-worker-delta="1"]').click()
         page.clock.fast_forward(300_000)  # walk to the new job
         page.clock.fast_forward(300_000)  # incomplete unit
-        expect(page.locator('[data-local-buffer="farm"]')).to_have_text('1 / 200 / 400')
+        assert_storage(page, 'farm', 1, 200, 400)
         page.clock.fast_forward(60_000)
-        expect(page.locator('[data-local-buffer="farm"]')).to_have_text('2 / 200 / 400')
+        assert_storage(page, 'farm', 2, 200, 400)
         context.close()
 
         context, page = visit(browser, fixture(workers={'farm': 1}))
@@ -336,7 +353,8 @@ with sync_playwright() as p:
         # Assigned, arrived people pay taxes even if their producer is blocked.
         context, page = visit(browser, fixture(workers={'farm': 6}, ready={'farm': 200}))
         page.locator('#hit-population').click()
-        expect(page.locator('[data-population-stat="taxes"]')).to_have_text('6 coins/h')
+        expect(page.locator('[data-population-stat="taxes"]')).to_have_count(0)
+        assert employment_tax_rate(page) == 6
         page.clock.fast_forward(3_600_000)
         taxed = checkpoint(page)
         assert taxed['resources']['coins'] == 106

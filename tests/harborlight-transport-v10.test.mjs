@@ -72,6 +72,43 @@ test('three selected priorities repeat a five-three-two allocation indefinitely'
   assert.deepEqual(state.warehousePriorities,['food','wood','grain']);
 });
 
+test('Construction joins the same three priorities and receives five-three-two dispatch slots alongside Food',()=>{
+  const state=island();
+  state.buildings.warehouse.level=1;
+  state.buildings.warehouse.workers=10;state.buildings.warehouse.workProgress=Array(10).fill(0);
+  state.residents.slice(0,10).forEach(person=>{person.workplace='warehouse';});
+  state.constructionProjects.push({building:'house',targetLevel:11,cost:{wood:600,stone:600},goodsTotal:1200,goodsRemaining:1200,
+    remainingMaterials:{wood:600,stone:600,grain:0,food:0,planks:0},delivered:{wood:0,stone:0,grain:0,food:0,planks:0},
+    transportSeconds:0,buildRemaining:0,stage:'transport',order:1});
+  priorities(state,['food','construction']);
+  nextLogisticsEvent(state);
+  const trips=state.haulTrips.warehouse;
+  assert.equal(trips.length,10);
+  assert.ok(trips.slice(0,5).every(trip=>trip.kind==='producer'&&trip.resource==='food'));
+  assert.ok(trips.slice(5,8).every(trip=>trip.kind==='construction'));
+  assert.ok(trips.slice(8).every(trip=>trip.kind!=='construction'&&trip.resource!=='food'));
+  assert.equal(state.warehousePriorityCycle.position,0);
+  assert.deepEqual(state.warehousePriorities,['food','construction']);
+  const persisted=structuredClone(state);
+  normalizeLogisticsState(state,persisted);
+  assert.deepEqual(state.warehousePriorities,['food','construction']);
+  assert.deepEqual(state.haulTrips,persisted.haulTrips);
+});
+
+test('a priority on Construction does not idle carriers when no building needs transport',()=>{
+  const state=island();
+  priorities(state,['construction']);
+  const trip=course(state);
+  assert.equal(trip.kind,'producer');
+  assert.ok(trip.amount>0);
+  assert.equal(state.warehousePriorityCycle.position,1);
+  assert.equal(logisticsAction(state,{type:'warehousePriority',resource:'food'}).ok,true);
+  assert.equal(logisticsAction(state,{type:'warehousePriority',resource:'wood'}).ok,true);
+  const before=JSON.stringify(state);
+  assert.equal(logisticsAction(state,{type:'warehousePriority',resource:'stone'}).ok,false);
+  assert.equal(JSON.stringify(state),before);
+});
+
 test('parallel carriers share one dispatch allocation rather than restarting it per worker',()=>{
   const state=island();priorities(state,['food','wood','grain']);
   state.buildings.warehouse.workers=10;state.buildings.warehouse.workProgress=Array(10).fill(0);

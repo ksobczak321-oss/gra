@@ -57,7 +57,7 @@ def run():
             if id=='townhall':
                 expect(page.locator('#dialog-title')).to_have_text('Town Hall')
                 expect(page.locator('[data-population-stat="population"]')).to_have_text('23 / 96')
-                expect(page.locator('[data-population-stat="taxes"]')).to_have_text('0 coins/h')
+                expect(page.locator('[data-population-stat="taxes"]')).to_have_count(0)
         for id in ['home','settings','resource-coins','resource-wood','resource-stone','resource-grain','resource-food','resource-planks','population','happiness','clock','menu','nav-tasks','nav-expeditions','nav-map','category-decorations','category-paths','boat','notifications']:
             close(page);page.locator('#hit-'+id).click();language_check(page,id)
         expect(page.locator('#dialog-title')).to_have_text('Notifications')

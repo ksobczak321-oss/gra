@@ -1,8 +1,12 @@
 // Physical goods and event-based logistics. Durations are real elapsed seconds,
 // including catch-up after the browser is closed.
-import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v11';
+import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v12';
+import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v12';
 export const workerEfficiency = productionMultiplier;
+// Paths improve cargo courses, independently of production and resident walks.
+export const transportEfficiency = (state, efficiency = workerEfficiency(state)) => efficiency * roadSpeedMultiplier(state);
 export const MATERIAL_IDS = ['wood', 'stone', 'grain', 'food', 'planks'];
+export const WAREHOUSE_PRIORITY_IDS = [...MATERIAL_IDS, 'construction'];
 export const PRODUCTION_RECIPES = {
   farm: { output: 'grain' }, lumber: { output: 'wood' }, quarry: { output: 'stone' },
   sawmill: { output: 'planks', input: 'wood', amount: 2 },
@@ -22,7 +26,7 @@ export const producerCapacity = (state, id = 'farm', level = state.buildings[id]
 export const productionRate = (state, id) => state.buildings[id]?.level === 1 ? 10 : state.buildings[id]?.level > 1 ? state.buildings[id].level + 10 : 0;
 export const foodReserve = state => 50 * (state.buildings.warehouse.level || 0);
 export const availableGoods = (state, id) => Math.max(0, Math.floor((state.resources[id] || 0) - (id === 'food' ? foodReserve(state) : 0)));
-export const haulCapacity = (state, id = 'warehouse') => Math.max(1, Math.floor(60 * 1.1 ** Math.max(0, (state.buildings[id]?.level || 1) - 1)));
+export const haulCapacity = (state, id = 'warehouse') => Math.max(1, Math.floor(Math.floor(60 * 1.1 ** Math.max(0, (state.buildings[id]?.level || 1) - 1)) * roadCapacityMultiplier(state)));
 export const workplaceUnlocked = (state, id) => state.buildings.townhall.level >= (id === 'market' ? 2 : id === 'dock' ? 4 : 1);
 export function activeWorkerIndices(state, id) {
   const people = Array.isArray(state.residents) ? state.residents.filter(person => person.workplace === id) : [];
@@ -77,7 +81,7 @@ export function constructionEstimate(state, projectOrCost, buildingId) {
   const inFlight = (state.haulTrips?.warehouse || []).filter(t => t.kind === 'construction' && t.projectOrder === project.order);
   const trips = queuedTrips + inFlight.length;
   const waves = crew ? Math.ceil(trips / crew) : trips ? Infinity : 0;
-  const efficiency = workerEfficiency(state);
+  const efficiency = transportEfficiency(state);
   const available = activeWorkerIndices(state, 'warehouse').map(index => ((state.haulTrips?.warehouse || []).find(t => t.worker === index)?.remaining || 0) / efficiency);
   let transport = inFlight.reduce((end,t) => Math.max(end,t.remaining / efficiency),0);
   for (let index=0; index<queuedTrips; index++) {
@@ -87,7 +91,7 @@ export function constructionEstimate(state, projectOrCost, buildingId) {
     transport=Math.max(transport,available[first]);
   }
   const fullTrips = MATERIAL_IDS.reduce((n,id) => n + Math.ceil((project.cost?.[id] || 0) / capacity), 0);
-  const baseTransport = crew ? Math.ceil(fullTrips / crew) * 300 / workerEfficiency(state) : fullTrips ? Infinity : 0;
+  const baseTransport = crew ? Math.ceil(fullTrips / crew) * 300 / efficiency : fullTrips ? Infinity : 0;
   const building = project.stage === 'building' ? project.buildRemaining : Math.max(project.transportSeconds || 0, baseTransport) * constructionBuildFactor(project);
   return { transport, building, total: transport + building, trips, waves, capacity, workers: crew };
 }
@@ -180,11 +184,11 @@ export function finishConstruction(state, project) {
   if(id==='lighthouse') {
     state.objective={wood:50,stone:30,repaired:true};
     beginLighthouseBonus(state,86400*building.level);
-    notify(state,'lighthouse-bonus','Lighthouse bonus',`For ${24*building.level} hours: happiness is 100% and material production ×2. Taxes are unchanged.`);
+    notify(state,'lighthouse-bonus','Lighthouse bonus',`For ${24*building.level} hours: happiness is 100% and material production ×2.`);
   }
   if(id==='chapel') {
     state.chapelRemaining=36000;
-    notify(state,'chapel-upgrade','Chapel upgrade bonus',`For 10 hours: +${building.level*10} happiness and taxes ×2.`);
+    notify(state,'chapel-upgrade','Chapel upgrade bonus',`For 10 hours: +${building.level*10} happiness.`);
   }
   state.statistics.upgrades=Math.min(10000000,(state.statistics.upgrades||0)+1);
   notify(state,'construction-finished',`${buildingNames[id]}: level ${building.level}`,'Upgrade complete. The new level is now active.');
@@ -215,7 +219,7 @@ export function estimateMaterialsSeconds(state,cost) {
       time=Math.max(time,need/upstreamRate*3600||0);trips+=Math.ceil(need/capacity);
     }
   }
-  return Math.max(time,crew?Math.ceil(trips/crew)*300/efficiency:0);
+  return Math.max(time,crew?Math.ceil(trips/crew)*300/transportEfficiency(state,efficiency):0);
 }
 export function receiveMaterials(state,values,{overflowToPending=true}={}) {
   for(const id of MATERIAL_IDS) {
@@ -343,7 +347,7 @@ export function normalizeLogisticsState(state,raw) {
   state.transportPriority=[...new Set([...order,...MATERIAL_IDS])];
   state.logisticsPriority=Array.isArray(raw.logisticsPriority)?[...new Set(raw.logisticsPriority.filter(x=>typeof x==='string').slice(0,100))]:[];
   const selected = Array.isArray(raw.warehousePriorities) ? raw.warehousePriorities : state.logisticsPriority.flatMap(target => target.startsWith('producer:') ? [PRODUCTION_RECIPES[target.slice(9)]?.output] : []);
-  state.warehousePriorities = [...new Set(selected.filter(id => MATERIAL_IDS.includes(id)))].slice(0,3);
+  state.warehousePriorities = [...new Set(selected.filter(id => WAREHOUSE_PRIORITY_IDS.includes(id)))].slice(0,3);
   state.warehousePriorityCycle = {
     position: whole(raw.warehousePriorityCycle?.position) % 10,
     seed: (Math.floor(clamp(raw.warehousePriorityCycle?.seed,0,0xffffffff)) >>> 0) || ((Math.floor(state.worldTimeMs || 0) ^ 0x6d2b79f5) >>> 0) || 1
@@ -409,6 +413,7 @@ function preferredWarehouseSource(sources) {
   const prioritized = sources.filter(source => source.priority >= 0).sort((a,b) => a.priority - b.priority);
   return prioritized[0] || sources[0] || null;
 }
+const warehousePriorityKey = source => source.kind === 'construction' ? 'construction' : source.resource;
 function chooseWarehouseJob(state) {
   const sources=[];
   for(const resource of state.transportPriority) {
@@ -428,16 +433,16 @@ function chooseWarehouseJob(state) {
   const selected = state.warehousePriorities;
   const desired = warehousePrioritySchedule(state)[state.warehousePriorityCycle.position];
   if (desired) {
-    const matching = sources.filter(source => source.resource === desired);
+    const matching = sources.filter(source => warehousePriorityKey(source) === desired);
     if (matching.length) return preferredWarehouseSource(matching);
   }
   // An unavailable priority never parks a free carrier. Random slots prefer
   // unselected goods; the same fallback applies to empty or blocked sources.
-  const unselected = sources.filter(source => !selected.includes(source.resource));
+  const unselected = sources.filter(source => !selected.includes(warehousePriorityKey(source)));
   const eligible = unselected.length ? unselected : sources;
-  const resources = [...new Set(eligible.map(source => source.resource))];
-  const resource = warehouseRandom(state, resources);
-  return preferredWarehouseSource(eligible.filter(source => source.resource === resource));
+  const categories = [...new Set(eligible.map(warehousePriorityKey))];
+  const category = warehouseRandom(state, categories);
+  return preferredWarehouseSource(eligible.filter(source => warehousePriorityKey(source) === category));
 }
 function chooseMarketJob(state) {
   if(!workplaceUnlocked(state,'market'))return null;
@@ -486,7 +491,7 @@ function launchTrip(state,id,index,source) {
 }
 export function warehouseCarrierJobs(state) {
   const trips = state.haulTrips?.warehouse || [];
-  const efficiency = workerEfficiency(state);
+  const efficiency = transportEfficiency(state);
   const describeTrip = trip => ({
     resource: trip.resource, amount: trip.amount,
     from: trip.kind === 'producer' ? trip.producer : trip.kind === 'pending' ? 'pending' : 'warehouse',
@@ -556,7 +561,7 @@ export function nextLogisticsEvent(state,efficiency=workerEfficiency(state)) {
   dispatchTrips(state);
   let next=Infinity;
   for(const j of productionJobs(state,efficiency))next=Math.min(next,Math.max(0,j.cycle-(state.buildings[j.id].workProgress[j.index]||0))/j.speed);
-  for(const t of Object.values(state.haulTrips).flat())next=Math.min(next,t.remaining/efficiency);
+  for(const t of Object.values(state.haulTrips).flat())next=Math.min(next,t.remaining/transportEfficiency(state,efficiency));
   for(const t of state.returningWorkers)next=Math.min(next,t);
   for(const l of state.market.locked)next=Math.min(next,l.remaining,l.expiresRemaining);
   for(const l of [...state.market.lots,...state.dock.lots])next=Math.min(next,l.remaining);
@@ -603,7 +608,7 @@ export function advanceLogistics(state,elapsed,efficiency=workerEfficiency(state
       }else {o.expiresRemaining=Math.max(0,o.expiresRemaining-duration);if(o.expiresRemaining<=EPS){o.stage='expired';o.remainingToPort=0;o.remainingToUnload=0;notify(state,'goods-expired','Harbor cargo expired','Uncollected cargo expired after 24 hours.');}}
     }
     state.dock.purchaseHistory=state.dock.purchaseHistory.map(h=>({...h,remaining:h.remaining-duration})).filter(h=>h.remaining>EPS);
-    for(const id of ['warehouse','market','dock'])for(const trip of state.haulTrips[id])trip.remaining=Math.max(0,trip.remaining-duration*efficiency);
+    for(const id of ['warehouse','market','dock'])for(const trip of state.haulTrips[id])trip.remaining=Math.max(0,trip.remaining-duration*transportEfficiency(state,efficiency));
     updateStorageStatus(state,duration);state.activeSeconds=Math.min(Number.MAX_SAFE_INTEGER,state.activeSeconds+duration);
     for(const j of jobs)if(state.buildings[j.id].workProgress[j.index]>=j.cycle-EPS) {
       const b=state.buildings[j.id],r=PRODUCTION_RECIPES[j.id];
@@ -639,10 +644,10 @@ export function logisticsAction(state,action,now=Date.now()) {
   if (action.type === 'warehousePriority') {
     let selected;
     if (Object.hasOwn(action, 'priorities')) {
-      if (!Array.isArray(action.priorities) || action.priorities.length > 3 || action.priorities.some(resource => !MATERIAL_IDS.includes(resource)) || new Set(action.priorities).size !== action.priorities.length) return bad('Choose up to three different transport priorities.');
+      if (!Array.isArray(action.priorities) || action.priorities.length > 3 || action.priorities.some(resource => !WAREHOUSE_PRIORITY_IDS.includes(resource)) || new Set(action.priorities).size !== action.priorities.length) return bad('Choose up to three different transport priorities.');
       selected = [...action.priorities];
     } else {
-      if (!MATERIAL_IDS.includes(action.resource)) return bad('Choose a material to prioritize.');
+      if (!WAREHOUSE_PRIORITY_IDS.includes(action.resource)) return bad('Choose goods or Construction to prioritize.');
       selected = [...(state.warehousePriorities || [])];
       const index = selected.indexOf(action.resource);
       if (index >= 0) selected.splice(index,1);

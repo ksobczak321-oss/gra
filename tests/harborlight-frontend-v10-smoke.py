@@ -116,6 +116,9 @@ def single_task_and_stock(browser):
         page.locator('[data-task-input="' + task['id'] + '-' + material + '"]').fill(str(remaining))
         page.locator('[data-task-deposit="' + task['id'] + '-' + material + '"]').click()
     assert saved(page)['activeTaskId'] is None
+    expect(page.locator('#task-celebration')).to_be_visible()
+    page.locator('[data-task-skip]').click()
+    expect(page.locator('#task-celebration')).to_have_count(0)
     expect(page.locator('.island-activity-stack [data-task-active="true"]')).to_have_count(0)
     next_task = saved(page)['lighthouseTasks'][0]
     page.locator('[data-task-accept="' + next_task['id'] + '"]').click()
@@ -149,7 +152,8 @@ def building_panels(browser):
             assert premium.evaluate("node => parseFloat(getComputedStyle(node).borderTopWidth) > 0"), 'Premium must have a visible frame'
             expect(page.locator('.premium-building-panel')).to_have_count(0)
             stock = 50 if id == 'windmill' else 0
-            expect(page.locator('[data-local-buffer="' + id + '"]')).to_have_text(str(stock) + ' / 200 / 400')
+            for field, value in [('current', stock), ('capacity', 200), ('next', 400)]:
+                expect(page.locator('[data-local-' + field + '="' + id + '"]')).to_have_text(str(value))
             expect(page.locator('[data-worker-count="' + id + '"]')).to_have_text('1' if id in ['windmill', 'quarry'] else '0')
             expect(page.locator('[data-worker-free="' + id + '"]')).to_have_text('10')
             expect(page.locator('[data-worker-limit="' + id + '"]')).to_have_text('12')
@@ -173,7 +177,7 @@ def building_panels(browser):
     building(page, 'quarry')
     expect(page.locator('[data-status-label]')).to_have_text('Producing')
     expect(page.locator('[data-status-detail]')).to_contain_text('Stone to local storage in')
-    expect(page.locator('[data-workplace-tax="quarry"]')).to_have_text('1 coin/h')
+    expect(page.locator('[data-workplace-tax]')).to_have_count(0)
     building(page, 'house')
     expect(page.locator('.housing-capacity-summary > .stat')).to_have_count(4)
     for field, value in [('current-population','12'), ('capacity','96'), ('housing','48')]:
@@ -277,8 +281,9 @@ def header_and_resource_dock(browser):
             card = page.locator('[data-dock-resource="' + resource + '"]')
             expect(card.locator('svg[role="img"]')).to_be_visible()
             expect(card.locator('[data-dock-active="' + resource + '"]')).to_have_text('1' if resource == 'stone' else '0')
-            expect(card.locator('[data-dock-staffing="' + resource + '"]')).to_have_text('10 / 12')
-            expect(card.locator('[data-dock-stock]')).to_have_count(0)
+            expect(card.locator('[data-dock-local="' + resource + '"]')).to_have_text('50' if resource == 'food' else '0')
+            expect(card.locator('[data-dock-central="' + resource + '"]')).to_have_text({'wood':'100','planks':'100','stone':'100','grain':'0','food':'300'}[resource])
+            expect(card.locator('[data-dock-stock="' + resource + '"]')).to_have_count(1)
             card.click()
             expect(page.locator('#dialog-title')).to_have_text(title)
             close(page)
@@ -287,7 +292,8 @@ def header_and_resource_dock(browser):
             page.locator('[data-worker-building="quarry"][data-worker-delta="1"]').click()
             close(page)
             expect(page.locator('[data-dock-active="stone"]')).to_have_text('1')
-            expect(page.locator('[data-dock-staffing="stone"]')).to_have_text('9 / 12')
+            expect(page.locator('[data-dock-local="stone"]')).to_have_text('0')
+            expect(page.locator('[data-dock-central="stone"]')).to_have_text('100')
             page.clock.fast_forward(300000)
             expect(page.locator('[data-dock-active="stone"]')).to_have_text('2')
             expect(page.locator('[data-dock-active="food"]')).to_have_text('0')  # Its assigned miller lacks grain.
@@ -300,7 +306,7 @@ def header_and_resource_dock(browser):
         if width == 1672:
             page.screenshot(path='/tmp/harborlight-frontend-v10-header-dock.png')
         context.close()
-    print('PASS header/Level/navigation geometry at four widths and five illustrated product cards with live staffing, producer routes and Buildings restoration')
+    print('PASS header/Level/navigation geometry at four widths and five illustrated product cards with working badges/local-central stock, producer routes and Buildings restoration')
 
 
 with sync_playwright() as playwright:

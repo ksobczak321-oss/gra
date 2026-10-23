@@ -1,10 +1,25 @@
 # Backlog HARBORLIGHT
 
-Stan: 2026-10-23. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Bazą jest [HARBORLIGHT7-zasady.xlsx](arkusze/HARBORLIGHT7-zasady.xlsx), a najnowsze zmiany frontendu opisuje poniższy pakiet zatwierdzony „go”. Excel 7 pozostaje zachowany bez zmian. Aktualny frontend v11 opublikowano z `43348df`; [dziennik](IMPLEMENTATION-LOG.md) podaje wyniki testów lokalnych i publicznego adresu oraz oddziela ukończony frontend od backendu.
+Stan: 2026-10-23. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Bazą są decyzje arkusza 7; najnowsze zmiany zbiera [HARBORLIGHT8-zasady.xlsx](arkusze/HARBORLIGHT8-zasady.xlsx). Excel 7 pozostaje zachowany bez zmian. Ostatni pełny odbiór frontendu v11 dotyczy `43348df`; bieżący pakiet jest w końcowej weryfikacji. [Dziennik](IMPLEMENTATION-LOG.md) oddziela historyczne wyniki, obecne prace i backend.
 
 Zachowujemy zaakceptowany wygląd wyspy i jej animacje. Reguły działają w przeglądarce bez backendu. Docelowe trzy sposoby gry — web, Android, iPhone — wymagają wspólnego konta, trwałego stanu i serwerowego rozliczania postępu; obecny lokalny zapis tego nie zapewnia.
 
 ## Bieżący frontend
+
+### FE-17 — atrakcje, ścieżki, efekty i Excel 8 — [#27](https://github.com/ksobczak321-oss/gra/issues/27)
+
+Status: realizacja zatwierdzona ostatnim „go”, implementacja i końcowa weryfikacja w toku. Zgłoszenie [#27](https://github.com/ksobczak321-oss/gra/issues/27), milestone frontend #3. [Aktualna macierz odbioru](FRONTEND-REVIEW.md) oddziela nowy pakiet od historycznego v11.
+
+- Mniejszy Level po lewej, Storage i Workers po prawej z podpisami poszczególnych wartości. Podatki są usunięte ze wszystkich widoków, bez zmiany naliczania przez silnik.
+- Pięć kart Resources zachowuje górną aktywną obsadę, a pod ilustracją pokazuje lokalny zapas produktu / jego zapas centralny. Przy budowie osobne Transport · ETA i Construction · ETA.
+- Ukończenie zadania: popup z fajerwerkami, wibracja na wspieranym telefonie, Share on Facebook albo Skip. Osobno zatwierdzono 500 lokalnych monet za kliknięcie Share, raz na ukończenie; brak integracji i publikacji posta.
+- Decorations: pięć kart na dolnym pasku z puli 20, rotacja co 24 h; Y 5…100, cena Y × ratusz, Y pp dla L osób przez 6 h. Osobne przyzwyczajenie 100/75/50/25/0%, reset po 24 h bez zakupu, trwałe zegary i offline.
+- Paths: 100 odcinków poziomu 0…5, 100 kamienia za jeden krok, wszystkie na poprzednim poziomie przed kolejnym; premia dopiero po pełnych 100. Szybkość +10…50%, ładowność od poziomu 3 +10…30%; zakres obejmuje tragarzy, nie produkcję, dojście ani rejs.
+- Construction jest dodatkowym priorytetem obok materiałów, w tym samym limicie trzech i tym samym powtarzanym podziale kursów.
+- Wszystkie aktywne premie i kary na górze Town Hall; start, istotna zmiana i koniec w Notifications, bez wpisu na każdą sekundę.
+- Oddzielny profil ?profile=new-player z normalnym startem, bez testowego doładowania i bez usuwania istniejącego zapisu. Nowy Excel 8 obejmuje wszystkie bieżące ustalenia; Excel 7 pozostaje nienaruszony.
+
+## Wcześniejsze ukończone wydania
 
 ### FE-16 — Spójne panele, priorytety i jedno aktywne zadanie — [#26](https://github.com/ksobczak321-oss/gra/issues/26)
 
@@ -24,7 +39,7 @@ Status: completed — pełny zestaw obu serii uwag ze screenów i komentarzy wdr
 - Poprawa geometrii i warstw nagłówka: marka, Level i początek lewej nawigacji nie nachodzą na siebie, a stary obraz nie przebija spod kontrolek.
 - Dolne Resources zastępuje cały pasek Buildings dokładnie pięcioma obrazkowymi kartami produktów: Wood, Planks, Stone, Grain, Food. Nad obrazkiem liczba rzeczywiście pracujących w zakładzie; pod nim wolni mieszkańcy w domu / limit zakładu. Wybór otwiera ten sam panel producenta co budynek na wyspie. Buildings przywraca karty budynków; monety nie są kartą produktu.
 
-Poniższe ukończone zakresy FE-14/15 dokumentują wcześniejsze wydanie. Bufor zależny od ratusza został zastąpiony własną pojemnością producenta; reguła limitu obsady pozostaje taka sama.
+FE-16 powyżej jest historycznym zakresem v11: najnowszy FE-17 usuwa podatki z UI i zastępuje dolny licznik wolni/limit przez lokalny/centralny zapas. Poniższe ukończone zakresy FE-14/15 dokumentują jeszcze wcześniejsze wydanie. Bufor zależny od ratusza został zastąpiony własną pojemnością producenta; reguła limitu obsady pozostaje taka sama.
 
 ### Formularze konta — [#5](https://github.com/ksobczak321-oss/gra/issues/5)
 
@@ -85,7 +100,7 @@ Odbiór grafiki nadal wymaga czytelnego ruchu wszystkich postaci, dymu unoszące
 Status: zaplanowane, backend nie jest wdrożony. Kliencki schemat 8 jest materiałem wejściowym, nie modelem zaufanego serwera.
 
 - Jedno API dla web, Android i iPhone: odczyt wyspy, komendy, potwierdzone wyniki, błędy i migracje.
-- Pełny stan mieszkańców, zegara, porcji Food, ładunków i rezerwacji, partii targu/portu, wizyt, puli domu, budów, zadań, przebiegów ekspedycji i uprawnień.
+- Pełny stan mieszkańców, zegara, porcji Food, ładunków i rezerwacji, partii targu/portu, wizyt, puli domu, budów, zadań, przebiegów ekspedycji i uprawnień; również ofert atrakcji, przyzwyczajenia, osobistych efektów, 100 odcinków dróg oraz jednorazowych bonusów ukończenia.
 - Idempotency keys, kontrola wersji stanu i konfliktów równoległych sesji; przykłady przyjętych i odrzuconych komend.
 
 ### BE-02 — Konto i bezpieczne sesje — [#12](https://github.com/ksobczak321-oss/gra/issues/12)
@@ -115,6 +130,8 @@ Status: zaplanowane; zgłoszenie uaktualnione o bieżące reguły. Backend pozos
 - Weryfikuje partię i termin targu/portu, historyczne podwyżki per produkt, wizyty i pakiety wejść, pulę domu, opłaty kaplicy oraz D01–D17.
 - Zadania mają serwerowe losowanie, terminy, jedno aktywne zadanie i jednorazowe wypłaty; zachowują zatwierdzoną normę wymagań. Ekspedycje mają potwierdzoną trasę/limit/etap i pulę monet. Sam komunikat „wygrana” z klienta nie wystarcza.
 - Rozdział dziesięciu kursów według maksymalnie trzech priorytetów przechowuje numer bloku i losowanie. Ponowienie lub ponowne połączenie nie może zabrać towaru dwa razy ani stale wracać do pierwszego kursu.
+- Atrakcje wymagają serwerowego Y/rotacji, niezależnego przyzwyczajenia, odbiorców i końca 6 h; ścieżki walidacji 100 odcinków oraz kolejności poziomów i premii przewozu. Construction dzieli limit i rozkład trzech priorytetów z towarami.
+- Bonus 500 po zadaniu musi mieć jednoznaczny identyfikator ukończenia i rozliczenie raz; obecny prototyp daje go za kliknięcie bez potwierdzenia posta, zgodnie z decyzją użytkownika. Docelowe zasady integracji mogą to zastąpić.
 - Testy obejmują modyfikację zegara i zapisu, nieprawidłowe liczby, powtórzenia, wyścigi, rozłączenia oraz konserwację zasobów.
 - Ranking wielu graczy wymaga serwerowej agregacji i zasad remisów; lokalny wynik ustawień nie jest takim rankingiem.
 
@@ -130,7 +147,7 @@ Status: zaplanowane, zgłoszenie uaktualnione; żadnej prawdziwej sprzedaży nie
 
 ## Dalsze zadania bez utworzonego zgłoszenia
 
-- Ustalić i zintegrować nagrody lojalnościowe, weryfikację poleceń i udostępnień oraz zasady reklam. Przechowywać uzgodnione wartości nagród; nie wypłacać ich za samo kliknięcie.
+- Ustalić i zintegrować nagrody lojalnościowe, weryfikację poleceń i udostępnień oraz zasady reklam. Przechowywać uzgodnione wartości przyszłych nagród. Oddzielny, zatwierdzony bonus prototypu 500 za Share po ukończeniu zadania działa raz za kliknięcie; pozostałe nagrody społecznościowe nadal wymagają zdefiniowanej weryfikacji.
 - Doprecyzować dodatkowy czas/ruchy ekspedycji, weryfikację obejrzanej reklamy, kod i ewentualne challenge. Nie ma obecnie integracji reklamowej ani automatycznej publikacji postów.
 - Zaprojektować i zmierzyć infrastrukturę wspólnego backendu: autorytatywne API, trwała baza, kolejki prac, monitoring, kopie i skalowanie; oszacować koszty według ruchu i czasu offline. Sam hosting statycznej strony nie gwarantuje skalowalności pełnej gry.
 - Uzupełnić osobne assety, stany budynków i kamerę zgodnie z #8/#9 oraz wizualny odbiór #10.
