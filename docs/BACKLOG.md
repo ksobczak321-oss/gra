@@ -1,6 +1,6 @@
 # Backlog HARBORLIGHT
 
-Stan: 2026-10-23. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Bieżąca specyfikacja to [HARBORLIGHT7-zasady.xlsx](arkusze/HARBORLIGHT7-zasady.xlsx): wpisy arkusza 6 i wszystkie rozstrzygnięte decyzje D01–D17. Dokumentacja opisuje rzeczywisty lokalny frontend; publikacja i zamknięcie zgłoszeń są osobnymi krokami.
+Stan: 2026-10-23. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Bieżąca specyfikacja to [HARBORLIGHT7-zasady.xlsx](arkusze/HARBORLIGHT7-zasady.xlsx): wpisy arkusza 6 i wszystkie rozstrzygnięte decyzje D01–D17. Wersja frontendowa `6b06f20` została opublikowana na Pages i sprawdzona publicznie; [wyniki](IMPLEMENTATION-LOG.md) rozdzielają ten zakres od backendu.
 
 Zachowujemy zaakceptowany wygląd wyspy i jej animacje. Reguły działają w przeglądarce bez backendu. Docelowe trzy sposoby gry — web, Android, iPhone — wymagają wspólnego konta, trwałego stanu i serwerowego rozliczania postępu; obecny lokalny zapis tego nie zapewnia.
 
@@ -8,7 +8,7 @@ Zachowujemy zaakceptowany wygląd wyspy i jej animacje. Reguły działają w prz
 
 ### Formularze konta — [#5](https://github.com/ksobczak321-oss/gra/issues/5)
 
-Tytuł GitHub: **[FE-14] Ekrany logowania/rejestracji bez OAuth**. Milestone frontend. Status: implementacja lokalna, zgłoszenie w toku; publikacja i końcowe potwierdzenie pozostają oddzielne.
+Tytuł GitHub: **[FE-14] Ekrany logowania/rejestracji bez OAuth**. Milestone frontend. Status: completed — implementacja, testy lokalne, publikacja i publiczny test formularzy zaliczone. Rzeczywiste konta pozostają w BE-02.
 
 - Oddzielna strona Sign in / Create account w stylu wyspy, przełączanie formularza i widoczności hasła, walidacja, komunikaty, klawiatura i układ mobilny.
 - Ikony Google i Facebook z uczciwym Coming soon; bez OAuth, żądań do dostawców i pozorowanego konta.
@@ -18,7 +18,7 @@ Tytuł GitHub: **[FE-14] Ekrany logowania/rejestracji bez OAuth**. Milestone fro
 
 ### Reguły arkusza 6 + D01–D17 — [#25](https://github.com/ksobczak321-oss/gra/issues/25)
 
-Tytuł GitHub: **[FE-15] reguły arkusza 6 + D01–D17**. Milestone frontend. Status: implementacja lokalna i weryfikacja; zgłoszenie w toku przed publikacją.
+Tytuł GitHub: **[FE-15] reguły arkusza 6 + D01–D17**. Milestone frontend. Status: completed — 189 testów modelu, 10 lokalnych zestawów przeglądarkowych, publikacja i 3 zestawy publicznej wersji zaliczone. Excel 7 dostępny na `main`.
 
 - Schemat 8: realny czas także offline, bez kontroli stop/play/speed; zapis kotwicy rozliczenia i idempotentny powrót.
 - Start 12 osób w domu i zero pracowników; limit `12 × własny poziom`, dojście 5 min i podatek od przybycia, pięciominutowy powrót.
