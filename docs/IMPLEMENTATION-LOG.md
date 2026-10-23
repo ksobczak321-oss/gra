@@ -245,7 +245,7 @@ Status: implementacja lokalna i weryfikacja. Zgłoszenia frontend [#5 — formul
 
 ## 2026-10-23 — spójne panele po pakiecie „go”
 
-Status: praca lokalna nad pełnym pakietem screenów i komentarzy, [FE-16 / #26](https://github.com/ksobczak321-oss/gra/issues/26), milestone frontend. Po początkowym „go” użytkownik ponownie wstrzymał prace, a następnie wyraźnie polecił prześledzić i wdrożyć wszystkie uwagi. Poniżej zapisano docelowy, wspólny zakres, z najnowszymi doprecyzowaniami. Ten wpis nie potwierdza jeszcze nowego wdrożenia ani pełnej regresji; [warunki odbioru](FRONTEND-REVIEW.md) oddzielają komplet wymagań od dowodów publikacji.
+Status: ukończono i opublikowano pełny pakiet screenów i komentarzy, [FE-16 / #26](https://github.com/ksobczak321-oss/gra/issues/26), milestone frontend. Po początkowym „go” użytkownik ponownie wstrzymał prace, a następnie wyraźnie polecił prześledzić i wdrożyć wszystkie uwagi. Poniżej zapisano docelowy, wspólny zakres, z najnowszymi doprecyzowaniami. [Warunki odbioru](FRONTEND-REVIEW.md) obejmują komplet wymagań, a poniższe sekcje zawierają wyniki końcowej regresji i dowody publikacji.
 
 - Wszystkie budynki dostają status odpowiadający ich funkcji. U producenta Producing / Waiting for workers / Storage full / Waiting for resources ma wyjaśniać pracę lub blokadę. Przy aktywnej produkcji widoczne są produkt, liczba najbliższych sztuk i czas trafienia do lokalnego magazynu.
 - Storage u pięciu producentów ma zapas / obecny limit / limit po jednym ulepszeniu, np. 50 / 200 / 400. Lokalny limit zmieniono z zależnego od ratusza na `200 × własny poziom producenta`.
@@ -270,4 +270,10 @@ Status: praca lokalna nad pełnym pakietem screenów i komentarzy, [FE-16 / #26]
 - Dodatkowe trzy testy wykrytego błędu transportu sprawdzają odwołanie załadowanego tragarza magazynu, targu i portu oraz przydzielenie innej osoby: stary ładunek nie przechodzi na nową osobę idącą do pracy, nie znika i jest dostarczany dokładnie raz, także po ponownym wczytaniu.
 - Estymacja używa rzeczywistej konkurencji o tragarzy. Jeśli brak obsady, poziomu ratusza lub rozkład dostaw przekracza ograniczenie obliczeń, pokazuje stan i przyczynę zamiast pozornego czasu; dla dostępnej obsady podaje osobno transport i budowę. Zasady pierwszeństwa dostaw nie zostały zmienione.
 - `git diff --check`, sprawdzenie składni JavaScript/Python i suma kontrolna Excel 7 zaliczone. Arkusz nadal ma SHA-256 `bf49eef3b43ba81e0492c6eb187940c99177bbb8ae925ceca2b09ab0a2b9e945`.
-- Publiczny workflow, commit i testy rzeczywistego adresu zostaną zapisane po publikacji.
+
+### Publikacja i odbiór publicznego frontendu v11
+
+- Commit gry: [`43348df`](https://github.com/ksobczak321-oss/gra/commit/43348df). Workflow Pages [`39936929230`](https://github.com/ksobczak321-oss/gra/actions/runs/39936929230) zakończył się `success`.
+- Na rzeczywistym adresie `https://ksobczak321-oss.github.io/gra` zaliczono ponownie `harborlight-frontend-v10-smoke.py`, `harborlight-motion-v10-smoke.py` oraz `harborlight-agreed-ui-smoke.py`: pełna checklista paneli i kliknięć, pięć kart produktów z licznikami i trasami, cztery szerokości, telefon, zadania i grant bez powtarzania, a także rzeczywiste zmiany pikseli wody/dymu, zachowanie preferencji animacji i powrót do karty. Brak błędów JavaScript/HTTP.
+- Publiczne HTML, CSS i JavaScript zwracają HTTP 200 i korzystają ze spójnych odnośników `frontend-v11`, bez starych importów frontend-v10. [Link do nowej wyspy](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v11).
+- Zaktualizowano [macierz 24 warunków odbioru](FRONTEND-REVIEW.md), backlog i FE-16 / #26 w milestone frontend. Excel 7 nie został zmieniony; backend, płatności i OAuth pozostają oddzielnymi zadaniami.

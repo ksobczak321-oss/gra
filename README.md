@@ -20,11 +20,11 @@ Dolny dok przełącza cały pasek Buildings na pięć obrazkowych kart produktó
 
 ## Podgląd
 
-- [Interaktywna wyspa na GitHub Pages](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html)
+- [Interaktywna wyspa na GitHub Pages](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v11)
 - [Logowanie i rejestracja po opublikowaniu zmian](https://ksobczak321-oss.github.io/gra/harborlight-auth.html)
 - [Zaakceptowany wzorzec wizualny](https://ksobczak321-oss.github.io/gra/harborlight-v1-screen.html)
 
-Publiczny adres pokazuje ostatnią udaną publikację `main`. Obecność plików w lokalnym środowisku nie potwierdza wdrożenia; wyniki publikacji zapisujemy w [dzienniku implementacji](docs/IMPLEMENTATION-LOG.md).
+Aktualny frontend-v11: commit `43348df`, udana publikacja Pages `39936929230`; 225 testów modelu, 12 lokalnych zestawów Chromium i 3 powtórzone zestawy na publicznym adresie zaliczone. Publiczny adres pokazuje ostatnią udaną publikację `main`. Obecność plików w lokalnym środowisku nie potwierdza wdrożenia; wyniki publikacji zapisujemy w [dzienniku implementacji](docs/IMPLEMENTATION-LOG.md).
 
 ## Uruchomienie i sprawdzenia
 

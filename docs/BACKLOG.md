@@ -1,6 +1,6 @@
 # Backlog HARBORLIGHT
 
-Stan: 2026-10-23. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Bazą jest [HARBORLIGHT7-zasady.xlsx](arkusze/HARBORLIGHT7-zasady.xlsx), a najnowsze zmiany frontendu opisuje poniższy pakiet zatwierdzony „go”. Excel 7 pozostaje zachowany bez zmian. Ostatnia wcześniej potwierdzona publikacja gry to `6b06f20`; [dziennik](IMPLEMENTATION-LOG.md) oddziela ją od bieżącej pracy i backendu.
+Stan: 2026-10-23. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Bazą jest [HARBORLIGHT7-zasady.xlsx](arkusze/HARBORLIGHT7-zasady.xlsx), a najnowsze zmiany frontendu opisuje poniższy pakiet zatwierdzony „go”. Excel 7 pozostaje zachowany bez zmian. Aktualny frontend v11 opublikowano z `43348df`; [dziennik](IMPLEMENTATION-LOG.md) podaje wyniki testów lokalnych i publicznego adresu oraz oddziela ukończony frontend od backendu.
 
 Zachowujemy zaakceptowany wygląd wyspy i jej animacje. Reguły działają w przeglądarce bez backendu. Docelowe trzy sposoby gry — web, Android, iPhone — wymagają wspólnego konta, trwałego stanu i serwerowego rozliczania postępu; obecny lokalny zapis tego nie zapewnia.
 
@@ -8,7 +8,7 @@ Zachowujemy zaakceptowany wygląd wyspy i jej animacje. Reguły działają w prz
 
 ### FE-16 — Spójne panele, priorytety i jedno aktywne zadanie — [#26](https://github.com/ksobczak321-oss/gra/issues/26)
 
-Status: wdrażanie pełnego zestawu uwag ze screenów i komentarzy, wraz z późniejszym doprecyzowaniem przez użytkownika. Milestone frontend. [Macierz odbioru](FRONTEND-REVIEW.md) obejmuje wcześniejsze i najnowsze wymagania; wyniki pełnej regresji oraz publikacja są zapisywane dopiero po potwierdzeniu.
+Status: completed — pełny zestaw obu serii uwag ze screenów i komentarzy wdrożony jako frontend-v11. Milestone frontend. Zaliczone 225/225 testów modelu, 12/12 lokalnych zestawów Chromium i 3 zestawy na rzeczywistym publicznym adresie. [Macierz odbioru](FRONTEND-REVIEW.md) obejmuje wcześniejsze i najnowsze wymagania; commit `43348df`, udane wdrożenie Pages `39936929230`.
 
 - Wspólny górny status każdego budynku; u producentów rodzaj i liczba najbliższych sztuk oraz czas odłożenia do lokalnego magazynu.
 - Storage: obecny zapas / pojemność teraz / po ulepszeniu, ze składami `200 × własny poziom producenta`.

@@ -2,7 +2,7 @@
 
 Zakres obejmuje wszystkie uwagi do bieżącej wyspy, zebrane podczas obu serii screenów. Najnowsze doprecyzowanie zastępuje wcześniejszą wersję tego samego widoku. Dotychczasowy limit obsady `12 × własny poziom budynku` oraz norma wymagań zadań pozostają zachowane. Excel 7 nie jest modyfikowany przez tę iterację.
 
-**Status: zaimplementowane w wersji roboczej; końcowa weryfikacja i publikacja w toku.** Tabela definiuje wynik do odbioru. Kolumna testów wskazuje scenariusze weryfikacji, nie potwierdza ich ostatniego wyniku. Konkretne uruchomienia testów, commit i sprawdzenie publicznej strony są zapisywane w [dzienniku implementacji](IMPLEMENTATION-LOG.md); sam plik roboczy nie potwierdza publikacji.
+**Status: zaimplementowane, przetestowane i opublikowane jako frontend-v11.** Commit gry [`43348df`](https://github.com/ksobczak321-oss/gra/commit/43348df), [udane wdrożenie Pages](https://github.com/ksobczak321-oss/gra/actions/runs/39936929230). Zaliczone 225/225 testów modelu, 12/12 lokalnych zestawów Chromium i ponownie trzy zestawy na publicznym adresie: frontend-v10, motion-v10 oraz agreed-ui. Tabela wskazuje zachowanie i scenariusze weryfikacji; szczegóły są w [dzienniku implementacji](IMPLEMENTATION-LOG.md). [Otwórz publiczną wyspę](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v11).
 
 | Wymaganie | Zachowanie końcowe | Plik weryfikacji |
 | --- | --- | --- |
@@ -31,6 +31,6 @@ Zakres obejmuje wszystkie uwagi do bieżącej wyspy, zebrane podczas obu serii s
 | Materiały i monety do testów | Pierwsze otwarcie nowej wersji jednorazowo uzupełnia centralny magazyn z zachowaniem limitu na rodzaj i łącznie oraz zapewnia minimum 10 000 monet. Większe saldo, poziomy, mieszkańcy i zlecenia są zachowane. Odświeżenie nie przyznaje ponownie zasobów. Zwykły start silnika nadal ma po 100 zasobów; uzupełnienie jest osobną, jednorazową migracją wersji testowej. | [frontend-v10](../tests/harborlight-frontend-v10-smoke.py), [agreed-state](../tests/harborlight-agreed-state.test.mjs) |
 | Wspólny stan i publikacja | Gra zachowuje dotychczasowy zapis i angielski interfejs. Po wdrożeniu należy sprawdzić rzeczywisty adres Pages, a nie tylko lokalny serwer, wraz z właściwymi wersjami JS/CSS i brakiem błędów JavaScript/HTTP. | [frontend-v10](../tests/harborlight-frontend-v10-smoke.py), [language](../tests/harborlight-language-smoke.py) |
 
-Sprawdzenie publicznego adresu wymaga ponownego uruchomienia scenariuszy przeglądarkowych z `HARBORLIGHT_BASE_URL` ustawionym na wdrożenie Pages. Ostateczny wynik i identyfikator wdrożonego commita trafiają do dziennika.
+Publiczny adres sprawdzono z `HARBORLIGHT_BASE_URL=https://ksobczak321-oss.github.io/gra`. Potwierdzono nowe odnośniki CSS/modułów `frontend-v11`, wszystkie panele, widoki mobilne, pięć kart zasobów, jedno aktywne zadanie oraz rzeczywisty ruch wody i dymu, bez błędów JavaScript/HTTP. Kolejna zmiana gry wymaga ponownej weryfikacji odpowiednich scenariuszy.
 
 Reguły i ograniczenia prototypu: [ECONOMY-RULES.md](ECONOMY-RULES.md), [INTERACTIVE-ISLAND.md](INTERACTIVE-ISLAND.md). Zgłoszenie: [FE-16 / #26](https://github.com/ksobczak321-oss/gra/issues/26).
