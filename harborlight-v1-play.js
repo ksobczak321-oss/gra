@@ -6,7 +6,9 @@ import * as Residents from './harborlight-v1-residents.js?v=frontend-v11';
 import * as Activities from './harborlight-v1-activities.js?v=frontend-v11';
 import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v11';
 
-const SAVE_KEY = 'harborlight-v1-interactive-save';
+const NEW_PLAYER_PROFILE = new URLSearchParams(location.search).get('profile') === 'new-player';
+const SAVE_KEY = NEW_PLAYER_PROFILE ? 'harborlight-v1-new-player-save' : 'harborlight-v1-interactive-save';
+document.documentElement.dataset.profile = NEW_PLAYER_PROFILE ? 'new-player' : 'preview';
 const stage = document.getElementById('stage');
 const layer = document.getElementById('semanticLayer');
 const dialog = document.getElementById('island-dialog');
@@ -1487,7 +1489,7 @@ function renderPanel() {
 }
 
 settleActiveTick();
-State.applyBuildTestStock?.(state);
+if (!NEW_PLAYER_PROFILE) State.applyBuildTestStock?.(state);
 recordVisit(state);
 save();
 renderHUD();
