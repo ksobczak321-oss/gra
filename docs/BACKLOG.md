@@ -1,244 +1,119 @@
 # Backlog HARBORLIGHT
 
-Stan: 2026-10-22. Zadania są podzielone według istniejących milestone’ów [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3) i [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Utworzono i potwierdzono osiemnaście GitHub Issues FE/BE z przypisaniem do milestone’ów. Identyfikatory FE/BE porządkują dokumentację; numery i linki rzeczywistych zgłoszeń są podane przy zadaniach.
+Stan: 2026-10-23. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Bieżąca specyfikacja to [HARBORLIGHT7-zasady.xlsx](arkusze/HARBORLIGHT7-zasady.xlsx): wpisy arkusza 6 i wszystkie rozstrzygnięte decyzje D01–D17. Dokumentacja opisuje rzeczywisty lokalny frontend; publikacja i zamknięcie zgłoszeń są osobnymi krokami.
 
-Utrzymujemy spokojną rozbudowę wyspy i pętlę ekspedycja → zasoby → osada. Zachowujemy zaakceptowany kierunek wizualny. Backend nie jest wymagany do uruchomienia obecnego statycznego prototypu.
+Zachowujemy zaakceptowany wygląd wyspy i jej animacje. Reguły działają w przeglądarce bez backendu. Docelowe trzy sposoby gry — web, Android, iPhone — wymagają wspólnego konta, trwałego stanu i serwerowego rozliczania postępu; obecny lokalny zapis tego nie zapewnia.
 
-## Frontend
+## Bieżący frontend
 
-### FE-01 — Interaktywna wyspa na zaakceptowanym ekranie
+### Formularze konta — [#5](https://github.com/ksobczak321-oss/gra/issues/5)
 
-Status: zrealizowane, sprawdzone lokalnie i na publicznej piaskownicy; zgłoszenie zamknięte jako completed. Milestone: frontend #3. GitHub Issue: [#7](https://github.com/ksobczak321-oss/gra/issues/7).
+Tytuł GitHub: **[FE-14] Ekrany logowania/rejestracji bez OAuth**. Milestone frontend. Status: implementacja lokalna, zgłoszenie w toku; publikacja i końcowe potwierdzenie pozostają oddzielne.
 
-Zakres: menu, HUD, dzielnice, budynki, produkcja, mieszkańcy, handel, zadania, cel latarni, ekspedycje i zapis przeglądarkowy. Implementacja w plikach `harborlight-v1-play.*` i `harborlight-v1-state.js`.
+- Oddzielna strona Sign in / Create account w stylu wyspy, przełączanie formularza i widoczności hasła, walidacja, komunikaty, klawiatura i układ mobilny.
+- Ikony Google i Facebook z uczciwym Coming soon; bez OAuth, żądań do dostawców i pozorowanego konta.
+- Formularze nie zapisują haseł ani nie tworzą lokalnego dowodu zalogowania. Brak usługi kont jest komunikowany przy wysłaniu.
+- Continue as guest oraz wejście do strony z wyspy; istniejący zapis gracza pozostaje dostępny.
+- Test `tests/harborlight-auth-smoke.py` obejmuje formularze, tryby, telefon, klawiaturę i brak integracji zewnętrznej.
 
-Kryteria odbioru:
+### Reguły arkusza 6 + D01–D17 — [#25](https://github.com/ksobczak321-oss/gra/issues/25)
 
-- Widoczne główne kontrolki prowadzą do działających paneli lub operacji; koszty i nagrody wpływają na jeden stan gry.
-- Gracz odbiera produkcję, ulepsza budynek, rozwiązuje ekspedycję i naprawia latarnię.
-- Odświeżenie zachowuje postęp; odebrane nagrody nie są przyznawane drugi raz.
-- Reguły gospodarki mają testy, a cały przebieg jest sprawdzony w przeglądarce na komputerze i telefonie.
-- Zapisany jest wynik publikacji GitHub Pages oraz aktualny link podglądu.
+Tytuł GitHub: **[FE-15] reguły arkusza 6 + D01–D17**. Milestone frontend. Status: implementacja lokalna i weryfikacja; zgłoszenie w toku przed publikacją.
 
-### FE-02 — Niezależne warstwy świata i stany budynków
+- Schemat 8: realny czas także offline, bez kontroli stop/play/speed; zapis kotwicy rozliczenia i idempotentny powrót.
+- Start 12 osób w domu i zero pracowników; limit `12 × własny poziom`, dojście 5 min i podatek od przybycia, pięciominutowy powrót.
+- Produkcja 10/12/13/14… na poziomach, transport jednego towaru w kursach 5 min, ładunek 60/66/72… i ochrona rezerwy Food `50 × poziom magazynu`.
+- Własne załogi targu i portu, blokada targu 1 h, wygasanie partii 24 h, port 40/50 i 140/150, liniowa historia podwyżek oddzielnie dla każdego towaru.
+- Nowe koszty budynków, kolejka +10%, standard 2T, latarnia 5T, kaplica 4T/7T/10T i zatwierdzony koszt kaplicy.
+- Osobiste szczęście, przestoje bez +1 pracy i bez kary bezrobocia; limit −50 dotyczy tylko przestoju. Nowe osoby zamrożone na 0% przez 24 h.
+- Dzienna pula domu, rozdział reszty po 23 h 58 min i odnowienie co 24 h; punkty nie kasują kar.
+- Zwiedzanie 4 h bez wycofania, osobiste 100%/24 h po powrocie, grupowe +10 pp/6 h, miejsca i wejścia 2L oraz trzy płatne pakiety.
+- Zadania latarni: trzy karty FIFO, losowe rozmiary po starcie S/M/L, indywidualne dobowe łańcuchy, skalowane nagrody, zapisywany mnożnik reakcji, raty i utrata wpłat po terminie.
+- Ekspedycje tylko za monety, pula 50/100/200…, wypłata albo ryzyko całej puli.
+- Lokalne wyceny/operacje monetowe: skrócenia z minimum 5 monet, kursy po 10, komplet budynku gotowy po 10 s, pakiet 1000 × ratusz/24 h i wykonalne plany dostaw z dodatkową opłatą 25% wartości braków.
+- Płatne błogosławieństwo z 4 h oczekiwania od końca efektu, lokalny wynik rankingu co pełną godzinę i seria dni bez niezdefiniowanej nagrody.
+- Dokumentacja, nowy arkusz oraz testy stanu, jedzenia, mieszkańców, logistyki, aktywności, formularzy i paneli. Końcowy wynik, commit i publikację zapisujemy w dzienniku.
 
-Status: zaplanowane. Zależność: FE-01. GitHub Issue: [#8](https://github.com/ksobczak321-oss/gra/issues/8).
+W powyższym zakresie nie ma prawdziwych płatności, OAuth, reklam, automatycznego publikowania postów ani wypłat za niezweryfikowane polecenia.
 
-Zakres: zastąpienie wycinków wspólnego obrazu osobnymi assetami terenu, dróg, roślinności i budynków zgodnie z [specyfikacją v1](HARBORLIGHT-V1-SCREEN-SPEC.md).
+## Zachowany frontend i dalsza grafika
 
-Kryteria odbioru:
+| Zgłoszenie | Zakres | Stan |
+| --- | --- | --- |
+| [#7](https://github.com/ksobczak321-oss/gra/issues/7) | Interaktywna wyspa, panele, wspólny stan i zapis | Wcześniej completed i opublikowane; reguły uaktualnia #25. |
+| [#8](https://github.com/ksobczak321-oss/gra/issues/8) | Osobne assety świata i stany budynków | Zaplanowane: teren, drogi, roślinność i każdy budynek niezależnie, bez zmiany zaakceptowanego układu. |
+| [#9](https://github.com/ksobczak321-oss/gra/issues/9) | Dotyk, kamera, dostępność | Częściowo: responsywne panele i klawiatura są; kamera wheel/pinch i pełny odbiór pozostają. |
+| [#10](https://github.com/ksobczak321-oss/gra/issues/10) | Żywa wyspa i animacje | Poprzednie iteracje opublikowane; otwarte do oceny wizualnej użytkownika. Bieżąca zmiana zachowuje animacje. |
+| [#15](https://github.com/ksobczak321-oss/gra/issues/15) | Ratusz, szczęście i populacja | Wcześniej completed; aktualne reguły czasu i noworodków w #25. |
+| [#16](https://github.com/ksobczak321-oss/gra/issues/16) | Limit ratusza, dom i przeludnienie | Wcześniej completed; zachowany rozdział limitu osady i miejsc w domu. |
+| [#17](https://github.com/ksobczak321-oss/gra/issues/17) | Ludzie, podatki i transport | Wcześniej completed; aktualne własne limity i kursy 5 min w #25. |
+| [#18](https://github.com/ksobczak321-oss/gra/issues/18) | Szczęście załogi, targ, kaplica i powiadomienia | Wcześniej completed; nowe wizyty, terminy i przestoje w #25. |
+| [#19](https://github.com/ksobczak321-oss/gra/issues/19) | Budowa, kolejka, model pakietu i latarnia | Wcześniej completed; nowe ceny, 5T i lokalny cennik monetowy w #25. |
+| [#21](https://github.com/ksobczak321-oss/gra/issues/21) | Angielski interfejs i pomoc „i” | Wcześniej completed; zachowane. |
+| [#22](https://github.com/ksobczak321-oss/gra/issues/22) | Automatyczne żywienie i posiłek | Wcześniej completed; aktualnie offline i rezerwa Food, bez dawnej kary −25/h. |
+| [#23](https://github.com/ksobczak321-oss/gra/issues/23) | Kompaktowe panele producentów | Wcześniej completed; zachowane małe −/+ i pomoc. |
+| [#24](https://github.com/ksobczak321-oss/gra/issues/24) | Indywidualne szczęście i pełne procenty | Wcześniej completed; #25 dodaje nowe stany i pulę domu. |
 
-- Co najmniej sześć dzielnic zachowuje układ i styl zaakceptowanej wyspy.
-- Każdy główny budynek ma osobne stany: niedostępny, budowa, aktywny, ulepszony.
-- Budowa oraz ulepszenie zmieniają obiekt w świecie bez przemalowania jednego zbiorczego tła.
-- Teren i interfejs pozostają oddzielone; porównanie wyglądu jest zapisane w dokumentacji.
+Numer i URL GitHub są jednoznacznym identyfikatorem zadania. Nowe zakresy mają oznaczenia FE-14 i FE-15.
 
-### FE-03 — Obsługa dotyku, kamera i dostępność
-
-Status: zaplanowane; dialogi responsywne i etykiety kontrolek są częściowo wdrożone w FE-01. GitHub Issue: [#9](https://github.com/ksobczak321-oss/gra/issues/9).
-
-Kryteria odbioru:
-
-- Na telefonie można wygodnie otworzyć menu, ekspedycję i zarządzanie budynkami bez trafiania w pomniejszone ikony.
-- Kamera obsługuje przesuwanie, wheel/pinch zoom i ograniczenia zapobiegające zgubieniu wyspy.
-- Stały HUD i dialogi pozostają czytelne przy zmianie orientacji; dialogi nie wychodzą poza ekran.
-- Cała główna pętla działa z klawiatury, fokus jest zachowywany, a ograniczenie animacji jest respektowane.
-
-### FE-04 — Żywa wyspa — animacje świata
-
-Status: trzecia iteracja opublikowana w `0816d27`; przegląd wizualny, regresje lokalne i rozszerzony test publicznej strony zaliczone. Zgłoszenie pozostaje otwarte do wizualnej oceny poprawki przez użytkownika; wcześniejsze testy nie wystarczały do odbioru czytelności ruchu i pełnego brzegu. Zakres doprecyzowany przez użytkownika do frontendu i grafiki. GitHub Issue i dowody: [#10](https://github.com/ksobczak321-oss/gra/issues/10#issuecomment-6324387868). Szczegóły: [animacje świata](WORLD-ANIMATION.md).
-
-Kryteria odbioru:
-
-- Wiatrak ma obracające się łopaty, bez drugiego nieruchomego wirnika pod spodem.
-- Dym powstaje przy wylocie komina, unosi się, rozszerza i zanika w czytelny sposób; mewy latają, a chmury przesuwają się nad dalekim planem.
-- Woda płynie w wodospadach. Fale i przybój obejmują wszystkie widoczne odcinki brzegu, port, wodę pomiędzy pomostami i skały; nie przesuwają lądu ani budowli.
-- Wszystkie 24 postacie świata przemieszczają się po ścieżkach bez postojów, o widoczny dystans w ciągu kilku sekund. Zwierzęta chodzą pomiędzy miejscami wypasu i mają ruch podczas postoju.
-- Nieruchome postacie, zwierzęta i smugi dymu z tła są zastąpione oczyszczonym obrazem całego świata przed narysowaniem animacji; interfejs zachowuje oryginalną grafikę, a ograniczenia oczyszczonego obrazu są opisane w dokumentacji.
-- Plac budowy sprawia wrażenie pracy: dźwig, lina lub hak poruszają się przy budowie.
-- Pauza, tempo i ograniczenie ruchu sterują animacjami; niewidoczna karta nie zużywa zasobów na aktywną animację.
-- Efekty zachowują styl zaakceptowanego obrazu, nie zasłaniają HUD ani kontrolek i są sprawdzone na komputerze oraz telefonie.
-- Test potwierdza przemieszczenie aktorów i pokrycie nazwanych stref brzegu, nie tylko zmianę dowolnych pikseli w wybranych fragmentach sceny.
-
-FE-02 nadal obejmuje pełne rozdzielenie assetów świata. Integrację lokalnego zapisu z API, obsługę braku połączenia i konfliktu wersji należy zaplanować oddzielnie po BE-01 i BE-03; zakres backendu nie wchodzi do obecnej iteracji animacji.
-
-### FE-05 — Poziom ratusza, szczęście i populacja
-
-Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone: frontend #3. GitHub Issue i dowody: [#15](https://github.com/ksobczak321-oss/gra/issues/15#issuecomment-6324709772).
-
-Zakres: górny pasek HTML pokazuje poziom, szczęście, mieszkańców i wszystkie zasoby; panel mieszkańców wyjaśnia zmianę populacji. Reguły, przykłady i migracja zapisu są opisane w [instrukcji prototypu](INTERACTIVE-ISLAND.md).
-
-Kryteria odbioru:
-
-- Nowa wyspa zaczyna na poziomie 1, ze szczęściem 0%, 12 mieszkańcami i po 100 sztuk każdego z pięciu zasobów. Istniejący zapis zachowuje postęp.
-- Poziom jest poziomem ratusza, a teoretyczny limit mieszkańców wynosi `24 × poziom`. Rozbudowa domu nie dodaje natychmiast nowych mieszkańców; jego miejsca mieszkalne doprecyzowano w FE-06.
-- Szczęście mieści się w zakresie −100%…+100%. Przy 0% populacja się nie zmienia; przy ±50% zmienia się o osobę co 6 godzin, a przy ±100% co godzinę.
-- Przyjęta interpolacja tempa daje zmianę co 12 godzin przy ±25% i co około 1 godzinę 43 minuty przy ±75%. Kierunek zmiany zależy od znaku.
-- Populacja nie spada poniżej 6 i nie przekracza limitu ratusza. Po ubytku pracownicy nie przekraczają liczby mieszkańców; wyspa pozostaje grywalna.
-- Liczony jest rzeczywisty aktywny czas, niezależnie od przyspieszenia; pauza zatrzymuje naliczanie. Nie ma naliczania poza grą. Zapis zachowuje niepełny postęp, ale 0%, odwrócenie znaku i osiągnięcie granicy nie pozwalają gromadzić zmian na później.
-- Górny pasek i panel mieszkańców są czytelne oraz działają na komputerze i telefonie. Testy obejmują granice, progi czasu, zapis, migrację i regresję dotychczasowych akcji.
-
-### FE-06 — Rozbudowa zależna od ratusza, mieszkania i przeludnienie
-
-Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone: frontend #3. GitHub Issue i dowody: [#16](https://github.com/ksobczak321-oss/gra/issues/16#issuecomment-6335468633).
-
-Zakres: ratusz ogranicza poziom rozbudowy pozostałych budynków, a dom wyznacza rzeczywistą liczbę miejsc mieszkalnych. Brak miejsc stopniowo obniża szczęście; gracz widzi osobno limit osady, mieszkania i liczbę osób bez miejsca.
-
-Kryteria odbioru:
-
-- Pozostałe budynki nie mogą być rozbudowywane powyżej poziomu ratusza, w ramach bieżącego maksimum 100 (rozszerzenie w FE-07). Blokada wyjaśnia wymagany poziom i nie wydaje zasobów; sam ratusz można podnosić do następnego poziomu.
-- Teoretyczny limit populacji wynosi `24 × poziom ratusza`, a miejsca mieszkalne `24 × poziom domu`. Rozbudowa jednego nie podnosi drugiego i nie dodaje ludzi natychmiast.
-- Ratusz 4, dom 3 i 78 osób oznaczają limit 96, 72 miejsca i 6 osób bez miejsca. Populacja może przekroczyć miejsca mieszkalne, ale nie limit ratusza.
-- Każda osoba bez miejsca obniża szczęście o 1 punkt procentowy na godzinę aktywnej gry. Dla stałego przeludnienia 6 osób spadek wynosi 6 punktów na godzinę. Część ułamkowa jest zachowywana w zapisie.
-- Rozbudowa domu do wystarczającej pojemności zatrzymuje dalszą karę, bez automatycznego zwracania utraconego szczęścia. Zmieniająca się populacja zmienia tempo kary.
-- Kara respektuje pauzę, widoczność karty i rzeczywisty aktywny czas niezależnie od tempa 1×/2×/4×. Dotychczasowy przelicznik narodzin i ubytku oraz minimum 6 pozostają aktualne.
-- Nowy start ma ratusz 1 i dom 1. Migracja zapisów 1/2 zachowuje zasoby i osiągnięte poziomy: ratusz otrzymuje co najmniej najwyższy posiadany poziom budynku. Schemat 3 waliduje dalszą zgodność poziomów i zapisuje ułamkowe szczęście.
-- Latarnia po pierwszej naprawie do poziomu 1 może być dalej rozbudowywana do poziomu ratusza; zapis nie cofa naprawionej latarni do poziomu 1.
-- Testy obejmują blokady i koszty, odblokowanie po ratuszu, osobne pojemności, naliczanie i zatrzymanie kary, zapis, migrację, działające panele oraz regresję rozgrywki na komputerze i telefonie.
-
-### FE-07 — Pracownicy, podatki i fizyczny transport
-
-Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone frontend #3. GitHub Issue: [#17](https://github.com/ksobczak321-oss/gra/issues/17).
-
-- Dokładnie osiem miejsc pracy, limit połowy faktycznej populacji i wspólna pula; ratusz, dom, kaplica i latarnia bez załogi.
-- Sześciu zatrudnionych na starcie, targ od 2 i przystań od 4; minimum populacji 6 oraz przykład ratusza 6 bez ograniczenia dawnego maksimum 5.
-- Podatek 1/os./aktywną godzinę, bez automatycznej produkcji monet; zwolnieni wracają 5 minut i nie mogą ponownie pracować w tym czasie.
-- Produkcja 10/os./h, osobne niełączone fazy, utrata niedokończonej sztuki; młyn i tartak 2:1.
-- Lokalne składy 200 × ratusz; przewóz 60/os./h, zapisane priorytety i centralne limity 1000/4000 × 1,5^(poziom−1), monety poza objętością.
-- Centralne koszty bez ręcznego obejścia logistyki; bezstratna migracja zapasów i wcześniejszych gotowych monet.
-- Zapis schematu 6, testy jednostkowe i przeglądarkowe; pełne reguły w [instrukcji](ECONOMY-RULES.md).
-
-### FE-08 — Szczęście załogi, powiadomienia, targ i kaplica
-
-Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone frontend #3. GitHub Issue: [#18](https://github.com/ksobczak321-oss/gra/issues/18).
-
-- Pełny skład zatrzymuje produkcję; −10 szczęścia jego załogi i kolejne −10/24 h do −50, z resetem po opróżnieniu. Średnia szczęścia obejmuje całą populację.
-- Powiadomienie przy każdym ponownym zapełnieniu, przeczytanie i stan zachowane w zapisie.
-- Targ: dwie grupy towarów, 10% marży, bez monet, dostawy 60/os./h, godzina blokady od przybycia, odbiór magazynierów; pojemność 1000,1500,2250…
-- Kaplica: bez pasywnego efektu poziomu 1; ukończenie rozbudowy daje +10 × poziom i podatki ×2/10 h. Ręcznie +50 wszystkich zasobów i +20 szczęścia/1 h, liczba jednorazowych użyć = poziom.
-- Lokalna seria kolejnych dni do 10 bez wymyślania nagrody; docelowe logowanie pozostaje backendem.
-
-### FE-09 — Rozbudowa, kolejka, uprawnienia pakietu i latarnia
-
-Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone frontend #3. GitHub Issue: [#19](https://github.com/ksobczak321-oss/gra/issues/19).
-
-- Zaakceptowane koszty producentów 72 drewna +72 kamienia +120 produktu, razy obecny poziom; sumowanie powtórzonego produktu. Główne budynki 500 każdego zasobu wraz z monetami × obecny poziom.
-- Rezerwacja całego kosztu przy zwykłym zleceniu, przewóz istniejącą załogą magazynu i następnie równie długa budowa. Poziom dopiero po zakończeniu.
-- Ratusz L: L aktywnych i L opłaconych miejsc kolejki, automatyczne przejście i kolejne poziomy tego samego budynku bez równoległego budowania dwóch jego poziomów.
-- Lokalny model pakietu: +4 aktywne, kolejka bez limitu, plany z estymat dostaw. Wygasanie kalendarzowe; rozpoczęte kończą się, opłacone czekają na normalny limit, nieopłacone zachowane i wstrzymane. Sprzedaż nie jest uruchomiona.
-- Latarnia: 500 każdego zasobu ze złotem, transport T + budowa 2T; +100 szczęścia i produkcja pięciu materiałów ×2 przez 24 h × osiągnięty poziom. Podatki bez zmiany. Użytkownik zaakceptował koszt przy historycznej kalkulacji około 35 h zbierania od startu; nie jest to prognoza obecnego modelu żywienia i szczęścia.
-- Panel ratusza: poziom, obecni/limit, podatki/h, bez przydziału i odbioru. Bezpośrednie „Ulepsz”; magazynowe posiadane/wymagane w czerwieni/zieleni. Scenę zachowujemy.
-
-### FE-10 — Angielski interfejs i pomoc pod ikoną „i”
-
-Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone frontend #3. GitHub Issue: [#21](https://github.com/ksobczak321-oss/gra/issues/21).
-
-- Trzy akapity pomocy z karty rozbudowy są schowane w popupie „i” obok nagłówka Upgrade; koszty, akcja oraz rzeczywiste blokady i postęp pozostają widoczne.
-- Popup działa myszą/dotykiem, klawiaturą i Escape, nie zamyka nadrzędnego dialogu, mieści się na telefonie i ma poprawną etykietę oraz aria-expanded.
-- Cały aktywny interfejs, nazwy, zadania, ekspedycje, komunikaty i znane historyczne powiadomienia są po angielsku. Formatowanie jest angielskie; identyfikatory, postęp i reguły pozostają zachowane.
-- Grafika zaakceptowanego ekranu ma już angielskie napisy; archiwalne eksperymenty nie wchodzą w zakres aktywnego interfejsu.
-
-### FE-11 — Automatyczne żywienie i głód
-
-Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone frontend #3. GitHub Issue: [#22](https://github.com/ksobczak321-oss/gra/issues/22).
-
-- Każda osoba zużywa 1 Food/aktywną godzinę. Automatyczny przydział dotyczy wyłącznie magazynu centralnego, bez ręcznej akcji ani bezpośredniego jedzenia lokalnej produkcji.
-- Przydzielona część posiłku jest rezerwowana, a ułamek zachowany w zapisie; nie da się wydać tej samej żywności ponownie.
-- Historycznie brak centralnego i przydzielonego jedzenia dawał −25 punktów/h bazowego szczęścia. **FE-13 zastępuje tę karę** indywidualnym licznikiem głodu, okresem 12 h i −5 punktów/os./h; zasady automatycznego jedzenia i zachowania posiłku pozostają aktualne.
-- Zmiana populacji zmienia popyt. Pauza, ukrycie, offline i tempo działają jak w pozostałych godzinowych regułach. Przeludnienie i głód sumują skutki w indywidualnym szczęściu zgodnie z FE-13.
-- Food i Residents pokazują popyt/h, centralny stan i żywienie/głód; testy obejmują zachowanie zasobów i dokładne granice wyczerpania/dostaw.
-
-### FE-12 — Kompaktowe panele producentów
-
-Status: zrealizowane, sprawdzone lokalnie i na publicznym Pages; zgłoszenie zamknięte jako completed. Milestone frontend #3. GitHub Issue: [#23](https://github.com/ksobczak321-oss/gra/issues/23).
-
-- Wszystkie pięć paneli produkcyjnych: pierwszy wiersz Level | Storage z małym czasem do sztuki, drugi Workers aktualni/limit z małym −/+ | Taxes/h.
-- Wyjaśnienia pod „i”, bez powtórzonych dużych kart produkcji i dużych/zbiorczych przycisków pracowników wewnątrz budynku.
-- Wspólna pula, limity, czas powrotu, pełne składy i zatrzymanie wejść pozostają zgodne z gospodarką; panele odświeżają się na żywo i działają na telefonie.
-
-### FE-13 — Indywidualne szczęście, głód, bezrobocie i pełne procenty
-
-Status: zamknięte jako completed; implementacja, 93 testy reguł, osiem lokalnych zestawów przeglądarkowych, publikacja i trzy zestawy publicznej wersji zaliczone. Dowody są w dzienniku. Milestone frontend #3. GitHub Issue: [#24](https://github.com/ksobczak321-oss/gra/issues/24).
-
-- Trwała tożsamość każdej osoby, indywidualne szczęście, przydział, powrót i niezależne liczniki ciągłego głodu oraz bezrobocia, zapis schematu 7 bez utraty zasobów i wcześniejszego postępu.
-- +1 punkt procentowy/os./h za jedzenie i +1 za przydział. Każdy brak po 12 h daje osobne −5 punktów/h, bez kary wstecz. Jedzenie i ponowne zatrudnienie resetują wyłącznie odpowiadający licznik.
-- Nakarmiony pracownik +2/h; nakarmiony długotrwale bezrobotny i głodny długotrwale pracownik po −4/h; oba długotrwałe braki −10/h. Powrót liczy się jako czas bez pracy, z zachowaniem osobistego szczęścia.
-- Głód od razu zmniejsza produkcję i przewóz do połowy: 10→5 i 60→30 sztuk/os./h, również przy transporcie na budowę; podatki przydzielonych pozostają 1 moneta/h.
-- Osobiste ograniczenie ±100% przed średnią populacji; efekty kaplicy, latarni, pełnych składów i przeludnienia pozostają. Nowa osoba zaczyna od 0% bez historycznych bonusów.
-- HUD, grupy i osoby pokazują pełne procenty zaokrąglone w górę; silnik i zapis zachowują ułamki. Testy obejmują progi i resety, historię osoby, zmianę załogi/populacji, migrację, pauzę, zgodność kroków czasu i interfejs komputer/telefon.
-
-### Otwarte decyzje dotyczące rozbudowy budynków
-
-- Ustalić konkretną korzyść z własnego poziomu farmy, młyna, drwali, tartaku i kamieniołomu. Obecna produkcja działa, ale wydajność zależy od pracowników, jedzenia i latarni, lokalna pojemność od ratusza, a limit pracowników od populacji. Samo ulepszenie producenta nie zwiększa tych wartości.
-- Ustalić efekt kolejnych poziomów przystani i dodatkową rolę jej załogi poza podatkami.
-- Zastąpić tymczasowy koszt kaplicy uzgodnionym cennikiem.
-- Aktualne efekty, koszty, czasy i istniejące notyfikacje zebrano w [rozszerzonej tabeli budynków](BUILDINGS.md). Te otwarte decyzje nie zmieniają zakresu ukończonego FE-13 i nie są jeszcze nowymi regułami.
+Odbiór grafiki nadal wymaga czytelnego ruchu wszystkich postaci, dymu unoszącego się z kominów i zanikającego, obracającego wiatraka, mew, chmur, wodospadów, wszystkich widocznych brzegów, zwierząt i pracującej budowy. Efekty mają zachować styl i nie zasłaniać interfejsu. Testy animacji sprawdzają przesunięcia aktorów i nazwane strefy brzegu, a nie samą zmianę dowolnego piksela. Rendering respektuje ograniczenie ruchu i widoczność karty; gospodarka działa offline niezależnie.
 
 ## Backend
 
-### BE-01 — Kontrakt API i model postępu gracza
+### BE-01 — Kontrakt API i model postępu — [#11](https://github.com/ksobczak321-oss/gra/issues/11)
 
-Status: zaplanowane; backend nie jest jeszcze zaimplementowany. GitHub Issue: [#11](https://github.com/ksobczak321-oss/gra/issues/11).
+Status: zaplanowane, backend nie jest wdrożony. Kliencki schemat 8 jest materiałem wejściowym, nie modelem zaufanego serwera.
 
-Zakres: opisać kontrakt przed wyborem technologii. Kliencki schemat `version: 7` jest punktem wyjścia, nie gotowym modelem serwerowym.
+- Jedno API dla web, Android i iPhone: odczyt wyspy, komendy, potwierdzone wyniki, błędy i migracje.
+- Pełny stan mieszkańców, zegara, porcji Food, ładunków i rezerwacji, partii targu/portu, wizyt, puli domu, budów, zadań, przebiegów ekspedycji i uprawnień.
+- Idempotency keys, kontrola wersji stanu i konfliktów równoległych sesji; przykłady przyjętych i odrzuconych komend.
 
-Kryteria odbioru:
+### BE-02 — Konto i bezpieczne sesje — [#12](https://github.com/ksobczak321-oss/gra/issues/12)
 
-- Udokumentowane są odczyt stanu, komendy gry, wyniki ekspedycji i odbiór nagród.
-- Model obejmuje zasoby, budynki, przydziały, cel latarni, zadania, ekspedycje, poziom ratusza, miejsca mieszkalne, przeludnienie, ułamkowe szczęście, postęp populacji, osiem miejsc pracy, limity załóg, ułamek podatku, tożsamości i indywidualne szczęście mieszkańców, osobne liczniki głodu/bezrobocia, rezerwację części posiłku i wersję stanu.
-- Kontrakt określa format błędów, walidację, idempotencję komend i obsługę konfliktu wersji.
-- Są przykłady poprawnych i odrzuconych żądań oraz plan migracji zapisów.
+Status: zaplanowane; gotowy frontend formularzy nie jest usługą kont. Zależność: BE-01.
 
-### BE-02 — Tożsamość gracza i bezpieczne sesje
+- Gość i przejście do konta bez utraty wyspy, weryfikacja adresu, bezpieczne sesje i wylogowanie.
+- Późniejszy OAuth Google/Facebook wymaga konfiguracji dostawców i przepływu serwerowego. Sekrety oraz tokeny uprzywilejowane nie trafiają do statycznego klienta.
+- Start tylko raz: 12 osób w domu, 0 pracowników, poziom 1, 0% szczęścia, po 100 sześciu zasobów. Kolejne logowanie odczytuje postęp.
+- Dostęp wyłącznie do własnego stanu, minimalizacja i usuwanie danych, testy dostępu do cudzego konta.
 
-Status: zaplanowane. Zależność: BE-01. GitHub Issue: [#12](https://github.com/ksobczak321-oss/gra/issues/12).
+### BE-03 — Trwały zapis i synchronizacja — [#13](https://github.com/ksobczak321-oss/gra/issues/13)
 
-Kryteria odbioru:
+Status: zaplanowane. Zależności: BE-01 i BE-02.
 
-- Ustalony jest przepływ gry gościa i przejścia do trwałego konta bez utraty wyspy.
-- Pierwsze utworzenie wyspy po zalogowaniu stosuje start z FE-05/FE-06/FE-07: ratusz 1, dom 1, szczęście 0%, 12 mieszkańców i po 100 każdego zasobu; 6 osób pracuje po jednej w pięciu producentach i magazynie, a 6 pozostaje wolnych. Kolejne logowanie odczytuje postęp zamiast przyznawać start ponownie.
-- Użytkownik może odczytać i zmienić wyłącznie własny postęp; testy obejmują próbę dostępu do cudzej wyspy.
-- Sesje mają bezpieczne przechowywanie, wygaśnięcie i wylogowanie; sekrety nie trafiają do plików klienta ani logów.
-- Udokumentowane są minimalne dane konta i ich usuwanie.
+- Trwała wyspa dostępna na wszystkich trzech klientach, serwerowa kotwica czasu i identyczne rozliczenie offline.
+- Transakcje, wersjonowanie, bezpieczne ponowienia i kontrola konfliktów dwóch urządzeń.
+- Zdefiniowany import lokalnego prototypu, kopie zapasowe, sprawdzone odtworzenie i migracje.
 
-### BE-03 — Trwały zapis i synchronizacja wyspy
+### BE-04 — Serwerowe reguły i wyniki — [#14](https://github.com/ksobczak321-oss/gra/issues/14)
 
-Status: zaplanowane. Zależności: BE-01, BE-02. GitHub Issue: [#13](https://github.com/ksobczak321-oss/gra/issues/13).
+Status: zaplanowane; zgłoszenie uaktualnione o bieżące reguły. Backend pozostaje niewdrożony.
 
-Kryteria odbioru:
+- Serwer rozlicza produkcję, offline, jedzenie, szczęście, narodziny/odejścia, podatek, kursy i budowę z własnego zaufanego czasu.
+- Waliduje własne limity pracy 12L, przybycie/powrót 5 min, blokady, zamrożenie nowej osoby przez 24 h, rezerwę Food i ochronę transportu.
+- Atomowo liczy koszty, dopłatę kolejki, fizyczne rezerwacje i dostępność pojemności; klient nie może tworzyć materiałów.
+- Weryfikuje partię i termin targu/portu, historyczne podwyżki per produkt, wizyty i pakiety wejść, pulę domu, opłaty kaplicy oraz D01–D17.
+- Zadania mają serwerowe losowanie, terminy i jednorazowe wypłaty; ekspedycje mają potwierdzoną trasę/limit/etap i pulę monet. Sam komunikat „wygrana” z klienta nie wystarcza.
+- Testy obejmują modyfikację zegara i zapisu, nieprawidłowe liczby, powtórzenia, wyścigi, rozłączenia oraz konserwację zasobów.
+- Ranking wielu graczy wymaga serwerowej agregacji i zasad remisów; lokalny wynik ustawień nie jest takim rankingiem.
 
-- Stan wyspy jest zapisany trwale i dostępny po nowej sesji lub zmianie urządzenia.
-- Aktualizacje mają kontrolę wersji i nie nadpisują po cichu nowszego postępu.
-- Powtórzenie tego samego żądania nie wydaje zasobów i nie przyznaje nagrody ponownie.
-- Import lokalnego zapisu ma określone zasady walidacji; kopia i odtworzenie danych są sprawdzone testem.
+### BE-05 — Płatności, monety i uprawnienia — [#20](https://github.com/ksobczak321-oss/gra/issues/20)
 
-### BE-04 — Serwerowe reguły gospodarki i wyników ekspedycji
+Status: zaplanowane, zgłoszenie uaktualnione; żadnej prawdziwej sprzedaży nie uruchomiono.
 
-Status: zaplanowane. Zależność: BE-01; zapis i autoryzacja wymagają BE-02 i BE-03. GitHub Issue: [#14](https://github.com/ksobczak321-oss/gra/issues/14).
+- Serwer przyznaje zakup po zweryfikowanym, podpisanym potwierdzeniu operatora/sklepu; kliencki przycisk i lokalny zapis nie są dowodem płatności. Uwzględnić kanały web, Android i iPhone.
+- Jedna waluta, przyjęty przelicznik 1 PLN =10 monet; księga transakcji, idempotencja, reklamacje i zwroty wymagają projektu.
+- Pakiet kosztuje 1000 × ratusz/24 h, przedłuża ważność i daje L+4/unlimited queue. Serwer sprawdza dopłatę kolejki +10% i planowanie za 25% wartości braków po dopłacie.
+- Weryfikacja wycen i pobrania monet: przyspieszenie min. 5, natychmiastowe kursy po 10, komplet budynku za materiały ×1,25 plus natywne monety/transport, gotowość 10 s bez tragarzy.
+- Uprawnienia i czasy wygasania po stronie serwera, odporność na powtórzenie komendy i konflikt sesji. Rozpoczęte budowy, opłacona kolejka i plany zachowują uzgodnione zachowanie po wygaśnięciu.
 
-Kryteria odbioru:
+## Dalsze zadania bez utworzonego zgłoszenia
 
-- Serwer oblicza koszty, produkcję, upływ czasu oraz nagrody zamiast ufać licznikom klienta.
-- Serwer weryfikuje poziom ratusza, zakres szczęścia i zmianę populacji według FE-05; osobno należy ustalić zasady naliczania poza grą przed ich wdrożeniem.
-- Serwer sprawdza dokładnie osiem miejsc pracy z FE-07, limit `floor(aktualna populacja / 2)` na budynek oraz wspólną pulę mieszkańców bez podwójnego przydziału. Dom, ratusz, kaplica i latarnia nie zatrudniają załogi.
-- Serwer nalicza 1 monetę podatku za osobę przydzieloną do istniejącego miejsca pracy na rzeczywistą aktywną godzinę, z rozliczeniem zmian załogi i zachowaniem ułamka. Bezrobotni nie płacą; brak osobnej automatycznej produkcji monet w porcie, targu i ratuszu. Handel i nagrody pozostają odrębnymi operacjami. Zasady czasu poza grą wymagają osobnego ustalenia.
-- Serwer odrzuca rozbudowę ponad poziom ratusza bez wydania zasobów. Wylicza osobno limit populacji i miejsca w domu oraz nalicza karę za przeludnienie z FE-06: 1 punkt procentowy szczęścia na osobę bez miejsca na godzinę, z zachowaniem części ułamkowej i spójnej migracji zapisów.
-- Serwer odtwarza indywidualne szczęście i liczniki z FE-13: +1 za jedzenie, +1 za przydział, osobne −5/h po 12 h każdego braku, odpowiednie resety bez utraty historii osoby, ograniczenie każdej osoby przed średnią i nowych mieszkańców od 0%. Ułamki pozostają w obliczeniach, pełne procenty to prezentacja klienta.
-- Serwer rozlicza jedzenie 1 Food/os./h wyłącznie z centralnego magazynu, ułamek przydzielonego posiłku oraz połowę wydajności produkcji i transportu od początku głodu, bez obniżenia podatków.
-- Serwer odtwarza indywidualną produkcję, centralny transport i rezerwacje, targ, czasowe premie kaplicy i latarni, średnią szczęścia oraz kolejkę budowy zgodnie z FE-07/08/09 i [aktualnymi regułami](ECONOMY-RULES.md). Uprawnienia pakietu są częścią BE-05.
-- Walidowane są przejścia planszy, zużycie narzędzi i liczba skrzyń; sam komunikat klienta „ukończono” nie wystarcza do wypłaty.
-- Testy obejmują ujemne ilości, nieprawidłowe liczby, duplikaty komend, wyścigi dwóch sesji i wielokrotny odbiór nagrody.
-- Istnieją testy integracyjne całego przepływu ekspedycja → nagroda → ulepszenie oraz diagnostyka błędów bez danych wrażliwych.
-
-### BE-05 — Płatny pakiet i serwerowa walidacja kolejki
-
-Status: zaplanowane, bez implementacji płatności. Milestone backend #4. GitHub Issue: [#20](https://github.com/ksobczak321-oss/gra/issues/20). Cena i warianty długości wymagają przyszłej definicji użytkownika.
-
-- Serwer nadaje datę ważności po zweryfikowanej płatności; klient nie stanowi dowodu zakupu.
-- Walidacja limitu L+4, kolejki bez limitu i planów dostaw; atomowa, idempotentna rezerwacja dopiero rzeczywiście dostępnych centralnych materiałów.
-- Zależności kolejnych poziomów i ratusza, odporność na powtórzenie komend, konflikt sesji i zmianę zegara klienta.
-- Kalendarzowe wygaśnięcie oraz zachowanie już rozpoczętych i opłaconych projektów zgodnie z [regułami](ECONOMY-RULES.md).
+- Ustalić i zintegrować nagrody lojalnościowe, weryfikację poleceń i udostępnień oraz zasady reklam. Przechowywać uzgodnione wartości nagród; nie wypłacać ich za samo kliknięcie.
+- Doprecyzować dodatkowy czas/ruchy ekspedycji, weryfikację obejrzanej reklamy, kod i ewentualne challenge. Nie ma obecnie integracji reklamowej ani automatycznej publikacji postów.
+- Zaprojektować i zmierzyć infrastrukturę wspólnego backendu: autorytatywne API, trwała baza, kolejki prac, monitoring, kopie i skalowanie; oszacować koszty według ruchu i czasu offline. Sam hosting statycznej strony nie gwarantuje skalowalności pełnej gry.
+- Uzupełnić osobne assety, stany budynków i kamerę zgodnie z #8/#9 oraz wizualny odbiór #10.
 
 ## Aktualizowanie planu
 
-Po utworzeniu zgłoszenia dopisujemy jego URL, numer i faktyczny milestone. Przy zamykaniu zadania dodajemy commit, wynik testów i wynik publikacji do [dziennika](IMPLEMENTATION-LOG.md). Backend nie powinien opóźniać sprawdzenia użyteczności obecnego prototypu.
+URL, numer i milestone dopisujemy po rzeczywistym utworzeniu zgłoszenia. Zakończenie prac lokalnych, commit, publikację oraz test opublikowanej wersji zapisujemy osobno w [dzienniku](IMPLEMENTATION-LOG.md). Wszystkie D01–D17 są rozstrzygnięte; dawne luki własnej korzyści poziomu producentów/portu i ceny kaplicy zostały zamknięte.

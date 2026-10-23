@@ -1,60 +1,63 @@
 # Uzgodnione reguły gospodarki HARBORLIGHT
 
-Stan: 2026-10-22, frontend `happiness-v8`, schemat zapisu 7. Ten dokument opisuje bieżące reguły i zastępuje historyczne ceny oraz natychmiastowe ulepszenia z wcześniejszych iteracji. Dowody testów i publikacji są w [dzienniku](IMPLEMENTATION-LOG.md). Pełna [tabela 12 budynków](BUILDINGS.md) zestawia ich obecną logikę, stan, koszty i efekty.
+Stan: 2026-10-23, lokalny prototyp, schemat zapisu 8. Źródłem są wpisy użytkownika w HARBORLIGHT6 i wszystkie zaakceptowane decyzje D01–D17, uporządkowane w [HARBORLIGHT7-zasady.xlsx](arkusze/HARBORLIGHT7-zasady.xlsx). Dokument opisuje obecną implementację; wcześniejsze wpisy dziennika zachowują historyczne reguły i wyniki publikacji. Bieżące sprawdzenia oraz stan wdrożenia zapisujemy w [dzienniku](IMPLEMENTATION-LOG.md).
 
-## Czas, ludzie i podatki
+## Czas i start
 
-Nowa wyspa ma po 100 monet, drewna, kamienia, zboża, żywności i desek, 12 mieszkańców, ratusz/dom 1 oraz 0% szczęścia. Pracuje sześć osób: po jednej w pięciu producentach i magazynie; sześć jest wolnych. Targ jest dostępny od ratusza 2, przystań od 4. Ratusz, dom, kaplica i latarnia nie zatrudniają pracowników.
+Wszystkie mechaniki używają rzeczywistego czasu, również przy ukrytej karcie i po zamknięciu gry: produkcja, przewozy, jedzenie, podatki, szczęście, populacja, budowa, wizyty, premie i wygaśnięcia. Zapis przechowuje znacznik ostatniego rozliczenia; powrót do gry rozlicza tylko czas od tego znacznika. Ponowne rozliczenie tej samej chwili nie przyznaje postępu drugi raz. Usunięto sterowanie pauzą i prędkością gospodarki. Ograniczenie animacji dotyczy obrazu.
 
-Dokładnie osiem miejsc pracy to farma, młyn, drwale, tartak, kamieniołom, magazyn, targ i przystań. Każde przyjmuje najwyżej `floor(obecna populacja / 2)`, a wszyscy korzystają ze wspólnej puli. Po odwołaniu osoba przez 300 sekund wraca do domu, nie pracuje, nie płaci podatku i nie może być ponownie przydzielona. Niedokończona jednostka jej produkcji przepada.
+Nowa wyspa: ratusz 1, dom 1, 12 osób w domu, **0 pracowników**, szczęście 0%, po 100 monet, drewna, kamienia, zboża, żywności i desek. Startowa dwunastka nie podlega blokadzie szczęścia noworodków. Starszy zapis zachowuje istniejący postęp; migracja do schematu 8 rozpoczyna nowy model czasu od chwili migracji, bez dopisywania nieznanej historii offline.
 
-Każda przydzielona osoba daje 1 monetę za aktywną godzinę. Przydział nadal jest opodatkowany przy chwilowym braku materiałów albo pełnym magazynie. Kaplica może podwoić tę stawkę. Latarnia nie zmienia podatków. Ratusz pokazuje mieszkańców obecni/limit i bieżące podatki na godzinę.
+Poziom ratusza jest poziomem gry i maksymalnym poziomem pozostałych budynków. Limit populacji wynosi `24 × poziom ratusza`, miejsca mieszkalne `24 × poziom domu`. Minimum populacji to 6; techniczne maksimum poziomu wynosi 100.
 
-Produkcja, transport, budowa, powroty, premie, szczęście i populacja liczą rzeczywisty czas aktywnej, widocznej karty. Pauza, ukryta karta i zamknięcie gry zatrzymują te systemy. Tempo 1×/2×/4× zmienia zegar oraz animacje; nie skraca godzin gospodarki. **Ważność przyszłego płatnego pakietu jest datą kalendarzową**, więc wygasa również przy pauzie i poza grą.
+## Człowiek, praca i podatki
 
-## Automatyczne żywienie
+Każda osoba ma trwałe ID, indywidualne szczęście, stan miejsca pobytu i własne liczniki. Dokładnie osiem miejsc pracy: farma, młyn, drwale, tartak, kamieniołom, magazyn, targ i przystań. Limit miejsca pracy to **12 × własny poziom budynku**. Ratusz ogranicza rozbudowę budynku, a dostępne osoby w domu ograniczają faktyczny nowy przydział. Ratusz, dom, kaplica i latarnia nie zatrudniają.
 
-Każda osoba, również bezrobotna albo wracająca do domu, zużywa **1 Food na aktywną godzinę**. Popyt wyspy wynosi więc aktualna populacja/h. Jedzenie jest przydzielane automatycznie wyłącznie z magazynu centralnego; lokalny zapas młyna, targ i dostawa oczekująca nie są dostępne przed centralnym przyjęciem.
+Dojście do pracy trwa 300 sekund. Dopiero po dotarciu zaczynają się praca, produkcja/transport i podatki. Zwolnienie zawsze uruchamia 300 sekund powrotu do domu; w tym czasie nie ma nowego przydziału ani podatku. Niedokończona sztuka produkcji przepada, gotowe towary pozostają. Już zabrany ładunek kończy swój kurs również po odwołaniu osoby.
 
-Przy rozpoczęciu jedzenia cała jednostka jest pobierana ze stanu centralnego do wspólnego posiłku, którego pozostała część jest konsumowana proporcjonalnie do czasu i populacji. Pozostały ułamek zachowuje się po zapisie. Przydzielona jednostka nie może być użyta ponownie do rozbudowy albo handlu. Dlatego przy pierwszym aktywnym kroku dostępny Food może od razu spaść o 1; jednostka została już przydzielona mieszkańcom, a nie utracona. Na dokładnym końcu odcinka nie pobiera się dodatkowej porcji na zapas.
+Pracownik, który dotarł, płaci **1 monetę/h**. Przestój lub głód nie zmniejszają podatku. Kaplica podwaja go przez okres swojej premii; latarnia go nie podwaja. Ułamki zachowuje `taxProgress`, a do skarbca trafiają pełne monety. Bezrobotni, osoby w drodze i zwiedzający nie płacą podatku.
 
-Gdy skończy się centralne i już przydzielone jedzenie, każdy mieszkaniec przestaje dostawać bonus za jedzenie i rozpoczyna własny licznik ciągłego głodu. **Wydajność pracowników od razu spada do 50%**: produkcja z 10 do 5 sztuk/os./h, transport magazynu i targu z 60 do 30 sztuk/os./h, także przy przewożeniu materiałów na budowę. Podatki przydzielonych osób pozostają bez zmiany. Po 12 godzinach ciągłego głodu nalicza się −5 punktów procentowych/os./h; to zastępuje wcześniejszą karę −25/h. Dostawa kończy głód i zeruje jego licznik, bez zwrotu utraconych punktów. Kara za przeludnienie może działać równocześnie. Przybycie żywności w środku odcinka czasu i zmiana populacji są rozliczane na rzeczywistych granicach zdarzeń.
+Przy ujemnym szczęściu ludzie odchodzą, nie umierają. Najpierw odchodzą osoby bez aktywnego miejsca pracy, w tym osoby w drodze; następnie z największej załogi. Remisy rozstrzyga kolejność: port → targ → tartak → kamieniołom → drwale → farma → młyn → magazyn. Zwiedzający są chronieni przed takim wyborem. Nowa osoba trafia do domu, bez automatycznego zatrudnienia.
 
-Pauza, ukryta karta i czas poza grą zatrzymują żywienie i karę; tempo zegara nie skraca godzin. Food oraz Residents pokazują popyt/h, centralny stan i żywienie albo brak jedzenia. W grze wszystkie te etykiety są po angielsku.
+## Jedzenie i indywidualne szczęście
 
-## Indywidualne szczęście
+Każdy mieszkaniec zjada automatycznie **1 Food/h**, wyłącznie z magazynu centralnego. Dotyczy także bezrobotnych, osób w drodze, zwiedzających i nowych mieszkańców. Cała jednostka jedzenia jest przydzielana do posiłku, a jej niezużyty ułamek zapisuje `foodCredit`; tej samej porcji nie można wydać drugi raz.
 
-Każdy mieszkaniec ma trwałą tożsamość, własne zgromadzone szczęście, przydział i dwa niezależne liczniki: ciągłego głodu oraz ciągłego bezrobocia. Startowa osoba i nowy mieszkaniec zaczynają od 0%, bez naliczania premii za czas sprzed ich pojawienia się. Zwolnienie, pięciominutowy powrót i ponowne zatrudnienie nie przenoszą szczęścia między ludźmi ani go nie zerują.
+Magazyn chroni **50 × swój poziom Food** przed budową, sprzedażą, wpłatami i innymi wydatkami nieżywieniowymi. Ludzie mogą tę rezerwę zjadać. Gdy Food jest poniżej progu, a żywność czeka w młynie, jeden istniejący magazynier dostaje ratunkowy przewóz Food. Nie wolno wtedy ręcznie zwolnić ostatniego takiego magazyniera; gra nie tworzy pracownika, jeśli obsada wynosi zero.
 
-- Jedzenie daje +1 punkt procentowy na aktywną godzinę, a przydział do pracy osobne +1.
-- Po 12 godzinach ciągłego bezrobocia dochodzi −5 punktów/h. Pierwsze 12 godzin nie jest karane wstecz. Powrót do domu liczy się jako czas bez pracy; ponowny przydział zeruje ten licznik.
-- Po 12 godzinach ciągłego głodu dochodzi osobne −5 punktów/h. Jedzenie zeruje tylko licznik głodu; praca zeruje tylko licznik bezrobocia.
-- Przydział daje bonus za pracę i podatki również podczas blokady pełnego składu lub braku surowca wejściowego. Kara pełnego składu pozostaje osobnym efektem tej załogi.
-
-| Stan osoby | Bilans szczęścia na godzinę, bez innych efektów | Wydajność pracy | Podatki |
+| Stan osoby, bez przeludnienia i premii | Zmiana szczęścia/h | Wydajność | Podatek/h |
 | --- | --- | --- | --- |
-| Je i pracuje | +2 punkty | 100% | 1 moneta/h |
-| Je, bez pracy do 12 h | +1 punkt | 0 | 0 |
-| Je, bez pracy ponad 12 h | +1 −5 = −4 punkty | 0 | 0 |
-| Nie je do 12 h, pracuje | +1 punkt | 50% | 1 moneta/h |
-| Nie je ponad 12 h, pracuje | +1 −5 = −4 punkty | 50% | 1 moneta/h |
-| Nie je i nie pracuje, oba braki do 12 h | 0 | 0 | 0 |
-| Nie je i nie pracuje, jeden brak ponad 12 h | −5 punktów | 0 | 0 |
-| Nie je i nie pracuje, oba braki ponad 12 h | −10 punktów | 0 | 0 |
+| Je i rzeczywiście pracuje | +2 pp | 100% | 1 moneta |
+| Je, bez pracy przez pierwsze 12 h | +1 pp | 0 | 0 |
+| Je, bez pracy ponad 12 h | −4 pp | 0 | 0 |
+| Nie je przez pierwsze 12 h, pracuje | +1 pp | 50% | 1 moneta |
+| Nie je ponad 12 h, pracuje | −4 pp | 50% | 1 moneta |
+| Nie je i nie pracuje; oba braki do 12 h | 0 | 0 | 0 |
+| Nie je i nie pracuje; jeden brak ponad 12 h | −5 pp | 0 | 0 |
+| Nie je i nie pracuje; oba braki ponad 12 h | −10 pp | 0 | 0 |
 
-Przykład tej samej osoby: 0% → po 10 h jedzenia i pracy 20% → po kolejnych 12 h jedzenia bez pracy 32% → po kolejnej godzinie bezrobocia 28%. Kary i premie są proporcjonalne również do części godziny. Przy progu dokładnie 12 h nie pobiera się kary za poprzedni czas; dopiero dalszy czas podlega karze.
+Jedzenie i rzeczywista praca dają osobno +1 pp/h. Każdy brak po 12 h daje osobne −5 pp/h, bez karania pierwszych 12 h wstecz. Jedzenie zeruje licznik głodu, a zatrudnienie licznik bezrobocia. Przestój produkcji z braku wejścia lub miejsca nie daje +1 za pracę, nie dodaje kary bezrobocia i nadal daje podatek. Ma własną karę: −10 pp, kolejne −10 co 24 h do **−50 pp wyłącznie za ten składnik**. Po usunięciu blokady lub zwolnieniu licznik przestoju się zeruje. −40 z innych przyczyn i −20 za przestój daje −60%, a nie −50%.
 
-Szczęście każdej osoby ograniczamy do **−100…+100%**, z dotychczasowymi osobnymi efektami kaplicy, błogosławieństwa, latarni i pełnego składu. Dopiero z indywidualnych wyników liczymy średnią populacji; nie ograniczamy dopiero jednej zbiorczej sumy. Przeludnienie nadal obniża szczęście każdej osoby o liczbę mieszkańców bez miejsca na godzinę, zgodnie z wcześniejszą zaakceptowaną regułą. Dekoracja lub ścieżka daje +1 punkt obecnym mieszkańcom.
+Głód od razu zmniejsza produkcję i tempo przewozu do połowy, jeszcze przed karą szczęścia po 12 h. Przeludnienie dodaje każdej osobie karę `max(0, populacja − 24 × poziom domu)` pp/h. Większy dom zatrzymuje dalszą karę dopiero po ukończeniu, bez zwrotu już utraconych punktów.
 
-HUD, średnie grup i lista mieszkańców pokazują wyłącznie pełne procenty, **zaokrąglone w górę**: 20,2% → 21%, −20,2% → −20%. W stanie gry zachowujemy części ułamkowe. Zaokrąglenie jest wyłącznie prezentacją: średnia, granice, przyrosty i demografia korzystają z dokładnych wartości, więc częstotliwość odświeżania nie zmienia wyniku.
+**Nowa osoba ma dokładnie 0% szczęścia przez pierwsze 24 h**, także podczas premii kaplicy i latarni. W tym okresie nie gromadzi wzrostu ani spadku własnego szczęścia; po nim zwykłe naliczanie zaczyna od 0%. Stan jedzenia i pozostałe mechaniki nadal działają. Ta zasada nie obejmuje początkowych 12 osób.
 
-Liczniki, premie i kary korzystają wyłącznie z aktywnego czasu, z tą samą pauzą, widocznością karty i brakiem naliczania offline co reszta gospodarki. W schemacie 7 zapisujemy osoby, ich szczęście, oba liczniki, przydziały i pozostały czas powrotu. Migracja wcześniejszych zapisów odtwarza osoby z dotychczasowego bazowego szczęścia, zachowuje zasoby oraz postęp i nie dopisuje nieznanej historii głodu ani bezrobocia. Opis w [instrukcji](INTERACTIVE-ISLAND.md).
+Każdą osobę ograniczamy do −100…+100%, a dopiero potem liczymy średnią populacji. W obliczeniach i zapisie są ułamki; interfejs pokazuje pełne procenty zaokrąglone w górę: 20,2 → 21%, −20,2 → −20%.
 
-## Produkcja i magazyny
+Dodatnia średnia daje przyrost, ujemna ubytek. Dla `h = abs(szczęście)` tempo osób/h wynosi `h/300` do 50% oraz `1/6 + (h−50)/60` powyżej 50%. Punkty odniesienia: 0% — brak zmiany; 25% — osoba co 12 h; 50% — co 6 h; 75% — co około 1 h 43 min; 100% — co 1 h. Zmiana znaku i 0% zerują postęp poprzedniego kierunku. Przy granicach populacji nie odkłada się zapasu narodzin ani odejść.
 
-Każdy nakarmiony pracownik producenta wytwarza 10 jednostek na godzinę: po 7 minutach ma 1, po 13 minutach 2, z indywidualnym postępem co 360 sekund. Ułamki różnych osób nie łączą się. Bez jedzenia wydajność od razu wynosi 5/h, czyli 1 sztukę co 12 minut. Premia latarni daje nakarmionej osobie 20/h, a głodnej 10/h. Zmiany tempa zachowują indywidualny rozpoczęty postęp.
+## Dzienna pula domu
 
-| Producent | Wejście z magazynu centralnego | Produkt lokalny |
+Dom dostaje raz na 24 h pulę pełnych punktów równą populacji **w chwili odnowienia**. Liczba ta pozostaje zamrożona do kolejnego odnowienia. Gracz może przyznać punkty jednej osobie lub rozdzielić po wskazanej liczbie wszystkim uprawnionym. Punkt dodaje 1 pp do osobistego szczęścia; nie kasuje kar, przydziałów ani ich liczników.
+
+Po 23 h 58 min automat rozdziela tylko niewykorzystaną resztę, po jednym pełnym punkcie najmniej szczęśliwym; przy remisie losuje. Nie zwiększa osób już na 100% ani osób z zamrożonym szczęściem. Po 24 h powstaje nowa pula. Nie jest to codzienne podwójne przyznanie całej początkowej puli.
+
+## Produkcja i przewozy
+
+Wydajność nakarmionego pracownika na kolejnych poziomach producenta wynosi **10, 12, 13, 14… szt./h**: poziom 1 = 10; poziom `L ≥ 2` = `L + 10`. Każda osoba ma własną fazę produkcji; niedokończone jednostki różnych osób nie łączą się. Na poziomie 1 po 7 minutach jest 1 gotowa sztuka, po 13 minutach 2. Głód mnoży wydajność przez 0,5, a premia latarni produkcję przez 2.
+
+| Budynek | Wejście z centrali | Produkt lokalny |
 | --- | --- | --- |
 | Farma | — | Zboże |
 | Drwale | — | Drewno |
@@ -62,83 +65,126 @@ Każdy nakarmiony pracownik producenta wytwarza 10 jednostek na godzinę: po 7 m
 | Młyn | 2 zboża | 1 żywność |
 | Tartak | 2 drewna | 1 deska |
 
-Każdy lokalny skład ma `200 × poziom ratusza` jednostek. Nie jest to zasób dostępny do wydania. Nakarmieni magazynierzy przewożą po 60 sztuk/osobę/h (głodni 30/h), zgodnie z priorytetami pięciu materiałów; pomijają puste źródła i pełne centralne miejsca.
+Lokalny skład producenta mieści `200 × poziom ratusza`. Zboże i drewno muszą przejść przez centralę przed przetworzeniem. Nie ma ręcznego odbioru omijającego transport.
 
-Magazyn centralny ma limit rodzaju `floor(1000 × 1,5^(poziom−1))` oraz limit wspólny `floor(4000 × 1,5^(poziom−1))`. Poziomy 1/2/3 dają odpowiednio 1000/1500/2250 na rodzaj i 4000/6000/9000 łącznie. Pięć materiałów współdzieli limit; monety są w osobnym skarbcu. Nadwyżki starych zapisów i nagród czekają w dostawach, zamiast przepadać lub stawać się natychmiast dostępne.
+Pełny kurs z powrotem trwa **5 minut**, a głodnemu pracownikowi efektywnie 10 minut. Każdy kurs niesie jeden rodzaj materiału; pracownik zabiera dostępny częściowy ładunek i nie czeka na zapełnienie. Ładunek magazynu, targu i portu to `floor(60 × 1,1^(własny poziom−1))`: 60, 66, 72… Jedna osoba na poziomie 1 może wykonać 12 kursów, czyli przewieźć do 720 szt./h przy stale pełnych ładunkach. Dawne 60 szt./h zastąpiono tym modelem.
 
-Pełny skład zatrzymuje produkcję i daje jego załodze −10 szczęścia. Każde kolejne 24 aktywne godziny ciągłego zapełnienia dodają −10, maksymalnie −50 po 96 godzinach. Po opróżnieniu poniżej limitu kara i licznik znikają. Dotyczy to również załogi pełnego magazynu centralnego i targu. Pełny centralny rodzaj materiału daje osobne powiadomienie; kara magazynierów wymaga pełnego limitu łącznego.
+Kursy liczymy jako **sumę `ceil(ilość danego materiału / ładunek)`**, nie sufit sumy wszystkich materiałów. Przykład: 61 drewna i 1 kamień przy ładunku 60 wymagają 3 kursów. Priorytety określają materiał, producenta, konkretną budowę oraz kolejność centrala/budowy; domyślnie zaopatrzenie centrali poprzedza budowy. Ratunkowy Food ma pierwszeństwo. Towar opuszcza źródło przy zabraniu i staje się dostępny w celu po zakończeniu kursu.
 
-Powiadomienie powstaje przy każdym przejściu do stanu pełnego, także po wcześniejszym opróżnieniu. Panel zachowuje przeczytanie i ostatnie 100 wpisów. Szczęście wyspy jest średnią wszystkich mieszkańców, po ograniczeniu szczęścia każdej osoby do −100…+100. Przykład: sześciu drwali z karą −10 i sześciu pozostałych przy 0 daje −5% dla wyspy.
+## Magazyn, targ i port
 
-## Koszty i czas rozbudowy
+Magazyn centralny i port mają limit na rodzaj `floor(1000 × 1,5^(L−1))` oraz łączny `floor(4000 × 1,5^(L−1))`. Targ ma tylko limit łączny `floor(1000 × 1,5^(L−1))`. Monety znajdują się w skarbcu i nie zajmują miejsca. Starsze nadwyżki są zachowane w oczekujących dostawach, wymagających miejsca i transportu.
 
-Poziom ratusza ogranicza ukończone poziomy innych budynków. Dom daje `24 × poziom` miejsc, ratusz taki sam teoretyczny limit populacji. Sześć osób bez miejsca nadal daje każdemu mieszkańcowi karę 6 punktów na aktywną godzinę, sumowaną z jego premiami za jedzenie i pracę; rozbudowa domu zatrzymuje dalszy spadek dopiero po ukończeniu. Reguły tempa populacji i minimum sześciu osób pozostają zgodne z [instrukcją](INTERACTIVE-ISLAND.md).
+Targ od ratusza 2 wymienia wyłącznie w grupach **drewno/kamień/zboże** oraz **deski/żywność**. Nie używa monet. Paczka 10 daje 9 innego towaru po marży 10%. Własna załoga targu przewozi towary w obu kierunkach. Każda dostawa jest zablokowana przez godzinę; niewykorzystany towar przepada 24 h po przybyciu, a wynik wymiany ma nowe 24 h.
 
-Użytkownik zaakceptował łagodniejszą **normę kosztową 240 jednostek dziennie × obecny poziom producenta**. To podstawa ceny, nie dodatkowa produkcja ani wzrost wydajności pracownika. Cena to 30% normy w drewnie + 30% w kamieniu + 50% we własnym produkcie.
+Port od ratusza 4 handluje pełnymi paczkami po 100 za monety:
 
-| Rozbudowa producenta na obecnym poziomie 1 | Koszt |
+| Towary | Cena sprzedaży /100 | Bazowa cena zakupu /100 |
+| --- | --- | --- |
+| Drewno, kamień, zboże | 40 | 50 |
+| Deski, żywność | 140 | 150 |
+
+Każda kolejna kupiona paczka **tego samego rodzaju** w ruchomych 3 h dodaje liniowo 10% ceny bazowej. Drewno kosztuje kolejno 50, 55, 60…; pierwszy kamień nadal kosztuje 50. Wielopaczkowe zamówienie rozlicza kolejne paczki. Sprzedaż nie ma tej dopłaty. Cena jest zamrażana przy zatwierdzeniu transakcji; kupno pobiera monety od razu.
+
+Własna załoga portu obsługuje dwa etapy sprzedaży: centrala → port oraz port → statek. Zapłata i powiadomienie następują przy wypłynięciu. Rejs zakupu trwa 5 minut, następnie towar wymaga rozładunku i przewozu do centrali. Pojemność statku odpowiada portowi. Nieodebrany towar wygasa po 24 h, także offline; dawnej opłaty 10 monet za składowanie nie ma.
+
+Przy przejściu składu do stanu pełnego powstaje powiadomienie, także po ponownym opróżnieniu i zapełnieniu. Stan przeczytania pozostaje w zapisie. Powiadomienia obejmują również budowę i dostawy, przeludnienie, wizyty, premie, port oraz wygaśnięcia.
+
+## Koszty i czas budowy
+
+`L` to poziom przed daną rozbudową; `N = L + 1` to nowy poziom. Kolejne zlecenie tego samego budynku korzysta z odpowiedniego przyszłego poziomu, bez budowania dwóch jego poziomów równocześnie. Wszystkie poniższe ceny są bazowe, przed dopłatą kolejki.
+
+| Budynek | Bazowy koszt |
 | --- | --- |
-| Farma | 72 drewna + 72 kamienia + 120 zboża |
-| Młyn | 72 drewna + 72 kamienia + 120 żywności |
-| Drwale | 192 drewna + 72 kamienia |
-| Tartak | 72 drewna + 72 kamienia + 120 desek |
-| Kamieniołom | 72 drewna + 192 kamienia |
+| Farma | `L × (72 drewna + 72 kamienia + 120 zboża)` |
+| Młyn | `2L × (72 drewna + 72 kamienia + 120 żywności)` |
+| Drwale | `2L × (192 drewna + 72 kamienia)` |
+| Tartak | `2L × (72 drewna + 72 kamienia + 120 desek)` |
+| Kamieniołom | `2L × (72 drewna + 192 kamienia)` |
+| Ratusz, dom | `500L` każdego z sześciu zasobów |
+| Magazyn, targ | `300L` każdego z sześciu zasobów |
+| Port | `400L` każdego z sześciu zasobów |
+| Latarnia | `500 × max(1,L)` każdego z sześciu zasobów |
+| Kaplica | `N × (180 monet + 20 drewna + 60 kamienia + 10 desek)` |
 
-Każdą kwotę mnoży się przez obecny poziom producenta. Drewno i kamień jako produkt sumują się z kosztem bazowym. Podniesienie ratusza, domu, targu, magazynu i przystani kosztuje **500 każdego z sześciu zasobów × obecny poziom**. Monety również są wymagane. Kaplica zachowuje wcześniejszy cennik w `BUILDINGS.chapel.cost`, mnożony przez docelowy poziom; jej nowej ceny użytkownik jeszcze nie określił.
+Kaplica ma **zatwierdzony**, pełnoprawny koszt: 1→2 to 360 monet, 40 drewna, 120 kamienia i 20 desek. Pierwsza latarnia kosztuje po 500 również monet. Koszt producentów wywodzi się z normy 240/dobę × poziom; nie jest procentem całej faktycznej produkcji gracza. Cztery wskazane receptury mają później uzgodniony mnożnik 2.
 
-Koszt pochodzi tylko z magazynu centralnego i skarbca. Jest odejmowany i rezerwowany w całości przy zleceniu, także w opłaconej kolejce. Żadna część lokalnej produkcji, targu czy spodziewanej dostawy nie płaci zwykłego zlecenia. Panel pokazuje `posiadane / wymagane`, czerwone przy braku, zielone przy wystarczającym zapasie. **„Upgrade” zleca bieżący budynek bez dodatkowego wyboru miejsca.** Opis źródła kosztu, szacunek transportu/budowania i wyjaśnienie braków są schowane pod ikoną „i” obok nagłówka; rzeczywiste blokady i postęp są widoczne na karcie.
+Zwykłe zlecenie rezerwuje od razu pełny koszt z centrali i skarbca, z zachowaniem rezerwy Food. Lokalny towar nie opłaca budowy przed dostawą. Zlecenie trafiające do kolejki kosztuje **+10% każdego składnika, zaokrąglone w górę**. Dopłata zwiększa również ilość przewożonych materiałów.
 
-Etapy zwykłej rozbudowy:
+`T` oznacza rzeczywisty czas transportu materiałów tej budowy. Standard: transport `T` + budowanie `T` = `2T`. Latarnia: `T + 4T = 5T`. Kaplica: `T + 3T × (N−1)`, czyli 4T, 7T, 10T dla docelowych poziomów 2, 3, 4. Monety nie jadą na budowę. Przy stałych nakarmionych `W` tragarzach i gotowych materiałach minimum transportu wynosi `ceil(suma kursów / W) × 5 min`. Faktyczne `T` uwzględnia obsadę, priorytety i blokady; ETA aktualizuje się po ich zmianie. Czas samej budowy opiera się na zakończonym przewozie. Zbieranie surowców, wcześniejsze rozbudowy i oczekiwanie w kolejce są poza takim zestawieniem czasu transport + budowa.
 
-1. Dostarczenie zarezerwowanych materiałów przez magazynierów, 60 sztuk/osobę/h przy jedzeniu lub 30 bez jedzenia. Monety nie wymagają przewozu.
-2. Budowa przez tyle samo czasu, ile zajęło aktywne przewożenie materiałów tej rozbudowy.
-3. Dopiero ukończenie zmienia poziom, pojemność, limit mieszkańców lub uruchamia premię.
+Ratusz `L` daje `L` aktywnych budów oraz `L` opłaconych miejsc kolejki. Nowy poziom i jego skutki działają po ukończeniu. Przed większą rozbudową trzeba zapewnić pojemność magazynu dla całego kosztu i rezerwy Food; zależność od wcześniejszej rozbudowy magazynu jest zamierzona.
 
-Przy sześciu nakarmionych magazynierach przewóz 264 materiałów kosztu farmy trwa 44 minuty, a budowa kolejne 44. Przy stałym głodzie są to odpowiednio 88 i 88 minut. Osoby na budowie są obsługiwane przez istniejącą logistykę; nie wprowadzono nowego miejsca zatrudnienia budowniczych. Magazynierzy najpierw dostarczają najwcześniejszą aktywną budowę, potem odbierają lokalną produkcję. Równoległe budowy dzielą tę samą załogę. Czas bez magazynierów i oczekiwanie na wcześniejszy transport nie doliczają się do późniejszego czasu samej budowy.
+## Kaplica i latarnia
 
-### Ocena trudności
+Kaplica poziomu 1 nie daje pasywnego bonusu. Ukończenie rozbudowy do `N` daje +`10N` pp szczęścia i podatki ×2 na 10 h. Osobne darmowe błogosławieństwa mają łączną liczbę użyć równą poziomowi kaplicy. Każde daje natychmiast +50 wszystkich sześciu zasobów i +20 pp szczęścia na 1 h. Nie można nakładać dwóch aktywnych błogosławieństw.
 
-Przy pierwotnej normie 12 pracowników na poziom surowcowa rozbudowa wymagałaby minimum około 31 godzin, a przetwórcza około 59 godzin od zera przy 12 mieszkańcach, wspólnej obsadzie produkcji i przewozu. Zaakceptowana norma 240 obniżyła minimum do około 2,6 godziny surowcowej i 4,9 godziny przetwórczej przed wprowadzeniem jedzenia. Po dodaniu żywienia stałe 12 nakarmionych osób bez bonusów i nagród wymaga około 4,2 osobogodziny dodatkowej produkcji/przewozu jedzenia na godzinę gry. Przy założeniu stałej populacji dostępne pozostaje 7,8 z 12 osobogodzin; wynik około 4,0 godziny dla producenta surowca i 7,5 godziny dla przetwórcy jest historycznym oszacowaniem tego scenariusza, a nie aktualną prognozą rozwijającej się wyspy. Nowe indywidualne szczęście zmienia wzrost populacji, a głód obniża wydajność, więc bieżący czas zależy od ich przebiegu. To scenariusz dobrej organizacji; przestoje, braki załogi i inne zużycie wydłużają zbieranie. Startowe zapasy mogą skrócić pierwsze zlecenie. Sam transport na budowę i budowanie to dodatkowy czas.
+Płatne użycie kosztuje `100 × poziom kaplicy` monet i ma ten sam efekt. Następne płatne użycie jest dostępne **4 h po zakończeniu efektu**: start 12:00, koniec 13:00, kolejne od 17:00. Rozbudowa i ręczne błogosławieństwo mogą działać równocześnie, z limitem szczęścia każdej osoby.
 
-Dla pięciu głównych budynków reguła 500 każdego zasobu jest oddzielną, celowo większą ceną. Nie obniżono jej samowolnie do cennika producentów.
+Ukończenie latarni ustawia efektywne szczęście uprawnionych mieszkańców na **100%**, a produkcję pięciu materiałów mnoży przez 2. Obie premie trwają `24 h × nowy poziom`. Podatki i transport nie mają mnożnika. Po zakończeniu przywracany jest osobisty stan szczęścia zapisany przed premią; nowy mieszkaniec nadal podlega 24 h zamrożenia 0%.
 
-## Miejsca budowy, kolejka i przyszły pakiet
+Zwiedzanie jest osobną mechaniką: maksymalnie `2 × poziom latarni` osób jednocześnie, z domu, na 4 h. Nie ma czasu dojścia i możliwości wycofania. Osoby jedzą normalnie, nie pracują i nie płacą podatku. **Po powrocie** uczestnicy dostają osobiste 100% na 24 h oraz 24 h zakazu kolejnej wizyty; cała populacja dostaje +10 pp na 6 h za daną wysłaną grupę. Kolejne grupy mają własne zegary, a ich premie populacji się sumują. Osobiste 100% ma pierwszeństwo przed zwykłymi dodatkami, z wyjątkiem zamrożenia noworodka.
 
-Zwykły gracz ma **poziom ratusza aktywnych budów oraz tyle samo miejsc opłaconej kolejki**. Na poziomie 2 są to 2 + 2. Transport i sama budowa zajmują aktywne miejsce. Kolejka automatycznie uruchamia najwcześniejsze możliwe zlecenie, po spełnieniu zależności poziomu. Można zamówić kolejne poziomy tego samego budynku, ale każdy startuje dopiero po poprzednim i w granicach ratusza. Wszystkie standardowe pozycje muszą mieć pełną rezerwację.
+Poza limitem jednoczesnych miejsc obowiązuje `2L` darmowych wejść w ruchomych 24 h. Można kupić do 3 dodatkowych pakietów w tym oknie, każdy po `2L` wejść. Kolejne numery pakietów, razem z darmowym, to 2, 3, 4; cena to `300 × numer × poziom latarni`. Pakiet nie zwiększa jednoczesnej liczby miejsc ani nie omija osobistego zakazu powrotnej wizyty.
 
-Przyszły płatny pakiet daje w czasie ważności:
+## Zadania latarni
 
-- limit aktywnych rozbudów `poziom ratusza + 4`;
-- kolejkę bez limitu liczby pozycji;
-- plany kolejnych poziomów na podstawie spodziewanych dostaw, bez obowiązku posiadania kosztu w chwili planowania.
+Zawsze widoczne są trzy zadania i ich nagrody. Na starcie: małe, średnie, duże. Po ukończeniu lub wygaśnięciu nowe losowe zadanie trafia na koniec FIFO; mogą wystąpić trzy małe albo trzy duże.
 
-Plan pokazuje optymistyczną estymatę z aktualnej załogi, buforów i transportu. To najwcześniejszy szacunek, bez gwarancji: inne zużycie materiałów, priorytety, wejścia przetwórców i zmiana obsady mogą go wydłużyć. Plan **nie tworzy zasobów i nie startuje na prognozie**. Dopiero obecność całego kosztu centralnie umożliwia atomową rezerwację. Zależność od wcześniejszego ratusza i poprzedniego poziomu nadal obowiązuje.
+| Rozmiar | Wymagane rodzaje | Godziny maksymalnej produkcji danego producenta | Bazowe monety na poziomie 3 | Rodzaje materiałów nagrody |
+| --- | --- | --- | --- | --- |
+| Małe | 2 | 2–6 h | 100–200 | 1 |
+| Średnie | 2–3 | 3–8 h | 100–400 | 2 |
+| Duże | 4 | 4–10 h | 100–600 | 3 |
 
-Po wygaśnięciu rozpoczęte budowy kończą się. Kolejne opłacone projekty ruszają w standardowym limicie, a nieopłacone plany pozostają wstrzymane do ponownego uprawnienia. Materiały opłaconej kolejki nie przepadają. Frontend ma lokalny model `premium.expiresAt` i testowe stany; **nie ma sprzedaży, ceny ani weryfikacji zapłaty**. Backend musi nadawać i weryfikować uprawnienia serwerowo; zmiana lokalnego zapisu nie może być źródłem prawdy o realnej płatności.
+Wymaganie materiału to `12 × poziom jego producenta × wydajność/os./h × wylosowane godziny`, zapisane przy powstaniu zadania. Nowe średnie ma co najmniej tyle godzin co największe aktualne małe; nowe duże co najmniej tyle co największe aktualne średnie. Pula obejmuje 100 narracji napraw i zaopatrzenia latarni. Nagrody materiałowe bazowo wynoszą 50–1000 **każdego** wylosowanego rodzaju na poziomie 3. Monety i ilości materiałów skalują się relacją maksymalnej produkcji aktualnego poziomu ratusza do poziomu 3: `12 × L × wydajność(L) / 468`. Nagroda pozostaje stała po pokazaniu zadania.
 
-## Latarnia Morska
+Bazowe nagrody monetowe aktualnych zadań zachowują kolejność małe < średnie < duże. Po zmianie poziomu nowy zakres może nie pasować między zamrożone stare nagrody. Wtedy losujemy rozmiar spośród tych, które spełniają zakres i kolejność, bez zmiany już pokazanych nagród; rozmiary nie mają zagwarantowanych równych szans. Warunki godzinowe są sprawdzane przy generowaniu, a mnożnik szybkiej akceptacji jest osobną premią.
 
-Pierwsza budowa kosztuje **500 każdego zasobu razem z monetami/złotem**. Dalsze ceny stosują 500 × obecny poziom, tak jak główne budynki. Użytkownik zaakceptował zachowanie pierwszego kosztu po przedstawieniu jego trudności.
+Kliknięcie przyjęcia przed upływem 15 s zapisuje ×3; od 15 s do przed 5 min ×2; później ×1. Mnożnik obejmuje całą nagrodę, nie wymaga natychmiastowego ukończenia. Wpłaty są bezpośrednio z centrali, również w ratach, z licznikiem dostarczone/wymagane. Nie ma tragarza ani zwrotu; nieukończone wpłaty przepadają z terminem. Nagroda jest przyznawana raz po ostatniej wpłacie. Materiały przekraczające pojemność trafiają do bufora nagród i automatycznie uzupełniają centralę, gdy zwolni się miejsce.
 
-Od startowych 100 każdego zasobu potrzeba dodatkowych 400 monet oraz po 400 pięciu materiałów. Deski i żywność wymagają jeszcze po 800 wejściowego drewna/zboża. W sumie jest to 3600 jednostek pracy produkcyjnej, czyli 360 osobogodzin, oraz około 60 osobogodzin przewozu. Przed dodaniem jedzenia dolna granica przy 12 osobach wynosiła około 35 godzin. Nowa reguła żywienia wymaga dodatkowo 12 Food/h, czyli 4,2 osobogodziny produkcji i przewozu na godzinę gry. Historyczny szacunek dla stałej, cały czas nakarmionej populacji 12 osób bez nagród i bonusów wynosił zatem `420 / (12 − 4,2)`, około **54 godziny aktywnej gry**, przed przewozem materiałów na budowę i samym budowaniem. Nie jest to dolna granica ani prognoza bieżącej wersji: indywidualne bonusy szczęścia zmieniają przyrost populacji, a okresy głodu zmniejszają produkcję i transport do połowy. Nowego czasu nie wyznaczono bez symulacji obsady, żywienia i zmian populacji. Faktyczny czas zależy także od pięciominutowych powrotów i blokad. Koszt mieści się w magazynie poziomu 1: 500 na rodzaj i 2500 łącznie. Trzeba też zachować osobny bufor Food na czas budowy: zarezerwowanie wszystkich 500 Food zostawi tylko wcześniej przydzieloną część posiłku, więc może szybko uruchomić głód. Ceny nie obniżono bez nowej instrukcji użytkownika.
+Każdy z trzech łańcuchów ma osobny termin. Przed pierwszym ukończeniem zadania mają 6 h. Pierwsze ukończenie zapisuje stałą dobową godzinę odnowienia danego łańcucha w Europe/Warsaw; następny termin wypada o tej godzinie kolejnego dnia. Kolejne zadanie po ukończeniu pojawia się od razu. Powrót offline nie odnawia okna reakcji ×3 ani nie zwraca przeterminowanych wpłat.
 
-Latarnia ma dłuższą budowę: transport **T** oraz sama budowa **2T**, razem **3T**. Przy sześciu stale nakarmionych magazynierach 2500 sztuk jedzie 417 minut, a budowa trwa 834 minuty: 20 godzin 51 minut po zleceniu, niezależnie od wcześniejszego zbierania.
+## Ekspedycje, ranking i lojalność
 
-Po ukończeniu **obu premii używa się przez 24 godziny × osiągnięty poziom**:
+Ekspedycje mają osobne plansze i wypłacają **wyłącznie monety**. Pierwszy ukończony etap daje pulę 50, następne 100, 200, 400… Gracz wypłaca do skarbca albo ryzykuje całą pulę na kolejnym etapie. Porażka lub wygaśnięcie czasu traci niewypłaconą pulę. Tryb ma limit ruchów albo czasu; wynik sprawdza poprawną trasę i etap bieżącego przebiegu. Ponowne rozliczenie zamkniętego etapu lub wypłaty jest odrzucane. W lokalnym prototypie weryfikacja klienta nie zastępuje serwera.
 
-- +100 szczęścia każdemu mieszkańcowi, z indywidualnym limitem +100;
-- produkcja pięciu materiałów ×2, z takim samym stosunkiem wejść 2:1.
+Ranking w ustawieniach to lokalny zapis `poziom ratusza × monety`, aktualizowany o pełnej godzinie zegarowej. Nie jest jeszcze rankingiem wielu kont. Seria wizyt liczy kolejne dni kalendarzowe Europe/Warsaw do 10, bez nieokreślonych nagród lojalnościowych.
 
-Poziom 2 daje więc 48 godzin obu efektów. Kolejna rozbudowa odświeża okres według nowego poziomu, bez mnożenia ×4. Podatki i tempo przewozu pozostają bez zmiany. Premia zaczyna się po ukończeniu, nie po opłaceniu. Historyczna dostawa po 50 drewna/30 kamienia i natychmiastowa naprawa za 300 monet zostały zastąpione tą budową.
+## Usługi za monety i integracje
 
-## Targ, kaplica i lojalność
+Monety i złoto to jedna waluta. Uzgodniono `1 PLN = 10 monet`; nie oznacza to działającej płatności ani wypłaty na PLN. Lokalne operacje pobierają istniejące monety z prototypu.
 
-Targ ma pojemność `floor(1000 × 1,5^(poziom−1))`. Jego nakarmieni pracownicy przenoszą zamówione towary z magazynu centralnego po 60 sztuk/os./h, a głodni po 30/h. Każda faktyczna dostawa czeka godzinę od przybycia. Wymienia się wyłącznie w obrębie grup drewno/kamień/zboże albo deski/żywność. Stosunek nominalny 1:1 ma marżę 10%; partie po 10 dają 9 sztuk. Nie ma wymiany za monety. Wynik pozostaje na targu do zlecenia odbioru przez magazynierów i dopiero po przyjęciu centralnie może finansować budowę.
+- Skrócenie **pozostałej fazy budowy** o 25%, 50%, 75% albo 100% kosztuje `max(5, floor(zaoszczędzone sekundy / 60))` monet. Cena i skrócenie są podawane przed zatwierdzeniem. Transport ma osobną operację.
+- Natychmiastowy transport od ratusza 4: 10 monet za każdy wymagany kurs, także ostatni niepełny, osobno dla każdego materiału. Obsługuje bufor producenta → centrala, centrala → budowa, targ w obie strony i osobne etapy portowe; za dostawę do portu i załadunek są osobne opłaty. Usługa nie tworzy miejsca ani towaru i zachowuje terminy/blokady handlu.
+- Kupno kompletnego budynku od ratusza 4: pełna proporcjonalna bazowa cena portowa wszystkich materiałów ×1,25 + osobno natywne monety kosztu budynku + opłata natychmiastowego transportu. Nie pobiera własnych materiałów; końcowa cena monet jest zaokrąglona w górę. Budynek jest gotowy po **10 sekundach**, bez wymogu rzeczywistych tragarzy; obowiązują zależności poziomu i miejsca budowy.
+- Pakiet budowlany: `1000 × poziom ratusza` monet na 24 h, kolejne kupno przedłuża ważność. Daje +4 aktywne budowy i kolejkę bez limitu. Nie znosi +10% kosztu kolejki.
+- Plan z prognozy wymaga aktywnego pakietu i wykonalnej produkcji/dostawy. Dodatkowo kosztuje 25% bazowej portowej wartości **brakujących** materiałów, liczonych po dopłacie kolejki. Przykład: baza 300, kolejka 330, centrala 200 — dopłata dotyczy 130. Plan nie tworzy towaru; pełna rezerwacja i start czekają na fizyczne dostawy, z ochroną Food. Po wygaśnięciu pakietu aktywne budowy kończą się, opłacona kolejka podlega zwykłym limitom, a nieopłacone plany czekają.
 
-Kaplica 1 nie daje pasywnej premii. Ukończenie rozbudowy daje wszystkim +10 × nowy poziom szczęścia i podatki ×2 na 10 aktywnych godzin. Kolejna rozbudowa odświeża, zamiast nakładać mnożniki. Ręczne błogosławieństwo jest osobne: +50 każdego z sześciu zasobów i +20 szczęścia każdemu przez godzinę. Nie uruchamia się drugiego podczas trwania pierwszego. Łączna dożywotnia liczba użyć to poziom kaplicy, więc podniesienie poziomu dodaje jedno nowe użycie. Oba rodzaje premii mogą działać równocześnie.
+Zapisano przyszłe nagrody: 1000 monet za informację o grze, 500 za informację o nowym poziomie, 1000 za poleconego logującego się gracza, 500 każdego materiału po jego trzecim aktywnym dniu i 1000 za każdy trzeci post FB. **Nie przyznajemy ich z niezweryfikowanego kliknięcia.** Warunki integracji, reklam do 30 s, dokupowania czasu/ruchów i ukrytego kodu pozostają odłożone. Tak samo nie uruchomiono OAuth Google/Facebook ani płatności zewnętrznych.
 
-Lojalność zlicza kolejne daty wizyty w strefie Europe/Warsaw do 10. Tego samego dnia nie wzrasta, luka resetuje serię do 1. Nagrody nie są przyznawane: użytkownik ustali je później. Obecna wizyta to lokalny prototyp, a rzeczywiste logowanie i wspólny stan konta są zadaniem backendu.
+## Rozstrzygnięcia 23 października — D01–D17
 
-## Kompaktowe panele produkcyjne
+| Decyzja | Przyjęta reguła |
+| --- | --- |
+| D01 | Po powrocie wizyty: populacja +10 pp/6 h, uczestnicy 100%/24 h. |
+| D02 | 2L miejsc jednocześnie i 2L darmowych wejść/24 h; do 3 płatnych pakietów po 2L, cena 300 × numer 2/3/4 × L. |
+| D03 | Punkty domu dodają osobiste pp, nie usuwają kar ani liczników. |
+| D04 | Pula zamrożona przy odnowieniu; po 23 h 58 min rozdział reszty najmniej szczęśliwym, losowanie remisów; odnowienie co 24 h. |
+| D05 | Start S/M/L, później losowe rozmiary na koniec FIFO. |
+| D06 | Pierwsze ukończenie wyznacza dobową godzinę łańcucha; nowe zadanie od razu; początkowo terminy 6 h. |
+| D07 | Zakresy nagród bazują na poziomie 3 i skalują się do 468 szt./h. |
+| D08 | Nagrody materiałowe mają 1/2/3 rodzaje dla S/M/L. |
+| D09 | Pakiet 1000 × poziom ratusza monet/24 h; kolejka nadal +10%. |
+| D10 | Prognoza: +25% wartości braków po uwzględnieniu dopłaty kolejki; materiały nadal muszą dotrzeć. |
+| D11 | Pełny kupiony budynek: komplet materiałów +25%, natywne monety i transport; bez własnych materiałów/tragarzy; gotowy po 10 s. |
+| D12 | Minimalna opłata przyspieszenia zawsze 5 monet. |
+| D13 | Nowa osoba ma zamrożone 0% przez 24 h, również podczas premii; początkowa dwunastka wyłączona. |
+| D14 | Limit −50 pp dotyczy tylko składnika przestoju. |
+| D15 | Kolejne płatne błogosławieństwo 4 h po końcu efektu. |
+| D16 | Portowa historia podwyżek jest osobna dla każdego rodzaju towaru. |
+| D17 | Zatwierdzony koszt kaplicy: nowy poziom × (180 monet +20 drewna +60 kamienia +10 desek). |
 
-Farm, Windmill, Lumber Camp, Sawmill i Quarry mają identyczny układ: Level oraz Storage w pierwszym wierszu, mały czas do kolejnej sztuki pod magazynem, a niżej Workers aktualni/limit z małym −/+ oraz Taxes/h. Wyjaśnienia produkcji są pod osobną ikoną „i”; pełny magazyn, brak wejść lub pauza są pokazane zamiast obiecanej daty produkcji, kiedy nie da się jej policzyć. Duże zbiorcze akcje i powtórzona karta produkcji nie zajmują tych paneli. Globalny Residents zachowuje zarządzanie całą wyspą.
+## Granice obecnej implementacji
+
+Reguły działają w lokalnej przeglądarce i są zapisywane w schemacie 8. Nie ma jeszcze autorytatywnego serwera, kont, wspólnego rankingu, synchronizacji web/Android/iPhone, płatności, potwierdzania poleceń ani reklam. Zegar, stan i komendy klienta nie są dowodem uprawnienia lub zakupu. Backend musi sam rozliczać czas, zasoby i nagrody, weryfikować tożsamość i transakcje oraz chronić operacje przed powtórzeniem i równoległymi sesjami. Zakres zapisano w [backlogu](BACKLOG.md).

@@ -25,21 +25,18 @@ EXPEDITIONS = [
         "name": "Misty Isles",
         "map": ["S..T..", ".WWT..", ".W.TC.", ".W....", ".TTTW.", "...W.G"],
         "tools": (1, 1, 0),
-        "reward": {"coins": 180, "wood": 50, "planks": 20},
     },
     {
         "id": "quarry",
         "name": "Forgotten Quarry",
         "map": ["S.R...", ".TRR..", "..R.C.", ".TT...", ".R.RT.", "C...G."],
         "tools": (0, 1, 1),
-        "reward": {"coins": 220, "stone": 80, "wood": 25},
     },
     {
         "id": "ruins",
         "name": "Watchtower Ruins",
         "map": ["S.TW..", ".R.WC.", ".K.W..", ".R.D..", ".TT...", "....G."],
         "tools": (1, 1, 1),
-        "reward": {"coins": 300, "planks": 40, "stone": 50},
     },
 ]
 
@@ -66,8 +63,11 @@ def solution(expedition):
     while queue:
         current, route = queue.popleft()
         row, col, bridge, axe, dynamite, key, cleared, collected = current
-        if grid[row][col] == "G" and collected and (expedition["id"] != "ruins" or key):
-            return route, collected.bit_count()
+        if grid[row][col] == "G":
+            if collected and cleared and (expedition["id"] != "ruins" or key):
+                return route, collected.bit_count()
+            # Entering the goal ends the attempt; it cannot be crossed on a detour.
+            continue
         for dr, dc in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
             r, c = row + dr, col + dc
             if not (0 <= r < len(grid) and 0 <= c < len(grid[r])):
@@ -95,6 +95,7 @@ def solution(expedition):
 
 def saved(page):
     # Reading the public browser save is evidence, not a shortcut to game actions.
+    page.evaluate("window.dispatchEvent(new Event('pagehide'))")
     raw = page.evaluate("key => localStorage.getItem(key)", SAVE_KEY)
     assert raw, "Expected the action to persist a browser save"
     return json.loads(raw)
@@ -104,7 +105,7 @@ def visit(page):
     response = page.goto(BASE_URL + PAGE_PATH)
     assert response and response.status == 200
     page.wait_for_function(
-        "document.querySelectorAll('.island-hotspot').length >= 50 && "
+        "document.querySelectorAll('.island-hotspot').length === 48 && "
         "document.getElementById('loading').hidden"
     )
     expect(page.locator(".slice canvas")).to_have_count(9)
@@ -135,8 +136,11 @@ def gameplay_checks(browser, errors, failed):
     page.clock.install(time=now - timedelta(seconds=5))
     page.clock.pause_at(now)
     visit(page)
-    page.locator("#hit-pause").click()
-    assert saved(page)["paused"] is True
+    expect(page.locator("#hit-pause,#hit-play,#hit-speed")).to_have_count(0)
+    initial = saved(page)
+    assert initial["version"] == 8
+    assert initial["paused"] is False and initial["speed"] == 1
+    assert all(person["workplace"] is None for person in initial["residents"])
 
     # The first townhall level does not allow a second-level house yet.
     before = saved(page)
@@ -146,10 +150,18 @@ def gameplay_checks(browser, errors, failed):
     assert saved(page)["resources"] == before["resources"]
     close_panel(page)
 
-    # Work and carrier timers, rather than a collect shortcut, unlock the first reward.
-    page.locator("#hit-play").click()
-    page.clock.run_for(420_000)
-    page.locator("#hit-pause").click()
+    # A new island starts with everyone at Home. Real assignments, five-minute
+    # walks, production and full carrier trips deliver goods into central stock.
+    for building, workers in [("farm", 2), ("lumber", 1), ("quarry", 1),
+                              ("windmill", 1), ("sawmill", 1), ("warehouse", 2)]:
+        page.locator("#hit-world-" + building).click()
+        for _ in range(workers):
+            page.locator(f'[data-worker-building="{building}"][data-worker-delta="1"]').click()
+        close_panel(page)
+    walking = saved(page)
+    assert sum(person["arrivalRemaining"] > 0 for person in walking["residents"]) == 8
+    assert walking["statistics"]["collected"] == 0
+    page.clock.fast_forward(20 * 60_000)
     produced = saved(page)
     assert produced["statistics"]["collected"] > 0
     assert produced["statistics"]["crafted"] > 0
@@ -159,14 +171,15 @@ def gameplay_checks(browser, errors, failed):
     expect(page.locator('[data-local-buffer="farm"]')).to_be_visible()
     close_panel(page)
 
-    # Earn the construction budget through real expedition play from the 100-each start.
+    # Chests are narrative markers. Three actual puzzle routes exercise tools,
+    # chest visits and the ruins key, earning only an unclaimed 50-coin pot.
     for expedition in EXPEDITIONS:
         page.locator("#hit-nav-expeditions").click()
         expedition_card = page.locator(".info-card").filter(
             has=page.get_by_role("heading", name=expedition["name"], exact=True)
         )
         before = saved(page)
-        expedition_card.get_by_role("button", name="Depart", exact=True).click()
+        expedition_card.get_by_role("button", name="Start expedition", exact=True).click()
         expect(page.locator(".puzzle-cell")).to_have_count(36)
         # Distant squares are explicitly unavailable until reached legitimately.
         expect(page.locator('.puzzle-cell[data-row="5"][data-col="5"]')).to_be_disabled()
@@ -174,24 +187,34 @@ def gameplay_checks(browser, errors, failed):
         for row, col in route:
             page.locator(f'.puzzle-cell[data-row="{row}"][data-col="{col}"]').click()
         after = saved(page)
-        assert after["expeditions"][expedition["id"]]["completed"] is True
-        for resource, amount in expedition["reward"].items():
-            bonus = caches * 10 if resource == "coins" else 0
-            assert after["resources"][resource] == before["resources"][resource] + amount + bonus
+        assert after["expeditionRuns"][expedition["id"]]["status"] == "decision"
+        assert after["expeditionRuns"][expedition["id"]]["pot"] == 50
+        assert after["resources"] == before["resources"]
+        page.locator(f'[data-expedition-cashout="{expedition["id"]}"]').click()
+        paid = saved(page)
+        assert paid["expeditionRuns"][expedition["id"]]["status"] == "closed"
+        assert paid["resources"]["coins"] == before["resources"]["coins"] + 50
+        for resource in ["wood", "stone", "grain", "food", "planks"]:
+            assert paid["resources"][resource] == before["resources"][resource]
         page.get_by_role("button", name="Return to island", exact=True).click()
         print(f"PASS expedition: {expedition['id']} ({len(route)} moves, {caches} chests)")
 
 
-    # Claim the earned starter reward before buying the townhall and house upgrades.
+    # Lighthouse tasks replace the obsolete free starter reward. A real
+    # contribution leaves central stock and persists; it cannot be withdrawn.
     page.locator("#hit-nav-tasks").click()
     before = saved(page)
-    collect_task = page.locator(".info-card").filter(has=page.get_by_role("heading", name="First Harvest", exact=True))
-    collect_task.get_by_role("button", name="Claim reward", exact=True).click()
+    expect(page.locator("[data-task-accept]")).to_have_count(3)
+    expect(page.get_by_role("button", name="Claim reward", exact=True)).to_have_count(0)
+    task = before["lighthouseTasks"][0]
+    page.locator(f'[data-task-accept="{task["id"]}"]').click()
+    resource = next(iter(task["requirements"]))
+    page.locator(f'[data-task-input="{task["id"]}-{resource}"]').fill("1")
+    page.locator(f'[data-task-deposit="{task["id"]}-{resource}"]').click()
     after = saved(page)
-    assert after["tasks"]["collect"] is True
-    assert after["resources"]["coins"] == before["resources"]["coins"] + 100
-    assert after["resources"]["wood"] == before["resources"]["wood"] + 20
-    expect(collect_task.get_by_role("button", name="Reward claimed", exact=True)).to_be_disabled()
+    assert after["lighthouseTasks"][0]["deposited"][resource] == 1
+    assert after["resources"][resource] == before["resources"][resource] - 1
+    assert after["resources"]["coins"] == before["resources"]["coins"]
     close_panel(page)
 
     # New expensive upgrades cannot start from local stock or the expedition budget.
@@ -207,7 +230,8 @@ def gameplay_checks(browser, errors, failed):
     page.get_by_role('button', name='Trade at the harbor', exact=True).click()
     expect(page.locator('#island-dialog')).to_contain_text('Town Hall level 4')
     close_panel(page)
-    page.locator('#hit-objective-title').click()
+    page.locator('#hit-home').click()
+    page.locator('#island-dialog').get_by_role('button', name='Main objective', exact=True).click()
     page.locator('#island-dialog').get_by_role('button', name='Lighthouse — construction and upgrades', exact=True).click()
     expect(page.locator('[data-upgrade-building="lighthouse"]')).to_be_disabled()
     expect(page.locator('#island-dialog')).to_contain_text('500')
@@ -220,10 +244,10 @@ def gameplay_checks(browser, errors, failed):
     page.get_by_role("button", name="Save now", exact=True).click()
     after = saved(page)
     assert after["objective"] == before["objective"]
-    assert after["expeditions"] == before["expeditions"]
+    assert after["expeditionRuns"] == before["expeditionRuns"]
+    assert after["lighthouseTasks"] == before["lighthouseTasks"]
     assert after["buildings"]["house"]["level"] == 1
     assert after["buildings"]["townhall"]["level"] == 1
-    assert after["tasks"]["collect"] is True
     assert after["resources"] == before["resources"]
     close_panel(page)
 
@@ -231,17 +255,13 @@ def gameplay_checks(browser, errors, failed):
     page.locator("#hit-world-farm").click()
     before = saved(page)
     expect(page.locator('[data-collect]')).to_have_count(0)
-    close_panel(page)
-    page.locator("#hit-play").click()
-    page.locator("#hit-world-farm").click()
-    page.clock.run_for(360_000)
+    page.clock.fast_forward(360_000)
     expect(page.locator('[data-local-buffer="farm"]')).to_be_visible()
     close_panel(page)
-    page.locator("#hit-pause").click()
     after = saved(page)
     assert after["statistics"]["collected"] > before["statistics"]["collected"]
     assert after["buildings"]["farm"]["workProgress"] != before["buildings"]["farm"]["workProgress"] or after["resources"] != before["resources"]
-    print("PASS gameplay: real production/hauling, upgrade costs/locks, queue navigation, claim, port/lighthouse gates, persistence and live local-stock panel")
+    print("PASS gameplay: real hiring/production/hauling, three coin-only expedition pots, irreversible task contribution, upgrade locks, queue, port/lighthouse gates, persistence and live local stock")
     context.close()
 
 
@@ -249,8 +269,7 @@ def navigation_checks(browser, errors, failed):
     routes = [
         "home", "settings", "resource-coins", "resource-wood", "resource-stone",
         "resource-food", "resource-planks", "resource-grain", "notifications", "level", "happiness", "population", "clock", "menu", "nav-expeditions",
-        "nav-tasks", "nav-residents", "nav-map", "objective-title",
-        "objective-wood", "objective-stone", "expedition-preview", "expedition-start",
+        "nav-tasks", "nav-residents", "nav-map",
         "category-buildings", "category-resources", "category-decorations", "category-paths",
         "dock-house", "dock-farm", "dock-sawmill", "dock-quarry", "dock-dock",
         "dock-warehouse", "dock-lighthouse",
@@ -269,6 +288,27 @@ def navigation_checks(browser, errors, failed):
         for route in routes:
             page.locator("#hit-" + route).click()
             within_viewport(page)
+            close_panel(page)
+        # Native dialog keyboard behavior remains available in each viewport.
+        page.locator('#hit-settings').focus()
+        page.keyboard.press('Enter')
+        within_viewport(page)
+        expect(page.locator('.dialog-close')).to_be_focused()
+        page.keyboard.press('Tab')
+        assert page.evaluate("document.activeElement.closest('#island-dialog') !== null")
+        page.keyboard.press('Escape')
+        expect(page.locator('#island-dialog')).not_to_be_visible()
+        expect(page.locator('#hit-settings')).to_be_focused()
+        # The former static objective/expedition pixels are now live activities.
+        expect(page.locator('.island-activity-stack .activity-task')).to_have_count(3)
+        page.locator('.activity-task-button').first.click()
+        within_viewport(page)
+        expect(page.locator('#dialog-title')).to_have_text('Tasks')
+        close_panel(page)
+        if width < 900:
+            page.locator('.mobile-activities').click()
+            within_viewport(page)
+            expect(page.locator('#dialog-title')).to_have_text('Tasks')
             close_panel(page)
         if width == 390:
             menu = page.locator(".mobile-island-menu")

@@ -1,5 +1,6 @@
-// Physical goods, individual work phases and hauling. All time is active seconds.
-import { productionMultiplier } from './harborlight-v1-residents.js?v=happiness-v8';
+// Physical goods and event-based logistics. Durations are real elapsed seconds,
+// including catch-up after the browser is closed.
+import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=rules-v9';
 export const workerEfficiency = productionMultiplier;
 export const MATERIAL_IDS = ['wood', 'stone', 'grain', 'food', 'planks'];
 export const PRODUCTION_RECIPES = {
@@ -7,27 +8,44 @@ export const PRODUCTION_RECIPES = {
   sawmill: { output: 'planks', input: 'wood', amount: 2 },
   windmill: { output: 'food', input: 'grain', amount: 2 }
 };
+const EPS = 1e-7;
 const clamp = (n, min = 0, max = 10000000) => Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : min;
 const whole = n => Math.floor(clamp(n));
 const stock = () => Object.fromEntries(MATERIAL_IDS.map(id => [id, 0]));
+const good = (message, extra = {}) => ({ ok: true, message, ...extra });
+const bad = message => ({ ok: false, message });
+const quantity = n => Number.isSafeInteger(n) && n > 0;
+const buildingNames = { farm: 'Farm', lumber: 'Lumber Camp', quarry: 'Quarry', windmill: 'Windmill', sawmill: 'Sawmill', warehouse: 'Warehouse', market: 'Market', dock: 'Harbor', house: 'House', townhall: 'Town Hall', chapel: 'Chapel', lighthouse: 'Lighthouse' };
+const materialNames = { wood: 'wood', stone: 'stone', grain: 'grain', food: 'food', planks: 'planks' };
 export const producerCapacity = state => 200 * state.buildings.townhall.level;
+export const productionRate = (state, id) => state.buildings[id]?.level === 1 ? 10 : state.buildings[id]?.level > 1 ? state.buildings[id].level + 10 : 0;
+export const foodReserve = state => 50 * (state.buildings.warehouse.level || 0);
+export const availableGoods = (state, id) => Math.max(0, Math.floor((state.resources[id] || 0) - (id === 'food' ? foodReserve(state) : 0)));
+export const haulCapacity = (state, id = 'warehouse') => Math.max(1, Math.floor(60 * 1.1 ** Math.max(0, (state.buildings[id]?.level || 1) - 1)));
+export const workplaceUnlocked = (state, id) => state.buildings.townhall.level >= (id === 'market' ? 2 : id === 'dock' ? 4 : 1);
+export function activeWorkerIndices(state, id) {
+  const people = Array.isArray(state.residents) ? state.residents.filter(person => person.workplace === id) : [];
+  if (!people.length && !Array.isArray(state.residents)) return Array.from({ length: state.buildings[id]?.workers || 0 }, (_, index) => index);
+  return people.flatMap((person, index) => (person.arrivalRemaining || 0) > EPS || person.visitGroup || person.visiting || (person.returnRemaining || 0) > EPS ? [] : [index]);
+}
 export function warehouseLimits(state) {
   const factor = state.buildings.warehouse.level ? 1.5 ** (state.buildings.warehouse.level - 1) : 0;
   return { perResource: Math.floor(Math.min(10000000, 1000 * factor)), total: Math.floor(Math.min(40000000, 4000 * factor)) };
 }
-export const warehouseUsed = state => MATERIAL_IDS.reduce((sum, id) => sum + state.resources[id], 0);
+export const warehouseUsed = state => MATERIAL_IDS.reduce((sum, id) => sum + (state.resources[id] || 0), 0);
 export function stockRoom(state, id) {
   if (!MATERIAL_IDS.includes(id)) return 0;
   const limits = warehouseLimits(state);
   return Math.max(0, Math.floor(Math.min(limits.perResource - state.resources[id], limits.total - warehouseUsed(state))));
 }
 export const marketCapacity = state => Math.floor(Math.min(10000000, 1000 * 1.5 ** Math.max(0, state.buildings.market.level - 1)));
-export const marketUsed = state => MATERIAL_IDS.reduce((sum, id) => sum + state.market.stock[id], 0) + state.market.locked.reduce((sum, lot) => sum + lot.amount, 0);
-export const workplaceUnlocked = (state, id) => state.buildings.townhall.level >= (id === 'market' ? 2 : id === 'dock' ? 4 : 1);
-const buildingNames = { farm: 'Farm', lumber: 'Lumber Camp', quarry: 'Quarry', windmill: 'Windmill', sawmill: 'Sawmill', warehouse: 'Warehouse', market: 'Market', dock: 'Harbor', house: 'House', townhall: 'Town Hall', chapel: 'Chapel', lighthouse: 'Lighthouse' };
-const materialNames = { wood: 'wood', stone: 'stone', grain: 'grain', food: 'food', planks: 'planks' };
-
-export const premiumActive = (state, now = Date.now()) => (state.premium?.expiresAt || 0) > now;
+export const marketUsed = state => MATERIAL_IDS.reduce((sum, id) => sum + (state.market?.stock[id] || 0), 0) + (state.market?.locked || []).reduce((sum, lot) => sum + lot.amount, 0);
+export function dockCapacity(state) {
+  const factor = 1.5 ** Math.max(0, state.buildings.dock.level - 1);
+  return { perResource: Math.floor(Math.min(10000000, 1000 * factor)), total: Math.floor(Math.min(40000000, 4000 * factor)) };
+}
+export const dockUsed = state => MATERIAL_IDS.reduce((sum, id) => sum + (state.dock?.stock[id] || 0), 0);
+export const premiumActive = (state, now = state.worldTimeMs ?? Date.now()) => (state.premium?.expiresAt || 0) > now;
 export function constructionCounts(state) {
   const projects = state.constructionProjects || [], premium = premiumActive(state);
   return { active: projects.filter(p => ['transport', 'building'].includes(p.stage)).length, queued: projects.filter(p => ['queued', 'planned'].includes(p.stage)).length, limit: state.buildings.townhall.level + (premium ? 4 : 0), queueLimit: premium ? Infinity : state.buildings.townhall.level, premium };
@@ -36,153 +54,150 @@ export function syncConstructionPointers(state) {
   for (const building of Object.values(state.buildings)) delete building.construction;
   for (const project of state.constructionProjects) if (!state.buildings[project.building].construction) state.buildings[project.building].construction = project;
 }
-export function nextConstruction(state) {
-  return state.constructionProjects.find(project => project.stage === 'transport') || null;
+export const nextConstruction = state => state.constructionProjects.find(project => project.stage === 'transport') || null;
+export const plannedLevel = (state, id) => Math.max(state.buildings[id].level, ...(state.constructionProjects || []).filter(project => project.building === id).map(project => project.targetLevel));
+export const constructionBuildFactor = project => project.building === 'lighthouse' ? 4 : project.building === 'chapel' ? 3 * Math.max(1, project.targetLevel - 1) : 1;
+function projectGoods(project) {
+  if (!project.remainingMaterials) {
+    project.remainingMaterials = Object.fromEntries(MATERIAL_IDS.map(id => [id, whole(project.cost?.[id])]));
+    // Legacy projects recorded only an aggregate remaining quantity. Preserve
+    // that quantity deterministically without recreating already delivered goods.
+    let trim = Math.max(0, MATERIAL_IDS.reduce((n,id) => n + project.remainingMaterials[id], 0) - (project.goodsRemaining ?? project.goodsTotal ?? 0));
+    for (const id of MATERIAL_IDS) { const used = Math.min(trim, project.remainingMaterials[id]); project.remainingMaterials[id] -= used; trim -= used; }
+  }
+  if (!project.delivered) project.delivered = Object.fromEntries(MATERIAL_IDS.map(id => [id, Math.max(0, whole(project.cost?.[id]) - project.remainingMaterials[id])]));
+  return project.remainingMaterials;
 }
-export function plannedLevel(state, id) {
-  return Math.max(state.buildings[id].level, ...state.constructionProjects.filter(project => project.building === id).map(project => project.targetLevel));
+export function constructionEstimate(state, projectOrCost, buildingId) {
+  const project = projectOrCost?.cost ? projectOrCost : { cost: projectOrCost || {}, building: buildingId || 'house', targetLevel: (state.buildings[buildingId || 'house']?.level || 0) + 1 };
+  const capacity = haulCapacity(state), crew = activeWorkerIndices(state, 'warehouse').length;
+  const required = project.stage === 'building' ? stock() : project.remainingMaterials || project.cost;
+  const queuedTrips = MATERIAL_IDS.reduce((n,id) => n + Math.ceil((required?.[id] || 0) / capacity), 0);
+  const inFlight = (state.haulTrips?.warehouse || []).filter(t => t.kind === 'construction' && t.projectOrder === project.order);
+  const trips = queuedTrips + inFlight.length;
+  const waves = crew ? Math.ceil(trips / crew) : trips ? Infinity : 0;
+  const efficiency = workerEfficiency(state);
+  const available = activeWorkerIndices(state, 'warehouse').map(index => ((state.haulTrips?.warehouse || []).find(t => t.worker === index)?.remaining || 0) / efficiency);
+  let transport = inFlight.reduce((end,t) => Math.max(end,t.remaining / efficiency),0);
+  for (let index=0; index<queuedTrips; index++) {
+    if (!available.length) { transport=Infinity; break; }
+    const first=available.indexOf(Math.min(...available));
+    available[first]+=300 / efficiency;
+    transport=Math.max(transport,available[first]);
+  }
+  const fullTrips = MATERIAL_IDS.reduce((n,id) => n + Math.ceil((project.cost?.[id] || 0) / capacity), 0);
+  const baseTransport = crew ? Math.ceil(fullTrips / crew) * 300 / workerEfficiency(state) : fullTrips ? Infinity : 0;
+  const building = project.stage === 'building' ? project.buildRemaining : Math.max(project.transportSeconds || 0, baseTransport) * constructionBuildFactor(project);
+  return { transport, building, total: transport + building, trips, waves, capacity, workers: crew };
 }
+export const constructionEstimateSeconds = (state, projectOrCost, buildingId) => constructionEstimate(state, projectOrCost, buildingId).total;
 export function promoteConstructionQueue(state) {
   const counts = constructionCounts(state);
   let slots = counts.limit - counts.active;
   for (const project of state.constructionProjects) {
-    if (project.stage === 'planned' && counts.premium && Object.entries(project.cost).every(([id, value]) => state.resources[id] >= value)) {
-      for (const [id, value] of Object.entries(project.cost)) state.resources[id] -= value;
+    projectGoods(project);
+    if (project.stage === 'planned' && counts.premium && Object.entries(project.cost).every(([id, value]) => id === 'coins' ? state.resources.coins >= value : availableGoods(state,id) >= value)) {
+      for (const [id,value] of Object.entries(project.cost)) state.resources[id] -= value;
       project.stage = 'queued';
-      notify(state, 'construction-reserved', `${buildingNames[project.building]}: materials reserved`, 'The expected materials have arrived in the warehouse. The full cost is now reserved.');
+      notify(state,'construction-reserved',`${buildingNames[project.building]}: materials reserved`,'The forecast supplies have reached the warehouse. The full cost is now reserved.');
     }
     if (project.stage !== 'queued' || slots <= 0) continue;
-    const id = project.building, building = state.buildings[id];
-    if (project.targetLevel !== building.level + 1 || (id !== 'townhall' && project.targetLevel > state.buildings.townhall.level)) continue;
-    if (state.constructionProjects.some(other => other !== project && other.building === id && ['transport', 'building'].includes(other.stage))) continue;
-    project.stage = 'transport'; slots--;
-    notify(state, 'construction-promoted', `${buildingNames[id]}: upgrade started`, 'A construction slot is available. Reserved materials are waiting for transport.');
+    if (project.targetLevel !== state.buildings[project.building].level + 1 || (project.building !== 'townhall' && project.targetLevel > state.buildings.townhall.level)) continue;
+    if (state.constructionProjects.some(other => other !== project && other.building === project.building && ['transport','building'].includes(other.stage))) continue;
+    project.stage=project.instantTransport&&project.goodsRemaining===0?'building':'transport'; slots--;
+    notify(state,'construction-promoted',`${buildingNames[project.building]}: upgrade started`,'Reserved materials are waiting for transport.');
   }
   syncConstructionPointers(state);
 }
-function finishConstruction(state, project) {
-  const id = project.building, building = state.buildings[id];
-  building.level = project.targetLevel;
-  state.constructionProjects = state.constructionProjects.filter(other => other !== project);
-  if (id === 'townhall') state.capacity = building.level * 24;
-  if (id === 'lighthouse') {
-    state.objective = { wood: 50, stone: 30, repaired: true };
-    state.lighthouseRemaining = 86400 * building.level;
-    notify(state, 'lighthouse-bonus', 'Lighthouse bonus', `For ${24 * building.level} hours: +100 happiness for everyone and material production ×2. Taxes are unchanged.`);
+export function finishConstruction(state, project) {
+  const id=project.building, building=state.buildings[id];
+  building.level=project.targetLevel;
+  state.constructionProjects=state.constructionProjects.filter(other=>other!==project);
+  if(id==='townhall') state.capacity=building.level*24;
+  if(id==='lighthouse') {
+    state.objective={wood:50,stone:30,repaired:true};
+    beginLighthouseBonus(state,86400*building.level);
+    notify(state,'lighthouse-bonus','Lighthouse bonus',`For ${24*building.level} hours: happiness is 100% and material production ×2. Taxes are unchanged.`);
   }
-  if (id === 'chapel') {
-    state.chapelRemaining = 36000;
-    notify(state, 'chapel-upgrade', 'Chapel upgrade bonus', `For 10 hours: +${building.level * 10} happiness for every resident and taxes ×2.`);
+  if(id==='chapel') {
+    state.chapelRemaining=36000;
+    notify(state,'chapel-upgrade','Chapel upgrade bonus',`For 10 hours: +${building.level*10} happiness and taxes ×2.`);
   }
-  state.statistics.upgrades = Math.min(10000000, state.statistics.upgrades + 1);
-  notify(state, 'construction-finished', `${buildingNames[id]}: level ${building.level}`, 'Upgrade complete. The new level is now active.');
+  state.statistics.upgrades=Math.min(10000000,(state.statistics.upgrades||0)+1);
+  notify(state,'construction-finished',`${buildingNames[id]}: level ${building.level}`,'Upgrade complete. The new level is now active.');
   syncConstructionPointers(state);
 }
-function forecastWorkerEfficiency(state) {
-  const current = workerEfficiency(state);
-  if (current === 1 || !state.buildings.warehouse.workers || !stockRoom(state, 'food')) return current;
-  const foodAwaitingTransport = state.pendingDeliveries.food + state.buildings.windmill.ready + Math.min(state.market.stock.food, state.market.dispatch.food);
-  const accessibleGrain = state.resources.grain + state.pendingDeliveries.grain + state.buildings.farm.ready + Math.min(state.market.stock.grain, state.market.dispatch.grain);
-  const canMakeFood = state.buildings.windmill.workers > 0 && (accessibleGrain >= PRODUCTION_RECIPES.windmill.amount || state.buildings.farm.workers > 0);
-  // An actual carrier and a food source can restore full efficiency. The
-  // optimistic forecast uses that prospective rate, without promising when
-  // the first meal arrives. Without a recovery route it keeps the hungry rate.
-  return foodAwaitingTransport > 0 || canMakeFood ? 1 : current;
-}
-
-// Optimistic delivery estimate, not a reservation or promise of future goods.
-export function estimateMaterialsSeconds(state, cost) {
-  const factor = 1.5 ** Math.max(0, plannedLevel(state, 'warehouse') - 1);
-  if (MATERIAL_IDS.some(id => (cost[id] || 0) > Math.floor(1000 * factor)) || MATERIAL_IDS.reduce((sum, id) => sum + (cost[id] || 0), 0) > Math.floor(4000 * factor)) return Infinity;
-  let estimate = 0, hauled = 0;
-  const efficiency = forecastWorkerEfficiency(state);
-  const materialSpeed = efficiency * (state.lighthouseRemaining > 0 ? 2 : 1);
-  const carriers = state.buildings.warehouse.workers * 60 * efficiency;
-  for (const [resource, required] of Object.entries(cost)) {
-    const missing = Math.max(0, required - state.resources[resource]);
-    if (!missing) continue;
-    if (resource === 'coins') {
-      const workers = Object.entries(state.buildings).reduce((sum, [id, b]) => sum + (workplaceUnlocked(state, id) ? b.workers : 0), 0);
-      if (!workers) return Infinity;
-      estimate = Math.max(estimate, missing / (workers * (state.chapelRemaining > 0 ? 2 : 1)) * 3600);
-      continue;
+export function estimateMaterialsSeconds(state,cost) {
+  const limits=warehouseLimits(state);
+  if(MATERIAL_IDS.some(id=>(cost[id]||0)>limits.perResource)||MATERIAL_IDS.reduce((n,id)=>n+(cost[id]||0),0)>limits.total)return Infinity;
+  const crew=activeWorkerIndices(state,'warehouse').length, capacity=haulCapacity(state), efficiency=workerEfficiency(state);
+  let time=0,trips=0;
+  for(const [id,value] of Object.entries(cost)) {
+    const missing=Math.max(0,value-(id==='coins'?state.resources.coins:availableGoods(state,id)));
+    if(!missing)continue;
+    if(id==='coins') {
+      const workers=Object.keys(buildingNames).reduce((n,k)=>n+activeWorkerIndices(state,k).length,0);
+      if(!workers)return Infinity; time=Math.max(time,missing/workers*3600/(state.chapelRemaining>0?2:1));continue;
     }
-    if (!carriers) return Infinity;
-    hauled += missing;
-    const producer = Object.keys(PRODUCTION_RECIPES).find(id => PRODUCTION_RECIPES[id].output === resource);
-    const recipe = PRODUCTION_RECIPES[producer], building = state.buildings[producer];
-    const buffered = building.ready + state.pendingDeliveries[resource] + Math.min(state.market.stock[resource], state.market.dispatch[resource]);
-    const toProduce = Math.max(0, missing - buffered);
-    if (toProduce && !building.workers) return Infinity;
-    if (toProduce) {
-      // Residents eat before future Food can accumulate for another use.
-      const output = building.workers * 10 * materialSpeed;
-      const surplus = output - (resource === 'food' ? state.population : 0);
-      if (surplus <= 0) return Infinity;
-      estimate = Math.max(estimate, toProduce / surplus * 3600);
-    }
-    if (toProduce && recipe.input) {
-      const inputMissing = Math.max(0, toProduce * recipe.amount - state.resources[recipe.input]);
-      const upstream = Object.keys(PRODUCTION_RECIPES).find(id => PRODUCTION_RECIPES[id].output === recipe.input);
-      const upstreamBuilding = state.buildings[upstream];
-      const inputToProduce = Math.max(0, inputMissing - upstreamBuilding.ready - state.pendingDeliveries[recipe.input]);
-      if (inputToProduce && !upstreamBuilding.workers) return Infinity;
-      if (inputToProduce) estimate = Math.max(estimate, inputToProduce / (upstreamBuilding.workers * 10 * materialSpeed) * 3600);
-      hauled += inputMissing;
+    if(!crew)return Infinity;
+    const producer=Object.keys(PRODUCTION_RECIPES).find(k=>PRODUCTION_RECIPES[k].output===id), b=state.buildings[producer], recipe=PRODUCTION_RECIPES[producer];
+    const buffered=b.ready+(state.pendingDeliveries[id]||0), make=Math.max(0,missing-buffered);
+    const workers=activeWorkerIndices(state,producer).length, rate=workers*productionRate(state,producer)*efficiency*(state.lighthouseRemaining>0?2:1)-(id==='food'?state.population:0);
+    if(make&&rate<=0)return Infinity;
+    time=Math.max(time,make?make/rate*3600:0);trips+=Math.ceil(missing/capacity);
+    if(make&&recipe.input) {
+      const upstream=Object.keys(PRODUCTION_RECIPES).find(k=>PRODUCTION_RECIPES[k].output===recipe.input), need=Math.max(0,make*recipe.amount-state.resources[recipe.input]-state.buildings[upstream].ready);
+      const upstreamRate=activeWorkerIndices(state,upstream).length*productionRate(state,upstream)*efficiency;
+      if(need&&!upstreamRate)return Infinity;
+      time=Math.max(time,need/upstreamRate*3600||0);trips+=Math.ceil(need/capacity);
     }
   }
-  return Math.max(estimate, hauled / carriers * 3600 || 0);
+  return Math.max(time,crew?Math.ceil(trips/crew)*300/efficiency:0);
 }
-
-export function receiveMaterials(state, values, { overflowToPending = true } = {}) {
-  for (const id of MATERIAL_IDS) {
-    const quantity = whole(values[id]);
-    const stored = Math.min(quantity, stockRoom(state, id));
-    state.resources[id] += stored;
-    if (overflowToPending) state.pendingDeliveries[id] = Math.min(10000000, state.pendingDeliveries[id] + quantity - stored);
+export function receiveMaterials(state,values,{overflowToPending=true}={}) {
+  for(const id of MATERIAL_IDS) {
+    const amount=whole(values[id]), accepted=Math.min(amount,stockRoom(state,id));
+    state.resources[id]+=accepted;
+    if(overflowToPending)state.pendingDeliveries[id]=Math.min(10000000,(state.pendingDeliveries[id]||0)+amount-accepted);
   }
 }
-
-export function syncCrewProgress(state, id, oldCount, newCount) {
-  const building = state.buildings[id];
-  const duration = PRODUCTION_RECIPES[id] ? 360 : 60;
-  const phases = Array.from({ length: newCount }, (_, index) => index < oldCount ? clamp(building.workProgress?.[index], 0, duration - 1e-8) : 0);
-  const released = Math.max(0, oldCount - newCount);
-  for (let index = 0; index < released; index++) state.returningWorkers.push(300);
-  building.workProgress = phases;
+export function syncCrewProgress(state,id,oldCount,newCount) {
+  const b=state.buildings[id],cycle=PRODUCTION_RECIPES[id]?3600/Math.max(1,productionRate(state,id)):300;
+  b.workProgress=Array.from({length:newCount},(_,i)=>i<oldCount?clamp(b.workProgress?.[i],0,cycle):0);
+  for(let i=0;i<Math.max(0,oldCount-newCount);i++)state.returningWorkers.push(300);
 }
-
-export function notify(state, kind, title, message) {
-  state.notificationSequence = (state.notificationSequence || 0) + 1;
-  state.notifications.unshift({ id: state.notificationSequence, kind, title, message, at: state.activeSeconds || 0, read: false });
-  state.notifications.length = Math.min(100, state.notifications.length);
+export function notify(state,kind,title,message) {
+  state.notifications ||= [];
+  state.notificationSequence=(state.notificationSequence||0)+1;
+  state.notifications.unshift({id:state.notificationSequence,kind,title,message,at:state.activeSeconds||0,read:false});
+  state.notifications.length=Math.min(100,state.notifications.length);
 }
-
-export function storagePenalty(state, id) {
-  const building = state.buildings[id];
-  return building.storageFull ? Math.min(50, 10 * (1 + Math.floor((building.fullSeconds + 1e-7) / 86400))) : 0;
+export function productionBlocked(state,id) {
+  const r=PRODUCTION_RECIPES[id],b=state.buildings[id];
+  return !!r&&(b.ready>=producerCapacity(state)||(r.input&&state.resources[r.input]<r.amount));
 }
-
-export function updateStorageStatus(state, elapsed = 0) {
-  const limits = warehouseLimits(state);
-  const stores = [
-    ...Object.entries(PRODUCTION_RECIPES).map(([id, recipe]) => [id, state.buildings[id].ready >= producerCapacity(state), `${buildingNames[id]}: storage is full`, `Storage full: ${materialNames[recipe.output]}. Production is waiting for transport.`]),
-    ['warehouse', warehouseUsed(state) >= limits.total, 'The central warehouse is full', 'No shared storage space remains. Upgrade the warehouse or use some goods.'],
-    ['market', workplaceUnlocked(state, 'market') && marketUsed(state) >= marketCapacity(state), 'The market is full', 'Exchange goods or order their collection by warehouse workers.']
-  ];
-  for (const [id, full, title, message] of stores) {
-    const building = state.buildings[id];
-    if (full && !building.storageFull) notify(state, 'storage-full', title, message);
-    building.fullSeconds = full ? Math.min(432000, (building.storageFull ? building.fullSeconds || 0 : 0) + elapsed) : 0;
-    building.storageFull = full;
+export function storagePenalty(state,id) {
+  const b=state.buildings[id];
+  return productionBlocked(state,id)?Math.min(50,10*(1+Math.floor(((b.fullSeconds||0)+EPS)/86400))):0;
+}
+export function updateStorageStatus(state,elapsed=0) {
+  const limits=warehouseLimits(state);
+  for(const [id,r] of Object.entries(PRODUCTION_RECIPES)) {
+    const b=state.buildings[id],full=b.ready>=producerCapacity(state),blocked=productionBlocked(state,id);
+    if(full&&!b.storageFull)notify(state,'storage-full',`${buildingNames[id]}: storage is full`,`Storage full: ${materialNames[r.output]}. Production is waiting for transport.`);
+    b.fullSeconds=blocked?Math.min(432000,(b.productionBlocked?b.fullSeconds||0:0)+elapsed):0;
+    b.productionBlocked=blocked;b.storageFull=full;
   }
-  for (const id of MATERIAL_IDS) {
-    const full = state.resources[id] >= limits.perResource && limits.perResource > 0;
-    if (full && !state.fullResources[id]) notify(state, 'storage-full', 'Material storage limit reached', `The central warehouse has no more space for ${materialNames[id]}.`);
-    state.fullResources[id] = full;
+  for(const [id,full,label] of [['warehouse',warehouseUsed(state)>=limits.total,'The central warehouse is full'],['market',workplaceUnlocked(state,'market')&&marketUsed(state)>=marketCapacity(state),'The market is full'],['dock',workplaceUnlocked(state,'dock')&&dockUsed(state)>=dockCapacity(state).total,'The harbor is full']]) {
+    const b=state.buildings[id];if(full&&!b.storageFull)notify(state,'storage-full',label,'Use or collect goods, or upgrade this building.');b.storageFull=full;
+  }
+  state.fullResources ||= {};
+  for(const id of MATERIAL_IDS) {
+    const full=state.resources[id]>=limits.perResource&&limits.perResource>0;
+    if(full&&!state.fullResources[id])notify(state,'storage-full','Material storage limit reached',`The central warehouse has no more space for ${materialNames[id]}.`);
+    state.fullResources[id]=full;
   }
 }
-
 // Translate only recognized messages produced by earlier game releases.
 // Unknown/custom notification content and every saved metadata field are preserved.
 const legacyNotificationText = {
@@ -227,188 +242,411 @@ function translateSavedNotificationText(text) {
   return text;
 }
 
-export function normalizeLogisticsState(state, raw) {
-  state.constructionSequence = whole(raw.constructionSequence);
-  state.pendingDeliveries = stock();
-  for (const id of MATERIAL_IDS) state.pendingDeliveries[id] = whole(raw.pendingDeliveries?.[id]);
-  state.returningWorkers = Array.isArray(raw.returningWorkers) ? raw.returningWorkers.filter(n => Number.isFinite(n) && n > 0).slice(0, state.population).map(n => clamp(n, 0, 300)) : [];
-  const ordered = Array.isArray(raw.transportPriority) ? raw.transportPriority.filter(id => MATERIAL_IDS.includes(id)) : [];
-  state.transportPriority = [...new Set([...ordered, ...MATERIAL_IDS])];
-  state.market = { stock: stock(), locked: [], orders: [], dispatch: stock() };
-  for (const id of MATERIAL_IDS) {
-    state.market.stock[id] = whole(raw.market?.stock?.[id]);
-    state.market.dispatch[id] = Math.min(state.market.stock[id], whole(raw.market?.dispatch?.[id]));
+
+const lot = (resource, amount, remaining = 86400, extra = {}) => ({ resource, amount, remaining, ...extra });
+function normalizeLots(values, { locked = false } = {}) {
+  return (Array.isArray(values) ? values : []).filter(x => x && MATERIAL_IDS.includes(x.resource) && whole(x.amount) > 0).slice(0,10000).map(x => ({ resource:x.resource,amount:whole(x.amount),remaining:clamp(x.remaining,0,locked?3600:86400),...(locked?{expiresRemaining:clamp(x.expiresRemaining??86400,0,86400)}:{}),...(x.orderId?{orderId:whole(x.orderId)}:{}),...(x.direction?{direction:x.direction}:{}) }));
+}
+function removeLots(lots,resource,amount,orderId) {
+  let left=amount;
+  for(const entry of lots.filter(x=>x.resource===resource&&(orderId===undefined||x.orderId===orderId)).sort((a,b)=>a.remaining-b.remaining)) {
+    const moved=Math.min(left,entry.amount);entry.amount-=moved;left-=moved;if(left<=0)break;
   }
-  if (Array.isArray(raw.market?.locked)) state.market.locked = raw.market.locked.filter(lot => MATERIAL_IDS.includes(lot.resource) && whole(lot.amount) > 0).slice(0, 10000).map(lot => ({ resource: lot.resource, amount: whole(lot.amount), remaining: clamp(lot.remaining, 0, 3600) }));
-  if (Array.isArray(raw.market?.orders)) state.market.orders = raw.market.orders.filter(order => MATERIAL_IDS.includes(order.resource) && whole(order.amount) > 0).slice(0, 100).map(order => ({ resource: order.resource, amount: whole(order.amount) }));
-  state.activeSeconds = clamp(raw.activeSeconds, 0, Number.MAX_SAFE_INTEGER);
-  state.notifications = Array.isArray(raw.notifications) ? raw.notifications.slice(0, 100).filter(n => n && typeof n.title === 'string' && typeof n.message === 'string').map(n => ({ id: whole(n.id), kind: String(n.kind || 'info').slice(0, 40), title: translateSavedNotificationText(n.title.slice(0, 150)), message: translateSavedNotificationText(n.message.slice(0, 400)), at: clamp(n.at, 0, Number.MAX_SAFE_INTEGER), read: n.read === true })) : [];
-  state.notificationSequence = Math.max(whole(raw.notificationSequence), ...state.notifications.map(n => n.id), 0);
-  state.fullResources = Object.fromEntries(MATERIAL_IDS.map(id => [id, raw.fullResources?.[id] === true]));
-  for (const [id, building] of Object.entries(state.buildings)) {
-    const cycle = PRODUCTION_RECIPES[id] ? 360 : 60;
-    building.workProgress = Array.from({ length: building.workers }, (_, index) => clamp(raw.buildings?.[id]?.workProgress?.[index], 0, cycle - 1e-8));
-    building.storageFull = raw.buildings?.[id]?.storageFull === true;
-    building.fullSeconds = clamp(raw.buildings?.[id]?.fullSeconds, 0, 432000);
+  for(let i=lots.length-1;i>=0;i--)if(!lots[i].amount)lots.splice(i,1);
+  return amount-left;
+}
+function inboundAmount(state,destination,resource) {
+  return Object.values(state.haulTrips||{}).flat().filter(t=>['producer','pending','marketOutbound','dockOutbound'].includes(t.kind)?destination==='warehouse':['marketInbound'].includes(t.kind)?destination==='market':['dockInbound','dockUnload'].includes(t.kind)?destination==='dock':false).filter(t=>!resource||t.resource===resource).reduce((n,t)=>n+t.amount,0);
+}
+function centralRoom(state,resource) {
+  const limits=warehouseLimits(state), inbound=inboundAmount(state,'warehouse');
+  return Math.max(0,Math.floor(Math.min(limits.perResource-state.resources[resource]-inboundAmount(state,'warehouse',resource),limits.total-warehouseUsed(state)-inbound)));
+}
+function reservedPort(state,resource) {
+  let reserved=resource?state.dock.stock[resource]:dockUsed(state);
+  for(const order of state.dock.orders) {
+    if(resource&&order.resource!==resource)continue;
+    if(order.direction==='buy'&&['voyage','unloading'].includes(order.stage))reserved+=order.remainingToUnload||0;
+    if(order.direction==='sell'&&['supplying','loading'].includes(order.stage))reserved+=order.remainingToPort||0;
   }
-  state.premium = { expiresAt: clamp(raw.premium?.expiresAt, 0, Number.MAX_SAFE_INTEGER) };
-  const projects = Array.isArray(raw.constructionProjects) ? raw.constructionProjects : [];
-  state.constructionProjects = [];
-  const levels = Object.fromEntries(Object.entries(state.buildings).map(([id, b]) => [id, b.level]));
-  let projectOrder = 0;
-  for (const project of [...projects].sort((a,b) => (a?.order || 0) - (b?.order || 0))) {
-    if (!project || !Object.hasOwn(buildingNames, project.building) || !['transport', 'building', 'queued', 'planned'].includes(project.stage)) continue;
-    if (project.targetLevel !== levels[project.building] + 1 || project.targetLevel > 100) continue;
-    const goodsTotal = whole(project.goodsTotal);
-    if (!goodsTotal) continue;
-    const cost = Object.fromEntries([...MATERIAL_IDS, 'coins'].filter(id => whole(project.cost?.[id])).map(id => [id, whole(project.cost[id])]));
-    if (project.stage === 'planned' && !Object.keys(cost).length) continue;
-    const normalized = { building: project.building, targetLevel: project.targetLevel, goodsTotal, goodsRemaining: Math.min(goodsTotal, whole(project.goodsRemaining)), transportSeconds: clamp(project.transportSeconds, 0, Number.MAX_SAFE_INTEGER), buildRemaining: clamp(project.buildRemaining, 0, Number.MAX_SAFE_INTEGER), stage: project.stage, order: Math.max(projectOrder + 1, whole(project.order)), cost };
-    projectOrder = normalized.order;
-    state.constructionSequence = Math.max(state.constructionSequence, normalized.order);
-    state.constructionProjects.push(normalized);
-    levels[project.building] = project.targetLevel;
+  return reserved+inboundAmount(state,'dock',resource);
+}
+export function normalizeLogisticsState(state,raw) {
+  state.activeSeconds=clamp(raw.activeSeconds,0,Number.MAX_SAFE_INTEGER);
+  state.constructionSequence=whole(raw.constructionSequence);
+  state.pendingDeliveries=stock();for(const id of MATERIAL_IDS)state.pendingDeliveries[id]=whole(raw.pendingDeliveries?.[id]);
+  state.returningWorkers=Array.isArray(raw.returningWorkers)?raw.returningWorkers.filter(x=>Number.isFinite(x)&&x>0).slice(0,state.population).map(x=>clamp(x,0,300)):[];
+  const order=Array.isArray(raw.transportPriority)?raw.transportPriority.filter(id=>MATERIAL_IDS.includes(id)):[];
+  state.transportPriority=[...new Set([...order,...MATERIAL_IDS])];
+  state.logisticsPriority=Array.isArray(raw.logisticsPriority)?[...new Set(raw.logisticsPriority.filter(x=>typeof x==='string').slice(0,100))]:[];
+  state.market={stock:stock(),locked:normalizeLots(raw.market?.locked,{locked:true}),lots:normalizeLots(raw.market?.lots),orders:[],dispatch:stock()};
+  for(const id of MATERIAL_IDS) { state.market.stock[id]=whole(raw.market?.stock?.[id]);state.market.dispatch[id]=Math.min(state.market.stock[id],whole(raw.market?.dispatch?.[id])); }
+  state.market.orders=(Array.isArray(raw.market?.orders)?raw.market.orders:[]).filter(x=>x&&MATERIAL_IDS.includes(x.resource)&&whole(x.amount)>0).slice(0,100).map(x=>({resource:x.resource,amount:whole(x.amount)}));
+  for(const id of MATERIAL_IDS) {
+    const represented=state.market.lots.filter(x=>x.resource===id).reduce((n,x)=>n+x.amount,0);
+    if(represented<state.market.stock[id])state.market.lots.push(lot(id,state.market.stock[id]-represented));
   }
-  const original = { ...state.resources };
-  for (const id of MATERIAL_IDS) state.resources[id] = 0;
-  receiveMaterials(state, original);
-  // Invalid oversized market saves keep their goods as pending deliveries.
-  let room = marketCapacity(state);
-  for (const id of MATERIAL_IDS) {
-    const kept = Math.min(state.market.stock[id], room);
-    state.pendingDeliveries[id] += state.market.stock[id] - kept;
-    state.market.stock[id] = kept;
-    state.market.dispatch[id] = Math.min(state.market.dispatch[id], kept);
-    room -= kept;
+  state.dock={stock:stock(),lots:normalizeLots(raw.dock?.lots),orders:[],purchaseHistory:[],nextOrderId:whole(raw.dock?.nextOrderId)};
+  for(const id of MATERIAL_IDS)state.dock.stock[id]=whole(raw.dock?.stock?.[id]);
+  for(const x of Array.isArray(raw.dock?.orders)?raw.dock.orders:[]) {
+    if(!x||!MATERIAL_IDS.includes(x.resource)||!['buy','sell'].includes(x.direction)||!quantity(x.amount)||x.amount%100)continue;
+    const normalized={id:whole(x.id)||++state.dock.nextOrderId,direction:x.direction,resource:x.resource,amount:whole(x.amount),price:clamp(x.price,0,Number.MAX_SAFE_INTEGER),stage:['voyage','unloading','collecting','supplying','loading','complete','expired'].includes(x.stage)?x.stage:'expired',remainingToPort:whole(x.remainingToPort),remainingToUnload:whole(x.remainingToUnload),remainingToShip:whole(x.remainingToShip),remaining:clamp(x.remaining,0,300),expiresRemaining:clamp(x.expiresRemaining??86400,0,86400),delivered:whole(x.delivered),paid:x.paid===true};
+    state.dock.nextOrderId=Math.max(state.dock.nextOrderId,normalized.id);state.dock.orders.push(normalized);
   }
-  state.market.locked = state.market.locked.map(lot => {
-    const amount = Math.min(lot.amount, room);
-    state.pendingDeliveries[lot.resource] += lot.amount - amount;
-    room -= amount;
-    return { ...lot, amount };
-  }).filter(lot => lot.amount);
-  // Existing active projects continue when a package expires; no new extra slot opens.
+  state.dock.orders=state.dock.orders.slice(-100);
+  state.dock.purchaseHistory=(Array.isArray(raw.dock?.purchaseHistory)?raw.dock.purchaseHistory:[]).filter(x=>x&&MATERIAL_IDS.includes(x.resource)&&whole(x.lots)&&x.remaining>0).slice(-10000).map(x=>({resource:x.resource,lots:whole(x.lots),remaining:clamp(x.remaining,0,10800)}));
+  state.haulTrips={warehouse:[],market:[],dock:[]};
+  const kinds=['producer','pending','construction','marketInbound','marketOutbound','dockInbound','dockLoad','dockUnload','dockOutbound'];
+  for(const id of Object.keys(state.haulTrips))for(const t of Array.isArray(raw.haulTrips?.[id])?raw.haulTrips[id]:[]) {
+    if(!t||!kinds.includes(t.kind)||!MATERIAL_IDS.includes(t.resource)||!whole(t.amount))continue;
+    state.haulTrips[id].push({worker:Number.isInteger(t.worker)&&t.worker>=-1?t.worker:0,remaining:clamp(t.remaining,0,300),resource:t.resource,amount:whole(t.amount),kind:t.kind,...(t.producer&&PRODUCTION_RECIPES[t.producer]?{producer:t.producer}:{}),...(t.projectOrder?{projectOrder:whole(t.projectOrder)}:{}),...(t.orderId?{orderId:whole(t.orderId)}:{})});
+  }
+  state.notifications=(Array.isArray(raw.notifications)?raw.notifications:[]).slice(0,100).filter(n=>n&&typeof n.title==='string'&&typeof n.message==='string').map(n=>({id:whole(n.id),kind:String(n.kind||'info').slice(0,40),title:translateSavedNotificationText(n.title.slice(0,150)),message:translateSavedNotificationText(n.message.slice(0,800)),at:clamp(n.at,0,Number.MAX_SAFE_INTEGER),read:n.read===true}));
+  state.notificationSequence=Math.max(whole(raw.notificationSequence),...state.notifications.map(n=>n.id),0);
+  state.fullResources=Object.fromEntries(MATERIAL_IDS.map(id=>[id,raw.fullResources?.[id]===true]));
+  for(const [id,b] of Object.entries(state.buildings)) {
+    const cycle=PRODUCTION_RECIPES[id]?3600/Math.max(1,productionRate(state,id)):300;
+    b.workProgress=Array.from({length:b.workers},(_,i)=>clamp(raw.buildings?.[id]?.workProgress?.[i],0,cycle));
+    b.storageFull=raw.buildings?.[id]?.storageFull===true;b.productionBlocked=raw.buildings?.[id]?.productionBlocked===true;b.fullSeconds=clamp(raw.buildings?.[id]?.fullSeconds,0,432000);
+  }
+  state.premium={...(raw.premium||{}),expiresAt:clamp(raw.premium?.expiresAt,0,Number.MAX_SAFE_INTEGER)};
+  const levels=Object.fromEntries(Object.entries(state.buildings).map(([id,b])=>[id,b.level]));state.constructionProjects=[];
+  for(const x of [...(Array.isArray(raw.constructionProjects)?raw.constructionProjects:[])].sort((a,b)=>(a?.order||0)-(b?.order||0))) {
+    if(!x||!buildingNames[x.building]||!['transport','building','queued','planned'].includes(x.stage)||x.targetLevel!==levels[x.building]+1||x.targetLevel>100)continue;
+    const cost=Object.fromEntries([...MATERIAL_IDS,'coins'].filter(id=>whole(x.cost?.[id])).map(id=>[id,whole(x.cost[id])]));
+    const p={...x,building:x.building,targetLevel:x.targetLevel,cost,goodsTotal:whole(x.goodsTotal),goodsRemaining:whole(x.goodsRemaining),transportSeconds:clamp(x.transportSeconds,0,Number.MAX_SAFE_INTEGER),buildRemaining:clamp(x.buildRemaining,0,Number.MAX_SAFE_INTEGER),stage:x.stage,order:whole(x.order)||++state.constructionSequence};
+    if(x.remainingMaterials)p.remainingMaterials=Object.fromEntries(MATERIAL_IDS.map(id=>[id,whole(x.remainingMaterials[id])]));
+    if(x.delivered)p.delivered=Object.fromEntries(MATERIAL_IDS.map(id=>[id,whole(x.delivered[id])]));
+    projectGoods(p);state.constructionSequence=Math.max(state.constructionSequence,p.order);state.constructionProjects.push(p);levels[p.building]=p.targetLevel;
+  }
+  const original={...state.resources};for(const id of MATERIAL_IDS)state.resources[id]=0;receiveMaterials(state,original);
   promoteConstructionQueue(state);
 }
-
-function haulSource(state) {
-  for (const resource of state.transportPriority) {
-    if (!stockRoom(state, resource)) continue;
-    if (state.pendingDeliveries[resource] > 0) return { resource, kind: 'pending' };
-    if (state.market.dispatch[resource] > 0 && state.market.stock[resource] > 0) return { resource, kind: 'market' };
-    const producer = Object.keys(PRODUCTION_RECIPES).find(id => PRODUCTION_RECIPES[id].output === resource && state.buildings[id].ready > 0);
-    if (producer) return { resource, producer, kind: 'producer' };
+function chooseWarehouseJob(state) {
+  const sources=[];
+  for(const resource of state.transportPriority) {
+    const room=centralRoom(state,resource);if(!room)continue;
+    if(state.pendingDeliveries[resource]>0)sources.push({kind:'pending',resource,available:Math.min(room,state.pendingDeliveries[resource]),priority:state.logisticsPriority.indexOf('pending')});
+    for(const [producer,r] of Object.entries(PRODUCTION_RECIPES))if(r.output===resource&&state.buildings[producer].ready>0)sources.push({kind:'producer',producer,resource,available:Math.min(room,state.buildings[producer].ready),priority:state.logisticsPriority.indexOf(`producer:${producer}`)});
+  }
+  if(state.resources.food<foodReserve(state)) {
+    const urgent=sources.find(s=>s.resource==='food');if(urgent)return urgent;
+  }
+  for(const project of state.constructionProjects)if(project.stage==='transport') {
+    const remaining=projectGoods(project),resource=state.transportPriority.find(id=>remaining[id]>0);
+    if(resource)sources.push({kind:'construction',projectOrder:project.order,resource,available:remaining[resource],priority:state.logisticsPriority.indexOf(`construction:${project.order}`)});
+  }
+  const explicitlyPrioritized=sources.filter(s=>s.priority>=0).sort((a,b)=>a.priority-b.priority);
+  return explicitlyPrioritized[0]||sources[0]||null;
+}
+function chooseMarketJob(state) {
+  if(!workplaceUnlocked(state,'market'))return null;
+  for(const resource of state.transportPriority) {
+    const amount=Math.min(state.market.dispatch[resource],state.market.stock[resource],centralRoom(state,resource));
+    if(amount>0)return {kind:'marketOutbound',resource,available:amount};
+  }
+  const room=marketCapacity(state)-marketUsed(state)-inboundAmount(state,'market');
+  if(room<=0)return null;
+  const order=state.market.orders.find(x=>x.amount>0&&availableGoods(state,x.resource)>0);
+  return order?{kind:'marketInbound',resource:order.resource,available:Math.min(order.amount,availableGoods(state,order.resource),room)}:null;
+}
+function chooseDockJob(state) {
+  if(!workplaceUnlocked(state,'dock'))return null;
+  for(const order of state.dock.orders) {
+    if(['complete','expired'].includes(order.stage))continue;
+    const r=order.resource;
+    if(order.direction==='buy') {
+      const port=state.dock.lots.filter(l=>l.orderId===order.id&&l.resource===r).reduce((n,l)=>n+l.amount,0);
+      if(port>0&&centralRoom(state,r)>0)return {kind:'dockOutbound',resource:r,available:Math.min(port,centralRoom(state,r)),orderId:order.id};
+      if(order.stage==='unloading'&&order.remainingToUnload>0)return {kind:'dockUnload',resource:r,available:order.remainingToUnload,orderId:order.id};
+    }else{
+      const port=state.dock.lots.filter(l=>l.orderId===order.id&&l.resource===r).reduce((n,l)=>n+l.amount,0);
+      if(port>0)return {kind:'dockLoad',resource:r,available:port,orderId:order.id};
+      if(order.remainingToPort>0)return {kind:'dockInbound',resource:r,available:order.remainingToPort,orderId:order.id};
+    }
   }
   return null;
 }
-
-function marketOrder(state) {
-  if (!workplaceUnlocked(state, 'market') || marketUsed(state) >= marketCapacity(state)) return null;
-  return state.market.orders.find(order => order.amount > 0 && state.resources[order.resource] > 0) || null;
-}
-
-function activeJobs(state, efficiency = workerEfficiency(state)) {
-  const jobs = [];
-  for (const [id, recipe] of Object.entries(PRODUCTION_RECIPES)) {
-    const building = state.buildings[id];
-    if (building.ready >= producerCapacity(state) || (recipe.input && state.resources[recipe.input] < recipe.amount)) continue;
-    for (let index = 0; index < building.workers; index++) jobs.push({ id, index, cycle: 360, speed: efficiency * (state.lighthouseRemaining > 0 ? 2 : 1) });
+function launchTrip(state,id,index,source) {
+  const amount=Math.floor(Math.min(source.available,haulCapacity(state,id)));if(!amount)return false;
+  if(source.kind==='producer')state.buildings[source.producer].ready-=amount;
+  if(source.kind==='pending')state.pendingDeliveries[source.resource]-=amount;
+  if(source.kind==='construction')projectGoods(state.constructionProjects.find(p=>p.order===source.projectOrder))[source.resource]-=amount;
+  if(source.kind==='marketInbound') {
+    const order=state.market.orders.find(x=>x.resource===source.resource&&x.amount>0);order.amount-=amount;state.resources[source.resource]-=amount;
   }
-  for (const id of ['warehouse', 'market']) {
-    const construction = id === 'warehouse' ? nextConstruction(state) : null;
-    const remainingGoods = construction ? construction.goodsRemaining : 0;
-    const source = id === 'warehouse' ? haulSource(state) : marketOrder(state);
-    for (let index = 0; index < state.buildings[id].workers; index++) {
-      if (index < remainingGoods) jobs.push({ id, index, cycle: 60, speed: efficiency, construction: construction.order });
-      else if (source) jobs.push({ id, index, cycle: 60, speed: efficiency });
+  if(source.kind==='marketOutbound') {state.market.stock[source.resource]-=amount;state.market.dispatch[source.resource]-=amount;removeLots(state.market.lots,source.resource,amount);}
+  const order=source.orderId?state.dock.orders.find(o=>o.id===source.orderId):null;
+  if(source.kind==='dockInbound')order.remainingToPort-=amount;
+  if(source.kind==='dockUnload')order.remainingToUnload-=amount;
+  if(['dockLoad','dockOutbound'].includes(source.kind)){state.dock.stock[source.resource]-=amount;removeLots(state.dock.lots,source.resource,amount,source.orderId);}
+  state.haulTrips[id].push({worker:index,remaining:300,kind:source.kind,resource:source.resource,amount,...(source.producer?{producer:source.producer}:{}),...(source.projectOrder?{projectOrder:source.projectOrder}:{}),...(source.orderId?{orderId:source.orderId}:{})});
+  return true;
+}
+function dispatchTrips(state) {
+  for(const id of ['warehouse','market','dock'])for(const index of activeWorkerIndices(state,id)) {
+    if(state.haulTrips[id].some(t=>t.worker===index))continue;
+    const source=id==='warehouse'?chooseWarehouseJob(state):id==='market'?chooseMarketJob(state):chooseDockJob(state);
+    if(source)launchTrip(state,id,index,source);
+  }
+}
+function startBuilding(state,p) {
+  p.stage='building';p.buildRemaining=Math.max(0,p.transportSeconds)*constructionBuildFactor(p);
+  notify(state,'construction-delivered',`${buildingNames[p.building]}: materials delivered`,'Transport is complete. Building work has started.');
+}
+function completeTrip(state,t) {
+  if(['producer','pending','marketOutbound','dockOutbound'].includes(t.kind)) {
+    receiveMaterials(state,{[t.resource]:t.amount});state.statistics.collected=Math.min(10000000,(state.statistics.collected||0)+t.amount);
+    if(t.kind==='dockOutbound') {const o=state.dock.orders.find(x=>x.id===t.orderId);if(o){o.delivered+=t.amount;if(o.delivered>=o.amount)o.stage='complete';}}
+  } else if(t.kind==='construction') {
+    const p=state.constructionProjects.find(x=>x.order===t.projectOrder);if(!p)return;
+    p.delivered[t.resource]=(p.delivered[t.resource]||0)+t.amount;p.goodsRemaining=Math.max(0,p.goodsRemaining-t.amount);
+    if(!p.goodsRemaining)startBuilding(state,p);
+  } else if(t.kind==='marketInbound')state.market.locked.push({resource:t.resource,amount:t.amount,remaining:3600,expiresRemaining:86400});
+  else {
+    const o=state.dock.orders.find(x=>x.id===t.orderId);if(!o)return;
+    if(['dockInbound','dockUnload'].includes(t.kind)) {
+      state.dock.stock[t.resource]+=t.amount;state.dock.lots.push(lot(t.resource,t.amount,o.expiresRemaining,{orderId:o.id,direction:o.direction}));
+      if(o.direction==='buy'&&!o.remainingToUnload&&!state.haulTrips.dock.some(x=>x!==t&&x.orderId===o.id&&x.kind==='dockUnload'))o.stage='collecting';
+      if(o.direction==='sell'&&!o.remainingToPort)o.stage='loading';
+    }else if(t.kind==='dockLoad') {
+      o.remainingToShip=Math.max(0,o.remainingToShip-t.amount);
+      if(!o.remainingToShip) {
+        if(!o.paid){state.resources.coins+=o.price;o.paid=true;notify(state,'harbor-sale','Ship departed',`Sold ${o.amount} ${materialNames[o.resource]} for ${o.price} coins.`);}
+        o.stage='voyage';o.remaining=300;
+      }
     }
+  }
+}
+function productionJobs(state,efficiency) {
+  const jobs=[];
+  for(const [id,r] of Object.entries(PRODUCTION_RECIPES)) {
+    if(productionBlocked(state,id))continue;
+    const cycle=3600/Math.max(1,productionRate(state,id));
+    for(const index of activeWorkerIndices(state,id))jobs.push({id,index,cycle,speed:efficiency*(state.lighthouseRemaining>0?2:1)});
   }
   return jobs;
 }
-
-export function nextLogisticsEvent(state, efficiency = workerEfficiency(state)) {
-  const jobs = activeJobs(state, efficiency);
-  let next = Infinity;
-  for (const job of jobs) next = Math.min(next, (job.cycle - (state.buildings[job.id].workProgress[job.index] || 0)) / (job.speed || 1));
-  for (const time of state.returningWorkers) next = Math.min(next, time);
-  for (const lot of state.market.locked) next = Math.min(next, lot.remaining);
-  for (const project of state.constructionProjects) if (project.stage === 'building') next = Math.min(next, project.buildRemaining);
-  for (const building of Object.values(state.buildings)) if (building.storageFull && building.fullSeconds < 345600) next = Math.min(next, 86400 - building.fullSeconds % 86400);
-  return Math.max(1e-8, next);
+export function nextLogisticsEvent(state,efficiency=workerEfficiency(state)) {
+  dispatchTrips(state);
+  let next=Infinity;
+  for(const j of productionJobs(state,efficiency))next=Math.min(next,Math.max(0,j.cycle-(state.buildings[j.id].workProgress[j.index]||0))/j.speed);
+  for(const t of Object.values(state.haulTrips).flat())next=Math.min(next,t.remaining/efficiency);
+  for(const t of state.returningWorkers)next=Math.min(next,t);
+  for(const l of state.market.locked)next=Math.min(next,l.remaining,l.expiresRemaining);
+  for(const l of [...state.market.lots,...state.dock.lots])next=Math.min(next,l.remaining);
+  for(const o of state.dock.orders)if(!['complete','expired'].includes(o.stage)){if(o.stage==='voyage')next=Math.min(next,o.remaining);else next=Math.min(next,o.expiresRemaining);}
+  for(const h of state.dock.purchaseHistory)next=Math.min(next,h.remaining);
+  for(const p of state.constructionProjects)if(p.stage==='building')next=Math.min(next,p.buildRemaining);
+  for(const b of Object.values(state.buildings))if(b.productionBlocked&&b.fullSeconds<345600)next=Math.min(next,86400-b.fullSeconds%86400);
+  if(state.premium?.expiresAt>(state.worldTimeMs||Date.now()))next=Math.min(next,(state.premium.expiresAt-(state.worldTimeMs||Date.now()))/1000);
+  return next===Infinity?Infinity:Math.max(EPS,next);
+}
+function expireLots(state,container,locked=false) {
+  for(const l of container.filter(x=>(locked?x.expiresRemaining:x.remaining)<=EPS)) {
+    if(!locked){const owner=container===state.market.lots?state.market:state.dock;owner.stock[l.resource]=Math.max(0,owner.stock[l.resource]-l.amount);if(owner.dispatch)owner.dispatch[l.resource]=Math.min(owner.dispatch[l.resource],owner.stock[l.resource]);}
+    notify(state,'goods-expired','Goods expired',`${l.amount} ${materialNames[l.resource]} expired after 24 hours.`);
+  }
+  return container.filter(x=>(locked?x.expiresRemaining:x.remaining)>EPS);
+}
+export function advanceLogistics(state,elapsed,efficiency=workerEfficiency(state)) {
+  if(!Number.isFinite(elapsed)||elapsed<=0)return;
+  let remaining=elapsed;
+  promoteConstructionQueue(state);updateStorageStatus(state);
+  // Event estimates deliberately use EPS as their smallest positive duration.
+  // That duration must still advance the underlying clocks; otherwise a
+  // near-boundary event keeps returning EPS forever during offline catch-up.
+  while(remaining>0) {
+    dispatchTrips(state);
+    const jobs=productionJobs(state,efficiency),duration=Math.min(remaining,nextLogisticsEvent(state,efficiency));
+    const activeProjects=new Set(state.haulTrips.warehouse.filter(t=>t.kind==='construction').map(t=>t.projectOrder));
+    for(const p of [...state.constructionProjects]) {
+      if(p.stage==='building'){p.buildRemaining=Math.max(0,p.buildRemaining-duration);if(p.buildRemaining<=EPS)finishConstruction(state,p);}
+      else if(activeProjects.has(p.order))p.transportSeconds+=duration;
+    }
+    for(const j of jobs)state.buildings[j.id].workProgress[j.index]=Math.min(j.cycle,(state.buildings[j.id].workProgress[j.index]||0)+duration*j.speed);
+    state.returningWorkers=state.returningWorkers.map(t=>t-duration).filter(t=>t>EPS);
+    for(const l of state.market.locked){l.remaining=Math.max(0,l.remaining-duration);l.expiresRemaining=Math.max(0,l.expiresRemaining-duration);}
+    for(const l of [...state.market.lots,...state.dock.lots])l.remaining=Math.max(0,l.remaining-duration);
+    state.market.locked=expireLots(state,state.market.locked,true);state.market.lots=expireLots(state,state.market.lots);state.dock.lots=expireLots(state,state.dock.lots);
+    for(const l of state.market.locked.filter(l=>l.remaining<=EPS)){state.market.stock[l.resource]+=l.amount;state.market.lots.push(lot(l.resource,l.amount,l.expiresRemaining));}
+    state.market.locked=state.market.locked.filter(l=>l.remaining>EPS);
+    for(const o of state.dock.orders)if(!['complete','expired'].includes(o.stage)) {
+      if(o.stage==='voyage') {
+        o.remaining=Math.max(0,o.remaining-duration);
+        if(o.remaining<=EPS){if(o.direction==='sell')o.stage='complete';else{o.stage='unloading';o.expiresRemaining=86400;notify(state,'harbor-arrival','Ship arrived',`${o.amount} ${materialNames[o.resource]} is ready for unloading.`);}}
+      }else {o.expiresRemaining=Math.max(0,o.expiresRemaining-duration);if(o.expiresRemaining<=EPS){o.stage='expired';o.remainingToPort=0;o.remainingToUnload=0;notify(state,'goods-expired','Harbor cargo expired','Uncollected cargo expired after 24 hours.');}}
+    }
+    state.dock.purchaseHistory=state.dock.purchaseHistory.map(h=>({...h,remaining:h.remaining-duration})).filter(h=>h.remaining>EPS);
+    for(const id of ['warehouse','market','dock'])for(const trip of state.haulTrips[id])trip.remaining=Math.max(0,trip.remaining-duration*efficiency);
+    updateStorageStatus(state,duration);state.activeSeconds=Math.min(Number.MAX_SAFE_INTEGER,state.activeSeconds+duration);
+    for(const j of jobs)if(state.buildings[j.id].workProgress[j.index]>=j.cycle-EPS) {
+      const b=state.buildings[j.id],r=PRODUCTION_RECIPES[j.id];
+      if(!productionBlocked(state,j.id)){if(r.input)state.resources[r.input]-=r.amount;b.ready++;b.workProgress[j.index]=0;if(r.input)state.statistics.crafted=Math.min(10000000,(state.statistics.crafted||0)+1);}
+    }
+    for(const id of ['warehouse','market','dock']) {
+      const done=state.haulTrips[id].filter(t=>t.remaining<=EPS);state.haulTrips[id]=state.haulTrips[id].filter(t=>t.remaining>EPS);
+      for(const t of done)completeTrip(state,t);
+    }
+    state.market.orders=state.market.orders.filter(x=>x.amount>0);
+    promoteConstructionQueue(state);updateStorageStatus(state);
+    remaining=Math.max(0,remaining-duration);
+  }
 }
 
-function completeJob(state, job) {
-  const building = state.buildings[job.id];
-  const recipe = PRODUCTION_RECIPES[job.id];
-  if (recipe) {
-    if (building.ready >= producerCapacity(state) || (recipe.input && state.resources[recipe.input] < recipe.amount)) return false;
-    if (recipe.input) state.resources[recipe.input] -= recipe.amount;
-    building.ready += 1;
-    if (recipe.input) state.statistics.crafted = Math.min(10000000, state.statistics.crafted + 1);
-  } else if (job.id === 'warehouse') {
-    if (job.construction) {
-      const construction = state.constructionProjects.find(project => project.order === job.construction);
-      if (!construction || construction.stage !== 'transport' || !construction.goodsRemaining) return false;
-      construction.goodsRemaining -= 1;
-      if (!construction.goodsRemaining) {
-        construction.stage = 'building';
-        construction.buildRemaining = construction.transportSeconds * (construction.building === 'lighthouse' ? 2 : 1);
-        notify(state, 'construction-delivered', `${buildingNames[construction.building]}: materials delivered`, construction.building === 'lighthouse' ? 'Lighthouse construction has started. It will take twice as long as transport.' : 'Construction has started. It will take as long as material transport.');
+export const portPrice = (resource,direction='buy') => ['planks','food'].includes(resource)?(direction==='sell'?140:150):(direction==='sell'?40:50);
+export function quoteTrade(state,action) {
+  if(!state.buildings.dock.level||!workplaceUnlocked(state,'dock'))return bad('Harbor trading unlocks at Town Hall level 4.');
+  const {resource,direction}=action,amount=action.amount;
+  if(!MATERIAL_IDS.includes(resource)||!['buy','sell'].includes(direction)||!quantity(amount)||amount%100)return bad('Trade whole batches of 100 materials.');
+  const capacity=dockCapacity(state);
+  if(reservedPort(state,resource)+amount>capacity.perResource||reservedPort(state)+amount>capacity.total)return bad('Not enough harbor capacity for this order.');
+  const lots=amount/100,base=portPrice(resource,direction);
+  // Inflation is tracked per material in a rolling real-time three-hour window.
+  const previous=direction==='buy'?state.dock.purchaseHistory.filter(h=>h.resource===resource&&h.remaining>EPS).reduce((n,h)=>n+h.lots,0):0;
+  const price=direction==='buy'?Math.round(base*(lots+.1*(previous*lots+lots*(lots-1)/2))):base*lots;
+  if(direction==='buy'&&state.resources.coins<price)return bad('Not enough coins for this order.');
+  if(direction==='sell'&&availableGoods(state,resource)<amount)return bad(resource==='food'?'This sale would spend the protected food reserve.':'Not enough unreserved goods in the warehouse.');
+  return good('Harbor quote. The price is frozen when you confirm the order.',{resource,direction,amount,price,lots,basePrice:base,previousLots:previous});
+}
+export function logisticsAction(state,action,now=Date.now()) {
+  if(!action||typeof action!=='object')return null;
+  if(action.type==='transportPriority') {
+    if(action.target) {
+      const target=String(action.target);
+      if(!(target==='pending'||target.startsWith('producer:')&&Object.hasOwn(PRODUCTION_RECIPES,target.slice(9))||target.startsWith('construction:')&&state.constructionProjects.some(p=>p.order===Number(target.slice(13)))))return bad('Choose a producer or construction project.');
+      const values=state.logisticsPriority;const index=values.indexOf(target);
+      if(action.direction===undefined){if(index>=0)values.splice(index,1);values.unshift(target);return good('Transport priority updated.');}
+      if(![-1,1].includes(action.direction))return bad('Invalid priority direction.');
+      if(index<0)values.push(target);
+      const current=values.indexOf(target),next=current+action.direction;
+      if(next<0||next>=values.length)return bad('This priority is already at the end of the list.');
+      [values[current],values[next]]=[values[next],values[current]];return good('Transport priority updated.');
+    }
+    if(!MATERIAL_IDS.includes(action.resource)||![-1,1].includes(action.direction))return bad('Invalid transport priority change.');
+    const i=state.transportPriority.indexOf(action.resource),j=i+action.direction;
+    if(j<0||j>=state.transportPriority.length)return bad('This material is already at the end of the priority list.');
+    [state.transportPriority[i],state.transportPriority[j]]=[state.transportPriority[j],state.transportPriority[i]];return good('Transport priority updated.');
+  }
+  if(action.type==='marketOrder') {
+    if(!workplaceUnlocked(state,'market'))return bad('The market unlocks at Town Hall level 2.');
+    const resource=action.resource,amount=action.amount;
+    if(!MATERIAL_IDS.includes(resource)||!quantity(amount))return bad('Enter a whole material quantity.');
+    const ordered=state.market.orders.reduce((n,o)=>n+o.amount,0),same=state.market.orders.filter(o=>o.resource===resource).reduce((n,o)=>n+o.amount,0);
+    if(availableGoods(state,resource)-same<amount)return bad(resource==='food'?'Protect the warehouse food reserve.':'Not enough unreserved goods in the warehouse.');
+    if(marketUsed(state)+inboundAmount(state,'market')+ordered+amount>marketCapacity(state))return bad('Not enough market capacity for this delivery.');
+    state.market.orders.push({resource,amount});return good('Market workers will carry these goods. Each delivery is locked for one hour and expires after 24 hours.');
+  }
+  if(action.type==='marketExchange') {
+    if(!workplaceUnlocked(state,'market'))return bad('The market unlocks at Town Hall level 2.');
+    const {from,to}=action,amount=action.amount,groups=[['wood','stone','grain'],['planks','food']];
+    if(from===to||!groups.some(g=>g.includes(from)&&g.includes(to)))return bad('Choose different goods from the same category.');
+    if(!quantity(amount)||amount%10)return bad('Exchange batches of 10 to receive 9 after the 10% margin.');
+    if(state.market.stock[from]-state.market.dispatch[from]<amount)return bad('Not enough unlocked, unreserved goods in the market.');
+    const output=amount*.9;state.market.stock[from]-=amount;removeLots(state.market.lots,from,amount);state.market.stock[to]+=output;state.market.lots.push(lot(to,output));state.statistics.traded=(state.statistics.traded||0)+1;
+    return good(`Exchanged ${amount} ${materialNames[from]} for ${output} ${materialNames[to]}. The new goods expire in 24 hours.`);
+  }
+  if(action.type==='marketDispatch') {
+    const resource=action.resource,amount=action.amount;
+    if(!workplaceUnlocked(state,'market')||!MATERIAL_IDS.includes(resource)||!quantity(amount))return bad('Invalid collection order.');
+    if(state.market.stock[resource]-state.market.dispatch[resource]<amount)return bad('Not enough unlocked goods in the market.');
+    state.market.dispatch[resource]+=amount;return good('Market workers will carry the goods back to the central warehouse.');
+  }
+  if(action.type==='trade') {
+    const quote=quoteTrade(state,action);if(!quote.ok)return quote;
+    const order={id:++state.dock.nextOrderId,direction:quote.direction,resource:quote.resource,amount:quote.amount,price:quote.price,stage:quote.direction==='buy'?'voyage':'supplying',remainingToPort:quote.direction==='sell'?quote.amount:0,remainingToUnload:quote.direction==='buy'?quote.amount:0,remainingToShip:quote.direction==='sell'?quote.amount:0,remaining:quote.direction==='buy'?300:0,expiresRemaining:86400,delivered:0,paid:false};
+    if(quote.direction==='buy'){state.resources.coins-=quote.price;state.dock.purchaseHistory.push({resource:quote.resource,lots:quote.lots,remaining:10800});}
+    else state.resources[quote.resource]-=quote.amount;
+    state.dock.orders.push(order);state.statistics.traded=(state.statistics.traded||0)+1;
+    notify(state,'harbor-order',quote.direction==='buy'?'Purchase confirmed':'Sale confirmed',quote.direction==='buy'?`${quote.price} coins paid. The ship arrives in 5 minutes; harbor workers unload and return the cargo to the warehouse.`:`${quote.amount} ${materialNames[quote.resource]} reserved. Harbor workers carry and load it; ${quote.price} coins arrive when the ship departs.`);
+    return good(quote.direction==='buy'?`Order paid: ${quote.price} coins. Ship arrives in 5 minutes.`:`Sale reserved. Payment of ${quote.price} coins follows loading and departure.`,{orderId:order.id,price:quote.price});
+  }
+  return null;
+}
+function selectedOrders(state,action,direction) {
+  const id=Number(action.order??action.orderId);
+  return state.dock.orders.filter(o=>o.direction===direction&&!['complete','expired'].includes(o.stage)&&(!id||o.id===id)&&(!action.resource||o.resource===action.resource));
+}
+function instantPlan(state,action) {
+  const route=action.route,amounts=stock();let carrier='warehouse',project=null,orders=[];
+  const add=(resource,n)=>{amounts[resource]+=Math.max(0,n||0);};
+  if(route==='producer') {
+    if(!Object.hasOwn(PRODUCTION_RECIPES,action.building))return bad('Choose a producer.');
+    add(PRODUCTION_RECIPES[action.building].output,state.buildings[action.building].ready);
+  }else if(route==='construction') {
+    project=state.constructionProjects.find(p=>p.order===Number(action.project??action.projectOrder)&&['transport','queued'].includes(p.stage));
+    if(!project)return bad('Choose an upgrade waiting for materials.');
+    for(const id of MATERIAL_IDS)add(id,Math.max(0,(project.cost[id]||0)-(project.delivered?.[id]||0)));
+    const estimate=constructionEstimate(state,project);
+    if(!Number.isFinite(estimate.building))return bad('Assign a warehouse worker to establish the building time before buying instant delivery.');
+  }else if(route==='marketInbound') {
+    carrier='market';
+    for(const o of state.market.orders)if(!action.resource||o.resource===action.resource)add(o.resource,o.amount);
+    if(action.resource&&action.amount!==undefined) {
+      if(!MATERIAL_IDS.includes(action.resource)||!quantity(action.amount))return bad('Enter a whole material quantity.');
+      amounts[action.resource]=action.amount;
+    }
+    for(const id of MATERIAL_IDS)if(amounts[id]>availableGoods(state,id))return bad('Not enough goods above the protected food reserve.');
+    if(MATERIAL_IDS.reduce((n,id)=>n+amounts[id],0)+marketUsed(state)+inboundAmount(state,'market')>marketCapacity(state))return bad('Not enough market capacity.');
+  }else if(route==='marketOutbound') {
+    carrier='market';for(const id of MATERIAL_IDS)if(!action.resource||action.resource===id)add(id,action.amount===undefined?state.market.dispatch[id]:action.amount);
+    for(const id of MATERIAL_IDS)if(amounts[id]>state.market.stock[id])return bad('Not enough unlocked market goods.');
+  }else if(['dockInbound','dockLoad','dockOutbound','dockUnload'].includes(route)) {
+    carrier='dock';orders=selectedOrders(state,action,route==='dockInbound'||route==='dockLoad'?'sell':'buy');
+    for(const o of orders) {
+      if(route==='dockInbound')add(o.resource,o.remainingToPort+state.haulTrips.dock.filter(t=>t.orderId===o.id&&t.kind==='dockInbound').reduce((n,t)=>n+t.amount,0));
+      if(route==='dockLoad')add(o.resource,state.dock.lots.filter(l=>l.orderId===o.id).reduce((n,l)=>n+l.amount,0)+state.haulTrips.dock.filter(t=>t.orderId===o.id&&t.kind==='dockLoad').reduce((n,t)=>n+t.amount,0));
+      if(route==='dockOutbound')add(o.resource,state.dock.lots.filter(l=>l.orderId===o.id).reduce((n,l)=>n+l.amount,0)+state.haulTrips.dock.filter(t=>t.orderId===o.id&&t.kind==='dockOutbound').reduce((n,t)=>n+t.amount,0));
+      if(route==='dockUnload'&&o.stage==='unloading')add(o.resource,o.remainingToUnload+state.haulTrips.dock.filter(t=>t.orderId===o.id&&t.kind==='dockUnload').reduce((n,t)=>n+t.amount,0));
+    }
+  }else return bad('Choose a supported transport route.');
+  const total=MATERIAL_IDS.reduce((n,id)=>n+amounts[id],0);if(!total)return bad('There are no goods waiting on this route.');
+  if(['producer','marketOutbound','dockOutbound'].includes(route)) {
+    const limits=warehouseLimits(state);
+    if(MATERIAL_IDS.some(id=>amounts[id]>stockRoom(state,id))||total>limits.total-warehouseUsed(state))return bad('Make room in the central warehouse before sending this whole batch.');
+  }
+  const capacity=haulCapacity(state,carrier),trips=MATERIAL_IDS.reduce((n,id)=>n+Math.ceil(amounts[id]/capacity),0);
+  return good('Instant transport quote.',{quantities:amounts,capacity,trips,route,carrier,project,orders});
+}
+export function quoteInstantTransport(state,action) {
+  const result=instantPlan(state,action);
+  if(!result.ok)return result;
+  const {project,orders,...publicQuote}=result;return publicQuote;
+}
+export function instantTransport(state,action) {
+  const plan=instantPlan(state,action);if(!plan.ok)return plan;
+  const {route,quantities,project,orders}=plan;
+  if(route==='producer') {state.buildings[action.building].ready=0;receiveMaterials(state,quantities);}
+  else if(route==='construction') {
+    const normal=constructionEstimate(state,project),fullCost=Object.fromEntries(MATERIAL_IDS.map(id=>[id,project.cost[id]||0]));
+    state.haulTrips.warehouse=state.haulTrips.warehouse.filter(t=>t.projectOrder!==project.order);
+    project.remainingMaterials=stock();project.delivered=fullCost;project.goodsRemaining=0;project.transportSeconds=Math.max(project.transportSeconds,normal.building/constructionBuildFactor(project));project.buildRemaining=project.transportSeconds*constructionBuildFactor(project);project.instantTransport=true;
+    if(project.stage==='transport')project.stage='building';
+  }else if(route==='marketInbound') {
+    for(const id of MATERIAL_IDS)if(quantities[id]) {
+      state.resources[id]-=quantities[id];let left=quantities[id];
+      for(const o of state.market.orders.filter(o=>o.resource===id)){const used=Math.min(left,o.amount);o.amount-=used;left-=used;}
+      state.market.locked.push({resource:id,amount:quantities[id],remaining:3600,expiresRemaining:86400});
+    }
+    state.market.orders=state.market.orders.filter(o=>o.amount);
+  }else if(route==='marketOutbound') {
+    for(const id of MATERIAL_IDS)if(quantities[id]){state.market.stock[id]-=quantities[id];state.market.dispatch[id]=Math.max(0,state.market.dispatch[id]-quantities[id]);removeLots(state.market.lots,id,quantities[id]);}receiveMaterials(state,quantities);
+  }else {
+    for(const o of orders) {
+      const matches=t=>t.orderId===o.id&&t.kind===route;
+      const carried=state.haulTrips.dock.filter(matches).reduce((n,t)=>n+t.amount,0);
+      state.haulTrips.dock=state.haulTrips.dock.filter(t=>!matches(t));
+      if(route==='dockInbound'||route==='dockUnload') {
+        const amount=(route==='dockInbound'?o.remainingToPort:o.remainingToUnload)+carried;if(!amount)continue;
+        if(route==='dockInbound')o.remainingToPort=0;else o.remainingToUnload=0;
+        state.dock.stock[o.resource]+=amount;state.dock.lots.push(lot(o.resource,amount,o.expiresRemaining,{orderId:o.id,direction:o.direction}));o.stage=route==='dockInbound'?'loading':'collecting';
+      }else {
+        const amount=state.dock.lots.filter(l=>l.orderId===o.id).reduce((n,l)=>n+l.amount,0)+carried;if(!amount)continue;
+        const fromPort=amount-carried;state.dock.stock[o.resource]-=fromPort;removeLots(state.dock.lots,o.resource,fromPort,o.id);
+        if(route==='dockOutbound'){receiveMaterials(state,{[o.resource]:amount});o.delivered+=amount;if(o.delivered>=o.amount)o.stage='complete';}
+        else {o.remainingToShip-=amount;if(!o.remainingToShip){if(!o.paid){state.resources.coins+=o.price;o.paid=true;notify(state,'harbor-sale','Ship departed',`${o.price} coins received.`);}o.stage='voyage';o.remaining=300;}}
       }
-      building.workProgress[job.index] = 0;
-      return true;
     }
-    const source = haulSource(state);
-    if (!source) return false;
-    if (source.kind === 'producer') state.buildings[source.producer].ready -= 1;
-    else if (source.kind === 'pending') state.pendingDeliveries[source.resource] -= 1;
-    else { state.market.stock[source.resource] -= 1; state.market.dispatch[source.resource] -= 1; }
-    state.resources[source.resource] += 1;
-    state.statistics.collected = Math.min(10000000, state.statistics.collected + 1);
-  } else {
-    const order = marketOrder(state);
-    if (!order) return false;
-    state.resources[order.resource] -= 1;
-    order.amount -= 1;
-    const last = state.market.locked.at(-1);
-    if (last?.resource === order.resource && last.remaining === 3600) last.amount += 1;
-    else state.market.locked.push({ resource: order.resource, amount: 1, remaining: 3600 });
-    state.market.orders = state.market.orders.filter(item => item.amount > 0);
   }
-  building.workProgress[job.index] = 0;
-  return true;
-}
-
-// The state integrator supplies the efficiency at the start of this interval:
-// consuming the last meal must not retroactively slow the work it supported.
-export function advanceLogistics(state, elapsed, efficiency = workerEfficiency(state)) {
-  let remaining = elapsed, events = 0;
-  promoteConstructionQueue(state);
-  updateStorageStatus(state);
-  while (remaining > 1e-9 && events++ < 200000) {
-    const jobs = activeJobs(state, efficiency);
-    const duration = Math.min(remaining, nextLogisticsEvent(state, efficiency));
-    const transporting = new Set(jobs.filter(job => job.construction).map(job => job.construction));
-    for (const project of [...state.constructionProjects]) {
-      if (project.stage === 'building') {
-        project.buildRemaining = Math.max(0, project.buildRemaining - duration);
-        if (project.buildRemaining <= 1e-7) finishConstruction(state, project);
-      } else if (transporting.has(project.order)) project.transportSeconds += duration;
-    }
-    promoteConstructionQueue(state);
-    for (const job of jobs) state.buildings[job.id].workProgress[job.index] = Math.min(job.cycle, (state.buildings[job.id].workProgress[job.index] || 0) + duration * (job.speed || 1));
-    state.returningWorkers = state.returningWorkers.map(time => time - duration).filter(time => time > 1e-7);
-    for (const lot of state.market.locked) lot.remaining = Math.max(0, lot.remaining - duration);
-    for (const lot of state.market.locked.filter(item => item.remaining <= 1e-7)) state.market.stock[lot.resource] += lot.amount;
-    state.market.locked = state.market.locked.filter(lot => lot.remaining > 1e-7);
-    updateStorageStatus(state, duration);
-    state.activeSeconds = Math.min(Number.MAX_SAFE_INTEGER, state.activeSeconds + duration);
-    for (const job of jobs) if (state.buildings[job.id].workProgress[job.index] >= job.cycle - 1e-7) {
-      if (!completeJob(state, job)) state.buildings[job.id].workProgress[job.index] = job.cycle - 1e-8;
-      updateStorageStatus(state);
-    }
-    promoteConstructionQueue(state);
-    updateStorageStatus(state);
-    remaining = Math.max(0, remaining - duration);
-  }
+  updateStorageStatus(state);return good('Goods transported instantly.',{quantities,trips:plan.trips});
 }

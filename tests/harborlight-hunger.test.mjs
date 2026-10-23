@@ -2,7 +2,7 @@ import test from 'node:test';
 import { estimateMaterialsSeconds, updateStorageStatus } from '../harborlight-v1-logistics.js';
 import assert from 'node:assert/strict';
 import {
-  createState, normalizeState, tick, act, foodDemandPerHour,
+  createState, normalizeState, tick, advanceTo, act, foodDemandPerHour,
   hasFoodForResidents, hungerPenaltyPerHour, updateHappiness,
   synchronizeResidents
 } from '../harborlight-v1-state.js';
@@ -35,6 +35,13 @@ function worker(state, id, count = 1) {
   synchronizeResidents(state);
   const delta = count - state.buildings[id].workers;
   if (delta) assert.equal(act(state, { type: 'assign', building: id, delta }).ok, true);
+  // These fixtures start with residents already at their workplace. Arrival
+  // timing has its own integration tests; settling it here must not consume
+  // meals or change personal happiness before the scenario starts.
+  for (const resident of state.residents.filter(person => person.workplace === id)) {
+    resident.arrivalRemaining = 0;
+    resident.unemployedSeconds = 0;
+  }
 }
 
 function reload(state) {
@@ -49,7 +56,7 @@ function matureHunger(state) {
   for (const resident of state.residents) resident.hungerSeconds = GRACE;
 }
 
-test('each resident consumes one food per active hour, independently of clock speed', () => {
+test('each resident consumes one food per real hour and legacy clock-speed flags cannot multiply demand', () => {
   for (const speed of [1, 2, 4]) {
     const state = island();
     state.speed = speed;
@@ -60,6 +67,7 @@ test('each resident consumes one food per active hour, independently of clock sp
     close(state.happiness, 1);
     assert.ok(state.residents.every(resident => Math.abs(resident.happiness - 1) < 1e-7));
     assert.equal(hungerPenaltyPerHour(state), 0);
+    assert.equal(state.speed, 1);
   }
 });
 
@@ -166,27 +174,26 @@ test('local mill output, market goods and pending deliveries do not feed residen
   assert.equal(state.pendingDeliveries.food, 100);
 });
 
-test('a hungry warehouse worker takes two minutes to deliver food and its arrival ends mature hunger', () => {
+test('a hungry warehouse worker takes ten minutes for a five-minute trip and the meal resets mature hunger', () => {
   const state = island({ food: 0 });
   matureHunger(state);
   worker(state, 'warehouse');
   state.buildings.windmill.ready = 1;
   const id = state.residents.find(resident => resident.workplace === 'warehouse').id;
-  tick(state, 420);
+  tick(state, 900);
   assert.equal(state.resources.food, 0);
   close(state.foodCredit, 0);
-  close(person(state, id).happiness, (-4 * 120 + 2 * 300) / HOUR);
+  close(person(state, id).happiness, (-4 * 600 + 2 * 300) / HOUR);
   tick(state, 1);
-  close(person(state, id).happiness, (-4 * 120 + 2 * 300 + 1) / HOUR);
+  close(person(state, id).happiness, (-4 * 600 + 2 * 300 + 1) / HOUR);
 });
 
 test('an arrival at interval end is available but is not prefetched until active time resumes', () => {
   const state = island({ food: 0 });
   matureHunger(state);
   worker(state, 'warehouse');
-  state.buildings.warehouse.workProgress = [59.5];
   state.buildings.windmill.ready = 1;
-  tick(state, 1);
+  tick(state, 600);
   assert.equal(state.resources.food, 1);
   close(state.foodCredit, 0);
   const before = state.residents.map(resident => resident.happiness);
@@ -201,9 +208,24 @@ test('birth and departure events change meal demand at their exact time', () => 
   const growing = island({ happiness: 100 });
   growing.lighthouseRemaining = 3 * HOUR;
   tick(growing, 2 * HOUR);
-  assert.equal(growing.population, 14);
+  assert.equal(growing.population, 13);
   assert.equal(growing.resources.food, 100 - 12 - 13);
   close(growing.foodCredit, 0);
+  const newborn = growing.residents.find(resident => resident.newbornRemaining > 0);
+  assert.ok(newborn);
+  assert.equal(newborn.happiness, 0);
+  close(newborn.newbornRemaining, 23 * HOUR);
+  // The newborn's zero happiness lowers the Lighthouse-boosted mean to 1200/13.
+  // The next birth therefore takes another 9000/17 seconds after the two-hour mark.
+  close(growing.happiness, 1200 / 13);
+  close(growing.populationProgress, 34 / 39);
+  const untilSecondBirth = (1 - 34 / 39) * HOUR / (34 / 39);
+  tick(growing, untilSecondBirth - 1);
+  assert.equal(growing.population, 13);
+  tick(growing, 1);
+  assert.equal(growing.population, 14);
+  close(growing.resources.food + growing.foodCredit, 100 - 25 - 13 * untilSecondBirth / HOUR);
+  assert.ok(growing.residents.filter(resident => resident.newbornRemaining > 0).every(resident => resident.happiness === 0));
   const shrinking = island({ happiness: -100 });
   // Overcrowding offsets feeding recovery, keeping the loss rate at its clamp.
   shrinking.buildings.house.level = 0;
@@ -225,18 +247,26 @@ test('housing and mature hunger penalties add for each individual, then the mean
   assert.equal(state.happiness, -100);
 });
 
-test('pause and save preserve personal happiness, meal credit and lack timers without offline aging', () => {
+test('offline catch-up continues meals and personal timers despite a legacy pause flag', () => {
   let state = island({ food: 1 });
   tick(state, 100);
   state.paused = true;
-  const before = JSON.stringify(state);
-  tick(state, 10 * HOUR);
-  assert.equal(JSON.stringify(state), before);
   state = reload(state);
   close(state.foodCredit, 2 / 3);
+  state.paused = true; // A stale in-memory flag cannot block wall-clock catch-up either.
+  const anchor = state.lastSimulatedAt;
+  close(advanceTo(state, anchor + 10 * HOUR * 1000), 10 * HOUR);
+  assert.equal(state.paused, false);
   assert.equal(state.resources.food, 0);
-  close(state.happiness, 100 / HOUR);
-  assert.ok(state.residents.every(resident => Math.abs(resident.unemployedSeconds - 100) < 1e-7));
+  close(state.foodCredit, 0);
+  close(state.happiness, 300 / HOUR);
+  for (const resident of state.residents) {
+    close(resident.unemployedSeconds, 10 * HOUR + 100);
+    close(resident.hungerSeconds, 10 * HOUR - 200);
+  }
+  const snapshot = JSON.stringify(state);
+  assert.equal(advanceTo(state, anchor + 10 * HOUR * 1000), 0);
+  assert.equal(JSON.stringify(state), snapshot);
 });
 
 test('food allocated to residents cannot pay for construction again', () => {
@@ -257,7 +287,7 @@ test('legacy saves preserve stock and initialize meals and individual timers saf
   delete old.residents;
   delete old.foodCredit;
   const migrated = reload(old);
-  assert.equal(migrated.version, 7);
+  assert.equal(migrated.version, 8);
   assert.equal(migrated.foodCredit, 0);
   assert.equal(migrated.resources.food, old.resources.food);
   assert.equal(migrated.residents.length, old.population);
@@ -306,11 +336,15 @@ test('meal horizons fully expire temporary bonuses despite fractional event inte
   assert.equal(state.blessingRemaining, 0);
   assert.equal(state.lighthouseRemaining, 0);
   assert.equal(state.population, 13);
-  close(state.happiness, 12 / 13);
+  // The Lighthouse now restores the saved pre-bonus happiness snapshot.
+  close(state.happiness, 0);
+  assert.ok(state.residents.every(resident => resident.happiness === 0));
 });
 
 test('Food delivery plans subtract resident demand from prospective output', () => {
-  const state = island({ food: 0 });
+  // The entire current food stock is protected as the meal reserve, so none
+  // of it may satisfy a planned construction's Food requirement.
+  const state = island({ food: 50 });
   worker(state, 'windmill', 1);
   worker(state, 'warehouse', 1);
   assert.equal(estimateMaterialsSeconds(state, { food: 120 }), Infinity);
@@ -391,16 +425,16 @@ test('a partly completed unit retains its phase when food runs out and returns',
   close(state.buildings.quarry.workProgress[0], 0);
 });
 
-test('hungry warehouse and market workers each carry thirty items per hour', () => {
+test('hungry warehouse and market crews haul full loads in ten-minute trips with their own workers', () => {
   const state = island({ food: 0 });
   worker(state, 'warehouse');
   worker(state, 'market');
-  state.buildings.quarry.ready = 50;
-  assert.equal(act(state, { type: 'marketOrder', resource: 'wood', amount: 40 }).ok, true);
+  state.buildings.quarry.ready = 400;
+  assert.equal(act(state, { type: 'marketOrder', resource: 'wood', amount: 100 }).ok, true);
   tick(state, HOUR);
-  assert.equal(state.resources.stone, 130);
-  assert.equal(state.resources.wood, 70);
-  assert.equal(state.market.locked.reduce((sum, batch) => sum + batch.amount, 0), 30);
+  assert.equal(state.resources.stone, 460);
+  assert.equal(state.resources.wood, 0);
+  assert.equal(state.market.locked.reduce((sum, batch) => sum + batch.amount, 0), 100);
 });
 
 test('hungry Lighthouse workers recover normal production while taxes remain unchanged', () => {
@@ -548,7 +582,8 @@ test('staggered dismissals preserve each person\'s home-return clock across save
     tick(saved, 240);
     assert.equal(person(saved, higherId).returnRemaining, 0);
     close(person(saved, lowerId).returnRemaining, 60);
-    assert.deepEqual(saved.returningWorkers, [60]);
+    assert.equal(saved.returningWorkers.length, 1);
+    close(saved.returningWorkers[0], 60);
     tick(saved, 60);
     assert.equal(person(saved, lowerId).returnRemaining, 0);
     assert.deepEqual(saved.returningWorkers, []);
@@ -564,14 +599,17 @@ test('reassigned crew order preserves the identity belonging to each unfinished 
   assert.ok(lowerId < higherId);
   assert.equal(act(state, { type: 'assign', building: 'farm', delta: -1 }).ok, true);
   tick(state, 300);
-  assert.equal(act(state, { type: 'assign', building: 'quarry', delta: 1 }).ok, true);
+  worker(state, 'quarry', 2);
   tick(state, 30);
-  assert.deepEqual(state.buildings.quarry.workProgress, [330, 30]);
+  assert.equal(state.buildings.quarry.workProgress.length, 2);
+  close(state.buildings.quarry.workProgress[0], 330);
+  close(state.buildings.quarry.workProgress[1], 30);
   const saved = reload(state);
   assert.equal(act(saved, { type: 'assign', building: 'quarry', delta: -1 }).ok, true);
   assert.equal(person(saved, lowerId).workplace, null);
   assert.equal(person(saved, higherId).workplace, 'quarry');
-  assert.deepEqual(saved.buildings.quarry.workProgress, [330]);
+  assert.equal(saved.buildings.quarry.workProgress.length, 1);
+  close(saved.buildings.quarry.workProgress[0], 330);
   tick(saved, 30);
   assert.equal(saved.buildings.quarry.ready, 1);
 });
@@ -594,14 +632,16 @@ test('hungry construction hauling takes twice as long and the ordinary building 
   worker(state, 'warehouse');
   state.resources.grain = 120;
   assert.equal(act(state, { type: 'upgrade', building: 'farm' }).ok, true);
-  tick(state, 31679);
-  assert.equal(state.buildings.farm.construction.goodsRemaining, 1);
+  // 72 wood and 72 stone require two trips each; 120 grain requires two
+  // more. A hungry single carrier therefore needs 6 × 600 seconds.
+  tick(state, 3599);
+  assert.equal(state.buildings.farm.construction.goodsRemaining, 60);
   assert.equal(state.buildings.farm.construction.stage, 'transport');
   tick(state, 1);
   assert.equal(state.buildings.farm.construction.stage, 'building');
-  close(state.buildings.farm.construction.transportSeconds, 31680);
-  close(state.buildings.farm.construction.buildRemaining, 31680);
-  tick(state, 31680);
+  close(state.buildings.farm.construction.transportSeconds, 3600);
+  close(state.buildings.farm.construction.buildRemaining, 3600);
+  tick(state, 3600);
   assert.equal(state.buildings.farm.level, 2);
   assert.equal(state.constructionProjects.length, 0);
 });

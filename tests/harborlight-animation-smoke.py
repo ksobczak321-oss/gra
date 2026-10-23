@@ -54,7 +54,7 @@ def visit(page):
     response = page.goto(BASE_URL + PAGE_PATH)
     assert response and response.status == 200
     page.wait_for_function(
-        "document.querySelectorAll('.island-hotspot').length>=51 && "
+        "document.querySelectorAll('.island-hotspot').length===48 && "
         "document.getElementById('loading').hidden && "
         "document.getElementById('island-ambient')?.dataset.ready==='true'"
     )
@@ -138,12 +138,9 @@ def run():
             assert frame(page,region)["painted"]==0, (name,"effects paint over fixed interface")
         print("PASS effects do not paint over HUD, navigation, objective cards or build dock")
 
-        page.locator("#hit-pause").click()
-        frozen(page,"paused")
-        page.locator("#hit-play").click()
-        page.wait_for_function("document.getElementById('island-ambient').dataset.mode==='running'")
+        expect(page.locator("#hit-pause,#hit-play,#hit-speed")).to_have_count(0)
         assert frame(page)["time"] >= second["time"]
-        print("PASS simulation pause freezes actual animation pixels and resume restarts it")
+        print("PASS real-time island has no simulation pause or speed controls")
 
         page.locator("#hit-settings").click()
         motion = page.locator("#island-dialog").get_by_role("checkbox", name="Animations and highlights")

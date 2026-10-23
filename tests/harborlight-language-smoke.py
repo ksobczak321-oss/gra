@@ -39,15 +39,16 @@ def run():
         page.on('response',lambda r:failures.append((r.status,r.url)) if r.status>=400 else None)
         page.on('requestfailed',lambda r:failures.append((r.failure,r.url)))
         buildings={id:{'level':4 if id in ['townhall','warehouse','house'] else 1,'workers':0,'ready':0,'workProgress':[]} for id in BUILDINGS}
-        buildings['farm']['workers']=1
-        data={'version':6,'paused':True,'population':23,'happiness':0,'baseHappiness':0,'buildings':buildings,
+        now=datetime(2026,10,23,12,0,0,tzinfo=timezone.utc)
+        page.clock.install(time=now);page.clock.pause_at(now)
+        data={'version':7,'paused':True,'speed':4,'population':23,'happiness':0,'baseHappiness':0,'buildings':buildings,
               'resources':{'coins':3000,**dict.fromkeys(MATERIALS,2000)},
               'notifications':[{'id':41,'kind':'storage-full','title':'Farma: magazyn jest pełny','message':'Pełny zapas: zboże. Produkcja czeka na transport.','at':10,'read':True},
                                {'id':42,'kind':'construction-start','title':'Ratusz: poziom 2','message':'materiały zarezerwowane, oczekiwanie na transport','at':12,'read':False}],
               'notificationSequence':42}
         page.add_init_script('''if(!sessionStorage.getItem('language-fixture')){localStorage.setItem(%s,%s);sessionStorage.setItem('language-fixture','1')}'''%(json.dumps(KEY),json.dumps(json.dumps(data))))
         assert page.goto(BASE+'/harborlight-v1-layered.html').status==200
-        page.wait_for_function('document.getElementById("loading").hidden && document.querySelectorAll(".island-hotspot").length>=56')
+        page.wait_for_function('document.getElementById("loading").hidden && document.querySelectorAll(".island-hotspot").length===48')
         assert page.locator('html').get_attribute('lang')=='en'
         assert page.title()=='HARBORLIGHT — Your Island'
         language_check(page,'island HUD')
@@ -56,21 +57,27 @@ def run():
             if id=='townhall':
                 expect(page.locator('#dialog-title')).to_have_text('Town Hall')
                 expect(page.locator('[data-population-stat="population"]')).to_have_text('23 / 96')
-                expect(page.locator('[data-population-stat="taxes"]')).to_have_text('1 coin/h')
-        for id in ['home','settings','resource-coins','resource-wood','resource-stone','resource-grain','resource-food','resource-planks','population','happiness','clock','menu','nav-tasks','nav-expeditions','nav-map','category-decorations','category-paths','objective-title','boat','notifications']:
+                expect(page.locator('[data-population-stat="taxes"]')).to_have_text('0 coins/h')
+        for id in ['home','settings','resource-coins','resource-wood','resource-stone','resource-grain','resource-food','resource-planks','population','happiness','clock','menu','nav-tasks','nav-expeditions','nav-map','category-decorations','category-paths','boat','notifications']:
             close(page);page.locator('#hit-'+id).click();language_check(page,id)
         expect(page.locator('#dialog-title')).to_have_text('Notifications')
         migrated=page.evaluate('(key)=>JSON.parse(localStorage.getItem(key))',KEY)
-        assert migrated['version']==7
+        assert migrated['version']==8
+        assert migrated['paused'] is False and migrated['speed']==1
+        assert all(person['workplace'] is None for person in migrated['residents'])
         assert migrated['resources']==data['resources']
         assert [n['id'] for n in migrated['notifications']]==[41,42]
         assert [n['read'] for n in migrated['notifications']]==[True,False]
         for entry in migrated['notifications']:
             assert not POLISH.search(entry['title']+' '+entry['message']),entry
         page.reload();page.wait_for_selector('[data-hud="level"]');language_check(page,'reload')
+        close(page);page.locator('#hit-home').click()
+        page.get_by_role('button',name='Main objective',exact=True).click();language_check(page,'main objective')
+        close(page);page.locator('#hit-home').click()
+        page.get_by_role('button',name='Premium options',exact=True).click();language_check(page,'Premium options')
         close(page);page.locator('#hit-nav-expeditions').click()
         expedition=page.locator('.info-card').filter(has=page.get_by_role('heading',name='Misty Isles',exact=True))
-        expedition.locator('button').click();language_check(page,'expedition puzzle')
+        expedition.get_by_role('button',name='Start expedition',exact=True).click();language_check(page,'expedition puzzle')
         close(page);page.locator('#hit-settings').click()
         page.locator('#island-dialog button.action.danger').click();language_check(page,'reset confirmation')
         for width,height in [(390,844),(844,390)]:

@@ -1,24 +1,24 @@
 """Construction, townhall UI, paid plans, timed bonuses and market acceptance.
 
 Saved fixtures reach long construction boundaries; full durations and economic
-rules are checked by the pure state tests. No real package purchase is exposed.
+rules are checked by the pure state tests. Coin-priced packages use the game treasury; no real payment integration is exposed.
 """
 import json
 import os
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from playwright.sync_api import expect, sync_playwright
-BASE=os.environ.get('HARBORLIGHT_BASE_URL','http://127.0.0.1:8002').rstrip('/')
+BASE=os.environ.get('HARBORLIGHT_BASE_URL','http://127.0.0.1:8003').rstrip('/')
 KEY='harborlight-v1-interactive-save'
 IDS=['house','farm','sawmill','quarry','dock','warehouse','lighthouse','lumber','windmill','townhall','chapel','market']
 MATERIALS=['wood','stone','grain','food','planks']
 NOW=datetime(2026,10,22,12,0,0,tzinfo=timezone.utc)
 errors=[]; failures=[]
 
-def fixture(level=2,workers=None,resources=None,paused=True):
+def fixture(level=2,workers=None,resources=None):
     buildings={id:{'level':0 if id=='lighthouse' else 1,'workers':(workers or {}).get(id,0),'ready':0,'workProgress':[]} for id in IDS}
     buildings['townhall']['level']=level; buildings['house']['level']=level; buildings['warehouse']['level']=level
-    return {'version':6,'buildings':buildings,'resources':{'coins':1000,**dict.fromkeys(MATERIALS,1000),**(resources or {})},'population':24,'happiness':0,'baseHappiness':0,'paused':paused,'settings':{'motion':False}}
+    return {'version':6,'buildings':buildings,'resources':{'coins':1000,**dict.fromkeys(MATERIALS,1000),**(resources or {})},'population':24,'happiness':0,'baseHappiness':0,'settings':{'motion':False}}
 
 def project(building,target,stage='building',remaining=1):
     return {'building':building,'targetLevel':target,'goodsTotal':2500,'goodsRemaining':0,'transportSeconds':100,'buildRemaining':remaining,'stage':stage,'order':1,'cost':{'coins':500,**dict.fromkeys(MATERIALS,500)}}
@@ -33,7 +33,9 @@ def visit(browser,data,has_touch=False):
     page.wait_for_selector('[data-hud="level"]');page.wait_for_function('document.getElementById("loading").hidden')
     return context,page
 
-def saved(page): return json.loads(page.evaluate('(key)=>localStorage.getItem(key)',KEY))
+def saved(page):
+    page.evaluate("window.dispatchEvent(new Event('pagehide'))")
+    return json.loads(page.evaluate('(key)=>localStorage.getItem(key)',KEY))
 def replace(page,data):
     page.evaluate('(value)=>sessionStorage.setItem("next-construction-fixture",JSON.stringify(value))',data)
     page.add_init_script('if(sessionStorage.getItem("next-construction-fixture")){localStorage.setItem("harborlight-v1-interactive-save",sessionStorage.getItem("next-construction-fixture"));sessionStorage.removeItem("next-construction-fixture")}')
@@ -41,9 +43,6 @@ def replace(page,data):
 def open_building(page,id):
     if page.locator('#island-dialog').evaluate('(node)=>node.open'):page.locator('.dialog-close').click()
     page.locator('#hit-world-'+id).click()
-def clock_control(page,id):
-    if page.locator('#island-dialog').evaluate('(node)=>node.open'):page.locator('.dialog-close').click()
-    page.locator('#hit-'+id).click()
 def queue_view(page):
     if page.locator('#island-dialog').evaluate('(node)=>node.open'):page.locator('.dialog-close').click()
     page.locator('#hit-menu').click();page.get_by_role('button',name='Construction and queue',exact=True).click()
@@ -71,8 +70,8 @@ with sync_playwright() as p:
         expect(info).to_have_attribute('aria-expanded', 'false')
         expect(help_popup).not_to_be_visible()
         visible_panel = page.locator('#island-dialog').inner_text().lower()
-        assert 'central warehouse' not in visible_panel
-        assert 'transport' not in visible_panel
+        assert 'estimated transport:' not in visible_panel
+        assert 'upgrade materials come from' not in visible_panel
         info.click()
         expect(info).to_have_attribute('aria-expanded', 'true')
         expect(help_popup).to_be_visible()
@@ -121,11 +120,15 @@ with sync_playwright() as p:
         open_building(page,'sawmill');expect(page.get_by_role('button',name='Upgrade',exact=True)).to_be_disabled()
         queue_view(page);expect(page.locator('[data-construction-summary]')).to_have_text('Construction: 2 / 2 · Queue: 2 / 2')
         # Restore a real saved boundary, then let application timers complete and promote.
-        state['paused']=False;state['constructionProjects'][0].update(stage='building',goodsRemaining=0,buildRemaining=1)
+        state['constructionProjects'][0].update(stage='building',goodsRemaining=0,buildRemaining=1)
         state['constructionProjects'][1].update(goodsRemaining=1,transportSeconds=10)
-        state['buildings']['warehouse']['workProgress']=[59]*6
-        replace(page,state);page.clock.run_for(1000)
-        clock_control(page,'pause');state=saved(page)
+        state['constructionProjects'][0]['remainingMaterials']=dict.fromkeys(MATERIALS,0)
+        state['constructionProjects'][0]['delivered']={key:state['constructionProjects'][0]['cost'].get(key,0) for key in MATERIALS}
+        state['constructionProjects'][1]['remainingMaterials']=dict.fromkeys(MATERIALS,0)
+        state['constructionProjects'][1]['delivered']={key:state['constructionProjects'][1]['cost'].get(key,0)-(1 if key=='food' else 0) for key in MATERIALS}
+        state['haulTrips']['warehouse']=[{'worker':0,'remaining':1,'resource':'food','amount':1,'kind':'construction','projectOrder':state['constructionProjects'][1]['order']}]
+        replace(page,state);page.clock.fast_forward(1000)
+        state=saved(page)
         assert state['buildings']['farm']['level']==2
         assert len(state['constructionProjects'])==3
         assert state['buildings']['lumber']['construction']['stage']=='transport'
@@ -134,31 +137,33 @@ with sync_playwright() as p:
         expect(page.locator('[data-construction-summary]')).to_have_text('Construction: 2 / 2 · Queue: 1 / 2')
         context.close();print('PASS 2 active + 2 queued, full reservation, no placement step, automatic FIFO promotion and saved queue')
 
-        data=fixture(resources=dict.fromkeys(['coins']+MATERIALS,0))
+        data=fixture(workers={'farm':1,'lumber':1,'quarry':1,'warehouse':1},resources={'coins':1000,'wood':0,'stone':0,'grain':0,'planks':0,'food':1000})
         data['premium']={'expiresAt':int(NOW.timestamp()*1000)+2000}
         context,page=visit(browser,data);open_building(page,'farm')
-        page.get_by_role('button',name='Upgrade',exact=True).click()
+        expect(page.get_by_role('button',name='Upgrade',exact=True)).to_be_disabled()
+        page.locator('[data-premium-forecast="farm"]').click()
         state=saved(page);assert state['buildings']['farm']['construction']['stage']=='planned';assert state['resources']['wood']==0
+        assert state['resources']['coins']==967  # 25% of the missing materials' base Harbor value.
         queue_view(page);expect(page.locator('[data-construction-summary]')).to_contain_text('Construction: 0 / 6 · Queue: 1 / unlimited')
-        page.clock.run_for(2000)
+        page.clock.fast_forward(2000)
         expect(page.locator('[data-construction-summary]')).to_have_text('Construction: 0 / 2 · Queue: 1 / 2')
-        expect(page.locator('[data-project-status]')).to_contain_text('package reactivation')
-        context.close();print('PASS paid +4, missing-material plan, unlimited queue and wall-clock package expiry even during pause')
+        expect(page.locator('[data-project-status]')).to_contain_text('waiting')
+        context.close();print('PASS paid +4, forecast fee with real future deliveries, unlimited queue and wall-clock package expiry')
 
-        data=fixture(workers={'farm':1},resources=dict.fromkeys(MATERIALS,100),paused=False)
+        data=fixture(workers={'farm':1},resources=dict.fromkeys(MATERIALS,100))
         data['population']=12;data['buildings']['lighthouse']['level']=1;data['objective']={'repaired':True,'wood':50,'stone':30};data['constructionProjects']=[project('lighthouse',2)]
-        context,page=visit(browser,data);open_building(page,'lighthouse');page.clock.run_for(1000)
+        context,page=visit(browser,data);open_building(page,'lighthouse');page.clock.fast_forward(1000)
         expect(page.locator('[data-lighthouse-bonus]')).to_contain_text('material production ×2')
         expect(page.locator('[data-hud="happiness"]')).to_have_text('+100%')
-        clock_control(page,'pause');state=saved(page);assert state['lighthouseRemaining']==172800;assert state['buildings']['lighthouse']['level']==2
-        clock_control(page,'play');open_building(page,'farm')
+        state=saved(page);assert state['lighthouseRemaining']==172800;assert state['buildings']['lighthouse']['level']==2
+        open_building(page,'farm')
         expect(page.locator('[data-local-rate]')).to_have_text('20 units/h')
-        page.clock.run_for(180000);expect(page.locator('[data-local-buffer="farm"]')).to_have_text('1 / 400')
+        page.clock.fast_forward(180000);expect(page.locator('[data-local-buffer="farm"]')).to_have_text('1 / 400')
         context.close();print('PASS lighthouse completion: both bonuses for 48h at level2, actual doubled production, no tax multiplier')
 
-        data=fixture(workers={'farm':1,'warehouse':1},resources=dict.fromkeys(MATERIALS,100),paused=False)
+        data=fixture(workers={'farm':1,'warehouse':1},resources=dict.fromkeys(MATERIALS,100))
         data['population']=12;data['constructionProjects']=[project('chapel',2)]
-        context,page=visit(browser,data);open_building(page,'chapel');page.clock.run_for(1000)
+        context,page=visit(browser,data);open_building(page,'chapel');page.clock.fast_forward(1000)
         expect(page.locator('[data-hud="happiness"]')).to_have_text('+21%')
         expect(page.locator('[data-hud="taxes"]')).to_have_text('Taxes: 4/h')
         page.locator('[data-blessing]').click();state=saved(page)
@@ -175,12 +180,12 @@ with sync_playwright() as p:
         data['market']={'stock':{'wood':10}}
         context,page=visit(browser,data);open_building(page,'market');page.locator('[data-market-exchange]').click()
         state=saved(page);assert state['market']['stock']['wood']==0 and state['market']['stock']['stone']==9
-        page.locator('[data-market-dispatch="stone"]').click();clock_control(page,'play');page.clock.run_for(60000)
-        clock_control(page,'pause');state=saved(page);assert state['resources']['stone']==101 and state['market']['stock']['stone']==8
-        page.locator('#hit-world-market').click();page.locator('[data-market-order="grain"]').click()
-        clock_control(page,'play');page.clock.run_for(60000);clock_control(page,'pause')
+        page.locator('[data-market-dispatch="stone"]').click();page.clock.fast_forward(300000)
+        state=saved(page);assert state['resources']['stone']==109 and state['market']['stock']['stone']==0
+        open_building(page,'market');page.locator('[data-market-order="grain"]').click()
+        page.clock.fast_forward(300000)
         state=saved(page);assert state['market']['locked'][0]['resource']=='grain';assert state['market']['locked'][0]['remaining']==3600
-        context.close();print('PASS market 10→9 without coins, warehouse pickup and one-hour lock on actual arrival')
+        context.close();print('PASS market 10→9 without coins, Market-owned five-minute return delivery and one-hour lock on actual arrival')
     finally:browser.close()
     assert not errors,errors
     assert not failures,failures

@@ -1,23 +1,24 @@
 # HARBORLIGHT
 
-Spokojna gra o rozwoju wyspy: rozwiązuj ekspedycje, zdobywaj materiały i odbuduj latarnię. Repozytorium zawiera statyczny prototyp przeglądarkowy w HTML, CSS i JavaScript, bez zależności do instalowania i bez backendu.
+Gra o rozwoju wyspy, gospodarce mieszkańców i odbudowie latarni. Repozytorium zawiera działający lokalny prototyp przeglądarkowy w HTML, CSS i JavaScript. Zachowuje zaakceptowaną grafikę oraz animacje świata. Nie wymaga instalowania zależności aplikacji i nie ma jeszcze backendu.
 
-Reguły rozwijanej osady: poziom ratusza wyznacza poziom gry, maksymalną rozbudowę pozostałych budynków i teoretyczny limit mieszkańców (`24 × poziom ratusza`). Dom daje osobno `24 × poziom domu` miejsc mieszkalnych. Każda osoba bez miejsca obniża szczęście o 1 punkt procentowy na godzinę aktywnej gry; szczęście od −100% do +100% steruje wzrostem lub spadkiem populacji. Nowa wyspa zaczyna z ratuszem i domem na poziomie 1, 12 mieszkańcami, szczęściem 0% i po 100 każdego zasobu.
+Aktualne reguły wynikają z arkusza HARBORLIGHT6 oraz 17 decyzji z 23 października 2026, zebranych w [HARBORLIGHT7-zasady.xlsx](docs/arkusze/HARBORLIGHT7-zasady.xlsx). Opis wdrożonych reguł znajduje się w [ECONOMY-RULES.md](docs/ECONOMY-RULES.md), a lista budynków i assetu Człowiek w [BUILDINGS.md](docs/BUILDINGS.md).
 
-Pracowników można przydzielać do ośmiu miejsc pracy, najwyżej do połowy aktualnej populacji na budynek i bez podwójnych przydziałów. Każdy przydzielony pracownik daje 1 monetę podatku na godzinę aktywnej gry; bezrobotni nie płacą podatku. Każdy mieszkaniec ma własne szczęście: +1 punkt procentowy/h za jedzenie i +1 za przydział do pracy. Po 12 godzinach ciągłego głodu lub bezrobocia każdy z tych braków daje osobno −5 punktów/h. Szczęście wyspy jest średnią indywidualnych wartości ograniczonych do ±100%; wyświetlane procenty zaokrąglamy w górę, a obliczenia zachowują ułamki. Szczegóły czasu, limitów i migracji zapisu opisano w [instrukcji prototypu](docs/INTERACTIVE-ISLAND.md); stan wdrożenia jest w dzienniku.
+Nowa wyspa ma 12 mieszkańców w domu, 0 pracowników, szczęście 0% i po 100 każdego z sześciu zasobów. Poziom ratusza wyznacza poziom gry i limit `24 × poziom` mieszkańców; dom zapewnia osobne miejsca mieszkalne. Każde z ośmiu miejsc pracy mieści `12 × własny poziom` osób, ze wspólnej puli dostępnych mieszkańców. Droga do pracy i powrót trwają po 5 minut. Produkcja na pracownika rośnie z poziomem producenta: 10, 12, 13, 14… szt./h. Cała gospodarka, jedzenie, podatki, budowa, szczęście i terminy działają również offline, według rzeczywistego czasu.
 
-Rozbudowa ma rezerwację, transport i czas budowy, z limitem miejsc oraz kolejką zależnymi od ratusza. Targ wymienia towary bez monet; kaplica i latarnia dają czasowe premie. Model przyszłego płatnego pakietu obsługuje +4 budowy i plany z dostaw, bez uruchamiania sprzedaży. Wszystkie zaakceptowane reguły i ocenę kosztu latarni zapisano w [regułach gospodarki](docs/ECONOMY-RULES.md).
+Prototyp obejmuje fizyczne kursy transportowe, centralną rezerwę żywności, barter na targu, port, indywidualne szczęście, dzienną pulę punktów domu, wizyty w latarni, kaplicę, kolejkę budowy, zadania latarni oraz ekspedycje z ryzykowaną pulą monet. Usługi za monety mają lokalne wyceny i operacje; nie uruchomiono rzeczywistych płatności, reklam ani nagród społecznościowych.
 
-Aktywny interfejs jest po angielsku. Wyjaśnienia rozbudowy otwiera ikona „i” obok Upgrade. Mieszkańcy automatycznie jedzą po 1 Food/os./h z magazynu centralnego. Brak jedzenia od razu zmniejsza produkcję i transport do połowy; podatki pracujących pozostają bez zmiany. Nowy model szczęścia zastępuje dawną karę głodu −25 punktów/h.
+[Strona logowania i rejestracji](harborlight-auth.html) ma formularze oraz ikony Google i Facebook. To frontend: waliduje pola i uczciwie informuje o niedostępności usługi kont. Nie tworzy kont, sesji ani integracji OAuth. Można przejść do gry jako gość. Zapis pozostaje w tej przeglądarce, bez synchronizacji web/Android/iPhone; docelowe konto i wiarygodne rozliczenia wymagają serwera.
 
 ## Podgląd
 
-- [Interaktywna wyspa — adres GitHub Pages](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html)
+- [Interaktywna wyspa na GitHub Pages](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html)
+- [Logowanie i rejestracja po opublikowaniu zmian](https://ksobczak321-oss.github.io/gra/harborlight-auth.html)
 - [Zaakceptowany wzorzec wizualny](https://ksobczak321-oss.github.io/gra/harborlight-v1-screen.html)
 
-Adres publiczny wskazuje ostatnią udaną publikację `main`. Stan bieżących prac i ich weryfikacji zapisujemy w [dzienniku implementacji](docs/IMPLEMENTATION-LOG.md); lokalna zmiana nie oznacza jeszcze wdrożenia.
+Publiczny adres pokazuje ostatnią udaną publikację `main`. Obecność plików w lokalnym środowisku nie potwierdza wdrożenia; wyniki publikacji zapisujemy w [dzienniku implementacji](docs/IMPLEMENTATION-LOG.md).
 
-## Uruchomienie i testy
+## Uruchomienie i sprawdzenia
 
 W katalogu repozytorium:
 
@@ -25,40 +26,37 @@ W katalogu repozytorium:
 python3 -m http.server 8002 --bind 127.0.0.1
 ```
 
-Otwórz lokalnie stronę `harborlight-v1-layered.html`. Serwer HTTP jest wymagany przez moduły JavaScript; otwieranie pliku bezpośrednio przez `file://` nie jest wspieranym sposobem uruchamiania. Jeżeli port jest zajęty, wybierz wolny port. Wystarczą Python 3 i aktualna przeglądarka.
+Otwórz `http://127.0.0.1:8002/harborlight-v1-layered.html` albo `http://127.0.0.1:8002/harborlight-auth.html`. Moduły JavaScript wymagają HTTP; bezpośrednie `file://` nie jest wspierane. Wystarczą Python 3 i aktualna przeglądarka. Gdy port jest zajęty, wybierz inny wolny port.
 
-Testy ekonomii i zapisu wymagają Node.js z obsługą modułów ES i wbudowanego runnera:
+Testy reguł wymagają aktualnego Node.js z wbudowanym runnerem:
 
 ```sh
-node --test tests/harborlight-state.test.mjs tests/harborlight-hunger.test.mjs
+node --test --test-timeout=10000 tests/*.test.mjs
 ```
 
-Po uruchomieniu serwera można wykonać pełny test w Chromium (wymaga pakietu Python `playwright` i Chromium):
+Sprawdzenia przeglądarkowe wymagają Python `playwright` i Chromium:
 
 ```sh
-python3 tests/harborlight-browser-smoke.py
-python3 tests/harborlight-population-smoke.py
-python3 tests/harborlight-logistics-smoke.py
-python3 tests/harborlight-construction-smoke.py
-python3 tests/harborlight-language-smoke.py
-python3 tests/harborlight-happiness-smoke.py
+python3 tests/harborlight-auth-smoke.py
+python3 tests/harborlight-agreed-ui-smoke.py
 python3 tests/harborlight-animation-smoke.py
 python3 tests/harborlight-coastal-smoke.py
 ```
 
-Inny adres serwera lub plik wykonywalny Chromium ustawiają `HARBORLIGHT_BASE_URL` oraz `HARBORLIGHT_CHROMIUM`. Test korzysta z osobnej sesji przeglądarki i nie usuwa zapisu gracza.
+Test auth uruchamia własny serwer, jeśli nie podano `HARBORLIGHT_BASE_URL`. Pozostałe testy korzystają z serwera gry; inny adres lub Chromium można wskazać przez `HARBORLIGHT_BASE_URL` i `HARBORLIGHT_CHROMIUM`. Zestawy starszych testów przeglądarkowych pozostają w `tests/`; ich historyczny wynik nie oznacza zgodności z nowymi regułami, dopóki nie zostaną ponownie uruchomione i dostosowane.
 
-Publikację GitHub Pages wykonuje istniejący workflow `.github/workflows/pages.yml` po wysłaniu zmian do `main`. Nie ma kroku budowania aplikacji.
+GitHub Pages publikuje workflow `.github/workflows/pages.yml` po wysłaniu zmian do `main`. Aplikacja nie ma kroku kompilacji.
 
 ## Dokumentacja
 
-- [Interaktywna wyspa: funkcje, sterowanie, zapis, sprawdzenia](docs/INTERACTIVE-ISLAND.md)
-- [Animacje świata: zakres frontendu, warstwy i odbiór](docs/WORLD-ANIMATION.md)
-- [Uzgodnione reguły gospodarki, koszty, kolejka i premie](docs/ECONOMY-RULES.md)
-- [Lista 12 budynków: logika, stan, koszty i efekty](docs/BUILDINGS.md)
-- [Dziennik implementacji](docs/IMPLEMENTATION-LOG.md)
+- [Sterowanie, panele, zapis i ograniczenia prototypu](docs/INTERACTIVE-ISLAND.md)
+- [Aktualne reguły gospodarki i decyzje D01–D17](docs/ECONOMY-RULES.md)
+- [12 budynków i asset Człowiek](docs/BUILDINGS.md)
+- [Arkusze i ich wersje](docs/arkusze/README.md)
+- [Animacje świata](docs/WORLD-ANIMATION.md)
+- [Dziennik zmian i weryfikacji](docs/IMPLEMENTATION-LOG.md)
 - [Backlog Frontend i Backend](docs/BACKLOG.md)
-- [Koncepcja gry i pętla rozgrywki](docs/HARBORLIGHT-CONCEPT.md)
-- [Zaakceptowany kierunek wizualny v1](docs/HARBORLIGHT-V1-SCREEN-SPEC.md)
+- [Koncepcja gry](docs/HARBORLIGHT-CONCEPT.md)
+- [Zaakceptowany kierunek wizualny](docs/HARBORLIGHT-V1-SCREEN-SPEC.md)
 
-Starsze pliki BLACKOUT i PANIC PETS są wcześniejszymi eksperymentami. Aktywny kierunek projektu to HARBORLIGHT. Postęp obecnego prototypu jest przechowywany wyłącznie w przeglądarce; synchronizacja między urządzeniami jest zaplanowana w backlogu Backend.
+Starsze pliki BLACKOUT i PANIC PETS są wcześniejszymi eksperymentami. Aktywny kierunek projektu to HARBORLIGHT; aktywny interfejs gry oraz formularze kont są po angielsku.

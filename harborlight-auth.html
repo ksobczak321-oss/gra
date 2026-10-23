@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#102f43">
+  <meta name="description" content="Welcome to HARBORLIGHT. Sign in, create an account, or continue exploring your island as a guest.">
+  <title>HARBORLIGHT — Welcome Home</title>
+  <link rel="stylesheet" href="harborlight-auth.css?v=accounts-1">
+  <script src="harborlight-auth.js?v=accounts-1" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#account">Skip to account</a>
+  <header class="site-header">
+    <a class="brand" href="harborlight-v1-layered.html" aria-label="HARBORLIGHT — return to your island">
+      <svg class="brand-mark" viewBox="0 0 40 48" fill="none" aria-hidden="true"><path d="M13 41h14l-3-25h-8l-3 25Z" stroke="currentColor" stroke-width="2"/><path d="M11 41h18v4H11zM13 11h14v5H13zM15 11V7l5-4 5 4v4M18 21h4v5h-4zM10 19l-7 3m27-3 7 3M9 9 3 6m28 3 6-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>HARBORLIGHT<small>A little island. A world to build.</small></span>
+    </a>
+    <a class="back-link" href="harborlight-v1-layered.html"><span aria-hidden="true">←</span> Back to island</a>
+  </header>
+
+  <main class="auth-layout">
+    <section class="island-story" aria-labelledby="story-title">
+      <div class="story-art" aria-hidden="true"></div>
+      <div class="story-shade" aria-hidden="true"></div>
+      <div class="story-copy">
+        <span class="eyebrow"><span class="welcome-spark" aria-hidden="true">✦</span> YOUR OWN CORNER OF THE WORLD</span>
+        <h1 id="story-title">An island worth<br>coming home to.</h1>
+        <p>Build a village, care for your people, and bring the lighthouse back to life.</p>
+      </div>
+      <div class="story-note"><span class="note-icon" aria-hidden="true">⌂</span><div><strong>Make yourself at home.</strong><span>Your island is ready to explore.</span></div></div>
+    </section>
+
+    <section id="account" class="account-card" aria-labelledby="auth-title" tabindex="-1">
+      <div class="account-tabs" role="tablist" aria-label="Account options">
+        <button id="tab-login" class="account-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="auth-panel" tabindex="0" data-mode="login">Sign in</button>
+        <button id="tab-register" class="account-tab" type="button" role="tab" aria-selected="false" aria-controls="auth-panel" tabindex="-1" data-mode="register">Create account</button>
+      </div>
+      <div id="auth-panel" role="tabpanel" aria-labelledby="tab-login">
+        <span class="eyebrow account-eyebrow">WELCOME TO HARBORLIGHT</span>
+        <h2 id="auth-title">Welcome back.</h2>
+        <p id="auth-intro" class="account-intro">Return to the island you call home.</p>
+
+        <div class="social-options" aria-label="Social sign-in options">
+          <button class="social-button" type="button" data-provider="Google" aria-describedby="social-availability">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6C44.4 38.03 46.98 31.86 46.98 24.55Z"/><path fill="#FBBC05" d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.28-3.13.77-4.59l-7.98-6.19A23.94 23.94 0 0 0 0 24c0 3.87.94 7.52 2.56 10.78l7.97-6.19Z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.9-5.8l-7.73-6c-2.15 1.45-4.92 2.3-8.17 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48Z"/></svg>
+            <span>Continue with Google</span><small>Soon</small>
+          </button>
+          <button class="social-button" type="button" data-provider="Facebook" aria-describedby="social-availability">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#1877F2" d="M24 12a12 12 0 1 0-13.875 11.855v-8.386H7.078V12h3.047V9.356c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.49 0-1.955.925-1.955 1.874V12h3.328l-.532 3.469h-2.796v8.386A12.003 12.003 0 0 0 24 12Z"/><path fill="#fff" d="m16.671 15.469.532-3.469h-3.328V9.749c0-.949.465-1.874 1.955-1.874h1.514V4.922s-1.374-.235-2.686-.235c-2.741 0-4.533 1.662-4.533 4.669V12H7.078v3.469h3.047v8.386a12.09 12.09 0 0 0 3.75 0v-8.386h2.796Z"/></svg>
+            <span>Continue with Facebook</span><small>Soon</small>
+          </button>
+        </div>
+        <p id="social-availability" class="availability">Account sign-in is coming soon. You can play as a guest today.</p>
+        <div class="divider"><span>or use your email</span></div>
+
+        <form id="account-form" method="post" action="#account" novalidate>
+          <fieldset id="account-fields" disabled>
+            <legend class="visually-hidden">Account details</legend>
+            <div class="field" data-register-only hidden>
+              <label for="display-name">Your name</label>
+              <input id="display-name" name="name" type="text" autocomplete="nickname" minlength="2" maxlength="40" placeholder="What should we call you?" aria-describedby="name-error" disabled>
+              <p id="name-error" class="field-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="email">Email address</label>
+              <input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" placeholder="you@example.com" aria-describedby="email-error" required>
+              <p id="email-error" class="field-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="password">Password</label>
+              <div class="password-field">
+                <input id="password" name="password" type="password" autocomplete="current-password" minlength="8" maxlength="128" placeholder="Enter your password" aria-describedby="password-hint password-error" required>
+                <button id="password-visibility" class="password-toggle" type="button" aria-label="Show password" aria-controls="password" aria-pressed="false">Show</button>
+              </div>
+              <p id="password-hint" class="field-hint" hidden>Use at least 8 characters.</p>
+              <p id="password-error" class="field-error" hidden></p>
+            </div>
+            <div class="field" data-register-only hidden>
+              <label for="confirm-password">Confirm password</label>
+              <input id="confirm-password" name="confirm-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" placeholder="Enter your password again" aria-describedby="confirm-error" disabled>
+              <p id="confirm-error" class="field-error" hidden></p>
+            </div>
+            <button id="account-submit" class="primary-button" type="submit"><span>Sign in</span><span aria-hidden="true">→</span></button>
+          </fieldset>
+        </form>
+        <noscript><p class="account-status" role="status">Enable JavaScript to preview account forms, or continue to the island as a guest.</p></noscript>
+        <p id="account-status" class="account-status" role="status" aria-live="polite" aria-atomic="true" hidden></p>
+      </div>
+      <div class="guest-entry"><span>Your island is waiting.</span><a class="guest-link" href="harborlight-v1-layered.html">Continue as a guest <span aria-hidden="true">→</span></a></div>
+    </section>
+  </main>
+  <footer class="site-footer"><span>HARBORLIGHT</span><span>Build slowly. Dream a little bigger.</span></footer>
+</body>
+</html>

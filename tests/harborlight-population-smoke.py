@@ -15,7 +15,7 @@ SAVE_KEY = 'harborlight-v1-interactive-save'
 RESOURCES = ['coins', 'wood', 'stone', 'food', 'planks', 'grain']
 
 
-def visit(context, fixture=None, clock=False):
+def visit(context, fixture=None, clock=True):
     page = context.new_page()
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.on('response', lambda response: failures.append((response.status, response.url)) if response.status >= 400 else None)
@@ -49,7 +49,6 @@ with sync_playwright() as p:
         # Fresh sessions really use the new starter kit, including grain.
         context = browser.new_context(viewport={'width': 1672, 'height': 941}, reduced_motion='reduce')
         page = visit(context, clock=True)
-        page.locator('#hit-pause').click()
         expect(page.locator('[data-hud="level"]')).to_have_text('1')
         expect(page.locator('[data-hud="happiness"]')).to_have_text('0%')
         expect(page.locator('[data-hud="population"]')).to_have_text('12 / 24')
@@ -58,8 +57,11 @@ with sync_playwright() as p:
         initial = save(page)
         assert initial['population'] == 12 and initial['happiness'] == 0
         assert initial['resources'] == dict.fromkeys(RESOURCES, 100)
-        assert initial['version'] == 7
+        assert initial['version'] == 8
         assert initial['buildings']['house']['level'] == 1
+        assert all(building['workers'] == 0 for building in initial['buildings'].values())
+        assert all(person['newbornRemaining'] == 0 for person in initial['residents'])
+        assert initial['paused'] is False and initial['speed'] == 1
         expect(page.locator('[data-hud="housing"]')).to_have_text('Housing: 24')
         page.locator('#hit-level').click()
         expect(page.locator('#dialog-title')).to_have_text('Town Hall')
@@ -81,27 +83,41 @@ with sync_playwright() as p:
         context.close()
         print('PASS starter kit, six resources, level/happiness navigation and mobile HUD')
 
-        # A full active hour at 4x production still yields exactly one resident.
+        # Legacy speed flags do not accelerate the wall clock. Birth freezes
+        # the new person's happiness for 24h; offline elapsed time still runs.
         context = browser.new_context(viewport={'width': 1672, 'height': 941}, reduced_motion='reduce')
         page = visit(context, {'version': 6, 'happiness': 100, 'population': 12,
                                'populationProgress': 0, 'populationDirection': 1,
                                'speed': 4, 'settings': {'motion': False}}, clock=True)
         page.locator('#hit-happiness').click()
-        page.clock.run_for(3_599_000)
+        page.clock.fast_forward(3_599_000)
         expect(page.locator('[data-hud="population"]')).to_have_text('12 / 24')
         page.clock.run_for(1_000)
         expect(page.locator('[data-hud="population"]')).to_have_text('13 / 24')
         expect(page.locator('[data-population-stat="population"]')).to_have_text('13 / 24')
         page.locator('.dialog-close').click()
-        page.locator('#hit-pause').click()
-        page.clock.fast_forward(3_600_000)
-        expect(page.locator('[data-hud="population"]')).to_have_text('13 / 24')
         recorded = save(page)
-        assert recorded['population'] == 13 and recorded['paused']
+        assert recorded['population'] == 13 and recorded['paused'] is False and recorded['speed'] == 1
+        newborn = max(recorded['residents'], key=lambda person: person['id'])
+        assert newborn['happiness'] == 0 and newborn['newbornRemaining'] == 86400
+        # No simulation runs in this static page. Returning catches up once,
+        # including food and the newborn clock, from the saved wall timestamp.
+        page.goto(BASE + '/harborlight-v1-screen.html')
+        away = json.loads(page.evaluate('key => localStorage.getItem(key)', SAVE_KEY))
+        page.clock.fast_forward(900_000)
+        assert json.loads(page.evaluate('key => localStorage.getItem(key)', SAVE_KEY)) == away
+        page.goto(BASE + '/harborlight-v1-layered.html')
+        page.wait_for_function('document.getElementById("loading").hidden')
+        caught_up = save(page)
+        returning_newborn = next(person for person in caught_up['residents'] if person['id'] == newborn['id'])
+        assert returning_newborn['happiness'] == 0 and returning_newborn['newbornRemaining'] == 85500
+        available_food = lambda state: state['resources']['food'] + state['foodCredit']
+        assert abs(available_food(away) - available_food(caught_up) - 13 / 4) < 1e-8
+        assert caught_up['lastSimulatedAt'] - away['lastSimulatedAt'] == 900_000
         page.reload()
         expect(page.locator('[data-hud="population"]')).to_have_text('13 / 24')
         context.close()
-        print('PASS full real active hour at 4x, live population panel, pause and saved reload')
+        print('PASS real hour birth despite legacy speed, newborn freeze, offline food/catchup and saved reload')
 
         # Existing signed saves migrate without giving the user another starter kit.
         context = browser.new_context(viewport={'width': 1672, 'height': 941}, reduced_motion='reduce')
@@ -113,7 +129,9 @@ with sync_playwright() as p:
         expect(page.locator('#hit-happiness')).to_have_attribute('data-sentiment', 'negative')
         expect(page.locator('[data-hud="population"]')).to_have_text('30 / 72')
         migrated = save(page)
-        assert migrated['version'] == 7 and migrated['resources'] == dict.fromkeys(RESOURCES, 321)
+        assert migrated['version'] == 8 and migrated['resources'] == dict.fromkeys(RESOURCES, 321)
+        assert migrated['paused'] is False and migrated['speed'] == 1
+        assert migrated['buildings']['townhall']['workers'] == 0
         context.close()
         print('PASS existing save migration, negative happiness and townhall-derived limit')
 
@@ -153,12 +171,11 @@ with sync_playwright() as p:
         expect(page.locator('[data-hud="housing"]')).to_have_text('Housing: 72')
         page.clock.run_for(60_000)
         expect(page.locator('[data-hud="happiness"]')).to_have_text('0%')
-        page.clock.run_for(3_540_000)
+        page.clock.fast_forward(3_540_000)
         expect(page.locator('[data-hud="happiness"]')).to_have_text('−5%')
         expect(page.locator('[data-hud="population"]')).to_have_text('78 / 96')
         expect(page.locator('[data-population-stat="happiness"]')).to_have_text('−5%')
         page.locator('.dialog-close').click()
-        page.locator('#hit-pause').click()
         crowded = save(page)
         assert abs(crowded['happiness'] + 5) < 1e-8
         assert crowded['population'] == 78
@@ -180,7 +197,6 @@ with sync_playwright() as p:
         page.wait_for_selector('[data-hud="housing"]')
         page.clock.run_for(1_000)
         expect(page.locator('[data-hud="housing"]')).to_have_text('Housing: 96')
-        page.locator('#hit-pause').click()
         expanded = save(page)
         assert expanded['buildings']['house']['level'] == 4
         assert expanded['happiness'] <= crowded['happiness']
@@ -188,9 +204,7 @@ with sync_playwright() as p:
         expect(page.locator('[data-upgrade-building="house"]')).to_be_disabled()
         expect(page.locator('[data-upgrade-lock="house"]')).to_contain_text('Town Hall to level 5')
         page.locator('.dialog-close').click()
-        page.locator('#hit-play').click()
         page.clock.run_for(60_000)
-        page.locator('#hit-pause').click()
         assert abs(save(page)['happiness'] - expanded['happiness'] - 1 / 60) < 1e-8
         page.reload()
         expect(page.locator('[data-hud="housing"]')).to_have_text('Housing: 96')
@@ -208,7 +222,7 @@ with sync_playwright() as p:
         expect(page.locator('[data-hud="housing"]')).to_have_text('Housing: 72')
         expect(page.locator('[data-hud="happiness"]')).to_have_text('0%')
         migrated = save(page)
-        assert migrated['version'] == 7 and migrated['buildings']['townhall']['level'] == 3
+        assert migrated['version'] == 8 and migrated['buildings']['townhall']['level'] == 3
         assert migrated['buildings']['house']['level'] == 3
         assert migrated['resources'] == dict.fromkeys(RESOURCES, 321)
         assert abs(migrated['happiness'] + 0.01) < 1e-10

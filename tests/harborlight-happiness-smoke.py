@@ -17,18 +17,21 @@ NOW = datetime(2026, 10, 22, 12, 0, 0, tzinfo=timezone.utc)
 errors, failures = [], []
 
 
-def fixture(values=None, jobs=None, hunger=0, unemployment=0, food=100, paused=True):
+def fixture(values=None, jobs=None, hunger=0, unemployment=0, food=100):
     values, jobs = values or [0] * 6, jobs or {}
     residents = [{'id': index + 1, 'happiness': value, 'workplace': jobs.get(index + 1),
                   'hungerSeconds': hunger, 'unemployedSeconds': 0 if jobs.get(index + 1) else unemployment,
-                  'returnRemaining': 0} for index, value in enumerate(values)]
+                  'arrivalRemaining': 0, 'returnRemaining': 0,
+                  'newbornRemaining': 0} for index, value in enumerate(values)]
     buildings = {key: {'level': 0 if key == 'lighthouse' else 1,
                       'workers': sum(person['workplace'] == key for person in residents),
                       'ready': 0, 'workProgress': []} for key in IDS}
-    return {'version': 7, 'population': 6, 'residentSequence': 6, 'residents': residents,
+    return {'version': 8, 'population': 6, 'residentSequence': 6, 'residents': residents,
             'happiness': sum(values) / len(values), 'baseHappiness': sum(values) / len(values),
             'buildings': buildings, 'resources': {'coins': 100, **dict.fromkeys(MATERIALS, 100), 'food': food},
-            'paused': paused, 'settings': {'motion': False}}
+            'lastSimulatedAt': int(NOW.timestamp() * 1000),
+            'savedAt': int(NOW.timestamp() * 1000),
+            'settings': {'motion': False}}
 
 
 def visit(browser, data, width=1672, height=941):
@@ -103,7 +106,7 @@ with sync_playwright() as p:
         print('PASS personal values, exact population mean, upward whole percentages, negative zero and responsive roster')
 
         # The grace ends exactly at 12h, then feeding +1 and unemployment -5 yield -4.
-        context, page = visit(browser, fixture(values=[32] * 6, unemployment=43200 - 1, paused=False))
+        context, page = visit(browser, fixture(values=[32] * 6, unemployment=43200 - 1))
         page.clock.run_for(1_000)
         threshold = save(page)
         assert abs(person(threshold, 1)['happiness'] - (32 + 1 / 3600)) < 1e-8
@@ -123,8 +126,7 @@ with sync_playwright() as p:
         assert person(dismissed, 1)['workplace'] is None
         assert person(dismissed, 1)['happiness'] == 20
         assert person(dismissed, 1)['returnRemaining'] == 300
-        page.locator('#hit-play').click()
-        page.clock.run_for(300_000)
+        page.clock.fast_forward(300_000)
         returned = save(page)
         assert person(returned, 1)['returnRemaining'] == 0
         assert abs(person(returned, 1)['happiness'] - (20 + 1 / 12)) < 1e-8
@@ -135,18 +137,31 @@ with sync_playwright() as p:
         page.locator('[data-worker-building="quarry"][data-worker-delta="1"]').click()
         rehired = save(page)
         assert person(rehired, 1)['workplace'] == 'quarry'
-        assert person(rehired, 1)['unemployedSeconds'] == 0
+        assert person(rehired, 1)['unemployedSeconds'] == 300
+        assert person(rehired, 1)['arrivalRemaining'] == 300
         assert abs(person(rehired, 1)['happiness'] - person(returned, 1)['happiness']) < 1e-8
+        assert rehired['buildings']['quarry']['ready'] == 0 and rehired['taxProgress'] == 0
+        page.clock.fast_forward(300_000)
+        arrived = save(page)
+        assert person(arrived, 1)['arrivalRemaining'] == 0
+        assert person(arrived, 1)['unemployedSeconds'] == 0
+        assert abs(person(arrived, 1)['happiness'] - (20 + 1 / 6)) < 1e-8
+        assert arrived['buildings']['quarry']['ready'] == 0 and arrived['taxProgress'] == 0
+        page.clock.fast_forward(360_000)
+        working = save(page)
+        assert working['buildings']['quarry']['ready'] == 1
+        assert abs(working['taxProgress'] - 0.1) < 1e-8
+        assert abs(person(working, 1)['happiness'] - (20 + 1 / 6 + 0.2)) < 1e-8
         context.close()
-        print('PASS stable happiness identity, five-minute return, save/reload and reset on rehire')
+        print('PASS stable identity, five-minute home/work journeys, reset on arrival and work/tax only after arrival')
 
         # Hungry workers lose four/h after grace and make one unit in 12 minutes.
-        data = fixture(jobs={1: 'quarry'}, hunger=43200, food=0, paused=False)
+        data = fixture(jobs={1: 'quarry'}, hunger=43200, food=0)
         context, page = visit(browser, data)
         page.locator('#hit-world-quarry').click()
         expect(page.locator('[data-local-rate="quarry"]')).to_have_text('5 units/h')
         expect(page.locator('[data-work-progress="quarry"]')).to_contain_text('12 min')
-        page.clock.run_for(720_000)
+        page.clock.fast_forward(720_000)
         hungry = save(page)
         assert hungry['buildings']['quarry']['ready'] == 1
         assert abs(person(hungry, 1)['happiness'] + 4 / 5) < 1e-8
@@ -154,12 +169,56 @@ with sync_playwright() as p:
         rows = roster(page)
         expect(rows.locator('[data-resident-id="1"] [data-resident-rate]')).to_contain_text('−4')
         page.locator('.dialog-close').click()
-        page.locator('#hit-pause').click()
         before = save(page)
-        page.clock.run_for(3_600_000)
-        assert save(page)['residents'] == before['residents']
+        page.goto(BASE + '/harborlight-v1-screen.html')
+        page.clock.fast_forward(360_000)
+        assert page.evaluate('(key) => JSON.parse(localStorage.getItem(key))', KEY)['lastSimulatedAt'] == before['lastSimulatedAt']
+        page.goto(BASE + '/harborlight-v1-layered.html')
+        page.wait_for_function('document.getElementById("loading").hidden')
+        offline = save(page)
+        assert offline['buildings']['quarry']['ready'] == 1
+        assert abs(person(offline, 1)['happiness'] + 1.2) < 1e-8
+        assert abs(offline['taxProgress'] - 0.3) < 1e-8
+        page.clock.fast_forward(360_000)
+        continued = save(page)
+        assert continued['buildings']['quarry']['ready'] == 2
+        assert abs(person(continued, 1)['happiness'] + 1.6) < 1e-8
+        assert abs(continued['taxProgress'] - 0.4) < 1e-8
         context.close()
-        print('PASS hungry half output, unchanged employment taxes, individual hunger penalty and paused timers')
+        print('PASS hungry half output, full employment tax, hunger penalty and continuous offline work')
+
+        # Frozen newborns ignore every happiness bonus during their first day.
+        # After offline catchup to the exact boundary, normal hourly rates start
+        # from zero. Initial residents remain ordinary people.
+        data = fixture(values=[0, -100, -100, -100, -100, -100], food=1000)
+        data['residents'][0]['newbornRemaining'] = 86400
+        data['blessingRemaining'] = 3600
+        data['chapelRemaining'] = 3600
+        context, page = visit(browser, data)
+        rows = roster(page)
+        expect(rows.locator('[data-resident-id="1"] [data-resident-value]')).to_have_text('0%')
+        expect(rows.locator('[data-resident-id="1"] [data-resident-timers]')).to_contain_text('Newborn')
+        frozen_start = save(page)
+        assert person(frozen_start, 1)['happiness'] == 0
+        page.goto(BASE + '/harborlight-v1-screen.html')
+        page.clock.fast_forward(86_399_000)
+        page.goto(BASE + '/harborlight-v1-layered.html')
+        page.wait_for_function('document.getElementById("loading").hidden')
+        almost = save(page)
+        assert person(almost, 1)['newbornRemaining'] == 1
+        assert person(almost, 1)['happiness'] == 0
+        assert almost['population'] == 6
+        page.clock.run_for(1_000)
+        boundary = save(page)
+        assert person(boundary, 1)['newbornRemaining'] == 0
+        assert person(boundary, 1)['happiness'] == 0
+        page.clock.fast_forward(3_600_000)
+        first_hour = save(page)
+        assert abs(person(first_hour, 1)['happiness'] + 4) < 1e-8
+        assert first_hour['resources']['food'] > 0
+        assert len({person['id'] for person in first_hour['residents']}) == 6
+        context.close()
+        print('PASS newborn frozen 0% through bonuses/offline/exact 24h, then normal rate without backcharge')
     finally:
         browser.close()
     assert not errors, errors

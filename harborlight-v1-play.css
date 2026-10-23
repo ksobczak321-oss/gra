@@ -261,3 +261,37 @@ body.reduce-motion .lighthouse-beam{animation:none;transform:rotate(3deg);opacit
 #island-dialog [data-resident-timers] { display: block; margin-top: 4px; color: #adc2cd; font-size: 11px; line-height: 1.5; }
 #island-dialog .resident-roster > summary:focus-visible { outline: 2px solid #ffe1a5; outline-offset: 3px; border-radius: 3px; }
 @media (max-width: 480px) { #island-dialog .happiness-rules-table th, #island-dialog .happiness-rules-table td { padding-inline: 4px; } }
+
+/* Live Lighthouse work and coin-only expeditions replace the baked-in right cards. */
+.island-activity-stack{position:absolute;left:1401px;top:79px;width:263px;max-height:672px;overflow:auto;display:grid;gap:9px;padding:11px;border:1px solid #c7aa6e;border-radius:11px;background:linear-gradient(155deg,#21485e,#092a40);box-shadow:0 7px 18px #001b3980,inset 0 1px #ffe3a52b;color:#edf3f0;pointer-events:auto;scrollbar-width:thin;font:12px/1.35 Inter,system-ui,sans-serif;z-index:15}
+.activity-section-heading{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.activity-section-heading h3{margin:0;font-size:17px;font-weight:780;color:#ffe0a1}
+.activity-link{padding:4px 7px;border:1px solid #78939d70;border-radius:5px;background:#0e3348;color:#d8e5e7;font:600 11px/1.3 inherit;cursor:pointer}
+.activity-task{padding:9px;border:1px solid #69828a70;border-radius:7px;background:linear-gradient(130deg,#2b52636e,#092a3c80)}
+.task-card-heading{display:flex;justify-content:space-between;align-items:center;gap:9px;margin-bottom:5px}
+.task-size{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:750;color:#a8cfb7}.task-size-medium{color:#f0d391}.task-size-large{color:#e3b59a}
+.task-countdown{font-size:10px;color:#bfd3d9;white-space:nowrap;font-variant-numeric:tabular-nums}
+.activity-task h4{margin:5px 0;font-size:13px;color:#ffe7b3;font-weight:700;line-height:1.3}
+.activity-task .task-reward{margin:5px 0;color:#c5dcd4;font-size:10px;line-height:1.5}
+.activity-task-button{width:100%;min-height:28px;margin-top:4px;padding:5px 7px;border:1px solid #d0ad6b;border-radius:5px;background:linear-gradient(#ebcf8c,#cba052);color:#102e3e;font:750 11px/1.2 Inter,system-ui,sans-serif;cursor:pointer}
+.activity-expedition,.activity-lighthouse{width:100%;min-height:32px;padding:7px 9px;border:1px solid #6f8c9b80;border-radius:6px;background:linear-gradient(135deg,#31596b,#173d53);color:#f4e2b9;font:650 12px/1.25 Inter,system-ui,sans-serif;cursor:pointer;text-align:left}
+.activity-lighthouse{border-color:#d4b67480;text-align:center;background:#253f45}
+.island-activity-stack button:focus-visible{outline:3px solid #fff1c7;outline-offset:2px}
+.mobile-activities{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:40;display:none;min-height:44px;padding:11px 15px;border:1px solid #d7b879;border-radius:12px;background:linear-gradient(145deg,#214b63f5,#0b283cf5);box-shadow:0 4px 20px #00152266;color:#ffe4aa;font:700 14px/1.25 Inter,system-ui,sans-serif;cursor:pointer}
+@media(max-width:900px),(max-height:500px){.mobile-activities{display:inline-flex}}
+#island-dialog .task-card-heading{margin-bottom:12px}#island-dialog .task-size{font-size:11px}#island-dialog .task-countdown{font-size:13px}
+#island-dialog .task-reward{color:#c0dda5;line-height:1.65}
+#island-dialog .task-deposit-row{display:grid;grid-template-columns:minmax(130px,1fr) 95px auto;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #5a7e8c55}
+#island-dialog .task-deposit-row>div{display:flex;flex-direction:column;gap:4px}#island-dialog .task-deposit-row>div>span{color:#c2d8de;font-variant-numeric:tabular-nums}
+#island-dialog input[type="number"],#island-dialog select{min-width:0;max-width:100%;padding:11px 10px;border:1px solid #7899a8;border-radius:7px;background:#0e3045;color:#fff0cf;font:inherit}
+#island-dialog .premium-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+#island-dialog .premium-options .action{margin:0;padding-inline:10px}
+#island-dialog .project-materials{margin:12px 0 16px;padding:10px 12px;border:1px solid #5f849169;border-radius:8px;background:#0c2e40}
+#island-dialog .visit-resident-picker{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;max-height:220px;overflow:auto;margin:12px 0;scrollbar-width:thin}
+#island-dialog .visit-resident-picker label{display:flex;align-items:center;gap:7px;min-height:42px;padding:8px;border:1px solid #67889877;border-radius:7px;background:#0c3045;cursor:pointer;font-size:12px}
+#island-dialog .visit-resident-picker strong{margin-left:auto;color:#ffe0a1}#island-dialog .visit-resident-picker input{accent-color:#e1bd72;width:18px;height:18px}
+#island-dialog .visit-selection-summary{color:#e9d5a3;font-size:13px}
+#island-dialog .expedition-decision{padding:9px 0 3px}#island-dialog .expedition-decision .action{width:100%;margin-inline-start:0}
+#island-dialog .pool-actions{display:grid;grid-template-columns:1fr 100px auto;gap:8px;align-items:center;margin:12px 0}
+#island-dialog .pool-actions .action{margin:0}
+@media(max-width:520px){#island-dialog .task-deposit-row{grid-template-columns:minmax(0,1fr) 72px auto;gap:7px}#island-dialog .task-deposit-row .action{padding:10px 8px;font-size:12px}#island-dialog .premium-options{grid-template-columns:1fr}#island-dialog .visit-resident-picker{grid-template-columns:1fr}#island-dialog .pool-actions{grid-template-columns:1fr 72px}#island-dialog .pool-actions .action{grid-column:1/-1}}
