@@ -54,7 +54,7 @@ def visit(page):
     response = page.goto(BASE_URL + PAGE_PATH)
     assert response and response.status == 200
     page.wait_for_function(
-        "document.querySelectorAll('.island-hotspot').length===48 && "
+        "document.querySelectorAll('.world-hotspot').length===12 && "
         "document.getElementById('loading').hidden && "
         "document.getElementById('island-ambient')?.dataset.ready==='true'"
     )
@@ -153,7 +153,7 @@ def run():
 
         # Effects must never become pointer targets over existing controls.
         obstruction = page.locator(".island-hotspot").evaluate_all(
-            """nodes=>nodes.filter(node=>{
+            """nodes=>nodes.filter(node=>node.getClientRects().length).filter(node=>{
               const b=node.getBoundingClientRect();
               const top=document.elementFromPoint(b.x+b.width/2,b.y+b.height/2);
               return top!==node && !node.contains(top);

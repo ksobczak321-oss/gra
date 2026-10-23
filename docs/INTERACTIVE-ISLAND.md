@@ -1,10 +1,12 @@
 # Interaktywna wyspa HARBORLIGHT
 
-Stan: 2026-10-23, `harborlight-v1-layered.html`, lokalny prototyp ze schematem zapisu 8. Reguły bazują na HARBORLIGHT6 i decyzjach D01–D17, zebranych w [arkuszu 7](arkusze/HARBORLIGHT7-zasady.xlsx). Wyniki sprawdzeń i publikacji zapisujemy osobno w [dzienniku implementacji](IMPLEMENTATION-LOG.md).
+Stan: 2026-10-23, `harborlight-v1-layered.html`, lokalny prototyp ze schematem zapisu 8. Bazę stanowią HARBORLIGHT6 i decyzje D01–D17 z [arkusza 7](arkusze/HARBORLIGHT7-zasady.xlsx), a opis poniżej uwzględnia późniejszy pakiet frontendu zatwierdzony „go”. Arkusz 7 zachowano bez zmian. Wyniki sprawdzeń i publikacji zapisujemy osobno w [dzienniku implementacji](IMPLEMENTATION-LOG.md).
 
 ## Wyspa i sterowanie
 
 Widok zachowuje zaakceptowany układ i grafikę wyspy, z kontrolkami HTML i responsywnymi dialogami. Aktywny interfejs jest po angielsku. Kliknięcie budynku otwiera jego panel; operacje używają jednego zapisanego stanu. Telefon ma czytelne menu i dialogi bez konieczności trafiania w pomniejszone napisy grafiki. Kontrolki mają etykiety, widoczny fokus i obsługę klawiatury.
+
+Marka, Level i pozostałe pola nagłówka mają osobne obszary, bez nakładania na lewą nawigację i bez przebijania starych napisów lub obrazków spod nowych kontrolek. Dolne Resources zastępuje cały pasek kart Buildings dokładnie pięcioma produktami: Wood → Lumber Camp, Planks → Sawmill, Stone → Quarry, Grain → Farm i Food → Windmill. Kliknięcie otwiera ten sam panel co budynek na wyspie. Nad ilustracją produktu jest liczba aktywnie pracujących w tym zakładzie, a pod nią wolni mieszkańcy w domu / maksymalna liczba miejsc pracy zakładu. Monety nie mają karty produktu. Buildings przywraca karty budynków.
 
 | Element | Co otwiera lub pokazuje |
 | --- | --- |
@@ -12,33 +14,41 @@ Widok zachowuje zaakceptowany układ i grafikę wyspy, z kontrolkami HTML i resp
 | Settings | Zapis, animacje, lokalny wynik rankingu i potwierdzany reset |
 | Sign in or create an account | Stronę formularzy konta; gra gościa pozostaje dostępna |
 | Zasoby | Centralne zapasy, osobny skarbiec monet i logistykę |
-| Level | Poziom ratusza i jego rozbudowę |
+| Level | Poziom ratusza, jego rozbudowę i zarządzanie kolejką budowy |
 | Happiness | Średnią osobistego szczęścia i tempo demografii |
-| Residents | Przydziały, dostępnych, idących i wracających, wizyty, osobiste szczęście i podatki |
+| Residents | Informacyjny przegląd osób, przydziałów, podróży, szczęścia i podatków; przejście do domu |
+| House → Manage all workers | Jedyne wejście do zbiorczego zarządzania obsadą wszystkich miejsc pracy |
 | Zegar | Rzeczywisty czas wyspy; bez kontroli pauzy i przyspieszenia gospodarki |
 | Budynki / dolny dok | Szczegóły, koszty, pracowników, transport i Upgrade danego budynku |
+| Dolne Resources | Pięć obrazkowych kart produktów z aktywną obsadą i wolnymi / limitem; wybór otwiera właściwego producenta |
 | Lighthouse tasks | Trzy bieżące zadania, nagrody, terminy i wpłaty |
 | Expeditions | Osobne plansze i pulę monet do wypłaty albo dalszego ryzyka |
 | Harbor / statek | Paczki handlu portowego, ceny i etapy dostawy |
 | Ścieżki / dekoracje | Dostępne ulepszenia wyspy |
 
-Animacje obejmują obrót wiatraka, unoszący się i zanikający dym, mewy, wodospady, fale i przybój przy całym widocznym brzegu, idące postacie, chmury, budowę i zwierzęta. Ich szczegóły i ograniczenia warstw opisuje [WORLD-ANIMATION.md](WORLD-ANIMATION.md). Ograniczenie ruchu lub niewidoczna karta może zatrzymać rysowanie efektów, ale gospodarka nadal rozlicza czas rzeczywisty.
+Animacje obejmują obrót wiatraka, unoszący się i zanikający dym, mewy, wodospady, fale i przybój przy całym widocznym brzegu, idące postacie, chmury, budowę i zwierzęta. Ich szczegóły i ograniczenia warstw opisuje [WORLD-ANIMATION.md](WORLD-ANIMATION.md). Domyślnie gra respektuje systemowe ograniczenie ruchu. Świadoma zmiana Animations and highlights w Settings ma jednak pierwszeństwo i jest zapisywana: włączenie uruchamia efekty również przy ograniczeniu systemowym, wyłączenie je zatrzymuje. Niewidoczna karta wstrzymuje rysowanie, a powrót je przywraca. Dawne flagi pause/speed nie sterują obrazem; gospodarka nadal rozlicza czas rzeczywisty.
 
 ## Rozpoczęcie gry
 
 Bez istniejącego zapisu powstaje wyspa z ratuszem i domem 1, 12 mieszkańcami w domu, 0 pracowników i szczęściem 0%. Każdy z sześciu zasobów ma 100: Coins, Wood, Stone, Grain, Food, Planks. Lokalne składy producentów są puste. Odświeżenie zachowuje istniejącą wyspę; nie przyznaje ponownie zasobów startowych.
 
+Na prośbę użytkownika ta aktualizacja ma osobne, **jednorazowe uzupełnienie materiałów centralnych do testowania budowy**, wykonywane przy najbliższym wczytaniu. Respektuje oba limity magazynu i zapisuje wykonanie, więc kolejne odświeżenie nie odnawia materiałów. Zapewnia także minimum **10 000 monet**, zachowując większe istniejące saldo. Nie podnosi poziomów i nie zmienia obsady, populacji czy budów. Nie jest częścią zwykłego startu ani usługą Premium.
+
 Poziom ratusza wyznacza poziom gry, maksymalny poziom innych budynków i limit `24 × poziom ratusza` mieszkańców. Dom ma własne `24 × poziom domu` miejsc mieszkalnych. Przy ratuszu 4, domu 3 i 78 osobach limit osady wynosi 96, miejsc jest 72, a 6 osób bez miejsca powoduje −6 pp/h dla każdej uprawnionej osoby. Dopiero ukończenie większego domu zatrzymuje dalszą karę. Minimum populacji to 6 osób, maksimum techniczne poziomu 100.
 
 ## Praca, produkcja i podatki
 
-Na starcie trzeba samodzielnie przypisać ludzi z domu. Pracować można w farmie, młynie, drwalach, tartaku, kamieniołomie, magazynie, targu i porcie. Limit wynosi `12 × własny poziom miejsca pracy`, z jednej puli wolnych osób. Targ otwiera ratusz 2, port ratusz 4. Dom, ratusz, kaplica i latarnia nie mają etatów.
+Na starcie trzeba samodzielnie przypisać ludzi z domu. Pracować można w farmie, młynie, drwalach, tartaku, kamieniołomie, magazynie, targu i porcie. Limit każdego miejsca pracy wynosi `12 × własny poziom budynku`, z jednej puli wolnych osób. Targ otwiera ratusz 2, port ratusz 4. Dom, ratusz, kaplica i latarnia nie mają etatów.
 
 Dojście do pracy zajmuje 5 min. Dopiero po dotarciu zaczyna się praca i podatek 1 moneta/os./h. Zwolnienie oznacza 5 min powrotu, bez podatku i możliwości kolejnego przydziału. Gotowe towary zostają, niedokończona sztuka przepada. Podatek płynie również przy głodzie lub blokadzie produkcji, a jego ułamkowy postęp jest zapisany.
 
-Własny poziom producenta zwiększa limit załogi oraz wydajność na osobę: poziomy 1/2/3/4 dają 10/12/13/14 szt./h. Każdy ma osobną fazę sztuki. Farma produkuje zboże, drwale drewno, kamieniołom kamień. Młyn zużywa 2 centralne zboża na 1 lokalną żywność, tartak 2 centralne drewna na 1 lokalną deskę. Brak materiału albo pełny bufor zatrzymuje produkcję.
+Własny poziom producenta zwiększa lokalną pojemność i wydajność na osobę: poziomy 1/2/3/4 dają 10/12/13/14 szt./h. Każdy ma osobną fazę sztuki. Farma produkuje zboże, drwale drewno, kamieniołom kamień. Młyn zużywa 2 centralne zboża na 1 lokalną żywność, tartak 2 centralne drewna na 1 lokalną deskę. Brak materiału albo pełny bufor zatrzymuje produkcję.
 
-Pięć kompaktowych paneli producentów ma Level i Storage z małym czasem do sztuki, a niżej Workers aktualni/limit z małym −/+ i Taxes. Wyjaśnienia są pod „i”. W ratuszu zamiast pracowników i odbioru są mieszkańcy obecni/limit oraz podatki/h. Ratusz nie ma przydziału ani odbioru produkcji.
+Wszystkie budynki mają u góry status odpowiadający ich funkcji. Producent pokazuje Producing, Waiting for workers, Storage full albo Waiting for resources; przy produkcji także najbliższy czas, produkt i liczbę sztuk, które trafią do lokalnego składu. Storage ma format **obecny zapas / pojemność na tym poziomie / pojemność po jednym ulepszeniu**, np. 50 / 200 / 400. Workers pokazuje **przypisani / wolni w domu / limit tego budynku**, np. 1 / 4 / 12, z małymi −/+. Taxes to bieżący przychód podatkowy tego budynku na godzinę. W ratuszu zamiast etatów są mieszkańcy i podatki całej wyspy.
+
+Licznik nad ilustracją produktu w dolnym doku pokazuje rzeczywistą pracę: osoba musi już dotrzeć i nie mieć blokady produkcji. Osoba idąca lub czekająca przy pełnym składzie nie zwiększa tego licznika; głodny, ale pracujący producent nadal jest liczony przy swojej połowie wydajności. Jest to inne pole niż liczba wszystkich przypisanych w panelu Workers. Limity obsady i norma wymagań zadań pozostają bez zmian.
+
+House pokazuje cztery wartości: obecną populację, limit według ratusza, miejsca do spania i tempo przyrostu/spadku. Opisy Housing capacity oraz House happiness są pod „i”. Wszystkie przyciski pomocy działają po najechaniu, fokusem i dotykiem; nie wymagają stałych bloków opisowych.
 
 ## Jedzenie i szczęście osób
 
@@ -56,7 +66,11 @@ W House można rozdysponować dzienną pulę szczęścia równą liczbie mieszka
 
 ## Transport i handel
 
-Towar producenta mieści się w osobnym buforze `200 × poziom ratusza` i staje się dostępny do wydania dopiero centralnie. Magazynier niesie jeden rodzaj na kurs, pełny lub częściowy. Kurs z powrotem trwa 5 min, przy głodzie efektywnie 10 min. Ładunek transportowego budynku poziomu 1/2/3 to 60/66/72. Domyślnie zaopatrzenie centrali jest przed budowami; można zmienić priorytety materiału, producenta i budowy. Towar zabrany przez odwołaną osobę dokończy kurs.
+Towar producenta mieści się w osobnym buforze `200 × własny poziom producenta` i staje się dostępny do wydania dopiero centralnie. Magazynier niesie jeden rodzaj na kurs, pełny lub częściowy. Kurs z powrotem trwa 5 min, przy głodzie efektywnie 10 min. Ładunek transportowego budynku poziomu 1/2/3 to 60/66/72. Domyślnie zaopatrzenie centrali jest przed budowami. Towar zabrany przez odwołaną osobę dokończy kurs.
+
+W Warehouse od razu widać, co robi każdy magazynier: materiał, liczbę sztuk, źródło → cel oraz czas do końca aktualnej dostawy. Oczekiwanie i droga pracownika są osobnymi stanami, zamiast pozornego aktywnego kursu. Można wybrać do trzech podświetlonych priorytetów z numerami 1/2/3. Ich przydział liczy rzeczywiście rozpoczęte kursy, również niepełne; brak gotowego towaru albo miejsca nie zatrzymuje wolnej załogi, która może obsłużyć inny dostępny przewóz. Ratunkowa dostawa Food zachowuje ochronę mieszkańców.
+
+Priorytety pozostają wybrane do ręcznej zmiany. Powtarzane dziesiątki kursów mają podział 8 +2 losowe przy jednym priorytecie, 5 +3 +2 losowe przy dwóch i 5 +3 +2 przy trzech. Brak wskazanego ładunku pozwala wykonać dostępny kurs zastępczy; stan dziesiątki i losowania są zachowane przy wczytaniu.
 
 Magazyn ma 1000 na rodzaj i 4000 łącznie na poziomie 1; oba limity rosną ×1,5 z każdym kolejnym poziomem. Port ma analogiczne limity, targ 1000 łącznie ×1,5. Monety nie zajmują miejsca. Powiadomienia o pełnych składach pojawiają się przy zmianie stanu, z zapisem przeczytania.
 
@@ -67,6 +81,10 @@ Port używa własnej załogi i paczek po 100. Podstawowe surowce sprzedaje/kupuj
 ## Rozbudowa i usługi za monety
 
 Upgrade dotyczy wybranego budynku bez dodatkowego wybierania miejsca. Koszt pokazuje centralne posiadane/wymagane na czerwono albo zielono. Wyjaśnienia źródła kosztu i czasu są w popupie „i”, z obsługą dotyku, fokusu i Escape. Opłacone materiały są rezerwowane, dowożone, a nowy poziom działa po ukończeniu. Postęp dostarczone/wymagane i ETA odpowiadają obecnym priorytetom.
+
+Licznik Construction / Queue oraz wejście Construction and queue występują tylko w Town Hall. Każdy budynek zachowuje własne Upgrade. W farmie, młynie, drwalach, tartaku i kamieniołomie obok Upgrade znajdują się dwie małe informacje: **Delivery time** oraz **Building time**. W tej samej sekcji Building upgrade jest obramowana ramka **Premium** z dwoma dotychczasowymi głównymi przyciskami. Opisy monet, odblokowania i zasad Premium są w informacji „i” rozbudowy; osobna dolna sekcja Premium building options została usunięta z producentów. Kontrolki skracania już trwającej budowy pozostają dostępne przy tej rozbudowie.
+
+Estymata rozdziela dowóz i budowanie, uwzględnia bieżącą załogę, jej drogę, zabrane ładunki, konkurujące dostawy i ustawione priorytety. Zakłada obecne warunki pracy oraz gotowość potrzebnych materiałów; zbieranie i kolejka są poza tym czasem. Brak możliwej trasy lub obsady ma opis przyczyny zamiast pozornego zera. Do zbiorczego Manage all workers wchodzi się tylko z House; pozostałe budynki zachowują własne małe −/+.
 
 Standardowy czas to transport `T` + budowa `T`; latarnia `T +4T`, kaplica `T +3T×(nowy poziom−1)`. Dokładne ceny, dopłatę +10% w kolejce i przykłady zawiera [tabela budynków](BUILDINGS.md). Zwykły limit to tyle aktywnych i tyle opłaconych w kolejce, ile poziomów ratusza.
 
@@ -84,9 +102,11 @@ Z House można wysłać wolne osoby na 4 h zwiedzania bez czasu dojścia i bez w
 
 ## Zadania i ekspedycje
 
-Prawy panel pokazuje trzy zadania latarni z nagrodami, wpłatami i osobnymi terminami. Na starcie są S/M/L; później każdy nowy losowy rozmiar trafia na koniec FIFO. Przyjęcie przed 15 s zapisuje mnożnik ×3, przed 5 min ×2, później ×1. Wpłaty są w ratach prosto z centrali, bez przewozu i zwrotu; przeterminowane przepadają. Po pełnej wpłacie nagroda jest jednorazowa, a nowa karta pojawia się od razu. Materiały przekraczające pojemność czekają w automatycznie zwalnianym buforze nagród.
+Prawy panel pokazuje trzy zadania latarni z nagrodami, wpłatami i osobnymi terminami. **Aktywne może być tylko jedno zadanie.** Przyjęcie na liście od razu podświetla tę samą kartę jako Active także po prawej, z osobnym dostarczone / wymagane dla każdego towaru, np. Planks 100 / 480 i Food 345 / 480. Pozostałe karty w obu widokach są wyszarzone, a rozpoczęcie ich i wpłaty są zablokowane. Można nadal podejrzeć wymagania. Ukończenie albo wygaśnięcie zwalnia miejsce aktywnego zadania.
 
-Początkowe terminy to 6 h. Pierwsze ukończenie każdego łańcucha wyznacza jego stałą dobową godzinę odnowienia w Europe/Warsaw. Wymagania zależą od maksymalnej produkcji właściwych budynków, a nagrody skalują się wobec poziomu 3. Szczegóły i zakresy są w [ECONOMY-RULES.md](ECONOMY-RULES.md).
+Na starcie są S/M/L; później każdy nowy losowy rozmiar trafia na koniec FIFO. Przyjęcie przed 15 s zapisuje mnożnik ×3, przed 5 min ×2, później ×1. Wpłaty są w ratach prosto z centrali, bez przewozu i zwrotu; przeterminowane przepadają. Po pełnej wpłacie nagroda jest jednorazowa, a nowa karta pojawia się od razu. Materiały przekraczające pojemność czekają w automatycznie zwalnianym buforze nagród. Migracja starszego zapisu nie kasuje rat ani zapisanego mnożnika; spośród wcześniej przyjętych zadań aktywne jest jedno, a pozostałe zachowują swój postęp i termin.
+
+Początkowe terminy to 6 h. Pierwsze ukończenie każdego łańcucha wyznacza jego stałą dobową godzinę odnowienia w Europe/Warsaw. Wymagania zachowują zatwierdzoną normę `12 × własny poziom producenta × jego wydajność × godziny`, podobnie jak dotychczasowy limit miejsc pracy. Norma nie jest obietnicą zebrania całości od zera w takim czasie przy wspólnej populacji i karmieniu. Nagrody nadal skalują się wobec poziomu 3. Szczegóły i zakresy są w [ECONOMY-RULES.md](ECONOMY-RULES.md).
 
 Ekspedycja wypłaca tylko monety. Za pierwszy etap pula wynosi 50, za kolejne 100, 200, 400… Można ją wypłacić albo postawić całą na dalszy etap; porażka lub limit czasu traci niewypłaconą pulę. Gra sprawdza trasę i bieżący etap, nie przyznaje dawnych dodatkowych materiałów. Dokupowanie ruchów/czasu, zewnętrzne reklamy i ich nagrody czekają na zdefiniowanie i weryfikację.
 

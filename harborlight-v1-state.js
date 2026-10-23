@@ -1,12 +1,12 @@
 // Economy and progression for the interactive approved-screen prototype.
 // Pure data module: browser UI and Node tests share the same rules.
-import { MATERIAL_IDS, PRODUCTION_RECIPES, receiveMaterials, stockRoom, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction } from './harborlight-v1-logistics.js?v=rules-v9';
-export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty } from './harborlight-v1-logistics.js?v=rules-v9';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction } from './harborlight-v1-logistics.js?v=frontend-v11';
+export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty } from './harborlight-v1-logistics.js?v=frontend-v11';
 
-import { normalizeResidents, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, nextResidentEvent, settleResidentEvents, residentVisitAction, removeResidentForDeparture } from './harborlight-v1-residents.js?v=rules-v9';
-export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=rules-v9';
+import { normalizeResidents, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, nextResidentEvent, settleResidentEvents, residentVisitAction, removeResidentForDeparture } from './harborlight-v1-residents.js?v=frontend-v11';
+export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v11';
 
-import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction } from './harborlight-v1-activities.js?v=rules-v9';
+import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction } from './harborlight-v1-activities.js?v=frontend-v11';
 
 export const RESOURCES = {
   coins: { name: 'Coins', short: 'coins', symbol: '◉', price: 1 },
@@ -78,7 +78,8 @@ export function createState(now = Date.now()) {
     buildings,
     objective: { wood: 20, stone: 12, repaired: false },
     speed: 1, paused: false, day: 18, minutes: 564,
-    settings: { sound: false, motion: true },
+    settings: { sound: false, motion: true, motionOverride: false },
+    previewBuildStockVersion: null,
     tasks: Object.fromEntries(TASKS.map(task => [task.id, false])),
     expeditions: {},
     statistics: { collected: 0, upgrades: 0, crafted: 0, expeditions: 0, traded: 0, taxCollected: 0 },
@@ -100,6 +101,33 @@ export function totalWorkers(state) {
 
 export function workerLimit(state, id) {
   return WORKPLACE_IDS.includes(id) && state.buildings[id].level > 0 && workplaceUnlocked(state, id) ? 12 * state.buildings[id].level : 0;
+}
+
+// One release-specific preview grant; the UI applies it after offline catch-up.
+// The normal starter kit and subsequent simulation never replenish this stock.
+export const BUILD_TEST_STOCK_VERSION = 'frontend-v10';
+export function applyBuildTestStock(state) {
+  if (state.previewBuildStockVersion === BUILD_TEST_STOCK_VERSION) return false;
+  const limits = warehouseLimits(state);
+  let remaining = Math.max(0, limits.total - warehouseUsed(state));
+  while (remaining > 0) {
+    const eligible = MATERIAL_IDS.filter(id => state.resources[id] < limits.perResource)
+      .sort((a, b) => state.resources[a] - state.resources[b]);
+    if (!eligible.length) break;
+    const lowest = state.resources[eligible[0]];
+    const group = eligible.filter(id => state.resources[id] === lowest);
+    const next = eligible.find(id => state.resources[id] > lowest);
+    const target = next ? Math.min(limits.perResource, state.resources[next]) : limits.perResource;
+    const step = Math.min(remaining, (target - lowest) * group.length);
+    const each = Math.floor(step / group.length), extra = step % group.length;
+    group.forEach((id, index) => { state.resources[id] += each + (index < extra ? 1 : 0); });
+    remaining -= step;
+  }
+  state.resources.coins = Math.max(10000, state.resources.coins);
+  state.previewBuildStockVersion = BUILD_TEST_STOCK_VERSION;
+  updateStorageStatus(state);
+  notify(state, 'preview-stock', 'Warehouse ready for building tests', 'Central storage has been filled to its current limits and the treasury has at least 10,000 coins, once for this preview.');
+  return true;
 }
 
 export function freeWorkers(state) {
@@ -421,7 +449,8 @@ export function normalizeState(raw, now = Date.now()) {
   state.paused = false;
   state.day = integer(raw.day, 18, 1, 99999);
   state.minutes = amount(raw.minutes, 564, 1439.999);
-  for (const key of ['sound', 'motion']) state.settings[key] = typeof raw.settings?.[key] === 'boolean' ? raw.settings[key] : state.settings[key];
+  for (const key of ['sound', 'motion', 'motionOverride']) state.settings[key] = typeof raw.settings?.[key] === 'boolean' ? raw.settings[key] : state.settings[key];
+  state.previewBuildStockVersion = raw.previewBuildStockVersion === BUILD_TEST_STOCK_VERSION ? BUILD_TEST_STOCK_VERSION : null;
   for (const task of TASKS) state.tasks[task.id] = raw.tasks?.[task.id] === true;
   for (const expedition of EXPEDITIONS) {
     const record = raw.expeditions?.[expedition.id];
@@ -799,6 +828,7 @@ export function act(state, action, now = Date.now()) {
     case 'setting':
       if (!['sound', 'motion'].includes(action.key) || typeof action.value !== 'boolean') return bad('Invalid setting.');
       state.settings[action.key] = action.value;
+      if (action.key === 'motion') state.settings.motionOverride = action.value;
       result = good('Settings saved.');
       break;
     default:

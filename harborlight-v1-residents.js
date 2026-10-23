@@ -50,7 +50,7 @@ export function residentProductionBlocked(state, person) {
   if (!person.workplace || person.arrivalRemaining > EPS || !Object.hasOwn(producerRecipes, person.workplace)) return false;
   const building = state.buildings[person.workplace];
   const input = producerRecipes[person.workplace];
-  return !!(building.ready >= 200 * state.buildings.townhall.level || (input && state.resources[input] < 2));
+  return !!(building.ready >= 200 * building.level || (input && state.resources[input] < 2));
 }
 export const residentIsWorking = (state, person) => !!person.workplace && person.arrivalRemaining <= EPS && !person.visitGroup && !residentProductionBlocked(state, person);
 
@@ -67,7 +67,14 @@ function newResident(state, happiness = 0, newborn = false) {
     visitGroup: null, prayerRemaining: 0, visitHappinessRemaining: 0, visitCooldownRemaining: 0,
     preVisitHappiness: null, globalLighthouseSnapshot: state.lighthouseRemaining > EPS ? happiness : null };
 }
-function releaseResident(person) {
+function releaseResident(state, person) {
+  const crewIndex = state.residents.filter(resident => resident.workplace === person.workplace).indexOf(person);
+  // Loaded cargo completes its course independently after a recall. Do not
+  // attach it to a new resident who later occupies the same crew index.
+  for (const trip of state.haulTrips?.[person.workplace] || []) {
+    if (trip.worker === crewIndex) trip.worker = -1;
+    else if (trip.worker > crewIndex) trip.worker--;
+  }
   person.workplace = null; person.arrivalRemaining = 0; person.returnRemaining = WALK_SECONDS;
   person.unemployedSeconds = 0; person.blockedSeconds = 0;
 }
@@ -155,7 +162,7 @@ export function synchronizeResidents(state) {
   for (const id of RESIDENT_WORKPLACES) {
     const desired = unlocked(state, id) ? Math.max(0, state.buildings[id].workers) : 0;
     const crew = state.residents.filter(person => person.workplace === id);
-    for (const person of crew.slice(desired)) releaseResident(person);
+    for (const person of crew.slice(desired)) releaseResident(state, person);
     let missing = desired - Math.min(desired, crew.length);
     const assigned = [];
     for (const person of state.residents.filter(residentAtHome)) {
@@ -231,7 +238,7 @@ export function assignResidents(state, id, delta) {
     state.residents = state.residents.filter(person => !assigned.includes(person)).concat(assigned);
   } else {
     const assigned = state.residents.filter(person => person.workplace === id);
-    for (const person of assigned.slice(delta)) releaseResident(person);
+    for (const person of assigned.slice(delta)) releaseResident(state, person);
   }
   settleResidentEvents(state);
 }

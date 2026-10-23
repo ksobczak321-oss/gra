@@ -18,7 +18,7 @@ errors=[]; failures=[]
 def fixture(level=2,workers=None,resources=None):
     buildings={id:{'level':0 if id=='lighthouse' else 1,'workers':(workers or {}).get(id,0),'ready':0,'workProgress':[]} for id in IDS}
     buildings['townhall']['level']=level; buildings['house']['level']=level; buildings['warehouse']['level']=level
-    return {'version':6,'buildings':buildings,'resources':{'coins':1000,**dict.fromkeys(MATERIALS,1000),**(resources or {})},'population':24,'happiness':0,'baseHappiness':0,'settings':{'motion':False}}
+    return {'version':6,'previewBuildStockVersion':'frontend-v10','buildings':buildings,'resources':{'coins':1000,**dict.fromkeys(MATERIALS,1000),**(resources or {})},'population':24,'happiness':0,'baseHappiness':0,'settings':{'motion':False}}
 
 def project(building,target,stage='building',remaining=1):
     return {'building':building,'targetLevel':target,'goodsTotal':2500,'goodsRemaining':0,'transportSeconds':100,'buildRemaining':remaining,'stage':stage,'order':1,'cost':{'coins':500,**dict.fromkeys(MATERIALS,500)}}
@@ -45,7 +45,7 @@ def open_building(page,id):
     page.locator('#hit-world-'+id).click()
 def queue_view(page):
     if page.locator('#island-dialog').evaluate('(node)=>node.open'):page.locator('.dialog-close').click()
-    page.locator('#hit-menu').click();page.get_by_role('button',name='Construction and queue',exact=True).click()
+    page.locator('#hit-world-townhall').click();page.get_by_role('button',name='Construction and queue',exact=True).click()
 
 with sync_playwright() as p:
     browser=p.chromium.launch(executable_path=os.environ.get('HARBORLIGHT_CHROMIUM','/usr/bin/chromium'),args=['--no-sandbox'])
@@ -158,7 +158,7 @@ with sync_playwright() as p:
         state=saved(page);assert state['lighthouseRemaining']==172800;assert state['buildings']['lighthouse']['level']==2
         open_building(page,'farm')
         expect(page.locator('[data-local-rate]')).to_have_text('20 units/h')
-        page.clock.fast_forward(180000);expect(page.locator('[data-local-buffer="farm"]')).to_have_text('1 / 400')
+        page.clock.fast_forward(180000);expect(page.locator('[data-local-buffer="farm"]')).to_have_text('1 / 200 / 400')
         context.close();print('PASS lighthouse completion: both bonuses for 48h at level2, actual doubled production, no tax multiplier')
 
         data=fixture(workers={'farm':1,'warehouse':1},resources=dict.fromkeys(MATERIALS,100))

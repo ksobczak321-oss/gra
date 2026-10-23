@@ -41,14 +41,14 @@ def run():
         buildings={id:{'level':4 if id in ['townhall','warehouse','house'] else 1,'workers':0,'ready':0,'workProgress':[]} for id in BUILDINGS}
         now=datetime(2026,10,23,12,0,0,tzinfo=timezone.utc)
         page.clock.install(time=now);page.clock.pause_at(now)
-        data={'version':7,'paused':True,'speed':4,'population':23,'happiness':0,'baseHappiness':0,'buildings':buildings,
+        data={'version':7,'previewBuildStockVersion':'frontend-v10','paused':True,'speed':4,'population':23,'happiness':0,'baseHappiness':0,'buildings':buildings,
               'resources':{'coins':3000,**dict.fromkeys(MATERIALS,2000)},
               'notifications':[{'id':41,'kind':'storage-full','title':'Farma: magazyn jest pełny','message':'Pełny zapas: zboże. Produkcja czeka na transport.','at':10,'read':True},
                                {'id':42,'kind':'construction-start','title':'Ratusz: poziom 2','message':'materiały zarezerwowane, oczekiwanie na transport','at':12,'read':False}],
               'notificationSequence':42}
         page.add_init_script('''if(!sessionStorage.getItem('language-fixture')){localStorage.setItem(%s,%s);sessionStorage.setItem('language-fixture','1')}'''%(json.dumps(KEY),json.dumps(json.dumps(data))))
         assert page.goto(BASE+'/harborlight-v1-layered.html').status==200
-        page.wait_for_function('document.getElementById("loading").hidden && document.querySelectorAll(".island-hotspot").length===48')
+        page.wait_for_function('document.getElementById("loading").hidden && document.querySelectorAll(".world-hotspot").length===12')
         assert page.locator('html').get_attribute('lang')=='en'
         assert page.title()=='HARBORLIGHT — Your Island'
         language_check(page,'island HUD')

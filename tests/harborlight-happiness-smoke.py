@@ -26,7 +26,7 @@ def fixture(values=None, jobs=None, hunger=0, unemployment=0, food=100):
     buildings = {key: {'level': 0 if key == 'lighthouse' else 1,
                       'workers': sum(person['workplace'] == key for person in residents),
                       'ready': 0, 'workProgress': []} for key in IDS}
-    return {'version': 8, 'population': 6, 'residentSequence': 6, 'residents': residents,
+    return {'version': 8, 'previewBuildStockVersion': 'frontend-v10', 'population': 6, 'residentSequence': 6, 'residents': residents,
             'happiness': sum(values) / len(values), 'baseHappiness': sum(values) / len(values),
             'buildings': buildings, 'resources': {'coins': 100, **dict.fromkeys(MATERIALS, 100), 'food': food},
             'lastSimulatedAt': int(NOW.timestamp() * 1000),

@@ -79,7 +79,7 @@ test('blocked producers still count for tax and have no work bonus or duplicate 
 test('full buffer only penalizes the affected arrived crew; partial storage alone is not a blockage', () => {
   const s = fixture(); hire(s, 'farm', 1, true); hire(s, 'lumber', 1, true);
   const farmer = s.residents.find(p => p.workplace === 'farm'); const logger = s.residents.find(p => p.workplace === 'lumber');
-  s.buildings.farm.ready = 200 * s.buildings.townhall.level;
+  s.buildings.farm.ready = 200 * s.buildings.farm.level;
   assert.equal(residentOffset(s, farmer), -10); assert.equal(residentOffset(s, logger), 0);
   s.buildings.farm.ready--;
   assert.equal(residentOffset(s, farmer), 0);

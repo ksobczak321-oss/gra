@@ -40,6 +40,7 @@ def fixture(page):
       const state = createState();
       for (const [id,b] of Object.entries(state.buildings)) { b.level=id==='lighthouse'?1:id==='farm'?3:4; b.workers=0; }
       state.resources={coins:100000,wood:2000,stone:2000,grain:2000,food:2000,planks:2000};
+      state.previewBuildStockVersion='frontend-v10';
       state.residents.forEach(person=>{person.workplace=null;person.arrivalRemaining=0;person.returnRemaining=0;});
       state.lastSimulatedAt=Date.now();state.worldTimeMs=Date.now();state.savedAt=Date.now();
       return JSON.stringify(state);
@@ -90,7 +91,7 @@ with sync_playwright() as playwright:
 
     # First specific task click locks the early reward before any contribution.
     page.locator('.activity-task-button').first.click()
-    expect(page.locator('[data-task-accept]').first).to_have_text('Bonus locked ×3')
+    expect(page.locator('[data-task-accept]').first).to_have_text('Active · bonus ×3')
     initial=saved(page);task=initial['lighthouseTasks'][0]
     resource=next(iter(task['requirements']))
     field=page.locator(f'[data-task-input="{task["id"]}-{resource}"]')

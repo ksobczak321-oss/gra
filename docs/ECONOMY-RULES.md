@@ -1,6 +1,6 @@
 # Uzgodnione reguły gospodarki HARBORLIGHT
 
-Stan: 2026-10-23, lokalny prototyp, schemat zapisu 8. Źródłem są wpisy użytkownika w HARBORLIGHT6 i wszystkie zaakceptowane decyzje D01–D17, uporządkowane w [HARBORLIGHT7-zasady.xlsx](arkusze/HARBORLIGHT7-zasady.xlsx). Dokument opisuje obecną implementację; wcześniejsze wpisy dziennika zachowują historyczne reguły i wyniki publikacji. Bieżące sprawdzenia oraz stan wdrożenia zapisujemy w [dzienniku](IMPLEMENTATION-LOG.md).
+Stan: 2026-10-23, lokalny prototyp, schemat zapisu 8. Źródłem bazowym są HARBORLIGHT6 i decyzje D01–D17 z [HARBORLIGHT7-zasady.xlsx](arkusze/HARBORLIGHT7-zasady.xlsx), uzupełnione późniejszym pakietem frontendu zatwierdzonym „go”. Najnowsza rozmowa zmieniła lokalną pojemność na zależną od samego producenta; limit pracy nadal wynika z własnego poziomu danego miejsca pracy. Oryginalnego arkusza 7 nie zmieniano. Wcześniejsze wpisy dziennika zachowują historyczne reguły i wyniki publikacji. Bieżące sprawdzenia oraz stan wdrożenia zapisujemy w [dzienniku](IMPLEMENTATION-LOG.md).
 
 ## Czas i start
 
@@ -8,11 +8,15 @@ Wszystkie mechaniki używają rzeczywistego czasu, również przy ukrytej karcie
 
 Nowa wyspa: ratusz 1, dom 1, 12 osób w domu, **0 pracowników**, szczęście 0%, po 100 monet, drewna, kamienia, zboża, żywności i desek. Startowa dwunastka nie podlega blokadzie szczęścia noworodków. Starszy zapis zachowuje istniejący postęp; migracja do schematu 8 rozpoczyna nowy model czasu od chwili migracji, bez dopisywania nieznanej historii offline.
 
+Wyłącznie dla testowania budowy w tej piaskownicy aktualizacja ma jednorazowo uzupełnić materiały centralne przy następnym otwarciu. Oba limity pojemności obowiązują. Saldo monet jest uzupełniane do minimum **10 000**, bez obniżania większego salda; poziomy i istniejący postęp pozostają zachowane. Zapisane wykonanie uniemożliwia ponowny grant po samym odświeżeniu. Zwykła reguła startu po 100 pozostaje odrębna.
+
 Poziom ratusza jest poziomem gry i maksymalnym poziomem pozostałych budynków. Limit populacji wynosi `24 × poziom ratusza`, miejsca mieszkalne `24 × poziom domu`. Minimum populacji to 6; techniczne maksimum poziomu wynosi 100.
 
 ## Człowiek, praca i podatki
 
-Każda osoba ma trwałe ID, indywidualne szczęście, stan miejsca pobytu i własne liczniki. Dokładnie osiem miejsc pracy: farma, młyn, drwale, tartak, kamieniołom, magazyn, targ i przystań. Limit miejsca pracy to **12 × własny poziom budynku**. Ratusz ogranicza rozbudowę budynku, a dostępne osoby w domu ograniczają faktyczny nowy przydział. Ratusz, dom, kaplica i latarnia nie zatrudniają.
+Każda osoba ma trwałe ID, indywidualne szczęście, stan miejsca pobytu i własne liczniki. Dokładnie osiem miejsc pracy: farma, młyn, drwale, tartak, kamieniołom, magazyn, targ i przystań. Limit każdego miejsca pracy to **12 × własny poziom budynku**. Ratusz nadal ogranicza rozbudowę budynku; liczba wolnych osób w domu ogranicza rzeczywisty nowy przydział. W panelu są trzy liczby: przypisani / wolni w domu / limit, a podatek dotyczy tego miejsca pracy. Ratusz, dom, kaplica i latarnia nie zatrudniają.
+
+Manage all workers jest zbiorczym narzędziem otwieranym wyłącznie z domu. Globalny Residents pokazuje informacje o mieszkańcach i kieruje do domu, a w poszczególnych miejscach pracy pozostają własne małe −/+. To organizacja dostępu w interfejsie, bez zmiany limitów, kosztów czy czasu dojścia.
 
 Dojście do pracy trwa 300 sekund. Dopiero po dotarciu zaczynają się praca, produkcja/transport i podatki. Zwolnienie zawsze uruchamia 300 sekund powrotu do domu; w tym czasie nie ma nowego przydziału ani podatku. Niedokończona sztuka produkcji przepada, gotowe towary pozostają. Już zabrany ładunek kończy swój kurs również po odwołaniu osoby.
 
@@ -65,11 +69,25 @@ Wydajność nakarmionego pracownika na kolejnych poziomach producenta wynosi **1
 | Młyn | 2 zboża | 1 żywność |
 | Tartak | 2 drewna | 1 deska |
 
-Lokalny skład producenta mieści `200 × poziom ratusza`. Zboże i drewno muszą przejść przez centralę przed przetworzeniem. Nie ma ręcznego odbioru omijającego transport.
+Lokalny skład producenta mieści `200 × własny poziom producenta`. Rozbudowa ratusza sama nie zwiększa już jego bufora. Pojemność w panelu to zapas / obecny limit / limit po następnym ulepszeniu; przy poziomie 1 przykład wynosi 50 / 200 / 400. Zboże i drewno muszą przejść przez centralę przed przetworzeniem. Nie ma ręcznego odbioru omijającego transport. Produkcyjny status podaje, dlaczego budynek pracuje lub czeka, oraz najbliższy produkt, liczbę sztuk i czas odłożenia do lokalnego magazynu.
+
+Resources w dolnym pasku ma dokładnie pięć kart produktów: Wood, Planks, Stone, Grain, Food. Każda otwiera panel właściwego producenta. Górny znacznik liczy osoby już przybyłe i faktycznie pracujące bez blokady; dolny pokazuje wolne osoby w domu / dotychczasowy limit zakładu. Ten widok nie zmienia receptur ani normy wymagań zadań. Monety są walutą skarbca, bez osobnej karty produktu w tym pasku.
 
 Pełny kurs z powrotem trwa **5 minut**, a głodnemu pracownikowi efektywnie 10 minut. Każdy kurs niesie jeden rodzaj materiału; pracownik zabiera dostępny częściowy ładunek i nie czeka na zapełnienie. Ładunek magazynu, targu i portu to `floor(60 × 1,1^(własny poziom−1))`: 60, 66, 72… Jedna osoba na poziomie 1 może wykonać 12 kursów, czyli przewieźć do 720 szt./h przy stale pełnych ładunkach. Dawne 60 szt./h zastąpiono tym modelem.
 
-Kursy liczymy jako **sumę `ceil(ilość danego materiału / ładunek)`**, nie sufit sumy wszystkich materiałów. Przykład: 61 drewna i 1 kamień przy ładunku 60 wymagają 3 kursów. Priorytety określają materiał, producenta, konkretną budowę oraz kolejność centrala/budowy; domyślnie zaopatrzenie centrali poprzedza budowy. Ratunkowy Food ma pierwszeństwo. Towar opuszcza źródło przy zabraniu i staje się dostępny w celu po zakończeniu kursu.
+Kursy liczymy jako **sumę `ceil(ilość danego materiału / ładunek)`**, nie sufit sumy wszystkich materiałów. Przykład: 61 drewna i 1 kamień przy ładunku 60 wymagają 3 kursów. Domyślnie zaopatrzenie centrali poprzedza budowy; można wskazać konkretną budowę. Ratunkowy Food ma pierwszeństwo. Towar opuszcza źródło przy zabraniu i staje się dostępny w celu po zakończeniu kursu. Panel Warehouse pokazuje każdego magazyniera, ładunek, trasę i pozostały czas; wolna osoba jest oznaczona jako oczekująca.
+
+Użytkownik wybiera do trzech materiałów jako podświetlone priorytety 1/2/3. Podział dziesięciu rzeczywistych kursów wynosi:
+
+| Liczba priorytetów | Przydział kursów |
+| --- | --- |
+| Jeden | 8 dla pierwszego, 2 losowe z pozostałych |
+| Dwa | 5 dla pierwszego, 3 dla drugiego, 2 losowe z pozostałych |
+| Trzy | 5 dla pierwszego, 3 dla drugiego, 2 dla trzeciego |
+
+Liczymy także ostatni niepełny kurs. Jeżeli wskazany towar nie jest gotowy albo nie ma dla niego miejsca, magazynier podejmuje inny dostępny przewóz; priorytet nie zatrzymuje całej załogi. Ładunki i stan rozdziału muszą przetrwać wczytanie bez ponownego zabierania towaru.
+
+Zgodnie z doprecyzowaniem użytkownika wybór **nie wygasa po 10 kursach**. Podział powtarza się w kolejnych dziesiątkach, dopóki gracz nie zmieni priorytetów. Stan bieżącego bloku oraz losowania jest zapisywany, aby ponowne wczytanie nie zaczynało stale od priorytetu 1.
 
 ## Magazyn, targ i port
 
@@ -115,6 +133,10 @@ Zwykłe zlecenie rezerwuje od razu pełny koszt z centrali i skarbca, z zachowan
 
 Ratusz `L` daje `L` aktywnych budów oraz `L` opłaconych miejsc kolejki. Nowy poziom i jego skutki działają po ukończeniu. Przed większą rozbudową trzeba zapewnić pojemność magazynu dla całego kosztu i rezerwy Food; zależność od wcześniejszej rozbudowy magazynu jest zamierzona.
 
+Zarządzanie Construction and queue oraz licznik zajętości są dostępne wyłącznie w ratuszu. Każdy budynek nadal pozwala zamówić własną rozbudowę. U pięciu producentów obok Upgrade są małe, oddzielne Delivery time i Building time oraz ramka Premium z dwoma głównymi przyciskami, w obrębie Building upgrade. Opisy monet, usług i sposobu rozbudowy są pod „i” rozbudowy; osobna dolna sekcja Premium building options jest usunięta z producentów. Brak drogi, materiałów lub magazynierów nie jest wyświetlany jako natychmiastowa budowa.
+
+Estymator odtwarza bieżący plan dostaw na kopii stanu: uwzględnia priorytety, ładunki już w drodze, dostępność i dojście magazynierów oraz konkurujące przewozy. Nie zużywa prawdziwych zasobów ani nie zmienia losowania. Podaje oddzielnie transport i budowę przy obecnych warunkach pracy; zbieranie oraz oczekiwanie w kolejce nie wchodzą do tych dwóch czasów. Ograniczona symulacja albo niemożliwa dostawa daje opis przyczyny zamiast fałszywego zera.
+
 ## Kaplica i latarnia
 
 Kaplica poziomu 1 nie daje pasywnego bonusu. Ukończenie rozbudowy do `N` daje +`10N` pp szczęścia i podatki ×2 na 10 h. Osobne darmowe błogosławieństwa mają łączną liczbę użyć równą poziomowi kaplicy. Każde daje natychmiast +50 wszystkich sześciu zasobów i +20 pp szczęścia na 1 h. Nie można nakładać dwóch aktywnych błogosławieństw.
@@ -129,15 +151,15 @@ Poza limitem jednoczesnych miejsc obowiązuje `2L` darmowych wejść w ruchomych
 
 ## Zadania latarni
 
-Zawsze widoczne są trzy zadania i ich nagrody. Na starcie: małe, średnie, duże. Po ukończeniu lub wygaśnięciu nowe losowe zadanie trafia na koniec FIFO; mogą wystąpić trzy małe albo trzy duże.
+Zawsze widoczne są trzy zadania i ich nagrody. Na starcie: małe, średnie, duże. Po ukończeniu lub wygaśnięciu nowe losowe zadanie trafia na koniec FIFO; mogą wystąpić trzy małe albo trzy duże. Aktywne jest maksymalnie **jedno** zadanie: tylko ono przyjmuje wpłaty, a druga akceptacja jest blokowana do ukończenia lub wygaśnięcia bieżącego. Lista i prawy panel pokazują ten sam stan Active oraz dostarczone / wymagane każdego produktu. Pozostałe karty są wyszarzone i nie można ich rozpocząć ani zasilać; podgląd wymagań pozostaje dostępny. Wcześniejsze wpłaty i utrwalony mnożnik starszych zadań są zachowane przy migracji.
 
-| Rozmiar | Wymagane rodzaje | Godziny maksymalnej produkcji danego producenta | Bazowe monety na poziomie 3 | Rodzaje materiałów nagrody |
+| Rozmiar | Wymagane rodzaje | Godziny zachowanej normy produkcyjnej | Bazowe monety na poziomie 3 | Rodzaje materiałów nagrody |
 | --- | --- | --- | --- | --- |
 | Małe | 2 | 2–6 h | 100–200 | 1 |
 | Średnie | 2–3 | 3–8 h | 100–400 | 2 |
 | Duże | 4 | 4–10 h | 100–600 | 3 |
 
-Wymaganie materiału to `12 × poziom jego producenta × wydajność/os./h × wylosowane godziny`, zapisane przy powstaniu zadania. Nowe średnie ma co najmniej tyle godzin co największe aktualne małe; nowe duże co najmniej tyle co największe aktualne średnie. Pula obejmuje 100 narracji napraw i zaopatrzenia latarni. Nagrody materiałowe bazowo wynoszą 50–1000 **każdego** wylosowanego rodzaju na poziomie 3. Monety i ilości materiałów skalują się relacją maksymalnej produkcji aktualnego poziomu ratusza do poziomu 3: `12 × L × wydajność(L) / 468`. Nagroda pozostaje stała po pokazaniu zadania.
+Wymaganie materiału to `12 × poziom jego producenta × wydajność/os./h × wylosowane godziny`, zapisane przy powstaniu zadania. Ta norma i dotychczasowy limit obsady zależny od miejsca pracy pozostają zachowane. Wymagania nie zmieniają się po pokazaniu zadania; nie są obietnicą uzbierania całej wpłaty od zera w takim czasie przy współdzielonej populacji i karmieniu. Nowe średnie ma co najmniej tyle godzin co największe aktualne małe; nowe duże co najmniej tyle co największe aktualne średnie. Pula obejmuje 100 narracji napraw i zaopatrzenia latarni. Nagrody materiałowe bazowo wynoszą 50–1000 **każdego** wylosowanego rodzaju na poziomie 3. Monety i ilości materiałów zachowują skalę `12 × L_ratusza × wydajność(L_ratusza) / 468`. Nagroda pozostaje stała po pokazaniu zadania.
 
 Bazowe nagrody monetowe aktualnych zadań zachowują kolejność małe < średnie < duże. Po zmianie poziomu nowy zakres może nie pasować między zamrożone stare nagrody. Wtedy losujemy rozmiar spośród tych, które spełniają zakres i kolejność, bez zmiany już pokazanych nagród; rozmiary nie mają zagwarantowanych równych szans. Warunki godzinowe są sprawdzane przy generowaniu, a mnożnik szybkiej akceptacji jest osobną premią.
 

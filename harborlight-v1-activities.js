@@ -3,7 +3,7 @@
 import {
   MATERIAL_IDS, stockRoom, receiveMaterials, notify,
   quoteInstantTransport, instantTransport, estimateMaterialsSeconds
-} from './harborlight-v1-logistics.js?v=rules-v9';
+} from './harborlight-v1-logistics.js?v=frontend-v11';
 
 const HOUR = 3600;
 const QUEST_LIFE = 6 * HOUR;
@@ -266,6 +266,17 @@ export function normalizeActivities(state, raw = {}) {
     } else state.lighthouseTasks.push(generateTask(state, SIZES[slot], slot));
     usedIds.add(state.lighthouseTasks[slot].id);
   }
+  const acceptedTasks = state.lighthouseTasks.filter(task => task.acceptedAt !== null && task.expiresAt > state.activityClock);
+  // Older saves allowed several accepted tasks. Keep their deposits and locked
+  // rewards, but select a single active task without silently starting the rest.
+  // An explicit null is meaningful after completing a task and survives reload.
+  if (Object.hasOwn(raw, 'activeTaskId')) {
+    state.activeTaskId = acceptedTasks.some(task => task.id === raw.activeTaskId) ? raw.activeTaskId : null;
+  } else {
+    state.activeTaskId = [...acceptedTasks].sort((a, b) =>
+      sum(b.deposited) - sum(a.deposited) || a.acceptedAt - b.acceptedAt
+    )[0]?.id || null;
+  }
   state.expeditionRuns = {};
   for (const [id, item] of entries(raw.expeditionRuns)) {
     if (!plain(item) || typeof item.id !== 'string' || !['active', 'decision', 'closed', 'lost'].includes(item.status)) continue;
@@ -289,14 +300,22 @@ export function taskReward(task) {
   const multiplier = [1, 2, 3].includes(task?.multiplier) ? task.multiplier : 1;
   return Object.fromEntries(entries(task?.reward).map(([id, value]) => [id, integer(value) * multiplier]));
 }
+export function activeLighthouseTask(state) {
+  return (state.lighthouseTasks || []).find(task => task.id === state.activeTaskId &&
+    task.acceptedAt !== null && task.expiresAt > currentClock(state)) || null;
+}
 export function taskStatus(state, taskOrId) {
   const task = typeof taskOrId === 'string' ? state.lighthouseTasks?.find(t => t.id === taskOrId) : taskOrId;
-  if (!task) return { remaining: 0, age: 0, multiplier: 1, complete: false };
+  if (!task) return { remaining: 0, age: 0, multiplier: 1, complete: false, active: false, canActivate: false };
   const age = Math.max(0, currentClock(state) - task.createdAt);
+  const activeTask = activeLighthouseTask(state);
+  const remaining = Math.max(0, task.expiresAt - currentClock(state));
   return {
-    age, remaining: Math.max(0, task.expiresAt - currentClock(state)),
+    age, remaining,
     multiplier: task.acceptedAt !== null ? task.multiplier : age < 15 ? 3 : age < 300 ? 2 : 1,
-    complete: entries(task.requirements).every(([id, value]) => integer(task.deposited?.[id]) >= value)
+    complete: entries(task.requirements).every(([id, value]) => integer(task.deposited?.[id]) >= value),
+    active: activeTask?.id === task.id,
+    canActivate: remaining > 0 && activeTask === null
   };
 }
 function refillRewardBuffer(state) {
@@ -329,6 +348,7 @@ function grantTaskReward(state, task) {
 }
 function replaceTask(state, index, at = currentClock(state), completed = false) {
   const previous = state.lighthouseTasks[index];
+  if (state.activeTaskId === previous.id) state.activeTaskId = null;
   // Exclude the task being replaced from reward-order constraints.
   state.lighthouseTasks.splice(index, 1);
   const next = generateTask(state, null, previous.slot, at);
@@ -495,11 +515,16 @@ export function activityAction(state, action, context = {}) {
     const task = state.lighthouseTasks[index], status = taskStatus(state, task);
     if (status.remaining <= 0) return bad('This lighthouse task has expired.');
     if (type === 'taskAccept') {
-      if (task.acceptedAt !== null) return bad('This task already has a locked reward multiplier.');
-      task.multiplier = status.multiplier; task.acceptedAt = currentClock(state);
-      return good('Task accepted. Reward multiplier ×' + task.multiplier + ' is locked.');
+      const activeTask = activeLighthouseTask(state);
+      if (activeTask?.id === task.id) return bad('This task is already active.');
+      if (activeTask) return bad('Finish the active task or wait for it to expire before starting another.');
+      const resumed = task.acceptedAt !== null;
+      if (!resumed) { task.multiplier = status.multiplier; task.acceptedAt = currentClock(state); }
+      state.activeTaskId = task.id;
+      return good((resumed ? 'Task resumed.' : 'Task accepted.') + ' Reward multiplier ×' + task.multiplier + ' is locked.');
     }
     if (task.acceptedAt === null) return bad('Accept the task before contributing goods.');
+    if (!status.active) return bad('Only the active task can receive contributions.');
     const resource = action.resource, quantity = action.amount;
     if (!owns(task.requirements, resource) || !Number.isSafeInteger(quantity) || quantity < 1) return bad('Enter a positive whole quantity of a required material.');
     const needed = task.requirements[resource] - task.deposited[resource];

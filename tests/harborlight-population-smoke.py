@@ -21,6 +21,7 @@ def visit(context, fixture=None, clock=True):
     page.on('response', lambda response: failures.append((response.status, response.url)) if response.status >= 400 else None)
     page.on('requestfailed', lambda request: failures.append((request.failure, request.url)))
     if fixture is not None:
+        fixture = {**fixture, 'previewBuildStockVersion': 'frontend-v10'}
         page.add_init_script('''if (!sessionStorage.getItem('population-fixture')) {
           localStorage.setItem('harborlight-v1-interactive-save', %s);
           sessionStorage.setItem('population-fixture', '1');
@@ -46,17 +47,19 @@ with sync_playwright() as p:
     browser = p.chromium.launch(executable_path=CHROMIUM, args=['--no-sandbox'])
     errors, failures = [], []
     try:
-        # Fresh sessions really use the new starter kit, including grain.
+        # A fresh preview receives the authorized one-time full warehouse.
+        # Engine starter-kit behavior remains covered by the model tests.
         context = browser.new_context(viewport={'width': 1672, 'height': 941}, reduced_motion='reduce')
         page = visit(context, clock=True)
         expect(page.locator('[data-hud="level"]')).to_have_text('1')
         expect(page.locator('[data-hud="happiness"]')).to_have_text('0%')
         expect(page.locator('[data-hud="population"]')).to_have_text('12 / 24')
         for resource in RESOURCES:
-            expect(page.locator(f'[data-hud="{resource}"]')).to_have_text('100')
+            expect(page.locator(f'[data-hud="{resource}"]')).to_have_text('10,000' if resource == 'coins' else '800')
         initial = save(page)
         assert initial['population'] == 12 and initial['happiness'] == 0
-        assert initial['resources'] == dict.fromkeys(RESOURCES, 100)
+        assert initial['resources'] == {resource: 10000 if resource == 'coins' else 800 for resource in RESOURCES}
+        assert initial['previewBuildStockVersion'] == 'frontend-v10'
         assert initial['version'] == 8
         assert initial['buildings']['house']['level'] == 1
         assert all(building['workers'] == 0 for building in initial['buildings'].values())

@@ -454,7 +454,7 @@ test('the population average uses each clamped individual rather than clamping t
   close(state.happiness, 12.5);
   state.blessingRemaining = 0;
   worker(state, 'quarry', 3);
-  state.buildings.quarry.ready = 800;
+  state.buildings.quarry.ready = 200 * state.buildings.quarry.level;
   updateStorageStatus(state);
   updateHappiness(state);
   close(state.happiness, -5);

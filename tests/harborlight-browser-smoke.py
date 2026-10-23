@@ -105,7 +105,7 @@ def visit(page):
     response = page.goto(BASE_URL + PAGE_PATH)
     assert response and response.status == 200
     page.wait_for_function(
-        "document.querySelectorAll('.island-hotspot').length === 48 && "
+        "document.querySelectorAll('.world-hotspot').length === 12 && "
         "document.getElementById('loading').hidden"
     )
     expect(page.locator(".slice canvas")).to_have_count(9)
@@ -135,6 +135,13 @@ def gameplay_checks(browser, errors, failed):
     now = datetime(2026, 10, 22, 12, 0, 0, tzinfo=timezone.utc)
     page.clock.install(time=now - timedelta(seconds=5))
     page.clock.pause_at(now)
+    # Isolate the ordinary starter economy from the separate one-time preview
+    # grant, which frontend-v10-smoke checks with a completely fresh browser.
+    fixture = {'version': 8, 'previewBuildStockVersion': 'frontend-v10',
+               'lastSimulatedAt': int(now.timestamp() * 1000)}
+    page.add_init_script('''if (!sessionStorage.getItem('starter-economy-fixture')) {
+      localStorage.setItem(%s, %s); sessionStorage.setItem('starter-economy-fixture', '1');
+    }''' % (json.dumps(SAVE_KEY), json.dumps(json.dumps(fixture))))
     visit(page)
     expect(page.locator("#hit-pause,#hit-play,#hit-speed")).to_have_count(0)
     initial = saved(page)
@@ -279,7 +286,7 @@ def navigation_checks(browser, errors, failed):
         page = context.new_page()
         attach_observers(page, errors, failed)
         visit(page)
-        blocked = page.evaluate("""Array.from(document.querySelectorAll('.island-hotspot')).map(button => {
+        blocked = page.evaluate("""Array.from(document.querySelectorAll('.island-hotspot')).filter(button=>button.getClientRects().length).map(button => {
           const box=button.getBoundingClientRect();
           const target=document.elementFromPoint(box.x+box.width/2,box.y+box.height/2);
           return {id:button.id,hit:target?.closest('button')?.id};
@@ -287,6 +294,15 @@ def navigation_checks(browser, errors, failed):
         assert not blocked, (width, height, blocked)
         for route in routes:
             page.locator("#hit-" + route).click()
+            if route in ['category-buildings', 'category-resources']:
+                expect(page.locator('#island-dialog')).not_to_be_visible()
+                expect(page.locator('#hit-' + route)).to_have_attribute('aria-pressed', 'true')
+                if route == 'category-resources':
+                    expect(page.locator('[data-resource-dock]')).to_be_visible()
+                    expect(page.locator('[data-dock-resource]')).to_have_count(5)
+                    page.locator('#hit-category-buildings').click()
+                expect(page.locator('[data-resource-dock]')).not_to_be_visible()
+                continue
             within_viewport(page)
             close_panel(page)
         # Native dialog keyboard behavior remains available in each viewport.
@@ -321,7 +337,7 @@ def navigation_checks(browser, errors, failed):
             within_viewport(page)
             expect(page.locator("#dialog-title")).to_have_text("Buildings")
             close_panel(page)
-        print(f"PASS navigation: {len(routes)} dialogs at {width}x{height}")
+        print(f"PASS navigation: {len(routes)-2} dialogs and two dock tabs at {width}x{height}")
         context.close()
 
 

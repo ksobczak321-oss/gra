@@ -4,6 +4,8 @@ Każdy wpis powinien podawać wynik zmiany, sposób sprawdzenia oraz stan publik
 
 Wpisy z 21–22 października są historią tamtych wersji. Ich zasady aktywnego czasu, obsada początkowa, limity połowy populacji, transport godzinowy i dawne czasy budowy zostały zastąpione regułami z 23 października. Aktualną specyfikację opisuje [ECONOMY-RULES.md](ECONOMY-RULES.md), a nie wcześniejsze zapisy historyczne.
 
+Późniejszy pakiet „go” z 23 października zastępuje bufor według ratusza własną pojemnością producenta. Limit obsady według własnego budynku pozostaje zachowany. Wpisy i ich wyniki zachowano jako historię konkretnych wersji; bieżący zakres jest w ostatnim wpisie.
+
 ## 2026-10-21 — przywrócenie ekranu v1
 
 - Zdiagnozowano `assets/harborlight-v1-approved.jpg`: plik zawierał uszkodzony tekst Base64 zamiast poprawnego obrazu JPEG. Próba dekodowania nie przywracała kompletnego obrazu.
@@ -240,3 +242,32 @@ Status: implementacja lokalna i weryfikacja. Zgłoszenia frontend [#5 — formul
 - Adresy: [wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html), [logowanie/rejestracja](https://ksobczak321-oss.github.io/gra/harborlight-auth.html), [Excel 7](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT7-zasady.xlsx).
 - FE-14 #5 i FE-15 #25 zakończono w milestone frontend; serwerowe konta, zapis, autorytatywna gospodarka i Premium pozostają w otwartych zadaniach backend. Publikacja nie uruchamia płatności, OAuth ani reklam.
 - Uaktualniono zapisane instrukcje startu środowiska: istniejący checkout, serwer statyczny, aktualne testy i granice prototypu. Zapis draftu nie publikuje konfiguracji środowiska; jej aktywacja wymaga zapisu i Publish w ustawieniach środowiska, osobno od zakończonego wdrożenia Pages.
+
+## 2026-10-23 — spójne panele po pakiecie „go”
+
+Status: praca lokalna nad pełnym pakietem screenów i komentarzy, [FE-16 / #26](https://github.com/ksobczak321-oss/gra/issues/26), milestone frontend. Po początkowym „go” użytkownik ponownie wstrzymał prace, a następnie wyraźnie polecił prześledzić i wdrożyć wszystkie uwagi. Poniżej zapisano docelowy, wspólny zakres, z najnowszymi doprecyzowaniami. Ten wpis nie potwierdza jeszcze nowego wdrożenia ani pełnej regresji; [warunki odbioru](FRONTEND-REVIEW.md) oddzielają komplet wymagań od dowodów publikacji.
+
+- Wszystkie budynki dostają status odpowiadający ich funkcji. U producenta Producing / Waiting for workers / Storage full / Waiting for resources ma wyjaśniać pracę lub blokadę. Przy aktywnej produkcji widoczne są produkt, liczba najbliższych sztuk i czas trafienia do lokalnego magazynu.
+- Storage u pięciu producentów ma zapas / obecny limit / limit po jednym ulepszeniu, np. 50 / 200 / 400. Lokalny limit zmieniono z zależnego od ratusza na `200 × własny poziom producenta`.
+- Workers ma przypisani / wolni w domu / dotychczasowy limit, np. 1 / 4 / 12. Użytkownik doprecyzował, że jest to zmiana widoku, bez zmiany reguły `12 × własny poziom budynku`. Małe −/+ pozostają; Taxes pokazuje bieżący przychód podatkowy danego budynku/h.
+- House ma cztery wartości: populacja, maksymalna według ratusza, miejsca do spania i przyrost/spadek. Opisy Housing capacity i House happiness trafiają pod „i”.
+- Licznik Construction / Queue i wejście Construction and queue są wyłącznie w ratuszu. Manage all workers otwiera się wyłącznie z domu; globalny Residents jest informacyjny. Miejsca pracy zachowują własne małe −/+.
+- W pięciu budynkach produkcyjnych Building upgrade zawiera Upgrade, osobne małe Delivery time / Building time i sąsiadującą obramowaną ramkę Premium z dwoma dotychczasowymi głównymi przyciskami. Opisy Coins/Instant są pod „i” rozbudowy z myszą, klawiaturą i dotykiem. Osobna dolna sekcja Premium building options została usunięta z producentów. Czasy wynikają z bieżących przewozów i priorytetów, z wyłączeniem zbierania i kolejki.
+- Warehouse pokazuje pracę każdego magazyniera: ładunek, liczbę sztuk, skąd → dokąd, czas do końca dostawy albo oczekiwanie. Priorytety są podświetlone i numerowane, maksymalnie trzy. Podział na dziesięć rzeczywistych kursów: jeden priorytet 8 +2 losowe; dwa 5 +3 +2 losowe; trzy 5 +3 +2. Użytkownik doprecyzował, że wybór jest stały, a dziesiątki się powtarzają.
+- Jednocześnie aktywne jest jedno zadanie. Przyjęcie synchronizuje podświetlenie Active i dostarczone / wymagane każdego produktu na liście oraz po prawej. Pozostałe karty są wyszarzone i blokują rozpoczęcie oraz wpłaty. Ukończenie albo wygaśnięcie zwalnia aktywne miejsce. Starsze wpłaty i mnożniki nie są kasowane podczas migracji.
+- Wymagania zadań zachowują wcześniejszy wzór `12 × własny poziom producenta × jego wydajność × godziny`; dotychczasowa reguła obsady również pozostaje zachowana. Nowe pole wolnych osób w panelu Workers nie zmienia gospodarki ani zamrożonych wymagań zadań.
+- Potwierdzono przyczynę nieruchomej wody i dymu: systemowe prefers-reduced-motion bezwarunkowo wygrywało ze świadomie zaznaczoną opcją animacji w grze. Zapisany motionOverride daje pierwszeństwo jawnemu wyborowi użytkownika; bez niego obowiązuje preferencja systemowa. Dawne pause/speed nie zatrzymują efektów. Nowy `tests/harborlight-motion-v10-smoke.py` zaliczono: rzeczywiste zmiany pikseli wody i dymu przy systemowym ograniczeniu ruchu, zapis wyboru, wyłączenie/włączenie, ukrycie/powrót i stare flagi.
+- Do sprawdzenia budowy użytkownik wybrał jednorazowe uzupełnienie materiałów magazynu centralnego przy następnym otwarciu oraz minimum 10 000 monet. Respektujemy pojemność na rodzaj i łącznie, zachowujemy saldo powyżej 10 000, poziomy, mieszkańców i zlecenia. Wykonanie jest zapisywane; odświeżenie nie odnawia grantu. Nie dodajemy powtarzalnego przycisku testowego.
+- Kolejne screeny doprecyzowały nakładanie Level na markę i blokowanie lewej nawigacji. Wymagana jest rozdzielona geometria oraz nieprzebijanie starych obrazów i napisów spod nowych kontrolek, także przy zmianie rozmiaru okna.
+- Resources zastępuje cały dolny pasek Buildings dokładnie pięcioma obrazkowymi produktami: Wood, Planks, Stone, Grain i Food. Górny znacznik liczy aktywnie pracujących danego producenta, dolny pokazuje wolni w domu / limit zakładu. Wybór otwiera ten sam panel co kliknięcie producenta na wyspie, a Buildings przywraca karty budynków. Nie ma szóstego produktu Coins.
+- Uaktualniono README, instrukcję, reguły gospodarki, tabelę budynków i backlog; Excel 7 pozostaje bez zmian. Nowe ustalenia z rozmowy mają pierwszeństwo przed starszym arkuszem oraz historycznymi wpisami dziennika.
+
+### Końcowa regresja frontendu v11
+
+- `node --test --test-timeout=10000 tests/*.test.mjs`: **225/225**, bez pominięć; ponownie zaliczone po ujednoliceniu odnośników modułów na `frontend-v11`.
+- Wszystkie **12 zestawów Chromium** zaliczone: browser, population, logistics, construction, language, happiness, animation, coastal, agreed-ui, auth, frontend-v10 i motion-v10. Testy frontend-v10/motion-v10 zachowują nazwę pierwotnego pakietu, ale sprawdzają aktualnie serwowany frontend v11. Po końcowej zmianie cache ponownie zaliczono pełny scenariusz frontendowy.
+- Obejrzano rzeczywiste zrzuty desktopowe i mobilne, także dla pięciu producentów, pełnego paska Resources i aktywnego zadania. Nagłówek i nawigację sprawdzono przy szerokościach 1845, 1672, 1440 i 390 px; nie wykryto nachodzenia ani poziomego przepełnienia dialogów. Brak błędów JavaScript/HTTP.
+- Dodatkowe trzy testy wykrytego błędu transportu sprawdzają odwołanie załadowanego tragarza magazynu, targu i portu oraz przydzielenie innej osoby: stary ładunek nie przechodzi na nową osobę idącą do pracy, nie znika i jest dostarczany dokładnie raz, także po ponownym wczytaniu.
+- Estymacja używa rzeczywistej konkurencji o tragarzy. Jeśli brak obsady, poziomu ratusza lub rozkład dostaw przekracza ograniczenie obliczeń, pokazuje stan i przyczynę zamiast pozornego czasu; dla dostępnej obsady podaje osobno transport i budowę. Zasady pierwszeństwa dostaw nie zostały zmienione.
+- `git diff --check`, sprawdzenie składni JavaScript/Python i suma kontrolna Excel 7 zaliczone. Arkusz nadal ma SHA-256 `bf49eef3b43ba81e0492c6eb187940c99177bbb8ae925ceca2b09ab0a2b9e945`.
+- Publiczny workflow, commit i testy rzeczywistego adresu zostaną zapisane po publikacji.

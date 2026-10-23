@@ -79,8 +79,9 @@ test('individual work phases and home-return clocks survive reload',()=>{
 test('processors consume two central inputs for one local product',()=>{
  const s=idle();crew(s,'sawmill',1);crew(s,'windmill',1);tick(s,360);assert.equal(s.resources.wood,98);assert.equal(s.resources.grain,98);assert.equal(s.resources.planks,100);close(s.resources.food+s.foodCredit,100-12*360/3600);assert.equal(s.buildings.sawmill.ready,1);assert.equal(s.buildings.windmill.ready,1);assert.equal(s.statistics.crafted,2);
 });
-test('local production capacity follows townhall and full stores stop output',()=>{
- const s=idle(6,144);crew(s,'lumber',1);s.buildings.lumber.level=1;s.buildings.lumber.ready=1200;tick(s,3600);assert.equal(producerCapacity(s),1200);assert.equal(s.buildings.lumber.ready,1200);assert.equal(s.buildings.lumber.workProgress[0],0);
+test('local production capacity follows its own building level and full stores stop output',()=>{
+ const s=idle(6,144);s.resources.food=1000;crew(s,'lumber',1);s.buildings.lumber.level=1;s.buildings.lumber.ready=200;tick(s,3600);assert.equal(producerCapacity(s,'lumber'),200);assert.equal(s.buildings.lumber.ready,200);assert.equal(s.buildings.lumber.workProgress[0],0);
+ s.buildings.lumber.level=2;assert.equal(producerCapacity(s,'lumber'),400);assert.equal(producerCapacity(s,'farm'),200);tick(s,300);assert.equal(s.buildings.lumber.ready,201);
 });
 test('manual collecting and crafting cannot bypass work and transport',()=>{
  const s=idle();s.buildings.lumber.ready=50;for(const action of [{type:'collect',building:'lumber'},{type:'craft',building:'sawmill'}]){const before=JSON.stringify(s);assert.equal(act(s,action).ok,false);assert.equal(JSON.stringify(s),before);}
@@ -134,14 +135,14 @@ test('housing shortage continues during construction and ends when the new house
  const s=funded(4);s.population=78;s.buildings.house.level=3;synchronizeResidents(s);
  // This fixture models 78 established adults, rather than 66 newborn arrivals.
  for(const resident of s.residents)resident.newbornRemaining=0;
- crew(s,'warehouse',39);assert.equal(unhousedResidents(s),6);tick(s,3600);close(s.happiness,-4.5);assert.equal(act(s,{type:'upgrade',building:'house'}).ok,true);assert.equal(housingCapacity(s),72);finish(s,'house');assert.equal(housingCapacity(s),96);const happiness=s.happiness;assert.ok(happiness<-4.5);tick(s,3600);close(s.happiness,happiness+1.5);
+ crew(s,'warehouse',39);const workBonus=39/78;assert.equal(unhousedResidents(s),6);tick(s,3600);close(s.happiness,1+workBonus-6);assert.equal(act(s,{type:'upgrade',building:'house'}).ok,true);assert.equal(housingCapacity(s),72);finish(s,'house');assert.equal(housingCapacity(s),96);const happiness=s.happiness;assert.ok(happiness<1+workBonus-6);tick(s,3600);close(s.happiness,happiness+1+workBonus);
 });
 test('mean happiness weights affected workers rather than applying their penalty to everyone',()=>{
  const s=idle(1,12);crew(s,'lumber',6);s.buildings.lumber.ready=200;updateStorageStatus(s);updateHappiness(s);assert.equal(storagePenalty(s,'lumber'),10);assert.equal(s.happiness,-5);assert.equal(happinessGroups(s).find(g=>g.building==='lumber').happiness,-10);
  intrinsic(s,-95);assert.equal(s.happiness,-97.5);
 });
 test('full-store penalties grow at daily boundaries, cap at fifty and clear after unloading',()=>{
- const s=idle(6,144);crew(s,'lumber',6);s.buildings.lumber.ready=1200;updateStorageStatus(s);updateHappiness(s);assert.equal(storagePenalty(s,'lumber'),10);
+ const s=idle(6,144);s.buildings.lumber.level=6;crew(s,'lumber',6);s.buildings.lumber.ready=1200;updateStorageStatus(s);updateHappiness(s);assert.equal(storagePenalty(s,'lumber'),10);
  for(const [days,expected] of [[1,20],[2,30],[3,40],[4,50],[5,50]]){
   s.buildings.lumber.fullSeconds=days*86400-1;for(const resident of s.residents)if(resident.workplace==='lumber')resident.blockedSeconds=days*86400-1;
   tick(s,1);assert.equal(storagePenalty(s,'lumber'),expected);

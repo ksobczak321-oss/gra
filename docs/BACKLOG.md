@@ -1,10 +1,30 @@
 # Backlog HARBORLIGHT
 
-Stan: 2026-10-23. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Bieżąca specyfikacja to [HARBORLIGHT7-zasady.xlsx](arkusze/HARBORLIGHT7-zasady.xlsx): wpisy arkusza 6 i wszystkie rozstrzygnięte decyzje D01–D17. Wersja frontendowa `6b06f20` została opublikowana na Pages i sprawdzona publicznie; [wyniki](IMPLEMENTATION-LOG.md) rozdzielają ten zakres od backendu.
+Stan: 2026-10-23. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4). Bazą jest [HARBORLIGHT7-zasady.xlsx](arkusze/HARBORLIGHT7-zasady.xlsx), a najnowsze zmiany frontendu opisuje poniższy pakiet zatwierdzony „go”. Excel 7 pozostaje zachowany bez zmian. Ostatnia wcześniej potwierdzona publikacja gry to `6b06f20`; [dziennik](IMPLEMENTATION-LOG.md) oddziela ją od bieżącej pracy i backendu.
 
 Zachowujemy zaakceptowany wygląd wyspy i jej animacje. Reguły działają w przeglądarce bez backendu. Docelowe trzy sposoby gry — web, Android, iPhone — wymagają wspólnego konta, trwałego stanu i serwerowego rozliczania postępu; obecny lokalny zapis tego nie zapewnia.
 
 ## Bieżący frontend
+
+### FE-16 — Spójne panele, priorytety i jedno aktywne zadanie — [#26](https://github.com/ksobczak321-oss/gra/issues/26)
+
+Status: wdrażanie pełnego zestawu uwag ze screenów i komentarzy, wraz z późniejszym doprecyzowaniem przez użytkownika. Milestone frontend. [Macierz odbioru](FRONTEND-REVIEW.md) obejmuje wcześniejsze i najnowsze wymagania; wyniki pełnej regresji oraz publikacja są zapisywane dopiero po potwierdzeniu.
+
+- Wspólny górny status każdego budynku; u producentów rodzaj i liczba najbliższych sztuk oraz czas odłożenia do lokalnego magazynu.
+- Storage: obecny zapas / pojemność teraz / po ulepszeniu, ze składami `200 × własny poziom producenta`.
+- Workers: przypisani / wolni w domu / limit `12 × własny poziom budynku`; podatki tego budynku/h i dotychczasowe małe −/+.
+- House: populacja, limit ratusza, miejsca do spania i tempo demografii. Housing capacity i House happiness chowają opisy pod „i”.
+- Construction and queue i jej licznik tylko w ratuszu. Manage all workers otwierane tylko z domu; Residents pozostaje przeglądem informacyjnym, a małe −/+ przy budynkach nadal działają.
+- U wszystkich pięciu producentów Building upgrade łączy Upgrade, dwie małe osobne estymaty Delivery time / Building time i sąsiadującą obramowaną ramkę Premium z dwoma głównymi przyciskami. Opisy Coins/Instant są pod „i” rozbudowy z myszą, klawiaturą i dotykiem; osobna dolna sekcja Premium building options znika z producentów.
+- Warehouse: jawny przydział każdego magazyniera, ładunek, źródło → cel, ETA lub oczekiwanie. Do trzech podświetlonych numerowanych priorytetów; powtarzany podział dziesięciu kursów 8/2 losowe, 5/3/2 losowe lub 5/3/2. Wybór pozostaje do zmiany przez gracza.
+- Jedno aktywne zadanie naraz; podświetlenie Active oraz dostarczone/wymagane każdego produktu są zgodne na liście i po prawej. Pozostałe karty są wyszarzone i blokują rozpoczęcie oraz wpłaty, ale pozwalają obejrzeć wymagania. Migracja zachowuje stare wpłaty, terminy i mnożniki.
+- Zadania zachowują dotychczasową normę wymagań `12 × własny poziom producenta × jego wydajność × godziny`. Dotychczasowa reguła limitu obsady również pozostaje zachowana; zmienia się tylko prezentacja trzech liczb.
+- Naprawa nieruchomej wody i dymu: systemowe ograniczenie ruchu nadpisywało nawet świadomie włączoną opcję w grze. Jawny wybór Animations and highlights ma teraz pierwszeństwo i jest zapisywany; domyślnie nadal respektujemy ustawienie systemu. Test motion-v10 potwierdził ruch pikseli wody/dymu, zapis, wyłączenie/włączenie, ukrycie/powrót i ignorowanie dawnych flag pause/speed.
+- Jednorazowe uzupełnienie materiałów centralnych przy następnym wczytaniu do testowania budowy; oba limity magazynu i saldo co najmniej 10 000 monet, bez obniżania większego salda. Bez zmiany poziomów i istniejącego postępu oraz bez powtarzalnego przycisku grantu.
+- Poprawa geometrii i warstw nagłówka: marka, Level i początek lewej nawigacji nie nachodzą na siebie, a stary obraz nie przebija spod kontrolek.
+- Dolne Resources zastępuje cały pasek Buildings dokładnie pięcioma obrazkowymi kartami produktów: Wood, Planks, Stone, Grain, Food. Nad obrazkiem liczba rzeczywiście pracujących w zakładzie; pod nim wolni mieszkańcy w domu / limit zakładu. Wybór otwiera ten sam panel producenta co budynek na wyspie. Buildings przywraca karty budynków; monety nie są kartą produktu.
+
+Poniższe ukończone zakresy FE-14/15 dokumentują wcześniejsze wydanie. Bufor zależny od ratusza został zastąpiony własną pojemnością producenta; reguła limitu obsady pozostaje taka sama.
 
 ### Formularze konta — [#5](https://github.com/ksobczak321-oss/gra/issues/5)
 
@@ -54,7 +74,7 @@ W powyższym zakresie nie ma prawdziwych płatności, OAuth, reklam, automatyczn
 | [#23](https://github.com/ksobczak321-oss/gra/issues/23) | Kompaktowe panele producentów | Wcześniej completed; zachowane małe −/+ i pomoc. |
 | [#24](https://github.com/ksobczak321-oss/gra/issues/24) | Indywidualne szczęście i pełne procenty | Wcześniej completed; #25 dodaje nowe stany i pulę domu. |
 
-Numer i URL GitHub są jednoznacznym identyfikatorem zadania. Nowe zakresy mają oznaczenia FE-14 i FE-15.
+Numer i URL GitHub są jednoznacznym identyfikatorem zadania. Kolejne iteracje zachowują osobny zakres i dowody w dzienniku.
 
 Odbiór grafiki nadal wymaga czytelnego ruchu wszystkich postaci, dymu unoszącego się z kominów i zanikającego, obracającego wiatraka, mew, chmur, wodospadów, wszystkich widocznych brzegów, zwierząt i pracującej budowy. Efekty mają zachować styl i nie zasłaniać interfejsu. Testy animacji sprawdzają przesunięcia aktorów i nazwane strefy brzegu, a nie samą zmianę dowolnego piksela. Rendering respektuje ograniczenie ruchu i widoczność karty; gospodarka działa offline niezależnie.
 
@@ -90,10 +110,11 @@ Status: zaplanowane. Zależności: BE-01 i BE-02.
 Status: zaplanowane; zgłoszenie uaktualnione o bieżące reguły. Backend pozostaje niewdrożony.
 
 - Serwer rozlicza produkcję, offline, jedzenie, szczęście, narodziny/odejścia, podatek, kursy i budowę z własnego zaufanego czasu.
-- Waliduje własne limity pracy 12L, przybycie/powrót 5 min, blokady, zamrożenie nowej osoby przez 24 h, rezerwę Food i ochronę transportu.
+- Waliduje limity pracy `12 × własny poziom budynku`, lokalne składy `200 × własny poziom producenta`, przybycie/powrót 5 min, blokady, zamrożenie nowej osoby przez 24 h, rezerwę Food i ochronę transportu.
 - Atomowo liczy koszty, dopłatę kolejki, fizyczne rezerwacje i dostępność pojemności; klient nie może tworzyć materiałów.
 - Weryfikuje partię i termin targu/portu, historyczne podwyżki per produkt, wizyty i pakiety wejść, pulę domu, opłaty kaplicy oraz D01–D17.
-- Zadania mają serwerowe losowanie, terminy i jednorazowe wypłaty; ekspedycje mają potwierdzoną trasę/limit/etap i pulę monet. Sam komunikat „wygrana” z klienta nie wystarcza.
+- Zadania mają serwerowe losowanie, terminy, jedno aktywne zadanie i jednorazowe wypłaty; zachowują zatwierdzoną normę wymagań. Ekspedycje mają potwierdzoną trasę/limit/etap i pulę monet. Sam komunikat „wygrana” z klienta nie wystarcza.
+- Rozdział dziesięciu kursów według maksymalnie trzech priorytetów przechowuje numer bloku i losowanie. Ponowienie lub ponowne połączenie nie może zabrać towaru dwa razy ani stale wracać do pierwszego kursu.
 - Testy obejmują modyfikację zegara i zapisu, nieprawidłowe liczby, powtórzenia, wyścigi, rozłączenia oraz konserwację zasobów.
 - Ranking wielu graczy wymaga serwerowej agregacji i zasad remisów; lokalny wynik ustawień nie jest takim rankingiem.
 

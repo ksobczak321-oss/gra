@@ -141,7 +141,7 @@ export function createAmbientScene(stage, getState) {
   surface.id = 'island-ambient';
   surface.setAttribute('aria-hidden', 'true');
   surface.dataset.effectGroups = EFFECTS;
-  surface.dataset.revision = 'living-world-3';
+  surface.dataset.revision = 'living-world-4';
   surface.dataset.time = '0';
   surface.dataset.frames = '0';
   surface.dataset.mode = 'loading';
@@ -165,8 +165,11 @@ export function createAmbientScene(stage, getState) {
   function mode() {
     if (document.hidden) return 'hidden';
     const state = getState();
-    if (media.matches || !state.settings.motion) return 'reduced';
-    return state.paused ? 'paused' : 'running';
+    // Respect the system preference by default, but let an explicit in-game
+    // choice enable the island. Previously the checkbox could be checked while
+    // every effect stayed frozen because the media query always won.
+    if (state.settings.motion === false || media.matches && state.settings.motionOverride !== true) return 'reduced';
+    return 'running';
   }
   function paint() {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
@@ -190,7 +193,9 @@ export function createAmbientScene(stage, getState) {
     const delta = last ? Math.min((now - last) / 1000, .12) : 0;
     last = now;
     if (nextMode === 'running') {
-      time += delta * getState().speed;
+      // Island motion follows real elapsed time. Obsolete saved pause/speed
+      // fields must not freeze the entire world or amplify its visual effects.
+      time += delta;
       const fps = innerWidth < 900 ? 24 : 30;
       if (now - lastPaint >= 1000 / fps) { paint(); lastPaint = now; }
     } else if (previousMode !== nextMode) paint();

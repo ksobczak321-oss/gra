@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { createState, normalizeState, tick, advanceTo, act, workerLimit, freeWorkers, taxRate, buildingCost, canAfford, updateHappiness, requestUpgrade } from '../harborlight-v1-state.js';
-import { advanceLogistics, updateStorageStatus, storagePenalty } from '../harborlight-v1-logistics.js';
+import { createState, normalizeState, tick, advanceTo, act, workerLimit, freeWorkers, taxRate, buildingCost, canAfford, updateHappiness, requestUpgrade, applyBuildTestStock, BUILD_TEST_STOCK_VERSION } from '../harborlight-v1-state.js';
+import { advanceLogistics, updateStorageStatus, storagePenalty, warehouseLimits, warehouseUsed, MATERIAL_IDS } from '../harborlight-v1-logistics.js';
 
 const NOW = Date.UTC(2026, 9, 23, 12, 0, 0);
 const close = (actual, expected, epsilon = 1e-7) => assert.ok(Math.abs(actual - expected) < epsilon, `${actual} ≠ ${expected}`);
@@ -65,7 +65,7 @@ test('workforce caps use each own building level and one shared Home pool', () =
 test('blocked but arrived producers still pay taxes and do not earn work happiness', () => {
   const state = island({ population: 6 });
   assign(state, 'quarry', 1); tick(state, 300);
-  state.buildings.quarry.ready = 200 * state.buildings.townhall.level;
+  state.buildings.quarry.ready = 200 * state.buildings.quarry.level;
   const person = state.residents.find(p => p.workplace === 'quarry');
   person.happiness = 0;
   const before = state.statistics.taxCollected;
@@ -79,10 +79,10 @@ test('a pickup unblocks producer happiness at dispatch rather than at the end of
   const state = island({ population: 6 });
   assign(state, 'quarry', 1); assign(state, 'warehouse', 1); tick(state, 300);
   for (const person of state.residents) person.happiness = 0;
-  state.buildings.quarry.ready = 800;
+  state.buildings.quarry.ready = 200;
   const quarryWorker = state.residents.find(person => person.workplace === 'quarry');
   tick(state, 300);
-  assert.ok(state.buildings.quarry.ready < 800);
+  assert.ok(state.buildings.quarry.ready < 200);
   close(quarryWorker.happiness, 2 * 300 / 3600); // Food + unblocked work.
   assert.equal(quarryWorker.blockedSeconds, 0);
   assert.ok(state.populationProgress > 0); // No retroactive blocked-store penalty.
@@ -350,7 +350,7 @@ test('House points are never spent on a newborn whose happiness must stay at zer
 test('the smallest logistics boundary advances both blocked clocks and pending production', () => {
   const state = island({ population: 6 });
   assign(state, 'lumber', 1); assign(state, 'farm', 1); tick(state, 300);
-  state.buildings.lumber.ready = state.buildings.townhall.level * 200;
+  state.buildings.lumber.ready = state.buildings.lumber.level * 200;
   updateStorageStatus(state);
   state.buildings.lumber.fullSeconds = 86400 - 5e-8;
   state.buildings.farm.workProgress[0] = 360 - 5e-8;
@@ -369,7 +369,7 @@ test('96-hour offline full-storage catch-up is bounded and matches split interva
     import { createState, normalizeState, act, tick, advanceTo } from ${JSON.stringify(moduleURL)};
     const now=${NOW}, raw=createState(now);
     raw.version=6; delete raw.residents;
-    raw.buildings.townhall.level=6; raw.buildings.house.level=6; raw.buildings.warehouse.level=6;
+    raw.buildings.townhall.level=6; raw.buildings.house.level=6; raw.buildings.warehouse.level=6; raw.buildings.lumber.level=6;
     raw.population=144; raw.resources.food=7000;
     const whole=normalizeState(raw,now);
     act(whole,{type:'assign',building:'lumber',delta:6});
@@ -393,4 +393,64 @@ test('96-hour offline full-storage catch-up is bounded and matches split interva
   close(split.blocked, 96 * 3600);
   close(whole.clock, NOW + 96 * 3600000, 0.1);
   close(split.clock, NOW + 96 * 3600000, 0.1);
+});
+
+
+test('the authorized preview stock fills current central limits once without changing levels or existing coins', () => {
+  const state = createState(NOW);
+  state.resources.coins = 12345;
+  const levels = Object.fromEntries(Object.entries(state.buildings).map(([id, b]) => [id, b.level]));
+  assert.equal(applyBuildTestStock(state), true);
+  assert.equal(state.previewBuildStockVersion, BUILD_TEST_STOCK_VERSION);
+  assert.equal(warehouseUsed(state), warehouseLimits(state).total);
+  for (const id of MATERIAL_IDS) assert.equal(state.resources[id], 800);
+  assert.equal(state.resources.coins, 12345);
+  assert.deepEqual(Object.fromEntries(Object.entries(state.buildings).map(([id, b]) => [id, b.level])), levels);
+  const snapshot = JSON.stringify(state);
+  assert.equal(applyBuildTestStock(state), false);
+  assert.equal(JSON.stringify(state), snapshot);
+});
+
+test('preview stock marker survives spending and reload without refilling a second time', () => {
+  let state = createState(NOW);
+  applyBuildTestStock(state);
+  state.resources.wood -= 72;
+  state = reload(state);
+  const snapshot = JSON.stringify(state);
+  assert.equal(applyBuildTestStock(state), false);
+  assert.equal(JSON.stringify(state), snapshot);
+  assert.equal(state.resources.wood, 728);
+});
+
+test('preview stock respects higher warehouse limits and does not erase an existing excess', () => {
+  const state = createState(NOW);
+  state.buildings.townhall.level = state.buildings.house.level = state.buildings.warehouse.level = 2;
+  state.resources = { coins: 12345, wood: 1600, stone: 10, grain: 20, food: 30, planks: 40 };
+  applyBuildTestStock(state);
+  assert.equal(state.resources.wood, 1600);
+  assert.equal(warehouseUsed(state), 6000);
+  for (const id of MATERIAL_IDS.filter(id => id !== 'wood')) assert.ok(state.resources[id] <= 1500);
+  assert.equal(state.resources.coins, 12345);
+});
+
+test('explicit motion enable overrides the operating-system default and survives save migration', () => {
+  let state = createState(NOW);
+  assert.equal(state.settings.motionOverride, false);
+  assert.equal(act(state, { type: 'setting', key: 'motion', value: true }).ok, true);
+  assert.equal(state.settings.motionOverride, true);
+  state = reload(state);
+  assert.equal(state.settings.motionOverride, true);
+  assert.equal(act(state, { type: 'setting', key: 'motion', value: false }).ok, true);
+  assert.equal(state.settings.motionOverride, false);
+});
+
+
+test('the one-time preview provides at least ten thousand coins for construction without changing the ordinary starter kit', () => {
+  const state = createState(NOW);
+  assert.equal(state.resources.coins, 100);
+  applyBuildTestStock(state);
+  assert.equal(state.resources.coins, 10000);
+  state.resources.coins -= 500;
+  assert.equal(applyBuildTestStock(state), false);
+  assert.equal(state.resources.coins, 9500);
 });
