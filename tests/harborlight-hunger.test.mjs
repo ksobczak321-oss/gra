@@ -395,13 +395,13 @@ test('meal horizons fully expire temporary bonuses despite fractional event inte
 test('Food delivery plans subtract resident demand from prospective output', () => {
   // The entire current food stock is protected as the meal reserve, so none
   // of it may satisfy a planned construction's Food requirement.
-  const state = island({ food: 50 });
+  const state = island({ population: 24, food: 50 });
   worker(state, 'windmill', 1);
   worker(state, 'warehouse', 1);
   assert.equal(estimateMaterialsSeconds(state, { food: 120 }), Infinity);
   worker(state, 'windmill', 2);
   worker(state, 'farm', 3);
-  close(estimateMaterialsSeconds(state, { food: 16 }), 7200);
+  close(estimateMaterialsSeconds(state, { food: 16 }), 3600);
 });
 
 test('the same resident earns twenty points in ten fed working hours then loses four per hour after unemployment grace', () => {
@@ -456,20 +456,20 @@ test('hungry workers produce half output immediately and still pay full employme
   const state = island({ food: 0 });
   worker(state, 'quarry');
   tick(state, HOUR);
-  assert.equal(state.buildings.quarry.ready, 5);
+  assert.equal(state.buildings.quarry.ready, 10);
   assert.equal(state.resources.coins, 101);
   const id = state.residents.find(resident => resident.workplace === 'quarry').id;
   close(person(state, id).happiness, 1);
 });
 
 test('a partly completed unit retains its phase when food runs out and returns', () => {
-  const state = island({ food: 1 });
+  const state = island({ population: 24, food: 1 });
   worker(state, 'quarry');
-  tick(state, 300);
-  close(state.buildings.quarry.workProgress[0], 300);
-  tick(state, 119);
+  tick(state, 150);
+  close(state.buildings.quarry.workProgress[0], 150);
+  tick(state, 59);
   assert.equal(state.buildings.quarry.ready, 0);
-  close(state.buildings.quarry.workProgress[0], 359.5);
+  close(state.buildings.quarry.workProgress[0], 179.5);
   state.resources.food = 1;
   tick(state, .5);
   assert.equal(state.buildings.quarry.ready, 1);
@@ -480,10 +480,11 @@ test('hungry warehouse and market crews haul full loads in ten-minute trips with
   const state = island({ food: 0 });
   worker(state, 'warehouse');
   worker(state, 'market');
-  state.buildings.quarry.ready = 400;
+  state.buildings.quarry.level = 4;
+  state.buildings.quarry.ready = 800;
   assert.equal(act(state, { type: 'marketOrder', resource: 'wood', amount: 100 }).ok, true);
   tick(state, HOUR);
-  assert.equal(state.resources.stone, 460);
+  assert.equal(state.resources.stone, 820);
   assert.equal(state.resources.wood, 0);
   assert.equal(state.market.locked.reduce((sum, batch) => sum + batch.amount, 0), 100);
 });
@@ -493,7 +494,7 @@ test('hungry Lighthouse workers recover normal production while taxes remain unc
   worker(state, 'quarry');
   state.lighthouseRemaining = HOUR;
   tick(state, HOUR);
-  assert.equal(state.buildings.quarry.ready, 10);
+  assert.equal(state.buildings.quarry.ready, 20);
   assert.equal(state.resources.coins, 101);
 });
 
@@ -653,16 +654,16 @@ test('reassigned crew order preserves the identity belonging to each unfinished 
   worker(state, 'quarry', 2);
   tick(state, 30);
   assert.equal(state.buildings.quarry.workProgress.length, 2);
-  close(state.buildings.quarry.workProgress[0], 330);
+  close(state.buildings.quarry.workProgress[0], 150);
   close(state.buildings.quarry.workProgress[1], 30);
   const saved = reload(state);
   assert.equal(act(saved, { type: 'assign', building: 'quarry', delta: -1 }).ok, true);
   assert.equal(person(saved, lowerId).workplace, null);
   assert.equal(person(saved, higherId).workplace, 'quarry');
   assert.equal(saved.buildings.quarry.workProgress.length, 1);
-  close(saved.buildings.quarry.workProgress[0], 330);
+  close(saved.buildings.quarry.workProgress[0], 150);
   tick(saved, 30);
-  assert.equal(saved.buildings.quarry.ready, 1);
+  assert.equal(saved.buildings.quarry.ready, 2);
 });
 
 test('maximum and duplicate saved resident IDs remain safe and unique when a new resident arrives', () => {
@@ -683,16 +684,16 @@ test('hungry construction hauling takes twice as long and the ordinary building 
   worker(state, 'warehouse');
   state.resources.grain = 120;
   assert.equal(act(state, { type: 'upgrade', building: 'farm' }).ok, true);
-  // 72 wood and 72 stone require two trips each; 120 grain requires two
-  // more. A hungry single carrier therefore needs 6 × 600 seconds.
-  tick(state, 3599);
-  assert.equal(state.buildings.farm.construction.goodsRemaining, 60);
+  // 72 wood, 72 stone and 120 grain each fit one course. A hungry single
+  // carrier therefore needs 3 × 600 seconds.
+  tick(state, 1799);
+  assert.equal(state.buildings.farm.construction.goodsRemaining, 120);
   assert.equal(state.buildings.farm.construction.stage, 'transport');
   tick(state, 1);
   assert.equal(state.buildings.farm.construction.stage, 'building');
-  close(state.buildings.farm.construction.transportSeconds, 3600);
-  close(state.buildings.farm.construction.buildRemaining, 3600);
-  tick(state, 3600);
+  close(state.buildings.farm.construction.transportSeconds, 1800);
+  close(state.buildings.farm.construction.buildRemaining, 1800);
+  tick(state, 1800);
   assert.equal(state.buildings.farm.level, 2);
   assert.equal(state.constructionProjects.length, 0);
 });

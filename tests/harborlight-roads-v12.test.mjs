@@ -29,7 +29,7 @@ test('road capacity adds its tier factor after the workplace base capacity is ro
     const factor = 1 + .1 * Math.max(0, tier - 2);
     for (const id of ['warehouse', 'market', 'dock']) {
       state.buildings[id].level = level;
-      const base = Math.floor(60 * 1.1 ** (level - 1));
+      const base = Math.floor(120 * 1.1 ** (level - 1));
       assert.equal(haulCapacity(state, id), Math.floor(base * factor));
     }
     near(transportEfficiency(state), 1 + .1 * tier);
@@ -39,7 +39,7 @@ test('road capacity adds its tier factor after the workplace base capacity is ro
 test('a completed road tier changes actual warehouse arrival time, not only the displayed estimate', () => {
   for (const tier of [0, 1, 3, 5]) {
     const state = island(tier);
-    crew(state, 'warehouse'); state.buildings.lumber.ready = 150;
+    crew(state, 'warehouse'); state.buildings.lumber.ready = 200;
     const load = haulCapacity(state), expected = 300 / (1 + .1 * tier);
     tick(state, expected - .001);
     assert.equal(state.resources.wood, 600);
@@ -59,7 +59,7 @@ test('food shortage halves hauling efficiency in addition to the completed road 
   tick(state, arrival - .001);
   assert.equal(state.resources.wood, 600);
   tick(state, .001);
-  assert.equal(state.resources.wood, 666);
+  assert.equal(state.resources.wood, 732);
 });
 
 test('upgrading the final path speeds up an already loaded trip without changing its cargo or duplicating goods', () => {
@@ -87,7 +87,7 @@ test('road speed does not shorten the five-minute walk or accelerate production'
   assert.equal(state.buildings.farm.ready, 0);
   tick(state, 1);
   near(state.residents.find(person => person.workplace === 'farm').arrivalRemaining, 0);
-  tick(state, 359);
+  tick(state, 179);
   assert.equal(state.buildings.farm.ready, 0);
   tick(state, 1);
   assert.equal(state.buildings.farm.ready, 1);
@@ -96,7 +96,7 @@ test('road speed does not shorten the five-minute walk or accelerate production'
 test('Harbor sea voyages stay five minutes while its cargo carriers receive road speed and capacity', () => {
   const state = island(5);
   crew(state, 'dock');
-  assert.equal(act(state, { type: 'trade', direction: 'buy', resource: 'wood', amount: 100 }, NOW).ok, true);
+  assert.equal(act(state, { type: 'trade', direction: 'buy', resource: 'wood', amount: 200 }, NOW).ok, true);
   tick(state, 299);
   assert.equal(state.dock.orders[0].stage, 'voyage');
   near(state.dock.orders[0].remaining, 1);
@@ -106,7 +106,7 @@ test('Harbor sea voyages stay five minutes while its cargo carriers receive road
   tick(state, 199.999);
   assert.equal(state.dock.stock.wood, 0);
   tick(state, .001);
-  assert.equal(state.dock.stock.wood, 78);
+  assert.equal(state.dock.stock.wood, 156);
 });
 
 test('scheduled construction ETA agrees with actual road-accelerated transport and building phases', () => {

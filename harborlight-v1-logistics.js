@@ -1,9 +1,9 @@
 // Physical goods and event-based logistics. Durations are real elapsed seconds,
 // including catch-up after the browser is closed.
-import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v13';
-import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v13';
-import { centralReserved, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v13';
-export { centralReserved, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v13';
+import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v15';
+import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v15';
+import { centralReserved, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v15';
+export { centralReserved, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v15';
 export const workerEfficiency = productionMultiplier;
 // Paths improve cargo courses, independently of production and resident walks.
 export const transportEfficiency = (state, efficiency = workerEfficiency(state)) => efficiency * roadSpeedMultiplier(state);
@@ -25,11 +25,14 @@ const buildingNames = { farm: 'Farm', lumber: 'Lumber Camp', quarry: 'Quarry', w
 const materialNames = { wood: 'wood', stone: 'stone', grain: 'grain', food: 'food', planks: 'planks' };
 // Local storage belongs to the producing building, independently of Town Hall.
 export const producerCapacity = (state, id = 'farm', level = state.buildings[id]?.level || 0) => 200 * Math.max(0, level);
-export const productionRate = (state, id) => state.buildings[id]?.level === 1 ? 10 : state.buildings[id]?.level > 1 ? state.buildings[id].level + 10 : 0;
+export const PRODUCTION_RATE_VERSION = 2;
+// The base economy was doubled in v15. Temporary bonuses still multiply this
+// rate; staffing, meals, taxes and five-minute carrier clocks are independent.
+export const productionRate = (state, id) => state.buildings[id]?.level === 1 ? 20 : state.buildings[id]?.level > 1 ? 2 * (state.buildings[id].level + 10) : 0;
 export const foodReserve = state => 50 * (state.buildings.warehouse.level || 0);
 export const availableGoods = (state, id) => Math.max(0, Math.floor(centralAvailable(state, id) - (id === 'food' ? foodReserve(state) : 0)));
 export const forecastAvailableGoods = availableGoods;
-export const haulCapacity = (state, id = 'warehouse') => Math.max(1, Math.floor(Math.floor(60 * 1.1 ** Math.max(0, (state.buildings[id]?.level || 1) - 1)) * roadCapacityMultiplier(state)));
+export const haulCapacity = (state, id = 'warehouse') => Math.max(1, Math.floor(Math.floor(120 * 1.1 ** Math.max(0, (state.buildings[id]?.level || 1) - 1)) * roadCapacityMultiplier(state)));
 export const workplaceUnlocked = (state, id) => state.buildings.townhall.level >= (id === 'market' ? 2 : id === 'dock' ? 4 : 1);
 export function activeWorkerIndices(state, id) {
   const people = Array.isArray(state.residents) ? state.residents.filter(person => person.workplace === id) : [];
@@ -400,6 +403,11 @@ function reservedPort(state,resource) {
   return reserved+inboundAmount(state,'dock',resource);
 }
 export function normalizeLogisticsState(state,raw) {
+  // Preserve the completed fraction of a pre-v15 unit, rather than clamp its
+  // old seconds into the now shorter cycle and award a unit on reload. Capture
+  // the marker before writing because callers may pass state as raw too.
+  const legacyProductionProgress = raw.productionRateVersion !== PRODUCTION_RATE_VERSION;
+  state.productionRateVersion = PRODUCTION_RATE_VERSION;
   state.activeSeconds=clamp(raw.activeSeconds,0,Number.MAX_SAFE_INTEGER);
   state.constructionSequence=whole(raw.constructionSequence);
   state.pendingDeliveries=stock();for(const id of MATERIAL_IDS)state.pendingDeliveries[id]=Math.floor(clamp(raw.pendingDeliveries?.[id],0,Number.MAX_SAFE_INTEGER));
@@ -443,7 +451,8 @@ export function normalizeLogisticsState(state,raw) {
   state.fullResources=Object.fromEntries(MATERIAL_IDS.map(id=>[id,raw.fullResources?.[id]===true]));
   for(const [id,b] of Object.entries(state.buildings)) {
     const cycle=PRODUCTION_RECIPES[id]?3600/Math.max(1,productionRate(state,id)):300;
-    b.workProgress=Array.from({length:b.workers},(_,i)=>clamp(raw.buildings?.[id]?.workProgress?.[i],0,cycle));
+    const progressScale = legacyProductionProgress && PRODUCTION_RECIPES[id] ? 0.5 : 1;
+    b.workProgress=Array.from({length:b.workers},(_,i)=>clamp(raw.buildings?.[id]?.workProgress?.[i] * progressScale,0,cycle));
     b.storageFull=raw.buildings?.[id]?.storageFull===true;b.productionBlocked=raw.buildings?.[id]?.productionBlocked===true;b.fullSeconds=clamp(raw.buildings?.[id]?.fullSeconds,0,432000);
   }
   state.premium={...(raw.premium||{}),expiresAt:clamp(raw.premium?.expiresAt,0,Number.MAX_SAFE_INTEGER)};

@@ -200,12 +200,12 @@ test('scheduler position, random state and in-flight cargo survive reload withou
 test('resource priorities apply to real construction courses and reserved materials stay conserved',()=>{
   const state=island();priorities(state,['wood']);
   for(const id of Object.keys(PRODUCTION_RECIPES))state.buildings[id].ready=0;
-  const project={building:'house',targetLevel:11,cost:{wood:70,stone:12},goodsTotal:82,goodsRemaining:82,remainingMaterials:{wood:70,stone:12,grain:0,food:0,planks:0},delivered:{wood:0,stone:0,grain:0,food:0,planks:0},transportSeconds:0,buildRemaining:0,stage:'transport',order:1};
+  const project={building:'house',targetLevel:11,cost:{wood:140,stone:24},goodsTotal:164,goodsRemaining:164,remainingMaterials:{wood:140,stone:24,grain:0,food:0,planks:0},delivered:{wood:0,stone:0,grain:0,food:0,planks:0},transportSeconds:0,buildRemaining:0,stage:'transport',order:1};
   state.constructionProjects.push(reserveProject(state,project));
   const trips=[course(state),course(state),course(state)];
-  assert.deepEqual(trips.map(trip=>[trip.resource,trip.amount]),[['wood',66],['wood',4],['stone',12]]);
+  assert.deepEqual(trips.map(trip=>[trip.resource,trip.amount]),[['wood',132],['wood',8],['stone',24]]);
   assert.equal(project.goodsRemaining,0);assert.equal(project.stage,'building');
-  assert.deepEqual(project.delivered,{wood:70,stone:12,grain:0,food:0,planks:0});
+  assert.deepEqual(project.delivered,{wood:140,stone:24,grain:0,food:0,planks:0});
   assert.equal(state.resources.wood,0);assert.equal(state.resources.stone,0);
 });
 
@@ -247,7 +247,7 @@ function upgradePreviewIsland() {
 
 test('scheduled total includes eight competing Food courses and never mutates the real island',()=>{
   const {state,project}=upgradePreviewIsland();
-  state.buildings.windmill.level=3;state.buildings.windmill.ready=528;priorities(state,['food']);
+  state.buildings.windmill.level=6;state.buildings.windmill.ready=1056;priorities(state,['food']);
   const before=JSON.stringify(state);
   const estimate=constructionScheduleEstimate(state,project);
   assert.equal(estimate.transport,2700);assert.equal(estimate.building,300);assert.equal(estimate.total,3000);

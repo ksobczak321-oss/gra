@@ -44,24 +44,27 @@ test('20 distinct attractions produce five persistent daily offers with Y in 5..
   assert.deepEqual(roundTrip(state), state, 'loading must not reroll offers or advance the random seed');
 });
 
-test('offer price uses current Town Hall level while Y and its daily reward remain fixed', () => {
-  const state = island(1), initial = leisureOffers(state)[0];
+test('offer price uses its population audience rather than Town Hall level while its daily values remain fixed', () => {
+  const state = island(1);
+  state.leisure.offers[0].sharePercent = 25;
+  const initial = leisureOffers(state)[0];
   state.buildings.townhall.level = 4;
   const changed = leisureOffers(state)[0];
   assert.equal(changed.y, initial.y);
-  assert.equal(changed.price, initial.y * 4);
+  assert.equal(changed.price, initial.y * 3);
   assert.equal(changed.amount, initial.y);
-  assert.equal(changed.residentCount, 4);
+  assert.equal(changed.residentCount, 3);
   const before = state.resources.coins;
   const result = buy(state, changed.id);
   assert.equal(result.ok, true);
-  assert.equal(state.resources.coins, before - initial.y * 4);
-  assert.equal(result.residentIds.length, 4);
+  assert.equal(state.resources.coins, before - initial.y * 3);
+  assert.equal(result.residentIds.length, 3);
   assert.equal(state.leisure.effects[0].remaining, ATTRACTION_EFFECT_SECONDS);
 });
 
 test('attractions benefit the least happy residents and keep newborn happiness frozen', () => {
   const state = island(2);
+  state.leisure.offers[0].sharePercent = 17;
   state.residents[0].newbornRemaining = 86400;
   state.residents[1].visitHappinessRemaining = 3600;
   state.residents[2].happiness = -90;
@@ -75,6 +78,7 @@ test('attractions benefit the least happy residents and keep newborn happiness f
 
 test('receiver selection accounts for existing bonuses and a production blockage', () => {
   const state = island(1);
+  state.leisure.offers[0].sharePercent = 1;
   for (const person of state.residents) person.happiness = 0;
   state.buildings.quarry = { level: 1, ready: 200 };
   state.residents[7].workplace = 'quarry';
@@ -82,23 +86,31 @@ test('receiver selection accounts for existing bonuses and a production blockage
   assert.deepEqual(buy(state).residentIds, [8]);
 });
 
-test('each attraction has 100/75/50/25 percent purchases then refuses a fifth without payment', () => {
+test('completed attraction uses give 100/75/50/25 percent bonuses and proportionate prices', () => {
   const state = island(1), offer = state.leisure.offers[0];
   offer.y = 7; // Partial points remain exact; display rounding belongs to the UI.
+  offer.sharePercent = 1;
   const start = state.resources.coins;
-  const amounts = Array.from({ length: 4 }, () => buy(state, offer.id).amount);
+  const amounts = Array.from({ length: 4 }, (_, index) => {
+    if (index) advanceLeisure(state, ATTRACTION_EFFECT_SECONDS);
+    return buy(state, offer.id).amount;
+  });
   assert.deepEqual(amounts, [7, 5.25, 3.5, 1.75]);
-  assert.equal(state.resources.coins, start - 4 * 7);
-  const before = structuredClone(state);
-  const refused = buy(state, offer.id);
+  assert.equal(state.resources.coins, start - (7 + 6 + 4 + 2));
+  // Legacy saves may have an exhausted attraction still in today's selection.
+  const exhausted = island(1), id = exhausted.leisure.offers[0].id;
+  exhausted.leisure.habits[id] = { uses: 4, resetRemaining: 86400 };
+  const before = structuredClone(exhausted);
+  const refused = buy(exhausted, id);
   assert.equal(refused.ok, false);
   assert.match(refused.message, /24-hour break/);
-  assert.deepEqual(state, before);
+  assert.deepEqual(exhausted, before);
 });
 
 test('habituation applies separately and another attraction starts at full happiness', () => {
   const state = island(), [one, two] = state.leisure.offers;
-  buy(state, one.id); buy(state, one.id);
+  buy(state, one.id); advanceLeisure(state, ATTRACTION_EFFECT_SECONDS); buy(state, one.id);
+  advanceLeisure(state, ATTRACTION_EFFECT_SECONDS);
   const result = buy(state, two.id);
   assert.equal(result.amount, two.y);
   assert.equal(state.leisure.habits[one.id].uses, 2);
@@ -107,24 +119,26 @@ test('habituation applies separately and another attraction starts at full happi
 
 test('a repeat purchase resets only its own 24-hour no-purchase break', () => {
   const state = island(), [one, two] = state.leisure.offers;
-  buy(state, one.id); buy(state, two.id);
-  advanceLeisure(state, 3 * 3600);
+  buy(state, one.id); advanceLeisure(state, ATTRACTION_EFFECT_SECONDS); buy(state, two.id);
+  advanceLeisure(state, ATTRACTION_EFFECT_SECONDS);
   buy(state, one.id);
   assert.equal(state.leisure.habits[one.id].resetRemaining, 86400);
-  assert.equal(state.leisure.habits[two.id].resetRemaining, 21 * 3600);
-  advanceLeisure(state, 21 * 3600);
+  assert.equal(state.leisure.habits[two.id].resetRemaining, 18 * 3600);
+  advanceLeisure(state, 18 * 3600);
   assert.equal(state.leisure.habits[two.id], undefined);
-  assert.equal(state.leisure.habits[one.id].resetRemaining, 3 * 3600);
-  advanceLeisure(state, 3 * 3600);
+  assert.equal(state.leisure.habits[one.id].resetRemaining, 6 * 3600);
+  advanceLeisure(state, 6 * 3600);
   assert.equal(state.leisure.habits[one.id], undefined);
 });
 
-test('each purchase has an independent six-hour duration and expires without removing intrinsic points', () => {
+test('previously paid overlapping purchases retain their independent expiry without removing intrinsic points', () => {
   const state = island(1), id = state.leisure.offers[0].id;
   const personal = state.residents.map(person => person.happiness);
-  buy(state, id);
-  advanceLeisure(state, 3600);
-  buy(state, id);
+  state.leisure.effects = [
+    { id: 1, attractionId: id, amount: 10, residentIds: [1], remaining: 5 * 3600 },
+    { id: 2, attractionId: id, amount: 7.5, residentIds: [2], remaining: 6 * 3600 }
+  ];
+  normalizeLeisure(state, structuredClone(state));
   assert.deepEqual(state.leisure.effects.map(effect => effect.remaining), [5 * 3600, 6 * 3600]);
   advanceLeisure(state, 5 * 3600);
   assert.equal(state.leisure.effects.length, 1);

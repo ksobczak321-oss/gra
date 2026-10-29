@@ -62,6 +62,7 @@ def run():
         expect(page.locator('#password-visibility')).to_have_attribute('aria-label', 'Pokaż hasło')
         expect(page.locator('[data-provider="Google"]')).to_contain_text('Kontynuuj przez Google')
         page.locator('#display-name').fill('Captain')
+        page.locator('#island-name').fill('Zatoka Światła')
         page.locator('#email').fill('captain@example.com')
         page.locator('#password').fill('island-password')
         page.locator('#confirm-password').fill('different-password')

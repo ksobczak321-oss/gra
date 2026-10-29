@@ -1,16 +1,17 @@
 // Economy and progression for the interactive approved-screen prototype.
 // Pure data module: browser UI and Node tests share the same rules.
-import { MATERIAL_IDS, PRODUCTION_RECIPES, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange } from './harborlight-v1-logistics.js?v=frontend-v13';
-export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty } from './harborlight-v1-logistics.js?v=frontend-v13';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange } from './harborlight-v1-logistics.js?v=frontend-v15';
+export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty } from './harborlight-v1-logistics.js?v=frontend-v15';
 
-import { normalizeResidents, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds } from './harborlight-v1-residents.js?v=frontend-v13';
-export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v13';
+import { normalizeResidents, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds } from './harborlight-v1-residents.js?v=frontend-v15';
+export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v15';
 
-import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction } from './harborlight-v1-activities.js?v=frontend-v13';
-import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v13';
-import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v13';
-import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v13';
-import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v13';
+import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction } from './harborlight-v1-activities.js?v=frontend-v15';
+import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v15';
+import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v15';
+import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v15';
+import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v15';
+import { normalizeIslandProfile, validateIslandName } from './harborlight-v1-profile.js?v=frontend-v15';
 
 export const RESOURCES = {
   coins: { name: 'Coins', short: 'coins', symbol: '◉', price: 1 },
@@ -27,14 +28,14 @@ export const CONSTRUCTION_IDS = ['farm', 'windmill', 'lumber', 'sawmill', 'quarr
 
 export const BUILDINGS = {
   house: { name: 'House', description: 'Each level provides housing for 24 residents. Every resident without a home reduces happiness by 1 percentage point per hour.', cost: { coins: 100, wood: 40, stone: 20, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
-  farm: { name: 'Farm', description: 'Each farmer produces 10 grain per working hour. Harvests wait in the farm storage until warehouse workers collect them.', cost: { coins: 80, wood: 30, stone: 10 }, resource: 'grain', rate: 10, maxLevel: MAX_BUILDING_LEVEL },
-  sawmill: { name: 'Sawmill', description: 'Each worker produces 10 planks per hour. Each plank requires 2 wood from the central warehouse.', cost: { coins: 120, wood: 45, stone: 25 }, resource: 'planks', rate: 10, input: 'wood', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
-  quarry: { name: 'Quarry', description: 'Each quarry worker produces 10 stone per working hour. Stone waits at the quarry for transport.', cost: { coins: 150, wood: 35, stone: 20 }, resource: 'stone', rate: 10, maxLevel: MAX_BUILDING_LEVEL },
+  farm: { name: 'Farm', description: 'Each farmer produces 20 grain per working hour. Harvests wait in the farm storage until warehouse workers collect them.', cost: { coins: 80, wood: 30, stone: 10 }, resource: 'grain', rate: 20, maxLevel: MAX_BUILDING_LEVEL },
+  sawmill: { name: 'Sawmill', description: 'Each worker produces 20 planks per hour. Each plank requires 2 wood from the central warehouse.', cost: { coins: 120, wood: 45, stone: 25 }, resource: 'planks', rate: 20, input: 'wood', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
+  quarry: { name: 'Quarry', description: 'Each quarry worker produces 20 stone per working hour. Stone waits at the quarry for transport.', cost: { coins: 150, wood: 35, stone: 20 }, resource: 'stone', rate: 20, maxLevel: MAX_BUILDING_LEVEL },
   dock: { name: 'Harbor', description: 'Connects the island to trade and expeditions.', cost: { coins: 200, wood: 60, planks: 25 }, maxLevel: MAX_BUILDING_LEVEL },
-  warehouse: { name: 'Warehouse', description: 'Each warehouse worker carries up to 60 items per five-minute round trip at level 1. Level 1 holds 1,000 of each material and 4,000 in total. Each additional level increases both limits by 50%.', cost: { coins: 160, wood: 35, stone: 30, planks: 15 }, maxLevel: MAX_BUILDING_LEVEL },
+  warehouse: { name: 'Warehouse', description: 'Each warehouse worker carries up to 120 items per five-minute round trip at level 1. Level 1 holds 1,000 of each material and 4,000 in total. Each additional level increases both limits by 50%.', cost: { coins: 160, wood: 35, stone: 30, planks: 15 }, maxLevel: MAX_BUILDING_LEVEL },
   lighthouse: { name: 'Lighthouse', description: 'Completing a level sets everyone’s happiness to 100% and doubles material production for 24 hours × the new level. Construction takes four times as long as transport.', cost: { coins: 300, planks: 30 }, maxLevel: MAX_BUILDING_LEVEL },
-  lumber: { name: 'Lumber Camp', description: 'Each lumberjack produces 10 wood per working hour. Wood waits in local storage for transport.', cost: { coins: 90, wood: 25, stone: 15 }, resource: 'wood', rate: 10, maxLevel: MAX_BUILDING_LEVEL },
-  windmill: { name: 'Windmill', description: 'Each miller produces 10 food per hour. Each food requires 2 grain from the central warehouse.', cost: { coins: 140, wood: 40, stone: 20, planks: 15 }, resource: 'food', rate: 10, input: 'grain', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
+  lumber: { name: 'Lumber Camp', description: 'Each lumberjack produces 20 wood per working hour. Wood waits in local storage for transport.', cost: { coins: 90, wood: 25, stone: 15 }, resource: 'wood', rate: 20, maxLevel: MAX_BUILDING_LEVEL },
+  windmill: { name: 'Windmill', description: 'Each miller produces 20 food per hour. Each food requires 2 grain from the central warehouse.', cost: { coins: 140, wood: 40, stone: 20, planks: 15 }, resource: 'food', rate: 20, input: 'grain', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
   townhall: { name: 'Town Hall', description: 'The Town Hall determines the island level and the upgrade limit for other buildings. Each level allows 24 residents; the House provides their housing.', cost: { coins: 240, wood: 50, stone: 50, planks: 20 }, maxLevel: MAX_BUILDING_LEVEL },
   chapel: { name: 'Chapel', description: 'Completing an upgrade grants +10 happiness × the new level for 10 hours. Separate one-use blessings give +50 of every resource and +20 happiness for one hour.', cost: { coins: 180, wood: 20, stone: 60, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
   market: { name: 'Market', description: 'Merchants exchange goods without coins.', cost: { coins: 130, wood: 35, stone: 15 }, maxLevel: MAX_BUILDING_LEVEL }
@@ -73,6 +74,7 @@ export function createState(now = Date.now()) {
   }
   const state = {
     version: 9,
+    islandName: '', islandNameUpdatedAt: 0,
     resources: Object.fromEntries(Object.keys(RESOURCES).map(id => [id, 100])),
     population: 12, capacity: 24, happiness: 0, baseHappiness: 0, chapelRemaining: 0, lighthouseRemaining: 0,
     blessingRemaining: 0, blessingsUsed: 0, paidBlessingCooldownRemaining: 0, loyalty: { lastDay: null, streak: 0 },
@@ -407,6 +409,7 @@ function advancePopulation(state, elapsedSeconds) {
 export function normalizeState(raw, now = Date.now()) {
   const state = createState(now);
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return state;
+  normalizeIslandProfile(state, raw);
   const simulationAnchor = raw.version >= 8 ? Math.min(now, amount(raw.lastSimulatedAt ?? raw.savedAt, now, Number.MAX_SAFE_INTEGER)) : now;
   state.worldTimeMs = state.lastSimulatedAt = state.savedAt = simulationAnchor;
   for (const key of Object.keys(RESOURCES)) state.resources[key] = integer(raw.resources?.[key], state.resources[key], 0, key === 'coins' ? Number.MAX_SAFE_INTEGER : 10000000);
@@ -745,8 +748,7 @@ export function resourceRates(state) {
   const multiplier = productionMultiplier(state) * activePlayMultiplier(state) * (state.lighthouseRemaining > 0 ? 2 : 1);
   for (const [id, recipe] of Object.entries(PRODUCTION_RECIPES)) {
     const workers = (state.residents || []).filter(person => person.workplace === id && residentIsWorking(state, person)).length;
-    const level = state.buildings[id].level;
-    const output = workers * (level === 1 ? 10 : level > 1 ? level + 10 : 0) * multiplier;
+    const output = workers * productionRate(state, id) * multiplier;
     rates[recipe.output].production += output;
     if (recipe.input) rates[recipe.input].consumption += output * 2;
   }
@@ -772,6 +774,14 @@ export function act(state, action, now = Date.now()) {
     return result;
   }
   switch (action.type) {
+    case 'renameIsland': {
+      const name = validateIslandName(action.name);
+      if (!name.ok) return bad(name.message);
+      state.islandName = name.name;
+      state.islandNameUpdatedAt = integer(now, state.worldTimeMs, 0, Number.MAX_SAFE_INTEGER);
+      result = good(name.message);
+      break;
+    }
     case 'build':
     case 'upgrade': {
       if (action.type === 'build' && state.buildings[id].level > 0) return bad('This building already exists. Choose Upgrade.');

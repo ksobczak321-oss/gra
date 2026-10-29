@@ -1,6 +1,6 @@
 // Persistent learning, meaningful activity and future verified social hooks.
 // No DOM, network requests or account creation happen in this module.
-import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v13';
+import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v15';
 
 export const ACTIVE_PLAY_SECONDS = 300;
 export const REFERRAL_WINDOW_SECONDS = 30 * DAY_SECONDS;

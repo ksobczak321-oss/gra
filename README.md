@@ -2,24 +2,25 @@
 
 Gra o rozwoju wyspy, pracy mieszkańców i odbudowie latarni. Repozytorium zawiera przeglądarkowy prototyp HTML/CSS/JavaScript z lokalnym zapisem, gospodarką offline i zaakceptowaną ilustracją wyspy. Nie wymaga instalowania zależności aplikacji ani kroku kompilacji.
 
-Bieżący interfejs **frontend-v14** ma większy dolny pasek z kategoriami Administracja, Gospodarka, Zasoby, Dekoracje i Ścieżki oraz uproszczone zarządzanie pracownikami. Testy EN/PL na komputerze i telefonie przeszły, włącznie z przydzielaniem ludzi i niezależnym nowym zapisem. Kod wysłano jako [3a4b000](https://github.com/ksobczak321-oss/gra/commit/3a4b000); kontrolę publicznego wdrożenia blokuje proxy środowiska (HTTP 403).
+Bieżący pakiet **frontend-v15** obejmuje [17 uzgodnionych zmian](docs/FRONTEND-V15-REQUIREMENTS.md): jednakowe miniatury i podpisy pracowników, karty budynków na jednym ekranie, powrót do poprzedniego menu, własną nazwę wyspy oraz nowe opisy i pełniejsze tłumaczenia. Bazowa produkcja i ładowność transportu są podwojone; jedna atrakcja działa przez sześć godzin dla losowego udziału 1–50% mieszkańców, z ceną zależną od sumy punktów szczęścia.
 
-Mechaniki i **Excel 9** zachowują [58 decyzji i 19 wcześniejszych wymagań frontendu](docs/decisions-v9.json). Ich wydanie v13 zaliczyło **388/388 testów modelu** oraz publiczny odbiór. Ta zmiana dotyczy prezentacji i osobnego zapisu, bez zmian silnika gospodarki. Pełne dowody są w [dzienniku](docs/IMPLEMENTATION-LOG.md).
+Wydanie zachowuje wcześniejsze [58 decyzji i 19 wymagań](docs/decisions-v9.json), z późniejszymi zmianami opisanymi w pakiecie v15. **Excel 9** pozostaje archiwum wcześniejszych zasad i nie jest aktualnym opisem podwojonej produkcji ani nowych atrakcji. Bieżące reguły są w [opisie gospodarki](docs/ECONOMY-RULES.md); wyniki sprawdzeń i publikację zapisuje [dziennik](docs/IMPLEMENTATION-LOG.md).
 
 ## Podgląd
 
-- [Wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v14).
-- [Nowy start z 29 października](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&slot=start-20261029&v=frontend-v14) — poziom 1, 12 osób, po 100 każdego zasobu, zero przydzielonych pracowników. Osobny zapis zachowuje wcześniejsze wyspy; kolejne otwarcie wznawia ten nowy profil.
+- [Wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v15).
+- [Profil nowego gracza z 29 października](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&slot=start-20261029&v=frontend-v15) — przy pierwszym otwarciu poziom 1, 12 osób, po 100 każdego zasobu, zero przydzielonych pracowników. Osobny zapis zachowuje wcześniejsze wyspy; kolejne otwarcie wznawia jego postęp.
 - [Logowanie/rejestracja](https://ksobczak321-oss.github.io/gra/harborlight-auth.html) — formularze, bez prawdziwej usługi kont i OAuth.
 - [Pobierz Excel 9](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT9-zasady.xlsx) — opublikowany i sprawdzony przez pobranie.
 
-Pełny publiczny odbiór v13 i pobranie Excela 9 zapisano w dzienniku. Testów publicznej strony nie udało się powtórzyć dla v14: proxy blokuje Pages i API GitHuba, mimo przyznanego dostępu sieciowego. Lokalny odbiór v14 jest zakończony; parametr wersji w linku sam nie potwierdza wdrożenia.
+Pełny publiczny odbiór v13 i pobranie Excela 9 zapisano w dzienniku. W tym środowisku proxy nadal blokuje Pages i API GitHuba błędem 403; publicznego odbioru v15 nie można utożsamiać z testami lokalnymi. Parametr wersji w linku sam nie potwierdza wdrożenia.
 
 ## Co obejmuje ta wersja
 
 - Wspólny polski dzień o północy i rzeczywiste czasy efektów, indywidualne H, jedzenie, praca, transport, fizyczne rezerwacje, budowa i gospodarka offline.
 - Zadania z potwierdzeniem, darowiznami i trwałym Share/Skip; ekspedycje z pulą +50, potrąceniami za spóźnienie i jedną serią blokującą wyspę.
-- Brak lewego paska, nowy nagłówek, 12 kart budynków, pięć zasobów z przewozami, EN/PL, filtry powiadomień i zwarte efekty. Informacje o podatkach są ukryte; silnik nadal je nalicza.
+- Brak lewego paska, 12 kart budynków w Administracji i Gospodarce, jednakowe miniatury, podpisane obsady, pięć zasobów z przewozami, EN/PL i filtry powiadomień. Szczegóły budynków mają zwięzły widok główny oraz osobny widok dodatkowy z powrotem.
+- Bazowa produkcja 20/24/26/28… na osobę i godzinę oraz 120 sztuk na pięciominutowy kurs na poziomie 1. Wymagania zadań zachowują wcześniejszą normę; podatki i zapotrzebowanie mieszkańców na żywność nie są podwajane przez zmianę bazy.
 - 25 mikrozadań przez pięć aktywnych dni oraz premia aktywnej gry. Kwoty samouczka i krzywa czasu minigier są jawnie projektowe, nie udają zatwierdzonych nagród lojalnościowych.
 - Excel 9 ma tylko cztery widoczne zakładki, opisy mechanik do trzech zdań i jeden kalkulator. Całe źródło 8 oraz 48 komentarzy pozostaje ukrytym archiwum; pliki 7 i 8 zachowują identyczne bajty.
 
@@ -37,13 +38,13 @@ Otwórz `http://127.0.0.1:8002/harborlight-v1-layered.html`. Bezpośrednie `file
 
 ```sh
 node --test --test-concurrency=1 --test-isolation=none tests/*.test.mjs
-python3 tests/harborlight-frontend-v14-smoke.py
+python3 tests/harborlight-frontend-v15-smoke.py
 python3 scripts/build_workbook_v9.py --validate-only
 ```
 
-Lokalny model: **388 PASS, 0 błędów, 0 pominiętych**. Zaliczono pięć scenariuszy Chromium: frontend-v13, new-player, auth, v13-auth-motion oraz dodatkowy odbiór sześciu grup wymagań. Sprawdzono komplet 24 widoków budynków w EN/PL, pięć zasobów, desktop i telefon. Na rzeczywistym Pages ponownie PASS: frontend-v13, dodatkowy odbiór oraz new-player. Brak błędów JavaScript/HTTP i nieoczekiwanych zewnętrznych wywołań udostępniania.
+Odbiór lokalny v15: **440/440 testów modelu PASS, 0 błędów i 0 pominiętych**. Nowy zestaw Chromium zaliczył siedem grup: 24 widoki budynków po polsku w dwóch rozdzielczościach, wszystkie 12 po angielsku, telefon, nawigację i opisy, zadania/atrakcje/ekspedycję oraz rejestrację nazw wysp. Brak błędów JavaScript/HTTP; osobne regresje formularzy i animacji również PASS. Audyt źródeł objął 1486 konkretnych tekstów i wiadomości z 12 plików. Publiczny odbiór v15 pozostaje niepotwierdzony z powodu HTTP 403 proxy; historyczne wyniki publicznego v13 są oddzielnie w dzienniku.
 
-Zestawy przeglądarkowe wymagają Python Playwright i Chromium; ścieżkę można ustawić przez `HARBORLIGHT_CHROMIUM`. Pełny raport obejmuje również wcześniejsze regresje i test rzeczywistego adresu Pages. Workflow `.github/workflows/pages.yml` publikuje `main` bez kompilacji.
+Zestawy przeglądarkowe wymagają Python Playwright i Chromium; ścieżkę można ustawić przez `HARBORLIGHT_CHROMIUM`. Dziennik rozdziela bieżący odbiór lokalny od wcześniejszych testów rzeczywistego adresu Pages. Workflow `.github/workflows/pages.yml` publikuje `main` bez kompilacji.
 
 ## Dokumentacja
 

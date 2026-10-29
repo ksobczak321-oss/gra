@@ -4,7 +4,7 @@
 import {
   MATERIAL_IDS, stockRoom, receiveMaterials, notify,
   quoteInstantTransport, instantTransport, estimateMaterialsSeconds, availableGoods, haulCapacity
-} from './harborlight-v1-logistics.js?v=frontend-v13';
+} from './harborlight-v1-logistics.js?v=frontend-v15';
 import { secondsUntilWarsawMidnight } from './harborlight-v1-calendar.js';
 
 const HOUR = 3600;

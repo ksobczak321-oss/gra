@@ -1,8 +1,8 @@
-# Reguły gospodarki HARBORLIGHT — wersja 9
+# Reguły gospodarki HARBORLIGHT — frontend v15
 
-Stan wydania **frontend-v13 / Excel 9**: implementacja, odbiór lokalny, publikacja i odbiór publiczny zakończone — **388/388 testów modelu PASS**, pięć lokalnych zestawów przeglądarkowych i trzy zestawy rzeczywistego Pages PASS. Udane [Pages 40012462614](https://github.com/ksobczak321-oss/gra/actions/runs/40012462614); publiczny Excel i 17 plików gry zwracają HTTP 200 oraz zgadzają się z lokalnymi sumami kontrolnymi. Dowody są w [dzienniku](IMPLEMENTATION-LOG.md); wyniki v12 są historią osobnego wydania.
+Stan wydania **frontend-v15**: implementacja i odbiór lokalny ukończone — 440/440 testów modelu i siedem grup Chromium PASS. Publiczny odbiór v15 blokuje HTTP 403 proxy środowiska. Nowe [17 wymagań pakietu GO](FRONTEND-V15-REQUIREMENTS.md) obejmuje podwojenie bazowej produkcji i ładunku oraz zmienione atrakcje; bieżące wyniki testów i stan publikacji zapisano w [dzienniku](IMPLEMENTATION-LOG.md). Wyniki poprzednich wydań nie stanowią potwierdzenia v15.
 
-Źródłem bieżących reguł jest [manifest 58 decyzji i 19 wymagań frontendu](decisions-v9.json), zatwierdzony w rozmowie po Excelu 8. Nowsze rozstrzygnięcia zastępują wcześniejsze opisy. Pliki 7 i 8 zachowują identyczne bajty; ich źródła i wszystkie 48 komentarzy zachowano w ukrytym archiwum Excela 9.
+Reguły nienadpisane przez v15 zachowują [manifest 58 decyzji i 19 wymagań frontendu](decisions-v9.json), zatwierdzony w rozmowie po Excelu 8. Nowsze rozstrzygnięcia zastępują wcześniejsze opisy. Pliki 7, 8 i 9 nie są przebudowywane; źródła i wszystkie 48 komentarzy starszych arkuszy pozostają w archiwum Excela 9.
 
 ## Jak działa gra
 
@@ -10,11 +10,13 @@ Każda mechanika ma najwyżej trzy zdania. Szczegóły wyjątków i pełne brzmi
 
 | Mechanika | Zasada | Źródło |
 |---|---|---|
+| Cel wyspy | Rozbudowujesz całą osadę, zapewniając mieszkańcom żywność, domy, pracę i szczęście. Produkcja, handel, transport oraz wszystkie budynki wspólnie umożliwiają rozwój wyspy. | V15-09 |
 | Start | Zaczynasz z 12 osobami w domu, Ratuszem 1 i po 100 każdego z sześciu zasobów. Nie ma przydzielonych pracowników, a szczęście wynosi 0%. Oddzielny profil nowego gracza nie kasuje poprzedniej wyspy. | Start / oddzielny zapis |
+| Nazwa i profil | Podczas rejestracji wybierasz nazwę swojej wyspy, zapisywaną dopiero po poprawnym zatwierdzeniu formularza. Samodzielny formularz kieruje do normalnego nowego profilu, a wejście z istniejącej wyspy zachowuje jej profil i slot. Nazwa pozostaje dosłowna w obu językach, a zapis nie tworzy prawdziwego konta. | V15-05 |
 | Poziom i mieszkanie | Poziom Ratusza jest poziomem gry i ogranicza ulepszanie innych budynków. Ratusz daje limit 24 mieszkańców na poziom, a Dom osobno zapewnia 24 łóżka na swój poziom. Brak łóżek zmniejsza szczęście wszystkich o 1 pp/h za każdą osobę bez miejsca. | Reguły V7/V8 zachowane |
 | Przydział i podróż | Każde z ośmiu miejsc pracy ma limit 12 × własny poziom, ze wspólnej puli wolnych osób w domu. Do pracy i z powrotem idzie się po 5 minut. Po zwolnieniu osoba bez ładunku od razu rozpoczyna powrót. | V9-19 / F04 |
 | Tragarz z ładunkiem | Odwołany tragarz najpierw kończy rozpoczętą dostawę i do tego czasu nadal pracuje. Nie bierze kolejnego kursu, potem wraca do domu przez 5 minut. Dopiero powrót czyni go dostępnym. | V9-19 |
-| Produkcja | Poziomy 1, 2, 3, 4 dają na osobę 10, 12, 13, 14 sztuk/h, a dalej +1 sztukę/h na poziom. Każda osoba ma własny postęp gotowej sztuki. Zwolnienie kasuje jej niedokończoną sztukę. | V9-50 |
+| Produkcja | Poziomy 1, 2, 3, 4 dają na osobę 20, 24, 26, 28 sztuk/h, a dalej +2 sztuki/h na poziom. Każda osoba ma własny postęp gotowej sztuki; nowa baza nadal podlega głodowi i istniejącym premiom. Zwolnienie kasuje jej niedokończoną sztukę. | V9-50 + V15-15 |
 | Młyn i tartak | Młyn zużywa 2 zboża z centrali na 1 żywność, a tartak 2 drewna na 1 deskę. Surowiec schodzi dopiero przy ukończeniu produktu. Brak wejścia lub miejsca wstrzymuje postęp bez jego utraty. | V9-50 |
 | Dwa magazyny | Gotowe produkty czekają lokalnie: pojemność wynosi 200 × własny poziom producenta. Dopiero tragarze zanoszą je do centrali, skąd można je wydawać i karmić ludzi. Monety są osobno w skarbcu. | V8 / V9-45 |
 | Pojemność centrali | Magazyn 1 mieści 1000 każdego materiału i 4000 łącznie; oba limity rosną ×1,5 na poziom. 50 × poziom Magazynu pojemności łącznej jest zarezerwowane dla żywności. Materiały przypisane budowie nadal zajmują miejsce aż do odbioru przez tragarza. | V9-14,45 |
@@ -29,10 +31,10 @@ Każda mechanika ma najwyżej trzy zdania. Szczegóły wyjątków i pełne brzmi
 | Darmowe błogosławieństwo | Darmowego użycia można dokonać podczas blokady płatnego, jeżeli inne błogosławieństwo już nie trwa. Darmowe użycie nie przesuwa terminu następnego płatnego. Błogosławieństwa pozostają odrębne od nieustalonej aktywności modlitewnej. | V9-56 |
 | Latarnia | Ulepszenie daje wymuszone 100% szczęścia i produkcję ×2 przez 24 h × osiągnięty poziom. Każdy efekt ma własny zegar, a nakładające się wymuszenia 100% korzystają z jednego zapisanego stanu sprzed pierwszego. Stan wraca po końcu ostatniego wymuszenia, z nadal aktywnymi dodatkami i karami. | V9-3,4 |
 | Zwiedzanie latarni | Wizyta trwa 4 h bez dojścia i wycofania; jednocześnie są 2 × poziom latarni miejsca. Po powrocie uczestnik ma 100% H i blokadę wizyty na 24 h, a jego grupa daje +10 pp populacji na 6 h. Pula darmowych wejść 2L działa w ruchomych 24 h, a trzy dodatkowe pakiety według zatwierdzonego cennika. | V7 D01–D02 + V9-3 |
-| Atrakcje | O północy pojawia się 5 ofert z katalogu 20 dekoracji i wydarzeń. Atrakcja daje Y pp na 6 h osobom o najniższym uprawnionym H, najwyżej tylu, jaki jest poziom Ratusza; cena wynosi Y × faktyczna liczba odbiorców. Y jest losową liczbą całkowitą 5–100, a brak odbiorców blokuje zakup. | V9-5,6,8 |
-| Przyzwyczajanie | Każdy rodzaj atrakcji ma osobny ciąg skuteczności: 100%, 75%, 50%, 25%, 0%. Po 24 h bez zakupu tego rodzaju wraca pełna skuteczność, a przy 0% nie pobieramy opłaty. Każdy zakup ma własne 6 h, a efekty sumują się przed ograniczeniem H. | V9-7,8 + V8 |
+| Atrakcje | O północy pojawia się 5 ofert z katalogu 20 dekoracji i wydarzeń; każda losuje Y od 5 do 100 pp oraz zasięg od 1% do 50% populacji. Bonus na 6 h otrzymuje wyliczona liczba uprawnionych osób o najniższym H, a cena wynosi w górę do całych monet: pp po przyzwyczajeniu × faktyczna liczba odbiorców. Na całej wyspie działa tylko jedna nowa atrakcja; następną można uruchomić od razu po zakończeniu jej 6 h. | V9-5,8 + V15-14 |
+| Przyzwyczajanie | Każdy rodzaj atrakcji ma osobny ciąg skuteczności: 100%, 75%, 50%, 25%, 0%. Po 24 h bez zakupu tego rodzaju wraca pełna skuteczność, a przy 0% nie pobieramy opłaty. Wyłączność dotyczy atrakcji, a wcześniejsze opłacone efekty ze starych zapisów są zachowane do końca i blokują nowy zakup. | V8 / V9-8 + V15-14 |
 | Ścieżki | Jest 100 odcinków na poziomach 0–5; jedno ulepszenie kosztuje 100 kamienia i działa po kliknięciu. Kolejny poziom wolno zacząć po ukończeniu wszystkich 100 odcinków poprzedniego. Pełne poziomy dają +10…50% szybkości tragarzy, a poziomy 3/4/5 również +10/20/30% ładunku. | V8 + F10 |
-| Kursy i priorytety | Bazowy pełny kurs trwa 5 min i zabiera jeden rodzaj, do 60 sztuk na poziomie miejsca pracy 1. Trzy trwałe priorytety towarów/Construction dzielą kursy 8+2 losowe, 5+3+2 losowe albo 5/3/2, z ochroną ratunkowej żywności. Construction wysyła najpierw wszystkie ładunki najstarszej aktywnej budowy, a potem następnej. | V9-20 + V8 |
+| Kursy i priorytety | Bazowy pełny kurs trwa 5 min i zabiera jeden rodzaj, do 120 sztuk na poziomie miejsca pracy 1. Trzy trwałe priorytety towarów/budowy dzielą kursy 8+2 losowe, 5+3+2 losowe albo 5/3/2, z ochroną ratunkowej żywności. Budowa wysyła najpierw wszystkie ładunki najstarszego aktywnego zlecenia, a potem następnego. | V9-20 + V8 + V15-16 |
 | Rozbudowa | Ratusz L daje L aktywnych budów i L miejsc kolejki; kolejka kosztuje +10% każdego składnika. T biegnie od pierwszego odbioru materiałów do ostatniej dostawy, także przez przerwy; obsada zmienia ETA i daje powiadomienie. Sama budowa trwa T, latarnia 4T, kaplica 3T × (nowy poziom−1). | V9-9,45 |
 | Plany i anulowanie | Pakiet 1000 × poziom Ratusza/24 h daje +4 budowy, dowolną kolejkę i planowanie braków za 25% ich bazowej wartości portowej po +10% kolejki. Dostępne materiały przypisujemy planom FIFO, bez podwójnego zastawiania. Anulować wolno przed pierwszym przewozem/budową, ze zwrotem rzeczywistych rezerwacji, lecz bez opłaty prognozy. | V9-11,12 |
 | Nagrody i zwroty | Materiały wypełniają centralę zgodnie z limitami i przestrzenią żywności. Nadwyżka czeka bezterminowo i wchodzi automatycznie bez tragarzy. Przed przyjęciem nadwyżki nie można wydać. | V9-13,14,44 |
@@ -55,16 +57,16 @@ Każda mechanika ma najwyżej trzy zdania. Szczegóły wyjątków i pełne brzmi
 | Kupno osoby | Osoba kosztuje 500 × obecny poziom Ratusza każdego z sześciu zasobów, jak najbliższa rozbudowa Ratusza. Potrzebne są wolne łóżko i miejsce w limicie ratusza, a osoba zaczyna z zasadami pierwszych 24 h. Tę cenę oznaczamy jako ogłoszone założenie wdrożeniowe, nie historyczną cenę ustaloną w V7. | F16 / jawne założenie przed GO |
 | Punkty i zasoby | Punkty to migawka poziom Ratusza × monety przeliczana o pełnej godzinie. Strzałka ↑/↓/→ pokazuje bilans godzinowy produkcji i zużycia całej wyspy. Samo przeniesienie towaru między magazynami nie zmienia tego bilansu. | F18,F19 |
 | Dzień i zapis | Odnowienia dzienne i dni aktywności używają 00:00 Europe/Warsaw, także offline. Czasy trwania efektów 6 h i 24 h, ruchome okna oraz 30 dni nadal liczymy od zdarzenia. Przeglądarka zachowuje oba oddzielne profile, bez synchronizacji z prawdziwym kontem. | V9-34 |
-| Nowy interfejs | Nie ma lewego paska ani pięciu materiałów w nagłówku; są pracujący, ETA nowej osoby i Punkty. Kafelki budynków mają ustaloną kolejność i stany osób, a zasoby pokazują lokalny / centralny (wszystkie przewozy w toku). Ustawienia obejmują EN/PL, filtry powiadomień oraz animacje, a rozwijane szczegóły efektu są pod i. | F01…F06,F09…F15,F17 |
+| Nowy interfejs | Nie ma lewego paska ani pięciu materiałów w nagłówku; są pracujący, ETA nowej osoby i Punkty. Administracja i Gospodarka dzielą budynki o równych miniaturach i podpisanych pracujących, a zasoby pokazują lokalny / centralny (wszystkie przewozy w toku). Karty komputerowe są zwarte, opisy wyjaśniają funkcje, powrót prowadzi do poprzedniego menu, a EN/PL i szczegóły pod i zachowują swoje działanie. | F01…F19 + V15-01…13,17 |
 
 ## Wzory, które pozostają obowiązujące
 
-- **Produkcja na osobę:** `p(1)=10`, dla `L≥2`: `p(L)=L+10`; głód daje ×0,5. Premia aktywnej gry ×2 i latarnia ×2 mogą dać ×4, ale nie przyspieszają tragarzy.
+- **Produkcja na osobę:** `p(1)=20`, dla `L≥2`: `p(L)=2×(L+10)`; głód daje ×0,5. Premia aktywnej gry ×2 i latarnia ×2 mogą dać ×4 względem tej nowej bazy, ale nie przyspieszają tragarzy. Dla L1 jest to 20 normalnie, 40 z jedną premią albo 80 z obiema premiami na osobę i godzinę.
 - **Praca i bufory:** limit `12 × własny L`; lokalny bufor `200 × własny L`; TH ustala jedynie granicę ulepszeń.
-- **Transport:** bazowy ładunek `floor(60 × 1,1^(własny L−1))`, następnie `floor(baza × (1+0,1×max(0,R−2)))`; `R` jest pełnym poziomem wszystkich dróg. Pełny kurs trwa `300 / ((1+0,1R) × wyżywienie)` sekund.
+- **Transport:** bazowy ładunek `floor(120 × 1,1^(własny L−1))`, następnie `floor(baza × (1+0,1×max(0,R−2)))`; `R` jest pełnym poziomem wszystkich dróg. Pełny kurs trwa `300 / ((1+0,1R) × wyżywienie)` sekund. Liczba kursów i koszt transportu Premium używają tej samej ładowności, także dla ostatniego niepełnego kursu.
 - **Budowanie:** standard `T`, latarnia `4T`, kaplica `3T×(N−1)` samej fazy budowania. T jest rzeczywiste, od pierwszego odbioru do ostatniej dostawy, z przerwami; nie jest czasem od zamówienia ani sumą osobogodzin.
 - **Dowóz Premium:** po zakupie budowanie zamraża `(miniony T + normalna estymata pozostałego transportu) × współczynnik`; bez obsady przyjmujemy jednego hipotetycznego tragarza. Pełne kupno kompletnego budynku to osobna usługa 10 s, poza zwykłymi slotami.
-- **Norma zadań:** `12 × własny poziom producenta × p(L) × wylosowane godziny`, bez bieżącej obsady i chwilowych bonusów. Nagrody zachowują bazę L3/468, 1/2/3 rodzaje materiałów oraz zamrożenie kwot oferty.
+- **Norma zadań:** `12 × własny poziom producenta × q(L) × wylosowane godziny`, gdzie historyczna norma `q(1)=10`, a dla `L≥2`: `q(L)=L+10`; bieżąca obsada i chwilowe bonusy jej nie zmieniają. Podwojenie produkcji nie podwaja kosztów zadań, a już pokazane oferty zachowują wymagania. Nagrody zachowują bazę L3/468, 1/2/3 rodzaje materiałów oraz zamrożenie kwot oferty.
 - **Demografia:** dokładna średnia H steruje przyrostem/ubytkiem. Do 50% tempo to `|H|/300` osoby/h, powyżej `1/6+(|H|−50)/60`; znak H wyznacza kierunek. Minimum 6, maksimum `24×TH`.
 - **Podatek silnika:** przybyły przypisany pracownik płaci 1 monetę/h, także podczas blokady; idący, wracający i zwiedzający nie płaci. Kaplica ×2 oraz aktywna gra ×2 mogą dać ×4. Informacji podatkowych nie pokazujemy w interfejsie.
 
@@ -77,6 +79,8 @@ Każda mechanika ma najwyżej trzy zdania. Szczegóły wyjątków i pełne brzmi
 - Samouczek ma jawnie projektowe kwoty: 10 pierwszych lekcji po 25 monet +10 materiału, 15 kolejnych po 50 monet +20 materiału, razem 1000 monet i 400 materiałów. To nie są nieustalone nagrody lojalnościowe.
 - Prototypowa krzywa czasu ekspedycji to `180/(1+0,1×(runda−1))` sekund. Jest eksportowaną konfiguracją projektu, nie zatwierdzoną docelową trudnością.
 - Cena kupna osoby, agregacja wszystkich przewozów w Resources i składanie premii aktywności zostały ogłoszone przed GO jako założenia wdrożeniowe; manifest oznacza je jawnie.
+- Oferta atrakcji zapisuje swój wylosowany procent; liczba odbiorców to `min(uprawnieni, max(1, floor(populacja×procent/100)))`. Wśród uprawnionych zachowujemy najmniej szczęśliwych, losowanie remisów i pominięcie zamrożonych nowych osób oraz osób już na 100%.
+- Nowe parametry produkcji zachowują część ukończonej sztuki przy wczytaniu starego zapisu; już rozpoczęty przewóz zachowuje swój rzeczywisty ładunek i pozostały czas. Kolejny odbiór korzysta z nowej bazy 120.
 
 ## Co naprawdę pozostaje na później
 
@@ -87,3 +91,7 @@ Każda mechanika ma najwyżej trzy zdania. Szczegóły wyjątków i pełne brzmi
 - Prawdziwe konta/OAuth, płatności i serwerowa weryfikacja publikacji/poleceń.
 
 Skrót i kalkulator: [Excel 9](arkusze/HARBORLIGHT9-zasady.xlsx). Budynki: [tabela](BUILDINGS.md). Interfejs: [instrukcja](INTERACTIVE-ISLAND.md).
+
+## Historyczny odbiór wersji 9
+
+Wydanie **frontend-v13 / Excel 9** zakończyło implementację, odbiór lokalny, publikację i odbiór publiczny: **388/388 testów modelu PASS**, pięć lokalnych zestawów przeglądarkowych i trzy zestawy rzeczywistego Pages PASS. Udane [Pages 40012462614](https://github.com/ksobczak321-oss/gra/actions/runs/40012462614); publiczny Excel i 17 plików gry zwracały HTTP 200 oraz zgadzały się z lokalnymi sumami kontrolnymi. Dowody zachowuje [dziennik](IMPLEMENTATION-LOG.md); ten wpis nie opisuje odbioru v15.

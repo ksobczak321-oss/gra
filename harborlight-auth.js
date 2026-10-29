@@ -1,6 +1,7 @@
 // Account screen only. No authentication service or social integration is connected.
 // Credentials never leave this form and are never written to browser storage.
-import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v13';
+import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v15';
+import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v15';
 
 registerTranslations({
   'HARBORLIGHT — Welcome Home': 'HARBORLIGHT — Witaj na wyspie',
@@ -14,6 +15,7 @@ registerTranslations({
   'An island worth': 'Wyspa, na którą',
   'coming home to.': 'chce się wracać.',
   'Build a village, care for your people, and bring the lighthouse back to life.': 'Zbuduj osadę, zadbaj o mieszkańców i przywróć blask latarni.',
+  'Build a village, care for your people, and help the whole island grow.': 'Rozbudowuj osadę, dbaj o mieszkańców i rozwijaj całą wyspę.',
   'Make yourself at home.': 'Poczuj się jak w domu.',
   'Your island is ready to explore.': 'Twoja wyspa czeka na odkrycie.',
   'Account options': 'Opcje konta',
@@ -33,6 +35,12 @@ registerTranslations({
   'Account details': 'Dane konta',
   'Your name': 'Twoja nazwa',
   'What should we call you?': 'Jak mamy się do Ciebie zwracać?',
+  'Island name': 'Nazwa wyspy',
+  'Name your island': 'Nadaj nazwę swojej wyspie',
+  'Use 2–40 characters. This name will appear on your island.': 'Użyj od 2 do 40 znaków. Ta nazwa będzie widoczna na Twojej wyspie.',
+  'Choose an island name with 2–40 characters, without control characters or angle brackets.': 'Podaj nazwę wyspy od 2 do 40 znaków, bez znaków sterujących ani nawiasów < i >.',
+  'Your browser could not save the island name. Allow local storage and try again.': 'Przeglądarka nie mogła zapisać nazwy wyspy. Zezwól na zapisywanie danych i spróbuj ponownie.',
+  'Your island name is saved on this device. Your account has not been created. Continue as a guest to explore your island.': 'Nazwa wyspy została zapisana na tym urządzeniu. Twoje konto nie zostało utworzone. Kontynuuj jako gość, aby odkrywać wyspę.',
   'Email address': 'Adres e-mail',
   'Password': 'Hasło',
   'Enter your password': 'Wpisz hasło',
@@ -69,16 +77,19 @@ registerTranslations({
   const status = document.getElementById('account-status');
   const tabs = [...document.querySelectorAll('[data-mode]')];
   const name = document.getElementById('display-name');
+  const islandName = document.getElementById('island-name');
   const email = document.getElementById('email');
   const password = document.getElementById('password');
   const confirm = document.getElementById('confirm-password');
   const visibility = document.getElementById('password-visibility');
   const languagePicker = document.getElementById('auth-language');
   const preferenceKey = 'harborlight-language';
+  const profileSearch = authProfileSearch(location.search);
   let language = 'en';
   try { language = localStorage.getItem(preferenceKey) === 'pl' ? 'pl' : 'en'; } catch { /* Keep the form usable without storage. */ }
-  const errorIds = new Map([[name, 'name-error'], [email, 'email-error'], [password, 'password-error'], [confirm, 'confirm-error']]);
+  const errorIds = new Map([[name, 'name-error'], [islandName, 'island-name-error'], [email, 'email-error'], [password, 'password-error'], [confirm, 'confirm-error']]);
   let mode = 'login';
+  for (const link of document.querySelectorAll('a[href="harborlight-v1-layered.html"]')) link.href = gameHref(profileSearch);
 
   function applyLanguage() {
     if (languagePicker) languagePicker.value = language;
@@ -175,6 +186,8 @@ registerTranslations({
     const fail = (input, message) => { setError(input, message); invalid.push(input); };
     email.value = email.value.trim();
     if (mode === 'register' && name.value.trim().length < 2) fail(name, 'Enter a name with at least 2 characters.');
+    const chosenIslandName = mode === 'register' ? validateIslandName(islandName.value) : null;
+    if (chosenIslandName && !chosenIslandName.ok) fail(islandName, chosenIslandName.message);
     if (!email.value) fail(email, 'Enter your email address.');
     else if (!email.validity.valid) fail(email, 'Enter a valid email address.');
     if (!password.value) fail(password, 'Enter your password.');
@@ -185,12 +198,25 @@ registerTranslations({
       invalid[0].focus();
       return;
     }
-    // This preview deliberately stops before a network request. Do not treat it as a signed-in session.
+    // A valid registration submission saves only the explicitly chosen local
+    // island name. No account, credentials or signed-in session are created.
+    if (chosenIslandName) {
+      let saved;
+      try { saved = saveIslandNamePreference(localStorage, profileSearch, chosenIslandName.name); }
+      catch { saved = { ok: false, message: 'Your browser could not save the island name. Allow local storage and try again.' }; }
+      if (!saved.ok) {
+        setError(islandName, saved.message);
+        announce(saved.message, 'error');
+        islandName.focus();
+        return;
+      }
+      islandName.value = saved.name;
+    }
     password.value = '';
     confirm.value = '';
     setPasswordVisible(false);
     announce(mode === 'register'
-      ? 'Account creation is coming soon. Your account has not been created. Continue as a guest to explore your island.'
+      ? 'Your island name is saved on this device. Your account has not been created. Continue as a guest to explore your island.'
       : 'Account sign-in is coming soon. Continue as a guest to explore your island.');
   });
   addEventListener('hashchange', () => changeMode(location.hash === '#register' ? 'register' : 'login', false));

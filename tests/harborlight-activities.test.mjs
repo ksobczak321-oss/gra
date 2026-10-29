@@ -296,12 +296,12 @@ test('acceleration uses remaining phase, rounds full saved minutes down and alwa
   assert.equal(quoteAcceleration(s, 1, 33).ok, false);
 });
 test('premium transport counts the final partial load and is gated at townhall4', () => {
-  const s = island(); s.buildings.lumber.ready = 100;
+  const s = island(); s.buildings.lumber.ready = 200;
   const quote = quoteTransport(s, { route: 'producer', building: 'lumber' });
   assert.equal(quote.ok, true, quote.message); assert.equal(quote.trips, 2); assert.equal(quote.coins, 20);
   const coins = s.resources.coins;
   assert.equal(activityAction(s, { type: 'premiumTransport', route: 'producer', building: 'lumber' }).ok, true);
-  assert.equal(s.resources.coins, coins - 20); assert.equal(s.resources.wood, 200);
+  assert.equal(s.resources.coins, coins - 20); assert.equal(s.resources.wood, 300);
   assert.equal(s.buildings.lumber.ready, 0);
   s.buildings.townhall.level = 3;
   assert.equal(quoteTransport(s, { route: 'producer', building: 'lumber' }).ok, false);
@@ -314,12 +314,12 @@ test('premium building price includes allmaterials+25%, nativecoins and each hau
   };
   const quote = quotePremiumBuilding(s, 'farm', ctx);
   assert.equal(quote.materialValue, 450);
-  assert.equal(quote.materialCoins, 562.5); assert.equal(quote.transportCoins, 100);
-  assert.equal(quote.coins, 1163);
+  assert.equal(quote.materialCoins, 562.5); assert.equal(quote.transportCoins, 50);
+  assert.equal(quote.coins, 1113);
   assert.equal(quote.buildSeconds, 10);
   const oldStock = Object.fromEntries(MATERIAL_IDS.map(id => [id, s.resources[id]])), coins = s.resources.coins;
   assert.equal(activityAction(s, { type: 'premiumBuyBuilding', building: 'farm' }, ctx).ok, true);
-  assert.equal(s.resources.coins, coins - 1163);
+  assert.equal(s.resources.coins, coins - 1113);
   assert.deepEqual(Object.fromEntries(MATERIAL_IDS.map(id => [id, s.resources[id]])), oldStock);
   assert.equal(requests[0].paidMaterials, true); assert.equal(requests[0].paidCoins, true);
   assert.equal(requests[0].skipTransport, true);
@@ -333,7 +333,7 @@ test('failed premium upgrade and rejected quotes do not charge or consume existi
   assert.equal(JSON.stringify(s), before);
 });
 test('Premium building charges are held before callbacks can promote other coin-funded plans', () => {
-  const s = island(); s.resources.coins = 300;
+  const s = island(); s.resources.coins = 270;
   const result = activityAction(s, { type: 'premiumBuyBuilding', building: 'farm' }, {
     buildingCost: () => ({ wood: 72, stone: 72, grain: 120 }),
     requestUpgrade: () => {

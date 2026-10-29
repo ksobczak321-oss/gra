@@ -278,6 +278,7 @@ test('departure ties are randomized reproducibly and visiting residents remain p
 
 test('attraction price matches actual recipients and people already at 100 or frozen receive no purchase', () => {
   const state = island();
+  state.leisure.offers[0].sharePercent = 50;
   for (const person of state.residents) person.happiness = 100;
   state.residents[0].happiness = -20; state.residents[1].happiness = -10;
   state.residents[2].happiness = 0; state.residents[2].newbornRemaining = 3600;

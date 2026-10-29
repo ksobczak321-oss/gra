@@ -13,14 +13,15 @@ for (const workplace of ['warehouse', 'market', 'dock']) {
     state.buildings.townhall.level = 4;
     state.resources.food = 1000;
     state.resources.wood = 400;
-    state.buildings.lumber.ready = 180;
-    if (workplace === 'market') assert.equal(act(state, { type: 'marketOrder', resource: 'wood', amount: 180 }).ok, true);
-    if (workplace === 'dock') assert.equal(act(state, { type: 'trade', direction: 'sell', resource: 'wood', amount: 200 }).ok, true);
+    state.buildings.lumber.level = 2;
+    state.buildings.lumber.ready = 360;
+    if (workplace === 'market') assert.equal(act(state, { type: 'marketOrder', resource: 'wood', amount: 360 }).ok, true);
+    if (workplace === 'dock') assert.equal(act(state, { type: 'trade', direction: 'sell', resource: 'wood', amount: 400 }).ok, true);
     assert.equal(act(state, { type: 'assign', building: workplace, delta: 2 }).ok, true);
     tick(state, 301);
     const crew = state.residents.filter(person => person.workplace === workplace);
     const firstId = crew[0].id, dismissedId = crew[1].id;
-    assert.deepEqual(state.haulTrips[workplace].map(trip => trip.amount), [60, 60]);
+    assert.deepEqual(state.haulTrips[workplace].map(trip => trip.amount), [120, 120]);
     assert.ok(state.haulTrips[workplace].every(trip => Math.abs(trip.remaining - 299) < 1e-7));
     assert.equal(act(state, { type: 'assign', building: workplace, delta: -1 }).ok, true);
     assert.equal(act(state, { type: 'assign', building: workplace, delta: 1 }).ok, true);
@@ -34,12 +35,12 @@ for (const workplace of ['warehouse', 'market', 'dock']) {
     assert.equal(recalled.pendingRelease, true);
     assert.equal(recalled.returnRemaining, 0, 'the home journey cannot begin before the loaded delivery finishes');
     assert.equal(cargo.filter(trip => trip.worker === 0).length, 1);
-    assert.equal(cargo.reduce((sum, trip) => sum + trip.amount, 0), 120);
+    assert.equal(cargo.reduce((sum, trip) => sum + trip.amount, 0), 240);
     if (workplace === 'warehouse') {
       const rows = warehouseCarrierJobs(state);
       assert.equal(rows.find(row => row.residentId === firstId).status, 'delivering');
       assert.equal(rows.find(row => row.residentId === hired.id).status, 'walking');
-      assert.equal(rows.find(row => row.residentId === dismissedId).amount, 60);
+      assert.equal(rows.find(row => row.residentId === dismissedId).amount, 120);
       assert.equal(rows.find(row => row.residentId === dismissedId).status, 'delivering');
     }
     state = normalizeState(JSON.parse(JSON.stringify(state)), state.lastSimulatedAt);
@@ -53,16 +54,16 @@ for (const workplace of ['warehouse', 'market', 'dock']) {
     close(returning.returnRemaining, 300);
     assert.equal(returning.pendingRelease, false);
     if (workplace === 'warehouse') {
-      assert.equal(state.resources.wood, 520);
-      assert.equal(state.buildings.lumber.ready, 60);
+      assert.equal(state.resources.wood, 640);
+      assert.equal(state.buildings.lumber.ready, 120);
     } else if (workplace === 'market') {
-      assert.equal(state.market.locked.reduce((sum, lot) => sum + lot.amount, 0), 120);
-      assert.equal(state.resources.wood, 280);
+      assert.equal(state.market.locked.reduce((sum, lot) => sum + lot.amount, 0), 240);
+      assert.equal(state.resources.wood, 160);
     } else {
-      assert.equal(state.dock.stock.wood, 120);
-      assert.equal(state.dock.orders[0].remainingToPort, 80);
-      assert.equal(state.resources.wood, 280);
-      assert.equal(centralAvailable(state, 'wood'), 200, 'the uncollected port reservation cannot be spent elsewhere');
+      assert.equal(state.dock.stock.wood, 240);
+      assert.equal(state.dock.orders[0].remainingToPort, 160);
+      assert.equal(state.resources.wood, 160);
+      assert.equal(centralAvailable(state, 'wood'), 0, 'the uncollected port reservation cannot be spent elsewhere');
     }
   });
 }

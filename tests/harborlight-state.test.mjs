@@ -67,30 +67,30 @@ test('bulk assignment shares a single pool and dismissal always means five minut
 test('bad assignment deltas never mutate state',()=>{
  const s=idle();for(const delta of [0,.5,NaN,Infinity,'1',1000,-1]){const before=JSON.stringify(s);assert.equal(act(s,{type:'assign',building:'farm',delta}).ok,false);assert.equal(JSON.stringify(s),before);}
 });
-test('one producer has one whole unit after seven minutes and two after thirteen',()=>{
- for(const [seconds,output,phase]of[[420,1,60],[780,2,60]]){const s=idle();crew(s,'farm',1);tick(s,seconds);assert.equal(s.buildings.farm.ready,output);close(s.buildings.farm.workProgress[0],phase);assert.equal(s.resources.grain,100);}
+test('one producer has two whole units after seven minutes and four after thirteen',()=>{
+ for(const [seconds,output,phase]of[[420,2,60],[780,4,60]]){const s=idle();crew(s,'farm',1);tick(s,seconds);assert.equal(s.buildings.farm.ready,output);close(s.buildings.farm.workProgress[0],phase);assert.equal(s.resources.grain,100);}
 });
 test('workers do not pool unfinished units and recalled fractions are lost',()=>{
- const s=idle();crew(s,'farm',2);tick(s,180);assert.equal(s.buildings.farm.ready,0);assert.deepEqual(s.buildings.farm.workProgress,[180,180]);
- act(s,{type:'assign',building:'farm',delta:-2});assert.deepEqual(s.buildings.farm.workProgress,[]);tick(s,300);crew(s,'farm',1);tick(s,359);assert.equal(s.buildings.farm.ready,0);tick(s,1);assert.equal(s.buildings.farm.ready,1);
+ const s=idle();crew(s,'farm',2);tick(s,90);assert.equal(s.buildings.farm.ready,0);assert.deepEqual(s.buildings.farm.workProgress,[90,90]);
+ act(s,{type:'assign',building:'farm',delta:-2});assert.deepEqual(s.buildings.farm.workProgress,[]);tick(s,300);crew(s,'farm',1);tick(s,179);assert.equal(s.buildings.farm.ready,0);tick(s,1);assert.equal(s.buildings.farm.ready,1);
 });
 test('individual work phases and home-return clocks survive reload',()=>{
  let s=idle();crew(s,'farm',1);tick(s,420);s=saved(s);close(s.buildings.farm.workProgress[0],60);act(s,{type:'assign',building:'farm',delta:-1});tick(s,240);s=saved(s);close(s.returningWorkers[0],60);tick(s,60);assert.equal(s.returningWorkers.length,0);
 });
 test('processors consume two central inputs for one local product',()=>{
- const s=idle();crew(s,'sawmill',1);crew(s,'windmill',1);tick(s,360);assert.equal(s.resources.wood,98);assert.equal(s.resources.grain,98);assert.equal(s.resources.planks,100);close(s.resources.food+s.foodCredit,100-12*360/3600);assert.equal(s.buildings.sawmill.ready,1);assert.equal(s.buildings.windmill.ready,1);assert.equal(s.statistics.crafted,2);
+ const s=idle();crew(s,'sawmill',1);crew(s,'windmill',1);tick(s,360);assert.equal(s.resources.wood,96);assert.equal(s.resources.grain,96);assert.equal(s.resources.planks,100);close(s.resources.food+s.foodCredit,100-12*360/3600);assert.equal(s.buildings.sawmill.ready,2);assert.equal(s.buildings.windmill.ready,2);assert.equal(s.statistics.crafted,4);
 });
 test('local production capacity follows its own building level and full stores stop output',()=>{
  const s=idle(6,144);s.resources.food=1000;crew(s,'lumber',1);s.buildings.lumber.level=1;s.buildings.lumber.ready=200;tick(s,3600);assert.equal(producerCapacity(s,'lumber'),200);assert.equal(s.buildings.lumber.ready,200);assert.ok(s.buildings.lumber.workProgress.every(progress=>progress===0));
- s.buildings.lumber.level=2;assert.equal(producerCapacity(s,'lumber'),400);assert.equal(producerCapacity(s,'farm'),200);tick(s,300);assert.equal(s.buildings.lumber.ready,201);
+ s.buildings.lumber.level=2;assert.equal(producerCapacity(s,'lumber'),400);assert.equal(producerCapacity(s,'farm'),200);tick(s,300);assert.equal(s.buildings.lumber.ready,202);
 });
 test('manual collecting and crafting cannot bypass work and transport',()=>{
  const s=idle();s.buildings.lumber.ready=50;for(const action of [{type:'collect',building:'lumber'},{type:'craft',building:'sawmill'}]){const before=JSON.stringify(s);assert.equal(act(s,action).ok,false);assert.equal(JSON.stringify(s),before);}
 });
 test('warehouse workers carry full loads in five-minute trips following resource priorities',()=>{
- const s=idle();crew(s,'warehouse',1);s.buildings.lumber.ready=3;s.buildings.farm.ready=80;s.transportPriority=['grain','wood','stone','food','planks'];
- tick(s,299);assert.equal(s.resources.grain,100);assert.equal(s.buildings.farm.ready,20);assert.equal(s.haulTrips.warehouse[0].amount,60);
- tick(s,1);assert.equal(s.resources.grain,160);tick(s,300);assert.equal(s.resources.grain,180);tick(s,300);assert.equal(s.resources.wood,103);assert.equal(s.buildings.lumber.ready,0);
+ const s=idle();crew(s,'warehouse',1);s.buildings.lumber.ready=3;s.buildings.farm.ready=160;s.transportPriority=['grain','wood','stone','food','planks'];
+ tick(s,299);assert.equal(s.resources.grain,100);assert.equal(s.buildings.farm.ready,40);assert.equal(s.haulTrips.warehouse[0].amount,120);
+ tick(s,1);assert.equal(s.resources.grain,220);tick(s,300);assert.equal(s.resources.grain,260);tick(s,300);assert.equal(s.resources.wood,103);assert.equal(s.buildings.lumber.ready,0);
 });
 test('empty sources and full resource slots are skipped without losing goods',()=>{
  const s=idle();crew(s,'warehouse',1);s.resources.wood=1000;s.resources.stone=999;s.resources.grain=1000;s.resources.food=1000;s.resources.planks=0;s.buildings.lumber.ready=5;s.buildings.quarry.ready=5;s.buildings.sawmill.ready=5;
@@ -197,8 +197,8 @@ test('obsolete expedition and task reward endpoints are rejected before and afte
 });
 test('lighthouse costs all six resources and requires transport plus four times transport to build',()=>{
  const s=funded(3);crew(s,'warehouse',6);const stock={...s.resources};assert.deepEqual(buildingCost(s,'lighthouse'),Object.fromEntries(Object.keys(RESOURCES).map(id=>[id,500])));assert.equal(act(s,{type:'repair'}).ok,true);for(const id of Object.keys(RESOURCES))assert.equal(id==='coins'?s.resources[id]:centralAvailable(s,id),stock[id]-500);assert.equal(act(s,{type:'repair'}).ok,false);
- // Five material types, seven 72-unit loads each, six carriers: six five-minute waves.
- tick(s,1799);assert.equal(s.buildings.lighthouse.level,0);tick(s,1);assert.equal(s.buildings.lighthouse.construction.stage,'building');close(s.buildings.lighthouse.construction.buildRemaining,7200);tick(s,7199);assert.equal(s.buildings.lighthouse.level,0);tick(s,1);assert.equal(s.buildings.lighthouse.level,1);assert.equal(s.objective.repaired,true);assert.equal(s.lighthouseRemaining,86400);assert.equal(s.happiness,100);assert.equal(saved(s).buildings.lighthouse.level,1);
+ // Five material types, four 145-unit loads each, six carriers: four five-minute waves.
+ tick(s,1199);assert.equal(s.buildings.lighthouse.level,0);tick(s,1);assert.equal(s.buildings.lighthouse.construction.stage,'building');close(s.buildings.lighthouse.construction.buildRemaining,4800);tick(s,4799);assert.equal(s.buildings.lighthouse.level,0);tick(s,1);assert.equal(s.buildings.lighthouse.level,1);assert.equal(s.objective.repaired,true);assert.equal(s.lighthouseRemaining,86400);assert.equal(s.happiness,100);assert.equal(saved(s).buildings.lighthouse.level,1);
 });
 test('whole and split intervals agree for output, transport, taxes and average happiness',()=>{
  const a=idle(4);crew(a,'farm',2);crew(a,'windmill',1);crew(a,'warehouse',1);a.buildings.lumber.ready=80;const b=saved(a);tick(a,3600);for(let i=0;i<360;i++)tick(b,10);assert.deepEqual(a.resources,b.resources);for(const id of WORKPLACE_IDS){assert.equal(a.buildings[id].ready,b.buildings[id].ready);for(let n=0;n<a.buildings[id].workProgress.length;n++)close(a.buildings[id].workProgress[n],b.buildings[id].workProgress[n]);}close(a.happiness,b.happiness);close(a.taxProgress,b.taxProgress);assert.ok(a.statistics.collected>0);assert.ok(a.statistics.crafted>0);assert.ok(a.statistics.taxCollected>0);
@@ -213,11 +213,11 @@ test('production upgrade costs use current level, overlap outputs and double fou
 });
 test('production upgrade reserves full materials, transports discrete five-minute loads and builds for T',()=>{
  const s=funded(2);crew(s,'warehouse',6);const stock={...s.resources};assert.equal(act(s,{type:'upgrade',building:'farm'}).ok,true);assert.equal(s.resources.wood,stock.wood);assert.equal(s.resources.grain,stock.grain);assert.equal(centralAvailable(s,'wood'),stock.wood-72);assert.equal(centralAvailable(s,'grain'),stock.grain-120);assert.equal(s.buildings.farm.level,1);
- // 66-unit carriers need six loads for the three materials, delivered in one wave.
+ // 132-unit carriers need one load per material, all delivered in one wave.
  tick(s,299);assert.equal(s.buildings.farm.construction.goodsRemaining,264);tick(s,1);assert.equal(s.buildings.farm.construction.stage,'building');close(s.buildings.farm.construction.buildRemaining,300);tick(s,299);assert.equal(s.buildings.farm.level,1);tick(s,1);assert.equal(s.buildings.farm.level,2);assert.equal(s.statistics.upgrades,1);assert.equal(s.constructionProjects.length,0);
 });
 test('construction waits without carriers and dispatched cargo finishes after the worker is recalled',()=>{
- const s=funded(2);assert.equal(act(s,{type:'upgrade',building:'farm'}).ok,true);tick(s,600);assert.equal(s.buildings.farm.construction.transportSeconds,0);crew(s,'warehouse',1);tick(s,60);assert.equal(s.buildings.farm.construction.goodsRemaining,264);act(s,{type:'assign',building:'warehouse',delta:-1});tick(s,240);assert.equal(s.buildings.farm.construction.goodsRemaining,198);const delivered={...s.buildings.farm.construction.delivered};tick(s,300);assert.deepEqual(s.buildings.farm.construction.delivered,delivered);assert.equal(s.buildings.farm.level,1);
+ const s=funded(2);assert.equal(act(s,{type:'upgrade',building:'farm'}).ok,true);tick(s,600);assert.equal(s.buildings.farm.construction.transportSeconds,0);crew(s,'warehouse',1);tick(s,60);assert.equal(s.buildings.farm.construction.goodsRemaining,264);act(s,{type:'assign',building:'warehouse',delta:-1});tick(s,240);assert.equal(s.buildings.farm.construction.goodsRemaining,192);const delivered={...s.buildings.farm.construction.delivered};tick(s,300);assert.deepEqual(s.buildings.farm.construction.delivered,delivered);assert.equal(s.buildings.farm.level,1);
 });
 test('level two permits two active and two funded waiting projects, rejecting overflow without spending',()=>{
  const s=funded(2);crew(s,'warehouse',6);for(const id of ['farm','windmill','lumber','quarry'])assert.equal(act(s,{type:'upgrade',building:id}).ok,true,id);assert.deepEqual(constructionCounts(s),{active:2,queued:2,limit:2,queueLimit:2,premium:false});const before=JSON.stringify(s);assert.equal(act(s,{type:'upgrade',building:'sawmill'}).ok,false);assert.equal(JSON.stringify(s),before);const queued=s.constructionProjects.find(p=>p.building==='lumber');assert.equal(queued.stage,'queued');assert.deepEqual(queued.cost,{wood:423,stone:159});finish(s,'farm');assert.equal(s.buildings.farm.level,2);assert.equal(queued.stage,'transport');assert.equal(constructionCounts(s).active,2);assert.equal(constructionCounts(s).queued,1);
@@ -250,12 +250,12 @@ test('queued reservations and real-clock progress survive reload and ignore lega
 });
 
 test('lighthouse doubles the five material outputs and consumption, but never tax or hauling',()=>{
- const s=idle(4);s.lighthouseRemaining=3600;crew(s,'sawmill',1);crew(s,'windmill',1);crew(s,'farm',1);crew(s,'lumber',1);crew(s,'quarry',1);tick(s,180);for(const id of ['farm','lumber','quarry','sawmill','windmill'])assert.equal(s.buildings[id].ready,1);assert.equal(s.resources.wood,98);assert.equal(s.resources.grain,98);tick(s,3420);assert.equal(s.resources.coins,105);assert.equal(s.lighthouseRemaining,0);assert.equal(s.buildings.farm.ready,20);tick(s,180);assert.equal(s.buildings.farm.ready,20);tick(s,180);assert.equal(s.buildings.farm.ready,21);
+ const s=idle(4);s.lighthouseRemaining=3600;crew(s,'sawmill',1);crew(s,'windmill',1);crew(s,'farm',1);crew(s,'lumber',1);crew(s,'quarry',1);tick(s,180);for(const id of ['farm','lumber','quarry','sawmill','windmill'])assert.equal(s.buildings[id].ready,2);assert.equal(s.resources.wood,96);assert.equal(s.resources.grain,96);tick(s,3420);assert.equal(s.resources.coins,105);assert.equal(s.lighthouseRemaining,0);assert.equal(s.buildings.farm.ready,40);tick(s,180);assert.equal(s.buildings.farm.ready,41);tick(s,180);assert.equal(s.buildings.farm.ready,42);
 });
 test('lighthouse bonus lasts twenty-four hours per completed level and restores saved happiness after expiry',()=>{
  const s=funded(3);s.buildings.lighthouse.level=1;s.objective.repaired=true;crew(s,'warehouse',6);assert.equal(act(s,{type:'upgrade',building:'lighthouse'}).ok,true);finish(s,'lighthouse');assert.equal(s.buildings.lighthouse.level,2);assert.equal(s.lighthouseRemaining,172800);assert.equal(s.happiness,100);
  const after=saved(s);close(after.lighthouseRemaining,172800);after.lighthouseRemaining=1;tick(after,1);assert.equal(after.lighthouseRemaining,0);close(after.happiness,intrinsicMean(after));
 });
 test('lighthouse boost preserves unfinished individual units across activation and expiration',()=>{
- const s=idle(2);crew(s,'farm',1);tick(s,300);s.lighthouseRemaining=30;tick(s,30);assert.equal(s.buildings.farm.ready,1);assert.equal(s.lighthouseRemaining,0);tick(s,359);assert.equal(s.buildings.farm.ready,1);tick(s,1);assert.equal(s.buildings.farm.ready,2);
+ const s=idle(2);crew(s,'farm',1);tick(s,150);s.lighthouseRemaining=30;tick(s,30);assert.equal(s.buildings.farm.ready,1);assert.equal(s.lighthouseRemaining,0);tick(s,149);assert.equal(s.buildings.farm.ready,1);tick(s,1);assert.equal(s.buildings.farm.ready,2);
 });

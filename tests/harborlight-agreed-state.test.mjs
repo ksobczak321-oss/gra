@@ -45,11 +45,11 @@ test('workers arrive after five minutes without retroactive production or taxes'
   tick(state, 1);
   assert.equal(state.buildings.farm.ready, 0);
   assert.equal(taxRate(state), 1);
-  tick(state, 359);
+  tick(state, 179);
   assert.equal(state.buildings.farm.ready, 0);
   tick(state, 1);
   assert.equal(state.buildings.farm.ready, 1);
-  close(state.taxProgress, 0.1);
+  close(state.taxProgress, 0.05);
 });
 
 test('workforce caps use each own building level and one shared Home pool', () => {
@@ -149,14 +149,14 @@ test('real-time catch-up is idempotent and legacy pause/speed do not alter econo
   state.paused = true; state.speed = 4;
   const food = state.resources.food;
   assert.equal(advanceTo(state, NOW + 3600000), 3600);
-  assert.equal(state.buildings.farm.ready, 9); // First five minutes are travel.
+  assert.equal(state.buildings.farm.ready, 18); // First five minutes are travel.
   assert.equal(food - state.resources.food, 6);
   const stored = JSON.stringify(state);
   assert.equal(advanceTo(state, NOW + 3600000), 0);
   assert.equal(JSON.stringify(state), stored);
   const saved = reload(state);
   assert.equal(advanceTo(saved, NOW + 7200000), 3600);
-  assert.equal(saved.buildings.farm.ready, 19);
+  assert.equal(saved.buildings.farm.ready, 38);
 });
 
 test('old saves are not retroactively simulated using an unreliable lastActionAt', () => {
@@ -316,11 +316,11 @@ test('Premium purchase reserves its coin price before other forecast plans can r
   state.buildings.warehouse.level = 1;
   state.premium.expiresAt = NOW + 86400000;
   const forecast = reservedForecast(state);
-  state.resources.coins = 554; // 225 for the service plus 329 of a 330-coin forecast.
+  state.resources.coins = 524; // 195 for the service plus 329 of a 330-coin forecast.
   const before = { ...state.resources };
   const bought = act(state, { type: 'premiumBuyBuilding', building: 'farm' });
   assert.equal(bought.ok, true, bought.message);
-  assert.equal(bought.coins, 225);
+  assert.equal(bought.coins, 195);
   assert.equal(state.resources.coins, 329);
   assert.equal(forecast.stage, 'planned');
   assert.equal(state.buildings.farm.premiumService.stage, 'building');
@@ -356,7 +356,7 @@ test('taxes fund a forecast at their exact threshold without retroactive constru
     close(state.taxProgress, 0);
     tick(state, 300);
     assert.equal(project.transportSeconds, 300);
-    assert.equal(project.goodsRemaining, 1260); // Six Wood loads (last30) and one Stone load.
+    assert.equal(project.goodsRemaining, 870); // Three Wood, three Stone and one Grain load.
   }
   assert.deepEqual(whole.resources, split.resources);
 });

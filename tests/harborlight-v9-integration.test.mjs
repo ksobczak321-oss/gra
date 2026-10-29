@@ -45,8 +45,8 @@ test('active play doubles production and taxes for five real minutes without dou
   assert.equal(act(state, { type: 'userActivity', visible: true, focused: true }).ok, true);
   assert.equal(taxRate(state), 2);
   tick(state, 360);
-  assert.equal(state.buildings.farm.ready, 1);
-  near(state.buildings.farm.workProgress[0], 300);
+  assert.equal(state.buildings.farm.ready, 3);
+  near(state.buildings.farm.workProgress[0], 120);
   near(state.taxProgress, 660 / 3600);
   near(state.resources.food + state.foodCredit, 100 - 12 * 360 / 3600);
   assert.equal(activePlayMultiplier(state), 1);
@@ -59,8 +59,8 @@ test('offline reload applies only the remaining active bonus and does not refres
   act(state, { type: 'userActivity', visible: true, focused: true });
   const saved = reload(state);
   advanceTo(saved, START + 360000);
-  assert.equal(saved.buildings.farm.ready, 1);
-  near(saved.buildings.farm.workProgress[0], 300);
+  assert.equal(saved.buildings.farm.ready, 3);
+  near(saved.buildings.farm.workProgress[0], 120);
   assert.equal(activePlayMultiplier(saved), 1);
   const before = JSON.stringify(saved);
   assert.equal(advanceTo(saved, START + 360000), 0);
@@ -74,7 +74,7 @@ test('active play stacks with Lighthouse/Chapel but never accelerates carrier co
   state.buildings.lumber.ready = 60;
   act(state, { type: 'userActivity', visible: true, focused: true });
   assert.equal(taxRate(state), 8);
-  assert.equal(resourceRates(state).grain.production, 40);
+  assert.equal(resourceRates(state).grain.production, 80);
   tick(state, 299);
   assert.equal(state.resources.wood, 100);
   tick(state, 1);
@@ -96,9 +96,9 @@ test('physical construction reservations remain in storage until actual pickup',
   assert.equal(saved.resources.wood, 550);
   assert.equal(centralReserved(saved, 'wood'), 500);
   tick(saved, 1);
-  assert.equal(saved.resources.wood, 484);
-  assert.equal(centralReserved(saved, 'wood'), 434);
-  assert.equal(saved.haulTrips.warehouse[0].amount, 66);
+  assert.equal(saved.resources.wood, 418);
+  assert.equal(centralReserved(saved, 'wood'), 368);
+  assert.equal(saved.haulTrips.warehouse[0].amount, 132);
   assert.equal(canAfford(saved, { wood: 51 }), false);
 });
 
@@ -176,11 +176,11 @@ test('resource trends use production minus processing and meals, not warehouse c
   const state = createState(START);
   arrived(state, 'farm', 2); arrived(state, 'windmill'); arrived(state, 'sawmill');
   const rates = resourceRates(state);
-  assert.equal(rates.grain.production, 20);
-  assert.equal(rates.grain.consumption, 20);
+  assert.equal(rates.grain.production, 40);
+  assert.equal(rates.grain.consumption, 40);
   assert.equal(rates.grain.net, 0);
-  assert.equal(rates.wood.net, -20);
-  assert.equal(rates.food.net, -2);
+  assert.equal(rates.wood.net, -40);
+  assert.equal(rates.food.net, 8);
   state.haulTrips.warehouse.push({ resource: 'food', amount: 60, remaining: 300, worker: 0, kind: 'producer' });
   assert.deepEqual(resourceRates(state), rates);
 });

@@ -305,7 +305,7 @@ test('full building purchases quote actual road cargo capacity and use a separat
     requestUpgrade: request => { requests.push(request); return { ok: true, message: 'service started' }; }
   };
   const quote = quotePremiumBuilding(state, 'farm', ctx);
-  assert.equal(quote.capacity, 78); assert.equal(quote.trips, 2); assert.equal(quote.coins, 96);
+  assert.equal(quote.capacity, 156); assert.equal(quote.trips, 1); assert.equal(quote.coins, 86);
   assert.equal(activityAction(state, { type: 'premiumBuyBuilding', building: 'farm' }, ctx).ok, true);
   assert.equal(requests[0].premiumService, true); assert.equal(requests[0].skipTransport, true);
   assert.equal(options[0].queued, false); assert.equal(quote.buildSeconds, 10);

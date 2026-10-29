@@ -1,11 +1,13 @@
 // Daily attractions and completed road tiers. All clocks use elapsed world
 // seconds, so the same rules apply while the island is open and offline.
 // This module intentionally imports no state, residents or logistics module.
-import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v13';
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v13';
+import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v15';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v15';
 
 export const LEISURE_DAY_SECONDS = 86400;
 export const ATTRACTION_EFFECT_SECONDS = 21600;
+export const ATTRACTION_MIN_POPULATION_PERCENT = 1;
+export const ATTRACTION_MAX_POPULATION_PERCENT = 50;
 export const ROAD_SECTIONS = 100;
 export const ROAD_MAX_LEVEL = 5;
 export const ROAD_SECTION_COST = 100;
@@ -61,6 +63,9 @@ function random(state) {
   return state.leisure.seed / 0x100000000;
 }
 
+const randomSharePercent = state => ATTRACTION_MIN_POPULATION_PERCENT +
+  Math.floor(random(state) * (ATTRACTION_MAX_POPULATION_PERCENT - ATTRACTION_MIN_POPULATION_PERCENT + 1));
+
 function rotateOffers(state, emit = true) {
   const previous = new Set((state.leisure.offers || []).map(offer => offer.id));
   const pool = ATTRACTIONS.filter(item => !previous.has(item.id)).map(item => item.id);
@@ -68,7 +73,7 @@ function rotateOffers(state, emit = true) {
   for (let index = 0; index < 5; index++) {
     const choice = Math.floor(random(state) * pool.length);
     const [id] = pool.splice(choice, 1);
-    state.leisure.offers.push({ id, y: 5 + Math.floor(random(state) * 96) });
+    state.leisure.offers.push({ id, y: 5 + Math.floor(random(state) * 96), sharePercent: randomSharePercent(state) });
   }
   state.leisure.nextRotationAt = nextWarsawMidnightMs(state.leisure.clockMs);
   state.leisure.rotationRemaining = (state.leisure.nextRotationAt - state.leisure.clockMs) / 1000;
@@ -80,8 +85,8 @@ export function normalizeLeisure(state, raw = {}) {
   const seed = integer(saved.seed, 0, 0xffffffff) >>> 0;
   const initialSeed = (Math.floor(state.worldTimeMs || 0) ^ 0x51ed270b) >>> 0;
   const clockMs = finite(state.worldTimeMs) ? state.worldTimeMs : finite(saved.clockMs) ? saved.clockMs : 0;
-  // Older rolling-day offers retain their current identities and prices until
-  // the next local midnight. New saves preserve the exact calendar boundary.
+  // Existing daily offers retain their identities and base happiness. The new
+  // audience percentage is rolled only once when migrating a legacy offer.
   const nextRotationAt = finite(saved.nextRotationAt) && saved.nextRotationAt > clockMs ? saved.nextRotationAt : nextWarsawMidnightMs(clockMs);
   state.leisure = { seed: seed || initialSeed || 1, clockMs, nextRotationAt,
     rotationRemaining: (nextRotationAt - clockMs) / 1000,
@@ -89,7 +94,8 @@ export function normalizeLeisure(state, raw = {}) {
   const offers = Array.isArray(saved.offers) ? saved.offers : [];
   if (offers.length === 5 && new Set(offers.map(item => item?.id)).size === 5 && offers.every(item =>
     item && ids.has(item.id) && Number.isInteger(item.y) && item.y >= 5 && item.y <= 100)) {
-    state.leisure.offers = offers.map(({ id, y }) => ({ id, y }));
+    state.leisure.offers = offers.map(({ id, y, sharePercent }) => ({ id, y,
+      sharePercent: Number.isInteger(sharePercent) && sharePercent >= ATTRACTION_MIN_POPULATION_PERCENT && sharePercent <= ATTRACTION_MAX_POPULATION_PERCENT ? sharePercent : randomSharePercent(state) }));
   } else rotateOffers(state, false);
   for (const id of ids) {
     const habit = saved.habits?.[id];
@@ -143,18 +149,34 @@ function estimatedHappiness(state, person) {
 
 export function leisureOffers(state) {
   const availablePeople = eligibleResidents(state).length;
+  const population = Math.max(0, integer(state.population, (state.residents || []).length));
+  const availability = attractionAvailability(state);
   return (state.leisure?.offers || []).map(offer => {
     const habit = state.leisure.habits[offer.id];
     const uses = habit?.resetRemaining > EPS ? Math.min(4, habit.uses) : 0;
     const multiplier = ATTRACTION_MULTIPLIERS[uses];
-    const residentCount = Math.min(tier(state), availablePeople);
-    const price = offer.y * residentCount, affordable = (state.resources?.coins || 0) >= price;
-    return { ...catalog.get(offer.id), y: offer.y, price, amount: offer.y * multiplier,
-      residentCount, level: tier(state), multiplier,
+    const requestedResidentCount = population ? Math.max(1, Math.floor(population * offer.sharePercent / 100)) : 0;
+    const residentCount = Math.min(requestedResidentCount, availablePeople);
+    const amount = offer.y * multiplier, totalHappiness = amount * residentCount;
+    const price = residentCount && amount > 0 ? Math.max(1, Math.ceil(totalHappiness)) : 0;
+    const affordable = (state.resources?.coins || 0) >= price;
+    return { ...catalog.get(offer.id), y: offer.y, sharePercent: offer.sharePercent, price, amount, totalHappiness,
+      residentCount, requestedResidentCount, level: tier(state), multiplier,
       uses, remaining: state.leisure.rotationRemaining, nextReset: habit?.resetRemaining || 0,
-      affordable, available: multiplier > 0 && affordable && availablePeople > 0,
-      reason: multiplier <= 0 ? 'Residents need a 24-hour break from this attraction.' : !availablePeople ? 'No eligible residents can gain happiness from this attraction.' : !affordable ? 'Not enough coins.' : '' };
+      activeRemaining: availability.remaining,
+      affordable, available: !availability.active && multiplier > 0 && affordable && residentCount > 0,
+      reason: availability.active ? 'Another attraction is active. Wait until its six-hour effect ends.' : multiplier <= 0 ? 'Residents need a 24-hour break from this attraction.' : !residentCount ? 'No eligible residents can gain happiness from this attraction.' : !affordable ? 'Not enough coins.' : '' };
   });
+}
+
+// Previously paid overlapping effects are retained when loading an older
+// island. New purchases wait for the last of those effects to finish.
+export function attractionAvailability(state) {
+  const effects = (state.leisure?.effects || []).filter(effect => finite(effect.remaining) && effect.remaining > EPS);
+  const longest = effects.reduce((latest, effect) => !latest || effect.remaining > latest.remaining ? effect : latest, null);
+  const remaining = longest?.remaining || 0;
+  return { active: effects.length > 0, remaining, nextAvailableIn: remaining,
+    activeCount: effects.length, activeAttractionId: longest?.attractionId || null, activeTitle: longest?.title || '' };
 }
 
 export function roadSummary(state) {

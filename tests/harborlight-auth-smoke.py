@@ -7,6 +7,7 @@ import functools
 import json
 import os
 import threading
+from datetime import datetime, timedelta, timezone
 from contextlib import contextmanager
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -63,6 +64,7 @@ def run():
         expect(page.locator('#tab-login')).to_have_attribute('aria-selected', 'true')
         expect(page.locator('#account-fields')).to_be_enabled()
         expect(page.locator('#display-name')).to_be_hidden()
+        expect(page.locator('#island-name')).to_be_hidden()
         assert page.evaluate('''async () => {
           const art = new Image();
           art.src = 'assets/harborlight-v1-approved.png';
@@ -102,13 +104,16 @@ def run():
         expect(page.locator('#tab-register')).to_be_focused()
         expect(page.locator('#tab-register')).to_have_attribute('aria-selected', 'true')
         expect(page.locator('#display-name')).to_be_visible()
+        expect(page.locator('#island-name')).to_be_visible()
         expect(page.locator('#password')).to_have_attribute('autocomplete', 'new-password')
         page.locator('#display-name').fill('Captain')
+        page.locator('#island-name').fill('Żółwia Zatoka')
         page.locator('#password').fill('island-password-123')
         page.locator('#confirm-password').fill('another-password')
         page.locator('#account-submit').click()
         expect(page.locator('#confirm-error')).to_have_text('The passwords do not match.')
         expect(page.locator('#confirm-password')).to_be_focused()
+        assert page.evaluate("localStorage.getItem('harborlight-island-name:harborlight-v1-new-player-save')") is None
         page.locator('#confirm-password').fill('island-password-123')
         page.locator('#account-submit').click()
         expect(page.locator('#account-status')).to_contain_text('Your account has not been created.')
@@ -116,7 +121,11 @@ def run():
         expect(page.locator('#confirm-password')).to_have_value('')
         assert len(requests) == initial_requests, requests[initial_requests:]
         assert all(method == 'GET' and url.startswith(base + '/') for method, url in requests), requests
-        assert page.evaluate('JSON.stringify(localStorage)') == json.dumps({'existing-island': 'keep-me'}, separators=(',', ':'))
+        stored = page.evaluate('({...localStorage})')
+        assert set(stored) == {'existing-island', 'harborlight-island-name:harborlight-v1-new-player-save'}, stored
+        assert stored['existing-island'] == 'keep-me'
+        assert json.loads(stored['harborlight-island-name:harborlight-v1-new-player-save'])['name'] == 'Żółwia Zatoka'
+        assert not any(value in json.dumps(stored) for value in ['captain@example.com', 'island-password-123', 'another-password']), stored
         assert page.evaluate('JSON.stringify(sessionStorage)') == json.dumps({'existing-session': 'keep-me-too'}, separators=(',', ':'))
 
         # The screen remains scrollable and has no horizontal overflow at small sizes.
@@ -132,10 +141,22 @@ def run():
         page.set_viewport_size({'width': 390, 'height': 844})
         page.screenshot(path='/tmp/harborlight-auth-mobile.png', full_page=True)
 
-        # Direct registration links work. Guest links deliberately retain the existing island entry.
+        # A standalone registration returns to a normal new-player profile.
+        # Explicit main/profile links keep their previous island instead.
+        now = datetime(2026, 10, 29, 12, tzinfo=timezone.utc)
+        page.clock.install(time=now - timedelta(seconds=1))
+        page.clock.pause_at(now)
         page.goto(base + '/harborlight-auth.html?mode=register')
         expect(page.locator('#tab-register')).to_have_attribute('aria-selected', 'true')
-        expect(page.locator('.guest-link')).to_have_attribute('href', 'harborlight-v1-layered.html')
+        expect(page.locator('.guest-link')).to_have_attribute('href', 'harborlight-v1-layered.html?profile=new-player')
+        page.locator('.guest-link').click()
+        page.wait_for_function('document.getElementById("loading").hidden')
+        page.wait_for_function("localStorage.getItem('harborlight-v1-new-player-save') !== null")
+        fresh = json.loads(page.evaluate("localStorage.getItem('harborlight-v1-new-player-save')"))
+        assert fresh['resources'] == dict.fromkeys(['coins', 'wood', 'stone', 'grain', 'food', 'planks'], 100), fresh['resources']
+        assert fresh['buildings']['townhall']['level'] == 1 and fresh['population'] == 12
+        assert fresh.get('previewBuildStockVersion') is None
+        assert fresh['islandName'] == 'Żółwia Zatoka'
         assert not errors, errors
         assert not failed, failed
         context.close()
