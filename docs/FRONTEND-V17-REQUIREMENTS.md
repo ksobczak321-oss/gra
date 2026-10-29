@@ -1,6 +1,6 @@
 # Pakiet GO — frontend v17
 
-Status: implementacja i odbiór lokalny ukończone — 486/486 testów modelu, pięć grup Chromium v17 oraz regresja siedmiu grup v16 PASS. Poniższe dziewięć wymagań zbiera uwagi po v16 zatwierdzone poleceniem „GO” 30 października 2026. Wyniki testów oraz odrębny stan publikacji zawiera [dziennik](IMPLEMENTATION-LOG.md); wcześniejsze wyniki v15/v16 nie potwierdzają tego pakietu.
+Status: implementacja i odbiór lokalny ukończone — 486/486 testów modelu, pięć grup Chromium v17 oraz regresja siedmiu grup v16 PASS. Publikację kodu `72e49da` potwierdza udany workflow Pages 40975340456; bezpośredni publiczny test nadal ogranicza proxy środowiska. Poniższe dziewięć wymagań zbiera uwagi po v16 zatwierdzone poleceniem „GO” 30 października 2026. Wyniki testów oraz odrębny stan publikacji zawiera [dziennik](IMPLEMENTATION-LOG.md); wcześniejsze wyniki v15/v16 nie potwierdzają tego pakietu.
 
 ## Uzgodnione zmiany
 

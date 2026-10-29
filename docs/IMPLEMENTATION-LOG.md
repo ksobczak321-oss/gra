@@ -446,3 +446,11 @@ Użytkownik zatwierdził [dziewięć wymagań](FRONTEND-V17-REQUIREMENTS.md) z k
 - Rzeczywista scena dwóch załadowanych tragarzy potwierdziła popup i `2 (−1)`, zachowanie obu dostaw, dowiezienie 200 drewna, spadek obsady do jednej osoby oraz dopiero potem pełne 300 s marszu i dostępność w Domu. Ikony sprawdzono dla braku wejścia i pełnego bufora, ich usunięcia po wznowieniu oraz braku fałszywej kary bez obsady.
 - Zestaw `harborlight-frontend-v16-smoke.py` ponownie **7 grup PASS** po minimalnym dostosowaniu wejścia do wyboru gry. Samouczek, skrzynie/Share, stare serie, sterowanie i zapisy zachowują działanie; nie rozluźniano asercji gospodarki. Niezależny przegląd zmian nie znalazł dalszych błędów. Obejrzano zrzuty komputera i telefonu, składnia oraz `git diff --check` poprawne.
 - Publikacja jest odrębna od powyższych wyników lokalnych. Status workflow można odczytać z publicznej strony GitHuba mimo blokady API; wynik konkretnego wdrożenia zostanie zapisany po wysłaniu tego pakietu. Bezpośredni odbiór Pages może nadal ograniczać proxy środowiska.
+
+
+### Publikacja v17
+
+- Pakiet kodu i dokumentacji wysłano do `main` jako [72e49da](https://github.com/ksobczak321-oss/gra/commit/72e49da1d1042ae23ceea3ffa8045380d1d54cec); `git ls-remote` potwierdził pełny identyfikator na zdalnej gałęzi.
+- Workflow [Pages 40975340456](https://github.com/ksobczak321-oss/gra/actions/runs/40975340456) dla tego commitu zakończył się **SUCCESS**. Wynik potwierdzono w danych publicznej strony GitHuba, wiążąc identyfikator commitu i przebieg wdrożenia. Jest to potwierdzenie publikacji, odrębne od lokalnego testu przeglądarkowego.
+- Bezpośredni adres Pages nadal zwraca z tego środowiska HTTP 403 od proxy, więc nie wykonano publicznego testu kliknięć ani porównania sum kontrolnych plików serwowanych przez Pages. Nie przypisujemy temu wydaniu wcześniejszych publicznych wyników v13. Udane wdrożenie potwierdza powyższy konkretny workflow.
+- [Gra v17](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&slot=start-20261029-v16&v=frontend-v17) zachowuje wcześniejszy slot i postęp. Nowy parametr pobiera spójne zasoby interfejsu v17 bez resetowania zapisu. Excel 10 nie był przebudowywany ani nadpisywany.

@@ -15,7 +15,7 @@ Zachowane są 25 lekcji samouczka, skrzynie po 100–300 każdego z pięciu mate
 - [Logowanie/rejestracja](https://ksobczak321-oss.github.io/gra/harborlight-auth.html) — formularze, bez prawdziwej usługi kont i OAuth.
 - [Pobierz Excel 10](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT10-zasady.xlsx) — archiwum zasad v16, 25 lekcji i kalkulator; jego wcześniejsze publiczne pobranie potwierdzono identyczną sumą kontrolną. Pliki 7–10 pozostają niezmienione.
 
-Dziennik rozdziela testy lokalne, wysłanie kodu i publiczny odbiór konkretnego wydania. Wyniki dawnych wersji i parametr wersji w linku nie potwierdzają publikacji v17.
+Publikację v17 potwierdza udany [workflow Pages 40975340456](https://github.com/ksobczak321-oss/gra/actions/runs/40975340456) dla commitu gry `72e49da`. Lokalne testy i udane wdrożenie są odrębne od bezpośredniego odbioru publicznej strony, który nadal blokuje HTTP 403 proxy środowiska; pełne dowody są w dzienniku.
 
 ## Co obejmuje ta wersja
 
