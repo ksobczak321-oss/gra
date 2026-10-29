@@ -414,3 +414,11 @@ Użytkownik rozszerzył samouczek o rzeczywiste działania, nowe nagrody i autom
 - Regresje `harborlight-frontend-v15-smoke.py`, `harborlight-auth-smoke.py` i `harborlight-new-player-smoke.py` również **PASS**. Zachowano 36 głównych widoków budynków na komputerze, mobilne ramki i dawny osobny profil; stare zestawy jawnie zamykają nowe okno samouczka zamiast wprowadzać produkcyjny parametr omijający naukę. Nowy start po rejestracji również automatycznie pokazuje samouczek.
 - Obejrzano rzeczywiste zrzuty nowej gry 1366 × 768 i 390 × 844 oraz panelu i skrzyni samouczka. Cała plansza kulek, zegar, sterowanie i wyjście są widoczne bez obcięcia; nie ma poziomego przepełnienia. Składnia zmienionych modułów i `git diff --check` poprawne.
 - Publiczny odbiór i pobranie Excela pozostają odrębne od tych wyników. Dostęp do Pages oraz API GitHuba blokuje proxy środowiska (HTTP 403); nie deklarujemy powodzenia workflow ani potwierdzenia publicznych plików na podstawie samego parametru wersji. Git CLI pozwala niezależnie wysłać i potwierdzić kod w `main`.
+
+
+### Wysłanie v16 i pobranie Excela 10
+
+- Kod gry, testy, dokumentacja i Excel 10 zostały wysłane do `main` w commicie [e061684](https://github.com/ksobczak321-oss/gra/commit/e061684fbde43370442bb011f0d4e2537038fbcc). `git ls-remote` potwierdził ten sam pełny identyfikator na zdalnej gałęzi; repozytorium lokalne pozostało czyste.
+- Pobrano [publiczny Excel 10](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT10-zasady.xlsx). Pobrany plik jest bajtowo identyczny z lokalnym, poprawnym ZIP/XLSX poddanym walidacji: 364049 bajtów, SHA-256 `4dd371e4fe779e51e1f060e69493635f25971a9c365ff9b55f961d457f31145a`. Publikacja i pobieranie arkusza są tym samym potwierdzone, bez przebudowy pliku.
+- Publiczny adres gry po push nadal zwraca z tego środowiska HTTP 403 od proxy. Nie jest to wynik testu samej gry ani potwierdzenie błędu u użytkownika; status workflow i działanie publicznego Pages v16 pozostają niezweryfikowane.
+- Link do oddzielnego startu z samouczkiem: [nowy gracz v16](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&slot=start-20261029-v16&v=frontend-v16). Ma własny zapis, a kolejne wejście zachowuje postęp.

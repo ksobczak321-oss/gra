@@ -11,7 +11,7 @@ Ekspedycje losują labirynt z kulkami albo dopasowywanie trójek. Nowe rundy maj
 - [Wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v16).
 - [Profil nowego gracza z 29 października](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&slot=start-20261029-v16&v=frontend-v16) — przy pierwszym otwarciu poziom 1, 12 osób, po 100 każdego zasobu, zero przydzielonych pracowników. Osobny zapis zachowuje wcześniejsze wyspy; kolejne otwarcie wznawia jego postęp.
 - [Logowanie/rejestracja](https://ksobczak321-oss.github.io/gra/harborlight-auth.html) — formularze, bez prawdziwej usługi kont i OAuth.
-- [Pobierz Excel 10](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT10-zasady.xlsx) — aktualne zasady, 25 lekcji i kalkulator; pliki 7–9 pozostają niezmienione.
+- [Pobierz Excel 10](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT10-zasady.xlsx) — aktualne zasady, 25 lekcji i kalkulator; publiczne pobranie potwierdzone identyczną sumą kontrolną. Pliki 7–9 pozostają niezmienione.
 
 Pełny publiczny odbiór v13 i pobranie Excela 9 zapisano w dzienniku. W tym środowisku proxy nadal blokuje Pages i API GitHuba błędem 403; publicznego odbioru v16 nie można utożsamiać z testami lokalnymi. Parametr wersji w linku sam nie potwierdza wdrożenia.
 
