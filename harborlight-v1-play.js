@@ -7,13 +7,17 @@ import * as Activities from './harborlight-v1-activities.js?v=frontend-v13';
 import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v13';
 import * as Effects from './harborlight-v1-effects.js?v=frontend-v13';
 import * as Progression from './harborlight-v1-progression.js?v=frontend-v13';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v13';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v14';
 import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v13';
 
-const NEW_PLAYER_PROFILE = new URLSearchParams(location.search).get('profile') === 'new-player';
+const profileParameters = new URLSearchParams(location.search);
+const NEW_PLAYER_PROFILE = profileParameters.get('profile') === 'new-player';
+const requestedSlot = profileParameters.get('slot') || '';
+const NEW_PLAYER_SLOT = NEW_PLAYER_PROFILE && /^[a-z0-9-]{1,40}$/.test(requestedSlot) ? requestedSlot : '';
 const OFFICIAL_GAME_URL = 'https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html';
-const SAVE_KEY = NEW_PLAYER_PROFILE ? 'harborlight-v1-new-player-save' : 'harborlight-v1-interactive-save';
+const SAVE_KEY = NEW_PLAYER_PROFILE ? `harborlight-v1-new-player-save${NEW_PLAYER_SLOT ? `-${NEW_PLAYER_SLOT}` : ''}` : 'harborlight-v1-interactive-save';
 document.documentElement.dataset.profile = NEW_PLAYER_PROFILE ? 'new-player' : 'preview';
+if (NEW_PLAYER_SLOT) document.documentElement.dataset.profileSlot = NEW_PLAYER_SLOT;
 const stage = document.getElementById('stage');
 const layer = document.getElementById('semanticLayer');
 const dialog = document.getElementById('island-dialog');
@@ -155,13 +159,19 @@ for (const [id, region] of Object.entries(buildingRegions)) {
   }, 'world-hotspot');
 }
 hotspot('boat', 'Ship — harbor trade', [215, 635, 219, 137], () => openPanel('trade'));
-const dockCategories = [['buildings', 'Buildings', 471, 167], ['resources', 'Production and resources', 648, 158], ['decorations', 'Decorations', 815, 170], ['paths', 'Paths', 991, 171]];
-for (const [id, label, x, width] of dockCategories) hotspot(`category-${id}`, label, [x, 780, width, 41], () => setDockCategory(id));
+const dockCategories = [['administration', 'Administration'], ['economy', 'Economy'], ['resources', 'Resources'], ['decorations', 'Decorations'], ['paths', 'Paths']];
+const dockTabs = el('nav', { class: 'dock-tabs', 'aria-label': 'Island building and resource dock' },
+  ...dockCategories.map(([id, label]) => button(label, () => setDockCategory(id), { id: `hit-category-${id}`, class: 'dock-tab', 'data-dock-category': id, 'aria-pressed': false })));
+layer.append(dockTabs);
 const BUILDING_DOCK_ORDER = ['townhall', 'house', 'farm', 'windmill', 'quarry', 'lumber', 'sawmill', 'warehouse', 'market', 'dock', 'chapel', 'lighthouse'];
+const BUILDING_DOCK_GROUPS = {
+  administration: ['townhall', 'house', 'warehouse', 'market', 'dock', 'chapel', 'lighthouse'],
+  economy: ['farm', 'windmill', 'quarry', 'lumber', 'sawmill']
+};
 const buildingDock = el('nav', { class: 'building-dock-cards', 'aria-label': 'Buildings', 'data-building-dock': '' });
 for (const id of BUILDING_DOCK_ORDER) {
   const [x,y,w,h] = buildingRegions[id];
-  const scale = Math.min(72 / w, 43 / h);
+  const scale = Math.min(124 / w, 84 / h);
   const picture = el('span', { class: 'building-dock-picture', 'aria-hidden': 'true', style: { backgroundImage: 'url("assets/harborlight-v1-approved.png")', backgroundSize: `${1672 * scale}px ${941 * scale}px`, backgroundPosition: `${-x * scale}px ${-y * scale}px`, width: `${w * scale}px`, height: `${h * scale}px` } });
   const control = button('', () => openPanel('building', id), { id: `hit-dock-${id}`, class: 'building-dock-card', 'data-dock-building': id, 'aria-label': `${titleOf(id)} — construction and upgrades` });
   control.append(el('small', { class: 'building-dock-level', 'data-dock-level': id }, `Lv. ${state.buildings[id].level}`), picture, el('span', { class: 'building-dock-name' }, titleOf(id)));
@@ -191,18 +201,26 @@ for (const id of Object.keys(resourceProductionBuildings)) {
   resourceDock.append(control);
 }
 layer.append(resourceDock);
-let activeDockCategory = 'buildings';
+let activeDockCategory = 'administration';
 let leisureDockSignature = '';
 const leisureDock = el('div', { class: 'resource-dock-cards leisure-dock-cards', 'data-leisure-dock': '', hidden: true, 'aria-label': 'Island attractions and paths' });
 layer.append(leisureDock);
 function setDockCategory(id) {
+  if (!dockCategories.some(([category]) => category === id)) return;
   activeDockCategory = id;
   resourceDock.hidden = id !== 'resources';
   leisureDock.hidden = !['decorations', 'paths'].includes(id);
-  buildingDock.hidden = id !== 'buildings';
-  for (const category of ['buildings', 'resources', 'decorations', 'paths']) {
+  const group = BUILDING_DOCK_GROUPS[id];
+  buildingDock.hidden = !group;
+  if (group) {
+    buildingDock.dataset.buildingDock = id;
+    buildingDock.style.gridTemplateColumns = `repeat(${group.length}, minmax(0, 1fr))`;
+    buildingDock.setAttribute('aria-label', dockCategories.find(([category]) => category === id)[1]);
+    for (const control of buildingDock.children) control.hidden = !group.includes(control.dataset.dockBuilding);
+  }
+  for (const [category, label] of dockCategories) {
     const node = document.getElementById(`hit-category-${category}`);
-    node.textContent = { buildings: 'Buildings', resources: 'Resources', decorations: 'Decorations', paths: 'Paths' }[category];
+    node.textContent = label;
     node.classList.toggle('is-selected', category === id);
     node.setAttribute('aria-pressed', String(category === id));
   }
@@ -507,7 +525,7 @@ function refreshLivePanel() {
   dialog.querySelectorAll('[data-expedition-pot]').forEach(node => { const run = expeditionRun(node.dataset.expeditionPot); node.textContent = `${count(Activities.expeditionRoundStatus?.(state, run)?.potentialPot ?? run?.pot)} coins`; });
   dialog.querySelectorAll('[data-expedition-live]').forEach(node => { const run = expeditionRun(node.dataset.expeditionLive); node.textContent = expeditionStatusText(run); if (puzzle && run?.status === 'lost' && !puzzle.complete) { puzzle.complete = true; puzzle.message = run.lossReason === 'presence-timeout' ? 'Presence was not confirmed. The unclaimed pot was lost.' : 'Overtime consumed the potential pot.'; renderPanel(); } });
   const foodStats = foodStatValues();
-  dialog.querySelectorAll('[data-food-stat]').forEach(node => { node.textContent = foodStats[node.dataset.foodStat]; });
+  dialog.querySelectorAll('[data-food-stat]').forEach(node => { node.textContent = foodStats[node.dataset.foodStat]; if (node.dataset.foodStat === 'status') node.dataset.fed = String(hasFoodForResidents(state)); });
   dialog.querySelectorAll('[data-upgrade-transport]').forEach(node => { node.textContent = upgradeTransportDescription(node.dataset.upgradeTransport); });
   dialog.querySelectorAll('[data-upgrade-requirements]').forEach(node => { node.textContent = upgradeRequirementDescription(node.dataset.upgradeRequirements); });
   if (panel?.kind === 'construction' && dialog.open) {
@@ -527,7 +545,7 @@ function refreshLivePanel() {
   dialog.querySelectorAll('[data-upgrade-building]').forEach(node => { const id = node.dataset.upgradeBuilding; node.disabled = !upgradeEligibility(state, id).ok || !canAfford(state, buildingCost(state, id)); });
   dialog.querySelectorAll('[data-upgrade-cost]').forEach(node => { const available = spendable(node.dataset.upgradeCost), required = node.dataset.costSource === 'resident' ? State.residentPurchaseQuote?.(state)?.cost?.[node.dataset.upgradeCost] ?? Number(node.dataset.required) : panel?.kind === 'building' ? buildingCost(state, panel.id)?.[node.dataset.upgradeCost] ?? Number(node.dataset.required) : Number(node.dataset.required); node.dataset.required = required; node.textContent = `${count(available)} / ${count(required)}`; node.classList.toggle('is-affordable', available >= required); node.classList.toggle('is-short', available < required); node.setAttribute('aria-label', `${nameOf(node.dataset.upgradeCost)}: in storage ${count(available)}, required ${count(required)}; ${available >= required ? 'enough' : 'short'}`); });
   dialog.querySelectorAll('[data-stock]').forEach(node => { node.textContent = count(state.resources[node.dataset.stock]); });
-  const live = { population: `${state.population} / ${state.capacity}`, 'current-population': count(state.population), workers: totalWorkers(state), free: freeWorkers(state), returning: (state.returningWorkers || []).length, 'next-return': returnDescription(), 'worker-limit': '12 × building level', happiness: happinessText(), level: state.buildings.townhall.level, growth: populationDescription(), 'growth-rate': populationGrowthRateText(), capacity: state.capacity, housing: housingCapacity(state), unhoused: unhousedResidents(state), penalty: housingPenaltyText(), 'housing-status': housingDescription() };
+  const live = { population: `${state.population} / ${state.capacity}`, 'current-population': count(state.population), workers: totalWorkers(state), free: freeWorkers(state), arriving: state.residents.filter(person => person.workplace && person.arrivalRemaining > 0).length, returning: (state.returningWorkers || []).length, 'next-return': returnDescription(), 'worker-limit': '12 × building level', happiness: happinessText(), level: state.buildings.townhall.level, growth: populationDescription(), 'growth-rate': populationGrowthRateText(), capacity: state.capacity, housing: housingCapacity(state), unhoused: unhousedResidents(state), penalty: housingPenaltyText(), 'housing-status': housingDescription() };
   dialog.querySelectorAll('[data-population-stat]').forEach(node => { node.textContent = live[node.dataset.populationStat]; });
   dialog.querySelectorAll('[data-housing-warning]').forEach(node => { node.dataset.overcrowded = String(unhousedResidents(state) > 0); });
   dialog.querySelectorAll('[data-logistics-stat]').forEach(node => { node.textContent = logisticsStatValue(node.dataset.logisticsStat); });
@@ -1054,19 +1072,35 @@ function rules(title, ...children) {
 }
 function foodStatValues() {
   const affected = hasFoodForResidents(state) ? 0 : state.residents.filter(resident => resident.hungerSeconds >= 12 * 3600).length;
-  return { demand: `${foodDemandPerHour(state)} food/h`, status: hasFoodForResidents(state) ? 'Feeding' : 'Hungry', penalty: hungerPenaltyPerHour(state) ? `−5 percentage points/h per affected resident (${affected})` : '0 percentage points/h', efficiency: `${productionMultiplier(state) * 100}%` };
+  return { demand: `${foodDemandPerHour(state)} food/h`, demandValue: count(foodDemandPerHour(state)), status: hasFoodForResidents(state) ? 'Food available' : 'Food needed', penalty: hungerPenaltyPerHour(state) ? `−5 percentage points/h per affected resident (${affected})` : '0 percentage points/h', penaltyCompact: hungerPenaltyPerHour(state) ? `−5 pp/h × ${count(affected)}` : '0 pp/h', efficiency: `${productionMultiplier(state) * 100}%` };
 }
 function feedingPanel() {
   const values = foodStatValues();
-  return card(el('h3', {}, 'Food and residents'),
-    el('div', { class: 'stat-grid' },
-      stat('Food demand', el('span', { 'data-food-stat': 'demand' }, values.demand)),
-      stat('Status', el('span', { 'data-food-stat': 'status' }, values.status)),
-      stat('Shortage penalty', el('span', { 'data-food-stat': 'penalty' }, values.penalty)),
-      stat('Work efficiency', el('span', { 'data-food-stat': 'efficiency' }, values.efficiency))),
-    rules('Food consumption', note('Each resident consumes 1 Food per real hour from central storage, including while offline. Eating adds 1 happiness point per hour. Without food, work efficiency immediately falls to 50%; after 12 continuous hungry hours the resident also loses 5 points per hour. Food reserved for meals cannot be spent twice.')));
+  const content = card(el('div', { class: 'workers-food-heading' }, el('h3', {}, 'Meals for everyone'), el('span', { class: 'workers-meal-status', 'data-food-stat': 'status', 'data-fed': String(hasFoodForResidents(state)) }, values.status)),
+    el('div', { class: 'workers-food-metrics' },
+      el('div', {}, el('strong', { 'data-food-stat': 'demandValue' }, values.demandValue), el('span', {}, 'Food per hour')),
+      el('div', {}, el('strong', { 'data-food-stat': 'efficiency' }, values.efficiency), el('span', {}, 'Work efficiency')),
+      el('div', {}, el('strong', { 'data-food-stat': 'penaltyCompact' }, values.penaltyCompact), el('span', {}, 'Hunger penalty'))),
+    rules('How meals work', note('Each resident consumes 1 Food per real hour from central storage, including while offline. Eating adds 1 happiness point per hour. Without food, work efficiency immediately falls to 50%; after 12 continuous hungry hours the resident also loses 5 points per hour. Food reserved for meals cannot be spent twice.'), note('The hunger penalty shows the loss for each affected resident and how many people are affected.')));
+  content.classList.add('workers-food');
+  return content;
+}
+function workerManagementPanel() {
+  const metric = (label, id, value) => el('div', { class: 'workers-metric' }, el('strong', { 'data-population-stat': id }, count(value)), el('span', {}, label));
+  return el('div', { class: 'workers-panel', 'data-workers-panel': '' },
+    el('p', { class: 'workers-intro' }, 'Choose a workplace, then use + or − to change its team. New workers need five minutes to arrive.'),
+    el('div', { class: 'workers-overview' }, metric('Free at home', 'free', freeWorkers(state)), metric('Assigned', 'workers', totalWorkers(state)), metric('Walking to work', 'arriving', state.residents.filter(person => person.workplace && person.arrivalRemaining > 0).length), metric('Returning home', 'returning', (state.returningWorkers || []).length)),
+    feedingPanel(),
+    el('div', { class: 'workers-section-heading' }, el('h3', {}, 'Your workplaces'), rules('Assignment help',
+      note('Each workplace can employ up to 12 × its own building level, limited by free residents at home. Each resident has one assignment. Workers shows assigned / free at Home / this building’s limit.'),
+      note('A resident starts working after the 5-minute walk to work. The Town Hall, House, Chapel and Lighthouse have no employees.'),
+      note('A recalled carrier finishes the delivery already in progress, then walks home for five minutes. Other released workers start their five-minute walk immediately. They become available again on arrival.'),
+      note('Production per worker is 10, 12, 13, 14… units per hour by the workplace’s own level. Hunger halves production and transport immediately. Releasing a worker discards their unfinished unit.'))),
+    el('div', { class: 'panel-grid workforce-grid' }, WORKPLACE_IDS.map(id => workplaceCard(id, true))),
+    el('div', { class: 'workers-footer' }, button('Residents and happiness', () => openPanel('residents'), { class: 'action secondary' }), button('Open House', () => openPanel('building', 'house'), { class: 'action secondary', 'data-workers-house-link': '' })));
 }
 function residentsPanel(manageWorkers = false) {
+  if (manageWorkers) return workerManagementPanel();
   const liveStat = (label, id, value) => stat(label, el('span', { 'data-population-stat': id }, value));
   return el('div', {}, el('div', { class: 'stat-grid' }, liveStat('Town Hall level', 'level', state.buildings.townhall.level), liveStat('Residents', 'population', `${state.population} / ${state.capacity}`), liveStat('Assigned', 'workers', totalWorkers(state)), liveStat('Happiness', 'happiness', happinessText())),
     feedingPanel(),
@@ -1113,6 +1147,7 @@ function workplaceCard(id, bulk = false) {
     button('Assign to limit', () => adjustWorkforce(id, 'max'), { class: 'action secondary', disabled: freeWorkers(state) <= 0 || building.workers >= workerLimit(state, id), 'data-worker-building': id, 'data-worker-action': 'max', 'aria-label': `Assign to limit: ${titleOf(id)}` }),
     button('Release all', () => adjustWorkforce(id, 'clear'), { class: 'action secondary', disabled: !building.workers, 'data-worker-building': id, 'data-worker-action': 'clear', 'aria-label': `Release all: ${titleOf(id)}` })));
   content.dataset.workplace = id;
+  if (bulk) content.classList.add('workers-workplace');
   return content;
 }
 function adjustWorkforce(id, action) {
@@ -1779,10 +1814,11 @@ function renderMobileDock(force = false) {
   if (!force && signature === mobileDockSignature) return;
   mobileDockSignature = signature;
   const scrolled = mobileDock.querySelector('.mobile-dock-scroll')?.scrollLeft || 0;
-  const tabs = el('div', { class: 'mobile-dock-tabs' }, ...[['buildings','Buildings'],['resources','Resources'],['decorations','Decorations'],['paths','Paths']].map(([id,label]) => button(label, () => setDockCategory(id), { class: `mobile-dock-tab${activeDockCategory===id?' is-selected':''}`, 'aria-pressed': activeDockCategory===id })));
+  const tabs = el('div', { class: 'mobile-dock-tabs' }, ...dockCategories.map(([id,label]) => button(label, () => setDockCategory(id), { class: `mobile-dock-tab${activeDockCategory===id?' is-selected':''}`, 'data-mobile-category': id, 'aria-pressed': String(activeDockCategory===id) })));
   const cards = el('div', { class: 'mobile-dock-scroll' });
-  if (activeDockCategory === 'buildings') {
+  if (BUILDING_DOCK_GROUPS[activeDockCategory]) {
     for (const source of buildingDock.children) {
+      if (source.hidden) continue;
       const id = source.dataset.dockBuilding;
       const control = button('', () => openPanel('building', id), { class: 'building-dock-card', 'data-mobile-building': id, 'aria-label': titleOf(id) });
       control.append(...[...source.children].map(node => node.cloneNode(true))); cards.append(control);
@@ -1863,7 +1899,7 @@ function meaningfulInput(event) {
 document.addEventListener('pointerdown', meaningfulInput, { capture: true, passive: true });
 document.addEventListener('keydown', meaningfulInput, { capture: true });
 
-setDockCategory('buildings');
+setDockCategory('administration');
 settleActiveTick();
 if (!NEW_PLAYER_PROFILE) State.applyBuildTestStock?.(state);
 recordVisit(state);

@@ -1001,7 +1001,7 @@ rule(/^Transport (.*?) \+ building (.*)$/, (_, transport, building) => `Transpor
 rule(/^(Transport|Construction) · ETA: (.*)$/, (_, phase, duration) => `${tr(phase)} · do końca: ${tr(duration)}`);
 rule(/^Estimated transport: (.*?)\. Building phase: (.*?)\. Total: (.*?)\. Changes to staffing or delivery priorities recalculate this estimate\.$/, (_, transport, building, total) => `Szacowany transport: ${tr(transport)}. Budowa: ${tr(building)}. Łącznie: ${tr(total)}. Zmiana obsady lub priorytetów dostaw aktualizuje szacunek.`);
 rule(/^([^:]+): in storage (.*?), required (.*?); (enough|short)$/, (_, name, have, need, status) => `${tr(name)}: w magazynie ${have}, potrzeba ${need}; ${status === 'enough' ? 'wystarcza' : 'brakuje'}`);
-rule(/^(Release worker|Assign worker|Assign to limit|Release all|Prioritize|Move up|Move down):?\s*(.*)$/, (_, action, building) => `${({ 'Release worker':'Zwolnij pracownika', 'Assign worker':'Przydziel pracownika', 'Assign to limit':'Przydziel do limitu', 'Release all':'Zwolnij wszystkich', Prioritize:'Ustaw priorytet', 'Move up':'Przesuń wyżej', 'Move down':'Przesuń niżej' })[action]}: ${tr(building)}`);
+rule(/^(Release worker|Assign worker|Assign to limit|Release all|Prioritize|Move up|Move down):?\s*(.*)$/, (_, action, building) => `${({ 'Release worker':'Zwolnij pracownika', 'Assign worker':'Przydziel pracownika', 'Assign to limit':'Przydziel do limitu', 'Release all':'Zwolnij wszystkich', Prioritize:'Ustaw priorytet', 'Move up':'Przesuń wyżej', 'Move down':'Przesuń niżej' })[action]}${building ? `: ${tr(building)}` : ''}`);
 rule(/^([\d, ]+) visitors return in (.*)\. This visit cannot be recalled\.$/, (_, n, duration) => `Zwiedzający wrócą za ${tr(duration)}: ${n} osób. Nie można ich odwołać.`);
 rule(/^([\d, ]+) selected \/ ([\d, ]+) free places$/, (_, selected, free) => `Wybrano ${selected} / wolne miejsca: ${free}`);
 rule(/^Send resident (\d+) to Lighthouse$/, (_, id) => `Wyślij mieszkańca ${id} na zwiedzanie latarni`);
@@ -1489,3 +1489,21 @@ registerTranslations({
 });
 
 registerTranslations({'Drag to explore the island':'Przeciągnij, aby zwiedzić wyspę','Island world — drag or use arrow keys to explore':'Wyspa — przeciągnij lub użyj strzałek, aby ją zwiedzić'});
+
+registerTranslations({
+  'Administration':'Administracja',
+  'Economy':'Gospodarka',
+  'Choose a workplace, then use + or − to change its team. New workers need five minutes to arrive.':'Wybierz budynek i użyj + lub −, aby zmienić obsadę. Nowi pracownicy docierają do pracy w pięć minut.',
+  'Walking to work':'Idą do pracy',
+  'Meals for everyone':'Posiłki mieszkańców',
+  'Food available':'Posiłki zapewnione',
+  'Food needed':'Potrzebna żywność',
+  'Food per hour':'Żywność na godzinę',
+  'Hunger penalty':'Kara za głód',
+  'How meals work':'Jak działa wyżywienie',
+  'The hunger penalty shows the loss for each affected resident and how many people are affected.':'Kara za głód pokazuje spadek szczęścia jednej głodującej osoby oraz liczbę osób objętych karą.',
+  'Your workplaces':'Obsada budynków',
+  'Assignment help':'Zasady przydzielania',
+  'A recalled carrier finishes the delivery already in progress, then walks home for five minutes. Other released workers start their five-minute walk immediately. They become available again on arrival.':'Odwołany tragarz kończy rozpoczętą dostawę, a następnie wraca do domu przez pięć minut. Pozostali zwolnieni pracownicy wyruszają do domu od razu. Po powrocie można przydzielić ich ponownie.',
+  'Residents and happiness':'Mieszkańcy i szczęście'
+});

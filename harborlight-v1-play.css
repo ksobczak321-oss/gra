@@ -501,10 +501,75 @@ body.reduce-motion .firework-burst i{animation:none;opacity:.55;transform:rotate
 .island-flow-dialog textarea{display:block;width:100%;min-height:120px;margin:15px 0;padding:12px;border:1px solid #73929e;border-radius:9px;background:#0b2b3e;color:#e7ece4;font:14px/1.6 Inter,system-ui,sans-serif;resize:vertical}
 .island-flow-dialog a.action{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;text-align:center}.share-intent-actions{justify-content:stretch}.share-intent-actions>.action{flex:1 1 190px}.share-intent-status{color:#c5dcae;font-size:13px;line-height:1.5}
 
+/* Worker management: short values, clear actions, explanations on demand. */
+#island-dialog .workers-panel{min-width:0}
+#island-dialog .workers-intro{max-width:59ch;margin:0 0 17px;color:#c2d7db;font-size:14px;line-height:1.6}
+#island-dialog .workers-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 18px}
+#island-dialog .workers-metric{display:flex;min-width:0;flex-direction:column;gap:5px;padding:14px 12px;border:1px solid #63818b66;border-radius:12px;background:#0d2d3e}
+#island-dialog .workers-metric:first-child{border-color:#8dbb9b99;background:#214a4380}
+#island-dialog .workers-metric strong{color:#ffe1a5;font-size:25px;font-variant-numeric:tabular-nums;line-height:1.2}
+#island-dialog .workers-metric span{color:#bfd3d9;font-size:12px;line-height:1.4;overflow-wrap:anywhere}
+#island-dialog .workers-food{min-width:0;padding:16px 18px}
+#island-dialog .workers-food-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+#island-dialog .workers-food-heading h3{margin:0;font-size:16px}
+#island-dialog .workers-meal-status{max-width:100%;padding:5px 10px;border:1px solid #78a58b88;border-radius:20px;background:#2c604137;color:#c6e9bd;font-size:12px;font-weight:650;line-height:1.4;overflow-wrap:anywhere}
+#island-dialog .workers-meal-status[data-fed="false"]{border-color:#dfac6b88;background:#995a2433;color:#f4d09a}
+#island-dialog .workers-food-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0 12px}
+#island-dialog .workers-food-metrics>div{display:flex;min-width:0;flex-direction:column;gap:4px}
+#island-dialog .workers-food-metrics>div+div{border-left:1px solid #64808c55;padding-left:12px}
+#island-dialog .workers-food-metrics strong{color:#f8dfb3;font-size:20px;line-height:1.35;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+#island-dialog .workers-food-metrics span{color:#adc8d0;font-size:11px;line-height:1.4;overflow-wrap:anywhere}
+#island-dialog .workers-food>.island-rules{margin-top:3px;font-size:12px}
+#island-dialog .workers-section-heading{margin:22px 0 14px}
+#island-dialog .workers-section-heading h3{margin:0 0 6px;font-size:18px}
+#island-dialog .workers-section-heading>.island-rules{font-size:12px}
+#island-dialog .workers-panel .workforce-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#island-dialog .workers-workplace{min-width:0;padding:16px}
+#island-dialog .workers-workplace h3{font-size:16px;margin-bottom:12px}
+#island-dialog .workers-workplace .producer-workers{min-width:0;padding:10px 11px}
+#island-dialog .workers-workplace .producer-workers-row{gap:10px}
+#island-dialog .workers-workplace .producer-workers-row>.worker-values{flex-basis:100%;min-width:0}
+#island-dialog .workers-workplace .producer-worker-controls{display:flex;justify-content:flex-end;gap:8px;width:100%}
+#island-dialog .workers-workplace .producer-worker-button{flex:0 0 44px;width:44px;height:44px;min-height:44px;font-size:22px}
+#island-dialog .workers-workplace .full-storage-status{font-size:12px;margin:10px 0}
+#island-dialog .workers-workplace .workforce-bulk-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:9px}
+#island-dialog .workers-workplace .workforce-bulk-actions>.action{min-width:0;margin:0;padding:9px 8px;font-size:12px;overflow-wrap:anywhere}
+#island-dialog .workers-footer{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}
+#island-dialog .workers-footer>.action{margin:0!important}
+@media(max-width:640px){#island-dialog .workers-overview{grid-template-columns:repeat(2,minmax(0,1fr))}#island-dialog .workers-panel .workforce-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:420px){#island-dialog .workers-food{padding:14px}#island-dialog .workers-food-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#island-dialog .workers-food-metrics>div+div{padding-left:8px}#island-dialog .workers-food-metrics>div:last-child{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:5px 10px;padding:10px 0 0;border-top:1px solid #64808c55;border-left:0}#island-dialog .workers-food-metrics strong{font-size:18px}#island-dialog .workers-food-metrics>div:last-child strong{font-size:16px;white-space:nowrap;overflow-wrap:normal}#island-dialog .workers-food-metrics span{font-size:10px}#island-dialog .workers-food-heading h3{font-size:15px}#island-dialog .workers-meal-status{font-size:11px}}
+
 #world-pan-hint{display:none}
 body.portrait-world #viewport{touch-action:pan-y;overflow:hidden;background:#0b729b}
 body.portrait-world .island-topbar,body.portrait-world .island-activity-stack,body.portrait-world .building-dock-cards,body.portrait-world .resource-dock-cards,body.portrait-world [id^="hit-category-"]{display:none!important}
 body.portrait-world #world-pan-hint{position:absolute;left:50%;bottom:7px;z-index:20;display:block;width:max-content;max-width:calc(100% - 25px);margin:0;padding:5px 10px;border:1px solid #b2ccce55;border-radius:15px;background:#0c3349b8;color:#d8ece8;font:600 10px/1.3 Inter,system-ui,sans-serif;text-align:center;transform:translateX(-50%);pointer-events:none}
 body.portrait-world #viewport:focus-visible{outline:2px solid #efd49a;outline-offset:-2px}
 
-.building-dock-cards{top:820px;height:121px;padding:6px 6px 8px}.building-dock-card{padding-top:15px;padding-bottom:5px;gap:1px}
+/* Larger v14 dock: fewer buildings per category, readable artwork and counters. */
+.dock-tabs{position:absolute;left:195px;top:708px;width:1190px;height:50px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;padding:7px 9px 5px;border:1px solid #b29259;border-bottom:0;border-radius:19px 19px 0 0;background:linear-gradient(150deg,#20485e,#0b293c);pointer-events:auto;z-index:15;box-shadow:0 -3px 15px #00172970}
+#semanticLayer .dock-tab{display:flex;align-items:center;justify-content:center;min-width:0;min-height:37px;padding:7px 12px;border:1px solid #648798;border-radius:9px;background:linear-gradient(#21485e,#133549);color:#c9dce2;font:700 16px/1.2 Inter,system-ui,sans-serif;cursor:pointer;touch-action:manipulation}
+#semanticLayer .dock-tab.is-selected{border-color:#e4bf76;background:linear-gradient(#46677a,#24485f);box-shadow:inset 0 -3px #e5c17c;color:#ffe3a6}
+#semanticLayer .dock-tab:focus-visible{outline:3px solid #fff1c7;outline-offset:2px}
+.building-dock-cards,.resource-dock-cards{left:195px;top:758px;width:1190px;height:183px;gap:10px;padding:9px 9px 10px;border-radius:0 0 12px 12px}
+.building-dock-card{padding:24px 6px 8px;gap:5px;font-size:15px;border-radius:11px}
+.building-dock-level{top:5px;right:6px;padding:3px 6px;font-size:12px}
+.building-dock-workers{font-size:14px;line-height:1.25}
+.building-dock-name{min-height:20px;line-height:1.25}
+.resource-dock-card{font-size:16px;gap:3px;padding-bottom:6px}
+.resource-dock-illustration{width:105px;height:75px}
+.resource-dock-staffing{font-size:15px}.resource-dock-trend{font-size:12px}
+.leisure-dock-cards .resource-dock-card{padding:6px;gap:5px}
+.leisure-dock-illustration{width:90px;height:58px;flex-basis:58px}
+.leisure-dock-cards .resource-dock-name{font-size:15px}.attraction-effect,.path-bonus{font-size:12px}.attraction-price,.path-price{font-size:14px}.path-progress{font-size:17px}
+body.portrait-world .dock-tabs{display:none!important}
+@media(max-width:900px),(max-height:500px){
+  .mobile-dock-tabs{grid-template-columns:minmax(0,1.35fr) minmax(0,1.1fr) repeat(3,minmax(0,1fr))}
+  .mobile-dock-tab{min-height:38px;padding:6px 2px;font-size:11px}
+  .mobile-dock-scroll>button{flex-basis:134px;min-height:150px}
+  .mobile-dock-scroll .building-dock-card{font-size:13px;padding-top:23px}
+  .mobile-dock-scroll .building-dock-picture{max-width:100%}
+  .mobile-dock-scroll .resource-dock-card{font-size:14px}
+  .mobile-dock-scroll .resource-dock-illustration{width:90px;height:67px}
+  .mobile-dock-scroll .leisure-dock-illustration{width:78px;height:51px;flex-basis:51px}
+  .mobile-dock-scroll .resource-dock-staffing{font-size:13px}
+}
