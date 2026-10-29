@@ -2,16 +2,18 @@
 
 Gra o rozwoju wyspy, pracy mieszkańców i odbudowie latarni. Repozytorium zawiera przeglądarkowy prototyp HTML/CSS/JavaScript z lokalnym zapisem, gospodarką offline i zaakceptowaną ilustracją wyspy. Nie wymaga instalowania zależności aplikacji ani kroku kompilacji.
 
-Bieżący zakres **frontend-v13 / Excel 9** obejmuje [58 decyzji i 19 wymagań frontendu](docs/decisions-v9.json). Implementacja i odbiór lokalny są zakończone: **388/388 testów modelu PASS**, zaliczone testy interfejsu, nowego gracza, formularzy i animacji. Wydanie opublikowano jako [8025f3d](https://github.com/ksobczak321-oss/gra/commit/8025f3d2a482d20ad419b95963a7f03135c7f2c1); [Pages 40012462614](https://github.com/ksobczak321-oss/gra/actions/runs/40012462614) zakończyło się sukcesem. Publiczne pliki gry i Excel mają zgodne sumy kontrolne; wszystkie trzy publiczne scenariusze przeglądarkowe zaliczone. Pełne dowody są w [dzienniku](docs/IMPLEMENTATION-LOG.md).
+Bieżący interfejs **frontend-v14** ma większy dolny pasek z kategoriami Administracja, Gospodarka, Zasoby, Dekoracje i Ścieżki oraz uproszczone zarządzanie pracownikami. Testy EN/PL na komputerze i telefonie przeszły, włącznie z przydzielaniem ludzi i niezależnym nowym zapisem. Kod wysłano jako [3a4b000](https://github.com/ksobczak321-oss/gra/commit/3a4b000); kontrolę publicznego wdrożenia blokuje proxy środowiska (HTTP 403).
+
+Mechaniki i **Excel 9** zachowują [58 decyzji i 19 wcześniejszych wymagań frontendu](docs/decisions-v9.json). Ich wydanie v13 zaliczyło **388/388 testów modelu** oraz publiczny odbiór. Ta zmiana dotyczy prezentacji i osobnego zapisu, bez zmian silnika gospodarki. Pełne dowody są w [dzienniku](docs/IMPLEMENTATION-LOG.md).
 
 ## Podgląd
 
-- [Wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v13).
-- [Oddzielny profil nowego gracza](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v13) — 12 osób, po 100 zasobów, bez testowego grantu; nie usuwa wcześniejszej wyspy.
+- [Wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v14).
+- [Nowy start z 29 października](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&slot=start-20261029&v=frontend-v14) — poziom 1, 12 osób, po 100 każdego zasobu, zero przydzielonych pracowników. Osobny zapis zachowuje wcześniejsze wyspy; kolejne otwarcie wznawia ten nowy profil.
 - [Logowanie/rejestracja](https://ksobczak321-oss.github.io/gra/harborlight-auth.html) — formularze, bez prawdziwej usługi kont i OAuth.
 - [Pobierz Excel 9](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT9-zasady.xlsx) — opublikowany i sprawdzony przez pobranie.
 
-Publiczna strona serwuje `frontend-v13`: 17 plików HTML/CSS/JS zwraca HTTP 200 i odpowiada lokalnym plikom. Pobrany Excel 9 ma 329612 bajtów oraz zgodny SHA-256; trzy zestawy testów kliknięć na Pages również zaliczone.
+Pełny publiczny odbiór v13 i pobranie Excela 9 zapisano w dzienniku. Testów publicznej strony nie udało się powtórzyć dla v14: proxy blokuje Pages i API GitHuba, mimo przyznanego dostępu sieciowego. Lokalny odbiór v14 jest zakończony; parametr wersji w linku sam nie potwierdza wdrożenia.
 
 ## Co obejmuje ta wersja
 
@@ -35,7 +37,7 @@ Otwórz `http://127.0.0.1:8002/harborlight-v1-layered.html`. Bezpośrednie `file
 
 ```sh
 node --test --test-concurrency=1 --test-isolation=none tests/*.test.mjs
-HARBORLIGHT_BASE_URL=http://127.0.0.1:8002 python3 tests/harborlight-frontend-v13-smoke.py
+python3 tests/harborlight-frontend-v14-smoke.py
 python3 scripts/build_workbook_v9.py --validate-only
 ```
 
