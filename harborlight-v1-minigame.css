@@ -95,3 +95,57 @@
   #island-dialog .minigame-side>[data-minigame-result-actions]>.action{min-height:36px;font-size:12px;padding:8px 10px;margin-top:0}
 }
 @media(prefers-reduced-motion:reduce){.marble-frame.is-scattering,.memory-board.is-shuffling .memory-card{animation:none}.memory-card{transition:none}}
+
+/* v17: the complete memory board fits its actual dialog budget. */
+.expedition-minigame[data-minigame-kind="triples"] .memory-viewport{max-height:none;overflow:visible;width:max-content;max-width:100%;margin-inline:auto;padding:4px}
+.expedition-minigame[data-minigame-kind="triples"] .memory-board{gap:var(--memory-gap,4px);margin:auto;max-width:100%;grid-template-columns:repeat(var(--memory-columns),var(--memory-tile,36px));width:max-content}
+.expedition-minigame[data-minigame-kind="triples"] .memory-card{min-height:0;min-width:0;padding:clamp(1px,calc(var(--memory-tile,36px)/12),6px);border-radius:clamp(3px,calc(var(--memory-tile,36px)/8),8px)}
+.expedition-minigame[data-minigame-kind="triples"] .memory-card-back{font-size:clamp(10px,calc(var(--memory-tile,36px)*.35),26px)}
+.expedition-minigame[data-minigame-kind="triples"] .memory-turn-status,
+.expedition-minigame[data-minigame-kind="triples"] .memory-shuffle-status{min-height:0;margin-block:3px;font-size:12px;line-height:1.25}
+.expedition-minigame[data-minigame-kind="triples"] .memory-shuffle-status:empty{display:none}
+.expedition-minigame[data-minigame-kind="triples"] .minigame-progress{margin:7px 0 3px;line-height:1.25}
+@media(max-width:520px){
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]){max-height:calc(100dvh - 16px)}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .dialog-header{padding-block:11px}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .dialog-body{padding:10px 12px 12px}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .minigame-panel{gap:7px}
+ .expedition-minigame[data-minigame-kind="triples"] .minigame-title{font-size:16px;margin-bottom:3px}
+ .expedition-minigame[data-minigame-kind="triples"] .minigame-help{font-size:11px;line-height:1.25;margin-bottom:6px}
+ .expedition-minigame[data-minigame-kind="triples"] .minigame-progress{font-size:12px;margin-top:5px}
+ .expedition-minigame[data-minigame-kind="triples"] .memory-turn-status,
+ .expedition-minigame[data-minigame-kind="triples"] .memory-shuffle-status{font-size:10px;margin-block:2px}
+}
+
+#island-dialog .minigame-side>.minigame-ad-slot{order:5}
+.minigame-ad-slot .action{margin-inline-start:0!important}
+@media(max-width:520px){
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .minigame-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .minigame-stats{grid-column:1/-1;grid-row:1}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) [data-minigame-reward-rules]{grid-column:1/-1;grid-row:2}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) [data-minigame-host]{grid-column:1/-1;grid-row:3}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) [data-minigame-controls-slot]:empty{display:none}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) [data-minigame-result-actions]{grid-column:1;grid-row:4}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .minigame-ad-slot{grid-column:2;grid-row:4}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .minigame-side .stat strong{font-size:14px;white-space:nowrap}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .minigame-side :is([data-minigame-result-actions],.minigame-ad-slot) .action{width:100%;min-height:40px;margin:0;padding:6px 8px;font-size:11px;line-height:1.25}
+ .expedition-minigame[data-minigame-kind="triples"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 4px}
+ .expedition-minigame[data-minigame-kind="triples"]>:is(.minigame-title,.minigame-help,.memory-viewport,.memory-shuffle-status,.minigame-message){grid-column:1/-1}
+ .expedition-minigame[data-minigame-kind="triples"] .minigame-progress{grid-column:1;font-size:10px;align-self:center}
+ .expedition-minigame[data-minigame-kind="triples"] .memory-turn-status{grid-column:2;font-size:10px;align-self:center}
+}
+
+@media(max-width:520px){
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]){max-height:calc(100dvh - 16px)}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]) .dialog-header{padding-block:11px}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]) .dialog-body{padding:10px 12px 12px}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]) .minigame-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]) .minigame-stats{grid-column:1/-1;grid-row:1}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]) [data-minigame-reward-rules]{grid-column:1/-1;grid-row:2}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]) [data-minigame-host]{grid-column:1/-1;grid-row:3}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]) [data-minigame-controls-slot]{grid-column:1/-1;grid-row:4}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]) [data-minigame-result-actions]{grid-column:1;grid-row:5}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]) .minigame-ad-slot{grid-column:2;grid-row:5}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]) .minigame-side .stat strong{font-size:14px;white-space:nowrap}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]) .minigame-side :is([data-minigame-result-actions],.minigame-ad-slot) .action{width:100%;min-height:40px;margin:0;padding:6px 8px;font-size:11px;line-height:1.25}
+}

@@ -1,5 +1,5 @@
-import { registerTranslations } from './harborlight-v1-i18n.js?v=frontend-v16';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v16';
+import { registerTranslations } from './harborlight-v1-i18n.js?v=frontend-v17';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v17';
 
 // Presentation copy for the current learning flow. Player-entered text never
 // passes through this catalogue.
@@ -26,7 +26,7 @@ const LESSON_COPY = {
   'market-rules': ['Poznaj wymiany na Targu', 'Otwórz Targ. Jest dostępny od drugiego poziomu Ratusza i wymienia towary z tej samej grupy z opłatą dziesięciu procent.'],
   'lighthouse-visits': ['Poznaj wizyty w latarni', 'Otwórz Latarnię. Odbudowa daje czasowe premie całej wyspie, a wizyty poprawiają szczęście po powrocie mieszkańców.'],
   'lighthouse-task': ['Podejmij jedno zadanie', 'Przeczytaj koszt i termin, a następnie potwierdź zadanie. Jednocześnie aktywne jest jedno zadanie, a darowizn nie można wycofać.'],
-  'expedition-rules': ['Spróbuj ekspedycji', 'Rozpocznij ekspedycję i spróbuj wylosowanej minigry. Możesz wypłacić wygraną albo zaryzykować całą niewypłaconą pulę serii.'],
+  'expedition-rules': ['Spróbuj ekspedycji', 'Rozpocznij ekspedycję i wybierz rodzaj minigry. Możesz wypłacić wygraną albo zaryzykować całą niewypłaconą pulę serii.'],
   'returning-workers': ['Bezpiecznie odwołaj pracownika', 'Zakończ ekspedycję, a następnie odwołaj jednego pracownika. Tragarz z ładunkiem najpierw kończy dostawę, potem przez pięć minut wraca do domu.'],
   'island-review': ['Zrób przegląd swojej wyspy', 'Wróć do menu wyspy i sprawdź żywność, pracę, magazyny, szczęście i plany budowy. Możesz już samodzielnie zarządzać wyspą.']
 };

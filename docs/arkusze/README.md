@@ -1,5 +1,7 @@
 # Arkusz zasad HARBORLIGHT
 
+**Archiwum v16:** Excel 10 zachowuje zasady wydania frontend-v16, w tym dawne losowanie minigier. Bieżące zmiany v17 opisują [wymagania pakietu](../FRONTEND-V17-REQUIREMENTS.md) i [reguły gospodarki](../ECONOMY-RULES.md); w tym pakiecie nie generujemy nowego arkusza. Poniższy raport walidacji dotyczy niezmienionego pliku v16.
+
 [Pobierz Excel 10 — HARBORLIGHT10-zasady.xlsx](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT10-zasady.xlsx)
 
 Jeżeli GitHub pokazuje stronę pliku, wybierz **Download raw file**. Plik otworzysz w Excelu lub LibreOffice Calc; można go też zaimportować do Arkuszy Google. Bieżące zasady opisują frontend-v16 wraz ze wszystkimi zmianami v15, a [manifest aktualizacji](../decisions-v10.json) oddziela decyzje użytkownika, jawne ustawienia projektu i przyszłe integracje.

@@ -1,7 +1,7 @@
 // Persistent learning, meaningful activity and future verified social hooks.
 // No DOM, network requests or account creation happen in this module.
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v16';
-import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v16';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v17';
+import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v17';
 
 export const ACTIVE_PLAY_SECONDS = 300;
 export const REFERRAL_WINDOW_SECONDS = 30 * DAY_SECONDS;
@@ -59,7 +59,7 @@ export const TUTORIAL_LESSONS = Object.freeze([
   lesson('market-rules', 20, 'Learn Market exchanges', 'Open the Market. It unlocks at Town Hall level 2 and exchanges goods within categories with a ten-percent fee.', 'observe', 'market', 'market', 'chapel-blessing'),
   lesson('lighthouse-visits', 21, 'Discover Lighthouse visits', 'Open the Lighthouse. Rebuilding grants temporary island bonuses; visits raise happiness after residents return.', 'observe', 'lighthouse', 'lighthouse', 'market-rules'),
   lesson('lighthouse-task', 22, 'Accept one task', 'Confirm one task after reading its cost and deadline. Only one can be active and donations cannot be withdrawn.', 'action', 'task-accept', 'tasks', 'lighthouse-visits'),
-  lesson('expedition-rules', 23, 'Try an expedition', 'Start an expedition and try the randomly assigned minigame. Cash out your winnings or risk the whole unclaimed series pot.', 'action', 'expedition-play', 'expeditions', 'lighthouse-task'),
+  lesson('expedition-rules', 23, 'Try an expedition', 'Start an expedition and choose a minigame. Cash out your winnings or risk the whole unclaimed series pot.', 'action', 'expedition-play', 'expeditions', 'lighthouse-task'),
   lesson('returning-workers', 24, 'Release a worker safely', 'Finish or leave your expedition, then release one worker. A loaded carrier finishes the delivery before the five-minute walk Home.', 'action', 'release-worker', 'workers', 'expedition-rules'),
   lesson('island-review', 25, 'Review your island', 'Return to the island menu and review food, jobs, stores, happiness and building plans. You are ready to manage the island.', 'observe', 'overview', 'home', 'returning-workers')
 ]);

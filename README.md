@@ -2,27 +2,29 @@
 
 Gra o rozwoju wyspy, pracy mieszkańców i odbudowie latarni. Repozytorium zawiera przeglądarkowy prototyp HTML/CSS/JavaScript z lokalnym zapisem, gospodarką offline i zaakceptowaną ilustracją wyspy. Nie wymaga instalowania zależności aplikacji ani kroku kompilacji.
 
-Bieżący pakiet **frontend-v16** prowadzi przez 25 lekcji samouczka: od zasad i mapy po pracę, wyżywienie, rozbudowę oraz szczęście. Samouczek wraca przy wejściu do ukończenia albo rezygnacji; każdy sukces daje fanfarę i utrwaloną skrzynię po 100–300 każdego z pięciu materiałów, z jednorazowym Share ×2. Zasady lojalności pozostają bez zmian, a jej kwoty nadal nie są ustalone.
+Bieżący pakiet **frontend-v17** obejmuje [9 poprawek po przeglądzie gry](docs/FRONTEND-V17-REQUIREMENTS.md): wyrównanie kart budynków, całą planszę trójek bez przewijania, wybór minigry, czytelne odwołanie tragarzy, oznaczenie kar produkcyjnych i poprawki menu. W minigrach jest miejsce na reklamę nagradzaną; jej efekt i integracja pozostają do ustalenia, więc przycisk nie przyznaje czasu ani monet.
 
-Ekspedycje losują labirynt z kulkami albo dopasowywanie trójek. Nowe rundy mają twardy limit czasu i stopniowo malejącą nagrodę; wygrana powiększa ryzykowaną pulę. Gra zachowuje wszystkie [17 zmian v15](docs/FRONTEND-V15-REQUIREMENTS.md), w tym własną nazwę wyspy, czytelne karty i podwojoną bazową produkcję oraz ładunek. Bieżące reguły i [Excel 10](docs/arkusze/HARBORLIGHT10-zasady.xlsx) uwzględniają oba pakiety; starsze arkusze pozostają historią.
+Gracz wybiera **labirynt z kulkami albo dopasowywanie trójek** przy rozpoczęciu oraz może zmienić rodzaj przed kolejną rundą. Wybrany rodzaj jest zachowany po wczytaniu i stanowi domyślny wybór kontynuacji. Zegary, ryzyko całej niewypłaconej puli i wcześniejsze zasady nagród pozostają takie jak w v16.
+
+Zachowane są 25 lekcji samouczka, skrzynie po 100–300 każdego z pięciu materiałów i jednorazowe Share ×2 oraz [zmiany gospodarki v15](docs/FRONTEND-V15-REQUIREMENTS.md). Bieżące reguły opisuje [gospodarka](docs/ECONOMY-RULES.md) wraz z wymaganiami v17. **Excel 10 pozostaje niezmienionym archiwum v16**: opisuje dawne losowanie minigry i nie jest aktualnym opisem wyboru gry ani poprawek interfejsu v17.
 
 ## Podgląd
 
-- [Wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v16).
-- [Profil nowego gracza z 29 października](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&slot=start-20261029-v16&v=frontend-v16) — przy pierwszym otwarciu poziom 1, 12 osób, po 100 każdego zasobu, zero przydzielonych pracowników. Osobny zapis zachowuje wcześniejsze wyspy; kolejne otwarcie wznawia jego postęp.
+- [Wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v17).
+- [Profil nowego gracza z 29 października](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&slot=start-20261029-v16&v=frontend-v17) — przy pierwszym otwarciu poziom 1, 12 osób, po 100 każdego zasobu, zero przydzielonych pracowników. Osobny zapis zachowuje wcześniejsze wyspy; kolejne otwarcie wznawia jego postęp.
 - [Logowanie/rejestracja](https://ksobczak321-oss.github.io/gra/harborlight-auth.html) — formularze, bez prawdziwej usługi kont i OAuth.
-- [Pobierz Excel 10](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT10-zasady.xlsx) — aktualne zasady, 25 lekcji i kalkulator; publiczne pobranie potwierdzone identyczną sumą kontrolną. Pliki 7–9 pozostają niezmienione.
+- [Pobierz Excel 10](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT10-zasady.xlsx) — archiwum zasad v16, 25 lekcji i kalkulator; jego wcześniejsze publiczne pobranie potwierdzono identyczną sumą kontrolną. Pliki 7–10 pozostają niezmienione.
 
-Pełny publiczny odbiór v13 i pobranie Excela 9 zapisano w dzienniku. W tym środowisku proxy nadal blokuje Pages i API GitHuba błędem 403; publicznego odbioru v16 nie można utożsamiać z testami lokalnymi. Parametr wersji w linku sam nie potwierdza wdrożenia.
+Dziennik rozdziela testy lokalne, wysłanie kodu i publiczny odbiór konkretnego wydania. Wyniki dawnych wersji i parametr wersji w linku nie potwierdzają publikacji v17.
 
 ## Co obejmuje ta wersja
 
 - Wspólny polski dzień o północy i rzeczywiste czasy efektów, indywidualne H, jedzenie, praca, transport, fizyczne rezerwacje, budowa i gospodarka offline.
-- Zadania z potwierdzeniem, darowiznami i trwałym Share/Skip; ekspedycje z pulą +50, potrąceniami za spóźnienie i jedną serią blokującą wyspę.
-- Brak lewego paska, 12 kart budynków w Administracji i Gospodarce, jednakowe miniatury, podpisane obsady, pięć zasobów z przewozami, EN/PL i filtry powiadomień. Szczegóły budynków mają zwięzły widok główny oraz osobny widok dodatkowy z powrotem.
+- Zadania z potwierdzeniem, darowiznami i trwałym Share/Skip; wybrane przez gracza minigry z nagrodą do 50 monet, potrąceniami według czasu i jedną serią blokującą wyspę.
+- Brak lewego paska, 12 kart budynków w Administracji i Gospodarce, jednakowe miniatury, podpisane obsady, pięć zasobów z przewozami, EN/PL i filtry powiadomień. Szczegóły budynków mają zwięzły widok główny z wyrównanymi kolumnami oraz osobny widok dodatkowy z powrotem. Aktywna kara za przestój ma smutną ikonę nad budynkiem.
 - Bazowa produkcja 20/24/26/28… na osobę i godzinę oraz 120 sztuk na pięciominutowy kurs na poziomie 1. Wymagania zadań zachowują wcześniejszą normę; podatki i zapotrzebowanie mieszkańców na żywność nie są podwajane przez zmianę bazy.
-- 25 kolejnych lekcji bez czekania na następne dni, skrzynie po 100–300 każdego materiału, Share ×2 i premia aktywnej gry. Kulki mają sterowanie kursorem, klawiaturą, dotykiem lub ruchem telefonu; trójki rosną od 24 do 120 pól i później przesuwają zakryte obrazki.
-- Excel 10 ma cztery widoczne zakładki, krótkie opisy mechanik i bieżący kalkulator. Całe źródło 9 oraz wszystkie 48 komentarzy pozostaje ukrytym archiwum; pliki 7, 8 i 9 zachowują identyczne bajty.
+- 25 kolejnych lekcji bez czekania na następne dni, skrzynie po 100–300 każdego materiału, Share ×2 i premia aktywnej gry. Kulki mają sterowanie kursorem, klawiaturą, dotykiem lub ruchem telefonu; trójki rosną od 24 do 120 pól, dopasowują całą planszę do okna bez suwaków i później przesuwają zakryte obrazki.
+- Archiwalny Excel 10 ma cztery widoczne zakładki, krótkie opisy mechanik i kalkulator wydania v16. Całe źródło 9 oraz wszystkie 48 komentarzy pozostaje ukrytym archiwum; pliki 7, 8 i 9 zachowują identyczne bajty.
 
 Zewnętrzne konta, synchronizacja web/Android/iPhone, płatności, reklamy i potwierdzanie publikacji/poleceń wymagają backendu. W tej iteracji są lokalne reguły i czyste punkty przyszłej integracji, bez deklarowania rzeczywistych połączeń.
 
@@ -38,16 +40,16 @@ Otwórz `http://127.0.0.1:8002/harborlight-v1-layered.html`. Bezpośrednie `file
 
 ```sh
 node --test --test-concurrency=1 --test-isolation=none tests/*.test.mjs
-python3 tests/harborlight-frontend-v16-smoke.py
-python3 scripts/build_workbook_v10.py --validate-only
+python3 tests/harborlight-frontend-v17-smoke.py
 ```
 
-Odbiór lokalny v16: **476/476 testów modelu PASS**, bez błędów i pominięć. Nowy Chromium zaliczył siedem grup wymagań; regresje v15 (36 widoków budynków), auth i new-player również PASS, bez błędów JavaScript/HTTP. Excel 10: 3866 przeliczonych formuł i 323 kontrole TRUE, zachowane źródła 7–9 oraz wszystkie 48 komentarzy. Szczegóły i ograniczenie publicznego odbioru opisuje [dziennik](docs/IMPLEMENTATION-LOG.md).
+Odbiór lokalny v17: **486/486 testów modelu PASS**, bez błędów i pominięć. Nowy Chromium zaliczył pięć grup wymagań oraz dodatkową regresję historii wyjścia; siedem grup v16 również PASS, bez błędów JavaScript/HTTP. Sprawdzono natychmiastową geometrię 24/42/120 kart, zmianę rozmiaru, cztery rozdzielczości, oba języki i pełny powrót tragarza. Stan publikacji zawiera [dziennik](docs/IMPLEMENTATION-LOG.md); niezmieniony Excel 10 zachowuje historyczny odbiór v16.
 
 Zestawy przeglądarkowe wymagają Python Playwright i Chromium; ścieżkę można ustawić przez `HARBORLIGHT_CHROMIUM`. Dziennik rozdziela bieżący odbiór lokalny od wcześniejszych testów rzeczywistego adresu Pages. Workflow `.github/workflows/pages.yml` publikuje `main` bez kompilacji.
 
 ## Dokumentacja
 
+- [Pakiet 9 wymagań v17](docs/FRONTEND-V17-REQUIREMENTS.md)
 - [Jak działa gospodarka](docs/ECONOMY-RULES.md)
 - [Tabela 12 budynków i mieszkaniec](docs/BUILDINGS.md)
 - [Sterowanie, język i zapis](docs/INTERACTIVE-ISLAND.md)

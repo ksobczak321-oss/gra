@@ -1,18 +1,41 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v16';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v16';
-import * as State from './harborlight-v1-state.js?v=frontend-v16';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v16';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v16';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v16';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v16';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v16';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v16';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v16';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v16';
-import { profileContext, islandDisplayName, applyIslandNamePreference, authHref } from './harborlight-v1-profile.js?v=frontend-v16';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v16';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v16';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v16';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v17';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v17';
+import * as State from './harborlight-v1-state.js?v=frontend-v17';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v17';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v17';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v17';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v17';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v17';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v17';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v17';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v17';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v17';
+import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v17';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v17';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v17';
+
+I18n.registerTranslations({
+  "Choose a minigame": "Wybierz minigrę",
+  "Play this game": "Zagraj",
+  "Next game": "Następna gra",
+  "Watch ad": "Obejrzyj reklamę",
+  "Rewarded ad": "Reklama z nagrodą",
+  "Rewarded ads are coming soon": "Reklamy z nagrodami są w przygotowaniu",
+  "Rewarded ads are coming soon.": "Reklamy z nagrodami są w przygotowaniu.",
+  "An ad will be able to add time or increase the reward. The rules will be defined later.": "Reklama będzie mogła wydłużyć czas gry lub zwiększyć nagrodę. Szczegółowe zasady ustalimy później.",
+  "Return to game": "Wróć do gry",
+  "Choose Marble maze or Picture triples.": "Wybierz kulki w labiryncie albo dopasowywanie trójek.",
+  "Choose Marble maze or Picture triples. Win up to 50 coins, cash out, or risk the whole unclaimed pot on the next round. The deadline ends the attempt and clears that pot.": "Wybierz kulki w labiryncie albo dopasowywanie trójek. Wygraj do 50 monet, wypłać je albo postaw całą niewypłaconą pulę na kolejny etap. Upływ czasu kończy próbę i zeruje tę pulę.",
+  "Production blockage penalty": "Kara za przestój produkcji",
+  "Warehouse workers recalled": "Wycofanie tragarzy z Magazynu",
+  "Carriers with a load finish their current delivery, then take five minutes to walk Home. They will not start another trip.": "Tragarze z ładunkiem dokończą rozpoczętą dostawę, a potem przez pięć minut wrócą do Domu. Nie rozpoczną kolejnego kursu.",
+  "Warehouse crew": "Obsada Magazynu",
+  "Finishing deliveries": "Kończą dostawę",
+  "Walking Home": "Wracają do Domu",
+  "Back at Home": "Już w Domu",
+  "Reducing the Warehouse crew recalculates the estimated delivery time for construction.": "Zmniejszenie obsady Magazynu powoduje przeliczenie przewidywanego czasu dostaw do budowy.",
+  "Understood": "Rozumiem"
+});
 
 I18n.registerTranslations({
   "Time left": "Pozostały czas",
@@ -136,6 +159,8 @@ function perform(action) {
   const focusWorkerDelta = focused?.dataset.workerDelta;
   const previousRoad = Leisure.roadSummary?.(state)?.level || 0;
   const previousAchievements = new Set((state.taskAchievements || []).map(item => item.id));
+  const warehouseCrewBefore = action.type === 'assign' && action.building === 'warehouse' && action.delta < 0 ? state.residents.filter(person => person.workplace === 'warehouse' && !person.pendingRelease).map(person => person.id) : [];
+  if (['expeditionStart', 'expeditionContinue'].includes(action.type)) { miniController?.dispose(); miniController = null; }
   const result = act(state, action);
   panelNotice = omitTaxInformation(result.message);
   if (result.ok) { if (action.type === 'setting' && action.key === 'language') { try { localStorage.setItem('harborlight-language', state.settings.language); } catch {} } save(); renderHUD(); }
@@ -148,6 +173,7 @@ function perform(action) {
   if (result.ok) {
     const achievement = (state.taskAchievements || []).find(item => !previousAchievements.has(item.id));
     if (achievement) showTaskCelebration(achievement);
+    if (warehouseCrewBefore.length) showWarehouseRecall(warehouseCrewBefore);
     if (action.type === 'upgradeRoad') showRoadSuccess((Leisure.roadSummary?.(state)?.level || 0) > previousRoad);
   }
   return result.ok;
@@ -175,7 +201,6 @@ for (const [id, label, region] of [
 ]) hotspot(`resource-${id}`, label, region, () => openPanel('resources', id));
 hotspot('population', 'Residents and worker assignments', [925, 8, 130, 49], () => openPanel('residents'));
 hotspot('clock', 'Island day and time', [1363, 7, 131, 49], () => openPanel('time'));
-hotspot('account', 'Sign in or create an account', [0, 0, 0, 0], () => { location.href = authHref(location.search); });
 hotspot('menu', 'Game menu', [1623, 7, 43, 50], () => openPanel('menu'));
 hotspot('objective-title', 'Main objective — develop your island', [1405, 76, 260, 65], () => openPanel('objective'));
 hotspot('objective-repair', 'Build the lighthouse', [1412, 143, 245, 31], () => openPanel('building', 'lighthouse'));
@@ -357,7 +382,7 @@ hud.housing = el('small', { class: 'topbar-housing', 'data-hud': 'housing' }, '�
 document.querySelector('.topbar-population .topbar-copy').append(hud.housing);
 hud.clock = el('strong', { 'data-hud': 'clock' }, '—');
 toolbarButton('clock', 'Island day and time', 'topbar-clock', hud.clock);
-for (const [id, icon, label] of [['tutorial', '?', 'Tutorial'], ['account', '♙', 'Sign in or create an account'], ['settings', '⚙︎', 'Settings'], ['menu', '☰', 'Game menu']]) {
+for (const [id, icon, label] of [['tutorial', '?', 'Tutorial'], ['settings', '⚙︎', 'Settings'], ['menu', '☰', 'Game menu']]) {
   const control = toolbarButton(id, label, 'topbar-control', el('span', { 'aria-hidden': 'true' }, icon));
 
 }
@@ -433,6 +458,7 @@ function renderHUD() {
   mobileHudValues.happiness.dataset.sentiment = document.getElementById('hit-happiness').dataset.sentiment;
   hud.clock.textContent = `Day ${state.day}\n${String(Math.floor(state.minutes / 60)).padStart(2, '0')}:${String(Math.floor(state.minutes % 60)).padStart(2, '0')}`;
 
+  const productionPenalties = new Set((Effects.activeEffects?.(state) || []).filter(effect => effect.id.startsWith('production-blockage-')).map(effect => effect.id.slice('production-blockage-'.length)));
   for (const [id, value] of Object.entries(state.buildings)) {
     const node = document.getElementById(`hit-world-${id}`);
     if (!node) continue;
@@ -448,6 +474,10 @@ function renderHUD() {
       if (!constructionBadge) { constructionBadge = el('span', { class: 'construction-badge' }); node.append(constructionBadge); }
       refreshConstructionBadge(constructionBadge, id, worldProject);
     } else constructionBadge?.remove();
+    let sadFace = node.querySelector('[data-production-penalty]');
+    if (productionPenalties.has(id)) {
+      if (!sadFace) { sadFace = el('span', { class: 'world-production-penalty', 'data-production-penalty': id, 'data-world-penalty': id, role: 'img', 'aria-label': 'Production blockage penalty', title: 'Production blockage penalty' }, '☹'); node.append(sadFace); }
+    } else sadFace?.remove();
     node.setAttribute('aria-label', `${titleOf(id)}, level ${value.level}${worldProject ? ', upgrade in progress' : value.ready ? ', goods awaiting pickup' : ''}`);
   }
   document.body.classList.toggle('reduce-motion', !state.settings.motion);
@@ -460,6 +490,7 @@ function renderHUD() {
   renderWorldAdditions();
   stage.dispatchEvent(new Event('island-statechange'));
   refreshTaskAcceptance();
+  refreshWarehouseRecall();
   refreshExpeditionPresence();
   refreshMiniGame();
   refreshTutorialExperience();
@@ -610,7 +641,7 @@ function refreshLivePanel() {
     node.dataset.value = state.resources[id]; node.dataset.limit = limits.perResource;
   });
   dialog.querySelectorAll('[data-pending-resource]').forEach(node => { node.textContent = count(state.pendingDeliveries?.[node.dataset.pendingResource] || 0); });
-  dialog.querySelectorAll('[data-worker-count]').forEach(node => { node.textContent = state.buildings[node.dataset.workerCount].workers; });
+  dialog.querySelectorAll('[data-worker-count]').forEach(node => { node.textContent = workerCountText(node.dataset.workerCount); });
   dialog.querySelectorAll('[data-worker-free]').forEach(node => { node.textContent = freeWorkers(state); });
   dialog.querySelectorAll('[data-building-status]').forEach(node => updateBuildingStatus(node, node.dataset.buildingStatus));
   dialog.querySelectorAll('[data-upgrade-estimate]').forEach(node => refreshUpgradeEstimate(node, node.dataset.upgradeEstimate));
@@ -632,7 +663,7 @@ function refreshLivePanel() {
   refreshResidentRosters();
   dialog.querySelectorAll('[data-worker-building]').forEach(node => {
     const id = node.dataset.workerBuilding, building = state.buildings[id];
-    node.disabled = node.dataset.workerAction === 'clear' || Number(node.dataset.workerDelta) < 0 ? building.workers === 0 : freeWorkers(state) <= 0 || building.workers >= workerLimit(state, id);
+    node.disabled = node.dataset.workerAction === 'clear' || Number(node.dataset.workerDelta) < 0 ? releasableWorkers(id) === 0 : freeWorkers(state) <= 0 || building.workers >= workerLimit(state, id);
   });
 }
 
@@ -642,7 +673,11 @@ function openPanel(kind, id) {
   if (expeditionSession() && !['puzzle', 'expeditions'].includes(kind) && dialog.open) { requestExpeditionExit(() => openPanel(kind, id)); return; }
   if (placement) cancelPlacement();
   if (!dialog.open) { previousFocus = document.activeElement; panelHistory.length = 0; }
-  else if (!restoringPanel && panel && (panel.kind !== kind || panel.id !== id)) panelHistory.push({ ...panel, scroll: dialog.scrollTop || 0, bodyScroll: dialog.querySelector('.dialog-body')?.scrollTop || 0 });
+  else if (!restoringPanel && panel?.kind === 'puzzle') {
+    const previous = panelHistory.at(-1);
+    if (previous?.kind === kind && previous.id === id) panelHistory.pop();
+  }
+  else if (!restoringPanel && panel && panel.kind !== 'puzzle' && (panel.kind !== kind || panel.id !== id)) panelHistory.push({ ...panel, scroll: dialog.scrollTop || 0, bodyScroll: dialog.querySelector('.dialog-body')?.scrollTop || 0 });
   panel = { kind, id };
   if (!['tutorial', 'puzzle', 'expeditions'].includes(kind)) {
     act(state, { type: 'tutorialVisit', subject: ['building', 'building-details'].includes(kind) ? id : kind === 'menu' ? 'home' : kind });
@@ -915,20 +950,25 @@ function buildingStatusBanner(id) {
   updateBuildingStatus(node, id);
   return node;
 }
+function releasableWorkers(id) { return state.residents.filter(person => person.workplace === id && !person.pendingRelease).length; }
+function workerCountText(id) {
+  const pending = state.residents.filter(person => person.workplace === id && person.pendingRelease).length;
+  return `${count(state.buildings[id].workers)}${pending ? ` (−${count(pending)})` : ''}`;
+}
 function workerStat(id, readonly = false) {
   const building = state.buildings[id];
   return el('div', { class: 'stat producer-workers' }, el('small', {}, 'Workers'),
     el('div', { class: 'producer-workers-row' },
       el('div', { class: 'labelled-values worker-values', 'aria-label': 'Assigned workers / free residents at Home / building worker limit' },
-        labelledValue(building.workers, 'Assigned', { 'data-worker-count': id }),
+        labelledValue(workerCountText(id), 'Assigned', { 'data-worker-count': id }),
         labelledValue(freeWorkers(state), 'Free at home', { 'data-worker-free': id }),
         labelledValue(workerLimit(state, id), 'Max workers', { 'data-worker-limit': id })),
       readonly ? null : el('div', { class: 'producer-worker-controls' },
-        button('−', () => perform({ type: 'assign', building: id, delta: -1 }), { class: 'producer-worker-button', disabled: !building.workers, 'data-worker-building': id, 'data-worker-delta': -1, 'aria-label': `Release worker: ${titleOf(id)}` }),
+        button('−', () => perform({ type: 'assign', building: id, delta: -1 }), { class: 'producer-worker-button', disabled: releasableWorkers(id) === 0, 'data-worker-building': id, 'data-worker-delta': -1, 'aria-label': `Release worker: ${titleOf(id)}` }),
         button('+', () => perform({ type: 'assign', building: id, delta: 1 }), { class: 'producer-worker-button', disabled: freeWorkers(state) <= 0 || building.workers >= workerLimit(state, id), 'data-worker-building': id, 'data-worker-delta': 1, 'aria-label': `Assign worker: ${titleOf(id)}` }))));
 }
 function labelledValue(value, label, attrs = {}) {
-  return el('span', { class: 'labelled-value' }, el('strong', attrs, count(value)), el('small', {}, label));
+  return el('span', { class: 'labelled-value' }, el('strong', attrs, typeof value === 'string' ? value : count(value)), el('small', {}, label));
 }
 function localStockValues(id) {
   const building = state.buildings[id];
@@ -1258,7 +1298,7 @@ function workplaceCard(id, bulk = false) {
     el('p', { 'data-full-penalty': id, class: 'full-storage-status' }, fullPenaltyDescription(id)));
   if (bulk) content.append(el('div', { class: 'workforce-actions workforce-bulk-actions' },
     button('Assign to limit', () => adjustWorkforce(id, 'max'), { class: 'action secondary', disabled: freeWorkers(state) <= 0 || building.workers >= workerLimit(state, id), 'data-worker-building': id, 'data-worker-action': 'max', 'aria-label': `Assign to limit: ${titleOf(id)}` }),
-    button('Release all', () => adjustWorkforce(id, 'clear'), { class: 'action secondary', disabled: !building.workers, 'data-worker-building': id, 'data-worker-action': 'clear', 'aria-label': `Release all: ${titleOf(id)}` })));
+    button('Release all', () => adjustWorkforce(id, 'clear'), { class: 'action secondary', disabled: releasableWorkers(id) === 0, 'data-worker-building': id, 'data-worker-action': 'clear', 'aria-label': `Release all: ${titleOf(id)}` })));
   content.dataset.workplace = id;
   if (bulk) content.classList.add('workers-workplace');
   return content;
@@ -1266,7 +1306,7 @@ function workplaceCard(id, bulk = false) {
 function adjustWorkforce(id, action) {
   settleActiveTick();
   const building = state.buildings[id];
-  const delta = action === 'clear' ? -building.workers : Math.min(freeWorkers(state), workerLimit(state, id) - building.workers);
+  const delta = action === 'clear' ? -releasableWorkers(id) : Math.min(freeWorkers(state), workerLimit(state, id) - building.workers);
   if (delta) perform({ type: 'assign', building: id, delta });
 }
 function activeEffectsPanel() {
@@ -1590,7 +1630,7 @@ function renderActivityStack() {
     activityStack.replaceChildren(el('div', { class: 'activity-section-heading' }, el('h3', {}, 'Current tasks'), button('All', () => openPanel('tasks'), { class: 'activity-link', 'aria-label': 'Open all Lighthouse tasks' })),
       ...tasks.slice(0, 3).map(task => taskCard(task, true)),
       el('div', { class: 'activity-section-heading' }, el('h3', {}, 'Expeditions'), button('Explore', () => openPanel('expeditions'), { class: 'activity-link' })),
-      button('Draw a minigame', () => startExpedition(expeditionSession()?.expedition || EXPEDITIONS[0].id), { class: 'activity-expedition' }),
+      button('Choose a minigame', () => openPanel('expeditions'), { class: 'activity-expedition' }),
       button('Lighthouse', () => openPanel('building', 'lighthouse'), { class: 'activity-lighthouse' }));
   }
   activityStack.querySelectorAll('[data-task-countdown]').forEach(node => { const task = tasks.find(t => taskId(t) === node.dataset.taskCountdown); if (task) node.textContent = durationText(statusOfTask(task).remaining); });
@@ -1664,7 +1704,6 @@ function settingsPanel() {
     !effectiveAnimationsEnabled() ? note(state.settings.motion ? 'Animations are paused by your system’s reduced-motion preference. Enable the checkbox to turn on water, smoke and island movement.' : 'Animations are off. Enable the checkbox to turn on water, smoke and island movement.') : null,
     note('Your island continues in real time, including while you are away. Progress is saved in this browser.'),
     card(el('h3', {}, 'Ranking'), stat('Hourly score', count(ranking)), note('Town Hall level × coins, recorded on each full hour.')),
-    button('Sign in or create an account', () => { location.href = authHref(location.search); }),
     button('Premium options', () => openPanel('premium'), { class: 'action secondary' }),
     button('Resume tutorial', () => { if (perform({ type: 'resumeTutorial' })) openPanel('tutorial'); }, { class: 'action secondary', 'data-resume-tutorial': '' }),
     button('Save now', () => { settleActiveTick(); save(); toast('Progress saved.'); }, { class: 'action secondary' }),
@@ -1678,11 +1717,13 @@ function timePanel() {
 function expeditionRun(id) { return state.expeditionRuns?.[id] || null; }
 function expeditionsPanel() {
   const run = expeditionSession();
-  return el('div', {}, note('Each round randomly chooses a marble maze or picture triples. Win up to 50 coins, cash out, or risk the whole unclaimed pot on the next round. The deadline ends the attempt and clears that pot.'),
+  const choiceCard = (kind, title, description) => card(el('h3', {}, title), note(description),
+    !run ? button('Play this game', () => startExpedition(EXPEDITIONS[0].id, kind), { 'data-expedition-choice': kind }) : null);
+  return el('div', {}, note('Choose Marble maze or Picture triples. Win up to 50 coins, cash out, or risk the whole unclaimed pot on the next round. The deadline ends the attempt and clears that pot.'),
     el('div', { class: 'panel-grid' },
-      card(el('h3', {}, 'Marble maze'), note('Guide the marbles into their goals with the mouse or by tilting your phone. The first round lasts 3 minutes: 50 coins for the first 2 minutes, then 1 coin less every 15 seconds.')),
-      card(el('h3', {}, 'Picture triples'), note('Reveal three identical black-and-white pictures to clear them. Boards grow with difficulty; later, hidden pictures move. Time limits grow from 4 to at most 15 minutes.'))),
-    run?.status === 'decision' ? expeditionDecisionControls(run.expedition, run) : button(run ? 'Resume expedition' : 'Draw a minigame', () => startExpedition(run?.expedition || EXPEDITIONS[0].id), { 'data-expedition-start': '' }),
+      choiceCard('tilt', 'Marble maze', 'Guide the marbles into their goals with the mouse or by tilting your phone. The first round lasts 3 minutes: 50 coins for the first 2 minutes, then 1 coin less every 15 seconds.'),
+      choiceCard('triples', 'Picture triples', 'Reveal three identical black-and-white pictures to clear them. Boards grow with difficulty; later, hidden pictures move. Time limits grow from 4 to at most 15 minutes.')),
+    run?.status === 'decision' ? expeditionDecisionControls(run.expedition, run) : run ? button('Resume expedition', () => startExpedition(run.expedition), { 'data-expedition-resume': '' }) : null,
     run ? stat('Current pot', `${count(run.pot)} coins`) : null);
 }
 function miniGamePanel(run) {
@@ -1690,13 +1731,14 @@ function miniGamePanel(run) {
     el('div', { class: 'stat-grid minigame-stats' }, stat('Level', run.level), stat('Time left', el('span', { 'data-minigame-time': '' }, durationText(Activities.expeditionRoundStatus(state, run).remaining))), stat('Potential pot', el('span', { 'data-minigame-pot': '' }, `${count(Activities.expeditionRoundStatus(state, run).potentialPot)} coins`))),
     el('p', { class: 'notice', 'data-i18n-ignore': '', 'data-minigame-reward-rules': '' }, language() === 'pl' ? `Do ${durationText(run.roundLimit * 2 / 3)} wygrasz 50 monet. Później nagroda maleje o 1 monetę co ${durationText(run.roundLimit / 12)}. Po ${durationText(run.roundLimit)} cała niewypłacona pula przepada.` : `Win 50 coins within ${durationText(run.roundLimit * 2 / 3)}. Then the reward drops by 1 coin every ${durationText(run.roundLimit / 12)}. At ${durationText(run.roundLimit)} the whole unclaimed pot is lost.`),
     el('div', { 'data-minigame-controls-slot': '', 'data-i18n-ignore': '' }),
-    el('div', { 'data-minigame-result-actions': '' }, miniGameActions(run)));
+    el('div', { 'data-minigame-result-actions': '' }, miniGameActions(run)),
+    el('div', { class: 'minigame-ad-slot' }, button('Watch ad', () => openRewardedAd(run), { class: 'action secondary', 'data-minigame-ad': '', title: 'Rewarded ads are coming soon' })));
   return el('div', { class: 'minigame-panel' }, side, el('div', { 'data-minigame-host': '', 'data-i18n-ignore': '' }));
 }
 function miniGameActions(run) {
   return run.status === 'decision' ? expeditionDecisionControls(run.expedition, run) : run.status === 'active' ?
     button('Leave attempt — lose the pot', () => requestExpeditionExit(() => { puzzle = null; openPanel('expeditions'); }), { class: 'action danger' }) :
-    el('div', {}, note(run.lossReason === 'deadline' ? 'Time is up. The unclaimed pot was lost.' : 'The expedition ended. The unclaimed pot was lost.'), button('Try another minigame', () => startExpedition(run.expedition)), button('Return to island', () => closePanel(true), { class: 'action secondary' }));
+    el('div', {}, note(run.lossReason === 'deadline' ? 'Time is up. The unclaimed pot was lost.' : 'The expedition ended. The unclaimed pot was lost.'), button('Choose a minigame', () => openPanel('expeditions')), button('Return to island', () => closePanel(true), { class: 'action secondary' }));
 }
 function miniGameInput(action) {
   if (tutorialCelebration || document.querySelector('.island-flow-dialog[open]')) return;
@@ -1723,18 +1765,34 @@ function refreshMiniGame() {
   if (miniGameStatus !== run.status) { miniGameStatus = run.status; dialog.querySelector('[data-minigame-result-actions]')?.replaceChildren(miniGameActions(run)); }
 }
 function expeditionDecisionControls(id, run) {
+  const choice = run.miniGame ? el('select', { 'data-expedition-next-kind': '', 'aria-label': 'Next game' },
+    ...[['tilt', 'Marble maze'], ['triples', 'Picture triples']].map(([kind, label]) => el('option', { value: kind, selected: kind === (run.selectedGameKind || run.miniGame.kind) }, label))) : null;
   return el('div', { class: 'expedition-decision' },
     button(`Cash out ${count(run.pot)} coins`, () => { if (perform({ type: 'expeditionCashout', expedition: id, runId: run.id })) { puzzle = null; closePanel(true); } }, { 'data-expedition-cashout': id }),
+    choice ? el('label', { class: 'next-expedition-choice' }, el('span', {}, 'Next game'), choice) : null,
     button(`Risk ${count(run.pot)} for ${count(run.pot + 50)}`, () => {
-      if (perform({ type: 'expeditionContinue', expedition: id, runId: run.id })) beginPuzzle(id);
+      if (perform({ type: 'expeditionContinue', expedition: id, runId: run.id, ...(choice ? { gameKind: choice.value } : {}) })) beginPuzzle(id);
     }, { class: 'action secondary', 'data-expedition-continue': id }));
 }
-function startExpedition(id) {
+function startExpedition(id, gameKind) {
   const run = expeditionRun(id);
   if (run?.status === 'decision') { openPanel('expeditions'); return; }
-  if (run?.status !== 'active' && !perform({ type: 'expeditionStart', expedition: id })) return;
+  if (run?.status !== 'active') {
+    if (!['tilt', 'triples'].includes(gameKind)) { openPanel('expeditions'); return; }
+    if (!perform({ type: 'expeditionStart', expedition: id, gameKind })) return;
+  }
   if (puzzle?.id === id && !puzzle.complete && puzzle.runId === expeditionRun(id)?.id && puzzle.stage === expeditionRun(id)?.level) { openPanel('puzzle', id); return; }
   beginPuzzle(id);
+}
+function openRewardedAd(run) {
+  if (document.getElementById('rewarded-ad')?.open) return;
+  if (run.miniGame?.kind === 'tilt' && run.status === 'active') { act(state, { type: 'expeditionMiniGameInput', runId: run.id, tiltX: 0, tiltY: 0, meaningful: false }); save(); }
+  const popup = createFlowDialog('rewarded-ad', 'Rewarded ad', el('div', {}, note('Rewarded ads are coming soon.'), note('An ad will be able to add time or increase the reward. The rules will be defined later.')));
+  popup.dataset.rewardedAd = '';
+  const previous = document.activeElement;
+  const close = () => { popup.close(); popup.remove(); previous?.isConnected && previous.focus({ preventScroll: true }); };
+  popup.querySelector('.flow-body').append(button('Return to game', close, { 'data-close-rewarded-ad': '' }));
+  popup.addEventListener('cancel', event => { event.preventDefault(); close(); }); localize(popup); popup.showModal(); popup.querySelector('[data-close-rewarded-ad]').focus();
 }
 function beginPuzzle(id) {
   const expedition = EXPEDITIONS.find(item => item.id === id), run = expeditionRun(id);
@@ -1847,8 +1905,9 @@ function renderPanel() {
   const dialogScroll = dialog.scrollTop || 0;
   dialog.dataset.panelKind = panel.kind;
   if (panel.id) dialog.dataset.panelBuilding = panel.id; else delete dialog.dataset.panelBuilding;
-  dialog.replaceChildren(el('header', { class: `dialog-header${panelHistory.length ? ' has-panel-back' : ''}` },
-    panelHistory.length ? button('←', backPanel, { class: 'dialog-back', 'aria-label': 'Back to previous menu', 'data-panel-back': '' }) : null,
+  const showPanelBack = panelHistory.length > 0 && panel.kind !== 'puzzle';
+  dialog.replaceChildren(el('header', { class: `dialog-header${showPanelBack ? ' has-panel-back' : ''}` },
+    showPanelBack ? button('←', backPanel, { class: 'dialog-back', 'aria-label': 'Back to previous menu', 'data-panel-back': '' }) : null,
     el('div', {}, el('span', { class: 'eyebrow' }, 'HARBORLIGHT · ISLAND 01'), el('h2', { id: 'dialog-title', 'data-i18n-ignore': ['home', 'menu'].includes(panel.kind) && !!state.islandName }, title)), button('×', closePanel, { class: 'dialog-close', 'aria-label': 'Close window' })), el('div', { class: 'dialog-body' }, panelNotice ? el('p', { class: 'notice action-feedback', role: 'status' }, panelNotice) : null, body));
   if (rosterOpen) {
     const roster = dialog.querySelector('[data-resident-roster]');
@@ -2073,6 +2132,31 @@ function showRoadSuccess(levelComplete) {
 function createFlowDialog(id, title, description) {
   const popup = el('dialog', { id, class: 'island-flow-dialog', 'aria-labelledby': `${id}-title` }, el('header', {}, el('h2', { id: `${id}-title` }, title)), el('div', { class: 'flow-body' }, description));
   document.body.append(popup); return popup;
+}
+function showWarehouseRecall(beforeIds) {
+  const recalledIds = beforeIds.filter(id => { const person = state.residents.find(resident => resident.id === id); return person && (person.pendingRelease || person.workplace !== 'warehouse'); });
+  if (!recalledIds.length) return;
+  const old = document.getElementById('warehouse-recall'); if (old) { old.close(); old.remove(); }
+  const previous = document.activeElement;
+  const popup = createFlowDialog('warehouse-recall', 'Warehouse workers recalled', el('div', {},
+    note('Carriers with a load finish their current delivery, then take five minutes to walk Home. They will not start another trip.'),
+    el('div', { class: 'stat-grid warehouse-recall-stats' }, stat('Warehouse crew', el('span', { 'data-recall-crew': '' })), stat('Finishing deliveries', el('span', { 'data-recall-pending': '' })), stat('Walking Home', el('span', { 'data-recall-walking': '' })), stat('Back at Home', el('span', { 'data-recall-home': '' }))),
+    note('Reducing the Warehouse crew recalculates the estimated delivery time for construction.')));
+  popup.dataset.carrierRecallDialog = '';
+  popup._recalledIds = recalledIds;
+  const close = () => { popup.close(); popup.remove(); if (previous?.isConnected) previous.focus({ preventScroll: true }); };
+  popup.querySelector('.flow-body').append(button('Understood', close, { 'data-close-carrier-recall': '' }));
+  popup.addEventListener('cancel', event => { event.preventDefault(); close(); });
+  refreshWarehouseRecall(); localize(popup); popup.showModal(); popup.querySelector('[data-close-carrier-recall]').focus();
+}
+function refreshWarehouseRecall() {
+  const popup = document.getElementById('warehouse-recall');
+  if (!popup) return;
+  const people = popup._recalledIds.map(id => state.residents.find(person => person.id === id)).filter(Boolean);
+  popup.querySelector('[data-recall-crew]').textContent = workerCountText('warehouse');
+  popup.querySelector('[data-recall-pending]').textContent = count(people.filter(person => person.pendingRelease).length);
+  popup.querySelector('[data-recall-walking]').textContent = count(people.filter(person => person.returnRemaining > 0).length);
+  popup.querySelector('[data-recall-home]').textContent = count(people.filter(person => !person.workplace && !person.returnRemaining && !person.pendingRelease).length);
 }
 function confirmChoice(title, description, confirmLabel, action) {
   if (confirmationDialog?.open) return;

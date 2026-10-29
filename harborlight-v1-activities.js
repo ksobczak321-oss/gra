@@ -4,11 +4,11 @@
 import {
   MATERIAL_IDS, stockRoom, receiveMaterials, notify,
   quoteInstantTransport, instantTransport, estimateMaterialsSeconds, availableGoods, haulCapacity
-} from './harborlight-v1-logistics.js?v=frontend-v16';
+} from './harborlight-v1-logistics.js?v=frontend-v17';
 import { secondsUntilWarsawMidnight } from './harborlight-v1-calendar.js';
 import { MINI_GAME_RULES, miniGameRoundRules, createMiniGame, normalizeMiniGame,
-  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v16';
-export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v16';
+  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v17';
+export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v17';
 
 const HOUR = 3600;
 const QUEST_LIFE = 6 * HOUR;
@@ -314,6 +314,7 @@ export function normalizeActivities(state, raw = {}) {
     if (rulesVersion === 16) {
       const restored = state.expeditionRuns[id];
       restored.rulesVersion = 16; restored.miniGame = miniGame;
+      restored.selectedGameKind = isMiniGameKind(item.selectedGameKind) ? item.selectedGameKind : miniGame?.kind || null;
       if (!miniGame && ['active', 'decision'].includes(restored.status)) {
         restored.status = 'lost'; restored.pot = 0; restored.lossReason = 'invalid-minigame'; restored.finishedAt = state.activityClock;
       }
@@ -647,11 +648,16 @@ export function expeditionPot(levelNumber) {
 function ownCoins(state, price) {
   return Number.isSafeInteger(price) && price >= 0 && integer(state.resources.coins) >= price;
 }
-function prepareMiniGameRound(state, run, stage, context) {
-  const kind = random(state) < 0.5 ? 'tilt' : 'triples';
+const isMiniGameKind = kind => kind === 'tilt' || kind === 'triples';
+function prepareMiniGameRound(state, run, stage, context, requestedKind) {
+  // New UI supplies a choice. Retain it across rounds and reloads; keep a
+  // random first choice only for callers of the pre-choice API.
+  const kind = isMiniGameKind(requestedKind) ? requestedKind :
+    isMiniGameKind(run.selectedGameKind) ? run.selectedGameKind : random(state) < 0.5 ? 'tilt' : 'triples';
   const seed = Math.floor(random(state) * 0x100000000) || 1;
   const rules = miniGameRoundRules(kind, stage, context.expeditionCurve || state.activitySettings?.expeditionCurve);
   run.rulesVersion = 16;
+  run.selectedGameKind = kind;
   run.miniGame = createMiniGame(kind, stage, seed, currentClock(state));
   run.roundLimit = rules.timeLimit; run.remaining = rules.timeLimit;
   return rules;
@@ -795,6 +801,7 @@ export function activityAction(state, action, context = {}) {
   }
   if (type === 'socialReward' || type === 'referralReward') return bad('Social and referral rewards will be available after their verification rules are defined.');
   if (type === 'expeditionStart') {
+    if (action.gameKind !== undefined && !isMiniGameKind(action.gameKind)) return bad('Choose Marble maze or Picture triples.');
     const definition = definitionOf(context, action.expedition);
     if (!definition) return bad('This expedition does not exist.');
     if (activeExpeditionRun(state)) return bad('Finish or cash out the current expedition series before starting another.');
@@ -806,7 +813,7 @@ export function activityAction(state, action, context = {}) {
       startedAt: currentClock(state), roundStartedAt: currentClock(state), roundLimit: limit, roundBasePot: 50,
       presencePromptAt: null, finishedAt: null, lossReason: null
     };
-    const currentRules = action.gameVersion === 9 ? rules : prepareMiniGameRound(state, run, 1, context);
+    const currentRules = action.gameVersion === 9 ? rules : prepareMiniGameRound(state, run, 1, context, action.gameKind);
     state.expeditionRuns[action.expedition] = run;
     state.activeExpeditionId = action.expedition;
     state.lastMeaningfulActivityAt = currentClock(state);
@@ -834,6 +841,7 @@ export function activityAction(state, action, context = {}) {
       return good('Presence confirmed. The expedition clock has continued while this prompt was open.');
     }
     if (type === 'expeditionContinue') {
+      if (action.gameKind !== undefined && !isMiniGameKind(action.gameKind)) return bad('Choose Marble maze or Picture triples.');
       if (run.status !== 'decision') return bad('Complete the current level before continuing.');
       if (run.presencePromptAt !== null) return bad('Confirm your presence before starting the next round.');
       if (!Number.isSafeInteger(run.pot + 50) || !Number.isSafeInteger(run.level + 1)) return bad('Cash out the current pot before starting another series.');
@@ -842,7 +850,7 @@ export function activityAction(state, action, context = {}) {
       run.level++; run.status = 'active'; run.startedAt = currentClock(state);
       run.roundStartedAt = currentClock(state); run.roundLimit = limit; run.remaining = limit;
       run.roundBasePot = run.pot + 50; run.finishedAt = null; run.lossReason = null;
-      const currentRules = run.rulesVersion === 16 ? prepareMiniGameRound(state, run, run.level, context) : rules;
+      const currentRules = run.rulesVersion === 16 ? prepareMiniGameRound(state, run, run.level, context, action.gameKind) : rules;
       state.lastMeaningfulActivityAt = currentClock(state);
       return good('The entire ' + run.pot + '-coin pot is now at risk. A timely win adds 50 coins to its actual remainder.', { rules: currentRules });
     }

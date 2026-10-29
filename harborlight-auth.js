@@ -1,7 +1,7 @@
 // Account screen only. No authentication service or social integration is connected.
 // Credentials never leave this form and are never written to browser storage.
-import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v16';
-import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v16';
+import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v17';
+import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v17';
 
 registerTranslations({
   'HARBORLIGHT — Welcome Home': 'HARBORLIGHT — Witaj na wyspie',

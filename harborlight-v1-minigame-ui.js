@@ -8,6 +8,7 @@ const WORDS = {
     tiltPhoneHelp: 'Doprowadź kulki do otworów. Steruj palcem lub włącz ruch telefonu poniżej.',
     touchHelp: 'Przesuwaj palec po sterowniku albo włącz sterowanie ruchem telefonu.',
     memoryHelp: 'Odkrywaj obrazki. Trzy identyczne znikają z planszy; różne możesz później odkrywać ponownie.',
+    memoryPhoneHelp: 'Odkrywaj trójki identycznych obrazków, aby wyczyścić planszę.',
     motion: 'Steruj ruchem telefonu', calibrate: 'Wyzeruj położenie telefonu',
     motionOn: 'Sterowanie ruchem włączone. Delikatnie przechyl telefon.',
     motionDenied: 'Sterowanie ruchem jest niedostępne. Użyj sterownika poniżej planszy.',
@@ -28,6 +29,7 @@ const WORDS = {
     tiltPhoneHelp: 'Roll the marbles into the holes. Drag the control or enable phone motion below.',
     touchHelp: 'Drag the tilt control or enable phone motion controls.',
     memoryHelp: 'Reveal pictures. Three identical pictures disappear; unmatched pictures can be revealed again as often as you like.',
+    memoryPhoneHelp: 'Reveal three matching pictures to clear them from the board.',
     motion: 'Use phone motion', calibrate: 'Centre phone position',
     motionOn: 'Motion controls are on. Gently tilt your phone.',
     motionDenied: 'Motion controls are unavailable. Use the control below the board.',
@@ -129,7 +131,7 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
   const reduced = !animations || matchMedia('(prefers-reduced-motion: reduce)').matches;
   const root = element('section', { class: 'expedition-minigame', 'data-minigame-kind': run.miniGame.kind, 'data-i18n-ignore': '' });
   const title = element('h3', { class: 'minigame-title' }, run.miniGame.kind === 'tilt' ? words.tiltTitle : words.memoryTitle);
-  const description = element('p', { class: 'minigame-help' }, run.miniGame.kind === 'tilt' ? matchMedia('(pointer: coarse)').matches ? words.tiltPhoneHelp : words.tiltHelp : words.memoryHelp);
+  const description = element('p', { class: 'minigame-help' }, run.miniGame.kind === 'tilt' ? matchMedia('(pointer: coarse)').matches ? words.tiltPhoneHelp : words.tiltHelp : matchMedia('(pointer: coarse)').matches ? words.memoryPhoneHelp : words.memoryHelp);
   const progress = element('p', { class: 'minigame-progress', 'aria-live': 'polite', 'data-minigame-progress': '' });
   const message = element('p', { class: 'minigame-message', role: 'status', 'data-minigame-message': '' });
   root.append(title, description);
@@ -140,7 +142,7 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
     controlsHost.replaceChildren(externalControls); root.classList.add('has-external-controls');
   }
   const cleanup = [];
-  let updateBoard = () => {}, drawBoard = () => {}, lossAt = null, previousState = '';
+  let updateBoard = () => {}, drawBoard = () => {}, fitLayout = () => {}, lossAt = null, previousState = '';
   const active = () => run.status === 'active' && !status.presenceRequired && !document.hidden;
   const send = action => {
     if (!active()) return;
@@ -235,6 +237,32 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
     window.addEventListener('blur', blur);
     document.addEventListener('visibilitychange', visibility);
     cleanup.push(() => { document.removeEventListener('keydown', onKeyDown, true); document.removeEventListener('keyup', onKeyUp, true); window.removeEventListener('deviceorientation', onOrientation); window.removeEventListener('blur', blur); document.removeEventListener('visibilitychange', visibility); });
+    let fitPending = true;
+    const fitMarbleFrame = () => {
+      if (!root.isConnected || !root.clientWidth) return;
+      if (matchMedia('(min-width:1100px) and (min-height:650px)').matches) {
+        frameElement.style.removeProperty('width'); fitPending = false; return;
+      }
+      const dialog = root.closest('dialog'), panel = root.closest('.minigame-panel');
+      const body = dialog?.querySelector('.dialog-body');
+      if (dialog && panel && body) {
+        const bodyStyle = getComputedStyle(body), maxHeight = parseFloat(getComputedStyle(dialog).maxHeight) || innerHeight - 20;
+        const bodySpace = maxHeight - (dialog.querySelector('.dialog-header')?.offsetHeight || 0) -
+          parseFloat(bodyStyle.paddingTop) - parseFloat(bodyStyle.paddingBottom) - 2;
+        const nonBoardHeight = panel.offsetHeight - frameElement.offsetHeight;
+        const otherBodyHeight = Math.max(0, body.scrollHeight - parseFloat(bodyStyle.paddingTop) - parseFloat(bodyStyle.paddingBottom) - panel.offsetHeight);
+        const size = Math.floor(Math.min(root.clientWidth, bodySpace - nonBoardHeight - otherBodyHeight - 14));
+        frameElement.style.width = `${Math.max(70, size)}px`;
+      }
+      fitPending = false;
+    };
+    fitLayout = fitMarbleFrame;
+    const fitObserver = new ResizeObserver(() => { fitPending = true; });
+    fitObserver.observe(host);
+    const panel = root.closest('.minigame-panel'); if (panel) fitObserver.observe(panel);
+    const onFitResize = () => { fitPending = true; };
+    window.addEventListener('resize', onFitResize, { passive: true });
+    cleanup.push(() => { fitObserver.disconnect(); window.removeEventListener('resize', onFitResize); });
     let boardSize = 0, ratio = 0;
     const resize = () => {
       boardSize = run.miniGame.boardSize || 600;
@@ -260,6 +288,7 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
       motionButton.disabled = !active(); calibrateButton.disabled = !active(); centre.disabled = !active();
     };
     drawBoard = now => {
+      if (fitPending) fitMarbleFrame();
       if (!context) return;
       const game = run.miniGame, size = game.boardSize || 600;
       if (size !== boardSize) resize();
@@ -306,8 +335,7 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
     };
   } else {
     const game = run.miniGame;
-    const large = game.columns > 20;
-    const wrapper = element('div', { class: `memory-viewport${large ? ' is-large' : ''}`, 'data-memory-viewport': '' });
+    const wrapper = element('div', { class: 'memory-viewport', 'data-memory-viewport': '' });
     const board = element('div', { class: 'memory-board', role: 'group', 'aria-label': words.memoryTitle, 'data-memory-board': '' });
     board.style.setProperty('--memory-columns', game.columns);
     board.style.setProperty('--memory-columns-mobile', Math.min(8, game.columns));
@@ -316,16 +344,54 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
     const turnStatus = element('p', { class: 'memory-turn-status', 'data-memory-turn': '' });
     const shuffleStatus = element('p', { class: 'memory-shuffle-status', 'data-memory-shuffle': '', 'aria-live': 'polite' });
     root.append(turnStatus, shuffleStatus, message);
-    if (large) {
-      const zoom = element('div', { class: 'memory-zoom' });
-      const out = element('button', { type: 'button', class: 'action secondary', 'aria-label': words.zoomOut }, '−');
-      const inside = element('span', {}, words.zoom);
-      const bigger = element('button', { type: 'button', class: 'action secondary', 'aria-label': words.zoomIn }, '+');
-      let tileSize = 46;
-      out.addEventListener('click', () => { tileSize = Math.max(26, tileSize - 10); board.style.setProperty('--memory-tile', `${tileSize}px`); });
-      bigger.addEventListener('click', () => { tileSize = Math.min(86, tileSize + 10); board.style.setProperty('--memory-tile', `${tileSize}px`); });
-      zoom.append(out, inside, bigger); root.insertBefore(zoom, wrapper);
-    }
+    let fitPending = true;
+    // Use the real remaining dialog space instead of creating a second scroll
+    // area. The grid can change its columns without changing card identities.
+    const fitBoard = () => {
+      if (!root.isConnected || !wrapper.clientWidth) return;
+      const dialog = root.closest('dialog'), panel = root.closest('.minigame-panel');
+      const body = dialog?.querySelector('.dialog-body');
+      const desktop = matchMedia('(min-width:1100px) and (min-height:650px)').matches;
+      const padding = getComputedStyle(wrapper);
+      const horizontalPadding = parseFloat(padding.paddingLeft) + parseFloat(padding.paddingRight) + 2;
+      const verticalPadding = parseFloat(padding.paddingTop) + parseFloat(padding.paddingBottom) + 2;
+      const availableWidth = Math.max(40, Math.min(host.clientWidth, root.clientWidth) - horizontalPadding);
+      let availableHeight;
+      if (dialog && body && panel) {
+        const bodyStyle = getComputedStyle(body), dialogStyle = getComputedStyle(dialog);
+        const maxDialogHeight = parseFloat(dialogStyle.maxHeight) || innerHeight - 20;
+        const bodySpace = maxDialogHeight - (dialog.querySelector('.dialog-header')?.offsetHeight || 0) -
+          parseFloat(bodyStyle.paddingTop) - parseFloat(bodyStyle.paddingBottom) - 2;
+        const nonBoardHeight = (desktop ? root.offsetHeight : panel.offsetHeight) - wrapper.offsetHeight;
+        const otherBodyHeight = Math.max(0, body.scrollHeight - parseFloat(bodyStyle.paddingTop) - parseFloat(bodyStyle.paddingBottom) - panel.offsetHeight);
+        availableHeight = Math.max(40, bodySpace - nonBoardHeight - otherBodyHeight - verticalPadding - 16);
+      } else availableHeight = Math.max(80, innerHeight - root.getBoundingClientRect().top - 100);
+      const gap = innerWidth <= 520 ? 3 : 4;
+      let best = { columns: 1, tile: 0, rows: game.cards.length };
+      for (let columns = 1; columns <= game.cards.length; columns++) {
+        const rows = Math.ceil(game.cards.length / columns);
+        const tile = Math.floor(Math.min((availableWidth - (columns - 1) * gap) / columns,
+          (availableHeight - (rows - 1) * gap) / rows));
+        if (tile > best.tile) best = { columns, rows, tile };
+      }
+      const tile = Math.max(8, best.tile);
+      board.style.setProperty('--memory-columns', best.columns);
+      board.style.setProperty('--memory-columns-mobile', best.columns);
+      board.style.setProperty('--memory-tile', `${tile}px`);
+      board.style.setProperty('--memory-gap', `${gap}px`);
+      board.style.gridTemplateColumns = `repeat(${best.columns}, ${tile}px)`;
+      board.style.width = `${best.columns * tile + (best.columns - 1) * gap}px`;
+      wrapper.dataset.memoryFit = `${best.columns}x${best.rows}`;
+      fitPending = false;
+    };
+    fitLayout = fitBoard;
+    const resizeObserver = new ResizeObserver(() => { fitPending = true; });
+    resizeObserver.observe(host);
+    const panel = root.closest('.minigame-panel');
+    if (panel) resizeObserver.observe(panel);
+    const onResize = () => { fitPending = true; };
+    window.addEventListener('resize', onResize, { passive: true });
+    cleanup.push(() => { resizeObserver.disconnect(); window.removeEventListener('resize', onResize); });
     const cards = game.cards.map((symbol, index) => {
       const button = element('button', { type: 'button', class: 'memory-card', 'data-memory-card': index, 'data-memory-state': 'hidden', 'aria-label': `${words.card} ${index + 1}: ${words.hidden}` });
       const back = element('span', { class: 'memory-card-back', 'aria-hidden': 'true' }, '✦');
@@ -373,7 +439,7 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
       else if (run.status === 'decision' || current.solved) { message.textContent = words.wonMemory; turnStatus.textContent = ''; }
       previousState = `${cleared}:${current.revealed.join(',')}:${run.status}`;
     };
-    drawBoard = now => { if (now - lastCheck > 80) { updateBoard(); lastCheck = now; } };
+    drawBoard = now => { if (fitPending) fitBoard(); if (now - lastCheck > 80) { updateBoard(); lastCheck = now; } };
   }
   function update(nextRun, nextStatus = status) {
     if (disposed || !nextRun?.miniGame) return;
@@ -386,6 +452,10 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
     if (run.miniGame.kind === 'tilt') updateBoard();
     frame = requestAnimationFrame(render);
   }
-  updateBoard(); frame = requestAnimationFrame(render);
+  updateBoard(); fitLayout();
+  // renderPanel mounts before a newly opened dialog enters the top layer.
+  // Fit again in this same task after showModal, before its first paint.
+  queueMicrotask(() => { if (!disposed) fitLayout(); });
+  frame = requestAnimationFrame(render);
   return { update, dispose() { disposed = true; cancelAnimationFrame(frame); cleanup.forEach(fn => fn()); externalControls?.remove(); } };
 }

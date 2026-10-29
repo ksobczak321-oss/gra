@@ -1,8 +1,8 @@
-# Budynki i mieszkaniec — frontend v16
+# Budynki i mieszkaniec — frontend v17
 
-Bieżący pakiet **frontend-v16** dodaje prowadzony samouczek 25 akcji i dwie losowane minigry, zachowując produkcję 20/24/26/28… na osobę oraz ładunek 120 na poziomie 1 z v15. Końcowy odbiór i stan publikacji zawiera [dziennik](IMPLEMENTATION-LOG.md); wyniki poprzednich wydań nie są dowodem odbioru v16.
+Bieżący pakiet **frontend-v17** poprawia [układ, oznaczenia kar i odwołanie tragarzy](FRONTEND-V17-REQUIREMENTS.md), zachowując produkcję 20/24/26/28… na osobę oraz ładunek 120 na poziomie 1. Końcowy odbiór i stan publikacji zapisuje [dziennik](IMPLEMENTATION-LOG.md); wcześniejsze wyniki nie potwierdzają tego pakietu.
 
-Nowsze reguły zbiera [manifest wersji 10](decisions-v10.json), oparty na wcześniejszych [58 decyzjach i 19 wymaganiach](decisions-v9.json). [Excel 10](arkusze/HARBORLIGHT10-zasady.xlsx) jest bieżącym zestawieniem, a Excele 7, 8 i 9 pozostają niezmienioną historią.
+Wymagania v17 uaktualniają [manifest wersji 10](decisions-v10.json), oparty na [58 decyzjach i 19 wymaganiach](decisions-v9.json). [Excel 10](arkusze/HARBORLIGHT10-zasady.xlsx) pozostaje niezmienionym archiwum v16, w tym dawnego losowania minigier; obecne zasady opisują bieżące dokumenty.
 
 L oznacza **obecny własny poziom**, N — nowy. Kwoty są bazowe: przy kolejce każdy składnik rośnie o 10% i jest zaokrąglany w górę. Kolumna budowania podaje samą fazę po dostawach; wcześniejsze zbieranie i oczekiwanie w kolejce nie są doliczane.
 
@@ -39,7 +39,7 @@ Samouczek otwiera się przy wejściu aż do ukończenia lub świadomej rezygnacj
 
 ## Ekspedycje i lojalność
 
-Każda runda nowej serii losuje labirynt z kulkami lub czarno-białe trójki, a wyspa działa pod zasłaniającym ją oknem bez równoczesnego zarządzania budynkami. Wygrana dodaje do puli do 50 monet, po 2/3 limitu nagroda rundy maleje o 1 za każdy pełny odcinek równy 1/12 limitu, a twardy koniec lub przegrana zabiera całą niewypłaconą pulę. Wypłacone wcześniej monety są bezpieczne; zapisane dawne serie trasowe zachowują poprzednie reguły do końca serii.
+Gracz wybiera labirynt z kulkami lub czarno-białe trójki przy rozpoczęciu oraz może zmienić rodzaj przed kolejną rundą; wybór jest zapisany, a wyspa działa pod zasłaniającym ją oknem bez równoczesnego zarządzania budynkami. Wygrana dodaje do puli do 50 monet, po 2/3 limitu nagroda rundy maleje o 1 za każdy pełny odcinek równy 1/12 limitu, a twardy koniec lub przegrana zabiera całą niewypłaconą pulę. Wypłacone wcześniej monety są bezpieczne; zapisane dawne serie trasowe zachowują poprzednie reguły do końca serii.
 
 Lojalność liczy kolejne dni logowania od północy czasu polskiego, a dzień przerwy resetuje serię. Program kończy się po odebraniu dziesiątej nagrody albo po osiągnięciu Ratusza 4. Kwoty nagród nie zostały jeszcze ustalone i nie są zastępowane kwotami skrzyń samouczka.
 
@@ -48,12 +48,14 @@ Lojalność liczy kolejne dni logowania od północy czasu polskiego, a dzień p
 - Administracja: Ratusz, Dom, Magazyn, Targ, Port, Kaplica i Latarnia. Gospodarka: Farma, Młyn, Kamieniołom, Drwale i Tartak. Zasoby, Dekoracje i Ścieżki pozostają oddzielnymi kategoriami.
 - Wszystkie miniatury mają równą ramkę i proporcje. Karta ma poziom u góry; zakład pracy pokazuje „Pracuje: n” oraz osobno idących `(+n)` i odwołanych `(−n)`. Cztery budynki bez pracowników mają tylko poziom.
 - Producent zachowuje Magazyn: zapas / pojemność teraz / pojemność następnego poziomu oraz Pracownicy: przypisani / wolni w domu / limit. Podpisy są krótkie i tłumaczone EN/PL, a liczby i jednostki mieszczą się w kartach.
-- Karta komputerowa mieści podstawowe informacje i działania na jednym ekranie, a dodatkowe objaśnienia są zwijane. Producent podaje produkt, ilość i ETA najbliższej gotowej sztuki; brak wejścia lub miejsca ma powiadomienie bez powtórzeń co sekundę. Latarnia w ruinach nie powtarza bloku „Nie zbudowano”.
-- „Budowa i kolejka” pozostaje w Ratuszu, a „Zarządzaj pracownikami” w Domu. Rozbudowa, Premium i osobne ETA są przy budynku; menu „Budynki” dodaje krótki opis funkcji każdego obiektu. Strzałka wraca do poprzedniego menu, a menu wyspy pokazuje własną nazwę i nie oferuje przycisku logowania.
+- Karta komputerowa mieści podstawowe informacje i działania na jednym ekranie, a dodatkowe objaśnienia są zwijane. Górna krawędź prawej kolumny z rozbudową jest równa górnej krawędzi lewej kolumny ze statystykami. Producent podaje produkt, ilość i ETA najbliższej gotowej sztuki; brak wejścia lub miejsca ma powiadomienie bez powtórzeń co sekundę. Latarnia w ruinach nie powtarza bloku „Nie zbudowano”.
+- „Budowa i kolejka” pozostaje w Ratuszu, a „Zarządzaj pracownikami” w Domu. Rozbudowa, Premium i osobne ETA są przy budynku; menu „Budynki” dodaje krótki opis funkcji każdego obiektu. Strzałka wraca do poprzedniego menu poza ekranem minigry. Menu wyspy pokazuje własną nazwę, jego dolne przyciski mieszczą się wewnątrz ramki, a Ustawienia nie oferują przycisku logowania.
+- Wycofanie tragarzy daje wyraźny popup, a licznik od razu pokazuje oczekiwane odejście, np. `5 (−2)`. Osoba z ładunkiem kończy dostawę, potem idzie 5 minut do domu; dopiero powrót zwalnia ją do innej pracy.
+- Nad producentem z aktywną karą za brak wejścia lub pełny lokalny magazyn jest smutna buźka. Znika po ustaniu kary; pusty zakład bez pracowników nie otrzymuje samego takiego oznaczenia.
 - Premie/kary u góry Ratusza i w Domu zajmują po jednym wierszu z nazwą, wartością, statusem/czasem i końcowym i rozwijającym szczegóły. Wszystkie informacje o podatkach są ukryte w UI.
 
 Koszty, łóżka i przewóz sprawdza wspólny model, również dla usług kupna; wygląd przycisku nie pomija zależności. Szczegóły: [reguły](ECONOMY-RULES.md), [58 decyzji i 19 wymagań](decisions-v9.json).
 
 ## Historyczny odbiór wersji 9
 
-Wydanie **frontend-v13 / Excel 9** zakończyło implementację, odbiór lokalny, publikację i odbiór publiczny: **388/388 testów modelu PASS**, pięć lokalnych zestawów przeglądarkowych i trzy zestawy rzeczywistego Pages PASS. Udane [Pages 40012462614](https://github.com/ksobczak321-oss/gra/actions/runs/40012462614); publiczny Excel i 17 plików gry zwracały HTTP 200 oraz zgadzały się z lokalnymi sumami kontrolnymi. Dowody zachowuje [dziennik](IMPLEMENTATION-LOG.md); ten wpis nie opisuje odbioru v16.
+Wydanie **frontend-v13 / Excel 9** zakończyło implementację, odbiór lokalny, publikację i odbiór publiczny: **388/388 testów modelu PASS**, pięć lokalnych zestawów przeglądarkowych i trzy zestawy rzeczywistego Pages PASS. Udane [Pages 40012462614](https://github.com/ksobczak321-oss/gra/actions/runs/40012462614); publiczny Excel i 17 plików gry zwracały HTTP 200 oraz zgadzały się z lokalnymi sumami kontrolnymi. Dowody zachowuje [dziennik](IMPLEMENTATION-LOG.md); ten wpis nie opisuje odbioru v17.

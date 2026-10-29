@@ -657,3 +657,37 @@ body.portrait-world .dock-tabs{display:none!important}
   #island-dialog .building-panel .producer-upgrade-times{flex-basis:160px}
   #island-dialog .residents-panel .housing-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+
+/* v17: reset the generic card margins inside the two aligned columns. */
+#island-dialog .dialog-body .building-main>.info-card,
+#island-dialog .dialog-body .building-upgrade-column>.info-card{margin-block:0}
+/* A scrollable dialog body always retains real space below its last action. */
+#island-dialog[data-panel-kind="home"] .dialog-body,
+#island-dialog[data-panel-kind="menu"] .dialog-body{padding-bottom:max(25px,env(safe-area-inset-bottom));scroll-padding-block:16px 28px}
+#island-dialog[data-panel-kind="home"] .dialog-body>div,
+#island-dialog[data-panel-kind="menu"] .dialog-body>div{padding-bottom:3px}
+@media(min-width:1100px) and (min-height:650px){
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]){width:min(1120px,calc(100vw - 40px));max-height:calc(100dvh - 28px)}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-header{padding:13px 72px 13px 19px}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-header h2{font-size:22px;line-height:1.25}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-header .eyebrow{font-size:10px;margin-bottom:3px}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-close{top:12px}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-body{padding:14px 18px 20px}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-body>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-body>div>:is(.notice,.stat,.stat-grid,.panel-grid),
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-body>div>.action:last-child{grid-column:1/-1;margin:0}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-body>div>.action{margin:0;min-height:38px;padding:8px 12px;font-size:12px}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .notice{padding:9px 12px;font-size:12px;line-height:1.4}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .stat{padding:8px 10px;font-size:11px}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .stat strong{font-size:19px;line-height:1.25}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .panel-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .panel-grid>.action{min-height:38px;padding:8px 12px;font-size:12px}
+}
+
+/* Penalties remain visible above a building without becoming a click target. */
+.world-production-penalty{position:absolute;left:50%;top:-22px;z-index:18;display:grid;place-items:center;transform:translateX(-50%);width:39px;height:39px;border:2px solid #f1c46f;border-radius:50%;background:#102f42f5;box-shadow:0 3px 12px #00121ccc,0 0 0 3px #07223499;color:#ffd57d;font:700 31px/1 Arial,sans-serif;text-shadow:0 1px #0008;pointer-events:none}
+#warehouse-recall .warehouse-recall-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}
+#warehouse-recall .warehouse-recall-stats .stat{min-width:0;padding:12px;border:1px solid #6c91a277;border-radius:10px;background:#0b2a3d;color:#bcd1dc;font-size:12px;overflow-wrap:anywhere}
+#warehouse-recall .warehouse-recall-stats .stat strong{display:block;margin-top:5px;color:#ffe0a2;font-size:23px;line-height:1.3;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+@media(max-width:520px){#warehouse-recall .warehouse-recall-stats{gap:7px}#warehouse-recall .warehouse-recall-stats .stat{padding:10px;font-size:11px}#warehouse-recall .warehouse-recall-stats .stat strong{font-size:20px}}
+@media(min-width:1100px) and (min-height:650px){#island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-header.has-panel-back{padding-left:76px}}

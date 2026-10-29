@@ -534,20 +534,22 @@ def language_and_legacy_acceptance(browser):
     page.locator('[data-expedition-cashout]').click()
     assert saved(page)['resources']['coins'] == 250
     page.locator('.activity-expedition').click()
+    page.locator('[data-expedition-choice="triples"]').click()
     assert active_run(saved(page))['rulesVersion'] == 16
     expect(page.locator('[data-minigame-kind]')).to_be_visible()
-    # The production Draw button chooses both kinds from the saved seed; the
-    # action does not receive a forced kind or a legacy compatibility flag.
+    # New production starts explicitly honor the player's chosen type, while
+    # the retained legacy route above still uses its original proof.
     for seed, kind in [(1, 'tilt'), (8192, 'triples')]:
         ordinary = new_state(page)
         ordinary['activitySeed'] = seed
         install_save(page, ordinary)
         page.locator('.activity-expedition').click()
+        page.locator(f'[data-expedition-choice="{kind}"]').click()
         drawn = active_run(saved(page))
         assert drawn['rulesVersion'] == 16 and drawn['miniGame']['kind'] == kind
         expect(page.locator('[data-minigame-kind]')).to_have_attribute('data-minigame-kind', kind)
     context.close()
-    print('PASS English tutorial/game, preserved paid legacy lesson/active route/pot and default Draw selects both new minigames')
+    print('PASS English tutorial/game, preserved paid legacy lesson/active route/pot and explicit choice starts both new minigames')
 
 
 def run():

@@ -1,12 +1,12 @@
-# Sterowanie i zapis HARBORLIGHT — frontend v16 / Excel 10
+# Sterowanie i zapis HARBORLIGHT — frontend v17
 
-Bieżąca instrukcja opisuje [ustalenia wydania v16](decisions-v10.json) oraz zachowane nowsze zasady gospodarki. [Excel 10](arkusze/HARBORLIGHT10-zasady.xlsx) zbiera również zmiany v14/v15; archiwalne pliki 7, 8 i 9 pozostają bez zmian. Końcowy odbiór lokalny, wysłanie kodu i potwierdzenie publicznego adresu są odrębnymi zdarzeniami zapisywanymi w [dzienniku](IMPLEMENTATION-LOG.md).
+Bieżąca instrukcja opisuje [dziewięć poprawek v17](FRONTEND-V17-REQUIREMENTS.md) i zachowane zasady wcześniejszych wydań. Wymagania v17 nadpisują wybór gry i wskazane elementy interfejsu [manifestu v10](decisions-v10.json). [Excel 10](arkusze/HARBORLIGHT10-zasady.xlsx) pozostaje niezmienionym archiwum v16, z dawnym losowaniem minigry; końcowy odbiór, wysłanie kodu i publiczną publikację opisuje [dziennik](IMPLEMENTATION-LOG.md).
 
 ## Otwieranie gry
 
-- [Dotychczasowa wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v16).
-- [Oddzielny profil nowego gracza](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v16): przy pierwszym otwarciu 12 osób, po 100 zasobów, Ratusz 1 i brak pracowników. Kolejne wejście zachowuje jego postęp; zmiana parametru wersji nie resetuje wyspy.
-- [Rejestracja i logowanie](https://ksobczak321-oss.github.io/gra/harborlight-auth.html?v=frontend-v16): formularz rejestracji pozwala nazwać wyspę, lecz nadal nie tworzy prawdziwego konta ani połączenia OAuth. Nazwa należy do wybranego lokalnego profilu i pozostaje dosłowna w obu językach.
+- [Dotychczasowa wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v17).
+- [Oddzielny profil nowego gracza](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v17): przy pierwszym otwarciu 12 osób, po 100 zasobów, Ratusz 1 i brak pracowników. Kolejne wejście zachowuje jego postęp; zmiana parametru wersji nie resetuje wyspy.
+- [Rejestracja i logowanie](https://ksobczak321-oss.github.io/gra/harborlight-auth.html?v=frontend-v17): formularz rejestracji pozwala nazwać wyspę, lecz nadal nie tworzy prawdziwego konta ani połączenia OAuth. Nazwa należy do wybranego lokalnego profilu i pozostaje dosłowna w obu językach.
 
 Sam odnośnik z wersją nie potwierdza publikacji. Potwierdzony stan Pages oraz ewentualne ograniczenia dostępu opisuje dziennik.
 
@@ -34,15 +34,15 @@ Dekoracje przełączają pasek na pięć ofert odnawianych o północy czasu pol
 
 ## Panele, efekty i powiadomienia
 
-Główny panel budynku mieści najważniejsze dane oraz działania na jednym ekranie komputera; dalsze funkcje mają osobny widok z powrotem. Krótki opis wyjaśnia funkcję obiektu, strzałka przywraca poprzednie menu, a X zamyka okno. Latarnia na poziomie 0 ma stan Ruiny, a osiągnięte poziomy 1–100 własne nazwy.
+Główny panel budynku mieści najważniejsze dane oraz działania na jednym ekranie komputera; górne krawędzie lewej kolumny statystyk i prawej kolumny rozbudowy są równe. Dalsze funkcje mają osobny widok z powrotem, a dolne przyciski menu wyspy mieszczą się wewnątrz ramki z odstępem od jej krawędzi. Krótki opis wyjaśnia funkcję obiektu, strzałka przywraca poprzednie menu, a X zamyka okno. Latarnia na poziomie 0 ma stan Ruiny, a osiągnięte poziomy 1–100 własne nazwy.
 
 Producent pokazuje produkt, ilość i ETA najbliższej gotowej sztuki. Magazyn ma podpisane zapas / pojemność teraz / pojemność po rozbudowie, a Pracownicy — przydzieleni / wolni w domu / limit, z małymi +/−. Nie pokazujemy podatków, choć silnik nadal je nalicza.
 
 Bazowa produkcja wynosi 20/24/26/28… na osobę i godzinę, a bazowy ładunek tragarza 120 na poziomie 1 przy pięciominutowym kursie. Poziomy, drogi, głód i wcześniejsze premie nadal stosują własne mnożniki. Podwojenie bazy nie podwoiło podatku ani zapotrzebowania mieszkańców na jedzenie.
 
-Ratusz skupia zarządzanie kolejką i budową, a Dom mieszkańców i zbiorcze przydziały. Każdy efekt ma wiersz z nazwą, wartością, czasem lub statusem i przyciskiem i rozwijającym źródło, odbiorców oraz warunek końca. Powiadomienia obejmują rozpoczęcie, istotną zmianę i koniec efektu oraz przyczynę przestoju, bez nowego wpisu co sekundę.
+Ratusz skupia zarządzanie kolejką i budową, a Dom mieszkańców i zbiorcze przydziały. Każdy efekt ma wiersz z nazwą, wartością, czasem lub statusem i przyciskiem i rozwijającym źródło, odbiorców oraz warunek końca. Powiadomienia obejmują rozpoczęcie, istotną zmianę i koniec efektu oraz przyczynę przestoju, bez nowego wpisu co sekundę. Nad producentem z aktywną karą za brak wejścia lub pełny magazyn lokalny widać smutną buźkę; po ustaniu kary oznaczenie znika.
 
-Magazyn pokazuje tragarza, jego ładunek, trasę i ETA. Maksymalnie trzy priorytety materiałów lub Budowy są numerowane i podświetlone; odwołany z ładunkiem kończy dostawę, a potem przez pięć minut wraca do domu. Kategorie powiadomień można filtrować bez usuwania historii.
+Magazyn pokazuje tragarza, jego ładunek, trasę i ETA. Po zmniejszeniu obsady wyraźny popup objaśnia wycofanie, a licznik od razu pokazuje planowaną zmianę, np. `5 (−2)`: odwołany z ładunkiem kończy dostawę, potem wraca pięć minut do domu i dopiero jest wolny. Maksymalnie trzy priorytety materiałów lub Budowy są numerowane i podświetlone; kategorie powiadomień można filtrować bez usuwania historii.
 
 ## Zadania i ukończenie
 
@@ -54,20 +54,20 @@ Po sukcesie zadania są fajerwerki, próba wibracji i opcjonalne Share/Skip. Sha
 
 ## Dwie gry ekspedycji
 
-Każda nowa runda losuje **labirynt z kulkami albo dopasowywanie trójek**. Sukces dodaje do puli najwyżej 50 monet, pomniejszonych według czasu tej rundy; kontynuacja ryzykuje całą niewypłaconą pulę, a wypłata kończy serię. Upływ pełnego limitu oznacza przegraną i stratę całej niewypłaconej puli, bez dodatkowego czasu za monety.
+Rozpoczynając ekspedycję gracz wybiera **labirynt z kulkami albo dopasowywanie trójek**. Wybór zostaje zapisany i jest domyślny przy kontynuacji; przed następną rundą można wskazać drugi rodzaj. Sukces dodaje do puli najwyżej 50 monet, pomniejszonych według czasu tej rundy; kontynuacja ryzykuje całą niewypłaconą pulę, a wypłata kończy serię. Upływ pełnego limitu oznacza przegraną i stratę całej niewypłaconej puli, bez dodatkowego czasu za monety.
 
 Labirynt przechyla się kursorem lub myszą na komputerze, a na telefonie ruchem urządzenia po włączeniu sterowania; przy braku obsługi lub odmowie dostępu pozostaje sterowanie dotykiem. Kulki trzeba umieścić w otworach, z rzeczywistymi kolizjami ścian. Pierwsza runda trwa trzy minuty i daje pełne 50 monet przez pierwsze dwie, następnie odejmuje jedną monetę co 15 sekund, a po końcu plansza trzęsie się i kulki się rozsypują.
 
-Dopasowywanie usuwa trzy identyczne odsłonięte czarno-białe obrazki i pozwala ponawiać próby bez limitu odkryć. Projektowa krzywa zaczyna od 24 pól i czterech minut, dodaje po sześć pól oraz 30 sekund na etap do 120 pól i maksymalnie 15 minut; od czwartego etapu zakryte, niedopasowane obrazki okresowo zmieniają miejsca. Odkryte i już dopasowane pola pozostają stabilne podczas przesunięcia, a całą planszę trzeba wyczyścić przed terminem.
+Dopasowywanie usuwa trzy identyczne odsłonięte czarno-białe obrazki i pozwala ponawiać próby bez limitu odkryć. Projektowa krzywa zaczyna od 24 pól i czterech minut, dodaje po sześć pól oraz 30 sekund na etap do 120 pól i maksymalnie 15 minut; od czwartego etapu zakryte, niedopasowane obrazki okresowo zmieniają miejsca. Odkryte i już dopasowane pola pozostają stabilne podczas przesunięcia, a całą planszę trzeba wyczyścić przed terminem. Wszystkie 24–120 kart dopasowują wielkość i kolumny do dostępnego okna bez suwaka i obcinania, również na telefonie.
 
 Dla obu nowych gier pełna nagroda trwa przez pierwsze dwie trzecie limitu, a później maleje o jedną monetę co jedną dwunastą limitu. Użytkownik określił zakres trudności; konkretna krzywa rozmiarów, czasów i przesunięć jest jawnym doborem projektu zapisanym w manifeście. Wczytane starsze serie zachowują dawną planszę i rozliczenie do końca tej serii, a nowe starty używają już dwóch nowych gier.
 
-Jedna seria zasłania i blokuje zarządzanie wyspą, podczas gdy gospodarka nadal działa. Po pięciu minutach bez rzeczywistej aktywności pojawia się pytanie z 60 sekundami na potwierdzenie; zegar działa także w tle i podczas pytania. Nie ma pozorowanego oglądania reklamy ani kupowania czasu, a rzeczywista integracja reklamowa pozostaje na później.
+Jedna seria zasłania i blokuje zarządzanie wyspą, podczas gdy gospodarka nadal działa. Po pięciu minutach bez rzeczywistej aktywności pojawia się pytanie z 60 sekundami na potwierdzenie; zegar działa także w tle i podczas pytania. W minigrze nie ma strzałki powrotu; opuszczenie próby i X nadal respektują potwierdzenie straty albo wypłaty. Przycisk „Obejrzyj reklamę” w prawej kolumnie pod wyjściem otwiera informację o przyszłej funkcji w obu grach. Dodatkowy czas, premia i limity pozostają do ustalenia, więc przycisk nie daje nagrody, nie zatrzymuje zegara i nie wywołuje sieci reklamowej.
 
 ## Lojalność, język i zapis
 
 Kolejne dni logowania tworzą serię, dzień przerwy ją resetuje, a granicą dnia jest północ Europe/Warsaw. Wprowadzający program lojalnościowy kończy się po odebraniu dziesiątej nagrody albo przy Ratuszu 4; kwoty tych nagród nadal nie zostały ustalone. Skrzynie samouczka nie zastępują nieustalonych nagród lojalnościowych.
 
-Rzeczywista akcja w widocznej aktywnej karcie odnawia premię produkcji na pięć minut, bez dodawania kolejnych czasów. Ustawienia pozwalają wybrać EN/PL, kategorie powiadomień, dźwięk i animacje. Zapisany wybór animacji pozostaje zachowany, a po powrocie do widocznej karty świat wznawia rysowanie.
+Rzeczywista akcja w widocznej aktywnej karcie odnawia premię produkcji na pięć minut, bez dodawania kolejnych czasów. Ustawienia pozwalają wybrać EN/PL, kategorie powiadomień, dźwięk i animacje oraz wznowić samouczek. Nie zawierają przycisku „Zaloguj się lub załóż konto”, który pozostaje częścią oddzielnych formularzy. Zapisany wybór animacji pozostaje zachowany, a po powrocie do widocznej karty świat wznawia rysowanie.
 
-Stan i preferencje są lokalne w tej przeglądarce; dotychczasowy oraz nowy profil mają oddzielne klucze, a reset dotyczy tylko wybranego profilu. Nie jest to synchronizacja web/Android/iPhone, rzeczywista usługa kont, płatności ani serwerowe potwierdzanie udostępnień i poleceń. Bieżące zasady opisują [reguły gospodarki](ECONOMY-RULES.md), [manifest v10](decisions-v10.json) i [Excel 10](arkusze/HARBORLIGHT10-zasady.xlsx); wyniki konkretnego wydania zawiera dziennik.
+Stan i preferencje są lokalne w tej przeglądarce; dotychczasowy oraz nowy profil mają oddzielne klucze, a reset dotyczy tylko wybranego profilu. Nie jest to synchronizacja web/Android/iPhone, rzeczywista usługa kont, płatności ani serwerowe potwierdzanie udostępnień i poleceń. Bieżące zasady opisują [reguły gospodarki](ECONOMY-RULES.md) oraz [wymagania v17](FRONTEND-V17-REQUIREMENTS.md); [manifest v10](decisions-v10.json) i [Excel 10](arkusze/HARBORLIGHT10-zasady.xlsx) zachowują źródło wcześniejszego v16. Wyniki konkretnego wydania zawiera dziennik.

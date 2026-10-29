@@ -1,17 +1,17 @@
 // Economy and progression for the interactive approved-screen prototype.
 // Pure data module: browser UI and Node tests share the same rules.
-import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange } from './harborlight-v1-logistics.js?v=frontend-v16';
-export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty } from './harborlight-v1-logistics.js?v=frontend-v16';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange } from './harborlight-v1-logistics.js?v=frontend-v17';
+export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty } from './harborlight-v1-logistics.js?v=frontend-v17';
 
-import { normalizeResidents, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds } from './harborlight-v1-residents.js?v=frontend-v16';
-export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v16';
+import { normalizeResidents, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds } from './harborlight-v1-residents.js?v=frontend-v17';
+export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v17';
 
-import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction } from './harborlight-v1-activities.js?v=frontend-v16';
-import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v16';
-import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v16';
-import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v16';
-import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v16';
-import { normalizeIslandProfile, validateIslandName } from './harborlight-v1-profile.js?v=frontend-v16';
+import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction } from './harborlight-v1-activities.js?v=frontend-v17';
+import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v17';
+import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v17';
+import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v17';
+import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v17';
+import { normalizeIslandProfile, validateIslandName } from './harborlight-v1-profile.js?v=frontend-v17';
 
 export const RESOURCES = {
   coins: { name: 'Coins', short: 'coins', symbol: '◉', price: 1 },

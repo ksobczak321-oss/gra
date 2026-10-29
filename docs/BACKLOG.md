@@ -1,18 +1,27 @@
-# Backlog HARBORLIGHT — frontend v16 / Excel 10
+# Backlog HARBORLIGHT — frontend v17
 
-Bieżący zakres określają [manifest v10](decisions-v10.json), [reguły gospodarki](ECONOMY-RULES.md) oraz [Excel 10](arkusze/HARBORLIGHT10-zasady.xlsx). Obejmuje zmiany interfejsu v14/v15, 25 kolejnych lekcji z materiałowymi skrzyniami i dwie losowane gry ekspedycji. Końcowe wyniki modelu i przeglądarki, wysłanie kodu oraz publiczny odbiór v16 zapisuje [dziennik](IMPLEMENTATION-LOG.md); poniższe wyniki dawnych wersji nie potwierdzają tego wydania.
+Bieżący zakres określają [dziewięć wymagań v17](FRONTEND-V17-REQUIREMENTS.md) i [reguły gospodarki](ECONOMY-RULES.md), z zachowaniem wcześniejszych zasad samouczka oraz ekonomii. Końcowe wyniki modelu i przeglądarki, wysłanie kodu oraz publiczny odbiór zapisuje [dziennik](IMPLEMENTATION-LOG.md); wyniki dawnych wydań nie potwierdzają tego pakietu.
 
-## Bieżąca iteracja V10
+## Bieżąca iteracja v17
 
-- Samouczek ma 25 lekcji bez blokady pięciu dni i wraca przy wejściu do ukończenia albo świadomej rezygnacji; ręczne wznowienie zachowuje postęp. Zaczyna od zasad, mapy, pracy, jedzenia, zlecenia rozbudowy Ratusza i szczęścia, a dalsze akcje wymagają rzeczywistych działań albo wizyty oraz potwierdzenia przeczytania.
-- Każdy sukces ma fanfarę i zapisane losowanie po 100–300 każdego z pięciu materiałów, bez monet. Share daje identyczną skrzynię dodatkowo najwyżej raz, Skip pozostawia podstawę, a nadmiar bez strat czeka na pojemność centrali. Jawna jednorazowa pomoc umożliwia zlecenie samouczkowej rozbudowy Ratusza bez wielogodzinnego blokowania dalszej nauki.
-- Nowa runda ekspedycji losuje przechylany labirynt z kulkami lub dopasowywanie trójek czarno-białych obrazków. Sterowanie obejmuje mysz, ruch telefonu po udzieleniu dostępu oraz dotykowy zamiennik; etap ma twardy termin, a spóźnienie w końcowej części obniża nową nagrodę. Po terminie przepada cała niewypłacona pula; stare zapisane serie zachowują swój dawny przebieg do końca.
-- Plansze dopasowywania rosną od małych, możliwych do rozegrania w 3–5 minut, do maksymalnego limitu 15 minut; później dochodzą przesunięcia zakrytych obrazków. Konkretne krzywe rozmiaru i czasu są jawnym doborem projektowym w manifeście, obok testowalnych parametrów.
-- Zachowujemy v15: produkcję 20/24/26/28… na osobę i godzinę, bazowy ładunek 120 na pięciominutowy kurs oraz jedną sześciogodzinną atrakcję dla losowego udziału 1–50% populacji. Bieżący interfejs ma równe miniatury, podpisane obsady, zwarte główne karty, powrót, własną nazwę wyspy i komplet PL/EN.
-- Excel 10 zawiera aktualne, krótkie reguły i kalkulatory oraz ukryte archiwum poprzednich arkuszy. Oryginalne pliki 7, 8 i 9 pozostają niezmienione.
-- Lojalność nadal ma serię dzienną, reset po przerwie oraz koniec przy Ratuszu 4 albo po dziesiątej odebranej nagrodzie; kwoty nie są ustalone. Prawdziwe konta, płatności, reklamy, publikacja na Facebooku i potwierdzanie poleceń pozostają osobnymi integracjami.
+- Wyrównane górne krawędzie kolumn budynków, wszystkie karty trójek dopasowane bez suwaków i dolne przyciski menu wewnątrz ramki.
+- Wybór kulek albo trójek przy rozpoczęciu oraz przed kolejną rundą; zapisany typ jest domyślny przy kontynuacji. Parametry, czas, pula i zgodność rozpoczętych starszych serii pozostają zachowane.
+- Wyraźny popup po wycofaniu tragarzy i natychmiastowa informacja w liczniku, np. `5 (−2)`. Osoba z ładunkiem nadal kończy dostawę i dopiero po pięciominutowym powrocie do domu jest wolna.
+- Smutna buźka nad producentem objętym aktywną karą za przestój, usuwana po ustaniu kary.
+- Ustawienia bez logowania, ekran minigry bez strzałki powrotu i przycisk „Obejrzyj reklamę” pod wyjściem w obu grach. Jego ekran informacyjny nie przyznaje czasu ani nagrody; zasady i integracja pozostają do ustalenia.
+- Uwaga o miniaturze Portu została wycofana przez użytkownika jako stary zrzut. Nie jest poprawką tego pakietu.
+
+[Excel 10](arkusze/HARBORLIGHT10-zasady.xlsx) i [manifest v10](decisions-v10.json) pozostają archiwum v16, w tym dawnego losowania minigier. Nie generujemy nowego arkusza i nie zmieniamy plików 7–10. Aktualny opis wyboru gry i interfejsu jest w wymaganiach oraz dokumentach v17.
+
+## Kierunki przyszłe
+
+Prowadzenie Facebooka z zatwierdzaniem postów i komentarzy, kody promocyjne, logo na koszulkę oraz planszowe 2–4 osoby i AR były omawiane jako przyszłość. Plan infrastruktury i kosztów nie oznacza zakupu usług ani uruchomienia backendu. Nagrody reklamowe, kwoty lojalności, prawdziwe konta, płatności, reklamy, publikacja i serwerowa weryfikacja nadal wymagają osobnych ustaleń lub integracji.
 
 Nowego numeru zgłoszenia nie przypisujemy bez jego rzeczywistego utworzenia. Milestone’y zachowują identyfikatory [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3) i [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4).
+
+## Historia: wydanie v16 / Excel 10
+
+Wydanie v16 zachowało 25 kolejnych lekcji bez pięciodniowej blokady, automatyczne otwieranie do ukończenia lub rezygnacji, skrzynie po 100–300 każdego z pięciu materiałów oraz jednorazowe Share ×2. Dwie nowe minigry były wówczas losowane co rundę; v17 zastępuje tę część wyborem gracza. Excel 10 z krótkimi regułami i kalkulatorem pozostaje archiwum tej wersji, a pozostałe zasady v16 są nadal obowiązujące, o ile wymagania v17 ich nie zmieniają.
 
 ## Historia: wydanie V9 / frontend v13
 

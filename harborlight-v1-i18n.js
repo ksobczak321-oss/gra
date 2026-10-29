@@ -1,4 +1,4 @@
-import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v16';
+import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v17';
 
 /** English is the source language. Polish strings are presentation only: saves,
  * identifiers, action payloads and user-entered values are never translated. */
