@@ -57,7 +57,7 @@ const simpleExpedition = {
 };
 const context = { expeditions: [simpleExpedition] };
 function startRun(state, extras = {}) {
-  const result = activityAction(state, { type: 'expeditionStart', expedition: 'proof', ...extras }, context);
+  const result = activityAction(state, { type: 'expeditionStart', expedition: 'proof', gameVersion: 9, ...extras }, context);
   assert.equal(result.ok, true, result.message);
   return state.expeditionRuns.proof;
 }

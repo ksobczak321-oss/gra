@@ -1,16 +1,41 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v15';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v15';
-import * as State from './harborlight-v1-state.js?v=frontend-v15';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v15';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v15';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v15';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v15';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v15';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v15';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v15';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v15';
-import { profileContext, islandDisplayName, applyIslandNamePreference, authHref } from './harborlight-v1-profile.js?v=frontend-v15';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v15';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v16';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v16';
+import * as State from './harborlight-v1-state.js?v=frontend-v16';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v16';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v16';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v16';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v16';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v16';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v16';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v16';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v16';
+import { profileContext, islandDisplayName, applyIslandNamePreference, authHref } from './harborlight-v1-profile.js?v=frontend-v16';
+import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v16';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v16';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v16';
+
+I18n.registerTranslations({
+  "Time left": "Pozostały czas",
+  "Draw a minigame": "Losuj minigrę",
+  "Marble maze": "Kulki w labiryncie",
+  "Picture triples": "Dopasuj trójki",
+  "Expedition minigame": "Minigra ekspedycji",
+  "Try another minigame": "Spróbuj kolejnej minigry",
+  "Island rules": "Zasady wyspy",
+  "Residents and food": "Mieszkańcy i wyżywienie",
+  "Production and transport": "Produkcja i transport",
+  "Happiness and progress": "Szczęście i rozwój",
+  "Continue tutorial": "Wróć do samouczka",
+  "Resume tutorial": "Wznów samouczek",
+  "Tutorial steps completed": "Ukończone kroki samouczka",
+  "Each round randomly chooses a marble maze or picture triples. Win up to 50 coins, cash out, or risk the whole unclaimed pot on the next round. The deadline ends the attempt and clears that pot.": "Każda runda losuje labirynt z kulkami albo dopasowywanie trójek. Wygraj do 50 monet, wypłać je albo postaw całą niewypłaconą pulę na kolejny etap. Upływ czasu kończy próbę i zeruje tę pulę.",
+  "Guide the marbles into their goals with the mouse or by tilting your phone. The first round lasts 3 minutes: 50 coins for the first 2 minutes, then 1 coin less every 15 seconds.": "Wprowadź kulki do otworów myszką albo przechylając telefon. Pierwszy etap trwa 3 minuty: przez pierwsze 2 minuty można wygrać 50 monet, później o 1 monetę mniej co 15 sekund.",
+  "Reveal three identical black-and-white pictures to clear them. Boards grow with difficulty; later, hidden pictures move. Time limits grow from 4 to at most 15 minutes.": "Odsłoń trzy identyczne czarno-białe obrazki, aby usunąć je z planszy. Kolejne plansze są większe, a później zakryte obrazki zmieniają miejsca. Limit czasu rośnie od 4 do najwyżej 15 minut.",
+  "Time is up. The unclaimed pot was lost.": "Czas minął. Niewypłacona pula przepadła.",
+  "Give residents jobs and keep Food in the central Warehouse. Workers need five minutes to reach work; hunger slows production and transport.": "Przydziel mieszkańcom pracę i zapewnij żywność w magazynie centralnym. Do pracy idą pięć minut, a głód spowalnia produkcję i transport.",
+  "Production waits in local storage until carriers deliver it. Upgrades spend central materials, then transport and construction take place in separate phases.": "Gotowe produkty czekają przy budynkach na tragarzy. Rozbudowa wykorzystuje zasoby z magazynu centralnego; najpierw trwa transport, a potem budowa.",
+  "Food, work, housing and temporary attractions influence happiness. Develop all buildings, improve paths and complete tasks while keeping residents happy.": "Na szczęście wpływają jedzenie, praca, mieszkanie i czasowe atrakcje. Rozwijaj budynki, ulepszaj ścieżki i wykonuj zadania, dbając o mieszkańców."
+});
 
 const currentProfile = profileContext(location.search);
 const NEW_PLAYER_PROFILE = currentProfile.newPlayer;
@@ -32,6 +57,14 @@ try { const preferred = localStorage.getItem('harborlight-language'); if (['en',
 let panel = null;
 let placement = null;
 let puzzle = null;
+let miniController = null;
+let miniGameStatus = '';
+let miniSavedAt = 0;
+let tutorialCelebration = null;
+let tutorialReady = false;
+let tutorialGuideSignature = '';
+let tutorialPanelSignature = '';
+const deferredTutorialRewards = new Set();
 let toastTimer;
 let previousFocus;
 let panelNotice = '';
@@ -213,6 +246,7 @@ layer.append(leisureDock);
 function setDockCategory(id) {
   if (!dockCategories.some(([category]) => category === id)) return;
   activeDockCategory = id;
+  if (tutorialReady) { act(state, { type: 'tutorialVisit', subject: id }); save(); }
   resourceDock.hidden = id !== 'resources';
   leisureDock.hidden = !['decorations', 'paths'].includes(id);
   const group = BUILDING_DOCK_GROUPS[id];
@@ -232,6 +266,7 @@ function setDockCategory(id) {
   renderLeisureDock(true);
   renderMobileDock(true);
   localize();
+  if (tutorialReady) refreshTutorialExperience();
 }
 function renderLeisureDock(force = false) {
   if (leisureDock.hidden) return;
@@ -426,6 +461,8 @@ function renderHUD() {
   stage.dispatchEvent(new Event('island-statechange'));
   refreshTaskAcceptance();
   refreshExpeditionPresence();
+  refreshMiniGame();
+  refreshTutorialExperience();
   localize();
 }
 function refreshConstructionBadge(node, id, project) {
@@ -607,11 +644,16 @@ function openPanel(kind, id) {
   if (!dialog.open) { previousFocus = document.activeElement; panelHistory.length = 0; }
   else if (!restoringPanel && panel && (panel.kind !== kind || panel.id !== id)) panelHistory.push({ ...panel, scroll: dialog.scrollTop || 0, bodyScroll: dialog.querySelector('.dialog-body')?.scrollTop || 0 });
   panel = { kind, id };
+  if (!['tutorial', 'puzzle', 'expeditions'].includes(kind)) {
+    act(state, { type: 'tutorialVisit', subject: ['building', 'building-details'].includes(kind) ? id : kind === 'menu' ? 'home' : kind });
+    save();
+  }
   panelNotice = '';
   renderPanel();
   if (!dialog.open) dialog.showModal();
   if (!restoringPanel) { dialog.scrollTop = 0; dialog.querySelector('.dialog-body')?.scrollTo(0, 0); }
   dialog.querySelector('.dialog-close')?.focus();
+  if (tutorialReady) refreshTutorialExperience();
 }
 function backPanel() {
   const previous = panelHistory.at(-1);
@@ -629,9 +671,11 @@ function closePanel(force = false) {
   if (force !== true && expeditionSession()) { requestExpeditionExit(() => closePanel(true)); return; }
   closeInfoPopup(false);
   dialog.close();
+  miniController?.dispose(); miniController = null;
   panel = null;
   panelHistory.length = 0;
   previousFocus?.focus();
+  refreshTutorialExperience();
 }
 dialog.addEventListener('cancel', event => {
   if (closeInfoPopup(true)) { event.preventDefault(); return; }
@@ -1546,7 +1590,7 @@ function renderActivityStack() {
     activityStack.replaceChildren(el('div', { class: 'activity-section-heading' }, el('h3', {}, 'Current tasks'), button('All', () => openPanel('tasks'), { class: 'activity-link', 'aria-label': 'Open all Lighthouse tasks' })),
       ...tasks.slice(0, 3).map(task => taskCard(task, true)),
       el('div', { class: 'activity-section-heading' }, el('h3', {}, 'Expeditions'), button('Explore', () => openPanel('expeditions'), { class: 'activity-link' })),
-      ...EXPEDITIONS.slice(0, 3).map(expedition => button(expedition.name, () => startExpedition(expedition.id), { class: 'activity-expedition' })),
+      button('Draw a minigame', () => startExpedition(expeditionSession()?.expedition || EXPEDITIONS[0].id), { class: 'activity-expedition' }),
       button('Lighthouse', () => openPanel('building', 'lighthouse'), { class: 'activity-lighthouse' }));
   }
   activityStack.querySelectorAll('[data-task-countdown]').forEach(node => { const task = tasks.find(t => taskId(t) === node.dataset.taskCountdown); if (task) node.textContent = durationText(statusOfTask(task).remaining); });
@@ -1622,6 +1666,7 @@ function settingsPanel() {
     card(el('h3', {}, 'Ranking'), stat('Hourly score', count(ranking)), note('Town Hall level × coins, recorded on each full hour.')),
     button('Sign in or create an account', () => { location.href = authHref(location.search); }),
     button('Premium options', () => openPanel('premium'), { class: 'action secondary' }),
+    button('Resume tutorial', () => { if (perform({ type: 'resumeTutorial' })) openPanel('tutorial'); }, { class: 'action secondary', 'data-resume-tutorial': '' }),
     button('Save now', () => { settleActiveTick(); save(); toast('Progress saved.'); }, { class: 'action secondary' }),
     button('Start a new island', () => openPanel('reset'), { class: 'action danger' }));
 }
@@ -1632,15 +1677,50 @@ function timePanel() {
 
 function expeditionRun(id) { return state.expeditionRuns?.[id] || null; }
 function expeditionsPanel() {
-  return el('div', {}, note('Expeditions award coins only. Each timely win adds 50 coins to the actual pot. Cash out or risk the entire remainder on the next level. Overtime removes 10 coins per whole second; a loss clears the pot.'),
-    ...EXPEDITIONS.map(expedition => {
-      const run = expeditionRun(expedition.id);
-      const pot = run && ['active', 'decision'].includes(run.status) ? run.pot : 0;
-      return card(el('h3', {}, expedition.name), el('p', {}, expedition.description),
-        el('div', { class: 'stat-grid' }, stat('Current pot', `${count(pot)} coins`), stat('Next win', `${count(run?.status === 'decision' ? pot + 50 : Activities.expeditionRoundStatus?.(state, run)?.potentialPot ?? 50)} coins`)),
-        run?.status === 'decision' ? expeditionDecisionControls(expedition.id, run) : button(run?.status === 'active' ? 'Resume expedition' : 'Start expedition', () => startExpedition(expedition.id)),
-        run?.status === 'lost' ? note('The last expedition was lost. Its unclaimed pot was cleared.') : null);
-    }));
+  const run = expeditionSession();
+  return el('div', {}, note('Each round randomly chooses a marble maze or picture triples. Win up to 50 coins, cash out, or risk the whole unclaimed pot on the next round. The deadline ends the attempt and clears that pot.'),
+    el('div', { class: 'panel-grid' },
+      card(el('h3', {}, 'Marble maze'), note('Guide the marbles into their goals with the mouse or by tilting your phone. The first round lasts 3 minutes: 50 coins for the first 2 minutes, then 1 coin less every 15 seconds.')),
+      card(el('h3', {}, 'Picture triples'), note('Reveal three identical black-and-white pictures to clear them. Boards grow with difficulty; later, hidden pictures move. Time limits grow from 4 to at most 15 minutes.'))),
+    run?.status === 'decision' ? expeditionDecisionControls(run.expedition, run) : button(run ? 'Resume expedition' : 'Draw a minigame', () => startExpedition(run?.expedition || EXPEDITIONS[0].id), { 'data-expedition-start': '' }),
+    run ? stat('Current pot', `${count(run.pot)} coins`) : null);
+}
+function miniGamePanel(run) {
+  const side = el('div', { class: 'minigame-side' },
+    el('div', { class: 'stat-grid minigame-stats' }, stat('Level', run.level), stat('Time left', el('span', { 'data-minigame-time': '' }, durationText(Activities.expeditionRoundStatus(state, run).remaining))), stat('Potential pot', el('span', { 'data-minigame-pot': '' }, `${count(Activities.expeditionRoundStatus(state, run).potentialPot)} coins`))),
+    el('p', { class: 'notice', 'data-i18n-ignore': '', 'data-minigame-reward-rules': '' }, language() === 'pl' ? `Do ${durationText(run.roundLimit * 2 / 3)} wygrasz 50 monet. Później nagroda maleje o 1 monetę co ${durationText(run.roundLimit / 12)}. Po ${durationText(run.roundLimit)} cała niewypłacona pula przepada.` : `Win 50 coins within ${durationText(run.roundLimit * 2 / 3)}. Then the reward drops by 1 coin every ${durationText(run.roundLimit / 12)}. At ${durationText(run.roundLimit)} the whole unclaimed pot is lost.`),
+    el('div', { 'data-minigame-controls-slot': '', 'data-i18n-ignore': '' }),
+    el('div', { 'data-minigame-result-actions': '' }, miniGameActions(run)));
+  return el('div', { class: 'minigame-panel' }, side, el('div', { 'data-minigame-host': '', 'data-i18n-ignore': '' }));
+}
+function miniGameActions(run) {
+  return run.status === 'decision' ? expeditionDecisionControls(run.expedition, run) : run.status === 'active' ?
+    button('Leave attempt — lose the pot', () => requestExpeditionExit(() => { puzzle = null; openPanel('expeditions'); }), { class: 'action danger' }) :
+    el('div', {}, note(run.lossReason === 'deadline' ? 'Time is up. The unclaimed pot was lost.' : 'The expedition ended. The unclaimed pot was lost.'), button('Try another minigame', () => startExpedition(run.expedition)), button('Return to island', () => closePanel(true), { class: 'action secondary' }));
+}
+function miniGameInput(action) {
+  if (tutorialCelebration || document.querySelector('.island-flow-dialog[open]')) return;
+  const before = expeditionRun(panel?.id)?.status;
+  settleActiveTick();
+  if (action.meaningful === true && !document.hidden && document.hasFocus() && Date.now() - lastInputAt >= 250) {
+    lastInputAt = Date.now(); act(state, { type: 'userActivity', visible: true, focused: true });
+  }
+  const result = act(state, action);
+  if (!result.ok) return;
+  if (action.type !== 'expeditionMiniGameInput' || action.tiltX === 0 && action.tiltY === 0 || Date.now() - miniSavedAt > 1000) { miniSavedAt = Date.now(); save(); }
+  const run = expeditionRun(panel?.id);
+  miniController?.update(run, Activities.expeditionRoundStatus(state, run));
+  if (before !== run?.status) { save(); renderHUD(); }
+}
+function refreshMiniGame() {
+  const run = panel?.kind === 'puzzle' && expeditionRun(panel.id);
+  if (!run?.miniGame || !miniController) return;
+  const status = Activities.expeditionRoundStatus(state, run);
+  miniController.update(run, status);
+  const time = dialog.querySelector('[data-minigame-time]'), pot = dialog.querySelector('[data-minigame-pot]');
+  if (time) time.textContent = durationText(status.remaining);
+  if (pot) pot.textContent = `${count(status.potentialPot)} coins`;
+  if (miniGameStatus !== run.status) { miniGameStatus = run.status; dialog.querySelector('[data-minigame-result-actions]')?.replaceChildren(miniGameActions(run)); }
 }
 function expeditionDecisionControls(id, run) {
   return el('div', { class: 'expedition-decision' },
@@ -1659,13 +1739,14 @@ function startExpedition(id) {
 function beginPuzzle(id) {
   const expedition = EXPEDITIONS.find(item => item.id === id), run = expeditionRun(id);
   if (!expedition || !run || run.status !== 'active') return;
+  if (run.miniGame) { puzzle = { id, runId: run.id, stage: run.level, complete: false }; openPanel('puzzle', id); return; }
   let row = 0, col = 0;
   expedition.map.forEach((line, r) => { if (line.includes('S')) { row = r; col = line.indexOf('S'); } });
   puzzle = { id, runId: run.id, stage: run.level, row, col, path: [[row, col]], moves: 0, tools: { ...expedition.tools }, cleared: new Set(), collected: new Set(), key: false, complete: false, message: 'Choose an adjacent tile to move.' };
   openPanel('puzzle', id);
 }
 function move(row, col) {
-  if (!puzzle || puzzle.complete || Math.abs(row - puzzle.row) + Math.abs(col - puzzle.col) !== 1) return;
+  if (!puzzle || expeditionRun(puzzle.id)?.miniGame || puzzle.complete || Math.abs(row - puzzle.row) + Math.abs(col - puzzle.col) !== 1) return;
   settleActiveTick();
   const expedition = EXPEDITIONS.find(item => item.id === puzzle.id), run = expeditionRun(puzzle.id);
   if (!run || run.status !== 'active' || run.id !== puzzle.runId || run.level !== puzzle.stage) { puzzle.complete = true; puzzle.message = 'This expedition attempt has ended.'; renderPanel(); return; }
@@ -1692,6 +1773,7 @@ function move(row, col) {
 function puzzlePanel() {
   if (!puzzle) return expeditionsPanel();
   const expedition = EXPEDITIONS.find(item => item.id === puzzle.id), run = expeditionRun(puzzle.id);
+  if (run?.miniGame) return miniGamePanel(run);
   const names = { S: 'Camp', '.': 'Path', W: 'Water — bridge', T: 'Tree — axe', R: 'Rock — dynamite', C: 'Supply marker', G: 'Goal', K: 'Key', D: 'Gate' };
   const icons = { S: '⌂', '.': '·', W: '≈', T: '♠', R: '◆', C: '▣', G: '⚑', K: '⚿', D: '▥' };
   const board = el('div', { class: 'puzzle-board', style: { '--cols': expedition.map[0].length }, 'aria-label': 'Expedition board' });
@@ -1721,6 +1803,7 @@ function renderPanel() {
   const rosterOpen = dialog.querySelector('[data-resident-roster]')?.open;
   const rosterScroll = dialog.querySelector('[data-resident-list]')?.scrollTop || 0;
   closeInfoPopup(false);
+  miniController?.dispose(); miniController = null;
   const titles = { home: islandDisplayName(state, language()), menu: islandDisplayName(state, language()), buildings: 'Buildings', resources: 'Warehouse and transport', residents: 'Residents', trade: 'Harbor trade', tasks: 'Tasks', objective: gameGoal().title, settings: 'Settings', time: 'Island time', premium: 'Premium options', expeditions: 'Expeditions', map: 'Island map', decorations: 'Decorations', paths: 'Paths and bridges', reset: 'New island' };
   let title = titles[panel.kind] || titleOf(panel.id);
   let body;
@@ -1745,7 +1828,8 @@ function renderPanel() {
     case 'decorations': body = decorationsPanel(); break;
     case 'paths': body = pathsPanel(); break;
     case 'expeditions': body = expeditionsPanel(); break;
-    case 'puzzle': title = EXPEDITIONS.find(item => item.id === puzzle.id).name; body = puzzlePanel(); break;
+    case 'puzzle': title = expeditionRun(puzzle.id)?.miniGame ? 'Expedition minigame' : EXPEDITIONS.find(item => item.id === puzzle.id).name; body = puzzlePanel(); break;
+    case 'rules': title = 'Island rules'; body = islandRulesPanel(); break;
     case 'map': body = el('div', {}, note('Choose a district to locate it on the island.'), el('div', { class: 'panel-grid' }, Object.keys(buildingRegions).map(id => button(titleOf(id), () => {
       closePanel(); const node = document.getElementById(`hit-world-${id}`); node.focus(); node.classList.add('world-pulse'); setTimeout(() => node.classList.remove('world-pulse'), 3000);
     })))); break;
@@ -1756,7 +1840,7 @@ function renderPanel() {
       button('Notifications', () => openPanel('notifications'), { class: 'action secondary' }),
       button('Premium options', () => openPanel('premium'), { class: 'action secondary' }),
       el('div', { class: 'stat-grid' }, stat('Town Hall level', el('span', { 'data-population-stat': 'level' }, state.buildings.townhall.level)), stat('Residents', el('span', { 'data-population-stat': 'population' }, `${state.population} / ${state.capacity}`)), stat('Happiness', el('span', { 'data-population-stat': 'happiness' }, happinessText())), stat('Day', state.day)),
-      el('div', { class: 'panel-grid' }, [['objective', 'Main objective'], ['buildings', 'Buildings'], ['expeditions', 'Expeditions'], ['tasks', 'Tasks'], ['residents', 'Residents'], ['resources', 'Warehouse'], ['trade', 'Trade'], ['map', 'Island map'], ['tutorial', 'Tutorial'], ['settings', 'Settings']].map(([kind, label]) => button(label, () => openPanel(kind)))),
+      el('div', { class: 'panel-grid' }, [['rules', 'Island rules'], ['objective', 'Main objective'], ['buildings', 'Buildings'], ['expeditions', 'Expeditions'], ['tasks', 'Tasks'], ['residents', 'Residents'], ['resources', 'Warehouse'], ['trade', 'Trade'], ['map', 'Island map'], ['tutorial', 'Tutorial'], ['settings', 'Settings']].map(([kind, label]) => button(label, () => openPanel(kind)))),
       button('Return to island', closePanel, { class: 'action secondary' }));
   }
   const scroll = dialog.querySelector('.dialog-body')?.scrollTop || 0;
@@ -1773,6 +1857,9 @@ function renderPanel() {
   dialog.querySelector('.dialog-body').scrollTop = scroll;
   dialog.scrollTop = dialogScroll;
   localize(dialog);
+  const gameHost = dialog.querySelector('[data-minigame-host]');
+  if (gameHost) { const run = expeditionRun(panel.id); miniGameStatus = run.status; miniController = mountMiniGame({ host: gameHost, controlsHost: dialog.querySelector('[data-minigame-controls-slot]'), run, onAction: miniGameInput, language: language(), status: Activities.expeditionRoundStatus(state, run), animations: effectiveAnimationsEnabled() }); }
+  if (tutorialReady) refreshTutorialExperience();
 }
 
 function levelSharePanel() {
@@ -1868,18 +1955,74 @@ function notificationCategory(item) {
 function notificationFilterSettings() {
   return rules('Notification categories', note('Choose which categories are shown. All events remain in your island history.'), ...NOTIFICATION_CATEGORIES.map(([id, label]) => el('label', { class: 'setting-row' }, el('span', {}, label), el('input', { type: 'checkbox', checked: state.settings.notificationCategories?.[id] !== false, 'data-notification-category': id, onchange: event => perform({ type: 'setting', key: 'notificationCategories', value: { ...(state.settings.notificationCategories || {}), [id]: event.target.checked } }) }))));
 }
-function tutorialPanel() {
-  const rows = Progression.tutorialRows?.(state) || [];
-  return el('div', { class: 'tutorial-panel' }, note('Learn the island in 25 short steps: five tasks on each of your first five active days. Complete tasks and claim their displayed rewards.'),
-    progressionOverview(),
-    ...[1,2,3,4,5].map(day => el('section', { class: 'tutorial-day', 'data-tutorial-day': day }, el('h3', {}, `Day ${day}`), ...rows.filter(row => row.day === day).map(row => card(
-      el('h4', {}, row.title), el('p', {}, row.description), el('p', { class: 'task-reward' }, `Reward: ${costText(row.reward)}`),
-      row.claimed ? el('span', { class: 'badge' }, 'Reward claimed') : !row.unlocked ? el('span', { class: 'badge' }, 'Available on this active day') : row.canClaim ? button('Claim reward', () => perform({ type: 'claimTutorial', taskId: row.id }), { 'data-tutorial-claim': row.id }) : row.canObserve ? button('Read and complete', () => perform({ type: 'tutorialObserve', taskId: row.id }), { 'data-tutorial-observe': row.id }) : el('span', { class: 'badge' }, row.lockedReason || (row.completed ? 'Completed' : 'In progress')))))));
+function tutorialOptions() {
+  return { state, progression: Progression, language: language(), onAction: tutorialAction, onVisit: visitTutorialRoute, onClose: () => closePanel() };
+}
+function tutorialPanel() { return createTutorialPanel(tutorialOptions()); }
+function tutorialAction(action) {
+  if (action.type === 'seeTutorialReward') deferredTutorialRewards.delete(action.taskId);
+  const result = perform(action);
+  if (result && action.type === 'seeTutorialReward' && !tutorialCelebration) {
+    const achievement = Progression.tutorialPendingRewards(state).find(item => item.lessonId === action.taskId);
+    if (achievement) openTutorialReward(achievement, Progression.tutorialRows(state));
+  }
+  if (result && action.type === 'dismissTutorial') closePanel(true);
+  return result;
+}
+function visitTutorialRoute(route) {
+  if (route === 'rules' && !state.tutorial.events['visit:rules-read:home']) { openPanel('home'); return; }
+  if (['paths', 'decorations'].includes(route) || route === 'resources' && Progression.tutorialStatus(state).nextLessonId === 'resources-dock') {
+    closePanel(true); setDockCategory(route); return;
+  }
+  if (BUILDINGS[route]) { openPanel('building', route); return; }
+  openPanel(route);
+}
+function islandRulesPanel() {
+  return el('div', { class: 'island-start-rules' }, note(gameGoal().description),
+    card(el('h3', {}, 'Residents and food'), note('Give residents jobs and keep Food in the central Warehouse. Workers need five minutes to reach work; hunger slows production and transport.')),
+    card(el('h3', {}, 'Production and transport'), note('Production waits in local storage until carriers deliver it. Upgrades spend central materials, then transport and construction take place in separate phases.')),
+    card(el('h3', {}, 'Happiness and progress'), note('Food, work, housing and temporary attractions influence happiness. Develop all buildings, improve paths and complete tasks while keeping residents happy.')),
+    button('Continue tutorial', () => openPanel('tutorial'), { class: 'action secondary' }));
+}
+function finishTutorialReward(achievement, type) {
+  const result = act(state, { type, taskId: achievement.lessonId });
+  if (!result.ok) { toast(result.message); return false; }
+  save();
+  queueMicrotask(() => { tutorialCelebration = null; renderHUD(); if (panel?.kind === 'tutorial') renderPanel(); });
+  return true;
+}
+function refreshTutorialExperience() {
+  if (!tutorialReady) return;
+  const status = Progression.tutorialStatus(state), rows = Progression.tutorialRows(state);
+  const row = rows.find(item => !item.completed);
+  const host = dialog.open ? dialog.querySelector('.dialog-body') : document.body;
+  const signature = JSON.stringify([language(), panel?.kind, panel?.id, status, row?.visited, row?.canObserve, row?.completed, row?.canClaim]);
+  if (panel?.kind === 'tutorial' && tutorialPanelSignature !== signature) { tutorialPanelSignature = signature; renderPanel(); return; }
+  const existing = document.querySelector('[data-active-tutorial-guide]');
+  if (signature !== tutorialGuideSignature || !existing?.isConnected) {
+    tutorialGuideSignature = signature; existing?.remove();
+    if (panel?.kind !== 'tutorial' && !expeditionSession()) {
+      const guide = createTutorialGuide(tutorialOptions());
+      if (guide && host) { guide.dataset.activeTutorialGuide = ''; if (!dialog.open) guide.classList.add('tutorial-guide-floating'); dialog.open ? host.prepend(guide) : host.append(guide); }
+    }
+  }
+  if (status.autoOpenDisabled) return;
+  for (const pending of rows.filter(item => item.canClaim)) { const result = act(state, { type: 'claimTutorial', taskId: pending.id }); if (result.ok) save(); }
+  if (panel && !dialog.open || tutorialCelebration || taskCelebration?.open || taskAcceptanceDialog?.open || confirmationDialog?.open || document.querySelector('.island-flow-dialog[open]')) return;
+  const achievement = Progression.tutorialPendingRewards(state).find(item => item.claimed && !deferredTutorialRewards.has(item.lessonId));
+  if (!achievement) return;
+  openTutorialReward(achievement, rows);
+}
+function openTutorialReward(achievement, rows) {
+  act(state, { type: 'seeTutorialReward', taskId: achievement.lessonId }); save();
+  tutorialCelebration = showTutorialAchievement({ achievement, row: rows.find(item => item.id === achievement.lessonId), language: language(), animations: effectiveAnimationsEnabled(), sound: state.settings.sound,
+    onShare: () => finishTutorialReward(achievement, 'shareTutorialReward'), onSkip: () => finishTutorialReward(achievement, 'skipTutorialShare'),
+    onClose: () => { deferredTutorialRewards.add(achievement.lessonId); tutorialCelebration = null; renderHUD(); } });
 }
 function progressionOverview() {
   const loyalty = Progression.loyaltyStatus?.(state), engagement = Progression.engagementStatus?.(state);
   return card(el('h3', {}, 'Your progress'),
-    el('div', { class: 'stat-grid' }, stat('Active tutorial days', `${state.tutorial?.activeDays?.length || 0} / 5`), stat('Tutorial rewards claimed', `${Object.keys(state.tutorial?.claimed || {}).length} / 25`)),
+    el('div', { class: 'stat-grid' }, stat('Tutorial steps completed', `${Progression.tutorialStatus(state).completed} / 25`), stat('Tutorial rewards claimed', `${Object.keys(state.tutorial?.claimed || {}).length} / 25`)),
     engagement?.active ? note(`Active play: production ×2 for ${durationText(engagement.remaining)}. Meaningful activity renews this five-minute bonus.`) : note('Meaningful activity activates a five-minute production ×2 bonus.'),
     loyalty ? el('details', { class: 'island-rules' }, el('summary', {}, 'Introductory loyalty calendar'),
       el('div', { class: 'loyalty-calendar' }, ...Array.from({length:10}, (_,index) => el('span', { class: `loyalty-day${loyalty.claimedDays.includes(index+1) ? ' is-claimed' : ''}${index+1 === loyalty.streak ? ' is-current' : ''}` }, index+1))), note(loyalty.message)) : null,
@@ -1988,6 +2131,8 @@ const restoredExpedition = expeditionSession();
 if (restoredExpedition?.status === 'active') beginPuzzle(restoredExpedition.expedition);
 else if (restoredExpedition?.status === 'decision') openPanel('expeditions');
 else if (Activities.taskAcceptanceStatus?.(state)?.pending) { const pending = state.lighthouseTasks.find(task => task.id === state.taskAcceptanceDraft.taskId); if (pending) openTaskAcceptance(pending); }
+tutorialReady = true;
+if (!dialog.open && !taskAcceptanceDialog?.open && Progression.tutorialStatus(state).shouldAutoOpen) openPanel('tutorial');
 renderHUD();
 createAmbientScene(stage, () => state).ready.catch(error => {
   console.error(error);

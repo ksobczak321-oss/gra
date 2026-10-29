@@ -1,9 +1,9 @@
 // Physical goods and event-based logistics. Durations are real elapsed seconds,
 // including catch-up after the browser is closed.
-import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v15';
-import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v15';
-import { centralReserved, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v15';
-export { centralReserved, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v15';
+import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v16';
+import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v16';
+import { centralReserved, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v16';
+export { centralReserved, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v16';
 export const workerEfficiency = productionMultiplier;
 // Paths improve cargo courses, independently of production and resident walks.
 export const transportEfficiency = (state, efficiency = workerEfficiency(state)) => efficiency * roadSpeedMultiplier(state);

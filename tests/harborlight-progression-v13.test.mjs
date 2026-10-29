@@ -36,7 +36,14 @@ function reload(state) {
   normalizeProgression(restored, raw);
   return restored;
 }
-function observe(state, taskId) { return progressionAction(state, { type: 'tutorialObserve', taskId }, context); }
+function observe(state, taskId) {
+  const item = TUTORIAL_LESSONS.find(row => row.id === taskId);
+  if (item?.kind === 'observe') {
+    if (taskId === 'rules-read') progressionAction(state, { type: 'tutorialVisit', subject: 'home' }, context);
+    progressionAction(state, { type: 'tutorialVisit', subject: item.route }, context);
+  }
+  return progressionAction(state, { type: 'tutorialObserve', taskId }, context);
+}
 function claim(state, taskId) { return progressionAction(state, { type: 'claimTutorial', taskId }, context); }
 const verifiedSocial = { verifiedSocialEvent: true, accountId: 'owner', receiveMaterials };
 const verifiedAccount = { verifiedAccountEvent: true, accountId: 'owner', receiveMaterials };
@@ -89,26 +96,28 @@ test('offline time does not create tutorial active days or renew activity', () =
   advance(state, 3 * 86400);
   assert.equal(activePlayMultiplier(state), 1);
   assert.deepEqual(state.tutorial.activeDays, ['2026-10-23']);
-  assert.equal(tutorialRows(state).filter(row => row.unlocked).length, 5);
+  assert.equal(tutorialRows(state).filter(row => row.unlocked).length, 1);
   activity(state);
   assert.deepEqual(state.tutorial.activeDays, ['2026-10-23', '2026-10-26']);
-  assert.equal(tutorialRows(state).filter(row => row.unlocked).length, 10);
+  assert.equal(tutorialRows(state).filter(row => row.unlocked).length, 1);
 });
 
-test('tutorial has exactly five lessons for each of the first five active Warsaw days', () => {
+test('all25 tutorial lessons are available in sequence without a five-day time gate', () => {
   const state = island();
   assert.equal(TUTORIAL_LESSONS.length, 25);
+  assert.equal(TUTORIAL_LESSONS.every(row => row.day === 1), true);
   for (let day = 1; day <= 5; day++) {
     activity(state);
-    activity(state);
     assert.equal(state.tutorial.activeDays.length, day);
-    assert.equal(TUTORIAL_LESSONS.filter(row => row.day === day).length, 5);
-    assert.equal(tutorialRows(state).filter(row => row.unlocked).length, day * 5);
+    assert.equal(tutorialRows(state).filter(row => row.unlocked).length, 1);
     advance(state, 86400);
   }
   activity(state);
   assert.equal(state.tutorial.activeDays.length, 5);
+  assert.equal(observe(state, 'rules-read').ok, true);
+  assert.equal(tutorialRows(state).find(row => row.id === 'island-map').unlocked, true);
 });
+
 
 test('a real Warsaw midnight rather than a rolling 24-hour clock unlocks the next tutorial day', () => {
   const state = island(Date.parse('2026-03-28T22:59:00Z'));
@@ -120,65 +129,73 @@ test('a real Warsaw midnight rather than a rolling 24-hour clock unlocks the nex
   assert.deepEqual(state.tutorial.activeDays, ['2026-03-28', '2026-03-29', '2026-03-30']);
 });
 
-test('locked days and missing prerequisite lessons cannot be observed or claimed', () => {
+test('missing prerequisite lessons cannot be observed or claimed even on later active days', () => {
   const state = island();
-  assert.equal(observe(state, 'island-level').ok, false);
-  assert.equal(claim(state, 'island-level').ok, false);
-  activity(state);
-  assert.equal(observe(state, 'residents-home').ok, false);
-  assert.equal(observe(state, 'central-food').ok, false);
-  assert.equal(claim(state, 'island-level').ok, false);
+  assert.equal(claim(state, 'rules-read').ok, false);
+  assert.equal(observe(state, 'island-map').ok, false);
+  activity(state); advance(state, 86400); activity(state);
+  assert.equal(observe(state, 'food-check').ok, false);
   assert.equal(state.resources.coins, 100);
-  assert.equal(observe(state, 'island-level').ok, true);
-  assert.equal(observe(state, 'residents-home').ok, true);
+  assert.equal(observe(state, 'rules-read').ok, true);
+  assert.equal(observe(state, 'island-map').ok, true);
 });
 
-test('tutorial observation, genuine gameplay conditions and once-only claiming remain distinct', () => {
+
+test('tutorial observation, genuine crew conditions and once-only claiming remain distinct', () => {
   const state = island(); activity(state);
-  observe(state, 'island-level'); observe(state, 'residents-home');
+  observe(state, 'rules-read'); observe(state, 'island-map');
   assert.equal(observe(state, 'first-job').ok, false);
   recordProgressionAction(state, { type: 'assign', building: 'quarry', delta: 1 }, { ok: false });
   assert.equal(tutorialRows(state).find(row => row.id === 'first-job').completed, false);
   state.residents[0].workplace = 'quarry'; state.residents[0].arrivalRemaining = 300;
+  state.residents[1].workplace = 'warehouse'; state.residents[1].arrivalRemaining = 300;
   recordProgressionAction(state, { type: 'assign', building: 'quarry', delta: 1 }, { ok: true });
+  recordProgressionAction(state, { type: 'assign', building: 'warehouse', delta: 1 }, { ok: true });
   assert.equal(tutorialRows(state).find(row => row.id === 'first-job').completed, true);
-  assert.equal(observe(state, 'workplace-journey').ok, true);
+  const reward = { ...state.tutorial.chests['first-job'].reward };
   assert.equal(claim(state, 'first-job').ok, true);
-  assert.equal(state.resources.coins, 125);
-  assert.equal(state.resources.grain, 110);
+  assert.equal(state.resources.coins, 100);
+  for (const id of MATERIALS) assert.equal(state.resources[id], 100 + reward[id]);
   assert.equal(claim(state, 'first-job').ok, false);
   const restored = reload(state);
   assert.equal(claim(restored, 'first-job').ok, false);
-  assert.equal(restored.resources.coins, 125);
+  assert.equal(restored.resources.coins, 100);
 });
+
 
 test('tutorial material overflow uses the existing conservation-preserving delivery buffer', () => {
-  const state = island(); activity(state); observe(state, 'island-level');
+  const state = island(); activity(state); observe(state, 'rules-read');
+  const reward = state.tutorial.chests['rules-read'].reward;
   for (const id of MATERIALS) state.resources[id] = 800;
-  assert.equal(claim(state, 'island-level').ok, true);
-  assert.equal(state.resources.wood, 800);
-  assert.equal(state.pendingDeliveries.wood, 10);
-  assert.equal(state.resources.coins, 125);
+  assert.equal(claim(state, 'rules-read').ok, true);
+  for (const id of MATERIALS) {
+    assert.equal(state.resources[id], 800);
+    assert.equal(state.pendingDeliveries[id], reward[id]);
+  }
+  assert.equal(state.resources.coins, 100);
 });
 
+
 test('missing material receiver cannot mark a tutorial reward claimed or add partial coins', () => {
-  const state = island(); activity(state); observe(state, 'island-level');
+  const state = island(); activity(state); observe(state, 'rules-read');
   const before = JSON.stringify(state);
-  assert.equal(progressionAction(state, { type: 'claimTutorial', taskId: 'island-level' }).ok, false);
+  assert.equal(progressionAction(state, { type: 'claimTutorial', taskId: 'rules-read' }).ok, false);
   assert.equal(JSON.stringify(state), before);
 });
 
 test('delivery lesson checks actual delivered goods and priorities require accepted actions', () => {
-  const state = island(); activity(state); advance(state, 86400); activity(state);
-  recordProgressionAction(state, { type: 'assign', building: 'warehouse', delta: 1 }, { ok: true });
-  assert.equal(tutorialRows(state).find(row => row.id === 'warehouse-job').completed, true);
+  const state = island();
+  for (const row of TUTORIAL_LESSONS.slice(0, 8)) state.tutorial.completed[row.id] = true;
+  state.warehousePriorities = ['construction'];
+  recordProgressionAction(state, { type: 'warehousePriority', resource: 'construction' }, { ok: false });
+  assert.equal(tutorialRows(state).find(row => row.id === 'transport-priority').completed, false);
+  recordProgressionAction(state, { type: 'warehousePriority', resource: 'construction' }, { ok: true });
+  assert.equal(tutorialRows(state).find(row => row.id === 'transport-priority').completed, true);
   assert.equal(tutorialRows(state).find(row => row.id === 'first-delivery').completed, false);
   state.statistics.collected = 1; advanceProgression(state);
   assert.equal(tutorialRows(state).find(row => row.id === 'first-delivery').completed, true);
-  state.warehousePriorities = ['construction'];
-  recordProgressionAction(state, { type: 'warehousePriority', resource: 'construction' }, { ok: true });
-  assert.equal(tutorialRows(state).find(row => row.id === 'transport-priority').completed, true);
 });
+
 
 test('social dialogs and caller-supplied verified fields never grant verified-publication rewards', () => {
   const state = island();
@@ -334,50 +351,41 @@ test('ten already-claimed loyalty rewards permanently close the introductory pro
 });
 
 test('normalization keeps durable progress while rejecting unknown lessons and future activity clocks', () => {
-  const state = island(); activity(state); observe(state, 'island-level'); claim(state, 'island-level');
+  const state = island(); activity(state); observe(state, 'rules-read'); claim(state, 'rules-read');
   state.engagement.activeUntil = START + 100 * 86400000;
   state.tutorial.completed.unknown = true;
   state.tutorial.claimed.unknown = true;
   const restored = reload(state);
   assert.equal(restored.engagement.activeUntil, START + 300000);
-  assert.equal(restored.tutorial.claimed['island-level'], true);
+  assert.equal(restored.tutorial.claimed['rules-read'], true);
   assert.equal(restored.tutorial.claimed.unknown, undefined);
   assert.equal(restored.tutorial.completed.unknown, undefined);
-  assert.equal(restored.resources.coins, 125);
+  assert.equal(restored.resources.coins, 100);
 });
 
 
-test('all25 lessons can finish on level1 through achievable actions and award1000coins total once', () => {
+test('all25 previously paid lessons remain archived without replaying their historical coin awards', () => {
   const state = island();
-  for (let day = 1; day <= 5; day++) {
-    activity(state);
-    for (const item of TUTORIAL_LESSONS.filter(item => item.day === day)) {
-      if (item.kind === 'observe') assert.equal(observe(state, item.id).ok, true, item.id);
-      else if (item.subject === 'delivery') { state.statistics.collected = 1; advanceProgression(state); }
-      else {
-        let action;
-        if (item.subject === 'assign-producer') {
-          state.residents[0].workplace = 'quarry'; state.residents[0].arrivalRemaining = 300;
-          action = { type: 'assign', building: 'quarry', delta: 1 };
-        } else if (item.subject === 'assign-warehouse') action = { type: 'assign', building: 'warehouse', delta: 1 };
-        else if (item.subject === 'transport-priority') { state.warehousePriorities = ['food']; action = { type: 'warehousePriority', resource: 'food' }; }
-        else if (item.subject === 'task-accept') action = { type: 'confirmTaskAcceptance', task: 'lighthouse-1' };
-        else if (item.subject === 'release-worker') action = { type: 'assign', building: 'quarry', delta: -1 };
-        else action = { type: 'setting', key: 'motion', value: false };
-        recordProgressionAction(state, action, { ok: true });
-      }
-      assert.equal(claim(state, item.id).ok, true, item.id);
-    }
-    if (day < 5) advance(state, 86400);
-  }
-  assert.equal(state.buildings.townhall.level, 1);
-  assert.equal(tutorialRows(state).filter(row => row.claimed).length, 25);
+  const oldIds = ['island-level','residents-home','first-job','workplace-journey','resources-dock','warehouse-job','first-delivery','transport-priority','food-chain','central-food','personal-happiness','house-points','upgrade-cost','construction-queue','storage-limits','market-rules','lighthouse-visits','lighthouse-task','path-levels','daily-attractions','chapel-blessing','expedition-rules','returning-workers','motion-setting','island-review'];
+  state.resources.coins = 1100;
+  const raw = structuredClone(state);
+  raw.tutorial = { completed: Object.fromEntries(oldIds.map(id => [id, true])), claimed: Object.fromEntries(oldIds.map(id => [id, true])) };
+  normalizeProgression(state, raw);
+  assert.equal(Object.keys(state.tutorial.legacy.claimed).length, 25);
+  assert.equal(state.tutorial.claimed['rules-read'], true);
+  assert.equal(state.tutorial.claimed['food-check'], true);
+  assert.equal(state.tutorial.claimed['townhall-upgrade'], undefined);
+  assert.equal(state.tutorial.claimed['happiness-action'], undefined);
+  assert.equal(state.tutorial.claimed['path-upgrade'], undefined);
+  assert.equal(state.tutorial.claimed['expedition-rules'], undefined);
+  assert.equal(claim(state, 'rules-read').ok, false);
   assert.equal(state.resources.coins, 1100);
-  assert.equal(MATERIALS.reduce((sum, id) => sum + state.resources[id], 0), 900);
   const restored = reload(state);
-  for (const row of tutorialRows(restored)) assert.equal(claim(restored, row.id).ok, false);
+  assert.deepEqual(restored.tutorial.legacy, state.tutorial.legacy);
+  assert.equal(claim(restored, 'food-check').ok, false);
   assert.equal(restored.resources.coins, 1100);
 });
+
 
 test('a third counted publication can stack with a newly reached level reward', () => {
   const state = island(); state.buildings.townhall.level = 2;

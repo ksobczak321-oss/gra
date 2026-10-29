@@ -1,8 +1,24 @@
-# Backlog HARBORLIGHT
+# Backlog HARBORLIGHT — frontend v16 / Excel 10
 
-Bieżący zakres: **58 decyzji V9, 19 uwag frontendu oraz uproszczony Excel 9**, wydanie docelowe frontend-v13. Implementacja i odbiór lokalny zakończone: 388/388 testów modelu PASS, pięć zestawów przeglądarkowych i przegląd wizualny zaliczone. Commit 8025f3d i udane Pages 40012462614 potwierdzają publikację; publiczne sumy kontrolne gry i Excela są zgodne. Końcowy odbiór rzeczywistego Pages: trzy zestawy PASS; dowody zapisuje dziennik. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4).
+Bieżący zakres określają [manifest v10](decisions-v10.json), [reguły gospodarki](ECONOMY-RULES.md) oraz [Excel 10](arkusze/HARBORLIGHT10-zasady.xlsx). Obejmuje zmiany interfejsu v14/v15, 25 kolejnych lekcji z materiałowymi skrzyniami i dwie losowane gry ekspedycji. Końcowe wyniki modelu i przeglądarki, wysłanie kodu oraz publiczny odbiór v16 zapisuje [dziennik](IMPLEMENTATION-LOG.md); poniższe wyniki dawnych wersji nie potwierdzają tego wydania.
 
-## Bieżąca iteracja V9
+## Bieżąca iteracja V10
+
+- Samouczek ma 25 lekcji bez blokady pięciu dni i wraca przy wejściu do ukończenia albo świadomej rezygnacji; ręczne wznowienie zachowuje postęp. Zaczyna od zasad, mapy, pracy, jedzenia, zlecenia rozbudowy Ratusza i szczęścia, a dalsze akcje wymagają rzeczywistych działań albo wizyty oraz potwierdzenia przeczytania.
+- Każdy sukces ma fanfarę i zapisane losowanie po 100–300 każdego z pięciu materiałów, bez monet. Share daje identyczną skrzynię dodatkowo najwyżej raz, Skip pozostawia podstawę, a nadmiar bez strat czeka na pojemność centrali. Jawna jednorazowa pomoc umożliwia zlecenie samouczkowej rozbudowy Ratusza bez wielogodzinnego blokowania dalszej nauki.
+- Nowa runda ekspedycji losuje przechylany labirynt z kulkami lub dopasowywanie trójek czarno-białych obrazków. Sterowanie obejmuje mysz, ruch telefonu po udzieleniu dostępu oraz dotykowy zamiennik; etap ma twardy termin, a spóźnienie w końcowej części obniża nową nagrodę. Po terminie przepada cała niewypłacona pula; stare zapisane serie zachowują swój dawny przebieg do końca.
+- Plansze dopasowywania rosną od małych, możliwych do rozegrania w 3–5 minut, do maksymalnego limitu 15 minut; później dochodzą przesunięcia zakrytych obrazków. Konkretne krzywe rozmiaru i czasu są jawnym doborem projektowym w manifeście, obok testowalnych parametrów.
+- Zachowujemy v15: produkcję 20/24/26/28… na osobę i godzinę, bazowy ładunek 120 na pięciominutowy kurs oraz jedną sześciogodzinną atrakcję dla losowego udziału 1–50% populacji. Bieżący interfejs ma równe miniatury, podpisane obsady, zwarte główne karty, powrót, własną nazwę wyspy i komplet PL/EN.
+- Excel 10 zawiera aktualne, krótkie reguły i kalkulatory oraz ukryte archiwum poprzednich arkuszy. Oryginalne pliki 7, 8 i 9 pozostają niezmienione.
+- Lojalność nadal ma serię dzienną, reset po przerwie oraz koniec przy Ratuszu 4 albo po dziesiątej odebranej nagrodzie; kwoty nie są ustalone. Prawdziwe konta, płatności, reklamy, publikacja na Facebooku i potwierdzanie poleceń pozostają osobnymi integracjami.
+
+Nowego numeru zgłoszenia nie przypisujemy bez jego rzeczywistego utworzenia. Milestone’y zachowują identyfikatory [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3) i [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4).
+
+## Historia: wydanie V9 / frontend v13
+
+Historyczny zakres: **58 decyzji V9, 19 uwag frontendu oraz uproszczony Excel 9**, wydanie frontend-v13. Implementacja i odbiór lokalny zakończone: 388/388 testów modelu PASS, pięć zestawów przeglądarkowych i przegląd wizualny zaliczone. Commit 8025f3d i udane Pages 40012462614 potwierdzają publikację; publiczne sumy kontrolne gry i Excela są zgodne. Końcowy odbiór rzeczywistego Pages: trzy zestawy PASS; dowody zapisuje dziennik. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4).
+
+### Historyczny zakres iteracji V9
 
 - [Manifest 58+19](decisions-v9.json) jest kompletem uzgodnień, a [macierz odbioru](FRONTEND-REVIEW.md) pokazuje wymagania końcowe. Nie otwieramy ponownie rozstrzygniętych zasad.
 - Model: nowe liczniki potrzeb, premie i odbiorcy, realny T i rezerwacje, anulowanie, Food, pełne zakupy i dowóz Premium, potwierdzanie zadań, seria ekspedycji, kalendarz, samouczek i potwierdzone zdarzenia przyszłych integracji.

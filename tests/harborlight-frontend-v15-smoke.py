@@ -60,6 +60,10 @@ def visit(browser, width=1672, height=941, language='pl'):
     assert page.goto(URL).ok
     page.wait_for_function('document.getElementById("loading").hidden')
     page.wait_for_selector('[data-hud="working"]', state='attached')
+    # v16 opens the real tutorial on a fresh profile. This older acceptance
+    # exercises unrelated panels after the player chooses to return later.
+    if page.locator('[data-tutorial-panel]').count():
+        page.locator('[data-tutorial-later]').click()
     return context, page
 
 
@@ -80,14 +84,19 @@ def install_save(page, value):
 
 def fixture(page, mode='rich'):
     value = page.evaluate('''async mode => {
-      const {createState} = await import('./harborlight-v1-state.js?v=frontend-v15');
+      const {createState,act,EXPEDITIONS} = await import('./harborlight-v1-state.js?v=frontend-v15');
       const s=createState(Date.now());
+      s.tutorial.autoOpenDisabled=true;
       if(mode==='rich') {
         for(const [id,b]of Object.entries(s.buildings))b.level=id==='lighthouse'?1:2;
         s.buildings.townhall.level=4;s.buildings.house.level=4;s.buildings.warehouse.level=4;
         s.resources={coins:100000,wood:1800,stone:1800,grain:1800,food:2000,planks:1800};
       }
-      if(mode==='challenge')s.activitySettings={taskMode:'queue',expeditionCurve:{baseSeconds:1000,difficultyPerStage:0.1}};
+      if(mode==='challenge') {
+        s.activitySettings={taskMode:'queue',expeditionCurve:{baseSeconds:1000,difficultyPerStage:0.1}};
+        // Preserve this suite's original route proof as an explicit legacy save.
+        act(s,{type:'expeditionStart',expedition:EXPEDITIONS[0].id,gameVersion:9});
+      }
       return s;
     }''', mode)
     install_save(page, value)
@@ -270,7 +279,8 @@ with sync_playwright() as playwright:
         print('PASS Polish task confirmation/donations, Chapel, and one six-hour attraction blocking all other starts across reload')
 
         fixture(page,'challenge')
-        page.locator('.activity-expedition').first.click()
+        if not page.locator('.puzzle-board').count():
+            page.locator('.activity-expedition').first.click()
         for row,col in route():page.locator(f'.puzzle-cell[data-row="{row}"][data-col="{col}"]').click()
         polish(page);expect(page.locator('[data-expedition-cashout]')).to_contain_text('50')
         page.screenshot(path='/tmp/harborlight-v15-expedition-win-pl.png')
@@ -309,6 +319,8 @@ with sync_playwright() as playwright:
             page.locator('.guest-link').click()
             assert 'slot='+SLOT in page.url
             assert saved(page)['islandName']==island_name
+            if page.locator('[data-tutorial-panel]').count():
+                page.locator('[data-tutorial-later]').click()
             expect(page.locator('[data-island-name]').first).to_have_text(island_name)
             page.locator('#hit-home').click();expect(page.locator('#dialog-title')).to_have_text(island_name)
             close(page);page.locator('#hit-settings').click();page.locator('select').first.select_option('en');close(page)

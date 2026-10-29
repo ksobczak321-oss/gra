@@ -157,6 +157,7 @@ def run():
         assert fresh['buildings']['townhall']['level'] == 1 and fresh['population'] == 12
         assert fresh.get('previewBuildStockVersion') is None
         assert fresh['islandName'] == 'Żółwia Zatoka'
+        expect(page.locator('[data-tutorial-panel]')).to_be_visible()
         assert not errors, errors
         assert not failed, failed
         context.close()

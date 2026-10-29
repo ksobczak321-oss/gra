@@ -1,50 +1,63 @@
 # Arkusz zasad HARBORLIGHT
 
-[Pobierz Excel 9 — HARBORLIGHT9-zasady.xlsx](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT9-zasady.xlsx)
+[Pobierz Excel 10 — HARBORLIGHT10-zasady.xlsx](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT10-zasady.xlsx)
 
-Jeżeli GitHub pokazuje stronę pliku, wybierz **Download raw file**. Plik otworzysz w Excelu lub LibreOffice Calc; można go też zaimportować do Arkuszy Google. Lokalna walidacja pliku jest zakończona; także gra zaliczyła 388/388 testów modelu i pięć lokalnych i trzy publiczne scenariusze przeglądarkowe. Wersję 9 opublikowano w [commicie 8025f3d](https://github.com/ksobczak321-oss/gra/commit/8025f3d2a482d20ad419b95963a7f03135c7f2c1). Anonimowe pobranie z GitHuba i Pages zwraca HTTP 200, poprawny XLSX i sumę SHA-256 identyczną z plikiem lokalnym; [dziennik implementacji](../IMPLEMENTATION-LOG.md) zawiera dowód publikacji.
+Jeżeli GitHub pokazuje stronę pliku, wybierz **Download raw file**. Plik otworzysz w Excelu lub LibreOffice Calc; można go też zaimportować do Arkuszy Google. Bieżące zasady opisują frontend-v16 wraz ze wszystkimi zmianami v15, a [manifest aktualizacji](../decisions-v10.json) oddziela decyzje użytkownika, jawne ustawienia projektu i przyszłe integracje.
 
-Wersja **9** upraszcza arkusz do **czterech widocznych zakładek**. Obejmuje wszystkie **58 rozstrzygnięć logiki i 19 wymagań frontendu** z [manifestu](../decisions-v9.json), wcześniejsze obowiązujące reguły oraz jawnie opisane założenia wdrożenia. Każda z 46 podstawowych mechanik ma najwyżej trzy zdania. Pliki 7 i 8 nie zostały zmienione.
+Excel 10 zachowuje **cztery widoczne zakładki**. Każda mechanika ma najwyżej trzy zdania; pełna lista 25 akcji samouczka jest także w pierwszej zakładce. Wszystkie **52 zakładki Excela 9**, ich wartości, formuły i **48 komentarzy źródłowych** pozostają niezmienionym ukrytym archiwum. Pliki 7, 8 i 9 zachowują identyczne bajty.
 
 ## Od czego zacząć
 
 | Widoczna zakładka | Zawartość |
 |---|---|
-| Jak działa gra | Krótkie zasady mieszkańców, szczęścia, produkcji, magazynów, budowy, zadań, ekspedycji i premii |
-| Budynki v9 | 12 budynków w kolejności paska gry: przeznaczenie, zatrudnienie, koszt, czas oraz efekt rozbudowy |
-| Do decyzji | Wyłącznie pięć rzeczywiście odłożonych tematów; rozstrzygnięte pytania nie wracają na listę |
-| Kalkulator | Jeden scenariusz z niebieskimi polami wejściowymi: transport i budowa, FIFO, atrakcje, ekspedycja, drogi, kupno osoby, tutorial i pojemność |
+| Jak działa gra v10 | Krótkie bieżące zasady i 25 kolejnych akcji samouczka |
+| Budynki v10 | Wszystkie 12 budynków: przeznaczenie, obsada, koszt, czas i efekt rozbudowy |
+| Do decyzji v10 | Wyłącznie nadal nieustalone kwoty i odłożone integracje |
+| Kalkulator v10 | Niebieskie pola wejściowe: produkcja, transport, FIFO, atrakcje, nagrody nowych minigier, skrzynie, drogi i pojemność |
 
-Pozostałe **48 zakładek jest ukrytych**, żeby nie utrudniać codziennego czytania. Zawierają 45 niezmienionych zakładek źródłowego Excela 8, pełne brzmienie manifestu V9, 25 lekcji samouczka oraz kontrolę formuł. W Excelu można je wyświetlić poleceniem **Odkryj arkusz / Unhide**. Dawne reguły i kalkulatory są historią; bieżące pierwszeństwo mają cztery widoczne zakładki i decyzje V9.
+Nazwy widocznych zakładek mają końcówkę v10, aby nie zmieniać odwołań dawnych formuł. Ukryte arkusze można pokazać przez **Odkryj arkusz / Unhide**; nie trzeba ich przeglądać podczas normalnego czytania. Dawne kalkulatory pozostają historią, a bieżące pierwszeństwo mają cztery zakładki v10.
 
 ## Co obejmuje aktualizacja
 
-- Mieszkańcy: karmienie, liczniki głodu i bezrobocia, pierwsze 24 h, indywidualne szczęście, nakładające się 100%, odejścia i codzienna pula Domu.
-- Gospodarka: pobranie surowca przy ukończeniu produktu, fizyczne rezerwacje, chronione miejsce żywności, nadwyżki nagród i zwrotów, pełne paczki targu oraz oddzielne terminy partii portowych.
-- Budowa: rzeczywisty T, zmienna obsada i ETA, plany FIFO, anulowanie przed transportem, osobna usługa kompletnego budynku 10 s oraz oddzielne przyspieszanie transportu i budowania.
-- Aktywności: nieodwołalne przyjęcie zadania, mnożnik z potwierdzeniem, pierwsze terminy 6 h i kolejne o północy, bonus Share 500 raz, liniowa pula ekspedycji +50 i utrata po 10 monet za sekundę spóźnienia.
-- Premie: atrakcje i przyzwyczajanie, drogi, pięciominutowy bonus aktywnej gry, samouczek, reguły social/referral, kolejne dni lojalności i Punkty.
-- Frontend: usunięty lewy pasek, nowy nagłówek, 12 kart, oba magazyny i wszystkie przewozy na kartach zasobów, EN/PL, filtry powiadomień, zwarte efekty i poprawki animacji. Informacje o podatkach są ukryte w interfejsie; silnik zachowuje naliczanie.
+- Samouczek zachowuje **25 akcji**, łączy wcześniejsze tematy z nową kolejnością początku i nie wymaga pięciu dni oczekiwania. Otwiera się przy wejściu do ukończenia albo rezygnacji; później można go wznowić ręcznie z zachowaniem postępu.
+- Pierwsze kroki to zasady w menu lewego górnego rogu, mapa, przydział ludzi, sprawdzenie jedzenia, zlecenie rozbudowy Ratusza i zwiększenie szczęścia. Jednorazowa pomoc przy piątej akcji uzupełnia dostępne środki do 500 monet i każdego materiału, z 600 żywności, aby budowa była wykonalna.
+- Każda akcja ma fanfarę i skrzynię: osobno **100–300 każdego z pięciu materiałów**, bez monet. Share daje drugi raz identyczną wylosowaną skrzynię, najwyżej raz; Skip zachowuje zwykłą nagrodę. Wynik i rozliczenie pozostają zapisane, a nadwyżki czekają na miejsce w centrali.
+- Dwie losowane minigry zastępują nowe rundy ekspedycji: przechylany labirynt z kulkami oraz czarno-białe dopasowywanie trójek. Gra zachowuje ryzyko całej niewypłaconej puli i możliwość wypłaty po wygranej.
+- Pierwszy labirynt ma 180 s i 50 monet; po 120 s nagroda nowej rundy maleje o jedną monetę co pełne 15 s. Przy końcu limitu następuje przegrana; późniejsze rundy mają proporcjonalne granice czasu. Komputer obsługuje mysz i klawiaturę, telefon ruch urządzenia albo dotyk.
+- Dopasowywanie zaczyna się od 24 pól i 240 s, rośnie do 120 pól i najwyżej 900 s, a od czwartego etapu wprowadza ruch zakrytych niedopasowanych kafelków. Te konkretne krzywe są jawnym doborem projektu w ramach uzgodnionej trudności, a nie dodatkową decyzją użytkownika.
+- Zakres v15 obejmuje bazową produkcję **20/24/26/28…**, ładowność **120 na poziomie 1**, jedną sześciogodzinną atrakcję na całej wyspie, utrwalony zasięg **1–50% populacji** i cenę według faktycznej sumy punktów szczęścia. Równe miniatury, podpisy pracujących, zwarte karty, powrót, nazwa wyspy, opisy i kompletna polska wersja są ujęte w manifeście.
 
-Nagrody 25 lekcji — łącznie **1000 monet i 400 materiałów** — są oznaczone jako dobór projektowy, odrębny od nieustalonych nagród lojalnościowych. Prototypowy czas ekspedycji `180/(1+0,1×(runda−1))` również ma oznaczenie projektowe. Cena kupna osoby to ogłoszone przed GO założenie `500 × obecny poziom Ratusza` każdego z sześciu zasobów; nie przedstawiamy jej jako dawnej ceny z Excela 7.
+Za 25 skrzyń podstawowych można otrzymać łącznie **12 500–37 500 sztuk materiałów**, średnio **25 000**; podwojenie każdej skrzyni daje średnio **50 000**. To suma pięciu różnych materiałów, bez monet i bez osobnej pomocy do budowy Ratusza. Nie jest to nagroda programu lojalnościowego.
 
-Arkusz opisuje docelowe reguły publikacji i poleceń, lecz nie oznacza podłączenia Facebooka, Google, prawdziwych kont, płatności ani zewnętrznej weryfikacji postów. Osobny bonus Share po zadaniu pozostaje prototypowym kliknięciem zgodnie z decyzją użytkownika. Prawdziwe integracje, docelowe plansze i czasy minigier, reklamy, kwoty lojalnościowe oraz osobna modlitwa są wyraźnie odłożone.
+Lojalność zachowuje serię kolejnych dni, reset po przerwie, granicę 00:00 Europe/Warsaw i koniec po dziesiątej odebranej nagrodzie albo osiągnięciu Ratusza 4. **Wysokości nagród nadal nie ustalono.** Arkusz nie zastępuje ich skrzyniami samouczka ani fikcyjną wypłatą.
 
-## Weryfikacja pliku
+Lokalne Share nie potwierdza publikacji na Facebooku. Prawdziwe konta, płatności, reklamy i serwerowa weryfikacja publikacji lub poleceń pozostają oddzielnymi integracjami; ich stan jest jawnie opisany.
 
-Wersja 9 ma **52 zakładki**, wszystkie **48 komentarzy źródłowych** oraz **3693 formuły z zapisanymi wynikami**. LibreOffice przeliczył plik, a kontrola openpyxl potwierdziła brak błędów i pustych wyników. **30 nowych kontroli i 231 historycznych kontroli daje TRUE**; porównanie zachowanych 45 zakładek potwierdziło identyczne wartości, formuły i komentarze.
+## Odtworzenie i weryfikacja
 
-- Excel 9: **329612 bajtów**, SHA-256 `3fc10a5d84df001e67e217dbc8c045cc5025b7777f91239c60b6694966864cc8`.
-- Niezmienione źródło 8: SHA-256 `74ea3cc586d8d889ff34de8819694430503f45ed5fa2743873c9ad0c0b83cc3e`.
-- Niezmienione źródło 7: SHA-256 `bf49eef3b43ba81e0492c6eb187940c99177bbb8ae925ceca2b09ab0a2b9e945`.
-
-Skrypt odtwarzający i walidujący: [scripts/build_workbook_v9.py](../../scripts/build_workbook_v9.py). Wymaga `openpyxl` i LibreOffice:
+Skrypt: [scripts/build_workbook_v10.py](../../scripts/build_workbook_v10.py). Wymaga `openpyxl`, Node.js i LibreOffice; pobiera rzeczywiste lekcje oraz parametry minigier z eksportów modułów gry.
 
 ```sh
-python3 scripts/build_workbook_v9.py
-python3 scripts/build_workbook_v9.py --validate-only
+python3 scripts/build_workbook_v10.py
+python3 scripts/build_workbook_v10.py --validate-only
 ```
 
-Opcja `--no-recalc` służy wyłącznie do roboczego podglądu, bo nie zapisuje wyników formuł. Kontrola publikacyjna wymaga pełnego przeliczenia. Odtworzenie zachowuje zasady i wyniki, ale metadane programu mogą zmienić sumę kontrolną pliku.
+Walidacja porównuje wszystkie 52 archiwalne zakładki z Excelem 9, treść i autorów 48 komentarzy oraz sumy kontrolne niezmienionych plików 7–9. LibreOffice zapisuje wyniki formuł; openpyxl sprawdza brak błędów i brakujących wyników, bieżące i historyczne kontrole TRUE, komplet 25 akcji oraz zgodność parametrów z kodem. Opcja `--no-recalc` służy wyłącznie roboczemu podglądowi i nie daje pełnego odbioru pliku.
 
-Poprzednie wydania: [Excel 8](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT8-zasady.xlsx), [Excel 7](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT7-zasady.xlsx), [oryginał 6 użytkownika](https://github.com/ksobczak321-oss/gra/blob/main/docs/arkusze/HARBORLIGHT6-zasady.xlsx). Bieżące zasady tekstowe: [gospodarka](../ECONOMY-RULES.md), [budynki](../BUILDINGS.md), [instrukcja interfejsu](../INTERACTIVE-ISLAND.md).
+## Końcowy odbiór lokalny Excela 10
+
+Plik ma **59 zakładek, cztery widoczne, 57 mechanik opisanych najwyżej trzema zdaniami, 25 akcji samouczka i 32 wpisy zmian**. LibreOffice przeliczył **3866 formuł**; nie ma błędów ani brakujących zapisanych wyników. **62 bieżące kontrole oraz 30 kontroli wersji 9 i 231 kontroli wersji 8 dają TRUE**. Wszystkie 52 archiwalne zakładki i 48 komentarzy są identyczne z Excelem 9; źródłowe pliki 7–9 nie zostały zmienione.
+
+Excel 10: **364049 bajtów**, SHA-256 `4dd371e4fe779e51e1f060e69493635f25971a9c365ff9b55f961d457f31145a`. To wynik lokalny; publikację kodu i ewentualne potwierdzenie publicznego pobrania zapisuje dziennik.
+
+Sumy niezmienionych źródeł:
+
+- Excel 9: `3fc10a5d84df001e67e217dbc8c045cc5025b7777f91239c60b6694966864cc8`.
+- Excel 8: `74ea3cc586d8d889ff34de8819694430503f45ed5fa2743873c9ad0c0b83cc3e`.
+- Excel 7: `bf49eef3b43ba81e0492c6eb187940c99177bbb8ae925ceca2b09ab0a2b9e945`.
+
+Końcowy raport walidacji i stan publikacji zapisuje [dziennik implementacji](../IMPLEMENTATION-LOG.md). Odtworzenie zachowuje zasady i wyniki, lecz metadane programu mogą zmienić sumę kontrolną nowego pliku. Lokalny odbiór nie jest potwierdzeniem publicznego pobrania.
+
+Poprzednie wydania: [Excel 9](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT9-zasady.xlsx), [Excel 8](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT8-zasady.xlsx), [Excel 7](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT7-zasady.xlsx). Historyczny odbiór publiczny wersji 9 jest zachowany w dzienniku; nie przypisujemy go wersji 10.
+
+Bieżące zasady tekstowe: [gospodarka](../ECONOMY-RULES.md), [budynki](../BUILDINGS.md), [instrukcja interfejsu](../INTERACTIVE-ISLAND.md).

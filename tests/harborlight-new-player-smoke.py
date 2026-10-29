@@ -48,6 +48,9 @@ with sync_playwright() as playwright:
     assert page.evaluate('(key) => localStorage.getItem(key)', MAIN_KEY) == original
     print('PASS new-player URL: normal 100 of all six resources, 12 residents, level 1, zero workers and no preview grant')
 
+    # The onboarding is now automatic; return later without opting out.
+    expect(page.locator('[data-tutorial-panel]')).to_be_visible()
+    page.locator('[data-tutorial-later]').click()
     page.locator('#hit-world-farm').click()
     page.locator('[data-worker-building="farm"][data-worker-delta="1"]').click()
     assigned = checkpoint(page)
@@ -60,6 +63,8 @@ with sync_playwright() as playwright:
     assert reloaded['resources'] == assigned['resources']
     assert reloaded.get('previewBuildStockVersion') is None
     assert page.evaluate('(key) => localStorage.getItem(key)', MAIN_KEY) == original
+    expect(page.locator('[data-tutorial-panel]')).to_be_visible()
+    page.locator('[data-tutorial-later]').click()
     print('PASS separate new-player progress persists across reload without changing the existing island or applying test stock')
     page.screenshot(path='/tmp/harborlight-new-player-profile.png')
     assert not errors, errors

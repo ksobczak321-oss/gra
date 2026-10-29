@@ -1,0 +1,315 @@
+{
+  "version": 10,
+  "release": "frontend-v16",
+  "baseWorkbook": "HARBORLIGHT9-zasady.xlsx",
+  "timeZone": "Europe/Warsaw",
+  "dailyBoundary": "00:00",
+  "sourceWorkbooksUnchanged": [
+    7,
+    8,
+    9
+  ],
+  "pendingDecisions": [],
+  "tutorial": {
+    "lessons": 25,
+    "autoOpen": "until-completed-or-declined",
+    "manualResume": true,
+    "dayGate": false,
+    "chestMin": 100,
+    "chestMax": 300,
+    "chestResources": [
+      "wood",
+      "stone",
+      "grain",
+      "food",
+      "planks"
+    ],
+    "shareMultiplier": 2,
+    "chestDescription": "Po 100–300 każdego z pięciu materiałów; Share daje drugi raz tę samą skrzynię.",
+    "starterSupplies": {
+      "coins": 500,
+      "wood": 500,
+      "stone": 500,
+      "grain": 500,
+      "food": 600,
+      "planks": 500
+    }
+  },
+  "expeditions": {
+    "types": [
+      "tilt",
+      "triples"
+    ],
+    "randomEveryRound": true,
+    "baseReward": 50,
+    "fullRewardFraction": 0.6666666666666666,
+    "decayIntervalFraction": 0.08333333333333333,
+    "hardDeadline": true,
+    "tilt": {
+      "firstSeconds": 180,
+      "minimumSeconds": 60
+    },
+    "memory": {
+      "firstCards": 24,
+      "cardsPerStage": 6,
+      "maxCards": 120,
+      "copiesPerSymbol": 3,
+      "firstSeconds": 240,
+      "secondsPerStage": 30,
+      "maxSeconds": 900,
+      "shuffleFromStage": 4,
+      "firstShuffleInterval": 60,
+      "minShuffleInterval": 30
+    }
+  },
+  "mechanicsOverrides": {
+    "Samouczek": {
+      "rule": "25 kolejnych akcji otwiera się przy każdym wejściu do gry aż do ukończenia lub świadomej rezygnacji, a ręczne wznowienie zachowuje postęp. Nie ma blokady pięciu dni: akcje wymagają rzeczywistego działania albo wizyty we wskazanym miejscu i potwierdzenia przeczytania. Każdy sukces ma fanfarę i skrzynię, a dawne odebrane lekcje są zachowane w migracji bez ponownego wypłacania ich nagród.",
+      "source": "V16-01…07"
+    },
+    "Skrzynie samouczka": {
+      "rule": "Każda akcja losuje osobno 100–300 drewna, kamienia, zboża, żywności i desek, bez monet. Share daje identyczną skrzynię dodatkowo najwyżej raz, a Skip pozostawia podstawową nagrodę. Zapis utrwala losowanie, odbiór i decyzję, a nadmiar materiałów czeka bez strat na miejsce w centrali.",
+      "source": "V16-03…05"
+    },
+    "Pomoc do Ratusza": {
+      "rule": "Przy piątej akcji i Ratuszu 1 jawny przycisk jednorazowo uzupełnia dostępne zasoby do 500 monet, po 500 drewna, kamienia, zboża i desek oraz 600 żywności. Pomoc pokrywa tylko braki, nie pomniejsza zapasów, zachowuje nadmiar w buforze i nie powtarza się po wczytaniu. Akcję zalicza rzeczywiste przyjęcie zlecenia rozbudowy Ratusza; transport i budowa nadal przebiegają normalnie.",
+      "source": "V16-06 / dobór wdrożeniowy"
+    },
+    "Pula ekspedycji": {
+      "rule": "Każda nowa runda losuje labirynt z kulkami albo dopasowywanie trójek i dodaje do puli najwyżej 50 monet za sukces, pomniejszonych według czasu tej rundy. Kontynuacja ryzykuje całą niewypłaconą pulę; przegrana ją zeruje, a wypłata kończy serię. Wcześniej wypłacone monety pozostają bezpieczne.",
+      "source": "V16-08…14; zachowane V9-21…23,31,58"
+    },
+    "Zegar ekspedycji": {
+      "rule": "Limit jest twardy i działa również w tle; jego osiągnięcie kończy serię przegraną, a labirynt pokazuje wstrząs i rozsypanie kulek. Po 5 minutach bez rzeczywistej aktywności nadal pojawia się wezwanie do obecności z 60 sekundami na odpowiedź. Otwarta seria zasłania wyspę i blokuje zarządzanie aż do zakończenia lub wypłaty.",
+      "source": "V16-10,13 + V9-26…30"
+    },
+    "Labirynt z kulkami": {
+      "rule": "Umieszczasz wszystkie kulki w celach, przechylając planszę myszą, klawiaturą albo ruchem telefonu. Sterowanie ruchem wymaga wsparcia urządzenia i ewentualnej zgody; dostępny jest również sterownik dotykowy. Pierwsza plansza ma jedną kulkę, labirynt 3 × 3 i limit 180 sekund.",
+      "source": "V16-09…11"
+    },
+    "Dopasowywanie trójek": {
+      "rule": "Odkrywaj kafelki dowolną liczbę razy i wyczyść całą planszę: trzy identyczne czarno-białe symbole znikają, a nietrafiona trójka ponownie się zakrywa. Projekt zaczyna od 24 kart, czyli ośmiu symboli po trzy sztuki, i dodaje sześć kart na etap do 120 kart, czyli 40 symboli. Limit zaczyna od 240 sekund, rośnie o 30 sekund na etap i kończy wzrost przy 900 sekundach.",
+      "source": "V16-12…14 / konfiguracja projektu"
+    }
+  },
+  "changes": [
+    {
+      "id": "V15-01",
+      "title": "Jednakowe miniatury",
+      "rule": "Wszystkie budynki w Administracji i Gospodarce mają jednakowe pole miniatury oraz proporcje, również szeroki Port i Farma. Obraz jest dopasowany do wspólnej ramki, a nazwy i liczniki mają spójne położenie.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-02",
+      "title": "Podpis liczby pracowników",
+      "rule": "Zamiast samotnego zera kafelek miejsca pracy pokazuje „Pracuje: 0” i właściwą liczbę. Zachowuje informacje o idących (+n) i odwołanych (−n) osobach, także na telefonie.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-03",
+      "title": "Budynek na jednym ekranie",
+      "rule": "Na komputerze karta każdego budynku mieści podstawowe informacje i dostępne działania w jednym ekranie bez przewijania. Dodatkowe objaśnienia są pod i lub w zwijanych szczegółach; na telefonie układ pozostaje czytelny.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-04",
+      "title": "Powrót do menu",
+      "rule": "Przejście z menu wyspy do Ratusza lub innego widoku daje strzałkę powrotu do poprzedniego menu. Zamknięcie okna i powrót to różne czynności, a nawigacja nie tworzy nieskończonej pętli.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-05",
+      "title": "Własna nazwa wyspy",
+      "rule": "Rejestracja zawiera pole „Nazwa wyspy”; po poprawnym zatwierdzeniu nazwa zastępuje „Twoja wyspa” w nagłówku i menu. Nazwa jest przypisana do właściwego lokalnego profilu, pozostaje dosłowna w EN/PL i nie wymaga udawania połączenia z usługą kont.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-06",
+      "title": "Pełny polski interfejs",
+      "rule": "Polska wersja nie miesza języków w opisach, przyciskach, podpowiedziach, powiadomieniach i błędach. Audyt obejmuje m.in. estymatę budowy, „Pozostałe użycia” Kaplicy, zadania i pulę ekspedycji; angielski pozostaje osobnym wyborem w ustawieniach.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-07",
+      "title": "Ruiny latarni",
+      "rule": "Usuwamy cały blok „Nie zbudowano / Zbuduj ten budynek, aby rozpocząć”. Poziom 0 latarni przedstawia stan „Ruiny” bez powtarzania drugiego komunikatu o braku budynku.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-08",
+      "title": "Nazwy poziomów latarni",
+      "rule": "Każdy osiągany poziom 1–100 ma własną nazwę etapu odbudowy i rozwoju, w obu językach. Nazwy są warstwą opowieści i nie dodają kosztów, warunków ani nowych efektów.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-09",
+      "title": "Cel całej gry",
+      "rule": "Celem jest rozwój całej wyspy i szczęście jej mieszkańców. Opisy celu, strony startowej i powiązanych podpowiedzi uwzględniają osadę, produkcję, handel, transport i wszystkie budynki; latarnia jest częścią rozwoju.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-10",
+      "title": "Opisy w menu budynków",
+      "rule": "Każdy kafelek w menu „Budynki” ma krótki, jednozdaniowy opis funkcji budynku obok poziomu i wejścia w szczegóły. Opis odpowiada rzeczywistej logice.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-11",
+      "title": "Jasny opis zadań",
+      "rule": "Opis wyjaśnia jedno aktywne zadanie, bezpośrednie darowizny z centrali również w ratach, brak zwrotu i utratę wpłat po wygaśnięciu. Wyjaśnia własny zegar zadania i ochronę rezerwy żywności, naturalną polszczyzną.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-12",
+      "title": "Mieszkańcy: opis i ramki",
+      "rule": "Teksty, liczby i jednostki mieszczą się w kartach. Krótki opis wyjaśnia rolę mieszkańców, pracę i potrzeby oraz przybywanie przy dodatnim szczęściu i odejścia przy ujemnym, z limitami Ratusza, Domu i minimum sześciu osób.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-13",
+      "title": "Opis magazynu",
+      "rule": "Nad sekcją Magazynu centralnego znajduje się krótki opis jego roli, limitu łącznego i limitów materiałów oraz pracy tragarzy. Opis uwzględnia nową bazową ładowność.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-14",
+      "title": "Atrakcje: zasięg, cena i wyłączność",
+      "rule": "Oferta losuje udział od 1% do 50% populacji i kieruje bonus do tylu uprawnionych osób, ile wynika z tego udziału. Cena rośnie z sumą przyznawanych pp; na całej wyspie trwa jedna nowa atrakcja przez 6 h, a następną wolno rozpocząć od razu po końcu efektu.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-15",
+      "title": "Produkcja ×2",
+      "rule": "Bazowa produkcja wszystkich pięciu materiałów na osobę jest podwojona: 20/24/26/28… zamiast 10/12/13/14…. Głód i istniejące premie działają nadal, bez podwajania podatku lub zużycia żywności przez samo wprowadzenie nowej bazy.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-16",
+      "title": "Ładowność transportu ×2",
+      "rule": "Bazowy ładunek każdego tragarza wynosi 120 zamiast 60 sztuk na poziomie 1; bazowy pełny kurs nadal trwa 5 min. Poziom miejsca pracy i drogi skalują nową bazę, a estymaty i kursy Premium korzystają z tej samej ładowności.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V15-17",
+      "title": "Bez logowania w menu gracza",
+      "rule": "Z menu wyspy usuwamy przycisk „Zaloguj się lub załóż konto”, ponieważ jest to widok osoby już grającej. Oddzielne formularze rejestracji i logowania zachowują swoje przeznaczenie.",
+      "status": "UZGODNIONE — FRONTEND V15"
+    },
+    {
+      "id": "V16-01",
+      "title": "Automatyczny samouczek 25 akcji",
+      "rule": "25 kolejnych akcji otwiera się przy każdym wejściu do gry aż do ukończenia lub świadomej rezygnacji, a ręczne wznowienie zachowuje postęp. Nie ma blokady pięciu dni: akcje wymagają rzeczywistego działania albo wizyty we wskazanym miejscu i potwierdzenia przeczytania. Każdy sukces ma fanfarę i skrzynię, a dawne odebrane lekcje są zachowane w migracji bez ponownego wypłacania ich nagród.",
+      "status": "UZGODNIONE"
+    },
+    {
+      "id": "V16-02",
+      "title": "Pierwsze sześć akcji",
+      "rule": "Początek prowadzi przez menu lewego górnego rogu i zasady, mapę wyspy, przydział ludzi, sprawdzenie jedzenia, przyjęcie rozbudowy Ratusza oraz zwiększenie szczęścia. Dalsze akcje uczą rzeczywistej obsługi wyspy.",
+      "status": "UZGODNIONE + DOBÓR DALSZYCH LEKCJI"
+    },
+    {
+      "id": "V16-03",
+      "title": "Skrzynia po każdej akcji",
+      "rule": "Każda akcja losuje osobno 100–300 drewna, kamienia, zboża, żywności i desek, bez monet. Share daje identyczną skrzynię dodatkowo najwyżej raz, a Skip pozostawia podstawową nagrodę. Zapis utrwala losowanie, odbiór i decyzję, a nadmiar materiałów czeka bez strat na miejsce w centrali.",
+      "status": "UZGODNIONE"
+    },
+    {
+      "id": "V16-04",
+      "title": "Podwojenie skrzyni zaShare",
+      "rule": "Wybór udostępnienia przyznaje drugi raz identyczną wylosowaną zawartość tej skrzyni, najwyżej raz. Pominięcie zachowuje zwykłą nagrodę. Jest to lokalny prototyp bez prawdziwego publikowania i potwierdzania posta naFacebooku.",
+      "status": "UZGODNIONE; INTEGRACJA ODŁOŻONA"
+    },
+    {
+      "id": "V16-05",
+      "title": "Fanfara i świętowanie",
+      "rule": "Po wykonaniu każdej akcji pojawia się ekran sukcesu ze skrzynią i fanfarą. Obsługiwany telefon otrzymuje krótką wibrację; preferencje dźwięku i animacji nadal obowiązują.",
+      "status": "UZGODNIONE + OGRANICZENIA PLATFORMY"
+    },
+    {
+      "id": "V16-06",
+      "title": "Pomoc przy rozbudowie Ratusza",
+      "rule": "Przy piątej akcji i Ratuszu 1 jawny przycisk jednorazowo uzupełnia dostępne zasoby do 500 monet, po 500 drewna, kamienia, zboża i desek oraz 600 żywności. Pomoc pokrywa tylko braki, nie pomniejsza zapasów, zachowuje nadmiar w buforze i nie powtarza się po wczytaniu. Akcję zalicza rzeczywiste przyjęcie zlecenia rozbudowy Ratusza; transport i budowa nadal przebiegają normalnie.",
+      "status": "JAWNY DOBÓR WDROŻENIOWY NA PODSTAWIE PROŚBY O ZASOBY"
+    },
+    {
+      "id": "V16-07",
+      "title": "Lojalność nadal bez kwot",
+      "rule": "Liczymy kolejne dni logowania, a przerwa rozpoczyna serię od początku. Program kończy się przy Ratuszu 4 albo po odebraniu dziesiątej dziennej nagrody. Wartości nagród nie zostały ustalone, więc nie przyznajemy fikcyjnych kwot.",
+      "status": "ZACHOWANE V9-34…36"
+    },
+    {
+      "id": "V16-08",
+      "title": "Dwa rodzaje ekspedycji",
+      "rule": "Nowa runda losuje labirynt z kulkami albo dopasowywanie trójek. Losowanie i postęp są zapisywane; ponowne wczytanie nie losuje wygodniejszej gry. Niewypłacona pula serii jest ryzykowana przy kontynuacji.",
+      "status": "UZGODNIONE"
+    },
+    {
+      "id": "V16-09",
+      "title": "Labirynt z kulkami",
+      "rule": "Umieszczasz wszystkie kulki w celach, przechylając planszę myszą, klawiaturą albo ruchem telefonu. Sterowanie ruchem wymaga wsparcia urządzenia i ewentualnej zgody; dostępny jest również sterownik dotykowy. Pierwsza plansza ma jedną kulkę, labirynt 3 × 3 i limit 180 sekund.",
+      "status": "UZGODNIONE; KONKRETNA KRZYWA PROJEKTOWA"
+    },
+    {
+      "id": "V16-10",
+      "title": "Limit i wygrana labiryntu",
+      "rule": "Pełne 50 monet jest dostępne przez pierwsze 2/3 limitu; potem nagroda tej rundy maleje o 1 monetę za każdy pełny odcinek równy 1/12 limitu. W pierwszym labiryncie limit wynosi 180 sekund, pełna nagroda trwa do 120 sekund, a pierwsze odjęcie następuje w 135 sekundzie. Po końcu limitu nie ma zwycięstwa ani dalszej gry za potrącenia — przepada cała niewypłacona seria.",
+      "status": "UZGODNIONE + PROPORCJONALNE SKALOWANIE PROJEKTU"
+    },
+    {
+      "id": "V16-11",
+      "title": "Narastająca trudność labiryntu",
+      "rule": "Projektowo co dwa etapy przybywa kulka do maksimum sześciu, a co trzy etapy rośnie bok labiryntu do maksimum ośmiu komórek. Limit skraca się według max(60, 180 / (1 + 0,1 × (etap−1))) sekund. Te parametry są jawną konfiguracją projektu, a wylosowana plansza, ruch i pozostały czas są zapisywane.",
+      "status": "DOBÓR PROJEKTOWY"
+    },
+    {
+      "id": "V16-12",
+      "title": "Dopasowywanie trójek",
+      "rule": "Odkrywaj kafelki dowolną liczbę razy i wyczyść całą planszę: trzy identyczne czarno-białe symbole znikają, a nietrafiona trójka ponownie się zakrywa. Projekt zaczyna od 24 kart, czyli ośmiu symboli po trzy sztuki, i dodaje sześć kart na etap do 120 kart, czyli 40 symboli. Limit zaczyna od 240 sekund, rośnie o 30 sekund na etap i kończy wzrost przy 900 sekundach.",
+      "status": "UZGODNIONE"
+    },
+    {
+      "id": "V16-13",
+      "title": "Rozwój planszy dopasowywania",
+      "rule": "Pierwszy etap ma 24 kafelki i 8 symboli po 3 kopie, a każdy kolejny dodaje 6 pól, do 120 pól i 40 symboli. Limit wynosi min(900,240+30×(n−1))s; pełna nagroda 50 monet trwa do 2/3 limitu, potem ubywa 1 co 1/12 limitu. Przy twardym końcu czasu cała niewypłacona seria przegrywa.",
+      "status": "JAWNY DOBÓR PROJEKTOWY W RAMACH UZGODNIONYCH GRANIC"
+    },
+    {
+      "id": "V16-14",
+      "title": "Ruch kafelków",
+      "rule": "Od czwartego etapu przesuwają się wyłącznie zakryte, niedopasowane kafelki; odkryte i już usunięte nie zmieniają miejsc. Pierwszy odstęp wynosi 60 sekund, maleje o 2 sekundy na kolejny etap i zatrzymuje się na 30 sekundach. Układ, odkryte trójki, liczba tasowań i zegary przetrwają ponowne wczytanie gry.",
+      "status": "DOBÓR PROJEKTOWY"
+    },
+    {
+      "id": "V16-15",
+      "title": "Zapis i starsze rozgrywki",
+      "rule": "Nowe postępy samouczka, odebrane skrzynie, Share i minigry pozostają w lokalnym zapisie. Stare odebrane lekcje i rozpoczęte serie nie są kasowane ani ponownie nagradzane przez migrację. Prawdziwe konta, reklamy i serwerowa weryfikacja nie są częścią tego pakietu.",
+      "status": "ZACHOWANIE ZAPISÓW / ZAKRES"
+    }
+  ],
+  "futureOnly": [
+    {
+      "id": "P01",
+      "title": "Wysokości premii lojalnościowych",
+      "rule": "Seria kolejnych dni, reset po przerwie, koniec po 10 nagrodach lub przy Ratuszu 4 i północ czasu polskiego są ustalone. Brakuje kwot nagród; nie przyznajemy w ich miejsce monet ani skrzyń samouczka.",
+      "status": "NIEUSTALONE KWOTY"
+    },
+    {
+      "id": "P02",
+      "title": "Prawdziwe reklamy i nagrody reklamowe",
+      "rule": "Nie podłączono odtwarzania i weryfikacji reklam. Docelowe dodatkowe czasy lub mnożniki po reklamie nadal wymagają osobnej konfiguracji i integracji.",
+      "status": "INTEGRACJA ODŁOŻONA"
+    },
+    {
+      "id": "P03",
+      "title": "Konta, płatności, publikacje i polecenia",
+      "rule": "Formularze i lokalne reguły nie tworzą rzeczywistych kont, płatności ani postów. Serwerowe powiązanie profilu użytkownika z grą i weryfikacja publikacji/poleceń pozostają do wdrożenia.",
+      "status": "BACKEND / INTEGRACJE ODŁOŻONE"
+    },
+    {
+      "id": "P04",
+      "title": "Osobna aktywność modlitewna",
+      "rule": "Nie ustalono odrębnej liczby miejsc, czasu ani efektów modlitwy. Obecne ręczne błogosławieństwa Kaplicy są niezależną, działającą mechaniką.",
+      "status": "ODŁOŻONE"
+    }
+  ]
+}

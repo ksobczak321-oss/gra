@@ -1,8 +1,8 @@
-# Budynki i mieszkaniec — frontend v15
+# Budynki i mieszkaniec — frontend v16
 
-Stan wydania **frontend-v15**: implementacja i odbiór lokalny ukończone — 440/440 testów modelu i siedem grup Chromium PASS. Publiczny odbiór v15 blokuje HTTP 403 proxy środowiska. [Pakiet 17 wymagań GO](FRONTEND-V15-REQUIREMENTS.md) dodaje krótkie opisy, nazwy etapów latarni i zwarte karty oraz podwaja bazową produkcję i ładunek. Wyniki testów i stan publikacji zawiera [dziennik](IMPLEMENTATION-LOG.md).
+Bieżący pakiet **frontend-v16** dodaje prowadzony samouczek 25 akcji i dwie losowane minigry, zachowując produkcję 20/24/26/28… na osobę oraz ładunek 120 na poziomie 1 z v15. Końcowy odbiór i stan publikacji zawiera [dziennik](IMPLEMENTATION-LOG.md); wyniki poprzednich wydań nie są dowodem odbioru v16.
 
-Reguły nienadpisane przez v15 zachowują [manifest 58 decyzji i 19 wymagań frontendu](decisions-v9.json), zatwierdzony w rozmowie po Excelu 8. Nowsze rozstrzygnięcia zastępują wcześniejsze opisy. Archiwalne Excele 7, 8 i 9 pozostają niezmienione; ten pakiet nie generuje kolejnego arkusza.
+Nowsze reguły zbiera [manifest wersji 10](decisions-v10.json), oparty na wcześniejszych [58 decyzjach i 19 wymaganiach](decisions-v9.json). [Excel 10](arkusze/HARBORLIGHT10-zasady.xlsx) jest bieżącym zestawieniem, a Excele 7, 8 i 9 pozostają niezmienioną historią.
 
 L oznacza **obecny własny poziom**, N — nowy. Kwoty są bazowe: przy kolejce każdy składnik rośnie o 10% i jest zaokrąglany w górę. Kolumna budowania podaje samą fazę po dostawach; wcześniejsze zbieranie i oczekiwanie w kolejce nie są doliczane.
 
@@ -29,6 +29,20 @@ Mieszkańcy produkują i przetwarzają materiały oraz przewożą towary, potrze
 
 Kupno jednej osoby używa pełnego kosztu najbliższego Ratusza: `500×obecny TH` każdego z sześciu zasobów, z limitem łóżek i populacji. To jawnie ogłoszone założenie wdrożeniowe, oznaczone F16; nie dopisujemy go do historycznych reguł V7.
 
+## Budynki w samouczku
+
+Pierwsze sześć akcji prowadzi przez menu w lewym górnym rogu i przeczytanie zasad, mapę wyspy, przydział producenta i tragarza, sprawdzenie jedzenia, zlecenie rozbudowy Ratusza oraz zwiększenie szczęścia. Kolejne akcje pokazują podróże do pracy, oba magazyny, priorytety i prawdziwą dostawę, łańcuch żywności, indywidualne szczęście, koszty, kolejkę, drogi, atrakcje, Kaplicę, Targ, latarnię, zadania, ekspedycję i bezpieczny powrót pracownika. Nie ma oczekiwania na następne dni: kolejne działania odblokowują się po ukończeniu poprzednich.
+
+Przy piątej akcji jawna pomoc jednorazowo uzupełnia braki do 500 monet, po 500 drewna, kamienia, zboża i desek oraz 600 żywności. Przyjęcie rzeczywistego zlecenia rozbudowy Ratusza zalicza akcję, ale nie pomija normalnego dowozu i budowania. Przydzielony wcześniej tragarz nadal przewozi materiały, a koszt budynku i rezerwa żywności zachowują zwykłe zasady.
+
+Samouczek otwiera się przy wejściu aż do ukończenia lub świadomej rezygnacji; po rezygnacji można go wznowić ręcznie z zachowaniem postępu. Każdy sukces ma fanfarę i skrzynię po 100–300 każdego z pięciu materiałów; Share przyznaje identyczną zawartość jeszcze raz, najwyżej raz dla danej akcji. Czytanie wymaga rzeczywistej wizyty w odpowiednim widoku, a stan nagród, decyzji i dawnych odebranych lekcji pozostaje zapisany.
+
+## Ekspedycje i lojalność
+
+Każda runda nowej serii losuje labirynt z kulkami lub czarno-białe trójki, a wyspa działa pod zasłaniającym ją oknem bez równoczesnego zarządzania budynkami. Wygrana dodaje do puli do 50 monet, po 2/3 limitu nagroda rundy maleje o 1 za każdy pełny odcinek równy 1/12 limitu, a twardy koniec lub przegrana zabiera całą niewypłaconą pulę. Wypłacone wcześniej monety są bezpieczne; zapisane dawne serie trasowe zachowują poprzednie reguły do końca serii.
+
+Lojalność liczy kolejne dni logowania od północy czasu polskiego, a dzień przerwy resetuje serię. Program kończy się po odebraniu dziesiątej nagrody albo po osiągnięciu Ratusza 4. Kwoty nagród nie zostały jeszcze ustalone i nie są zastępowane kwotami skrzyń samouczka.
+
 ## Wspólne widoki
 
 - Administracja: Ratusz, Dom, Magazyn, Targ, Port, Kaplica i Latarnia. Gospodarka: Farma, Młyn, Kamieniołom, Drwale i Tartak. Zasoby, Dekoracje i Ścieżki pozostają oddzielnymi kategoriami.
@@ -42,4 +56,4 @@ Koszty, łóżka i przewóz sprawdza wspólny model, również dla usług kupna;
 
 ## Historyczny odbiór wersji 9
 
-Wydanie **frontend-v13 / Excel 9** zakończyło implementację, odbiór lokalny, publikację i odbiór publiczny: **388/388 testów modelu PASS**, pięć lokalnych zestawów przeglądarkowych i trzy zestawy rzeczywistego Pages PASS. Udane [Pages 40012462614](https://github.com/ksobczak321-oss/gra/actions/runs/40012462614); publiczny Excel i 17 plików gry zwracały HTTP 200 oraz zgadzały się z lokalnymi sumami kontrolnymi. Dowody zachowuje [dziennik](IMPLEMENTATION-LOG.md); ten wpis nie opisuje odbioru v15.
+Wydanie **frontend-v13 / Excel 9** zakończyło implementację, odbiór lokalny, publikację i odbiór publiczny: **388/388 testów modelu PASS**, pięć lokalnych zestawów przeglądarkowych i trzy zestawy rzeczywistego Pages PASS. Udane [Pages 40012462614](https://github.com/ksobczak321-oss/gra/actions/runs/40012462614); publiczny Excel i 17 plików gry zwracały HTTP 200 oraz zgadzały się z lokalnymi sumami kontrolnymi. Dowody zachowuje [dziennik](IMPLEMENTATION-LOG.md); ten wpis nie opisuje odbioru v16.

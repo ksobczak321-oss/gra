@@ -1,57 +1,73 @@
-# Sterowanie i zapis HARBORLIGHT — frontend v13
+# Sterowanie i zapis HARBORLIGHT — frontend v16 / Excel 10
 
-Stan wydania **frontend-v13 / Excel 9**: implementacja, odbiór lokalny, publikacja i odbiór publiczny zakończone — **388/388 testów modelu PASS**, pięć lokalnych zestawów przeglądarkowych i trzy zestawy rzeczywistego Pages PASS. Udane [Pages 40012462614](https://github.com/ksobczak321-oss/gra/actions/runs/40012462614); publiczny Excel i 17 plików gry zwracają HTTP 200 oraz zgadzają się z lokalnymi sumami kontrolnymi. Dowody są w [dzienniku](IMPLEMENTATION-LOG.md); wyniki v12 są historią osobnego wydania.
+Bieżąca instrukcja opisuje [ustalenia wydania v16](decisions-v10.json) oraz zachowane nowsze zasady gospodarki. [Excel 10](arkusze/HARBORLIGHT10-zasady.xlsx) zbiera również zmiany v14/v15; archiwalne pliki 7, 8 i 9 pozostają bez zmian. Końcowy odbiór lokalny, wysłanie kodu i potwierdzenie publicznego adresu są odrębnymi zdarzeniami zapisywanymi w [dzienniku](IMPLEMENTATION-LOG.md).
 
 ## Otwieranie gry
 
-- [Dotychczasowa wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v13).
-- [Osobny profil nowego gracza](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v13): 12 osób, po 100 zasobów, Ratusz 1, bez testowego grantu. Kolejne otwarcie kontynuuje ten profil.
-- [Formularze logowania/rejestracji](https://ksobczak321-oss.github.io/gra/harborlight-auth.html): nadal bez rzeczywistego konta i OAuth.
+- [Dotychczasowa wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v16).
+- [Oddzielny profil nowego gracza](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v16): przy pierwszym otwarciu 12 osób, po 100 zasobów, Ratusz 1 i brak pracowników. Kolejne wejście zachowuje jego postęp; zmiana parametru wersji nie resetuje wyspy.
+- [Rejestracja i logowanie](https://ksobczak321-oss.github.io/gra/harborlight-auth.html?v=frontend-v16): formularz rejestracji pozwala nazwać wyspę, lecz nadal nie tworzy prawdziwego konta ani połączenia OAuth. Nazwa należy do wybranego lokalnego profilu i pozostaje dosłowna w obu językach.
 
-Do potwierdzenia publikacji odnośnik może pokazywać poprzednie wydanie. Wersję udanego Pages i wyniki publicznego testu zapisuje dziennik.
+Sam odnośnik z wersją nie potwierdza publikacji. Potwierdzony stan Pages oraz ewentualne ograniczenia dostępu opisuje dziennik.
+
+## Samouczek i nagrody
+
+Samouczek ma **25 kolejnych lekcji**, bez czekania na pięć kolejnych dni. Otwiera się przy każdym wejściu aż do ukończenia albo wybrania „Nie pokazuj automatycznie”; można go wznowić ręcznie z zachowaniem postępu. Zwykłe zamknięcie lub powrót na wyspę odkłada naukę na później i nie usuwa dotychczasowych osiągnięć.
+
+Początek prowadzi przez menu w lewym górnym rogu i przeczytanie zasad, mapę, przydzielenie producenta oraz tragarza, sprawdzenie jedzenia, zlecenie rozbudowy Ratusza i poprawę szczęścia. Dalej poznajesz dojście do pracy, oba magazyny, priorytety i dostawy, żywność, punkty Domu, indywidualne potrzeby, koszty i kolejkę, ścieżki, atrakcje, Kaplicę, Targ, Latarnię, zadania, ekspedycję oraz bezpieczne odwołanie pracownika. Mała karta wskazuje aktualny krok; lekcje czytania wymagają odwiedzenia wskazanego miejsca i potwierdzenia „Przeczytane”, a działania są zaliczane na podstawie rzeczywistych zmian w grze.
+
+Przy kroku rozbudowy Ratusza jawny przycisk jednorazowo pokrywa braki do 500 monet i po 500 materiałów, z 600 żywności na budowę oraz posiłki. Zlecenie rozbudowy zalicza lekcję; transport i osobna faza budowania przebiegają dalej normalnie. Pomoc nie obniża wyższych zapasów i nie odnawia się po ponownym wejściu.
+
+Każdy sukces ma fanfarę i skrzynię z osobno wylosowaną ilością **100–300 każdego z pięciu materiałów**, bez monet. Share daje jeszcze raz dokładnie te same zasoby, najwyżej raz; Skip zachowuje zwykłą nagrodę, a odłożoną decyzję można później otworzyć ponownie. Losowanie, odbiór i wybór są zapisane, nadwyżki bezpiecznie czekają na pojemność centrali, a dawne odebrane lekcje są zachowane w migracji bez ponownego wypłacania nagród.
+
+Share w tym prototypie przyznaje premię za wybór przycisku, bez publikowania na Facebooku. Dźwięk respektuje ustawienia i wymaga odblokowania dźwięku rzeczywistą akcją gracza; wspierane telefony mogą krótko zawibrować. Wyłączenie animacji lub systemowe ograniczenie ruchu ogranicza efekty, ale nie zatrzymuje postępu ani zegarów.
 
 ## Nagłówek i dolny pasek
 
-Lewy pasek nawigacji został usunięty. Górny pasek zachowuje markę, poziom, szczęście, monety i mieszkańców, a zamiast pięciu liczników materiałów pokazuje faktycznie pracujących, czas do nowej osoby i Punkty. Funkcje są dostępne przez menu, karty i odpowiednie budynki; nie pozostawiamy niewidocznego pola plaży czy innych pól otoczenia.
+Lewy pasek nawigacji został usunięty. Górny pasek pokazuje własną nazwę wyspy, poziom, szczęście, monety i mieszkańców oraz faktycznie pracujących, czas do nowej osoby i Punkty. Funkcje są dostępne przez menu, karty i budynki, bez klikalnych pól plaży lub innych pól otoczenia.
 
-Buildings pokazuje wszystkie 12 budynków w kolejności z tabeli. U góry każdej karty jest własny poziom, a u pracodawców na dole pracujący, idący `(+n)` i odwołani `(−n)`; Ratusz, Dom, Kaplica i Latarnia nie dostają fikcyjnej obsady.
+Administracja obejmuje Ratusz, Dom, Magazyn, Targ, Port, Kaplicę i Latarnię; Gospodarka — Gospodarstwo, Młyn, Kamieniołom, Drwali i Tartak. Miniatury mają wspólny rozmiar i proporcje, u góry widnieje własny poziom, a miejsca pracy pokazują „Pracuje: n” oraz idących `(+n)` i odwołanych `(−n)`. Ratusz, Dom, Kaplica i Latarnia nie dostają fikcyjnej obsady.
 
-Resources ma pięć materiałów: drewno, deski, kamień, zboże, żywność. Górny licznik to faktycznie pracujący producenta, dolny to **lokalny / centralny (w przewozie)**. Nawias sumuje wszystkie fizyczne trasy tego materiału, w tym budowy, targ i port; nie zwiększa dostępnego zapasu centrali. Strzałka bilansu ↑/↓/→ dotyczy produkcji minus zużycie całej wyspy, a nie samego przewozu.
+Zasoby mają pięć materiałów: drewno, deski, kamień, zboże i żywność. Górny licznik pokazuje pracujących producenta, dolny — **lokalny / centralny (w przewozie)**, ze wszystkimi fizycznymi trasami materiału, także budowy, Targu i Portu. Strzałka ↑/↓/→ pokazuje produkcję minus zużycie całej wyspy; sam przewóz nie zmienia tego bilansu ani nie zwiększa zapasu dostępnego w centrali.
 
-Decorations przełącza pasek na pięć atrakcji, odnawianych o północy. Paths pokazuje pięć poziomów i postęp odcinków; skuteczne ulepszenie ma krótkie potwierdzenie wizualne zgodne z ustawieniem animacji.
+Dekoracje przełączają pasek na pięć ofert odnawianych o północy czasu polskiego. Oferta obejmuje losowe 1–50% populacji, kosztuje według rzeczywistej sumy przyznawanych punktów szczęścia i działa sześć godzin; kolejna atrakcja czeka na koniec poprzedniej. Ścieżki pokazują pięć poziomów i postęp odcinków, a zakup ma krótkie potwierdzenie wizualne zgodne z ustawieniami.
 
 ## Panele, efekty i powiadomienia
 
-Panel budynku ma właściwy status, a producent również rodzaj/ilość/ETA najbliższej produkcji. Storage ma podpisane trzy wartości stanu i obu pojemności; Workers ma przydzielonych, wolnych w domu i limit, z małymi +/−. Nie wyświetlamy podatków, choć silnik nadal je nalicza.
+Główny panel budynku mieści najważniejsze dane oraz działania na jednym ekranie komputera; dalsze funkcje mają osobny widok z powrotem. Krótki opis wyjaśnia funkcję obiektu, strzałka przywraca poprzednie menu, a X zamyka okno. Latarnia na poziomie 0 ma stan Ruiny, a osiągnięte poziomy 1–100 własne nazwy.
 
-Ratusz skupia kolejkę i budowę, Dom mieszkańców i zbiorcze przydziały. Najważniejsze liczby są widoczne od razu, a opisy pod i. Wiersz efektu zawiera nazwę, wartość, czas/status i i na końcu; kliknięcie rozwija źródło, odbiorców i warunek zakończenia.
+Producent pokazuje produkt, ilość i ETA najbliższej gotowej sztuki. Magazyn ma podpisane zapas / pojemność teraz / pojemność po rozbudowie, a Pracownicy — przydzieleni / wolni w domu / limit, z małymi +/−. Nie pokazujemy podatków, choć silnik nadal je nalicza.
 
-Magazyn pokazuje każdą osobę, ładunek, trasę i czas dostawy. Maksymalnie trzy priorytety materiałów/Construction są numerowane i podświetlone. Odwołany z ładunkiem kończy kurs, potem idzie pięć minut do domu.
+Bazowa produkcja wynosi 20/24/26/28… na osobę i godzinę, a bazowy ładunek tragarza 120 na poziomie 1 przy pięciominutowym kursie. Poziomy, drogi, głód i wcześniejsze premie nadal stosują własne mnożniki. Podwojenie bazy nie podwoiło podatku ani zapotrzebowania mieszkańców na jedzenie.
 
-W Notifications można wybierać kategorie widocznych wpisów; filtr nie usuwa historii. Start, istotna zmiana i koniec efektu oraz przyczyna przestoju mają wpisy bez tworzenia nowego przy każdym odświeżeniu.
+Ratusz skupia zarządzanie kolejką i budową, a Dom mieszkańców i zbiorcze przydziały. Każdy efekt ma wiersz z nazwą, wartością, czasem lub statusem i przyciskiem i rozwijającym źródło, odbiorców oraz warunek końca. Powiadomienia obejmują rozpoczęcie, istotną zmianę i koniec efektu oraz przyczynę przestoju, bez nowego wpisu co sekundę.
+
+Magazyn pokazuje tragarza, jego ładunek, trasę i ETA. Maksymalnie trzy priorytety materiałów lub Budowy są numerowane i podświetlone; odwołany z ładunkiem kończy dostawę, a potem przez pięć minut wraca do domu. Kategorie powiadomień można filtrować bez usuwania historii.
 
 ## Zadania i ukończenie
 
-Przyjęcie nieodwołalnego zadania otwiera potwierdzenie na 60 sekund. Otwarcie utrwala mnożnik szybkiego kliknięcia, ale oferta musi być nadal ważna przy potwierdzeniu. Aktywne jest jedno zadanie; pozostałe są szare, a oba widoki pokazują te same darowizny produktów.
+Przyjęcie nieodwołalnego zadania otwiera potwierdzenie na 60 sekund. Otwarcie utrwala mnożnik szybkiego kliknięcia, lecz oferta musi być ważna również przy potwierdzeniu. Aktywne jest jedno zadanie, a pozostałe pozwalają obejrzeć wymagania bez rozpoczęcia i wpłat.
 
-Angielskie Deposit jest zastąpione Donate/Donation, polskie nazwy to Przekaż/Darowizna. Wpłaty są bezzwrotne; po końcu terminu przepadają. Pierwsze oferty mają sześć godzin, a po pierwszym sukcesie następcy danego ciągu wygasają o północy Europe/Warsaw.
+Darowizny trafiają z magazynu centralnego i mogą być przekazywane w ratach, z zachowaniem chronionej rezerwy żywności. Wpłaty są bezzwrotne i przepadają po końcu terminu; pierwsze oferty mają sześć godzin, a po pierwszym sukcesie następcy danego ciągu wygasają o północy czasu polskiego. Norma kosztów zadań pozostaje wcześniejsza mimo podwojenia produkcji.
 
-Po sukcesie są fajerwerki, próba wibracji na wspieranym telefonie i opcjonalne Share/Skip. Share daje 500 monet raz, Skip zachowuje zwykłą nagrodę, a nierozstrzygnięte zaproszenie czeka bezterminowo w powiadomieniach. To lokalny mechanizm bez zewnętrznej publikacji Facebook.
+Po sukcesie zadania są fajerwerki, próba wibracji i opcjonalne Share/Skip. Share zadania daje osobne 500 monet raz, a Skip zachowuje zwykłą nagrodę; nierozstrzygnięta propozycja pozostaje w powiadomieniach. Ten bonus różni się od podwajania materiałowej skrzyni samouczka i również nie publikuje posta na Facebooku.
 
-## Challenge, samouczek i aktywność
+## Dwie gry ekspedycji
 
-Jedna seria ekspedycji zasłania i blokuje zarządzanie wyspą; gospodarka dalej działa. Kolejna wygrana dodaje 50 do faktycznie zachowanej puli, a po czasie odejmowane jest 10 monet za pełną sekundę opóźnienia. Wyjście w rundzie wymaga potwierdzenia straty; zamknięcie po wygranej wymaga potwierdzenia pełnej wypłaty i zakończenia serii.
+Każda nowa runda losuje **labirynt z kulkami albo dopasowywanie trójek**. Sukces dodaje do puli najwyżej 50 monet, pomniejszonych według czasu tej rundy; kontynuacja ryzykuje całą niewypłaconą pulę, a wypłata kończy serię. Upływ pełnego limitu oznacza przegraną i stratę całej niewypłaconej puli, bez dodatkowego czasu za monety.
 
-Po pięciu minutach bez rzeczywistej aktywności jest pytanie i 60 sekund na odpowiedź. Zegar działa także przy ukrytej/zamkniętej grze i podczas pytania. Nie ma fikcyjnego oglądania reklamy ani przycisku kupowania czasu za monety; reklamy pozostają przyszłą integracją.
+Labirynt przechyla się kursorem lub myszą na komputerze, a na telefonie ruchem urządzenia po włączeniu sterowania; przy braku obsługi lub odmowie dostępu pozostaje sterowanie dotykiem. Kulki trzeba umieścić w otworach, z rzeczywistymi kolizjami ścian. Pierwsza runda trwa trzy minuty i daje pełne 50 monet przez pierwsze dwie, następnie odejmuje jedną monetę co 15 sekund, a po końcu plansza trzęsie się i kulki się rozsypują.
 
-Samouczek ma 25 trwałych mikrozadań, po pięć na każdy z pierwszych pięciu aktywnych dni. Kwoty są jawnie projektowe: łącznie 1000 monet i 400 materiałów. Osobny program lojalnościowy ma zatwierdzony przebieg, ale brak skonfigurowanych nagród.
+Dopasowywanie usuwa trzy identyczne odsłonięte czarno-białe obrazki i pozwala ponawiać próby bez limitu odkryć. Projektowa krzywa zaczyna od 24 pól i czterech minut, dodaje po sześć pól oraz 30 sekund na etap do 120 pól i maksymalnie 15 minut; od czwartego etapu zakryte, niedopasowane obrazki okresowo zmieniają miejsca. Odkryte i już dopasowane pola pozostają stabilne podczas przesunięcia, a całą planszę trzeba wyczyścić przed terminem.
 
-Rzeczywista akcja w widocznej aktywnej karcie odnawia premię produkcji na pięć minut, bez dodawania kolejnych czasów. Przełącznik animacji zachowuje świadomy wybór również przy systemowym ograniczeniu ruchu; po powrocie do karty świat powinien wznowić rysowanie.
+Dla obu nowych gier pełna nagroda trwa przez pierwsze dwie trzecie limitu, a później maleje o jedną monetę co jedną dwunastą limitu. Użytkownik określił zakres trudności; konkretna krzywa rozmiarów, czasów i przesunięć jest jawnym doborem projektu zapisanym w manifeście. Wczytane starsze serie zachowują dawną planszę i rozliczenie do końca tej serii, a nowe starty używają już dwóch nowych gier.
 
-## Język, zapis i ograniczenia
+Jedna seria zasłania i blokuje zarządzanie wyspą, podczas gdy gospodarka nadal działa. Po pięciu minutach bez rzeczywistej aktywności pojawia się pytanie z 60 sekundami na potwierdzenie; zegar działa także w tle i podczas pytania. Nie ma pozorowanego oglądania reklamy ani kupowania czasu, a rzeczywista integracja reklamowa pozostaje na później.
 
-Settings pozwala wybrać EN/PL dla całego widocznego interfejsu, podpowiedzi, komunikatów i liczb. Wibracja zależy od obsługi przez urządzenie i przeglądarkę. Wyłączenie ruchu ogranicza fajerwerki i animacje, lecz nie zegar gospodarki.
+## Lojalność, język i zapis
 
-Stan i preferencje są lokalne w tej przeglądarce. Domyślny i nowy profil mają oddzielne klucze; reset dotyczy wybranego profilu. Nie jest to synchronizacja web/Android/iPhone, prawdziwa usługa kont, płatności ani potwierdzanie publikacji i poleceń.
+Kolejne dni logowania tworzą serię, dzień przerwy ją resetuje, a granicą dnia jest północ Europe/Warsaw. Wprowadzający program lojalnościowy kończy się po odebraniu dziesiątej nagrody albo przy Ratuszu 4; kwoty tych nagród nadal nie zostały ustalone. Skrzynie samouczka nie zastępują nieustalonych nagród lojalnościowych.
 
-Reguły: [ECONOMY-RULES.md](ECONOMY-RULES.md). Czytelny arkusz: [Excel 9](arkusze/HARBORLIGHT9-zasady.xlsx). Odbiór wdrożenia: [FRONTEND-REVIEW.md](FRONTEND-REVIEW.md).
+Rzeczywista akcja w widocznej aktywnej karcie odnawia premię produkcji na pięć minut, bez dodawania kolejnych czasów. Ustawienia pozwalają wybrać EN/PL, kategorie powiadomień, dźwięk i animacje. Zapisany wybór animacji pozostaje zachowany, a po powrocie do widocznej karty świat wznawia rysowanie.
+
+Stan i preferencje są lokalne w tej przeglądarce; dotychczasowy oraz nowy profil mają oddzielne klucze, a reset dotyczy tylko wybranego profilu. Nie jest to synchronizacja web/Android/iPhone, rzeczywista usługa kont, płatności ani serwerowe potwierdzanie udostępnień i poleceń. Bieżące zasady opisują [reguły gospodarki](ECONOMY-RULES.md), [manifest v10](decisions-v10.json) i [Excel 10](arkusze/HARBORLIGHT10-zasady.xlsx); wyniki konkretnego wydania zawiera dziennik.
