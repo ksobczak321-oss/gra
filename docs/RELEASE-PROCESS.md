@@ -19,6 +19,8 @@ Workflow przygotowuje dwa elementy wydania:
 
 Frontend trafia do targetu `hosting:game` na witrynie `harborlight-dev`. Po publikacji workflow porównuje pobrany po HTTPS manifest z oczekiwanym SHA/hash i uruchamia pełne pięć grup testów rzeczywistej gry pod planowanym adresem `https://harborlight-dev.web.app`. Publiczne sondy backendu `/health` i `/ready` muszą równocześnie potwierdzić środowisko DEV i ten sam commit.
 
+Wydanie ze [stałymi kontami DEV](DEV-ACCOUNTS.md) wymaga wcześniej właścicielskiego przygotowania Authentication, aplikacji Web i Firestore. Po testach hostingu workflow sprawdza rzeczywiste logowanie `admin1`–`admin3`, odczyt własnych zapisów oraz odmowę dostępu dla innych UID i żądań anonimowych. Kontrola nie nadpisuje wysp; jej błąd blokuje utworzenie potwierdzenia DEV. Zwykłe wdrożenia nie tworzą kont ani nie zmieniają ich haseł i zapisów.
+
 Dopiero po sukcesie wszystkich kontroli powstają dwa artefakty, związane z przebiegiem i numerem próby:
 
 - `harborlight-dev-frontend-<run_id>-<run_attempt>` — dokładne archiwum plików publicznych;
@@ -52,6 +54,6 @@ Właściciel aktywował Firebase w istniejącym projekcie i potwierdził gotowo�
 
 Można ponownie promować poprzednie pełne wydanie mające ważne potwierdzenie DEV i dostępne artefakty. Po wygaśnięciu dowodu lub zmianie kodu wymagane jest ponowne przejście odpowiednich etapów. Nie podmieniamy zawartości między DEV i PROD.
 
-Frontend jest obecną przeglądarkową grą z lokalnym zapisem. Nowa domena ma odrębny `localStorage`; stare wyspy z GitHub Pages nie przenoszą się automatycznie. Backend nadal zawiera sondy, a nie konta i serwerową gospodarkę. Firebase Authentication, trwały zapis i migracje bazy wymagają własnego wdrożenia i testów na DEV w tym samym łańcuchu.
+Frontend pozostaje przeglądarkową grą. Trzy konta DEV używają Authentication i prywatnego Firestore; podgląd gościa pozostaje lokalny, a stare wyspy z GitHub Pages nie przenoszą się automatycznie. Cloud Run nadal zawiera sondy, a nie serwerową gospodarkę. Konfiguracja kont jest odczytywana w czasie działania, więc promocja zachowuje identyczne archiwum frontendu. Konta produkcyjne i migracje danych wymagają własnego wdrożenia i testów na DEV w tym samym łańcuchu; kont testowych ani ich reguł nie kopiuje się do PROD.
 
 Administratorzy nadal zarządzają IAM i workflow. Normalne publikacje prowadzimy wyłącznie opisaną automatyzacją; sukces jednego etapu nie uprawnia do pominięcia następnego.

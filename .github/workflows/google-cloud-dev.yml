@@ -327,6 +327,10 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+      - name: Verify permanent DEV accounts and cloud save isolation
+        shell: bash
+        run: node infra/google-cloud/check-dev-accounts.mjs --passwords-match-logins
+
       - name: Publish the exact successful DEV frontend bundle
         uses: actions/upload-artifact@v4
         with:
@@ -374,6 +378,7 @@ jobs:
             printf 'Potwierdzenie DEV: `harborlight-dev-release-%s-%s`.\n\n' \
               "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT"
             printf 'Sprawdzone: `/health`, `/ready`, manifest wydania i 5 grup testów gry z rzeczywistego hostingu DEV.\n\n'
+            printf 'Konta DEV: trzy trwałe tożsamości oraz odczyt własnego zapisu i odmowa odczytu cudzych zapisów; kontrola nie nadpisuje wysp.\n\n'
             printf 'Cloud Run: min. 0, maks. 2 instancje na rewizję; nie jest to limit faktury.\n\n'
             printf 'Gra jest udostępniona z Firebase Hosting; zapis pozostaje lokalny w przeglądarce. Konta, trwały zapis wysp i API gospodarki pozostają kolejnymi etapami.\n'
           } >> "$GITHUB_STEP_SUMMARY"

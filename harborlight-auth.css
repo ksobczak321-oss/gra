@@ -40,6 +40,9 @@ input:focus-visible{outline-offset:2px}
 .story-note div span{margin-top:3px;font-size:11px;line-height:1.5;color:#b4cbd3}
 .account-card{min-width:0;padding:0;outline:none}
 .account-tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:5px;margin-bottom:29px;border:1px solid #54758670;border-radius:13px;background:#061e2b75}
+.dev-auth .account-tabs{grid-template-columns:1fr}
+.dev-auth .availability{margin:0 0 22px;font-size:12px}
+.dev-auth .primary-button:disabled,.dev-auth fieldset:disabled .primary-button{cursor:wait;filter:saturate(.5);opacity:.75}
 .account-tab{min-height:44px;padding:9px 12px;border:1px solid transparent;border-radius:9px;background:transparent;color:#adc3cd;font-size:13px;font-weight:700;transition:background .15s,color .15s}
 .account-tab:hover{color:#fff0cd}
 .account-tab.is-active{border-color:#87937c54;background:linear-gradient(135deg,#274c5d,#1a3d50);box-shadow:0 2px 8px #00152240;color:#f5dca6}

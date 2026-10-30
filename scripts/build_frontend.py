@@ -26,6 +26,8 @@ PUBLIC_FILES = (
     "harborlight-auth.css",
     "harborlight-auth.html",
     "harborlight-auth.js",
+    "harborlight-dev-cloud.js",
+    "harborlight-dev-sync.js",
     "harborlight-v1-activities.js",
     "harborlight-v1-ambient.js",
     "harborlight-v1-calendar.js",
@@ -68,7 +70,9 @@ INDEX = b'''<!doctype html>
 <title>HARBORLIGHT</title>
 <script>
 (() => {
-  const target = new URL('harborlight-v1-layered.html', location.href);
+  const dev = ['harborlight-dev.web.app', 'harborlight-dev.firebaseapp.com']
+    .includes(new URL(location.href).hostname);
+  const target = new URL(dev ? 'harborlight-auth.html' : 'harborlight-v1-layered.html', location.href);
   target.search = location.search;
   if (!target.searchParams.has('profile')) target.searchParams.set('profile', 'new-player');
   target.hash = location.hash;

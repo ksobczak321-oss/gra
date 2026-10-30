@@ -112,9 +112,9 @@ class FrontendBundleTests(unittest.TestCase):
                                 text=True, capture_output=True, timeout=10, check=False)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(json.loads(result.stdout), [
-            "https://harborlight-dev.web.app/harborlight-v1-layered.html?slot=test&profile=new-player#map",
+            "https://harborlight-dev.web.app/harborlight-auth.html?slot=test&profile=new-player#map",
             "https://harborlight-prod.web.app/harborlight-v1-layered.html?profile=preview&slot=old#house",
-            "https://harborlight-dev.web.app/harborlight-v1-layered.html?profile=new-player",
+            "https://harborlight-dev.web.app/harborlight-auth.html?profile=new-player",
         ])
 
     def test_unknown_source_files_and_secrets_never_enter_release(self):

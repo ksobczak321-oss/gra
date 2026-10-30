@@ -691,3 +691,6 @@ body.portrait-world .dock-tabs{display:none!important}
 #warehouse-recall .warehouse-recall-stats .stat strong{display:block;margin-top:5px;color:#ffe0a2;font-size:23px;line-height:1.3;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 @media(max-width:520px){#warehouse-recall .warehouse-recall-stats{gap:7px}#warehouse-recall .warehouse-recall-stats .stat{padding:10px;font-size:11px}#warehouse-recall .warehouse-recall-stats .stat strong{font-size:20px}}
 @media(min-width:1100px) and (min-height:650px){#island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-header.has-panel-back{padding-left:76px}}
+.dev-cloud-alert{position:fixed;top:max(82px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));z-index:90;max-width:min(360px,calc(100vw - 24px));padding:11px 14px;border:1px solid #e1b872;border-radius:10px;background:#173747f5;color:#ffe2a0;font:600 12px/1.4 Inter,system-ui,sans-serif;text-align:left;box-shadow:0 4px 18px #001b3866;cursor:pointer}
+.dev-cloud-alert[hidden]{display:none}
+#island-dialog [data-cloud-save-status][data-status="conflict"],#island-dialog [data-cloud-save-status][data-status="offline"]{border-color:#e1b872;color:#ffe2a0}

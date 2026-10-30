@@ -1,7 +1,8 @@
-// Account screen only. No authentication service or social integration is connected.
-// Credentials never leave this form and are never written to browser storage.
+// DEV uses the configured Firebase project. Other hosts retain the account preview.
+// Passwords are sent only by the Firebase client and never saved in browser storage.
 import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v17';
-import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v17';
+import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=dev-accounts-v1';
+import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=dev-accounts-v1';
 
 registerTranslations({
   'HARBORLIGHT — Welcome Home': 'HARBORLIGHT — Witaj na wyspie',
@@ -66,7 +67,27 @@ registerTranslations({
   'Google sign-in is coming soon. You can continue as a guest to play today.': 'Logowanie przez Google będzie dostępne wkrótce. Już teraz możesz grać jako gość.',
   'Facebook sign-in is coming soon. You can continue as a guest to play today.': 'Logowanie przez Facebook będzie dostępne wkrótce. Już teraz możesz grać jako gość.',
   'Account creation is coming soon. Your account has not been created. Continue as a guest to explore your island.': 'Zakładanie kont będzie dostępne wkrótce. Twoje konto nie zostało utworzone. Kontynuuj jako gość, aby odkrywać wyspę.',
-  'Account sign-in is coming soon. Continue as a guest to explore your island.': 'Logowanie do konta będzie dostępne wkrótce. Kontynuuj jako gość, aby odkrywać wyspę.'
+  'Account sign-in is coming soon. Continue as a guest to explore your island.': 'Logowanie do konta będzie dostępne wkrótce. Kontynuuj jako gość, aby odkrywać wyspę.',
+  'HARBORLIGHT — DEV sign-in': 'HARBORLIGHT — logowanie DEV',
+  'Sign in to your DEV island. Your progress is saved in the cloud.': 'Zaloguj się na swoją wyspę DEV. Postęp jest zapisywany w chmurze.',
+  'HARBORLIGHT — sign in to DEV': 'HARBORLIGHT — zaloguj się do DEV',
+  'DEV TEST ACCOUNTS': 'KONTA TESTOWE DEV',
+  'Sign in to DEV': 'Zaloguj się do DEV',
+  'Your island follows you between devices.': 'Twoja wyspa jest dostępna na różnych urządzeniach.',
+  'Use your DEV login and password. Your progress is saved in the cloud.': 'Użyj loginu i hasła do konta DEV. Postęp jest zapisywany w chmurze.',
+  'Username': 'Login',
+  'admin1, admin2 or admin3': 'admin1, admin2 lub admin3',
+  'Enter your DEV username: admin1, admin2 or admin3.': 'Wpisz login DEV: admin1, admin2 lub admin3.',
+  'Signing in…': 'Logowanie…',
+  'Checking your session…': 'Sprawdzanie sesji…',
+  'The username or password is incorrect.': 'Login lub hasło są nieprawidłowe.',
+  'This account is disabled. Contact the island owner.': 'To konto jest wyłączone. Skontaktuj się z właścicielem wyspy.',
+  'Too many attempts. Wait a moment and try again.': 'Zbyt wiele prób. Zaczekaj chwilę i spróbuj ponownie.',
+  'DEV accounts are not configured yet. Ask the owner to finish their setup.': 'Konta DEV nie są jeszcze skonfigurowane. Poproś właściciela o dokończenie konfiguracji.',
+  'Your browser could not save the session. Allow local storage and try again.': 'Przeglądarka nie mogła zapisać sesji. Zezwól na zapisywanie danych i spróbuj ponownie.',
+  'Could not connect to sign-in. Check your connection and try again.': 'Nie udało się połączyć z logowaniem. Sprawdź połączenie i spróbuj ponownie.',
+  'Your session expired. Sign in again.': 'Sesja wygasła. Zaloguj się ponownie.',
+  'Could not sign in. Try again in a moment.': 'Nie udało się zalogować. Spróbuj ponownie za chwilę.'
 });
 
 (() => {
@@ -85,17 +106,41 @@ registerTranslations({
   const languagePicker = document.getElementById('auth-language');
   const preferenceKey = 'harborlight-language';
   const profileSearch = authProfileSearch(location.search);
-  let language = 'en';
-  try { language = localStorage.getItem(preferenceKey) === 'pl' ? 'pl' : 'en'; } catch { /* Keep the form usable without storage. */ }
+  const devCloud = createDevCloud();
+  const devMode = devCloud.enabled;
+  let language = devMode ? 'pl' : 'en';
+  try { const saved = localStorage.getItem(preferenceKey); if (['pl', 'en'].includes(saved)) language = saved; } catch { /* Keep the form usable without storage. */ }
   const errorIds = new Map([[name, 'name-error'], [islandName, 'island-name-error'], [email, 'email-error'], [password, 'password-error'], [confirm, 'confirm-error']]);
   let mode = 'login';
+  let signingIn = false;
   for (const link of document.querySelectorAll('a[href="harborlight-v1-layered.html"]')) link.href = gameHref(profileSearch);
+
+  if (devMode) {
+    document.documentElement.classList.add('dev-auth');
+    document.getElementById('tab-register').hidden = true;
+    for (const node of document.querySelectorAll('.social-options,.divider,.guest-entry,.back-link')) node.hidden = true;
+    const brand = document.querySelector('.brand');
+    brand.href = '#account';
+    brand.setAttribute('aria-label', 'HARBORLIGHT — sign in to DEV');
+    document.querySelector('.account-eyebrow').textContent = 'DEV TEST ACCOUNTS';
+    document.getElementById('social-availability').textContent = 'Use your DEV login and password. Your progress is saved in the cloud.';
+    document.querySelector('label[for="email"]').textContent = 'Username';
+    email.type = 'text';
+    email.name = 'username';
+    email.autocomplete = 'username';
+    email.inputMode = 'text';
+    email.maxLength = 40;
+    email.placeholder = 'admin1, admin2 or admin3';
+    password.minLength = 1;
+  }
 
   function applyLanguage() {
     if (languagePicker) languagePicker.value = language;
-    document.title = 'HARBORLIGHT — Welcome Home';
+    document.title = devMode ? 'HARBORLIGHT — DEV sign-in' : 'HARBORLIGHT — Welcome Home';
     const description = document.querySelector('meta[name="description"]');
-    if (description) description.content = translate('Welcome to HARBORLIGHT. Sign in, create an account, or continue exploring your island as a guest.', language);
+    if (description) description.content = translate(devMode
+      ? 'Sign in to your DEV island. Your progress is saved in the cloud.'
+      : 'Welcome to HARBORLIGHT. Sign in, create an account, or continue exploring your island as a guest.', language);
     translateDOM(document, language);
   }
 
@@ -104,6 +149,20 @@ registerTranslations({
     status.dataset.kind = kind;
     status.hidden = false;
     translateDOM(status, language);
+  }
+  function signInMessage(error) {
+    const messages = {
+      'invalid-login': 'The username or password is incorrect.',
+      'invalid-credentials': 'The username or password is incorrect.',
+      'account-disabled': 'This account is disabled. Contact the island owner.',
+      'rate-limited': 'Too many attempts. Wait a moment and try again.',
+      configuration: 'DEV accounts are not configured yet. Ask the owner to finish their setup.',
+      disabled: 'DEV accounts are not configured yet. Ask the owner to finish their setup.',
+      storage: 'Your browser could not save the session. Allow local storage and try again.',
+      'auth-required': 'Your session expired. Sign in again.',
+      offline: 'Could not connect to sign-in. Check your connection and try again.'
+    };
+    return messages[error?.code] || 'Could not sign in. Try again in a moment.';
   }
   function clearError(input) {
     input.removeAttribute('aria-invalid');
@@ -126,7 +185,8 @@ registerTranslations({
     translateDOM(visibility, language);
   }
   function changeMode(nextMode, updateHash = true) {
-    mode = nextMode === 'register' ? 'register' : 'login';
+    if (signingIn) return;
+    mode = !devMode && nextMode === 'register' ? 'register' : 'login';
     const registering = mode === 'register';
     for (const tab of tabs) {
       const active = tab.dataset.mode === mode;
@@ -142,8 +202,8 @@ registerTranslations({
         input.required = registering;
       }
     }
-    document.getElementById('auth-title').textContent = registering ? 'Your island starts here.' : 'Welcome back.';
-    document.getElementById('auth-intro').textContent = registering ? 'A new adventure, a place to call your own.' : 'Return to the island you call home.';
+    document.getElementById('auth-title').textContent = devMode ? 'Sign in to DEV' : registering ? 'Your island starts here.' : 'Welcome back.';
+    document.getElementById('auth-intro').textContent = devMode ? 'Your island follows you between devices.' : registering ? 'A new adventure, a place to call your own.' : 'Return to the island you call home.';
     document.querySelector('#account-submit span').textContent = registering ? 'Create account' : 'Sign in';
     document.getElementById('password-hint').hidden = !registering;
     password.autocomplete = registering ? 'new-password' : 'current-password';
@@ -162,6 +222,7 @@ registerTranslations({
   for (const tab of tabs) {
     tab.addEventListener('click', () => changeMode(tab.dataset.mode));
     tab.addEventListener('keydown', event => {
+      if (devMode) return;
       if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
       event.preventDefault();
       let index = tabs.indexOf(tab);
@@ -179,8 +240,9 @@ registerTranslations({
       announce(`${button.dataset.provider} sign-in is coming soon. You can continue as a guest to play today.`);
     });
   }
-  form.addEventListener('submit', event => {
+  form.addEventListener('submit', async event => {
     event.preventDefault();
+    if (signingIn) return;
     for (const input of errorIds.keys()) clearError(input);
     const invalid = [];
     const fail = (input, message) => { setError(input, message); invalid.push(input); };
@@ -188,14 +250,38 @@ registerTranslations({
     if (mode === 'register' && name.value.trim().length < 2) fail(name, 'Enter a name with at least 2 characters.');
     const chosenIslandName = mode === 'register' ? validateIslandName(islandName.value) : null;
     if (chosenIslandName && !chosenIslandName.ok) fail(islandName, chosenIslandName.message);
-    if (!email.value) fail(email, 'Enter your email address.');
+    if (devMode && !DEV_USERS.some(user => user.login === email.value)) fail(email, 'Enter your DEV username: admin1, admin2 or admin3.');
+    else if (!email.value) fail(email, 'Enter your email address.');
     else if (!email.validity.valid) fail(email, 'Enter a valid email address.');
     if (!password.value) fail(password, 'Enter your password.');
-    else if (password.value.length < 8) fail(password, 'Use at least 8 characters for your password.');
+    else if (!devMode && password.value.length < 8) fail(password, 'Use at least 8 characters for your password.');
     if (mode === 'register' && confirm.value !== password.value) fail(confirm, 'The passwords do not match.');
     if (invalid.length) {
       announce('Check the highlighted fields to continue.', 'error');
       invalid[0].focus();
+      return;
+    }
+    if (devMode) {
+      signingIn = true;
+      fields.disabled = true;
+      form.setAttribute('aria-busy', 'true');
+      announce('Signing in…');
+      try {
+        await devCloud.signIn(email.value, password.value);
+        password.value = '';
+        setPasswordVisible(false);
+        location.assign('harborlight-v1-layered.html?profile=new-player');
+      } catch (error) {
+        password.value = '';
+        setPasswordVisible(false);
+        announce(signInMessage(error), 'error');
+        fields.disabled = false;
+        password.focus();
+      } finally {
+        signingIn = false;
+        fields.disabled = false;
+        form.removeAttribute('aria-busy');
+      }
       return;
     }
     // A valid registration submission saves only the explicitly chosen local
@@ -232,4 +318,18 @@ registerTranslations({
   });
   // With JavaScript unavailable the disabled fieldset prevents accidental form submission.
   fields.disabled = false;
+  if (devMode) {
+    signingIn = true;
+    fields.disabled = true;
+    form.setAttribute('aria-busy', 'true');
+    announce('Checking your session…');
+    devCloud.restoreSession().then(account => {
+      if (account) location.replace('harborlight-v1-layered.html?profile=new-player');
+      else { status.hidden = true; status.textContent = ''; }
+    }).catch(error => announce(signInMessage(error), 'error')).finally(() => {
+      signingIn = false;
+      fields.disabled = false;
+      form.removeAttribute('aria-busy');
+    });
+  }
 })();

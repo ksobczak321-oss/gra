@@ -1,0 +1,23 @@
+// HARBORLIGHT DEV accounts v1 — owner-managed, never promoted to PROD.
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function ownsIsland(uid) {
+      return request.auth != null && request.auth.uid == uid &&
+        uid in ['dev-admin1', 'dev-admin2', 'dev-admin3'];
+    }
+    function validIsland() {
+      let data = request.resource.data;
+      return data.keys().hasOnly(['schemaVersion', 'revision', 'payload', 'updatedAt']) &&
+        data.schemaVersion is int && data.schemaVersion == 1 && data.revision is int && data.revision > 0 &&
+        data.payload is string && data.payload.size() > 0 &&
+        data.payload.toUtf8().size() <= 700000 && data.updatedAt == request.time;
+    }
+    match /islands/{uid} {
+      allow get: if ownsIsland(uid);
+      allow create: if ownsIsland(uid) && validIsland() && request.resource.data.revision == 1;
+      allow update: if ownsIsland(uid) && validIsland() &&
+        request.resource.data.revision == resource.data.revision + 1;
+    }
+  }
+}

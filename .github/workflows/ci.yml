@@ -54,6 +54,9 @@ jobs:
       - name: Test Firebase Hosting preparation safety
         run: python3 tests/harborlight-firebase-hosting.test.py
 
+      - name: Test permanent DEV account preparation safety
+        run: python3 tests/harborlight-dev-users.test.py
+
       - name: Test production domain preparation safety
         run: python3 tests/harborlight-domain.test.py
 
@@ -134,6 +137,35 @@ jobs:
           fi
           exit "$browser_status"
 
+      - name: Test packaged DEV login and cloud saves in Chromium
+        id: dev_browser
+        env:
+          HARBORLIGHT_FRONTEND_ROOT: ${{ github.workspace }}/build/frontend
+        shell: bash
+        run: |
+          set -uo pipefail
+          set +e
+          python3 -u - <<'PY' 2>&1 | tee "$RUNNER_TEMP/harborlight-dev-browser.log"
+          import subprocess
+          import sys
+
+          for test in ('tests/harborlight-dev-auth-smoke.py', 'tests/harborlight-dev-game-smoke.py'):
+              status = subprocess.call([sys.executable, '-u', test])
+              if status:
+                  sys.exit(status)
+          PY
+          browser_status=${PIPESTATUS[0]}
+          set -e
+          if (( browser_status != 0 )); then
+            node --input-type=module - "$RUNNER_TEMP/harborlight-dev-browser.log" <<'JS' || true
+          import { readFileSync } from 'node:fs';
+          const text = readFileSync(process.argv[2], 'utf8').slice(-6000);
+          const escaped = text.replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+          console.log(`::error title=DEV account browser acceptance failed::${escaped}`);
+          JS
+          fi
+          exit "$browser_status"
+
       - name: Publish browser failure diagnostics
         if: ${{ failure() && steps.browser.outcome == 'failure' }}
         uses: actions/upload-artifact@v4
@@ -143,5 +175,16 @@ jobs:
             ${{ runner.temp }}/harborlight-browser.log
             ${{ runner.temp }}/harborlight-frontend-server.log
             /tmp/harborlight-v17-*.png
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Publish DEV account browser failure diagnostics
+        if: ${{ failure() && steps.dev_browser.outcome == 'failure' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: dev-account-browserfailure-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/harborlight-dev-browser.log
+            /tmp/harborlight-dev-*.png
           if-no-files-found: error
           retention-days: 7

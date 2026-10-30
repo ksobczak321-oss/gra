@@ -9,7 +9,9 @@ import * as Effects from './harborlight-v1-effects.js?v=frontend-v17';
 import * as Progression from './harborlight-v1-progression.js?v=frontend-v17';
 import * as I18n from './harborlight-v1-i18n.js?v=frontend-v17';
 import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v17';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v17';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=dev-accounts-v1';
+import { createDevCloud, accountSaveKey, SESSION_KEY } from './harborlight-dev-cloud.js?v=dev-accounts-v1';
+import { createDevSync } from './harborlight-dev-sync.js?v=dev-accounts-v1';
 import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v17';
 import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v17-fit2';
 import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v17';
@@ -60,7 +62,16 @@ I18n.registerTranslations({
   "Food, work, housing and temporary attractions influence happiness. Develop all buildings, improve paths and complete tasks while keeping residents happy.": "Na szczęście wpływają jedzenie, praca, mieszkanie i czasowe atrakcje. Rozwijaj budynki, ulepszaj ścieżki i wykonuj zadania, dbając o mieszkańców."
 });
 
-const currentProfile = profileContext(location.search);
+const devCloud = createDevCloud();
+let devAccount = null, devSync = null, devSyncStatus = 'loading';
+let devCloudUiReady = false, devCloudAlert = null, devSigningOut = false;
+try { devAccount = await devCloud.restoreSession(); }
+catch {
+  // A rejected stored identity must not fall back to another island profile.
+  location.replace('harborlight-auth.html?mode=login');
+  await new Promise(() => {});
+}
+const currentProfile = devAccount ? { newPlayer: true, slot: '', saveKey: accountSaveKey(devAccount.uid) } : profileContext(location.search);
 const NEW_PLAYER_PROFILE = currentProfile.newPlayer;
 const NEW_PLAYER_SLOT = currentProfile.slot;
 const OFFICIAL_GAME_URL = 'https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html';
@@ -73,9 +84,17 @@ const dialog = document.getElementById('island-dialog');
 const toastElement = document.getElementById('island-toast');
 const placementBanner = document.getElementById('placement-banner');
 let state;
-try { state = normalizeState(JSON.parse(localStorage.getItem(SAVE_KEY))); }
-catch { state = createState(); }
-try { applyIslandNamePreference(state, localStorage, location.search); } catch {}
+if (devAccount) {
+  devSync = createDevSync({ cloud: devCloud, account: devAccount, storage: localStorage, saveKey: SAVE_KEY,
+    onStatus: status => { devSyncStatus = status; if (devCloudUiReady) updateDevCloudStatus(); } });
+  const payload = await devSync.open(JSON.stringify(createState()));
+  try { state = normalizeState(JSON.parse(payload)); }
+  catch { state = createState(); devSync.pause('invalid-cloud-data'); }
+} else {
+  try { state = normalizeState(JSON.parse(localStorage.getItem(SAVE_KEY))); }
+  catch { state = createState(); }
+  try { applyIslandNamePreference(state, localStorage, location.search); } catch {}
+}
 try { const preferred = localStorage.getItem('harborlight-language'); if (['en','pl'].includes(preferred)) state.settings.language = preferred; } catch {}
 let panel = null;
 let placement = null;
@@ -137,7 +156,10 @@ const note = text => el('p', { class: 'notice' }, omitTaxInformation(text));
 const card = (...children) => el('section', { class: 'info-card' }, ...children);
 
 function save() {
-  try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); }
+  if (devSigningOut) return;
+  const payload = JSON.stringify(state);
+  if (devSync) { devSync.queue(payload); return; }
+  try { localStorage.setItem(SAVE_KEY, payload); }
   catch { toast('Your browser cannot save progress. You can keep playing until this tab is closed.'); }
 }
 function toast(message) {
@@ -1696,17 +1718,96 @@ function pathsPanel() {
 }
 
 function effectiveAnimationsEnabled() { return !!state.settings.motion && (!matchMedia('(prefers-reduced-motion: reduce)').matches || state.settings.motionOverride === true); }
+function devSyncMessage() {
+  const messages = {
+    loading: ['Wczytywanie zapisu z chmury…', 'Loading your cloud save…'],
+    saved: ['Postęp zapisany w chmurze.', 'Progress saved to the cloud.'],
+    pending: ['Zmiany czekają na zapis w chmurze.', 'Changes are waiting to be saved to the cloud.'],
+    saving: ['Zapisywanie postępu w chmurze…', 'Saving progress to the cloud…'],
+    offline: ['Brak połączenia z chmurą. Zmiany są zachowane na tym urządzeniu.', 'Cloud connection unavailable. Your changes are kept on this device.'],
+    conflict: ['Nowszy zapis powstał w innym oknie lub na innym urządzeniu. Twoja lokalna kopia jest zachowana; automatyczny zapis został wstrzymany.', 'Another window or device saved a newer island. Your local copy is preserved; automatic cloud saving is paused.'],
+    'auth-required': ['Sesja wygasła. Wyloguj się i zaloguj ponownie; lokalny postęp pozostanie zachowany.', 'Your session expired. Sign out and sign in again; your local progress will be kept.'],
+    permission: ['Zapis w chmurze jest niedostępny. Lokalna kopia pozostaje zachowana.', 'Cloud saving is unavailable. Your local copy is preserved.'],
+    configuration: ['Konta DEV wymagają dokończenia konfiguracji. Lokalna kopia pozostaje zachowana.', 'DEV account setup is incomplete. Your local copy is preserved.'],
+    'invalid-state': ['Zapis jest zbyt duży lub nieprawidłowy. Pobierz kopię lokalną.', 'The save is too large or invalid. Download your local copy.'],
+    'invalid-cloud-data': ['Nie można odczytać zapisu w chmurze. Nie zostanie on nadpisany.', 'The cloud save could not be read. It will not be overwritten.']
+  };
+  return (messages[devSyncStatus] || messages.offline)[language() === 'pl' ? 0 : 1];
+}
+function updateDevCloudStatus() {
+  if (!devAccount || !devCloudUiReady) return;
+  const failure = !['loading', 'saved', 'pending', 'saving'].includes(devSyncStatus);
+  if (!devCloudAlert) {
+    devCloudAlert = el('button', { type: 'button', class: 'dev-cloud-alert', 'data-i18n-ignore': '',
+      onclick: () => openPanel('settings') });
+    document.body.append(devCloudAlert);
+  }
+  devCloudAlert.hidden = !failure;
+  devCloudAlert.textContent = devSyncMessage();
+  devCloudAlert.setAttribute('aria-label', `${devSyncMessage()} ${language() === 'pl' ? 'Otwórz ustawienia konta.' : 'Open account settings.'}`);
+  for (const node of dialog.querySelectorAll('[data-cloud-save-status]')) {
+    node.textContent = devSyncMessage();
+    node.dataset.status = devSyncStatus;
+  }
+}
+function downloadLocalIsland(backup = false) {
+  let payload = JSON.stringify(state);
+  if (backup) { try { payload = localStorage.getItem(`${SAVE_KEY}:backup`) || payload; } catch {} }
+  const url = URL.createObjectURL(new Blob([payload], { type: 'application/json' }));
+  const link = el('a', { href: url, download: `${devAccount.login}-${backup ? 'kopia-' : ''}wyspa.json` });
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+function finishDevSignout() {
+  devSync.dispose(); devCloud.signOut();
+  location.assign('harborlight-auth.html?mode=login');
+}
+function devAccountPanel() {
+  if (!devAccount) return null;
+  const label = (polish, english) => language() === 'pl' ? polish : english;
+  let hasBackup = false;
+  try { hasBackup = !!localStorage.getItem(`${SAVE_KEY}:backup`); } catch {}
+  return card(el('h3', { 'data-dev-account': devAccount.login }, `${label('Konto DEV', 'DEV account')}: ${devAccount.login}`),
+    el('p', { class: 'notice', 'data-cloud-save-status': '', 'data-status': devSyncStatus, 'data-i18n-ignore': '', role: 'status' }, devSyncMessage()),
+    note(label('Każde konto ma oddzielną wyspę. Zapis w chmurze jest dostępny po zalogowaniu na innym urządzeniu.', 'Each account has its own island. Your cloud save is available when you sign in on another device.')),
+    button(label('Zapisz w chmurze', 'Save to cloud'), async () => {
+      settleActiveTick(); save();
+      await devSync.flush();
+      updateDevCloudStatus(); toast(devSyncMessage());
+    }, { class: 'action secondary', 'data-cloud-save-now': '' }),
+    button(label('Pobierz kopię lokalną', 'Download local copy'), () => downloadLocalIsland(), { class: 'action secondary', 'data-cloud-backup': '' }),
+    hasBackup ? button(label('Pobierz zachowaną wcześniejszą kopię', 'Download preserved earlier copy'), () => downloadLocalIsland(true), { class: 'action secondary', 'data-cloud-earlier-backup': '' }) : null,
+    ['conflict', 'offline', 'invalid-cloud-data'].includes(devSyncStatus) ? button(label('Wczytaj zapis z chmury', 'Load cloud save'), async () => {
+      devSigningOut = true;
+      try { await devSync.reloadCloud(); devSync.dispose(); location.reload(); }
+      catch { devSigningOut = false; toast(label('Nie można wczytać zapisu. Lokalna kopia jest zachowana.', 'The cloud save could not be loaded. Your local copy is preserved.')); }
+    }, { class: 'action secondary', 'data-cloud-reload': '' }) : null,
+    button(label('Wyloguj się', 'Sign out'), async event => {
+      const trigger = event.currentTarget;
+      trigger.disabled = true;
+      settleActiveTick(); save();
+      devSigningOut = true;
+      if (await devSync.flush()) finishDevSignout();
+      else {
+        devSigningOut = false; trigger.disabled = false;
+        save(); renderPanel(); toast(devSyncMessage());
+      }
+    }, { class: 'action secondary', 'data-dev-signout': '' }),
+    !['loading', 'saved', 'pending', 'saving'].includes(devSyncStatus) ? button(label('Wyloguj, zachowaj lokalną kopię', 'Sign out and keep local copy'), () => {
+      settleActiveTick(); save(); devSigningOut = true; finishDevSignout();
+    }, { class: 'action secondary', 'data-dev-signout-local': '' }) : null);
+}
 function settingsPanel() {
   const checkbox = (key, label) => el('label', { class: 'setting-row' }, el('span', {}, label), el('input', { type: 'checkbox', checked: key === 'motion' ? effectiveAnimationsEnabled() : !!state.settings[key], onchange: event => perform({ type: 'setting', key, value: event.target.checked }) }));
   const languageSelect = el('select', { 'aria-label': 'Language', onchange: event => { perform({ type: 'setting', key: 'language', value: event.target.value }); renderLeisureDock(true); localize(); renderMobileDock(true); } }, el('option', { value: 'en', selected: language() === 'en' }, 'English'), el('option', { value: 'pl', selected: language() === 'pl' }, 'Polski'));
   const ranking = state.ranking?.score ?? state.rankingScore ?? state.buildings.townhall.level * state.resources.coins;
-  return el('div', {}, el('label', { class: 'setting-row' }, el('span', {}, 'Language'), languageSelect), notificationFilterSettings(), button('Tutorial', () => openPanel('tutorial'), { class: 'action secondary' }), checkbox('motion', 'Animations and highlights'),
+  return el('div', {}, devAccountPanel(), el('label', { class: 'setting-row' }, el('span', {}, 'Language'), languageSelect), notificationFilterSettings(), button('Tutorial', () => openPanel('tutorial'), { class: 'action secondary' }), checkbox('motion', 'Animations and highlights'),
     !effectiveAnimationsEnabled() ? note(state.settings.motion ? 'Animations are paused by your system’s reduced-motion preference. Enable the checkbox to turn on water, smoke and island movement.' : 'Animations are off. Enable the checkbox to turn on water, smoke and island movement.') : null,
-    note('Your island continues in real time, including while you are away. Progress is saved in this browser.'),
+    note(devAccount ? (language() === 'pl' ? 'Wyspa działa w czasie rzeczywistym. Postęp jest zapisywany w chmurze oraz w lokalnej kopii na tym urządzeniu.' : 'Your island continues in real time. Progress is saved to the cloud and kept in a local copy on this device.') : 'Your island continues in real time, including while you are away. Progress is saved in this browser.'),
     card(el('h3', {}, 'Ranking'), stat('Hourly score', count(ranking)), note('Town Hall level × coins, recorded on each full hour.')),
     button('Premium options', () => openPanel('premium'), { class: 'action secondary' }),
     button('Resume tutorial', () => { if (perform({ type: 'resumeTutorial' })) openPanel('tutorial'); }, { class: 'action secondary', 'data-resume-tutorial': '' }),
-    button('Save now', () => { settleActiveTick(); save(); toast('Progress saved.'); }, { class: 'action secondary' }),
+    !devAccount ? button('Save now', () => { settleActiveTick(); save(); toast('Progress saved.'); }, { class: 'action secondary' }) : null,
     button('Start a new island', () => openPanel('reset'), { class: 'action danger' }));
 }
 
@@ -1891,7 +1992,7 @@ function renderPanel() {
     case 'map': body = el('div', {}, note('Choose a district to locate it on the island.'), el('div', { class: 'panel-grid' }, Object.keys(buildingRegions).map(id => button(titleOf(id), () => {
       closePanel(); const node = document.getElementById(`hit-world-${id}`); node.focus(); node.classList.add('world-pulse'); setTimeout(() => node.classList.remove('world-pulse'), 3000);
     })))); break;
-    case 'reset': body = el('div', {}, note('Starting a new island will erase your current progress in this browser.'), button('Yes, start over', () => { const previewBuildStockVersion = state.previewBuildStockVersion; state = createState(); if (previewBuildStockVersion) state.previewBuildStockVersion = previewBuildStockVersion; puzzle = null; save(); renderHUD(); openPanel('home'); toast('Your new island is ready.'); }, { class: 'action danger' }), button('Keep my island', () => openPanel('settings'), { class: 'action secondary' })); break;
+    case 'reset': body = el('div', {}, note(devAccount ? (language() === 'pl' ? 'Rozpoczęcie nowej wyspy zastąpi postęp tego konta, również w chmurze.' : 'Starting a new island replaces this account’s progress, including its cloud save.') : 'Starting a new island will erase your current progress in this browser.'), button('Yes, start over', () => { const previewBuildStockVersion = state.previewBuildStockVersion; state = createState(); if (previewBuildStockVersion) state.previewBuildStockVersion = previewBuildStockVersion; puzzle = null; save(); renderHUD(); openPanel('home'); toast('Your new island is ready.'); }, { class: 'action danger' }), button('Keep my island', () => openPanel('settings'), { class: 'action secondary' })); break;
     default: body = el('div', {}, note(gameGoal().description),
       stat('Loyalty — consecutive days', `${state.loyalty.streak} / 10`),
       button('Town Hall', () => openPanel('building', 'townhall'), { class: 'action secondary' }),
@@ -2206,6 +2307,8 @@ function meaningfulInput(event) {
 document.addEventListener('pointerdown', meaningfulInput, { capture: true, passive: true });
 document.addEventListener('keydown', meaningfulInput, { capture: true });
 
+devCloudUiReady = true;
+updateDevCloudStatus();
 setDockCategory('administration');
 settleActiveTick();
 if (!NEW_PLAYER_PROFILE) State.applyBuildTestStock?.(state);
@@ -2227,8 +2330,18 @@ setInterval(() => {
   renderHUD();
 }, 1000);
 setInterval(save, 10000);
-window.addEventListener('pagehide', () => { settleActiveTick(); save(); });
+window.addEventListener('pagehide', () => { settleActiveTick(); save(); if (devSync) void devSync.flush(); });
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) { settleActiveTick(); save(); }
+  if (document.hidden) { settleActiveTick(); save(); if (devSync) void devSync.flush(); }
   else { settleActiveTick(); save(); renderHUD(); }
+});
+window.addEventListener('online', () => { if (devSync) void devSync.flush(); });
+window.addEventListener('storage', event => {
+  if (!devAccount || event.key !== SESSION_KEY) return;
+  let nextUid;
+  try { nextUid = JSON.parse(event.newValue)?.uid; } catch { /* A removed session signs out this tab as well. */ }
+  if (nextUid !== devAccount.uid) {
+    settleActiveTick(); save(); devSync.dispose();
+    location.assign('harborlight-auth.html?mode=login');
+  }
 });
