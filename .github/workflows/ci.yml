@@ -95,12 +95,33 @@ jobs:
           HARBORLIGHT_FRONTEND_ROOT: ${{ github.workspace }}/build/frontend
         shell: bash
         run: |
-          set -euo pipefail
-          {
-            python3 -u tests/harborlight-frontend-v17-smoke.py
-            python3 -u tests/harborlight-frontend-v18-smoke.py
-            python3 -u tests/harborlight-tutorial-v18-smoke.py
-          } 2>&1 | tee "$RUNNER_TEMP/harborlight-browser.log"
+          set -uo pipefail
+          python3 -u - <<'PY' 2>&1 | tee "$RUNNER_TEMP/harborlight-browser.log"
+          import subprocess
+          import sys
+
+          for test in ('tests/harborlight-frontend-v17-smoke.py', 'tests/harborlight-frontend-v18-smoke.py', 'tests/harborlight-tutorial-v18-smoke.py'):
+              print('Starting browser acceptance: ' + test, flush=True)
+              status = subprocess.call([sys.executable, '-u', test])
+              if status:
+                  sys.exit(status)
+          PY
+          browser_status=${PIPESTATUS[0]}
+          set -e
+          if (( browser_status != 0 )); then
+            node --input-type=module - "$RUNNER_TEMP/harborlight-browser.log" <<'JS' || true
+          import { readFileSync } from 'node:fs';
+          const text = readFileSync(process.argv[2], 'utf8') || 'Browser acceptance failed without output.';
+          let escaped = '';
+          for (const character of Array.from(text.slice(-6000)).reverse()) {
+            const piece = character === '%' ? '%25' : character === '\r' ? '%0D' : character === '\n' ? '%0A' : character;
+            if (escaped.length + piece.length > 6000) break;
+            escaped = piece + escaped;
+          }
+          console.log(`::error title=Packaged game browser acceptance failed::${escaped}`);
+          JS
+          fi
+          exit "$browser_status"
 
       - name: Test packaged DEV login and cloud saves in Chromium
         id: dev_browser
@@ -139,6 +160,7 @@ jobs:
           path: |
             ${{ runner.temp }}/harborlight-browser.log
             /tmp/harborlight-v18-*.png
+            /tmp/harborlight-v17-*.png
           if-no-files-found: error
           retention-days: 7
 
