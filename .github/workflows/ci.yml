@@ -68,4 +68,36 @@ jobs:
           PY
 
       - name: Test interface in Chromium
-        run: python3 tests/harborlight-frontend-v17-smoke.py
+        id: browser
+        shell: bash
+        run: |
+          set -uo pipefail
+          set +e
+          python3 -u tests/harborlight-frontend-v17-smoke.py 2>&1 | tee "$RUNNER_TEMP/harborlight-browser.log"
+          browser_status=${PIPESTATUS[0]}
+          set -e
+          if (( browser_status != 0 )); then
+            node --input-type=module - "$RUNNER_TEMP/harborlight-browser.log" <<'JS' || true
+          import { readFileSync } from 'node:fs';
+          const text = readFileSync(process.argv[2], 'utf8') || 'Browser acceptance failed without output.';
+          let escaped = '';
+          for (const character of Array.from(text.slice(-6000)).reverse()) {
+            const piece = character === '%' ? '%25' : character === '\r' ? '%0D' : character === '\n' ? '%0A' : character;
+            if (escaped.length + piece.length > 6000) break;
+            escaped = piece + escaped;
+          }
+          console.log(`::error title=Browser acceptance failed::${escaped}`);
+          JS
+          fi
+          exit "$browser_status"
+
+      - name: Publish browser failure diagnostics
+        if: ${{ failure() && steps.browser.outcome == 'failure' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: browserfailure-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/harborlight-browser.log
+            /tmp/harborlight-v17-*.png
+          if-no-files-found: error
+          retention-days: 7
