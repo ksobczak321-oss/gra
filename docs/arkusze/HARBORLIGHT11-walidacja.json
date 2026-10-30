@@ -1,0 +1,34 @@
+{
+  "version": 11,
+  "as_of": "2026-10-30",
+  "published_preprod": {
+    "commit": "6ec3c6d8625420fd96474a22a8b1d699672416cd",
+    "ci": "41111528800",
+    "deployment": "41112673285",
+    "url": "https://harborlight-dev.web.app"
+  },
+  "new_scope": "DEV; logout and draft legal documents require own acceptance/promotion",
+  "source_file": "HARBORLIGHT10-zasady.xlsx",
+  "source_sha256": "4dd371e4fe779e51e1f060e69493635f25971a9c365ff9b55f961d457f31145a",
+  "output": "HARBORLIGHT11-zasady.xlsx",
+  "sha256": "6526a742ec73fa6bbc1faff87dc8a086b9c4f9f3d6e54ff6a3f8238555c6e6ce",
+  "bytes": 425159,
+  "sheets": 66,
+  "visible": [
+    "Jak działa gra v11",
+    "Budynki v11",
+    "Do decyzji v11",
+    "Kalkulator v11",
+    "Testy v11"
+  ],
+  "historical_sheets_unchanged": 59,
+  "source_comments_unchanged": 48,
+  "historical_cached_formulas_unchanged": 3866,
+  "new_cached_formulas_checked": 126,
+  "runtime_formula_samples": 91,
+  "current_checks": 47,
+  "manual_scenarios": 155,
+  "manual_results": "Nie wykonano",
+  "cache_method": "Old OOXML parts copied byte-for-byte; new formulas evaluated independently; no LibreOffice recalculation claimed",
+  "validation": "PASS"
+}

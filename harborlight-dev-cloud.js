@@ -1,6 +1,7 @@
 // Firebase owns credentials and verifies access to the UID-scoped documents.
 // Hosting selects the isolated project; runtime Firebase config never contains secrets.
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v18';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v19';
+import { LEGAL_DOCUMENTS, validLegalAcceptance } from './harborlight-legal.js?v=legal-v1';
 export const DEV_PROJECT = 'harborlight-dev';
 export const PROD_PROJECT = 'harborlight-prod';
 export const PROD_SESSION_KEY = 'harborlight-prod-auth-v1';
@@ -24,6 +25,8 @@ const MESSAGES = {
   'weak-password': 'Hasło musi mieć co najmniej 8 znaków.',
   'invalid-email': 'Wpisz prawidłowy adres e-mail.',
   'invalid-island-name': 'Nazwa wyspy musi mieć od 2 do 40 znaków.',
+  'legal-required': 'Przed ukończeniem rejestracji zaakceptuj Regulamin i potwierdź zapoznanie się z Polityką prywatności.',
+  'legal-outdated': 'Wersja dokumentów zmieniła się. Odśwież stronę i przeczytaj aktualne dokumenty.',
   configuration: 'Konfiguracja logowania tego środowiska nie jest zakończona.',
   'invalid-login': 'Wpisz login admin1, admin2 albo admin3.',
   'invalid-credentials': 'Nieprawidłowy login lub hasło.',
@@ -254,13 +257,14 @@ export function createDevCloud({
     return identity();
   }
 
-  async function registerEmail(email, password, { islandName = '' } = {}) {
+  async function registerEmail(email, password, { islandName = '', legalAcceptance = null } = {}) {
     requireEnabled();
     if (preprod) throw fail('registration-disabled');
     const normalized = String(email || '').trim().toLowerCase(), name = validateIslandName(islandName);
     if (!validEmail(normalized)) throw fail('invalid-email');
     if (typeof password !== 'string' || password.length < 8 || password.length > 128) throw fail('weak-password');
     if (!name.ok) throw fail('invalid-island-name');
+    if (!validLegalAcceptance(legalAcceptance)) throw fail('legal-required');
     const attempt = ++generation, settings = await config();
     const result = await request(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${encodeURIComponent(settings.apiKey)}`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -349,7 +353,7 @@ export function createDevCloud({
     // meaningful promotion/retention failures before treating generic 409 as a
     // concurrent-write conflict. Never expose arbitrary provider diagnostics.
     const apiError = typeof result.body.error === 'string' ? result.body.error : null;
-    if (apiError && ['island-expired', 'invalid-code', 'promotion-not-started', 'promotion-ended', 'promotion-exhausted', 'unsupported-promotion-verification'].includes(apiError)) throw fail(apiError);
+    if (apiError && ['island-expired', 'invalid-code', 'promotion-not-started', 'promotion-ended', 'promotion-exhausted', 'unsupported-promotion-verification', 'legal-required'].includes(apiError)) throw fail(apiError);
     if (apiError && ['invalid-island', 'invalid-generation', 'invalid-revision', 'inventory-overflow'].includes(apiError)) throw fail('invalid-state');
     if ([409, 412].includes(result.status) || result.body.error?.status === 'FAILED_PRECONDITION' ||
         result.body.error?.status === 'ALREADY_EXISTS') throw fail('conflict');
@@ -372,6 +376,26 @@ export function createDevCloud({
         !Number.isSafeInteger(island.generation) || island.generation < 0) throw fail('invalid-cloud-data');
     islandGeneration = island.generation;
     return { payload: island.payload, version: island.version, generation: islandGeneration };
+  }
+
+  async function getLegalStatus() {
+    requireEnabled();
+    if (!session) throw fail('auth-required');
+    if (preprod) return { required: false, exempt: true };
+    const result = await firestoreRequest('/api/v1/legal');
+    if (!result.ok || typeof result.body.required !== 'boolean') throw fail('configuration');
+    if (result.body.termsVersion !== LEGAL_DOCUMENTS.terms.version || result.body.privacyVersion !== LEGAL_DOCUMENTS.privacy.version) throw fail('legal-outdated');
+    return result.body;
+  }
+
+  async function acceptLegal(acceptance) {
+    requireEnabled();
+    if (!session) throw fail('auth-required');
+    if (!validLegalAcceptance(acceptance)) throw fail('legal-required');
+    if (preprod) return { exempt: true };
+    const result = await firestoreRequest('/api/v1/legal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(acceptance) });
+    if (!result.ok || result.body.uid !== session.uid || result.body.termsVersion !== LEGAL_DOCUMENTS.terms.version || result.body.privacyVersion !== LEGAL_DOCUMENTS.privacy.version || !Number.isSafeInteger(result.body.acceptedAt) || result.body.acceptedAt < 0) throw fail('invalid-cloud-data');
+    return result.body;
   }
 
   async function createIsland() {
@@ -455,5 +479,5 @@ export function createDevCloud({
     return { revision, updateTime };
   }
 
-  return { enabled, preprod, projectId, environment, sessionKey, get accountApiEnabled() { return accountApiEnabled; }, signIn, registerEmail, acceptExternalSession, getPublicConfig: config, getProfile, restoreSession, signOut: clear, loadIsland, createIsland, saveIsland, recordActivity, redeemPromoCode, get accountStatus() { return accountStatus ? { ...accountStatus } : null; } };
+  return { enabled, preprod, projectId, environment, sessionKey, get accountApiEnabled() { return accountApiEnabled; }, signIn, registerEmail, acceptExternalSession, getPublicConfig: config, getProfile, getLegalStatus, acceptLegal, restoreSession, signOut: clear, loadIsland, createIsland, saveIsland, recordActivity, redeemPromoCode, get accountStatus() { return accountStatus ? { ...accountStatus } : null; } };
 }

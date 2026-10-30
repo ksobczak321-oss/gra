@@ -80,7 +80,7 @@ export function createServer({
         ...(isReadiness ? { scope: 'infrastructure', features: { accounts: accountApi, persistence: accountApi, gameApi: false } } : {}) });
       return;
     }
-    const routes = { '/api/v1/config': ['GET'], '/api/v1/island': ['GET','POST','PUT'], '/api/v1/activity': ['POST'], '/api/v1/promotions/redeem': ['POST'] };
+    const routes = { '/api/v1/config': ['GET'], '/api/v1/island': ['GET','POST','PUT'], '/api/v1/activity': ['POST'], '/api/v1/promotions/redeem': ['POST'], '/api/v1/legal': ['GET','POST'] };
     if (!routes[path]) { send(404, { error: 'not_found' }); return; }
     if (!accountApi) { send(503, { error: 'account_api_disabled' }); return; }
     if (!routes[path].includes(request.method)) { response.setHeader('Allow', routes[path].join(', ')); send(405, { error: 'method_not_allowed' }); return; }
@@ -93,8 +93,12 @@ export function createServer({
       if (!identity?.uid) throw new AccountServiceError('auth-required', 401);
       const uid = identity.uid;
       if (runtimeEnvironment === 'preprod' && !['dev-admin1','dev-admin2','dev-admin3'].includes(uid)) throw new AccountServiceError('permission', 403);
-      if (request.method === 'GET') { send(200, await accountService.readIsland({ uid })); return; }
+      if (request.method === 'GET') { send(200, await (path === '/api/v1/legal' ? accountService.readLegalStatus({ uid }) : accountService.readIsland({ uid }))); return; }
       const body = await requestJson(request);
+      if (path === '/api/v1/legal') {
+        send(200, await accountService.acceptLegal({ uid, termsVersion: body.termsVersion, privacyVersion: body.privacyVersion,
+          termsAccepted: body.termsAccepted, privacyAcknowledged: body.privacyAcknowledged })); return;
+      }
       if (path === '/api/v1/island' && request.method === 'POST') {
         if (Object.keys(body).length) throw new AccountServiceError('starter-is-server-owned', 400);
         await accountService.startIsland({ uid, payload: starter(now()) });

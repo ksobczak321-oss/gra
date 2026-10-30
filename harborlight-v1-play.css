@@ -729,3 +729,5 @@ body.portrait-world .dock-tabs{display:none!important}
  #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .minigame-side>[data-minigame-result-actions]{grid-column:1;grid-row:4;min-width:0}
  #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .minigame-side :is([data-minigame-result-actions],.minigame-ad-slot) .action{min-height:40px;padding:5px 6px;font-size:10px;line-height:1.2;overflow-wrap:anywhere}
 }
+.settings-session-actions{display:flex;justify-content:flex-end;margin-bottom:14px}.settings-session-actions .settings-signout{min-width:150px}
+.settings-legal-links{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}.settings-legal-links a{display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border:1px solid #6d8d9d;border-radius:9px;color:#ffe1a0;text-underline-offset:3px}.settings-legal-links a:focus-visible{outline:3px solid #ffe0a0;outline-offset:3px}

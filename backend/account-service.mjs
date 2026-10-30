@@ -13,6 +13,9 @@ const object = value => value !== null && typeof value === 'object' && !Array.is
 const positive = value => Number.isSafeInteger(value) && value > 0;
 const nonnegative = value => Number.isSafeInteger(value) && value >= 0;
 const ACCOUNT_PROGRESS_FIELDS = ['commerce', 'loyalty', 'socialRewards', 'referrals', 'engagementSchedule', 'welcome'];
+export const LEGAL_DOCUMENT_VERSIONS = Object.freeze({ termsVersion: '2026-10-30-draft1', privacyVersion: '2026-10-30-draft1' });
+const acceptedLegal = account => account?.legalAcceptance?.termsVersion === LEGAL_DOCUMENT_VERSIONS.termsVersion &&
+  account?.legalAcceptance?.privacyVersion === LEGAL_DOCUMENT_VERSIONS.privacyVersion && Number.isSafeInteger(account?.legalAcceptance?.acceptedAt);
 
 function captureAccountProgress(state, previous = {}) {
   const progress = object(previous) ? structuredClone(previous) : {};
@@ -103,6 +106,29 @@ export function createAccountService({ store, now = () => Date.now(), environmen
     if (generationValue(generation) !== currentGeneration(account) || island && (island.generation ?? 1) !== generation || account?.islandExpiredAt && !island) fail('island-expired', 410);
   };
   const canExpire = (uid, account, island, at) => !exempt.has(uid) && account && island && Number.isSafeInteger(account.lastPlayedAt) && at >= threeMonthDeadline(account.lastPlayedAt);
+  const legalExempt = uid => environment !== 'production' && PREPROD_USERS.includes(uid);
+  async function readLegalStatus({ uid }) {
+    return store.runTransaction(async tx => {
+      const account = await tx.get(accountPath(uid)), island = await tx.get(islandPath(uid));
+      // Existing islands keep access. Mandatory registration admission applies
+      // before creating a new world, not as a forced reset of an older account.
+      return { ...LEGAL_DOCUMENT_VERSIONS, draft: true, required: !legalExempt(uid) && !island && !acceptedLegal(account),
+        accepted: acceptedLegal(account), acceptance: acceptedLegal(account) ? account.legalAcceptance : null, existingIsland: !!island };
+    });
+  }
+  async function acceptLegal({ uid, termsVersion, privacyVersion, termsAccepted, privacyAcknowledged }) {
+    uidValue(uid);
+    if (termsAccepted !== true || privacyAcknowledged !== true || termsVersion !== LEGAL_DOCUMENT_VERSIONS.termsVersion || privacyVersion !== LEGAL_DOCUMENT_VERSIONS.privacyVersion) fail('legal-required', 428);
+    const at = serverTime(), key = accountPath(uid);
+    return store.runTransaction(async tx => {
+      const account = await tx.get(key);
+      if (acceptedLegal(account)) return { ...account.legalAcceptance, alreadyAccepted: true };
+      const receipt = { ...LEGAL_DOCUMENT_VERSIONS, uid, acceptedAt: at, privacyAcknowledgedAt: at, draft: true };
+      await tx.set(key, { ...(account || {}), legalAcceptance: receipt });
+      await tx.set(key + '/legalAcceptances/' + termsVersion + '_' + privacyVersion, receipt);
+      return { ...receipt, alreadyAccepted: false };
+    });
+  }
   async function expireStored(tx, uid, account, island, at) {
     const key = accountPath(uid), previousGeneration = currentGeneration(account), generation = previousGeneration + 1;
     if (!positive(generation)) fail('generation-overflow', 500);
@@ -161,6 +187,9 @@ export function createAccountService({ store, now = () => Date.now(), environmen
       assertGeneration(account, island, generation);
       if (canExpire(uid, account, island, at)) { await expireStored(tx, uid, account, island, at); return expiredMutation; }
       if (!account) fail('account-not-initialized', 409);
+      // Accepting legal documents creates account metadata, not a world. Only
+      // the trusted POST starter may create islands; PUT always updates one.
+      if (!island) fail('island-not-initialized', 409);
       if ((island?.revision || 0) !== expectedRevision) fail('island-conflict', 409);
       if (!island && account.islandExpiredAt) fail('island-expired', 410);
       if (environment === 'production') {
@@ -183,6 +212,7 @@ export function createAccountService({ store, now = () => Date.now(), environmen
     return store.runTransaction(async tx => {
       const account = await tx.get(accountPath(uid)), island = await tx.get(key);
       if (island) fail('island-already-exists', 409);
+      if (environment === 'production' && !acceptedLegal(account)) fail('legal-required', 428);
       const generation = currentGeneration(account);
       if (object(account?.islandAccountProgress)) for (const field of ACCOUNT_PROGRESS_FIELDS) {
         if (object(account.islandAccountProgress[field])) state[field] = structuredClone(account.islandAccountProgress[field]);
@@ -264,5 +294,5 @@ export function createAccountService({ store, now = () => Date.now(), environmen
     return { results, cursor: page.cursor ?? null };
   }
 
-  return { readIsland, recordActivity, saveIsland, startIsland, redeemCode, expireIsland, sweepExpired };
+  return { readIsland, recordActivity, saveIsland, startIsland, redeemCode, expireIsland, sweepExpired, readLegalStatus, acceptLegal };
 }

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createDevCloud, PROD_PROJECT, PROD_SESSION_KEY, accountSaveKey } from '../harborlight-dev-cloud.js';
 import { signInWithProvider, facebookShareUrl, shareAchievement } from '../harborlight-auth-providers.js';
+import { legalAcceptance } from '../harborlight-legal.js';
 
 const NOW = Date.parse('2026-10-30T12:00:00Z'), UID = 'real-player-123', EMAIL = 'captain@example.invalid';
 const CONFIG = { projectId: PROD_PROJECT, apiKey: 'fixture-public-api-key-123456789', messagingSenderId: '992911312434' };
@@ -43,7 +44,7 @@ test('PROD accounts cannot accept the PRE-PROD Firebase project or mismatched cr
 
 test('real registration creates an Auth account and its cloud profile without creating an island', async () => {
   const h = harness([reply(CONFIG), reply(auth()), reply({ displayName: 'HARBORLIGHT:Port Mew' })]);
-  const identity = await h.client.registerEmail(EMAIL, 'captain-password', { islandName: 'Port Mew' });
+  const identity = await h.client.registerEmail(EMAIL, 'captain-password', { islandName: 'Port Mew', legalAcceptance: legalAcceptance(true,true) });
   assert.equal(identity.uid, UID); assert.equal(identity.islandName, 'Port Mew');
   assert.ok(h.calls[1].url.includes('accounts:signUp'));
   assert.deepEqual(JSON.parse(h.calls[2].options.body), { idToken: token(), displayName: 'HARBORLIGHT:Port Mew', returnSecureToken: true });
@@ -154,7 +155,7 @@ test('a successful promotion claim reloads its credited server island without ap
 
 test('a failed profile update does not pretend that a successfully created account failed', async () => {
   const h = harness([reply(CONFIG), reply(auth()), reply({ error: { message: 'UNAVAILABLE' } }, 503)]);
-  assert.equal((await h.client.registerEmail(EMAIL, 'captain-password', { islandName: 'Port Mew' })).uid, UID);
+  assert.equal((await h.client.registerEmail(EMAIL, 'captain-password', { islandName: 'Port Mew', legalAcceptance: legalAcceptance(true,true) })).uid, UID);
   assert.ok(h.values.has(PROD_SESSION_KEY));
 });
 

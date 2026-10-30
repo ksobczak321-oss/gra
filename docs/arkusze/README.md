@@ -1,65 +1,59 @@
 # Arkusz zasad HARBORLIGHT
 
-**Archiwum v16:** Excel 10 zachowuje zasady wydania frontend-v16, w tym dawne losowanie minigier. Bieżące zmiany v17 opisują [wymagania pakietu](../FRONTEND-V17-REQUIREMENTS.md) i [reguły gospodarki](../ECONOMY-RULES.md); w tym pakiecie nie generujemy nowego arkusza. Poniższy raport walidacji dotyczy niezmienionego pliku v16.
+Bieżący plik: **[HARBORLIGHT11-zasady.xlsx](HARBORLIGHT11-zasady.xlsx)**. Obejmuje zatwierdzone reguły **v18**, stan potwierdzonego PRE-PROD oraz osobno oznaczony nowy zakres DEV: bezpośrednie wylogowanie i robocze dokumenty rejestracji.
 
-[Pobierz Excel 10 — HARBORLIGHT10-zasady.xlsx](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT10-zasady.xlsx)
+[Pobierz Excel 11 z repozytorium](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT11-zasady.xlsx) — po synchronizacji zmian z Gitem. Jeżeli GitHub pokazuje stronę pliku, wybierz **Download raw file**. Plik można otworzyć w Excelu lub LibreOffice Calc i zaimportować do Arkuszy Google.
 
-Jeżeli GitHub pokazuje stronę pliku, wybierz **Download raw file**. Plik otworzysz w Excelu lub LibreOffice Calc; można go też zaimportować do Arkuszy Google. Bieżące zasady opisują frontend-v16 wraz ze wszystkimi zmianami v15, a [manifest aktualizacji](../decisions-v10.json) oddziela decyzje użytkownika, jawne ustawienia projektu i przyszłe integracje.
+## Pięć widocznych zakładek
 
-Excel 10 zachowuje **cztery widoczne zakładki**. Każda mechanika ma najwyżej trzy zdania; pełna lista 25 akcji samouczka jest także w pierwszej zakładce. Wszystkie **52 zakładki Excela 9**, ich wartości, formuły i **48 komentarzy źródłowych** pozostają niezmienionym ukrytym archiwum. Pliki 7, 8 i 9 zachowują identyczne bajty.
-
-## Od czego zacząć
-
-| Widoczna zakładka | Zawartość |
+| Zakładka | Zawartość |
 |---|---|
-| Jak działa gra v10 | Krótkie bieżące zasady i 25 kolejnych akcji samouczka |
-| Budynki v10 | Wszystkie 12 budynków: przeznaczenie, obsada, koszt, czas i efekt rozbudowy |
-| Do decyzji v10 | Wyłącznie nadal nieustalone kwoty i odłożone integracje |
-| Kalkulator v10 | Niebieskie pola wejściowe: produkcja, transport, FIFO, atrakcje, nagrody nowych minigier, skrzynie, drogi i pojemność |
+| Jak działa gra v11 | Aktualne zasady v18, granice integracji, nowy zakres DEV i wszystkie 25 rzeczywistych działań samouczka |
+| Budynki v11 | 12 budynków: cel, obsada, korzyść, koszt, osobny czas transportu/budowania i ważne wyjątki |
+| Do decyzji v11 | Stan publikacji, jawne parametry projektu i rzeczy wymagające konfiguracji; bez ponownego otwierania ustalonych kwot lojalności |
+| Kalkulator v11 | Niebieskie wejścia: produkcja, transport, ograniczenie Magazynu L24, bonusowy zapas, demografia, minigry, uprawnienie bez reklam, Kaplica i czas nieobecności |
+| Testy v11 | 155 filtrowalnych scenariuszy ręcznych z warunkami, krokami, oczekiwanym wynikiem i polem wyniku |
 
-Nazwy widocznych zakładek mają końcówkę v10, aby nie zmieniać odwołań dawnych formuł. Ukryte arkusze można pokazać przez **Odkryj arkusz / Unhide**; nie trzeba ich przeglądać podczas normalnego czytania. Dawne kalkulatory pozostają historią, a bieżące pierwszeństwo mają cztery zakładki v10.
+Wszystkie **59 zakładek Excela 10**, ich formuły, zapisane wyniki i **48 komentarzy źródłowych** pozostały nienaruszonym ukrytym archiwum. Ich dawne zasady nie mają pierwszeństwa przed v11. Ukryte zakładki można wyświetlić przez **Odkryj arkusz / Unhide**. Nowe ukryte `Kontrole v11` i `Źródła v11` dokumentują wartości odczytane z eksportów kodu oraz kontrolę kalkulatora.
 
-## Co obejmuje aktualizacja
+## Najważniejsze różnice wobec Excela 10
 
-- Samouczek zachowuje **25 akcji**, łączy wcześniejsze tematy z nową kolejnością początku i nie wymaga pięciu dni oczekiwania. Otwiera się przy wejściu do ukończenia albo rezygnacji; później można go wznowić ręcznie z zachowaniem postępu.
-- Pierwsze kroki to zasady w menu lewego górnego rogu, mapa, przydział ludzi, sprawdzenie jedzenia, zlecenie rozbudowy Ratusza i zwiększenie szczęścia. Jednorazowa pomoc przy piątej akcji uzupełnia dostępne środki do 500 monet i każdego materiału, z 600 żywności, aby budowa była wykonalna.
-- Każda akcja ma fanfarę i skrzynię: osobno **100–300 każdego z pięciu materiałów**, bez monet. Share daje drugi raz identyczną wylosowaną skrzynię, najwyżej raz; Skip zachowuje zwykłą nagrodę. Wynik i rozliczenie pozostają zapisane, a nadwyżki czekają na miejsce w centrali.
-- Dwie losowane minigry zastępują nowe rundy ekspedycji: przechylany labirynt z kulkami oraz czarno-białe dopasowywanie trójek. Gra zachowuje ryzyko całej niewypłaconej puli i możliwość wypłaty po wygranej.
-- Pierwszy labirynt ma 180 s i 50 monet; po 120 s nagroda nowej rundy maleje o jedną monetę co pełne 15 s. Przy końcu limitu następuje przegrana; późniejsze rundy mają proporcjonalne granice czasu. Komputer obsługuje mysz i klawiaturę, telefon ruch urządzenia albo dotyk.
-- Dopasowywanie zaczyna się od 24 pól i 240 s, rośnie do 120 pól i najwyżej 900 s, a od czwartego etapu wprowadza ruch zakrytych niedopasowanych kafelków. Te konkretne krzywe są jawnym doborem projektu w ramach uzgodnionej trudności, a nie dodatkową decyzją użytkownika.
-- Zakres v15 obejmuje bazową produkcję **20/24/26/28…**, ładowność **120 na poziomie 1**, jedną sześciogodzinną atrakcję na całej wyspie, utrwalony zasięg **1–50% populacji** i cenę według faktycznej sumy punktów szczęścia. Równe miniatury, podpisy pracujących, zwarte karty, powrót, nazwa wyspy, opisy i kompletna polska wersja są ujęte w manifeście.
+- Nowa wyspa ma bazowe 20% szczęścia i minimum 20% przez 72 h dla wszystkich; wymuszone 100% ma pierwszeństwo. Dodatni przyrost populacji jest dwukrotnie szybszy, odejścia pozostają bez przyspieszenia.
+- Produkcja, podatki i szybkość przewozu mają ×2 przez pięć minut od rzeczywistego działania, następnie ×1 i dopiero po 48 h bez grania ×0,5. Nieobecność rozliczamy przedziałami; jedzenie i zegary świata biegną normalnie.
+- Nagrody materiałowe są od razu wydawalne i nie zajmują limitu zwykłych dostaw. Przepełnienie blokuje kolejne skrzynie/podwojenia, a nie pomoc do Ratusza ani zarządzanie wyspą. Po L24 Magazyn zwiększa tylko obsadę.
+- 25 kroków wymaga prawdziwych działań. Materiały do piątego kroku oraz skrzynie 100–300 pięciu materiałów nie są lojalnością; ta daje teraz 50–200 każdego z sześciu zasobów raz na dzień Warszawy.
+- Gracz wybiera minigrę; rundy nominalnie dodają 50, 100, 200, 400…, czyli pula wynosi 50, 150, 350, 750…. Dodatkowy czas kupuje się dobrowolnie przed końcem; obecne ceny i limity są jawną konfiguracją.
+- Darmowe błogosławieństwo odnawia się o północy Warszawy, bez kumulowania. Od Kaplicy 3 okres opieki to `3 + poziom`, a zagrożenie losujemy po dalszych 6–15 dniach; wraki respektują ochronę Latarni.
+- Zapis konta jest wyłącznie w chmurze; brak internetu lub konflikt nie tworzy lokalnej wyspy. Wdrożenie zachowuje konta i wyspy `admin1`–`admin3`; testy destrukcyjne dotyczą jedynie fikstur lub wydzielonych kont.
+- Paynow i reklamy w DEV/PRE-PROD są oznaczoną symulacją. OAuth, rzeczywiste potwierdzenia płatności/reklam, globalne kody i retencja wymagają rzeczywistej konfiguracji, nie samej obecności kodu.
 
-Za 25 skrzyń podstawowych można otrzymać łącznie **12 500–37 500 sztuk materiałów**, średnio **25 000**; podwojenie każdej skrzyni daje średnio **50 000**. To suma pięciu różnych materiałów, bez monet i bez osobnej pomocy do budowy Ratusza. Nie jest to nagroda programu lojalnościowego.
+## Scenariusze testów
 
-Lojalność zachowuje serię kolejnych dni, reset po przerwie, granicę 00:00 Europe/Warsaw i koniec po dziesiątej odebranej nagrodzie albo osiągnięciu Ratusza 4. **Wysokości nagród nadal nie ustalono.** Arkusz nie zastępuje ich skrzyniami samouczka ani fikcyjną wypłatą.
+Ten sam zestaw jest dostępny jako [Markdown](../TEST-SCENARIOS-v18.md), [CSV dla polskiego Excela](../TEST-SCENARIOS-v18.csv) i [JSON](../test-scenarios-v18.json). CSV ma UTF-8 z BOM, separator średnikowy i wielowierszowe kroki.
 
-Lokalne Share nie potwierdza publikacji na Facebooku. Prawdziwe konta, płatności, reklamy i serwerowa weryfikacja publikacji lub poleceń pozostają oddzielnymi integracjami; ich stan jest jawnie opisany.
+**155 scenariuszy to plan testów, nie raport ich wykonania.** Wszystkie zaczynają ze stanem `Nie wykonano`; nie przypisano im historycznych wyników testów automatycznych. W arkuszu można wybrać `PASS`, `FAIL` lub `Zablokowany` dopiero po rzeczywistym odbiorze. Nowe rejestracje i wylogowanie są oznaczone jako zakres do osobnego odbioru.
 
-## Odtworzenie i weryfikacja
+`admin1` sprawdzamy odczytowo. `admin2` i `admin3` również są trwałymi kontami i nie są przeznaczone do kasowania danych. Scenariusze zmieniające czas, zasoby, retencję, płatności lub reguły bezpieczeństwa wymagają lokalnej fikstury albo wyraźnie wydzielonego środowiska testowego.
 
-Skrypt: [scripts/build_workbook_v10.py](../../scripts/build_workbook_v10.py). Wymaga `openpyxl`, Node.js i LibreOffice; pobiera rzeczywiste lekcje oraz parametry minigier z eksportów modułów gry.
+## Co jest faktycznie opublikowane
+
+Potwierdzony PRE-PROD to **v18 / `6ec3c6d`**, [udane wdrożenie 41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285), gra **https://harborlight-dev.web.app**. Kolejna partia zmian w tej przestrzeni nie jest automatycznie częścią tamtej publikacji. Arkusz nie oznacza opublikowania PROD, aktywacji wszystkich dostawców ani pobierania prawdziwych opłat.
+
+Końcowe żądanie właściciela to miesięczny budżet alertowy **100 USD**, łącznie dla `harborlight-dev` i `harborlight-prod`. Przygotowanie planu w DEV nie potwierdza zastosowania konfiguracji GCP. Kalkulator pokazuje jedynie przykład przeliczenia 100 USD × 4 PLN/USD = około 400 PLN, bez gwarantowanego kursu i bez odczytu faktycznych kosztów. Standardowy budżet GCP sam w sobie nie odcina usług ani nie ogranicza faktury; bieżące naliczenia właściciel sprawdza prywatnie.
+
+Regulamin i polityka prywatności są robocze, z placeholderem operatora `Loremipsum`, do uzupełnienia i przeglądu. Wymagane potwierdzenie zapoznania się z polityką prywatności nie jest wymuszoną zgodą RODO na konieczne przetwarzanie.
+
+## Odtworzenie i walidacja
+
+Skrypt: [scripts/build_workbook_v11.py](../../scripts/build_workbook_v11.py). Wymaga `openpyxl`, `lxml` i Node.js.
 
 ```sh
-python3 scripts/build_workbook_v10.py
-python3 scripts/build_workbook_v10.py --validate-only
+python3 scripts/build_workbook_v11.py
+python3 scripts/build_workbook_v11.py --validate-only
 ```
 
-Walidacja porównuje wszystkie 52 archiwalne zakładki z Excelem 9, treść i autorów 48 komentarzy oraz sumy kontrolne niezmienionych plików 7–9. LibreOffice zapisuje wyniki formuł; openpyxl sprawdza brak błędów i brakujących wyników, bieżące i historyczne kontrole TRUE, komplet 25 akcji oraz zgodność parametrów z kodem. Opcja `--no-recalc` służy wyłącznie roboczemu podglądowi i nie daje pełnego odbioru pliku.
+Generator czyta parametry i lekcje z eksportów modułów gry. Nowe formuły mają sprawdzone zapisane wyniki początkowe; Excel przelicza je po zmianie wejść. **Nie uruchamiano LibreOffice ani nie przypisano mu przeliczenia nowej wersji.** Generator kopiuje historyczne części OOXML bajt w bajt, dlatego nie usuwa 3866 starych wyników formuł ani komentarzy przy zapisie nowego pliku.
 
-## Końcowy odbiór lokalny Excela 10
+Szczegółowy wynik: [HARBORLIGHT11-walidacja.json](HARBORLIGHT11-walidacja.json). Walidacja sprawdza integralność ZIP, wszystkie stare zakładki i komentarze, stare cache formuł, nowe cache i kontrole TRUE, próbki wzorów wobec rzeczywistych eksportów kodu, 25 lekcji i komplet scenariuszy. Wynik lokalny nie jest potwierdzeniem publicznego pobrania pliku.
 
-Plik ma **59 zakładek, cztery widoczne, 57 mechanik opisanych najwyżej trzema zdaniami, 25 akcji samouczka i 32 wpisy zmian**. LibreOffice przeliczył **3866 formuł**; nie ma błędów ani brakujących zapisanych wyników. **62 bieżące kontrole oraz 30 kontroli wersji 9 i 231 kontroli wersji 8 dają TRUE**. Wszystkie 52 archiwalne zakładki i 48 komentarzy są identyczne z Excelem 9; źródłowe pliki 7–9 nie zostały zmienione.
-
-Excel 10: **364049 bajtów**, SHA-256 `4dd371e4fe779e51e1f060e69493635f25971a9c365ff9b55f961d457f31145a`. To wynik lokalny; publikację kodu i ewentualne potwierdzenie publicznego pobrania zapisuje dziennik.
-
-Sumy niezmienionych źródeł:
-
-- Excel 9: `3fc10a5d84df001e67e217dbc8c045cc5025b7777f91239c60b6694966864cc8`.
-- Excel 8: `74ea3cc586d8d889ff34de8819694430503f45ed5fa2743873c9ad0c0b83cc3e`.
-- Excel 7: `bf49eef3b43ba81e0492c6eb187940c99177bbb8ae925ceca2b09ab0a2b9e945`.
-
-Końcowy raport walidacji i stan publikacji zapisuje [dziennik implementacji](../IMPLEMENTATION-LOG.md). Odtworzenie zachowuje zasady i wyniki, lecz metadane programu mogą zmienić sumę kontrolną nowego pliku. Lokalny odbiór nie jest potwierdzeniem publicznego pobrania.
-
-Poprzednie wydania: [Excel 9](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT9-zasady.xlsx), [Excel 8](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT8-zasady.xlsx), [Excel 7](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT7-zasady.xlsx). Historyczny odbiór publiczny wersji 9 jest zachowany w dzienniku; nie przypisujemy go wersji 10.
-
-Bieżące zasady tekstowe: [gospodarka](../ECONOMY-RULES.md), [budynki](../BUILDINGS.md), [instrukcja interfejsu](../INTERACTIVE-ISLAND.md).
+Archiwa pozostają bez nadpisywania: [Excel 10](HARBORLIGHT10-zasady.xlsx), [Excel 9](HARBORLIGHT9-zasady.xlsx), [Excel 8](HARBORLIGHT8-zasady.xlsx), [Excel 7](HARBORLIGHT7-zasady.xlsx). Historia i dowody wdrożeń są w [dzienniku](../IMPLEMENTATION-LOG.md).

@@ -66,6 +66,12 @@ jobs:
       - name: Test isolated runtime and Hosting configuration
         run: python3 tests/harborlight-runtime-config.test.py
 
+      - name: Test monthly billing alert configuration safety
+        run: python3 tests/harborlight-budget.test.py
+
+      - name: Verify generated legal documents match their reviewed drafts
+        run: python3 scripts/build_legal_pages.py --check
+
       - name: Install browser acceptance dependencies
         shell: bash
         run: |
@@ -139,7 +145,7 @@ jobs:
           import subprocess
           import sys
 
-          for test in ('tests/harborlight-dev-auth-smoke.py', 'tests/harborlight-dev-game-smoke.py', 'tests/harborlight-v18-auth-smoke.py'):
+          for test in ('tests/harborlight-dev-auth-smoke.py', 'tests/harborlight-dev-game-smoke.py', 'tests/harborlight-settings-signout-smoke.py', 'tests/harborlight-v18-auth-smoke.py'):
               status = subprocess.call([sys.executable, '-u', test])
               if status:
                   sys.exit(status)

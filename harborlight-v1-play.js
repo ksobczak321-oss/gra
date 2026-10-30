@@ -1,24 +1,24 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v18';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v18';
-import * as State from './harborlight-v1-state.js?v=frontend-v18';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v18';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v18';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v18';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v18';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v18';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v18';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v18';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v18';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v18';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v18';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v18';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v18';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v18';
-import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v18';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v18';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v18';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v18-fit2';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v18';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v19';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v19';
+import * as State from './harborlight-v1-state.js?v=frontend-v19';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v19';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v19';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v19';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v19';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v19';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v19';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v19';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v19';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v19';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v19';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v19';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v19';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v19';
+import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v19';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v19';
+import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v19';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v19-fit2';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v19';
 
 I18n.registerTranslations({
   "Choose a minigame": "Wybierz minigrę",
@@ -107,7 +107,10 @@ async function waitForCloudRetry(error) {
   await new Promise(resolve=>retry.addEventListener('click',async()=>{
     if(!expired){resolve();return;}
     retry.disabled=true;
-    try{await devCloud.createIsland();resolve();}catch{message.textContent=copy('Nie udało się utworzyć wyspy. Sprawdź połączenie i spróbuj ponownie.','The new island could not be created. Check your connection and try again.');retry.disabled=false;}
+    try{await devCloud.createIsland();resolve();}catch(error){
+      if(error?.code==='legal-required') {location.replace('harborlight-auth.html?mode=login&legal=required');return;}
+      message.textContent=copy('Nie udało się utworzyć wyspy. Sprawdź połączenie i spróbuj ponownie.','The new island could not be created. Check your connection and try again.');retry.disabled=false;
+    }
   })); overlay.remove();
 }
 if (devAccount) {
@@ -119,7 +122,13 @@ if (devAccount) {
       try { state=normalizeState(JSON.parse(payload)); }
       catch { devSync.pause('invalid-cloud-data'); throw Object.assign(new Error('Invalid cloud save'),{code:'invalid-cloud-data'}); }
       break;
-    } catch(error) { await waitForCloudRetry(error); }
+    } catch(error) {
+      if(error?.code==='legal-required') {
+        location.replace('harborlight-auth.html?mode=login&legal=required');
+        await new Promise(()=>{});
+      }
+      await waitForCloudRetry(error);
+    }
   }
   if (!state.islandName && typeof devCloud.getProfile==='function') {
     try { const profile=await devCloud.getProfile(); if(profile?.islandName)state.islandName=profile.islandName; } catch { /* A profile-name lookup never replaces the island. */ }
@@ -1951,15 +1960,20 @@ function devAccountPanel() {
     el('p',{class:'notice','data-cloud-save-status':'','data-status':devSyncStatus,'data-i18n-ignore':'',role:'status'},devSyncMessage()),
     note(label('Postęp tej wyspy jest zapisywany wyłącznie w chmurze.','This island is saved exclusively in the cloud.')),
     button(label('Zapisz w chmurze','Save to cloud'),async()=>{settleActiveTick();await save(true);updateDevCloudStatus();toast(devSyncMessage());},{class:'action secondary','data-cloud-save-now':''}),
-    button(label('Wczytaj zapis z chmury','Load cloud save'),async()=>{try{await reloadConfirmedIsland();toast(devSyncMessage());}catch{toast(devSyncMessage());}},{class:'action secondary','data-cloud-reload':''}),
-    button(label('Wyloguj się','Sign out'),async()=>{settleActiveTick();await save(true);devSigningOut=true;finishDevSignout();},{class:'action secondary','data-dev-signout':''}));
+    button(label('Wczytaj zapis z chmury','Load cloud save'),async()=>{try{await reloadConfirmedIsland();toast(devSyncMessage());}catch{toast(devSyncMessage());}},{class:'action secondary','data-cloud-reload':''}));
 }
 
 function settingsPanel() {
   const checkbox = (key, label) => el('label', { class: 'setting-row' }, el('span', {}, label), el('input', { type: 'checkbox', checked: key === 'motion' ? effectiveAnimationsEnabled() : !!state.settings[key], onchange: event => perform({ type: 'setting', key, value: event.target.checked }) }));
   const languageSelect = el('select', { 'aria-label': 'Language', onchange: event => { perform({ type: 'setting', key: 'language', value: event.target.value }); renderLeisureDock(true); localize(); renderMobileDock(true); } }, el('option', { value: 'en', selected: language() === 'en' }, 'English'), el('option', { value: 'pl', selected: language() === 'pl' }, 'Polski'));
   const ranking = state.ranking?.score ?? state.rankingScore ?? state.buildings.townhall.level * state.resources.coins;
-  return el('div', {}, devAccountPanel(), el('label', { class: 'setting-row' }, el('span', {}, 'Language'), languageSelect), notificationFilterSettings(), button('Tutorial', () => openPanel('tutorial'), { class: 'action secondary' }), checkbox('motion', 'Animations and highlights'),
+  const signout = devAccount ? el('div', { class: 'settings-session-actions' },
+    button(uiCopy('Sign out', 'Wyloguj się'), async () => { settleActiveTick(); await save(true); devSigningOut = true; finishDevSignout(); },
+      { class: 'action settings-signout', 'data-dev-signout': '', 'data-settings-signout': '' })) : null;
+  const legalLinks = el('nav', { class:'settings-legal-links', 'aria-label':uiCopy('Game documents','Dokumenty gry'), 'data-settings-legal':'' },
+    el('a', {href:'harborlight-terms.html',target:'_blank',rel:'noopener'}, uiCopy('Game Terms','Regulamin gry')),
+    el('a', {href:'harborlight-privacy.html',target:'_blank',rel:'noopener'}, uiCopy('Privacy policy','Polityka prywatności')));
+  return el('div', {}, signout, devAccountPanel(), legalLinks, el('label', { class: 'setting-row' }, el('span', {}, 'Language'), languageSelect), notificationFilterSettings(), button('Tutorial', () => openPanel('tutorial'), { class: 'action secondary' }), checkbox('motion', 'Animations and highlights'),
     !effectiveAnimationsEnabled() ? note(state.settings.motion ? 'Animations are paused by your system’s reduced-motion preference. Enable the checkbox to turn on water, smoke and island movement.' : 'Animations are off. Enable the checkbox to turn on water, smoke and island movement.') : null,
     note(devAccount ? (language() === 'pl' ? 'Wyspa działa w czasie rzeczywistym. Postęp jest zapisywany wyłącznie w chmurze.' : 'Your island continues in real time. Progress is saved exclusively in the cloud.') : 'Development preview runs in memory. Hosted accounts save exclusively in the cloud.'),
     card(el('h3', {}, 'Ranking'), stat('Hourly score', count(ranking)), note('Town Hall level × coins, recorded on each full hour.')),

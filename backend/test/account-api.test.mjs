@@ -11,7 +11,9 @@ async function fixture(t, options = {}) {
     startIsland: async args => { calls.push(['start', args]); return { generation: 1, revision: 1 }; },
     saveIsland: async args => { calls.push(['save', args]); return { generation: args.generation, revision: args.expectedRevision + 1, updatedAt: NOW }; },
     recordActivity: async args => { calls.push(['activity', args]); return { lastPlayedAt: NOW }; },
-    redeemCode: async args => { calls.push(['redeem', args]); return { code: args.code, alreadyRedeemed: false }; }
+    redeemCode: async args => { calls.push(['redeem', args]); return { code: args.code, alreadyRedeemed: false }; },
+    readLegalStatus: async args => { calls.push(['legal-read', args]); return { required: true }; },
+    acceptLegal: async args => { calls.push(['legal-accept', args]); return { uid: args.uid, acceptedAt: NOW }; }
   };
   const server = createServer({ environment: 'test', now: () => NOW, accountService: service, verifyIdentityToken: async token => {
     if (token !== 'valid-token') throw Object.assign(new Error('invalid signature'), { code: 'auth-required', status: 401 });
@@ -69,6 +71,17 @@ test('optimistic saves use explicit revisions/generations and expose a cloud ver
   const result = await request('/api/v1/island', 'PUT', { payload: '{}', expectedRevision: 4, generation: 2, uid: 'another-user' });
   assert.equal(result.status, 200); assert.equal(result.body.revision, 5); assert.equal(result.body.updateTime, new Date(NOW).toISOString());
   assert.deepEqual(calls[0], ['save', { uid: 'signed-in-user', payload: '{}', expectedRevision: 4, generation: 2 }]);
+});
+
+test('legal confirmations are authenticated, UID-scoped and never accept caller timestamps', async t => {
+  const { request, calls } = await fixture(t);
+  assert.equal((await request('/api/v1/legal','GET',undefined,null)).status,401);
+  assert.equal((await request('/api/v1/legal')).status,200);
+  assert.deepEqual(calls[0],['legal-read',{uid:'signed-in-user'}]);
+  const acceptance={uid:'another-user',acceptedAt:1,termsVersion:'draft',privacyVersion:'draft',termsAccepted:true,privacyAcknowledged:true};
+  assert.equal((await request('/api/v1/legal','POST',acceptance)).status,200);
+  assert.deepEqual(calls[1],['legal-accept',{uid:'signed-in-user',termsVersion:'draft',privacyVersion:'draft',termsAccepted:true,privacyAcknowledged:true}]);
+  assert.equal((await request('/api/v1/legal','DELETE')).status,405);
 });
 
 test('unsupported payment/purge routes, invalid JSON and wrong methods cannot mutate accounts', async t => {

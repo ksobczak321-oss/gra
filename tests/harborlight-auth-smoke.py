@@ -115,6 +115,8 @@ def run():
         expect(page.locator('#confirm-password')).to_be_focused()
         assert page.evaluate("localStorage.getItem('harborlight-island-name:harborlight-v1-new-player-save')") is None
         page.locator('#confirm-password').fill('island-password-123')
+        page.locator('#terms-accepted').check()
+        page.locator('#privacy-acknowledged').check()
         page.locator('#account-submit').click()
         expect(page.locator('#account-status')).to_contain_text('Your account has not been created.')
         expect(page.locator('#password')).to_have_value('')

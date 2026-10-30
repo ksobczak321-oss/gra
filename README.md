@@ -6,7 +6,7 @@ Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarn
 
 | Miejsce | Stan |
 |---|---|
-| DEV — ta przestrzeń robocza | Implementacja v18 i poprawka pakowania serwera przeszły pełne [CI 41111528800](https://github.com/ksobczak321-oss/gra/actions/runs/41111528800). |
+| DEV — ta przestrzeń robocza | Uzupełnienie [v19](docs/FRONTEND-V19-REQUIREMENTS.md): wylogowanie w Ustawieniach i dokumenty rejestracji. Wymaga własnego CI i promocji. |
 | PRE-PROD — `harborlight-dev` | [Gra](https://harborlight-dev.web.app), opublikowane v18 / `6ec3c6d`; [sukces 41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285), testy hostingu i kont, oba artefakty v2. |
 | PROD — `harborlight-prod` / `harborlight.pl` | Brak potwierdzonej publikacji i powiązania domeny. |
 | GitHub Pages | Podgląd deweloperski, nie PROD; nie dowodzi promocji PRE-PROD. |
@@ -24,7 +24,9 @@ PRE-PROD zachowuje trzy osobne konta `admin1`, `admin2`, `admin3`, ich UID i wys
 - Codzienne darmowe błogosławieństwo, wydarzenia dobre/złe, regularność Kaplicy, lojalność 50–200 sześciu zasobów oraz czytelne powiadomienia.
 - Postęp konta wyłącznie w chmurze. Brak lokalnej wyspy i lokalnej kopii odzyskiwania; brak połączenia blokuje zatwierdzanie działań. Język i techniczna sesja logowania nie są zapisem postępu.
 
-Nowe parametry cen dodatkowego czasu i wag wydarzeń są jawnie opisane jako konfigurowalne wartości wdrożeniowe. [Excel 10](docs/arkusze/HARBORLIGHT10-zasady.xlsx) pozostaje **archiwum v16**, nie aktualną specyfikacją v18; pliki 7–10 nie są nadpisywane.
+Nowe parametry cen dodatkowego czasu i wag wydarzeń są jawnie opisane jako konfigurowalne wartości wdrożeniowe. Aktualny [Excel 11](docs/arkusze/HARBORLIGHT11-zasady.xlsx) zawiera bieżące reguły i [scenariusze testowe](docs/TEST-SCENARIOS-v18.md). Starsze arkusze pozostają archiwami i nie są nadpisywane.
+
+Uzupełnienie v19 dodaje bezpośrednie wylogowanie i odnośniki do dokumentów w Ustawieniach. Rejestracja wymaga osobnej akceptacji [roboczego Regulaminu](docs/TERMS-DRAFT.pl.md) i potwierdzenia przeczytania [Polityki prywatności](docs/PRIVACY-DRAFT.pl.md); nowe konta otrzymują wersjonowane potwierdzenie serwera. Dane operatora „Lorem ipsum” wymagają uzupełnienia przed publicznym uruchomieniem. Stałe konta PRE-PROD zachowują dostęp i historię.
 
 ## Konta i integracje
 
@@ -66,5 +68,7 @@ Obowiązuje **DEV tutaj → GitHub/CI → PRE-PROD → PROD**. PRE-PROD wymaga C
 - [Dziennik wyników i publikacji](docs/IMPLEMENTATION-LOG.md)
 - [Konfiguracja Google Cloud](docs/GOOGLE-CLOUD.md) — wcześniejsze instrukcje używają technicznej nazwy DEV dla obecnego PRE-PROD.
 - [Archiwa arkuszy](docs/arkusze/README.md)
+- [Monitorowanie kosztów i budżet alertowy GCP](docs/GCP-COST-CONTROL.md)
+- [Zakup licencji na muzykę](docs/MUSIC-LICENSING.md)
 
 BLACKOUT, PANIC PETS i wcześniejsze makiety pozostają historią repozytorium. Aktywny projekt to HARBORLIGHT.

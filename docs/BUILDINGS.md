@@ -1,6 +1,6 @@
 # Budynki i mieszkaniec — frontend v18
 
-Opis bieżącego kodu uzupełnia [zatwierdzony zakres v18](FRONTEND-V18-REQUIREMENTS.md) i [reguły gospodarki](ECONOMY-RULES.md). Nie stanowi potwierdzenia publikacji. Ostatni potwierdzony PRE-PROD pozostaje przy `f161e45`; stan v18 zapisuje [dziennik](IMPLEMENTATION-LOG.md). Excel 10 jest niezmienionym archiwum v16.
+Opis bieżącego kodu uzupełnia [zatwierdzony zakres v18](FRONTEND-V18-REQUIREMENTS.md) i [reguły gospodarki](ECONOMY-RULES.md). Nie stanowi potwierdzenia publikacji. Ostatni potwierdzony PRE-PROD to v18 / `6ec3c6d`, workflow `41112673285`; nowe uzupełnienie interfejsu i dokumentów [v19](FRONTEND-V19-REQUIREMENTS.md) wymaga osobnego odbioru. Stan wydań zapisuje [dziennik](IMPLEMENTATION-LOG.md). Aktualny jest Excel 11, a poprzednie arkusze pozostają archiwami.
 
 L to obecny własny poziom, N — nowy. Kwoty bazowe; kolejka dodaje 10% każdego składnika, w górę do sztuk. T jest rzeczywistym czasem od pierwszego odbioru do ostatniej dostawy, także przez przerwy. Aktywność wpływająca na przewóz zmienia więc również wynikową fazę budowania.
 

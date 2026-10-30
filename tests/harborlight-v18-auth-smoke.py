@@ -18,6 +18,7 @@ spec.loader.exec_module(base)
 PROD = 'https://harborlight.pl'
 SESSION_KEY = 'harborlight-prod-auth-v1'
 EMAIL, PASSWORD, UID = 'captain@example.invalid', 'captain-password', 'real-player-123'
+LEGAL_VERSION = '2026-10-30-draft1'
 
 
 def token():
@@ -32,10 +33,29 @@ class ProdSite(base.Site):
         self.config_project = 'harborlight-prod'
         self.profile_calls = []
         self.sdk_calls = []
+        self.legal_required = False
+        self.legal_calls = []
+        self.legal_failures = 0
+        self.provider_success = False
 
     def route(self, route):
         request = route.request
         parsed = urlsplit(request.url)
+        if parsed.netloc == urlsplit(PROD).netloc and parsed.path == '/api/v1/legal':
+            assert request.headers.get('authorization','').startswith('Bearer ')
+            if request.method == 'GET':
+                route.fulfill(content_type='application/json',body=json.dumps({'required':self.legal_required,'termsVersion':LEGAL_VERSION,'privacyVersion':LEGAL_VERSION}))
+            else:
+                body=request.post_data_json
+                assert body == {'termsAccepted':True,'privacyAcknowledged':True,'termsVersion':LEGAL_VERSION,'privacyVersion':LEGAL_VERSION}
+                self.legal_calls.append(body)
+                if self.legal_failures:
+                    self.legal_failures-=1
+                    route.fulfill(status=503,content_type='application/json',body=json.dumps({'error':'account-service-unavailable'}))
+                else:
+                    self.legal_required=False
+                    route.fulfill(content_type='application/json',body=json.dumps({'uid':UID,'termsVersion':LEGAL_VERSION,'privacyVersion':LEGAL_VERSION,'acceptedAt':int(time.time()*1000)}))
+            return
         if parsed.netloc == 'identitytoolkit.googleapis.com':
             body = json.loads(request.post_data)
             if parsed.path in ['/v1/accounts:signInWithPassword', '/v1/accounts:signUp']:
@@ -43,6 +63,8 @@ class ProdSite(base.Site):
                 if body.get('email') != EMAIL or body.get('password') != PASSWORD:
                     route.fulfill(status=400, content_type='application/json', body=json.dumps({'error': {'message': 'INVALID_LOGIN_CREDENTIALS'}}))
                 else:
+                    if parsed.path.endswith('signUp'):
+                        self.legal_required=True
                     route.fulfill(content_type='application/json', body=json.dumps({'localId': UID, 'email': EMAIL,
                         'idToken': token(), 'refreshToken': 'fixture-real-refresh', 'expiresIn': '3600'}))
                 return
@@ -50,13 +72,17 @@ class ProdSite(base.Site):
                 self.profile_calls.append(body)
                 route.fulfill(content_type='application/json', body=json.dumps({'localId': UID, 'displayName': body['displayName']}))
                 return
+            if parsed.path == '/v1/accounts:lookup':
+                route.fulfill(content_type='application/json',body=json.dumps({'users':[{'localId':UID,'email':EMAIL,'displayName':'HARBORLIGHT:Port Mew'}]}))
+                return
         if parsed.netloc == 'www.gstatic.com' and '/firebasejs/' in parsed.path:
             self.sdk_calls.append(parsed.path)
+            popup = ('export const signInWithPopup=async()=>({user:{uid:'+json.dumps(UID)+',refreshToken:"oauth-refresh",getIdToken:async()=>'+json.dumps(token())+'}});') if self.provider_success else 'export const signInWithPopup=async()=>{throw {code:"auth/operation-not-allowed"}};'
             source = ('export const getApps=()=>[];export const initializeApp=(config,name)=>({config,name});'
                 if parsed.path.endswith('/firebase-app.js') else
                 'export class GoogleAuthProvider{};export class FacebookAuthProvider{addScope(){}};'
                 'export const getAuth=()=>({}),inMemoryPersistence={},setPersistence=async()=>{},signOut=async()=>{};'
-                'export const signInWithPopup=async()=>{throw {code:"auth/operation-not-allowed"}};')
+                + popup)
             route.fulfill(content_type='application/javascript', headers={'Access-Control-Allow-Origin': '*'}, body=source)
             return
         super().route(route)
@@ -76,15 +102,24 @@ def run():
             expect(page.locator('.back-link')).to_be_hidden()
             expect(page.locator('.social-options')).to_be_visible()
             expect(page.locator('.social-button small')).to_have_count(0)
-            page.locator('#display-name').fill('Kapitan')
+            expect(page.locator('#display-name')).to_be_hidden()
             page.locator('#island-name').fill('Port Mew')
             page.locator('#email').fill(EMAIL)
             page.locator('#password').fill(PASSWORD)
             page.locator('#confirm-password').fill(PASSWORD)
             page.locator('#account-submit').click()
+            expect(page.locator('#terms-error')).to_be_visible()
+            assert not site.auth_calls and not site.legal_calls
+            page.locator('#terms-accepted').check()
+            page.locator('#account-submit').click()
+            expect(page.locator('#privacy-error')).to_be_visible()
+            assert not site.auth_calls
+            page.locator('#privacy-acknowledged').check()
+            page.locator('#account-submit').click()
             expect(page).to_have_url(PROD + '/harborlight-v1-layered.html?profile=new-player')
             assert 'accounts:signUp' in site.auth_calls[0][1]
             assert site.profile_calls[0]['displayName'] == 'HARBORLIGHT:Port Mew'
+            assert len(site.legal_calls)==1
             stored = page.evaluate('({...localStorage})')
             session = json.loads(stored[SESSION_KEY])
             assert session['uid'] == UID and session['projectId'] == 'harborlight-prod'
@@ -92,6 +127,28 @@ def run():
             assert not any(PASSWORD in value for value in stored.values())
             assert not any('island-real-player' in key for key in stored)
             assert not errors and not site.unexpected, (errors, site.unexpected)
+            context.close()
+
+            # A new provider identity coming from the login tab must complete
+            # the same admission. A failed receipt write cannot open the game.
+            site=ProdSite();site.provider_success=True;site.legal_required=True;site.legal_failures=1
+            context,page,errors=base.context_for(browser,site,width=390,height=844)
+            page.goto(PROD+'/harborlight-auth.html')
+            expect(page.locator('#account-fields')).to_be_enabled()
+            page.locator('[data-provider="Google"]').click()
+            expect(page.locator('#registration-legal-dialog')).to_be_visible()
+            expect(page.locator('#legal-modal-confirm')).to_be_disabled()
+            assert urlsplit(page.url).path=='/harborlight-auth.html' and not site.legal_calls
+            page.locator('#legal-modal-terms').check()
+            expect(page.locator('#legal-modal-confirm')).to_be_disabled()
+            page.locator('#legal-modal-privacy').check()
+            page.locator('#legal-modal-confirm').click()
+            expect(page.locator('#legal-modal-confirm')).to_be_enabled()
+            expect(page.locator('#registration-legal-dialog')).to_be_visible()
+            assert urlsplit(page.url).path=='/harborlight-auth.html' and len(site.legal_calls)==1
+            page.locator('#legal-modal-confirm').click()
+            expect(page).to_have_url(PROD+'/harborlight-v1-layered.html?profile=new-player')
+            assert len(site.legal_calls)==2 and not errors and not site.unexpected,(errors,site.unexpected)
             context.close()
 
             site = ProdSite()
@@ -122,7 +179,7 @@ def run():
             context.close()
         finally:
             browser.close()
-    print('PASS PROD account UI: email registration/login, cloud profile, no guest fallback, mobile, real SDK configuration error without false OAuth success')
+    print('PASS PROD account UI: required separate legal confirmations and server receipt, email/existing login, provider login-to-registration admission, failed receipt retry without island access, mobile and honest unconfigured OAuth')
 
 
 if __name__ == '__main__':

@@ -1,11 +1,28 @@
 // PRE-PROD preserves its test accounts. PROD uses Firebase email and OAuth accounts.
 // Passwords are sent only by the Firebase client and never saved in browser storage.
-import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v18';
-import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v18';
-import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v18';
-import { signInWithProvider } from './harborlight-auth-providers.js?v=frontend-v18';
+import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v19';
+import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v19';
+import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v19';
+import { signInWithProvider } from './harborlight-auth-providers.js?v=frontend-v19';
+import { legalAcceptance, validLegalAcceptance } from './harborlight-legal.js?v=legal-v1';
 
 registerTranslations({
+  'Terms of Service': 'Regulamin gry',
+  'Privacy policy': 'Polityka prywatności',
+  'Legal documents': 'Dokumenty prawne',
+  'Read terms': 'Przeczytaj Regulamin',
+  'Read privacy policy': 'Przeczytaj Politykę prywatności',
+  'I accept the Terms of Service.': 'Akceptuję Regulamin gry.',
+  'I have read the Privacy policy.': 'Potwierdzam zapoznanie się z Polityką prywatności.',
+  'Accept the Terms of Service to finish registration.': 'Zaakceptuj Regulamin, aby dokończyć rejestrację.',
+  'Confirm that you have read the Privacy policy.': 'Potwierdź zapoznanie się z Polityką prywatności.',
+  'Draft documents contain demonstrative operator details. Review them before confirming.': 'Dokumenty robocze zawierają demonstracyjne dane operatora Lorem ipsum. Przeczytaj je przed potwierdzeniem.',
+  'These confirmations do not consent to marketing or waive consumer rights.': 'Te potwierdzenia nie są zgodą marketingową ani zrzeczeniem się praw konsumenta.',
+  'Finish registration': 'Dokończ rejestrację',
+  'Your sign-in identity is ready. Confirm the documents before a new island is created.': 'Tożsamość logowania jest gotowa. Potwierdź dokumenty przed utworzeniem nowej wyspy.',
+  'Confirm and continue': 'Potwierdź i kontynuuj',
+  'Saving your confirmation…': 'Zapisywanie potwierdzenia…',
+  'Document versions changed. Refresh the page and read the current documents.': 'Wersja dokumentów zmieniła się. Odśwież stronę i przeczytaj aktualne dokumenty.',
   'HARBORLIGHT — Welcome Home': 'HARBORLIGHT — Witaj na wyspie',
   'Welcome to HARBORLIGHT. Sign in, create an account, or continue exploring your island as a guest.': 'Witaj w HARBORLIGHT. Zaloguj się, załóż konto lub odkrywaj wyspę jako gość.',
   'Skip to account': 'Przejdź do konta',
@@ -124,6 +141,8 @@ registerTranslations({
   const email = document.getElementById('email');
   const password = document.getElementById('password');
   const confirm = document.getElementById('confirm-password');
+  const terms = document.getElementById('terms-accepted');
+  const privacy = document.getElementById('privacy-acknowledged');
   const visibility = document.getElementById('password-visibility');
   const languagePicker = document.getElementById('auth-language');
   const preferenceKey = 'harborlight-language';
@@ -133,7 +152,7 @@ registerTranslations({
   document.documentElement.dataset.environment = devCloud.environment;
   let language = hostedMode ? 'pl' : 'en';
   try { const saved = localStorage.getItem(preferenceKey); if (['pl', 'en'].includes(saved)) language = saved; } catch { /* Keep the form usable without storage. */ }
-  const errorIds = new Map([[name, 'name-error'], [islandName, 'island-name-error'], [email, 'email-error'], [password, 'password-error'], [confirm, 'confirm-error']]);
+  const errorIds = new Map([[name, 'name-error'], [islandName, 'island-name-error'], [email, 'email-error'], [password, 'password-error'], [confirm, 'confirm-error'], [terms, 'terms-error'], [privacy, 'privacy-error']]);
   let mode = 'login';
   let signingIn = false;
   for (const link of document.querySelectorAll('a[href="harborlight-v1-layered.html"]')) link.href = gameHref(profileSearch);
@@ -200,6 +219,8 @@ registerTranslations({
       'popup-blocked': 'Allow the sign-in popup in your browser.',
       'account-link-required': 'This email uses another sign-in method. Sign in using that method first.',
       'provider-unavailable': 'Could not connect to the sign-in provider. Try again.',
+      'legal-required': 'Accept the Terms of Service to finish registration.',
+      'legal-outdated': 'Document versions changed. Refresh the page and read the current documents.',
       storage: 'Your browser could not save the session. Allow local storage and try again.',
       'auth-required': 'Your session expired. Sign in again.',
       offline: 'Could not connect to sign-in. Check your connection and try again.'
@@ -226,6 +247,59 @@ registerTranslations({
     visibility.setAttribute('aria-pressed', String(visible));
     translateDOM(visibility, language);
   }
+  const currentLegalAcceptance = () => legalAcceptance(terms.checked, privacy.checked);
+  function validateRegistrationLegal() {
+    if (!terms.checked) { setError(terms, 'Accept the Terms of Service to finish registration.'); terms.focus(); return false; }
+    if (!privacy.checked) { setError(privacy, 'Confirm that you have read the Privacy policy.'); privacy.focus(); return false; }
+    return true;
+  }
+  let legalPrompt = null;
+  function requestLegalConfirmation() {
+    if (legalPrompt) return legalPrompt;
+    const dialog = document.getElementById('registration-legal-dialog');
+    const legalForm = document.getElementById('registration-legal-form');
+    const checks = [document.getElementById('legal-modal-terms'), document.getElementById('legal-modal-privacy')];
+    const submit = document.getElementById('legal-modal-confirm');
+    const cancel = document.getElementById('legal-modal-cancel');
+    const message = document.getElementById('legal-modal-status');
+    checks.forEach(input => { input.checked = false; input.disabled = false; });
+    submit.disabled = true; message.hidden = true;
+    let saving = false;
+    legalPrompt = new Promise(resolve => {
+      const update = () => { submit.disabled = saving || !checks.every(input => input.checked); };
+      const finish = accepted => {
+        checks.forEach(input => input.removeEventListener('change', update));
+        legalForm.removeEventListener('submit', confirmDocuments); cancel.removeEventListener('click', cancelDocuments); dialog.removeEventListener('cancel', cancelDocuments);
+        dialog.close(); legalPrompt = null; resolve(accepted);
+      };
+      const cancelDocuments = event => {
+        event?.preventDefault(); if (saving) return;
+        devCloud.signOut(); announce('Sign-in cancelled.'); finish(false);
+      };
+      const confirmDocuments = async event => {
+        event.preventDefault(); if (saving || !checks.every(input => input.checked)) return;
+        saving = true; update(); cancel.disabled = true; checks.forEach(input => { input.disabled = true; });
+        message.textContent = translate('Saving your confirmation…', language); message.hidden = false;
+        try { await devCloud.acceptLegal(legalAcceptance(checks[0].checked, checks[1].checked)); finish(true); }
+        catch (error) { message.textContent = translate(signInMessage(error), language); }
+        finally { saving = false; cancel.disabled = false; checks.forEach(input => { input.disabled = false; }); update(); }
+      };
+      checks.forEach(input => input.addEventListener('change', update));
+      legalForm.addEventListener('submit', confirmDocuments); cancel.addEventListener('click', cancelDocuments); dialog.addEventListener('cancel', cancelDocuments);
+      translateDOM(dialog, language); dialog.showModal(); checks[0].focus();
+    });
+    return legalPrompt;
+  }
+  async function finishHostedSignIn(acceptance = null) {
+    const admission = await devCloud.getLegalStatus();
+    if (admission.required) {
+      if (validLegalAcceptance(acceptance)) {
+        try { await devCloud.acceptLegal(acceptance); }
+        catch (error) { announce(signInMessage(error), 'error'); if (!await requestLegalConfirmation()) return; }
+      } else if (!await requestLegalConfirmation()) return;
+    }
+    location.assign('harborlight-v1-layered.html?profile=new-player');
+  }
   function changeMode(nextMode, updateHash = true) {
     if (signingIn) return;
     mode = !devMode && nextMode === 'register' ? 'register' : 'login';
@@ -244,6 +318,9 @@ registerTranslations({
         input.required = registering;
       }
     }
+    // The hosted service never persists the former nickname field. Do not
+    // collect an unused personal identifier while registering real accounts.
+    if (hostedMode) { name.closest('[data-register-only]').hidden = true; name.disabled = true; name.required = false; }
     document.getElementById('auth-title').textContent = devMode ? 'Sign in to PRE-PROD' : registering ? 'Your island starts here.' : 'Welcome back.';
     document.getElementById('auth-intro').textContent = devMode ? 'Your island follows you between devices.' : registering ? 'A new adventure, a place to call your own.' : 'Return to the island you call home.';
     document.querySelector('#account-submit span').textContent = registering ? 'Create account' : 'Sign in';
@@ -253,6 +330,7 @@ registerTranslations({
     // Passwords are cleared when changing account modes; email and name stay in the form only.
     password.value = '';
     confirm.value = '';
+    terms.checked = false; privacy.checked = false;
     setPasswordVisible(false);
     for (const input of errorIds.keys()) clearError(input);
     status.hidden = true;
@@ -283,11 +361,12 @@ registerTranslations({
       if (!hostedMode) { announce('This provider requires configuration by the game owner.', 'error'); return; }
       const chosen = mode === 'register' ? validateIslandName(islandName.value) : null;
       if (chosen && !chosen.ok) { setError(islandName, chosen.message); islandName.focus(); return; }
+      if (mode === 'register' && !validateRegistrationLegal()) return;
       signingIn = true; fields.disabled = true; form.setAttribute('aria-busy', 'true'); announce('Signing in…');
       try {
-        await signInWithProvider(devCloud, button.dataset.provider, { islandName: chosen?.name || '', testLogin: devMode ? email.value : '', testPassword: devMode ? password.value : '' });
+        await signInWithProvider(devCloud, button.dataset.provider, { islandName: chosen?.name || '', testLogin: devMode ? email.value : '', testPassword: devMode ? password.value : '', registration: mode === 'register', legalAcceptance: mode === 'register' ? currentLegalAcceptance() : null });
         password.value = ''; setPasswordVisible(false);
-        location.assign('harborlight-v1-layered.html?profile=new-player');
+        await finishHostedSignIn(mode === 'register' ? currentLegalAcceptance() : null);
       } catch (error) { password.value = ''; setPasswordVisible(false); announce(signInMessage(error), 'error'); }
       finally { signingIn = false; fields.disabled = false; form.removeAttribute('aria-busy'); }
     });
@@ -299,7 +378,7 @@ registerTranslations({
     const invalid = [];
     const fail = (input, message) => { setError(input, message); invalid.push(input); };
     email.value = email.value.trim();
-    if (mode === 'register' && name.value.trim().length < 2) fail(name, 'Enter a name with at least 2 characters.');
+    if (mode === 'register' && !hostedMode && name.value.trim().length < 2) fail(name, 'Enter a name with at least 2 characters.');
     const chosenIslandName = mode === 'register' ? validateIslandName(islandName.value) : null;
     if (chosenIslandName && !chosenIslandName.ok) fail(islandName, chosenIslandName.message);
     if (devMode && !DEV_USERS.some(user => user.login === email.value)) fail(email, 'Enter your PRE-PROD username: admin1, admin2 or admin3.');
@@ -308,6 +387,8 @@ registerTranslations({
     if (!password.value) fail(password, 'Enter your password.');
     else if (!devMode && password.value.length < 8) fail(password, 'Use at least 8 characters for your password.');
     if (mode === 'register' && confirm.value !== password.value) fail(confirm, 'The passwords do not match.');
+    if (mode === 'register' && !terms.checked) fail(terms, 'Accept the Terms of Service to finish registration.');
+    if (mode === 'register' && !privacy.checked) fail(privacy, 'Confirm that you have read the Privacy policy.');
     if (invalid.length) {
       announce('Check the highlighted fields to continue.', 'error');
       invalid[0].focus();
@@ -319,11 +400,11 @@ registerTranslations({
       form.setAttribute('aria-busy', 'true');
       announce('Signing in…');
       try {
-        if (mode === 'register') await devCloud.registerEmail(email.value, password.value, { islandName: chosenIslandName.name });
+        if (mode === 'register') await devCloud.registerEmail(email.value, password.value, { islandName: chosenIslandName.name, legalAcceptance: currentLegalAcceptance() });
         else await devCloud.signIn(email.value, password.value);
         password.value = '';
         setPasswordVisible(false);
-        location.assign('harborlight-v1-layered.html?profile=new-player');
+        await finishHostedSignIn(mode === 'register' ? currentLegalAcceptance() : null);
       } catch (error) {
         password.value = '';
         setPasswordVisible(false);
@@ -376,8 +457,8 @@ registerTranslations({
     fields.disabled = true;
     form.setAttribute('aria-busy', 'true');
     announce('Checking your session…');
-    devCloud.restoreSession().then(account => {
-      if (account) location.replace('harborlight-v1-layered.html?profile=new-player');
+    devCloud.restoreSession().then(async account => {
+      if (account) await finishHostedSignIn();
       else { status.hidden = true; status.textContent = ''; }
     }).catch(error => announce(signInMessage(error), 'error')).finally(() => {
       signingIn = false;

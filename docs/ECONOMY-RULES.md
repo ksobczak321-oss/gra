@@ -1,6 +1,6 @@
 # Reguły gospodarki HARBORLIGHT — frontend v18
 
-Bieżące reguły kodu wynikają z [zatwierdzonego zakresu v18](FRONTEND-V18-REQUIREMENTS.md). Opis nie jest dowodem publikacji. Ostatnie potwierdzone wydanie PRE-PROD to `f161e45` / workflow `41067599818`; lokalną walidację i kolejne promocje opisuje [dziennik](IMPLEMENTATION-LOG.md).
+Bieżące reguły kodu wynikają z [zatwierdzonego zakresu v18](FRONTEND-V18-REQUIREMENTS.md). Opis nie jest dowodem publikacji. Ostatnie potwierdzone wydanie PRE-PROD to v18 / `6ec3c6d` / workflow `41112673285`; uzupełnienie interfejsu i dokumentów [v19](FRONTEND-V19-REQUIREMENTS.md) jest osobnym zakresem DEV. Lokalną walidację i kolejne promocje opisuje [dziennik](IMPLEMENTATION-LOG.md).
 
 V18 zastępuje sprzeczne reguły v17 i wcześniejszych manifestów. Excel 10 pozostaje niezmienionym archiwum v16; ukryte dawne pytania nie otwierają ponownie później rozstrzygniętych zasad.
 

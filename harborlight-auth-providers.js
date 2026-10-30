@@ -1,7 +1,8 @@
 // OAuth is delegated to Firebase's maintained browser SDK. Only public Firebase
 // configuration is used here; provider secrets belong in the Firebase console.
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v18';
-import { DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v18';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v19';
+import { DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v19';
+import { validLegalAcceptance } from './harborlight-legal.js?v=legal-v1';
 
 const fail = (code, message) => Object.assign(new Error(message), { code });
 export async function loadFirebaseProviderSdk() {
@@ -23,11 +24,12 @@ export function providerError(error) {
   return fail('provider-unavailable', 'Nie udało się połączyć z dostawcą logowania. Spróbuj ponownie.');
 }
 
-export async function signInWithProvider(cloud, providerName, { islandName = '', testLogin = '', testPassword = '', loadSdk = loadFirebaseProviderSdk } = {}) {
+export async function signInWithProvider(cloud, providerName, { islandName = '', testLogin = '', testPassword = '', registration = false, legalAcceptance = null, loadSdk = loadFirebaseProviderSdk } = {}) {
   if (!cloud?.enabled) throw fail('provider-configuration', 'Logowanie Google/Facebook wymaga skonfigurowanego hostingu Firebase.');
   const testUser = cloud.preprod && testLogin ? DEV_USERS.find(user => user.login === String(testLogin).trim().toLowerCase()) : null;
   if (cloud.preprod && (testLogin && !testUser || testPassword && !testUser)) throw fail('invalid-login', 'Wpisz stały login PRE-PROD admin1, admin2 albo admin3.');
   if (!['Google', 'Facebook'].includes(providerName)) throw fail('provider-configuration', 'Wybierz Google albo Facebook.');
+  if (registration && !cloud.preprod && !validLegalAcceptance(legalAcceptance)) throw fail('legal-required', 'Potwierdź dokumenty przed ukończeniem rejestracji.');
   const chosenName = islandName ? validateIslandName(islandName) : null;
   if (chosenName && !chosenName.ok) throw fail('invalid-island-name', chosenName.message);
   let sdk, auth;
@@ -59,7 +61,7 @@ export async function signInWithProvider(cloud, providerName, { islandName = '',
     const idToken = await result.user.getIdToken(!!chosenName);
     return await cloud.acceptExternalSession({ uid: result.user.uid, idToken, refreshToken: result.user.refreshToken });
   } catch (error) {
-    if (['auth-required', 'invalid-login', 'provider-not-linked', 'configuration', 'offline', 'registration-disabled', 'storage'].includes(error?.code)) throw error;
+    if (['auth-required', 'invalid-login', 'provider-not-linked', 'configuration', 'offline', 'registration-disabled', 'storage', 'legal-required', 'legal-outdated'].includes(error?.code)) throw error;
     throw providerError(error);
   } finally {
     if (sdk && auth) { try { await sdk.signOut(auth); } catch { /* The REST session is independent of SDK memory cleanup. */ } }

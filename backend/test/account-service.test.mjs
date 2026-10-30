@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { createAccountService, threeMonthDeadline } from '../account-service.mjs';
+import { createAccountService, threeMonthDeadline, LEGAL_DOCUMENT_VERSIONS } from '../account-service.mjs';
 
 // A serializable, rollback-capable test adapter. The service never defaults to
 // this volatile store in production; real handlers must inject a durable store.
@@ -36,7 +36,10 @@ function fixture(time = NOW, environment = 'production') {
   let clock = time;
   return { store, service: createAccountService({ store, now: () => clock, environment }), setTime: value => { clock = value; } };
 }
-async function starter(f, uid) { return f.service.startIsland({ uid, payload: payload() }); }
+async function starter(f, uid, content = payload()) {
+  await f.service.acceptLegal({ uid, ...LEGAL_DOCUMENT_VERSIONS, termsAccepted: true, privacyAcknowledged: true });
+  return f.service.startIsland({ uid, payload: content });
+}
 function promotion(f, extras = {}) { f.store.put('promotions/LAUNCH20', { enabled: true, maxClaims: 20, claimedCount: 0, reward: { coins: 25, wood: 150 }, ...extras }); }
 const rejects = (operation, code) => assert.rejects(operation, error => error.code === code);
 
@@ -82,7 +85,7 @@ test('invalid, premature, ended and unverifiable promotions never consume a plac
 });
 
 test('inventory overflow rolls back the global claim and permits retry after spending', async () => {
-  const f = fixture(); await f.service.startIsland({ uid: 'one', payload: payload(Number.MAX_SAFE_INTEGER) }); promotion(f);
+  const f = fixture(); await starter(f, 'one', payload(Number.MAX_SAFE_INTEGER)); promotion(f);
   await rejects(f.service.redeemCode({ uid: 'one', code: 'LAUNCH20', generation: 1 }), 'inventory-overflow');
   assert.equal(f.store.get('promotions/LAUNCH20').claimedCount, 0);
   assert.equal(f.store.get('accounts/one/redemptions/LAUNCH20'), undefined);

@@ -1,6 +1,6 @@
 // Cloud-only island persistence. Authentication storage is separate; this
 // coordinator never reads or writes an island in browser storage.
-import { accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v18';
+import { accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v19';
 
 export function createDevSync({ cloud, account, saveKey, onStatus = () => {},
   schedule = (callback, delay) => setTimeout(callback, delay), cancel = handle => clearTimeout(handle),

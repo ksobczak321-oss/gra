@@ -311,6 +311,8 @@ with sync_playwright() as playwright:
             pref='harborlight-island-name:'+SAVE_KEY
             assert page.evaluate('(key)=>localStorage.getItem(key)',pref) is None
             page.locator('#confirm-password').fill('island-password-123')
+            page.locator('#terms-accepted').check()
+            page.locator('#privacy-acknowledged').check()
             page.locator('#account-submit').click()
             stored=json.loads(page.evaluate('(key)=>localStorage.getItem(key)',pref))
             assert stored['name']==island_name

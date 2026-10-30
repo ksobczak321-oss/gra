@@ -1,0 +1,4101 @@
+{
+  "schema_version": 1,
+  "title": "HARBORLIGHT — ręczne scenariusze odbioru v18 i nowego zakresu rejestracji",
+  "created_on": "2026-10-30",
+  "timezone": "Europe/Warsaw",
+  "baseline_release": {
+    "source_commit": "6ec3c6d8625420fd96474a22a8b1d699672416cd",
+    "preprod_run_id": 41112673285,
+    "url": "https://harborlight-dev.web.app"
+  },
+  "status_note": "To plan testów, nie raport wykonania. Każdy scenariusz ma status Nie wykonano. Historyczne wyniki automatyzacji nie są przypisane tym ręcznym przypadkom.",
+  "safety_rules": [
+    "admin1, admin2 i admin3 są trwałymi kontami. Nie resetować ich ani nie używać jako jednorazowych danych do testów destrukcyjnych.",
+    "Na admin1 wykonywać kontrolę istniejącej historii wyłącznie zabezpieczonym harnessem blokującym zapisy wyspy i aktywności przed nawigacją; zwykłe przeglądanie zalogowanej gry może uruchomić userActivity lub autosave. Pozostałe scenariusze wymagają lokalnego fixture, atrap albo wyraźnie wydzielonego projektu i jednorazowych kont.",
+    "Nie zmieniać ręcznie zegara, bazy, płatności, budżetu ani retencji prawdziwych kont w ramach scenariuszy lokalnych. Zmiana czasu dotyczy harnessu lub serwerowego zegara testowego.",
+    "PROD, dostawcy OAuth, prawdziwe płatności, reklamy, kody globalne i konfiguracja Billing wymagają wcześniejszej konfiguracji oraz odbioru właściciela. Nie oznaczać ich PASS na podstawie symulacji.",
+    "Nowy przycisk wylogowania i dokumenty rejestracji są nowym zakresem do odbioru; nie są automatycznie uznane za opublikowane w baseline v18."
+  ],
+  "columns": [
+    "id",
+    "module",
+    "title",
+    "priority",
+    "environment",
+    "account",
+    "preconditions",
+    "steps",
+    "expected",
+    "mode",
+    "implementation_status",
+    "status",
+    "source"
+  ],
+  "scenarios": [
+    {
+      "id": "ACC-001",
+      "module": "Konta i zapis w chmurze",
+      "title": "Anonimowe wejście na chronioną grę",
+      "priority": "P0",
+      "environment": "PRE-PROD — odczyt",
+      "account": "Czysty profil; bez konta",
+      "preconditions": "Czysty profil prywatny bez jakiejkolwiek sesji Firebase; wyłącznie anonimowe wejście hostowane. W tym przypadku nie wpisuj danych konta i nie przechodź do zalogowanej gry.",
+      "steps": [
+        "Otwórz bezpośredni adres gry w czystym profilu przeglądarki.",
+        "Poczekaj na zakończenie przekierowania."
+      ],
+      "expected": [
+        "Pojawia się formularz logowania.",
+        "Gra nie otwiera lokalnej wyspy i nie oferuje wejścia gościa."
+      ],
+      "mode": "Manualnie — odczyt",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-dev-cloud.js",
+        "harborlight-dev-sync.js",
+        "tests/harborlight-dev-game-smoke.py"
+      ]
+    },
+    {
+      "id": "ACC-002",
+      "module": "Konta i zapis w chmurze",
+      "title": "Historia admin1 przez harness blokujący zapis",
+      "priority": "P0",
+      "environment": "PRE-PROD — odczyt postępu przez zabezpieczony harness",
+      "account": "admin1 / dev-admin1; istniejąca wyspa; bez tworzenia i resetu",
+      "preconditions": "Istniejący dokument wyspy admin1 i wcześniej zanotowany stan do porównania. Obowiązkowo użyj tests/harborlight-hosted-v18-smoke.py oraz zweryfikowanego pakietu/manifestu. Przed pierwszą nawigacją kontekst przeglądarki musi blokować wszystkie żądania zapisu wyspy i aktywności; brak zapisanej wyspy ma zakończyć odbiór bez tworzenia startera.",
+      "steps": [
+        "Sprawdź w harnessie rejestrację ochrony prohibit_writes przed page.goto; dozwolone są odczyty oraz niezbędne odczytowe wywołania Auth lookup/refresh, a zapisy wyspy, aktywności i realizacji nagród są blokowane.",
+        "Uruchom istniejący odczytowy harness dla PRE-PROD. Potwierdź UID dev-admin1 i własny istniejący dokument. Jeśli harness wybierze inne konto lub nie ma zapisanej wyspy admin1, oznacz scenariusz jako Zablokowano; nie twórz nowej wyspy.",
+        "Porównaj poziomy, zasoby, statystyki i historię z odczytanej odpowiedzi lub dowodów harnessu z zanotowanym stanem. Ewentualny dalszy upływ czasu w renderowanej grze traktuj wyłącznie jako ulotną symulację w pamięci, której nie wolno zapisać.",
+        "Sprawdź dowody blokady żądań mutujących i zamknij kontekst testowy. Nie wykonuj tego scenariusza przez zwykłe zalogowanie i klikanie paneli żywej gry: userActivity i autosave mogą wtedy zapisać stan."
+      ],
+      "expected": [
+        "Odczyt dotyczy istniejącej wyspy dev-admin1; zachowuje jej poziomy, zasoby, statystyki i treść historii. Nie powstaje nowy UID, starter ani dokument zastępujący wyspę.",
+        "Zapisy gry i aktywności są przechwytywane przed dotarciem do backendu/Firestore, także przy automatycznym zapisie lub zdarzeniach wejścia. Porównanie nie zatwierdza ulotnej symulacji.",
+        "Dowód jest ważny tylko dla admin1 i przy aktywnej blokadzie zapisów. Sam poprawny ekran gry lub udane logowanie nie jest dowodem testu bez zapisu; logowanie może zmienić techniczne metadane Auth."
+      ],
+      "mode": "Właścicielski harness z obowiązkową blokadą zapisów",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "tests/harborlight-hosted-v18-smoke.py",
+        "harborlight-dev-cloud.js",
+        "harborlight-dev-sync.js"
+      ]
+    },
+    {
+      "id": "ACC-003",
+      "module": "Konta i zapis w chmurze",
+      "title": "Trzy tożsamości mają oddzielne wyspy",
+      "priority": "P0",
+      "environment": "PRE-PROD — odczyt",
+      "account": "admin1–3; wyłącznie sprawdzenie tożsamości i odczytu",
+      "preconditions": "Przygotowane konta admin1–3; kontrola przez odczytowy check-dev-accounts.mjs.",
+      "steps": [
+        "Uruchom przewidzianą odczytową kontrolę kont w zatwierdzonym workflow.",
+        "Sprawdź UID i wyniki odczytów własnych oraz cudzych dokumentów."
+      ],
+      "expected": [
+        "UID są dev-admin1, dev-admin2 i dev-admin3.",
+        "Cudze i anonimowe odczyty są odrzucane; brak nadpisania wysp."
+      ],
+      "mode": "Kontrola właścicielska — odczyt",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-dev-cloud.js",
+        "harborlight-dev-sync.js",
+        "tests/harborlight-dev-game-smoke.py",
+        "infra/google-cloud/check-dev-accounts.mjs"
+      ]
+    },
+    {
+      "id": "ACC-004",
+      "module": "Konta i zapis w chmurze",
+      "title": "Starter tworzony raz przy pierwszym wejściu",
+      "priority": "P0",
+      "environment": "DEV — atrapa chmury",
+      "account": "Jednorazowe konto testowe",
+      "preconditions": "Nowe jednorazowe konto w izolowanej bazie testowej; brak dokumentu wyspy.",
+      "steps": [
+        "Wejdź pierwszy raz do gry.",
+        "Sprawdź Ratusz, populację, przydziały i sześć zasobów.",
+        "Wyloguj i zaloguj ponownie."
+      ],
+      "expected": [
+        "Start: Ratusz 1, 12 mieszkańców, 0 przydzielonych, po100 sześciu zasobów i bazowe H20%.",
+        "Kolejne wejście wznawia zapis zamiast dopisywać drugi starter."
+      ],
+      "mode": "Atrapa API / izolowana baza",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-dev-cloud.js",
+        "harborlight-dev-sync.js",
+        "tests/harborlight-dev-game-smoke.py"
+      ]
+    },
+    {
+      "id": "ACC-005",
+      "module": "Konta i zapis w chmurze",
+      "title": "Zapis na drugim urządzeniu",
+      "priority": "P0",
+      "environment": "DEV — atrapa chmury",
+      "account": "Jednorazowe konto testowe",
+      "preconditions": "To samo jednorazowe konto w dwóch czystych profilach; brak równoległej gry.",
+      "steps": [
+        "W profilu A wykonaj pojedynczy przydział i poczekaj na potwierdzenie zapisu.",
+        "Wyloguj A.",
+        "Zaloguj profil B."
+      ],
+      "expected": [
+        "Profil B odczytuje potwierdzony przydział, zasoby i historię z chmury.",
+        "Nie importuje żadnej lokalnej wyspy."
+      ],
+      "mode": "Atrapa API / izolowana baza",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-dev-cloud.js",
+        "harborlight-dev-sync.js",
+        "tests/harborlight-dev-game-smoke.py"
+      ]
+    },
+    {
+      "id": "ACC-006",
+      "module": "Konta i zapis w chmurze",
+      "title": "Awaria chmury przed otwarciem",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Prawidłowa sesja testowa; endpoint odczytu wyspy zwraca błąd sieci.",
+      "steps": [
+        "Otwórz grę.",
+        "Sprawdź ekran błędu i dostępność działań.",
+        "Przywróć sieć i użyj Ponów."
+      ],
+      "expected": [
+        "Brak lokalnego startera i brak dostępnych operacji gospodarki podczas awarii.",
+        "Ponowienie odczytuje istniejącą wyspę."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-dev-cloud.js",
+        "harborlight-dev-sync.js",
+        "tests/harborlight-dev-game-smoke.py"
+      ]
+    },
+    {
+      "id": "ACC-007",
+      "module": "Konta i zapis w chmurze",
+      "title": "Nieudany pierwszy zapis startera",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Atrapa starej ścieżki PRE-PROD: brak wyspy, pierwszy commit odrzucony.",
+      "steps": [
+        "Spróbuj otworzyć grę z nowym kontem testowym.",
+        "Odrzuć utworzenie dokumentu."
+      ],
+      "expected": [
+        "Gra nie ogłasza utworzenia wyspy i nie otwiera niezapisanego świata.",
+        "Nie zapisuje startera ani kopii w localStorage/sessionStorage."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-dev-cloud.js",
+        "harborlight-dev-sync.js",
+        "tests/harborlight-dev-game-smoke.py"
+      ]
+    },
+    {
+      "id": "ACC-008",
+      "module": "Konta i zapis w chmurze",
+      "title": "Konflikt dwóch kart",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Jednorazowe konto; dwa klienty odczytały tę samą rewizję.",
+      "steps": [
+        "Klient A zapisuje zmianę i otrzymuje potwierdzenie.",
+        "Klient B próbuje zapisać swój starszy stan.",
+        "W B wybierz jawne wczytanie chmury."
+      ],
+      "expected": [
+        "Drugi zapis jest odrzucony warunkiem rewizji.",
+        "B przestaje zatwierdzać działania, a po wczytaniu pokazuje stan A."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-dev-cloud.js",
+        "harborlight-dev-sync.js",
+        "tests/harborlight-dev-game-smoke.py"
+      ]
+    },
+    {
+      "id": "ACC-009",
+      "module": "Konta i zapis w chmurze",
+      "title": "Utrata odpowiedzi po skutecznym commicie",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Atrapa zapisuje żądanie w bazie, lecz gubi odpowiedź do klienta.",
+      "steps": [
+        "Wykonaj komendę.",
+        "Zasymuluj brak odpowiedzi.",
+        "Sprawdź liczbę żądań, następnie jawnie wczytaj chmurę."
+      ],
+      "expected": [
+        "Klient nie ponawia bez końca niejednoznacznego zapisu i blokuje dalsze komendy.",
+        "Odczyt pokazuje pojedynczy serwerowy skutek, bez podwojenia."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-dev-cloud.js",
+        "harborlight-dev-sync.js",
+        "tests/harborlight-dev-game-smoke.py"
+      ]
+    },
+    {
+      "id": "ACC-010",
+      "module": "Konta i zapis w chmurze",
+      "title": "Brak pamięci wysp w przeglądarce",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture lub atrapa chmury; otwarte narzędzia pamięci przeglądarki.",
+      "steps": [
+        "Rozegraj kilka akcji i wyloguj.",
+        "Sprawdź klucze localStorage i sessionStorage."
+      ],
+      "expected": [
+        "Nie ma payloadu wyspy, kopii zapasowej ani trwałej kolejki jej zapisu.",
+        "Techniczna sesja logowania i preferencja języka są dozwolone."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-dev-cloud.js",
+        "harborlight-dev-sync.js",
+        "tests/harborlight-dev-game-smoke.py"
+      ]
+    },
+    {
+      "id": "ACC-011",
+      "module": "Konta i zapis w chmurze",
+      "title": "Migracja zapisu opublikowanego v17",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Syntetyczny plik tests/fixtures/harborlight-v17-admin-history.json; czas symulacji zatrzymany.",
+      "steps": [
+        "Wczytaj fixture przez nowy normalizator.",
+        "Zapisz i ponownie wczytaj trzy razy.",
+        "Porównaj zasoby, populację, poziomy, obsadę, budowę, rezerwacje i historię."
+      ],
+      "expected": [
+        "Nie giną środki, mieszkańcy, budowa ani treść historycznych wiadomości.",
+        "Nie odnawia się72 h premia powitalna i nie wypłacają ponownie stare skrzynie."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-dev-cloud.js",
+        "harborlight-dev-sync.js",
+        "tests/harborlight-dev-game-smoke.py"
+      ]
+    },
+    {
+      "id": "ACC-012",
+      "module": "Konta i zapis w chmurze",
+      "title": "Nieprawidłowy zapis nie jest zastępowany",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Atrapa zwraca niepoprawny JSON lub błędną strukturę dokumentu.",
+      "steps": [
+        "Otwórz konto testowe.",
+        "Sprawdź komunikat oraz liczbę zapisów do API."
+      ],
+      "expected": [
+        "Gra odmawia otwarcia i nie nadpisuje uszkodzonego dokumentu nową wyspą."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-dev-cloud.js",
+        "harborlight-dev-sync.js",
+        "tests/harborlight-dev-game-smoke.py"
+      ]
+    },
+    {
+      "id": "ACC-013",
+      "module": "Konta i zapis w chmurze",
+      "title": "Brak obejścia ścieżki API produkcyjnego konta",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Atrapa hosta PROD; API kont zwraca503.",
+      "steps": [
+        "Zaloguj konto testowe i otwórz grę.",
+        "Obserwuj żądania i pamięć przeglądarki."
+      ],
+      "expected": [
+        "Brak przejścia do bezpośredniego Firestore lub lokalnej gry jako awaryjnego zapisu.",
+        "Wyświetlony jest błąd wymagający przywrócenia API."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-dev-cloud.js",
+        "harborlight-dev-sync.js",
+        "tests/harborlight-dev-game-smoke.py"
+      ]
+    },
+    {
+      "id": "ACC-014",
+      "module": "Konta i zapis w chmurze",
+      "title": "Wykrywanie włączonego API — atrapa PRE-PROD",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Wyłącznie lokalna atrapa /api/v1/config podaje poprawny projekt i accountApi=true; wszystkie operacje Auth/Firestore/API są obsługiwane przez fixture, bez żądań do prawdziwych kont.",
+      "steps": [
+        "Otwórz istniejącą sesję.",
+        "Zapisz zmianę testowego konta.",
+        "Zasymuluj późniejszy błąd API."
+      ],
+      "expected": [
+        "Klient używa API dla wyspy, aktywności i kodów.",
+        "Późniejszy błąd nie przełącza go na stary bezpośredni zapis Firestore."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-dev-cloud.js",
+        "harborlight-dev-sync.js",
+        "tests/harborlight-dev-game-smoke.py"
+      ]
+    },
+    {
+      "id": "ACC-015",
+      "module": "Konta i zapis w chmurze",
+      "title": "Wygaśnięcie sesji i odświeżanie",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Atrapa wygasającego tokenu oraz prawidłowego refresh tokenu.",
+      "steps": [
+        "Poczekaj na odświeżenie sesji bez dotykania gry.",
+        "Sprawdź UID, zegar realnej aktywności i stan wyspy."
+      ],
+      "expected": [
+        "Odświeżenie zachowuje konto, lecz nie jest działaniem gracza i nie odnawia pięciominutowej premii."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-dev-cloud.js",
+        "harborlight-dev-sync.js",
+        "tests/harborlight-dev-game-smoke.py"
+      ]
+    },
+    {
+      "id": "REG-001",
+      "module": "Wylogowanie i dokumenty rejestracji",
+      "title": "Wylogowanie bezpośrednio w Ustawieniach",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Zalogowane jednorazowe konto testowe; istniejący potwierdzony zapis.",
+      "steps": [
+        "Otwórz Ustawienia.",
+        "Wybierz widoczny przycisk Wyloguj się bez przechodzenia do osobnego panelu konta.",
+        "Zaloguj ponownie."
+      ],
+      "expected": [
+        "Sesja jest usunięta, pojawia się logowanie, a ponowny login wczytuje tę samą wyspę.",
+        "Nie następuje reset ani przyznanie startera."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "Nowy zakres 2026-10-30 — odbiór wymagany; publikacja PRE-PROD niepotwierdzona",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-play.js",
+        "harborlight-auth.js",
+        "harborlight-auth.html",
+        "docs/TERMS-DRAFT.pl.md"
+      ]
+    },
+    {
+      "id": "REG-002",
+      "module": "Wylogowanie i dokumenty rejestracji",
+      "title": "Wylogowanie podczas zapisu",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Atrapa opóźnia odpowiedź na ostatnią komendę.",
+      "steps": [
+        "Wykonaj komendę i natychmiast wybierz wylogowanie.",
+        "Zakończ odpowiedź albo zasymuluj błąd.",
+        "Zaloguj ponownie i odczytaj stan."
+      ],
+      "expected": [
+        "Interfejs nie ogłasza niepotwierdzonego zapisu jako sukcesu.",
+        "Ponowne wejście pokazuje wyłącznie prawdę z chmury; brak lokalnej kopii i brak resetu."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "Nowy zakres 2026-10-30 — odbiór wymagany; publikacja PRE-PROD niepotwierdzona",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-play.js",
+        "harborlight-auth.js",
+        "harborlight-auth.html",
+        "docs/TERMS-DRAFT.pl.md"
+      ]
+    },
+    {
+      "id": "REG-003",
+      "module": "Wylogowanie i dokumenty rejestracji",
+      "title": "Wylogowanie usuwa dostęp w drugiej karcie",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Dwie karty jednorazowego konta, ta sama sesja w pamięci technicznej.",
+      "steps": [
+        "Wyloguj pierwszą kartę.",
+        "Spróbuj działać w drugiej bez ponownego logowania."
+      ],
+      "expected": [
+        "Druga karta wykrywa zmianę sesji i kończy dostęp do poprzedniego konta."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "Nowy zakres 2026-10-30 — odbiór wymagany; publikacja PRE-PROD niepotwierdzona",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-play.js",
+        "harborlight-auth.js",
+        "harborlight-auth.html",
+        "docs/TERMS-DRAFT.pl.md"
+      ]
+    },
+    {
+      "id": "REG-004",
+      "module": "Wylogowanie i dokumenty rejestracji",
+      "title": "Domyślnie niezaznaczone wymagane potwierdzenia",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Tryb nowej rejestracji e-mail; aktualny roboczy komplet dokumentów.",
+      "steps": [
+        "Otwórz rejestrację w czystym profilu.",
+        "Sprawdź pola akceptacji bez klikania.",
+        "Wypełnij pozostałe dane i spróbuj wysłać formularz."
+      ],
+      "expected": [
+        "Potwierdzenia są niezaznaczone.",
+        "Konto nie powstaje bez akceptacji regulaminu i potwierdzenia zapoznania się z polityką."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "Nowy zakres 2026-10-30 — odbiór wymagany; publikacja PRE-PROD niepotwierdzona",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-play.js",
+        "harborlight-auth.js",
+        "harborlight-auth.html",
+        "docs/TERMS-DRAFT.pl.md"
+      ]
+    },
+    {
+      "id": "REG-005",
+      "module": "Wylogowanie i dokumenty rejestracji",
+      "title": "Każde potwierdzenie jest wymagane osobno",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Nowa rejestracja e-mail w atrapie Auth.",
+      "steps": [
+        "Zaznacz tylko regulamin i wyślij formularz.",
+        "Zaznacz tylko politykę i ponów.",
+        "Zaznacz oba i wyślij."
+      ],
+      "expected": [
+        "Pierwsze dwie próby są blokowane.",
+        "Trzecia może utworzyć konto po przejściu pozostałej walidacji."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "Nowy zakres 2026-10-30 — odbiór wymagany; publikacja PRE-PROD niepotwierdzona",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-play.js",
+        "harborlight-auth.js",
+        "harborlight-auth.html",
+        "docs/TERMS-DRAFT.pl.md"
+      ]
+    },
+    {
+      "id": "REG-006",
+      "module": "Wylogowanie i dokumenty rejestracji",
+      "title": "Dokumenty są dostępne przed rejestracją",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Brak sesji; formularz rejestracji.",
+      "steps": [
+        "Otwórz oba linki klawiaturą i dotykiem.",
+        "Przeczytaj oznaczenie wersji oraz dane operatora/oznaczone braki.",
+        "Wróć do formularza."
+      ],
+      "expected": [
+        "Dokumenty otwierają się bez logowania i pozostają czytelne na telefonie.",
+        "Oznaczenie robocze i pola nieuzupełnione nie udają gotowych danych przedsiębiorcy."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "Nowy zakres 2026-10-30 — odbiór wymagany; publikacja PRE-PROD niepotwierdzona",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-play.js",
+        "harborlight-auth.js",
+        "harborlight-auth.html",
+        "docs/TERMS-DRAFT.pl.md"
+      ]
+    },
+    {
+      "id": "REG-007",
+      "module": "Wylogowanie i dokumenty rejestracji",
+      "title": "Potwierdzenie polityki nie jest zgodą marketingową",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Formularz nowej rejestracji i treść dokumentów.",
+      "steps": [
+        "Przeczytaj etykiety pól i podstawy przetwarzania.",
+        "Sprawdź brak automatycznej zgody na reklamę, newsletter i publikowanie w FB."
+      ],
+      "expected": [
+        "Wymóg zapoznania się z polityką jest oddzielony od akceptacji umowy.",
+        "Brak warunku udzielenia zbędnej zgody marketingowej w celu gry."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "Nowy zakres 2026-10-30 — odbiór wymagany; publikacja PRE-PROD niepotwierdzona",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-play.js",
+        "harborlight-auth.js",
+        "harborlight-auth.html",
+        "docs/TERMS-DRAFT.pl.md"
+      ]
+    },
+    {
+      "id": "REG-008",
+      "module": "Wylogowanie i dokumenty rejestracji",
+      "title": "Zapis wersji dokumentów powiązany z UID",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Jednorazowe konto w izolowanym API; poprawne potwierdzenia.",
+      "steps": [
+        "Zarejestruj konto.",
+        "Odczytaj metadane akceptacji przez uprawnione narzędzie właścicielskie.",
+        "Porównaj wersje z linkowanymi dokumentami."
+      ],
+      "expected": [
+        "Akceptacja jest przypisana do uwierzytelnionego UID i konkretnych wersji.",
+        "Zapis czasu po stronie serwera nie zależy od dowolnego czasu podanego przez klienta."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "Nowy zakres 2026-10-30 — odbiór wymagany; publikacja PRE-PROD niepotwierdzona",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-play.js",
+        "harborlight-auth.js",
+        "harborlight-auth.html",
+        "docs/TERMS-DRAFT.pl.md"
+      ]
+    },
+    {
+      "id": "REG-009",
+      "module": "Wylogowanie i dokumenty rejestracji",
+      "title": "Nowy OAuth nie omija wymaganych dokumentów",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Atrapa nowego Google/Facebook UID; dwa wejścia: rejestracja oraz przycisk w logowaniu.",
+      "steps": [
+        "Spróbuj utworzyć nowe konto każdym wejściem bez potwierdzeń.",
+        "Następnie zatwierdź dokumenty i dokończ rejestrację."
+      ],
+      "expected": [
+        "Żadna ścieżka nowego konta nie daje dostępu do nowej wyspy bez wymaganych potwierdzeń.",
+        "Zgody nie są fabrykowane samym otwarciem popupu."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "Nowy zakres 2026-10-30 — odbiór wymagany; publikacja PRE-PROD niepotwierdzona",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-play.js",
+        "harborlight-auth.js",
+        "harborlight-auth.html",
+        "docs/TERMS-DRAFT.pl.md"
+      ]
+    },
+    {
+      "id": "REG-010",
+      "module": "Wylogowanie i dokumenty rejestracji",
+      "title": "Istniejące konta nie są rejestrowane ponownie",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Wyłącznie syntetyczny profil starego konta w DEV oraz pełna atrapa Auth/Firestore/API. Żądania nie mogą docierać do rzeczywistego PRE-PROD ani PROD. Test można powtórzyć na wymyślonych profilach odwzorowujących techniczne UID dev-admin1–3; nie kopiować prawdziwych zapisów.",
+      "steps": [
+        "Uruchom lokalny harness z syntetycznym istniejącym kontem i zablokowanymi nieoczekiwanymi żądaniami sieciowymi.",
+        "Zaloguj syntetyczny profil zwykłą metodą w atrapie, a następnie sprawdź UID, zapis i brak nowego startera lub ponownej rejestracji.",
+        "Dla każdego syntetycznego profilu odwzorowującego UID porównaj stan przed i po zmianie wymogów rejestracji. Ewentualną kontrolę rzeczywistej historii admin1 wykonuj wyłącznie jako osobny ACC-002 z obowiązkową blokadą zapisów przed nawigacją."
+      ],
+      "expected": [
+        "Dotychczasowe logowanie i syntetyczna wyspa pozostają dostępne zgodnie z polityką wdrożenia, bez nowego UID i startera.",
+        "Dodanie wymogów rejestracji nie resetuje syntetycznych profili odwzorowujących UID dev-admin1–3. Ten scenariusz nie loguje się do prawdziwych kont i nie zapisuje ich dokumentów."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "Nowy zakres 2026-10-30 — odbiór wymagany; publikacja PRE-PROD niepotwierdzona",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-play.js",
+        "harborlight-auth.js",
+        "harborlight-auth.html",
+        "docs/TERMS-DRAFT.pl.md"
+      ]
+    },
+    {
+      "id": "MAT-001",
+      "module": "Zapasy i transport",
+      "title": "Bonus poza zwykłą pojemnością",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: limit300, zwykły zapas200, bonus0.",
+      "steps": [
+        "Przyznaj kontrolowaną nagrodę200 tego zasobu.",
+        "Dostarcz100 zwykłego towaru od producenta."
+      ],
+      "expected": [
+        "Dostępne jest500/300: 300 zwykłego i200 bonusowego.",
+        "Nagroda jest wydawalna i nie zajmuje limitu zwykłych dostaw."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-inventory.js",
+        "harborlight-v1-logistics.js",
+        "tests/harborlight-v18-inventory.test.mjs"
+      ]
+    },
+    {
+      "id": "MAT-002",
+      "module": "Zapasy i transport",
+      "title": "Wydawanie bonusu przed zwykłym zapasem",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: 200 zwykłego i200 bonusowego jednego materiału; koszt150.",
+      "steps": [
+        "Wydaj150 na prawidłowe działanie.",
+        "Sprawdź ledger i łączny zapas."
+      ],
+      "expected": [
+        "Zostaje200 zwykłego i50 bonusowego, łącznie250.",
+        "Nie nalicza się ponownej opłaty za już zarezerwowany koszt."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-inventory.js",
+        "harborlight-v1-logistics.js",
+        "tests/harborlight-v18-inventory.test.mjs"
+      ]
+    },
+    {
+      "id": "MAT-003",
+      "module": "Zapasy i transport",
+      "title": "Sześć zasobów i monety poza pojemnością",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: magazyn na zwykłym limicie; zasób Coins można zwiększyć.",
+      "steps": [
+        "Przyznaj nagrodę monetową i materiałową.",
+        "Porównaj użycie zwykłej pojemności."
+      ],
+      "expected": [
+        "Monety nie zajmują miejsca materiałów.",
+        "Materiał nagrody trafia do wydawalnego zapasu bonusowego."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-inventory.js",
+        "harborlight-v1-logistics.js",
+        "tests/harborlight-v18-inventory.test.mjs"
+      ]
+    },
+    {
+      "id": "MAT-004",
+      "module": "Zapasy i transport",
+      "title": "Rezerwacja chroni środki budowy",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: koszt budowy dostępny tylko raz.",
+      "steps": [
+        "Zleć rozbudowę.",
+        "Spróbuj wydać te same środki na drugie działanie.",
+        "Obserwuj podjęcie zarezerwowanego ładunku."
+      ],
+      "expected": [
+        "Pierwsza budowa rezerwuje koszt.",
+        "Inne działanie nie wydaje go drugi raz, a odbiór fizycznie zmniejsza właściwy zapas."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-inventory.js",
+        "harborlight-v1-logistics.js",
+        "tests/harborlight-v18-inventory.test.mjs"
+      ]
+    },
+    {
+      "id": "MAT-005",
+      "module": "Zapasy i transport",
+      "title": "Rezerwa żywności na posiłki",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: zapas Food równy rezerwie Magazynu i mieszkańcy do karmienia.",
+      "steps": [
+        "Spróbuj oddać lub sprzedać całą żywność.",
+        "Obserwuj posiłek."
+      ],
+      "expected": [
+        "Operacja nie wydaje chronionej rezerwy; karmienie nadal może z niej korzystać."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-inventory.js",
+        "harborlight-v1-logistics.js",
+        "tests/harborlight-v18-inventory.test.mjs"
+      ]
+    },
+    {
+      "id": "MAT-006",
+      "module": "Zapasy i transport",
+      "title": "Natychmiastowy transport uwzględnia towar w drodze",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: planowana dostawa zwykła zajmuje pozostałe miejsce.",
+      "steps": [
+        "Otwórz płatną usługę odbioru kolejnego towaru.",
+        "Spróbuj zatwierdzić przewóz przekraczający miejsce."
+      ],
+      "expected": [
+        "Operacja odmawia przed pobraniem opłaty i towaru.",
+        "Istniejący ładunek i zlecenie pozostają nienaruszone."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-inventory.js",
+        "harborlight-v1-logistics.js",
+        "tests/harborlight-v18-inventory.test.mjs"
+      ]
+    },
+    {
+      "id": "MAT-007",
+      "module": "Zapasy i transport",
+      "title": "Wycofanie załadowanego tragarza",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: tragarz Magazynu niesie ładunek; dostępne UI obsady.",
+      "steps": [
+        "Zmniejsz obsadę o1.",
+        "Sprawdź wyraźny popup i liczbę kończących kurs.",
+        "Poczekaj na dostawę oraz pięciominutowy powrót."
+      ],
+      "expected": [
+        "Ładunek jest dowieziony raz.",
+        "Tragarz nie zaczyna kolejnego kursu; staje się wolny dopiero po powrocie."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-inventory.js",
+        "harborlight-v1-logistics.js",
+        "tests/harborlight-v18-inventory.test.mjs"
+      ]
+    },
+    {
+      "id": "MAT-008",
+      "module": "Zapasy i transport",
+      "title": "Powrót pustego pracownika",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: pracownik produkcji bez gotowego ładunku.",
+      "steps": [
+        "Odwołaj pracownika.",
+        "Spróbuj natychmiast przypisać go ponownie.",
+        "Odczekaj5 min."
+      ],
+      "expected": [
+        "Powrót trwa5 min rzeczywistego czasu; podczas niego pracownik nie jest dostępny.",
+        "Po powrocie można go przypisać."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-inventory.js",
+        "harborlight-v1-logistics.js",
+        "tests/harborlight-v18-inventory.test.mjs"
+      ]
+    },
+    {
+      "id": "MAT-009",
+      "module": "Zapasy i transport",
+      "title": "Pojemność i ładunek Magazynu kończą wzrost na24",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: poziomy23,24,25 i ta sama droga.",
+      "steps": [
+        "Porównaj limity całkowite, materiałowe, rezerwę Food i ładunek tragarza.",
+        "Zwiększ poziom drogi przy Magazynie25."
+      ],
+      "expected": [
+        "Po24 nie rośnie pojemność, rezerwa ani wkład Magazynu w ładunek; rośnie limit obsady.",
+        "Droga nadal niezależnie poprawia transport."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-inventory.js",
+        "harborlight-v1-logistics.js",
+        "tests/harborlight-v18-inventory.test.mjs"
+      ]
+    },
+    {
+      "id": "MAT-010",
+      "module": "Zapasy i transport",
+      "title": "Limit całkowity i limit materiału",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: całkowity limit ma miejsce, lecz jeden materiał osiągnął własny limit.",
+      "steps": [
+        "Zaplanuj dostawę pełnego materiału i innego, który ma miejsce."
+      ],
+      "expected": [
+        "Dostawa pierwszego materiału jest ograniczona jego własnym limitem.",
+        "Wolne miejsce innych materiałów nie jest błędnie liczone jako jego pojemność."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-inventory.js",
+        "harborlight-v1-logistics.js",
+        "tests/harborlight-v18-inventory.test.mjs"
+      ]
+    },
+    {
+      "id": "MAT-011",
+      "module": "Zapasy i transport",
+      "title": "Priorytety transportu są trwałe",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: co najmniej dwa materiały czekają i wolny tragarz.",
+      "steps": [
+        "Ustaw numeryczne priorytety materiałów i Budowy.",
+        "Obserwuj wybór kolejnych kursów.",
+        "Wczytaj zapis."
+      ],
+      "expected": [
+        "Wybór odpowiada ustawionej kolejności i cyklowi priorytetów.",
+        "Konfiguracja nie znika po wczytaniu."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-inventory.js",
+        "harborlight-v1-logistics.js",
+        "tests/harborlight-v18-inventory.test.mjs"
+      ]
+    },
+    {
+      "id": "MAT-012",
+      "module": "Zapasy i transport",
+      "title": "Premium Targu nie usuwa poprzednich zwykłych zleceń",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: zwykła wysyłka Targu w kolejce i inny niezarezerwowany towar.",
+      "steps": [
+        "Wykonaj natychmiastowy odbiór tylko niezarezerwowanego towaru.",
+        "Obserwuj poprzednie zlecenie."
+      ],
+      "expected": [
+        "Premium nie usuwa wcześniej zamówionej zwykłej wysyłki i nie pobiera jej towaru drugi raz."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-inventory.js",
+        "harborlight-v1-logistics.js",
+        "tests/harborlight-v18-inventory.test.mjs"
+      ]
+    },
+    {
+      "id": "MAT-013",
+      "module": "Zapasy i transport",
+      "title": "Termin Portu na obu etapach przewozu",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: partie tuż przed wygaśnięciem; jedna podjęta przed terminem, druga niepodjęta.",
+      "steps": [
+        "Przekrocz termin podczas załadunku/rozładunku i ostatniego odcinka do Magazynu.",
+        "Dokończ kurs podjętej partii."
+      ],
+      "expected": [
+        "Towar podjęty przed terminem przetrwa oba etapy i jest dostarczony raz.",
+        "Niepodjęty przeterminowany towar wygasa."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-inventory.js",
+        "harborlight-v1-logistics.js",
+        "tests/harborlight-v18-inventory.test.mjs"
+      ]
+    },
+    {
+      "id": "MAT-014",
+      "module": "Zapasy i transport",
+      "title": "Etapy Portu i Targu odświeżają się w otwartym panelu",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z trwającym rejsem i osobna dostawa Targu.",
+      "steps": [
+        "Pozostaw odpowiedni panel otwarty.",
+        "Przekrocz granicę rejs/rozładunek lub dostawa/blokada."
+      ],
+      "expected": [
+        "Nazwy etapów i liczniki zmieniają się bez zamykania panelu.",
+        "Zakończone zlecenie nie pozostaje jako fikcyjnie aktywne."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-inventory.js",
+        "harborlight-v1-logistics.js",
+        "tests/harborlight-v18-inventory.test.mjs"
+      ]
+    },
+    {
+      "id": "MAT-015",
+      "module": "Zapasy i transport",
+      "title": "Blokada i odnowienie terminu na Targu",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: towar po przybyciu na Targ.",
+      "steps": [
+        "Spróbuj wymienić go przed upływem1 h.",
+        "Po odblokowaniu wykonaj wymianę.",
+        "Porównaj termin otrzymanej partii."
+      ],
+      "expected": [
+        "Przybyły towar jest zablokowany1 h.",
+        "Wymieniony otrzymuje własne świeże24 h, zamiast dziedziczyć stary termin."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-inventory.js",
+        "harborlight-v1-logistics.js",
+        "tests/harborlight-v18-inventory.test.mjs"
+      ]
+    },
+    {
+      "id": "BLD-001",
+      "module": "Budowy, produkcja i drogi",
+      "title": "Limit poziomu przez Ratusz",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: Ratusz 1, inny budynek1, dostępne środki.",
+      "steps": [
+        "Spróbuj podnieść zwykły budynek ponad poziom Ratusza.",
+        "Następnie podnieś Ratusz i ponów."
+      ],
+      "expected": [
+        "Pierwsza próba jest blokowana jasnym powodem.",
+        "Po osiągnięciu właściwego poziomu Ratusza rozbudowa staje się możliwa."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-logistics.js",
+        "harborlight-v1-leisure.js",
+        "harborlight-v1-activities.js"
+      ]
+    },
+    {
+      "id": "BLD-002",
+      "module": "Budowy, produkcja i drogi",
+      "title": "Rozdzielenie transportu i budowy",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: zamówiony upgrade i przydzieleni tragarze.",
+      "steps": [
+        "Obserwuj rezerwację, podjęcie kosztu i dostawy.",
+        "Po dostarczeniu porównaj faktyczny czas transportu z czasem fazy budowania."
+      ],
+      "expected": [
+        "Fazy nie biegną równolegle jako jedna ukryta operacja.",
+        "Budowa zależy od rzeczywistego transportu i właściwego mnożnika typu budynku."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-logistics.js",
+        "harborlight-v1-leisure.js",
+        "harborlight-v1-activities.js"
+      ]
+    },
+    {
+      "id": "BLD-003",
+      "module": "Budowy, produkcja i drogi",
+      "title": "Kolejka nie przekracza limitu Ratusza",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: zajęte miejsca aktywne i zwykła kolejka na limicie.",
+      "steps": [
+        "Spróbuj dodać kolejny projekt.",
+        "Zakończ jeden i ponów."
+      ],
+      "expected": [
+        "Nadmiarowy projekt nie pobiera środków i nie trafia do kolejki.",
+        "Zwolnienie miejsca dopuszcza poprawne zlecenie."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-logistics.js",
+        "harborlight-v1-leisure.js",
+        "harborlight-v1-activities.js"
+      ]
+    },
+    {
+      "id": "BLD-004",
+      "module": "Budowy, produkcja i drogi",
+      "title": "Dwa poziomy tego samego budynku",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: poprzedni poziom budynku już zamówiony; wolne miejsce aktywne dla innego projektu.",
+      "steps": [
+        "Zamów następny poziom tego samego budynku.",
+        "Sprawdź liczbę zajętych miejsc kolejki i kolejność."
+      ],
+      "expected": [
+        "Następny poziom jest liczony do kolejki i nie wyprzedza poprzedniego poziomu."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-logistics.js",
+        "harborlight-v1-leisure.js",
+        "harborlight-v1-activities.js"
+      ]
+    },
+    {
+      "id": "BLD-005",
+      "module": "Budowy, produkcja i drogi",
+      "title": "Anulowanie tylko przed pierwszym podjęciem",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: dwie kopie projektu, przed podjęciem i po podjęciu materiałów.",
+      "steps": [
+        "Spróbuj anulować oba projekty przez UI."
+      ],
+      "expected": [
+        "Projekt przed podjęciem można anulować zgodnie z warunkami i uwolnić rezerwację.",
+        "Rozpoczęty nie oddaje zasobów błędnie ani nie znika z ładunkiem."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-logistics.js",
+        "harborlight-v1-leisure.js",
+        "harborlight-v1-activities.js"
+      ]
+    },
+    {
+      "id": "BLD-006",
+      "module": "Budowy, produkcja i drogi",
+      "title": "Popup dokładnego skrócenia budowy",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture:125 s budowania i środki na skrócenie25%.",
+      "steps": [
+        "Kup skrócenie25%.",
+        "Porównaj różnicę licznika z popupem w minutach i sekundach."
+      ],
+      "expected": [
+        "Popup podaje faktycznie zaoszczędzony czas zgodnie z zaokrągleniem UI.",
+        "Nie podaje czasu całej budowy ani wartości innego etapu."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-logistics.js",
+        "harborlight-v1-leisure.js",
+        "harborlight-v1-activities.js"
+      ]
+    },
+    {
+      "id": "BLD-007",
+      "module": "Budowy, produkcja i drogi",
+      "title": "Wydajność 20/24/26/28 i receptury2:1",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: po1 przybyłym najedzonym pracowniku na poziomach1–4.",
+      "steps": [
+        "Obserwuj bazową produkcję przy mnożniku×1.",
+        "W Młynie i Tartaku zanotuj pobór wejścia na ukończoną sztukę."
+      ],
+      "expected": [
+        "Baza wynosi20/24/26/28 na godzinę.",
+        "Żywność zużywa2 Grain, a deska2 Wood na sztukę; opis rozróżnia bazę i aktualne mnożniki."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-logistics.js",
+        "harborlight-v1-leisure.js",
+        "harborlight-v1-activities.js"
+      ]
+    },
+    {
+      "id": "BLD-008",
+      "module": "Budowy, produkcja i drogi",
+      "title": "Brak wejścia i pełny bufor producenta",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Dwa fixtures: brak Grain w Młynie oraz pełny lokalny bufor Gospodarstwa.",
+      "steps": [
+        "Otwórz budynki i obserwuj zatrzymanie.",
+        "Przywróć wejście lub odbierz gotowe towary."
+      ],
+      "expected": [
+        "Powód przestoju jest poprawny; smutna ikona pojawia się dla rzeczywistej kary.",
+        "Po wznowieniu produkcji komunikat i ikona ustępują."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-logistics.js",
+        "harborlight-v1-leisure.js",
+        "harborlight-v1-activities.js"
+      ]
+    },
+    {
+      "id": "BLD-009",
+      "module": "Budowy, produkcja i drogi",
+      "title": "Sto odcinków drogi przed następnym poziomem",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture:99 ulepszonych odcinków bieżącego poziomu i200 Stone.",
+      "steps": [
+        "Spróbuj przejść do następnego poziomu.",
+        "Ulepsz setny odcinek za100 Stone.",
+        "Rozpocznij następny poziom."
+      ],
+      "expected": [
+        "Nowy poziom nie omija brakującego odcinka.",
+        "Każdy poprawny zakup pobiera100 Stone raz."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-logistics.js",
+        "harborlight-v1-leisure.js",
+        "harborlight-v1-activities.js"
+      ]
+    },
+    {
+      "id": "POP-001",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Powitalne minimum wszystkich mieszkańców",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Nowa wyspa; mieszkańcy początkowi i nowo przybyły; brak Latarni.",
+      "steps": [
+        "W ciągu72 h wywołaj ujemne czynniki na fixture.",
+        "Porównaj indywidualne szczęście i średnią."
+      ],
+      "expected": [
+        "Każdy ma co najmniej20%, także przybyły w okresie ochrony; średnia nie spada poniżej20%."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-002",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Koniec ochrony bez ukrytego długu",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture blisko końca72 h; ujemne czynniki działały pod ochroną.",
+      "steps": [
+        "Przekrocz granicę72 h.",
+        "Obserwuj zmianę bez dodatkowej komendy."
+      ],
+      "expected": [
+        "Nie następuje automatyczne odjęcie20 pp ani jednorazowe naliczenie całej chronionej kary.",
+        "Dalsze naliczanie jest zgodne z aktualnymi czynnikami."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-003",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Latarnia ma pierwszeństwo nad nowym mieszkańcem",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: aktywna globalna Latarnia i nowa osoba z24 h osiedlania.",
+      "steps": [
+        "Dodaj przybyłego w połowie efektu.",
+        "Przekrocz wspólny koniec efektu Latarni."
+      ],
+      "expected": [
+        "W czasie globalnej ochrony osoba ma100%.",
+        "Nie otrzymuje osobnego pełnego nowego czasu Latarni po przybyciu."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-004",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Dwukrotnie szybsze przybywanie, stare odejścia",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixtures ze stałym H+100 i H−100; wolne miejsce i populacja powyżej6.",
+      "steps": [
+        "Mierz czas do zmiany o1 osobę.",
+        "Porównaj tabelę UI."
+      ],
+      "expected": [
+        "Przy+100 przybywa1 co30 min, przy−100 odchodzi1 co1 h.",
+        "Tabela pokazuje osobne czasy dodatnie i ujemne."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-005",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Limit Ratusza i minimum sześciu",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixtures: pełny limit Ratusza przy dodatnim H oraz6 osób przy ujemnym H.",
+      "steps": [
+        "Przekrocz termin kolejnej zmiany populacji w obu fixtures."
+      ],
+      "expected": [
+        "Pierwszy nie przekracza limitu Ratusza.",
+        "Drugi nie schodzi poniżej6 mieszkańców."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-006",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Dojście trwa pięć rzeczywistych minut",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: wolna osoba, aktywność×2 i dobre drogi.",
+      "steps": [
+        "Przydziel osobę do producenta.",
+        "Zmierz czas rozpoczęcia pracy."
+      ],
+      "expected": [
+        "Droga do pracy trwa5 min; mnożnik przewozu nie skraca dojścia osobistego."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-007",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Podatek dopiero po dotarciu",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: przypisana osoba jeszcze w drodze, a następnie przybyła.",
+      "steps": [
+        "Porównaj naliczenie podatku przed i po końcu dojścia."
+      ],
+      "expected": [
+        "Osoba w drodze nie płaci podatku jak przybyły pracownik.",
+        "Naliczenie zaczyna się po dotarciu."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-008",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Przydział wstrzymuje bezrobocie bez kasowania licznika",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: osoba ma naliczone ponad12 h bezrobocia.",
+      "steps": [
+        "Przydziel ją do pracy.",
+        "Odwołaj przed dojściem.",
+        "Ponownie przydziel i tym razem pozwól dojść."
+      ],
+      "expected": [
+        "Kara jest wstrzymana podczas dojścia, ale sam przydział nie zeruje zegara.",
+        "Tylko dotarcie zeruje licznik; szybkie odwołanie nie daje nowej ochrony."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-009",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Karmienie resetuje głód po pełnej godzinie",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: ponad12 h głodu, zapas Food przywracany odcinkami.",
+      "steps": [
+        "Nakarm przez30 min i przerwij.",
+        "Przywróć karmienie na pełne60 min."
+      ],
+      "expected": [
+        "Kara szczęścia zatrzymuje się po przywróceniu jedzenia.",
+        "Krótki posiłek nie kasuje historii; pełna nieprzerwana godzina zeruje licznik."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-010",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Głód od razu zmniejsza wydajność",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: przybyli pracownicy i tragarze; zapas Food spada do0.",
+      "steps": [
+        "Porównaj produkcję i prędkość przewozu przed brakiem Food i bezpośrednio po nim."
+      ],
+      "expected": [
+        "Mnożnik głodu×0,5 działa od razu; nie czeka na12 h kary szczęścia."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-011",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Aktywność kończy się po pięciu minutach",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z wystarczającymi materiałami i porównywalnym pracownikiem.",
+      "steps": [
+        "Wykonaj rzeczywisty dotyk lub klawisz w aktywnej karcie.",
+        "Przez kolejne5 min nie wykonuj wejścia.",
+        "Porównaj mnożniki przed i po granicy."
+      ],
+      "expected": [
+        "Produkcja, podatki i przewóz mają×2 przez5 min od aktywności, następnie×1.",
+        "Automatyczny zegar i zapis nie odnawiają premii."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-012",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Powrót po60 h jest liczony przedziałowo",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture: zapis tuż po realnym działaniu; identyczny stan porównawczy.",
+      "steps": [
+        "Rozlicz60 h jednym skokiem.",
+        "W drugim stanie rozlicz te same granice odcinkami."
+      ],
+      "expected": [
+        "Pierwsze5 min mają×2, pozostały czas do48 h×1, dopiero ostatnie12 h×0,5.",
+        "Wyniki całego i dzielonego rozliczenia są zgodne."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-013",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Spowolnienie nie zmienia jedzenia i efektów",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture:60 h nieobecności, znane zużycie Food i efekt krótszy niż nieobecność.",
+      "steps": [
+        "Rozlicz nieobecność i porównaj zegary z rzeczywistym czasem."
+      ],
+      "expected": [
+        "Jedzenie, kalendarz, szczęście i czas efektów biegną normalnie.",
+        "Populacja ma osobną regułę przyrostu; spowolnienie ekonomii nie przedłuża efektu."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-014",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Tylko prawdziwe wejście w aktywnej karcie",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z licznikiem realnej aktywności.",
+      "steps": [
+        "Użyj dotyku, klawisza i sensownego przechylenia w minigrze.",
+        "Następnie pozostaw kartę w tle z animacją i odświeżaniem sesji."
+      ],
+      "expected": [
+        "Rzeczywiste sterowanie odnawia aktywność.",
+        "Tło, animacja, neutralna fizyka, automatyczny zapis i refresh tokenu tego nie robią."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-015",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Globalne wylogowanie30 min+30 s",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z zalogowaną atrapą sesji i zatrzymanym zegarem testowym.",
+      "steps": [
+        "Odczekaj30 min bez rzeczywistego wejścia.",
+        "Nie odpowiadaj przez30 s.",
+        "Powtórz, potwierdzając obecność przed końcem."
+      ],
+      "expected": [
+        "Po30 min jest widoczne ostrzeżenie, po dalszych30 s wylogowanie.",
+        "Potwierdzenie w terminie zachowuje sesję bez resetu wyspy."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-016",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Fikcyjny1 stycznia i rzeczywista godzina Warszawy",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Nowa wyspa; różne strefy urządzenia.",
+      "steps": [
+        "Porównaj dzień startu i zegar przy UTC oraz strefie innej niż Polska.",
+        "Sprawdź rzeczywiste znaczniki zapisu."
+      ],
+      "expected": [
+        "Startowa data świata to1 stycznia, a godzina wynika z Europe/Warsaw.",
+        "Znaczniki płatności, aktywności i zapisu pozostają rzeczywiste."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "POP-017",
+      "module": "Mieszkańcy, szczęście i zegary",
+      "title": "Północ Warszawy podczas zmiany czasu",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Kontrolowane daty zmiany czasu i przejścia przez północ Europe/Warsaw.",
+      "steps": [
+        "Zmień strefę systemu testera.",
+        "Rozlicz przed i po warszawskiej północy oraz godzinie DST."
+      ],
+      "expected": [
+        "Dzienny reset następuje raz według Warszawy, nie według lokalnego urządzenia ani po arbitralnych24 h."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-residents.js",
+        "harborlight-v1-state.js",
+        "harborlight-v1-progression.js",
+        "harborlight-v1-calendar.js"
+      ]
+    },
+    {
+      "id": "EVT-001",
+      "module": "Kaplica i wydarzenia",
+      "title": "Jedno darmowe błogosławieństwo dziennie",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z Kaplicą i brakiem aktywnego błogosławieństwa.",
+      "steps": [
+        "Odbierz darmowe użycie.",
+        "Po końcu efektu spróbuj drugi raz tego dnia.",
+        "Przekrocz warszawską północ."
+      ],
+      "expected": [
+        "Darmowe użycie jest pojedyncze na dzień; nie kumuluje niewykorzystanych dni.",
+        "O północy odnawia się1 użycie."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-events.js",
+        "harborlight-v1-effects.js"
+      ]
+    },
+    {
+      "id": "EVT-002",
+      "module": "Kaplica i wydarzenia",
+      "title": "Wspólna blokada płatnego i reklamowego błogosławieństwa",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture ze środkami, symulacją reklam i Kaplicą.",
+      "steps": [
+        "Odbierz płatne błogosławieństwo.",
+        "Po1 h spróbuj reklamowego.",
+        "Odczekaj dalsze4 h i ponów."
+      ],
+      "expected": [
+        "Płatne i reklamowe użycia mają wspólną blokadę4 h od końca godzinnego efektu, czyli5 h start–start.",
+        "Próba w blokadzie nie pobiera środków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-events.js",
+        "harborlight-v1-effects.js"
+      ]
+    },
+    {
+      "id": "EVT-003",
+      "module": "Kaplica i wydarzenia",
+      "title": "Darmowe użycie nie przesuwa płatnego terminu",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z aktywną blokadą płatnego użycia, po końcu efektu i z wolnym darmowym użyciem.",
+      "steps": [
+        "Odbierz darmowe błogosławieństwo.",
+        "Porównaj zapisany termin płatnego użycia przed i po."
+      ],
+      "expected": [
+        "Termin płatnego/reklamowego odnowienia nie jest przesunięty.",
+        "Aktywne ręczne błogosławieństwa nie nakładają się."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-events.js",
+        "harborlight-v1-effects.js"
+      ]
+    },
+    {
+      "id": "EVT-004",
+      "module": "Kaplica i wydarzenia",
+      "title": "Regularność Kaplicy3 i4",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Dwa fixtures: Kaplica 3 oraz4, znany ostatni ręczny blessing.",
+      "steps": [
+        "Sprawdź dozwolony odstęp i kontrolowane najwcześniejsze zagrożenie.",
+        "Użyj prawdziwego ręcznego błogosławieństwa."
+      ],
+      "expected": [
+        "Okres łaski to6 dni dla Kaplicy3 oraz7 dni dla Kaplicy4.",
+        "Użycie odnawia regularność; zagrożenie jest dopiero dalsze6–15 dni po łasce."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-events.js",
+        "harborlight-v1-effects.js"
+      ]
+    },
+    {
+      "id": "EVT-005",
+      "module": "Kaplica i wydarzenia",
+      "title": "Dobre wydarzenie36–60 h bez ponownego losowania",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture ze znanym ziarnem generatora i bez Latarni.",
+      "steps": [
+        "Zapisz termin dobrego wydarzenia.",
+        "Wielokrotnie otwórz panel i wczytaj stan.",
+        "Rozlicz dojście do terminu."
+      ],
+      "expected": [
+        "Termin leży w36–60 h i pozostaje taki sam po odczytach.",
+        "Wydarzenie oraz nagroda występują tylko raz."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-events.js",
+        "harborlight-v1-effects.js"
+      ]
+    },
+    {
+      "id": "EVT-006",
+      "module": "Kaplica i wydarzenia",
+      "title": "Latarnia odkłada najwyżej jedno dobre wydarzenie",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z wieloma potencjalnymi terminami podczas długiej globalnej ochrony.",
+      "steps": [
+        "Rozlicz całą ochronę.",
+        "Zakończ jej wspólny efekt i sprawdź historię."
+      ],
+      "expected": [
+        "Podczas ochrony nie narasta dowolna kolejka nagród.",
+        "Po końcu uwalnia się najwyżej jedno odłożone dobre wydarzenie i powstaje nowy przyszły termin."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-events.js",
+        "harborlight-v1-effects.js"
+      ]
+    },
+    {
+      "id": "EVT-007",
+      "module": "Kaplica i wydarzenia",
+      "title": "Latarnia anuluje złe prognozy bez fikcyjnego błogosławieństwa",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z należnym negatywnym wydarzeniem i później włączaną Latarnią.",
+      "steps": [
+        "Włącz globalną ochronę.",
+        "Przekrocz dawny zły termin.",
+        "Zakończ ochronę i sprawdź nowe prognozy oraz lastBlessingAt."
+      ],
+      "expected": [
+        "Stara zła prognoza nie wybucha podczas ochrony.",
+        "Nowy termin respektuje łaskę i losowe opóźnienie, a timestamp prawdziwego błogosławieństwa nie jest podmieniany."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-events.js",
+        "harborlight-v1-effects.js"
+      ]
+    },
+    {
+      "id": "EVT-008",
+      "module": "Kaplica i wydarzenia",
+      "title": "Dżuma respektuje minimum6 i chroni ładunek",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z kontrolowanym wynikiem dżumy,6–10 osobami i załadowanym kurierem.",
+      "steps": [
+        "Wywołaj należne wydarzenie w lokalnym modelu.",
+        "Sprawdź populację, rezerwacje i towar w drodze."
+      ],
+      "expected": [
+        "Populacja nie spada poniżej6.",
+        "Zarezerwowane i niesione dobra nie są niszczone przez usunięcie osoby."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-events.js",
+        "harborlight-v1-effects.js"
+      ]
+    },
+    {
+      "id": "EVT-009",
+      "module": "Kaplica i wydarzenia",
+      "title": "Latarnia po dżumie nie zwraca strat",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture po utracie ludzi i dóbr; czynna kara dżumy.",
+      "steps": [
+        "Ukończ poziom Latarni.",
+        "Sprawdź szczęście oraz poprzednie straty."
+      ],
+      "expected": [
+        "Szczęście jest wymuszone na100%, lecz utracone dobra i ludzie nie wracają automatycznie."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-events.js",
+        "harborlight-v1-effects.js"
+      ]
+    },
+    {
+      "id": "EVT-010",
+      "module": "Kaplica i wydarzenia",
+      "title": "Rozbitek przy pełnym limicie",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z pełnym Domem lub limitem Ratusza oraz kontrolowanym rozbitkiem.",
+      "steps": [
+        "Wywołaj pozytywne wydarzenie rozbitka.",
+        "Porównaj populację i saldo monet."
+      ],
+      "expected": [
+        "Nie przekracza dostępnego miejsca.",
+        "Zamiast mieszkańca przyznaje500×poziom Ratusza monet dokładnie raz."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-events.js",
+        "harborlight-v1-effects.js"
+      ]
+    },
+    {
+      "id": "EVT-011",
+      "module": "Kaplica i wydarzenia",
+      "title": "Najwyżej jedno złe zaległe wydarzenie",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z długą nieobecnością bez realnej aktywności i wysoką Kaplicą.",
+      "steps": [
+        "Rozlicz długą nieobecność jednym i dzielonym skokiem.",
+        "Dopiero później wykonaj prawdziwe działanie."
+      ],
+      "expected": [
+        "W niezmienionym okresie bez grania naliczane jest najwyżej jedno złe zaległe wydarzenie.",
+        "Nowe działanie pozwala uzbroić kolejne przyszłe okno, bez natychmiastowego wielokrotnego ataku."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-state.js",
+        "harborlight-v1-events.js",
+        "harborlight-v1-effects.js"
+      ]
+    },
+    {
+      "id": "MIN-001",
+      "module": "Ekspedycje i minigry",
+      "title": "Wybór obu gier i następnej rundy",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z dostępną ekspedycją.",
+      "steps": [
+        "Wybierz kulki, zakończ serię i wybierz trójki.",
+        "Po wygranej wybierz inny typ następnej rundy.",
+        "Wczytaj zapis."
+      ],
+      "expected": [
+        "Wybrany typ jest respektowany i utrwalony.",
+        "Przyciski nawigacji nie wprowadzają niezamierzonego powrotu niszczącego serię."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-activities.js",
+        "harborlight-v1-minigames.js",
+        "harborlight-v1-minigame-ui.js",
+        "tests/harborlight-frontend-v17-smoke.py"
+      ]
+    },
+    {
+      "id": "MIN-002",
+      "module": "Ekspedycje i minigry",
+      "title": "Rosnące nagrody i suma puli",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z możliwością kontrolowanego szybkiego zwycięstwa.",
+      "steps": [
+        "Wygrywaj4 rundy przed progiem potrąceń i nie wypłacaj wcześniej.",
+        "Zapisz nagrodę każdej oraz pulę."
+      ],
+      "expected": [
+        "Nagrody to50,100,200,400; pula50,150,350,750.",
+        "Kolejny etap nie zastępuje puli samą nagrodą rundy."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-activities.js",
+        "harborlight-v1-minigames.js",
+        "harborlight-v1-minigame-ui.js",
+        "tests/harborlight-frontend-v17-smoke.py"
+      ]
+    },
+    {
+      "id": "MIN-003",
+      "module": "Ekspedycje i minigry",
+      "title": "Wypłata kończy serię raz",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z wygraną i niewypłaconą pulą.",
+      "steps": [
+        "Wypłać pulę.",
+        "Ponów kliknięcie/żądanie i wczytaj stan."
+      ],
+      "expected": [
+        "Monety są dopisane tylko raz i seria zakończona.",
+        "Nie można jednocześnie wypłacić i zachować ryzykowanej puli."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-activities.js",
+        "harborlight-v1-minigames.js",
+        "harborlight-v1-minigame-ui.js",
+        "tests/harborlight-frontend-v17-smoke.py"
+      ]
+    },
+    {
+      "id": "MIN-004",
+      "module": "Ekspedycje i minigry",
+      "title": "Przegrana na twardym limicie",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z pulą po poprzedniej wygranej i aktywną kolejną rundą.",
+      "steps": [
+        "Pozwól upłynąć całemu limitowi.",
+        "Spróbuj kontynuować, dopłacić i odświeżyć."
+      ],
+      "expected": [
+        "Niewypłacona pula przepada i próba pozostaje zakończona po wczytaniu.",
+        "Nie ma automatycznej płatności ani wskrzeszenia po terminie."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-activities.js",
+        "harborlight-v1-minigames.js",
+        "harborlight-v1-minigame-ui.js",
+        "tests/harborlight-frontend-v17-smoke.py"
+      ]
+    },
+    {
+      "id": "MIN-005",
+      "module": "Ekspedycje i minigry",
+      "title": "Potrącenia za czas w pierwszej rundzie",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture pierwszych kulek i osobno trójek.",
+      "steps": [
+        "Sprawdź ofertę przed i po progu pełnej nagrody.",
+        "Przekraczaj kolejne pełne interwały."
+      ],
+      "expected": [
+        "Kulki: limit180 s, pełna nagroda do120 s, potem−1 co15 s.",
+        "Trójki: limit240 s, pełna nagroda do160 s, potem−1 co20 s."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-activities.js",
+        "harborlight-v1-minigames.js",
+        "harborlight-v1-minigame-ui.js",
+        "tests/harborlight-frontend-v17-smoke.py"
+      ]
+    },
+    {
+      "id": "MIN-006",
+      "module": "Ekspedycje i minigry",
+      "title": "Dobrowolny zakup30 s za10 monet maksymalnie dwa razy",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture aktywnej rundy i przynajmniej30 Coins.",
+      "steps": [
+        "Kup dodatkowy czas przed końcem.",
+        "Kup drugi raz.",
+        "Spróbuj trzeci raz i po końcu rundy."
+      ],
+      "expected": [
+        "Każdy dozwolony zakup dodaje30 s i pobiera10 Coins.",
+        "Trzeci i spóźniony zakup są odrzucone bez opłaty."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-activities.js",
+        "harborlight-v1-minigames.js",
+        "harborlight-v1-minigame-ui.js",
+        "tests/harborlight-frontend-v17-smoke.py"
+      ]
+    },
+    {
+      "id": "MIN-007",
+      "module": "Ekspedycje i minigry",
+      "title": "Reklama za60 s tylko raz",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture aktywnej rundy z symulacją DEV.",
+      "steps": [
+        "Uruchom reklamę.",
+        "Zakończ wymagane oglądanie i potwierdzenie.",
+        "Spróbuj ponowić ten sam dowód i uruchomić drugą reklamę."
+      ],
+      "expected": [
+        "Runda otrzymuje60 s raz.",
+        "Przerwany film i powtórzony dowód nie dają nagrody; limit jednego użycia działa."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-activities.js",
+        "harborlight-v1-minigames.js",
+        "harborlight-v1-minigame-ui.js",
+        "tests/harborlight-frontend-v17-smoke.py"
+      ]
+    },
+    {
+      "id": "MIN-008",
+      "module": "Ekspedycje i minigry",
+      "title": "Film zatrzymuje rundę, a nie świat",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z trwającą budową, jedzeniem i aktywną rundą.",
+      "steps": [
+        "Zanotuj zegary.",
+        "Włącz symulowaną reklamę czasu na10 s.",
+        "Porównaj postęp świata i rundy."
+      ],
+      "expected": [
+        "Zegar rundy i ochrony obecności nie zużywa czasu filmu.",
+        "Budowa, jedzenie i efekty świata nadal biegną; pauza ma ograniczony czas, nie jest bezterminowa."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-activities.js",
+        "harborlight-v1-minigames.js",
+        "harborlight-v1-minigame-ui.js",
+        "tests/harborlight-frontend-v17-smoke.py"
+      ]
+    },
+    {
+      "id": "MIN-009",
+      "module": "Ekspedycje i minigry",
+      "title": "Ochrona obecności w ekspedycji",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture aktywnej rundy z odpowiednio długim limitem.",
+      "steps": [
+        "Nie wykonuj sterowania przez5 min.",
+        "Potwierdź obecność przed60 s.",
+        "Powtórz bez potwierdzenia."
+      ],
+      "expected": [
+        "Pojawia się osobna kontrola obecności5 min+60 s.",
+        "Brak odpowiedzi kończy chronioną serię zgodnie z zasadą; sam popup nie jest dobrowolnym zakupem czasu."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-activities.js",
+        "harborlight-v1-minigames.js",
+        "harborlight-v1-minigame-ui.js",
+        "tests/harborlight-frontend-v17-smoke.py"
+      ]
+    },
+    {
+      "id": "MIN-010",
+      "module": "Ekspedycje i minigry",
+      "title": "Trzy zgodne karty i dowolna liczba błędów",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture planszy24 pól ze znanym układem.",
+      "steps": [
+        "Odkrywaj błędne trójki wielokrotnie.",
+        "Odkryj trzy identyczne obrazki.",
+        "Wczytaj stan przy częściowo ukończonej planszy."
+      ],
+      "expected": [
+        "Błędy nie wprowadzają limitu prób.",
+        "Zgodna trójka jest usunięta, a wczytanie zachowuje postęp i nie odtwarza dopasowanych kart."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-activities.js",
+        "harborlight-v1-minigames.js",
+        "harborlight-v1-minigame-ui.js",
+        "tests/harborlight-frontend-v17-smoke.py"
+      ]
+    },
+    {
+      "id": "MIN-011",
+      "module": "Ekspedycje i minigry",
+      "title": "Tasowanie zachowuje odkryte i dopasowane karty",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture trójek od etapu4 z częścią dopasowaną i aktualnie odkrytą kartą.",
+      "steps": [
+        "Przekrocz termin tasowania ukrytych kart.",
+        "Porównaj widoczną kartę i dopasowane pozycje."
+      ],
+      "expected": [
+        "Przemieszczają się tylko zakryte niedopasowane obrazy.",
+        "Odkryte i już dopasowane nie są podmienione."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-activities.js",
+        "harborlight-v1-minigames.js",
+        "harborlight-v1-minigame-ui.js",
+        "tests/harborlight-frontend-v17-smoke.py"
+      ]
+    },
+    {
+      "id": "MIN-012",
+      "module": "Ekspedycje i minigry",
+      "title": "Plansze24/42/120 mieszczą się bez suwaka",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixtures odpowiadające24,42 i120 polom; rozdzielczości1366×768,1536×864,390×844 i360×740.",
+      "steps": [
+        "Otwórz każdą planszę.",
+        "Zmień rozmiar także przy wstrzymanych callbackach resize/ResizeObserver w lokalnym harnessie.",
+        "Sprawdź skrajne karty."
+      ],
+      "expected": [
+        "Widać całą planszę bez przycięcia i obu suwaków.",
+        "Karty pozostają kwadratowe, co najmniej20 px, a dopasowany stan nie ginie."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-activities.js",
+        "harborlight-v1-minigames.js",
+        "harborlight-v1-minigame-ui.js",
+        "tests/harborlight-frontend-v17-smoke.py"
+      ]
+    },
+    {
+      "id": "MIN-013",
+      "module": "Ekspedycje i minigry",
+      "title": "Kulki działają myszą, dotykiem i przechyłem",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny labirynt oraz telefon z dostępem do sensora.",
+      "steps": [
+        "Doprowadź kulkę do celu myszą/klawiaturą.",
+        "Powtórz dotykiem.",
+        "Na telefonie jawnie udziel lub odmów zgody na orientację."
+      ],
+      "expected": [
+        "Każde wspierane sterowanie prowadzi rzeczywistą fizykę.",
+        "Odmowa sensora pozostawia działającą alternatywę dotykową."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-activities.js",
+        "harborlight-v1-minigames.js",
+        "harborlight-v1-minigame-ui.js",
+        "tests/harborlight-frontend-v17-smoke.py"
+      ]
+    },
+    {
+      "id": "PAY-001",
+      "module": "Reklamy, płatności i kody",
+      "title": "Paynow — testowe zachowanie PRE-PROD w fixture",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Wyłącznie lokalny fixture dostępnych pakietów i usług, odwzorowujący możliwości PRE-PROD. Żadnego logowania do rzeczywistych admin1–3 ani wysyłania zapisu do chmury.",
+      "steps": [
+        "Otwórz płatność z poziomu1.",
+        "Przeczytaj oznaczenie symulacji.",
+        "Potwierdź testowy zakup, następnie ponów potwierdzenie."
+      ],
+      "expected": [
+        "Nie jest pobierana prawdziwa płatność.",
+        "Testowa nagroda trafia raz; cena i usługa są ponownie weryfikowane przed rozliczeniem."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-commerce.js",
+        "harborlight-v1-engagement.js",
+        "backend/account-service.mjs"
+      ]
+    },
+    {
+      "id": "PAY-002",
+      "module": "Reklamy, płatności i kody",
+      "title": "Anulowanie płatności niczego nie przyznaje",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z rozpoczętym checkoutem monet lub budynku.",
+      "steps": [
+        "Anuluj popup.",
+        "Spróbuj dokończyć anulowany checkout."
+      ],
+      "expected": [
+        "Brak nagrody, kosztu i uprawnienia bez reklam z anulowanego zakupu."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-commerce.js",
+        "harborlight-v1-engagement.js",
+        "backend/account-service.mjs"
+      ]
+    },
+    {
+      "id": "PAY-003",
+      "module": "Reklamy, płatności i kody",
+      "title": "PROD odrzuca dowolny kliencki dowód zakupu",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Atrapa hosta i API PROD; brak rzeczywistego potwierdzenia operatora.",
+      "steps": [
+        "Wyślij testowe completeCheckout, devSimulation i własne verified=true.",
+        "Ponownie odczytaj zapis serwera."
+      ],
+      "expected": [
+        "Przeglądarka nie może stworzyć potwierdzonego zakupu produkcyjnego ani trwałego uprawnienia.",
+        "Realny operator nie jest udawany."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-commerce.js",
+        "harborlight-v1-engagement.js",
+        "backend/account-service.mjs"
+      ]
+    },
+    {
+      "id": "PAY-004",
+      "module": "Reklamy, płatności i kody",
+      "title": "Usługi za monety od4, za kasę od1",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixtures Ratusz 1 i4; spełnione zwykłe warunki poziomu docelowego.",
+      "steps": [
+        "Porównaj usługę kupna budynku/transportu za zdobyte monety z osobnym linkiem płatności.",
+        "NaRatuszu1 spróbuj kupić poziom innego budynku wyższy niż limit."
+      ],
+      "expected": [
+        "Ścieżka monetowa wymaga Ratusza4.",
+        "Osobna ścieżka pieniężna działa od1, lecz nie omija limitu poziomu budynku."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-commerce.js",
+        "harborlight-v1-engagement.js",
+        "backend/account-service.mjs"
+      ]
+    },
+    {
+      "id": "PAY-005",
+      "module": "Reklamy, płatności i kody",
+      "title": "Próg bez reklam jest ruchomy i sumowany",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z potwierdzonymi płatnościami1000 gr29 dni temu i999 gr14 dni temu.",
+      "steps": [
+        "Sprawdź standardowe reklamy.",
+        "Przekrocz dzień wygaśnięcia starszej wpłaty."
+      ],
+      "expected": [
+        "Suma1999 gr daje uprawnienie.",
+        "Po wygaśnięciu starszej części suma999 gr nie daje uprawnienia; termin nie jest liczony od ostatniej wpłaty."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-commerce.js",
+        "harborlight-v1-engagement.js",
+        "backend/account-service.mjs"
+      ]
+    },
+    {
+      "id": "PAY-006",
+      "module": "Reklamy, płatności i kody",
+      "title": "Bez reklam zachowuje bonus i limity",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z aktywnym potwierdzonym uprawnieniem i dostępnym standardowym bonusem.",
+      "steps": [
+        "Odbierz bonus bez filmu.",
+        "Spróbuj odebrać drugi raz w tym samym oknie.",
+        "W ekspedycji otwórz reklamę za czas."
+      ],
+      "expected": [
+        "Standardowy bonus jest przyznany bez filmu, lecz bez obejścia limitu.",
+        "Reklama za czas ekspedycji nadal wymaga oglądania."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-commerce.js",
+        "harborlight-v1-engagement.js",
+        "backend/account-service.mjs"
+      ]
+    },
+    {
+      "id": "PAY-007",
+      "module": "Reklamy, płatności i kody",
+      "title": "Pierwsza reklama raz między4 a8 min aktywności",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Nowe konto testowe ze stałym ziarnem harmonogramu.",
+      "steps": [
+        "Graj w widocznej aktywnej karcie do pierwszej propozycji.",
+        "Zakończ lub pomiń.",
+        "Wyloguj i wróć."
+      ],
+      "expected": [
+        "Pierwszy termin mieści się w4–8 aktywnych minutach.",
+        "Odczyt ani ponowny login nie losuje i nie proponuje pierwszego bonusu od nowa."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-commerce.js",
+        "harborlight-v1-engagement.js",
+        "backend/account-service.mjs"
+      ]
+    },
+    {
+      "id": "PAY-008",
+      "module": "Reklamy, płatności i kody",
+      "title": "Kolejne okna liczone od końca aktywności",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture po pierwszej reklamie z zapisanym harmonogramem.",
+      "steps": [
+        "Zakończ/pomiń pierwszą reklamę.",
+        "Zakończ pierwszą i drugą wybraną ekspedycję albo reklamę.",
+        "Zanotuj aktywne minuty następnych propozycji."
+      ],
+      "expected": [
+        "Odstępy wynoszą5–15, następnie43–62, następnie60–100 aktywnych minut od właściwego zakończenia.",
+        "Tło i logowanie nie dodają fikcyjnych aktywnych minut."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-commerce.js",
+        "harborlight-v1-engagement.js",
+        "backend/account-service.mjs"
+      ]
+    },
+    {
+      "id": "PAY-009",
+      "module": "Reklamy, płatności i kody",
+      "title": "Materiałowa reklama nie daje monet ani dowolnego farmienia",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z należną propozycją reklamy i drugi bez propozycji.",
+      "steps": [
+        "Zakończ prawidłową reklamę.",
+        "Porównaj wszystkie zasoby.",
+        "Prześlij powtórzony dowód oraz prośbę bez okna harmonogramu."
+      ],
+      "expected": [
+        "Przyznaje10–30 każdego z5 materiałów, bezCoins.",
+        "Powtórzenie i brak należnej propozycji nie przyznają kolejnej nagrody."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-commerce.js",
+        "harborlight-v1-engagement.js",
+        "backend/account-service.mjs"
+      ]
+    },
+    {
+      "id": "PAY-010",
+      "module": "Reklamy, płatności i kody",
+      "title": "Pierwszy bonus premium nie kotwiczy zegara dwa razy",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z uprawnieniem bez reklam przed4–8 minutą.",
+      "steps": [
+        "Przekrocz pierwszy termin bez odbioru bonusu.",
+        "Później odbierz materiałowy bonus.",
+        "Porównaj termin kolejnej propozycji przed i po odbiorze."
+      ],
+      "expected": [
+        "Harmonogram zakotwicza się automatycznie raz.",
+        "Późniejszy odbiór nie uruchamia zegara od nowa i nie wymaga filmu."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-commerce.js",
+        "harborlight-v1-engagement.js",
+        "backend/account-service.mjs"
+      ]
+    },
+    {
+      "id": "PAY-011",
+      "module": "Reklamy, płatności i kody",
+      "title": "Globalny limit20 realizacji kodu",
+      "priority": "P0",
+      "environment": "Izolowany projekt / emulator",
+      "account": "Jednorazowe konta kampanii",
+      "preconditions": "Izolowany transakcyjny backend; kampania maxClaims20, minimum21 jednorazowych UID.",
+      "steps": [
+        "Wyślij równolegle21 poprawnych realizacji.",
+        "Ponów kod z konta, które otrzymało nagrodę.",
+        "Porównaj saldo i licznik globalny."
+      ],
+      "expected": [
+        "Najwyżej20 kont otrzymuje nagrodę; licznik nie przekracza20.",
+        "Powtórzenie nie wypłaca drugi raz ani nie zwiększa licznika."
+      ],
+      "mode": "Wymaga przygotowania właściciela",
+      "implementation_status": "API kodów zaimplementowane; aktywacja/IAM wymagają osobnego odbioru",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-commerce.js",
+        "harborlight-v1-engagement.js",
+        "backend/account-service.mjs"
+      ]
+    },
+    {
+      "id": "PAY-012",
+      "module": "Reklamy, płatności i kody",
+      "title": "Niewłączone API kodów nie udaje sukcesu",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Ścieżka UI kodu, ale backend wyłączony503.",
+      "steps": [
+        "Wpisz kod i spróbuj go wykorzystać.",
+        "Porównaj zasoby oraz komunikat."
+      ],
+      "expected": [
+        "Brak klienckiej fikcyjnej nagrody i globalnego licznika.",
+        "Interfejs jawnie informuje o braku potwierdzenia serwera."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-commerce.js",
+        "harborlight-v1-engagement.js",
+        "backend/account-service.mjs"
+      ]
+    },
+    {
+      "id": "TUT-001",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "01/25 — Wyślij mieszkańca do Gospodarstwa",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 1/25 (rules-read); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Otwórz Gospodarstwo i naciśnij +1, aby przydzielić rolnika. Wskazany strzałką przycisk rozpoczyna prawdziwą pracę.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 1 — rules-read, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-002",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "02/25 — Przydziel tragarza do Magazynu",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 2/25 (island-map); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Otwórz Magazyn i przydziel jednego tragarza. Tragarze przynoszą gotowe produkty do centrali.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 2 — island-map, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-003",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "03/25 — Uruchom obsadę Młyna",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 3/25 (first-job); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Przydziel mieszkańca do Młyna. Jedna żywność wymaga dwóch sztuk dostępnego zboża z centrali.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 3 — first-job, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-004",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "04/25 — Rozpocznij pozyskiwanie drewna",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 4/25 (food-check); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Przydziel mieszkańca do Obozu drwali, aby zapewnić stałe dostawy drewna na rozbudowę.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 4 — food-check, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-005",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "05/25 — Rozpocznij rozbudowę Ratusza",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 5/25 (townhall-upgrade); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Odbierz jednorazowe materiały i zleć rozbudowę Ratusza. Materiały bonusowe można wydawać także przy pełnym zwykłym magazynie.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 5 — townhall-upgrade, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-006",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "06/25 — Popraw szczęście mieszkańców",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 6/25 (happiness-action); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Rozdaj punkty Domu, udziel błogosławieństwa albo kup atrakcję. Wykonaj prawdziwe działanie poprawiające szczęście.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 6 — happiness-action, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-007",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "07/25 — Rozpocznij pozyskiwanie kamienia",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 7/25 (workplace-journey); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Przydziel mieszkańca do Kamieniołomu. W drodze do pracy nie ma kary bezrobocia, a podatek zaczyna płacić po dojściu.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 7 — workplace-journey, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-008",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "08/25 — Rozpocznij produkcję desek",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 8/25 (resources-dock); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Przydziel mieszkańca do Tartaku. Dwie sztuki drewna schodzą z centrali dopiero po ukończeniu deski.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 8 — resources-dock, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-009",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "09/25 — Wybierz priorytet transportu",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 9/25 (transport-priority); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Ustaw w Magazynie numerowany priorytet materiału lub Budowy.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 9 — transport-priority, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-010",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "10/25 — Odbierz prawdziwą dostawę",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 10/25 (first-delivery); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Poczekaj, aż tragarz zakończy dostawę do centrali. Samo otwarcie okna nie zalicza tego kroku.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 10 — first-delivery, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-011",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "11/25 — Dodaj kolejnego tragarza",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 11/25 (storage-limits); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Przydziel jeszcze jedną osobę do Magazynu. Ten krok wymaga nowego przydziału, wykonanego po jego rozpoczęciu.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 11 — storage-limits, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-012",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "12/25 — Ukończ przetworzony produkt",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 12/25 (food-chain); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Poczekaj na ukończenie produktu w Młynie lub Tartaku. Krok zalicza prawdziwa produkcja.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 12 — food-chain, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-013",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "13/25 — Wykorzystaj punkty Domu",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 13/25 (house-points); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Przekaż punkty szczęścia jednemu mieszkańcowi albo wszystkim. Pula odnawia się o północy Warszawy.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 13 — house-points, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-014",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "14/25 — Wybierz swoje powiadomienia",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 14/25 (personal-happiness); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Zmień jedną kategorię powiadomień w Ustawieniach. Wybór dotyczy także licznika dzwonka.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 14 — personal-happiness, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-015",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "15/25 — Rozbuduj Gospodarstwo",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 15/25 (upgrade-cost); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Gdy pozwoli na to poziom Ratusza, zleć rozbudowę Gospodarstwa z dostępnych materiałów.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 15 — upgrade-cost, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-016",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "16/25 — Zleć większy Dom",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 16/25 (construction-queue); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Zleć rozbudowę Domu. Aktywne budowy i kolejka mają osobne limity.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 16 — construction-queue, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-017",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "17/25 — Ulepsz odcinek ścieżki",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 17/25 (path-upgrade); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Wydaj 100 kamienia na odcinek. Ukończ poziom wszystkich ścieżek przed rozpoczęciem następnego.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 17 — path-upgrade, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-018",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "18/25 — Kup jedną atrakcję",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 18/25 (daily-attractions); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Wybierz atrakcję, na którą Cię stać. Jednocześnie może działać jedna nowa atrakcja.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 18 — daily-attractions, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-019",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "19/25 — Uruchom błogosławieństwo",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 19/25 (chapel-blessing); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Użyj dostępnego darmowego lub płatnego błogosławieństwa. Jedno darmowe użycie odnawia się każdego dnia Warszawy i nie kumuluje się.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 19 — chapel-blessing, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-020",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "20/25 — Wyślij towar na Targ",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 20/25 (market-rules); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Od drugiego poziomu Ratusza zleć prawdziwą dostawę na Targ. Towar przenosi jego obsada.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 20 — market-rules, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-021",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "21/25 — Rozpocznij odbudowę Latarni",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 21/25 (lighthouse-visits); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Zleć kolejny poziom Latarni. Ukończenie rozbudowy przyzna czasową premię całej wyspie.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 21 — lighthouse-visits, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-022",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "22/25 — Podejmij zadanie",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 22/25 (lighthouse-task); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Sprawdź koszt i termin, a następnie potwierdź zadanie. Jednocześnie aktywne jest jedno.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 22 — lighthouse-task, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-023",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "23/25 — Spróbuj ekspedycji",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 23/25 (expedition-rules); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Rozpocznij wybraną minigrę. Skrzynia samouczka poczeka do zakończenia ekspedycji.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 23 — expedition-rules, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-024",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "24/25 — Bezpiecznie odwołaj pracownika",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 24/25 (returning-workers); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Po ekspedycji odwołaj jednego pracownika. Tragarz z ładunkiem najpierw dokończy kurs, potem wróci do Domu.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 24 — returning-workers, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUT-025",
+      "module": "Samouczek — 25 prawdziwych działań",
+      "title": "25/25 — Przekaż darowiznę na zadanie",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny fixture przed krokiem 25/25 (island-review); poprzednie kroki ukończone; środki, wolni mieszkańcy i odblokowania potrzebne do tej akcji.",
+      "steps": [
+        "Otwórz samouczek i użyj Przejdź do działania.",
+        "Jeżeli krok ma strzałkę, sprawdź wskazany przycisk; przy kroku dostawy/produkcji obserwuj fizyczne zdarzenie. Samo czytanie nie kończy lekcji.",
+        "Przekaż dostępny materiał na przyjęte zadanie. Ta prawdziwa darowizna kończy Twoje wprowadzenie.",
+        "Porównaj ukończenie i nagrodę po rzeczywistym zdarzeniu; wczytaj zapis."
+      ],
+      "expected": [
+        "Kończy się właściwy krok 25 — island-review, a nie sąsiednia lekcja.",
+        "Gdy magazyn nie blokuje nagrody, podstawowa skrzynia100–300 każdego z5 materiałów jest przyznana raz. Sama skrzynia nie przyznaje Coins; koszt wykonanego polecenia rozlicza się osobno.",
+        "Jeżeli istnieje przepełnienie, ukończenie pozostaje zapisane, a skrzynia czeka do zwolnienia warunków."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-v16-copy.js",
+        "harborlight-v1-tutorial-ui.js"
+      ]
+    },
+    {
+      "id": "TUX-001",
+      "module": "Samouczek — przepełnienie i prowadzenie",
+      "title": "Przepełnienie blokuje tylko następną skrzynię",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture pierwszych czterech skrzyń, ziarno57, próg magazynu przekroczony.",
+      "steps": [
+        "Odbierz legalną czwartą skrzynię.",
+        "Zleć upgrade i przydziel tragarzy.",
+        "Odbierz fizycznie zarezerwowane towary, aż oba limity przestaną blokować."
+      ],
+      "expected": [
+        "Czwarta wypłata i jej przegląd nie znikają.",
+        "Zarządzanie i wydawanie działają mimo przepełnienia; kolejna należna skrzynia jest odroczona i wypłacona raz po odblokowaniu."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-tutorial-ui.js",
+        "harborlight-v1-tutorial.css",
+        "tests/harborlight-tutorial-v18-smoke.py"
+      ]
+    },
+    {
+      "id": "TUX-002",
+      "module": "Samouczek — przepełnienie i prowadzenie",
+      "title": "Tło podpowiedzi przepuszcza kliknięcia w wyspę",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny harness ustawia pływającą podpowiedź nad hotspotem Magazynu.",
+      "steps": [
+        "Kliknij Magazyn przez nieinteraktywne tło podpowiedzi.",
+        "Następnie użyj właściwego przycisku samej podpowiedzi."
+      ],
+      "expected": [
+        "Tło nie przechwytuje kliknięcia budynku.",
+        "Przyciski podpowiedzi pozostają dostępne wskaźnikiem i klawiaturą."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-tutorial-ui.js",
+        "harborlight-v1-tutorial.css",
+        "tests/harborlight-tutorial-v18-smoke.py"
+      ]
+    },
+    {
+      "id": "TUX-003",
+      "module": "Samouczek — przepełnienie i prowadzenie",
+      "title": "Share daje identyczną skrzynię, nie potwierdza FB",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture odebranej skrzyni z zapamiętanym wynikiem i wolną pojemnością.",
+      "steps": [
+        "Wybierz opcję udostępnienia/podwojenia.",
+        "Porównaj drugi grant z pierwszym.",
+        "Ponów akcję i wczytaj stan."
+      ],
+      "expected": [
+        "Drugi grant jest identyczny, bez nowego losowania i tylko raz.",
+        "UI nie udaje potwierdzonej publikacji Facebooka."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-tutorial-ui.js",
+        "harborlight-v1-tutorial.css",
+        "tests/harborlight-tutorial-v18-smoke.py"
+      ]
+    },
+    {
+      "id": "TUX-004",
+      "module": "Samouczek — przepełnienie i prowadzenie",
+      "title": "Samouczek i skrzynia czekają na koniec ekspedycji",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z krokiem23 i uruchamianą minigrą.",
+      "steps": [
+        "Rozpocznij ekspedycję kończącą krok.",
+        "Graj i obserwuj ekran rundy.",
+        "Zakończ serię przez wypłatę lub rezygnację."
+      ],
+      "expected": [
+        "Samouczek, fanfara i skrzynia nie zasłaniają aktywnej gry.",
+        "Należna prezentacja pojawia się po zakończeniu serii."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-tutorial-ui.js",
+        "harborlight-v1-tutorial.css",
+        "tests/harborlight-tutorial-v18-smoke.py"
+      ]
+    },
+    {
+      "id": "TUX-005",
+      "module": "Samouczek — przepełnienie i prowadzenie",
+      "title": "Pomoc do Ratusza raz i mimo przepełnienia",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture przed piątym krokiem; środki poniżej potrzeb, magazyn przepełniony nagrodami.",
+      "steps": [
+        "Odbierz pomoc.",
+        "Spróbuj odebrać ją drugi raz.",
+        "Zleć rozbudowę Ratusza."
+      ],
+      "expected": [
+        "Pomoc zapewnia docelowe500 Coins i materiały wymagane do kroku, Food 600 według konfiguracji.",
+        "Nie jest powtarzalnym źródłem środków i nie jest blokowana jak następna skrzynia."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-tutorial-ui.js",
+        "harborlight-v1-tutorial.css",
+        "tests/harborlight-tutorial-v18-smoke.py"
+      ]
+    },
+    {
+      "id": "TUX-006",
+      "module": "Samouczek — przepełnienie i prowadzenie",
+      "title": "Wyłączenie automatu i wznowienie zachowują postęp",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z kilkoma ukończonymi lekcjami i skrzynią.",
+      "steps": [
+        "Wyłącz automatyczne pokazywanie.",
+        "Wczytaj zapis.",
+        "Otwórz samouczek ręcznie i wznów prowadzenie."
+      ],
+      "expected": [
+        "Ukończenia i wypłaty pozostają zapisane, bez ponownej nagrody.",
+        "Automatyczne otwieranie respektuje wybór gracza."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-tutorial-ui.js",
+        "harborlight-v1-tutorial.css",
+        "tests/harborlight-tutorial-v18-smoke.py"
+      ]
+    },
+    {
+      "id": "SOC-001",
+      "module": "Lojalność, zadania i udostępnianie",
+      "title": "Lojalność losuje wszystkie sześć zasobów raz",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture kwalifikującego się dnia i Ratusz poniżej4.",
+      "steps": [
+        "Otwórz nagrodę i zanotuj draw.",
+        "Wczytaj stan przed odbiorem.",
+        "Odbierz, ponów i sprawdź sześć sald."
+      ],
+      "expected": [
+        "Draw50–200 każdego z6 zasobów, takżeCoins, jest utrwalony.",
+        "Powtórzenie tego dnia nic nie dopisuje."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-activities.js",
+        "harborlight-auth-providers.js"
+      ]
+    },
+    {
+      "id": "SOC-002",
+      "module": "Lojalność, zadania i udostępnianie",
+      "title": "Koniec lojalności po10 nagrodach lub Ratuszu4",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Dwa fixtures:9 odebranych dni orazRatusz3 z niewykorzystaną nagrodą.",
+      "steps": [
+        "Odbierz dziesiątą nagrodę w pierwszym.",
+        "Osiągnij Ratusz 4 w drugim i wczytaj stan."
+      ],
+      "expected": [
+        "Program zamyka się po dziesiątej wypłacie albo osiągnięciu4; reset/wczytanie nie otwierają go ponownie."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-activities.js",
+        "harborlight-auth-providers.js"
+      ]
+    },
+    {
+      "id": "SOC-003",
+      "module": "Lojalność, zadania i udostępnianie",
+      "title": "Przerwa w serii i północ Warszawy",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture aktywnej lojalności z ustalonym ostatnim dniem.",
+      "steps": [
+        "Pomiń pełny dzień Warszawy.",
+        "Powróć i porównaj serię.",
+        "Sprawdź odbiór tuż przed i po północy."
+      ],
+      "expected": [
+        "Seria uwzględnia przerwę i dzienne granice Warszawy.",
+        "Nie ma dwóch wypłat w tym samym dniu dzięki zmianie strefy urządzenia."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-activities.js",
+        "harborlight-auth-providers.js"
+      ]
+    },
+    {
+      "id": "SOC-004",
+      "module": "Lojalność, zadania i udostępnianie",
+      "title": "Akceptacja zadania po sprawdzeniu kosztu",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture propozycji zadania i brak aktywnego zadania.",
+      "steps": [
+        "Otwórz ofertę.",
+        "Porównaj koszt i termin, potwierdź w dozwolonym czasie.",
+        "Spróbuj zaakceptować drugie zadanie."
+      ],
+      "expected": [
+        "Samo otwarcie nie akceptuje zadania.",
+        "Po świadomym potwierdzeniu istnieje najwyżej jedno aktywne zadanie."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-activities.js",
+        "harborlight-auth-providers.js"
+      ]
+    },
+    {
+      "id": "SOC-005",
+      "module": "Lojalność, zadania i udostępnianie",
+      "title": "Wkład do zadania nie jest wydany dwa razy",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture zaakceptowanego zadania i części dostępnych materiałów.",
+      "steps": [
+        "Wpłać materiał w dwóch ratach.",
+        "Spróbuj cofnąć wkład i wydać go na budowę.",
+        "Doprowadź osobny fixture do wygaśnięcia zadania."
+      ],
+      "expected": [
+        "Wpłacone środki stają się wkładem i nie są dalej wydawalne.",
+        "Wkład wygasłego zadania nie wraca fikcyjnie do magazynu."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-activities.js",
+        "harborlight-auth-providers.js"
+      ]
+    },
+    {
+      "id": "SOC-006",
+      "module": "Lojalność, zadania i udostępnianie",
+      "title": "Udostępnienie osiągnięcia wymaga działania gracza",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture osiągniętego celu; brak podłączonej strony FB.",
+      "steps": [
+        "Wybierz Udostępnij.",
+        "Anuluj systemowy composer lub Facebook.",
+        "Sprawdź komunikaty i żądania."
+      ],
+      "expected": [
+        "Otwarcie jest zainicjowane przez gracza i wymaga jego zatwierdzenia.",
+        "Nie ma automatycznego posta na stronie ani twierdzenia, że anulowany formularz został opublikowany."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-activities.js",
+        "harborlight-auth-providers.js"
+      ]
+    },
+    {
+      "id": "SOC-007",
+      "module": "Lojalność, zadania i udostępnianie",
+      "title": "Powiadomienia: filtr dzwonka i kasowanie",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Fixture z przeczytanymi i nieprzeczytanymi wiadomościami różnych kategorii.",
+      "steps": [
+        "Wyłącz jedną kategorię.",
+        "Porównaj listę z dzwonkiem.",
+        "Usuń przeczytane i sprawdź nieprzeczytane."
+      ],
+      "expected": [
+        "Filtr dotyczy listy i licznika.",
+        "Ręczne kasowanie zachowuje każdą nieprzeczytaną wiadomość; historia nie rośnie powyżej100."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-progression.js",
+        "harborlight-v1-activities.js",
+        "harborlight-auth-providers.js"
+      ]
+    },
+    {
+      "id": "OPS-001",
+      "module": "Retencja, wdrożenie, bezpieczeństwo i koszty",
+      "title": "Wygasła wyspa zachowuje konto i historie",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Izolowana produkcyjna instancja testowa; jednorazowy UID z historią zakupów, kodów i jednorazowych nagród.",
+      "steps": [
+        "Przesuń serwerowy czas za3 miesiące kalendarzowe bez realnej gry.",
+        "Odczytaj wyspę, a po świadomym potwierdzeniu utwórz nową."
+      ],
+      "expected": [
+        "Stara wyspa wygasa, ale konto i historie pozostają.",
+        "Nowa generacja ma świeże środki/ludzi i nie odnawia raz odebranych uprawnień ani pierwotnego welcome."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "backend/account-service.mjs",
+        "backend/retention.mjs",
+        ".github/workflows/google-cloud-dev.yml",
+        ".github/workflows/google-cloud-prod.yml",
+        "docs/RELEASE-PROCESS.md"
+      ]
+    },
+    {
+      "id": "OPS-002",
+      "module": "Retencja, wdrożenie, bezpieczeństwo i koszty",
+      "title": "Stara karta nie przywraca usuniętej generacji",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Izolowany backend, zapis generacji1; backend wygasił świat i przeszedł do2.",
+      "steps": [
+        "Wyślij stary zapis, activity i kod z generacją1.",
+        "Odczytaj generację2."
+      ],
+      "expected": [
+        "Stare żądania są odrzucane i nie odtwarzają poprzedniej wyspy ani nie przyznają kolejnej nagrody."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "backend/account-service.mjs",
+        "backend/retention.mjs",
+        ".github/workflows/google-cloud-dev.yml",
+        ".github/workflows/google-cloud-prod.yml",
+        "docs/RELEASE-PROCESS.md"
+      ]
+    },
+    {
+      "id": "OPS-003",
+      "module": "Retencja, wdrożenie, bezpieczeństwo i koszty",
+      "title": "Brak obejścia retencji pierwszym zapisem starej karty",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Izolowany backend z przekroczonym terminem3 miesięcy, bez wcześniejszego sweep/read.",
+      "steps": [
+        "Jako pierwsze żądanie po terminie wyślij activity, save lub redeemCode.",
+        "Odczytaj metadane po odmowie."
+      ],
+      "expected": [
+        "Wygaśnięcie zapisuje tombstone przed odpowiedzią410.",
+        "Aktywność nie odnawia już wygasłego świata, a transakcja nie cofa tombstone."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "backend/account-service.mjs",
+        "backend/retention.mjs",
+        ".github/workflows/google-cloud-dev.yml",
+        ".github/workflows/google-cloud-prod.yml",
+        "docs/RELEASE-PROCESS.md"
+      ]
+    },
+    {
+      "id": "OPS-004",
+      "module": "Retencja, wdrożenie, bezpieczeństwo i koszty",
+      "title": "Trzy konta PRE-PROD są wyłączone z retencji",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Wyłącznie wymyślone profile o technicznych UID dev-admin1–3 w lokalnym store testowym; żadnych odczytów, kopii i mutacji prawdziwych dokumentów kont.",
+      "steps": [
+        "Przesuń czas poza termin i wywołaj retencję w lokalnym modelu."
+      ],
+      "expected": [
+        "Żadne z trzech UID nie jest wygaszane.",
+        "Test nie jest wykonywany mutująco na prawdziwych wyspach."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "backend/account-service.mjs",
+        "backend/retention.mjs",
+        ".github/workflows/google-cloud-dev.yml",
+        ".github/workflows/google-cloud-prod.yml",
+        "docs/RELEASE-PROCESS.md"
+      ]
+    },
+    {
+      "id": "OPS-005",
+      "module": "Retencja, wdrożenie, bezpieczeństwo i koszty",
+      "title": "Token innego projektu lub UID odrzucony",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Wyłącznie izolowany backend lub atrapa HTTP odwzorowująca reguły PRE-PROD, kontrolowane podpisane tokeny testowe i brak połączeń do rzeczywistych kont lub wysp.",
+      "steps": [
+        "Do izolowanej atrapy API odwzorowującej reguły PRE-PROD wyślij tokeny ze złym aud/iss/terminem/podpisem oraz UID spoza trójki.",
+        "Wyłącznie w tym izolowanym backendzie spróbuj anonimowego zapisu i odczytaj syntetyczny store po odmowie."
+      ],
+      "expected": [
+        "Niepoprawna tożsamość nie dostaje danych ani prawa zapisu.",
+        "PRE-PROD dopuszcza tylko znane UID; anonimowe operacje są odrzucane."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "backend/account-service.mjs",
+        "backend/retention.mjs",
+        ".github/workflows/google-cloud-dev.yml",
+        ".github/workflows/google-cloud-prod.yml",
+        "docs/RELEASE-PROCESS.md"
+      ]
+    },
+    {
+      "id": "OPS-006",
+      "module": "Retencja, wdrożenie, bezpieczeństwo i koszty",
+      "title": "Obraz zawiera wszystkie moduły uruchomieniowe",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalne źródła backendu; dostęp do Docker lub testu filtrowanego pakietu.",
+      "steps": [
+        "Uruchom test backend-package.",
+        "Zbuduj i wystartuj obraz z --network none oraz HARBORLIGHT_ACCOUNT_API=0.",
+        "Odpytaj /health i /ready."
+      ],
+      "expected": [
+        "Brak ERR_MODULE_NOT_FOUND; obraz startuje przed pobraniem poświadczeń Google.",
+        "Testy i pliki prywatne są wyłączone z kontekstu."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "backend/account-service.mjs",
+        "backend/retention.mjs",
+        ".github/workflows/google-cloud-dev.yml",
+        ".github/workflows/google-cloud-prod.yml",
+        "docs/RELEASE-PROCESS.md"
+      ]
+    },
+    {
+      "id": "OPS-007",
+      "module": "Retencja, wdrożenie, bezpieczeństwo i koszty",
+      "title": "PRE-PROD wymaga CI tego samego SHA",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Wyłącznie lokalny verifier bramki promocji z atrapami odpowiedzi GitHuba; bez uruchamiania workflow i bez poświadczeń lub zmian GCP.",
+      "steps": [
+        "W lokalnym verifierze podaj syntetyczny SHA bez zielonego CI oraz inny SHA niż w zasymulowanym udanym CI.",
+        "Następnie sprawdź syntetyczne właściwe SHA z atrapą udanego CI. Nie wywołuj dispatch ani rzeczywistego wdrożenia."
+      ],
+      "expected": [
+        "Verifier odrzuca brak zielonego CI oraz niezgodność SHA przed etapem dostępu do poświadczeń.",
+        "Poprawny zestaw dowodów przechodzi wyłącznie lokalną kontrolę bramki. Test nie wysyła obrazów ani pakietu i nie zmienia chmury."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "backend/account-service.mjs",
+        "backend/retention.mjs",
+        ".github/workflows/google-cloud-dev.yml",
+        ".github/workflows/google-cloud-prod.yml",
+        "docs/RELEASE-PROCESS.md",
+        "tests/harborlight-promotion.test.mjs"
+      ]
+    },
+    {
+      "id": "OPS-008",
+      "module": "Retencja, wdrożenie, bezpieczeństwo i koszty",
+      "title": "PROD nie przebudowuje i nie pomija dowodu PRE-PROD",
+      "priority": "P0",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Test bramki promocji, bez wykonywania prawdziwego wdrożenia PROD.",
+      "steps": [
+        "Podaj niepełne receipt lub brak jednego artefaktu.",
+        "Podmień hash/commit.",
+        "Sprawdź prawidłową parę w testowym verifierze."
+      ],
+      "expected": [
+        "Brak lub podmiana są odrzucone.",
+        "Poprawna promocja używa identycznego archiwum i digestu obrazu; API musi mieć własny dowód PRE-PROD."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "backend/account-service.mjs",
+        "backend/retention.mjs",
+        ".github/workflows/google-cloud-dev.yml",
+        ".github/workflows/google-cloud-prod.yml",
+        "docs/RELEASE-PROCESS.md"
+      ]
+    },
+    {
+      "id": "OPS-009",
+      "module": "Retencja, wdrożenie, bezpieczeństwo i koszty",
+      "title": "Plan i odczyt budżetu alertowego 100 USD dla obu projektów",
+      "priority": "P0",
+      "environment": "DEV — atrapy/dry-run; po osobnym zastosowaniu prywatny odczyt Billing",
+      "account": "Syntetyczne odpowiedzi Billing; rzeczywisty odczyt tylko przez uprawnionego właściciela",
+      "preconditions": "Aktualny uzgodniony plan to miesięczny budżet alertowy 100 USD łącznie dla harborlight-dev i harborlight-prod. Jego zastosowanie w GCP nie jest potwierdzone w tym planie. Test konfiguracji wykonuje się wyłącznie na atrapach lub w domyślnym dry-run; autoryzowane zastosowanie narzędziem właścicielskim jest osobną operacją poza fixture.",
+      "steps": [
+        "Na lokalnych odpowiedziach testowych uruchom domyślny podgląd/dry-run przygotowanego narzędzia. Sprawdź kwotę 100 USD, miesięczny okres, prawidłowe konto rozliczeniowe oraz wspólny filtr obejmujący harborlight-dev i harborlight-prod.",
+        "Sprawdź uzgodnione progi i adresatów alertów w podglądzie. Potwierdź, że próba lokalna nie wysyła zapisu do prawdziwego Billing, nie tworzy dwóch niezależnych budżetów po 100 USD i nie uruchamia wyłączenia usług.",
+        "Dopiero po osobnym, autoryzowanym zastosowaniu przez narzędzie właściciel odczytuje rzeczywistą konfigurację w swojej prywatnej konsoli: walutę USD, kwotę 100, okres miesięczny i oba projekty. Bez potwierdzonego zastosowania część rzeczywistego odbioru pozostaje Nie wykonano lub Zablokowano.",
+        "Porównaj odczytany budżet z planem bez publikowania sald i raportów kosztowych. Potwierdź, że alert jest informacją o przekroczeniu progu, a nie gwarantowanym twardym limitem rachunku."
+      ],
+      "expected": [
+        "Lokalny plan opisuje jeden miesięczny budżet alertowy 100 USD obejmujący łącznie oba projekty. Dry-run nie wykonuje mutacji w GCP.",
+        "Odbiór rzeczywistej konfiguracji wymaga osobnego odczytu po faktycznym autoryzowanym zastosowaniu. Sama atrapa lub gotowy skrypt nie oznaczają utworzonego budżetu.",
+        "Budżet nie zatrzymuje automatycznie naliczania opłat ani usług; możliwe są dalsze koszty i opóźnienie raportowania. Prywatne rzeczywiste wydatki nie trafiają do publicznych scenariuszy ani Excela."
+      ],
+      "mode": "Lokalne atrapy/dry-run oraz osobny prywatny odczyt właściciela",
+      "implementation_status": "Uzgodniony plan 100 USD/miesiąc dla obu projektów; zastosowanie niepotwierdzone",
+      "status": "Nie wykonano",
+      "source": [
+        "AGENTS.md",
+        "docs/GOOGLE-CLOUD.md"
+      ]
+    },
+    {
+      "id": "OPS-010",
+      "module": "Retencja, wdrożenie, bezpieczeństwo i koszty",
+      "title": "Raport kosztów odróżnia wydatek od kredytów",
+      "priority": "P1",
+      "environment": "Google Cloud Billing — odczyt",
+      "account": "Uprawniony właściciel; bez zmian",
+      "preconditions": "Właścicielski dostęp do raportu Billing, bez modyfikacji zasobów.",
+      "steps": [
+        "Ustaw bieżący miesiąc i projekty harborlight-dev/prod.",
+        "Porównaj koszt naliczony, kredyty oraz kwotę netto i datę aktualizacji.",
+        "Nie przenoś rzeczywistych kwot, sald, danych konta rozliczeniowego ani zrzutów raportu do publicznych plików; odnotuj jedynie wykonanie prywatnej kontroli."
+      ],
+      "expected": [
+        "Raport nie myli0 dozapłaty z zerowym zużyciem zasobów.",
+        "Kwota ma podany okres, walutę, zakres i opóźnienie danych."
+      ],
+      "mode": "Manualnie — prywatny odczyt właściciela",
+      "implementation_status": "Rzeczywisty raport odczytuje właściciel w prywatnej konsoli; nie publikuje jego wartości",
+      "status": "Nie wykonano",
+      "source": [
+        "docs/GOOGLE-CLOUD.md"
+      ]
+    },
+    {
+      "id": "UI-001",
+      "module": "Interfejs i zgodność opisów",
+      "title": "PL i EN wszystkich głównych paneli",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Lokalny rozwinięty fixture oraz widoki desktop/mobile.",
+      "steps": [
+        "Przejdź przez12 budynków, mieszkańców, Ustawienia, premium, zadania i obie minigry.",
+        "Zmień język w obie strony."
+      ],
+      "expected": [
+        "Etykiety, komunikaty, jednostki i popupy odpowiadają wybranemu językowi.",
+        "Imiona i nazwy wprowadzone przez gracza nie są tłumaczone."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-play.js",
+        "harborlight-v1-play.css",
+        "harborlight-v1-i18n.js",
+        "docs/ECONOMY-RULES.md"
+      ]
+    },
+    {
+      "id": "UI-002",
+      "module": "Interfejs i zgodność opisów",
+      "title": "Przyciski menu mieszczą się w ramce",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Widoki1366×768 i1536×864.",
+      "steps": [
+        "Otwórz menu wyspy.",
+        "Sprawdź dolne Magazyn i Handel oraz wszystkie przyciski."
+      ],
+      "expected": [
+        "Żaden przycisk nie wystaje poza ciało dialogu lub ramkę.",
+        "Wszystkie są dostępne myszą i klawiaturą."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-play.js",
+        "harborlight-v1-play.css",
+        "harborlight-v1-i18n.js",
+        "docs/ECONOMY-RULES.md"
+      ]
+    },
+    {
+      "id": "UI-003",
+      "module": "Interfejs i zgodność opisów",
+      "title": "Mobile390/360 bez poziomego przewijania",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Telefon albo emulacja390×844 i360×740.",
+      "steps": [
+        "Otwórz menu, producenta, budowę, płatność i dokumenty.",
+        "Obróć ekran i wróć."
+      ],
+      "expected": [
+        "Brak poziomego przewijania strony i ukrytych kluczowych kontrolek.",
+        "Dotyk i fokus pozostają dostępne po zmianie rozmiaru."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-play.js",
+        "harborlight-v1-play.css",
+        "harborlight-v1-i18n.js",
+        "docs/ECONOMY-RULES.md"
+      ]
+    },
+    {
+      "id": "UI-004",
+      "module": "Interfejs i zgodność opisów",
+      "title": "Opisy odpowiadają aktualnym liczbom",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Rozwinięty lokalny fixture; dostęp do informacji i tabel.",
+      "steps": [
+        "Porównaj H+100/−100, reguły nowych mieszkańców, progi Kaplicy, koszt czasu i pulę ekspedycji z wynikami modelu."
+      ],
+      "expected": [
+        "Opisy uwzględniają przybycie30 min kontra odejście1 h, welcome/Latarnię,3+poziom łaski,30 s/10 Coins oraz pulę50/150/350/750.",
+        "Nie sugerują starego systemu lojalności ani ograniczonej liczby darmowych błogosławieństw na poziom."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "v18 — implementacja; wynik tego scenariusza nie został wpisany",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-play.js",
+        "harborlight-v1-play.css",
+        "harborlight-v1-i18n.js",
+        "docs/ECONOMY-RULES.md"
+      ]
+    },
+    {
+      "id": "UI-005",
+      "module": "Interfejs i zgodność opisów",
+      "title": "Brak mylącego logowania w ustawieniach zalogowanego",
+      "priority": "P1",
+      "environment": "DEV — izolowany fixture",
+      "account": "Syntetyczna wyspa; bez kont chmurowych",
+      "preconditions": "Atrapa prawidłowej sesji chmurowej oraz lokalny podgląd jako osobna próba.",
+      "steps": [
+        "Otwórz Ustawienia.",
+        "Sprawdź komunikat miejsca zapisu i akcje konta."
+      ],
+      "expected": [
+        "Zalogowany gracz widzi informacje o chmurze i wylogowanie.",
+        "Brak przycisku rejestracji/logowania wewnątrz zalogowanej gry; lokalny podgląd nie udaje trwałego zapisu."
+      ],
+      "mode": "Lokalnie",
+      "implementation_status": "Nowy zakres 2026-10-30 — odbiór wymagany; publikacja PRE-PROD niepotwierdzona",
+      "status": "Nie wykonano",
+      "source": [
+        "harborlight-v1-play.js",
+        "harborlight-v1-play.css",
+        "harborlight-v1-i18n.js",
+        "docs/ECONOMY-RULES.md"
+      ]
+    }
+  ]
+}

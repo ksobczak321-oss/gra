@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createStarterIsland } from '../backend/server.mjs';
-import { createAccountService } from '../backend/account-service.mjs';
+import { createAccountService, LEGAL_DOCUMENT_VERSIONS } from '../backend/account-service.mjs';
 import { normalizeState } from '../harborlight-v1-state.js';
 const NOW = Date.parse('2026-10-30T12:00:00Z');
 
@@ -9,6 +9,7 @@ test('server starter survives frontend normalization and cloud snapshot save wit
   const documents = new Map();
   const store = { runTransaction: async work => work({ get: async key => structuredClone(documents.get(key)), set: async (key, value) => documents.set(key, structuredClone(value)), delete: async key => documents.delete(key) }) };
   const service = createAccountService({ store, now: () => NOW, environment: 'production' });
+  await service.acceptLegal({ uid: 'player', ...LEGAL_DOCUMENT_VERSIONS, termsAccepted: true, privacyAcknowledged: true });
   await service.startIsland({ uid: 'player', payload: createStarterIsland(NOW) });
   const read = await service.readIsland({ uid: 'player' });
   const game = normalizeState(JSON.parse(read.island.payload), NOW);

@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#102f43">
   <meta name="description" content="Welcome to HARBORLIGHT. Sign in, create an account, or continue exploring your island as a guest.">
   <title>HARBORLIGHT — Welcome Home</title>
-  <link rel="stylesheet" href="harborlight-auth.css?v=frontend-v18">
-  <script type="module" src="harborlight-auth.js?v=frontend-v18"></script>
+  <link rel="stylesheet" href="harborlight-auth.css?v=frontend-v19">
+  <script type="module" src="harborlight-auth.js?v=frontend-v19"></script>
 </head>
 <body>
   <a class="skip-link" href="#account">Skip to account</a>
@@ -90,6 +90,14 @@
               <input id="confirm-password" name="confirm-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" placeholder="Enter your password again" aria-describedby="confirm-error" disabled>
               <p id="confirm-error" class="field-error" hidden></p>
             </div>
+            <div class="legal-confirmations" data-register-only hidden>
+              <p class="legal-draft-note">Draft documents contain demonstrative operator details. Review them before confirming.</p>
+              <label class="legal-check" for="terms-accepted"><input id="terms-accepted" name="terms-accepted" type="checkbox" aria-describedby="terms-error" disabled><span><span data-legal-terms-copy>I accept the Terms of Service.</span> <a href="harborlight-terms.html" target="_blank" rel="noopener noreferrer">Read terms</a></span></label>
+              <p id="terms-error" class="field-error" hidden></p>
+              <label class="legal-check" for="privacy-acknowledged"><input id="privacy-acknowledged" name="privacy-acknowledged" type="checkbox" aria-describedby="privacy-error" disabled><span><span data-legal-privacy-copy>I have read the Privacy policy.</span> <a href="harborlight-privacy.html" target="_blank" rel="noopener noreferrer">Read privacy policy</a></span></label>
+              <p id="privacy-error" class="field-error" hidden></p>
+              <p class="field-hint">These confirmations do not consent to marketing or waive consumer rights.</p>
+            </div>
             <button id="account-submit" class="primary-button" type="submit"><span>Sign in</span><span aria-hidden="true">→</span></button>
           </fieldset>
         </form>
@@ -99,6 +107,19 @@
       <div class="guest-entry"><span>Your island is waiting.</span><a class="guest-link" href="harborlight-v1-layered.html">Continue as a guest <span aria-hidden="true">→</span></a></div>
     </section>
   </main>
-  <footer class="site-footer"><span>HARBORLIGHT</span><span>Build slowly. Dream a little bigger.</span></footer>
+  <dialog id="registration-legal-dialog" class="registration-legal-dialog" aria-labelledby="registration-legal-title">
+    <form id="registration-legal-form" novalidate>
+      <h2 id="registration-legal-title">Finish registration</h2>
+      <p>Your sign-in identity is ready. Confirm the documents before a new island is created.</p>
+      <p class="legal-draft-note">Draft documents contain demonstrative operator details. Review them before confirming.</p>
+      <label class="legal-check" for="legal-modal-terms"><input id="legal-modal-terms" type="checkbox" required><span>I accept the Terms of Service. <a href="harborlight-terms.html" target="_blank" rel="noopener noreferrer">Read terms</a></span></label>
+      <label class="legal-check" for="legal-modal-privacy"><input id="legal-modal-privacy" type="checkbox" required><span>I have read the Privacy policy. <a href="harborlight-privacy.html" target="_blank" rel="noopener noreferrer">Read privacy policy</a></span></label>
+      <p class="field-hint">These confirmations do not consent to marketing or waive consumer rights.</p>
+      <p id="legal-modal-status" class="field-error" role="status" hidden></p>
+      <button id="legal-modal-confirm" class="primary-button" type="submit" disabled>Confirm and continue</button>
+      <button id="legal-modal-cancel" class="legal-cancel" type="button">Sign out</button>
+    </form>
+  </dialog>
+  <footer class="site-footer"><span>HARBORLIGHT</span><span>Build slowly. Dream a little bigger.</span><nav aria-label="Legal documents"><a href="harborlight-terms.html" target="_blank" rel="noopener noreferrer">Terms of Service</a><a href="harborlight-privacy.html" target="_blank" rel="noopener noreferrer">Privacy policy</a></nav></footer>
 </body>
 </html>
