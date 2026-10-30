@@ -62,9 +62,9 @@ OAuth Google/Facebook wymaga konfiguracji dostawcy i domen; prawdziwe Paynow/rek
 
 ## 5. Faktycznie potwierdzone wydanie
 
-30 października 2026 właściciel potwierdził przygotowanie kont i Firestore. [Przebieg 41067599818](https://github.com/ksobczak321-oss/gra/actions/runs/41067599818) dla **`f161e45`** zakończył się sukcesem. PRE-PROD działa pod `https://harborlight-dev.web.app`; dostępne były oba artefakty v2: `harborlight-dev-frontend-41067599818-1` i `harborlight-dev-release-41067599818-1`.
+30 października 2026 pełne [CI 41111528800](https://github.com/ksobczak321-oss/gra/actions/runs/41111528800) oraz [PRE-PROD 41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285) dla **v18 / `6ec3c6d8625420fd96474a22a8b1d699672416cd`** zakończyły się sukcesem. Gra jest opublikowana pod `https://harborlight-dev.web.app`; potwierdzono obie sondy API, wszystkie bajty pakietu względem manifestu, odczytowe renderowanie istniejącej wyspy oraz izolację trzech kont. Wysp, haseł i postępu nie resetowano.
 
-To dowód tamtego wydania, nie publikacji v18. Każda nowa zmiana wymaga własnego CI i PRE-PROD. PROD/DNS nie mają jeszcze potwierdzonego wdrożenia. Przed użyciem starego `dev_run_id` workflow ponownie sprawdza aktualną dostępność, metadane i hashe artefaktów.
+Zachowano parę `harborlight-dev-frontend-41112673285-1` i `harborlight-dev-release-41112673285-1`. Jest to potwierdzenie wydania v2; wewnętrznych wartości potwierdzenia ani hashy nie odczytano w tym czacie. Przed użyciem `dev_run_id` workflow PROD nadal musi sprawdzić dostępność, metadane, treść i hashe artefaktów oraz własne wymagania kont/API. Nowa publikacja PROD i DNS pozostają niepotwierdzone. Wcześniejsze udane `f161e45` / `41067599818` pozostaje w dzienniku jako historia.
 
 ## 6. Wycofanie
 

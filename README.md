@@ -6,12 +6,12 @@ Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarn
 
 | Miejsce | Stan |
 |---|---|
-| DEV — ta przestrzeń robocza | Implementacja v18; bieżące testy i integracja. Wyniki końcowe zapisuje dziennik. |
-| PRE-PROD — `harborlight-dev` | [Gra](https://harborlight-dev.web.app), ostatnie potwierdzone wydanie `f161e45`; [sukces 41067599818](https://github.com/ksobczak321-oss/gra/actions/runs/41067599818). |
+| DEV — ta przestrzeń robocza | Implementacja v18 i poprawka pakowania serwera przeszły pełne [CI 41111528800](https://github.com/ksobczak321-oss/gra/actions/runs/41111528800). |
+| PRE-PROD — `harborlight-dev` | [Gra](https://harborlight-dev.web.app), opublikowane v18 / `6ec3c6d`; [sukces 41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285), testy hostingu i kont, oba artefakty v2. |
 | PROD — `harborlight-prod` / `harborlight.pl` | Brak potwierdzonej publikacji i powiązania domeny. |
 | GitHub Pages | Podgląd deweloperski, nie PROD; nie dowodzi promocji PRE-PROD. |
 
-PRE-PROD zachowuje trzy osobne konta `admin1`, `admin2`, `admin3`, ich UID i wyspy. Kod v18 nie jest opublikowany tylko dlatego, że istnieje w repozytorium. Historia poprzednich testów i wydań pozostaje w [dzienniku](docs/IMPLEMENTATION-LOG.md).
+PRE-PROD zachowuje trzy osobne konta `admin1`, `admin2`, `admin3`, ich UID i wyspy. Odbiór wdrożenia blokuje zapisy gry i nie resetuje postępu. Dowodem publikacji v18 jest udany przebieg powyżej; sam push kolejnych zmian nie publikuje ich w chmurze. Historia poprzednich testów i wydań pozostaje w [dzienniku](docs/IMPLEMENTATION-LOG.md).
 
 ## Co zmienia v18
 
