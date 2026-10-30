@@ -1,13 +1,13 @@
 # Google Cloud — DEV i PROD HARBORLIGHT krok po kroku
 
-Stan z 30 października 2026: użytkownik wybrał Google Cloud, pokazał aktywne konto rozliczeniowe HARBORLIGHT i poprosił o osobne DEV oraz PROD. Projekty i uprawnienia wdrożeniowe nie zostały jeszcze podłączone do tego środowiska. Pliki poniżej są przygotowaną konfiguracją, nie dowodem uruchomienia usług w chmurze.
+Stan z 30 października 2026: użytkownik wybrał Google Cloud, pokazał aktywne konto rozliczeniowe HARBORLIGHT oraz utworzone projekty `harborlight-dev` i `harborlight-prod`. Uprawnienia wdrożeniowe i powiązanie projektów z rozliczeniami czekają na sprawdzenie w zalogowanym Cloud Shell. Pliki poniżej są przygotowaną konfiguracją, nie dowodem uruchomienia usług w chmurze.
 
 ## Oddzielenie środowisk
 
 | Środowisko | Oddzielny projekt Google Cloud | Środowisko GitHub Actions | Przeznaczenie |
 | --- | --- | --- | --- |
-| DEV | `harborlight-dev` — faktyczny unikalny ID nadaje Google | `google-cloud-dev` | Rozwój i testy |
-| PROD | `harborlight-prod` — inny ID niż DEV | `google-cloud-prod` | Docelowa opublikowana gra |
+| DEV | `harborlight-dev` — ID potwierdzone screenem użytkownika | `google-cloud-dev` | Rozwój i testy |
+| PROD | `harborlight-prod` — ID potwierdzone screenem użytkownika | `google-cloud-prod` | Docelowa opublikowana gra |
 
 Oba projekty mogą korzystać z tego samego konta rozliczeniowego HARBORLIGHT. Mają osobne konta usługowe, zaufanie GitHub, obrazy i później oddzielne bazy oraz konfigurację Firebase. DEV nie otrzymuje dostępu do danych PROD. Utworzenie pustego projektu nie uruchamia serwerów ani baz. Na tym etapie również workflow PROD publikuje wyłącznie serwer sond, nie gotową usługę gry.
 
@@ -49,7 +49,7 @@ cd harborlight-infra
 cp infra/google-cloud/config.example.env infra/google-cloud/config.dev.local.env
 ```
 
-Uzupełnić `PROJECT_ID` dla DEV w lokalnym pliku, pozostawiając `ENVIRONMENT=dev`. Publiczne numeryczne `GITHUB_REPOSITORY_ID` i `GITHUB_REPOSITORY_OWNER_ID` są już wpisane i zostały sprawdzone na stronie GitHub 30 października 2026. Przy zmianie repozytorium lub właściciela należy je zaktualizować; można je odczytać przez `gh api repos/ksobczak321-oss/gra --jq '{repository_id: .id, owner_id: .owner.id}'`. Plik lokalny jest ignorowany przez Git. Następnie:
+`PROJECT_ID=harborlight-dev` i `ENVIRONMENT=dev` są już wpisane. Publiczne numeryczne `GITHUB_REPOSITORY_ID` i `GITHUB_REPOSITORY_OWNER_ID` również są wpisane i zostały sprawdzone na stronie GitHub 30 października 2026. Przy zmianie repozytorium lub właściciela należy je zaktualizować; można je odczytać przez `gh api repos/ksobczak321-oss/gra --jq '{repository_id: .id, owner_id: .owner.id}'`. Plik lokalny jest ignorowany przez Git. Następnie:
 
 ```sh
 set -a
@@ -61,7 +61,7 @@ bash infra/google-cloud/bootstrap.sh --apply
 
 `--check` jest domyślny i niczego nie zmienia. `--apply` włącza usługi oraz konfiguruje zasoby i IAM. Oba tryby wymagają działającego `gcloud`, dostępu do aktywnego projektu i podpiętych rozliczeń. Skrypt nie tworzy projektu ani konta rozliczeniowego. Nie wdraża serwera i nie tworzy bazy SQL.
 
-Dla PROD użyć `config.prod.example.env`, utworzyć lokalny `config.prod.local.env` i wpisać **drugi** ID projektu z `ENVIRONMENT=prod`. Powtórzyć kontrolę i konfigurację po wczytaniu tego pliku; nie zmieniać oznaczenia projektu DEV na PROD.
+Dla PROD użyć `config.prod.example.env` i utworzyć lokalny `config.prod.local.env`; zawiera już **drugi** ID `harborlight-prod` z `ENVIRONMENT=prod`. Powtórzyć kontrolę i konfigurację po wczytaniu tego pliku; nie zmieniać oznaczenia projektu DEV na PROD.
 
 ## Połączenie z GitHub
 
