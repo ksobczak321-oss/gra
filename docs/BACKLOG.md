@@ -180,6 +180,8 @@ Status: zaplanowane, zgłoszenie uaktualnione; żadnej prawdziwej sprzedaży nie
 
 ## Dalsze zadania bez utworzonego zgłoszenia
 
+- Google Cloud wybrane przez użytkownika z oddzielnymi projektami DEV i PROD. Przygotowano [pierwszy etap infrastruktury](GOOGLE-CLOUD.md): sondy HTTP, kontener Node.js, dwa ręczne workflow Cloud Run i bootstrap WIF/IAM. Konto rozliczeniowe jest aktywne według ekranu użytkownika; podłączenie projektów, rzeczywisty bootstrap i wdrożenie pozostają do wykonania po udostępnieniu dostępu. Cloud SQL, Firebase Auth i autorytatywna gospodarka pozostają odrębnymi etapami BE-01–04. Nie utworzono nowego zgłoszenia GitHub.
+
 - Ustalić i zintegrować nagrody lojalnościowe, weryfikację poleceń i udostępnień oraz zasady reklam. Przechowywać uzgodnione wartości przyszłych nagród. Oddzielny, zatwierdzony bonus prototypu 500 za Share po ukończeniu zadania działa raz za kliknięcie; pozostałe nagrody społecznościowe nadal wymagają zdefiniowanej weryfikacji.
 - Doprecyzować dodatkowy czas/ruchy ekspedycji, weryfikację obejrzanej reklamy, kod i ewentualne challenge. Nie ma obecnie integracji reklamowej ani automatycznej publikacji postów.
 - Zaprojektować i zmierzyć infrastrukturę wspólnego backendu: autorytatywne API, trwała baza, kolejki prac, monitoring, kopie i skalowanie; oszacować koszty według ruchu i czasu offline. Sam hosting statycznej strony nie gwarantuje skalowalności pełnej gry.

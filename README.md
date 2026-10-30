@@ -28,6 +28,8 @@ Publikację v17 potwierdza udany [workflow Pages 40975340456](https://github.com
 
 Zewnętrzne konta, synchronizacja web/Android/iPhone, płatności, reklamy i potwierdzanie publikacji/poleceń wymagają backendu. W tej iteracji są lokalne reguły i czyste punkty przyszłej integracji, bez deklarowania rzeczywistych połączeń.
 
+Wybraną platformą docelową jest **Google Cloud z oddzielnymi projektami DEV i PROD**. [Pierwszy etap infrastruktury](docs/GOOGLE-CLOUD.md) zawiera startowy serwer HTTP, kontener, konfigurację dostępu GitHub bez stałych kluczy i dwa ręczne workflow Cloud Run. Konto rozliczeniowe użytkownika jest aktywne; projekty i dostęp wdrożeniowy czekają na podłączenie. Te pliki nie oznaczają jeszcze uruchomienia usług, kont ani bazy gry w Google Cloud.
+
 ## Uruchomienie
 
 ```sh
@@ -57,6 +59,7 @@ Zestawy przeglądarkowe wymagają Python Playwright i Chromium; ścieżkę możn
 - [Macierz odbioru](docs/FRONTEND-REVIEW.md)
 - [Dziennik implementacji i publikacji](docs/IMPLEMENTATION-LOG.md)
 - [Backlog frontend/backend](docs/BACKLOG.md)
+- [Google Cloud — osobne DEV i PROD](docs/GOOGLE-CLOUD.md)
 - [Historia animacji świata](docs/WORLD-ANIMATION.md)
 
 Starsze BLACKOUT, PANIC PETS i pierwsze makiety zachowano jako historię repozytorium. Aktywny projekt to HARBORLIGHT.

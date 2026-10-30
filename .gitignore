@@ -1,3 +1,8 @@
 setup-checks/
 __pycache__/
 *.pyc
+infra/google-cloud/config.local.env
+infra/google-cloud/config.*.local.env
+gha-creds-*.json
+application_default_credentials.json
+backend/node_modules/

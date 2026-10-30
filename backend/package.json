@@ -1,0 +1,14 @@
+{
+  "name": "harborlight-api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Initial HTTP service for HARBORLIGHT infrastructure; game persistence and accounts are not connected yet.",
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test test/*.test.mjs"
+  }
+}
