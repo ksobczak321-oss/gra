@@ -1,88 +1,52 @@
-// UID-scoped DEV persistence. Firebase/Firestore remain responsible for identity
-// and access control; this coordinator preserves a local copy on failed writes.
-import { accountSaveKey } from './harborlight-dev-cloud.js?v=dev-accounts-v1';
+// Cloud-only island persistence. Authentication storage is separate; this
+// coordinator never reads or writes an island in browser storage.
+import { accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v18';
 
-export function createDevSync({ cloud, account, storage, saveKey, onStatus = () => {},
+export function createDevSync({ cloud, account, saveKey, onStatus = () => {},
   schedule = (callback, delay) => setTimeout(callback, delay), cancel = handle => clearTimeout(handle),
-  delay = 20000, retryDelay = 60000 } = {}) {
-  if (!account?.uid || !cloud || saveKey !== accountSaveKey(account.uid)) throw new Error('A DEV account and its own save key are required.');
-  const metaKey = `${saveKey}:cloud`, backupKey = `${saveKey}:backup`;
+  delay = 20000 } = {}) {
+  if (!account?.uid || !cloud || saveKey !== accountSaveKey(account.uid, cloud.projectId)) throw new Error('An authenticated account and its own save key are required.');
   let version = null, pending = null, savedPayload = null, timer = null, inFlight = null;
   let stopped = false, disposed = false, status = 'loading';
   const emit = value => { status = value; onStatus(value); };
-  const read = key => { try { return storage.getItem(key); } catch { return null; } };
-  const write = (key, value) => { try { storage.setItem(key, value); return true; } catch { return false; } };
-  const validVersion = value => value && Number.isSafeInteger(value.revision) && value.revision > 0 && typeof value.updateTime === 'string';
-  const sameVersion = (first, second) => first === null && second === null || !!first && !!second &&
-    first.revision === second.revision && first.updateTime === second.updateTime;
-  const persist = () => write(metaKey, JSON.stringify({ uid: account.uid, version, pending: pending !== null }));
-  const backup = payload => { if (payload !== null) write(backupKey, payload); };
   const clearTimer = () => { if (timer !== null) cancel(timer); timer = null; };
-  const later = wait => {
+  const later = () => {
     if (timer === null && !disposed && !stopped && pending !== null) timer = schedule(() => {
-      timer = null;
-      void flush();
-    }, wait);
+      timer = null; void flush();
+    }, delay);
   };
-
   async function open(initialPayload) {
     if (typeof initialPayload !== 'string') throw new Error('The starter island must be serialized.');
-    const cached = read(saveKey);
-    let metadata;
-    try { metadata = JSON.parse(read(metaKey)); } catch { /* Missing or damaged cache metadata is not authority. */ }
-    const known = metadata?.uid === account.uid;
-    version = known && validVersion(metadata.version) ? metadata.version : null;
-    const wasPending = known && metadata.pending === true && cached !== null;
     emit('loading');
     try {
-      const remote = await cloud.loadIsland();
-      const remoteVersion = remote?.version || null;
-      if (wasPending && !sameVersion(version, remoteVersion) || !remote && version !== null) {
-        pending = cached;
-        backup(cached);
-        stopped = true;
-        emit('conflict');
-        return cached ?? initialPayload;
-      }
-      version = remoteVersion;
+      let remote = await cloud.loadIsland();
+      if (!remote && cloud.accountStatus?.expired) throw Object.assign(new Error('This island expired after three months without play.'), { code: 'island-expired' });
+      if (!remote && (cloud.accountApiEnabled === true || cloud.environment === 'prod') && typeof cloud.createIsland === 'function') remote = await cloud.createIsland();
+      version = remote?.version || null;
       savedPayload = remote?.payload ?? null;
-      const selected = wasPending ? cached : remote?.payload ?? cached ?? initialPayload;
-      // Keep uncommitted data recoverable if an old, unversioned cache and a
-      // cloud island both exist (for example after clearing only metadata).
-      if (!wasPending && cached !== null && remote && cached !== remote.payload) backup(cached);
-      pending = selected !== savedPayload ? selected : null;
-      write(saveKey, selected);
-      persist();
-      emit(pending === null ? 'saved' : 'pending');
-      later(delay);
-      return selected;
+      pending = remote ? null : initialPayload;
+      stopped = false;
+      if (!remote && !await flush()) throw Object.assign(new Error('The starter island could not be confirmed in the cloud.'), { code: status });
+      emit('saved');
+      return savedPayload;
     } catch (error) {
-      pending = cached ?? initialPayload;
-      write(saveKey, pending);
-      persist();
-      stopped = ['auth-required', 'permission', 'configuration', 'invalid-cloud-data'].includes(error?.code);
-      emit(stopped ? error.code : 'offline');
-      later(retryDelay);
-      return pending;
+      pending = null; stopped = true;
+      emit(error?.code || 'offline');
+      throw error;
     }
   }
-
   function queue(payload) {
-    if (disposed || typeof payload !== 'string') return;
-    write(saveKey, payload);
+    if (disposed || stopped || typeof payload !== 'string') return false;
     pending = payload === savedPayload && !inFlight ? null : payload;
-    persist();
-    if (stopped) { backup(payload); return; }
-    if (pending === null) { emit('saved'); return; }
-    if (status !== 'offline' && status !== 'saving') emit('pending');
-    later(delay); // The timer is not restarted by continuous gameplay.
+    if (pending === null) emit('saved');
+    else { if (status !== 'saving') emit('pending'); later(); }
+    return true;
   }
-
   async function flush() {
     if (disposed || stopped) return false;
     if (inFlight) {
       await inFlight;
-      if (disposed || stopped || status === 'offline') return false;
+      if (disposed || stopped) return false;
       return pending === null ? true : flush();
     }
     if (pending === null) return true;
@@ -94,42 +58,33 @@ export function createDevSync({ cloud, account, storage, saveKey, onStatus = () 
         version = await cloud.saveIsland(snapshot, version);
         savedPayload = snapshot;
         if (pending === snapshot) pending = null;
-        persist();
         emit(pending === null ? 'saved' : 'pending');
-        later(delay);
+        later();
         return pending === null;
       } catch (error) {
-        persist();
-        backup(pending);
-        const code = error?.code;
-        stopped = ['conflict', 'auth-required', 'permission', 'configuration', 'invalid-state', 'invalid-cloud-data'].includes(code);
-        emit(stopped ? code : 'offline');
-        later(retryDelay);
+        // A response may have been lost after a successful server commit.
+        // Never blindly retry or keep accepting local gameplay.
+        pending = null; stopped = true; clearTimer();
+        emit(error?.code || 'offline');
         return false;
       } finally { inFlight = null; }
     });
     return inFlight;
   }
-
   async function reloadCloud() {
-    // Explicit recovery always keeps the current island before replacing it.
     if (inFlight) await inFlight;
-    const remote = await cloud.loadIsland();
-    if (!remote) throw Object.assign(new Error('Nie znaleziono zapisu w chmurze.'), { code: 'missing-save' });
-    backup(pending ?? read(saveKey));
-    clearTimer();
-    version = remote.version;
-    pending = null;
-    savedPayload = remote.payload;
-    stopped = false;
-    write(saveKey, remote.payload);
-    persist();
-    emit('saved');
-    return remote.payload;
+    emit('loading');
+    try {
+      const remote = await cloud.loadIsland();
+      if (!remote) throw Object.assign(new Error('Nie znaleziono zapisu w chmurze.'), { code: cloud.accountStatus?.expired ? 'island-expired' : 'missing-save' });
+      clearTimer(); version = remote.version; pending = null; savedPayload = remote.payload;
+      stopped = false; emit('saved'); return savedPayload;
+    } catch (error) { stopped = true; emit(error?.code || 'offline'); throw error; }
   }
-
-  return { open, queue, flush, reloadCloud, get status() { return status; },
-    get pending() { return pending !== null; },
-    pause(code = 'invalid-save') { stopped = true; clearTimer(); backup(pending ?? read(saveKey)); emit(code); },
-    dispose() { disposed = true; clearTimer(); } };
+  return { open, queue, flush, reloadCloud,
+    get status() { return status; }, get pending() { return pending !== null; },
+    get writable() { return !stopped && !disposed && status !== 'loading'; },
+    get confirmedPayload() { return savedPayload; },
+    pause(code = 'invalid-save') { stopped = true; clearTimer(); pending = null; emit(code); },
+    dispose() { disposed = true; clearTimer(); pending = null; } };
 }

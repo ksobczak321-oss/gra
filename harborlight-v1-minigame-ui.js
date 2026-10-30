@@ -143,7 +143,7 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
   }
   const cleanup = [];
   let updateBoard = () => {}, drawBoard = () => {}, fitLayout = () => {}, lossAt = null, previousState = '';
-  const active = () => run.status === 'active' && !status.presenceRequired && !document.hidden;
+  const active = () => run.status === 'active' && !status.presenceRequired && !status.adPaused && !document.hidden;
   const send = action => {
     if (!active()) return;
     return onAction?.({ ...action, runId: run.id, stage: run.level });

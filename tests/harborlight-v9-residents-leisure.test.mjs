@@ -360,7 +360,7 @@ test('active-play effects show production benefit without changing personal happ
   syncEffectNotifications(state);
   const row = activeEffects(state).find(effect => effect.id === 'active-play');
   assert.equal(row.remaining, 300);
-  assert.equal(row.effect, 'Material production ×2');
+  assert.equal(row.effect, 'Production, taxes and transport speed ×2');
   assert.equal(residentHappiness(state, person), before);
   const count = state.notifications.length;
   for (let second = 0; second < 100; second++) { state.worldTimeMs += 1000; syncEffectNotifications(state); }

@@ -10,6 +10,8 @@ const NOW = Date.UTC(2026, 9, 23, 12, 0, 0);
 const close = (actual, expected, epsilon = 1e-7) => assert.ok(Math.abs(actual - expected) < epsilon, `${actual} ≠ ${expected}`);
 function island({ level = 4, population = 12 } = {}) {
   const raw = createState(NOW);
+  raw.welcome = { startedAt: 0, until: 0 }; raw.happiness = raw.baseHappiness = 0;
+  for (const person of raw.residents) person.happiness = 0;
   raw.buildings.townhall.level = level;
   raw.buildings.house.level = level;
   raw.buildings.warehouse.level = level;

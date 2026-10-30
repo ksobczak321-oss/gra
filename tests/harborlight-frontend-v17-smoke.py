@@ -1,12 +1,15 @@
 """Acceptance of the approved v17 interface changes.
 
-Every scenario owns isolated storage. Fixtures arrange long-running game states;
-user controls perform recalls, blessings, game selection and advertisement review.
+Every scenario owns an isolated, ephemeral localhost fixture. The application
+never caches island progress in browser storage. User controls perform recalls,
+blessings, game selection and rewarded-ad review; cloud persistence has separate
+Firebase-backed acceptance.
 """
 from datetime import datetime, timedelta, timezone
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.parse import urlsplit
 import json
 import os
 import re
@@ -15,8 +18,9 @@ import threading
 from playwright.sync_api import expect, sync_playwright
 
 ROOT = Path(__file__).resolve().parent.parent
+FRONTEND_ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', ROOT)).resolve()
 SLOT = 'qa-v17'
-SAVE_KEY = 'harborlight-v1-new-player-save-' + SLOT
+FIXTURE_RELAY = 'qa-v18-next-fixture'
 NOW = datetime(2026, 10, 30, 12, tzinfo=timezone.utc)
 BUILDINGS = ['townhall', 'house', 'warehouse', 'market', 'dock', 'chapel', 'lighthouse',
              'farm', 'windmill', 'quarry', 'lumber', 'sawmill']
@@ -30,7 +34,7 @@ class Handler(SimpleHTTPRequestHandler):
         pass
 
 
-server = ThreadingHTTPServer(('127.0.0.1', 0), partial(Handler, directory=str(ROOT)))
+server = ThreadingHTTPServer(('127.0.0.1', 0), partial(Handler, directory=str(FRONTEND_ROOT)))
 threading.Thread(target=server.serve_forever, daemon=True).start()
 BASE = os.environ.get('HARBORLIGHT_BASE_URL', 'http://127.0.0.1:' + str(server.server_port)).rstrip('/')
 URL = BASE + '/harborlight-v1-layered.html?profile=new-player&slot=' + SLOT + '&v=frontend-v17'
@@ -40,6 +44,10 @@ def visit(browser, width=1366, height=768, language='pl', init_script=None):
     context = browser.new_context(viewport={'width': width, 'height': height},
                                   is_mobile=width < 901, has_touch=width < 901,
                                   reduced_motion='reduce')
+    context.add_init_script('''(() => {
+      const value=sessionStorage.getItem(%s);
+      if(value) { window.__HARBORLIGHT_DEV_FIXTURE__=JSON.parse(value);sessionStorage.removeItem(%s); }
+    })();''' % (json.dumps(FIXTURE_RELAY), json.dumps(FIXTURE_RELAY)))
     if init_script:
         context.add_init_script(init_script)
     page = context.new_page()
@@ -57,17 +65,19 @@ def visit(browser, width=1366, height=768, language='pl', init_script=None):
 
 def saved(page):
     page.evaluate("window.dispatchEvent(new Event('pagehide'))")
-    return json.loads(page.evaluate('(key)=>localStorage.getItem(key)', SAVE_KEY))
+    value = page.evaluate('window.__HARBORLIGHT_DEV_STATE__')
+    assert isinstance(value, dict), 'Local QA state getter was not installed'
+    assert page.evaluate("Object.keys(localStorage).filter(key=>/^harborlight.*(?:island|save)/i.test(key))") == [], 'Application cached an island in browser storage'
+    return value
 
 
 def install_save(page, state):
-    page.evaluate('(value)=>sessionStorage.setItem("v17-next-save",JSON.stringify(value))', state)
-    page.add_init_script('''(() => {
-      const value = sessionStorage.getItem('v17-next-save');
-      if(value) { localStorage.setItem(%s,value);sessionStorage.removeItem('v17-next-save'); }
-    })();''' % json.dumps(SAVE_KEY))
+    # This relay belongs exclusively to the acceptance harness. The app sees
+    # one injected fixture at localhost bootstrap and never reads the relay.
+    page.evaluate('(value)=>sessionStorage.setItem(%s,JSON.stringify(value))' % json.dumps(FIXTURE_RELAY), state)
     page.reload()
     page.wait_for_function('document.getElementById("loading").hidden')
+    page.wait_for_function('window.__HARBORLIGHT_DEV_STATE__ !== undefined')
 
 
 def fixture(page, mode='starter'):
@@ -75,6 +85,7 @@ def fixture(page, mode='starter'):
       const {createState,act,tick}=await import('./harborlight-v1-state.js?v=frontend-v17');
       const s=createState(Date.now()-(mode==='carrier'?301000:0));
       s.tutorial.autoOpenDisabled=true;
+      s.engagementSchedule.initialCompleted=true;s.engagementSchedule.initialAnchored=true;s.engagementSchedule.nextAt=1000000000;
       if(mode==='rich') {
         for(const [id,b]of Object.entries(s.buildings))b.level=id==='lighthouse'?1:2;
         s.buildings.townhall.level=s.buildings.house.level=s.buildings.warehouse.level=4;
@@ -103,6 +114,7 @@ def game_fixture(page, kind='triples', stage=1, finishable=False):
       const {createState,act,EXPEDITIONS}=await import('./harborlight-v1-state.js?v=frontend-v17');
       const {createMiniGame,miniGameRoundRules}=await import('./harborlight-v1-minigames.js?v=frontend-v17');
       const s=createState(Date.now());s.tutorial.autoOpenDisabled=true;
+      s.engagementSchedule.initialCompleted=true;s.engagementSchedule.initialAnchored=true;s.engagementSchedule.nextAt=1000000000;
       const definition=EXPEDITIONS[0];
       const result=act(s,{type:'expeditionStart',expedition:definition.id,gameKind:options.kind});
       if(!result.ok)throw new Error(result.message);
@@ -142,7 +154,12 @@ def polish(page, scope='#island-dialog'):
 
 def no_horizontal_overflow(page):
     assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
-    assert page.locator('#island-dialog .dialog-body').evaluate('(n)=>n.scrollWidth<=n.clientWidth+1')
+    body = page.locator('#island-dialog .dialog-body')
+    fits = body.evaluate('(n)=>n.scrollWidth<=n.clientWidth+1')
+    if not fits:
+        page.screenshot(path='/tmp/harborlight-v18-v17-overflow.png')
+    assert fits, body.evaluate('''n=>({viewport:[innerWidth,innerHeight],width:n.clientWidth,scrollWidth:n.scrollWidth,cards:n.querySelectorAll('[data-memory-card]').length,
+      overflowing:[...n.querySelectorAll('*')].filter(child=>child.getBoundingClientRect().right>n.getBoundingClientRect().right+1).slice(0,8).map(child=>({tag:child.tagName,class:child.className,text:child.textContent.slice(0,80),right:child.getBoundingClientRect().right}))})''')
 
 
 def whole_game(page):
@@ -159,7 +176,10 @@ def whole_game(page):
       });
     }''')
     assert dimensions and all(item['inside'] for item in dimensions), dimensions
-    assert all(min(item['width'], item['height']) >= 20 for item in dimensions), dimensions
+    minimum = min(min(item['width'], item['height']) for item in dimensions)
+    if minimum < 20:
+        page.screenshot(path='/tmp/harborlight-v18-v17-small-cards.png')
+    assert minimum >= 20, {'viewport':page.viewport_size,'minimum':minimum,'cards':len(dimensions),'sample':dimensions[:3]}
 
 
 def overview_acceptance(browser):
@@ -306,7 +326,7 @@ def choice_and_ad_acceptance(browser):
             current = run_of(saved(page))
             assert current['miniGame']['kind'] == current['selectedGameKind'] == kind
             assert current['roundLimit'] == (180 if kind == 'tilt' else 240)
-            page.reload();page.wait_for_function('document.getElementById("loading").hidden')
+            install_save(page, saved(page))
             assert run_of(saved(page))['selectedGameKind'] == kind
             ad = page.locator('[data-minigame-ad]')
             expect(ad).to_be_visible()
@@ -319,14 +339,31 @@ def choice_and_ad_acceptance(browser):
             expect(popup).to_be_visible()
             if language == 'pl':
                 polish(page, '#rewarded-ad')
-                expect(popup).to_contain_text('później')
+                expect(popup).to_contain_text('SYMULACJA')
             else:
-                expect(popup).to_contain_text('rules will be defined later')
-            after = saved(page)
-            assert after['resources'] == before['resources']
-            for key in ['pot', 'roundLimit', 'roundStartedAt', 'level']:
+                expect(popup).to_contain_text('SIMULATION')
+            paused = saved(page)
+            assert run_of(paused)['adPause'] is not None
+            if kind == 'tilt':
+                popup.locator('[data-close-rewarded-ad]').click()
+                after = saved(page)
+                assert run_of(after)['roundLimit'] == run_of(before)['roundLimit']
+                assert run_of(after)['adTimeRewards'] == 0
+            else:
+                page.clock.run_for(10000)
+                expect(popup).not_to_be_visible()
+                after = saved(page)
+                assert run_of(after)['roundLimit'] == run_of(before)['roundLimit'] + 60
+                assert run_of(after)['adTimeRewards'] == 1
+                assert after['worldTimeMs'] >= before['worldTimeMs'] + 10000
+                before_food = before['resources']['food'] + before['foodCredit']
+                after_food = after['resources']['food'] + after['foodCredit']
+                assert abs(after_food - (before_food - 12 * 10 / 3600)) < .001
+            assert run_of(after)['adPause'] is None
+            assert after['resources']['coins'] == before['resources']['coins']
+            for key in ['pot', 'level']:
                 assert run_of(after)[key] == run_of(before)[key], (key, before, after)
-            popup.locator('[data-close-rewarded-ad]').click()
+            expect(ad).to_be_disabled()
             expect(popup).not_to_be_visible()
             if language == 'pl':
                 polish(page)
@@ -365,10 +402,10 @@ def choice_and_ad_acceptance(browser):
             if next_kind == 'triples':
                 expect(page.locator('[data-memory-card]')).to_have_count(30)
             assert page.locator('[data-panel-back]').count() == 0
-            page.reload();page.wait_for_function('document.getElementById("loading").hidden')
+            install_save(page, saved(page))
             assert run_of(saved(page))['selectedGameKind'] == next_kind
         context.close()
-    print('PASS explicit game choice/next-round switch/reload in PL/EN; both ad entry screens preserve time, resources and pot')
+    print('PASS explicit game choice/next-round switch/fixture reload in PL/EN; ad skip and verifiedDEVcompletion preserve pot, pause only the round and enforce one attempt')
 
 
 def recall_acceptance(browser):
@@ -394,11 +431,12 @@ def recall_acceptance(browser):
     popup.locator('[data-close-carrier-recall]').click()
     close_panel(page)
     expect(page.locator('[data-dock-working-count="warehouse"]').first).to_contain_text('−1')
-    page.clock.fast_forward(298000)
+    page.clock.fast_forward(148000)
     current = saved(page)
     assert next(p for p in current['residents'] if p['id'] == person_id)['pendingRelease']
     assert len(current['haulTrips']['warehouse']) == 2
-    page.clock.fast_forward(1000)
+    # A real recall click enables active transportx2: remaining299s finishesin149.5s.
+    page.clock.fast_forward(1500)
     delivered = saved(page)
     person = next(p for p in delivered['residents'] if p['id'] == person_id)
     assert delivered['resources']['wood'] == before['resources']['wood'] + 200
@@ -449,6 +487,8 @@ def penalty_acceptance(browser):
 
 
 def run():
+    if urlsplit(BASE).hostname not in ['localhost', '127.0.0.1', '::1']:
+        raise ValueError('Fixture UI acceptance requires a loopback frontend package; use authenticated readback for hosted environments.')
     groups = {'overview': overview_acceptance, 'memory': memory_layout_acceptance,
               'choice': choice_and_ad_acceptance, 'recall': recall_acceptance,
               'penalty': penalty_acceptance}

@@ -1,71 +1,70 @@
 # HARBORLIGHT
 
-Gra o rozwoju wyspy, pracy mieszkańców i odbudowie latarni. Repozytorium zawiera przeglądarkowy prototyp HTML/CSS/JavaScript z lokalnym zapisem, gospodarką offline i zaakceptowaną ilustracją wyspy. Nie wymaga instalowania zależności aplikacji ani kroku kompilacji.
+Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarni. Aktywny zakres **frontend-v18** zatwierdzono przez GO użytkownika 30 października 2026: [pełne wymagania](docs/FRONTEND-V18-REQUIREMENTS.md), [reguły gospodarki](docs/ECONOMY-RULES.md) i [budynki](docs/BUILDINGS.md).
 
-Bieżący pakiet **frontend-v17** obejmuje [9 poprawek po przeglądzie gry](docs/FRONTEND-V17-REQUIREMENTS.md): wyrównanie kart budynków, całą planszę trójek bez przewijania, wybór minigry, czytelne odwołanie tragarzy, oznaczenie kar produkcyjnych i poprawki menu. W minigrach jest miejsce na reklamę nagradzaną; jej efekt i integracja pozostają do ustalenia, więc przycisk nie przyznaje czasu ani monet.
+## Wersja lokalna a opublikowana
 
-Gracz wybiera **labirynt z kulkami albo dopasowywanie trójek** przy rozpoczęciu oraz może zmienić rodzaj przed kolejną rundą. Wybrany rodzaj jest zachowany po wczytaniu i stanowi domyślny wybór kontynuacji. Zegary, ryzyko całej niewypłaconej puli i wcześniejsze zasady nagród pozostają takie jak w v16.
+| Miejsce | Stan |
+|---|---|
+| DEV — ta przestrzeń robocza | Implementacja v18; bieżące testy i integracja. Wyniki końcowe zapisuje dziennik. |
+| PRE-PROD — `harborlight-dev` | [Gra](https://harborlight-dev.web.app), ostatnie potwierdzone wydanie `f161e45`; [sukces 41067599818](https://github.com/ksobczak321-oss/gra/actions/runs/41067599818). |
+| PROD — `harborlight-prod` / `harborlight.pl` | Brak potwierdzonej publikacji i powiązania domeny. |
+| GitHub Pages | Podgląd deweloperski, nie PROD; nie dowodzi promocji PRE-PROD. |
 
-Zachowane są 25 lekcji samouczka, skrzynie po 100–300 każdego z pięciu materiałów i jednorazowe Share ×2 oraz [zmiany gospodarki v15](docs/FRONTEND-V15-REQUIREMENTS.md). Bieżące reguły opisuje [gospodarka](docs/ECONOMY-RULES.md) wraz z wymaganiami v17. **Excel 10 pozostaje niezmienionym archiwum v16**: opisuje dawne losowanie minigry i nie jest aktualnym opisem wyboru gry ani poprawek interfejsu v17.
+PRE-PROD zachowuje trzy osobne konta `admin1`, `admin2`, `admin3`, ich UID i wyspy. Kod v18 nie jest opublikowany tylko dlatego, że istnieje w repozytorium. Historia poprzednich testów i wydań pozostaje w [dzienniku](docs/IMPLEMENTATION-LOG.md).
 
-## Podgląd
+## Co zmienia v18
 
-- [GCP DEV — gra i trzy stałe konta](https://harborlight-dev.web.app) — potwierdzone wydanie `f161e45`, [udane wdrożenie 41067599818](https://github.com/ksobczak321-oss/gra/actions/runs/41067599818). Loginy `admin1`, `admin2`, `admin3`; osobne wyspy w chmurze.
-- [Wyspa](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?v=frontend-v17).
-- [Profil nowego gracza z 29 października](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&slot=start-20261029-v16&v=frontend-v17) — przy pierwszym otwarciu poziom 1, 12 osób, po 100 każdego zasobu, zero przydzielonych pracowników. Osobny zapis zachowuje wcześniejsze wyspy; kolejne otwarcie wznawia jego postęp.
-- [Logowanie/rejestracja](https://ksobczak321-oss.github.io/gra/harborlight-auth.html) — formularze, bez prawdziwej usługi kont i OAuth.
-- [Pobierz Excel 10](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT10-zasady.xlsx) — archiwum zasad v16, 25 lekcji i kalkulator; jego wcześniejsze publiczne pobranie potwierdzono identyczną sumą kontrolną. Pliki 7–10 pozostają niezmienione.
+- Materiały bonusowe są od razu wydawalne i nie zajmują pojemności zwykłych dostaw. Wydajemy bonus przed zwykłym zapasem. Przepełnienie blokuje dalsze skrzynie samouczka, nie rozbudowę i zarządzanie wyspą.
+- Poprawione przyjęcie nagród, limity kolejki, natychmiastowy transport, zachowanie wcześniejszych zleceń Targu i ochrona podjętego na czas ładunku Portu.
+- Bazowe 20% szczęścia nowej wyspy, minimum 20% przez 72 h dla wszystkich, pierwszeństwo wymuszonego 100% i dwukrotnie szybszy dodatni przyrost ludności. Aktywność daje produkcję/podatki/transport ×2; po pięciu minutach ×1, po 48 h bez grania ×0,5.
+- 25 prawdziwych działań samouczka ze wskazaniem właściwego przycisku, skrzynie 100–300 pięciu materiałów, zachowane odebrane nagrody i brak zasłaniania trwającej minigry.
+- Nagrody rund 50,100,200,400… i pula 50,150,350,750…; dobrowolne przedłużenie przed terminem, ryzyko niewypłaconej serii i zachowany wybór kulek/trójek.
+- Zapisywany harmonogram propozycji minigry/reklamy, nagrody materiałowe 10–30, osobne uprawnienie bez reklam w standardowej grze po zakupach 1999 gr/30 dni. Reklamy za czas ekspedycji pozostają także dla uprawnionych.
+- Codzienne darmowe błogosławieństwo, wydarzenia dobre/złe, regularność Kaplicy, lojalność 50–200 sześciu zasobów oraz czytelne powiadomienia.
+- Postęp konta wyłącznie w chmurze. Brak lokalnej wyspy i lokalnej kopii odzyskiwania; brak połączenia blokuje zatwierdzanie działań. Język i techniczna sesja logowania nie są zapisem postępu.
 
-Publikację v17 potwierdza udany [workflow Pages 40975340456](https://github.com/ksobczak321-oss/gra/actions/runs/40975340456) dla commitu gry `72e49da`. Lokalne testy i udane wdrożenie są odrębne od bezpośredniego odbioru publicznej strony, który nadal blokuje HTTP 403 proxy środowiska; pełne dowody są w dzienniku.
+Nowe parametry cen dodatkowego czasu i wag wydarzeń są jawnie opisane jako konfigurowalne wartości wdrożeniowe. [Excel 10](docs/arkusze/HARBORLIGHT10-zasady.xlsx) pozostaje **archiwum v16**, nie aktualną specyfikacją v18; pliki 7–10 nie są nadpisywane.
 
-## Co obejmuje ta wersja
+## Konta i integracje
 
-- Wspólny polski dzień o północy i rzeczywiste czasy efektów, indywidualne H, jedzenie, praca, transport, fizyczne rezerwacje, budowa i gospodarka offline.
-- Zadania z potwierdzeniem, darowiznami i trwałym Share/Skip; wybrane przez gracza minigry z nagrodą do 50 monet, potrąceniami według czasu i jedną serią blokującą wyspę.
-- Brak lewego paska, 12 kart budynków w Administracji i Gospodarce, jednakowe miniatury, podpisane obsady, pięć zasobów z przewozami, EN/PL i filtry powiadomień. Szczegóły budynków mają zwięzły widok główny z wyrównanymi kolumnami oraz osobny widok dodatkowy z powrotem. Aktywna kara za przestój ma smutną ikonę nad budynkiem.
-- Bazowa produkcja 20/24/26/28… na osobę i godzinę oraz 120 sztuk na pięciominutowy kurs na poziomie 1. Wymagania zadań zachowują wcześniejszą normę; podatki i zapotrzebowanie mieszkańców na żywność nie są podwajane przez zmianę bazy.
-- 25 kolejnych lekcji bez czekania na następne dni, skrzynie po 100–300 każdego materiału, Share ×2 i premia aktywnej gry. Kulki mają sterowanie kursorem, klawiaturą, dotykiem lub ruchem telefonu; trójki rosną od 24 do 120 pól, dopasowują całą planszę do okna bez suwaków i później przesuwają zakryte obrazki.
-- Archiwalny Excel 10 ma cztery widoczne zakładki, krótkie opisy mechanik i kalkulator wydania v16. Całe źródło 9 oraz wszystkie 48 komentarzy pozostaje ukrytym archiwum; pliki 7, 8 i 9 zachowują identyczne bajty.
+PRE-PROD ma rzeczywiste Firebase Authentication/Firestore dla stałych kont testowych. Kod produkcyjnych kont obsługuje e-mail oraz ścieżki Google/Facebook, lecz aktywacja dostawców, domen i aplikacji wymaga właścicielskiej konfiguracji. Brak konfiguracji nie jest zastępowany pozorowanym logowaniem. Gracz sam inicjuje i zatwierdza udostępnienie osiągnięcia; automatyczne posty strony i osobisty facebookowy push są odłożone.
 
-DEV obsługuje trzy stałe konta **admin1, admin2, admin3** z logowaniem i synchronizacją wysp przez Firebase Authentication/Firestore. Właściciel potwierdził [przygotowanie kont](docs/DEV-ACCOUNTS.md), a workflow DEV zakończył publikację i testy hostingu oraz rzeczywistego logowania/izolacji zapisów. Zwykłe wdrożenia nie resetują haseł ani postępu. Każda nowa wyspa powstaje przy pierwszym wejściu do gry; późniejsze logowania wznawiają postęp i czas nieobecności. Konta produkcyjne, aplikacje Android/iPhone, płatności, reklamy i potwierdzanie poleceń pozostają kolejnymi etapami.
+**Paynow i reklamy są symulowane tylko w DEV/PRE-PROD**, z wyraźnym oznaczeniem i bez pobierania pieniędzy. PROD nie przyznaje zakupów ani nagród na podstawie symulacji. Uruchomienie rzeczywistego operatora/dostawcy wymaga osobnego przygotowania i weryfikacji potwierdzeń.
 
-Wybraną platformą jest **Google Cloud z oddzielnymi projektami DEV i PROD**. [Konfiguracja publikacji](docs/GOOGLE-CLOUD.md) obejmuje grę na Firebase Hosting/CDN oraz serwer sond Cloud Run. Bootstrap sprawdzono w Cloud Shell użytkownika: **22 kontrole PASS, 0 FAIL**. Wydanie DEV `f161e45` zostało opublikowane 30 października 2026 z pełnym potwierdzeniem v2, archiwum frontendu i obrazem backendu. PROD i domena produkcyjna pozostają do przygotowania i promocji zgodnie z procesem.
+Backend zawiera kod API kont, transakcyjnego limitu kodów promocyjnych i retencji wysp. Włączenie tych usług wymaga konfiguracji serwera, Firestore, IAM i routingu; ich kod nie dowodzi działającej usługi w chmurze. Gospodarka pozostaje obliczana przez przeglądarkę, więc autorytatywne serwerowe rozliczenie komend i wyników jest kolejnym etapem.
 
-Obowiązuje [kolejność promocji](docs/RELEASE-PROCESS.md): **praca tutaj → GitHub i CI → GCP DEV → GCP PROD**. DEV wymaga CI tego samego commitu i testów opublikowanej gry. PROD wymaga pełnego potwierdzenia v2 oraz obu artefaktów z DEV: publikuje identyczne archiwum frontendu i obraz backendu po digest, bez przebudowy. Planowany adres DEV to `https://harborlight-dev.web.app`; docelowa domena PROD **harborlight.pl** wymaga jeszcze powiązania i DNS w nazwa.pl. GitHub Pages pozostaje podglądem deweloperskim.
+Po trzech miesiącach kalendarzowych bez rzeczywistej gry wyspa może zostać zresetowana przy zachowaniu konta i historii. Stałe konta PRE-PROD są wyłączone. Automatyczne zwroty zakupów wycofano; [szkic regulaminu](docs/TERMS-DRAFT.pl.md) wymaga sprawdzenia przed rozpoczęciem płatnej sprzedaży.
 
-## Uruchomienie
+## Uruchomienie DEV
 
 ```sh
 python3 -m http.server 8002 --bind 127.0.0.1
 ```
 
-Otwórz `http://127.0.0.1:8002/harborlight-v1-layered.html`. Bezpośrednie `file://` nie obsługuje modułów aplikacji. Inny wolny port jest dopuszczalny.
+Otwórz `http://127.0.0.1:8002/harborlight-v1-layered.html`. To nietrwały podgląd w pamięci, bez udawania konta i bez zapisu wyspy w przeglądarce. Konta chmurowe wymagają właściwego hosta i konfiguracji. Moduły nie działają przez `file://`.
 
 ## Sprawdzenia
 
 ```sh
 node --test --test-concurrency=1 --test-isolation=none tests/*.test.mjs
-python3 tests/harborlight-frontend-v17-smoke.py
+node --test backend/test/*.test.mjs
+python3 tests/harborlight-frontend-bundle.test.py
+python3 tests/harborlight-frontend-v18-smoke.py
+python3 tests/harborlight-v18-auth-smoke.py
 ```
 
-Odbiór lokalny v17: **486/486 testów modelu PASS**, bez błędów i pominięć. Nowy Chromium zaliczył pięć grup wymagań oraz dodatkową regresję historii wyjścia; siedem grup v16 również PASS, bez błędów JavaScript/HTTP. Sprawdzono natychmiastową geometrię 24/42/120 kart, zmianę rozmiaru, cztery rozdzielczości, oba języki i pełny powrót tragarza. Stan publikacji zawiera [dziennik](docs/IMPLEMENTATION-LOG.md); niezmieniony Excel 10 zachowuje historyczny odbiór v16.
+Przeglądarka wymaga Python Playwright i Chromium; opcjonalna ścieżka wykonywalna to `HARBORLIGHT_CHROMIUM`. Wyniki lokalne, testy z atrapami i rzeczywisty odbiór hostingu są osobnymi dowodami. Aktualne liczby i ograniczenia zapisujemy wyłącznie w dzienniku po zakończeniu danego sprawdzenia.
 
-Przygotowanie pełnego wydania GCP rozszerzyło zestaw do **502 testów modelu i promocji**. Integracja kont dodaje testy protokołu, synchronizacji i przygotowania zasobów. Deterministyczny pakiet obejmuje również moduły kont DEV; testy z pakietu są odrębne od odbioru prawdziwego hostingu i DNS.
+## Publikacja i dokumentacja
 
-Zestawy przeglądarkowe wymagają Python Playwright i Chromium; ścieżkę można ustawić przez `HARBORLIGHT_CHROMIUM`. Dziennik rozdziela bieżący odbiór lokalny od wcześniejszych testów rzeczywistego adresu Pages. Workflow `.github/workflows/pages.yml` publikuje `main` bez kompilacji.
+Obowiązuje **DEV tutaj → GitHub/CI → PRE-PROD → PROD**. PRE-PROD wymaga CI tego samego SHA. PROD promuje identyczne archiwum frontendu i obraz po digest z udanego PRE-PROD, bez ponownej budowy. Nazwy techniczne `google-cloud-dev.yml` i `harborlight-dev-*` pozostają niezmienione.
 
-## Dokumentacja
+- [Kontrakt promocji](docs/RELEASE-PROCESS.md)
+- [Sterowanie, samouczek i zapis](docs/INTERACTIVE-ISLAND.md)
+- [Backlog i ograniczenia uruchomienia](docs/BACKLOG.md)
+- [Dziennik wyników i publikacji](docs/IMPLEMENTATION-LOG.md)
+- [Konfiguracja Google Cloud](docs/GOOGLE-CLOUD.md) — wcześniejsze instrukcje używają technicznej nazwy DEV dla obecnego PRE-PROD.
+- [Archiwa arkuszy](docs/arkusze/README.md)
 
-- [Pakiet 9 wymagań v17](docs/FRONTEND-V17-REQUIREMENTS.md)
-- [Jak działa gospodarka](docs/ECONOMY-RULES.md)
-- [Tabela 12 budynków i mieszkaniec](docs/BUILDINGS.md)
-- [Sterowanie, język i zapis](docs/INTERACTIVE-ISLAND.md)
-- [Arkusze i odtwarzanie Excela 10](docs/arkusze/README.md)
-- [Macierz odbioru](docs/FRONTEND-REVIEW.md)
-- [Dziennik implementacji i publikacji](docs/IMPLEMENTATION-LOG.md)
-- [Backlog frontend/backend](docs/BACKLOG.md)
-- [Google Cloud — osobne DEV i PROD](docs/GOOGLE-CLOUD.md)
-- [Zasady promocji od pracy lokalnej do PROD](docs/RELEASE-PROCESS.md)
-- [Historia animacji świata](docs/WORLD-ANIMATION.md)
-
-Starsze BLACKOUT, PANIC PETS i pierwsze makiety zachowano jako historię repozytorium. Aktywny projekt to HARBORLIGHT.
+BLACKOUT, PANIC PETS i wcześniejsze makiety pozostają historią repozytorium. Aktywny projekt to HARBORLIGHT.

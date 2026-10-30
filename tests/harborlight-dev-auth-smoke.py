@@ -61,6 +61,9 @@ class Site:
             else:
                 route.fulfill(content_type='application/json', body=json.dumps(authentication(login)))
             return
+        if request.url == self.origin + '/api/v1/config':
+            route.fulfill(status=503, content_type='application/json', body=json.dumps({'error':'account_api_disabled'}))
+            return
         if request.url.startswith(self.origin + '/'):
             if parsed.path == '/__/firebase/init.json':
                 route.fulfill(content_type='application/json', body=json.dumps({
@@ -110,10 +113,10 @@ def run():
             context, page, errors = context_for(browser, site)
             page.goto(DEV + '/harborlight-auth.html?profile=preview&slot=old-preview&mode=register#register')
             form_ready(page)
-            expect(page).to_have_title('HARBORLIGHT — logowanie DEV')
-            expect(page.locator('#auth-title')).to_have_text('Zaloguj się do DEV')
+            expect(page).to_have_title('HARBORLIGHT — logowanie PRE-PROD')
+            expect(page.locator('#auth-title')).to_have_text('Zaloguj się do PRE-PROD')
             expect(page.locator('#tab-register')).to_be_hidden()
-            expect(page.locator('.social-options')).to_be_hidden()
+            expect(page.locator('.social-options')).to_be_visible()
             expect(page.locator('.guest-entry')).to_be_hidden()
             expect(page.locator('.back-link')).to_be_hidden()
             expect(page.locator('label[for="email"]')).to_have_text('Login')
@@ -121,7 +124,7 @@ def run():
             page.locator('#email').fill('admi1')
             page.locator('#password').fill('irrelevant-fixture')
             page.locator('#account-submit').click()
-            expect(page.locator('#email-error')).to_have_text('Wpisz login DEV: admin1, admin2 lub admin3.')
+            expect(page.locator('#email-error')).to_have_text('Wpisz login PRE-PROD: admin1, admin2 lub admin3.')
             assert not site.auth_calls
             page.locator('#email').fill('admin1')
             page.locator('#password').fill('wrong-fixture-password')
@@ -186,7 +189,7 @@ def run():
             page.locator('#email').fill('admin1')
             page.locator('#password').fill('admin1')
             page.locator('#account-submit').click()
-            expect(page.locator('#account-status')).to_have_text('Konta DEV nie są jeszcze skonfigurowane. Poproś właściciela o dokończenie konfiguracji.')
+            expect(page.locator('#account-status')).to_have_text('Konfiguracja kont nie jest zakończona. Poproś właściciela o jej dokończenie.')
             assert not site.auth_calls
             site.config_project = 'harborlight-dev'
             site.offline = True
@@ -198,8 +201,8 @@ def run():
             assert not errors and not site.unexpected
             context.close()
 
-            # No DEV account service is activated on the production origin.
-            site = Site('https://harborlight.pl')
+            # An unrelated preview origin never activates a cloud account service.
+            site = Site('https://preview.harborlight.invalid')
             context, page, errors = context_for(browser, site)
             page.goto(site.origin + '/harborlight-auth.html')
             expect(page.locator('#account-fields')).to_be_enabled()

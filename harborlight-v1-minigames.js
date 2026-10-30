@@ -39,7 +39,7 @@ export function miniGameRoundRules(kind, stageNumber = 1, overrides = {}) {
   return { version: 16, kind: tilt ? 'tilt' : 'triples', stage, timeLimit,
     fullRewardUntil: timeLimit * MINI_GAME_RULES.fullRewardRatio,
     penaltyEvery: timeLimit / MINI_GAME_RULES.penaltyIntervals,
-    baseReward: MINI_GAME_RULES.baseReward,
+    baseReward: Number.isSafeInteger(MINI_GAME_RULES.baseReward * 2 ** (stage - 1)) ? MINI_GAME_RULES.baseReward * 2 ** (stage - 1) : null,
     ballCount: tilt ? Math.min(MINI_GAME_RULES.tilt.maximumBalls, 1 + Math.floor((stage - 1) / 2)) : 0,
     mazeCells: tilt ? Math.min(MINI_GAME_RULES.tilt.maximumCells, 3 + Math.floor((stage - 1) / 3)) : 0,
     cardCount: tilt ? 0 : Math.min(MINI_GAME_RULES.triples.maximumCards, MINI_GAME_RULES.triples.firstCards + MINI_GAME_RULES.triples.cardsPerStage * (stage - 1)),

@@ -1,14 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {
-  TUTORIAL_LESSONS, TUTORIAL_VERSION, TUTORIAL_BUILDING_SUPPLIES,
-  normalizeProgression, progressionAction, advanceProgression, recordProgressionAction,
-  tutorialRows, tutorialStatus, tutorialPendingRewards, activePlayMultiplier
-} from '../harborlight-v1-progression.js';
+import { TUTORIAL_LESSONS, TUTORIAL_VERSION, normalizeProgression, progressionAction,
+  advanceProgression, recordProgressionAction, tutorialRows, tutorialStatus,
+  tutorialPendingRewards, tutorialWarehouseOverfull } from '../harborlight-v1-progression.js';
 import { receiveMaterials } from '../harborlight-v1-logistics.js';
+import { spendMaterials } from '../harborlight-v1-inventory.js';
 import { createState, act } from '../harborlight-v1-state.js';
 
-const NOW = Date.parse('2026-10-29T12:00:00Z');
+const NOW = Date.parse('2026-10-24T01:42:26.934Z');
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const context = { receiveMaterials };
 function island() {
@@ -17,47 +16,37 @@ function island() {
     pendingDeliveries: Object.fromEntries(MATERIALS.map(id => [id, 0])),
     buildings: { townhall: { level: 1 }, warehouse: { level: 1 } },
     residents: Array.from({ length: 12 }, (_, id) => ({ id: id + 1, workplace: null, arrivalRemaining: 0 })),
-    statistics: { collected: 0 }, warehousePriorities: [], constructionProjects: [], notifications: [] };
+    statistics: { collected: 0, crafted: 0 }, warehousePriorities: [], constructionProjects: [], notifications: [] };
   normalizeProgression(state, {});
   return state;
 }
 const action = (state, type, extra = {}) => progressionAction(state, { type, ...extra }, context);
-const visit = (state, subject) => action(state, 'tutorialVisit', { subject });
-const observe = (state, id) => action(state, 'tutorialObserve', { taskId: id });
-const claim = (state, id) => action(state, 'claimTutorial', { taskId: id });
+const claim = (state, taskId) => action(state, 'claimTutorial', { taskId });
 function reload(state) {
   const raw = structuredClone(state), restored = structuredClone(state);
   normalizeProgression(restored, raw);
   return restored;
 }
+function accepted(state, command) { recordProgressionAction(state, command, { ok: true }); }
 function finishLesson(state, item) {
-  if (item.kind === 'observe') {
-    if (item.id === 'rules-read') visit(state, 'home');
-    visit(state, item.route);
-    assert.equal(observe(state, item.id).ok, true, item.id);
-  } else if (item.subject === 'delivery') {
-    state.statistics.collected = 120;
+  if (item.kind === 'condition') {
+    const key = item.subject === 'delivery' ? 'collected' : 'crafted';
+    state.statistics[key] = (state.statistics[key] || 0) + 1;
     advanceProgression(state);
-  } else {
-    let act;
-    if (item.subject === 'assign-crew') {
-      state.residents[0].workplace = 'farm';
-      recordProgressionAction(state, { type: 'assign', building: 'farm', delta: 1 }, { ok: true });
-      state.residents[1].workplace = 'warehouse';
-      act = { type: 'assign', building: 'warehouse', delta: 1 };
-    } else if (item.subject === 'upgrade-townhall') {
-      assert.equal(action(state, 'prepareTutorialUpgrade').ok, true);
-      state.constructionProjects.push({ building: 'townhall', targetLevel: 2 });
-      act = { type: 'upgrade', building: 'townhall' };
-    } else if (item.subject === 'increase-happiness') act = { type: 'houseHappinessAll' };
-    else if (item.subject === 'transport-priority') { state.warehousePriorities = ['food']; act = { type: 'warehousePriority', resource: 'food' }; }
-    else if (item.subject === 'upgrade-road') act = { type: 'upgradeRoad' };
-    else if (item.subject === 'task-accept') act = { type: 'confirmTaskAcceptance' };
-    else if (item.subject === 'expedition-play') act = { type: 'expeditionStart' };
-    else act = { type: 'assign', building: 'farm', delta: -1 };
-    recordProgressionAction(state, act, { ok: true });
+  } else if (item.subject.startsWith('assign-')) accepted(state, { type: 'assign', building: item.subject.slice(7), delta: 1 });
+  else if (item.subject.startsWith('upgrade-')) accepted(state, item.subject === 'upgrade-road' ? { type: 'upgradeRoad' } : { type: 'upgrade', building: item.subject.slice(8) });
+  else if (item.subject === 'transport-priority') { state.warehousePriorities = ['food']; accepted(state, { type: 'warehousePriority', resource: 'food' }); }
+  else {
+    const commands = { 'increase-happiness': { type: 'houseHappinessAll' }, 'house-points': { type: 'houseHappiness', amount: 1 },
+      'notification-filter': { type: 'setting', key: 'notificationCategories', value: { tasks: false } },
+      'buy-attraction': { type: 'buyAttraction' }, 'chapel-blessing': { type: 'blessing' },
+      'market-order': { type: 'marketOrder', resource: 'wood', amount: 10 }, 'task-accept': { type: 'confirmTaskAcceptance' },
+      'expedition-play': { type: 'expeditionStart' }, 'release-worker': { type: 'assign', building: 'farm', delta: -1 },
+      'task-deposit': { type: 'taskDeposit', resource: 'wood', amount: 1 } };
+    assert.ok(commands[item.subject], item.subject);
+    accepted(state, commands[item.subject]);
   }
-  assert.equal(tutorialRows(state).find(row => row.id === item.id).completed, true, item.id);
+  assert.equal(state.tutorial.completed[item.id], true, item.id);
 }
 function finishThrough(state, id) {
   for (const item of TUTORIAL_LESSONS) {
@@ -66,141 +55,151 @@ function finishThrough(state, id) {
   }
 }
 
-test('the combined tutorial has25 ordered lessons and its first six teach the requested real actions', () => {
+test('all25 lessons require real commands or physical events and expose actionable guidance', () => {
   assert.equal(TUTORIAL_LESSONS.length, 25);
-  assert.deepEqual(TUTORIAL_LESSONS.slice(0, 6).map(row => row.id), ['rules-read', 'island-map', 'first-job', 'food-check', 'townhall-upgrade', 'happiness-action']);
-  assert.deepEqual(TUTORIAL_LESSONS.map(row => row.index), Array.from({ length: 25 }, (_, index) => index + 1));
-  assert.equal(TUTORIAL_LESSONS.every(row => row.day === 1), true);
+  assert.equal(TUTORIAL_LESSONS.every(row => row.kind === 'action' || row.kind === 'condition'), true);
+  assert.equal(TUTORIAL_LESSONS.filter(row => row.kind === 'action').every(row => !!row.guideSelector), true);
+  assert.deepEqual(TUTORIAL_LESSONS.map(row => row.index), Array.from({ length: 25 }, (_, i) => i + 1));
 });
 
-test('opening starts at the first unfinished action without calendar-day or active-day gates', () => {
+test('reading, visiting locations, rejected commands and unrelated work cannot complete a lesson', () => {
   const state = island();
-  assert.equal(tutorialStatus(state).shouldAutoOpen, true);
-  assert.equal(tutorialStatus(state).nextLessonId, 'rules-read');
-  assert.equal(tutorialRows(state)[0].unlocked, true);
-  assert.equal(tutorialRows(state)[1].unlocked, false);
-  state.worldTimeMs += 10 * 86400000;
-  advanceProgression(state);
-  assert.equal(tutorialStatus(state).nextLessonId, 'rules-read');
-  finishThrough(state, 'island-map');
-  assert.equal(tutorialStatus(state).nextLessonId, 'first-job');
+  action(state, 'tutorialVisit', { subject: 'home' });
+  action(state, 'tutorialVisit', { subject: 'rules' });
+  assert.equal(action(state, 'tutorialObserve', { taskId: 'rules-read' }).ok, false);
+  recordProgressionAction(state, { type: 'assign', building: 'farm', delta: 1 }, { ok: false });
+  accepted(state, { type: 'assign', building: 'warehouse', delta: 1 });
+  assert.equal(tutorialStatus(state).completed, 0);
+  assert.equal(claim(state, 'rules-read').ok, false);
+  accepted(state, { type: 'assign', building: 'farm', delta: 1 });
+  assert.equal(tutorialStatus(state).completed, 1);
+  assert.equal(state.tutorial.completed['island-map'], undefined);
 });
 
-test('reading the rules requires the real upper-left menu and Rules view first', () => {
+test('each later lesson needs its own successful action even if an earlier action was similar', () => {
   const state = island();
-  assert.equal(observe(state, 'rules-read').ok, false);
-  visit(state, 'rules');
-  assert.equal(observe(state, 'rules-read').ok, false);
-  visit(state, 'home');
-  assert.equal(observe(state, 'rules-read').ok, true);
-  assert.equal(observe(state, 'island-map').ok, false);
-  visit(state, 'map');
-  assert.equal(observe(state, 'island-map').ok, true);
+  finishThrough(state, 'first-delivery');
+  assert.equal(state.tutorial.completed['storage-limits'], undefined);
+  accepted(state, { type: 'assign', building: 'warehouse', delta: 1 });
+  assert.equal(state.tutorial.completed['storage-limits'], true);
 });
 
-test('assigning a producer alone cannot finish the crew lesson or unlock food checking', () => {
-  const state = island(); finishThrough(state, 'island-map');
-  state.residents[0].workplace = 'farm';
-  recordProgressionAction(state, { type: 'assign', building: 'farm', delta: 1 }, { ok: true });
-  assert.equal(state.tutorial.completed['first-job'], undefined);
-  state.residents[1].workplace = 'warehouse';
-  recordProgressionAction(state, { type: 'assign', building: 'warehouse', delta: 1 }, { ok: false });
-  assert.equal(state.tutorial.completed['first-job'], undefined);
-  recordProgressionAction(state, { type: 'assign', building: 'warehouse', delta: 1 }, { ok: true });
-  assert.equal(state.tutorial.completed['first-job'], true);
-});
-
-test('food check needs an actual status view and food available beyond physical reservations', () => {
-  const state = island(); finishThrough(state, 'first-job');
-  visit(state, 'residents');
-  state.constructionProjects.push({ reservedMaterials: { food: 100 } });
-  assert.equal(observe(state, 'food-check').ok, false);
-  state.foodCredit = 0.5;
-  assert.equal(observe(state, 'food-check').ok, true);
-});
-
-test('building help tops up only deficits once and ordering a real Town Hall project advances the lesson', () => {
-  const state = island(); finishThrough(state, 'food-check');
-  state.resources.wood = 700;
-  const supplied = action(state, 'prepareTutorialUpgrade');
-  assert.equal(supplied.ok, true);
-  for (const [id, target] of Object.entries(TUTORIAL_BUILDING_SUPPLIES)) assert.equal(state.resources[id], id === 'wood' ? 700 : target);
-  assert.equal(state.tutorial.completed['townhall-upgrade'], undefined);
-  assert.equal(action(state, 'prepareTutorialUpgrade').ok, false);
-  state.constructionProjects.push({ building: 'townhall', targetLevel: 2 });
+test('condition lessons require a fresh physical delivery and a fresh processed product', () => {
+  const state = island();
+  state.statistics.collected = 500;
+  state.statistics.crafted = 800;
+  finishThrough(state, 'transport-priority');
   advanceProgression(state);
-  assert.equal(state.tutorial.completed['townhall-upgrade'], true);
-  assert.equal(state.buildings.townhall.level, 1);
-  assert.equal(action(reload(state), 'prepareTutorialUpgrade').ok, false);
+  assert.equal(state.tutorial.completed['first-delivery'], undefined);
+  state.statistics.collected++;
+  advanceProgression(state);
+  assert.equal(state.tutorial.completed['first-delivery'], true);
+  finishThrough(state, 'storage-limits');
+  advanceProgression(state);
+  assert.equal(state.tutorial.completed['food-chain'], undefined);
+  state.statistics.crafted++;
+  advanceProgression(state);
+  assert.equal(state.tutorial.completed['food-chain'], true);
 });
 
-test('a genuine normal starter can fund and order its Town Hall upgrade through the tutorial without a preview grant', () => {
-  const state = createState(NOW);
-  const run = (type, extra = {}) => act(state, { type, ...extra }, NOW);
-  run('tutorialVisit', { subject: 'home' }); run('tutorialVisit', { subject: 'rules' });
-  assert.equal(run('tutorialObserve', { taskId: 'rules-read' }).ok, true);
-  run('tutorialVisit', { subject: 'map' });
-  assert.equal(run('tutorialObserve', { taskId: 'island-map' }).ok, true);
-  assert.equal(run('assign', { building: 'farm', delta: 1 }).ok, true);
-  assert.equal(run('assign', { building: 'warehouse', delta: 1 }).ok, true);
-  run('tutorialVisit', { subject: 'residents' });
-  assert.equal(run('tutorialObserve', { taskId: 'food-check' }).ok, true);
-  assert.equal(run('prepareTutorialUpgrade').ok, true);
-  assert.equal(run('upgrade', { building: 'townhall' }).ok, true);
+test('a real starter can collect four chests, receive spendable help and order the Town Hall upgrade', () => {
+  const state = createState(NOW), run = command => act(state, command, NOW);
+  for (const [taskId, building] of [['rules-read', 'farm'], ['island-map', 'warehouse'], ['first-job', 'windmill'], ['food-check', 'lumber']]) {
+    assert.equal(run({ type: 'assign', building, delta: 1 }).ok, true);
+    assert.equal(run({ type: 'claimTutorial', taskId }).ok, true);
+  }
+  const totalBefore = MATERIALS.reduce((sum, id) => sum + state.resources[id], 0);
+  assert.ok(totalBefore > 0);
+  assert.equal(run({ type: 'prepareTutorialUpgrade' }).ok, true);
+  assert.ok(state.resources.planks >= 500);
+  assert.equal(run({ type: 'upgrade', building: 'townhall' }).ok, true);
   assert.equal(state.tutorial.completed['townhall-upgrade'], true);
   assert.equal(state.buildings.townhall.level, 1);
   assert.equal(state.constructionProjects[0].targetLevel, 2);
-  assert.equal(state.resources.food, 600);
-  assert.equal(state.constructionProjects[0].reservedMaterials.food, 500);
-  assert.equal(state.resources.coins, 0);
+  assert.equal(run({ type: 'prepareTutorialUpgrade' }).ok, false);
 });
 
-test('every lesson chest contains100–300 of each material and survives observation, quotes and reload exactly', () => {
+test('the seed57 fourth chest still has a celebration and Skip when its reward overfills storage', () => {
+  const state = createState(NOW), run = command => act(state, command, NOW);
+  for (const [taskId, building] of [['rules-read', 'farm'], ['island-map', 'warehouse'], ['first-job', 'windmill'], ['food-check', 'lumber']]) {
+    assert.equal(run({ type: 'assign', building, delta: 1 }).ok, true);
+    assert.equal(run({ type: 'claimTutorial', taskId }).ok, true);
+    if (taskId !== 'food-check') assert.equal(run({ type: 'skipTutorialShare', taskId }).ok, true);
+  }
+  assert.equal(tutorialWarehouseOverfull(state), true);
+  const row = tutorialRows(state).find(item => item.id === 'food-check');
+  assert.equal(row.canShare, false);
+  const pending = tutorialPendingRewards(state);
+  assert.equal(pending.length, 1);
+  assert.equal(pending[0].lessonId, 'food-check');
+  assert.equal(pending[0].claimed, true);
+  assert.equal(run({ type: 'shareTutorialReward', taskId: 'food-check' }).ok, false);
+  assert.equal(run({ type: 'seeTutorialReward', taskId: 'food-check' }).ok, true);
+  const before = structuredClone(state.resources);
+  assert.equal(run({ type: 'skipTutorialShare', taskId: 'food-check' }).ok, true);
+  assert.deepEqual(state.resources, before);
+  assert.equal(tutorialPendingRewards(state).length, 0);
+});
+
+test('opening one chest may exceed capacity, but the next claim and doubling wait until materials are spent', () => {
+  const state = island(); finishThrough(state, 'island-map');
+  for (const id of MATERIALS) state.resources[id] = 800;
+  const firstReward = { ...state.tutorial.chests['rules-read'].reward };
+  assert.equal(claim(state, 'rules-read').ok, true);
+  assert.equal(tutorialWarehouseOverfull(state), true);
+  assert.equal(claim(state, 'island-map').ok, false);
+  assert.equal(action(state, 'shareTutorialReward', { taskId: 'rules-read' }).ok, false);
+  for (const id of MATERIALS) {
+    assert.equal(state.resources[id], 800 + firstReward[id]);
+    assert.equal(state.pendingDeliveries[id], 0);
+  }
+  spendMaterials(state, firstReward);
+  assert.equal(tutorialWarehouseOverfull(state), false);
+  assert.equal(action(state, 'shareTutorialReward', { taskId: 'rules-read' }).ok, true);
+  assert.equal(action(state, 'shareTutorialReward', { taskId: 'rules-read' }).ok, false);
+  assert.equal(claim(state, 'island-map').ok, false);
+});
+
+test('overfull storage never blocks real lesson actions or the one-time upgrade help', () => {
+  const state = island();
+  for (const id of MATERIALS) state.resources[id] = 1500;
+  finishThrough(state, 'food-check');
+  assert.equal(claim(state, 'rules-read').ok, false);
+  assert.equal(action(state, 'prepareTutorialUpgrade').ok, true);
+  accepted(state, { type: 'upgrade', building: 'townhall' });
+  assert.equal(state.tutorial.completed['townhall-upgrade'], true);
+  assert.equal(action(state, 'prepareTutorialUpgrade').ok, false);
+});
+
+test('every chest draw stays100–300 per material and survives reload without rerolling', () => {
   const state = island(); finishThrough(state, 'rules-read');
   const reward = structuredClone(state.tutorial.chests['rules-read'].reward);
-  assert.deepEqual(Object.keys(reward), MATERIALS);
-  assert.ok(Object.values(reward).every(value => Number.isInteger(value) && value >= 100 && value <= 300));
-  for (let index = 0; index < 5; index++) tutorialRows(state);
+  for (const amount of Object.values(reward)) assert.ok(Number.isInteger(amount) && amount >= 100 && amount <= 300);
+  for (let i = 0; i < 5; i++) tutorialRows(state);
   assert.deepEqual(reload(state).tutorial.chests['rules-read'].reward, reward);
   assert.deepEqual(tutorialPendingRewards(state)[0].reward, reward);
 });
 
-test('base claim and Share each pay the same exact chest once, including after reload', () => {
+test('base and sharing pay the same chest once each and Skip never removes the base reward', () => {
   const state = island(); finishThrough(state, 'rules-read');
   const reward = structuredClone(state.tutorial.chests['rules-read'].reward);
-  assert.equal(action(state, 'shareTutorialReward', { taskId: 'rules-read' }).ok, false);
   assert.equal(claim(state, 'rules-read').ok, true);
-  for (const id of MATERIALS) assert.equal(state.resources[id], 100 + reward[id]);
-  assert.equal(state.resources.coins, 100);
+  assert.equal(claim(state, 'rules-read').ok, false);
+  assert.equal(action(state, 'shareTutorialReward', { taskId: 'rules-read' }).ok, true);
   const restored = reload(state);
-  assert.equal(claim(restored, 'rules-read').ok, false);
-  assert.equal(action(restored, 'shareTutorialReward', { taskId: 'rules-read' }).ok, true);
-  for (const id of MATERIALS) assert.equal(restored.resources[id], 100 + reward[id] * 2);
-  assert.equal(action(reload(restored), 'shareTutorialReward', { taskId: 'rules-read' }).ok, false);
-  assert.deepEqual(tutorialPendingRewards(restored), []);
-});
-
-test('Skip preserves the base chest and prevents an unresolved Share bonus from being replayed', () => {
-  const state = island(); finishThrough(state, 'rules-read'); claim(state, 'rules-read');
-  const before = { ...state.resources };
-  assert.equal(action(state, 'skipTutorialShare', { taskId: 'rules-read' }).ok, true);
-  assert.equal(action(reload(state), 'shareTutorialReward', { taskId: 'rules-read' }).ok, false);
+  assert.equal(action(restored, 'shareTutorialReward', { taskId: 'rules-read' }).ok, false);
+  for (const id of MATERIALS) assert.equal(state.resources[id], 100 + 2 * reward[id]);
+  finishThrough(state, 'island-map');
+  // Spend any bonus overfill so another chest is eligible.
+  spendMaterials(state, Object.fromEntries(MATERIALS.map(id => [id, Math.max(0, state.resources[id] - 100)])));
+  assert.equal(claim(state, 'island-map').ok, true);
+  const before = structuredClone(state.resources);
+  assert.equal(action(state, 'skipTutorialShare', { taskId: 'island-map' }).ok, true);
   assert.deepEqual(state.resources, before);
+  assert.equal(action(state, 'shareTutorialReward', { taskId: 'island-map' }).ok, false);
 });
 
-test('full warehouses preserve both the chest and its doubled overflow without losing materials', () => {
-  const state = island(); finishThrough(state, 'rules-read');
-  const reward = state.tutorial.chests['rules-read'].reward;
-  for (const id of MATERIALS) state.resources[id] = 800;
-  claim(state, 'rules-read');
-  action(state, 'shareTutorialReward', { taskId: 'rules-read' });
-  for (const id of MATERIALS) {
-    assert.equal(state.resources[id], 800);
-    assert.equal(state.pendingDeliveries[id], reward[id] * 2);
-  }
-});
-
-test('a missing material receiver cannot mark any chest or building supply as paid', () => {
+test('missing material delivery never consumes a chest or the upgrade help', () => {
   const state = island(); finishThrough(state, 'rules-read');
   const before = structuredClone(state);
   assert.equal(progressionAction(state, { type: 'claimTutorial', taskId: 'rules-read' }).ok, false);
@@ -210,54 +209,42 @@ test('a missing material receiver cannot mark any chest or building supply as pa
   assert.equal(state.tutorial.buildingSuppliesClaimed, false);
 });
 
-test('opting out survives reload and manual resume preserves every completed lesson and chest', () => {
+test('opting out and resuming preserve completed real actions and chest draws', () => {
   const state = island(); finishThrough(state, 'island-map');
-  const before = structuredClone(state.tutorial.chests);
+  const chests = structuredClone(state.tutorial.chests);
   action(state, 'dismissTutorial');
   const restored = reload(state);
   assert.equal(tutorialStatus(restored).shouldAutoOpen, false);
   assert.equal(tutorialStatus(restored).nextLessonId, 'first-job');
   action(restored, 'resumeTutorial');
   assert.equal(tutorialStatus(restored).shouldAutoOpen, true);
-  assert.deepEqual(restored.tutorial.chests, before);
+  assert.deepEqual(restored.tutorial.chests, chests);
 });
 
-test('legacy paid lessons remain archived and equivalent new lessons cannot pay them again', () => {
+test('version2 paid lessons migrate without fresh actions or repeated rewards', () => {
   const state = island();
-  const raw = { ...structuredClone(state), tutorial: { completed: { 'island-level': true, 'central-food': true, 'motion-setting': true, 'expedition-rules': true }, claimed: { 'island-level': true, 'central-food': true, 'motion-setting': true, 'expedition-rules': true } } };
+  const raw = { ...structuredClone(state), tutorial: { version: 2,
+    completed: { 'rules-read': true }, claimed: { 'rules-read': true },
+    events: { 'transport-priority': true }, chests: {} } };
   normalizeProgression(state, raw);
   assert.equal(state.tutorial.version, TUTORIAL_VERSION);
   assert.equal(state.tutorial.claimed['rules-read'], true);
-  assert.equal(state.tutorial.claimed['food-check'], true);
-  assert.equal(state.tutorial.legacy.claimed['motion-setting'], true);
-  assert.equal(state.tutorial.legacy.claimed['expedition-rules'], true);
-  assert.equal(state.tutorial.claimed['expedition-rules'], undefined);
   assert.equal(claim(state, 'rules-read').ok, false);
-  assert.equal(state.tutorial.chests['rules-read'], undefined);
-  assert.equal(claim(state, 'motion-setting').ok, false);
+  assert.equal(state.tutorial.events['transport-priority'], undefined);
+  assert.equal(state.tutorial.completed['island-map'], undefined);
 });
 
-test('all25 lessons and rewards can complete without waiting for more calendar days or replacing live construction', () => {
+test('all25 lessons can record real outcomes without a calendar-day gate', () => {
   const state = island();
+  state.buildings.warehouse.level = 24;
   for (const item of TUTORIAL_LESSONS) {
     finishLesson(state, item);
     assert.equal(claim(state, item.id).ok, true, item.id);
     assert.equal(action(state, 'skipTutorialShare', { taskId: item.id }).ok, true);
   }
   assert.equal(tutorialStatus(state).finished, true);
-  assert.equal(tutorialStatus(state).shouldAutoOpen, false);
   assert.equal(tutorialStatus(state).claimed, 25);
   assert.equal(state.worldTimeMs, NOW);
-  assert.equal(state.constructionProjects[0].building, 'townhall');
-  assert.equal(state.buildings.townhall.level, 1);
   const restored = reload(state);
   for (const item of TUTORIAL_LESSONS) assert.equal(claim(restored, item.id).ok, false);
-});
-
-test('automatic minigame input cannot renew active-play or manufacture a tutorial gameplay event', () => {
-  const state = island();
-  assert.equal(progressionAction(state, { type: 'userActivity', visible: true, focused: true, meaningful: false }).ok, false);
-  recordProgressionAction(state, { type: 'expeditionMiniGameInput', meaningful: false }, { ok: true });
-  assert.equal(activePlayMultiplier(state), 1);
-  assert.equal(state.tutorial.events['expedition-play'], undefined);
 });

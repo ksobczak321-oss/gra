@@ -60,6 +60,9 @@ jobs:
       - name: Test production domain preparation safety
         run: python3 tests/harborlight-domain.test.py
 
+      - name: Test isolated runtime and Hosting configuration
+        run: python3 tests/harborlight-runtime-config.test.py
+
       - name: Install browser acceptance dependencies
         shell: bash
         run: |
@@ -86,56 +89,18 @@ jobs:
           python3 scripts/build_frontend.py --commit "$GITHUB_SHA" \
             --output build/frontend --archive build/harborlight-frontend.tar.gz
 
-      - name: Test packaged game in Chromium
+      - name: Test packaged v18 game in Chromium
         id: browser
+        env:
+          HARBORLIGHT_FRONTEND_ROOT: ${{ github.workspace }}/build/frontend
         shell: bash
         run: |
           set -euo pipefail
-          python3 -m http.server 8765 --bind 127.0.0.1 --directory build/frontend \
-            > "$RUNNER_TEMP/harborlight-frontend-server.log" 2>&1 &
-          frontend_server_pid=$!
-          cleanup_frontend_server() {
-            kill "$frontend_server_pid" 2>/dev/null || true
-            wait "$frontend_server_pid" 2>/dev/null || true
-          }
-          trap cleanup_frontend_server EXIT
-          frontend_ready=false
-          for attempt in {1..40}; do
-            if ! kill -0 "$frontend_server_pid" 2>/dev/null; then
-              cat "$RUNNER_TEMP/harborlight-frontend-server.log"
-              printf '::error::Packaged frontend server exited before browser acceptance.\n'
-              exit 1
-            fi
-            if curl --fail --silent --output /dev/null --max-time 1 \
-              http://127.0.0.1:8765/release.json; then
-              frontend_ready=true
-              break
-            fi
-            sleep 0.25
-          done
-          if [[ "$frontend_ready" != true ]]; then
-            printf '::error::Packaged frontend server did not become ready.\n'
-            exit 1
-          fi
-          set +e
-          HARBORLIGHT_BASE_URL=http://127.0.0.1:8765 \
-            python3 -u tests/harborlight-frontend-v17-smoke.py 2>&1 | tee "$RUNNER_TEMP/harborlight-browser.log"
-          browser_status=${PIPESTATUS[0]}
-          set -e
-          if (( browser_status != 0 )); then
-            node --input-type=module - "$RUNNER_TEMP/harborlight-browser.log" <<'JS' || true
-          import { readFileSync } from 'node:fs';
-          const text = readFileSync(process.argv[2], 'utf8') || 'Browser acceptance failed without output.';
-          let escaped = '';
-          for (const character of Array.from(text.slice(-6000)).reverse()) {
-            const piece = character === '%' ? '%25' : character === '\r' ? '%0D' : character === '\n' ? '%0A' : character;
-            if (escaped.length + piece.length > 6000) break;
-            escaped = piece + escaped;
-          }
-          console.log(`::error title=Browser acceptance failed::${escaped}`);
-          JS
-          fi
-          exit "$browser_status"
+          {
+            python3 -u tests/harborlight-frontend-v17-smoke.py
+            python3 -u tests/harborlight-frontend-v18-smoke.py
+            python3 -u tests/harborlight-tutorial-v18-smoke.py
+          } 2>&1 | tee "$RUNNER_TEMP/harborlight-browser.log"
 
       - name: Test packaged DEV login and cloud saves in Chromium
         id: dev_browser
@@ -149,7 +114,7 @@ jobs:
           import subprocess
           import sys
 
-          for test in ('tests/harborlight-dev-auth-smoke.py', 'tests/harborlight-dev-game-smoke.py'):
+          for test in ('tests/harborlight-dev-auth-smoke.py', 'tests/harborlight-dev-game-smoke.py', 'tests/harborlight-v18-auth-smoke.py'):
               status = subprocess.call([sys.executable, '-u', test])
               if status:
                   sys.exit(status)
@@ -173,8 +138,7 @@ jobs:
           name: browserfailure-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             ${{ runner.temp }}/harborlight-browser.log
-            ${{ runner.temp }}/harborlight-frontend-server.log
-            /tmp/harborlight-v17-*.png
+            /tmp/harborlight-v18-*.png
           if-no-files-found: error
           retention-days: 7
 

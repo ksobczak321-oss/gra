@@ -4,11 +4,12 @@
 import {
   MATERIAL_IDS, stockRoom, receiveMaterials, notify,
   quoteInstantTransport, instantTransport, estimateMaterialsSeconds, availableGoods, haulCapacity
-} from './harborlight-v1-logistics.js?v=frontend-v17';
+} from './harborlight-v1-logistics.js?v=frontend-v18';
+import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v18';
 import { secondsUntilWarsawMidnight } from './harborlight-v1-calendar.js';
 import { MINI_GAME_RULES, miniGameRoundRules, createMiniGame, normalizeMiniGame,
-  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v17';
-export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v17';
+  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v18';
+export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v18';
 
 const HOUR = 3600;
 const QUEST_LIFE = 6 * HOUR;
@@ -44,7 +45,9 @@ export const ACTIVITY_RULES = Object.freeze({
   purchasedBuildSeconds: 10,
   packagePricePerLevel: 1000, packageDuration: DAY,
   taskConfirmationSeconds: 60,
-  taskDuration: QUEST_LIFE, expeditionBase: 50, maximumAdSeconds: 30,
+  taskDuration: QUEST_LIFE, expeditionBase: 50, maximumAdSeconds: 120,
+  extraTimeSeconds: 30, extraTimeCoins: 10, maximumExtraTimePurchases: 2,
+  adTimeSeconds: 60, maximumAdTimeRewards: 1, adPauseTimeoutSeconds: 120,
   expeditionOvertimeCoinsPerSecond: 10, presenceIdleSeconds: 300, presenceConfirmationSeconds: 60,
   expeditionCurve: Object.freeze({ baseSeconds: 180, difficultyPerStage: 0.1, provisional: true }),
   social: [
@@ -250,7 +253,9 @@ export function normalizeActivities(state, raw = {}) {
   state.taskScheduleVersion = 9;
   state.lastMeaningfulActivityAt = Math.min(state.activityClock, nonnegative(raw.lastMeaningfulActivityAt, state.activityClock));
   state.rewardBuffer = zeros();
-  for (const id of MATERIAL_IDS) state.rewardBuffer[id] = integer(raw.rewardBuffer?.[id]);
+  // normalizeLogisticsState migrates legacy pending/reward goods into the
+  // spendable bonus ledger. Never restore that old buffer a second time.
+  state.expeditionAdReceipts = [...new Set((Array.isArray(raw.expeditionAdReceipts) ? raw.expeditionAdReceipts : []).filter(value => typeof value === 'string' && /^[A-Za-z0-9._:-]{1,160}$/.test(value)))].slice(-100);
   state.lighthouseTasks = [];
   const original = Array.isArray(raw.lighthouseTasks) ? raw.lighthouseTasks : [];
   for (const item of original) {
@@ -309,12 +314,21 @@ export function normalizeActivities(state, raw = {}) {
       remaining: Math.max(0, roundLimit - (state.activityClock - startedAt)),
       presencePromptAt: validNumber(item.presencePromptAt) && item.presencePromptAt <= state.activityClock ? nonnegative(item.presencePromptAt) : null,
       finishedAt: validNumber(item.finishedAt) ? nonnegative(item.finishedAt) : null,
-      lossReason: typeof item.lossReason === 'string' ? item.lossReason.slice(0, 80) : null
+      lossReason: typeof item.lossReason === 'string' ? item.lossReason.slice(0, 80) : null,
+      extraTimePurchases: integer(item.extraTimePurchases, 0, ACTIVITY_RULES.maximumExtraTimePurchases),
+      adAttempts: integer(item.adAttempts, 0, 1),
+      adTimeRewards: integer(item.adTimeRewards, 0, ACTIVITY_RULES.maximumAdTimeRewards),
+      adSequence: integer(item.adSequence), adPause: null
     };
     if (rulesVersion === 16) {
       const restored = state.expeditionRuns[id];
       restored.rulesVersion = 16; restored.miniGame = miniGame;
       restored.selectedGameKind = isMiniGameKind(item.selectedGameKind) ? item.selectedGameKind : miniGame?.kind || null;
+      if (restored.status === 'active' && plain(item.adPause) && typeof item.adPause.nonce === 'string' &&
+          item.adPause.nonce === `${restored.id}:${restored.level}:ad:${restored.adSequence}` && validNumber(item.adPause.remaining) &&
+          item.adPause.remaining > 0 && item.adPause.remaining <= ACTIVITY_RULES.adPauseTimeoutSeconds) {
+        restored.adPause = { nonce: item.adPause.nonce, remaining: item.adPause.remaining };
+      }
       if (!miniGame && ['active', 'decision'].includes(restored.status)) {
         restored.status = 'lost'; restored.pot = 0; restored.lossReason = 'invalid-minigame'; restored.finishedAt = state.activityClock;
       }
@@ -368,30 +382,18 @@ export function taskStatus(state, taskOrId) {
 }
 function refillRewardBuffer(state) {
   if (!plain(state.rewardBuffer)) state.rewardBuffer = zeros();
-  let moved = 0;
-  for (const id of MATERIAL_IDS) {
-    const quantity = Math.min(integer(state.rewardBuffer[id]), stockRoom(state, id));
-    if (quantity > 0) {
-      state.resources[id] += quantity;
-      state.rewardBuffer[id] -= quantity;
-      moved += quantity;
-    }
-  }
-  if (moved) signal(state, 'reward-released', 'Reward goods delivered', moved + ' stored reward items moved into the central warehouse.');
+  const remaining = Object.fromEntries(MATERIAL_IDS.map(id => [id, integer(state.rewardBuffer[id])]));
+  if (sum(remaining)) receiveMaterials(state, remaining);
+  state.rewardBuffer = zeros();
 }
 function grantTaskReward(state, task) {
-  const values = taskReward(task);
-  const coins = values.coins || 0;
+  const values = taskReward(task), coins = values.coins || 0;
   if (!Number.isSafeInteger(integer(state.resources.coins) + coins)) return false;
   state.resources.coins += coins;
-  for (const id of MATERIAL_IDS) {
-    const quantity = integer(values[id]);
-    const stored = Math.min(quantity, stockRoom(state, id));
-    if (stored) receiveMaterials(state, { [id]: stored }, { overflowToPending: false });
-    state.rewardBuffer[id] = integer(state.rewardBuffer[id]) + quantity - stored;
-  }
+  // Reward materials are spendable bonus stock. Physical stock and reservations
+  // in transit cannot swallow part of this credit.
+  receiveMaterials(state, values);
   signal(state, 'lighthouse-task-reward', 'Lighthouse task complete', 'Reward: ' + coins + ' coins. Multiplier ×' + task.multiplier + '.');
-  if (sum(state.rewardBuffer)) signal(state, 'reward-buffer', 'Reward goods waiting', 'Your reward exceeds available warehouse space. The remainder will be delivered automatically when space opens.');
   return true;
 }
 function replaceTask(state, index, at = currentClock(state), completed = false) {
@@ -408,9 +410,8 @@ function replaceTask(state, index, at = currentClock(state), completed = false) 
   return next;
 }
 
-// Designer defaults, deliberately configurable until individual puzzle balance
-// is specified. The clock shortens with each stage; the payout increment does
-// not depend on stage and always uses the previous round's actual remainder.
+// Time limits are explicit designer defaults. New mini-game round awards
+// double by stage, while legacy route series retain their saved +50 rules.
 export function expeditionRoundRules(stageNumber = 1, overrides = {}) {
   const stage = Math.max(1, integer(stageNumber, 1));
   const baseSeconds = Math.max(1, nonnegative(overrides.baseSeconds, 180, 86400));
@@ -435,11 +436,12 @@ export function expeditionRoundStatus(state, runOrId = activeExpeditionRun(state
     const fullRewardUntil = run.roundLimit * MINI_GAME_RULES.fullRewardRatio;
     const penaltyEvery = run.roundLimit / MINI_GAME_RULES.penaltyIntervals;
     const penalty = Math.floor(Math.max(0, elapsed - fullRewardUntil) / penaltyEvery + 1e-9);
-    const roundReward = Math.max(0, MINI_GAME_RULES.baseReward - penalty);
+    const nominalReward = expeditionRoundReward(run.level);
+    const roundReward = nominalReward === null ? 0 : Math.max(0, nominalReward - penalty);
     const presenceRequired = ['active', 'decision'].includes(run.status) && run.presencePromptAt !== null;
     return { active, decision: run.status === 'decision', stage: run.level, pot: run.pot,
       potentialPot: active ? Math.min(SAFE, run.pot + roundReward) : run.pot,
-      roundReward, elapsed, timeLimit: run.roundLimit, remaining: active ? Math.max(0, run.roundLimit - elapsed) : 0,
+      roundReward, nominalReward, adPaused: !!run.adPause, extraTimePurchases: run.extraTimePurchases || 0, adTimeRewards: run.adTimeRewards || 0, elapsed, timeLimit: run.roundLimit, remaining: active ? Math.max(0, run.roundLimit - elapsed) : 0,
       overtimeSeconds: Math.max(0, elapsed - fullRewardUntil), overtimePenalty: penalty,
       nextOvertimeIn: active ? Math.max(0.001, elapsed < fullRewardUntil ? fullRewardUntil + penaltyEvery - elapsed :
         fullRewardUntil + (penalty + 1) * penaltyEvery - elapsed) : 0,
@@ -460,7 +462,7 @@ export function expeditionRoundStatus(state, runOrId = activeExpeditionRun(state
     status: run.status, runId: run.id };
 }
 function loseExpedition(state, run, reason, at = currentClock(state)) {
-  run.status = 'lost'; run.pot = 0; run.presencePromptAt = null; run.finishedAt = at; run.lossReason = reason;
+  run.status = 'lost'; run.pot = 0; run.presencePromptAt = null; run.adPause = null; run.finishedAt = at; run.lossReason = reason;
   if (state.activeExpeditionId === run.expedition) state.activeExpeditionId = null;
   if (run.miniGame?.kind === 'tilt') { run.miniGame.tiltX = 0; run.miniGame.tiltY = 0; }
   signal(state, 'expedition-lost', 'Expedition ended', reason === 'presence-timeout' ? 'The presence confirmation expired. The whole unclaimed pot was lost.' : reason === 'deadline' ? 'Time ran out. The whole unclaimed expedition pot was lost.' : reason === 'overtime' ? 'Overtime consumed the whole potential pot.' : 'The whole unclaimed expedition pot was lost.');
@@ -478,6 +480,7 @@ function finishMiniGameRound(state, run, at = currentClock(state)) {
 }
 function settleExpedition(state, run) {
   if (!['active', 'decision'].includes(run.status)) return;
+  if (run.adPause) { run.remaining = expeditionRoundStatus(state, run).remaining; return; }
   const now = currentClock(state);
   const promptAt = run.presencePromptAt ?? nonnegative(state.lastMeaningfulActivityAt, now) + ACTIVITY_RULES.presenceIdleSeconds;
   const presenceLossAt = promptAt + ACTIVITY_RULES.presenceConfirmationSeconds;
@@ -500,6 +503,7 @@ export function nextActivitiesEvent(state) {
   if (state.taskAcceptanceDraft) remaining = Math.min(remaining, Math.max(0, state.taskAcceptanceDraft.expiresAt - now));
   for (const run of Object.values(state.expeditionRuns || {})) {
     if (!['active', 'decision'].includes(run.status)) continue;
+    if (run.adPause) { remaining = Math.min(remaining, run.adPause.remaining); continue; }
     const presenceAt = run.presencePromptAt !== null ? run.presencePromptAt + ACTIVITY_RULES.presenceConfirmationSeconds : nonnegative(state.lastMeaningfulActivityAt, now) + ACTIVITY_RULES.presenceIdleSeconds;
     remaining = Math.min(remaining, Math.max(0, presenceAt - now));
     if (run.status === 'active') {
@@ -517,9 +521,17 @@ export function advanceActivities(state, seconds) {
   const previousClock = currentClock(state), target = previousClock + seconds;
   for (const run of Object.values(state.expeditionRuns || {})) {
     if (run.rulesVersion !== 16 || run.status !== 'active' || !run.miniGame) continue;
-    const availableSeconds = Math.max(0, Math.min(seconds, run.roundStartedAt + run.roundLimit - previousClock));
-    const result = advanceMiniGame(run.miniGame, availableSeconds, previousClock);
-    if (result.solved) finishMiniGameRound(state, run, previousClock + result.elapsed);
+    const pauseSeconds = run.adPause ? Math.min(seconds, run.adPause.remaining) : 0;
+    if (pauseSeconds) {
+      run.roundStartedAt += pauseSeconds;
+      state.lastMeaningfulActivityAt = nonnegative(state.lastMeaningfulActivityAt, previousClock) + pauseSeconds; // Presence pause only; engagement tracks real input separately.
+      for (const key of ['hideAt', 'nextShuffleAt']) if (validNumber(run.miniGame[key])) run.miniGame[key] += pauseSeconds;
+      run.adPause.remaining = Math.max(0, run.adPause.remaining - pauseSeconds);
+      if (run.adPause.remaining <= 1e-9) run.adPause = null;
+    }
+    const availableSeconds = Math.max(0, Math.min(seconds - pauseSeconds, run.roundStartedAt + run.roundLimit - previousClock - pauseSeconds));
+    const result = advanceMiniGame(run.miniGame, availableSeconds, previousClock + pauseSeconds);
+    if (result.solved) finishMiniGameRound(state, run, previousClock + pauseSeconds + result.elapsed);
   }
   state.activityClock = target;
   if (state.taskAcceptanceDraft && state.taskAcceptanceDraft.expiresAt <= target + 1e-9) state.taskAcceptanceDraft = null;
@@ -554,8 +566,8 @@ export function quoteAcceleration(state, projectOrOrder, percent) {
   const coins = Math.max(ACTIVITY_RULES.minimumAccelerationPrice, fullMinutes);
   return good('Construction acceleration quote.', { coins, savedSeconds, remaining: project.buildRemaining - savedSeconds, percent, project: project.order });
 }
-export function quoteTransport(state, action) {
-  if (level(state, 'townhall') < ACTIVITY_RULES.premiumUnlockLevel) return bad('Instant transport unlocks at Town Hall level 4.');
+export function quoteTransport(state, action, context = {}) {
+  if (!context.cashPurchase && level(state, 'townhall') < ACTIVITY_RULES.premiumUnlockLevel) return bad('Instant transport unlocks at Town Hall level 4.');
   const quote = quoteInstantTransport(state, action);
   if (!quote?.ok) return quote || bad('This transport route is unavailable.');
   return { ...quote, coins: integer(quote.trips) * ACTIVITY_RULES.transportCoinsPerTrip };
@@ -567,7 +579,7 @@ function warehouseCarryCapacity(state) {
   return haulCapacity(state, 'warehouse');
 }
 export function quotePremiumBuilding(state, building, context = {}) {
-  if (level(state, 'townhall') < ACTIVITY_RULES.premiumUnlockLevel) return bad('Buying a building without materials unlocks at Town Hall level 4.');
+  if (!context.cashPurchase && level(state, 'townhall') < ACTIVITY_RULES.premiumUnlockLevel) return bad('Buying a building without materials unlocks at Town Hall level 4.');
   if (typeof context.buildingCost !== 'function') return bad('The construction price is not available.');
   const cost = context.buildingCost(state, building, { queued: false, premiumService: true });
   if (!plain(cost)) return bad('This building does not exist.');
@@ -641,8 +653,13 @@ function expeditionOf(state, runId) {
 function definitionOf(context, id) {
   return (context.expeditions || []).find(definition => definition.id === id) || null;
 }
+export function expeditionRoundReward(stageNumber = 1) {
+  if (!Number.isSafeInteger(stageNumber) || stageNumber < 1 || stageNumber > 48) return null;
+  const value = ACTIVITY_RULES.expeditionBase * 2 ** (stageNumber - 1);
+  return Number.isSafeInteger(value) && value > 0 ? value : null;
+}
 export function expeditionPot(levelNumber) {
-  const value = 50 * levelNumber;
+  const value = ACTIVITY_RULES.expeditionBase * (2 ** levelNumber - 1);
   return Number.isSafeInteger(value) && value > 0 ? value : null;
 }
 function ownCoins(state, price) {
@@ -660,13 +677,65 @@ function prepareMiniGameRound(state, run, stage, context, requestedKind) {
   run.selectedGameKind = kind;
   run.miniGame = createMiniGame(kind, stage, seed, currentClock(state));
   run.roundLimit = rules.timeLimit; run.remaining = rules.timeLimit;
+  run.extraTimePurchases = 0; run.adTimeRewards = 0; run.adAttempts = 0; run.adPause = null;
   return rules;
+}
+
+export function quoteExtraTime(state, runOrId = activeExpeditionRun(state)) {
+  const run = typeof runOrId === 'string' ? expeditionOf(state, runOrId) : runOrId;
+  if (!run || run.rulesVersion !== 16 || run.status !== 'active') return bad('Choose an active mini-game round.');
+  if (run.presencePromptAt !== null) return bad('Confirm your presence before buying time.');
+  if (run.adPause) return bad('Finish or cancel the ad before buying time.');
+  if (!(expeditionRoundStatus(state, run).remaining > 1e-9)) return bad('Additional time must be bought before the deadline.');
+  const remainingPurchases = Math.max(0, ACTIVITY_RULES.maximumExtraTimePurchases - integer(run.extraTimePurchases));
+  if (!remainingPurchases) return bad('The time purchase limit for this round has been reached.');
+  return good('Additional time quote.', { runId: run.id, coins: ACTIVITY_RULES.extraTimeCoins,
+    seconds: ACTIVITY_RULES.extraTimeSeconds, remainingPurchases, maxPurchases: ACTIVITY_RULES.maximumExtraTimePurchases });
 }
 
 export function activityAction(state, action, context = {}) {
   if (!plain(action) || typeof action.type !== 'string') return null;
   const type = action.type;
   if (type.startsWith('expedition') || ['presenceConfirm', 'taskAccept', 'beginTaskAcceptance', 'confirmTaskAcceptance', 'cancelTaskAcceptance', 'taskDeposit'].includes(type)) advanceActivities(state, 0);
+  if (['expeditionExtraTime', 'expeditionAdBegin', 'expeditionAdComplete', 'expeditionAdCancel'].includes(type)) {
+    const run = expeditionOf(state, action.runId);
+    if (!run || run.rulesVersion !== 16 || run.status !== 'active') return bad('This mini-game round is no longer active.');
+    if (type === 'expeditionExtraTime') {
+      const quote = quoteExtraTime(state, run);
+      if (!quote.ok) return quote;
+      if (!ownCoins(state, quote.coins)) return bad('Not enough coins for additional time.');
+      consumeMaterial(state, 'coins', quote.coins);
+      run.roundLimit += quote.seconds; run.extraTimePurchases = integer(run.extraTimePurchases) + 1;
+      run.remaining = expeditionRoundStatus(state, run).remaining;
+      return good('Added ' + quote.seconds + ' seconds for ' + quote.coins + ' coins.', quote);
+    }
+    if (type === 'expeditionAdBegin') {
+      if (run.adPause) return bad('An ad is already in progress.');
+      if (run.presencePromptAt !== null || !(expeditionRoundStatus(state, run).remaining > 1e-9)) return bad('Start the ad before the round deadline and confirm your presence first.');
+      if (integer(run.adAttempts) >= 1 || integer(run.adTimeRewards) >= ACTIVITY_RULES.maximumAdTimeRewards) return bad('The ad limit for this round has been reached.');
+      run.adSequence = integer(run.adSequence) + 1; run.adAttempts = integer(run.adAttempts) + 1;
+      const nonce = `${run.id}:${run.level}:ad:${run.adSequence}`;
+      run.adPause = { nonce, remaining: ACTIVITY_RULES.adPauseTimeoutSeconds };
+      if (run.miniGame?.kind === 'tilt') { run.miniGame.tiltX = 0; run.miniGame.tiltY = 0; }
+      return good('The round is paused while the ad is in progress. The island world continues.',
+        { runId: run.id, nonce, timeout: ACTIVITY_RULES.adPauseTimeoutSeconds, seconds: ACTIVITY_RULES.adTimeSeconds });
+    }
+    if (!run.adPause || action.nonce !== run.adPause.nonce) return bad('This ad is no longer pending.');
+    if (!(expeditionRoundStatus(state, run).remaining > 1e-9)) { run.adPause = null; settleExpedition(state, run); return bad('The round deadline has passed.'); }
+    if (type === 'expeditionAdCancel') {
+      run.adPause = null;
+      return good('Ad skipped. No extra time was awarded. The round continues.');
+    }
+    const receiptId = action.receiptId;
+    if (context.rewardedAdVerified !== true || typeof receiptId !== 'string' || !/^[A-Za-z0-9._:-]{1,160}$/.test(receiptId)) return bad('A verified rewarded-ad completion is required.');
+    state.expeditionAdReceipts ||= [];
+    if (state.expeditionAdReceipts.includes(receiptId)) return bad('This ad completion was already used.');
+    if (integer(run.adTimeRewards) >= ACTIVITY_RULES.maximumAdTimeRewards) return bad('The ad reward for this round was already received.');
+    state.expeditionAdReceipts.push(receiptId); state.expeditionAdReceipts = state.expeditionAdReceipts.slice(-100);
+    run.adPause = null; run.adTimeRewards = integer(run.adTimeRewards) + 1;
+    run.roundLimit += ACTIVITY_RULES.adTimeSeconds; run.remaining = expeditionRoundStatus(state, run).remaining;
+    return good('Added ' + ACTIVITY_RULES.adTimeSeconds + ' seconds for the verified ad.', { seconds: ACTIVITY_RULES.adTimeSeconds, runId: run.id });
+  }
   if (['seeTaskAchievement', 'shareTaskAchievement', 'skipTaskAchievement'].includes(type)) {
     const achievement = (state.taskAchievements || []).find(item => item.id === action.id);
     if (!achievement) return bad('This completed task achievement is not available.');
@@ -727,8 +796,8 @@ export function activityAction(state, action, context = {}) {
     if (quantity > needed) return bad('This contribution exceeds the remaining requirement.');
     if (availableMaterial(state, resource) < quantity) return bad(resource === 'food' ? 'Keep the protected food reserve in the central warehouse.' : 'Not enough goods in the central warehouse.');
     const complete = entries(task.requirements).every(([id, value]) => task.deposited[id] + (id === resource ? quantity : 0) >= value);
-    if (complete && !Number.isSafeInteger(integer(state.resources.coins) + (taskReward(task).coins || 0))) return bad('Your coin balance cannot hold this reward.');
-    state.resources[resource] -= quantity;
+    if (complete && entries(taskReward(task)).some(([id, value]) => !Number.isSafeInteger(value) || !Number.isSafeInteger(integer(state.resources[id]) + value))) return bad('Your balance cannot hold this reward.');
+    consumeMaterial(state, resource, quantity);
     task.deposited[resource] += quantity;
     if (complete) {
       grantTaskReward(state, task);
@@ -749,7 +818,7 @@ export function activityAction(state, action, context = {}) {
     if (!quote.ok) return quote;
     if (!ownCoins(state, quote.coins)) return bad('Not enough coins for this acceleration.');
     const project = projectOf(state, action.project);
-    state.resources.coins -= quote.coins;
+    consumeMaterial(state, 'coins', quote.coins);
     project.buildRemaining = Math.max(0, project.buildRemaining - quote.savedSeconds);
     return good('Construction shortened by ' + Math.floor(quote.savedSeconds) + ' seconds for ' + quote.coins + ' coins.', quote);
   }
@@ -760,17 +829,17 @@ export function activityAction(state, action, context = {}) {
     if (!ownCoins(state, quote.coins)) return bad('Not enough coins for instant transport.');
     const moved = instantTransport(state, action);
     if (!moved?.ok) return moved || bad('This transport route is unavailable.');
-    state.resources.coins -= quote.coins;
+    consumeMaterial(state, 'coins', quote.coins);
     return good(moved.message + ' Cost: ' + quote.coins + ' coins.', { coins: quote.coins });
   }
   if (type === 'premiumBuyBuilding') {
-    const quote = quotePremiumBuilding(state, action.building, context);
+    const quote = quotePremiumBuilding(state, action.building, { ...context, cashPurchase: false });
     if (!quote.ok) return quote;
     if (!ownCoins(state, quote.coins)) return bad('Not enough coins to buy the building.');
     if (typeof context.requestUpgrade !== 'function') return bad('Construction is unavailable.');
     // Reserve the full charge before promoting any other affordable forecasts.
     // The callback may start old orders, so a later charge could overspend.
-    state.resources.coins -= quote.coins;
+    consumeMaterial(state, 'coins', quote.coins);
     const started = context.requestUpgrade({ building: action.building, cost: quote.cost, paidMaterials: true, paidCoins: true, skipTransport: true, premiumService: true });
     if (!started?.ok) {
       state.resources.coins += quote.coins;
@@ -783,7 +852,7 @@ export function activityAction(state, action, context = {}) {
     if (!quote.ok) return quote;
     if (!ownCoins(state, quote.coins)) return bad('Not enough coins for the forecast scheduling fee.');
     if (typeof context.requestUpgrade !== 'function') return bad('Construction is unavailable.');
-    state.resources.coins -= quote.coins;
+    consumeMaterial(state, 'coins', quote.coins);
     const planned = context.requestUpgrade({ building: action.building, cost: quote.cost, forecast: true, forecastFee: quote.coins });
     if (!planned?.ok) {
       state.resources.coins += quote.coins;
@@ -795,7 +864,7 @@ export function activityAction(state, action, context = {}) {
     const quote = quoteConstructionPackage(state);
     if (!quote.ok) return quote;
     if (!ownCoins(state, quote.coins)) return bad('Not enough coins for the construction package.');
-    state.resources.coins -= quote.coins;
+    consumeMaterial(state, 'coins', quote.coins);
     state.premium = { ...state.premium, expiresAt: quote.expiresAt };
     return good('Construction package activated for another 24 hours. Four additional builds, unlimited queue and expected-delivery planning are available.', quote);
   }
@@ -824,6 +893,7 @@ export function activityAction(state, action, context = {}) {
     if (!run) return bad('This expedition run is no longer available.');
     if (type === 'expeditionMiniGameInput' || type === 'expeditionMiniGameReveal') {
       if (run.rulesVersion !== 16 || run.status !== 'active') return bad('This mini-game round is no longer active.');
+      if (run.adPause) return bad('Finish or cancel the ad before playing the round.');
       if (run.presencePromptAt !== null) return bad('Confirm your presence before completing this round.');
       if (type === 'expeditionMiniGameInput') {
         const changed = Math.hypot((action.tiltX ?? 0) - run.miniGame.tiltX, (action.tiltY ?? 0) - run.miniGame.tiltY) > 0.02;
@@ -844,7 +914,8 @@ export function activityAction(state, action, context = {}) {
       if (action.gameKind !== undefined && !isMiniGameKind(action.gameKind)) return bad('Choose Marble maze or Picture triples.');
       if (run.status !== 'decision') return bad('Complete the current level before continuing.');
       if (run.presencePromptAt !== null) return bad('Confirm your presence before starting the next round.');
-      if (!Number.isSafeInteger(run.pot + 50) || !Number.isSafeInteger(run.level + 1)) return bad('Cash out the current pot before starting another series.');
+      const nextReward = run.rulesVersion === 16 ? expeditionRoundReward(run.level + 1) : 50;
+      if (nextReward === null || !Number.isSafeInteger(run.pot + nextReward) || !Number.isSafeInteger(run.level + 1)) return bad('Cash out the current pot before starting another series.');
       const rules = expeditionRoundRules(run.level + 1, context.expeditionCurve || state.activitySettings?.expeditionCurve);
       const limit = validNumber(action.limit) && action.limit > 0 ? Math.min(86400, action.limit) : rules.timeLimit;
       run.level++; run.status = 'active'; run.startedAt = currentClock(state);
@@ -852,7 +923,7 @@ export function activityAction(state, action, context = {}) {
       run.roundBasePot = run.pot + 50; run.finishedAt = null; run.lossReason = null;
       const currentRules = run.rulesVersion === 16 ? prepareMiniGameRound(state, run, run.level, context, action.gameKind) : rules;
       state.lastMeaningfulActivityAt = currentClock(state);
-      return good('The entire ' + run.pot + '-coin pot is now at risk. A timely win adds 50 coins to its actual remainder.', { rules: currentRules });
+      return good('The entire ' + run.pot + '-coin pot is now at risk. A timely win adds up to ' + nextReward + ' coins.', { rules: currentRules, roundReward: nextReward });
     }
     if (type === 'expeditionCashout') {
       if (run.status !== 'decision' || !run.pot) return bad('There is no completed expedition pot to cash out.');
@@ -881,6 +952,6 @@ export function activityAction(state, action, context = {}) {
     if (state.statistics) state.statistics.expeditions = integer(state.statistics.expeditions) + 1;
     return good('Level ' + run.level + ' complete. Pot: ' + pot + ' coins. Cash out or risk it on the next level.', { pot, overtimePenalty: status.overtimePenalty, outcome: 'won' });
   }
-  if (type === 'expeditionExtraTime' || type === 'expeditionExtraMoves' || type === 'expeditionAdReward') return bad(activeExpeditionRun(state)?.rulesVersion === 16 ? 'Time cannot be bought. Complete the mini-game before its deadline. Rewarded ads remain a future feature.' : 'Time cannot be bought. Overtime automatically reduces the potential pot by 10 coins per whole second. Rewarded ads remain a future feature.');
+  if (type === 'expeditionExtraMoves' || type === 'expeditionAdReward') return bad('Use the time purchase or a verified rewarded-ad completion.');
   return null;
 }

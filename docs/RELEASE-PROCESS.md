@@ -1,59 +1,71 @@
 # Kolejność pracy i promocji HARBORLIGHT
 
-Zasada ustalona 30 października 2026: **praca tutaj → synchronizacja do GitHub → CI → GCP DEV → GCP PROD**. Synchronizacja kodu nie jest promocją do chmury. DEV i PROD uruchamiamy osobno; na PROD trafia wyłącznie kompletny pakiet sprawdzony wcześniej na DEV.
+Obowiązuje **DEV tutaj → GitHub i CI → PRE-PROD → PROD**. PRE-PROD to istniejący projekt `harborlight-dev`, PROD to `harborlight-prod`. Nazwy workflow `google-cloud-dev.yml`, środowiska GitHub i artefaktów `harborlight-dev-*` pozostają technicznym kontraktem; w starszych dowodach słowo DEV oznacza dzisiejszy PRE-PROD.
 
-## 1. Rozwój, GitHub i CI
+Push, kontrola konfiguracji, test lokalny i publikacja to odrębne operacje. Aktualny zakres: [v18](FRONTEND-V18-REQUIREMENTS.md). Bieżące wyniki i faktyczne SHA zapisuje [dziennik](IMPLEMENTATION-LOG.md).
 
-Zmiany powstają w roboczym środowisku Codex, przechodzą odpowiednie testy lokalne i trafiają do Git. Push na `main` uruchamia [CI](../.github/workflows/ci.yml): reguły gry, blokady promocji, backend, konfigurację chmury i domeny oraz budowę publicznego pakietu. Pełne testy Chromium działają z plików tego pakietu, nie z całego katalogu repozytorium.
+## 1. Kod, GitHub i CI
 
-Dotychczasowy GitHub Pages pozostaje **podglądem deweloperskim**, a nie GCP PROD. Jego aktualizacja nie jest dowodem przejścia DEV. Push nie uruchamia automatycznie publikacji Google Cloud.
+Zmiany powstają w roboczym DEV, przechodzą odpowiednie lokalne testy i trafiają do Git. Push na `main` uruchamia CI, nie publikację Google Cloud. GitHub Pages jest podglądem deweloperskim, nie PROD.
 
-## 2. Promocja całej gry na GCP DEV
+CI waliduje model gry i migracje, reguły promocji, API, konfigurację, deterministyczny publiczny pakiet oraz testy Chromium z tego pakietu. Scenariusze testowe tworzą izolowane fikstury tylko w lokalnym odbiorze pakietu; nie zastępują wysp stałych kont chmurowych.
 
-Uruchomienie [workflow DEV](../.github/workflows/google-cloud-dev.yml) z `main` wymaga udanego CI po pushu dla **tego samego pełnego SHA commitu**. Brak zielonego CI zatrzymuje proces przed uzyskaniem poświadczeń Google.
+Lista publicznych plików jest jawna. Archiwum nie zawiera repozytorium Git, dokumentacji, sekretów ani historycznych gier. `release.json` wiąże pełny SHA z hashami i rozmiarami zawartości. Hash manifestu i archiwum są osobnymi dowodami.
 
-Workflow przygotowuje dwa elementy wydania:
+## 2. Promocja na PRE-PROD
 
-- obraz backendu, budowany raz i wdrażany na Cloud Run przez niezmienny `image@sha256`;
-- deterministyczne archiwum frontendu: aktywne pliki gry i grafiki oraz manifest `release.json` wiążący SHA z hashami plików.
+[Techniczny workflow DEV](../.github/workflows/google-cloud-dev.yml) uruchamia się ręcznie z `main` po zielonym CI **tego samego pełnego SHA**. Kontrola bez poświadczeń Google blokuje brak dowodu przed dostępem do WIF.
 
-Frontend trafia do targetu `hosting:game` na witrynie `harborlight-dev`. Po publikacji workflow porównuje pobrany po HTTPS manifest z oczekiwanym SHA/hash i uruchamia pełne pięć grup testów rzeczywistej gry pod planowanym adresem `https://harborlight-dev.web.app`. Publiczne sondy backendu `/health` i `/ready` muszą równocześnie potwierdzić środowisko DEV i ten sam commit.
+Workflow buduje backend raz, wdraża przez niezmienny `image@sha256` i publikuje deterministyczny frontend do `hosting:game`/`harborlight-dev`. Publiczne `/health` i `/ready` muszą potwierdzić właściwe środowisko techniczne i wydanie; aliasy `*z` nie są publicznym dowodem Cloud Run.
 
-Wydanie ze [stałymi kontami DEV](DEV-ACCOUNTS.md) wymaga wcześniej właścicielskiego przygotowania Authentication, aplikacji Web i Firestore. Po testach hostingu workflow sprawdza rzeczywiste logowanie `admin1`–`admin3`, odczyt własnych zapisów oraz odmowę dostępu dla innych UID i żądań anonimowych. Kontrola nie nadpisuje wysp; jej błąd blokuje utworzenie potwierdzenia DEV. Zwykłe wdrożenia nie tworzą kont ani nie zmieniają ich haseł i zapisów.
+Odbiór należy rozdzielić:
 
-Dopiero po sukcesie wszystkich kontroli powstają dwa artefakty, związane z przebiegiem i numerem próby:
+- **Pełne testy reguł i scenariuszy przeglądarkowych:** pakiet lokalny w CI, z izolowanymi fiksturami.
+- **Rzeczywisty hosting:** HTTPS, manifest i SHA każdego pliku publicznego, właściwy projekt konfiguracji, anonimowe przekierowanie do konta i stan tras API.
+- **Rzeczywista zalogowana gra PRE-PROD:** odbiór renderowania istniejącej wyspy po rzeczywistym logowaniu; test nie tworzy ani nie nadpisuje wyspy. Zapisy przeglądarki są blokowane w tym scenariuszu, aby nie zastąpić postępu fiksturą.
+- **Izolacja trzech kont:** rzeczywiste logowanie admin1–3, odczyt własnego zapisu i odmowa cudzych/anonimowych odczytów. Ta kontrola nie nadpisuje danych.
 
-- `harborlight-dev-frontend-<run_id>-<run_attempt>` — dokładne archiwum plików publicznych;
-- `harborlight-dev-release-<run_id>-<run_attempt>` — potwierdzenie wydania **v2**, zawierające SHA, obraz/digest, hash archiwum i manifestu, witrynę, CI/DEV i numery prób.
+Brak istniejącej wyspy do bezpiecznego odbioru nie jest sukcesem testu. Sumy kontrolne nie są nazywane pełnym testem działania gry, a test logowania z atrapą nie potwierdza Firebase/Google/Meta. Szczegółowy zakres skryptów potwierdza workflow i log przebiegu.
 
-Retencja wynosi 90 dni. Sam obraz w rejestrze, pusty Hosting, wynik konfiguracji lub zielone testy lokalne nie zastępują potwierdzenia działającego wydania DEV.
+Dopiero sukces wymaganych kontroli tworzy parę artefaktów z tej samej próby:
 
-## 3. Promocja na GCP PROD
+- `harborlight-dev-frontend-<run_id>-<run_attempt>` — dokładne archiwum publiczne;
+- `harborlight-dev-release-<run_id>-<run_attempt>` — potwierdzenie wydania v2: SHA, digest backendu, hashe pakietu/manifestu, witryna i identyfikatory CI/PRE-PROD.
 
-W [workflow PROD](../.github/workflows/google-cloud-prod.yml) podajemy `dev_run_id` — identyfikator udanego wdrożenia DEV. Workflow nie zastępuje jego SHA najnowszym `main`.
+Retencja 90 dni. Sam obraz w rejestrze, pusty Hosting albo sondy API nie zastępują pełnego potwierdzenia v2.
 
-Oddzielny job bez prawa uzyskania tożsamości Google sprawdza właściwe repozytorium i numeryczne ID, `main`, plik workflow, udane CI i DEV, zgodne SHA oraz numery prób. Wymaga po jednym ważnym, niewygasłym artefakcie obu rodzajów. Potwierdzenia v1 obejmujące tylko sondy backendu są odrzucane.
+## 3. Promocja na PROD
 
-Dopiero zależny job weryfikuje i rozpakowuje archiwum, porównując jego hash, manifest i commit, zanim uzyska poświadczenia Google. Odrzuca obce ścieżki, linki, brakujące pliki i zmienioną zawartość. Nie buduje gry ponownie.
+[Workflow PROD](../.github/workflows/google-cloud-prod.yml) otrzymuje `dev_run_id` udanego PRE-PROD. Nie zastępuje jego SHA najnowszym `main` i nie buduje gry ponownie.
 
-PROD kopiuje identyczny obraz backendu, zachowuje manifest i porównuje digest przed wdrożeniem. Firebase Hosting otrzymuje dokładnie archiwum z DEV. Testy opublikowanej gry i manifestu sprawdzają SHA wybranego wydania, nawet jeżeli na GitHubie jest już nowszy kod.
+Osobny job bez prawa OIDC sprawdza repozytorium/numeryczne ID, gałąź, właściwy workflow, sukces CI/PRE-PROD, SHA i numery prób, a także po jednym ważnym artefakcie obu rodzajów. Potwierdzenia API-only v1 są odrzucane.
 
-Docelowa domena produkcyjna to **https://harborlight.pl**. Powiązanie domeny oraz aktywne DNS/własność/certyfikat są osobnym warunkiem gotowości PROD. Przygotowanie pustej witryny lub powiązania domeny nie publikuje gry i nie omija wcześniejszych etapów.
+Weryfikacja archiwum kończy się przed rozpakowaniem i dostępem do poświadczeń: odrzucane są obce ścieżki, linki, brakujące pliki, przekroczone limity i zmienione bajty. PROD kopiuje ten sam obraz backendu i porównuje digest, a Hosting otrzymuje identyczny pakiet z PRE-PROD. Odbiór manifestu odnosi się do SHA wybranego wydania, również gdy `main` zawiera już nowszy kod.
 
-## Uprawnienia i stan faktyczny
+Konta admin1–3 i ich testowe reguły nie są kontami PROD. Produkcyjna aktywacja API, tożsamości i danych ma własny odbiór; test anonimowej strony ani sukces starego konta PRE-PROD nie potwierdza nowej konfiguracji produkcyjnej.
 
-DEV i PROD są oddzielnymi projektami oraz środowiskami GitHub. Joby kontrolne mają dostęp do kodu i metadanych Actions; poświadczenia Google są dostępne dopiero po przejściu kontroli. WIF wymaga odpowiedniego pliku workflow z `main` i ręcznego uruchomienia.
+Przed pierwszą mutacją PROD workflow wymaga włączonej konfiguracji API oraz środowiskowych sekretów `HARBORLIGHT_PROD_SMOKE_EMAIL` i `HARBORLIGHT_PROD_SMOKE_PASSWORD` rzeczywistego konta wskazanego przez właściciela. Nie kopiujemy haseł PRE-PROD. Odbiór nie tworzy wyspy za gracza; brak istniejącego świata nie jest sukcesem testu. Szczegóły konfiguracji i pierwszego wejścia opisuje instrukcja runtime.
 
-Deployer ma Cloud Run/Hosting tylko w swoim projekcie. PROD dodatkowo potrzebuje wyłącznie odczytu repozytorium obrazów DEV. Aktualny bootstrap dodaje `artifactregistry.reader`; po starszym bootstrapie jego część PROD trzeba powtórzyć. Nie nadajemy dostępu do bazy DEV ani ogólnych ról w jego projekcie.
+Domena docelowa to **https://harborlight.pl**. Powiązanie, DNS nazwa.pl, własność i certyfikat są osobnym warunkiem. Rekordy odczytujemy z rzeczywistej odpowiedzi Firebase, nie zgadujemy i nie traktujemy przygotowania domeny jako publikacji gry.
 
-Domyślne identyfikatory projektów są publiczną konfiguracją workflow; nie trzeba kopiować sekretów do GitHuba. [Kontrola konfiguracji](../infra/google-cloud/verify.py) obejmuje 22 punkty, a `--promotion` dodaje 23. punkt roli czytelnika obrazów DEV dla PROD. Potwierdzono wynik 22/22; wynik 23. kontroli pozostaje do otrzymania.
+## 4. Konta, API i dostawcy
 
-30 października 2026 właściciel potwierdził przygotowanie kont i Firestore, a DEV [41067599818](https://github.com/ksobczak321-oss/gra/actions/runs/41067599818) dla `f161e45` zakończył się sukcesem. Gra działa pod `https://harborlight-dev.web.app`; zaliczono kontrole API, manifestu, rzeczywistego hostingu i izolacji trzech kont. Dostępne są oba artefakty wydania v2: `harborlight-dev-frontend-41067599818-1` oraz `harborlight-dev-release-41067599818-1`. To wydanie można wskazać jako źródło promocji po spełnieniu gotowości PROD/domeny i ponownej walidacji metadanych oraz hashy artefaktów przez workflow. PROD ani DNS nie zostały jeszcze wdrożone. [Stan konfiguracji](GOOGLE-CLOUD.md) rozdziela te etapy.
+PRE-PROD zachowuje istniejące Authentication/Firestore i UID `dev-admin1`–`dev-admin3`. Zwykła publikacja nie resetuje haseł, zapisów ani pakietów startowych. Kontrola przygotowania zasobów i rzeczywisty odbiór opublikowanej gry to osobne wyniki.
 
-## Wycofanie i następne elementy
+v18 zapisuje postęp wyłącznie w chmurze. Lokalny DEV może być nietrwałym podglądem, lecz nie daje lokalnego konta ani kopii odzyskiwania. Dane Firebase pochodzą z konfiguracji runtime; promocja nie podmienia bajtów archiwum na inne środowisko.
 
-Można ponownie promować poprzednie pełne wydanie mające ważne potwierdzenie DEV i dostępne artefakty. Po wygaśnięciu dowodu lub zmianie kodu wymagane jest ponowne przejście odpowiednich etapów. Nie podmieniamy zawartości między DEV i PROD.
+Jawna zmienna środowiska GitHub `HARBORLIGHT_ACCOUNT_API_ENABLED=true` włącza właściwy projekt API. Tymczasowa konfiguracja Hostingu kieruje `/api/**` do odpowiedniej usługi Cloud Run, bez zmiany publicznych bajtów archiwum. Klient PRE-PROD musi rozpoznać aktywny tryb API i przejść jego rzeczywisty odbiór przed przeniesieniem tej konfiguracji na PROD; nie wystarcza anonimowy `401` albo samo istnienie kodu adaptera.
 
-Frontend pozostaje przeglądarkową grą. Trzy konta DEV używają Authentication i prywatnego Firestore; podgląd gościa pozostaje lokalny, a stare wyspy z GitHub Pages nie przenoszą się automatycznie. Cloud Run nadal zawiera sondy, a nie serwerową gospodarkę. Konfiguracja kont jest odczytywana w czasie działania, więc promocja zachowuje identyczne archiwum frontendu. Konta produkcyjne i migracje danych wymagają własnego wdrożenia i testów na DEV w tym samym łańcuchu; kont testowych ani ich reguł nie kopiuje się do PROD.
+Kod API kont, limitów kodów i retencji wymaga właścicielskiej aktywacji: [RUNTIME-ACCOUNTS.md](RUNTIME-ACCOUNTS.md). Domyślnie wyłączone API ma odmawiać działania; brak konfiguracji nie może uruchomić produkcyjnej symulacji. IAM, routing, reguły bazy i migracja wymagają przygotowania oraz testów przed użyciem. Gospodarka nadal jest obliczana przez klienta, a serwer sond/kont nie jest pełnym autorytatywnym silnikiem gry.
 
-Administratorzy nadal zarządzają IAM i workflow. Normalne publikacje prowadzimy wyłącznie opisaną automatyzacją; sukces jednego etapu nie uprawnia do pominięcia następnego.
+OAuth Google/Facebook wymaga konfiguracji dostawcy i domen; prawdziwe Paynow/reklamy — usług operatora i zaufanych potwierdzeń. Symulacje dozwolone tylko poza PROD. Nie nadajemy szerokich ról ani nie zapisujemy sekretów w repozytorium w celu obejścia błędu. Retencja nie ma publicznego endpointu kasowania; narzędzie właściciela domyślnie działa w dry-run i wymaga osobnego jawnego włączenia mutacji.
+
+## 5. Faktycznie potwierdzone wydanie
+
+30 października 2026 właściciel potwierdził przygotowanie kont i Firestore. [Przebieg 41067599818](https://github.com/ksobczak321-oss/gra/actions/runs/41067599818) dla **`f161e45`** zakończył się sukcesem. PRE-PROD działa pod `https://harborlight-dev.web.app`; dostępne były oba artefakty v2: `harborlight-dev-frontend-41067599818-1` i `harborlight-dev-release-41067599818-1`.
+
+To dowód tamtego wydania, nie publikacji v18. Każda nowa zmiana wymaga własnego CI i PRE-PROD. PROD/DNS nie mają jeszcze potwierdzonego wdrożenia. Przed użyciem starego `dev_run_id` workflow ponownie sprawdza aktualną dostępność, metadane i hashe artefaktów.
+
+## 6. Wycofanie
+
+Można ponownie promować wcześniejsze pełne wydanie z ważnym potwierdzeniem i dostępną parą artefaktów. Nie podmieniamy zawartości między środowiskami. Powrót aplikacji nie cofa automatycznie migracji danych, zakupów ani retencji — te operacje wymagają własnej zgodności wersji i sprawdzonego odtworzenia.

@@ -11,6 +11,8 @@ const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const near = (actual, expected) => assert.ok(Math.abs(actual - expected) < 1e-6, `${actual} != ${expected}`);
 function funded(level = 2, amount = 550) {
   const state = createState(START);
+  state.welcome = { startedAt: 0, until: 0 }; state.happiness = state.baseHappiness = 0;
+  for (const person of state.residents) person.happiness = 0;
   state.buildings.townhall.level = level;
   state.buildings.house.level = level;
   state.buildings.warehouse.level = level;
@@ -67,7 +69,7 @@ test('offline reload applies only the remaining active bonus and does not refres
   assert.equal(JSON.stringify(saved), before);
 });
 
-test('active play stacks with Lighthouse/Chapel but never accelerates carrier courses', () => {
+test('active play stacks with Lighthouse/Chapel and doubles carrier speed without changing cargo', () => {
   const state = createState(START);
   arrived(state, 'farm'); arrived(state, 'warehouse');
   state.lighthouseRemaining = 1000; state.chapelRemaining = 1000;
@@ -75,7 +77,7 @@ test('active play stacks with Lighthouse/Chapel but never accelerates carrier co
   act(state, { type: 'userActivity', visible: true, focused: true });
   assert.equal(taxRate(state), 8);
   assert.equal(resourceRates(state).grain.production, 80);
-  tick(state, 299);
+  tick(state, 149);
   assert.equal(state.resources.wood, 100);
   tick(state, 1);
   assert.equal(state.resources.wood, 160);
@@ -226,15 +228,17 @@ test('calendar midnight keeps a 25-hour autumn day while effect durations remain
   assert.equal(state.houseHappinessPool.refreshRemaining, 24 * 3600);
 });
 
-test('uncollected blessing materials refill automatically without carriers and preserve total goods', () => {
+test('blessing materials are spendable bonus stock above capacity and spending uses the bonus first', () => {
   const state = createState(START);
   Object.assign(state.resources, { wood: 1000, stone: 1000, grain: 1000, planks: 950, food: 50 });
   assert.equal(warehouseUsed(state), 4000);
   assert.equal(act(state, { type: 'blessing' }).ok, true);
-  assert.equal(Object.values(state.pendingDeliveries).reduce((a, b) => a + b, 0), 250);
+  assert.equal(Object.values(state.pendingDeliveries).reduce((a, b) => a + b, 0), 0);
+  assert.equal(Object.values(state.bonusMaterials).reduce((a, b) => a + b, 0), 250);
   assert.equal(act(state, { type: 'upgradeRoad', level: 1 }).ok, true);
-  assert.equal(warehouseUsed(state), 4000);
-  assert.equal(Object.values(state.pendingDeliveries).reduce((a, b) => a + b, 0), 150);
+  assert.equal(warehouseUsed(state), 4150);
+  assert.equal(Object.values(state.bonusMaterials).reduce((a, b) => a + b, 0), 200);
+  assert.equal(Object.values(state.pendingDeliveries).reduce((a, b) => a + b, 0), 0);
   assert.equal(state.buildings.warehouse.workers, 0);
   assert.ok(state.resources.food >= foodReserve(state));
 });

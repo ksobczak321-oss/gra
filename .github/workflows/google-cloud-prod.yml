@@ -68,6 +68,7 @@ jobs:
           HARBORLIGHT_DEV_RUN_ID: ${{ steps.dev.outputs.dev_run_id }}
           HARBORLIGHT_DEV_RUN_ATTEMPT: ${{ steps.dev.outputs.dev_run_attempt }}
           HARBORLIGHT_DEV_IMAGE_PREFIX: europe-central2-docker.pkg.dev/harborlight-dev/harborlight/api
+          HARBORLIGHT_REQUIRE_ACCOUNT_API: 'true'
           HARBORLIGHT_RECEIPT_PATH: ${{ runner.temp }}/harborlight-dev-receipt/release.json
         run: node infra/google-cloud/promotion.mjs verify-receipt
 
@@ -97,6 +98,9 @@ jobs:
       HARBORLIGHT_FRONTEND_ARTIFACT_NAME: ${{ needs.gate.outputs.frontend_artifact_name }}
       HARBORLIGHT_FRONTEND_ARCHIVE_SHA256: ${{ needs.gate.outputs.frontend_archive_sha256 }}
       HARBORLIGHT_FRONTEND_MANIFEST_SHA256: ${{ needs.gate.outputs.frontend_manifest_sha256 }}
+      HARBORLIGHT_ACCOUNT_API_ENABLED: ${{ vars.HARBORLIGHT_ACCOUNT_API_ENABLED || 'false' }}
+      HARBORLIGHT_PROD_SMOKE_EMAIL: ${{ secrets.HARBORLIGHT_PROD_SMOKE_EMAIL }}
+      HARBORLIGHT_PROD_SMOKE_PASSWORD: ${{ secrets.HARBORLIGHT_PROD_SMOKE_PASSWORD }}
       HARBORLIGHT_FRONTEND_URL: https://harborlight.pl
     steps:
       - name: Checkout trusted deployment configuration
@@ -115,6 +119,14 @@ jobs:
             fi
           done
           [[ "$GITHUB_REF" == 'refs/heads/main' ]]
+          if [[ "${HARBORLIGHT_ACCOUNT_API_ENABLED,,}" != true && "$HARBORLIGHT_ACCOUNT_API_ENABLED" != 1 ]]; then
+            printf '::error::PROD account API must be explicitly enabled after owner IAM/database setup. No deployment was started.\n'
+            exit 1
+          fi
+          if [[ -z "$HARBORLIGHT_PROD_SMOKE_EMAIL" || -z "$HARBORLIGHT_PROD_SMOKE_PASSWORD" ]]; then
+            printf '::error::Configure the owner-selected existing PROD smoke account in scoped GitHub secrets. No account or island will be created by acceptance.\n'
+            exit 1
+          fi
           [[ "$GCP_PROJECT_ID" =~ ^[a-z][a-z0-9-]{4,28}[a-z0-9]$ ]]
           [[ "$GCP_PROJECT_ID" == harborlight-prod ]]
           [[ "$GCP_REGION" =~ ^[a-z]+-[a-z]+[0-9]+$ ]]
@@ -242,6 +254,14 @@ jobs:
             exit 1
           fi
 
+      - name: Generate isolated runtime settings
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 infra/google-cloud/runtime-config.py --project "$GCP_PROJECT_ID" \
+            --release "$HARBORLIGHT_SOURCE_SHA" --account-api-enabled "$HARBORLIGHT_ACCOUNT_API_ENABLED" \
+            --output "$RUNNER_TEMP/harborlight-runtime.json"
+
       - name: Deploy the promoted image without rebuilding
         id: deploy
         shell: bash
@@ -253,7 +273,7 @@ jobs:
             --execution-environment=gen2 --port=8080 --cpu=1 --memory=512Mi \
             --cpu-throttling --no-cpu-boost --min-instances=0 --max-instances=2 \
             --concurrency=20 --timeout=30 --ingress=all --allow-unauthenticated \
-            --set-env-vars="HARBORLIGHT_ENV=production,HARBORLIGHT_RELEASE=$HARBORLIGHT_SOURCE_SHA" --quiet
+            --env-vars-file="$RUNNER_TEMP/harborlight-runtime.json" --quiet
           api_url="$(gcloud run services describe "$GCP_CLOUD_RUN_SERVICE" \
             --project="$GCP_PROJECT_ID" --region="$GCP_REGION" --format='value(status.url)')"
           [[ "$api_url" =~ ^https://[a-z0-9.-]+\.run\.app$ ]]
@@ -286,12 +306,20 @@ jobs:
             printf 'Ten sam digest co na DEV; bez ponownej budowy. Obie sondy produkcyjne PASS.\n'
           } >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Generate environment-specific Hosting routing
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 infra/google-cloud/hosting-config.py --project "$GCP_PROJECT_ID" \
+            --service "$GCP_CLOUD_RUN_SERVICE" --region "$GCP_REGION" \
+            --output "$RUNNER_TEMP/harborlight-hosting.json"
+
       - name: Publish the verified frontend without rebuilding
         shell: bash
         run: |
           set -euo pipefail
-          firebase deploy --only hosting:game --project "$GCP_PROJECT_ID" \
-            --non-interactive --config firebase.json
+          firebase deploy --only hosting --project "$GCP_PROJECT_ID" \
+            --non-interactive --config "$RUNNER_TEMP/harborlight-hosting.json"
 
       - name: Verify the promoted hosted frontend manifest
         shell: bash
@@ -321,7 +349,7 @@ jobs:
         run: |
           set -uo pipefail
           set +e
-          python3 -u tests/harborlight-frontend-v17-smoke.py 2>&1 | tee "$RUNNER_TEMP/harborlight-hosted-browser.log"
+          python3 -u tests/harborlight-hosted-v18-smoke.py 2>&1 | tee "$RUNNER_TEMP/harborlight-hosted-browser.log"
           browser_status=${PIPESTATUS[0]}
           set -e
           if (( browser_status != 0 )); then
@@ -346,7 +374,7 @@ jobs:
           name: prod-hosted-browserfailure-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             ${{ runner.temp }}/harborlight-hosted-browser.log
-            /tmp/harborlight-v17-*.png
+            /tmp/harborlight-v18-*.png
           if-no-files-found: error
           retention-days: 7
 
@@ -357,5 +385,5 @@ jobs:
             printf '\n### Gra na PROD\n\n'
             printf 'Graj: %s\n\n' "$HARBORLIGHT_FRONTEND_URL"
             printf 'Archiwum frontendu SHA-256: `%s`\n\n' "$HARBORLIGHT_FRONTEND_ARCHIVE_SHA256"
-            printf 'Frontend i backend są identycznymi pakietami sprawdzonymi na DEV. Testy opublikowanej gry PASS.\n'
+            printf 'Frontend i backend są identycznymi pakietami sprawdzonymi na PRE-PROD. Sumy hostowanych plików, wejście anonimowe i rzeczywiste odczytowe renderowanie istniejącej zalogowanej wyspy PROD PASS; zapisy testowe były blokowane.\n'
           } >> "$GITHUB_STEP_SUMMARY"

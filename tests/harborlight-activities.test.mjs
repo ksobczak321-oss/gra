@@ -7,6 +7,7 @@ import {
   TASK_NARRATIVES, verifyExpeditionPath, expeditionPot, nextDailyTaskDeadline, expeditionRoundStatus
 } from '../harborlight-v1-activities.js';
 import { normalizeLogisticsState, MATERIAL_IDS } from '../harborlight-v1-logistics.js';
+import { consumeMaterial } from '../harborlight-v1-inventory.js';
 
 const HOUR = 3600, DAY = 24 * HOUR;
 const world = Date.parse('2026-10-23T10:00:00Z'); // 12:00 in Warsaw.
@@ -253,21 +254,23 @@ test('offline return preserves the real daily appearance time and does not refre
   assert.equal(taskStatus(s, current).age, 14 * HOUR + 12 * 60);
   assert.equal(taskStatus(s, current).multiplier, 1);
 });
-test('task reward overflow is retained and auto-filled after space becomes available', () => {
+test('task reward excess is immediately spendable bonus stock and survives reload', () => {
   const s = island(), task = smallTask(s, { wood: 20, stone: 10 }, { coins: 100, planks: 1000 });
   s.resources.planks = 1000;
   const coins = s.resources.coins;
   contribute(s, task);
   assert.equal(s.resources.coins, coins + 300);
-  assert.equal(s.resources.planks, 1000);
-  assert.equal(s.rewardBuffer.planks, 3000);
-  s.resources.planks -= 200;
+  assert.equal(s.resources.planks, 4000);
+  assert.equal(s.bonusMaterials.planks, 3000);
+  assert.equal(s.rewardBuffer.planks, 0);
+  consumeMaterial(s, 'planks', 200);
   advanceActivities(s, 0);
-  assert.equal(s.resources.planks, 1000);
-  assert.equal(s.rewardBuffer.planks, 2800);
-  assert.ok(s.notifications.some(n => n.kind === 'reward-buffer'));
+  assert.equal(s.resources.planks, 3800);
+  assert.equal(s.bonusMaterials.planks, 2800);
   const old = refresh(s);
-  assert.equal(old.rewardBuffer.planks, 2800);
+  assert.equal(old.resources.planks, 3800);
+  assert.equal(old.bonusMaterials.planks, 2800);
+  assert.equal(old.rewardBuffer.planks, 0);
 });
 test('normalization preserves accepted tasks, de-duplicates IDs and is safe in place', () => {
   const s = island(), task = smallTask(s);
@@ -454,5 +457,5 @@ test('timed expedition overtime continues offline at10coinspersecond until the p
   assert.equal(run.status, 'lost'); assert.equal(run.pot, 0);
   assert.equal(s.resources.coins, coins);
   assert.equal(activityAction(s, { type: 'expeditionAdReward', runId: run.id }).ok, false);
-  assert.equal(expeditionPot(20), 1000); assert.equal(expeditionPot(49), 2450);
+  assert.equal(expeditionPot(20), 52428750); assert.equal(expeditionPot(49), null);
 });

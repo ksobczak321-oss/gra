@@ -1,8 +1,9 @@
-// DEV uses the configured Firebase project. Other hosts retain the account preview.
+// PRE-PROD preserves its test accounts. PROD uses Firebase email and OAuth accounts.
 // Passwords are sent only by the Firebase client and never saved in browser storage.
-import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v17';
-import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=dev-accounts-v1';
-import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=dev-accounts-v1';
+import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v18';
+import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v18';
+import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v18';
+import { signInWithProvider } from './harborlight-auth-providers.js?v=frontend-v18';
 
 registerTranslations({
   'HARBORLIGHT — Welcome Home': 'HARBORLIGHT — Witaj na wyspie',
@@ -90,6 +91,27 @@ registerTranslations({
   'Could not sign in. Try again in a moment.': 'Nie udało się zalogować. Spróbuj ponownie za chwilę.'
 });
 
+registerTranslations({
+  'Enter your PRE-PROD username: admin1, admin2 or admin3.': 'Wpisz login PRE-PROD: admin1, admin2 lub admin3.',
+  'or use your test login': 'lub użyj loginu testowego',
+  'Google/Facebook support linked test accounts only. Enter your test login and password to link a provider.': 'Google/Facebook obsługuje tylko powiązane konta testowe. Aby powiązać dostawcę, wpisz login i hasło konta testowego.',
+  'HARBORLIGHT — PRE-PROD sign-in': 'HARBORLIGHT — logowanie PRE-PROD',
+  'PRE-PROD TEST ACCOUNTS': 'KONTA TESTOWE PRE-PROD',
+  'Sign in to PRE-PROD': 'Zaloguj się do PRE-PROD',
+  'HARBORLIGHT — sign in to PRE-PROD': 'HARBORLIGHT — zaloguj się do PRE-PROD',
+  'Sign in to your island. Your progress is saved in the cloud.': 'Zaloguj się na swoją wyspę. Postęp jest zapisywany w chmurze.',
+  'Use your PRE-PROD login and password. Your progress is saved in the cloud.': 'Użyj loginu i hasła do konta PRE-PROD. Postęp jest zapisywany w chmurze.',
+  'Sign in with Google, Facebook or your email. Your progress is saved in the cloud.': 'Zaloguj się przez Google, Facebook albo e-mail. Postęp jest zapisywany w chmurze.',
+  'Account setup is incomplete. Ask the owner to finish its configuration.': 'Konfiguracja kont nie jest zakończona. Poproś właściciela o jej dokończenie.',
+  'This email already has an account. Sign in instead.': 'Ten adres e-mail ma już konto. Zaloguj się.',
+  'This provider is not linked to the selected permanent PRE-PROD account. Use its password to link it.': 'Ten dostawca nie jest powiązany z wybranym stałym kontem PRE-PROD. Użyj jego hasła, aby go powiązać.',
+  'This provider requires configuration by the game owner.': 'Ta metoda logowania wymaga konfiguracji dostawcy przez właściciela gry.',
+  'Sign-in cancelled.': 'Logowanie anulowane.',
+  'Allow the sign-in popup in your browser.': 'Zezwól przeglądarce na otwarcie okna logowania.',
+  'This email uses another sign-in method. Sign in using that method first.': 'Ten adres korzysta z innej metody logowania. Zaloguj się dotychczasową metodą.',
+  'Could not connect to the sign-in provider. Try again.': 'Nie udało się połączyć z dostawcą logowania. Spróbuj ponownie.'
+});
+
 (() => {
   'use strict';
   const form = document.getElementById('account-form');
@@ -107,23 +129,34 @@ registerTranslations({
   const preferenceKey = 'harborlight-language';
   const profileSearch = authProfileSearch(location.search);
   const devCloud = createDevCloud();
-  const devMode = devCloud.enabled;
-  let language = devMode ? 'pl' : 'en';
+  const hostedMode = devCloud.enabled, devMode = devCloud.preprod;
+  document.documentElement.dataset.environment = devCloud.environment;
+  let language = hostedMode ? 'pl' : 'en';
   try { const saved = localStorage.getItem(preferenceKey); if (['pl', 'en'].includes(saved)) language = saved; } catch { /* Keep the form usable without storage. */ }
   const errorIds = new Map([[name, 'name-error'], [islandName, 'island-name-error'], [email, 'email-error'], [password, 'password-error'], [confirm, 'confirm-error']]);
   let mode = 'login';
   let signingIn = false;
   for (const link of document.querySelectorAll('a[href="harborlight-v1-layered.html"]')) link.href = gameHref(profileSearch);
 
+  if (hostedMode) {
+    for (const node of document.querySelectorAll('.guest-entry,.back-link')) node.hidden = true;
+    document.querySelector('.brand').href = '#account';
+  }
+  if (hostedMode && !devMode) {
+    for (const node of document.querySelectorAll('.social-button small')) node.remove();
+    document.getElementById('social-availability').textContent = 'Sign in with Google, Facebook or your email. Your progress is saved in the cloud.';
+  }
   if (devMode) {
     document.documentElement.classList.add('dev-auth');
     document.getElementById('tab-register').hidden = true;
-    for (const node of document.querySelectorAll('.social-options,.divider,.guest-entry,.back-link')) node.hidden = true;
+    for (const node of document.querySelectorAll('.guest-entry,.back-link')) node.hidden = true;
+    for (const node of document.querySelectorAll('.social-button small')) node.remove();
+    document.querySelector('.divider span').textContent = 'or use your test login';
     const brand = document.querySelector('.brand');
     brand.href = '#account';
-    brand.setAttribute('aria-label', 'HARBORLIGHT — sign in to DEV');
-    document.querySelector('.account-eyebrow').textContent = 'DEV TEST ACCOUNTS';
-    document.getElementById('social-availability').textContent = 'Use your DEV login and password. Your progress is saved in the cloud.';
+    brand.setAttribute('aria-label', 'HARBORLIGHT — sign in to PRE-PROD');
+    document.querySelector('.account-eyebrow').textContent = 'PRE-PROD TEST ACCOUNTS';
+    document.getElementById('social-availability').textContent = 'Google/Facebook support linked test accounts only. Enter your test login and password to link a provider.';
     document.querySelector('label[for="email"]').textContent = 'Username';
     email.type = 'text';
     email.name = 'username';
@@ -136,10 +169,10 @@ registerTranslations({
 
   function applyLanguage() {
     if (languagePicker) languagePicker.value = language;
-    document.title = devMode ? 'HARBORLIGHT — DEV sign-in' : 'HARBORLIGHT — Welcome Home';
+    document.title = devMode ? 'HARBORLIGHT — PRE-PROD sign-in' : 'HARBORLIGHT — Welcome Home';
     const description = document.querySelector('meta[name="description"]');
-    if (description) description.content = translate(devMode
-      ? 'Sign in to your DEV island. Your progress is saved in the cloud.'
+    if (description) description.content = translate(hostedMode
+      ? 'Sign in to your island. Your progress is saved in the cloud.'
       : 'Welcome to HARBORLIGHT. Sign in, create an account, or continue exploring your island as a guest.', language);
     translateDOM(document, language);
   }
@@ -156,8 +189,17 @@ registerTranslations({
       'invalid-credentials': 'The username or password is incorrect.',
       'account-disabled': 'This account is disabled. Contact the island owner.',
       'rate-limited': 'Too many attempts. Wait a moment and try again.',
-      configuration: 'DEV accounts are not configured yet. Ask the owner to finish their setup.',
-      disabled: 'DEV accounts are not configured yet. Ask the owner to finish their setup.',
+      configuration: 'Account setup is incomplete. Ask the owner to finish its configuration.',
+      disabled: 'Account setup is incomplete. Ask the owner to finish its configuration.',
+      'email-in-use': 'This email already has an account. Sign in instead.',
+      'weak-password': 'Use at least 8 characters for your password.',
+      'invalid-email': 'Enter a valid email address.',
+      'provider-configuration': 'This provider requires configuration by the game owner.',
+      'provider-not-linked': 'This provider is not linked to the selected permanent PRE-PROD account. Use its password to link it.',
+      'provider-cancelled': 'Sign-in cancelled.',
+      'popup-blocked': 'Allow the sign-in popup in your browser.',
+      'account-link-required': 'This email uses another sign-in method. Sign in using that method first.',
+      'provider-unavailable': 'Could not connect to the sign-in provider. Try again.',
       storage: 'Your browser could not save the session. Allow local storage and try again.',
       'auth-required': 'Your session expired. Sign in again.',
       offline: 'Could not connect to sign-in. Check your connection and try again.'
@@ -202,7 +244,7 @@ registerTranslations({
         input.required = registering;
       }
     }
-    document.getElementById('auth-title').textContent = devMode ? 'Sign in to DEV' : registering ? 'Your island starts here.' : 'Welcome back.';
+    document.getElementById('auth-title').textContent = devMode ? 'Sign in to PRE-PROD' : registering ? 'Your island starts here.' : 'Welcome back.';
     document.getElementById('auth-intro').textContent = devMode ? 'Your island follows you between devices.' : registering ? 'A new adventure, a place to call your own.' : 'Return to the island you call home.';
     document.querySelector('#account-submit span').textContent = registering ? 'Create account' : 'Sign in';
     document.getElementById('password-hint').hidden = !registering;
@@ -236,8 +278,18 @@ registerTranslations({
   visibility.addEventListener('click', () => setPasswordVisible(password.type === 'password'));
   for (const input of errorIds.keys()) input.addEventListener('input', () => clearError(input));
   for (const button of document.querySelectorAll('[data-provider]')) {
-    button.addEventListener('click', () => {
-      announce(`${button.dataset.provider} sign-in is coming soon. You can continue as a guest to play today.`);
+    button.addEventListener('click', async () => {
+      if (signingIn) return;
+      if (!hostedMode) { announce('This provider requires configuration by the game owner.', 'error'); return; }
+      const chosen = mode === 'register' ? validateIslandName(islandName.value) : null;
+      if (chosen && !chosen.ok) { setError(islandName, chosen.message); islandName.focus(); return; }
+      signingIn = true; fields.disabled = true; form.setAttribute('aria-busy', 'true'); announce('Signing in…');
+      try {
+        await signInWithProvider(devCloud, button.dataset.provider, { islandName: chosen?.name || '', testLogin: devMode ? email.value : '', testPassword: devMode ? password.value : '' });
+        password.value = ''; setPasswordVisible(false);
+        location.assign('harborlight-v1-layered.html?profile=new-player');
+      } catch (error) { password.value = ''; setPasswordVisible(false); announce(signInMessage(error), 'error'); }
+      finally { signingIn = false; fields.disabled = false; form.removeAttribute('aria-busy'); }
     });
   }
   form.addEventListener('submit', async event => {
@@ -250,7 +302,7 @@ registerTranslations({
     if (mode === 'register' && name.value.trim().length < 2) fail(name, 'Enter a name with at least 2 characters.');
     const chosenIslandName = mode === 'register' ? validateIslandName(islandName.value) : null;
     if (chosenIslandName && !chosenIslandName.ok) fail(islandName, chosenIslandName.message);
-    if (devMode && !DEV_USERS.some(user => user.login === email.value)) fail(email, 'Enter your DEV username: admin1, admin2 or admin3.');
+    if (devMode && !DEV_USERS.some(user => user.login === email.value)) fail(email, 'Enter your PRE-PROD username: admin1, admin2 or admin3.');
     else if (!email.value) fail(email, 'Enter your email address.');
     else if (!email.validity.valid) fail(email, 'Enter a valid email address.');
     if (!password.value) fail(password, 'Enter your password.');
@@ -261,13 +313,14 @@ registerTranslations({
       invalid[0].focus();
       return;
     }
-    if (devMode) {
+    if (hostedMode) {
       signingIn = true;
       fields.disabled = true;
       form.setAttribute('aria-busy', 'true');
       announce('Signing in…');
       try {
-        await devCloud.signIn(email.value, password.value);
+        if (mode === 'register') await devCloud.registerEmail(email.value, password.value, { islandName: chosenIslandName.name });
+        else await devCloud.signIn(email.value, password.value);
         password.value = '';
         setPasswordVisible(false);
         location.assign('harborlight-v1-layered.html?profile=new-player');
@@ -318,7 +371,7 @@ registerTranslations({
   });
   // With JavaScript unavailable the disabled fieldset prevents accidental form submission.
   fields.disabled = false;
-  if (devMode) {
+  if (hostedMode) {
     signingIn = true;
     fields.disabled = true;
     form.setAttribute('aria-busy', 'true');

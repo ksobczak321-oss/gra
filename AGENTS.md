@@ -2,25 +2,27 @@
 
 ## Rozwój i publikacja
 
-- Rozwijamy projekt w tej przestrzeni roboczej i synchronizujemy zmiany z GitHubem.
-- Obowiązuje kolejność ustalona przez użytkownika: **praca tutaj → GitHub i CI → GCP DEV → GCP PROD**.
-- Synchronizacja Git nie oznacza promocji do chmury. Wdrożenia GCP są oddzielnymi operacjami.
-- Nie wdrażaj na PROD commitu ani obrazu, który nie przeszedł wcześniejszych etapów. Korzystaj z przygotowanych workflow; nie omijaj blokad ręcznym `gcloud run deploy`.
-- DEV wymaga udanego CI tego samego commitu i testów gry opublikowanej z pakietu. PROD wymaga pełnego potwierdzenia wydania v2 oraz obu artefaktów z udanego DEV: identycznego archiwum frontendu i obrazu backendu po digest, bez ponownej budowy aplikacji. Potwierdzenia API-only v1 nie uprawniają do publikacji całej gry.
-- Poprawka po testach wymaga ponownej walidacji zmienionego wydania. Frontend produkcyjny i migracje bazy muszą dołączyć do tego samego procesu przed publikacją.
-- GitHub Pages jest podglądem deweloperskim repozytorium, nie środowiskiem GCP PROD.
-- Jeżeli użytkownik wyraźnie zbiera serię uwag do wdrożenia po „GO”, zapisuj kontekst i czekaj z wdrożeniem do jego sygnału.
+- **DEV** oznacza tę przestrzeń roboczą. **PRE-PROD** to projekt Google Cloud `harborlight-dev`, **PROD** to `harborlight-prod`. Nazwy istniejących workflow `google-cloud-dev.yml`, artefaktów `harborlight-dev-*` i zasobów pozostają techniczne; nie zmieniaj ich wyłącznie z powodu nowego nazewnictwa.
+- Obowiązuje kolejność użytkownika: **DEV tutaj → GitHub i CI → PRE-PROD → PROD**. Synchronizacja Git nie jest promocją do chmury.
+- Korzystaj z przygotowanych workflow; nie omijaj blokad przez ręczne `gcloud run deploy`. PRE-PROD wymaga zielonego CI tego samego pełnego SHA i testów opublikowanej gry.
+- PROD wymaga pełnego potwierdzenia wydania v2 oraz obu artefaktów udanego PRE-PROD: identycznego archiwum frontendu i obrazu backendu po digest, bez ponownej budowy aplikacji. Potwierdzenie API-only v1 nie uprawnia do publikacji gry.
+- Poprawiony kod wymaga ponownej walidacji. Konfiguracja API, migracje/reguły bazy i wymagane uprawnienia także muszą przejść wcześniejsze środowisko przed PROD.
+- GitHub Pages jest podglądem deweloperskim, nie środowiskiem produkcyjnym. Push nie jest dowodem wdrożenia Google Cloud.
+- Gdy użytkownik zbiera uwagi „po GO”, czekaj z implementacją i publikacją. GO z 30 października 2026 obejmuje [zakres v18](docs/FRONTEND-V18-REQUIREMENTS.md); jawne parametry wdrożeniowe w tym dokumencie odróżniamy od wcześniejszych decyzji użytkownika.
 
-Szczegóły i kontrakt promocji: [docs/RELEASE-PROCESS.md](docs/RELEASE-PROCESS.md).
+Kontrakt promocji: [docs/RELEASE-PROCESS.md](docs/RELEASE-PROCESS.md).
 
-## Środowiska i potwierdzanie wyników
+## Stan faktyczny i granice v18
 
-- DEV: projekt `harborlight-dev`; PROD: oddzielny projekt `harborlight-prod`. Region API i repozytoriów obrazów: `europe-central2`.
-- Gra działa na Firebase Hosting DEV `harborlight-dev.web.app`: wydanie `f161e45`, udany workflow `41067599818` z 30 października 2026, testami gry i kont oraz oboma artefaktami wydania v2. Docelowy PROD `harborlight.pl` (nazwa.pl) nie został jeszcze opublikowany. Rekordy DNS pochodzą z rzeczywistej odpowiedzi Firebase; nie zgaduj ich i nie traktuj przygotowania domeny jako publikacji gry.
-- Dostęp workflow do Google Cloud odbywa się przez Workload Identity Federation. Nie zapisuj kluczy ani tokenów w kodzie i nie proś o ich przesyłanie w czacie.
-- Odróżniaj testy lokalne, synchronizację Git, kontrolę konfiguracji i faktyczne wdrożenie z testami działającej usługi.
-- Obraz backendu nadal zawiera sondy HTTP. DEV ma integrację Firebase Authentication i prywatnych zapisów Firestore dla `admin1`, `admin2`, `admin3`; rzeczywiste zasoby przygotowuje właścicielski `prepare-dev-users.py`. Konta mają stałe UID `dev-admin1`–`dev-admin3`; zwykłe wdrożenia nie tworzą ich ponownie ani nie zmieniają haseł/wysp. Tych kont i reguł nie przenosi się na PROD.
-- Konfiguracja Firebase pochodzi z `/__/firebase/init.json`, a nie z osobnej kompilacji DEV. Frontend zachowuje te same bajty przy promocji. Bez zalogowanej sesji działa dotychczasowy lokalny podgląd; Firestore wymaga rzeczywistego tokenu właściciela dokumentu. Zapis gospodarki DEV nadal jest obliczany przez klienta, nie przez autorytatywny serwer.
-- Publikacja na nowej domenie ani logowanie nie importują automatycznie `localStorage` z GitHub Pages lub profilu gościa. Sam sukces hostingu/sond nie potwierdza działania kont i zapisów. DEV wymaga dodatkowo rzeczywistej kontroli logowania i odmowy odczytu cudzych wysp, która nie nadpisuje postępu.
-- Nowe konto inicjalizuje wyspę przy pierwszym wejściu do gry: ratusz 1, 12 mieszkańców, po 100 monet i każdego z pięciu materiałów, bez przydzielonych pracowników. Przygotowanie kont i kontrola logowania nie tworzą dokumentów wysp. Kolejne logowania wznawiają postęp i naliczają rzeczywisty czas nieobecności, bez ponownego pakietu startowego.
-- Wyniki i istotne ograniczenia zapisuj w [docs/IMPLEMENTATION-LOG.md](docs/IMPLEMENTATION-LOG.md).
+- Ostatnie potwierdzone wydanie chmurowe to **`f161e45`** na `https://harborlight-dev.web.app`, udany workflow **`41067599818`** z 30 października 2026, testy gry i kont oraz oba artefakty v2. To PRE-PROD mimo historycznej nazwy DEV w dowodach. Wersja v18 w tej przestrzeni wymaga własnych testów, commitu, CI i promocji; nie przedstawiaj jej jako już opublikowanej.
+- PROD `harborlight.pl` w nazwa.pl nie jest jeszcze opublikowany. DNS i certyfikat odczytujemy z rzeczywistych odpowiedzi Firebase; nie zgaduj rekordów ani stanu propagacji.
+- Region API i repozytoriów obrazów: `europe-central2`. Dostęp workflow przez WIF, bez kluczy kont usługowych w kodzie. Nie proś o przesyłanie sekretów w czacie.
+- PRE-PROD ma stałe loginy `admin1`, `admin2`, `admin3`, UID `dev-admin1`–`dev-admin3`, Firebase Authentication i prywatne wyspy Firestore. Nie resetuj ich haseł ani postępu przy wdrożeniu. Konta testowe są wyłączone z trzymiesięcznego resetu i nie są kopiowane na PROD.
+- v18 przechowuje postęp wyłącznie w chmurze: bez wysp, kopii odzyskiwania i kolejki zapisu w localStorage/sessionStorage. Techniczna sesja logowania oraz język mogą używać pamięci przeglądarki. Lokalny DEV może mieć wyraźny nietrwały podgląd w pamięci procesu.
+- Awaria chmury nie może otwierać innego profilu, udawać zapisu ani pozwalać na dalsze zatwierdzanie niezapisanych operacji. Zachowaj kontrolę wersji i konfliktów; stare lokalne dane nie są automatycznym importem konta.
+- Nowa wyspa powstaje raz przy pierwszym wejściu: Ratusz 1, 12 osób, brak przydzielonych pracowników, po 100 sześciu zasobów i bazowe H20%. Ochrona powitalna min.20% trwa 72 h; wymuszone 100% ma pierwszeństwo. Kolejne wejście wznawia wyspę i rozlicza nieobecność.
+- Rejestracja e-mail i kod OAuth Google/Facebook dotyczą kont produkcyjnych po aktywacji dostawców przez właściciela. Sam przycisk lub test z atrapą nie potwierdza konfiguracji Google/Meta. Udostępnianie osiągnięcia inicjuje i zatwierdza gracz; brak automatyzacji strony i osobistych powiadomień FB.
+- Paynow i nagradzane reklamy mają oznaczoną symulację tylko poza PROD. Rzeczywiste płatności/nagrody wymagają zaufanego potwierdzenia serwera/dostawcy; nie przyznawaj produkcyjnego zakupu za klienckie `verified:true`. Próg bez reklam 1999 gr/30 dni jest odrębny od pakietu budowlanego 24 h; reklamy za czas ekspedycji pozostają także dla uprawnionych.
+- Kod serwerowego API kont, globalnych limitów kodów i retencji nie oznacza jego aktywacji w chmurze. Wymaga konfiguracji routingu, IAM i zasobów oraz osobnych testów. Gospodarka i wyniki nadal są wyliczane przez klienta — nie nazywaj ich autorytatywnym modelem serwerowym.
+- Reset po trzech miesiącach kalendarzowych zachowuje konto i historie płatności/kodów/poleceń. Automatyczne zwroty zostały wycofane. [Regulamin](docs/TERMS-DRAFT.pl.md) jest szkicem do weryfikacji, nie potwierdzeniem legalnego uruchomienia sprzedaży.
+- Oddzielaj wyniki lokalne, synchronizację Git, odczyt konfiguracji i faktyczne wdrożenie. Zapisuj dowody w [dzienniku](docs/IMPLEMENTATION-LOG.md), nie zamieniając historycznych sukcesów w odbiór nowego kodu.

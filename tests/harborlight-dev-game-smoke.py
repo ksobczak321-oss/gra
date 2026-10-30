@@ -27,6 +27,7 @@ ERRORS, REQUESTS = [], []
 DOCUMENTS = {}
 WRITES = []
 SEQUENCE = 0
+OFFLINE = False
 
 
 def starter(coins, name):
@@ -67,6 +68,8 @@ def document(uid):
 
 def firebase(route):
     request = route.request
+    if OFFLINE:
+        return route.abort('internetdisconnected')
     def reply(**arguments):
         return route.fulfill(headers={'access-control-allow-origin': ORIGIN,
                                      'access-control-allow-headers': 'authorization,content-type',
@@ -108,11 +111,25 @@ def firebase(route):
     return reply(json={'writeResults': [{'updateTime': updated}], 'commitTime': updated})
 
 
+def identity_lookup(route):
+    headers = {'access-control-allow-origin': ORIGIN,
+               'access-control-allow-headers': 'content-type',
+               'access-control-allow-methods': 'POST,OPTIONS'}
+    if route.request.method == 'OPTIONS':
+        return route.fulfill(status=204, headers=headers)
+    assert '/accounts:lookup?' in route.request.url, route.request.url
+    value = route.request.post_data_json['idToken'].split('.')[1]
+    uid = json.loads(base64.urlsafe_b64decode(value + '='*(-len(value) % 4)))['sub']
+    return route.fulfill(headers=headers, json={'users': [{'localId': uid, 'displayName': ''}]})
+
+
 def assets(route):
     path = unquote(urlsplit(route.request.url).path)
     if path == '/__/firebase/init.json':
         return route.fulfill(json={'projectId': 'harborlight-dev', 'apiKey': 'AIza-fixture-public-key-123456789',
                                    'messagingSenderId': '28040211190'})
+    if path == '/api/v1/config':
+        return route.fulfill(status=503, json={'error': 'account_api_disabled'})
     target = (ROOT / path.lstrip('/')).resolve()
     assert target.is_relative_to(ROOT) and target.is_file(), str(target)
     route.fulfill(body=target.read_bytes(), content_type=mimetypes.guess_type(str(target))[0] or 'application/octet-stream')
@@ -123,6 +140,7 @@ def context(browser, uid, *, language='pl', mobile=False):
                                  reduced_motion='reduce', is_mobile=mobile, has_touch=mobile)
     result.route(ORIGIN + '/**', assets)
     result.route('https://firestore.googleapis.com/**', firebase)
+    result.route('https://identitytoolkit.googleapis.com/**', identity_lookup)
     initial = {'session': session(uid), 'language': language,
                'guest': json.dumps(starter(999, 'Guest island must stay separate'))}
     result.add_init_script('''(() => {
@@ -133,6 +151,15 @@ def context(browser, uid, *, language='pl', mobile=False):
         localStorage.setItem('harborlight-v1-new-player-save',initial.guest);
         localStorage.setItem('harborlight-island-name:harborlight-v1-new-player-save',JSON.stringify({name:'Wrong guest name',updatedAt:9999999999999}));
         if(initial.language) localStorage.setItem('harborlight-language',initial.language);
+      }
+      window.__qaIslandStorageCalls=[];
+      for(const operation of ['getItem','setItem']) {
+        const original=Storage.prototype[operation];
+        Storage.prototype[operation]=function(key,...values) {
+          if(/^harborlight-(?:dev-island-|v1-(?:new-player-)?save|island-name:)/.test(String(key)))
+            window.__qaIslandStorageCalls.push([operation,String(key)]);
+          return original.call(this,key,...values);
+        };
       }
     })();''' % (json.dumps(initial), json.dumps(SESSION)))
     page = result.new_page()
@@ -146,12 +173,21 @@ def visit(page):
     page.goto(ORIGIN + '/harborlight-v1-layered.html?profile=preview&slot=wrong-account')
     page.wait_for_selector('[data-hud="working"]', state='attached')
     page.wait_for_function('document.getElementById("loading").hidden')
-    if page.locator('#island-dialog').is_visible():
+    if page.locator('[data-tutorial-dismiss]').is_visible():
+        page.locator('[data-tutorial-dismiss]').click()
+        expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
+    elif page.locator('#island-dialog').is_visible():
         page.locator('#island-dialog .dialog-close').click()
 
 
-def local(page, uid):
-    return json.loads(page.evaluate('(key)=>localStorage.getItem(key)', KEY(uid)))
+def cloud_state(uid):
+    return json.loads(DOCUMENTS[uid]['payload'])
+
+
+def no_island_cache(page):
+    assert page.evaluate('window.__qaIslandStorageCalls') == [], 'The application read or wrote a browser island cache'
+    assert page.evaluate("Object.keys(localStorage).filter(key=>key.startsWith('harborlight-dev-island-'))") == []
+
 
 
 def settings(page):
@@ -168,6 +204,7 @@ def save_cloud(page):
 
 
 def run():
+    global OFFLINE
     for uid, coins in [('dev-admin1', 321), ('dev-admin2', 654)]:
         DOCUMENTS[uid] = {'payload': json.dumps(starter(coins, 'Wyspa ' + uid)), 'revision': 4, 'updateTime': timestamp()}
     with sync_playwright() as playwright:
@@ -175,70 +212,128 @@ def run():
                                              headless=True, args=['--no-sandbox'])
         first, page = context(browser, 'dev-admin1')
         visit(page)
-        assert local(page, 'dev-admin1')['resources']['coins'] == 321
-        assert local(page, 'dev-admin1')['islandName'] == 'Wyspa dev-admin1'
+        no_island_cache(page)
+        assert cloud_state('dev-admin1')['resources']['coins'] == 321
         settings(page)
         expect(page.locator('[data-dev-account="admin1"]')).to_be_visible()
         page.locator('#island-dialog select').first.select_option('en')
+        # A successful action is acknowledged in the cloud without waiting for
+        # a twenty-second autosave or writing a browser recovery copy.
+        expect(page.locator('[data-cloud-save-status]')).to_have_attribute('data-status', 'saved')
+        assert cloud_state('dev-admin1')['settings']['language'] == 'en'
         save_cloud(page)
-        assert json.loads(DOCUMENTS['dev-admin1']['payload'])['settings']['language'] == 'en'
+        assert cloud_state('dev-admin1')['islandName'] == 'Wyspa dev-admin1'
+        no_island_cache(page)
 
-        # A fresh browser/device has no island cache and restores the saved one.
+        # A fresh device has no island cache and restores the same cloud state.
         second, device = context(browser, 'dev-admin1', language=None, mobile=True)
         visit(device)
-        assert local(device, 'dev-admin1')['resources']['coins'] == 321
-        assert local(device, 'dev-admin1')['settings']['language'] == 'en'
+        settings(device)
+        expect(device.locator('#island-dialog select').first).to_have_value('en')
+        save_cloud(device)
+        assert cloud_state('dev-admin1')['resources']['coins'] == 321
+        no_island_cache(device)
         second.close()
 
-        # Account switching in the same browser must not copy the first island.
+        # Account switching never copies guest or previous-account progress.
         page.evaluate('(value)=>localStorage.setItem(%s,JSON.stringify(value))' % json.dumps(SESSION), session('dev-admin2'))
         visit(page)
-        assert local(page, 'dev-admin2')['resources']['coins'] == 654
-        assert local(page, 'dev-admin1')['resources']['coins'] == 321
         settings(page)
+        expect(page.locator('[data-dev-account="admin2"]')).to_be_visible()
         save_cloud(page)
-        assert json.loads(DOCUMENTS['dev-admin1']['payload'])['resources']['coins'] == 321
-        # A concurrent device advances the version before this browser writes.
+        assert cloud_state('dev-admin2')['resources']['coins'] == 654
+        assert cloud_state('dev-admin1')['resources']['coins'] == 321
+        no_island_cache(page)
+
+        # A concurrent device advances the version before the next action.
         remote = starter(900, 'Nowsza wyspa')
         DOCUMENTS['dev-admin2'] = {'payload': json.dumps(remote), 'revision': DOCUMENTS['dev-admin2']['revision']+1,
                                   'updateTime': timestamp()}
         commits_before = len(WRITES)
         page.locator('#island-dialog select').first.select_option('pl')
-        page.locator('[data-cloud-save-now]').click()
         expect(page.locator('[data-cloud-save-status]')).to_have_attribute('data-status', 'conflict')
-        assert local(page, 'dev-admin2')['resources']['coins'] == 654
-        assert json.loads(DOCUMENTS['dev-admin2']['payload'])['resources']['coins'] == 900
+        assert cloud_state('dev-admin2')['resources']['coins'] == 900
         assert len(WRITES) == commits_before
         page.clock.run_for(21000)
         assert len(WRITES) == commits_before
-        # Explicit recovery loads the new version while preserving a backup.
-        page.reload(); page.wait_for_selector('[data-hud="working"]', state='attached')
-        settings(page)
-        with page.expect_navigation():
-            page.locator('[data-cloud-reload]').click()
+        no_island_cache(page)
+        # Explicit recovery must adopt the new cloud version; no local backup
+        # or stale pre-reload island is allowed to overwrite it.
+        page.locator('[data-cloud-reload]').click()
+        expect(page.locator('[data-cloud-save-status]')).to_have_attribute('data-status', 'saved')
         page.wait_for_selector('[data-hud="working"]', state='attached')
-        assert local(page, 'dev-admin2')['resources']['coins'] == 900
-        settings(page)
-        expect(page.locator('[data-cloud-earlier-backup]')).to_be_visible()
+        page.wait_for_function('document.getElementById("loading").hidden')
+        if not page.locator('[data-dev-account="admin2"]').count():
+            settings(page)
+        save_cloud(page)
+        assert cloud_state('dev-admin2')['resources']['coins'] == 900
+        assert cloud_state('dev-admin2')['islandName'] == 'Nowsza wyspa'
+        assert page.locator('[data-cloud-backup],[data-cloud-earlier-backup]').count() == 0
+
+        # A disconnected action cannot be reported as saved on this device.
+        confirmed = DOCUMENTS['dev-admin2']['payload']
+        OFFLINE = True
+        page.locator('#island-dialog select').first.select_option('en')
+        expect(page.locator('[data-cloud-save-status]')).to_have_attribute('data-status', 'offline')
+        assert DOCUMENTS['dev-admin2']['payload'] == confirmed
+        assert 'lokaln' not in page.locator('[data-cloud-save-status]').inner_text().lower()
+        no_island_cache(page)
+        OFFLINE = False
+        page.locator('[data-cloud-reload]').click()
+        expect(page.locator('[data-cloud-save-status]')).to_have_attribute('data-status', 'saved')
+        page.wait_for_selector('[data-hud="working"]', state='attached')
+        page.wait_for_function('document.getElementById("loading").hidden')
+        if not page.locator('[data-dev-account="admin2"]').count():
+            settings(page)
+        save_cloud(page)
+        assert cloud_state('dev-admin2')['resources']['coins'] == 900
+        no_island_cache(page)
         page.locator('[data-dev-signout]').click()
         page.wait_for_url('**/harborlight-auth.html?mode=login')
         assert page.evaluate('(key)=>localStorage.getItem(key)', SESSION) is None
-        assert local(page, 'dev-admin2')['resources']['coins'] == 900
+        assert cloud_state('dev-admin2')['resources']['coins'] == 900
         first.close()
 
-        # A new permanent identity gets the normal starter, not guest/preview stock.
+        # New permanent identity receives the normal starter exactly once.
         third, new_page = context(browser, 'dev-admin3', mobile=True)
         visit(new_page)
-        assert local(new_page, 'dev-admin3')['resources']['coins'] == 100
-        assert local(new_page, 'dev-admin3')['resources']['wood'] == 100
-        settings(new_page); save_cloud(new_page)
-        assert DOCUMENTS['dev-admin3']['revision'] == 1
-        assert json.loads(DOCUMENTS['dev-admin3']['payload'])['resources']['coins'] == 100
+        settings(new_page)
+        save_cloud(new_page)
+        assert DOCUMENTS['dev-admin3']['revision'] >= 1
+        fresh = cloud_state('dev-admin3')
+        assert fresh['resources']['coins'] == fresh['resources']['wood'] == 100
+        assert fresh['population'] == 12
+        assert fresh['happiness'] >= 20
+        assert fresh['welcome']['startedAt'] == int(NOW.timestamp()*1000)
+        no_island_cache(new_page)
+        new_page.reload()
+        new_page.wait_for_selector('[data-hud="working"]', state='attached')
+        assert cloud_state('dev-admin3')['welcome']['startedAt'] == fresh['welcome']['startedAt']
+        assert cloud_state('dev-admin3')['resources']['coins'] == 100
+        no_island_cache(new_page)
         third.close()
+
+        # Initial cloud failure blocks entry instead of importing the deliberately
+        # seeded guest island or creating another local starter.
+        OFFLINE = True
+        blocked_context, blocked_page = context(browser, 'dev-admin1')
+        blocked_page.goto(ORIGIN + '/harborlight-v1-layered.html')
+        expect(blocked_page.locator('[data-cloud-startup-blocked]')).to_be_visible()
+        assert blocked_page.locator('[data-hud="working"]').count() == 0
+        no_island_cache(blocked_page)
+        OFFLINE = False
+        blocked_page.locator('[data-cloud-startup-retry]').click()
+        blocked_page.wait_for_selector('[data-hud="working"]', state='attached')
+        settings(blocked_page)
+        save_cloud(blocked_page)
+        assert cloud_state('dev-admin1')['resources']['coins'] == 321
+        assert cloud_state('dev-admin1')['islandName'] == 'Wyspa dev-admin1'
+        no_island_cache(blocked_page)
+        blocked_context.close()
         browser.close()
     assert not ERRORS, ERRORS
     assert all('islands/dev-admin' in url or '/documents:commit' in url for url in REQUESTS), REQUESTS
-    print('PASS DEV game: separate account islands, second-device restore, safe cloud save, CAS conflict, recovery, sign-out and normal starter')
+    print('PASS cloud-only game: isolatedaccounts, immediateack, second-device restore, CAS conflict, offlineblocking, explicitrecovery, sign-out and one-time starter without browserislandcopies')
 
 
 if __name__ == '__main__':

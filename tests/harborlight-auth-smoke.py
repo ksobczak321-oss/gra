@@ -76,7 +76,7 @@ def run():
         # Every provider stays on this page and honestly reports unavailability.
         for provider in ['Google', 'Facebook']:
             page.locator(f'[data-provider="{provider}"]').click()
-            expect(page.locator('#account-status')).to_contain_text(provider + ' sign-in is coming soon.')
+            expect(page.locator('#account-status')).to_contain_text('This provider requires configuration by the game owner.')
             assert page.url == base + '/harborlight-auth.html'
 
         # Form validation runs locally and focuses the first invalid control.

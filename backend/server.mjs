@@ -1,5 +1,8 @@
 import http from 'node:http';
 import { pathToFileURL } from 'node:url';
+import { createAccountService, AccountServiceError } from './account-service.mjs';
+import { createFirestoreStore } from './firestore-store.mjs';
+import { createFirebaseIdentityVerifier } from './firebase-auth.mjs';
 
 export function parsePort(value = '8080') {
   if (!/^\d+$/.test(String(value))) throw new Error('PORT must be an integer between 1 and 65535.');
@@ -10,52 +13,105 @@ export function parsePort(value = '8080') {
   return port;
 }
 
+export function createStarterIsland(now = Date.now()) {
+  const buildings = Object.fromEntries(['house','farm','sawmill','quarry','dock','warehouse','lighthouse','lumber','windmill','townhall','chapel','market'].map(id => [id, { level: id === 'lighthouse' ? 0 : 1, workers: 0, ready: 0, workProgress: [] }]));
+  return JSON.stringify({ version: 9, population: 12, capacity: 24, happiness: 20, baseHappiness: 20,
+    resources: Object.fromEntries(['coins','wood','stone','grain','food','planks'].map(id => [id, 100])), buildings,
+    welcome: { startedAt: now, until: now + 72 * 3600000 }, worldTimeMs: now, lastSimulatedAt: now, savedAt: now,
+    islandStartedAt: now, day: 1, minutes: 0, settings: { language: 'pl', motion: true, sound: true },
+    engagement: { lastRealActivityAt: now, activeUntil: 0, activeSeconds: 0 } });
+}
+function configuredAccountApi(environment) {
+  if (process.env.HARBORLIGHT_ACCOUNT_API !== '1') return null;
+  const projectId = process.env.HARBORLIGHT_PROJECT_ID || (['prod','production'].includes(environment) ? 'harborlight-prod' : ['dev','preprod'].includes(environment) ? 'harborlight-dev' : null);
+  if (!projectId) return null;
+  const store = createFirestoreStore({ projectId, databaseId: process.env.HARBORLIGHT_DATABASE_ID || '(default)' });
+  return { service: createAccountService({ store, environment: projectId === 'harborlight-dev' ? 'preprod' : projectId === 'harborlight-prod' || ['prod','production'].includes(environment) ? 'production' : 'preprod' }), verify: createFirebaseIdentityVerifier({ projectId }), projectId };
+}
+function requestJson(request) {
+  return new Promise((resolve, reject) => {
+    if (!(request.headers['content-type'] || '').toLowerCase().startsWith('application/json')) { request.resume(); reject(new AccountServiceError('json-required', 415)); return; }
+    const pieces = []; let bytes = 0, failed = false;
+    request.on('data', piece => {
+      if (failed) return;
+      bytes += piece.length;
+      if (bytes > 1500000) { failed = true; pieces.length = 0; reject(new AccountServiceError('request-too-large', 413)); return; }
+      pieces.push(piece);
+    });
+    request.once('end', () => {
+      if (failed) return;
+      try { const body = JSON.parse(Buffer.concat(pieces).toString('utf8')); if (!body || typeof body !== 'object' || Array.isArray(body)) throw new Error(); resolve(body); }
+      catch { reject(new AccountServiceError('invalid-json', 400)); }
+    });
+    request.once('error', () => reject(new AccountServiceError('request-aborted', 400)));
+  });
+}
+
 export function createServer({
   environment = process.env.HARBORLIGHT_ENV || 'development',
   release = process.env.HARBORLIGHT_RELEASE || 'local',
-  readiness = { ready: true }
+  readiness = { ready: true }, accountService = null, verifyIdentityToken = null,
+  now = () => Date.now(), starter = createStarterIsland, accountProjectId = null
 } = {}) {
-  const server = http.createServer((request, response) => {
+  let configured;
+  if (!accountService && !verifyIdentityToken) {
+    try { configured = configuredAccountApi(environment); } catch { configured = null; }
+    accountService = configured?.service || null; verifyIdentityToken = configured?.verify || null;
+  }
+  const accountApi = !!accountService && typeof verifyIdentityToken === 'function';
+  const runtimeProjectId = configured?.projectId || accountProjectId || process.env.HARBORLIGHT_PROJECT_ID || (['prod','production'].includes(environment) ? 'harborlight-prod' : ['dev','preprod'].includes(environment) ? 'harborlight-dev' : null);
+  const runtimeEnvironment = runtimeProjectId === 'harborlight-dev' ? 'preprod' : runtimeProjectId === 'harborlight-prod' ? 'production' : ['dev','preprod'].includes(environment) ? 'preprod' : ['prod','production'].includes(environment) ? 'production' : 'development';
+  const server = http.createServer(async (request, response) => {
     response.setHeader('Content-Type', 'application/json; charset=utf-8');
     response.setHeader('Cache-Control', 'no-store');
     response.setHeader('X-Content-Type-Options', 'nosniff');
-
     const send = (statusCode, body) => {
-      const encoded = JSON.stringify(body);
-      response.statusCode = statusCode;
+      if (response.destroyed || response.writableEnded) return;
+      const encoded = JSON.stringify(body); response.statusCode = statusCode;
       response.setHeader('Content-Length', Buffer.byteLength(encoded));
       response.end(request.method === 'HEAD' ? undefined : encoded);
     };
-    // Use unreserved paths for public Cloud Run readback. Keep the z-suffixed
-    // aliases for internal/local probes, where the Google frontend is absent.
-    // No player data or client-supplied game state is accepted by this service.
     const path = request.url?.split('?', 1)[0];
-    const isHealth = path === '/health' || path === '/healthz';
-    const isReadiness = path === '/ready' || path === '/readyz';
-    if (!isHealth && !isReadiness) {
-      send(404, { error: 'not_found' });
+    const isHealth = path === '/health' || path === '/healthz', isReadiness = path === '/ready' || path === '/readyz';
+    if (isHealth || isReadiness) {
+      if (request.method !== 'GET' && request.method !== 'HEAD') { response.setHeader('Allow', 'GET, HEAD'); send(405, { error: 'method_not_allowed' }); return; }
+      const ready = !isReadiness || readiness.ready;
+      send(ready ? 200 : 503, { status: ready ? 'ok' : 'draining', service: 'harborlight-api', environment, release,
+        ...(isReadiness ? { scope: 'infrastructure', features: { accounts: accountApi, persistence: accountApi, gameApi: false } } : {}) });
       return;
     }
-    if (request.method !== 'GET' && request.method !== 'HEAD') {
-      response.setHeader('Allow', 'GET, HEAD');
-      send(405, { error: 'method_not_allowed' });
-      return;
+    const routes = { '/api/v1/config': ['GET'], '/api/v1/island': ['GET','POST','PUT'], '/api/v1/activity': ['POST'], '/api/v1/promotions/redeem': ['POST'] };
+    if (!routes[path]) { send(404, { error: 'not_found' }); return; }
+    if (!accountApi) { send(503, { error: 'account_api_disabled' }); return; }
+    if (!routes[path].includes(request.method)) { response.setHeader('Allow', routes[path].join(', ')); send(405, { error: 'method_not_allowed' }); return; }
+    if (!readiness.ready) { send(503, { error: 'draining' }); return; }
+    if (path === '/api/v1/config') { send(200, { accountApi: true, projectId: runtimeProjectId, environment: runtimeEnvironment }); return; }
+    try {
+      const token = /^Bearer ([^\s]{1,16000})$/.exec(request.headers.authorization || '')?.[1];
+      if (!token) { response.setHeader('WWW-Authenticate', 'Bearer'); throw new AccountServiceError('auth-required', 401); }
+      const identity = await verifyIdentityToken(token);
+      if (!identity?.uid) throw new AccountServiceError('auth-required', 401);
+      const uid = identity.uid;
+      if (runtimeEnvironment === 'preprod' && !['dev-admin1','dev-admin2','dev-admin3'].includes(uid)) throw new AccountServiceError('permission', 403);
+      if (request.method === 'GET') { send(200, await accountService.readIsland({ uid })); return; }
+      const body = await requestJson(request);
+      if (path === '/api/v1/island' && request.method === 'POST') {
+        if (Object.keys(body).length) throw new AccountServiceError('starter-is-server-owned', 400);
+        await accountService.startIsland({ uid, payload: starter(now()) });
+        send(201, await accountService.readIsland({ uid })); return;
+      }
+      if (path === '/api/v1/island') {
+        const saved = await accountService.saveIsland({ uid, payload: body.payload, expectedRevision: body.expectedRevision, generation: body.generation });
+        send(200, { ...saved, updateTime: new Date(saved.updatedAt).toISOString() }); return;
+      }
+      if (path === '/api/v1/activity') { send(200, await accountService.recordActivity({ uid, generation: body.generation })); return; }
+      send(200, await accountService.redeemCode({ uid, code: body.code, generation: body.generation }));
+    } catch (error) {
+      const status = Number.isInteger(error?.status) && error.status >= 400 && error.status <= 599 ? error.status : 503;
+      send(status, { error: typeof error?.code === 'string' ? error.code : 'account-service-unavailable' });
     }
-    const ready = !isReadiness || readiness.ready;
-    send(ready ? 200 : 503, {
-      status: ready ? 'ok' : 'draining',
-      service: 'harborlight-api',
-      environment,
-      release,
-      ...(isReadiness ? {
-        scope: 'infrastructure',
-        features: { accounts: false, persistence: false, gameApi: false }
-      } : {})
-    });
   });
-  server.requestTimeout = 15_000;
-  server.headersTimeout = 10_000;
-  server.keepAliveTimeout = 5_000;
+  server.requestTimeout = 15_000; server.headersTimeout = 10_000; server.keepAliveTimeout = 5_000;
   return server;
 }
 

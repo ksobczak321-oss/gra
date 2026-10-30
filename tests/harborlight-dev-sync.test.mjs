@@ -1,149 +1,74 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createDevSync } from '../harborlight-dev-sync.js';
-
-const A = { uid: 'dev-admin1', login: 'admin1' }, B = { uid: 'dev-admin2', login: 'admin2' };
-const KEY = uid => `harborlight-dev-island-${uid}`;
+const account = { uid: 'dev-admin1', login: 'admin1' }, key = 'harborlight-dev-island-dev-admin1';
 const V1 = { revision: 1, updateTime: '2026-10-30T12:00:00.000001Z' };
 const V2 = { revision: 2, updateTime: '2026-10-30T12:00:01.000002Z' };
-const payload = coins => JSON.stringify({ resources: { coins } });
-const deferred = () => { let resolve, reject; const promise = new Promise((yes, no) => { resolve = yes; reject = no; }); return { promise, resolve, reject }; };
-function storage(initial = {}) {
-  const values = new Map(Object.entries(initial));
-  return { values, getItem: key => values.get(key) ?? null, setItem: (key, value) => values.set(key, value) };
+const json = coins => JSON.stringify({resources:{coins}});
+function fixture({remote={payload:json(100),version:V1},save,load}={}) {
+  const statuses=[],writes=[],timers=new Map(); let seq=0;
+  const storage={getItem(){throw Error('Island storage must never be read')},setItem(){throw Error('Island storage must never be written')}};
+  const sync=createDevSync({account,saveKey:key,storage,onStatus:s=>statuses.push(s),schedule:fn=>{timers.set(++seq,fn);return seq},cancel:id=>timers.delete(id),cloud:{loadIsland:load||(async()=>remote),saveIsland:save||(async(payload,version)=>{writes.push({payload,version});return version?V2:V1})}});
+  return {sync,statuses,writes,timers};
 }
-function harness({ account = A, cache = storage(), remote = null, save, load } = {}) {
-  const timers = new Map(), statuses = [], writes = [];
-  let clock = 0;
-  const sync = createDevSync({ account, saveKey: KEY(account.uid), storage: cache,
-    cloud: { loadIsland: load || (async () => remote), saveIsland: save || (async (value, version) => {
-      writes.push({ value, version }); return version ? V2 : V1;
-    }) }, onStatus: value => statuses.push(value),
-    schedule: (fn, delay) => { const id = ++clock; timers.set(id, { fn, delay }); return id; },
-    cancel: id => timers.delete(id) });
-  return { sync, cache, timers, statuses, writes };
-}
-
-test('new account starts separately and never imports a guest island or another account', async () => {
-  const cache = storage({ 'harborlight-v1-new-player-save': payload(999), [KEY(B.uid)]: payload(888) });
-  const first = harness({ cache });
-  assert.equal(await first.sync.open(payload(100)), payload(100));
-  assert.equal(await first.sync.flush(), true);
-  assert.deepEqual(first.writes, [{ value: payload(100), version: null }]);
-  const second = harness({ account: B, cache });
-  assert.equal(await second.sync.open(payload(100)), payload(888));
-  assert.equal(cache.getItem(KEY(A.uid)), payload(100));
-  assert.equal(cache.getItem('harborlight-v1-new-player-save'), payload(999));
-  assert.throws(() => createDevSync({ account: A, saveKey: KEY(B.uid), cloud: {}, storage: cache }));
+test('cloud-only new island is confirmed before opening, without importing any browser cache',async()=>{
+  const f=fixture({remote:null});assert.equal(await f.sync.open(json(100)),json(100));
+  assert.deepEqual(f.writes,[{payload:json(100),version:null}]);assert.equal(f.sync.pending,false);assert.equal(f.sync.status,'saved');
 });
-
-test('a different device restores the cloud island before queued gameplay changes', async () => {
-  const { sync, cache, writes } = harness({ remote: { payload: payload(321), version: V1 } });
-  assert.equal(await sync.open(payload(100)), payload(321));
-  assert.equal(sync.status, 'saved');
-  assert.equal(writes.length, 0);
-  sync.queue(payload(320));
-  await sync.flush();
-  assert.deepEqual(writes, [{ value: payload(320), version: V1 }]);
-  assert.equal(cache.getItem(KEY(A.uid)), payload(320));
+test('existing cloud island takes precedence and is never reset by a starter',async()=>{
+  const f=fixture({remote:{payload:json(777),version:V1}});assert.equal(await f.sync.open(json(100)),json(777));assert.equal(f.writes.length,0);
 });
-
-test('continuous activity schedules one bounded write using the newest snapshot', async () => {
-  const { sync, timers, writes } = harness();
-  await sync.open(payload(100));
-  for (let i = 0; i < 50; i++) sync.queue(payload(i));
-  assert.equal(timers.size, 1);
-  assert.equal([...timers.values()][0].delay, 20000);
-  [...timers.values()][0].fn();
-  await sync.flush();
-  assert.equal(writes.length, 1);
-  assert.equal(writes[0].value, payload(49));
+test('an unavailable cloud blocks opening instead of starting an offline island',async()=>{
+  const f=fixture({load:async()=>{throw Object.assign(Error('offline'),{code:'offline'})}});
+  await assert.rejects(f.sync.open(json(100)),/offline/);assert.equal(f.sync.writable,false);assert.equal(f.sync.queue(json(999)),false);assert.equal(f.writes.length,0);
 });
-
-test('network failure retains pending cache and retries with the same compare-and-swap version', async () => {
-  let online = false;
-  const calls = [];
-  const { sync, cache, timers } = harness({ remote: { payload: payload(100), version: V1 }, save: async (value, version) => {
-    calls.push({ value, version });
-    if (!online) throw Object.assign(new Error('offline'), { code: 'offline' });
-    return V2;
-  } });
-  await sync.open(payload(100)); sync.queue(payload(222));
-  assert.equal(await sync.flush(), false);
-  assert.equal(sync.status, 'offline');
-  assert.equal(cache.getItem(KEY(A.uid)), payload(222));
-  assert.equal(JSON.parse(cache.getItem(`${KEY(A.uid)}:cloud`)).pending, true);
-  assert.equal([...timers.values()][0].delay, 60000);
-  online = true;
-  assert.equal(await sync.flush(), true);
-  assert.deepEqual(calls.map(value => value.version), [V1, V1]);
-  assert.equal(sync.status, 'saved');
+test('failed first cloud commit does not claim a created starter',async()=>{
+  const f=fixture({remote:null,save:async()=>{throw Object.assign(Error('offline'),{code:'offline'})}});
+  await assert.rejects(f.sync.open(json(100)));assert.equal(f.sync.status,'offline');assert.equal(f.sync.confirmedPayload,null);
 });
-
-test('CAS conflict stops further writes while preserving local progress and an exportable backup', async () => {
-  let calls = 0;
-  const { sync, cache, timers } = harness({ remote: { payload: payload(100), version: V1 }, save: async () => {
-    calls++; throw Object.assign(new Error('conflict'), { code: 'conflict' });
-  } });
-  await sync.open(payload(100)); sync.queue(payload(120));
-  assert.equal(await sync.flush(), false);
-  sync.queue(payload(121));
-  assert.equal(await sync.flush(), false);
-  assert.equal(calls, 1); assert.equal(timers.size, 0);
-  assert.equal(sync.status, 'conflict');
-  assert.equal(cache.getItem(`${KEY(A.uid)}:backup`), payload(121));
+test('successful command snapshots use cloud compare-and-swap and become confirmed',async()=>{
+  const f=fixture();await f.sync.open(json(100));f.sync.queue(json(90));assert.equal(await f.sync.flush(),true);
+  assert.deepEqual(f.writes,[{payload:json(90),version:V1}]);assert.equal(f.sync.confirmedPayload,json(90));
 });
-
-test('pending local changes survive reload when the remote version has not changed', async () => {
-  const cache = storage({ [KEY(A.uid)]: payload(222),
-    [`${KEY(A.uid)}:cloud`]: JSON.stringify({ uid: A.uid, version: V1, pending: true }) });
-  const { sync, writes } = harness({ cache, remote: { payload: payload(100), version: V1 } });
-  assert.equal(await sync.open(payload(100)), payload(222));
-  await sync.flush();
-  assert.deepEqual(writes, [{ value: payload(222), version: V1 }]);
+test('failed or ambiguous write stops gameplay and never retries blindly',async()=>{
+  let calls=0;const f=fixture({save:async()=>{calls++;throw Object.assign(Error('offline'),{code:'offline'})}});
+  await f.sync.open(json(100));f.sync.queue(json(90));assert.equal(await f.sync.flush(),false);
+  assert.equal(f.sync.writable,false);assert.equal(f.sync.confirmedPayload,json(100));assert.equal(f.sync.queue(json(80)),false);
+  assert.equal(await f.sync.flush(),false);assert.equal(calls,1);assert.equal(f.timers.size,0);
 });
-
-test('a newer cloud version on reload does not erase uncommitted local data or overwrite the server', async () => {
-  const cache = storage({ [KEY(A.uid)]: payload(222),
-    [`${KEY(A.uid)}:cloud`]: JSON.stringify({ uid: A.uid, version: V1, pending: true }) });
-  const { sync, writes } = harness({ cache, remote: { payload: payload(444), version: V2 } });
-  assert.equal(await sync.open(payload(100)), payload(222));
-  assert.equal(sync.status, 'conflict');
-  assert.equal(await sync.flush(), false); assert.equal(writes.length, 0);
-  assert.equal(await sync.reloadCloud(), payload(444));
-  assert.equal(cache.getItem(`${KEY(A.uid)}:backup`), payload(222));
-  assert.equal(cache.getItem(KEY(A.uid)), payload(444));
-  assert.equal(sync.status, 'saved');
+test('explicit reload recovers the server truth after a lost response',async()=>{
+  let loads=0;const f=fixture({load:async()=>({payload:json(++loads===1?100:90),version:loads===1?V1:V2}),save:async()=>{throw Object.assign(Error('offline'),{code:'offline'})}});
+  await f.sync.open(json(100));f.sync.queue(json(90));await f.sync.flush();assert.equal(await f.sync.reloadCloud(),json(90));assert.equal(f.sync.writable,true);
 });
-
-test('offline startup uses only its own cache and a create precondition protects an unknown cloud save', async () => {
-  const cache = storage({ [KEY(A.uid)]: payload(123), [KEY(B.uid)]: payload(999) });
-  const { sync, writes } = harness({ cache, load: async () => { throw Object.assign(new Error(), { code: 'offline' }); } });
-  assert.equal(await sync.open(payload(100)), payload(123));
-  assert.equal(sync.status, 'offline');
-  await sync.flush();
-  assert.equal(writes[0].version, null);
+test('conflict stops writes and leaves the confirmed island unchanged',async()=>{
+  const f=fixture({save:async()=>{throw Object.assign(Error('conflict'),{code:'conflict'})}});
+  await f.sync.open(json(100));f.sync.queue(json(120));await f.sync.flush();assert.equal(f.sync.status,'conflict');assert.equal(f.sync.confirmedPayload,json(100));
 });
-
-test('changes made while a write is in flight are not overwritten by that completed snapshot', async () => {
-  const first = deferred(), calls = [];
-  const { sync, cache } = harness({ remote: { payload: payload(100), version: V1 }, save: async (value, version) => {
-    calls.push({ value, version }); return calls.length === 1 ? first.promise : { ...V2, revision: 3 };
-  } });
-  await sync.open(payload(100)); sync.queue(payload(101));
-  const write = sync.flush();
-  await Promise.resolve();
-  sync.queue(payload(100)); // Reverting to the formerly saved payload is still a new write.
-  first.resolve(V2); await write;
-  assert.equal(cache.getItem(KEY(A.uid)), payload(100));
-  assert.equal(sync.pending, true);
-  await sync.flush();
-  assert.deepEqual(calls, [{ value: payload(101), version: V1 }, { value: payload(100), version: V2 }]);
+test('concurrent flushes serialize snapshots instead of overwriting their versions',async()=>{
+  let release;const gate=new Promise(r=>release=r),calls=[];
+  const f=fixture({save:async(payload,version)=>{calls.push({payload,version});if(calls.length===1)await gate;return calls.length===1?V2:{revision:3,updateTime:'2026-10-30T12:00:02.000003Z'}}});
+  await f.sync.open(json(100));f.sync.queue(json(90));const first=f.sync.flush();await Promise.resolve();f.sync.queue(json(80));const second=f.sync.flush();release();await Promise.all([first,second]);
+  assert.deepEqual(calls.map(x=>x.version),[V1,V2]);assert.equal(f.sync.confirmedPayload,json(80));
 });
-
-test('disposal cancels scheduled writes without deleting the account or local save', async () => {
-  const { sync, cache, timers, writes } = harness();
-  await sync.open(payload(100)); sync.queue(payload(111)); sync.dispose();
-  assert.equal(timers.size, 0); assert.equal(await sync.flush(), false);
-  assert.equal(cache.getItem(KEY(A.uid)), payload(111)); assert.equal(writes.length, 0);
+test('cross-account save keys and disposed coordinators cannot save',async()=>{
+  assert.throws(()=>createDevSync({account,saveKey:'harborlight-dev-island-dev-admin2',cloud:{}}));
+  const f=fixture();await f.sync.open(json(100));f.sync.dispose();assert.equal(f.sync.queue(json(90)),false);assert.equal(await f.sync.flush(),false);
+});
+test('a new production island comes from the server, never from a browser-supplied starter',async()=>{
+ let creates=0,saves=0;
+ const cloud={projectId:'harborlight-prod',environment:'prod',accountStatus:{expired:false},loadIsland:async()=>null,createIsland:async()=>{creates++;return{payload:json(100),version:V1}},saveIsland:async()=>{saves++;return V2}};
+ const sync=createDevSync({account:{uid:'real-user'},saveKey:'harborlight-prod-island-real-user',cloud});
+ assert.equal(await sync.open(json(999999)),json(100));assert.equal(creates,1);assert.equal(saves,0);
+});
+test('an expired production island is not silently recreated by opening the page',async()=>{
+ let creates=0;
+ const cloud={projectId:'harborlight-prod',environment:'prod',accountStatus:{expired:true},loadIsland:async()=>null,createIsland:async()=>{creates++;return{payload:json(100),version:V1}}};
+ const sync=createDevSync({account:{uid:'real-user'},saveKey:'harborlight-prod-island-real-user',cloud});
+ await assert.rejects(sync.open(json(100)),error=>error.code==='island-expired');assert.equal(creates,0);assert.equal(sync.writable,false);
+});
+test('PRE-PROD with the account API enabled also uses the server-owned starter',async()=>{
+ let creates=0,saves=0;
+ const cloud={projectId:'harborlight-dev',environment:'preprod',accountApiEnabled:true,accountStatus:{expired:false},loadIsland:async()=>null,createIsland:async()=>{creates++;return{payload:json(100),version:V1}},saveIsland:async()=>{saves++;throw Error('No client starter')}};
+ const sync=createDevSync({account,saveKey:key,cloud});
+ assert.equal(await sync.open(json(999999)),json(100));assert.equal(creates,1);assert.equal(saves,0);
 });

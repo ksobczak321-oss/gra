@@ -1,17 +1,24 @@
 // Economy and progression for the interactive approved-screen prototype.
 // Pure data module: browser UI and Node tests share the same rules.
-import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange } from './harborlight-v1-logistics.js?v=frontend-v17';
-export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty } from './harborlight-v1-logistics.js?v=frontend-v17';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange } from './harborlight-v1-logistics.js?v=frontend-v18';
+export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty } from './harborlight-v1-logistics.js?v=frontend-v18';
 
-import { normalizeResidents, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds } from './harborlight-v1-residents.js?v=frontend-v17';
-export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v17';
+import { normalizeResidents, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds } from './harborlight-v1-residents.js?v=frontend-v18';
+export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v18';
 
-import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction } from './harborlight-v1-activities.js?v=frontend-v17';
-import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v17';
-import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v17';
-import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v17';
-import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v17';
-import { normalizeIslandProfile, validateIslandName } from './harborlight-v1-profile.js?v=frontend-v17';
+import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction } from './harborlight-v1-activities.js?v=frontend-v18';
+import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v18';
+import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v18';
+import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v18';
+import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v18';
+import { normalizeIslandProfile, validateIslandName } from './harborlight-v1-profile.js?v=frontend-v18';
+import { consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v18';
+import { warsawParts, warsawDayKey, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v18';
+import { welcomeStatus, WELCOME_SECONDS } from './harborlight-v1-residents.js?v=frontend-v18';
+export { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v18';
+import { normalizeWorldEvents, advanceWorldEvents, nextWorldEvent, recordChapelBlessing, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v18';
+import { normalizeCommerce, commerceAction, nextCommerceEvent, advanceCommerce } from './harborlight-v1-commerce.js?v=frontend-v18';
+import { normalizeEngagementSchedule } from './harborlight-v1-engagement.js?v=frontend-v18';
 
 export const RESOURCES = {
   coins: { name: 'Coins', short: 'coins', symbol: '◉', price: 1 },
@@ -28,16 +35,16 @@ export const CONSTRUCTION_IDS = ['farm', 'windmill', 'lumber', 'sawmill', 'quarr
 
 export const BUILDINGS = {
   house: { name: 'House', description: 'Each level provides housing for 24 residents. Every resident without a home reduces happiness by 1 percentage point per hour.', cost: { coins: 100, wood: 40, stone: 20, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
-  farm: { name: 'Farm', description: 'Each farmer produces 20 grain per working hour. Harvests wait in the farm storage until warehouse workers collect them.', cost: { coins: 80, wood: 30, stone: 10 }, resource: 'grain', rate: 20, maxLevel: MAX_BUILDING_LEVEL },
-  sawmill: { name: 'Sawmill', description: 'Each worker produces 20 planks per hour. Each plank requires 2 wood from the central warehouse.', cost: { coins: 120, wood: 45, stone: 25 }, resource: 'planks', rate: 20, input: 'wood', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
-  quarry: { name: 'Quarry', description: 'Each quarry worker produces 20 stone per working hour. Stone waits at the quarry for transport.', cost: { coins: 150, wood: 35, stone: 20 }, resource: 'stone', rate: 20, maxLevel: MAX_BUILDING_LEVEL },
+  farm: { name: 'Farm', description: 'Each farmer produces 20 grain per hour at level 1, 24 at level 2, and two more per level thereafter. Harvests wait locally for warehouse workers.', cost: { coins: 80, wood: 30, stone: 10 }, resource: 'grain', rate: 20, maxLevel: MAX_BUILDING_LEVEL },
+  sawmill: { name: 'Sawmill', description: 'Each worker produces 20 planks per hour at level 1, 24 at level 2, and two more per level thereafter. Each plank requires 2 wood from central storage.', cost: { coins: 120, wood: 45, stone: 25 }, resource: 'planks', rate: 20, input: 'wood', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
+  quarry: { name: 'Quarry', description: 'Each quarry worker produces 20 stone per hour at level 1, 24 at level 2, and two more per level thereafter. Stone waits locally for transport.', cost: { coins: 150, wood: 35, stone: 20 }, resource: 'stone', rate: 20, maxLevel: MAX_BUILDING_LEVEL },
   dock: { name: 'Harbor', description: 'Connects the island to trade and expeditions.', cost: { coins: 200, wood: 60, planks: 25 }, maxLevel: MAX_BUILDING_LEVEL },
-  warehouse: { name: 'Warehouse', description: 'Each warehouse worker carries up to 120 items per five-minute round trip at level 1. Level 1 holds 1,000 of each material and 4,000 in total. Each additional level increases both limits by 50%.', cost: { coins: 160, wood: 35, stone: 30, planks: 15 }, maxLevel: MAX_BUILDING_LEVEL },
+  warehouse: { name: 'Warehouse', description: 'At level 1 each carrier carries 120 items per base five-minute course; storage holds 1,000 per material and 4,000 total. Capacity grows by 50% up to 10 million per material and 40 million total. After level 24 only crew capacity grows; separate road upgrades still apply.', cost: { coins: 160, wood: 35, stone: 30, planks: 15 }, maxLevel: MAX_BUILDING_LEVEL },
   lighthouse: { name: 'Lighthouse', description: 'Completing a level sets everyone’s happiness to 100% and doubles material production for 24 hours × the new level. Construction takes four times as long as transport.', cost: { coins: 300, planks: 30 }, maxLevel: MAX_BUILDING_LEVEL },
-  lumber: { name: 'Lumber Camp', description: 'Each lumberjack produces 20 wood per working hour. Wood waits in local storage for transport.', cost: { coins: 90, wood: 25, stone: 15 }, resource: 'wood', rate: 20, maxLevel: MAX_BUILDING_LEVEL },
-  windmill: { name: 'Windmill', description: 'Each miller produces 20 food per hour. Each food requires 2 grain from the central warehouse.', cost: { coins: 140, wood: 40, stone: 20, planks: 15 }, resource: 'food', rate: 20, input: 'grain', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
+  lumber: { name: 'Lumber Camp', description: 'Each lumberjack produces 20 wood per hour at level 1, 24 at level 2, and two more per level thereafter. Wood waits locally for transport.', cost: { coins: 90, wood: 25, stone: 15 }, resource: 'wood', rate: 20, maxLevel: MAX_BUILDING_LEVEL },
+  windmill: { name: 'Windmill', description: 'Each miller produces 20 food per hour at level 1, 24 at level 2, and two more per level thereafter. Each Food requires 2 grain from central storage.', cost: { coins: 140, wood: 40, stone: 20, planks: 15 }, resource: 'food', rate: 20, input: 'grain', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
   townhall: { name: 'Town Hall', description: 'The Town Hall determines the island level and the upgrade limit for other buildings. Each level allows 24 residents; the House provides their housing.', cost: { coins: 240, wood: 50, stone: 50, planks: 20 }, maxLevel: MAX_BUILDING_LEVEL },
-  chapel: { name: 'Chapel', description: 'Completing an upgrade grants +10 happiness × the new level for 10 hours. Separate one-use blessings give +50 of every resource and +20 happiness for one hour.', cost: { coins: 180, wood: 20, stone: 60, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
+  chapel: { name: 'Chapel', description: 'Completing an upgrade grants +10 happiness × the new level for 10 hours. One free blessing renews at Warsaw midnight without accumulation. Every manual blessing gives +50 of every resource and +20 happiness for one hour. Paid and ad blessings share a four-hour wait after their effect ends.', cost: { coins: 180, wood: 20, stone: 60, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
   market: { name: 'Market', description: 'Merchants exchange goods without coins.', cost: { coins: 130, wood: 35, stone: 15 }, maxLevel: MAX_BUILDING_LEVEL }
 };
 
@@ -74,16 +81,19 @@ export function createState(now = Date.now()) {
   }
   const state = {
     version: 9,
+    islandGeneration: 1,
     islandName: '', islandNameUpdatedAt: 0,
     resources: Object.fromEntries(Object.keys(RESOURCES).map(id => [id, 100])),
-    population: 12, capacity: 24, happiness: 0, baseHappiness: 0, chapelRemaining: 0, lighthouseRemaining: 0,
-    blessingRemaining: 0, blessingsUsed: 0, paidBlessingCooldownRemaining: 0, loyalty: { lastDay: null, streak: 0 },
+    population: 12, capacity: 24, happiness: 20, baseHappiness: 20, chapelRemaining: 0, lighthouseRemaining: 0,
+    welcome: { startedAt: now, until: now + WELCOME_SECONDS * 1000 },
+    blessingRemaining: 0, blessingsUsed: 0, dailyBlessingDay: null, blessingAdReceipts: [], paidBlessingCooldownRemaining: 0, loyalty: { lastDay: null, streak: 0 },
     populationProgress: 0, populationDirection: 0, taxProgress: 0, foodCredit: 0,
     returningWorkers: [], transportPriority: [...MATERIAL_IDS],
     pendingDeliveries: Object.fromEntries(MATERIAL_IDS.map(id => [id, 0])),
     buildings,
     objective: { wood: 20, stone: 12, repaired: false },
-    speed: 1, paused: false, day: 18, minutes: 564,
+    speed: 1, paused: false, day: 1, minutes: Number(warsawParts(now).hour) * 60 + Number(warsawParts(now).minute),
+    calendar: { startDay: warsawDayKey(now), year: Number(warsawParts(now).year) },
     settings: { sound: true, motion: true, motionOverride: false, language: 'en', notificationCategories: {} },
     premiumServices: [],
     previewBuildStockVersion: null,
@@ -101,8 +111,31 @@ export function createState(now = Date.now()) {
   normalizeHouseHappiness(state, {});
   normalizeLeisure(state, state);
   normalizeProgression(state, {});
+  normalizeEngagementSchedule(state, {});
+  normalizeWorldEvents(state, {});
+  normalizeCommerce(state, {});
   normalizeEffectNotifications(state);
   return state;
+}
+
+// The island's fictional date starts on January 1. Daily rewards and durations
+// continue to use the real Warsaw calendar and the real simulation anchor.
+export function islandCalendar(state) {
+  const parts = warsawParts(state.worldTimeMs), today = warsawDayKey(state.worldTimeMs);
+  const origin = /^\d{4}-\d{2}-\d{2}$/.test(state.calendar?.startDay || '') ? state.calendar.startDay : today;
+  const day = Math.max(0, calendarDayDistance(origin, today));
+  const year = Number.isSafeInteger(state.calendar?.year) ? state.calendar.year : Number(parts.year);
+  const date = new Date(Date.UTC(year, 0, 1 + day));
+  return { day: day + 1, date: date.getUTCDate(), month: date.getUTCMonth() + 1, year: date.getUTCFullYear(),
+    hour: Number(parts.hour), minute: Number(parts.minute), second: Number(parts.second), timeZone: 'Europe/Warsaw' };
+}
+
+export function dailyBlessingStatus(state) {
+  const day = warsawDayKey(state.worldTimeMs);
+  const available = state.buildings.chapel.level > 0 && state.dailyBlessingDay !== day;
+  const nextRefreshAt = nextWarsawMidnightMs(state.worldTimeMs);
+  return { available, remaining: available ? 1 : 0, day, lastUsedDay: state.dailyBlessingDay,
+    nextRefreshAt, remainingSeconds: Math.max(0, (nextRefreshAt - state.worldTimeMs) / 1000) };
 }
 
 export function totalWorkers(state) {
@@ -156,7 +189,7 @@ function reserveResidentFood(state) {
   if (centralAvailable(state, 'food') >= 1) {
     // One whole warehouse unit is allocated to meals. Only its unused fraction
     // remains available to residents; buildings cannot spend that unit again.
-    state.resources.food -= 1;
+    consumeMaterial(state, 'food', 1);
     state.foodCredit = 1;
   }
 }
@@ -209,16 +242,17 @@ export function upgradeEligibility(state, id, options = {}) {
   if ((state.premiumServices || []).some(service => service.building === id)) return bad('Wait for the purchased upgrade of this building to finish first.');
   if (options.premiumService && state.constructionProjects.some(project => project.building === id)) return bad('Finish the preceding upgrade of this building before buying its next level.');
   const construction = constructionCounts(state);
-  if (!options.premiumService && construction.active >= construction.limit && construction.queued >= construction.queueLimit) return bad(`Construction slots and the queue are full (${construction.limit} + ${construction.limit}). Wait for an upgrade to finish.`);
+  const needsQueue = construction.active >= construction.limit || state.constructionProjects.some(project => project.building === id);
+  if (!options.premiumService && needsQueue && construction.queued >= construction.queueLimit) return bad(`Construction slots and the queue are full (${construction.limit} + ${construction.queueLimit}). Wait for an upgrade to finish.`);
   return good('An upgrade is available.');
 }
 
-// Rates interpolate the agreed anchors: 0%=0, 50%=1/6, 100%=1 person/hour.
-// Negative happiness uses the same rate for population loss.
+// Arrival times are half the former anchors; negative departures retain their
+// original rate. Hunger, effects and personal walking keep their real clocks.
 export function populationRate(happiness) {
   if (typeof happiness !== 'number' || !Number.isFinite(happiness)) return 0;
   const magnitude = Math.min(100, Math.abs(happiness));
-  return Math.sign(happiness) * (magnitude <= 50 ? magnitude / 300 : 1 / 6 + (magnitude - 50) / 60);
+  return Math.sign(happiness) * (happiness > 0 ? 2 : 1) * (magnitude <= 50 ? magnitude / 300 : 1 / 6 + (magnitude - 50) / 60);
 }
 
 export function populationIntervalSeconds(happiness) {
@@ -315,7 +349,7 @@ function advancePopulation(state, elapsedSeconds) {
     if (direction !== state.populationDirection || !direction || populationAtLimit(state, direction)) resetPopulationProgress(state, direction);
     const blocked = !direction || populationAtLimit(state, direction);
     const rate = Math.abs(populationRate(happiness)) / 3600;
-    const rateDerivative = Math.abs(happiness) > 50 || Math.abs(happiness) === 50 && direction * happinessSlope > 0 ? 1 / 60 : 1 / 300;
+    const rateDerivative = (direction > 0 ? 2 : 1) * (Math.abs(happiness) > 50 || Math.abs(happiness) === 50 && direction * happinessSlope > 0 ? 1 / 60 : 1 / 300);
     const rateSlope = direction * happinessSlope * rateDerivative / 3600;
     const foodTime = state.foodCredit > 1e-12 ? state.foodCredit * 3600 / foodDemandPerHour(state) : Infinity;
     const taxesPerHour = taxRate(state);
@@ -332,7 +366,7 @@ function advancePopulation(state, elapsedSeconds) {
     const serviceTime = Math.min(Infinity, ...(state.premiumServices || []).map(service => service.buildRemaining > 1e-9 ? service.buildRemaining : 1e-8));
     // residentSegments already includes nextResidentEvent and narrows it with
     // happiness boundaries; no resident clock changes during these quotes.
-    let duration = Math.min(remaining, boundaryTime, segment.nextEvent, logisticsEvent, nextActivitiesEvent(state), nextLeisureEvent(state), nextProgressionEvent(state), serviceTime, foodTime, taxFundingTime, rankingTime, premiumTime, houseTime,
+    let duration = Math.min(remaining, boundaryTime, segment.nextEvent, logisticsEvent, nextActivitiesEvent(state), nextLeisureEvent(state), nextProgressionEvent(state), nextWorldEvent(state), nextCommerceEvent(state), serviceTime, foodTime, taxFundingTime, rankingTime, premiumTime, houseTime,
       state.chapelRemaining > 0 ? state.chapelRemaining : Infinity,
       state.blessingRemaining > 0 ? state.blessingRemaining : Infinity,
       state.paidBlessingCooldownRemaining > 0 ? state.paidBlessingCooldownRemaining : Infinity,
@@ -374,6 +408,8 @@ function advancePopulation(state, elapsedSeconds) {
     }
     state.foodCredit = Math.max(0, state.foodCredit - foodDemandPerHour(state) * duration / 3600);
     state.worldTimeMs = Math.min(Number.MAX_SAFE_INTEGER, state.worldTimeMs + duration * 1000);
+    advanceWorldEvents(state, duration, { removeResident: removeResidentForDeparture, synchronizeResidents });
+    advanceCommerce(state, duration);
     advanceActivities(state, duration);
     advanceProgression(state, duration);
     for (const service of [...(state.premiumServices || [])]) {
@@ -412,7 +448,11 @@ export function normalizeState(raw, now = Date.now()) {
   normalizeIslandProfile(state, raw);
   const simulationAnchor = raw.version >= 8 ? Math.min(now, amount(raw.lastSimulatedAt ?? raw.savedAt, now, Number.MAX_SAFE_INTEGER)) : now;
   state.worldTimeMs = state.lastSimulatedAt = state.savedAt = simulationAnchor;
-  for (const key of Object.keys(RESOURCES)) state.resources[key] = integer(raw.resources?.[key], state.resources[key], 0, key === 'coins' ? Number.MAX_SAFE_INTEGER : 10000000);
+  state.islandGeneration = Number.isSafeInteger(raw.islandGeneration) && raw.islandGeneration > 0 ? raw.islandGeneration : 1;
+  const hasWelcome = Number.isFinite(raw.welcome?.startedAt) && Number.isFinite(raw.welcome?.until);
+  const welcomeStart = hasWelcome ? Math.min(simulationAnchor, Math.max(0, raw.welcome.startedAt)) : 0;
+  state.welcome = { startedAt: welcomeStart, until: hasWelcome ? Math.min(welcomeStart + WELCOME_SECONDS * 1000, Math.max(welcomeStart, raw.welcome.until)) : 0 };
+  for (const key of Object.keys(RESOURCES)) state.resources[key] = integer(raw.resources?.[key], state.resources[key], 0, Number.MAX_SAFE_INTEGER);
   if (!owns(raw.resources, 'grain')) state.resources.grain = 0;
   if ([1, 2, 3].includes(raw.version)) {
     // Settle already-earned legacy coin batches once. Version 4 has no passive
@@ -450,6 +490,8 @@ export function normalizeState(raw, now = Date.now()) {
   state.lighthouseRemaining = amount(raw.lighthouseRemaining, 0, 8640000);
   state.blessingRemaining = amount(raw.blessingRemaining, 0, 3600);
   state.blessingsUsed = integer(raw.blessingsUsed, 0, 0, MAX_BUILDING_LEVEL);
+  state.dailyBlessingDay = typeof raw.dailyBlessingDay === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(raw.dailyBlessingDay) ? raw.dailyBlessingDay : null;
+  state.blessingAdReceipts = [...new Set((Array.isArray(raw.blessingAdReceipts) ? raw.blessingAdReceipts : []).filter(id => typeof id === 'string' && id.length > 0 && id.length <= 200))].slice(-100);
   state.paidBlessingCooldownRemaining = amount(raw.paidBlessingCooldownRemaining, 0, 18000);
   state.loyalty = { lastDay: typeof raw.loyalty?.lastDay === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(raw.loyalty.lastDay) ? raw.loyalty.lastDay : null, streak: integer(raw.loyalty?.streak, 0, 0, 10) };
   const direction = Math.sign(populationRate(state.happiness));
@@ -481,8 +523,11 @@ export function normalizeState(raw, now = Date.now()) {
   // Economy time is wall-clock time. Legacy pause/speed flags do not stop it.
   state.speed = 1;
   state.paused = false;
-  state.day = integer(raw.day, 18, 1, 99999);
-  state.minutes = amount(raw.minutes, 564, 1439.999);
+  state.calendar = { startDay: typeof raw.calendar?.startDay === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(raw.calendar.startDay) && Number.isFinite(Date.parse(raw.calendar.startDay)) ? raw.calendar.startDay : warsawDayKey(simulationAnchor),
+    year: integer(raw.calendar?.year, Number(warsawParts(simulationAnchor).year), 1900, 9999) };
+  const displayCalendar = islandCalendar(state);
+  state.day = displayCalendar.day;
+  state.minutes = displayCalendar.hour * 60 + displayCalendar.minute + displayCalendar.second / 60;
   for (const key of ['sound', 'motion', 'motionOverride']) state.settings[key] = typeof raw.settings?.[key] === 'boolean' ? raw.settings[key] : state.settings[key];
   state.settings.language = ['en', 'pl'].includes(raw.settings?.language) ? raw.settings.language : 'en';
   state.settings.notificationCategories = raw.settings?.notificationCategories && typeof raw.settings.notificationCategories === 'object' && !Array.isArray(raw.settings.notificationCategories)
@@ -508,6 +553,9 @@ export function normalizeState(raw, now = Date.now()) {
   state.ranking = raw.ranking && typeof raw.ranking === 'object' ? { score: integer(raw.ranking.score, 0, 0, Number.MAX_SAFE_INTEGER), level: integer(raw.ranking.level, state.buildings.townhall.level, 1, MAX_BUILDING_LEVEL), coins: integer(raw.ranking.coins, state.resources.coins, 0, Number.MAX_SAFE_INTEGER), at: amount(raw.ranking.at, state.worldTimeMs, Number.MAX_SAFE_INTEGER) } : { score: Math.min(Number.MAX_SAFE_INTEGER, state.buildings.townhall.level * state.resources.coins), level: state.buildings.townhall.level, coins: state.resources.coins, at: state.worldTimeMs };
   normalizeActivities(state, raw);
   normalizeProgression(state, raw);
+  normalizeEngagementSchedule(state, raw);
+  normalizeWorldEvents(state, raw);
+  normalizeCommerce(state, raw);
   const serviceBuildings = new Set();
   state.premiumServices = (Array.isArray(raw.premiumServices) ? raw.premiumServices : []).filter(service => {
     if (!service || !owns(BUILDINGS, service.building) || serviceBuildings.has(service.building) || service.targetLevel !== state.buildings[service.building].level + 1 || service.targetLevel > buildingLevelLimit(state, service.building)) return false;
@@ -560,7 +608,8 @@ export function canAfford(state, cost) {
 }
 
 function spend(state, cost) {
-  for (const [resource, value] of Object.entries(cost)) state.resources[resource] -= value;
+  if (cost.coins) state.resources.coins -= cost.coins;
+  spendMaterials(state, Object.fromEntries(Object.entries(cost).filter(([resource]) => resource !== 'coins')));
 }
 
 function reward(state, values) {
@@ -648,7 +697,7 @@ function manualHouseHappiness(state, action) {
   }
   const person = state.residents.find(person => person.id === action.residentId);
   if (!person) return bad('This resident does not exist.');
-  if (person.newbornRemaining > 1e-9) return bad('Newborn happiness remains at zero for its first 24 hours.');
+  if (person.newbornRemaining > 1e-9) return bad('New residents cannot receive House happiness points during their first 24 hours.');
   if (!canGainHouseHappiness(state, person)) return bad('This resident already has the highest happiness this pool can provide.');
   const used = Math.min(amountRequested, Math.ceil(100 - residentHappiness(state, person)));
   if (used > pool.points) return bad('Not enough happiness points remain in the House pool.');
@@ -677,9 +726,9 @@ export function tick(state, elapsedSeconds) {
   advancePopulation(state, elapsedSeconds);
   state.lastSimulatedAt = state.worldTimeMs;
   state.savedAt = state.lastSimulatedAt;
-  const nextMinutes = state.minutes + elapsedSeconds / 60;
-  state.day = Math.min(99999, state.day + Math.floor(nextMinutes / 1440));
-  state.minutes = nextMinutes % 1440;
+  const calendar = islandCalendar(state);
+  state.day = calendar.day;
+  state.minutes = calendar.hour * 60 + calendar.minute + calendar.second / 60;
 }
 
 export function advanceTo(state, now = Date.now()) {
@@ -748,7 +797,7 @@ export function resourceRates(state) {
   const multiplier = productionMultiplier(state) * activePlayMultiplier(state) * (state.lighthouseRemaining > 0 ? 2 : 1);
   for (const [id, recipe] of Object.entries(PRODUCTION_RECIPES)) {
     const workers = (state.residents || []).filter(person => person.workplace === id && residentIsWorking(state, person)).length;
-    const output = workers * productionRate(state, id) * multiplier;
+    const output = workers * productionRate(state, id) * multiplier * eventProductionMultiplier(state, id);
     rates[recipe.output].production += output;
     if (recipe.input) rates[recipe.input].consumption += output * 2;
   }
@@ -757,15 +806,18 @@ export function resourceRates(state) {
   return rates;
 }
 
-export function act(state, action, now = Date.now()) {
+export function act(state, action, now = Date.now(), context = {}) {
   if (!action || typeof action !== 'object') return bad('Unknown action.');
   const id = action.building;
   if (['build', 'upgrade', 'collect', 'assign', 'craft'].includes(action.type) && !owns(BUILDINGS, id)) return bad('This building does not exist.');
-  let result = progressionAction(state, action, { receiveMaterials });
+  let result = commerceAction(state, action, { ...context, receiveMaterials, buildingCost,
+    requestUpgrade: request => requestUpgrade(state, request),
+    activateBlessing: receiptId => act(state, { type: 'adBlessing', receiptId }, now, { ...context, rewardedAdVerified: true }) });
+  if (result === null) result = progressionAction(state, action, { ...context, receiveMaterials });
   if (result === null) result = residentVisitAction(state, action);
   if (result === null) result = leisureAction(state, action);
   if (result === null) result = logisticsAction(state, action, state.worldTimeMs);
-  if (result === null) result = activityAction(state, action, { buildingCost, requestUpgrade: request => requestUpgrade(state, request), expeditions: EXPEDITIONS });
+  if (result === null) result = activityAction(state, action, { ...context, buildingCost, requestUpgrade: request => requestUpgrade(state, request), expeditions: EXPEDITIONS });
   if (result !== null) {
     if (result.ok) {
       if (action.type === 'premiumAccelerate') for (const project of [...state.constructionProjects]) if (project.stage === 'building' && project.buildRemaining <= 1e-8) finishConstruction(state, project);
@@ -816,26 +868,33 @@ export function act(state, action, now = Date.now()) {
       spend(state, quote.cost);
       state.population += quantity;
       synchronizeResidents(state);
-      notify(state, 'resident-purchased', 'New residents arrived', `${quantity} residents moved into the House. Their happiness remains at 0% for their first 24 hours.`);
+      notify(state, 'resident-purchased', 'New residents arrived', `${quantity} residents moved into the House. Their initial 24-hour settling period remains protected by active Lighthouse or Welcome bonuses.`);
       result = { ...good('New residents moved into the House.'), quantity, cost: quote.cost };
       break;
     }
     case 'blessing':
-    case 'paidBlessing': {
+    case 'paidBlessing':
+    case 'adBlessing': {
       if (!state.buildings.chapel.level) return bad('Build the Chapel first.');
       if (state.blessingRemaining > 0) return bad('A blessing is already active. Wait for it to end.');
-      const paid = action.type === 'paidBlessing' || action.paid === true;
+      const advertisement = action.type === 'adBlessing';
+      if (advertisement && (context.rewardedAdVerified !== true || typeof action.receiptId !== 'string' || !action.receiptId || action.receiptId.length > 200)) return bad('A verified rewarded advertisement is required.');
+      if (advertisement && (state.blessingAdReceipts || []).includes(action.receiptId)) return bad('This advertisement reward was already received.');
+      const paid = action.type === 'paidBlessing' || action.paid === true || advertisement;
       if (paid) {
         if (state.paidBlessingCooldownRemaining > 0) return bad('A paid blessing becomes available four hours after its previous one-hour effect ends.');
-        const price = 100 * state.buildings.chapel.level;
+        const price = advertisement ? 0 : 100 * state.buildings.chapel.level;
         if (state.resources.coins < price) return bad('Not enough coins for this blessing.');
         state.resources.coins -= price;
         state.paidBlessingCooldownRemaining = 5 * 3600;
       } else {
-        if (state.blessingsUsed >= state.buildings.chapel.level) return bad('All free blessings available at this Chapel level have been used.');
+        if (!dailyBlessingStatus(state).available) return bad('Today’s free blessing was already used. It renews at Warsaw midnight.');
+        state.dailyBlessingDay = warsawDayKey(state.worldTimeMs);
         state.blessingsUsed += 1;
       }
+      if (advertisement) state.blessingAdReceipts = [...(state.blessingAdReceipts || []), action.receiptId].slice(-100);
       state.blessingRemaining = 3600;
+      recordChapelBlessing(state);
       reward(state, Object.fromEntries(Object.keys(RESOURCES).map(resource => [resource, 50])));
       notify(state, 'blessing', 'Blessing', '+50 of every resource and +20 happiness for every resident for one hour.');
       result = good('Granted +50 of every resource and +20 happiness for one hour.');
@@ -844,6 +903,13 @@ export function act(state, action, now = Date.now()) {
     case 'readNotifications': {
       for (const notification of state.notifications) notification.read = true;
       result = good('Notifications marked as read.');
+      break;
+    }
+    case 'deleteReadNotifications':
+    case 'clearReadNotifications': {
+      const before = state.notifications.length;
+      state.notifications = state.notifications.filter(notification => !notification.read);
+      result = { ...good('Read notifications deleted.'), deleted: before - state.notifications.length };
       break;
     }
     case 'marketOrder': {

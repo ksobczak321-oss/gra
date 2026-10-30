@@ -1,8 +1,8 @@
 // Daily attractions and completed road tiers. All clocks use elapsed world
 // seconds, so the same rules apply while the island is open and offline.
 // This module intentionally imports no state, residents or logistics module.
-import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v17';
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v17';
+import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v18';
+import { centralAvailable, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v18';
 
 export const LEISURE_DAY_SECONDS = 86400;
 export const ATTRACTION_EFFECT_SECONDS = 21600;
@@ -228,7 +228,7 @@ export function leisureAction(state, action) {
   if (centralAvailable(state, 'stone') < ROAD_SECTION_COST) return bad('Upgrading one path section costs 100 unreserved stone from the central Warehouse.');
   const index = state.roads.segments.findIndex(level => level < desired);
   if (index < 0) return bad('This path level is already complete.');
-  state.resources.stone -= ROAD_SECTION_COST;
+  consumeMaterial(state, 'stone', ROAD_SECTION_COST);
   state.roads.segments[index] = desired;
   state.paths = state.roads.segments.filter(level => level > 0).length;
   const after = roadSummary(state);

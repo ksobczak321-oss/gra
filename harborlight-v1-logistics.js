@@ -1,12 +1,14 @@
 // Physical goods and event-based logistics. Durations are real elapsed seconds,
 // including catch-up after the browser is closed.
-import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v17';
-import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v17';
-import { centralReserved, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v17';
-export { centralReserved, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v17';
+import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v18';
+import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v18';
+import { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, normalizeBonusMaterials, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v18';
+import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v18';
+import { eventTransportMultiplier, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v18';
+export { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v18';
 export const workerEfficiency = productionMultiplier;
 // Paths improve cargo courses, independently of production and resident walks.
-export const transportEfficiency = (state, efficiency = workerEfficiency(state)) => efficiency * roadSpeedMultiplier(state);
+export const transportEfficiency = (state, efficiency = workerEfficiency(state)) => efficiency * roadSpeedMultiplier(state) * activePlayMultiplier(state) * eventTransportMultiplier(state);
 export const MATERIAL_IDS = ['wood', 'stone', 'grain', 'food', 'planks'];
 export const WAREHOUSE_PRIORITY_IDS = [...MATERIAL_IDS, 'construction'];
 export const PRODUCTION_RECIPES = {
@@ -29,10 +31,12 @@ export const PRODUCTION_RATE_VERSION = 2;
 // The base economy was doubled in v15. Temporary bonuses still multiply this
 // rate; staffing, meals, taxes and five-minute carrier clocks are independent.
 export const productionRate = (state, id) => state.buildings[id]?.level === 1 ? 20 : state.buildings[id]?.level > 1 ? 2 * (state.buildings[id].level + 10) : 0;
-export const foodReserve = state => 50 * (state.buildings.warehouse.level || 0);
+export const WAREHOUSE_CAP_LEVEL = 24;
+export const effectiveWarehouseLevel = state => Math.min(WAREHOUSE_CAP_LEVEL, state.buildings.warehouse.level || 0);
+export const foodReserve = state => 50 * effectiveWarehouseLevel(state);
 export const availableGoods = (state, id) => Math.max(0, Math.floor(centralAvailable(state, id) - (id === 'food' ? foodReserve(state) : 0)));
 export const forecastAvailableGoods = availableGoods;
-export const haulCapacity = (state, id = 'warehouse') => Math.max(1, Math.floor(Math.floor(120 * 1.1 ** Math.max(0, (state.buildings[id]?.level || 1) - 1)) * roadCapacityMultiplier(state)));
+export const haulCapacity = (state, id = 'warehouse') => Math.max(1, Math.floor(Math.floor(120 * 1.1 ** Math.max(0, (id === 'warehouse' ? effectiveWarehouseLevel(state) : state.buildings[id]?.level || 1) - 1)) * roadCapacityMultiplier(state)));
 export const workplaceUnlocked = (state, id) => state.buildings.townhall.level >= (id === 'market' ? 2 : id === 'dock' ? 4 : 1);
 export function activeWorkerIndices(state, id) {
   const people = Array.isArray(state.residents) ? state.residents.filter(person => person.workplace === id) : [];
@@ -44,11 +48,15 @@ export function warehouseLimits(state) {
   return { perResource: Math.floor(Math.min(10000000, 1000 * factor)), total: Math.floor(Math.min(40000000, 4000 * factor)) };
 }
 export const warehouseUsed = state => MATERIAL_IDS.reduce((sum, id) => sum + (state.resources[id] || 0), 0);
+export function inventoryOverfull(state) {
+  const limits = warehouseLimits(state);
+  return warehouseUsed(state) > limits.total || MATERIAL_IDS.some(id => (state.resources[id] || 0) > limits.perResource);
+}
 export function stockRoom(state, id) {
   if (!MATERIAL_IDS.includes(id)) return 0;
   const limits = warehouseLimits(state);
-  const foodSpace = id === 'food' ? 0 : Math.max(0, foodReserve(state) - (state.resources.food || 0));
-  return Math.max(0, Math.floor(Math.min(limits.perResource - state.resources[id], limits.total - warehouseUsed(state) - foodSpace)));
+  const foodSpace = id === 'food' ? 0 : Math.max(0, foodReserve(state) - ordinaryStock(state,'food'));
+  return Math.max(0, Math.floor(Math.min(limits.perResource - ordinaryStock(state, id), limits.total - ordinaryWarehouseUsed(state) - foodSpace)));
 }
 export const marketCapacity = state => Math.floor(Math.min(10000000, 1000 * 1.5 ** Math.max(0, state.buildings.market.level - 1)));
 export const marketUsed = state => MATERIAL_IDS.reduce((sum, id) => sum + (state.market?.stock[id] || 0), 0) + (state.market?.locked || []).reduce((sum, lot) => sum + lot.amount, 0);
@@ -271,6 +279,7 @@ export function estimateMaterialsSeconds(state,cost,ownerContext=null) {
   return Math.max(time,crew?Math.ceil(trips/crew)*300/transportEfficiency(state,efficiency):0);
 }
 export function flushPendingDeliveries(state) {
+  normalizeBonusMaterials(state);
   state.pendingDeliveries ||= stock();
   let moved = 0;
   for (const id of ['food', ...MATERIAL_IDS.filter(resource => resource !== 'food')]) {
@@ -281,7 +290,12 @@ export function flushPendingDeliveries(state) {
   }
   return moved;
 }
-export function receiveMaterials(state,values,{overflowToPending=true}={}) {
+export function receiveMaterials(state,values,{overflowToPending=true,bonus=true}={}) {
+  if (bonus) {
+    grantBonusMaterials(state, values);
+    return;
+  }
+  normalizeBonusMaterials(state);
   state.pendingDeliveries ||= stock();
   for(const id of ['food', ...MATERIAL_IDS.filter(resource => resource !== 'food')]) {
     const amount=Math.floor(clamp(values[id],0,Number.MAX_SAFE_INTEGER)), accepted=Math.min(amount,centralRoom(state,id));
@@ -318,12 +332,12 @@ export function updateStorageStatus(state,elapsed=0) {
     b.fullSeconds=blocked?Math.min(432000,(b.productionBlocked?b.fullSeconds||0:0)+elapsed):0;
     b.productionBlocked=blocked;b.storageFull=full;
   }
-  for(const [id,full,label] of [['warehouse',warehouseUsed(state)>=limits.total,'The central warehouse is full'],['market',workplaceUnlocked(state,'market')&&marketUsed(state)>=marketCapacity(state),'The market is full'],['dock',workplaceUnlocked(state,'dock')&&dockUsed(state)>=dockCapacity(state).total,'The harbor is full']]) {
+  for(const [id,full,label] of [['warehouse',ordinaryWarehouseUsed(state)>=limits.total,'The central warehouse is full'],['market',workplaceUnlocked(state,'market')&&marketUsed(state)>=marketCapacity(state),'The market is full'],['dock',workplaceUnlocked(state,'dock')&&dockUsed(state)>=dockCapacity(state).total,'The harbor is full']]) {
     const b=state.buildings[id];if(full&&!b.storageFull)notify(state,'storage-full',label,'Use or collect goods, or upgrade this building.');b.storageFull=full;
   }
   state.fullResources ||= {};
   for(const id of MATERIAL_IDS) {
-    const full=state.resources[id]>=limits.perResource&&limits.perResource>0;
+    const full=ordinaryStock(state,id)>=limits.perResource&&limits.perResource>0;
     if(full&&!state.fullResources[id])notify(state,'storage-full','Material storage limit reached',`The central warehouse has no more space for ${materialNames[id]}.`);
     state.fullResources[id]=full;
   }
@@ -374,12 +388,13 @@ function translateSavedNotificationText(text) {
 
 
 const lot = (resource, amount, remaining = 86400, extra = {}) => ({ resource, amount, remaining, ...extra });
-function normalizeLots(values, { locked = false } = {}) {
-  return (Array.isArray(values) ? values : []).filter(x => x && MATERIAL_IDS.includes(x.resource) && whole(x.amount) > 0).slice(0,10000).map(x => ({ resource:x.resource,amount:whole(x.amount),remaining:clamp(x.remaining,0,locked?3600:86400),...(locked?{expiresRemaining:clamp(x.expiresRemaining??86400,0,86400)}:{}),...(x.orderId?{orderId:whole(x.orderId)}:{}),...(x.direction?{direction:x.direction}:{}) }));
+function normalizeLots(values, { locked = false, protectedCargo = false } = {}) {
+  return (Array.isArray(values) ? values : []).filter(x => x && MATERIAL_IDS.includes(x.resource) && whole(x.amount) > 0).slice(0,10000).map(x => ({ resource:x.resource,amount:whole(x.amount),remaining:clamp(x.remaining,0,locked?3600:86400),...(locked?{expiresRemaining:clamp(x.expiresRemaining??86400,0,86400)}:{}),...(x.orderId?{orderId:whole(x.orderId)}:{}),...(x.direction?{direction:x.direction}:{}),...(protectedCargo&&x.protected===true&&x.direction==='buy'?{protected:true}:{}) }));
 }
+const liveCargo = entry => entry.protected === true || entry.remaining > EPS;
 function removeLots(lots,resource,amount,orderId) {
   let left=amount;
-  for(const entry of lots.filter(x=>x.resource===resource&&x.remaining>EPS&&(orderId===undefined||x.orderId===orderId)).sort((a,b)=>a.remaining-b.remaining)) {
+  for(const entry of lots.filter(x=>x.resource===resource&&liveCargo(x)&&(orderId===undefined||x.orderId===orderId)).sort((a,b)=>a.remaining-b.remaining)) {
     const moved=Math.min(left,entry.amount);entry.amount-=moved;left-=moved;if(left<=0)break;
   }
   for(let i=lots.length-1;i>=0;i--)if(!lots[i].amount)lots.splice(i,1);
@@ -388,10 +403,10 @@ function removeLots(lots,resource,amount,orderId) {
 function inboundAmount(state,destination,resource) {
   return Object.values(state.haulTrips||{}).flat().filter(t=>['producer','pending','marketOutbound','dockOutbound'].includes(t.kind)?destination==='warehouse':['marketInbound'].includes(t.kind)?destination==='market':['dockInbound','dockUnload'].includes(t.kind)?destination==='dock':false).filter(t=>!resource||t.resource===resource).reduce((n,t)=>n+t.amount,0);
 }
-function centralRoom(state,resource) {
+export function centralRoom(state,resource) {
   const limits=warehouseLimits(state), inbound=inboundAmount(state,'warehouse');
-  const protectedFoodSpace = resource === 'food' ? 0 : Math.max(0, foodReserve(state) - (state.resources.food || 0) - inboundAmount(state, 'warehouse', 'food'));
-  return Math.max(0,Math.floor(Math.min(limits.perResource-state.resources[resource]-inboundAmount(state,'warehouse',resource),limits.total-warehouseUsed(state)-inbound-protectedFoodSpace)));
+  const protectedFoodSpace = resource === 'food' ? 0 : Math.max(0, foodReserve(state) - ordinaryStock(state,'food') - inboundAmount(state, 'warehouse', 'food'));
+  return Math.max(0,Math.floor(Math.min(limits.perResource-ordinaryStock(state,resource)-inboundAmount(state,'warehouse',resource),limits.total-ordinaryWarehouseUsed(state)-inbound-protectedFoodSpace)));
 }
 function reservedPort(state,resource) {
   let reserved=resource?state.dock.stock[resource]:dockUsed(state);
@@ -403,6 +418,10 @@ function reservedPort(state,resource) {
   return reserved+inboundAmount(state,'dock',resource);
 }
 export function normalizeLogisticsState(state,raw) {
+  const legacyBonusInventory = raw.bonusInventoryVersion !== 1;
+  const savedBonus = { ...(raw.bonusMaterials || {}) };
+  const savedPending = Object.fromEntries(MATERIAL_IDS.map(id => [id, Math.floor(clamp(raw.pendingDeliveries?.[id],0,Number.MAX_SAFE_INTEGER))]));
+  const savedRewards = Object.fromEntries(MATERIAL_IDS.map(id => [id, Math.floor(clamp(raw.rewardBuffer?.[id],0,Number.MAX_SAFE_INTEGER))]));
   // Preserve the completed fraction of a pre-v15 unit, rather than clamp its
   // old seconds into the now shorter cycle and award a unit on reload. Capture
   // the marker before writing because callers may pass state as raw too.
@@ -410,7 +429,7 @@ export function normalizeLogisticsState(state,raw) {
   state.productionRateVersion = PRODUCTION_RATE_VERSION;
   state.activeSeconds=clamp(raw.activeSeconds,0,Number.MAX_SAFE_INTEGER);
   state.constructionSequence=whole(raw.constructionSequence);
-  state.pendingDeliveries=stock();for(const id of MATERIAL_IDS)state.pendingDeliveries[id]=Math.floor(clamp(raw.pendingDeliveries?.[id],0,Number.MAX_SAFE_INTEGER));
+  state.pendingDeliveries=legacyBonusInventory?stock():savedPending;
   state.returningWorkers=Array.isArray(raw.returningWorkers)?raw.returningWorkers.filter(x=>Number.isFinite(x)&&x>0).slice(0,state.population).map(x=>clamp(x,0,300)):[];
   const order=Array.isArray(raw.transportPriority)?raw.transportPriority.filter(id=>MATERIAL_IDS.includes(id)):[];
   state.transportPriority=[...new Set([...order,...MATERIAL_IDS])];
@@ -428,7 +447,7 @@ export function normalizeLogisticsState(state,raw) {
     const represented=state.market.lots.filter(x=>x.resource===id).reduce((n,x)=>n+x.amount,0);
     if(represented<state.market.stock[id])state.market.lots.push(lot(id,state.market.stock[id]-represented));
   }
-  state.dock={stock:stock(),lots:normalizeLots(raw.dock?.lots),orders:[],purchaseHistory:[],nextOrderId:whole(raw.dock?.nextOrderId)};
+  state.dock={stock:stock(),lots:normalizeLots(raw.dock?.lots,{protectedCargo:true}),orders:[],purchaseHistory:[],nextOrderId:whole(raw.dock?.nextOrderId)};
   for(const id of MATERIAL_IDS)state.dock.stock[id]=whole(raw.dock?.stock?.[id]);
   for(const x of Array.isArray(raw.dock?.orders)?raw.dock.orders:[]) {
     if(!x||!MATERIAL_IDS.includes(x.resource)||!['buy','sell'].includes(x.direction)||!quantity(x.amount)||x.amount%100)continue;
@@ -446,7 +465,7 @@ export function normalizeLogisticsState(state,raw) {
     if(!t||!kinds.includes(t.kind)||!MATERIAL_IDS.includes(t.resource)||!whole(t.amount))continue;
     state.haulTrips[id].push({worker:Number.isInteger(t.worker)&&t.worker>=-1?t.worker:0,remaining:clamp(t.remaining,0,300),resource:t.resource,amount:whole(t.amount),kind:t.kind,...(Number.isSafeInteger(t.residentId)?{residentId:t.residentId}:{}),...(t.producer&&PRODUCTION_RECIPES[t.producer]?{producer:t.producer}:{}),...(t.projectOrder?{projectOrder:whole(t.projectOrder)}:{}),...(t.orderId?{orderId:whole(t.orderId)}:{})});
   }
-  state.notifications=(Array.isArray(raw.notifications)?raw.notifications:[]).slice(0,100).filter(n=>n&&typeof n.title==='string'&&typeof n.message==='string').map(n=>({id:whole(n.id),kind:String(n.kind||'info').slice(0,40),title:translateSavedNotificationText(n.title.slice(0,150)),message:translateSavedNotificationText(n.message.slice(0,800)),at:clamp(n.at,0,Number.MAX_SAFE_INTEGER),read:n.read===true}));
+  state.notifications=(Array.isArray(raw.notifications)?raw.notifications:[]).slice(0,100).filter(n=>n&&typeof n.title==='string'&&typeof n.message==='string').map(n=>({id:whole(n.id),kind:String(n.kind||'info').slice(0,40),title:translateSavedNotificationText(n.title.slice(0,150)),message:translateSavedNotificationText(n.message.slice(0,800)),at:clamp(n.at,0,Number.MAX_SAFE_INTEGER),read:n.read===true,...(typeof n.titlePl==='string'?{titlePl:n.titlePl.slice(0,150)}:{}),...(typeof n.messagePl==='string'?{messagePl:n.messagePl.slice(0,800)}:{}),...(typeof n.worldEventId==='string'?{worldEventId:n.worldEventId.slice(0,80)}:{})}));
   state.notificationSequence=Math.max(whole(raw.notificationSequence),...state.notifications.map(n=>n.id),0);
   state.fullResources=Object.fromEntries(MATERIAL_IDS.map(id=>[id,raw.fullResources?.[id]===true]));
   for(const [id,b] of Object.entries(state.buildings)) {
@@ -471,9 +490,9 @@ export function normalizeLogisticsState(state,raw) {
     p.transportStarted=x.transportStarted===true||p.transportSeconds>EPS||MATERIAL_IDS.some(id=>p.delivered[id]>0)||state.haulTrips.warehouse.some(trip=>trip.projectOrder===p.order);
     state.constructionSequence=Math.max(state.constructionSequence,p.order);state.constructionProjects.push(p);levels[p.building]=p.targetLevel;
   }
-  const original={...state.resources};
-  for(const id of MATERIAL_IDS)state.resources[id]=Math.min(original[id],centralReserved(state,id));
-  receiveMaterials(state,Object.fromEntries(MATERIAL_IDS.map(id=>[id,Math.max(0,original[id]-state.resources[id])])));
+  normalizeBonusMaterials(state,{bonusMaterials:savedBonus});
+  grantBonusMaterials(state,Object.fromEntries(MATERIAL_IDS.map(id=>[id,(legacyBonusInventory?savedPending[id]:0)+savedRewards[id]])));
+  state.rewardBuffer=stock();
   promoteConstructionQueue(state);
 }
 export function warehousePrioritySchedule(state) {
@@ -543,9 +562,9 @@ function chooseDockJob(state) {
     if(['complete','expired'].includes(order.stage))continue;
     const r=order.resource;
     if(order.direction==='buy') {
-      const port=state.dock.lots.filter(l=>l.orderId===order.id&&l.resource===r&&l.remaining>EPS).reduce((n,l)=>n+l.amount,0);
+      const port=state.dock.lots.filter(l=>l.orderId===order.id&&l.resource===r&&liveCargo(l)).reduce((n,l)=>n+l.amount,0);
       if(port>0&&centralRoom(state,r)>0)return {kind:'dockOutbound',resource:r,available:Math.min(port,centralRoom(state,r)),orderId:order.id};
-      if(order.stage==='unloading'&&order.remainingToUnload>0)return {kind:'dockUnload',resource:r,available:order.remainingToUnload,orderId:order.id};
+      if(order.stage==='unloading'&&order.remainingToUnload>0&&order.expiresRemaining>EPS)return {kind:'dockUnload',resource:r,available:order.remainingToUnload,orderId:order.id};
     }else{
       const port=state.dock.lots.filter(l=>l.orderId===order.id&&l.resource===r&&l.remaining>EPS).reduce((n,l)=>n+l.amount,0);
       if(port>0)return {kind:'dockLoad',resource:r,available:port,orderId:order.id};
@@ -562,15 +581,15 @@ function launchTrip(state,id,index,source) {
     const project=state.constructionProjects.find(p=>p.order===source.projectOrder);
     projectGoods(project)[source.resource]-=amount;
     project.reservedMaterials[source.resource]-=amount;
-    state.resources[source.resource]-=amount;
+    consumeMaterial(state,source.resource,amount);
     project.transportStarted=true;
   }
   if(source.kind==='marketInbound') {
-    const order=state.market.orders.find(x=>x.resource===source.resource&&x.amount>0);order.amount-=amount;state.resources[source.resource]-=amount;
+    const order=state.market.orders.find(x=>x.resource===source.resource&&x.amount>0);order.amount-=amount;consumeMaterial(state,source.resource,amount);
   }
   if(source.kind==='marketOutbound') {state.market.stock[source.resource]-=amount;state.market.dispatch[source.resource]-=amount;removeLots(state.market.lots,source.resource,amount);}
   const order=source.orderId?state.dock.orders.find(o=>o.id===source.orderId):null;
-  if(source.kind==='dockInbound'){order.remainingToPort-=amount;state.resources[source.resource]-=amount;}
+  if(source.kind==='dockInbound'){order.remainingToPort-=amount;consumeMaterial(state,source.resource,amount);}
   if(source.kind==='dockUnload')order.remainingToUnload-=amount;
   if(['dockLoad','dockOutbound'].includes(source.kind)){state.dock.stock[source.resource]-=amount;removeLots(state.dock.lots,source.resource,amount,source.orderId);}
   const resident=(state.residents||[]).filter(person=>person.workplace===id)[index];
@@ -615,7 +634,7 @@ function startBuilding(state,p) {
 }
 function completeTrip(state,t) {
   if(['producer','pending','marketOutbound','dockOutbound'].includes(t.kind)) {
-    receiveMaterials(state,{[t.resource]:t.amount});state.statistics.collected=Math.min(10000000,(state.statistics.collected||0)+t.amount);
+    receiveMaterials(state,{[t.resource]:t.amount},{bonus:false});state.statistics.collected=Math.min(10000000,(state.statistics.collected||0)+t.amount);
     if(t.kind==='dockOutbound') {const o=state.dock.orders.find(x=>x.id===t.orderId);if(o){o.delivered+=t.amount;if(o.delivered>=o.amount)o.stage='complete';}}
   } else if(t.kind==='construction') {
     const p=state.constructionProjects.find(x=>x.order===t.projectOrder);if(!p)return;
@@ -625,9 +644,10 @@ function completeTrip(state,t) {
   else {
     const o=state.dock.orders.find(x=>x.id===t.orderId);if(!o)return;
     if(['dockInbound','dockUnload'].includes(t.kind)) {
+      // Ship cargo actually picked up before expiry stays protected through
+      // both delivery legs. Unpicked goods keep their original deadline.
       const remaining=t.kind==='dockInbound'?86400:o.expiresRemaining;
-      if(remaining>EPS){state.dock.stock[t.resource]+=t.amount;state.dock.lots.push(lot(t.resource,t.amount,remaining,{orderId:o.id,direction:o.direction}));}
-      else {o.expiredAmount=(o.expiredAmount||0)+t.amount;notify(state,'goods-expired','Harbor cargo expired',`${t.amount} ${materialNames[t.resource]} reached port storage after its purchase deadline.`);}
+      state.dock.stock[t.resource]+=t.amount;state.dock.lots.push(lot(t.resource,t.amount,remaining,{orderId:o.id,direction:o.direction,...(t.kind==='dockUnload'?{protected:true}:{})}));
       if(o.direction==='buy'&&!o.remainingToUnload&&!state.haulTrips.dock.some(x=>x!==t&&x.orderId===o.id&&x.kind==='dockUnload'))o.stage='collecting';
       if(o.direction==='sell'&&!o.remainingToPort)o.stage='loading';
     }else if(t.kind==='dockLoad') {
@@ -641,8 +661,8 @@ function productionJobs(state,efficiency) {
   for(const [id,r] of Object.entries(PRODUCTION_RECIPES)) {
     if(productionBlocked(state,id))continue;
     const cycle=3600/Math.max(1,productionRate(state,id));
-    const engaged=state.engagement?.activeUntil>(state.worldTimeMs||0)?2:1;
-    for(const index of activeWorkerIndices(state,id))jobs.push({id,index,cycle,speed:efficiency*(state.lighthouseRemaining>0?2:1)*engaged});
+    const engaged=activePlayMultiplier(state);
+    for(const index of activeWorkerIndices(state,id))jobs.push({id,index,cycle,speed:efficiency*(state.lighthouseRemaining>0?2:1)*engaged*eventProductionMultiplier(state,id)});
   }
   return jobs;
 }
@@ -654,7 +674,7 @@ export function nextLogisticsEvent(state,efficiency=workerEfficiency(state)) {
   for(const t of Object.values(state.haulTrips).flat())next=Math.min(next,t.remaining/transportEfficiency(state,efficiency));
   for(const t of state.returningWorkers)next=Math.min(next,t);
   for(const l of state.market.locked)next=Math.min(next,l.remaining,l.expiresRemaining);
-  for(const l of [...state.market.lots,...state.dock.lots])next=Math.min(next,l.remaining);
+  for(const l of [...state.market.lots,...state.dock.lots])if(!l.protected)next=Math.min(next,l.remaining);
   for(const o of state.dock.orders)if(!['complete','expired'].includes(o.stage)){if(o.stage==='voyage')next=Math.min(next,o.remaining);else if(o.direction==='buy'&&o.expiresRemaining>EPS)next=Math.min(next,o.expiresRemaining);}
   for(const h of state.dock.purchaseHistory)next=Math.min(next,h.remaining);
   for(const p of state.constructionProjects)if(p.stage==='building')next=Math.min(next,p.buildRemaining);
@@ -664,13 +684,13 @@ export function nextLogisticsEvent(state,efficiency=workerEfficiency(state)) {
   return next===Infinity?Infinity:Math.max(EPS,next);
 }
 function expireLots(state,container,locked=false) {
-  for(const l of container.filter(x=>(locked?x.expiresRemaining:x.remaining)<=EPS)) {
+  for(const l of container.filter(x=>!x.protected&&(locked?x.expiresRemaining:x.remaining)<=EPS)) {
     if(!locked){const owner=container===state.market.lots?state.market:state.dock;owner.stock[l.resource]=Math.max(0,owner.stock[l.resource]-l.amount);if(owner.dispatch)owner.dispatch[l.resource]=Math.min(owner.dispatch[l.resource],owner.stock[l.resource]);
       if(owner===state.dock){const order=state.dock.orders.find(item=>item.id===l.orderId);if(order){order.expiredAmount=(order.expiredAmount||0)+l.amount;if(order.direction==='sell')order.remainingToShip=Math.max(0,order.remainingToShip-l.amount);}}
     }
     notify(state,'goods-expired','Goods expired',`${l.amount} ${materialNames[l.resource]} expired after 24 hours.`);
   }
-  return container.filter(x=>(locked?x.expiresRemaining:x.remaining)>EPS);
+  return container.filter(x=>x.protected||(locked?x.expiresRemaining:x.remaining)>EPS);
 }
 function finishSaleLoading(state,order) {
   if(order.direction!=='sell'||order.remainingToShip>EPS||order.paid)return;
@@ -696,7 +716,7 @@ export function advanceLogistics(state,elapsed,efficiency=workerEfficiency(state
     for(const j of jobs)state.buildings[j.id].workProgress[j.index]=Math.min(j.cycle,(state.buildings[j.id].workProgress[j.index]||0)+duration*j.speed);
     state.returningWorkers=state.returningWorkers.map(t=>t-duration).filter(t=>t>EPS);
     for(const l of state.market.locked){l.remaining=Math.max(0,l.remaining-duration);l.expiresRemaining=Math.max(0,l.expiresRemaining-duration);}
-    for(const l of [...state.market.lots,...state.dock.lots])l.remaining=Math.max(0,l.remaining-duration);
+    for(const l of [...state.market.lots,...state.dock.lots])if(!l.protected)l.remaining=Math.max(0,l.remaining-duration);
     state.market.locked=expireLots(state,state.market.locked,true);state.market.lots=expireLots(state,state.market.lots);state.dock.lots=expireLots(state,state.dock.lots);
     for(const l of state.market.locked.filter(l=>l.remaining<=EPS)){state.market.stock[l.resource]+=l.amount;state.market.lots.push(lot(l.resource,l.amount,l.expiresRemaining));}
     state.market.locked=state.market.locked.filter(l=>l.remaining>EPS);
@@ -714,7 +734,7 @@ export function advanceLogistics(state,elapsed,efficiency=workerEfficiency(state
     updateStorageStatus(state,duration);state.activeSeconds=Math.min(Number.MAX_SAFE_INTEGER,state.activeSeconds+duration);
     for(const j of jobs)if(state.buildings[j.id].workProgress[j.index]>=j.cycle-EPS) {
       const b=state.buildings[j.id],r=PRODUCTION_RECIPES[j.id];
-      if(!productionBlocked(state,j.id)){if(r.input)state.resources[r.input]-=r.amount;b.ready++;b.workProgress[j.index]=0;if(r.input)state.statistics.crafted=Math.min(10000000,(state.statistics.crafted||0)+1);}
+      if(!productionBlocked(state,j.id)){if(r.input)consumeMaterial(state,r.input,r.amount);b.ready++;b.workProgress[j.index]=0;if(r.input)state.statistics.crafted=Math.min(10000000,(state.statistics.crafted||0)+1);}
     }
     for(const id of ['warehouse','market','dock']) {
       const done=state.haulTrips[id].filter(t=>t.remaining<=EPS);state.haulTrips[id]=state.haulTrips[id].filter(t=>t.remaining>EPS);
@@ -868,7 +888,11 @@ function instantPlan(state,action) {
   const total=MATERIAL_IDS.reduce((n,id)=>n+amounts[id],0);if(!total)return bad('There are no goods waiting on this route.');
   if(['producer','marketOutbound','dockOutbound'].includes(route)) {
     const limits=warehouseLimits(state);
-    if(MATERIAL_IDS.some(id=>amounts[id]>stockRoom(state,id))||total>limits.total-warehouseUsed(state))return bad('Make room in the central warehouse before sending this whole batch.');
+    const selectedIds=new Set(orders.map(order=>order.id));
+    const admission=route==='dockOutbound'?{...state,haulTrips:{...state.haulTrips,dock:state.haulTrips.dock.filter(trip=>trip.kind!=='dockOutbound'||!selectedIds.has(trip.orderId))}}:state;
+    const incoming=inboundAmount(admission,'warehouse');
+    const protectedFood=Math.max(0,foodReserve(admission)-ordinaryStock(admission,'food')-inboundAmount(admission,'warehouse','food')-amounts.food);
+    if(MATERIAL_IDS.some(id=>amounts[id]>centralRoom(admission,id))||total>limits.total-ordinaryWarehouseUsed(admission)-incoming-protectedFood)return bad('Make room in the central warehouse, including incoming cargo, before sending this whole batch.');
   }
   const capacity=haulCapacity(state,carrier),trips=MATERIAL_IDS.reduce((n,id)=>n+Math.ceil(amounts[id]/capacity),0);
   return good('Instant transport quote.',{quantities:amounts,capacity,trips,route,carrier,project,orders,...(normalEstimate?{normalTransport:normalEstimate.transport,normalBuilding:(project.transportSeconds+normalEstimate.transport)*constructionBuildFactor(project),virtualCarrier:normalEstimate.virtualCarrier===true}:{})});
@@ -881,38 +905,46 @@ export function quoteInstantTransport(state,action) {
 export function instantTransport(state,action) {
   const plan=instantPlan(state,action);if(!plan.ok)return plan;
   const {route,quantities,project,orders}=plan;
-  if(route==='producer') {state.buildings[action.building].ready=0;receiveMaterials(state,quantities);}
+  if(route==='producer') {state.buildings[action.building].ready=0;receiveMaterials(state,quantities,{bonus:false});}
   else if(route==='construction') {
     const fullCost=Object.fromEntries(MATERIAL_IDS.map(id=>[id,project.cost[id]||0]));
-    for(const id of MATERIAL_IDS)state.resources[id]-=project.reservedMaterials?.[id]||0;
+    for(const id of MATERIAL_IDS)consumeMaterial(state,id,project.reservedMaterials?.[id]||0);
     state.haulTrips.warehouse=state.haulTrips.warehouse.filter(t=>t.projectOrder!==project.order);
     project.remainingMaterials=stock();project.reservedMaterials=stock();project.delivered=fullCost;project.goodsRemaining=0;project.transportSeconds+=plan.normalTransport;project.transportStarted=true;project.buildRemaining=project.transportSeconds*constructionBuildFactor(project);project.instantTransport=true;
     if(project.stage==='transport')startBuilding(state,project);
   }else if(route==='marketInbound') {
     for(const id of MATERIAL_IDS)if(quantities[id]) {
-      state.resources[id]-=quantities[id];let left=quantities[id];
+      consumeMaterial(state,id,quantities[id]);let left=quantities[id];
       for(const o of state.market.orders.filter(o=>o.resource===id)){const used=Math.min(left,o.amount);o.amount-=used;left-=used;}
       state.market.locked.push({resource:id,amount:quantities[id],remaining:3600,expiresRemaining:86400});
     }
     state.market.orders=state.market.orders.filter(o=>o.amount);
   }else if(route==='marketOutbound') {
-    for(const id of MATERIAL_IDS)if(quantities[id]){state.market.stock[id]-=quantities[id];state.market.dispatch[id]=Math.max(0,state.market.dispatch[id]-quantities[id]);removeLots(state.market.lots,id,quantities[id]);}receiveMaterials(state,quantities);
+    for(const id of MATERIAL_IDS)if(quantities[id]){
+      const unreserved=Math.max(0,state.market.stock[id]-state.market.dispatch[id]);
+      const fulfilledReservation=action.amount===undefined?quantities[id]:Math.max(0,quantities[id]-unreserved);
+      state.market.stock[id]-=quantities[id];
+      state.market.dispatch[id]=Math.max(0,state.market.dispatch[id]-fulfilledReservation);
+      removeLots(state.market.lots,id,quantities[id]);
+    }receiveMaterials(state,quantities,{bonus:false});
   }else {
     for(const o of orders) {
       const matches=t=>t.orderId===o.id&&t.kind===route;
       const carried=state.haulTrips.dock.filter(matches).reduce((n,t)=>n+t.amount,0);
       state.haulTrips.dock=state.haulTrips.dock.filter(t=>!matches(t));
       if(route==='dockInbound'||route==='dockUnload') {
-        const amount=(route==='dockInbound'?o.remainingToPort:o.remainingToUnload)+carried;if(!amount)continue;
-        if(route==='dockInbound'){state.resources[o.resource]-=o.remainingToPort;o.remainingToPort=0;}else o.remainingToUnload=0;
+        const unpicked=route==='dockInbound'?o.remainingToPort:o.remainingToUnload;
+        const amount=unpicked+carried;if(!amount)continue;
+        if(route==='dockInbound'){consumeMaterial(state,o.resource,o.remainingToPort);o.remainingToPort=0;}else o.remainingToUnload=0;
         const deadline=route==='dockInbound'?86400:o.expiresRemaining;
-        if(deadline>EPS){state.dock.stock[o.resource]+=amount;state.dock.lots.push(lot(o.resource,amount,deadline,{orderId:o.id,direction:o.direction}));}
-        else {o.expiredAmount=(o.expiredAmount||0)+amount;notify(state,'goods-expired','Harbor cargo expired',`${amount} ${materialNames[o.resource]} expired after its purchase deadline.`);}
+        const accepted=deadline>EPS?amount:carried;
+        if(accepted){state.dock.stock[o.resource]+=accepted;state.dock.lots.push(lot(o.resource,accepted,deadline,{orderId:o.id,direction:o.direction,...(route==='dockUnload'?{protected:true}:{})}));}
+        if(accepted<amount){const expired=amount-accepted;o.expiredAmount=(o.expiredAmount||0)+expired;notify(state,'goods-expired','Harbor cargo expired',`${expired} ${materialNames[o.resource]} expired after its purchase deadline.`);}
         o.stage=route==='dockInbound'?'loading':'collecting';
       }else {
         const amount=state.dock.lots.filter(l=>l.orderId===o.id).reduce((n,l)=>n+l.amount,0)+carried;if(!amount)continue;
         const fromPort=amount-carried;state.dock.stock[o.resource]-=fromPort;removeLots(state.dock.lots,o.resource,fromPort,o.id);
-        if(route==='dockOutbound'){receiveMaterials(state,{[o.resource]:amount});o.delivered+=amount;if(o.delivered>=o.amount)o.stage='complete';}
+        if(route==='dockOutbound'){receiveMaterials(state,{[o.resource]:amount},{bonus:false});o.delivered+=amount;if(o.delivered>=o.amount)o.stage='complete';}
         else {o.remainingToShip-=amount;o.loaded=(o.loaded||0)+amount;finishSaleLoading(state,o);}
       }
     }

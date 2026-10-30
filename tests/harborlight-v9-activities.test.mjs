@@ -170,7 +170,7 @@ test('unresolved share decisions remain available after opening/reload and the p
   assert.equal(pendingTaskAchievements(state).length, 0);
 });
 
-test('Skip resolves a notification without paying and reward overflow waits indefinitely without carriers', () => {
+test('Skip resolves a notification without paying and bonus rewards remain spendable without carriers', () => {
   const state = island();
   state.resources = { coins: 1000, wood: 1000, stone: 1000, grain: 1000, food: 1000, planks: 0 };
   advanceActivities(state, 301); // A plain ×1 reward makes quantities explicit.
@@ -178,14 +178,15 @@ test('Skip resolves a notification without paying and reward overflow waits inde
   const achievement = pendingTaskAchievements(state)[0], coins = state.resources.coins;
   activityAction(state, { type: 'skipTaskAchievement', id: achievement.id });
   assert.equal(state.resources.coins, coins);
-  assert.ok(state.rewardBuffer.planks > 0);
-  const total = state.resources.planks + state.rewardBuffer.planks;
+  assert.equal(state.rewardBuffer.planks, 0);
+  assert.equal(state.bonusMaterials.planks, 1000);
+  const total = state.resources.planks;
   advanceActivities(state, 30 * DAY);
-  assert.equal(state.resources.planks + state.rewardBuffer.planks, total);
+  assert.equal(state.resources.planks, total);
   const before = state.resources.planks;
   state.resources.wood -= 100;
   advanceActivities(state, 0);
-  assert.equal(state.resources.planks, before + 100);
+  assert.equal(state.resources.planks, before);
   assert.equal(state.buildings.warehouse.workers, 0);
 });
 

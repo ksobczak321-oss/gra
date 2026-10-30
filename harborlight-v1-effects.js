@@ -1,6 +1,9 @@
 // One read-only view of active benefits and penalties, shared by Town Hall and
 // transition notifications. Countdown changes alone never create a new notice.
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v17';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v18';
+import { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v18';
+import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v18';
+import { worldEventRows } from './harborlight-v1-events.js?v=frontend-v18';
 const EPS = 1e-7;
 const GRACE = 12 * 3600;
 const workplaceNames = { farm: 'Farm', windmill: 'Windmill', lumber: 'Lumber Camp', sawmill: 'Sawmill', quarry: 'Quarry', warehouse: 'Warehouse', market: 'Market', dock: 'Harbor' };
@@ -31,9 +34,14 @@ export function activeEffects(state = {}) {
   const effects = [], people = peopleOf(state), eligible = people.filter(person => !frozen(person));
   const allScope = scopeOf(eligible, people);
   const allIds = idsOf(eligible);
+  const welcome = welcomeStatus(state);
+  if (welcome.active) effects.push(effectRow('welcome', 'Welcome bonus', 'positive', 'Happiness cannot fall below 20%', scopeOf(people, people), {
+    amount: 20, residentIds: idsOf(people), remaining: welcome.remaining,
+    explain: 'For the island’s first 72 hours every resident, including new arrivals, has at least 20% happiness. Forced 100% takes priority. Expiry removes the protection without subtracting twenty points or charging hidden losses.'
+  }));
   if (finite(state.blessingRemaining) > EPS) effects.push(effectRow('manual-blessing', 'Chapel blessing', 'positive', '+20 pp happiness', allScope, {
     amount: 20, residentIds: allIds, remaining: state.blessingRemaining,
-    explain: 'Each eligible resident receives the temporary happiness bonus. New residents keep their initial 0% freeze.'
+    explain: 'Each eligible resident receives the temporary happiness bonus. During the initial settling period, Lighthouse 100% and the Welcome minimum take priority; otherwise happiness remains at 0%.'
   }));
   if (finite(state.chapelRemaining) > EPS) {
     const amount = 10 * finite(state.buildings?.chapel?.level);
@@ -42,9 +50,9 @@ export function activeEffects(state = {}) {
       explain: 'The happiness bonus lasts ten hours after a Chapel upgrade.'
     }));
   }
-  if (finite(state.lighthouseRemaining) > EPS) effects.push(effectRow('lighthouse-upgrade', 'Lighthouse upgrade bonus', 'positive', 'Happiness set to 100% · material production ×2', allScope, {
-    amount: 100, residentIds: allIds, remaining: state.lighthouseRemaining,
-    explain: 'The upgrade gives both benefits for 24 hours × the achieved Lighthouse level. New residents retain their initial 0% freeze.'
+  if (finite(state.lighthouseRemaining) > EPS) effects.push(effectRow('lighthouse-upgrade', 'Lighthouse upgrade bonus', 'positive', 'Happiness set to 100% · material production ×2', scopeOf(people, people), {
+    amount: 100, residentIds: idsOf(people), remaining: state.lighthouseRemaining,
+    explain: 'The upgrade gives both benefits for 24 hours × the achieved Lighthouse level. New arrivals also receive 100%, only until the shared effect ends. Lost residents and resources are not restored.'
   }));
   for (const bonus of Array.isArray(state.lighthouseVisitBonuses) ? state.lighthouseVisitBonuses : []) {
     if (!(finite(bonus.remaining) > EPS)) continue;
@@ -54,13 +62,13 @@ export function activeEffects(state = {}) {
     }));
   }
   for (const person of people) {
-    if (!frozen(person) && finite(person.visitHappinessRemaining) > EPS) effects.push(effectRow(`lighthouse-person-${person.id}`, 'Lighthouse visit reward', 'positive', 'Happiness set to 100%', `Resident #${person.id}`, {
+    if (finite(person.visitHappinessRemaining) > EPS) effects.push(effectRow(`lighthouse-person-${person.id}`, 'Lighthouse visit reward', 'positive', 'Happiness set to 100%', `Resident #${person.id}`, {
       amount: 100, residentIds: [person.id], remaining: person.visitHappinessRemaining,
       explain: 'The personal benefit starts after the four-hour visit and lasts for 24 hours.'
     }));
-    if (frozen(person)) effects.push(effectRow(`new-resident-${person.id}`, 'New resident settling in', 'neutral', 'Happiness stays at 0%', `Resident #${person.id}`, {
+    if (frozen(person)) effects.push(effectRow(`new-resident-${person.id}`, 'New resident settling in', 'neutral', finite(state.lighthouseRemaining) > EPS || finite(person.visitHappinessRemaining) > EPS ? 'Happiness set to 100% by Lighthouse protection' : welcome.active ? 'Happiness protected at 20% by Welcome bonus' : 'Happiness stays at 0%', `Resident #${person.id}`, {
       amount: 0, residentIds: [person.id], remaining: person.newbornRemaining,
-      explain: 'Every new resident starts with 24 hours of frozen 0% happiness. Hunger and unemployment counters also start only after this period.'
+      explain: 'The initial 24-hour settling period suspends hunger and unemployment counters. Forced 100% takes priority, followed by the Welcome bonus minimum; otherwise happiness stays at 0%.'
     }));
   }
 
@@ -90,10 +98,10 @@ export function activeEffects(state = {}) {
       explain: 'Unfed time accumulates until a full uninterrupted hour of feeding clears it. After twelve hours the penalty applies only while food is unavailable, without backcharging the first twelve hours.'
     }));
   }
-  const unemployed = eligible.filter(person => (!person.workplace || finite(person.arrivalRemaining) > EPS) && finite(person.unemployedSeconds) >= GRACE - EPS);
+  const unemployed = eligible.filter(person => !person.workplace && finite(person.unemployedSeconds) >= GRACE - EPS);
   if (unemployed.length) effects.push(effectRow('unemployment', 'Unemployment penalty', 'negative', '−5 pp happiness / h', scopeOf(unemployed, people), {
-    amount: -5, residentIds: idsOf(unemployed), endCondition: 'Until these residents arrive at work',
-    explain: 'The penalty begins after twelve continuous hours without work. Returning home counts as unemployment.'
+    amount: -5, residentIds: idsOf(unemployed), endCondition: 'Until these residents are assigned to work',
+    explain: 'The penalty is paused on assignment and while walking to work. Only arriving resets the remembered timer; recalling a resident early does not grant a new grace period. Returning home counts as unemployment.'
   }));
   const unhoused = Math.max(0, finite(state.population, people.length) - 24 * finite(state.buildings?.house?.level));
   if (unhoused > 0 && eligible.length) effects.push(effectRow('overcrowding', 'Not enough beds', 'negative', `−${unhoused} pp happiness / h`, allScope, {
@@ -143,9 +151,17 @@ export function activeEffects(state = {}) {
   }
   const now = finite(state.worldTimeMs, finite(state.lastSimulatedAt));
   const activityRemaining = (finite(state.engagement?.activeUntil) - now) / 1000;
-  if (activityRemaining > EPS) effects.push(effectRow('active-play', 'Active play', 'positive', 'Material production ×2', 'All material production', {
+  if (activityRemaining > EPS) effects.push(effectRow('active-play', 'Active play', 'positive', 'Production, taxes and transport speed ×2', 'Island economy', {
     amount: 2, remaining: activityRemaining,
-    explain: 'Meaningful activity in the focused visible game keeps this benefit active for five minutes. It combines with the Lighthouse production bonus.'
+    explain: 'Meaningful activity in the focused visible game keeps this benefit active for five minutes. Food, population clocks and effect durations keep real time. The Lighthouse production bonus can combine with it.'
+  }));
+  if (activePlayMultiplier(state) === 0.5) effects.push(effectRow('long-absence', 'Island inactivity', 'negative', 'Production, taxes and transport speed ×0.5', 'Island economy', {
+    amount: 0.5, endCondition: 'Until the player performs a real game action',
+    explain: 'Only time after 48 hours without real play is slowed. Earlier offline hours retain their original multipliers; automatic session refresh does not count as play.'
+  }));
+  for (const event of worldEventRows(state, 'en')) effects.push(effectRow(event.id, event.title, event.polarity, String(event.description), 'Island', {
+    residentIds: event.polarity === 'negative' ? allIds : [], remaining: event.remaining,
+    explain: 'Shipwreck effects keep their own clocks. Lighthouse protection overrides happiness loss without restoring residents or materials already lost.'
   }));
   const packageRemaining = (finite(state.premium?.expiresAt) - now) / 1000;
   if (packageRemaining > EPS) effects.push(effectRow('construction-package', 'Construction package', 'positive', '+4 active builds · unlimited queue · delivery planning', 'Island construction', {

@@ -119,6 +119,16 @@ test('legacy API-only evidence cannot authorize a complete game promotion', asyn
   await assert.rejects(verifyReceipt({ getRun: async () => run() }, legacy, expected), /current DEV release receipt/);
 });
 
+test('account APIs cannot first become active on PROD without upstream runtime evidence', () => {
+  assert.throws(() => validateReceipt(receipt(), { ...expected, requireAccountApi: true }), /verified on PRE-PROD/);
+  const verified = createReceipt({ ...expected, sourceImage: `${prefix}@${digest}`, ciRunId: 90, ciRunAttempt: 1, frontendArchiveSha256, frontendManifestSha256, accountApi: true });
+  assert.equal(validateReceipt(verified, { ...expected, requireAccountApi: true }).sourceSha, sourceSha);
+  for (const value of [false, 'true', 1, null]) {
+    const altered=structuredClone(verified);altered.checks.account_api=value;
+    assert.throws(() => validateReceipt(altered, { ...expected, requireAccountApi: true }), /verified on PRE-PROD/);
+  }
+});
+
 test('production revalidates the receipt CI run and refuses rerun/failed/different-commit evidence', async () => {
   assert.equal((await verifyReceipt({ getRun: async () => run() }, receipt(), expected)).imageDigest, digest);
   for (const change of [{ run_attempt: 2 }, { conclusion: 'failure' }, { head_sha: 'c'.repeat(40) }, { event: 'pull_request' }]) {

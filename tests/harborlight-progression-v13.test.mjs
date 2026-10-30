@@ -36,11 +36,16 @@ function reload(state) {
   normalizeProgression(restored, raw);
   return restored;
 }
+// Older scenarios use this helper name; completion now performs real commands.
 function observe(state, taskId) {
   const item = TUTORIAL_LESSONS.find(row => row.id === taskId);
-  if (item?.kind === 'observe') {
-    if (taskId === 'rules-read') progressionAction(state, { type: 'tutorialVisit', subject: 'home' }, context);
-    progressionAction(state, { type: 'tutorialVisit', subject: item.route }, context);
+  if (['rules-read', 'island-map'].includes(taskId)) {
+    const before = state.tutorial.completed[taskId] === true;
+    const building = taskId === 'rules-read' ? 'farm' : 'warehouse';
+    const person = state.residents.find(row => !row.workplace);
+    if (person) person.workplace = building;
+    recordProgressionAction(state, { type: 'assign', building, delta: 1 }, { ok: true });
+    return { ok: !before && state.tutorial.completed[taskId] === true };
   }
   return progressionAction(state, { type: 'tutorialObserve', taskId }, context);
 }
@@ -94,7 +99,7 @@ test('active bonus and clocks survive reload without extending the window', () =
 test('offline time does not create tutorial active days or renew activity', () => {
   const state = island(); activity(state);
   advance(state, 3 * 86400);
-  assert.equal(activePlayMultiplier(state), 1);
+  assert.equal(activePlayMultiplier(state), 0.5);
   assert.deepEqual(state.tutorial.activeDays, ['2026-10-23']);
   assert.equal(tutorialRows(state).filter(row => row.unlocked).length, 1);
   activity(state);
@@ -141,7 +146,7 @@ test('missing prerequisite lessons cannot be observed or claimed even on later a
 });
 
 
-test('tutorial observation, genuine crew conditions and once-only claiming remain distinct', () => {
+test('only the requested real assignment completes the crew lesson and its reward pays once', () => {
   const state = island(); activity(state);
   observe(state, 'rules-read'); observe(state, 'island-map');
   assert.equal(observe(state, 'first-job').ok, false);
@@ -149,8 +154,7 @@ test('tutorial observation, genuine crew conditions and once-only claiming remai
   assert.equal(tutorialRows(state).find(row => row.id === 'first-job').completed, false);
   state.residents[0].workplace = 'quarry'; state.residents[0].arrivalRemaining = 300;
   state.residents[1].workplace = 'warehouse'; state.residents[1].arrivalRemaining = 300;
-  recordProgressionAction(state, { type: 'assign', building: 'quarry', delta: 1 }, { ok: true });
-  recordProgressionAction(state, { type: 'assign', building: 'warehouse', delta: 1 }, { ok: true });
+  recordProgressionAction(state, { type: 'assign', building: 'windmill', delta: 1 }, { ok: true });
   assert.equal(tutorialRows(state).find(row => row.id === 'first-job').completed, true);
   const reward = { ...state.tutorial.chests['first-job'].reward };
   assert.equal(claim(state, 'first-job').ok, true);
@@ -163,14 +167,15 @@ test('tutorial observation, genuine crew conditions and once-only claiming remai
 });
 
 
-test('tutorial material overflow uses the existing conservation-preserving delivery buffer', () => {
+test('tutorial rewards enter immediately spendable bonus stock without consuming ordinary space', () => {
   const state = island(); activity(state); observe(state, 'rules-read');
   const reward = state.tutorial.chests['rules-read'].reward;
   for (const id of MATERIALS) state.resources[id] = 800;
   assert.equal(claim(state, 'rules-read').ok, true);
   for (const id of MATERIALS) {
-    assert.equal(state.resources[id], 800);
-    assert.equal(state.pendingDeliveries[id], reward[id]);
+    assert.equal(state.resources[id], 800 + reward[id]);
+    assert.equal(state.bonusMaterials[id], reward[id]);
+    assert.equal(state.pendingDeliveries[id], 0);
   }
   assert.equal(state.resources.coins, 100);
 });
@@ -284,8 +289,9 @@ test('three distinct active days with gaps within30days grant500ofeachmaterial o
   advance(state, 10 * 86400);
   assert.equal(referralDay(state).rewarded, true);
   for (const id of MATERIALS) {
-    assert.equal(state.resources[id], 800);
-    assert.equal(state.pendingDeliveries[id], 500);
+    assert.equal(state.resources[id], 1300);
+    assert.equal(state.bonusMaterials[id], 500);
+    assert.equal(state.pendingDeliveries[id], 0);
   }
   assert.equal(referralRows(state)[0].activeDayCount, 3);
   assert.equal(referralDay(state).ok, false);
@@ -323,10 +329,12 @@ test('loyalty counts consecutive Warsaw login days once and resets its streak af
   assert.equal(state.loyalty.streak, 2);
   advance(state, 2 * 86400); recordProgressionLogin(state);
   assert.equal(state.loyalty.streak, 1);
-  assert.equal(loyaltyStatus(state).rewardConfigured, false);
+  assert.equal(loyaltyStatus(state).rewardConfigured, true);
   const before = state.resources.coins;
+  const claimed = progressionAction(state, { type: 'claimLoyalty' }, context);
+  assert.equal(claimed.ok, true);
+  assert.equal(state.resources.coins, before + claimed.reward.coins);
   assert.equal(progressionAction(state, { type: 'claimLoyalty' }, context).ok, false);
-  assert.equal(state.resources.coins, before);
 });
 
 test('loyalty permanently closes atTownHall4 even if later data lowers the level', () => {
@@ -400,10 +408,11 @@ test('a third counted publication can stack with a newly reached level reward', 
 
 test('opening a task acceptance draft is not the tutorial acceptance action', () => {
   const state = island(); activity(state);
+  for (const item of TUTORIAL_LESSONS.slice(0, 21)) state.tutorial.completed[item.id] = true;
   recordProgressionAction(state, { type: 'taskAccept', task: 'lighthouse-1' }, { ok: true, draft: true });
-  assert.equal(state.tutorial.events['task-accept'], undefined);
+  assert.equal(state.tutorial.completed['lighthouse-task'], undefined);
   recordProgressionAction(state, { type: 'confirmTaskAcceptance', task: 'lighthouse-1' }, { ok: false });
-  assert.equal(state.tutorial.events['task-accept'], undefined);
+  assert.equal(state.tutorial.completed['lighthouse-task'], undefined);
   recordProgressionAction(state, { type: 'confirmTaskAcceptance', task: 'lighthouse-1' }, { ok: true });
-  assert.equal(state.tutorial.events['task-accept'], true);
+  assert.equal(state.tutorial.completed['lighthouse-task'], true);
 });

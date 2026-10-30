@@ -27,7 +27,7 @@ function harness(replies = [], { stored, hostname = 'harborlight-dev.web.app', s
   const storage = injected || { getItem: key => values.get(key) ?? null,
     setItem: (key, value) => values.set(key, value), removeItem: key => values.delete(key) };
   const calls = [];
-  const client = createDevCloud({ hostname, storage, now: () => NOW, fetch: async (url, options) => {
+  const client = createDevCloud({ hostname, storage, discoverAccountApi: false, now: () => NOW, fetch: async (url, options) => {
     calls.push({ url, options });
     assert.ok(replies.length, `Unexpected request: ${url}`);
     const next = replies.shift();
@@ -48,7 +48,7 @@ test('only the three stable DEV identities are accepted; unrelated origins never
   assert.deepEqual(DEV_USERS.map(user => user.uid), ['dev-admin1', 'dev-admin2', 'dev-admin3']);
   assert.equal(accountSaveKey('dev-admin2'), 'harborlight-dev-island-dev-admin2');
   assert.throws(() => accountSaveKey('../admin2'), { code: 'invalid-login' });
-  for (const hostname of ['localhost', 'harborlight.pl', 'harborlight-prod.web.app',
+  for (const hostname of ['localhost', 'unrelated.invalid', 'harborlight-prod.web.app.attacker.invalid',
     'harborlight-dev.web.app.attacker.invalid', 'ksobczak321-oss.github.io']) {
     const { client, calls } = harness([], { hostname, stored: storedSession() });
     assert.equal(client.enabled, false);
@@ -69,7 +69,7 @@ test('blocked browser storage cannot break unrelated hosts at client constructio
     throw new Error('SecurityError: storage blocked');
   } });
   try {
-    const inactive = createDevCloud({ hostname: 'harborlight.pl' });
+    const inactive = createDevCloud({ hostname: 'unrelated.invalid' });
     assert.equal(inactive.enabled, false);
     assert.equal(await inactive.restoreSession(), null);
     await assert.rejects(inactive.signIn(USER.login, 'password'), { code: 'disabled' });

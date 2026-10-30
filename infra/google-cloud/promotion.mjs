@@ -128,6 +128,9 @@ export function validateReceipt(receipt, options) {
   if (receipt.checks?.ci !== true || receipt.checks?.dev_smoke !== true || receipt.checks?.frontend_smoke !== true) {
     fail('Receipt is missing successful stage checks.');
   }
+  if (options.requireAccountApi === true && receipt.checks?.account_api !== true) {
+    fail('The account API must be verified on PRE-PROD before it can be enabled on PROD.');
+  }
   return {
     sourceSha, sourceImage: image.uri, imageDigest: image.digest, ciRunId, ciRunAttempt,
     frontendArtifactName, frontendArchiveSha256, frontendManifestSha256
@@ -158,7 +161,7 @@ export function createReceipt(options) {
       site: DEV_FRONTEND_SITE,
       url: DEV_FRONTEND_URL
     },
-    checks: { ci: true, dev_smoke: true, frontend_smoke: true }
+    checks: { ci: true, dev_smoke: true, frontend_smoke: true, account_api: options.accountApi === true }
   };
   validateReceipt(receipt, { ...options, devImagePrefix: image.prefix });
   return receipt;
@@ -276,7 +279,8 @@ export async function main(command, env = process.env, fetchImpl = fetch) {
       ciRunId: env.HARBORLIGHT_CI_RUN_ID, ciRunAttempt: env.HARBORLIGHT_CI_RUN_ATTEMPT,
       devRunId: env.GITHUB_RUN_ID, devRunAttempt: env.GITHUB_RUN_ATTEMPT,
       frontendArchiveSha256: env.HARBORLIGHT_FRONTEND_ARCHIVE_SHA256,
-      frontendManifestSha256: env.HARBORLIGHT_FRONTEND_MANIFEST_SHA256
+      frontendManifestSha256: env.HARBORLIGHT_FRONTEND_MANIFEST_SHA256,
+      accountApi: env.HARBORLIGHT_ACCOUNT_API_VERIFIED === 'true'
     });
     await writeFile(env.HARBORLIGHT_RECEIPT_PATH, `${JSON.stringify(receipt, null, 2)}\n`, { flag: 'wx' });
   } else if (command === 'verify-receipt') {
@@ -287,7 +291,8 @@ export async function main(command, env = process.env, fetchImpl = fetch) {
     try { receipt = JSON.parse(contents); } catch { fail('DEV receipt is not valid JSON.'); }
     const release = await verifyReceipt(api(), receipt, {
       ...options, devRunId: env.HARBORLIGHT_DEV_RUN_ID, devRunAttempt: env.HARBORLIGHT_DEV_RUN_ATTEMPT,
-      devImagePrefix: env.HARBORLIGHT_DEV_IMAGE_PREFIX
+      devImagePrefix: env.HARBORLIGHT_DEV_IMAGE_PREFIX,
+      requireAccountApi: env.HARBORLIGHT_REQUIRE_ACCOUNT_API === 'true'
     });
     await output({
       source_sha: release.sourceSha, source_image: release.sourceImage, image_digest: release.imageDigest, ci_run_id: release.ciRunId,

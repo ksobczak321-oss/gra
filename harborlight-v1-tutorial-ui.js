@@ -1,4 +1,4 @@
-import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v17';
+import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v18';
 
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const MATERIAL_NAMES = { en: ['Wood', 'Stone', 'Grain', 'Food', 'Planks'], pl: ['Drewno', 'Kamień', 'Zboże', 'Żywność', 'Deski'] };
@@ -24,6 +24,9 @@ export function createTutorialPanel(options) {
   const root = node('div', { class: 'tutorial-v16', 'data-tutorial-panel': '', 'data-i18n-ignore': '' });
   const progress = node('progress', { max: rows.length, value: status.completed, 'aria-label': pick(language, 'Tutorial progress', 'Postęp samouczka') });
   root.append(node('div', { class: 'tutorial-v16-progress' }, node('strong', {}, pick(language, `${status.completed} / ${rows.length} completed`, `Ukończono ${status.completed} / ${rows.length}`)), progress));
+  if (rows.some(row => row.rewardBlocked)) root.append(node('p', { class: 'tutorial-v18-storage-warning', 'data-tutorial-storage-blocked': '' }, pick(language,
+    'Spend stored materials before opening or doubling another tutorial chest. Building, production and other island actions remain available.',
+    'Wydaj zgromadzone materiały, zanim otworzysz lub podwoisz kolejną skrzynię. Rozbudowa, produkcja i zarządzanie wyspą pozostają dostępne.')));
   if (current) {
     const copy = tutorialLessonText(current, language);
     const controls = node('div', { class: 'tutorial-v16-actions' });
@@ -31,15 +34,14 @@ export function createTutorialPanel(options) {
     if (current.canClaim) controls.append(action(pick(language, 'Open reward chest', 'Otwórz skrzynię z nagrodą'), () => onAction({ type: 'claimTutorial', taskId: current.id }), { 'data-tutorial-claim': current.id }));
     else {
       controls.append(action(pick(language, 'Go to this place', 'Przejdź do wskazanego miejsca'), () => onVisit(current.route), { 'data-tutorial-visit': current.id }));
-      if (current.kind === 'observe') controls.append(action(pick(language, 'I have read it', 'Przeczytane'), () => onAction({ type: 'tutorialObserve', taskId: current.id }), { class: 'tutorial-action secondary', disabled: !current.canObserve, 'data-tutorial-observe': current.id }));
     }
     root.append(node('section', { class: 'tutorial-v16-current', 'data-tutorial-current': current.id },
       node('span', { class: 'tutorial-v16-eyebrow' }, fraction(current.index, rows.length, language)), node('h3', {}, copy.title), node('p', {}, copy.description),
       node('p', { class: 'tutorial-v16-reward' }, pick(language, 'Reward: a chest with 100–300 of each of the five materials.', 'Nagroda: skrzynia z 100–300 sztuk każdego z pięciu materiałów.')),
-      controls, current.kind === 'observe' && !current.canObserve && !current.completed ? node('small', { class: 'tutorial-v16-hint' }, pick(language, 'Visit the indicated place first. Use the small tutorial guide to confirm reading.', 'Najpierw odwiedź wskazane miejsce. Potwierdź przeczytanie w małej karcie samouczka.')) : null,
-      current.kind === 'condition' ? node('small', { class: 'tutorial-v16-hint' }, pick(language, 'The step completes automatically when the delivery arrives. Your island keeps working.', 'Krok zaliczy się po dotarciu dostawy. Twoja wyspa cały czas pracuje.')) : null));
+      controls, node('small', { class: 'tutorial-v16-hint' }, pick(language, 'Follow the highlighted control and complete the actual action. Reading alone never grants a chest.', 'Wykonaj wskazane strzałką działanie. Samo przeczytanie instrukcji nie przyznaje skrzyni.')),
+      current.kind === 'condition' ? node('small', { class: 'tutorial-v16-hint' }, pick(language, 'This step completes after the real delivery or production event. Your island keeps working.', 'Krok zaliczy się po prawdziwej dostawie albo produkcji. Twoja wyspa cały czas pracuje.')) : null));
   } else root.append(node('section', { class: 'tutorial-v16-current is-finished', 'data-tutorial-finished': '' }, node('span', { class: 'tutorial-v16-finished-mark', 'aria-hidden': 'true' }, '✓'), node('h3', {}, pick(language, 'Your island is in good hands', 'Twoja wyspa jest w dobrych rękach')), node('p', {}, pick(language, 'All 25 lessons are complete. You can revisit the guide here whenever you need it.', 'Wszystkie 25 lekcji ukończone. Możesz wrócić do tego przewodnika, kiedy tylko zechcesz.'))));
-  const rewards = rows.filter(row => row.canShare);
+  const rewards = rows.filter(row => row.claimed && !!state.tutorial?.chests?.[row.id] && !row.shared && !row.skipped);
   if (rewards.length) root.append(node('section', { class: 'tutorial-v16-pending' }, node('h4', {}, pick(language, 'Your chest bonuses', 'Premie do Twoich skrzyń')), ...rewards.map(row => action(pick(language, `Review: ${tutorialLessonText(row, language).title}`, `Sprawdź: ${tutorialLessonText(row, language).title}`), () => onAction({ type: 'seeTutorialReward', taskId: row.id }), { class: 'tutorial-action secondary', 'data-tutorial-review': row.id }))));
   root.append(node('details', { class: 'tutorial-v16-list' }, node('summary', {}, pick(language, 'All 25 lessons', 'Wszystkie 25 lekcji')), node('ol', {}, ...rows.map(row => node('li', { class: row.completed ? 'is-complete' : '', 'data-tutorial-list-item': row.id }, node('span', { 'aria-hidden': 'true' }, row.completed ? '✓' : String(row.index)), node('span', {}, tutorialLessonText(row, language).title))))));
   root.append(node('div', { class: 'tutorial-v16-footer' },
@@ -52,14 +54,17 @@ export function createTutorialPanel(options) {
 export function createTutorialGuide(options) {
   const { state, progression, language = 'en', onAction, onVisit } = options;
   const status = progression.tutorialStatus(state);
-  if (status.finished || status.autoOpenDisabled) return null;
-  const current = nextRow(rowsFor(options));
+  const rows = rowsFor(options), storageBlocked = rows.some(row => row.rewardBlocked);
+  if (status.autoOpenDisabled || status.finished && !storageBlocked) return null;
+  const current = nextRow(rows) || rows.find(row => row.rewardBlocked);
   if (!current) return null;
   const copy = tutorialLessonText(current, language);
-  return node('aside', { class: 'tutorial-v16-guide', 'data-tutorial-guide': current.id, 'data-i18n-ignore': '', 'aria-label': pick(language, 'Current tutorial step', 'Aktualny krok samouczka') },
+  return node('aside', { class: 'tutorial-v16-guide', 'data-tutorial-guide': current.id, 'data-tutorial-target': current.completed ? '' : current.guideSelector || '', 'data-i18n-ignore': '', 'aria-label': pick(language, 'Current tutorial step', 'Aktualny krok samouczka') },
     node('div', { class: 'tutorial-v16-guide-copy' }, node('small', {}, fraction(current.index, status.total, language)), node('strong', {}, copy.title)),
+    storageBlocked ? node('small', { class: 'tutorial-v18-storage-warning', 'data-tutorial-storage-blocked': '' }, pick(language, 'Chests are waiting: spend the excess materials. Island actions remain available.', 'Skrzynie czekają: wydaj nadmiar materiałów. Działania wyspy pozostają dostępne.')) : null,
     node('div', { class: 'tutorial-v16-guide-actions' },
-      current.canObserve ? action(pick(language, 'Read', 'Przeczytane'), () => onAction({ type: 'tutorialObserve', taskId: current.id }), { 'data-tutorial-observe': current.id }) : current.canClaim ? action(pick(language, 'Open chest', 'Otwórz skrzynię'), () => onAction({ type: 'claimTutorial', taskId: current.id }), { 'data-tutorial-claim': current.id }) : null,
+      current.id === 'townhall-upgrade' && !status.buildingSuppliesClaimed && !current.completed ? action(pick(language, 'Collect building supplies', 'Odbierz materiały do budowy'), () => onAction({ type: 'prepareTutorialUpgrade' }), { 'data-tutorial-supplies': '' }) : null,
+      current.canClaim ? action(pick(language, 'Open chest', 'Otwórz skrzynię'), () => onAction({ type: 'claimTutorial', taskId: current.id }), { 'data-tutorial-claim': current.id }) : action(pick(language, 'Go to the action', 'Przejdź do działania'), () => onVisit(current.route), { 'data-tutorial-go': current.id }),
       action(pick(language, 'Tutorial', 'Samouczek'), () => onVisit('tutorial'), { class: 'tutorial-action secondary', 'data-tutorial-return': '' })));
 }
 
@@ -126,10 +131,10 @@ export function showTutorialAchievement({ achievement, row, language = 'en', onS
     try { if (callback?.(achievement) !== false) dispose(); }
     finally { busy = false; }
   }
-  const share = action(pick(language, 'Share on Facebook · chest ×2', 'Udostępnij na Facebooku · skrzynia ×2'), () => finish(onShare), { 'data-tutorial-share': id });
+  const share = action(pick(language, 'Share on Facebook · chest ×2', 'Udostępnij na Facebooku · skrzynia ×2'), () => finish(onShare), { 'data-tutorial-share': id, disabled: row?.canShare === false });
   content.append(node('div', { class: 'tutorial-v16-actions' }, share,
     action(pick(language, 'Skip sharing', 'Pomiń udostępnianie'), () => finish(onSkip), { class: 'tutorial-action secondary', 'data-tutorial-skip': id })),
-    node('small', { class: 'tutorial-v16-hint' }, pick(language, 'Facebook publishing is not connected yet. This prototype grants the bonus when you choose Share; nothing is posted.', 'Publikowanie na Facebooku nie jest jeszcze podłączone. W tej wersji wybór Udostępnij przyznaje premię; nic nie jest publikowane.')),
+    node('small', { class: 'tutorial-v16-hint' }, row?.canShare === false ? pick(language, 'Spend stored materials before doubling another chest. Your existing reward remains available.', 'Wydaj zgromadzone materiały przed podwojeniem skrzyni. Odebrana nagroda pozostaje dostępna.') : pick(language, 'You choose and approve sharing yourself. Nothing is published automatically.', 'Samodzielnie wybierasz i zatwierdzasz udostępnienie. Nic nie publikuje się automatycznie.')),
     action(pick(language, 'Decide later', 'Zdecyduję później'), () => { dispose(); onClose?.(achievement); }, { class: 'tutorial-action quiet', 'data-tutorial-reward-later': id }));
   popup.append(content);
   popup.addEventListener('cancel', event => { event.preventDefault(); dispose(); onClose?.(achievement); });

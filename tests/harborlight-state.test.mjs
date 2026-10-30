@@ -9,7 +9,7 @@ function idle(level=1,population=12,happiness=0) {
   const state=createState(Date.UTC(2026,9,23,0));
   state.buildings.townhall.level=level;state.buildings.house.level=level;
   state.population=population;state.capacity=level*24;
-  state.baseHappiness=happiness;state.happiness=happiness;
+  state.baseHappiness=happiness;state.happiness=happiness;state.welcome={startedAt:0,until:0};
   for(const building of Object.values(state.buildings)){building.workers=0;building.workProgress=[];}
   state.version=6;delete state.residents;
   return normalizeState(state,state.lastSimulatedAt);
@@ -36,7 +36,7 @@ function saved(state){return normalizeState(JSON.parse(JSON.stringify(state)),st
 
 test('fresh island has six resources, twelve residents at home and no passive chapel bonus',()=>{
  const s=createState();assert.equal(s.version,9);assert.deepEqual(s.resources,Object.fromEntries(Object.keys(RESOURCES).map(id=>[id,100])));
- assert.equal(s.population,12);assert.equal(s.capacity,24);assert.equal(housingCapacity(s),24);assert.equal(totalWorkers(s),0);assert.equal(freeWorkers(s),12);assert.equal(taxRate(s),0);assert.equal(s.happiness,0);assert.equal(s.chapelRemaining,0);
+ assert.equal(s.population,12);assert.equal(s.capacity,24);assert.equal(housingCapacity(s),24);assert.equal(totalWorkers(s),0);assert.equal(freeWorkers(s),12);assert.equal(taxRate(s),0);assert.equal(s.happiness,20);assert.equal(s.chapelRemaining,0);
  for(const building of Object.values(s.buildings))assert.equal(building.ready,0);
 });
 test('townhall and house provide their capacities only when real construction finishes',()=>{
@@ -116,11 +116,11 @@ test('fractional taxes persist and walking home earns none',()=>{
 test('population-loss tax uses the old crew before the loss and the smaller crew afterward',()=>{
  const s=idle(4,8,-100);s.resources.food=0;for(const resident of s.residents)resident.hungerSeconds=43200;crew(s,'farm',4);crew(s,'quarry',4);tick(s,3599);assert.equal(s.population,8);assert.equal(s.resources.coins,107);tick(s,1);assert.equal(s.population,7);assert.equal(totalWorkers(s),7);assert.equal(s.resources.coins,108);tick(s,3600);assert.equal(s.population,6);assert.equal(totalWorkers(s),6);assert.equal(s.resources.coins,115);assert.equal(s.statistics.taxCollected,15);for(const id of WORKPLACE_IDS)assert.ok(s.buildings[id].workers<=workerLimit(s,id));
 });
-test('approved population-rate anchors remain symmetric',()=>{
- for(const[h,hours]of[[25,12],[50,6],[75,12/7],[100,1]]){close(populationRate(h),1/hours);close(populationRate(-h),-1/hours);}assert.equal(populationRate(0),0);const s=idle(4,12);tick(s,3600);close(s.happiness,1);close(s.populationProgress,1/600);assert.equal(s.population,12);
+test('positive population-rate anchors double while departures retain the former rate',()=>{
+ for(const[h,hours]of[[25,12],[50,6],[75,12/7],[100,1]]){close(populationRate(h),2/hours);close(populationRate(-h),-1/hours);}assert.equal(populationRate(0),0);const s=idle(4,12);tick(s,3600);close(s.happiness,1);close(s.populationProgress,1/300);assert.equal(s.population,12);
 });
 test('population progress persists and resets when happiness changes sign',()=>{
- let s=idle(4,12,100);tick(s,1800);close(s.populationProgress,.5);s=saved(s);tick(s,1800);assert.equal(s.population,13);
+ let s=idle(4,12,100);tick(s,900);close(s.populationProgress,.5);s=saved(s);tick(s,900);assert.equal(s.population,13);
  const newborn=s.residents.find(resident=>resident.newbornRemaining>0);assert.ok(newborn);assert.equal(newborn.happiness,0);
  for(const resident of s.residents){resident.happiness=resident===newborn?0:-100;resident.hungerSeconds=43200;}updateHappiness(s);
  s.resources.food=0;s.foodCredit=0;tick(s,1800);
@@ -156,8 +156,8 @@ test('full notifications fire on each transition, persist and can be marked read
 test('chapel upgrade gives ten full bonus hours after completion and exactly double tax',()=>{
  const s=funded(4);crew(s,'dock',1);crew(s,'warehouse',1);assert.equal(act(s,{type:'upgrade',building:'chapel'}).ok,true);assert.equal(s.happiness,0);finish(s,'chapel');assert.equal(s.chapelRemaining,36000);close(s.happiness,intrinsicMean(s)+20);act(s,{type:'assign',building:'warehouse',delta:-1});assert.equal(taxRate(s),2);const coins=s.resources.coins;tick(s,36000);assert.equal(s.resources.coins,coins+20);close(s.happiness,intrinsicMean(s));assert.equal(taxRate(s),1);assert.equal(s.chapelRemaining,0);
 });
-test('manual blessing gives fifty of every resource and twenty happiness for one hour with lifetime charges',()=>{
- let s=idle(4);s.buildings.chapel.level=2;const stock={...s.resources};assert.equal(act(s,{type:'blessing'}).ok,true);for(const id of Object.keys(RESOURCES))assert.equal(s.resources[id],stock[id]+50);assert.equal(s.happiness,20);assert.equal(s.blessingsUsed,1);assert.equal(act(s,{type:'blessing'}).ok,false);s=saved(s);tick(s,3600);close(s.happiness,1);assert.equal(act(s,{type:'blessing'}).ok,true);tick(s,3600);assert.equal(act(s,{type:'blessing'}).ok,false);assert.equal(s.blessingsUsed,2);
+test('manual blessing gives fifty of every resource and twenty happiness for one hour with one free use per Warsaw day',()=>{
+ let s=idle(4);s.buildings.chapel.level=2;const stock={...s.resources};assert.equal(act(s,{type:'blessing'}).ok,true);for(const id of Object.keys(RESOURCES))assert.equal(s.resources[id],stock[id]+50);assert.equal(s.happiness,20);assert.equal(s.blessingsUsed,1);assert.equal(act(s,{type:'blessing'}).ok,false);s=saved(s);tick(s,3600);close(s.happiness,1);assert.equal(act(s,{type:'blessing'}).ok,false);tick(s,86400);assert.equal(act(s,{type:'blessing'}).ok,true);assert.equal(s.blessingsUsed,2);
 });
 test('upgrade bonus and manual blessing can coexist without exceeding person happiness bounds',()=>{
  const s=funded(4);intrinsic(s,90);act(s,{type:'upgrade',building:'chapel'});act(s,{type:'blessing'});assert.equal(s.happiness,100);assert.ok(happinessGroups(s).every(g=>g.happiness<=100));
@@ -180,8 +180,10 @@ test('market over-capacity orders and unavailable locked inventory do not change
 test('daily loyalty uses Warsaw calendar days, never repeats a same-day visit and caps at ten',()=>{
  const s=createState(Date.parse('2026-10-21T22:30:00Z'));assert.equal(recordVisit(s,Date.parse('2026-10-21T22:30:00Z')),true);assert.equal(s.loyalty.lastDay,'2026-10-22');assert.equal(s.loyalty.streak,1);assert.equal(recordVisit(s,Date.parse('2026-10-22T12:00:00Z')),false);for(let day=23;day<=31;day++)recordVisit(s,Date.parse(`2026-10-${day}T12:00:00Z`));assert.equal(s.loyalty.streak,10);recordVisit(s,Date.parse('2026-11-02T12:00:00Z'));assert.equal(s.loyalty.streak,1);assert.equal(s.resources.coins,100);
 });
-test('overflow rewards wait outside central stock and automatically use free room without carriers',()=>{
- const raw=idle();raw.resources={coins:100,wood:1000,stone:1000,grain:1000,food:1000,planks:500};let s=saved(raw);assert.equal(warehouseUsed(s),4000);assert.equal(s.resources.planks,0);assert.equal(s.pendingDeliveries.planks,500);assert.equal(stockRoom(s,'planks'),0);assert.equal(s.buildings.warehouse.workers,0);s.resources.wood-=10;tick(s,1);assert.equal(s.resources.planks,11);assert.equal(s.pendingDeliveries.planks,489);assert.equal(s.haulTrips.warehouse.length,0);assert.equal(s.resources.planks+s.pendingDeliveries.planks,500);assert.equal(warehouseUsed(s),4000);s=saved(s);assert.equal(s.resources.planks+s.pendingDeliveries.planks,500);
+test('legacy reward buffers become spendable bonus stock without occupying ordinary delivery capacity',()=>{
+ const raw=idle();raw.resources={coins:100,wood:1000,stone:1000,grain:1000,food:1000,planks:0};raw.pendingDeliveries.planks=500;delete raw.bonusInventoryVersion;delete raw.bonusMaterials;
+ let s=saved(raw);assert.equal(warehouseUsed(s),4500);assert.equal(s.resources.planks,500);assert.equal(s.bonusMaterials.planks,500);assert.equal(s.pendingDeliveries.planks,0);
+ assert.equal(stockRoom(s,'planks'),0);const total={...s.resources};s=saved(s);assert.deepEqual(s.resources,total);assert.equal(s.bonusMaterials.planks,500);
 });
 test('legacy farm food and unclaimed coin batches preserve their types and settle once',()=>{
  const raw=idle();raw.version=3;delete raw.resources.grain;raw.buildings.farm.ready=12;raw.buildings.dock.ready=20;raw.buildings.market.ready=30;raw.buildings.townhall.ready=40;let s=normalizeState(raw);assert.equal(s.resources.coins,190);assert.equal(s.resources.grain,0);assert.equal(s.pendingDeliveries.food,0);assert.equal(s.resources.food,112);assert.equal(s.buildings.farm.ready,0);s=saved(s);assert.equal(s.resources.coins,190);assert.equal(s.pendingDeliveries.food,0);assert.equal(s.resources.food,112);

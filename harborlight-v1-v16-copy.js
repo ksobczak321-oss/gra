@@ -1,37 +1,120 @@
-import { registerTranslations } from './harborlight-v1-i18n.js?v=frontend-v17';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v17';
+import { registerTranslations } from './harborlight-v1-i18n.js?v=frontend-v18';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v18';
 
 // Presentation copy for the current learning flow. Player-entered text never
 // passes through this catalogue.
 const LESSON_COPY = {
-  'rules-read': ['Poznaj zasady swojej wyspy', 'Otwórz menu wyspy w lewym górnym rogu, wejdź w Zasady i potwierdź ich przeczytanie.'],
-  'island-map': ['Obejrzyj mapę wyspy', 'Otwórz mapę i sprawdź, gdzie znajdują się budynki, miejsca produkcji i port.'],
-  'first-job': ['Przydziel mieszkańcom pracę', 'Przydziel co najmniej jedną osobę do produkcji i jedną do Magazynu. Do pracy dotrą po pięciu minutach.'],
-  'food-check': ['Sprawdź, czy nikt nie jest głodny', 'Otwórz Mieszkańców i sprawdź stan wyżywienia. Żywność musi być w magazynie centralnym albo w trwającym posiłku.'],
-  'townhall-upgrade': ['Rozpocznij rozbudowę Ratusza', 'Odbierz tutaj jednorazowe materiały do budowy i zleć rozbudowę Ratusza. Transport oraz budowa będą trwały, gdy poznasz kolejne zasady.'],
-  'happiness-action': ['Popraw szczęście mieszkańców', 'Rozdaj punkty szczęścia w Domu, udziel błogosławieństwa w Kaplicy albo uruchom atrakcję. Wykonaj jedno działanie poprawiające szczęście.'],
-  'workplace-journey': ['Sprawdź drogę do pracy', 'Otwórz zarządzanie pracownikami i porównaj osoby pracujące, idące do pracy oraz wracające do domu.'],
-  'resources-dock': ['Odczytaj oba magazyny zasobów', 'Wybierz Zasoby na dolnym pasku. Odczytaj zapas lokalny / centralny oraz ilość przewożoną w nawiasie.'],
-  'transport-priority': ['Wybierz priorytet transportu', 'W Magazynie ustaw wybrany materiał albo Budowę jako numerowany priorytet transportu.'],
-  'first-delivery': ['Odbierz prawdziwą dostawę', 'Poczekaj, aż tragarz z Magazynu przyniesie co najmniej jedną partię gotowych produktów do magazynu centralnego.'],
-  'storage-limits': ['Porównaj limity magazynów', 'Otwórz Magazyn i porównaj łączną pojemność, limit jednego materiału oraz lokalne zapasy producentów.'],
-  'food-chain': ['Poznaj produkcję żywności', 'Otwórz Młyn. Gospodarstwo produkuje zboże, a Młyn zużywa dwie sztuki zboża z centrali na jedną sztukę żywności w lokalnym magazynie.'],
-  'house-points': ['Znajdź codzienne punkty Domu', 'Otwórz pulę szczęścia w Domu. Odnawia się o północy czasu polskiego, a niewykorzystane punkty są rozdawane tuż przed północą.'],
-  'personal-happiness': ['Odczytaj szczęście każdej osoby', 'Otwórz Mieszkańców i porównaj indywidualne szczęście, potrzeby oraz aktywne efekty. Wartość wyspy jest średnią wszystkich osób.'],
-  'upgrade-cost': ['Sprawdź koszt rozbudowy', 'Otwórz rozbudowę budynku i porównaj dostępne zasoby centralne z kosztem oraz ograniczeniem poziomu Ratusza.'],
-  'construction-queue': ['Znajdź zarządzanie budową', 'Otwórz zarządzanie budową w Ratuszu. Najpierw docierają materiały, a dopiero potem zaczyna się osobna faza budowania.'],
-  'path-upgrade': ['Ulepsz jeden odcinek ścieżki', 'Wydaj 100 kamienia z centrali na jeden odcinek. Wszystkie odcinki muszą osiągnąć dany poziom, zanim rozpocznie się kolejny.'],
-  'daily-attractions': ['Poznaj codzienne atrakcje', 'Wybierz Dekoracje i porównaj pięć ofert. Jedna atrakcja działa przez sześć godzin, a jej zasięg i cena zależą od oferty.'],
-  'chapel-blessing': ['Poznaj błogosławieństwa Kaplicy', 'Otwórz Kaplicę i przeczytaj zasady darmowych oraz płatnych błogosławieństw. Ręczne błogosławieństwo daje materiały i czasową premię szczęścia.'],
-  'market-rules': ['Poznaj wymiany na Targu', 'Otwórz Targ. Jest dostępny od drugiego poziomu Ratusza i wymienia towary z tej samej grupy z opłatą dziesięciu procent.'],
-  'lighthouse-visits': ['Poznaj wizyty w latarni', 'Otwórz Latarnię. Odbudowa daje czasowe premie całej wyspie, a wizyty poprawiają szczęście po powrocie mieszkańców.'],
-  'lighthouse-task': ['Podejmij jedno zadanie', 'Przeczytaj koszt i termin, a następnie potwierdź zadanie. Jednocześnie aktywne jest jedno zadanie, a darowizn nie można wycofać.'],
-  'expedition-rules': ['Spróbuj ekspedycji', 'Rozpocznij ekspedycję i wybierz rodzaj minigry. Możesz wypłacić wygraną albo zaryzykować całą niewypłaconą pulę serii.'],
-  'returning-workers': ['Bezpiecznie odwołaj pracownika', 'Zakończ ekspedycję, a następnie odwołaj jednego pracownika. Tragarz z ładunkiem najpierw kończy dostawę, potem przez pięć minut wraca do domu.'],
-  'island-review': ['Zrób przegląd swojej wyspy', 'Wróć do menu wyspy i sprawdź żywność, pracę, magazyny, szczęście i plany budowy. Możesz już samodzielnie zarządzać wyspą.']
+  "rules-read": [
+    "Wyślij mieszkańca do Gospodarstwa",
+    "Otwórz Gospodarstwo i naciśnij +1, aby przydzielić rolnika. Wskazany strzałką przycisk rozpoczyna prawdziwą pracę."
+  ],
+  "island-map": [
+    "Przydziel tragarza do Magazynu",
+    "Otwórz Magazyn i przydziel jednego tragarza. Tragarze przynoszą gotowe produkty do centrali."
+  ],
+  "first-job": [
+    "Uruchom obsadę Młyna",
+    "Przydziel mieszkańca do Młyna. Jedna żywność wymaga dwóch sztuk dostępnego zboża z centrali."
+  ],
+  "food-check": [
+    "Rozpocznij pozyskiwanie drewna",
+    "Przydziel mieszkańca do Obozu drwali, aby zapewnić stałe dostawy drewna na rozbudowę."
+  ],
+  "townhall-upgrade": [
+    "Rozpocznij rozbudowę Ratusza",
+    "Odbierz jednorazowe materiały i zleć rozbudowę Ratusza. Materiały bonusowe można wydawać także przy pełnym zwykłym magazynie."
+  ],
+  "happiness-action": [
+    "Popraw szczęście mieszkańców",
+    "Rozdaj punkty Domu, udziel błogosławieństwa albo kup atrakcję. Wykonaj prawdziwe działanie poprawiające szczęście."
+  ],
+  "workplace-journey": [
+    "Rozpocznij pozyskiwanie kamienia",
+    "Przydziel mieszkańca do Kamieniołomu. W drodze do pracy nie ma kary bezrobocia, a podatek zaczyna płacić po dojściu."
+  ],
+  "resources-dock": [
+    "Rozpocznij produkcję desek",
+    "Przydziel mieszkańca do Tartaku. Dwie sztuki drewna schodzą z centrali dopiero po ukończeniu deski."
+  ],
+  "transport-priority": [
+    "Wybierz priorytet transportu",
+    "Ustaw w Magazynie numerowany priorytet materiału lub Budowy."
+  ],
+  "first-delivery": [
+    "Odbierz prawdziwą dostawę",
+    "Poczekaj, aż tragarz zakończy dostawę do centrali. Samo otwarcie okna nie zalicza tego kroku."
+  ],
+  "storage-limits": [
+    "Dodaj kolejnego tragarza",
+    "Przydziel jeszcze jedną osobę do Magazynu. Ten krok wymaga nowego przydziału, wykonanego po jego rozpoczęciu."
+  ],
+  "food-chain": [
+    "Ukończ przetworzony produkt",
+    "Poczekaj na ukończenie produktu w Młynie lub Tartaku. Krok zalicza prawdziwa produkcja."
+  ],
+  "house-points": [
+    "Wykorzystaj punkty Domu",
+    "Przekaż punkty szczęścia jednemu mieszkańcowi albo wszystkim. Pula odnawia się o północy Warszawy."
+  ],
+  "personal-happiness": [
+    "Wybierz swoje powiadomienia",
+    "Zmień jedną kategorię powiadomień w Ustawieniach. Wybór dotyczy także licznika dzwonka."
+  ],
+  "upgrade-cost": [
+    "Rozbuduj Gospodarstwo",
+    "Gdy pozwoli na to poziom Ratusza, zleć rozbudowę Gospodarstwa z dostępnych materiałów."
+  ],
+  "construction-queue": [
+    "Zleć większy Dom",
+    "Zleć rozbudowę Domu. Aktywne budowy i kolejka mają osobne limity."
+  ],
+  "path-upgrade": [
+    "Ulepsz odcinek ścieżki",
+    "Wydaj 100 kamienia na odcinek. Ukończ poziom wszystkich ścieżek przed rozpoczęciem następnego."
+  ],
+  "daily-attractions": [
+    "Kup jedną atrakcję",
+    "Wybierz atrakcję, na którą Cię stać. Jednocześnie może działać jedna nowa atrakcja."
+  ],
+  "chapel-blessing": [
+    "Uruchom błogosławieństwo",
+    "Użyj dostępnego darmowego lub płatnego błogosławieństwa. Jedno darmowe użycie odnawia się każdego dnia Warszawy i nie kumuluje się."
+  ],
+  "market-rules": [
+    "Wyślij towar na Targ",
+    "Od drugiego poziomu Ratusza zleć prawdziwą dostawę na Targ. Towar przenosi jego obsada."
+  ],
+  "lighthouse-visits": [
+    "Rozpocznij odbudowę Latarni",
+    "Zleć kolejny poziom Latarni. Ukończenie rozbudowy przyzna czasową premię całej wyspie."
+  ],
+  "lighthouse-task": [
+    "Podejmij zadanie",
+    "Sprawdź koszt i termin, a następnie potwierdź zadanie. Jednocześnie aktywne jest jedno."
+  ],
+  "expedition-rules": [
+    "Spróbuj ekspedycji",
+    "Rozpocznij wybraną minigrę. Skrzynia samouczka poczeka do zakończenia ekspedycji."
+  ],
+  "returning-workers": [
+    "Bezpiecznie odwołaj pracownika",
+    "Po ekspedycji odwołaj jednego pracownika. Tragarz z ładunkiem najpierw dokończy kurs, potem wróci do Domu."
+  ],
+  "island-review": [
+    "Przekaż darowiznę na zadanie",
+    "Przekaż dostępny materiał na przyjęte zadanie. Ta prawdziwa darowizna kończy Twoje wprowadzenie."
+  ]
 };
 
 export const V16_COPY = {
+  "Spend stored materials before opening or doubling another tutorial chest.": "Wydaj zgromadzone materiały przed otwarciem lub podwojeniem kolejnej skrzyni samouczka.",
+  "Referral activity cannot precede the first login.": "Aktywność poleconego gracza nie może poprzedzać jego pierwszego logowania.",
+  "The daily loyalty reward is not available or has already been received.": "Dzisiejsza nagroda lojalnościowa nie jest dostępna albo została już odebrana.",
+  "Daily loyalty reward received.": "Odebrano dzienną nagrodę lojalnościową.",
+  "Daily loyalty reward received": "Odebrano dzienną nagrodę lojalnościową",
+  "Receive 50–200 of each resource once per Warsaw day, including Coins. The stored draw does not change when you reload.": "Odbierz raz na dzień Warszawy po 50–200 każdego zasobu, także monet. Zapisane losowanie nie zmienia się po ponownym wczytaniu.",
+  "Granted the saved daily draw: 50–200 of each resource, including Coins.": "Przyznano zapisaną dzienną nagrodę: po 50–200 każdego zasobu, także monet.",
+
   'Automatic tutorial opening is disabled. You can resume it from Settings.': 'Samouczek nie będzie otwierał się automatycznie. Możesz go wznowić w Ustawieniach.',
   'Tutorial resumed. Your progress is preserved.': 'Samouczek wznowiony. Dotychczasowy postęp został zachowany.',
   'Choose a tutorial location.': 'Wybierz miejsce wskazane w samouczku.',
@@ -39,7 +122,7 @@ export const V16_COPY = {
   'Building supplies are available only before your tutorial Town Hall upgrade.': 'Materiały samouczka są dostępne tylko przed wskazaną rozbudową Ratusza.',
   'The tutorial building supplies were already received.': 'Materiały do budowy z samouczka zostały już odebrane.',
   'Tutorial building supplies': 'Materiały do budowy z samouczka',
-  'One-time supplies bring your available building budget to 500 coins and each material, with 600 Food for construction and meals. Any overflow waits safely for warehouse space.': 'Jednorazowa pomoc uzupełnia dostępny zapas do 500 monet i każdego materiału oraz 600 żywności na budowę i posiłki. Nadwyżka bezpiecznie czeka na miejsce w magazynie.',
+  'One-time supplies bring your available building budget to 500 coins and each material, with 600 Food for construction and meals. Bonus materials are immediately available without taking ordinary delivery space.': 'Jednorazowa pomoc uzupełnia dostępny zapas do 500 monet i każdego materiału oraz 600 żywności na budowę i posiłki. Materiały bonusowe są od razu dostępne i nie zajmują miejsca zwykłym dostawom.',
   'Tutorial building supplies received. You can now order the Town Hall upgrade.': 'Odebrano materiały samouczka. Możesz teraz zlecić rozbudowę Ratusza.',
   'This tutorial lesson does not exist.': 'Ta lekcja samouczka nie istnieje.',
   'Complete this lesson through its gameplay action.': 'Ukończ tę lekcję, wykonując wskazane działanie w grze.',

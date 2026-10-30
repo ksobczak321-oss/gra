@@ -1,23 +1,49 @@
-# Backlog HARBORLIGHT — frontend v17
+# Backlog HARBORLIGHT — frontend v18
 
-Bieżący zakres określają [dziewięć wymagań v17](FRONTEND-V17-REQUIREMENTS.md) i [reguły gospodarki](ECONOMY-RULES.md), z zachowaniem wcześniejszych zasad samouczka oraz ekonomii. Końcowe wyniki modelu i przeglądarki, wysłanie kodu oraz publiczny odbiór zapisuje [dziennik](IMPLEMENTATION-LOG.md); wyniki dawnych wydań nie potwierdzają tego pakietu.
+Bieżący zakres wyznaczają [zatwierdzone wymagania v18](FRONTEND-V18-REQUIREMENTS.md), [reguły](ECONOMY-RULES.md) i [kontrakt promocji](RELEASE-PROCESS.md). GO z30 października 2026 uruchomiło lokalną implementację. Poniższa lista nie oznacza publikacji: PRE-PROD nadal ma ostatnie potwierdzone `f161e45`, workflow `41067599818`; nowe wyniki zapisuje [dziennik](IMPLEMENTATION-LOG.md).
 
-## Bieżąca iteracja v17
+## Aktualna iteracja v18
 
-- Wyrównane górne krawędzie kolumn budynków, wszystkie karty trójek dopasowane bez suwaków i dolne przyciski menu wewnątrz ramki.
-- Wybór kulek albo trójek przy rozpoczęciu oraz przed kolejną rundą; zapisany typ jest domyślny przy kontynuacji. Parametry, czas, pula i zgodność rozpoczętych starszych serii pozostają zachowane.
-- Wyraźny popup po wycofaniu tragarzy i natychmiastowa informacja w liczniku, np. `5 (−2)`. Osoba z ładunkiem nadal kończy dostawę i dopiero po pięciominutowym powrocie do domu jest wolna.
-- Smutna buźka nad producentem objętym aktywną karą za przestój, usuwana po ustaniu kary.
-- Ustawienia bez logowania, ekran minigry bez strzałki powrotu i przycisk „Obejrzyj reklamę” pod wyjściem w obu grach. Jego ekran informacyjny nie przyznaje czasu ani nagrody; zasady i integracja pozostają do ustalenia.
-- Uwaga o miniaturze Portu została wycofana przez użytkownika jako stary zrzut. Nie jest poprawką tego pakietu.
+- Zapas bonusowy i zwykły, wydawanie bonusu najpierw, brak utraty nagród, kontrola przyszłych dostaw przy natychmiastowym transporcie, zachowanie zwykłych zleceń Targu i ochrona podjętego na czas ładunku Portu.
+- Prawidłowe limity kolejki, limit korzyści pojemności/ładunku/rezerwy Magazynu po L24 i popup faktycznego skrócenia budowy.
+- Powitalne 20%/72 h, pierwszeństwo 100%, dodatni przyrost ×2, brak kary bezrobocia w drodze i reset dopiero po dotarciu, poprawne opisy głodu/kar/produkcji.
+- Produkcja/podatki/transport ×2/×1/×0,5 według realnej aktywności i granic 5 min/48 h, przedziałowe rozliczenie offline, globalne wylogowanie 30 min+30 s.
+- 25 rzeczywistych działań samouczka, wskazanie kontrolki, blokada dalszych skrzyń przy przepełnieniu bez blokady zarządzania i pomocy. Minigra odkłada samouczek i reklamy do bezpiecznego momentu.
+- Ekspedycje: nagrody rund 50/100/200…, dobrowolne kupno czasu i odrębna reklama czasu; zapisany harmonogram zaproszeń i materiałowe 10–30, lojalność 50–200 sześciu zasobów.
+- Codzienne darmowe błogosławieństwo, opieka Kaplicy i dobre/złe wydarzenia z zapisanym losowaniem oraz ochroną rezerwacji/ładunków/populacji.
+- Paynow i reklamy jako oznaczona symulacja poza PROD, osobne uprawnienie bez reklam 1999 gr/30 dni, wyraźny checkout i pole kodu. Prawdziwe pieniądze nie są pobierane.
+- Kod logowania/rejestracji e-mail/Google/Facebook i ręcznie zatwierdzanego udostępniania. Nie traktujemy kodu OAuth jako aktywacji dostawcy.
+- Postęp konta wyłącznie w chmurze; brak lokalnych wysp/kopii/odzyskiwania. Niepowodzenie zapisu blokuje dalsze zatwierdzanie.
 
-[Excel 10](arkusze/HARBORLIGHT10-zasady.xlsx) i [manifest v10](decisions-v10.json) pozostają archiwum v16, w tym dawnego losowania minigier. Nie generujemy nowego arkusza i nie zmieniamy plików 7–10. Aktualny opis wyboru gry i interfejsu jest w wymaganiach oraz dokumentach v17.
+Status poszczególnych poprawek i ich testów jest potwierdzany przez faktyczne wyniki, nie oznaczenie tej listy jako zakończonej.
 
-## Kierunki przyszłe
+## Backend i integracje — stan bieżący
 
-Prowadzenie Facebooka z zatwierdzaniem postów i komentarzy, kody promocyjne, logo na koszulkę oraz planszowe 2–4 osoby i AR były omawiane jako przyszłość. Plan infrastruktury i kosztów nie oznacza zakupu usług ani uruchomienia backendu. Nagrody reklamowe, kwoty lojalności, prawdziwe konta, płatności, reklamy, publikacja i serwerowa weryfikacja nadal wymagają osobnych ustaleń lub integracji.
+| Obszar / zgłoszenie | Kod i stan rzeczywisty | Pozostała praca |
+|---|---|---|
+| BE-01 API postępu — [#11](https://github.com/ksobczak321-oss/gra/issues/11) | API kont/wysp, generacja i rewizja mają implementację oraz adapter Firestore. | Aktywacja routingu/IAM i próby chmurowe; pełny model komend gry nadal nie jest serwerowy. |
+| BE-02 konta — [#12](https://github.com/ksobczak321-oss/gra/issues/12) | Trzy rzeczywiste konta PRE-PROD istnieją od poprzedniego wydania. Kod produkcyjnej rejestracji i OAuth jest przygotowany. | Właścicielskie konfiguracje Google/Meta/Firebase, domeny i rzeczywiste testy dostawców. |
+| BE-03 zapis — [#13](https://github.com/ksobczak321-oss/gra/issues/13) | v18 usuwa lokalny zapis wysp, zachowuje wersjonowanie chmury i konflikty. API produkcyjne obsługuje generacje po resecie. | Aktywacja API i reguł oraz rzeczywiste testy zapisu, kopii/odtworzenia i migracji. |
+| BE-04 zaufane reguły — [#14](https://github.com/ksobczak321-oss/gra/issues/14) | Gospodarka i wyniki nadal są liczone w przeglądarce. Istnieją serwerowe granice kodów i retencji. | Autorytatywne komendy, czas, losowanie i walidacja wyników; nie przedstawiać obecnego JSON zapisu jako tego wdrożenia. |
+| BE-05 płatności — [#20](https://github.com/ksobczak321-oss/gra/issues/20) | Paynow wybrany; checkout i oznaczona symulacja poza PROD, produkcyjna symulacja odrzucana. | Konto operatora, weryfikowane potwierdzenia i księga rzeczywistych transakcji; kanały mobilne i sprawdzony regulamin. |
+| Kody promocyjne | Serwerowy transakcyjny licznik, jedna realizacja/konto, zakres dat, nagroda i globalny limit. | Konfiguracja API/uprawnień i utworzenie rzeczywistych ofert przez właściciela; nie udajemy potwierdzenia polubienia FB. |
+| Retencja | Trzy miesiące kalendarzowe, zachowanie konta/historii, generacje blokujące stare karty, wyłączenie admin1–3. Osobne narzędzie dry-run/apply. | Aktywacja zadania/skanowania i IAM; nie uruchamiać kasowania przypadkowo podczas testów ani tworzyć publicznej trasy purge. |
 
-Nowego numeru zgłoszenia nie przypisujemy bez jego rzeczywistego utworzenia. Milestone’y zachowują identyfikatory [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3) i [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4).
+[RUNTIME-ACCOUNTS.md](RUNTIME-ACCOUNTS.md) opisuje wymagania właścicielskie. Przygotowanie kodu, test z atrapą, aktywacja zasobu oraz faktyczny odbiór usługi są osobnymi etapami.
+
+## Publikacja i otwarte kierunki
+
+Obowiązuje DEV tutaj → GitHub/CI → PRE-PROD (`harborlight-dev`) → PROD (`harborlight-prod`). Istniejące nazwy workflow/artefaktów pozostają techniczne. Nowa wersja wymaga własnego CI, przebiegu PRE-PROD i identycznego pakietu/digestu do promocji. PROD `harborlight.pl` i DNS nie zostały jeszcze potwierdzone.
+
+Otwarte pozostają: rzeczywiste reklamy/płatności, konfiguracja OAuth, weryfikacja zewnętrznych publikacji/poleceń, autorytatywna gospodarka, ranking wielu graczy z serwerową agregacją i ex aequo, dalsze pomiary balansu, osobna modlitwa, błogosławieństwa za challenge/social, automatyzacja strony FB, planszówka/AR i dźwięk. Wysokości lojalności i podstawowe harmonogramy reklam są już ustalone.
+
+[Regulamin](TERMS-DRAFT.pl.md) jest szkicem; automatyczne zwroty po trzech miesiącach wycofano. Legalna gotowość płatnej sprzedaży nie wynika z GO ani ze szkicu dokumentu.
+
+Nie tworzymy fikcyjnych numerów GitHub ani nie zamykamy zgłoszeń na podstawie samego planu. Istniejące milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4).
+
+## Archiwum wcześniejszych wydań
+
+Poniższe wpisy opisują stan w swoim czasie. Starsze koszty, zapis lokalny, nieustalone kwoty lojalności i brak kont nie są bieżącymi regułami v18.
 
 ## Historia: wydanie v16 / Excel 10
 
@@ -126,7 +152,11 @@ Numer i URL GitHub są jednoznacznym identyfikatorem zadania. Kolejne iteracje z
 
 Odbiór grafiki nadal wymaga czytelnego ruchu wszystkich postaci, dymu unoszącego się z kominów i zanikającego, obracającego wiatraka, mew, chmur, wodospadów, wszystkich widocznych brzegów, zwierząt i pracującej budowy. Efekty mają zachować styl i nie zasłaniać interfejsu. Testy animacji sprawdzają przesunięcia aktorów i nazwane strefy brzegu, a nie samą zmianę dowolnego piksela. Rendering respektuje ograniczenie ruchu i widoczność karty; gospodarka działa offline niezależnie.
 
-## Backend
+
+## Archiwalny plan backendu sprzed v18
+
+Poniższe opisy zgłoszeń i dawnych zależności zachowano jako historię. Aktualny stan implementacji i aktywacji znajduje się w tabeli wyżej.
+
 
 ### BE-01 — Kontrakt API i model postępu — [#11](https://github.com/ksobczak321-oss/gra/issues/11)
 

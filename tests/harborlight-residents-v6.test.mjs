@@ -272,18 +272,18 @@ test('initial residents are not frozen, while demographic additions get a full t
   assert.equal(baby.unemployedSeconds, HOUR);
 });
 
-test('newborn zero overrides all bonuses, ignores house grants and keeps both need clocks frozen', () => {
+test('Lighthouse100 overrides newborn display while settling still ignores grants and freezes need clocks', () => {
   const s = fixture(); s.population++; synchronizeResidents(s); const baby = s.residents.at(-1);
   s.chapelRemaining = 200000; s.blessingRemaining = 200000;
   s.lighthouseVisitBonuses = [{ groupId: 99, amount: 10, remaining: 200000 }];
   beginLighthouseBonus(s, 200000);
   adjustResidentHappiness(s, 40, [baby.id]);
-  assert.equal(baby.happiness, 0); assert.equal(residentHappiness(s, baby), 0);
+  assert.equal(baby.happiness, 0); assert.equal(residentHappiness(s, baby), 100);
   assert.equal(s.residents[0].happiness, 0, 'individual grant must not affect other people');
   baby.hungerSeconds = 36000; baby.unemployedSeconds = 36000; s.resources.food = 0;
   advance(s, HOUR);
   assert.equal(baby.hungerSeconds, 0); assert.equal(baby.unemployedSeconds, 0);
-  assert.equal(baby.happiness, 0); assert.equal(residentHappiness(s, baby), 0);
+  assert.equal(baby.happiness, 0); assert.equal(residentHappiness(s, baby), 100);
 });
 
 test('an offline-length advance ends the newborn freeze exactly and never backcharges its first day', () => {

@@ -4,7 +4,7 @@ import {
   MATERIAL_IDS, PRODUCTION_RECIPES, normalizeLogisticsState, advanceLogistics,
   nextLogisticsEvent, logisticsAction, warehouseUsed, stockRoom, availableGoods,
   centralReserved, centralAvailable, reserveConstructionMaterials, promoteConstructionQueue,
-  receiveMaterials, updateStorageStatus, cancelConstruction, constructionScheduleEstimate,
+  receiveMaterials, bonusStock, ordinaryWarehouseUsed, consumeMaterial, updateStorageStatus, cancelConstruction, constructionScheduleEstimate,
   quoteInstantTransport, instantTransport, productionBlocked, haulCapacity, estimateMaterialsSeconds
 } from '../harborlight-v1-logistics.js';
 
@@ -82,22 +82,23 @@ test('earlier upgrades cannot be cancelled while later levels depend on them',()
   assert.equal(cancelConstruction(s,first.order).ok,true);
 });
 
-test('all overflow returns automatically without a carrier when central space becomes free',()=>{
+test('reward overflow is spendable immediately and never expires',()=>{
   const s=island();Object.assign(s.resources,{wood:1000,stone:1000,grain:1000,planks:950,food:50});
-  receiveMaterials(s,{wood:100});assert.equal(s.pendingDeliveries.wood,100);
-  s.resources.wood-=40;updateStorageStatus(s);
-  assert.equal(s.resources.wood,1000);assert.equal(s.pendingDeliveries.wood,60);assert.equal(s.buildings.warehouse.workers,0);
-  advanceLogistics(s,30*86400);assert.equal(s.pendingDeliveries.wood,60,'overflow never expires');
-  s.resources.wood-=60;updateStorageStatus(s);
-  assert.equal(s.resources.wood,1000);assert.equal(s.pendingDeliveries.wood,0);
+  receiveMaterials(s,{wood:100});assert.equal(s.resources.wood,1100);assert.equal(bonusStock(s,'wood'),100);
+  consumeMaterial(s,'wood',40);updateStorageStatus(s);
+  assert.equal(s.resources.wood,1060);assert.equal(bonusStock(s,'wood'),60);assert.equal(s.buildings.warehouse.workers,0);
+  advanceLogistics(s,30*86400);assert.equal(bonusStock(s,'wood'),60,'reward goods never expire');
+  consumeMaterial(s,'wood',60);updateStorageStatus(s);
+  assert.equal(s.resources.wood,1000);assert.equal(bonusStock(s,'wood'),0);
 });
 
-test('non-Food inventory cannot fill the central space reserved for emergency meals',()=>{
+test('bonus goods do not occupy the ordinary central space reserved for emergency meals',()=>{
   const s=island();Object.assign(s.resources,{wood:1000,stone:1000,grain:1000,planks:950,food:0});
   assert.equal(warehouseUsed(s),3950);assert.equal(stockRoom(s,'planks'),0);assert.equal(stockRoom(s,'food'),50);
-  receiveMaterials(s,{planks:50});assert.equal(s.pendingDeliveries.planks,50);assert.equal(s.resources.planks,950);
-  receiveMaterials(s,{food:50});assert.equal(s.resources.food,50);assert.equal(warehouseUsed(s),4000);
-  s.resources.food-=20;updateStorageStatus(s);assert.equal(s.pendingDeliveries.planks,50,'Food-reserved space cannot be filled with pending boards');
+  receiveMaterials(s,{planks:50});assert.equal(bonusStock(s,'planks'),50);assert.equal(s.resources.planks,1000);
+  receiveMaterials(s,{food:50});assert.equal(s.resources.food,50);assert.equal(warehouseUsed(s),4050);
+  assert.equal(ordinaryWarehouseUsed(s),3950);
+  consumeMaterial(s,'food',20);updateStorageStatus(s);assert.equal(bonusStock(s,'planks'),50);
 });
 
 test('actual construction T includes interruptions after the first pickup',()=>{
@@ -183,7 +184,7 @@ test('market physical arrivals keep distinct twenty-four-hour expiry clocks',()=
   advanceLogistics(s,300);assert.equal(s.market.stock.wood,0);
 });
 
-test('a purchased ship starts its whole-batch expiry on arrival even without port workers',()=>{
+test('a purchased ship expires unpicked cargo but protects cargo already being unloaded',()=>{
   const s=island();const trade=logisticsAction(s,{type:'trade',resource:'wood',direction:'buy',amount:200});
   assert.equal(trade.ok,true);advanceLogistics(s,300);
   const order=s.dock.orders[0];assert.equal(order.stage,'unloading');assert.equal(order.expiresRemaining,86400);
@@ -191,8 +192,9 @@ test('a purchased ship starts its whole-batch expiry on arrival even without por
   crew(s,'dock',1);advanceLogistics(s,1);
   assert.equal(order.remainingToUnload,0);assert.equal(order.expiredAmount,80);assert.equal(s.haulTrips.dock[0].amount,120);
   advanceLogistics(s,299);
-  assert.equal(s.dock.stock.wood,0,'unloading cannot renew an expired ship-arrival deadline');
-  assert.equal(order.expiredAmount,200);assert.equal(order.stage,'expired');
+  assert.equal(s.dock.stock.wood,120,'picked cargo remains protected through the second delivery leg');
+  assert.equal(s.dock.lots[0].protected,true);
+  assert.equal(order.expiredAmount,80);assert.equal(order.stage,'collecting');
 });
 
 test('final Harbor cargo picked up before expiry reaches central storage after the deadline',()=>{

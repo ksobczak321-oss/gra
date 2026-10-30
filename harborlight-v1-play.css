@@ -694,3 +694,38 @@ body.portrait-world .dock-tabs{display:none!important}
 .dev-cloud-alert{position:fixed;top:max(82px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));z-index:90;max-width:min(360px,calc(100vw - 24px));padding:11px 14px;border:1px solid #e1b872;border-radius:10px;background:#173747f5;color:#ffe2a0;font:600 12px/1.4 Inter,system-ui,sans-serif;text-align:left;box-shadow:0 4px 18px #001b3866;cursor:pointer}
 .dev-cloud-alert[hidden]{display:none}
 #island-dialog [data-cloud-save-status][data-status="conflict"],#island-dialog [data-cloud-save-status][data-status="offline"]{border-color:#e1b872;color:#ffe2a0}
+
+/* Approved v18 feedback, spendable reward inventory and guided real actions. */
+.topbar-happiness-effect{display:block;font-size:9px!important;line-height:1.2;color:#ffe4a2;max-width:145px;white-space:normal}
+.topbar-happiness-effect[hidden]{display:none}
+#island-dialog .warehouse-stock-row>span{min-width:0;overflow-wrap:anywhere;white-space:normal;text-align:right}
+.tutorial-action-target{outline:3px solid #ffe3a0!important;outline-offset:4px;box-shadow:0 0 0 6px #edbd5a40!important}
+.tutorial-action-pointer{position:fixed;z-index:200;width:220px;box-sizing:border-box;padding:7px 9px;border:1px solid #ffe3a0;border-radius:10px;background:#0c2a3df5;color:#ffe8af;font:700 12px/1.3 Inter,system-ui,sans-serif;text-align:center;pointer-events:none;box-shadow:0 5px 18px #0006}
+.simulation-label{padding:10px 12px;border:1px solid #e5b96b;border-radius:9px;background:#5d492d55;color:#ffe2a3!important;font-weight:800;letter-spacing:.02em}
+.paynow-payment-options,.transport-payment-options{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.paynow-payment-options>.action,.transport-payment-options>.action{flex:1 1 160px}
+.paynow-payment-link{border-color:#76c340!important;background:linear-gradient(120deg,#c7e9a3,#81b749)!important;color:#142e18!important;text-decoration:none;text-align:center}
+.paynow-logo{display:block;width:155px;max-width:70%;height:48px;object-fit:contain;margin:0 auto 12px}
+.promo-code-fields{display:flex;gap:9px;flex-wrap:wrap;align-items:end}
+.promo-code-fields label{flex:1 1 180px}
+.promo-code-fields input{box-sizing:border-box;width:100%;min-height:42px;padding:9px 11px;border:1px solid #688b9c;border-radius:9px;background:#0a283a;color:#f4dfb4;font:inherit;text-transform:uppercase}
+.world-event-row{padding:10px 0;border-bottom:1px solid #67849150}
+.world-event-row:last-child{border-bottom:0}
+.world-event-row.negative strong{color:#ffb7a5}
+.world-event-row.positive strong{color:#bfe6a0}
+@media(max-width:700px){.tutorial-action-pointer{width:190px;font-size:11px}.paynow-payment-options>.action,.transport-payment-options>.action{flex-basis:100%}}
+.initial-premium-bonus{position:fixed;left:18px;bottom:90px;z-index:45;max-width:calc(100vw - 36px);padding:11px 16px;border:1px solid #e8c681;border-radius:12px;background:#174359;color:#ffe2a3;font-weight:750;box-shadow:0 5px 20px #001b2a88}
+.initial-premium-bonus[hidden]{display:none}
+.promo-code-fields select{box-sizing:border-box;width:100%;min-height:42px;padding:9px 11px;border:1px solid #688b9c;border-radius:9px;background:#0a283a;color:#f4dfb4;font:inherit}
+#island-dialog[data-panel-kind="puzzle"] .minigame-side .minigame-stats .stat strong,
+#island-dialog[data-panel-kind="puzzle"] [data-minigame-pot]{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+#island-dialog .minigame-side>.minigame-ad-slot{display:flex;flex-direction:column;gap:6px;min-width:0}
+#island-dialog .minigame-side>.minigame-ad-slot .action{margin:0}
+@media(max-width:520px){
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .dialog-body .minigame-panel{grid-template-columns:repeat(3,minmax(0,1fr))}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .minigame-side>.minigame-ad-slot{display:contents}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .minigame-side>.minigame-ad-slot>[data-buy-extra-time]{grid-column:2;grid-row:4}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .minigame-side>.minigame-ad-slot>[data-minigame-ad]{grid-column:3;grid-row:4}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .minigame-side>[data-minigame-result-actions]{grid-column:1;grid-row:4;min-width:0}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .minigame-side :is([data-minigame-result-actions],.minigame-ad-slot) .action{min-height:40px;padding:5px 6px;font-size:10px;line-height:1.2;overflow-wrap:anywhere}
+}

@@ -1,4 +1,4 @@
-import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v17';
+import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v18';
 
 /** English is the source language. Polish strings are presentation only: saves,
  * identifiers, action payloads and user-entered values are never translated. */
@@ -1715,3 +1715,108 @@ priorityRule(/^(.+) per 10 trips · next allocation (\d+) \/ 10$/, (_, shares, p
 priorityRule(/^([\d,. ]+) extra entries are available for 24 hours\. Paid package (\d+) of 3\.$/, (_, entries, ordinal) => `Dodatkowe wejścia dostępne przez 24 godziny: ${entries}. Płatny pakiet ${ordinal} z 3.`);
 priorityRule(/^([\d,. ]+) residents will return in four hours\. The group cannot be withdrawn\.$/, (_, count) => `Zwiedzanie potrwa cztery godziny. Liczba uczestników: ${count}. Nie można odwołać tej grupy.`);
 priorityRule(/^([\d,. ]+) residents sent to the Lighthouse\. Their bonuses begin when they return in four hours\.$/, (_, count) => `Wysłano do latarni grupę ${count} osób. Premie zaczną działać po ich powrocie za cztery godziny.`);
+
+// Approved v18 rules and transaction feedback.
+registerTranslations({
+  "Construction shortened": "Skrócono budowę",
+  "Delete read notifications": "Usuń przeczytane wiadomości",
+  "Free daily use": "Darmowe użycie dzisiaj",
+  "Buy 30 seconds": "Kup 30 sekund",
+  "Watch an ad for extra time": "Obejrzyj reklamę za dodatkowy czas",
+  "Choose an activity": "Wybierz aktywność",
+  "Collect bonus without an ad": "Odbierz premię bez reklamy",
+  "Collect blessing without an ad": "Odbierz błogosławieństwo bez reklamy",
+  "Watch ad for a blessing": "Obejrzyj reklamę za błogosławieństwo",
+  "Paynow payment": "Płatność Paynow",
+  "Go to Paynow payment": "Przejdź do płatności Paynow",
+  "Confirm simulated payment": "Potwierdź płatność testową",
+  "Payment amount in PLN": "Kwota płatności w PLN",
+  "Promotional code": "Kod promocyjny",
+  "Code": "Kod",
+  "Redeem code": "Wykorzystaj kod",
+  "Standard game without ads": "Gra standardowa bez reklam",
+  "Claim daily reward": "Odbierz nagrodę dnia",
+  "Welcome bonus": "Bonus powitalny",
+  "Happiness cannot fall below 20%": "Szczęście nie spada poniżej 20%",
+  "Happiness set to 100% by Lighthouse protection": "Szczęście wymuszone na 100% przez ochronę Latarnianą",
+  "Happiness protected at 20% by Welcome bonus": "Powitalna ochrona szczęścia do minimum 20%",
+  "Island inactivity": "Nieaktywność na wyspie",
+  "Island economy": "Gospodarka wyspy",
+  "Island": "Wyspa",
+  "You choose and confirm the post yourself. The choice bonus does not verify Facebook publication.": "Samodzielnie wybierasz i zatwierdzasz publikację. Bonus za wybór udostępnienia nie potwierdza opublikowania posta na Facebooku.",
+  "A manual blessing grants +50 of every resource and +20 happiness for one hour. One free use renews at Warsaw midnight and does not accumulate. Paid and ad uses share a four-hour cooldown after the previous paid or ad effect ends.": "Ręczne błogosławieństwo daje po 50 każdego zasobu i +20 pp szczęścia na godzinę. Jedno darmowe użycie odnawia się o północy Warszawy, bez kumulowania. Płatne i reklamowe użycia mają wspólną blokadę czterech godzin od końca poprzedniego płatnego lub reklamowego efektu.",
+  "A level 1 Warehouse holds 4,000 ordinary units in total and up to 1,000 of each material. Capacity grows by 50% per level up to 40 million total and 10 million per material at level 24. Later Warehouse levels only add worker places. Spendable reward stock does not use ordinary capacity. Coins are kept separately.": "Magazyn 1 mieści 4000 zwykłych materiałów łącznie i do 1000 każdego rodzaju. Pojemność rośnie o 50% na poziom do 40 mln łącznie i 10 mln danego materiału na poziomie 24. Dalsze poziomy dodają tylko miejsca pracy. Wydawalny zapas z nagród nie zajmuje zwykłej pojemności. Monety są przechowywane osobno.",
+  "Each resident consumes 1 Food per real hour from central storage, including while offline. Eating adds 1 happiness point per hour. Without food, work efficiency immediately falls to 50%; after 12 accumulated hungry hours the resident also loses 5 points per hour. Feeding stops the penalty immediately; one full uninterrupted hour of feeding resets the hunger clock. Food reserved for meals cannot be spent twice.": "Każdy mieszkaniec zużywa 1 żywność na rzeczywistą godzinę z magazynu centralnego, również podczas nieobecności. Posiłki dają +1 pp szczęścia na godzinę. Brak jedzenia od razu obniża wydajność do 50%; po 12 zgromadzonych godzinach głodu działa też kara −5 pp/h. Karmienie od razu zatrzymuje karę, a pełna godzina nieprzerwanego karmienia zeruje licznik głodu. Żywności zarezerwowanej na posiłki nie można wydać drugi raz.",
+  "Eating adds +1 point per hour and actual work adds another +1. After twelve accumulated hungry hours, hunger costs −5 points/hour until feeding resumes; one full uninterrupted fed hour resets that clock. Assignment pauses the unemployment penalty during the walk; arrival resets its clock. Returning home counts as unemployment.": "Posiłki dają +1 pp na godzinę, a rzeczywista praca kolejne +1. Po dwunastu zgromadzonych godzinach głodu działa kara −5 pp/h do wznowienia karmienia; pełna godzina nieprzerwanego karmienia zeruje licznik. Przydzielenie do pracy wstrzymuje karę bezrobocia na czas dojścia, a dotarcie zeruje licznik. Powrót do domu jest czasem bezrobocia.",
+  "A manual blessing grants +50 of every resource and +20 happiness to everyone for one hour. One free use renews at Warsaw midnight without accumulating. Only one manual blessing can be active at a time.": "Ręczne błogosławieństwo daje po 50 każdego zasobu i +20 pp szczęścia na godzinę. Jedno darmowe użycie odnawia się o północy Warszawy, bez kumulowania. Jednocześnie może działać jedno ręczne błogosławieństwo.",
+  "A paid blessing costs 100 × Chapel level coins and has the same effect. Paid and ad uses share a 4-hour cooldown from the end of the previous paid or ad effect. A free daily use does not move that deadline. Active blessings cannot overlap.": "Płatne błogosławieństwo kosztuje 100 × poziom Kaplicy monet i daje ten sam efekt. Płatne i reklamowe użycia mają wspólną blokadę 4 godzin od końca poprzedniego takiego efektu. Darmowe użycie nie przesuwa tego terminu. Aktywne błogosławieństwa nie mogą się nakładać.",
+  "Choose which categories appear in the list and on the bell. The island keeps the latest 100 notifications. Only read notifications can be deleted manually.": "Wybierz kategorie widoczne na liście i w dzwoneczku. Wyspa zachowuje 100 najnowszych wiadomości. Ręcznie można usuwać tylko przeczytane.",
+  "Confirm your presence to continue. The round clock continues while this prompt is open. Extra seconds can be bought voluntarily before the deadline.": "Potwierdź obecność, aby kontynuować. Zegar rundy biegnie podczas tego okna. Dodatkowe sekundy można kupić dobrowolnie przed końcem czasu.",
+  "For the island’s first 72 hours every resident, including new arrivals, has at least 20% happiness. Forced 100% takes priority. Expiry removes the protection without subtracting twenty points or charging hidden losses.": "Przez pierwsze 72 godziny wyspy każdy mieszkaniec, także nowo przybyły, ma co najmniej 20% szczęścia. Wymuszone 100% ma pierwszeństwo. Koniec ochrony nie odejmuje dwudziestu punktów ani nie rozlicza ukrytych strat.",
+  "The upgrade gives both benefits for 24 hours × the achieved Lighthouse level. New arrivals also receive 100%, only until the shared effect ends. Lost residents and resources are not restored.": "Ulepszenie daje obie premie na 24 godziny × osiągnięty poziom Latarni. Nowi mieszkańcy również mają 100%, tylko do wspólnego końca efektu. Utraceni mieszkańcy i zasoby nie wracają.",
+  "The initial 24-hour settling period suspends hunger and unemployment counters. Forced 100% takes priority, followed by the Welcome bonus minimum; otherwise happiness stays at 0%.": "Pierwsze 24 godziny osiedlania wstrzymują liczniki głodu i bezrobocia. Pierwszeństwo ma wymuszone 100%, następnie powitalne minimum; poza tym szczęście pozostaje na 0%.",
+  "Meaningful activity in the focused visible game keeps this benefit active for five minutes. Food, population clocks and effect durations keep real time. The Lighthouse production bonus can combine with it.": "Rzeczywiste działanie w widocznej, aktywnej karcie odnawia tę premię na pięć minut. Jedzenie, przyrost populacji i efekty biegną w czasie rzeczywistym. Premia produkcji z Latarni może się z nią łączyć.",
+  "Only time after 48 hours without real play is slowed. Earlier offline hours retain their original multipliers; automatic session refresh does not count as play.": "Spowolnienie obejmuje tylko czas po 48 godzinach bez rzeczywistego grania. Wcześniejsze godziny zachowują właściwe mnożniki; automatyczne odnowienie sesji nie jest graniem.",
+  "Until the player performs a real game action": "Do rzeczywistego działania gracza",
+  "Receive 50–200 of each resource once per Warsaw day, including Coins. The stored draw does not change when you reload.": "Odbierz po 50–200 każdego zasobu, również monet, raz na dzień Warszawy. Zapisany wynik losowania nie zmienia się po odświeżeniu.",
+  "Daily loyalty reward received.": "Odebrano dzienną nagrodę lojalnościową.",
+  "Spend stored materials before opening or doubling another tutorial chest.": "Wykorzystaj zapas materiałów przed otwarciem lub podwojeniem następnej skrzyni samouczka.",
+  "Coin package quote.": "Wycena pakietu monet.",
+  "Choose an available coin package.": "Wybierz dostępny pakiet monet.",
+  "Upgrade the Town Hall before buying this building level.": "Ulepsz Ratusz przed zakupem tego poziomu budynku.",
+  "Wait for the blessing and its paid cooldown to end.": "Poczekaj na koniec błogosławieństwa i blokady płatnego użycia.",
+  "Blessing purchase quote.": "Wycena zakupu błogosławieństwa.",
+  "Choose a supported purchase.": "Wybierz dostępną usługę.",
+  "Real payments are not enabled. No money was charged.": "Prawdziwe płatności nie są włączone. Nie pobrano pieniędzy.",
+  "DEV payment simulation. No money will be charged.": "Symulacja płatności DEV. Nie pobierzemy pieniędzy.",
+  "This checkout is no longer pending.": "Ta płatność nie oczekuje już na potwierdzenie.",
+  "Checkout cancelled. No money was charged.": "Anulowano płatność. Nie pobrano pieniędzy.",
+  "A verified server payment is required. No purchase was granted.": "Wymagane jest potwierdzenie płatności przez serwer. Nie przyznano zakupu.",
+  "This checkout was already completed or cancelled.": "Ta płatność została już zakończona lub anulowana.",
+  "The purchase changed. Start a new checkout.": "Zakup uległ zmianie. Rozpocznij nową płatność.",
+  "The balance cannot hold this package.": "Saldo nie może przyjąć tego pakietu.",
+  "Coin package granted.": "Przyznano pakiet monet.",
+  "The purchase cannot be delivered.": "Nie można zrealizować zakupu.",
+  "DEV payment completed. No money was charged.": "Zakończono płatność testową DEV. Nie pobrano pieniędzy.",
+  "Choose a supported ad reward.": "Wybierz dostępną nagrodę reklamową.",
+  "Finish or cancel the current reward first.": "Najpierw zakończ lub anuluj bieżącą nagrodę.",
+  "A current reward invitation is required.": "Wymagane jest bieżące zaproszenie do nagrody.",
+  "The advertisement provider is not configured. No reward was granted.": "Dostawca reklam nie został skonfigurowany. Nie przyznano nagrody.",
+  "Your standard reward is available without an ad.": "Twoja standardowa nagroda jest dostępna bez reklamy.",
+  "Start the rewarded ad.": "Rozpocznij reklamę z nagrodą.",
+  "This ad is no longer active.": "Ta reklama nie jest już aktywna.",
+  "Ad skipped. No reward was granted.": "Pominięto reklamę. Nie przyznano nagrody.",
+  "The reward receipt was already used or is invalid.": "Potwierdzenie nagrody zostało już użyte lub jest nieprawidłowe.",
+  "The ad provider has not confirmed the reward.": "Dostawca reklamy nie potwierdził nagrody.",
+  "This reward invitation has already ended.": "To zaproszenie do nagrody już się zakończyło.",
+  "Material reward received.": "Odebrano nagrodę materiałową.",
+  "This reward cannot be delivered.": "Nie można przyznać tej nagrody.",
+  "Reward received.": "Odebrano nagrodę.",
+  "Enter a valid promotional code.": "Wpisz poprawny kod promocyjny.",
+  "This code was already redeemed by this account.": "To konto wykorzystało już ten kod.",
+  "Code redemption requires confirmation from the server.": "Wykorzystanie kodu wymaga potwierdzenia serwera.",
+  "The promotional reward is invalid.": "Nagroda z kodu jest nieprawidłowa.",
+  "Promotional code redeemed.": "Wykorzystano kod promocyjny.",
+  "Each farmer produces 20 grain per hour at level 1, 24 at level 2, and two more per level thereafter. Harvests wait locally for warehouse workers.": "Każdy najedzony pracownik produkuje zboże: 20 szt./h na poziomie 1, 24 na poziomie 2, dalej o 2 więcej na poziom. Gotowy produkt czeka na tragarzy.",
+  "Each worker produces 20 planks per hour at level 1, 24 at level 2, and two more per level thereafter. Each plank requires 2 wood from central storage.": "Każdy najedzony pracownik produkuje deski: 20 szt./h na poziomie 1, 24 na poziomie 2, dalej o 2 więcej na poziom. Gotowy produkt czeka na tragarzy. Jedna sztuka wymaga dwóch sztuk surowca z magazynu centralnego.",
+  "Each quarry worker produces 20 stone per hour at level 1, 24 at level 2, and two more per level thereafter. Stone waits locally for transport.": "Każdy najedzony pracownik produkuje kamień: 20 szt./h na poziomie 1, 24 na poziomie 2, dalej o 2 więcej na poziom. Gotowy produkt czeka na tragarzy.",
+  "At level 1 each carrier carries 120 items per base five-minute course; storage holds 1,000 per material and 4,000 total. Capacity grows by 50% up to 10 million per material and 40 million total. After level 24 only crew capacity grows; separate road upgrades still apply.": "Magazyn 1 mieści 1000 każdego materiału i 4000 łącznie; podstawowy kurs przenosi 120 sztuk w 5 minut. Pojemność rośnie o 50% do 10 mln każdego materiału i 40 mln łącznie. Po poziomie 24 rośnie tylko obsada. Drogi nadal niezależnie usprawniają transport.",
+  "Each lumberjack produces 20 wood per hour at level 1, 24 at level 2, and two more per level thereafter. Wood waits locally for transport.": "Każdy najedzony pracownik produkuje drewno: 20 szt./h na poziomie 1, 24 na poziomie 2, dalej o 2 więcej na poziom. Gotowy produkt czeka na tragarzy.",
+  "Each miller produces 20 food per hour at level 1, 24 at level 2, and two more per level thereafter. Each Food requires 2 grain from central storage.": "Każdy najedzony pracownik produkuje żywność: 20 szt./h na poziomie 1, 24 na poziomie 2, dalej o 2 więcej na poziom. Gotowy produkt czeka na tragarzy. Jedna sztuka wymaga dwóch sztuk surowca z magazynu centralnego.",
+  "Completing an upgrade grants +10 happiness × the new level for 10 hours. One free blessing renews at Warsaw midnight without accumulation. Every manual blessing gives +50 of every resource and +20 happiness for one hour. Paid and ad blessings share a four-hour wait after their effect ends.": "Ulepszenie daje +10 × nowy poziom pp szczęścia przez 10 godzin. Jedno darmowe błogosławieństwo odnawia się o północy Warszawy bez kumulowania. Ręczne użycie daje po 50 każdego zasobu i +20 pp na godzinę. Płatne i reklamowe użycia mają wspólną blokadę 4 godzin od końca efektu."
+});
+
+registerTranslations({
+  "Each eligible resident receives the temporary happiness bonus. During the initial settling period Lighthouse100% and the Welcome minimum take priority; otherwise happiness remains0%.": "Uprawnieni mieszkańcy otrzymują czasową premię szczęścia. Podczas początkowego osiedlania pierwszeństwo mają Latarniane 100% i powitalne minimum; poza tym szczęście pozostaje na 0%."
+});
+registerTranslations({
+  'Each eligible resident receives the temporary happiness bonus. During the initial settling period, Lighthouse 100% and the Welcome minimum take priority; otherwise happiness remains at 0%.': 'Uprawnieni mieszkańcy otrzymują czasową premię szczęścia. Podczas początkowego osiedlania pierwszeństwo mają Latarniane 100% i powitalne minimum; poza tym szczęście pozostaje na 0%.'
+});
+registerTranslations({
+  'Cloud confirmation is required before another action.': 'Przed kolejnym działaniem wymagane jest potwierdzenie zapisu przez chmurę.',
+  'Development preview runs in memory. Hosted accounts save exclusively in the cloud.': 'Podgląd deweloperski działa w pamięci. Konta środowiska chmurowego zapisują postęp wyłącznie w chmurze.',
+  'New residents cannot receive House happiness points during their first 24 hours.': 'Nowym mieszkańcom nie można przydzielać punktów szczęścia z Domu przez pierwsze 24 godziny.',
+  'Base production per worker is 20, 24, 26, 28… units per hour by the workplace’s own level, before temporary multipliers. Hunger halves production and transport immediately. Releasing a worker discards their unfinished unit.': 'Bazowa wydajność pracownika przed czasowymi mnożnikami wynosi 20, 24, 26, 28… sztuk na godzinę zależnie od poziomu miejsca pracy. Głód od razu zmniejsza produkcję i szybkość przewozu o połowę. Zwolnienie pracownika usuwa postęp jego niedokończonej sztuki.',
+  'A resident costs the full next Town Hall upgrade price in all six resources. An available House bed and Town Hall population place are required. New residents settle in for 24 hours: Lighthouse protection gives 100%, Welcome protection gives a minimum of 20%, otherwise happiness stays at 0%.': 'Mieszkaniec kosztuje tyle, co pełna kolejna rozbudowa Ratusza, we wszystkich sześciu zasobach. Wymaga wolnego łóżka w Domu i miejsca w limicie Ratusza. Przez pierwsze 24 godziny osiedlania ochrona Latarniana daje 100% szczęścia, powitalna co najmniej 20%, a poza nimi szczęście pozostaje na 0%.',
+  'Cloud sign-in is required.': 'Wymagane jest zalogowanie do chmury.'
+});

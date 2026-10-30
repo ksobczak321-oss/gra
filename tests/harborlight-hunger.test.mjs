@@ -18,6 +18,7 @@ const close = (actual, expected, tolerance = 1e-7) => {
 
 function island({ population = 12, happiness = 0, food = 100 } = {}) {
   const raw = createState(START);
+  raw.welcome = { startedAt: 0, until: 0 };
   raw.version = 6;
   delete raw.residents;
   raw.buildings.townhall.level = 4;
@@ -256,26 +257,24 @@ test('birth and departure events change meal demand at their exact time', () => 
   const growing = island({ happiness: 100 });
   growing.lighthouseRemaining = 3 * HOUR;
   tick(growing, 2 * HOUR);
-  assert.equal(growing.population, 13);
-  assert.equal(growing.resources.food, 100 - 12 - 13);
+  assert.equal(growing.population, 16);
+  assert.equal(growing.resources.food, 73); //12,13,14,15 residents over four half-hour intervals.
   close(growing.foodCredit, 0);
   const newborn = growing.residents.find(resident => resident.newbornRemaining > 0);
   assert.ok(newborn);
   assert.equal(newborn.happiness, 0);
-  close(newborn.newbornRemaining, 23 * HOUR);
+  close(newborn.newbornRemaining, 22.5 * HOUR);
   assert.equal(newborn.hungerSeconds, 0);
   assert.equal(newborn.unemployedSeconds, 0);
   assert.equal(newborn.fedRecoverySeconds, 0);
-  // The newborn's zero happiness lowers the Lighthouse-boosted mean to 1200/13.
-  // The next birth therefore takes another 9000/17 seconds after the two-hour mark.
-  close(growing.happiness, 1200 / 13);
-  close(growing.populationProgress, 34 / 39);
-  const untilSecondBirth = (1 - 34 / 39) * HOUR / (34 / 39);
-  tick(growing, untilSecondBirth - 1);
-  assert.equal(growing.population, 13);
+  // Forced100 also protects newcomers, so the next arrival remains exactly30minutes away.
+  close(growing.happiness, 100);
+  close(growing.populationProgress, 0);
+  tick(growing, HOUR / 2 - 1);
+  assert.equal(growing.population, 16);
   tick(growing, 1);
-  assert.equal(growing.population, 14);
-  close(growing.resources.food + growing.foodCredit, 100 - 25 - 13 * untilSecondBirth / HOUR);
+  assert.equal(growing.population, 17);
+  close(growing.resources.food + growing.foodCredit, 65);
   assert.ok(growing.residents.filter(resident => resident.newbornRemaining > 0).every(resident => resident.happiness === 0));
   const shrinking = island({ happiness: -100 });
   // Overcrowding offsets feeding recovery, keeping the loss rate at its clamp.
@@ -386,7 +385,7 @@ test('meal horizons fully expire temporary bonuses despite fractional event inte
   assert.equal(state.chapelRemaining, 0);
   assert.equal(state.blessingRemaining, 0);
   assert.equal(state.lighthouseRemaining, 0);
-  assert.equal(state.population, 13);
+  assert.equal(state.population, 14);
   // The Lighthouse now restores the saved pre-bonus happiness snapshot.
   close(state.happiness, 0);
   assert.ok(state.residents.every(resident => resident.happiness === 0));

@@ -80,7 +80,7 @@ def run():
         page.locator('[data-provider="Facebook"]').click()
         expect(page.locator('#account-status')).to_contain_text('Logowanie przez Facebook będzie dostępne wkrótce.')
         page.locator('#auth-language').select_option('en')
-        expect(page.locator('#account-status')).to_contain_text('Facebook sign-in is coming soon.')
+        expect(page.locator('#account-status')).to_contain_text('This provider requires configuration by the game owner.')
         page.locator('#tab-login').click()
         expect(page.locator('#auth-title')).to_have_text('Welcome back.')
         page.locator('#auth-language').select_option('pl')

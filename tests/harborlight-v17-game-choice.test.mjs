@@ -69,7 +69,7 @@ test('continuing without a new choice retains the chosen type and risked pot aft
   assert.equal(run.miniGame.cards.length, 30);
   assert.equal(run.roundLimit, 270);
   assert.equal(run.pot, 50);
-  assert.equal(expeditionRoundStatus(loaded, run).potentialPot, 100);
+  assert.equal(expeditionRoundStatus(loaded, run).potentialPot, 150);
   assert.equal(loaded.resources.coins, 100);
 });
 
@@ -83,7 +83,7 @@ test('an explicit next-round choice switches type without cashing out or changin
   assert.equal(run.selectedGameKind, 'tilt');
   assert.equal(run.miniGame.kind, 'tilt');
   assert.equal(run.roundLimit, 180 / 1.1);
-  assert.equal(expeditionRoundStatus(state, run).potentialPot, 100);
+  assert.equal(expeditionRoundStatus(state, run).potentialPot, 150);
   assert.equal(state.resources.coins, 100);
   assert.equal(normalizeState(snapshot(state), NOW).expeditionRuns[expedition].selectedGameKind, 'tilt');
 });

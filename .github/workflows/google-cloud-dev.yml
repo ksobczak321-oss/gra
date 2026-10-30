@@ -63,6 +63,7 @@ jobs:
       HARBORLIGHT_VERIFIED_SHA: ${{ needs.gate.outputs.source_sha }}
       HARBORLIGHT_CI_RUN_ID: ${{ needs.gate.outputs.ci_run_id }}
       HARBORLIGHT_CI_RUN_ATTEMPT: ${{ needs.gate.outputs.ci_run_attempt }}
+      HARBORLIGHT_ACCOUNT_API_ENABLED: ${{ vars.HARBORLIGHT_ACCOUNT_API_ENABLED || 'false' }}
       HARBORLIGHT_FRONTEND_URL: https://harborlight-dev.web.app
     steps:
       - name: Checkout exact source commit
@@ -208,6 +209,14 @@ jobs:
           image_prefix="${HARBORLIGHT_IMAGE_TAG%:*}"
           printf 'HARBORLIGHT_SOURCE_IMAGE=%s@%s\n' "$image_prefix" "$image_digest" >> "$GITHUB_ENV"
 
+      - name: Generate isolated runtime settings
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 infra/google-cloud/runtime-config.py --project "$GCP_PROJECT_ID" \
+            --release "$GITHUB_SHA" --account-api-enabled "$HARBORLIGHT_ACCOUNT_API_ENABLED" \
+            --output "$RUNNER_TEMP/harborlight-runtime.json"
+
       - name: Deploy development API
         id: deploy
         shell: bash
@@ -230,7 +239,7 @@ jobs:
             --timeout=30 \
             --ingress=all \
             --allow-unauthenticated \
-            --set-env-vars="HARBORLIGHT_ENV=development,HARBORLIGHT_RELEASE=$GITHUB_SHA" \
+            --env-vars-file="$RUNNER_TEMP/harborlight-runtime.json" \
             --quiet
           api_url="$(gcloud run services describe "$GCP_CLOUD_RUN_SERVICE" \
             --project="$GCP_PROJECT_ID" --region="$GCP_REGION" --format='value(status.url)')"
@@ -260,13 +269,21 @@ jobs:
             printf '%s: OK\n' "$endpoint"
           done
 
+      - name: Generate environment-specific Hosting routing
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 infra/google-cloud/hosting-config.py --project "$GCP_PROJECT_ID" \
+            --service "$GCP_CLOUD_RUN_SERVICE" --region "$GCP_REGION" \
+            --output "$RUNNER_TEMP/harborlight-hosting.json"
+
       - name: Deploy the frontend bundle to Firebase Hosting DEV
         id: hosting
         shell: bash
         run: |
           set -euo pipefail
-          firebase deploy --only hosting:game --project "$GCP_PROJECT_ID" \
-            --non-interactive --config firebase.json
+          firebase deploy --only hosting --project "$GCP_PROJECT_ID" \
+            --non-interactive --config "$RUNNER_TEMP/harborlight-hosting.json"
           printf 'url=%s\n' "$HARBORLIGHT_FRONTEND_URL" >> "$GITHUB_OUTPUT"
 
       - name: Verify the exact hosted frontend release
@@ -294,11 +311,12 @@ jobs:
         id: hosted_browser
         env:
           HARBORLIGHT_BASE_URL: https://harborlight-dev.web.app
+          HARBORLIGHT_HOSTED_EVIDENCE_PATH: ${{ runner.temp }}/harborlight-hosted-evidence.json
         shell: bash
         run: |
           set -uo pipefail
           set +e
-          python3 -u tests/harborlight-frontend-v17-smoke.py 2>&1 | tee "$RUNNER_TEMP/harborlight-hosted-browser.log"
+          python3 -u tests/harborlight-hosted-v18-smoke.py 2>&1 | tee "$RUNNER_TEMP/harborlight-hosted-browser.log"
           browser_status=${PIPESTATUS[0]}
           set -e
           if (( browser_status != 0 )); then
@@ -314,6 +332,18 @@ jobs:
           console.log(`::error title=Hosted browser acceptance failed::${escaped}`);
           JS
           fi
+          if (( browser_status == 0 )); then
+            node --input-type=module - "$RUNNER_TEMP/harborlight-hosted-evidence.json" <<'JS'
+          import { readFileSync, appendFileSync } from 'node:fs';
+          const evidence = JSON.parse(readFileSync(process.argv[2], 'utf8'));
+          const enabled = ['true', '1'].includes(process.env.HARBORLIGHT_ACCOUNT_API_ENABLED.toLowerCase());
+          if (evidence.project !== 'harborlight-dev' || evidence.commit !== process.env.GITHUB_SHA ||
+              evidence.authenticated_island_render !== true || evidence.account_api !== enabled) {
+            throw new Error('Hosted evidence did not confirm the configured PRE-PROD account API');
+          }
+          appendFileSync(process.env.GITHUB_ENV, `HARBORLIGHT_ACCOUNT_API_VERIFIED=${evidence.account_api ? 'true' : 'false'}\n`);
+          JS
+          fi
           exit "$browser_status"
 
       - name: Publish hosted browser failure diagnostics
@@ -323,7 +353,7 @@ jobs:
           name: hosted-browserfailure-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             ${{ runner.temp }}/harborlight-hosted-browser.log
-            /tmp/harborlight-v17-*.png
+            /tmp/harborlight-v18-*.png
           if-no-files-found: error
           retention-days: 7
 
@@ -340,7 +370,8 @@ jobs:
           retention-days: 90
 
       # The receipt is created only after the immutable API image and exact
-      # frontend bundle were deployed and the actual hosted game passed tests.
+      # frontend bundle were deployed, every hosted asset matched the package,
+      # and an existing authenticated island rendered with writes blocked.
       - name: Write successful DEV release receipt
         env:
           HARBORLIGHT_RECEIPT_PATH: ${{ runner.temp }}/harborlight-release/release.json
@@ -377,8 +408,8 @@ jobs:
               "$HARBORLIGHT_CI_RUN_ID" "$HARBORLIGHT_CI_RUN_ATTEMPT"
             printf 'Potwierdzenie DEV: `harborlight-dev-release-%s-%s`.\n\n' \
               "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT"
-            printf 'Sprawdzone: `/health`, `/ready`, manifest wydania i 5 grup testów gry z rzeczywistego hostingu DEV.\n\n'
+            printf 'Sprawdzone: `/health`, `/ready`, manifest wydania i sumy wszystkich plików hostingu, wejście anonimowe i odczytowe renderowanie istniejącej zalogowanej wyspy PRE-PROD; pełne scenariusze pakietu przeszły CI.\n\n'
             printf 'Konta DEV: trzy trwałe tożsamości oraz odczyt własnego zapisu i odmowa odczytu cudzych zapisów; kontrola nie nadpisuje wysp.\n\n'
             printf 'Cloud Run: min. 0, maks. 2 instancje na rewizję; nie jest to limit faktury.\n\n'
-            printf 'Gra jest udostępniona z Firebase Hosting; zapis pozostaje lokalny w przeglądarce. Konta, trwały zapis wysp i API gospodarki pozostają kolejnymi etapami.\n'
+            printf 'PRE-PROD zachowuje trzy istniejące konta i zapis Firestore. Test hostowanej wyspy blokuje zapisy; nie tworzy, nie resetuje ani nie zmienia postępu. API kont jest aktywowane wyłącznie osobną flagą po konfiguracji IAM. Gospodarka nadal jest obliczana przez klienta.\n'
           } >> "$GITHUB_STEP_SUMMARY"

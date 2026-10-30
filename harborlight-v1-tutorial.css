@@ -17,3 +17,4 @@
 .dialog-body>.tutorial-v16-guide{position:sticky;bottom:0;z-index:3;margin-top:14px}.tutorial-guide-floating{position:fixed;left:18px;bottom:210px;z-index:60;max-width:min(480px,calc(100vw - 36px))}.portrait-world .tutorial-guide-floating{top:130px;bottom:auto;left:12px;max-width:calc(100vw - 24px)}
 
 .dialog-body>.tutorial-v16-guide{top:0;bottom:auto;margin:0 0 14px}
+.tutorial-v18-storage-warning{padding:12px 14px;border:1px solid #e5b862;border-radius:12px;background:#57462555;color:#ffe3a1;line-height:1.45}
