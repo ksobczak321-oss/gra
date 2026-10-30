@@ -2,6 +2,8 @@
 
 Użytkownik ustalił trzy konta: **admin1, admin2, admin3**, logowanie nazwą i hasłem oraz postęp dostępny na różnych urządzeniach. Początkowe hasła mają odpowiadać nazwom kont. Dotyczy to wyłącznie projektu `harborlight-dev`.
 
+30 października 2026 właściciel potwierdził przygotowanie zasobów, a [wdrożenie DEV 41067599818](https://github.com/ksobczak321-oss/gra/actions/runs/41067599818) dla `f161e45` zakończyło się sukcesem. Gra działa pod adresem https://harborlight-dev.web.app.
+
 ## Przygotowanie przez właściciela
 
 Po przygotowaniu Firebase Hosting, w zalogowanym Cloud Shell:
@@ -36,6 +38,8 @@ Konfiguracja projektu jest pobierana w czasie działania z `/__/firebase/init.js
 Każdy użytkownik ma dokument `islands/{uid}` i osobny lokalny cache. Parametry `profile` i `slot` nie zmieniają tożsamości zalogowanego konta. Zapis gościa lub starej domeny nie jest automatycznie kopiowany do konta.
 
 Gra wczytuje zapis konta przed rozpoczęciem symulacji. Wysyłanie zmian jest ograniczone w czasie, a zapis zawiera numer rewizji i warunek zgodności wersji serwera. Konflikt dwóch urządzeń zatrzymuje automatyczne nadpisywanie i zachowuje lokalną kopię. Błąd sieci nie jest przedstawiany jako udany zapis w chmurze. Wylogowanie ani publikacja nowego pakietu nie usuwają wyspy.
+
+Nowa wyspa powstaje przy pierwszym wejściu do gry po zalogowaniu: ratusz poziomu 1, 12 mieszkańców, po 100 monet i każdego z pięciu materiałów oraz brak przydzielonych pracowników. Od tego momentu naliczana jest symulacja, również za późniejszą nieobecność. Samo utworzenie konta i testy logowania nie uruchamiają wyspy. Pakiet startowy nie jest odnawiany przy kolejnych logowaniach.
 
 Reguły pozwalają tylko trzem wskazanym UID odczytywać i zmieniać własny dokument. Nie pozwalają przeglądać wszystkich wysp, odczytywać cudzych zapisów ani usuwać dokumentów. Zapis jest ograniczony do 700 000 bajtów i wymaga kolejnej rewizji oraz czasu serwera.
 
