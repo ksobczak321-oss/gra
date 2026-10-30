@@ -159,6 +159,33 @@ class DevUsersTests(unittest.TestCase):
         self.lines = []
         return users.prepare(cloud=cloud, sleep=lambda _seconds: None, emit=self.lines.append, **kwargs)
 
+    def test_owner_api_requests_use_dev_quota_instead_of_cloud_sdk_consumer(self):
+        calls = []
+        def runner(*_args, **_kwargs):
+            return SimpleNamespace(returncode=0, stdout="private-owner-token", stderr="")
+        class Opener:
+            def open(self, request, timeout):
+                headers = dict((key.lower(), value) for key, value in request.header_items())
+                calls.append((request.get_method(), request.full_url, headers))
+                if headers.get("x-goog-user-project") != users.PROJECT:
+                    body = json.dumps({"error": {"status": "PERMISSION_DENIED", "details": [{
+                        "@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": "SERVICE_DISABLED",
+                        "metadata": {"service": "identitytoolkit.googleapis.com",
+                                     "consumer": "projects/618104708054"}}]}}).encode()
+                    raise urllib.error.HTTPError(request.full_url, 403, "forbidden", {}, io.BytesIO(body))
+                return io.BytesIO(b'{"quotaProjectConfirmed":true}')
+        cloud = users.Cloud(users.PROJECT, runner=runner, opener=Opener())
+        for method, url, body in [
+            ("GET", users.AUTH_CONFIG, None),
+            ("PATCH", users.AUTH_CONFIG + "?updateMask=signIn.email.enabled", {"signIn": {"email": {"enabled": True}}}),
+            ("POST", f"{users.IDENTITY}/v1/projects/{users.PROJECT}/accounts:lookup", {"localId": ["dev-admin1"]}),
+            ("GET", f"{users.FIRESTORE}/{users.DATABASE_NAME}", None),
+        ]:
+            self.assertTrue(cloud.request(method, url, body)["quotaProjectConfirmed"])
+        self.assertEqual(len(calls), 4)
+        self.assertTrue(all(headers["x-goog-user-project"] == "harborlight-dev" for _method, _url, headers in calls))
+        self.assertTrue(all(headers["authorization"] == "Bearer private-owner-token" for _method, _url, headers in calls))
+
     def test_default_check_never_prompts_enables_or_creates_resources(self):
         cloud = FakeCloud()
         def no_password(_login):

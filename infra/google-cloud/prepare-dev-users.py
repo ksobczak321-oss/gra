@@ -92,8 +92,12 @@ class Cloud(hosting.Cloud):
             require(bool(re.fullmatch(r"[A-Za-z0-9._~+/=-]+", self.token or "")),
                     "Nie uzyskano dostępu Google. Ponów logowanie Cloud Shell.")
         data = None if body is None else json.dumps(body).encode()
+        # A Cloud Shell OAuth token can otherwise select the Cloud SDK's
+        # consumer project, where these APIs are not enabled. Resource paths
+        # and the quota project must both point to this isolated DEV project.
         request = urllib.request.Request(url, data=data, method=method,
                                          headers={"Authorization": "Bearer " + self.token,
+                                                  "x-goog-user-project": PROJECT,
                                                   "Content-Type": "application/json", "Accept": "application/json"})
         try:
             with self.opener.open(request, timeout=30) as response:
