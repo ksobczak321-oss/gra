@@ -139,6 +139,19 @@ def first_five_actions(browser):
     # Management stays usable while chests are blocked. Extra real carriers
     # pick up the reserved materials and thereby free the physical storage.
     qa.close_panel(page)
+    # The floating guide must not catch island clicks merely because fonts or
+    # viewport geometry put its background over another building (CI Chromium
+    #151 exposed this at the happiness-action step). Its real buttons remain
+    # interactive. Reproduce the overlap deterministically before a real click.
+    guide = page.locator('[data-active-tutorial-guide].tutorial-guide-floating')
+    expect(guide).to_be_visible()
+    warehouse = page.locator('#hit-world-warehouse').bounding_box()
+    assert warehouse
+    guide.evaluate('''(node,point)=>{
+      Object.assign(node.style,{left:(point.x-4)+'px',top:(point.y-4)+'px',bottom:'auto'});
+    }''', {'x':warehouse['x']+warehouse['width']/2,'y':warehouse['y']+warehouse['height']/2})
+    assert guide.evaluate('(node)=>getComputedStyle(node).pointerEvents') == 'none'
+    assert guide.locator('button').first.evaluate('(node)=>getComputedStyle(node).pointerEvents') == 'auto'
     page.locator('#hit-world-warehouse').click()
     for _ in range(3):
         page.locator('[data-worker-building="warehouse"][data-worker-delta="1"]').click()

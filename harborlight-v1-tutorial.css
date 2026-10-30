@@ -18,3 +18,4 @@
 
 .dialog-body>.tutorial-v16-guide{top:0;bottom:auto;margin:0 0 14px}
 .tutorial-v18-storage-warning{padding:12px 14px;border:1px solid #e5b862;border-radius:12px;background:#57462555;color:#ffe3a1;line-height:1.45}
+.tutorial-guide-floating{pointer-events:none}.tutorial-guide-floating .tutorial-action{pointer-events:auto}
