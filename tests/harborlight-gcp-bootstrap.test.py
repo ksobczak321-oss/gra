@@ -173,6 +173,17 @@ class BootstrapSafetyTests(unittest.TestCase):
         project_update = next(command for command in commands
                               if "projects" in command and "update" in command)
         self.assertIn("--update-labels=harborlight_env=prod", project_update)
+        reader = [command for command in commands if "--role=roles/artifactregistry.reader" in command]
+        self.assertEqual(len(reader), 1)
+        self.assertIn("--project=harborlight-dev", reader[0])
+        self.assertIn("--member=serviceAccount:harborlight-deployer@test-project.iam.gserviceaccount.com", reader[0])
+        self.assertIn("repositories", reader[0])
+        self.assertNotIn("projects", reader[0])
+
+    def test_production_cannot_use_its_own_project_as_development(self):
+        result, commands = self.run_bootstrap("--apply", ENVIRONMENT="prod", DEV_PROJECT_ID="test-project")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(commands, [])
 
     def test_invalid_environment_rejected_before_gcloud(self):
         result, commands = self.run_bootstrap("--apply", ENVIRONMENT="staging")

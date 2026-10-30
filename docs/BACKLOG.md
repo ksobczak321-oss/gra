@@ -180,6 +180,8 @@ Status: zaplanowane, zgłoszenie uaktualnione; żadnej prawdziwej sprzedaży nie
 
 ## Dalsze zadania bez utworzonego zgłoszenia
 
+- Ustalono i zapisano [obowiązkową kolejność promocji](RELEASE-PROCESS.md): praca tutaj → GitHub/CI → GCP DEV → PROD. Przygotowane workflow blokują pominięcie CI/DEV i kopiują dokładnie obraz sprawdzony na DEV. Pierwsze rzeczywiste przebiegi i odbiór GCP wymagają podłączenia środowisk GitHub; serwer pozostaje początkową usługą sond. Frontend produkcyjny i migracje bazy mają dołączyć do tego samego łańcucha przed ich publikacją.
+
 - Google Cloud wybrane przez użytkownika z oddzielnymi projektami DEV i PROD. Przygotowano [pierwszy etap infrastruktury](GOOGLE-CLOUD.md): sondy HTTP, kontener Node.js, dwa ręczne workflow Cloud Run i bootstrap WIF/IAM. Konto rozliczeniowe jest aktywne według ekranu użytkownika; podłączenie projektów, rzeczywisty bootstrap i wdrożenie pozostają do wykonania po udostępnieniu dostępu. Cloud SQL, Firebase Auth i autorytatywna gospodarka pozostają odrębnymi etapami BE-01–04. Nie utworzono nowego zgłoszenia GitHub.
 
 - Ustalić i zintegrować nagrody lojalnościowe, weryfikację poleceń i udostępnień oraz zasady reklam. Przechowywać uzgodnione wartości przyszłych nagród. Oddzielny, zatwierdzony bonus prototypu 500 za Share po ukończeniu zadania działa raz za kliknięcie; pozostałe nagrody społecznościowe nadal wymagają zdefiniowanej weryfikacji.

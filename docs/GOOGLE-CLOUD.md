@@ -1,6 +1,6 @@
 # Google Cloud — DEV i PROD HARBORLIGHT krok po kroku
 
-Stan z 30 października 2026: użytkownik wybrał Google Cloud, pokazał aktywne konto rozliczeniowe HARBORLIGHT oraz utworzone projekty `harborlight-dev` i `harborlight-prod`. Uprawnienia wdrożeniowe i powiązanie projektów z rozliczeniami czekają na sprawdzenie w zalogowanym Cloud Shell. Pliki poniżej są przygotowaną konfiguracją, nie dowodem uruchomienia usług w chmurze.
+Stan z 30 października 2026: użytkownik wybrał Google Cloud, pokazał aktywne konto rozliczeniowe HARBORLIGHT oraz utworzone projekty `harborlight-dev` i `harborlight-prod`. Wykonał bootstrap, a odczytowa kontrola w jego zalogowanym Cloud Shell zakończyła się **PASS=22, FAIL=0**, co potwierdza przekazany screen. To dowód poprawnej konfiguracji początkowej; serwer, konta graczy i baza nie zostały jeszcze wdrożone.
 
 ## Oddzielenie środowisk
 
@@ -11,7 +11,7 @@ Stan z 30 października 2026: użytkownik wybrał Google Cloud, pokazał aktywne
 
 Oba projekty mogą korzystać z tego samego konta rozliczeniowego HARBORLIGHT. Mają osobne konta usługowe, zaufanie GitHub, obrazy i później oddzielne bazy oraz konfigurację Firebase. DEV nie otrzymuje dostępu do danych PROD. Utworzenie pustego projektu nie uruchamia serwerów ani baz. Na tym etapie również workflow PROD publikuje wyłącznie serwer sond, nie gotową usługę gry.
 
-Bootstrap oznacza projekt etykietą `harborlight_env=dev` lub `prod` i odmawia użycia projektu oznaczonego jako drugie środowisko. Workflow weryfikuje tę etykietę przed wysłaniem obrazu. Na produkcję trafia konkretny commit wybrany ręcznie; push zmian nie uruchamia żadnego z dwóch wdrożeń.
+Bootstrap oznacza projekt etykietą `harborlight_env=dev` lub `prod` i odmawia użycia projektu oznaczonego jako drugie środowisko. Workflow weryfikuje tę etykietę przed wysłaniem obrazu. Obowiązuje [kolejność promocji](RELEASE-PROCESS.md): praca tutaj → GitHub i udane CI → udane DEV → PROD. Push zmian nie uruchamia żadnego z dwóch wdrożeń GCP. PROD kopiuje ten sam obraz po digest, bez ponownej budowy.
 
 ## Docelowy układ
 
@@ -67,7 +67,7 @@ Dla PROD użyć `config.prod.example.env` i utworzyć lokalny `config.prod.local
 
 ## Połączenie z GitHub
 
-W repozytorium utworzyć środowiska GitHub Actions **google-cloud-dev** oraz **google-cloud-prod**. W każdym ustawić zwykłe zmienne wyświetlone przez bootstrap dla właściwego projektu:
+Workflow zawierają domyślne, publiczne identyfikatory potwierdzonych projektów oraz kont usługowych. Dzięki temu pierwsze wdrożenie nie wymaga kopiowania zmiennych ani kluczy do GitHuba. Środowiska GitHub Actions **google-cloud-dev** i **google-cloud-prod** powstaną przy pierwszym użyciu, jeśli jeszcze nie istnieją. Opcjonalne zmienne środowiska mogą nadpisać wartości domyślne:
 
 ```text
 GCP_PROJECT_ID
@@ -79,11 +79,11 @@ GCP_RUNTIME_SERVICE_ACCOUNT
 GCP_CLOUD_RUN_SERVICE
 ```
 
-Bootstrap wypisuje również gotowe komendy `gh variable set` do użycia w sesji z dostępem do właściwego repozytorium; sam ich nie wykonuje. Identyfikatory nie są sekretami. Nie tworzymy ani nie przechowujemy klucza JSON. WIF dopuszcza wyłącznie właściwe numeryczne ID repozytorium i właściciela, `main`, dokładny plik workflow oraz ręczne zdarzenie `workflow_dispatch`. IAM może potrzebować kilku minut na propagację.
+Bootstrap wypisuje również opcjonalne komendy `gh variable set` do użycia w sesji z dostępem do właściwego repozytorium; sam ich nie wykonuje i nie są potrzebne przy obecnych domyślnych identyfikatorach. Identyfikatory nie są sekretami. Nie tworzymy ani nie przechowujemy klucza JSON. WIF dopuszcza wyłącznie właściwe numeryczne ID repozytorium i właściciela, `main`, dokładny plik workflow oraz ręczne zdarzenie `workflow_dispatch`. IAM może potrzebować kilku minut na propagację.
 
-Każdy runtime ma własne konto usługowe bez nadawania ról projektowych. Deployer może zapisywać obrazy tylko w repozytorium `harborlight` swojego projektu i używać wyłącznie jego konta runtime. Otrzymuje Cloud Run Admin w wydzielonym projekcie danego środowiska, aby tworzyć usługę i ustawiać publiczny dostęp do sond. Nie nadajemy dostępu z deployera DEV do projektu PROD.
+Każdy runtime ma własne konto usługowe bez nadawania ról projektowych. Deployer może zapisywać obrazy tylko w repozytorium `harborlight` swojego projektu i używać wyłącznie jego konta runtime. Otrzymuje Cloud Run Admin w wydzielonym projekcie danego środowiska, aby tworzyć usługę i ustawiać publiczny dostęp do sond. Nie nadajemy dostępu z deployera DEV do projektu PROD. Deployer PROD otrzymuje tylko odczyt repozytorium obrazów DEV, aby kopiować sprawdzony pakiet; dodaje go ponowne uruchomienie aktualnego bootstrapu PROD.
 
-Po połączeniu uruchomić **Deploy HARBORLIGHT API to Google Cloud dev** w GitHub Actions, wybierając `main`. Analogiczny workflow **Google Cloud prod** działa wyłącznie na drugim projekcie. Workflow sprawdzi odpowiedzi HTTP, właściwe środowisko i SHA commitu oraz zapisze adres usługi w podsumowaniu. Dopiero zakończone wdrożenie i te odpowiedzi potwierdzają działający serwer. Publiczne sondy nie zastępują późniejszej weryfikacji tokenów Firebase dla kont i komend gry.
+Po udanym CI uruchomić **Deploy HARBORLIGHT API to Google Cloud dev** w GitHub Actions, wybierając `main`. DEV zapisuje potwierdzenie wydania dopiero po testach działającego serwera. Workflow **Promote verified HARBORLIGHT DEV release to PROD** wymaga identyfikatora tego udanego przebiegu DEV i promuje dokładnie jego obraz na drugi projekt. Oba sprawdzają odpowiedzi HTTP, właściwe środowisko i SHA commitu oraz zapisują adres usługi w podsumowaniu. Dopiero zakończone wdrożenie i te odpowiedzi potwierdzają działający serwer. Publiczne sondy nie zastępują późniejszej weryfikacji tokenów Firebase dla kont i komend gry.
 
 ## Koszty i następne etapy
 

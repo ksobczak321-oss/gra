@@ -1,0 +1,71 @@
+name: Validate HARBORLIGHT source
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: source-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact source commit
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Keep simulation, API and browser tests sequential: the offline simulation
+      # has a deliberate watchdog and must not compete with Chromium for CPU.
+      - name: Test game rules and release promotion gates
+        run: node --test --test-concurrency=1 --test-isolation=none tests/*.test.mjs
+
+      - name: Test API infrastructure endpoints
+        run: node --test backend/test/*.test.mjs
+
+      - name: Test cloud bootstrap safety
+        run: python3 tests/harborlight-gcp-bootstrap.test.py
+
+      - name: Test read-only cloud verification
+        run: python3 tests/harborlight-gcp-verify.test.py
+
+      - name: Install browser acceptance dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check playwright==1.62.0
+          python3 -m playwright install --with-deps chromium
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+
+          with sync_playwright() as playwright:
+              executable = Path(playwright.chromium.executable_path)
+              if not executable.is_file():
+                  raise RuntimeError('Installed Chromium executable was not found')
+              with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as output:
+                  output.write(f'HARBORLIGHT_CHROMIUM={executable}\n')
+          PY
+
+      - name: Test interface in Chromium
+        run: python3 tests/harborlight-frontend-v17-smoke.py

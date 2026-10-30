@@ -6,32 +6,68 @@ on:
 
 permissions:
   contents: read
-  id-token: write
 
 concurrency:
   group: google-cloud-dev
   cancel-in-progress: false
 
 jobs:
+  gate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      ci_run_id: ${{ steps.ci.outputs.ci_run_id }}
+      ci_run_attempt: ${{ steps.ci.outputs.ci_run_attempt }}
+      source_sha: ${{ steps.ci.outputs.source_sha }}
+    steps:
+      - name: Checkout exact source commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Require successful CI for this exact commit
+        id: ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node infra/google-cloud/promotion.mjs check-ci
+
   deploy:
+    needs: gate
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
     environment:
       name: google-cloud-dev
       url: ${{ steps.deploy.outputs.url }}
     env:
-      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID || 'harborlight-dev' }}
       GCP_REGION: ${{ vars.GCP_REGION || 'europe-central2' }}
-      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
-      GCP_DEPLOYER_SERVICE_ACCOUNT: ${{ vars.GCP_DEPLOYER_SERVICE_ACCOUNT }}
-      GCP_RUNTIME_SERVICE_ACCOUNT: ${{ vars.GCP_RUNTIME_SERVICE_ACCOUNT }}
+      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER || 'projects/28040211190/locations/global/workloadIdentityPools/harborlight-github/providers/github-main' }}
+      GCP_DEPLOYER_SERVICE_ACCOUNT: ${{ vars.GCP_DEPLOYER_SERVICE_ACCOUNT || 'harborlight-deployer@harborlight-dev.iam.gserviceaccount.com' }}
+      GCP_RUNTIME_SERVICE_ACCOUNT: ${{ vars.GCP_RUNTIME_SERVICE_ACCOUNT || 'harborlight-runtime@harborlight-dev.iam.gserviceaccount.com' }}
       GCP_ARTIFACT_REPOSITORY: ${{ vars.GCP_ARTIFACT_REPOSITORY || 'harborlight' }}
       GCP_CLOUD_RUN_SERVICE: ${{ vars.GCP_CLOUD_RUN_SERVICE || 'harborlight-api-dev' }}
+      HARBORLIGHT_VERIFIED_SHA: ${{ needs.gate.outputs.source_sha }}
+      HARBORLIGHT_CI_RUN_ID: ${{ needs.gate.outputs.ci_run_id }}
+      HARBORLIGHT_CI_RUN_ATTEMPT: ${{ needs.gate.outputs.ci_run_attempt }}
     steps:
-      - name: Checkout
+      - name: Checkout exact source commit
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.sha }}
           persist-credentials: false
 
       - name: Validate development configuration
@@ -56,7 +92,10 @@ jobs:
           done
           [[ "$GCP_DEPLOYER_SERVICE_ACCOUNT" != "$GCP_RUNTIME_SERVICE_ACCOUNT" ]]
           [[ "$GITHUB_SHA" =~ ^[a-f0-9]{40}$ ]]
-          printf 'HARBORLIGHT_IMAGE=%s-docker.pkg.dev/%s/%s/api:%s\n' \
+          [[ "$GITHUB_SHA" == "$HARBORLIGHT_VERIFIED_SHA" ]]
+          [[ "$HARBORLIGHT_CI_RUN_ID" =~ ^[1-9][0-9]*$ ]]
+          [[ "$HARBORLIGHT_CI_RUN_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
+          printf 'HARBORLIGHT_IMAGE_TAG=%s-docker.pkg.dev/%s/%s/api:%s\n' \
             "$GCP_REGION" "$GCP_PROJECT_ID" "$GCP_ARTIFACT_REPOSITORY" "$GITHUB_SHA" >> "$GITHUB_ENV"
 
       - name: Setup Node
@@ -70,11 +109,13 @@ jobs:
 
       # Build before requesting a short-lived Google identity. The Docker context
       # contains only backend/, never the repository's generated auth file.
-      - name: Build API image
+      - name: Build single-platform API image once
         shell: bash
         run: |
           set -euo pipefail
-          docker build --pull --tag "$HARBORLIGHT_IMAGE" backend/
+          docker buildx build --pull --platform=linux/amd64 \
+            --provenance=false --sbom=false --load \
+            --tag "$HARBORLIGHT_IMAGE_TAG" backend/
 
       - name: Authenticate with short-lived Google credentials
         uses: google-github-actions/auth@v3
@@ -103,7 +144,20 @@ jobs:
         run: |
           set -euo pipefail
           gcloud auth configure-docker "$GCP_REGION-docker.pkg.dev" --quiet
-          docker push "$HARBORLIGHT_IMAGE"
+          docker push "$HARBORLIGHT_IMAGE_TAG"
+
+      - name: Resolve immutable DEV image digest
+        shell: bash
+        run: |
+          set -euo pipefail
+          image_digest="$(gcloud artifacts docker images describe "$HARBORLIGHT_IMAGE_TAG" \
+            --project="$GCP_PROJECT_ID" --format='value(image_summary.digest)')"
+          if [[ ! "$image_digest" =~ ^sha256:[a-f0-9]{64}$ ]]; then
+            printf '::error::Artifact Registry did not return a valid SHA-256 image digest.\n'
+            exit 1
+          fi
+          image_prefix="${HARBORLIGHT_IMAGE_TAG%:*}"
+          printf 'HARBORLIGHT_SOURCE_IMAGE=%s@%s\n' "$image_prefix" "$image_digest" >> "$GITHUB_ENV"
 
       - name: Deploy development API
         id: deploy
@@ -113,7 +167,7 @@ jobs:
           gcloud run deploy "$GCP_CLOUD_RUN_SERVICE" \
             --project="$GCP_PROJECT_ID" \
             --region="$GCP_REGION" \
-            --image="$HARBORLIGHT_IMAGE" \
+            --image="$HARBORLIGHT_SOURCE_IMAGE" \
             --service-account="$GCP_RUNTIME_SERVICE_ACCOUNT" \
             --execution-environment=gen2 \
             --port=8080 \
@@ -156,10 +210,42 @@ jobs:
             '
             printf '%s: OK\n' "$endpoint"
           done
+
+      # The receipt is created only after the exact immutable image was deployed
+      # and its live HTTP probes confirmed this source commit on DEV.
+      - name: Write successful DEV release receipt
+        env:
+          HARBORLIGHT_RECEIPT_PATH: ${{ runner.temp }}/harborlight-release/release.json
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/harborlight-release"
+          node infra/google-cloud/promotion.mjs write-receipt
+
+      - name: Publish successful DEV release receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: harborlight-dev-release-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/harborlight-release/release.json
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Summarize validated DEV release
+        shell: bash
+        env:
+          HARBORLIGHT_API_URL: ${{ steps.deploy.outputs.url }}
+        run: |
+          set -euo pipefail
           {
             printf '### HARBORLIGHT — infrastruktura dev\n\n'
             printf 'Adres API: %s\n\n' "$HARBORLIGHT_API_URL"
-            printf 'Obraz: `%s`\n\n' "$HARBORLIGHT_IMAGE"
+            printf 'Commit: `%s`\n\n' "$GITHUB_SHA"
+            printf 'Obraz: `%s`\n\n' "$HARBORLIGHT_SOURCE_IMAGE"
+            printf 'CI: [%s](%s/%s/actions/runs/%s), próba %s.\n\n' \
+              "$HARBORLIGHT_CI_RUN_ID" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" \
+              "$HARBORLIGHT_CI_RUN_ID" "$HARBORLIGHT_CI_RUN_ATTEMPT"
+            printf 'Potwierdzenie DEV: `harborlight-dev-release-%s-%s`.\n\n' \
+              "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT"
             printf 'Sprawdzone: `/healthz`, `/readyz`.\n\n'
             printf 'Cloud Run: min. 0, maks. 2 instancje na rewizję; nie jest to limit faktury.\n\n'
             printf 'To serwer startowy infrastruktury. Konta, zapis wysp i API gry pozostają kolejnymi etapami.\n'

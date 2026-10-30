@@ -193,10 +193,22 @@ class Verifier:
 
         self.check(environment, "Cloud Run Admin deployera i minimalny runtime", project_iam)
 
+    def promotion(self):
+        def source_images():
+            data = gcloud_json("harborlight-dev", "artifacts", "repositories", "get-iam-policy", "harborlight",
+                               f"--location={REGION}")
+            member = "serviceAccount:harborlight-deployer@harborlight-prod.iam.gserviceaccount.com"
+            require(has_role(data, "roles/artifactregistry.reader", member),
+                    "brak odczytu obrazów DEV dla deployera PROD")
+
+        self.check("prod", "odczyt sprawdzonych obrazów DEV", source_images)
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--environment", choices=["dev", "prod", "both"], default="both")
+    parser.add_argument("--promotion", action="store_true",
+                        help="dodatkowo sprawdź odczyt obrazów DEV przez deployera PROD")
     args = parser.parse_args()
     if not shutil.which("gcloud"):
         print("FAIL — brak gcloud. Uruchom ten odczyt w zalogowanym Google Cloud Shell.")
@@ -205,6 +217,8 @@ def main():
     print("Kontrola tylko do odczytu — nie tworzy ani nie zmienia zasobów.")
     for environment in (["dev", "prod"] if args.environment == "both" else [args.environment]):
         verifier.project(environment)
+    if args.promotion:
+        verifier.promotion()
     print(f"WYNIK: PASS={verifier.passed}, FAIL={verifier.failed}")
     print("Zakres: konfiguracja bootstrapu. To nie potwierdza wdrożenia gry ani działania bazy.")
     return 1 if verifier.failed else 0

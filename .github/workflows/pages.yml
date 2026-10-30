@@ -1,4 +1,6 @@
-name: Deploy HARBORLIGHT to GitHub Pages
+name: Publish HARBORLIGHT development preview to GitHub Pages
+
+# Repository preview only. Production is promoted through GCP DEV and PROD.
 
 on:
   push:

@@ -19,6 +19,8 @@ Opcjonalne:
   ENVIRONMENT                  dev (domyślnie) albo prod; osobny projekt dla każdego
   REGION                       domyślnie europe-central2 (Warszawa)
   GITHUB_REPOSITORY             domyślnie ksobczak321-oss/gra
+  DEV_PROJECT_ID               dla PROD: projekt obrazów DEV, domyślnie harborlight-dev
+  DEV_REGION                   dla PROD: region obrazów DEV, domyślnie europe-central2
 
 Skrypt wymaga gcloud i aktywnego logowania, np. w Google Cloud Shell.
 Nie tworzy konta Google, projektu, konta rozliczeniowego, kluczy JSON ani bazy SQL.
@@ -47,6 +49,8 @@ REGION=${REGION:-europe-central2}
 GITHUB_REPOSITORY=${GITHUB_REPOSITORY:-ksobczak321-oss/gra}
 GITHUB_REPOSITORY_ID=${GITHUB_REPOSITORY_ID:-}
 GITHUB_REPOSITORY_OWNER_ID=${GITHUB_REPOSITORY_OWNER_ID:-}
+DEV_PROJECT_ID=${DEV_PROJECT_ID:-harborlight-dev}
+DEV_REGION=${DEV_REGION:-europe-central2}
 
 [[ "$PROJECT_ID" =~ ^[a-z][a-z0-9-]{4,28}[a-z0-9]$ ]] || die 'Ustaw poprawne PROJECT_ID istniejącego projektu (6–30 znaków).'
 [[ "$ENVIRONMENT" == dev || "$ENVIRONMENT" == prod ]] || die 'ENVIRONMENT musi mieć wartość dev albo prod.'
@@ -54,6 +58,10 @@ GITHUB_REPOSITORY_OWNER_ID=${GITHUB_REPOSITORY_OWNER_ID:-}
 [[ "$GITHUB_REPOSITORY" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]] || die 'Niepoprawne GITHUB_REPOSITORY (właściciel/repozytorium).'
 [[ "$GITHUB_REPOSITORY_ID" =~ ^[1-9][0-9]*$ ]] || die 'Ustaw numeryczne GITHUB_REPOSITORY_ID.'
 [[ "$GITHUB_REPOSITORY_OWNER_ID" =~ ^[1-9][0-9]*$ ]] || die 'Ustaw numeryczne GITHUB_REPOSITORY_OWNER_ID.'
+if [[ "$ENVIRONMENT" == prod ]]; then
+  [[ "$DEV_PROJECT_ID" =~ ^[a-z][a-z0-9-]{4,28}[a-z0-9]$ && "$DEV_PROJECT_ID" != "$PROJECT_ID" ]] || die 'PROD wymaga oddzielnego DEV_PROJECT_ID.'
+  [[ "$DEV_REGION" =~ ^[a-z]+-[a-z]+[0-9]+$ ]] || die 'Niepoprawny DEV_REGION.'
+fi
 command -v gcloud >/dev/null 2>&1 || die 'Brak gcloud. Uruchom skrypt w Google Cloud Shell lub zainstaluj Google Cloud CLI.'
 
 # Jawny projekt w każdej komendzie: nie zmieniamy globalnej konfiguracji gcloud.
@@ -182,6 +190,14 @@ fi
 # obrazów i konta runtime. Wymagamy oddzielnego projektu dla każdego środowiska.
 "${GCLOUD[@]}" projects add-iam-policy-binding "$PROJECT_ID" \
   --member="serviceAccount:$DEPLOYER_ACCOUNT" --role=roles/run.admin --condition=None --format=none
+
+# PROD promuje dokładnie obraz sprawdzony na DEV. Otrzymuje tylko odczyt
+# repozytorium obrazów DEV; nie dostaje dostępu do jego bazy ani projektu.
+if [[ "$ENVIRONMENT" == prod ]]; then
+  gcloud --quiet --project="$DEV_PROJECT_ID" artifacts repositories add-iam-policy-binding "$ARTIFACT_REPOSITORY" \
+    --location="$DEV_REGION" --member="serviceAccount:$DEPLOYER_ACCOUNT" \
+    --role=roles/artifactregistry.reader --condition=None --format=none
+fi
 
 note 'APPLY zakończone. Utworzono lub uzgodniono konfigurację; serwis Cloud Run nie został jeszcze wdrożony.'
 note 'Runtime nie otrzymał żadnej roli projektowej. Nie utworzono stałych kluczy ani bazy SQL.'

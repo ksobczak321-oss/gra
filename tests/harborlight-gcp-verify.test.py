@@ -52,6 +52,9 @@ elif a[:3] == ['iam','service-accounts','get-iam-policy']:
  data = policy('roles/iam.workloadIdentityUser','principalSet://iam.googleapis.com/'+pool+'/attribute.repository_id/1428128759') if a[3]==deployer else policy('roles/iam.serviceAccountUser',member)
 elif a[:3] == ['artifacts','repositories','get-iam-policy']:
  data = policy('roles/artifactregistry.writer',member)
+ if mode == 'promotion-reader' and env == 'dev':
+  data['bindings'].append({'role':'roles/artifactregistry.reader',
+   'members':['serviceAccount:harborlight-deployer@harborlight-prod.iam.gserviceaccount.com']})
  if mode == 'missing-role': data={}
 elif a[:2] == ['projects','get-iam-policy']:
  data = policy('roles/run.admin',member)
@@ -73,8 +76,8 @@ class ReadOnlyVerificationTests(unittest.TestCase):
         executable.chmod(0o755)
         self.environment = dict(os.environ, PATH=str(directory)+os.pathsep+os.environ['PATH'], VERIFY_LOG=str(self.log))
 
-    def run_verifier(self, mode="ok"):
-        result = subprocess.run([sys.executable, str(VERIFY)], env=dict(self.environment, VERIFY_MODE=mode),
+    def run_verifier(self, mode="ok", *arguments):
+        result = subprocess.run([sys.executable, str(VERIFY), *arguments], env=dict(self.environment, VERIFY_MODE=mode),
                                 capture_output=True, text=True, timeout=20)
         calls = [json.loads(line) for line in self.log.read_text().splitlines()]
         self.assertTrue(calls)
@@ -128,6 +131,18 @@ class ReadOnlyVerificationTests(unittest.TestCase):
         result = self.run_verifier("runtime-editor")
         self.assertEqual(result.returncode, 1)
         self.assertIn("runtime ma rolę projektową", result.stdout)
+
+    def test_promotion_checks_prod_reader_on_dev_repository(self):
+        result = self.run_verifier("promotion-reader", "--promotion")
+        self.assertEqual(result.returncode, 0, result.stdout+result.stderr)
+        self.assertIn("PASS PROD — odczyt sprawdzonych obrazów DEV", result.stdout)
+        self.assertIn("WYNIK: PASS=23, FAIL=0", result.stdout)
+
+    def test_promotion_fails_when_prod_cannot_read_dev_images(self):
+        result = self.run_verifier("ok", "--promotion")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("brak odczytu obrazów DEV dla deployera PROD", result.stdout)
+        self.assertIn("WYNIK: PASS=22, FAIL=1", result.stdout)
 
 
 if __name__ == "__main__":
