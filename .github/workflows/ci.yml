@@ -96,6 +96,7 @@ jobs:
         shell: bash
         run: |
           set -uo pipefail
+          set +e
           python3 -u - <<'PY' 2>&1 | tee "$RUNNER_TEMP/harborlight-browser.log"
           import subprocess
           import sys
