@@ -15,6 +15,8 @@ python3 infra/google-cloud/prepare-dev-users.py --apply --passwords-match-logins
 )
 ```
 
+Jeśli projekt nie ma jeszcze uruchomionego Authentication, otwórz [Authentication DEV](https://console.firebase.google.com/project/harborlight-dev/authentication) i wybierz **Get started / Rozpocznij**, a następnie ponów skrypt. Skrypt skonfiguruje metodę logowania hasłem.
+
 Skrypt sprawdza projekt, etykietę DEV i rozliczenia HARBORLIGHT. Żądania właściciela wskazują `harborlight-dev` zarówno w ścieżce zasobu, jak i w nagłówku projektu kwot `x-goog-user-project`; token Cloud Shell nie wybiera wtedy technicznego projektu OAuth jako konsumenta API. Skrypt przygotowuje logowanie e-mail/hasło w Firebase Authentication, aplikację Web i jej powiązanie z Hostingiem, bazę Firestore `(default)` w `europe-central2` oraz reguły prywatnych wysp. Nie publikuje plików gry. Nie tworzy serwera SQL, stałych kluczy ani użytkowników PROD.
 
 UID kont to `dev-admin1`, `dev-admin2`, `dev-admin3`. Alias w formularzu jest mapowany na odpowiedni techniczny adres `adminN@dev.harborlight.pl`; skrzynka pocztowa nie jest potrzebna do tego logowania. Są to tożsamości gry, bez ról administracyjnych Google Cloud.
@@ -22,6 +24,8 @@ UID kont to `dev-admin1`, `dev-admin2`, `dev-admin3`. Alias w formularzu jest ma
 Opcja `--passwords-match-logins` dotyczy tylko nowych kont. Ponowienie zachowuje istniejące tożsamości, hasła i dokumenty wysp; nie wykonuje resetów ani usuwania danych. Bez tej opcji nowe hasła są pobierane interaktywnie przez `getpass`. Hasła nie trafiają do plików, argumentów polecenia, logów ani frontendu. Rejestracja i usuwanie kont przez klienta są wyłączone.
 
 Domyślny `--check` odczytuje stan. Skrypt odmawia użycia innego projektu, zmiany typu/lokalizacji istniejącej bazy i zastąpienia nieznanej polityki Firestore. Kompiluje reguły przez oficjalne API Google przed ich publikacją. Konfiguracja i końcowy odczyt zasobów nie zastępują testu gry po wdrożeniu.
+
+Tworzenie aplikacji Web i bazy zwraca długotrwałe operacje Google. Ich identyfikatory są traktowane jako nieprzezroczyste: mogą zawierać hierarchię Firebase, dwukropki i padding `=`. Odczyt pozostaje na tej samej usłudze Google, a operacje Firestore dotyczą wyłącznie projektu DEV i bazy `(default)`. Ponowienie wyszukuje istniejącą aplikację i bazę zamiast je usuwać lub resetować.
 
 ## Logowanie i trwałość postępu
 

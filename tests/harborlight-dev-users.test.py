@@ -186,6 +186,68 @@ class DevUsersTests(unittest.TestCase):
         self.assertTrue(all(headers["x-goog-user-project"] == "harborlight-dev" for _method, _url, headers in calls))
         self.assertTrue(all(headers["authorization"] == "Bearer private-owner-token" for _method, _url, headers in calls))
 
+    def test_provider_operation_names_are_opaque_and_polled_on_original_service(self):
+        cases = [
+            (users.FIREBASE, "operations/cp.28040211190"),
+            (users.FIREBASE, "operations/projects/harborlight-dev/webApps/1:28040211190:web:abc/create=+"),
+            (users.FIREBASE, "operations/projects/28040211190/apps/1:28040211190:web:abc/opaque=="),
+            (users.FIREBASE, "operations/create:app=+token"),
+            (users.FIRESTORE, users.DATABASE_NAME + "/operations/Y3JlYXRlLWRhdGFiYXNl=="),
+            (users.FIRESTORE, "projects/28040211190/databases/(default)/operations/Y3JlYXRl=="),
+        ]
+        for origin, name in cases:
+            with self.subTest(name=name):
+                calls = []
+                def request(method, url):
+                    calls.append((method, url))
+                    self.assertTrue(users.allowed_url(url))
+                    return {"name": name, "done": True, "response": {"completed": True}}
+                cloud = SimpleNamespace(request=request)
+                result = users.wait_operation(cloud, {"name": name, "done": False}, origin,
+                                              sleep=lambda _seconds: None)
+                self.assertEqual(result, {"completed": True})
+                self.assertEqual(calls, [("GET", users.operation_url(name, origin))])
+
+    def test_operation_names_cannot_escape_namespace_project_or_original_origin(self):
+        invalid = [
+            (users.FIREBASE, "https://attacker.invalid/operations/id"),
+            (users.FIREBASE, "projects/harborlight-prod/webApps/other"),
+            (users.FIREBASE, "operations/projects/harborlight-prod/webApps/other"),
+            (users.FIREBASE, "operations/../projects/harborlight-prod"),
+            (users.FIREBASE, "operations/%2e%2e/other"),
+            (users.FIREBASE, "operations/%252e%252e/other"),
+            (users.FIREBASE, "operations/%2f%2fattacker.invalid"),
+            (users.FIREBASE, "operations/id?alt=media"),
+            (users.FIREBASE, "operations/id#fragment"),
+            (users.FIREBASE, "operations/id\\other"),
+            (users.FIREBASE, "operations/id\nother"),
+            (users.FIRESTORE, "projects/harborlight-prod/databases/(default)/operations/id"),
+            (users.FIRESTORE, "projects/992911312434/databases/(default)/operations/id"),
+            (users.FIRESTORE, "projects/harborlight-dev/databases/other/operations/id"),
+            (users.FIRESTORE, users.DATABASE_NAME + "/operations/id/other"),
+            ("https://attacker.invalid/v1", "operations/id"),
+        ]
+        cloud = SimpleNamespace(request=lambda *_args: self.fail("Rejected operation must not make requests"))
+        for origin, name in invalid:
+            with self.subTest(origin=origin, name=name), self.assertRaises(users.PreparationError):
+                users.wait_operation(cloud, {"name": name}, origin, sleep=lambda _seconds: None)
+        valid = users.operation_url("operations/create:app==", users.FIREBASE)
+        self.assertTrue(users.allowed_url(valid))
+        self.assertFalse(users.allowed_url(valid + "?project=harborlight-prod"))
+        self.assertFalse(users.allowed_url(valid + "#fragment"))
+
+    def test_completed_or_failed_operations_do_not_poll_and_pending_operation_times_out(self):
+        cloud = SimpleNamespace(request=lambda *_args: self.fail("Unexpected operation request"))
+        name = "operations/create:app=="
+        self.assertEqual(users.wait_operation(cloud, {"name": name, "done": True, "response": {"ok": True}},
+                                               users.FIREBASE), {"ok": True})
+        with self.assertRaisesRegex(users.PreparationError, "błędem Google"):
+            users.wait_operation(cloud, {"name": name, "error": {"code": 7}}, users.FIREBASE)
+        clock = iter([0, 181])
+        with self.assertRaisesRegex(users.PreparationError, "trwa dłużej"):
+            users.wait_operation(cloud, {"name": name}, users.FIREBASE,
+                                 sleep=lambda _seconds: None, monotonic=lambda: next(clock))
+
     def test_default_check_never_prompts_enables_or_creates_resources(self):
         cloud = FakeCloud()
         def no_password(_login):

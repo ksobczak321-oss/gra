@@ -28,6 +28,7 @@ ApiError = hosting.ApiError
 require = hosting.require
 
 PROJECT = "harborlight-dev"
+PROJECT_NUMBER = "28040211190"
 REGION = "europe-central2"
 APP_NAME = "HARBORLIGHT DEV"
 USERS = tuple({"login": f"admin{i}", "uid": f"dev-admin{i}",
@@ -68,15 +69,63 @@ def nested_body(settings):
     return result
 
 
+def operation_url(name, origin):
+    """Resolve a server-assigned operation name on its original API only.
+
+    Firebase documents operations/.* (including nested opaque names). Firestore
+    documents one opaque ID under this database. Neither promises an alnum ID.
+    """
+    require(isinstance(name, str) and 0 < len(name) <= 4096,
+            "Operacja Google nie ma poprawnej nazwy.")
+    if origin == FIREBASE:
+        prefix = "operations/"
+    elif origin == FIRESTORE:
+        prefixes = [f"projects/{project}/databases/(default)/operations/" for project in (PROJECT, PROJECT_NUMBER)]
+        prefix = next((value for value in prefixes if name.startswith(value)), prefixes[0])
+    else:
+        raise PreparationError("Odrzucono nieoczekiwaną usługę operacji Google.")
+    valid = name.startswith(prefix)
+    parts = name[len(prefix):].split("/") if valid else []
+    valid = valid and bool(parts) and (origin == FIREBASE or len(parts) == 1)
+    for part in parts:
+        decoded = urllib.parse.unquote(part)
+        if (not part or decoded in (".", "..") or
+                any(ord(char) <= 32 or ord(char) == 127 or char in "/\\?#%" for char in decoded)):
+            valid = False
+    # Structured Firebase operation names must not point at the other project.
+    for index, part in enumerate(parts[:-1]):
+        if part == "projects" and parts[index + 1] not in (PROJECT, PROJECT_NUMBER):
+            valid = False
+    if not valid:
+        safe_name = hosting.safe_provider_text(name, limit=320)
+        raise PreparationError(f"Nieobsługiwana nazwa operacji {urllib.parse.urlsplit(origin).netloc}: {safe_name!r}.")
+    return origin + "/" + urllib.parse.quote(name, safe="/():._~-=+")
+
+
 def allowed_url(url):
     parsed = urllib.parse.urlsplit(url)
     if parsed.scheme != "https" or parsed.fragment or parsed.username or parsed.password:
         return False
+    operation_origins = {
+        "firebase.googleapis.com": (FIREBASE, "/v1beta1/operations/"),
+        "firestore.googleapis.com": (FIRESTORE, f"/v1/{DATABASE_NAME}/operations/"),
+    }
+    operation = operation_origins.get(parsed.netloc)
+    if parsed.netloc == "firestore.googleapis.com" and parsed.path.startswith(
+            f"/v1/projects/{PROJECT_NUMBER}/databases/(default)/operations/"):
+        operation = (FIRESTORE, f"/v1/projects/{PROJECT_NUMBER}/databases/(default)/operations/")
+    if operation and parsed.path.startswith(operation[1]):
+        origin, _prefix = operation
+        name = urllib.parse.unquote(parsed.path[len(urllib.parse.urlsplit(origin).path) + 1:])
+        try:
+            return not parsed.query and operation_url(name, origin) == url
+        except PreparationError:
+            return False
     patterns = {
-        "firebase.googleapis.com": rf"/v1beta1/(?:projects/{PROJECT}(?:/webApps(?:/[^/]+(?:/config)?)?)?|operations/[A-Za-z0-9._~-]+)",
+        "firebase.googleapis.com": rf"/v1beta1/projects/{PROJECT}(?:/webApps(?:/[^/]+(?:/config)?)?)?",
         "firebasehosting.googleapis.com": rf"/v1beta1/projects/{PROJECT}/sites/{PROJECT}",
         "identitytoolkit.googleapis.com": rf"/(?:v2/projects/{PROJECT}/config|v1/projects/{PROJECT}/accounts(?::lookup)?)",
-        "firestore.googleapis.com": rf"/v1/projects/{PROJECT}/databases(?:/\(default\)(?:/operations/[A-Za-z0-9._~-]+)?)?",
+        "firestore.googleapis.com": rf"/v1/projects/{PROJECT}/databases(?:/\(default\))?",
         "firebaserules.googleapis.com": rf"/v1/projects/{PROJECT}(?::test|/rulesets(?:/[A-Za-z0-9._~-]+)?|/releases(?:/cloud\.firestore)?)",
     }
     pattern = patterns.get(parsed.netloc)
@@ -131,8 +180,7 @@ def optional(cloud, url):
 
 def wait_operation(cloud, operation, origin, sleep=time.sleep, monotonic=time.monotonic):
     name = operation.get("name", "")
-    url = f"{origin}/{name}"
-    require(allowed_url(url), "Operacja Google nie należy do obsługiwanego zasobu DEV.")
+    url = operation_url(name, origin)
     deadline = monotonic() + 180
     while True:
         require(not operation.get("error"), "Operacja konfiguracji zakończyła się błędem Google.")
@@ -334,6 +382,7 @@ def prepare(project=PROJECT, apply=False, passwords_match_logins=False, cloud=No
             cloud.request("PATCH", AUTH_CONFIG + "?" + urllib.parse.urlencode({"updateMask": ",".join(AUTH_SETTINGS)}),
                           nested_body(AUTH_SETTINGS))
         if app is None:
+            emit("APPLY DEV — tworzenie aplikacji Web Firebase")
             operation = cloud.request("POST", f"{FIREBASE}/projects/{PROJECT}/webApps", {"displayName": APP_NAME})
             app = wait_operation(cloud, operation, FIREBASE, sleep=sleep)
             require(app_id_ok(app.get("appId"), number), "Nowa aplikacja Web ma niezgodny projekt.")
@@ -342,6 +391,7 @@ def prepare(project=PROJECT, apply=False, passwords_match_logins=False, cloud=No
             hosting.validate_site(site, PROJECT, number)
             require(site.get("appId") == app["appId"], "Witryna nie potwierdziła aplikacji Web.")
         if database is None:
+            emit("APPLY DEV — tworzenie bazy Firestore w Warszawie")
             operation = cloud.request("POST", f"{FIRESTORE}/projects/{PROJECT}/databases?databaseId=(default)",
                                       {"locationId": REGION, "type": "FIRESTORE_NATIVE"})
             wait_operation(cloud, operation, FIRESTORE, sleep=sleep)
