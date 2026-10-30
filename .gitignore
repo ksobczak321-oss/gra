@@ -6,3 +6,6 @@ infra/google-cloud/config.*.local.env
 gha-creds-*.json
 application_default_credentials.json
 backend/node_modules/
+build/
+.firebase/
+firebase-debug*.log

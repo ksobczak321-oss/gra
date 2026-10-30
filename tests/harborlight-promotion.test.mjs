@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import {
-  validateCiRun, validateDevRun, validateReceiptArtifact, validateReceipt,
+  validateCiRun, validateDevRun, validateReceiptArtifact, validateFrontendArtifact, validateReceipt,
   createReceipt, createGitHubApi, checkCi, checkDev, verifyReceipt, main
 } from '../infra/google-cloud/promotion.mjs';
 
@@ -12,6 +12,8 @@ const repository = 'ksobczak321-oss/gra';
 const repositoryId = 1428128759;
 const sourceSha = 'a'.repeat(40);
 const digest = `sha256:${'b'.repeat(64)}`;
+const frontendArchiveSha256 = 'd'.repeat(64);
+const frontendManifestSha256 = 'e'.repeat(64);
 const prefix = 'europe-central2-docker.pkg.dev/harborlight-dev/harborlight/api';
 const expected = { repository, repositoryId, sourceSha, devRunId: 100, devRunAttempt: 2, devImagePrefix: prefix };
 const repo = { id: repositoryId, full_name: repository };
@@ -21,8 +23,9 @@ const run = overrides => ({
   ...overrides
 });
 const devRun = overrides => run({ id: 100, run_attempt: 2, path: '.github/workflows/google-cloud-dev.yml', event: 'workflow_dispatch', ...overrides });
-const receipt = () => createReceipt({ ...expected, sourceImage: `${prefix}@${digest}`, ciRunId: 90, ciRunAttempt: 1 });
+const receipt = () => createReceipt({ ...expected, sourceImage: `${prefix}@${digest}`, ciRunId: 90, ciRunAttempt: 1, frontendArchiveSha256, frontendManifestSha256 });
 const artifact = overrides => ({ id: 300, name: 'harborlight-dev-release-100-2', expired: false, ...overrides });
+const frontendArtifact = overrides => ({ id: 400, name: 'harborlight-dev-frontend-100-2', expired: false, ...overrides });
 
 test('CI permits only a successful push on main for the exact source and repository', () => {
   assert.deepEqual(validateCiRun(run(), expected), { sourceSha, runId: 90, runAttempt: 1 });
@@ -37,6 +40,7 @@ test('CI permits only a successful push on main for the exact source and reposit
 test('DEV authorization rejects wrong workflows and binds receipt name to the exact attempt', () => {
   const result = validateDevRun(devRun(), expected);
   assert.equal(result.artifactName, 'harborlight-dev-release-100-2');
+  assert.equal(result.frontendArtifactName, 'harborlight-dev-frontend-100-2');
   for (const change of [
     { path: '.github/workflows/google-cloud-prod.yml' }, { event: 'push' }, { head_branch: 'other' },
     { conclusion: 'cancelled' }, { status: 'queued' }, { head_sha: 'short' }
@@ -55,16 +59,23 @@ test('missing, stale-attempt, duplicate, expired and foreign artifacts fail clos
 
 test('receipt promotes the exact digest, source commit and successful CI/DEV identities', () => {
   assert.deepEqual(validateReceipt(receipt(), expected), {
-    sourceSha, sourceImage: `${prefix}@${digest}`, imageDigest: digest, ciRunId: 90, ciRunAttempt: 1
+    sourceSha, sourceImage: `${prefix}@${digest}`, imageDigest: digest, ciRunId: 90, ciRunAttempt: 1,
+    frontendArtifactName: 'harborlight-dev-frontend-100-2', frontendArchiveSha256, frontendManifestSha256
   });
   for (const mutate of [
-    value => { value.schema_version = 0; }, value => { value.repository_id = 1; },
+    value => { value.schema_version = 0; }, value => { value.schema_version = 1; }, value => { value.repository_id = 1; },
     value => { value.repository = 'attacker/gra'; }, value => { value.source_sha = 'c'.repeat(40); },
     value => { value.dev.run_id = 101; }, value => { value.dev.run_attempt = 1; },
     value => { value.image.uri = `${prefix}:latest`; },
     value => { value.image.uri = value.image.uri.replace('/harborlight-dev/', '/harborlight-prod/'); },
     value => { value.image.digest = `sha256:${'c'.repeat(64)}`; },
-    value => { value.checks.dev_smoke = false; }, value => { delete value.ci; }
+    value => { value.checks.dev_smoke = false; }, value => { value.checks.frontend_smoke = false; },
+    value => { delete value.ci; }, value => { delete value.frontend; },
+    value => { value.frontend.artifact_name = 'harborlight-dev-frontend-100-1'; },
+    value => { value.frontend.site = 'harborlight-prod'; },
+    value => { value.frontend.url = 'https://attacker.example'; },
+    value => { value.frontend.archive_sha256 = 'latest'; },
+    value => { value.frontend.manifest_sha256 = 'E'.repeat(64); }
   ]) {
     const altered = receipt();
     mutate(altered);
@@ -79,9 +90,33 @@ test('CI lookup ignores unrelated successes and rejects a list without a matchin
 });
 
 test('DEV check verifies artifact availability instead of trusting only a green workflow', async () => {
-  const api = { getRun: async () => devRun(), listArtifacts: async () => [artifact()] };
+  const api = { getRun: async () => devRun(), listArtifacts: async () => [artifact(), frontendArtifact()] };
   assert.equal((await checkDev(api, expected)).sourceSha, sourceSha);
   await assert.rejects(checkDev({ ...api, listArtifacts: async () => [] }, expected), /Exactly one receipt/);
+  await assert.rejects(checkDev({ ...api, listArtifacts: async () => [artifact()] }, expected), /Exactly one frontend bundle/);
+});
+
+test('frontend bundle evidence requires the matching DEV attempt and an available unique artifact', async () => {
+  const dev = validateDevRun(devRun(), expected);
+  assert.equal(validateFrontendArtifact([frontendArtifact()], dev).id, 400);
+  for (const artifacts of [
+    [], [frontendArtifact({ name: 'harborlight-dev-frontend-100-1' })],
+    [frontendArtifact(), frontendArtifact({ id: 401 })], [frontendArtifact({ expired: true })],
+    [frontendArtifact({ workflow_run: { id: 101, head_sha: sourceSha } })],
+    [frontendArtifact({ workflow_run: { id: 100, head_sha: 'c'.repeat(40) } })]
+  ]) {
+    assert.throws(() => validateFrontendArtifact(artifacts, dev));
+    await assert.rejects(checkDev({ getRun: async () => devRun(), listArtifacts: async () => [artifact(), ...artifacts] }, expected));
+  }
+});
+
+test('legacy API-only evidence cannot authorize a complete game promotion', async () => {
+  const legacy = receipt();
+  legacy.schema_version = 1;
+  delete legacy.frontend;
+  delete legacy.checks.frontend_smoke;
+  assert.throws(() => validateReceipt(legacy, expected), /current DEV release receipt/);
+  await assert.rejects(verifyReceipt({ getRun: async () => run() }, legacy, expected), /current DEV release receipt/);
 });
 
 test('production revalidates the receipt CI run and refuses rerun/failed/different-commit evidence', async () => {
@@ -141,13 +176,20 @@ test('CLI receipt creation and verification round trip uses the tested release S
     GITHUB_REPOSITORY: repository, GITHUB_REPOSITORY_ID: String(repositoryId), GITHUB_SHA: 'c'.repeat(40),
     HARBORLIGHT_SOURCE_SHA: sourceSha, HARBORLIGHT_SOURCE_IMAGE: `${prefix}@${digest}`,
     HARBORLIGHT_CI_RUN_ID: '90', HARBORLIGHT_CI_RUN_ATTEMPT: '1', GITHUB_RUN_ID: '100', GITHUB_RUN_ATTEMPT: '2',
+    HARBORLIGHT_FRONTEND_ARCHIVE_SHA256: frontendArchiveSha256, HARBORLIGHT_FRONTEND_MANIFEST_SHA256: frontendManifestSha256,
     HARBORLIGHT_DEV_RUN_ID: '100', HARBORLIGHT_DEV_RUN_ATTEMPT: '2', HARBORLIGHT_DEV_IMAGE_PREFIX: prefix,
     HARBORLIGHT_RECEIPT_PATH: receiptPath, GITHUB_OUTPUT: output, GITHUB_TOKEN: 'fake-token'
   };
   await main('write-receipt', env);
-  assert.equal(JSON.parse(await readFile(receiptPath, 'utf8')).source_sha, sourceSha);
+  const written = JSON.parse(await readFile(receiptPath, 'utf8'));
+  assert.equal(written.source_sha, sourceSha);
+  assert.equal(written.schema_version, 2);
+  assert.deepEqual(written.frontend, {
+    artifact_name: 'harborlight-dev-frontend-100-2', archive_sha256: frontendArchiveSha256,
+    manifest_sha256: frontendManifestSha256, site: 'harborlight-dev', url: 'https://harborlight-dev.web.app'
+  });
   await main('verify-receipt', env, async () => new Response(JSON.stringify(run()), { status: 200 }));
-  assert.equal(await readFile(output, 'utf8'), `source_sha=${sourceSha}\nsource_image=${prefix}@${digest}\nimage_digest=${digest}\nci_run_id=90\n`);
+  assert.equal(await readFile(output, 'utf8'), `source_sha=${sourceSha}\nsource_image=${prefix}@${digest}\nimage_digest=${digest}\nci_run_id=90\nfrontend_artifact_name=harborlight-dev-frontend-100-2\nfrontend_archive_sha256=${frontendArchiveSha256}\nfrontend_manifest_sha256=${frontendManifestSha256}\n`);
   await assert.rejects(main('write-receipt', env), /EEXIST/);
 });
 
@@ -179,8 +221,24 @@ test('CLI DEV gate selects an earlier tested release and its attempt-specific re
   const requests = [];
   await main('check-dev', env, async url => {
     requests.push(url.pathname);
-    return new Response(JSON.stringify(url.pathname.endsWith('/artifacts') ? { artifacts: [artifact()] } : devRun()), { status: 200 });
+    return new Response(JSON.stringify(url.pathname.endsWith('/artifacts') ? { artifacts: [artifact(), frontendArtifact()] } : devRun()), { status: 200 });
   });
   assert.equal(requests.length, 2);
-  assert.equal(await readFile(output, 'utf8'), `dev_run_id=100\ndev_run_attempt=2\nsource_sha=${sourceSha}\nartifact_name=harborlight-dev-release-100-2\n`);
+  assert.equal(await readFile(output, 'utf8'), `dev_run_id=100\ndev_run_attempt=2\nsource_sha=${sourceSha}\nartifact_name=harborlight-dev-release-100-2\nfrontend_artifact_name=harborlight-dev-frontend-100-2\n`);
+});
+
+test('CLI refuses creating receipt without both frontend content digests', async t => {
+  const directory = await mkdtemp(path.join(os.tmpdir(), 'harborlight-incomplete-frontend-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const receiptPath = path.join(directory, 'receipt.json');
+  const env = {
+    GITHUB_REPOSITORY: repository, GITHUB_REPOSITORY_ID: String(repositoryId), GITHUB_SHA: sourceSha,
+    HARBORLIGHT_SOURCE_IMAGE: `${prefix}@${digest}`, HARBORLIGHT_CI_RUN_ID: '90', HARBORLIGHT_CI_RUN_ATTEMPT: '1',
+    GITHUB_RUN_ID: '100', GITHUB_RUN_ATTEMPT: '2', HARBORLIGHT_RECEIPT_PATH: receiptPath
+  };
+  for (const hashes of [{}, { HARBORLIGHT_FRONTEND_ARCHIVE_SHA256: frontendArchiveSha256 },
+    { HARBORLIGHT_FRONTEND_MANIFEST_SHA256: frontendManifestSha256 }]) {
+    await assert.rejects(main('write-receipt', { ...env, ...hashes }), /SHA-256 frontend/);
+    await assert.rejects(readFile(receiptPath), /ENOENT/);
+  }
 });

@@ -1,107 +1,91 @@
-# Google Cloud — DEV i PROD HARBORLIGHT krok po kroku
+# Google Cloud — DEV, PROD i domena HARBORLIGHT
 
-Stan z 30 października 2026: użytkownik wybrał Google Cloud, pokazał aktywne konto rozliczeniowe HARBORLIGHT oraz utworzone projekty `harborlight-dev` i `harborlight-prod`. Wykonał bootstrap, a odczytowa kontrola w jego zalogowanym Cloud Shell zakończyła się **PASS=22, FAIL=0**, co potwierdza przekazany screen. To dowód poprawnej konfiguracji początkowej; serwer, konta graczy i baza nie zostały jeszcze wdrożone.
+## Potwierdzony stan
 
-## Oddzielenie środowisk
+30 października 2026 użytkownik pokazał aktywne konto rozliczeniowe HARBORLIGHT, projekty `harborlight-dev` i `harborlight-prod` oraz wynik kontroli z Cloud Shell: **PASS=22, FAIL=0**. Potwierdza to początkowy bootstrap, WIF i IAM. Nie potwierdza publikacji gry, działania kont graczy ani bazy.
 
-| Środowisko | Oddzielny projekt Google Cloud | Środowisko GitHub Actions | Przeznaczenie |
-| --- | --- | --- | --- |
-| DEV | `harborlight-dev` — ID potwierdzone screenem użytkownika | `google-cloud-dev` | Rozwój i testy |
-| PROD | `harborlight-prod` — ID potwierdzone screenem użytkownika | `google-cloud-prod` | Docelowa opublikowana gra |
+Użytkownik następnie zlecił wdrożenie gry na DEV oraz przypisanie zarejestrowanej w nazwa.pl domeny **harborlight.pl** do PROD. Przygotowano pakiet frontendu, konfigurację Firebase Hosting i pełny proces promocji. Dodanie Firebase do DEV zatrzymało się na **HTTP 403 przy `projects/harborlight-dev:addFirebase`**. Poprawiona diagnostyka pokazała `The caller does not have permission`, status `PERMISSION_DENIED`; nie wskazała konkretnej brakującej roli ani błędu warunków usługi. Pierwszą aktywację sprawdzamy z zalogowaną sesją właściciela w konsoli Firebase. Gra nie została jeszcze potwierdzona na GCP, a DNS domeny nie został zmieniony przez te skrypty.
 
-Oba projekty mogą korzystać z tego samego konta rozliczeniowego HARBORLIGHT. Mają osobne konta usługowe, zaufanie GitHub, obrazy i później oddzielne bazy oraz konfigurację Firebase. DEV nie otrzymuje dostępu do danych PROD. Utworzenie pustego projektu nie uruchamia serwerów ani baz. Na tym etapie również workflow PROD publikuje wyłącznie serwer sond, nie gotową usługę gry.
+Ostatni potwierdzony sukces zdalnego CI to [41034966129](https://github.com/ksobczak321-oss/gra/actions/runs/41034966129) dla `fddd564`. Bieżące zmiany pełnego wydania wymagają własnego CI i odbioru po publikacji.
 
-Bootstrap oznacza projekt etykietą `harborlight_env=dev` lub `prod` i odmawia użycia projektu oznaczonego jako drugie środowisko. Workflow weryfikuje tę etykietę przed wysłaniem obrazu. Obowiązuje [kolejność promocji](RELEASE-PROCESS.md): praca tutaj → GitHub i udane CI → udane DEV → PROD. Push zmian nie uruchamia żadnego z dwóch wdrożeń GCP. PROD kopiuje ten sam obraz po digest, bez ponownej budowy.
+## Adresy i usługi
 
-## Docelowy układ
-
-| Element | Usługa | Etap |
+| Element | DEV | PROD |
 | --- | --- | --- |
-| API i serwerowe reguły gry | Cloud Run, Node.js w kontenerze | Przygotowany serwer startowy i osobne workflow DEV/PROD |
-| Stan wysp, transakcje, kopie | Cloud SQL PostgreSQL | Kolejny etap po wycenie konkretnej instancji |
-| Konta web/Android/iPhone | Firebase Authentication | Kolejny etap; formularze gry pozostają lokalnym prototypem |
-| Strona i grafiki | Firebase Hosting/CDN | Po przygotowaniu przejścia ze starych lokalnych zapisów |
+| Projekt Google Cloud | `harborlight-dev` | `harborlight-prod` |
+| Środowisko GitHub Actions | `google-cloud-dev` | `google-cloud-prod` |
+| Hosting gry | planowany `https://harborlight-dev.web.app` | docelowo `https://harborlight.pl` |
+| Witryna Firebase Hosting | `harborlight-dev` | `harborlight-prod` |
+| Początkowy serwer HTTP | `harborlight-api-dev` | `harborlight-api-prod` |
 
-API i bazę planujemy w Warszawie, `europe-central2`. Region każdej późniejszej usługi dobieramy przy jej tworzeniu; sam projekt nie ma jednego regionu. Wspólne API i PostgreSQL pozwalają zwiększać zasoby bez planowanej zmiany platformy po przekroczeniu 100 graczy.
+Firebase Hosting udostępnia stronę, moduły gry i grafiki przez HTTPS/CDN. Cloud Run zawiera obecnie tylko sondy `/healthz` i `/readyz`; gospodarka i zapis nadal działają w przeglądarce. Cloud SQL PostgreSQL, Firebase Authentication i serwerowe komendy są kolejnymi etapami, a nie częścią publikacji statycznej gry.
 
-100 jednoczesnych graczy oznacza kolejny punkt pomiaru, a nie sztywny limit chmury. Cloud Run automatycznie dodaje instancje do ustawionego maksimum. Moc Cloud SQL i połączenia do bazy wymagają oddzielnego doboru; baza nie skaluje CPU automatycznie co 100 osób. Nie wdrażamy jeszcze autorytatywnej gospodarki, synchronizacji, płatności ani reklam.
+API i repozytoria obrazów są w Warszawie, `europe-central2`. Projekty współdzielą konto rozliczeniowe, ale mają osobne konta usługowe, WIF i zasoby. Późniejsze bazy oraz konta Firebase także mają być oddzielone. 100 jednoczesnych graczy to kolejny próg pomiaru wydajności, nie limit chmury. Cloud Run automatycznie dodaje instancje do ustawionego maksimum; moc przyszłej bazy wymaga osobnego doboru.
 
-## Pierwszy etap — co jest gotowe
+## Przygotowanie hostingu DEV
 
-- [`backend/server.mjs`](../backend/server.mjs): tylko publiczne sondy `/healthz` i `/readyz`, bez przyjmowania stanu gracza. Gotowość dotyczy infrastruktury HTTP; odpowiedź jawnie oznacza brak kont, zapisu i API gry.
-- [`backend/Dockerfile`](../backend/Dockerfile): Node.js 24, użytkownik bez uprawnień roota, brak instalowanych pakietów. Kontekst obrazu zawiera wyłącznie pliki serwera, bez dokumentacji i poświadczeń.
-- [`infra/google-cloud/bootstrap.sh`](../infra/google-cloud/bootstrap.sh): kontrola istniejącego projektu i rozliczeń, a następnie opcjonalna konfiguracja API, Artifact Registry, kont usługowych i Workload Identity Federation.
-- [Workflow DEV](../.github/workflows/google-cloud-dev.yml) i [workflow PROD](../.github/workflows/google-cloud-prod.yml): oddzielne ręczne wdrożenia z `main`, testy, budowa obrazu, krótkotrwałe uwierzytelnienie, publikacja i sprawdzenie obu sond. Sam push kodu nie uruchamia wdrożenia Google Cloud.
+Początkowy [bootstrap](../infra/google-cloud/bootstrap.sh) wymaga istniejącego projektu z rozliczeniami, sprawdza etykietę `harborlight_env`, konfiguruje Artifact Registry, konta usługowe i WIF. Domyślny `--check` tylko odczytuje stan, a `--apply` uzgadnia konfigurację. Ustawienie etykiety używa `gcloud alpha projects update`, ponieważ stabilny wariant odrzuca `--update-labels`.
 
-Początkowe usługi `harborlight-api-dev` i `harborlight-api-prod` używają Cloud Run gen2: 1 vCPU, 512 MiB, minimum 0 instancji, maksimum 2 instancje na rewizję, współbieżność 20 i limit żądania 30 sekund. Proces dostaje CPU podczas obsługi żądania. Nie ma cyklicznego procesu symulującego każdą wyspę w tle. To konfiguracja serwera startowego; wydajność pełnej gospodarki trzeba zmierzyć przed dopuszczeniem graczy.
-
-## Czynności wymagające konta właściciela
-
-1. W [konsoli Google Cloud](https://console.cloud.google.com/projectcreate) utworzyć dwa oddzielne projekty **harborlight-dev** i **harborlight-prod**, domyślnie bez organizacji. Powiązać je z aktywnym kontem rozliczeniowym HARBORLIGHT. Zapisać oba **ID projektów**, które różnią się od nazw i od identyfikatora konta rozliczeniowego.
-2. Ustawić w rozliczeniach budżety dla projektów i powiadomienia. Kwotę oraz walutę dobrać do konta i oczekiwanego kosztu testów. Alert budżetowy sam nie zatrzymuje wydatków.
-3. Jednorazowo uruchomić konfigurację z zalogowanego [Google Cloud Shell](https://shell.cloud.google.com/) albo ze środowiska z autoryzowanym `gcloud`. Nie przekazywać do repozytorium haseł, tokenów ani kluczy kont usługowych. To środowisko Codex nie ma obecnie działającego dostępu do konta Google użytkownika.
-
-Po ustaleniu ID projektów można przygotować dla właściciela komendy z konkretnymi identyfikatorami. Najpierw uruchamiamy DEV. Szablon poniżej opisuje proces; pustych wartości nie należy wykonywać:
+Po bootstrapie, w zalogowanym Cloud Shell właściciela, z katalogu repozytorium:
 
 ```sh
-git clone --depth 1 https://github.com/ksobczak321-oss/gra.git harborlight-infra
-cd harborlight-infra
-cp infra/google-cloud/config.example.env infra/google-cloud/config.dev.local.env
+git pull --ff-only
+python3 infra/google-cloud/prepare-hosting.py --project harborlight-dev --apply
 ```
 
-`PROJECT_ID=harborlight-dev` i `ENVIRONMENT=dev` są już wpisane. Publiczne numeryczne `GITHUB_REPOSITORY_ID` i `GITHUB_REPOSITORY_OWNER_ID` również są wpisane i zostały sprawdzone na stronie GitHub 30 października 2026. Przy zmianie repozytorium lub właściciela należy je zaktualizować; można je odczytać przez `gh api repos/ksobczak321-oss/gra --jq '{repository_id: .id, owner_id: .owner.id}'`. Plik lokalny jest ignorowany przez Git. Następnie:
+Skrypt włącza API Firebase/Hosting, nadaje deployerowi `roles/firebasehosting.admin`, dodaje Firebase do właściwego istniejącego projektu oraz tworzy lub sprawdza witrynę. Nie publikuje gry i nie tworzy bazy ani kluczy. Domyślny `--check` jest odczytowy. Przy błędzie pokazuje ograniczony komunikat i powód z oficjalnego API bez tokenów lub pełnego zrzutu odpowiedzi. Ewentualną akceptację warunków Firebase użytkownik wykonuje w konsoli Google, jeżeli rzeczywista odpowiedź tego wymaga.
+
+To środowisko Codex nie ma działającego `gcloud`, poświadczeń konta użytkownika ani tokenu GitHub CLI do uruchamiania Actions. Przygotowanie wymagające konta właściciela odbywa się w jego Cloud Shell. Publikację uruchamia uprawniona sesja GitHub, korzystając z WIF; nie przekazujemy haseł ani kluczy w czacie.
+
+## Pakiet i publikacja gry
+
+[`scripts/build_frontend.py`](../scripts/build_frontend.py) tworzy deterministyczny pakiet **34 publicznych plików**, około 10,4 MB przed kompresją. Jawna lista obejmuje aktywne HTML/CSS/JS i trzy grafiki, bez dokumentacji, starych gier, konfiguracji lokalnych czy poświadczeń. `release.json` wiąże pełne SHA commitu z hashami i rozmiarami plików. Archiwum i manifest mają własne SHA-256.
+
+Root `index.html` kieruje do gry, zachowuje query/hash i domyślnie wybiera nowego gracza. Pierwszy start ma poziom 1, 12 osób i po 100 każdego zasobu. Istniejące profile pozostają rozdzielone. Zapis `localStorage` jest zależny od domeny: nowy adres DEV nie przejmuje automatycznie wyspy z GitHub Pages. Konta, synchronizacja i import zapisu wymagają osobnej integracji.
+
+[`firebase.json`](../firebase.json) i [`.firebaserc`](../.firebaserc) jawnie mapują target **`hosting:game`** na odpowiednie witryny DEV/PROD. Nie polegają na automatycznym wyborze domyślnej witryny. HTML, JS, CSS i manifest wymagają ponownej walidacji cache; grafiki mogą być buforowane. Nie dodajemy przekierowania wszystkich brakujących ścieżek do HTML, które ukrywałoby brak modułu gry.
+
+Obowiązuje [proces promocji](RELEASE-PROCESS.md): **praca tutaj → GitHub/CI → DEV → PROD**. CI sprawdza grę z zbudowanego publicznego pakietu. DEV publikuje frontend na Firebase Hosting i obraz sond na Cloud Run, weryfikuje manifest po HTTPS oraz przeprowadza pełne pięć grup testów gry z rzeczywistego hostingu. Dopiero wtedy zapisuje archiwum frontendu i potwierdzenie wydania v2. Sam push nie publikuje usług GCP.
+
+PROD wymaga udanego przebiegu DEV i obu jego artefaktów. Kopiuje ten sam obraz backendu po digest i publikuje to samo zweryfikowane archiwum frontendu bez ponownej budowy. Starsze potwierdzenia obejmujące wyłącznie sondy backendu nie uprawniają do publikacji całej gry.
+
+## Domena harborlight.pl
+
+Po przygotowaniu witryny PROD właściciel uruchamia:
 
 ```sh
-set -a
-source infra/google-cloud/config.dev.local.env
-set +a
-bash infra/google-cloud/bootstrap.sh --check
-bash infra/google-cloud/bootstrap.sh --apply
+python3 infra/google-cloud/prepare-hosting.py --project harborlight-prod --apply
+python3 infra/google-cloud/prepare-domain.py --apply
 ```
 
-`--check` jest domyślny i niczego nie zmienia. `--apply` włącza usługi oraz konfiguruje zasoby i IAM. Oba tryby wymagają działającego `gcloud`, dostępu do aktywnego projektu i podpiętych rozliczeń. Skrypt nie tworzy projektu ani konta rozliczeniowego. Nie wdraża serwera i nie tworzy bazy SQL.
+Skrypt domeny tworzy wyłącznie powiązanie **harborlight.pl → harborlight-prod** i wypisuje rekordy `ADD`, `REMOVE` lub `NONE` otrzymane z Firebase. Nie publikuje gry, nie zmienia DNS w nazwa.pl i nie zgaduje adresów A, TXT ani rekordów certyfikatu. Zakres obejmuje domenę główną; `www` nie jest automatycznie dodawane ani przekierowywane.
 
-Ustawianie etykiety projektu korzysta z `gcloud alpha projects update`: stabilna ścieżka `gcloud projects update` nie obsługuje flagi `--update-labels`. Komponent `alpha` musi być dostępny w używanym Google Cloud CLI; Cloud Shell zwykle już go zawiera. Po pobraniu poprawki wystarczy `git pull --ff-only` w sklonowanym katalogu i ponowne uruchomienie konfiguracji obu środowisk.
+W panelu nazwa.pl trzeba wpisać dokładne wartości z odpowiedzi Firebase i zachować niezwiązane rekordy, w tym pocztę. Po propagacji sprawdzić:
 
-Dla PROD użyć `config.prod.example.env` i utworzyć lokalny `config.prod.local.env`; zawiera już **drugi** ID `harborlight-prod` z `ENVIRONMENT=prod`. Powtórzyć kontrolę i konfigurację po wczytaniu tego pliku; nie zmieniać oznaczenia projektu DEV na PROD.
-
-## Połączenie z GitHub
-
-Workflow zawierają domyślne, publiczne identyfikatory potwierdzonych projektów oraz kont usługowych. Dzięki temu pierwsze wdrożenie nie wymaga kopiowania zmiennych ani kluczy do GitHuba. Środowiska GitHub Actions **google-cloud-dev** i **google-cloud-prod** powstaną przy pierwszym użyciu, jeśli jeszcze nie istnieją. Opcjonalne zmienne środowiska mogą nadpisać wartości domyślne:
-
-```text
-GCP_PROJECT_ID
-GCP_REGION
-GCP_ARTIFACT_REPOSITORY
-GCP_WORKLOAD_IDENTITY_PROVIDER
-GCP_DEPLOYER_SERVICE_ACCOUNT
-GCP_RUNTIME_SERVICE_ACCOUNT
-GCP_CLOUD_RUN_SERVICE
+```sh
+python3 infra/google-cloud/prepare-domain.py --check
 ```
 
-Bootstrap wypisuje również opcjonalne komendy `gh variable set` do użycia w sesji z dostępem do właściwego repozytorium; sam ich nie wykonuje i nie są potrzebne przy obecnych domyślnych identyfikatorach. Identyfikatory nie są sekretami. Nie tworzymy ani nie przechowujemy klucza JSON. WIF dopuszcza wyłącznie właściwe numeryczne ID repozytorium i właściciela, `main`, dokładny plik workflow oraz ręczne zdarzenie `workflow_dispatch`. IAM może potrzebować kilku minut na propagację.
+`OCZEKUJE` oznacza, że powiązanie istnieje, ale DNS, własność lub certyfikat jeszcze nie są gotowe. Gotowość wymaga `HOST_ACTIVE`, `OWNERSHIP_ACTIVE` oraz `CERT_ACTIVE` lub `CERT_EXPIRING_SOON`. Odczytowe `--status-only` służy workflow i nie wymaga dostępu deployera do rozliczeń. Warunkiem ruchu PROD jest poprawna domena/HTTPS oraz przejście wcześniejszych etapów wydania; samo skonfigurowanie domeny nie promuje gry.
 
-Każdy runtime ma własne konto usługowe bez nadawania ról projektowych. Deployer może zapisywać obrazy tylko w repozytorium `harborlight` swojego projektu i używać wyłącznie jego konta runtime. Otrzymuje Cloud Run Admin w wydzielonym projekcie danego środowiska, aby tworzyć usługę i ustawiać publiczny dostęp do sond. Nie nadajemy dostępu z deployera DEV do projektu PROD. Deployer PROD otrzymuje tylko odczyt repozytorium obrazów DEV, aby kopiować sprawdzony pakiet; dodaje go ponowne uruchomienie aktualnego bootstrapu PROD.
+## Uprawnienia i koszty
 
-Po udanym CI uruchomić **Deploy HARBORLIGHT API to Google Cloud dev** w GitHub Actions, wybierając `main`. DEV zapisuje potwierdzenie wydania dopiero po testach działającego serwera. Workflow **Promote verified HARBORLIGHT DEV release to PROD** wymaga identyfikatora tego udanego przebiegu DEV i promuje dokładnie jego obraz na drugi projekt. Oba sprawdzają odpowiedzi HTTP, właściwe środowisko i SHA commitu oraz zapisują adres usługi w podsumowaniu. Dopiero zakończone wdrożenie i te odpowiedzi potwierdzają działający serwer. Publiczne sondy nie zastępują późniejszej weryfikacji tokenów Firebase dla kont i komend gry.
+WIF dopuszcza właściwe numeryczne ID repozytorium/właściciela, `main`, dokładny workflow i ręczne uruchomienie. Konta runtime nie otrzymują ról projektowych. Deployer ma uprawnienia Cloud Run i Hosting tylko w swoim projekcie. PROD dodatkowo potrzebuje `artifactregistry.reader` na repozytorium obrazów DEV, aby skopiować sprawdzony obraz — bez dostępu do danych lub bazy DEV.
 
-## Koszty i następne etapy
+Domyślne, publiczne identyfikatory projektów są zapisane w workflow, a zmienne środowisk GitHub mogą je opcjonalnie nadpisać. Nie tworzymy klucza JSON. [Kontrola podstawowa](../infra/google-cloud/verify.py) ma 22 punkty; `--promotion` dodaje 23. punkt odczytu obrazów DEV dla PROD. Potwierdzono dotąd wynik 22/22; wyniku 23. kontroli nie otrzymano.
 
-- Przy braku ruchu Cloud Run może zejść do zera instancji. Przechowywanie obrazów, logi, transfer i późniejsza baza mają osobne rozliczenia; samo minimum 0 nie oznacza zerowej faktury.
-- Maksimum 2 dotyczy rewizji. Podczas wymiany rewizji i w szczególnych warunkach liczba instancji może chwilowo być większa. To ograniczenie skalowania, a nie twardy limit kosztów.
-- Obrazy są oznaczane SHA commitu. W kolejnym kroku ustalamy retencję zachowującą obrazy do wycofania wdrożenia; pierwszy etap nie usuwa automatycznie starych obrazów.
-- Cloud SQL nalicza koszt także poza 2–3 godzinami testów. Przed jej uruchomieniem dobieramy i wyceniamy instancję, dysk, kopie i sposób dostępu. Aktualnych cen dostawcy nie potwierdzono: publiczne cenniki w tym środowisku zwracają HTTP 403. Nie traktować wcześniejszej wyceny Cloudflare/Supabase jako wyceny Google Cloud.
-- Dalej: trwała baza i sprawdzenie odtworzenia kopii, Firebase Auth, autorytatywne komendy z idempotencją, przeniesienie zapisu oraz testy 100/200/300 CCU. Skalowanie instancji API trzeba dopasować do limitu połączeń bazy.
-
-Przeglądarka zapisuje wyspę w `localStorage` zależnym od domeny. Przeniesienie strony z GitHub Pages na inną domenę nie przenosi tego zapisu automatycznie. Przygotowanie konta/importu poprzedzi zmianę hostingu; obecna gra i jej pliki pozostają w wydaniu frontend-v17.
+Początkowy Cloud Run: 1 vCPU, 512 MiB, min. 0, maks. 2 instancje na rewizję, współbieżność 20 i 30 s na żądanie. Brak ruchu może obniżyć liczbę instancji do zera, ale obrazy, transfer, logi i Hosting mają własne rozliczenia. Maksimum instancji i alerty budżetowe nie są twardym limitem faktury. Cloud SQL nalicza koszt także poza godzinami testów; przed jej uruchomieniem potrzebna jest wycena konkretnej konfiguracji. Aktualnych cenników nie potwierdzono z tego środowiska.
 
 ## Sprawdzenia lokalne
 
 ```sh
+node --test --test-concurrency=1 --test-isolation=none tests/*.test.mjs
 node --test backend/test/*.test.mjs
 python3 tests/harborlight-gcp-bootstrap.test.py
-bash -n infra/google-cloud/bootstrap.sh
-docker build --tag harborlight-api:infra-dev-check backend
+python3 tests/harborlight-gcp-verify.test.py
+python3 tests/harborlight-frontend-bundle.test.py
+python3 tests/harborlight-firebase-hosting.test.py
+python3 tests/harborlight-domain.test.py
 ```
 
-Testy sond obejmują rzeczywiste lokalne HTTP, HEAD/metody, brak dostępu do plików i gotowość przy zamykaniu. Testy bootstrapu używają wyłącznie atrapy `gcloud`: sprawdzają tryb odczytu, blokadę bez rozliczeń, walidację identyfikatorów, rozdział DEV/PROD, zakres IAM/WIF, ponowne uruchomienie i błędy dostępu. Nie sprawdzają prawdziwej konfiguracji Google Cloud.
+Testy konfiguracji używają atrap usług. Testy lokalnego pakietu nie są testami rzeczywistego Firebase Hosting ani dowodem zmiany DNS; wynik każdego z tych etapów zapisujemy osobno w dzienniku.

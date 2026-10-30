@@ -28,9 +28,9 @@ Publikację v17 potwierdza udany [workflow Pages 40975340456](https://github.com
 
 Zewnętrzne konta, synchronizacja web/Android/iPhone, płatności, reklamy i potwierdzanie publikacji/poleceń wymagają backendu. W tej iteracji są lokalne reguły i czyste punkty przyszłej integracji, bez deklarowania rzeczywistych połączeń.
 
-Wybraną platformą docelową jest **Google Cloud z oddzielnymi projektami DEV i PROD**. [Pierwszy etap infrastruktury](docs/GOOGLE-CLOUD.md) zawiera startowy serwer HTTP, kontener, konfigurację dostępu GitHub bez stałych kluczy i dwa ręczne workflow Cloud Run. Bootstrap obu projektów sprawdzono w Cloud Shell użytkownika: **22 kontrole PASS, 0 FAIL**. Serwer, konta graczy i baza czekają na rzeczywiste wdrożenie; sam wynik konfiguracji nie potwierdza uruchomienia gry w Google Cloud.
+Wybraną platformą jest **Google Cloud z oddzielnymi projektami DEV i PROD**. [Konfiguracja publikacji](docs/GOOGLE-CLOUD.md) obejmuje grę na Firebase Hosting/CDN oraz początkowy serwer sond Cloud Run. Bootstrap sprawdzono w Cloud Shell użytkownika: **22 kontrole PASS, 0 FAIL**. Pierwsze dodanie Firebase do DEV zatrzymało się na **HTTP 403**; gra nie ma jeszcze potwierdzonego wdrożenia GCP. Konta graczy i trwała baza pozostają kolejnym etapem.
 
-Obowiązuje [kolejność promocji](docs/RELEASE-PROCESS.md): **praca tutaj → GitHub i CI → GCP DEV → GCP PROD**. DEV wymaga udanego CI tego samego commitu. PROD wymaga udanego DEV i jego potwierdzenia, po czym kopiuje identyczny obraz po digest bez ponownej budowy. GitHub Pages pozostaje podglądem deweloperskim, a nie GCP PROD.
+Obowiązuje [kolejność promocji](docs/RELEASE-PROCESS.md): **praca tutaj → GitHub i CI → GCP DEV → GCP PROD**. DEV wymaga CI tego samego commitu i testów opublikowanej gry. PROD wymaga pełnego potwierdzenia v2 oraz obu artefaktów z DEV: publikuje identyczne archiwum frontendu i obraz backendu po digest, bez przebudowy. Planowany adres DEV to `https://harborlight-dev.web.app`; docelowa domena PROD **harborlight.pl** wymaga jeszcze powiązania i DNS w nazwa.pl. GitHub Pages pozostaje podglądem deweloperskim.
 
 ## Uruchomienie
 
@@ -48,6 +48,8 @@ python3 tests/harborlight-frontend-v17-smoke.py
 ```
 
 Odbiór lokalny v17: **486/486 testów modelu PASS**, bez błędów i pominięć. Nowy Chromium zaliczył pięć grup wymagań oraz dodatkową regresję historii wyjścia; siedem grup v16 również PASS, bez błędów JavaScript/HTTP. Sprawdzono natychmiastową geometrię 24/42/120 kart, zmianę rozmiaru, cztery rozdzielczości, oba języki i pełny powrót tragarza. Stan publikacji zawiera [dziennik](docs/IMPLEMENTATION-LOG.md); niezmieniony Excel 10 zachowuje historyczny odbiór v16.
+
+Przygotowanie pełnego wydania GCP rozszerza zestaw do **502 testów modelu i promocji**. Deterministyczny pakiet zawiera 34 publiczne pliki; pięć grup testów Chromium przeszło także po uruchomieniu gry bezpośrednio z tego pakietu. Są to wyniki lokalne, odrębne od testów prawdziwego hostingu i DNS.
 
 Zestawy przeglądarkowe wymagają Python Playwright i Chromium; ścieżkę można ustawić przez `HARBORLIGHT_CHROMIUM`. Dziennik rozdziela bieżący odbiór lokalny od wcześniejszych testów rzeczywistego adresu Pages. Workflow `.github/workflows/pages.yml` publikuje `main` bez kompilacji.
 

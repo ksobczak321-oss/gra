@@ -1,0 +1,31 @@
+{
+  "hosting": {
+    "target": "game",
+    "public": "build/frontend",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "cleanUrls": false,
+    "trailingSlash": false,
+    "headers": [
+      {
+        "source": "**",
+        "headers": [{"key": "X-Content-Type-Options", "value": "nosniff"}]
+      },
+      {
+        "source": "**/*.@(html|js|css|json)",
+        "headers": [{"key": "Cache-Control", "value": "public, max-age=0, must-revalidate"}]
+      },
+      {
+        "source": "/",
+        "headers": [{"key": "Cache-Control", "value": "public, max-age=0, must-revalidate"}]
+      },
+      {
+        "source": "/release.json",
+        "headers": [{"key": "Cache-Control", "value": "no-store"}]
+      },
+      {
+        "source": "/assets/**",
+        "headers": [{"key": "Cache-Control", "value": "public, max-age=86400"}]
+      }
+    ]
+  }
+}

@@ -48,6 +48,15 @@ jobs:
       - name: Test read-only cloud verification
         run: python3 tests/harborlight-gcp-verify.test.py
 
+      - name: Test deterministic frontend release bundle
+        run: python3 tests/harborlight-frontend-bundle.test.py
+
+      - name: Test Firebase Hosting preparation safety
+        run: python3 tests/harborlight-firebase-hosting.test.py
+
+      - name: Test production domain preparation safety
+        run: python3 tests/harborlight-domain.test.py
+
       - name: Install browser acceptance dependencies
         shell: bash
         run: |
@@ -67,13 +76,47 @@ jobs:
                   output.write(f'HARBORLIGHT_CHROMIUM={executable}\n')
           PY
 
-      - name: Test interface in Chromium
+      - name: Build the frontend release being validated
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/build_frontend.py --commit "$GITHUB_SHA" \
+            --output build/frontend --archive build/harborlight-frontend.tar.gz
+
+      - name: Test packaged game in Chromium
         id: browser
         shell: bash
         run: |
-          set -uo pipefail
+          set -euo pipefail
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory build/frontend \
+            > "$RUNNER_TEMP/harborlight-frontend-server.log" 2>&1 &
+          frontend_server_pid=$!
+          cleanup_frontend_server() {
+            kill "$frontend_server_pid" 2>/dev/null || true
+            wait "$frontend_server_pid" 2>/dev/null || true
+          }
+          trap cleanup_frontend_server EXIT
+          frontend_ready=false
+          for attempt in {1..40}; do
+            if ! kill -0 "$frontend_server_pid" 2>/dev/null; then
+              cat "$RUNNER_TEMP/harborlight-frontend-server.log"
+              printf '::error::Packaged frontend server exited before browser acceptance.\n'
+              exit 1
+            fi
+            if curl --fail --silent --output /dev/null --max-time 1 \
+              http://127.0.0.1:8765/release.json; then
+              frontend_ready=true
+              break
+            fi
+            sleep 0.25
+          done
+          if [[ "$frontend_ready" != true ]]; then
+            printf '::error::Packaged frontend server did not become ready.\n'
+            exit 1
+          fi
           set +e
-          python3 -u tests/harborlight-frontend-v17-smoke.py 2>&1 | tee "$RUNNER_TEMP/harborlight-browser.log"
+          HARBORLIGHT_BASE_URL=http://127.0.0.1:8765 \
+            python3 -u tests/harborlight-frontend-v17-smoke.py 2>&1 | tee "$RUNNER_TEMP/harborlight-browser.log"
           browser_status=${PIPESTATUS[0]}
           set -e
           if (( browser_status != 0 )); then
@@ -98,6 +141,7 @@ jobs:
           name: browserfailure-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             ${{ runner.temp }}/harborlight-browser.log
+            ${{ runner.temp }}/harborlight-frontend-server.log
             /tmp/harborlight-v17-*.png
           if-no-files-found: error
           retention-days: 7

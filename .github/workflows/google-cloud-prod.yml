@@ -29,6 +29,9 @@ jobs:
       image_digest: ${{ steps.receipt.outputs.image_digest }}
       ci_run_id: ${{ steps.receipt.outputs.ci_run_id }}
       dev_run_id: ${{ steps.dev.outputs.dev_run_id }}
+      frontend_artifact_name: ${{ steps.receipt.outputs.frontend_artifact_name }}
+      frontend_archive_sha256: ${{ steps.receipt.outputs.frontend_archive_sha256 }}
+      frontend_manifest_sha256: ${{ steps.receipt.outputs.frontend_manifest_sha256 }}
     steps:
       # Gate logic comes from current main, never from a user-selected release.
       - name: Checkout trusted promotion rules
@@ -71,13 +74,14 @@ jobs:
   deploy:
     needs: gate
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     permissions:
       contents: read
       id-token: write
+      actions: read
     environment:
       name: google-cloud-prod
-      url: ${{ steps.deploy.outputs.url }}
+      url: https://harborlight.pl
     env:
       GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID || 'harborlight-prod' }}
       GCP_REGION: ${{ vars.GCP_REGION || 'europe-central2' }}
@@ -90,6 +94,10 @@ jobs:
       HARBORLIGHT_SOURCE_IMAGE: ${{ needs.gate.outputs.source_image }}
       HARBORLIGHT_IMAGE_DIGEST: ${{ needs.gate.outputs.image_digest }}
       HARBORLIGHT_DEV_RUN_ID: ${{ needs.gate.outputs.dev_run_id }}
+      HARBORLIGHT_FRONTEND_ARTIFACT_NAME: ${{ needs.gate.outputs.frontend_artifact_name }}
+      HARBORLIGHT_FRONTEND_ARCHIVE_SHA256: ${{ needs.gate.outputs.frontend_archive_sha256 }}
+      HARBORLIGHT_FRONTEND_MANIFEST_SHA256: ${{ needs.gate.outputs.frontend_manifest_sha256 }}
+      HARBORLIGHT_FRONTEND_URL: https://harborlight.pl
     steps:
       - name: Checkout trusted deployment configuration
         uses: actions/checkout@v4
@@ -108,7 +116,7 @@ jobs:
           done
           [[ "$GITHUB_REF" == 'refs/heads/main' ]]
           [[ "$GCP_PROJECT_ID" =~ ^[a-z][a-z0-9-]{4,28}[a-z0-9]$ ]]
-          [[ "$GCP_PROJECT_ID" != harborlight-dev ]]
+          [[ "$GCP_PROJECT_ID" == harborlight-prod ]]
           [[ "$GCP_REGION" =~ ^[a-z]+-[a-z]+[0-9]+$ ]]
           [[ "$GCP_ARTIFACT_REPOSITORY" =~ ^[a-z][a-z0-9_-]{0,62}$ ]]
           [[ "$GCP_CLOUD_RUN_SERVICE" =~ ^[a-z]([a-z0-9-]{0,47}[a-z0-9])?$ ]]
@@ -121,6 +129,9 @@ jobs:
           [[ "$HARBORLIGHT_SOURCE_SHA" =~ ^[a-f0-9]{40}$ ]]
           [[ "$HARBORLIGHT_IMAGE_DIGEST" =~ ^sha256:[a-f0-9]{64}$ ]]
           [[ "$HARBORLIGHT_SOURCE_IMAGE" == "europe-central2-docker.pkg.dev/harborlight-dev/harborlight/api@$HARBORLIGHT_IMAGE_DIGEST" ]]
+          [[ "$HARBORLIGHT_FRONTEND_ARCHIVE_SHA256" =~ ^[a-f0-9]{64}$ ]]
+          [[ "$HARBORLIGHT_FRONTEND_MANIFEST_SHA256" =~ ^[a-f0-9]{64}$ ]]
+          [[ "$HARBORLIGHT_FRONTEND_ARTIFACT_NAME" =~ ^harborlight-dev-frontend-[1-9][0-9]*-[1-9][0-9]*$ ]]
           printf 'HARBORLIGHT_IMAGE_TAG=%s-docker.pkg.dev/%s/%s/api:%s\n' \
             "$GCP_REGION" "$GCP_PROJECT_ID" "$GCP_ARTIFACT_REPOSITORY" "$HARBORLIGHT_SOURCE_SHA" >> "$GITHUB_ENV"
           printf 'HARBORLIGHT_IMAGE=%s-docker.pkg.dev/%s/%s/api@%s\n' \
@@ -130,6 +141,60 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '24'
+
+      - name: Download the frontend archive tested on DEV
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ needs.gate.outputs.dev_run_id }}
+          name: ${{ needs.gate.outputs.frontend_artifact_name }}
+          path: ${{ runner.temp }}/harborlight-dev-frontend
+
+      - name: Verify and extract the exact tested frontend archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/build_frontend.py \
+            --verify-archive "$RUNNER_TEMP/harborlight-dev-frontend/harborlight-frontend.tar.gz" \
+            --commit "$HARBORLIGHT_SOURCE_SHA" \
+            --expected-sha256 "$HARBORLIGHT_FRONTEND_ARCHIVE_SHA256" \
+            --extract-to build/frontend > "$RUNNER_TEMP/harborlight-frontend-verified.json"
+          node --input-type=module - "$RUNNER_TEMP/harborlight-frontend-verified.json" <<'JS'
+          import { readFileSync } from 'node:fs';
+          const metadata = JSON.parse(readFileSync(process.argv[2], 'utf8'));
+          if (metadata.commit !== process.env.HARBORLIGHT_SOURCE_SHA ||
+              metadata.archive_sha256 !== process.env.HARBORLIGHT_FRONTEND_ARCHIVE_SHA256 ||
+              metadata.manifest_sha256 !== process.env.HARBORLIGHT_FRONTEND_MANIFEST_SHA256) {
+            throw new Error('Frontend archive does not match the successful DEV release');
+          }
+          JS
+
+      - name: Install pinned Firebase deployment tool
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --prefix "$RUNNER_TEMP/harborlight-firebase-cli" \
+            --no-audit --no-fund firebase-tools@15.34.2
+          printf '%s\n' "$RUNNER_TEMP/harborlight-firebase-cli/node_modules/.bin" >> "$GITHUB_PATH"
+
+      - name: Install hosted browser acceptance dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check playwright==1.62.0
+          python3 -m playwright install --with-deps chromium
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+          with sync_playwright() as playwright:
+              executable = Path(playwright.chromium.executable_path)
+              if not executable.is_file():
+                  raise RuntimeError('Installed Chromium executable was not found')
+              with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as output:
+                  output.write(f'HARBORLIGHT_CHROMIUM={executable}\n')
+          PY
 
       - name: Setup Go for pinned image-copy tool
         uses: actions/setup-go@v5
@@ -158,6 +223,9 @@ jobs:
           set -euo pipefail
           project_environment="$(gcloud projects describe "$GCP_PROJECT_ID" --format='value(labels.harborlight_env)')"
           [[ "$project_environment" == prod ]] || { printf '::error::Expected harborlight_env=prod.\n'; exit 1; }
+
+      - name: Require the production domain and HTTPS to be ready
+        run: python3 infra/google-cloud/prepare-domain.py --status-only
 
       - name: Copy the exact tested DEV image and verify its digest
         shell: bash
@@ -216,4 +284,78 @@ jobs:
             printf 'DEV: %s/%s/actions/runs/%s\n\n' "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$HARBORLIGHT_DEV_RUN_ID"
             printf 'Adres API: %s\n\n' "$HARBORLIGHT_API_URL"
             printf 'Ten sam digest co na DEV; bez ponownej budowy. Obie sondy produkcyjne PASS.\n'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish the verified frontend without rebuilding
+        shell: bash
+        run: |
+          set -euo pipefail
+          firebase deploy --only hosting:game --project "$GCP_PROJECT_ID" \
+            --non-interactive --config firebase.json
+
+      - name: Verify the promoted hosted frontend manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --retry 8 --retry-all-errors \
+            --retry-connrefused --retry-delay 3 --connect-timeout 10 --max-time 20 \
+            --header 'Cache-Control: no-cache' \
+            "$HARBORLIGHT_FRONTEND_URL/release.json?commit=$HARBORLIGHT_SOURCE_SHA" \
+            --output "$RUNNER_TEMP/harborlight-hosted-release.json"
+          node --input-type=module - "$RUNNER_TEMP/harborlight-hosted-release.json" <<'JS'
+          import { readFileSync } from 'node:fs';
+          import { createHash } from 'node:crypto';
+          const bytes = readFileSync(process.argv[2]);
+          const manifest = JSON.parse(bytes.toString('utf8'));
+          if (manifest.schema_version !== 1 || manifest.commit !== process.env.HARBORLIGHT_SOURCE_SHA ||
+              createHash('sha256').update(bytes).digest('hex') !== process.env.HARBORLIGHT_FRONTEND_MANIFEST_SHA256) {
+            throw new Error('PROD did not serve the exact frontend tested on DEV');
+          }
+          JS
+
+      - name: Test the promoted hosted game in Chromium
+        id: hosted_browser
+        env:
+          HARBORLIGHT_BASE_URL: https://harborlight.pl
+        shell: bash
+        run: |
+          set -uo pipefail
+          set +e
+          python3 -u tests/harborlight-frontend-v17-smoke.py 2>&1 | tee "$RUNNER_TEMP/harborlight-hosted-browser.log"
+          browser_status=${PIPESTATUS[0]}
+          set -e
+          if (( browser_status != 0 )); then
+            node --input-type=module - "$RUNNER_TEMP/harborlight-hosted-browser.log" <<'JS' || true
+          import { readFileSync } from 'node:fs';
+          const text = readFileSync(process.argv[2], 'utf8') || 'Hosted browser acceptance failed without output.';
+          let escaped = '';
+          for (const character of Array.from(text.slice(-6000)).reverse()) {
+            const piece = character === '%' ? '%25' : character === '\r' ? '%0D' : character === '\n' ? '%0A' : character;
+            if (escaped.length + piece.length > 6000) break;
+            escaped = piece + escaped;
+          }
+          console.log(`::error title=Hosted browser acceptance failed::${escaped}`);
+          JS
+          fi
+          exit "$browser_status"
+
+      - name: Publish hosted browser failure diagnostics
+        if: ${{ failure() && steps.hosted_browser.outcome == 'failure' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: prod-hosted-browserfailure-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/harborlight-hosted-browser.log
+            /tmp/harborlight-v17-*.png
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Summarize the complete production game release
+        shell: bash
+        run: |
+          {
+            printf '\n### Gra na PROD\n\n'
+            printf 'Graj: %s\n\n' "$HARBORLIGHT_FRONTEND_URL"
+            printf 'Archiwum frontendu SHA-256: `%s`\n\n' "$HARBORLIGHT_FRONTEND_ARCHIVE_SHA256"
+            printf 'Frontend i backend są identycznymi pakietami sprawdzonymi na DEV. Testy opublikowanej gry PASS.\n'
           } >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,18 @@
+{
+  "projects": {
+    "dev": "harborlight-dev",
+    "prod": "harborlight-prod"
+  },
+  "targets": {
+    "harborlight-dev": {
+      "hosting": {
+        "game": ["harborlight-dev"]
+      }
+    },
+    "harborlight-prod": {
+      "hosting": {
+        "game": ["harborlight-prod"]
+      }
+    }
+  }
+}

@@ -3,6 +3,8 @@ import { pathToFileURL } from 'node:url';
 
 const CI_PATH = '.github/workflows/ci.yml';
 const DEV_PATH = '.github/workflows/google-cloud-dev.yml';
+const DEV_FRONTEND_SITE = 'harborlight-dev';
+const DEV_FRONTEND_URL = 'https://harborlight-dev.web.app';
 const fail = message => { throw new Error(message); };
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const validRepository = value => typeof value === 'string' &&
@@ -18,6 +20,11 @@ function positiveInteger(value, name) {
 
 function sha(value) {
   if (typeof value !== 'string' || !/^[a-f0-9]{40}$/.test(value)) fail('A full source commit SHA is required.');
+  return value;
+}
+
+function sha256(value, name) {
+  if (typeof value !== 'string' || !/^[a-f0-9]{64}$/.test(value)) fail(`A full SHA-256 ${name} is required.`);
   return value;
 }
 
@@ -57,19 +64,31 @@ export function validateCiRun(run, options) {
 
 export function validateDevRun(run, options) {
   const result = validateRun(run, options, DEV_PATH, 'workflow_dispatch');
-  return { ...result, artifactName: `harborlight-dev-release-${result.runId}-${result.runAttempt}` };
+  return {
+    ...result,
+    artifactName: `harborlight-dev-release-${result.runId}-${result.runAttempt}`,
+    frontendArtifactName: `harborlight-dev-frontend-${result.runId}-${result.runAttempt}`
+  };
+}
+
+function validateArtifact(artifacts, dev, name, label) {
+  if (!Array.isArray(artifacts)) fail('Invalid DEV artifact response.');
+  const matches = artifacts.filter(artifact => artifact?.name === name);
+  if (matches.length !== 1) fail(`Exactly one ${label} from the successful DEV attempt is required.`);
+  const artifact = matches[0];
+  positiveInteger(artifact.id, 'artifact ID');
+  if (artifact.expired !== false) fail(`DEV ${label} has expired.`);
+  if (artifact.workflow_run && (artifact.workflow_run.id !== dev.runId ||
+      artifact.workflow_run.head_sha !== dev.sourceSha)) fail(`${label} artifact belongs to another DEV run.`);
+  return artifact;
 }
 
 export function validateReceiptArtifact(artifacts, dev) {
-  if (!Array.isArray(artifacts)) fail('Invalid DEV artifact response.');
-  const matches = artifacts.filter(artifact => artifact?.name === dev.artifactName);
-  if (matches.length !== 1) fail('Exactly one receipt from the successful DEV attempt is required.');
-  const artifact = matches[0];
-  positiveInteger(artifact.id, 'artifact ID');
-  if (artifact.expired !== false) fail('DEV receipt has expired.');
-  if (artifact.workflow_run && (artifact.workflow_run.id !== dev.runId ||
-      artifact.workflow_run.head_sha !== dev.sourceSha)) fail('Receipt artifact belongs to another DEV run.');
-  return artifact;
+  return validateArtifact(artifacts, dev, dev.artifactName, 'receipt');
+}
+
+export function validateFrontendArtifact(artifacts, dev) {
+  return validateArtifact(artifacts, dev, dev.frontendArtifactName, 'frontend bundle');
 }
 
 function imageReference(value) {
@@ -81,7 +100,7 @@ function imageReference(value) {
 
 export function validateReceipt(receipt, options) {
   const expected = identity(options);
-  if (!object(receipt) || receipt.schema_version !== 1) fail('A current DEV release receipt is required.');
+  if (!object(receipt) || receipt.schema_version !== 2) fail('A current DEV release receipt including the tested frontend is required.');
   if (receipt.repository?.toLowerCase() !== expected.repository.toLowerCase() ||
       receipt.repository_id !== expected.repositoryId) fail('Receipt belongs to another repository.');
   const sourceSha = sha(receipt.source_sha);
@@ -98,15 +117,28 @@ export function validateReceipt(receipt, options) {
   if (image.prefix !== options.devImagePrefix || image.digest !== receipt.image.digest) {
     fail('Receipt image is outside the expected DEV repository or has another digest.');
   }
-  if (receipt.checks?.ci !== true || receipt.checks?.dev_smoke !== true) fail('Receipt is missing successful stage checks.');
-  return { sourceSha, sourceImage: image.uri, imageDigest: image.digest, ciRunId, ciRunAttempt };
+  if (!object(receipt.frontend)) fail('Receipt has no tested frontend bundle.');
+  const frontendArtifactName = `harborlight-dev-frontend-${receipt.dev.run_id}-${receipt.dev.run_attempt}`;
+  if (receipt.frontend.artifact_name !== frontendArtifactName) fail('Frontend bundle belongs to another DEV run or attempt.');
+  if (receipt.frontend.site !== DEV_FRONTEND_SITE || receipt.frontend.url !== DEV_FRONTEND_URL) {
+    fail('Frontend was not verified on the required DEV Hosting site.');
+  }
+  const frontendArchiveSha256 = sha256(receipt.frontend.archive_sha256, 'frontend archive digest');
+  const frontendManifestSha256 = sha256(receipt.frontend.manifest_sha256, 'frontend manifest digest');
+  if (receipt.checks?.ci !== true || receipt.checks?.dev_smoke !== true || receipt.checks?.frontend_smoke !== true) {
+    fail('Receipt is missing successful stage checks.');
+  }
+  return {
+    sourceSha, sourceImage: image.uri, imageDigest: image.digest, ciRunId, ciRunAttempt,
+    frontendArtifactName, frontendArchiveSha256, frontendManifestSha256
+  };
 }
 
 export function createReceipt(options) {
   const expected = identity(options);
   const image = imageReference(options.sourceImage);
   const receipt = {
-    schema_version: 1,
+    schema_version: 2,
     repository: expected.repository,
     repository_id: expected.repositoryId,
     source_sha: sha(options.sourceSha),
@@ -119,7 +151,14 @@ export function createReceipt(options) {
       run_attempt: positiveInteger(options.devRunAttempt, 'DEV run attempt')
     },
     image: { uri: image.uri, digest: image.digest },
-    checks: { ci: true, dev_smoke: true }
+    frontend: {
+      artifact_name: `harborlight-dev-frontend-${positiveInteger(options.devRunId, 'DEV run ID')}-${positiveInteger(options.devRunAttempt, 'DEV run attempt')}`,
+      archive_sha256: sha256(options.frontendArchiveSha256, 'frontend archive digest'),
+      manifest_sha256: sha256(options.frontendManifestSha256, 'frontend manifest digest'),
+      site: DEV_FRONTEND_SITE,
+      url: DEV_FRONTEND_URL
+    },
+    checks: { ci: true, dev_smoke: true, frontend_smoke: true }
   };
   validateReceipt(receipt, { ...options, devImagePrefix: image.prefix });
   return receipt;
@@ -195,7 +234,9 @@ export async function checkCi(api, options) {
 export async function checkDev(api, options) {
   const run = await api.getRun(options.devRunId);
   const dev = validateDevRun(run, options);
-  validateReceiptArtifact(await api.listArtifacts(dev.runId), dev);
+  const artifacts = await api.listArtifacts(dev.runId);
+  validateReceiptArtifact(artifacts, dev);
+  validateFrontendArtifact(artifacts, dev);
   return dev;
 }
 
@@ -208,7 +249,7 @@ export async function verifyReceipt(api, receipt, options) {
 
 async function output(values, file) {
   const lines = Object.entries(values).map(([key, value]) => {
-    if (!/^[a-z_]+$/.test(key) || /[\r\n]/.test(String(value))) fail('Invalid promotion output.');
+    if (!/^[a-z][a-z0-9_]*$/.test(key) || /[\r\n]/.test(String(value))) fail('Invalid promotion output.');
     return `${key}=${value}\n`;
   }).join('');
   if (!file) fail('GITHUB_OUTPUT is required.');
@@ -227,13 +268,15 @@ export async function main(command, env = process.env, fetchImpl = fetch) {
     await output({ ci_run_id: ci.runId, ci_run_attempt: ci.runAttempt, source_sha: ci.sourceSha }, env.GITHUB_OUTPUT);
   } else if (command === 'check-dev') {
     const dev = await checkDev(api(), { ...options, sourceSha: undefined, devRunId: env.HARBORLIGHT_DEV_RUN_ID });
-    await output({ dev_run_id: dev.runId, dev_run_attempt: dev.runAttempt, source_sha: dev.sourceSha, artifact_name: dev.artifactName }, env.GITHUB_OUTPUT);
+    await output({ dev_run_id: dev.runId, dev_run_attempt: dev.runAttempt, source_sha: dev.sourceSha, artifact_name: dev.artifactName, frontend_artifact_name: dev.frontendArtifactName }, env.GITHUB_OUTPUT);
   } else if (command === 'write-receipt') {
     if (!env.HARBORLIGHT_RECEIPT_PATH) fail('Receipt output path is required.');
     const receipt = createReceipt({
       ...options, sourceImage: env.HARBORLIGHT_SOURCE_IMAGE,
       ciRunId: env.HARBORLIGHT_CI_RUN_ID, ciRunAttempt: env.HARBORLIGHT_CI_RUN_ATTEMPT,
-      devRunId: env.GITHUB_RUN_ID, devRunAttempt: env.GITHUB_RUN_ATTEMPT
+      devRunId: env.GITHUB_RUN_ID, devRunAttempt: env.GITHUB_RUN_ATTEMPT,
+      frontendArchiveSha256: env.HARBORLIGHT_FRONTEND_ARCHIVE_SHA256,
+      frontendManifestSha256: env.HARBORLIGHT_FRONTEND_MANIFEST_SHA256
     });
     await writeFile(env.HARBORLIGHT_RECEIPT_PATH, `${JSON.stringify(receipt, null, 2)}\n`, { flag: 'wx' });
   } else if (command === 'verify-receipt') {
@@ -246,7 +289,12 @@ export async function main(command, env = process.env, fetchImpl = fetch) {
       ...options, devRunId: env.HARBORLIGHT_DEV_RUN_ID, devRunAttempt: env.HARBORLIGHT_DEV_RUN_ATTEMPT,
       devImagePrefix: env.HARBORLIGHT_DEV_IMAGE_PREFIX
     });
-    await output({ source_sha: release.sourceSha, source_image: release.sourceImage, image_digest: release.imageDigest, ci_run_id: release.ciRunId }, env.GITHUB_OUTPUT);
+    await output({
+      source_sha: release.sourceSha, source_image: release.sourceImage, image_digest: release.imageDigest, ci_run_id: release.ciRunId,
+      frontend_artifact_name: release.frontendArtifactName,
+      frontend_archive_sha256: release.frontendArchiveSha256,
+      frontend_manifest_sha256: release.frontendManifestSha256
+    }, env.GITHUB_OUTPUT);
   } else {
     fail('Use check-ci, check-dev, write-receipt or verify-receipt.');
   }

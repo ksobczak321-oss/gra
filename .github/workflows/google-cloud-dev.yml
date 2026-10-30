@@ -1,4 +1,4 @@
-name: Deploy HARBORLIGHT API to Google Cloud dev
+name: Deploy HARBORLIGHT game to Google Cloud dev
 
 # Deliberately manual: a commit alone must not create or change billed resources.
 on:
@@ -45,13 +45,13 @@ jobs:
     needs: gate
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     permissions:
       contents: read
       id-token: write
     environment:
       name: google-cloud-dev
-      url: ${{ steps.deploy.outputs.url }}
+      url: ${{ steps.hosting.outputs.url }}
     env:
       GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID || 'harborlight-dev' }}
       GCP_REGION: ${{ vars.GCP_REGION || 'europe-central2' }}
@@ -63,6 +63,7 @@ jobs:
       HARBORLIGHT_VERIFIED_SHA: ${{ needs.gate.outputs.source_sha }}
       HARBORLIGHT_CI_RUN_ID: ${{ needs.gate.outputs.ci_run_id }}
       HARBORLIGHT_CI_RUN_ATTEMPT: ${{ needs.gate.outputs.ci_run_attempt }}
+      HARBORLIGHT_FRONTEND_URL: https://harborlight-dev.web.app
     steps:
       - name: Checkout exact source commit
         uses: actions/checkout@v4
@@ -82,6 +83,7 @@ jobs:
           done
           [[ "$GITHUB_REF" == 'refs/heads/main' ]]
           [[ "$GCP_PROJECT_ID" =~ ^[a-z][a-z0-9-]{4,28}[a-z0-9]$ ]]
+          [[ "$GCP_PROJECT_ID" == harborlight-dev ]]
           [[ "$GCP_REGION" =~ ^[a-z]+-[a-z]+[0-9]+$ ]]
           [[ "$GCP_ARTIFACT_REPOSITORY" =~ ^[a-z][a-z0-9_-]{0,62}$ ]]
           [[ "$GCP_CLOUD_RUN_SERVICE" =~ ^[a-z]([a-z0-9-]{0,47}[a-z0-9])?$ ]]
@@ -106,6 +108,53 @@ jobs:
       - name: Test API infrastructure endpoints
         shell: bash
         run: node --test backend/test/*.test.mjs
+
+      - name: Build the exact frontend release bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/build_frontend.py --commit "$GITHUB_SHA" \
+            --output build/frontend --archive build/harborlight-frontend.tar.gz \
+            > "$RUNNER_TEMP/harborlight-frontend-build.json"
+          node --input-type=module - "$RUNNER_TEMP/harborlight-frontend-build.json" <<'JS'
+          import { readFileSync, appendFileSync } from 'node:fs';
+          const metadata = JSON.parse(readFileSync(process.argv[2], 'utf8'));
+          if (metadata.commit !== process.env.GITHUB_SHA ||
+              !/^[a-f0-9]{64}$/.test(metadata.archive_sha256) ||
+              !/^[a-f0-9]{64}$/.test(metadata.manifest_sha256)) {
+            throw new Error('Frontend bundle did not confirm the source commit and hashes');
+          }
+          appendFileSync(process.env.GITHUB_ENV,
+            `HARBORLIGHT_FRONTEND_ARCHIVE_SHA256=${metadata.archive_sha256}\n` +
+            `HARBORLIGHT_FRONTEND_MANIFEST_SHA256=${metadata.manifest_sha256}\n`);
+          JS
+
+      - name: Install pinned Firebase deployment tool
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --prefix "$RUNNER_TEMP/harborlight-firebase-cli" \
+            --no-audit --no-fund firebase-tools@15.34.2
+          printf '%s\n' "$RUNNER_TEMP/harborlight-firebase-cli/node_modules/.bin" >> "$GITHUB_PATH"
+
+      - name: Install hosted browser acceptance dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check playwright==1.62.0
+          python3 -m playwright install --with-deps chromium
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+
+          with sync_playwright() as playwright:
+              executable = Path(playwright.chromium.executable_path)
+              if not executable.is_file():
+                  raise RuntimeError('Installed Chromium executable was not found')
+              with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as output:
+                  output.write(f'HARBORLIGHT_CHROMIUM={executable}\n')
+          PY
 
       # Build before requesting a short-lived Google identity. The Docker context
       # contains only backend/, never the repository's generated auth file.
@@ -211,8 +260,83 @@ jobs:
             printf '%s: OK\n' "$endpoint"
           done
 
-      # The receipt is created only after the exact immutable image was deployed
-      # and its live HTTP probes confirmed this source commit on DEV.
+      - name: Deploy the frontend bundle to Firebase Hosting DEV
+        id: hosting
+        shell: bash
+        run: |
+          set -euo pipefail
+          firebase deploy --only hosting:game --project "$GCP_PROJECT_ID" \
+            --non-interactive --config firebase.json
+          printf 'url=%s\n' "$HARBORLIGHT_FRONTEND_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Verify the exact hosted frontend release
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --retry 8 --retry-all-errors \
+            --retry-connrefused --retry-delay 3 --connect-timeout 10 --max-time 20 \
+            --header 'Cache-Control: no-cache' \
+            "$HARBORLIGHT_FRONTEND_URL/release.json?commit=$GITHUB_SHA" \
+            --output "$RUNNER_TEMP/harborlight-hosted-release.json"
+          node --input-type=module - "$RUNNER_TEMP/harborlight-hosted-release.json" <<'JS'
+          import { readFileSync } from 'node:fs';
+          import { createHash } from 'node:crypto';
+          const bytes = readFileSync(process.argv[2]);
+          const manifest = JSON.parse(bytes.toString('utf8'));
+          const digest = createHash('sha256').update(bytes).digest('hex');
+          if (manifest.schema_version !== 1 || manifest.commit !== process.env.GITHUB_SHA ||
+              digest !== process.env.HARBORLIGHT_FRONTEND_MANIFEST_SHA256) {
+            throw new Error('Hosted frontend is not the exact bundle of this source commit');
+          }
+          JS
+
+      - name: Test the actual hosted game in Chromium
+        id: hosted_browser
+        env:
+          HARBORLIGHT_BASE_URL: https://harborlight-dev.web.app
+        shell: bash
+        run: |
+          set -uo pipefail
+          set +e
+          python3 -u tests/harborlight-frontend-v17-smoke.py 2>&1 | tee "$RUNNER_TEMP/harborlight-hosted-browser.log"
+          browser_status=${PIPESTATUS[0]}
+          set -e
+          if (( browser_status != 0 )); then
+            node --input-type=module - "$RUNNER_TEMP/harborlight-hosted-browser.log" <<'JS' || true
+          import { readFileSync } from 'node:fs';
+          const text = readFileSync(process.argv[2], 'utf8') || 'Hosted browser acceptance failed without output.';
+          let escaped = '';
+          for (const character of Array.from(text.slice(-6000)).reverse()) {
+            const piece = character === '%' ? '%25' : character === '\r' ? '%0D' : character === '\n' ? '%0A' : character;
+            if (escaped.length + piece.length > 6000) break;
+            escaped = piece + escaped;
+          }
+          console.log(`::error title=Hosted browser acceptance failed::${escaped}`);
+          JS
+          fi
+          exit "$browser_status"
+
+      - name: Publish hosted browser failure diagnostics
+        if: ${{ failure() && steps.hosted_browser.outcome == 'failure' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: hosted-browserfailure-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/harborlight-hosted-browser.log
+            /tmp/harborlight-v17-*.png
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Publish the exact successful DEV frontend bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: harborlight-dev-frontend-${{ github.run_id }}-${{ github.run_attempt }}
+          path: build/harborlight-frontend.tar.gz
+          if-no-files-found: error
+          retention-days: 90
+
+      # The receipt is created only after the immutable API image and exact
+      # frontend bundle were deployed and the actual hosted game passed tests.
       - name: Write successful DEV release receipt
         env:
           HARBORLIGHT_RECEIPT_PATH: ${{ runner.temp }}/harborlight-release/release.json
@@ -237,16 +361,19 @@ jobs:
         run: |
           set -euo pipefail
           {
-            printf '### HARBORLIGHT — infrastruktura dev\n\n'
+            printf '### HARBORLIGHT — gra na GCP DEV\n\n'
+            printf 'Graj: %s\n\n' "$HARBORLIGHT_FRONTEND_URL"
             printf 'Adres API: %s\n\n' "$HARBORLIGHT_API_URL"
             printf 'Commit: `%s`\n\n' "$GITHUB_SHA"
             printf 'Obraz: `%s`\n\n' "$HARBORLIGHT_SOURCE_IMAGE"
+            printf 'Pakiet frontendu SHA-256: `%s`\n\n' "$HARBORLIGHT_FRONTEND_ARCHIVE_SHA256"
+            printf 'Manifest frontendu SHA-256: `%s`\n\n' "$HARBORLIGHT_FRONTEND_MANIFEST_SHA256"
             printf 'CI: [%s](%s/%s/actions/runs/%s), próba %s.\n\n' \
               "$HARBORLIGHT_CI_RUN_ID" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" \
               "$HARBORLIGHT_CI_RUN_ID" "$HARBORLIGHT_CI_RUN_ATTEMPT"
             printf 'Potwierdzenie DEV: `harborlight-dev-release-%s-%s`.\n\n' \
               "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT"
-            printf 'Sprawdzone: `/healthz`, `/readyz`.\n\n'
+            printf 'Sprawdzone: `/healthz`, `/readyz`, manifest wydania i 5 grup testów gry z rzeczywistego hostingu DEV.\n\n'
             printf 'Cloud Run: min. 0, maks. 2 instancje na rewizję; nie jest to limit faktury.\n\n'
-            printf 'To serwer startowy infrastruktury. Konta, zapis wysp i API gry pozostają kolejnymi etapami.\n'
+            printf 'Gra jest udostępniona z Firebase Hosting; zapis pozostaje lokalny w przeglądarce. Konta, trwały zapis wysp i API gospodarki pozostają kolejnymi etapami.\n'
           } >> "$GITHUB_STEP_SUMMARY"
