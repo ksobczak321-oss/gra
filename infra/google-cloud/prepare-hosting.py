@@ -29,7 +29,7 @@ class PreparationError(Exception):
 
 
 class ApiError(PreparationError):
-    def __init__(self, status, tos=False):
+    def __init__(self, status, tos=False, diagnostics=(), phase=None):
         self.status = status
         self.tos = tos
         if tos:
@@ -38,7 +38,84 @@ class ApiError(PreparationError):
                        "zaakceptuj je na swoim koncie i ponów konfigurację.")
         else:
             message = f"Odczyt lub konfiguracja Firebase nie powiodła się (HTTP {status})."
+        if phase:
+            message += " Etap: " + phase + "."
+        if diagnostics:
+            message += " Google: " + "; ".join(diagnostics) + "."
         super().__init__(message)
+
+
+def safe_provider_text(value, token=None, limit=1000):
+    """Bound provider diagnostic fields and remove reflected credentials."""
+    if not isinstance(value, str):
+        return ""
+    if token:
+        value = value.replace(token, "[REDACTED]")
+    value = re.sub(r"(?i)\bBearer\s+[A-Za-z0-9._~+/=-]+", "Bearer [REDACTED]", value)
+    value = re.sub(r"\bya29\.[A-Za-z0-9._~+/=-]+", "[REDACTED]", value)
+    value = re.sub(r"\b1//[A-Za-z0-9._~+/=-]+", "[REDACTED]", value)
+    value = re.sub(r"(?i)(\b(?:access_token|refresh_token|id_token)\b[\s\"']*[:=][\s\"']*)[A-Za-z0-9._~+/=-]+",
+                   r"\1[REDACTED]", value)
+    value = re.sub(r"\x1b\[[0-?]*[ -/]*[@-~]", "", value)
+    return " ".join(value.split())[:limit]
+
+
+def provider_error(raw, token=None):
+    """Expose only documented error fields, never the whole response body."""
+    try:
+        data = json.loads(raw)
+        error = data.get("error") if isinstance(data, dict) else None
+        if not isinstance(error, dict):
+            return False, ()
+    except (ValueError, TypeError):
+        return False, ()
+    diagnostics = []
+    message = safe_provider_text(error.get("message"), token)
+    if message:
+        diagnostics.append("message=" + message)
+    status = safe_provider_text(error.get("status"), token, 100)
+    if status:
+        diagnostics.append("status=" + status)
+    details = error.get("details", [])
+    if not isinstance(details, list):
+        details = []
+    reasons = []
+    terms_text = [message]
+    reported_error_info = False
+    for item in details[:20]:
+        if not isinstance(item, dict):
+            continue
+        # DebugInfo's detail participates only in the known ToS detection;
+        # arbitrary debug data is deliberately not printed.
+        if isinstance(item.get("detail"), str):
+            terms_text.append(item["detail"][:2000])
+        if item.get("@type") != "type.googleapis.com/google.rpc.ErrorInfo":
+            continue
+        reason = safe_provider_text(item.get("reason"), token, 128)
+        if reason:
+            reasons.append(reason)
+        if reported_error_info:
+            continue
+        reported_error_info = True
+        if reason:
+            diagnostics.append("reason=" + reason)
+        domain = safe_provider_text(item.get("domain"), token, 128)
+        if domain:
+            diagnostics.append("domain=" + domain)
+        metadata = item.get("metadata")
+        if isinstance(metadata, dict):
+            for key in ("permission", "service", "method", "consumer"):
+                value = safe_provider_text(metadata.get(key), token, 192)
+                if value:
+                    diagnostics.append(key + "=" + value)
+        # Report one ErrorInfo but keep scanning for a known ToS signal,
+        # regardless of its ordering among the provider's error details.
+    normalized = " ".join(terms_text + reasons).lower().replace("_", " ")
+    tos = any(phrase in normalized for phrase in (
+        "firebase tos not accepted", "tos not accepted", "terms not accepted",
+        "terms of service not accepted",
+    ))
+    return tos, tuple(diagnostics)
 
 
 def require(condition, message):
@@ -114,10 +191,9 @@ class Cloud:
                 return value
         except urllib.error.HTTPError as error:
             raw = error.read(2_000_000)
-            # Match the official Firebase CLI's known provider error, without
-            # echoing arbitrary response bodies or bearer credentials.
-            tos = b"Firebase Tos Not Accepted" in raw
-            raise ApiError(error.code, tos) from None
+            tos, diagnostics = provider_error(raw, self.token)
+            phase = safe_provider_text(f"{method} {parsed.netloc}{parsed.path}", self.token, 320)
+            raise ApiError(error.code, tos, diagnostics, phase) from None
         except (urllib.error.URLError, TimeoutError, ValueError) as error:
             raise PreparationError("Nie można odczytać poprawnej odpowiedzi API Firebase.") from error
 

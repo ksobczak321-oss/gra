@@ -188,6 +188,76 @@ class HostingPreparationTests(unittest.TestCase):
         self.assertNotIn("do-not-leak-secret", str(raised.exception))
         self.assertIn("43", str(raised.exception))
 
+    def test_structured_denial_exposes_only_actionable_provider_fields(self):
+        raw = json.dumps({"error": {
+            "code": 403, "status": "PERMISSION_DENIED", "message": "Request had insufficient authentication scopes.",
+            "details": [{"@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                         "reason": "ACCESS_TOKEN_SCOPE_INSUFFICIENT", "domain": "googleapis.com",
+                         "metadata": {"service": "firebase.googleapis.com", "method": "FirebaseManagement.AddFirebase",
+                                      "permission": "firebase.projects.update", "consumer": "projects/123",
+                                      "unlisted_secret": "DO-NOT-PRINT"}}]}, "other": "PRIVATE"}).encode()
+        tos, fields = hosting.provider_error(raw)
+        self.assertFalse(tos)
+        text = "; ".join(fields)
+        for expected in ["PERMISSION_DENIED", "ACCESS_TOKEN_SCOPE_INSUFFICIENT", "googleapis.com",
+                         "firebase.googleapis.com", "firebase.projects.update", "projects/123"]:
+            self.assertIn(expected, text)
+        self.assertNotIn("DO-NOT-PRINT", text)
+        self.assertNotIn("PRIVATE", text)
+
+    def test_provider_reflected_tokens_are_redacted_before_truncation(self):
+        token = "secret-current-token"
+        raw = json.dumps({"error": {
+            "message": f"Denied {token}; Authorization: Bearer OTHER_TOKEN; ya29.otherOAuthToken; "
+                       "refresh_token=1//refresh-token\n\x1b[31mcontrol",
+            "details": [{"@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                         "reason": "PERMISSION_DENIED", "metadata": {"service": token}}]}}).encode()
+        _tos, fields = hosting.provider_error(raw, token)
+        text = "; ".join(fields)
+        for secret in [token, "OTHER_TOKEN", "ya29.otherOAuthToken", "1//refresh-token"]:
+            self.assertNotIn(secret, text)
+        self.assertIn("[REDACTED]", text)
+        self.assertNotIn("\n", text)
+        self.assertNotIn("\x1b", text)
+        _tos, bounded = hosting.provider_error(json.dumps({"error": {"message": "x"*100_000}}))
+        self.assertLessEqual(len("; ".join(bounded)), 1008)
+
+    def test_terms_error_reason_variants_are_recognized(self):
+        for reason in ["FIREBASE_TOS_NOT_ACCEPTED", "TERMS_NOT_ACCEPTED", "TERMS_OF_SERVICE_NOT_ACCEPTED"]:
+            with self.subTest(reason=reason):
+                raw = json.dumps({"error": {"message": "Permission denied", "details": [
+                    {"@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": reason}]}}).encode()
+                tos, fields = hosting.provider_error(raw)
+                self.assertTrue(tos)
+                self.assertIn(reason, "; ".join(fields))
+        raw = json.dumps({"error": {"message": "Permission denied", "details": [
+            {"@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": "PERMISSION_DENIED"},
+            {"@type": "type.googleapis.com/google.rpc.DebugInfo", "detail": "Firebase Tos Not Accepted"}
+        ]}}).encode()
+        self.assertTrue(hosting.provider_error(raw)[0])
+
+    def test_malformed_error_body_stays_generic(self):
+        for raw in [b"not JSON secret-private-body", b"[]", b'{"other":"private"}', b'{"error":"private"}']:
+            self.assertEqual(hosting.provider_error(raw), (False, ()))
+
+    def test_http_denial_reports_endpoint_phase_and_safe_reason(self):
+        def runner(*_args, **_kwargs):
+            return SimpleNamespace(returncode=0, stdout="private-access-token", stderr="")
+        class Opener:
+            def open(self, request, timeout):
+                body = json.dumps({"error": {"message": "Missing permission", "status": "PERMISSION_DENIED",
+                    "details": [{"@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": "IAM_PERMISSION_DENIED",
+                                 "domain": "firebase.googleapis.com", "metadata": {"permission": "firebase.projects.update"}}]}}).encode()
+                raise urllib.error.HTTPError(request.full_url, 403, "forbidden", {}, io.BytesIO(body))
+        cloud = hosting.Cloud("harborlight-dev", runner=runner, opener=Opener())
+        with self.assertRaises(hosting.ApiError) as raised:
+            cloud.request("POST", hosting.FIREBASE + "/projects/harborlight-dev:addFirebase", {})
+        text = str(raised.exception)
+        self.assertIn("HTTP 403", text)
+        self.assertIn("POST firebase.googleapis.com/v1beta1/projects/harborlight-dev:addFirebase", text)
+        self.assertIn("firebase.projects.update", text)
+        self.assertNotIn("private-access-token", text)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
