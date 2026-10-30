@@ -106,7 +106,8 @@ fi
 
 # Etykieta jest ustawiana dopiero po kompletnym preflight. Kolejne uruchomienie
 # dla innego środowiska zatrzyma się przed pierwszą mutacją.
-"${GCLOUD[@]}" projects update "$PROJECT_ID" --update-labels="harborlight_env=$ENVIRONMENT" --format=none
+# --update-labels dla projektów jest dostępne w ścieżce alpha, nie w GA.
+"${GCLOUD[@]}" alpha projects update "$PROJECT_ID" --update-labels="harborlight_env=$ENVIRONMENT" --format=none
 
 "${GCLOUD[@]}" services enable \
   serviceusage.googleapis.com \

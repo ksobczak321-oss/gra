@@ -466,3 +466,9 @@ Użytkownik zaakceptował Google Cloud jako platformę docelową, pokazał aktyw
 - `python3 tests/harborlight-gcp-bootstrap.test.py`: **10/10 PASS**, wyłącznie atrapa `gcloud`. Potwierdzono brak mutacji w `--check` i bez rozliczeń, walidację ID/środowiska, rozdział DEV/PROD, zakres IAM/WIF, powtórzenie bez duplikatów oraz przerwanie przy błędzie odczytu lub niezgodnym repozytorium.
 - Zbudowano rzeczywisty obraz Docker i zaliczono obie sondy w kontenerze bez sieci z limitem 512 MiB/1 CPU. Potwierdzono użytkownika bez roota, środowisko i identyfikator wydania. Składnia Bash, YAML i wszystkich skryptów workflow poprawna; niezależny przegląd nie znalazł błędu blokującego.
 - Nie wykonano operacji w Google Cloud. Samo konto rozliczeniowe nie potwierdza istnienia projektu ani wdrożenia. Pierwsze rzeczywiste wdrożenie wymaga podłączenia projektu, budżetu i dostępu WIF, a następnie sprawdzenia publicznych sond. Gra v17 i archiwalne Excele nie były zmieniane.
+
+### Korekta bootstrapu po pierwszym uruchomieniu Cloud Shell
+
+- Użytkownik potwierdził z terminala `billingEnabled: true` dla obu projektów; oba są połączone z kontem rozliczeniowym HARBORLIGHT. Pierwszy bootstrap zatrzymał się na `gcloud projects update --update-labels`, zanim włączył API i utworzył zasoby wdrożeniowe. Rzeczywisty CLI odrzuca tę flagę w stabilnej ścieżce i wskazuje `gcloud alpha projects update`.
+- Poprawiono wywołanie na wskazaną ścieżkę `alpha`. Atrapa CLI odtąd odrzuca błędny stabilny wariant zamiast akceptować go bezwarunkowo. Dodano regresję potwierdzającą, że odmowa ustawienia etykiety przerywa konfigurację przed włączeniem usług lub tworzeniem zasobów.
+- Testy bootstrapu **11/11 PASS**, składnia Bash i `git diff --check` poprawne. Niezależny przegląd pozostałych wywołań nie znalazł drugiej konkretnej nieobsługiwanej flagi. Są to wyniki lokalne; poprawiony bootstrap nadal wymaga ponownego uruchomienia w Cloud Shell użytkownika.

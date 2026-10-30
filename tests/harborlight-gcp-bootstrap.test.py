@@ -25,6 +25,15 @@ arguments = [arg for arg in arguments
 mode = os.environ.get("MOCK_GCLOUD_MODE", "empty")
 if arguments[:2] == ["auth", "list"]:
     print("tester@example.invalid")
+elif arguments[:2] == ["projects", "update"]:
+    # Cloud Shell rejects this flag in GA; only the alpha command supports it.
+    # Do not silently accept an invalid CLI call as the old mock did.
+    print("unrecognized arguments: --update-labels; use gcloud alpha projects update", file=sys.stderr)
+    sys.exit(2)
+elif arguments[:3] == ["alpha", "projects", "update"]:
+    if mode == "label-update-denied":
+        print("permission denied updating project labels", file=sys.stderr)
+        sys.exit(42)
 elif arguments[:2] == ["projects", "describe"]:
     if "--format=value(labels.harborlight_env)" in arguments:
         print({"label-dev": "dev", "label-prod": "prod"}.get(mode, ""))
@@ -180,6 +189,15 @@ class BootstrapSafetyTests(unittest.TestCase):
                 self.assertNotEqual(result.returncode, 0)
                 self.assertFalse(any(map(mutates, commands)))
                 self.assertIn("harborlight_env=", result.stderr)
+
+    def test_failed_label_update_stops_before_enabling_services_or_creating_resources(self):
+        result, commands = self.run_bootstrap("--apply", mode="label-update-denied")
+        self.assertEqual(result.returncode, 42)
+        mutations = [command for command in commands if mutates(command)]
+        self.assertEqual(len(mutations), 1)
+        self.assertFalse(any("enable" in command or "create" in command
+                             or "create-oidc" in command for command in commands))
+        self.assertIn("permission denied", result.stderr)
 
     def test_second_apply_reuses_resources_and_reconciles_provider(self):
         result, commands = self.run_bootstrap("--apply", mode="existing")

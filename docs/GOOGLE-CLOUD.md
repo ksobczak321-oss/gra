@@ -61,6 +61,8 @@ bash infra/google-cloud/bootstrap.sh --apply
 
 `--check` jest domyślny i niczego nie zmienia. `--apply` włącza usługi oraz konfiguruje zasoby i IAM. Oba tryby wymagają działającego `gcloud`, dostępu do aktywnego projektu i podpiętych rozliczeń. Skrypt nie tworzy projektu ani konta rozliczeniowego. Nie wdraża serwera i nie tworzy bazy SQL.
 
+Ustawianie etykiety projektu korzysta z `gcloud alpha projects update`: stabilna ścieżka `gcloud projects update` nie obsługuje flagi `--update-labels`. Komponent `alpha` musi być dostępny w używanym Google Cloud CLI; Cloud Shell zwykle już go zawiera. Po pobraniu poprawki wystarczy `git pull --ff-only` w sklonowanym katalogu i ponowne uruchomienie konfiguracji obu środowisk.
+
 Dla PROD użyć `config.prod.example.env` i utworzyć lokalny `config.prod.local.env`; zawiera już **drugi** ID `harborlight-prod` z `ENVIRONMENT=prod`. Powtórzyć kontrolę i konfigurację po wczytaniu tego pliku; nie zmieniać oznaczenia projektu DEV na PROD.
 
 ## Połączenie z GitHub
