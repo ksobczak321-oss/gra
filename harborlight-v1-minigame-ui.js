@@ -389,7 +389,10 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
     resizeObserver.observe(host);
     const panel = root.closest('.minigame-panel');
     if (panel) resizeObserver.observe(panel);
-    const onResize = () => { fitPending = true; };
+    // Fixed pixel tracks must be recomputed while the viewport resize is
+    // handled. Waiting for the next animation frame can leave the old tracks
+    // wider than the new wrapper (notably when game time/RAF is paused).
+    const onResize = () => { fitPending = true; fitBoard(); };
     window.addEventListener('resize', onResize, { passive: true });
     cleanup.push(() => { resizeObserver.disconnect(); window.removeEventListener('resize', onResize); });
     const cards = game.cards.map((symbol, index) => {
