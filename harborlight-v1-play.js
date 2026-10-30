@@ -11,7 +11,7 @@ import * as I18n from './harborlight-v1-i18n.js?v=frontend-v17';
 import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v17';
 import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v17';
 import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v17';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v17-fit1';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v17-fit2';
 import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v17';
 
 I18n.registerTranslations({

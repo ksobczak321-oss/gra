@@ -36,10 +36,12 @@ BASE = os.environ.get('HARBORLIGHT_BASE_URL', 'http://127.0.0.1:' + str(server.s
 URL = BASE + '/harborlight-v1-layered.html?profile=new-player&slot=' + SLOT + '&v=frontend-v17'
 
 
-def visit(browser, width=1366, height=768, language='pl'):
+def visit(browser, width=1366, height=768, language='pl', init_script=None):
     context = browser.new_context(viewport={'width': width, 'height': height},
                                   is_mobile=width < 901, has_touch=width < 901,
                                   reduced_motion='reduce')
+    if init_script:
+        context.add_init_script(init_script)
     page = context.new_page()
     page.on('pageerror', lambda error: ERRORS.append(getattr(error, 'stack', None) or str(error)))
     page.on('response', lambda response: FAILURES.append((response.status, response.url)) if response.status >= 400 else None)
@@ -223,7 +225,71 @@ def memory_layout_acceptance(browser):
                 whole_game(page)
                 expect(page.locator('[data-memory-card]')).to_have_count(120)
         context.close()
+    delayed_memory_resize_acceptance(browser, (390, 844), {'width': 360, 'height': 740})
+    delayed_memory_resize_acceptance(browser, (1536, 864), {'width': 1366, 'height': 768})
     print('PASS24/42/120-card memory boards fit desktop and390/360px phones without scrollbars or clipped cards')
+
+
+def delayed_memory_resize_acceptance(browser, initial_size, resized):
+    # Hold only native resize notifications, leaving the game clock paused.
+    # A narrower viewport must be safe even before application fitting runs.
+    context, page = visit(browser, *initial_size, init_script='''(() => {
+      const state = window.__qaResizeNotifications = {hold: false, queued: []};
+      addEventListener('resize', event => {
+        if (state.hold) event.stopImmediatePropagation();
+      }, true);
+      const NativeObserver = ResizeObserver;
+      window.ResizeObserver = class extends NativeObserver {
+        constructor(callback) {
+          super((entries, observer) => {
+            if (state.hold) state.queued.push(() => callback(entries, observer));
+            else callback(entries, observer);
+          });
+        }
+      };
+    })();''')
+    install_save(page, game_fixture(page, 'triples', 17))
+    game = run_of(saved(page))['miniGame']
+    symbol = game['cards'][0]
+    for index in [i for i, value in enumerate(game['cards']) if value == symbol][:3]:
+        page.locator(f'[data-memory-card="{index}"]').click()
+    before = run_of(saved(page))['miniGame']
+    assert sum(before['matched']) == 3
+    whole_game(page)
+    page.evaluate('window.__qaResizeNotifications.hold = true')
+    page.set_viewport_size(resized)
+    # No run_for or wait here: this checks the CSS invariant before RAF/RO.
+    whole_game(page)
+    rectangles = page.evaluate('''() => {
+      const bounds = document.querySelector('.memory-viewport').getBoundingClientRect();
+      return [...document.querySelectorAll('[data-memory-card]')].map(card => {
+        const r = card.getBoundingClientRect();
+        return {width:r.width,height:r.height,inside:r.left>=bounds.left-1&&
+          r.right<=bounds.right+1&&r.top>=bounds.top-1&&r.bottom<=bounds.bottom+1};
+      });
+    }''')
+    assert len(rectangles) == 120
+    assert all(r['inside'] and abs(r['width'] - r['height']) <= 1 for r in rectangles), rectangles
+    after = run_of(saved(page))['miniGame']
+    for key in ['cards', 'matched', 'revealed']:
+        assert after[key] == before[key], key
+    # Wait for delivery into our held queue, not for application layout. The
+    # width/square/identity checks above already ran with notifications held.
+    for _ in range(50):
+        if page.evaluate('window.__qaResizeNotifications.queued.length'):
+            break
+        page.wait_for_timeout(10)
+    released = page.evaluate('''() => {
+      const state = window.__qaResizeNotifications;
+      state.hold = false;
+      const queued = state.queued.splice(0);
+      for (const callback of queued) callback();
+      return queued.length;
+    }''')
+    assert released > 0, 'Browser did not deliver a resize notification'
+    whole_game(page)
+    expect(page.locator('[data-memory-card]')).to_have_count(120)
+    context.close()
 
 
 def choice_and_ad_acceptance(browser):

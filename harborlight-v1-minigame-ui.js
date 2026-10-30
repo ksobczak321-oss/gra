@@ -338,34 +338,32 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
     const wrapper = element('div', { class: 'memory-viewport', 'data-memory-viewport': '' });
     const board = element('div', { class: 'memory-board', role: 'group', 'aria-label': words.memoryTitle, 'data-memory-board': '' });
     board.style.setProperty('--memory-columns', game.columns);
+    board.style.setProperty('--memory-rows', Math.ceil(game.cards.length / game.columns));
     board.style.setProperty('--memory-columns-mobile', Math.min(8, game.columns));
     board.style.setProperty('--memory-tile', '46px');
     wrapper.append(board); root.append(wrapper, progress);
     const turnStatus = element('p', { class: 'memory-turn-status', 'data-memory-turn': '' });
     const shuffleStatus = element('p', { class: 'memory-shuffle-status', 'data-memory-shuffle': '', 'aria-live': 'polite' });
     root.append(turnStatus, shuffleStatus, message);
-    let fitPending = true;
+    let fitPending = true, fittedConstraints = '';
+    const layoutConstraints = () => {
+      const dialog = root.closest('dialog');
+      return [innerWidth, innerHeight, host.clientWidth, root.clientWidth,
+        dialog ? getComputedStyle(dialog).maxHeight : '',
+        dialog?.querySelector('.dialog-header')?.offsetHeight || 0].join(':');
+    };
     // Use the real remaining dialog space instead of creating a second scroll
     // area. The grid can change its columns without changing card identities.
     const fitBoard = () => {
       if (!root.isConnected || !wrapper.clientWidth) return;
-      const dialog = root.closest('dialog'), panel = root.closest('.minigame-panel');
-      const body = dialog?.querySelector('.dialog-body');
-      const desktop = matchMedia('(min-width:1100px) and (min-height:650px)').matches;
+      const constraints = layoutConstraints();
       const padding = getComputedStyle(wrapper);
-      const horizontalPadding = parseFloat(padding.paddingLeft) + parseFloat(padding.paddingRight) + 2;
-      const verticalPadding = parseFloat(padding.paddingTop) + parseFloat(padding.paddingBottom) + 2;
-      const availableWidth = Math.max(40, Math.min(host.clientWidth, root.clientWidth) - horizontalPadding);
-      let availableHeight;
-      if (dialog && body && panel) {
-        const bodyStyle = getComputedStyle(body), dialogStyle = getComputedStyle(dialog);
-        const maxDialogHeight = parseFloat(dialogStyle.maxHeight) || innerHeight - 20;
-        const bodySpace = maxDialogHeight - (dialog.querySelector('.dialog-header')?.offsetHeight || 0) -
-          parseFloat(bodyStyle.paddingTop) - parseFloat(bodyStyle.paddingBottom) - 2;
-        const nonBoardHeight = (desktop ? root.offsetHeight : panel.offsetHeight) - wrapper.offsetHeight;
-        const otherBodyHeight = Math.max(0, body.scrollHeight - parseFloat(bodyStyle.paddingTop) - parseFloat(bodyStyle.paddingBottom) - panel.offsetHeight);
-        availableHeight = Math.max(40, bodySpace - nonBoardHeight - otherBodyHeight - verticalPadding - 16);
-      } else availableHeight = Math.max(80, innerHeight - root.getBoundingClientRect().top - 100);
+      const horizontalPadding = parseFloat(padding.paddingLeft) + parseFloat(padding.paddingRight);
+      const verticalPadding = parseFloat(padding.paddingTop) + parseFloat(padding.paddingBottom);
+      // CSS gives this frame the space left after the real header, controls
+      // and messages. Read that space directly, without cached dvh arithmetic.
+      const availableWidth = Math.max(40, wrapper.clientWidth - horizontalPadding);
+      const availableHeight = Math.max(40, wrapper.clientHeight - verticalPadding);
       const gap = innerWidth <= 520 ? 3 : 4;
       let best = { columns: 1, tile: 0, rows: game.cards.length };
       for (let columns = 1; columns <= game.cards.length; columns++) {
@@ -376,22 +374,29 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
       }
       const tile = Math.max(8, best.tile);
       board.style.setProperty('--memory-columns', best.columns);
+      board.style.setProperty('--memory-rows', best.rows);
       board.style.setProperty('--memory-columns-mobile', best.columns);
       board.style.setProperty('--memory-tile', `${tile}px`);
       board.style.setProperty('--memory-gap', `${gap}px`);
-      board.style.gridTemplateColumns = `repeat(${best.columns}, ${tile}px)`;
-      board.style.width = `${best.columns * tile + (best.columns - 1) * gap}px`;
       wrapper.dataset.memoryFit = `${best.columns}x${best.rows}`;
+      fittedConstraints = constraints;
       fitPending = false;
     };
     fitLayout = fitBoard;
-    const resizeObserver = new ResizeObserver(() => { fitPending = true; });
+    const resizeObserver = new ResizeObserver(() => {
+      fitPending = true;
+      // Native layout notifications can arrive before the window resize event
+      // or the next animation frame. Dynamic viewport CSS can also settle
+      // after innerHeight changed. Refit on those external constraints, while
+      // deferring size changes caused only by fitting itself to avoid a loop.
+      if (fittedConstraints !== layoutConstraints()) fitBoard();
+    });
     resizeObserver.observe(host);
     const panel = root.closest('.minigame-panel');
     if (panel) resizeObserver.observe(panel);
-    // Fixed pixel tracks must be recomputed while the viewport resize is
-    // handled. Waiting for the next animation frame can leave the old tracks
-    // wider than the new wrapper (notably when game time/RAF is paused).
+    const body = root.closest('dialog')?.querySelector('.dialog-body');
+    if (body) resizeObserver.observe(body);
+    // Recompute height and the preferred card size immediately as well.
     const onResize = () => { fitPending = true; fitBoard(); };
     window.addEventListener('resize', onResize, { passive: true });
     cleanup.push(() => { resizeObserver.disconnect(); window.removeEventListener('resize', onResize); });
