@@ -26,10 +26,13 @@ export function createServer({
       response.setHeader('Content-Length', Buffer.byteLength(encoded));
       response.end(request.method === 'HEAD' ? undefined : encoded);
     };
-    // Only these two infrastructure probes are public. No player data or
-    // client-supplied game state is accepted by this first service.
+    // Use unreserved paths for public Cloud Run readback. Keep the z-suffixed
+    // aliases for internal/local probes, where the Google frontend is absent.
+    // No player data or client-supplied game state is accepted by this service.
     const path = request.url?.split('?', 1)[0];
-    if (path !== '/healthz' && path !== '/readyz') {
+    const isHealth = path === '/health' || path === '/healthz';
+    const isReadiness = path === '/ready' || path === '/readyz';
+    if (!isHealth && !isReadiness) {
       send(404, { error: 'not_found' });
       return;
     }
@@ -38,13 +41,13 @@ export function createServer({
       send(405, { error: 'method_not_allowed' });
       return;
     }
-    const ready = path !== '/readyz' || readiness.ready;
+    const ready = !isReadiness || readiness.ready;
     send(ready ? 200 : 503, {
       status: ready ? 'ok' : 'draining',
       service: 'harborlight-api',
       environment,
       release,
-      ...(path === '/readyz' ? {
+      ...(isReadiness ? {
         scope: 'infrastructure',
         features: { accounts: false, persistence: false, gameApi: false }
       } : {})

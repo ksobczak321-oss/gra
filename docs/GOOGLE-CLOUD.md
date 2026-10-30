@@ -4,9 +4,9 @@
 
 30 października 2026 użytkownik pokazał aktywne konto rozliczeniowe HARBORLIGHT, projekty `harborlight-dev` i `harborlight-prod` oraz wynik kontroli z Cloud Shell: **PASS=22, FAIL=0**. Potwierdza to początkowy bootstrap, WIF i IAM. Nie potwierdza publikacji gry, działania kont graczy ani bazy.
 
-Użytkownik następnie zlecił wdrożenie gry na DEV oraz przypisanie zarejestrowanej w nazwa.pl domeny **harborlight.pl** do PROD. Przygotowano pakiet frontendu, konfigurację Firebase Hosting i pełny proces promocji. Dodanie Firebase do DEV zatrzymało się na **HTTP 403 przy `projects/harborlight-dev:addFirebase`**. Poprawiona diagnostyka pokazała `The caller does not have permission`, status `PERMISSION_DENIED`; nie wskazała konkretnej brakującej roli ani błędu warunków usługi. Pierwszą aktywację sprawdzamy z zalogowaną sesją właściciela w konsoli Firebase. Gra nie została jeszcze potwierdzona na GCP, a DNS domeny nie został zmieniony przez te skrypty.
+Użytkownik następnie zlecił wdrożenie gry na DEV oraz przypisanie zarejestrowanej w nazwa.pl domeny **harborlight.pl** do PROD. Po początkowej odmowie `addFirebase` właściciel aktywował Firebase w istniejącym projekcie przez jego konsolę. Ponowny skrypt potwierdził aktywny projekt i gotową witrynę `harborlight-dev`. Pierwszy workflow DEV przeszedł gate oraz publikację usługi Cloud Run, ale kontrola `/healthz` otrzymała Google HTTP 404 przed publikacją strony gry. Publiczne sondy przeniesiono na `/health` i `/ready`; poprawka wymaga nowego CI i uruchomienia DEV. Gra nie została jeszcze potwierdzona na GCP, a DNS domeny nie został zmieniony przez te skrypty.
 
-Ostatni potwierdzony sukces zdalnego CI to [41034966129](https://github.com/ksobczak321-oss/gra/actions/runs/41034966129) dla `fddd564`. Bieżące zmiany pełnego wydania wymagają własnego CI i odbioru po publikacji.
+Pełny pakiet gry przeszedł zdalne CI [41040626924](https://github.com/ksobczak321-oss/gra/actions/runs/41040626924) dla `8cb51ba`. Pierwszy DEV [41041613187](https://github.com/ksobczak321-oss/gra/actions/runs/41041613187) zatrzymał się na opisanej kontroli Cloud Run. Każda poprawka wymaga własnego CI i odbioru po publikacji.
 
 ## Adresy i usługi
 
@@ -18,7 +18,7 @@ Ostatni potwierdzony sukces zdalnego CI to [41034966129](https://github.com/ksob
 | Witryna Firebase Hosting | `harborlight-dev` | `harborlight-prod` |
 | Początkowy serwer HTTP | `harborlight-api-dev` | `harborlight-api-prod` |
 
-Firebase Hosting udostępnia stronę, moduły gry i grafiki przez HTTPS/CDN. Cloud Run zawiera obecnie tylko sondy `/healthz` i `/readyz`; gospodarka i zapis nadal działają w przeglądarce. Cloud SQL PostgreSQL, Firebase Authentication i serwerowe komendy są kolejnymi etapami, a nie częścią publikacji statycznej gry.
+Firebase Hosting udostępnia stronę, moduły gry i grafiki przez HTTPS/CDN. Cloud Run zawiera obecnie tylko publiczne sondy `/health` i `/ready`; gospodarka i zapis nadal działają w przeglądarce. Aliasy `/healthz` i `/readyz` pozostają dostępne w kontenerze, ale publiczna kontrola korzysta z tras bez kolizji z frontendem Cloud Run. Cloud SQL PostgreSQL, Firebase Authentication i serwerowe komendy są kolejnymi etapami, a nie częścią publikacji statycznej gry.
 
 API i repozytoria obrazów są w Warszawie, `europe-central2`. Projekty współdzielą konto rozliczeniowe, ale mają osobne konta usługowe, WIF i zasoby. Późniejsze bazy oraz konta Firebase także mają być oddzielone. 100 jednoczesnych graczy to kolejny próg pomiaru wydajności, nie limit chmury. Cloud Run automatycznie dodaje instancje do ustawionego maksimum; moc przyszłej bazy wymaga osobnego doboru.
 

@@ -265,7 +265,7 @@ jobs:
           HARBORLIGHT_API_URL: ${{ steps.deploy.outputs.url }}
         run: |
           set -euo pipefail
-          for endpoint in healthz readyz; do
+          for endpoint in health ready; do
             response="$(curl --fail --silent --show-error --retry 8 --retry-all-errors \
               --retry-connrefused --retry-delay 3 --connect-timeout 10 --max-time 20 \
               "$HARBORLIGHT_API_URL/$endpoint")"

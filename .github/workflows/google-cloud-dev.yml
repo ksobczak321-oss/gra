@@ -243,7 +243,7 @@ jobs:
           HARBORLIGHT_API_URL: ${{ steps.deploy.outputs.url }}
         run: |
           set -euo pipefail
-          for endpoint in healthz readyz; do
+          for endpoint in health ready; do
             response="$(curl --fail --silent --show-error \
               --retry 8 --retry-all-errors --retry-connrefused --retry-delay 3 \
               --connect-timeout 10 --max-time 20 \
@@ -373,7 +373,7 @@ jobs:
               "$HARBORLIGHT_CI_RUN_ID" "$HARBORLIGHT_CI_RUN_ATTEMPT"
             printf 'Potwierdzenie DEV: `harborlight-dev-release-%s-%s`.\n\n' \
               "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT"
-            printf 'Sprawdzone: `/healthz`, `/readyz`, manifest wydania i 5 grup testów gry z rzeczywistego hostingu DEV.\n\n'
+            printf 'Sprawdzone: `/health`, `/ready`, manifest wydania i 5 grup testów gry z rzeczywistego hostingu DEV.\n\n'
             printf 'Cloud Run: min. 0, maks. 2 instancje na rewizję; nie jest to limit faktury.\n\n'
             printf 'Gra jest udostępniona z Firebase Hosting; zapis pozostaje lokalny w przeglądarce. Konta, trwały zapis wysp i API gospodarki pozostają kolejnymi etapami.\n'
           } >> "$GITHUB_STEP_SUMMARY"

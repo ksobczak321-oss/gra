@@ -17,7 +17,7 @@ Workflow przygotowuje dwa elementy wydania:
 - obraz backendu, budowany raz i wdrażany na Cloud Run przez niezmienny `image@sha256`;
 - deterministyczne archiwum frontendu: aktywne pliki gry i grafiki oraz manifest `release.json` wiążący SHA z hashami plików.
 
-Frontend trafia do targetu `hosting:game` na witrynie `harborlight-dev`. Po publikacji workflow porównuje pobrany po HTTPS manifest z oczekiwanym SHA/hash i uruchamia pełne pięć grup testów rzeczywistej gry pod planowanym adresem `https://harborlight-dev.web.app`. Sondy backendu muszą równocześnie potwierdzić środowisko DEV i ten sam commit.
+Frontend trafia do targetu `hosting:game` na witrynie `harborlight-dev`. Po publikacji workflow porównuje pobrany po HTTPS manifest z oczekiwanym SHA/hash i uruchamia pełne pięć grup testów rzeczywistej gry pod planowanym adresem `https://harborlight-dev.web.app`. Publiczne sondy backendu `/health` i `/ready` muszą równocześnie potwierdzić środowisko DEV i ten sam commit.
 
 Dopiero po sukcesie wszystkich kontroli powstają dwa artefakty, związane z przebiegiem i numerem próby:
 
@@ -46,7 +46,7 @@ Deployer ma Cloud Run/Hosting tylko w swoim projekcie. PROD dodatkowo potrzebuje
 
 Domyślne identyfikatory projektów są publiczną konfiguracją workflow; nie trzeba kopiować sekretów do GitHuba. [Kontrola konfiguracji](../infra/google-cloud/verify.py) obejmuje 22 punkty, a `--promotion` dodaje 23. punkt roli czytelnika obrazów DEV dla PROD. Potwierdzono wynik 22/22; wynik 23. kontroli pozostaje do otrzymania.
 
-Na obecnym etapie publikacja Firebase DEV jest zatrzymana po HTTP 403 przy dodawaniu Firebase. Szczegółowy komunikat ma ustalić przyczynę. Ani lokalne testy pakietu, ani wcześniejszy zielony CI nie oznaczają jeszcze, że gra jest dostępna na GCP. [Konfiguracja hostingu i domeny](GOOGLE-CLOUD.md) opisuje kroki wymagające zalogowanego właściciela.
+Właściciel aktywował Firebase w istniejącym projekcie i potwierdził gotowość witryny DEV. Pierwszy przebieg publikacji przeszedł gate i wdrożył usługę Cloud Run, lecz kontrola publicznego `/healthz` zwróciła HTTP 404, zanim rozpoczęła się publikacja frontendu. Przygotowano sondy `/health` i `/ready`; poprawka wymaga własnego CI i nowego uruchomienia DEV. [Konfiguracja hostingu i domeny](GOOGLE-CLOUD.md) odróżnia przygotowanie zasobów od udanej publikacji gry.
 
 ## Wycofanie i następne elementy
 
