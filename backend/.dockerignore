@@ -2,3 +2,7 @@
 !Dockerfile
 !package.json
 !server.mjs
+!account-service.mjs
+!firebase-auth.mjs
+!firestore-store.mjs
+!retention.mjs

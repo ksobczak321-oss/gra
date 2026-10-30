@@ -167,6 +167,51 @@ jobs:
             --provenance=false --sbom=false --load \
             --tag "$HARBORLIGHT_IMAGE_TAG" backend/
 
+      - name: Start the exact API image before requesting cloud credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          api_container="harborlight-api-smoke-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          cleanup_api_container() {
+            docker rm --force "$api_container" >/dev/null 2>&1 || true
+          }
+          trap cleanup_api_container EXIT
+          docker run --detach --name "$api_container" --network none \
+            --env HARBORLIGHT_ENV=development \
+            --env "HARBORLIGHT_RELEASE=$GITHUB_SHA" \
+            --env HARBORLIGHT_ACCOUNT_API=0 "$HARBORLIGHT_IMAGE_TAG"
+          api_ready=false
+          for attempt in {1..30}; do
+            if docker exec "$api_container" node --input-type=module -e '
+              for (const endpoint of ["health", "ready"]) {
+                const response = await fetch(`http://127.0.0.1:8080/${endpoint}`);
+                const body = await response.json();
+                if (!response.ok || body.status !== "ok" || body.service !== "harborlight-api" ||
+                    body.environment !== "development" || body.release !== process.env.HARBORLIGHT_RELEASE) {
+                  throw new Error("The built API image did not confirm its health, environment and release");
+                }
+              }
+              const accounts = await fetch("http://127.0.0.1:8080/api/v1/island");
+              if (accounts.status !== 503 || (await accounts.json()).error !== "account_api_disabled") {
+                throw new Error("The image smoke test must not enable account/database access");
+              }
+            ' > "$RUNNER_TEMP/harborlight-image-smoke.log" 2>&1; then
+              api_ready=true
+              break
+            fi
+            if [[ "$(docker inspect --format='{{.State.Running}}' "$api_container")" != true ]]; then
+              break
+            fi
+            sleep 1
+          done
+          if [[ "$api_ready" != true ]]; then
+            docker logs "$api_container" || true
+            cat "$RUNNER_TEMP/harborlight-image-smoke.log"
+            printf '::error::The built API image could not start locally; cloud deployment was not attempted.\n'
+            exit 1
+          fi
+          printf 'Built image: health, readiness and disabled account API confirmed without cloud credentials.\n'
+
       - name: Authenticate with short-lived Google credentials
         uses: google-github-actions/auth@v3
         with:

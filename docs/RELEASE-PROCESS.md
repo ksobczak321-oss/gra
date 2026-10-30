@@ -8,7 +8,7 @@ Push, kontrola konfiguracji, test lokalny i publikacja to odrębne operacje. Akt
 
 Zmiany powstają w roboczym DEV, przechodzą odpowiednie lokalne testy i trafiają do Git. Push na `main` uruchamia CI, nie publikację Google Cloud. GitHub Pages jest podglądem deweloperskim, nie PROD.
 
-CI waliduje model gry i migracje, reguły promocji, API, konfigurację, deterministyczny publiczny pakiet oraz testy Chromium z tego pakietu. Scenariusze testowe tworzą izolowane fikstury tylko w lokalnym odbiorze pakietu; nie zastępują wysp stałych kont chmurowych.
+CI waliduje model gry i migracje, reguły promocji, API, odizolowany zestaw plików aplikacji po filtrze `.dockerignore`, konfigurację, deterministyczny publiczny pakiet oraz testy Chromium z tego pakietu. Kontrola pakowania uruchamia serwer z plików, które faktycznie trafią do obrazu, i sprawdza sondy bez dostępu do chmury. Scenariusze testowe tworzą izolowane fikstury tylko w lokalnym odbiorze pakietu; nie zastępują wysp stałych kont chmurowych.
 
 Lista publicznych plików jest jawna. Archiwum nie zawiera repozytorium Git, dokumentacji, sekretów ani historycznych gier. `release.json` wiąże pełny SHA z hashami i rozmiarami zawartości. Hash manifestu i archiwum są osobnymi dowodami.
 
@@ -16,7 +16,7 @@ Lista publicznych plików jest jawna. Archiwum nie zawiera repozytorium Git, dok
 
 [Techniczny workflow DEV](../.github/workflows/google-cloud-dev.yml) uruchamia się ręcznie z `main` po zielonym CI **tego samego pełnego SHA**. Kontrola bez poświadczeń Google blokuje brak dowodu przed dostępem do WIF.
 
-Workflow buduje backend raz, wdraża przez niezmienny `image@sha256` i publikuje deterministyczny frontend do `hosting:game`/`harborlight-dev`. Publiczne `/health` i `/ready` muszą potwierdzić właściwe środowisko techniczne i wydanie; aliasy `*z` nie są publicznym dowodem Cloud Run.
+Workflow buduje backend raz, uruchamia dokładnie ten obraz w lokalnym kontenerze z odłączoną siecią i wyłączonym API kont, a po sukcesie wdraża przez niezmienny `image@sha256` i publikuje deterministyczny frontend do `harborlight-dev`. Lokalny start odbywa się przed pobraniem poświadczeń Google i sprawdza `/health`, `/ready` oraz wyłączenie dostępu do kont. Publiczne `/health` i `/ready` muszą następnie potwierdzić właściwe środowisko techniczne i wydanie; aliasy `*z` nie są publicznym dowodem Cloud Run.
 
 Odbiór należy rozdzielić:
 

@@ -15,6 +15,7 @@ Kontrakt promocji: [docs/RELEASE-PROCESS.md](docs/RELEASE-PROCESS.md).
 ## Stan faktyczny i granice v18
 
 - Ostatnie potwierdzone wydanie chmurowe to **`f161e45`** na `https://harborlight-dev.web.app`, udany workflow **`41067599818`** z 30 października 2026, testy gry i kont oraz oba artefakty v2. To PRE-PROD mimo historycznej nazwy DEV w dowodach. Wersja v18 w tej przestrzeni wymaga własnych testów, commitu, CI i promocji; nie przedstawiaj jej jako już opublikowanej.
+- Źródło v18 `6c87a5b` zaliczyło pełne CI **`41109091537`**. Próba PRE-PROD **`41110213741`** zakończyła się błędem zadania deploy, bez artefaktów wydania. Lokalnie odtworzono pominięcie nowych modułów przez `.dockerignore`; poprawka pakowania i test uruchomienia rzeczywistego obrazu wymagają nowego CI oraz nowego przebiegu PRE-PROD. Ponowienie starego przebiegu nie pobiera nowszego kodu.
 - PROD `harborlight.pl` w nazwa.pl nie jest jeszcze opublikowany. DNS i certyfikat odczytujemy z rzeczywistych odpowiedzi Firebase; nie zgaduj rekordów ani stanu propagacji.
 - Region API i repozytoriów obrazów: `europe-central2`. Dostęp workflow przez WIF, bez kluczy kont usługowych w kodzie. Nie proś o przesyłanie sekretów w czacie.
 - PRE-PROD ma stałe loginy `admin1`, `admin2`, `admin3`, UID `dev-admin1`–`dev-admin3`, Firebase Authentication i prywatne wyspy Firestore. Nie resetuj ich haseł ani postępu przy wdrożeniu. Konta testowe są wyłączone z trzymiesięcznego resetu i nie są kopiowane na PROD.
