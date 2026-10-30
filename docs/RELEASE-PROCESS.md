@@ -46,7 +46,7 @@ Deployer ma Cloud Run/Hosting tylko w swoim projekcie. PROD dodatkowo potrzebuje
 
 Domyślne identyfikatory projektów są publiczną konfiguracją workflow; nie trzeba kopiować sekretów do GitHuba. [Kontrola konfiguracji](../infra/google-cloud/verify.py) obejmuje 22 punkty, a `--promotion` dodaje 23. punkt roli czytelnika obrazów DEV dla PROD. Potwierdzono wynik 22/22; wynik 23. kontroli pozostaje do otrzymania.
 
-Właściciel aktywował Firebase w istniejącym projekcie i potwierdził gotowość witryny DEV. Pierwszy przebieg publikacji przeszedł gate i wdrożył usługę Cloud Run, lecz kontrola publicznego `/healthz` zwróciła HTTP 404, zanim rozpoczęła się publikacja frontendu. Przygotowano sondy `/health` i `/ready`; poprawka wymaga własnego CI i nowego uruchomienia DEV. [Konfiguracja hostingu i domeny](GOOGLE-CLOUD.md) odróżnia przygotowanie zasobów od udanej publikacji gry.
+Właściciel aktywował Firebase w istniejącym projekcie i potwierdził gotowość witryny DEV. Po poprawieniu publicznych sond Cloud Run commit `c025895` przeszedł CI, a DEV `41050480920` zaliczył kontrole `/health` i `/ready`. Publikację Firebase zatrzymał HTTP 403 przy odczycie stanu API. Przygotowanie hostingu uzupełniono o `roles/serviceusage.serviceUsageViewer` dla deployera. Po ponowieniu właścicielskiego `--apply` można ponowić nieudane zadanie tego samego wydania; nowy commit nadal wymaga własnego CI. Pełne potwierdzenie DEV nie powstało. [Konfiguracja hostingu i domeny](GOOGLE-CLOUD.md) odróżnia przygotowanie zasobów od udanej publikacji gry.
 
 ## Wycofanie i następne elementy
 

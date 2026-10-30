@@ -22,6 +22,7 @@ FIREBASE = "https://firebase.googleapis.com/v1beta1"
 HOSTING = "https://firebasehosting.googleapis.com/v1beta1"
 APIS = ("firebase.googleapis.com", "firebasehosting.googleapis.com")
 HOSTING_ROLE = "roles/firebasehosting.admin"
+SERVICE_USAGE_VIEWER_ROLE = "roles/serviceusage.serviceUsageViewer"
 
 
 class PreparationError(Exception):
@@ -259,21 +260,26 @@ def prepare(project, apply=False, cloud=None, sleep=time.sleep, monotonic=time.m
     policy = cloud.gcloud("projects", "get-iam-policy", project)
     member = f"serviceAccount:harborlight-deployer@{project}.iam.gserviceaccount.com"
     role_ready = has_role(policy, HOSTING_ROLE, member)
+    viewer_ready = has_role(policy, SERVICE_USAGE_VIEWER_ROLE, member)
     emit(f"PASS {environment.upper()} — projekt, etykieta i rozliczenia HARBORLIGHT")
 
-    if not apply and (not set(APIS).issubset(enabled) or not role_ready):
+    if not apply and (not set(APIS).issubset(enabled) or not role_ready or not viewer_ready):
         if not set(APIS).issubset(enabled):
             emit("CHECK — API Firebase/Hosting czekają na włączenie.")
         if not role_ready:
             emit("CHECK — deployer czeka na rolę Firebase Hosting Admin.")
+        if not viewer_ready:
+            emit("CHECK — deployer czeka na rolę Service Usage Viewer do odczytu stanu API.")
         emit("CHECK — nie wykonano zmian. Użyj --apply, aby przygotować Hosting.")
         return False
     if apply:
         if not set(APIS).issubset(enabled):
             cloud.gcloud("services", "enable", *APIS, mutate=True)
-        if not role_ready:
+        missing_roles = [role for role, ready in ((HOSTING_ROLE, role_ready),
+                                                 (SERVICE_USAGE_VIEWER_ROLE, viewer_ready)) if not ready]
+        for role in missing_roles:
             cloud.gcloud("projects", "add-iam-policy-binding", project, f"--member={member}",
-                         f"--role={HOSTING_ROLE}", "--condition=None", mutate=True)
+                         f"--role={role}", "--condition=None", mutate=True)
 
     project_url = f"{FIREBASE}/projects/{project}"
     firebase = get_optional(cloud, project_url, retries=3 if apply else 0, sleep=sleep)

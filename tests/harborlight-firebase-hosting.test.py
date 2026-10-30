@@ -23,6 +23,7 @@ class FakeCloud:
         self.environment = project.rsplit("-", 1)[-1]
         self.number = "123456789"
         self.apis = self.role = self.firebase = self.site = ready
+        self.viewer = ready
         self.billing = True
         self.label = self.environment
         self.calls = []
@@ -41,12 +42,19 @@ class FakeCloud:
             return [{"config": {"name": name}} for name in hosting.APIS] if self.apis else []
         if arguments[:2] == ("projects", "get-iam-policy"):
             member = f"serviceAccount:harborlight-deployer@{self.project}.iam.gserviceaccount.com"
-            return {"bindings": [{"role": hosting.HOSTING_ROLE, "members": [member]}]} if self.role else {}
+            return {"bindings": [{"role": role, "members": [member]}
+                                 for role, ready in [(hosting.HOSTING_ROLE, self.role),
+                                                     (hosting.SERVICE_USAGE_VIEWER_ROLE, self.viewer)] if ready]}
         if arguments[:2] == ("services", "enable") and mutate:
             self.apis = True
             return {}
         if arguments[:2] == ("projects", "add-iam-policy-binding") and mutate:
-            self.role = True
+            if f"--role={hosting.HOSTING_ROLE}" in arguments:
+                self.role = True
+            elif f"--role={hosting.SERVICE_USAGE_VIEWER_ROLE}" in arguments:
+                self.viewer = True
+            else:
+                raise AssertionError("Unexpected broader IAM role")
             return {}
         raise AssertionError(f"Unexpected CLI operation: {arguments}")
 
@@ -101,11 +109,12 @@ class HostingPreparationTests(unittest.TestCase):
         cloud = FakeCloud()
         self.assertTrue(self.run_prepare(cloud, apply=True))
         mutations = [args for args, mutate in cloud.calls if mutate]
-        self.assertEqual(len(mutations), 2)
+        self.assertEqual(len(mutations), 3)
         self.assertEqual(sum(method == "POST" for method, _url, _body in cloud.http), 2)
         role = mutations[1]
         self.assertIn("--role=roles/firebasehosting.admin", role)
         self.assertIn("--member=serviceAccount:harborlight-deployer@harborlight-dev.iam.gserviceaccount.com", role)
+        self.assertIn("--role=roles/serviceusage.serviceUsageViewer", mutations[2])
         self.assertFalse(any(any(word in args for word in ["sql", "keys", "deploy", "delete"])
                              for args, _mutate in cloud.calls))
         cloud.calls.clear()
@@ -113,6 +122,31 @@ class HostingPreparationTests(unittest.TestCase):
         self.assertTrue(self.run_prepare(cloud, apply=True))
         self.assertFalse(any(mutate for _args, mutate in cloud.calls))
         self.assertTrue(all(method == "GET" for method, _url, _body in cloud.http))
+
+    def test_missing_service_usage_viewer_fails_check_without_mutations(self):
+        cloud = FakeCloud(ready=True)
+        cloud.viewer = False
+        self.assertFalse(self.run_prepare(cloud))
+        self.assertIn("Service Usage Viewer", "\n".join(self.lines))
+        self.assertFalse(any(mutate for _args, mutate in cloud.calls))
+        self.assertEqual(cloud.http, [])
+
+    def test_apply_adds_only_missing_service_usage_viewer_for_correct_environment(self):
+        for project in ["harborlight-dev", "harborlight-prod"]:
+            with self.subTest(project=project):
+                cloud = FakeCloud(project, ready=True)
+                cloud.viewer = False
+                self.assertTrue(self.run_prepare(cloud, apply=True))
+                mutations = [args for args, mutate in cloud.calls if mutate]
+                self.assertEqual(len(mutations), 1)
+                self.assertEqual(mutations[0][:3], ("projects", "add-iam-policy-binding", project))
+                self.assertIn("--role=roles/serviceusage.serviceUsageViewer", mutations[0])
+                self.assertIn(f"--member=serviceAccount:harborlight-deployer@{project}.iam.gserviceaccount.com", mutations[0])
+                self.assertIn("--condition=None", mutations[0])
+                self.assertTrue(all(method == "GET" for method, _url, _body in cloud.http))
+                cloud.calls.clear()
+                self.assertTrue(self.run_prepare(cloud, apply=True))
+                self.assertFalse(any(mutate for _args, mutate in cloud.calls))
 
     def test_wrong_billing_or_environment_stops_before_mutation(self):
         for field, value in [("billing", False), ("label", "prod")]:
