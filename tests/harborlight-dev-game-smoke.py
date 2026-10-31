@@ -209,13 +209,14 @@ def save_cloud(page):
 
 def finish_onboarding(page, name='Nowa wyspa'):
     guide = page.locator('[data-island-onboarding]')
-    if not guide.count():
-        return
+    expect(guide).to_be_visible()
     if guide.get_attribute('data-onboarding-stage') == 'intro':
         page.locator('[data-onboarding-next]').click()
+        expect(guide).to_have_attribute('data-onboarding-stage', 'name')
     if guide.get_attribute('data-onboarding-stage') == 'name':
         page.locator('[data-onboarding-name]').fill(name)
         page.locator('[data-onboarding-next]').click()
+        expect(guide).to_have_attribute('data-onboarding-stage', 'tour')
     page.locator('[data-onboarding-exit]').click()
     expect(guide).not_to_be_visible()
     if page.locator('[data-tutorial-dismiss]').is_visible():
