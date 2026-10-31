@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#102f43">
   <meta name="description" content="Welcome to HARBORLIGHT. Sign in, create an account, or continue exploring your island as a guest.">
   <title>HARBORLIGHT — Welcome Home</title>
-  <link rel="stylesheet" href="harborlight-auth.css?v=frontend-v19">
-  <script type="module" src="harborlight-auth.js?v=frontend-v19"></script>
+  <link rel="stylesheet" href="harborlight-auth.css?v=frontend-v20">
+  <script type="module" src="harborlight-auth.js?v=frontend-v20"></script>
 </head>
 <body>
   <a class="skip-link" href="#account">Skip to account</a>
@@ -65,7 +65,7 @@
               <input id="display-name" name="name" type="text" autocomplete="nickname" minlength="2" maxlength="40" placeholder="What should we call you?" aria-describedby="name-error" disabled>
               <p id="name-error" class="field-error" hidden></p>
             </div>
-            <div class="field" data-register-only hidden>
+            <div class="field" data-register-only data-local-island-name hidden>
               <label for="island-name">Island name</label>
               <input id="island-name" name="island-name" type="text" autocomplete="off" minlength="2" maxlength="40" placeholder="Name your island" aria-describedby="island-name-hint island-name-error" disabled>
               <p id="island-name-hint" class="field-hint">Use 2–40 characters. This name will appear on your island.</p>

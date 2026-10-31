@@ -1,7 +1,7 @@
 // Persistent learning, meaningful activity and future verified social hooks.
 // No DOM, network requests or account creation happen in this module.
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v19';
-import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v19';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v20';
+import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v20';
 
 export const ACTIVE_PLAY_SECONDS = 300;
 export const ABANDONED_PLAY_SECONDS = 48 * 3600;
@@ -17,6 +17,7 @@ const finite = value => typeof value === 'number' && Number.isFinite(value);
 const nonnegative = (value, fallback = 0) => finite(value) ? Math.min(Number.MAX_SAFE_INTEGER, Math.max(0, value)) : fallback;
 const whole = (value, fallback = 0) => Math.floor(nonnegative(value, fallback));
 const plain = value => value && typeof value === 'object' && !Array.isArray(value);
+const introductionPending = state => state?.onboarding?.version === 1 && state.onboarding.worldStartedAt === null && ['intro', 'name', 'tour'].includes(state.onboarding.stage);
 const textId = value => typeof value === 'string' && value.length > 0 && value.length <= 200 ? value : null;
 const nowOf = state => nonnegative(state.worldTimeMs, nonnegative(state.lastSimulatedAt));
 const townLevel = state => Math.max(1, whole(state.buildings?.townhall?.level, 1));
@@ -195,6 +196,7 @@ export function engagementStatus(state) {
 }
 
 export function registerMeaningfulActivity(state, activity = {}) {
+  if (introductionPending(state)) return false;
   if (activity.type === 'heartbeat' || activity.meaningful === false || activity.visible !== true || activity.focused !== true) return false;
   ensure(state);
   const now = nowOf(state), day = warsawDayKey(now);
@@ -272,10 +274,11 @@ export function tutorialPendingRewards(state) {
 export function tutorialStatus(state) {
   const rows = tutorialRows(state), completed = rows.filter(row => row.completed).length;
   return { completed, claimed: rows.filter(row => row.claimed).length, total: TUTORIAL_LESSONS.length, finished: completed === TUTORIAL_LESSONS.length,
-    autoOpenDisabled: state.tutorial?.autoOpenDisabled === true, shouldAutoOpen: completed < TUTORIAL_LESSONS.length && state.tutorial?.autoOpenDisabled !== true,
+    autoOpenDisabled: state.tutorial?.autoOpenDisabled === true, shouldAutoOpen: !introductionPending(state) && completed < TUTORIAL_LESSONS.length && state.tutorial?.autoOpenDisabled !== true,
     nextLessonId: rows.find(row => !row.completed)?.id || null, buildingSuppliesClaimed: state.tutorial?.buildingSuppliesClaimed === true };
 }
 export function recordProgressionAction(state, action, result) {
+  if (introductionPending(state)) return;
   if (result?.ok !== true || !action || typeof action !== 'object' || action.meaningful === false || action.type === 'expeditionMiniGameInput') return;
   ensure(state);
   const current = TUTORIAL_LESSONS.find(item => !state.tutorial.completed[item.id]);
@@ -330,6 +333,7 @@ function settleLoyaltyClosure(state) {
 }
 
 export function recordProgressionLogin(state, now = nowOf(state)) {
+  if (introductionPending(state)) return false;
   ensure(state);
   if (!finite(now) || now < 0) return false;
   settleLoyaltyClosure(state);

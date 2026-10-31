@@ -1,5 +1,5 @@
-import { registerTranslations } from './harborlight-v1-i18n.js?v=frontend-v19';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v19';
+import { registerTranslations } from './harborlight-v1-i18n.js?v=frontend-v20';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v20';
 
 // Presentation copy for the current learning flow. Player-entered text never
 // passes through this catalogue.

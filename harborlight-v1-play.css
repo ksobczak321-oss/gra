@@ -165,6 +165,10 @@ body.reduce-motion .lighthouse-beam{animation:none;transform:rotate(3deg);opacit
 [data-sentiment="positive"] [data-hud="happiness"],[data-mobile-hud="happiness"][data-sentiment="positive"]{color:#a7dfac}
 [data-sentiment="negative"] [data-hud="happiness"],[data-mobile-hud="happiness"][data-sentiment="negative"]{color:#ffa69b}
 .mobile-island-hud{display:none}
+.mobile-hud-heading{display:flex;align-items:center;gap:4px;min-width:0}
+.mobile-hud-heading button{min-width:30px;min-height:30px;padding:4px;border:1px solid #60809470;border-radius:7px;background:#13384d;color:#ffe0a1;font:700 14px/1.15 Inter,system-ui,sans-serif;cursor:pointer}
+.mobile-hud-heading .mobile-hud-brand{flex:1;min-width:0;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}
+.mobile-hud-heading .mobile-hud-clock{white-space:pre-line;font-size:10px}
 .island-topbar .topbar-brand{width:190px}
 .island-topbar .topbar-resource{min-width:78px;padding-inline:6px;gap:5px}
 .notification-button{position:relative}

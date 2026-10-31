@@ -1,24 +1,25 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v19';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v19';
-import * as State from './harborlight-v1-state.js?v=frontend-v19';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v19';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v19';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v19';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v19';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v19';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v19';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v19';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v19';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v19';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v19';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v19';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v19';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v19';
-import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v19';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v19';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v19';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v19-fit2';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v19';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v20';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v20';
+import * as State from './harborlight-v1-state.js?v=frontend-v20';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v20';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v20';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v20';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v20';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v20';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v20';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v20';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v20';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v20';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v20';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v20';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v20';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v20';
+import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v20';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v20';
+import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v20';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v20-fit2';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v20';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v20';
 
 I18n.registerTranslations({
   "Choose a minigame": "Wybierz minigrę",
@@ -115,10 +116,11 @@ async function waitForCloudRetry(error) {
 }
 if (devAccount) {
   devSync = createDevSync({ cloud: devCloud, account: devAccount, saveKey: SAVE_KEY,
+    onRestore: payload => restoreSyncedIsland(payload),
     onStatus: status => { devSyncStatus = status; if (devCloudUiReady) updateDevCloudStatus(); } });
   for (;;) {
     try {
-      const payload=await devSync.open(JSON.stringify(createState()));
+      const payload=await devSync.open(JSON.stringify(createState(Date.now(), { onboarding: true })));
       try { state=normalizeState(JSON.parse(payload)); }
       catch { devSync.pause('invalid-cloud-data'); throw Object.assign(new Error('Invalid cloud save'),{code:'invalid-cloud-data'}); }
       break;
@@ -135,7 +137,7 @@ if (devAccount) {
   }
 } else if (LOCAL_PREVIEW) {
   const fixture=LOOPBACK_PREVIEW && globalThis.__HARBORLIGHT_DEV_FIXTURE__;
-  state=fixture ? normalizeState(structuredClone(fixture)) : createState();
+  state=fixture ? normalizeState(structuredClone(fixture)) : createState(Date.now(), { onboarding: NEW_PLAYER_PROFILE });
   if(LOOPBACK_PREVIEW) {
     delete globalThis.__HARBORLIGHT_DEV_FIXTURE__;
     Object.defineProperty(window,'__HARBORLIGHT_DEV_STATE__',{configurable:true,get:()=>structuredClone(state)});
@@ -154,6 +156,8 @@ let miniSavedAt = 0;
 let miniLastTiltActive = false;
 let tutorialCelebration = null;
 let tutorialReady = false;
+let onboardingFlow = null;
+let worldExperienceReady = false;
 let tutorialGuideSignature = '';
 let tutorialPanelSignature = '';
 const deferredTutorialRewards = new Set();
@@ -176,6 +180,7 @@ stage.append(worldAdditions);
 let worldSignature = '';
 
 function settleActiveTick() {
+  if (onboardingFlow?.active && !worldExperienceReady) return;
   if (devSync && !devSync.writable) return;
   const now = Date.now();
   if (typeof State.advanceTo === 'function') State.advanceTo(state, now);
@@ -210,6 +215,9 @@ let lastServerActivityAt=-Infinity;
 function act(...args) {
   if (devSync && (!devSync.writable || devSync.status==='saving')) return {ok:false,message:'Cloud confirmation is required before another action.'};
   const result=modelAct(...args);
+  if (result.ok && args[1]?.type === 'userActivity' && devAccount && devCloud.recordSessionActivity?.() === false) {
+    finishDevSignout(); return { ok: false, message: 'Your session expired. Sign in again.' };
+  }
   if(result.ok && args[1]?.type==='userActivity' && devAccount && typeof devCloud.recordActivity==='function' && Date.now()-lastServerActivityAt>=60000){
     lastServerActivityAt=Date.now();
     void devCloud.recordActivity().catch(error=>{if(devSync)devSync.pause(error?.code||'offline');});
@@ -221,13 +229,36 @@ function save(immediate=false) {
   if (!devSync.queue(JSON.stringify(state))) return Promise.resolve(false);
   return immediate ? devSync.flush() : Promise.resolve(true);
 }
-async function reloadConfirmedIsland() {
-  if(!devSync) throw new Error('Cloud sign-in is required.');
-  const payload=await devSync.reloadCloud();
-  miniController?.dispose(); miniController=null;
-  state=normalizeState(JSON.parse(payload)); lastTick=Date.now();
-  renderHUD(); if(panel&&dialog.open)renderPanel();
-  return state;
+function restoreSyncedIsland(payload) {
+  // A retry adopts either the server-confirmed pending write or a newer remote
+  // version. Never replace an unreachable island with a fresh starter.
+  const restored = normalizeState(JSON.parse(payload));
+  miniController?.dispose(); miniController = null;
+  state = restored; lastTick = Date.now();
+  if (!devCloudUiReady) return;
+  // Recovery is still locked while this callback runs. Resume interface
+  // commands only after the coordinator has published its recovered status.
+  queueMicrotask(() => {
+    if (devSync && !devSync.writable) return;
+    if (State.onboardingStatus(state).pending) {
+      const status = State.onboardingStatus(state);
+      if (onboardingFlow?.active) void onboardingFlow.update({ ...status, islandName: state.islandName });
+      else {
+        tutorialReady = false; worldExperienceReady = false;
+        if (dialog.open) closePanel(true);
+        void beginOnboarding();
+      }
+    } else if (onboardingFlow?.active) {
+      onboardingFlow.destroy(); onboardingFlow = null;
+      beginWorldExperience();
+    }
+    if (panel?.kind === 'puzzle') {
+      const run = expeditionSession();
+      if (!run || !['active', 'decision'].includes(run.status)) { closePanel(true); puzzle = null; }
+    }
+    renderHUD();
+    if (panel && dialog.open) renderPanel();
+  });
 }
 
 function toast(message) {
@@ -491,6 +522,11 @@ hotspot('notifications', 'Notifications', [0, 0, 0, 0], () => openPanel('notific
 hud.notifications = el('span', { 'data-notification-count': '' }, '0');
 toolbarButton('notifications', 'Notifications', 'topbar-control notification-button', el('span', { 'aria-hidden': 'true' }, '🔔'), hud.notifications);
 const mobileHud = el('nav', { class: 'mobile-island-hud', 'aria-label': 'Island status' });
+const mobileHeading = el('div', { class: 'mobile-hud-heading' },
+  button('', () => openPanel('home'), { class: 'mobile-hud-brand', 'data-mobile-control': 'home', 'aria-label': 'Island overview' }),
+  button('', () => openPanel('time'), { class: 'mobile-hud-clock', 'data-mobile-control': 'clock', 'aria-label': 'Island day and time' }),
+  ...[['tutorial', '?', 'Tutorial'], ['notifications', '🔔', 'Notifications'], ['settings', '⚙', 'Settings']].map(([id, icon, label]) =>
+    button(icon, () => openPanel(id), { class: 'mobile-hud-tool', 'data-mobile-control': id, 'aria-label': label })));
 const mobileSummary = el('div', { class: 'mobile-hud-summary' });
 const mobileResources = el('div', { class: 'mobile-hud-resources' });
 const mobileHudValues = {};
@@ -500,7 +536,7 @@ for (const [id, label, action] of [['level', 'Level', () => openPanel('building'
   node.replaceChildren(el('small', {}, label), mobileHudValues[id]);
   (['level', 'happiness', 'population'].includes(id) ? mobileSummary : mobileResources).append(node);
 }
-mobileHud.append(mobileSummary, mobileResources);
+mobileHud.append(mobileHeading, mobileSummary, mobileResources);
 document.body.append(mobileHud);
 const roundUpHappiness = value => {
   // Exact hourly totals can land a few floating-point bits above an integer.
@@ -529,6 +565,7 @@ function renderHUD() {
   document.title = `${islandDisplayName(state, language())} — HARBORLIGHT`;
   document.querySelector('title').setAttribute('data-i18n-ignore', '');
   document.querySelectorAll('[data-island-name]').forEach(node => { node.textContent = islandDisplayName(state, language()); node.title = islandDisplayName(state, language()); });
+  mobileHeading.querySelector('[data-mobile-control="home"]').textContent = islandDisplayName(state, language());
   resourceDock.querySelectorAll('[data-dock-active]').forEach(node => {
     const producer = resourceProductionBuildings[node.dataset.dockActive];
     node.textContent = count(workingProducerCount(producer));
@@ -565,6 +602,7 @@ function renderHUD() {
   const calendar = State.islandCalendar?.(state);
   hud.clock.textContent = calendar ? `${calendar.date}.${String(calendar.month).padStart(2, '0')}\n${String(calendar.hour).padStart(2, '0')}:${String(calendar.minute).padStart(2, '0')}` : `${uiCopy('Day', 'Dzień')} ${state.day}\n${String(Math.floor(state.minutes / 60)).padStart(2, '0')}:${String(Math.floor(state.minutes % 60)).padStart(2, '0')}`;
 
+  mobileHeading.querySelector('[data-mobile-control="clock"]').textContent = hud.clock.textContent;
   const productionPenalties = new Set((Effects.activeEffects?.(state) || []).filter(effect => effect.id.startsWith('production-blockage-')).map(effect => effect.id.slice('production-blockage-'.length)));
   for (const [id, value] of Object.entries(state.buildings)) {
     const node = document.getElementById(`hit-world-${id}`);
@@ -589,7 +627,7 @@ function renderHUD() {
   }
   document.body.classList.toggle('reduce-motion', !state.settings.motion);
   document.body.classList.toggle('motion-override', state.settings.motionOverride === true && state.settings.motion);
-  document.body.classList.remove('world-paused');
+  document.body.classList.toggle('world-paused', State.onboardingStatus(state).pending);
   renderLeisureDock();
   renderMobileDock();
   renderActivityStack();
@@ -602,7 +640,7 @@ function renderHUD() {
   refreshMiniGame();
   refreshTutorialExperience();
   refreshIdleSession();
-  refreshEngagementExperience();
+  if (!State.onboardingStatus(state).pending && worldExperienceReady) refreshEngagementExperience();
   localize();
 }
 function refreshConstructionBadge(node, id, project) {
@@ -1926,8 +1964,8 @@ function devSyncMessage() {
     saved:['Postęp zapisany w chmurze.','Progress saved to the cloud.'],
     pending:['Zmiany oczekują na potwierdzenie w chmurze.','Changes are awaiting cloud confirmation.'],
     saving:['Zapisywanie postępu w chmurze…','Saving progress to the cloud…'],
-    offline:['Brak połączenia. Działania są wstrzymane. Wczytaj zapis z chmury.','Connection lost. Actions are paused. Reload the cloud save.'],
-    conflict:['Inna sesja zapisała nowszy stan. Wczytaj zapis z chmury.','Another session saved a newer state. Reload the cloud save.'],
+    offline:['Brak połączenia. Gra automatycznie ponawia zapis; działania są wstrzymane.','Connection lost. The game retries saving automatically; actions are paused.'],
+    conflict:['Wczytywanie nowszego zapisu z innej sesji. Działania są wstrzymane.','Loading the newer save from another session. Actions are paused.'],
     'auth-required':['Sesja wygasła. Zaloguj się ponownie.','Your session expired. Sign in again.'],
     permission:['Brak dostępu do zapisu. Działania są wstrzymane.','Cloud access denied. Actions are paused.'],
     configuration:['Usługa kont wymaga konfiguracji. Działania są wstrzymane.','The account service requires setup. Actions are paused.'],
@@ -1941,28 +1979,18 @@ function updateDevCloudStatus() {
   if(!devAccount||!devCloudUiReady)return;
   const failure=!['loading','saved','pending','saving'].includes(devSyncStatus);
   document.body.dataset.cloudStatus=devSyncStatus;
-  if(!devCloudAlert){devCloudAlert=el('button',{type:'button',class:'dev-cloud-alert','data-i18n-ignore':'',onclick:()=>openPanel('settings')});document.body.append(devCloudAlert);}
+  if(!devCloudAlert){devCloudAlert=el('button',{type:'button',class:'dev-cloud-alert','data-i18n-ignore':'',onclick:async()=>{
+    if (devSyncStatus === 'auth-required') { finishDevSignout(); return; }
+    await devSync.recover();
+  }});document.body.append(devCloudAlert);}
   devCloudAlert.hidden=!failure;devCloudAlert.textContent=devSyncMessage();
-  for(const node of dialog.querySelectorAll('[data-cloud-save-status]')){node.textContent=devSyncMessage();node.dataset.status=devSyncStatus;}
-  if(failure && devSync.confirmedPayload){
-    miniController?.dispose();miniController=null;
-    try{state=normalizeState(JSON.parse(devSync.confirmedPayload));}catch{/* Invalid server data is never replaced with a starter. */}
-  }
+  if (failure) (document.querySelector('dialog[open]') || document.body).append(devCloudAlert);
+  if(failure) { miniController?.dispose(); miniController=null; }
 }
 function finishDevSignout() {
   devSync?.dispose();devCloud.signOut();
   location.assign('harborlight-auth.html?mode=login');
 }
-function devAccountPanel() {
-  if(!devAccount)return null;
-  const label=(pl,en)=>language()==='pl'?pl:en;
-  return card(el('h3',{'data-dev-account':devAccount.login},`${label(devCloud.preprod?'Konto PRE-PROD':'Konto','Account')}: ${devAccount.login}`),
-    el('p',{class:'notice','data-cloud-save-status':'','data-status':devSyncStatus,'data-i18n-ignore':'',role:'status'},devSyncMessage()),
-    note(label('Postęp tej wyspy jest zapisywany wyłącznie w chmurze.','This island is saved exclusively in the cloud.')),
-    button(label('Zapisz w chmurze','Save to cloud'),async()=>{settleActiveTick();await save(true);updateDevCloudStatus();toast(devSyncMessage());},{class:'action secondary','data-cloud-save-now':''}),
-    button(label('Wczytaj zapis z chmury','Load cloud save'),async()=>{try{await reloadConfirmedIsland();toast(devSyncMessage());}catch{toast(devSyncMessage());}},{class:'action secondary','data-cloud-reload':''}));
-}
-
 function settingsPanel() {
   const checkbox = (key, label) => el('label', { class: 'setting-row' }, el('span', {}, label), el('input', { type: 'checkbox', checked: key === 'motion' ? effectiveAnimationsEnabled() : !!state.settings[key], onchange: event => perform({ type: 'setting', key, value: event.target.checked }) }));
   const languageSelect = el('select', { 'aria-label': 'Language', onchange: event => { perform({ type: 'setting', key: 'language', value: event.target.value }); renderLeisureDock(true); localize(); renderMobileDock(true); } }, el('option', { value: 'en', selected: language() === 'en' }, 'English'), el('option', { value: 'pl', selected: language() === 'pl' }, 'Polski'));
@@ -1973,9 +2001,9 @@ function settingsPanel() {
   const legalLinks = el('nav', { class:'settings-legal-links', 'aria-label':uiCopy('Game documents','Dokumenty gry'), 'data-settings-legal':'' },
     el('a', {href:'harborlight-terms.html',target:'_blank',rel:'noopener'}, uiCopy('Game Terms','Regulamin gry')),
     el('a', {href:'harborlight-privacy.html',target:'_blank',rel:'noopener'}, uiCopy('Privacy policy','Polityka prywatności')));
-  return el('div', {}, signout, devAccountPanel(), legalLinks, el('label', { class: 'setting-row' }, el('span', {}, 'Language'), languageSelect), notificationFilterSettings(), button('Tutorial', () => openPanel('tutorial'), { class: 'action secondary' }), checkbox('motion', 'Animations and highlights'),
+  return el('div', {}, signout, legalLinks, el('label', { class: 'setting-row' }, el('span', {}, 'Language'), languageSelect), notificationFilterSettings(), button('Tutorial', () => openPanel('tutorial'), { class: 'action secondary' }), checkbox('motion', 'Animations and highlights'),
     !effectiveAnimationsEnabled() ? note(state.settings.motion ? 'Animations are paused by your system’s reduced-motion preference. Enable the checkbox to turn on water, smoke and island movement.' : 'Animations are off. Enable the checkbox to turn on water, smoke and island movement.') : null,
-    note(devAccount ? (language() === 'pl' ? 'Wyspa działa w czasie rzeczywistym. Postęp jest zapisywany wyłącznie w chmurze.' : 'Your island continues in real time. Progress is saved exclusively in the cloud.') : 'Development preview runs in memory. Hosted accounts save exclusively in the cloud.'),
+    note(devAccount ? (language() === 'pl' ? 'Postęp zapisuje się automatycznie co 30 sekund, wyłącznie w chmurze. Po zakończeniu wprowadzenia wyspa działa w czasie rzeczywistym, także podczas nieobecności.' : 'Progress saves automatically every 30 seconds, exclusively to the cloud. After the introduction, the island continues in real time, including while you are away.') : 'Development preview runs in memory. Hosted accounts save exclusively in the cloud.'),
     card(el('h3', {}, 'Ranking'), stat('Hourly score', count(ranking)), note('Town Hall level × coins, recorded on each full hour.')),
     button('Premium options', () => openPanel('premium'), { class: 'action secondary' }),
     button('Resume tutorial', () => { if (perform({ type: 'resumeTutorial' })) openPanel('tutorial'); }, { class: 'action secondary', 'data-resume-tutorial': '' }),
@@ -2019,6 +2047,7 @@ function miniGameInput(action) {
   const before = expeditionRun(panel?.id)?.status;
   settleActiveTick();
   if (action.meaningful === true && !document.hidden && document.hasFocus() && Date.now() - lastInputAt >= 250) {
+    if (devAccount && devCloud.recordSessionActivity?.() === false) { finishDevSignout(); return; }
     lastInputAt = Date.now(); act(state, { type: 'userActivity', visible: true, focused: true });
   }
   const inputFrame = action.type === 'expeditionMiniGameInput';
@@ -2206,9 +2235,12 @@ function renderPanel() {
     })))); break;
     case 'reset': body = el('div', {}, note(uiCopy('Starting over replaces this island. Account purchase history and one-time entitlements are retained. Island resources are lost.', 'Rozpoczęcie od nowa zastąpi tę wyspę. Historia zakupów i jednorazowe uprawnienia konta pozostają zachowane. Zasoby wyspy zostaną utracone.')), button('Yes, start over', async () => {
       if(devSync && (!devSync.writable || devSync.status==='saving')){toast(devSyncMessage());return;}
-      state=Commerce.preserveAccountProgress(state,createState());puzzle=null;
+      state=Commerce.preserveAccountProgress(state,createState(Date.now(), { onboarding: true }));puzzle=null;
       if(!await save(true)){renderHUD();toast(devSyncMessage());return;}
-      renderHUD();openPanel('home');toast('Your new island is ready.');
+      tutorialReady=false;worldExperienceReady=false;closePanel(true);
+      document.querySelector('[data-active-tutorial-guide]')?.remove();
+      document.querySelector('[data-tutorial-pointer]')?.remove();
+      renderHUD();await beginOnboarding();
     }, { class:'action danger','data-reset-island':'' }), button('Keep my island', () => openPanel('settings'), { class:'action secondary' })); break;
     default: body = el('div', {}, note(gameGoal().description),
       stat('Loyalty — consecutive days', `${state.loyalty.streak} / 10`),
@@ -2540,19 +2572,100 @@ function refreshTaskAcceptance() {
   if (clock) clock.textContent = status?.pending ? `Confirm in ${durationText(status.remaining)}` : 'This confirmation has expired. Open the task again.';
   const confirm = taskAcceptanceDialog.querySelector('[data-confirm-task]'); if (confirm) confirm.disabled = !status?.canConfirm;
 }
-const sessionStartedAt = Date.now();
+// The explanation comes before gameplay: its navigation never visits a panel,
+// spends resources, assigns a worker, or advances the ordinary tutorial.
+function onboardingSteps() {
+  const visible = (...selectors) => selectors.map(selector => document.querySelector(selector)).find(node => {
+    if (!node?.getClientRects().length) return false;
+    const rect = node.getBoundingClientRect();
+    return rect.right > 0 && rect.left < innerWidth && rect.bottom > 0 && rect.top < innerHeight;
+  });
+  const targetHud = id => () => visible(`[data-mobile-control="${id}"]`, `[data-mobile-hud="${id}"]`, `#hit-${id === 'coins' ? 'resource-coins' : id}`);
+  const step = (id, plTitle, enTitle, pl, en, target, prepare) => ({ id, title: { pl: plTitle, en: enTitle }, text: { pl, en }, target, prepare });
+  const steps = [
+    step('home', 'Twoja wyspa', 'Your island', 'Tu widzisz nazwę swojej wyspy. Kliknięcie otwiera jej podsumowanie: cele, zasady, budynki, zadania, ekspedycje i handel.', 'This is your island’s name. Open its overview for goals, rules, buildings, tasks, expeditions and trade.', targetHud('home')),
+    step('level', 'Poziom wyspy', 'Island level', 'To poziom Ratusza. Wyznacza limit mieszkańców i najwyższy dostępny poziom rozbudowy budynków. Kliknij go, aby sprawdzić koszt i kolejkę rozbudowy Ratusza.', 'This is the Town Hall level. It sets the population limit and the highest available building level. Open it to see the Town Hall upgrade cost and queue.', targetHud('level')),
+    step('happiness', 'Szczęście mieszkańców', 'Residents’ happiness', 'Szczęście to średnia dla mieszkańców. Dodatnie przyciąga nowych ludzi, ujemne powoduje odejścia, a 0% utrzymuje liczbę ludności. Jedzenie, praca, mieszkania i premie wpływają na wynik.', 'This is residents’ average happiness. Positive happiness attracts people, negative happiness causes departures, and 0% keeps the population stable. Food, work, homes and bonuses affect it.', targetHud('happiness')),
+    step('population', 'Mieszkańcy i miejsca', 'Residents and places', 'Sprawdź liczbę mieszkańców, limit Ratusza i dostępne łóżka. W tym oknie przydzielasz wolnych mieszkańców do pracy i sprawdzasz, czy mają dom oraz żywność.', 'Check the population, Town Hall limit and available beds. Open this panel to assign available residents to work and check their housing and food.', targetHud('population')),
+    step('coins', 'Monety', 'Coins', 'Monety służą do handlu, atrakcji i wybranych przyspieszeń. Zarabiasz je między innymi dzięki pracującym mieszkańcom, zadaniom i ekspedycjom. Kliknięcie pokazuje stan zasobów.', 'Use coins for trade, attractions and selected speed-ups. Working residents, tasks and expeditions can earn them. Open this control to inspect your resources.', targetHud('coins')),
+    step('working', 'Pracujący mieszkańcy', 'Working residents', 'Ta liczba pokazuje osoby, które rzeczywiście dotarły do pracy. Nowo przydzielony pracownik najpierw idzie do budynku; dopiero potem rozpoczyna pracę. Kliknij, aby zarządzać obsadą.', 'This count shows residents who have actually reached work. A newly assigned worker first walks to the building, then starts working. Open it to manage assignments.', targetHud('working')),
+    step('arrival', 'Następny mieszkaniec', 'Next resident', 'Tu zobaczysz przewidywany czas przybycia lub odejścia mieszkańca przy obecnym szczęściu. Dla nowych osób potrzebujesz wolnych miejsc; zmiana szczęścia zmienia ten czas.', 'This estimates the next arrival or departure at the current happiness. New residents need available population space; changing happiness changes this estimate.', targetHud('arrival')),
+    step('points', 'Punkty', 'Points', 'Wynik godzinowy to poziom Ratusza pomnożony przez monety. Gra zapisuje go po każdej pełnej godzinie. Kliknięcie prowadzi do ustawień i podsumowania wyniku.', 'Your hourly score is the Town Hall level multiplied by your coins. It is recorded on each full hour. Open this control for Settings and the score summary.', targetHud('points')),
+    step('clock', 'Czas wyspy', 'Island time', 'Wyspa ma własny kalendarz. Po tym oprowadzaniu produkcja, transport, posiłki i budowa zaczną biec w czasie rzeczywistym, również podczas Twojej nieobecności. Teraz czas pozostaje zatrzymany.', 'The island has its own calendar. After this tour, production, transport, food and construction follow real elapsed time, including while you are away. Time is still paused now.', targetHud('clock')),
+    step('tasks', 'Bieżące zadania', 'Current tasks', 'Zadania Latarni wymagają dostarczenia określonych zasobów i mają własny termin. Możesz realizować jedno naraz. Otwórz listę przyciskiem „Zadania” lub „Wszystkie”, aby poznać wymagania i nagrody przed przyjęciem.', 'Lighthouse tasks require specific resources and have individual deadlines. Work on one at a time. Use Tasks or All to check requirements and rewards before accepting.', () => visible('.mobile-activities', '.island-activity-stack .activity-section-heading .activity-link')),
+    step('expeditions', 'Ekspedycje i minigry', 'Expeditions and minigames', 'W ekspedycjach wybierasz minigrę. Po wygranej możesz wypłacić nagrodę albo zaryzykować pulę w kolejnej rundzie. Na telefonie wejdziesz do ekspedycji przez Menu wyspy.', 'Choose a minigame for an expedition. After winning, cash out or risk the pot on the next round. On a phone, open Expeditions from the Island menu.', () => visible('.island-activity-stack .activity-expedition', '.mobile-island-menu'))
+  ];
+  for (const id of BUILDING_DOCK_ORDER) steps.push(step(`building-${id}`, titleOf(id) && text(titleOf(id)), titleOf(id), buildingPurpose(id, 'pl'), buildingPurpose(id, 'en'), () => document.getElementById(`hit-world-${id}`), () => {
+    window.dispatchEvent(new CustomEvent('island-tour-focus', { detail: { region: buildingRegions[id] } }));
+  }));
+  steps.push(step('ship', 'Statek i handel', 'Ship and trade', 'Statek prowadzi do handlu w Porcie. Kupowane i sprzedawane materiały potrzebują transportu — sama transakcja nie zastępuje dostawy.', 'The ship opens harbour trade. Bought and sold materials need transport: placing a trade does not replace the delivery.', () => document.getElementById('hit-boat'), () => window.dispatchEvent(new CustomEvent('island-tour-focus', { detail: { region: [215, 635, 219, 137] } }))));
+  const categories = [
+    ['administration', 'Administracja', 'Administration', 'Ratusz, Dom, Magazyn, Targ, Port, Kaplica i Latarnia. Wybierz kartę budynku, aby sprawdzić jego działanie, obsadę, koszty i rozbudowę.', 'Find the Town Hall, House, Warehouse, Market, Harbour, Chapel and Lighthouse. Select a building card for its purpose, workers, costs and upgrades.'],
+    ['economy', 'Gospodarka', 'Economy', 'Tu wybierasz budynki produkujące i przetwarzające zasoby. Obsada produkuje, a tragarze Magazynu odbierają gotowe towary.', 'Find the buildings that produce and process resources. Assigned workers produce goods, and Warehouse carriers collect them.'],
+    ['resources', 'Zasoby', 'Resources', 'Karty zasobów pokazują obsadę, lokalny zapas, stan magazynu centralnego i towary w drodze. Kliknięcie zasobu otwiera odpowiedni budynek produkcyjny.', 'Resource cards show workers, local stock, central stock and goods in transit. Select a resource to open its production building.'],
+    ['decorations', 'Dekoracje i atrakcje', 'Decorations and attractions', 'Atrakcje dają czasowe premie do szczęścia za monety. Przed zakupem sprawdź cenę, objętych premią mieszkańców i czas trwania efektu.', 'Attractions provide temporary happiness bonuses for coins. Check the price, affected residents and effect duration before buying.'],
+    ['paths', 'Ścieżki', 'Paths', 'Ulepszanie ścieżek kosztuje kamień i usprawnia przewóz. Ukończ wszystkie odcinki bieżącego poziomu, zanim przejdziesz do następnego.', 'Path improvements cost Stone and improve transport. Finish every section of the current level before starting the next.']
+  ];
+  for (const [id, plTitle, enTitle, pl, en] of categories) steps.push(step(`category-${id}`, plTitle, enTitle, pl, en, () => visible(`[data-mobile-category="${id}"]`, `#hit-category-${id}`), () => setDockCategory(id)));
+  steps.push(
+    step('tutorial', 'Samouczek praktyczny', 'Practical tutorial', 'Po oprowadzaniu ruszy osobny samouczek. Jego 25 kroków uczy przez prawdziwe działania w grze. Samo oglądanie tych podpowiedzi nie wykonuje zadań i nie odbiera nagród.', 'After this tour, a separate 25-step tutorial teaches you through actual game actions. Reading these explanations does not complete lessons or collect rewards.', targetHud('tutorial')),
+    step('notifications', 'Powiadomienia', 'Notifications', 'Tu sprawdzisz informacje o budowach, dostawach, premiach i karach. W ustawieniach wybierasz kategorie, które chcesz widzieć.', 'Check construction, delivery, bonus and penalty messages here. Choose which categories to display in Settings.', targetHud('notifications')),
+    step('settings', 'Ustawienia i wylogowanie', 'Settings and sign-out', 'Tutaj zmienisz język, animacje i powiadomienia oraz wylogujesz się. Postęp zapisuje się automatycznie co 30 sekund w chmurze — nie musisz ręcznie zapisywać ani wczytywać wyspy.', 'Change language, animations and notifications, or sign out here. Progress saves automatically to the cloud every 30 seconds; no manual saving or loading is needed.', targetHud('settings')),
+    step('menu', 'Menu wyspy', 'Island menu', 'Menu daje dostęp do zasad, celów, budynków, mieszkańców, magazynu, handlu i ekspedycji. Możesz tu wrócić w każdej chwili podczas zwykłej gry.', 'The menu gives access to rules, goals, buildings, residents, storage, trade and expeditions. Return here at any time during regular play.', () => visible('.mobile-island-menu', '#hit-menu'))
+  );
+  return steps;
+}
+async function beginOnboarding() {
+  const status = State.onboardingStatus(state);
+  onboardingFlow = createIslandOnboarding({ ...status, islandName: state.islandName, language: language(), steps: onboardingSteps(),
+    onUpdate: async next => {
+      if (devSync && !devSync.writable && !await devSync.recover()) return false;
+      const action = { type: 'onboardingUpdate', stage: next.stage, index: next.index };
+      if (next.islandName) action.islandName = next.islandName;
+      if (!act(state, action).ok) return false;
+      renderHUD(); return save(true);
+    },
+    onFinish: async () => {
+      if (devSync && !devSync.writable && !await devSync.recover()) return false;
+      if (!act(state, { type: 'onboardingFinish' }).ok) return false;
+      if (!await save(true)) return false;
+      onboardingFlow?.destroy(); onboardingFlow = null;
+      beginWorldExperience(); renderHUD(); return true;
+    }
+  });
+  await onboardingFlow.start();
+}
+function beginWorldExperience() {
+  if (worldExperienceReady || State.onboardingStatus(state).pending) return;
+  worldExperienceReady = true;
+  lastTick = Date.now(); foregroundAnchor = Date.now();
+  recoverInterruptedStandardAd();
+  settleActiveTick();
+  if (!NEW_PLAYER_PROFILE) State.applyBuildTestStock?.(state);
+  recordVisit(state); save();
+  const restoredExpedition = expeditionSession();
+  if (restoredExpedition?.status === 'active') beginPuzzle(restoredExpedition.expedition);
+  else if (restoredExpedition?.status === 'decision') openPanel('expeditions');
+  else if (Activities.taskAcceptanceStatus?.(state)?.pending) { const pending = state.lighthouseTasks.find(task => task.id === state.taskAcceptanceDraft.taskId); if (pending) openTaskAcceptance(pending); }
+  tutorialReady = true;
+  if (!dialog.open && !taskAcceptanceDialog?.open && Progression.tutorialStatus(state).shouldAutoOpen) openPanel('tutorial');
+}
+const sessionStartedAt = devCloud.lastSessionActivityAt || Date.now();
 let foregroundAnchor = Date.now();
 let foregroundWasActive = !document.hidden && document.hasFocus();
 let idleSignoutStarted = false;
 function settleForegroundTime() {
   const now = Date.now(), seconds = Math.max(0, (now - foregroundAnchor) / 1000);
   foregroundAnchor = now;
+  if (onboardingFlow?.active || State.onboardingStatus(state).pending || devSync && !devSync.writable) {
+    foregroundWasActive = !document.hidden && document.hasFocus(); return;
+  }
   Engagement.advanceEngagementSchedule(state, seconds, { visible: foregroundWasActive, focused: foregroundWasActive, premium: Commerce.commerceStatus?.(state)?.noAds === true });
   foregroundWasActive = !document.hidden && document.hasFocus();
 }
 function refreshIdleSession() {
   if (idleSignoutStarted) return;
-  const status = Engagement.idleSessionStatus(state, Date.now(), { sessionStartedAt });
+  const status = Engagement.idleSessionStatus(state, Date.now(), { sessionStartedAt: devCloud.lastSessionActivityAt || sessionStartedAt });
   let popup = document.getElementById('session-idle-warning');
   if (status.shouldLogout) {
     idleSignoutStarted = true; popup?.close(); popup?.remove();
@@ -2560,7 +2673,10 @@ function refreshIdleSession() {
   }
   if (!status.warning) { popup?.close(); popup?.remove(); return; }
   if (!popup) {
-    popup = createFlowDialog('session-idle-warning', 'Are you still playing?', el('div', {}, note(uiCopy('No activity for 30 minutes. Confirm within 30 seconds to stay signed in. Your island continues after sign-out.', 'Brak aktywności od 30 minut. Potwierdź w ciągu 30 sekund, aby pozostać w grze. Wyspa działa również po wylogowaniu.')), el('strong', { 'data-session-idle-countdown': '', 'data-i18n-ignore': '' })));
+    const message = State.onboardingStatus(state).pending ?
+      uiCopy('No activity for 30 minutes. Confirm within 30 seconds to stay signed in. Your introduction is saved; island time stays paused until you finish it.', 'Brak aktywności od 30 minut. Potwierdź w ciągu 30 sekund, aby pozostać w grze. Wprowadzenie jest zapisane; czas wyspy pozostanie zatrzymany do jego zakończenia.') :
+      uiCopy('No activity for 30 minutes. Confirm within 30 seconds to stay signed in. Your island continues after sign-out.', 'Brak aktywności od 30 minut. Potwierdź w ciągu 30 sekund, aby pozostać w grze. Wyspa działa również po wylogowaniu.');
+    popup = createFlowDialog('session-idle-warning', 'Are you still playing?', el('div', {}, note(message), el('strong', { 'data-session-idle-countdown': '', 'data-i18n-ignore': '' })));
     popup.querySelector('.flow-body').append(button('I am here', () => { perform({ type: 'userActivity', visible: true, focused: true }); popup.close(); popup.remove(); }, { 'data-session-idle-confirm': '' }));
     popup.addEventListener('cancel', event => event.preventDefault()); localize(popup); popup.showModal();
   }
@@ -2663,25 +2779,17 @@ function refreshExpeditionPresence() {
 function meaningfulInput(event) {
   if (document.hidden || !document.hasFocus() || event.type === 'keydown' && ['Shift','Control','Alt','Meta','Tab'].includes(event.key)) return;
   const now = Date.now(); if (now - lastInputAt < 250) return; lastInputAt = now;
+  if (devAccount && devCloud.recordSessionActivity?.() === false) { finishDevSignout(); return; }
   settleActiveTick(); const result = act(state, { type: 'userActivity', visible: true, focused: true }); if (result.ok) save();
 }
 document.addEventListener('pointerdown', meaningfulInput, { capture: true, passive: true });
 document.addEventListener('keydown', meaningfulInput, { capture: true });
 
 devCloudUiReady = true;
-recoverInterruptedStandardAd();
 updateDevCloudStatus();
 setDockCategory('administration');
-settleActiveTick();
-if (!NEW_PLAYER_PROFILE) State.applyBuildTestStock?.(state);
-recordVisit(state);
-save();
-const restoredExpedition = expeditionSession();
-if (restoredExpedition?.status === 'active') beginPuzzle(restoredExpedition.expedition);
-else if (restoredExpedition?.status === 'decision') openPanel('expeditions');
-else if (Activities.taskAcceptanceStatus?.(state)?.pending) { const pending = state.lighthouseTasks.find(task => task.id === state.taskAcceptanceDraft.taskId); if (pending) openTaskAcceptance(pending); }
-tutorialReady = true;
-if (!dialog.open && !taskAcceptanceDialog?.open && Progression.tutorialStatus(state).shouldAutoOpen) openPanel('tutorial');
+if (State.onboardingStatus(state).pending) await beginOnboarding();
+else beginWorldExperience();
 renderHUD();
 createAmbientScene(stage, () => state).ready.catch(error => {
   console.error(error);
@@ -2692,13 +2800,14 @@ setInterval(() => {
   settleActiveTick();
   renderHUD();
 }, 1000);
-setInterval(save, 10000);
+setInterval(() => { settleActiveTick(); void save(true); }, 30000);
 window.addEventListener('pagehide', () => { settleActiveTick(); save(); if (devSync) void devSync.flush(); });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { settleActiveTick(); save(); if (devSync) void devSync.flush(); }
-  else { settleActiveTick(); save(); renderHUD(); }
+  else { refreshIdleSession(); if (devSync) void devSync.recover(); settleActiveTick(); save(); renderHUD(); }
 });
-window.addEventListener('online', () => { if (devSync) void devSync.flush(); });
+window.addEventListener('online', () => { if (devSync) void devSync.recover(); });
+window.addEventListener('focus', () => { if (devSync) void devSync.recover(); });
 window.addEventListener('storage', event => {
   if (!devAccount || event.key !== devCloud.sessionKey) return;
   let nextUid;

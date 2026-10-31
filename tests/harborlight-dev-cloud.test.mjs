@@ -1,10 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { DEV_PROJECT, DEV_USERS, SESSION_KEY, accountSaveKey, createDevCloud } from '../harborlight-dev-cloud.js';
+import { DEV_PROJECT, DEV_USERS, SESSION_KEY, SESSION_IDLE_TIMEOUT_MS, accountSaveKey, createDevCloud, validIslandPayload } from '../harborlight-dev-cloud.js';
 
 const NOW = Date.UTC(2026, 9, 30, 12);
 const TIME1 = '2026-10-30T12:00:00.000001Z';
 const TIME2 = '2026-10-30T12:00:01.000002Z';
+const islandPayload = coins => JSON.stringify({version:9,population:12,lastSimulatedAt:NOW,resources:{coins,wood:100,stone:100,grain:100,food:100,planks:100},buildings:Object.fromEntries(['townhall','house','warehouse','farm','windmill','lumber','sawmill','quarry','dock','market','chapel','lighthouse'].map(id=>[id,{level:id==='lighthouse'?0:1}]))});
 const USER = DEV_USERS[0];
 const CONFIG = { projectId: DEV_PROJECT, apiKey: 'AIza-test-public-api-key-123456789', messagingSenderId: '28040211190' };
 const NAME = `projects/${DEV_PROJECT}/databases/(default)/documents/islands/${USER.uid}`;
@@ -15,19 +16,19 @@ const token = (uid = USER.uid, overrides = {}) => ['header', Buffer.from(JSON.st
 const authReply = (user = USER, overrides = {}) => ({ localId: user.uid, email: user.email,
   idToken: token(user.uid), refreshToken: 'refresh-test-token', expiresIn: '3600', ...overrides });
 const storedSession = (overrides = {}) => ({ projectId: DEV_PROJECT, uid: USER.uid, login: USER.login,
-  idToken: token(), refreshToken: 'refresh-test-token', expiresAt: NOW + 3600000, ...overrides });
+  idToken: token(), refreshToken: 'refresh-test-token', expiresAt: NOW + 3600000, lastActivityAt: NOW, ...overrides });
 const document = (overrides = {}) => ({ name: NAME, fields: {
-  schemaVersion: { integerValue: '1' }, revision: { integerValue: '4' }, payload: { stringValue: '{"coins":345}' }
+  schemaVersion: { integerValue: '1' }, revision: { integerValue: '4' }, payload: { stringValue: islandPayload(345) }
 }, updateTime: TIME1, ...overrides });
 const response = (body, status = 200) => ({ status, ok: status >= 200 && status < 300,
   json: async () => body });
 
-function harness(replies = [], { stored, hostname = 'harborlight-dev.web.app', storage: injected } = {}) {
+function harness(replies = [], { stored, hostname = 'harborlight-dev.web.app', storage: injected, clock = () => NOW } = {}) {
   const values = new Map(stored ? [[SESSION_KEY, JSON.stringify(stored)]] : []);
   const storage = injected || { getItem: key => values.get(key) ?? null,
     setItem: (key, value) => values.set(key, value), removeItem: key => values.delete(key) };
   const calls = [];
-  const client = createDevCloud({ hostname, storage, discoverAccountApi: false, now: () => NOW, fetch: async (url, options) => {
+  const client = createDevCloud({ hostname, storage, discoverAccountApi: false, now: clock, fetch: async (url, options) => {
     calls.push({ url, options });
     assert.ok(replies.length, `Unexpected request: ${url}`);
     const next = replies.shift();
@@ -100,9 +101,10 @@ test('password sign-in sends credentials only to Google and persists tokens with
     assert.ok(call.options.signal instanceof AbortSignal);
   }
   const stored = JSON.parse(values.get(SESSION_KEY));
-  assert.deepEqual(Object.keys(stored).sort(), ['expiresAt', 'idToken', 'login', 'projectId', 'refreshToken', 'uid']);
+  assert.deepEqual(Object.keys(stored).sort(), ['expiresAt', 'idToken', 'lastActivityAt', 'login', 'projectId', 'refreshToken', 'uid']);
   assert.equal(stored.uid, USER.uid);
   assert.equal(stored.expiresAt, NOW + 3600000);
+  assert.equal(stored.lastActivityAt, NOW);
   assert.ok(!values.get(SESSION_KEY).includes('chosen-password'));
   assert.equal(Object.keys(identity).includes('idToken'), false);
 });
@@ -216,7 +218,7 @@ test('concurrent cloud reads share a single expired-token refresh', async () => 
 
 test('Firestore reads are bound to the authenticated UID and validate versioned payloads', async () => {
   const h = await signedIn([response(document()), response({ error: { status: 'NOT_FOUND' } }, 404)]);
-  assert.deepEqual(await h.client.loadIsland(), { payload: '{"coins":345}', version: { revision: 4, updateTime: TIME1 } });
+  assert.deepEqual(await h.client.loadIsland(), { payload: islandPayload(345), version: { revision: 4, updateTime: TIME1 } });
   assert.equal(h.calls[0].url, `https://firestore.googleapis.com/v1/${NAME}`);
   assert.equal(h.calls[0].options.headers.Authorization, `Bearer ${token()}`);
   assert.equal(await h.client.loadIsland(), null);
@@ -231,16 +233,16 @@ test('Firestore reads are bound to the authenticated UID and validate versioned 
 test('first create and subsequent saves use server timestamps and explicit compare-and-set preconditions', async () => {
   const h = await signedIn([response({ writeResults: [{ updateTime: TIME1 }] }),
     response({ writeResults: [{ updateTime: TIME2 }] })]);
-  const first = await h.client.saveIsland('{"coins":345}');
+  const first = await h.client.saveIsland(islandPayload(345));
   assert.deepEqual(first, { revision: 1, updateTime: TIME1 });
   assert.equal(h.calls[0].url, `https://firestore.googleapis.com/v1/projects/${DEV_PROJECT}/databases/(default)/documents:commit`);
   const write1 = JSON.parse(h.calls[0].options.body).writes[0];
   assert.deepEqual(write1.currentDocument, { exists: false });
   assert.equal(write1.update.name, NAME);
   assert.deepEqual(write1.update.fields, { schemaVersion: { integerValue: '1' },
-    revision: { integerValue: '1' }, payload: { stringValue: '{"coins":345}' } });
+    revision: { integerValue: '1' }, payload: { stringValue: islandPayload(345) } });
   assert.deepEqual(write1.updateTransforms, [{ fieldPath: 'updatedAt', setToServerValue: 'REQUEST_TIME' }]);
-  assert.deepEqual(await h.client.saveIsland('{"coins":346}', first), { revision: 2, updateTime: TIME2 });
+  assert.deepEqual(await h.client.saveIsland(islandPayload(346), first), { revision: 2, updateTime: TIME2 });
   const write2 = JSON.parse(h.calls[1].options.body).writes[0];
   assert.deepEqual(write2.currentDocument, { updateTime: TIME1 });
   assert.equal(write2.update.fields.revision.integerValue, '2');
@@ -252,7 +254,7 @@ test('a stale save is reported as a conflict and never retried as an uncondition
     response({ error: { status: 'FAILED_PRECONDITION' } }, 400),
     response({ error: {} }, 412)]) {
     const h = await signedIn([result]);
-    await assert.rejects(h.client.saveIsland('{}', { revision: 4, updateTime: TIME1 }), { code: 'conflict' });
+    await assert.rejects(h.client.saveIsland(islandPayload(345), { revision: 4, updateTime: TIME1 }), { code: 'conflict' });
     assert.equal(h.calls.length, 1);
     assert.deepEqual(JSON.parse(h.calls[0].options.body).writes[0].currentDocument, { updateTime: TIME1 });
   }
@@ -310,4 +312,97 @@ test('storage denial is explicit and never falls back to persisting a password e
   await assert.rejects(h.client.signIn(USER.login, 'chosen-password'), { code: 'storage' });
   await assert.rejects(h.client.restoreSession(), { code: 'storage' });
   assert.equal(h.values.size, 0);
+});
+
+test('an overnight session expires before a token refresh and leaves the cloud island untouched', async () => {
+  const h = harness([], { stored: storedSession({ lastActivityAt: NOW - SESSION_IDLE_TIMEOUT_MS }) });
+  h.values.set(accountSaveKey(USER.uid), 'legacy-progress-is-never-imported-or-removed');
+  assert.equal(await h.client.restoreSession(), null);
+  assert.equal(h.values.has(SESSION_KEY), false);
+  assert.equal(h.values.get(accountSaveKey(USER.uid)), 'legacy-progress-is-never-imported-or-removed');
+  assert.equal(h.calls.length, 0);
+  assert.equal(h.client.recordSessionActivity(), false);
+});
+
+test('reloading during the idle warning does not renew the original thirty-second deadline', async () => {
+  let at = NOW;
+  const previous = NOW - SESSION_IDLE_TIMEOUT_MS + 1000;
+  const h = harness([response(CONFIG)], { stored: storedSession({ lastActivityAt: previous }), clock: () => at });
+  assert.deepEqual(await h.client.restoreSession(), { uid: USER.uid, login: USER.login });
+  assert.equal(h.client.lastSessionActivityAt, previous);
+  at += 1000;
+  assert.equal(h.client.sessionIdleExpired, true);
+  assert.equal(h.client.recordSessionActivity(), false);
+  assert.equal(h.values.has(SESSION_KEY), false);
+});
+
+test('only real input renews auth activity; token refresh preserves the earlier input stamp', async () => {
+  let at = NOW;
+  const previous = NOW - 10 * 60_000;
+  const h = harness([response(CONFIG), response({ user_id: USER.uid, project_id: DEV_PROJECT,
+    id_token: token(), refresh_token: 'next', expires_in: '3600' }), response(document())],
+    { stored: storedSession({ lastActivityAt: previous, expiresAt: NOW - 1 }), clock: () => at });
+  await h.client.restoreSession();
+  assert.equal(h.client.lastSessionActivityAt, previous);
+  assert.equal(JSON.parse(h.values.get(SESSION_KEY)).lastActivityAt, previous);
+  at += 1000;
+  await h.client.loadIsland();
+  assert.equal(h.client.lastSessionActivityAt, previous, 'cloud reads do not extend player activity');
+  assert.equal(h.client.recordSessionActivity(), true);
+  assert.equal(h.client.lastSessionActivityAt, at);
+  assert.equal(JSON.parse(h.values.get(SESSION_KEY)).lastActivityAt, at);
+  const auth = JSON.parse(h.values.get(SESSION_KEY));
+  assert.ok(!('island' in auth) && !('payload' in auth) && !('tutorial' in auth));
+});
+
+test('legacy fresh auth records migrate conservatively while expired legacy tokens require login', async () => {
+  const fresh = storedSession(); delete fresh.lastActivityAt;
+  const h = harness([response(CONFIG)], { stored: fresh });
+  assert.deepEqual(await h.client.restoreSession(), { uid: USER.uid, login: USER.login });
+  assert.equal(h.client.lastSessionActivityAt, NOW);
+  const old = storedSession({ expiresAt: NOW - 1 }); delete old.lastActivityAt;
+  const expired = harness([], { stored: old });
+  assert.equal(await expired.client.restoreSession(), null);
+  assert.equal(expired.calls.length, 0);
+});
+
+test('malformed and future activity metadata cannot create a permanently renewed session', async () => {
+  for (const lastActivityAt of [null, 'today', Infinity, -1, NOW + 60_001]) {
+    const h = harness([], { stored: storedSession({ lastActivityAt }) });
+    assert.equal(await h.client.restoreSession(), null);
+    assert.equal(h.values.has(SESSION_KEY), false);
+    assert.equal(h.calls.length, 0);
+  }
+});
+
+test('cloud payload validation rejects partial worlds instead of normalizing them into new starters', async () => {
+  const valid = JSON.parse(islandPayload(7654));
+  const malformed = [{}, { coins: 7654 }, { ...valid, resources: {} }, { ...valid, buildings: {} },
+    { ...valid, buildings: { ...valid.buildings, townhall: { level: 0 } } },
+    { ...valid, resources: { ...valid.resources, wood: -1 } }, { ...valid, population: null },
+    { ...valid, lastSimulatedAt: null }, { ...valid, version: 100 }];
+  const missingResource = structuredClone(valid); delete missingResource.resources.food; malformed.push(missingResource);
+  const missingBuilding = structuredClone(valid); delete missingBuilding.buildings.farm; malformed.push(missingBuilding);
+  assert.equal(validIslandPayload(islandPayload(7654)), true);
+  for (const state of malformed) {
+    const payload = JSON.stringify(state);
+    assert.equal(validIslandPayload(payload), false);
+    const h = await signedIn([response(document({fields:{schemaVersion:{integerValue:'1'},revision:{integerValue:'4'},payload:{stringValue:payload}}}))]);
+    await assert.rejects(h.client.loadIsland(), { code: 'invalid-cloud-data' });
+    await assert.rejects(h.client.saveIsland(payload), { code: 'invalid-state' });
+    assert.equal(h.calls.length, 1, 'only the cloud read ran; no starter or overwrite was attempted');
+    assert.equal(h.calls[0].options.method, undefined);
+  }
+});
+
+test('valid legacy cloud islands remain readable without newer tutorial or onboarding markers', async () => {
+  const legacy = JSON.parse(islandPayload(777)); legacy.version = 3;
+  delete legacy.resources.grain; delete legacy.lastSimulatedAt; delete legacy.buildings.chapel;
+  assert.equal(validIslandPayload(JSON.stringify(legacy)), true);
+  const historical = JSON.parse(await (await import('node:fs/promises')).readFile(new URL('./fixtures/harborlight-v17-admin-history.json',import.meta.url),'utf8'));
+  assert.equal(validIslandPayload(JSON.stringify(historical)), true);
+  const payload = JSON.stringify(historical);
+  const h = await signedIn([response(document({fields:{schemaVersion:{integerValue:'1'},revision:{integerValue:'9'},payload:{stringValue:payload}}}))]);
+  assert.equal((await h.client.loadIsland()).payload, payload);
+  assert.equal(h.calls.length, 1);assert.equal(h.calls[0].options.method, undefined);
 });

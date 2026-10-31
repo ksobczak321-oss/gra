@@ -1,14 +1,24 @@
-# Sterowanie i zapis HARBORLIGHT — frontend v18
+# Sterowanie i zapis HARBORLIGHT — frontend v20
 
-Instrukcja bieżącego kodu: [zakres zatwierdzony po GO](FRONTEND-V18-REQUIREMENTS.md). Nie stanowi potwierdzenia publikacji. Ostatni potwierdzony PRE-PROD to `f161e45` na `harborlight-dev.web.app`; aktualne testy i promocję v18 rozdziela [dziennik](IMPLEMENTATION-LOG.md). Excel 10 i starsze wymagania są archiwami swoich wydań.
+Instrukcja bieżącego kodu DEV: [reguły v18](FRONTEND-V18-REQUIREMENTS.md), [uzupełnienie v19](FRONTEND-V19-REQUIREMENTS.md) i [pierwsze wejście oraz zapis v20](FRONTEND-V20-REQUIREMENTS.md). Nie stanowi potwierdzenia publikacji. Ostatni potwierdzony PRE-PROD to v18 / `6ec3c6d` / [41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285) na `harborlight-dev.web.app`; wyniki późniejszych zmian i promocji rozdziela [dziennik](IMPLEMENTATION-LOG.md). Aktualny arkusz to Excel 11; wcześniejsze wersje pozostają archiwami.
 
 ## Wejście i zapis
 
-PRE-PROD używa trzech stałych kont testowych. Produkcyjne formularze e-mail/Google/Facebook wymagają przygotowania dostawców i serwera przez właściciela. Każde konto ma własną wyspę, rozpoczynaną raz przy pierwszym wejściu: Ratusz 1, 12 mieszkańców, brak pracowników, po 100 sześciu zasobów i bazowe 20% szczęścia.
+PRE-PROD używa trzech stałych kont testowych. Produkcyjne formularze e-mail/Google/Facebook wymagają przygotowania dostawców i serwera przez właściciela. Każde konto ma własną wyspę: Ratusz 1, 12 mieszkańców, brak pracowników, po 100 sześciu zasobów i bazowe 20% szczęścia. Nowy świat najpierw pokazuje opis gry, wymaga nazwania wyspy i oprowadza po interfejsie. Jego czas rusza dopiero po ukończeniu lub zamknięciu oprowadzania; potem można rozpocząć standardowy samouczek.
 
-Postęp konta jest przechowywany wyłącznie w chmurze. Przeglądarka nie zapisuje wyspy, kopii odzyskiwania ani kolejki zmian w localStorage/sessionStorage. Przechowywanie sesji logowania i języka jest odrębne. Przy braku potwierdzonego zapisu nie przyznajemy dalszych operacji; awaria nie przełącza na inną wyspę. Odczyt chmury rozstrzyga konflikt równoczesnych okien/urządzeń.
+Postęp konta zapisuje się automatycznie co 30 sekund przy oczekujących zmianach, wyłącznie w chmurze. Przeglądarka nie zapisuje wyspy, kopii odzyskiwania ani kolejki zmian w localStorage/sessionStorage. Przechowywanie sesji logowania i języka jest odrębne. Ważne operacje oraz wylogowanie mogą dodatkowo zapisywać stan wcześniej. Ustawienia mają przycisk wylogowania; osobna karta konta, status techniczny i ręczne przyciski zapisz/wczytaj zostały usunięte.
+
+Po błędzie zapisu działania są wstrzymane, a mechanizm ponawia odczyt i uzgadnia wersje automatycznie. Odczyt chmury rozstrzyga niepewne potwierdzenie oraz konflikt równoczesnych okien/urządzeń; nowsza wyspa innej sesji nie jest nadpisywana. Błąd odczytu ani nieprawidłowy zapis nie może udawać nowego konta. Ponowne logowanie wznawia zachowany świat i samouczek, a nie tworzy wyspy od początku.
 
 Lokalny DEV może uruchomić nietrwały podgląd w pamięci. Nie jest kontem ani dowodem zapisu. Stare zapisy Pages/gościa nie importują się automatycznie do konta; zwykłe wdrożenie zachowuje istniejącą wyspę chmurową.
+
+## Wprowadzenie przed startem świata
+
+Okno otwierające wyjaśnia rozwój osady, potrzeby mieszkańców, pracę, transport i dodatkowe aktywności. „Dalej” prowadzi do nazwy wyspy: 2–40 znaków, bez znaków sterujących i nawiasów ostrokątnych. Oprowadzanie kolejno podświetla nazwę i przegląd wyspy, elementy nagłówka, budynki oraz dolne menu. Chmurki mają strzałki wstecz/dalej i wyjście w prawym górnym rogu. Wyjście jest dostępne po nazwaniu wyspy, na etapie oprowadzania.
+
+Czytanie nie wykonuje komend i nie przyznaje skrzyń. Do zakończenia oprowadzania tło jest zablokowane, a czas świata, jego potrzeby, produkcja, ochrona powitalna i harmonogramy pozostają zatrzymane. Etap, krok i nazwa trafiają do zapisu chmurowego: przerwanie i powrót, także na innym urządzeniu, wznawia tę samą nierozpoczętą wyspę bez naliczania nieobecności.
+
+Wprowadzenie dotyczy nowych światów z jego znacznikiem. Starsze zapisy bez tego znacznika pozostają rozpoczętymi wyspami; nie pokazujemy im obowiązkowego początku ani nie resetujemy zegara, historii czy lekcji. `admin1`–`admin3` zachowują własny postęp.
 
 ## Samouczek
 
@@ -20,7 +30,7 @@ Pomoc pokrywa braki do 500 monet, po 500 drewna/kamienia/zboża/desek i600 żywn
 
 Skrzynia losuje 100–300 każdego z pięciu materiałów, bez monet. Losowanie jest trwałe; jednorazowe Share daje identyczną zawartość, Skip pozostawia podstawową nagrodę. Odebrane starsze lekcje nie są wypłacane ponownie. Gdy dostępny zapas przekracza limit jednego materiału lub całkowity limit Magazynu, kolejne skrzynie i ich podwajanie czekają na wydanie materiałów; zarządzanie, rozbudowa, pomoc oraz nagrody reklamowe/zadań pozostają dostępne.
 
-Samouczek otwiera się do ukończenia lub świadomej rezygnacji. Ręczne wznowienie zachowuje postęp. Trwająca minigra ma pierwszeństwo — skrzynia i przewodnik czekają, zamiast zużywać limit rundy.
+Samouczek otwiera się po uruchomieniu świata do ukończenia lub świadomej rezygnacji. Powrót na konto i ręczne wznowienie zachowują ukończone kroki oraz odebrane nagrody. Trwająca minigra ma pierwszeństwo — skrzynia i przewodnik czekają, zamiast zużywać limit rundy.
 
 ## Wyspa i budynki
 
@@ -38,9 +48,9 @@ Smutna buźka nad producentem oznacza faktycznie aktywną karę przestoju. Szcze
 
 Minimum powitalne 20% przez 72 h dotyczy wszystkich. Wymuszone 100% ma pierwszeństwo także dla nowych osób. Po wspólnym końcu Latarnianej premii nowy mieszkaniec wraca do zwykłych zasad wieku; nie otrzymuje dodatkowych 24 h za sam moment przybycia. Koniec ochrony powitalnej nie odejmuje 20 pp ani nie rozlicza ukrytych strat.
 
-Nowa wyspa pokazuje 1 stycznia i aktualną godzinę Warszawy. Fikcyjna data nie zastępuje prawdziwego czasu konta. Dzienne odnowienia używają 00:00 Europe/Warsaw, a czas działania efektów pozostaje rzeczywisty. Dodatni przyrost populacji jest ×2; odejścia nie są przyspieszone.
+Nowa wyspa zaczyna kalendarz od 1 stycznia i godziny Warszawy w momencie zakończenia albo zamknięcia oprowadzania. Przed tym momentem kalendarz i czas symulacji są zatrzymane. Fikcyjna data nie zastępuje prawdziwego czasu konta. W rozpoczętym świecie dzienne odnowienia używają 00:00 Europe/Warsaw, a czas działania efektów pozostaje rzeczywisty. Dodatni przyrost populacji jest ×2; odejścia nie są przyspieszone.
 
-Rzeczywiste sterowanie w aktywnej karcie odnawia na 5 minut produkcję, podatki i transport ×2. Potem działają ×1, a po 48 h bez rzeczywistej gry ×0,5. Nieobecność rozliczamy przedziałami; animacja, odświeżenie sesji i automatyczny zapis nie są działaniem gracza. Po30 minutach bezczynności pojawia się 30-sekundowe ostrzeżenie, potem wylogowanie. Świat nadal działa.
+Rzeczywiste sterowanie w aktywnej karcie rozpoczętego świata odnawia na 5 minut produkcję, podatki i transport ×2. Potem działają ×1, a po 48 h bez rzeczywistej gry ×0,5. Nieobecność rozliczamy przedziałami; animacja, odświeżenie sesji i automatyczny zapis nie są działaniem gracza. Po 30 minutach bezczynności pojawia się 30-sekundowe ostrzeżenie, potem wylogowanie. Termin nie zaczyna się od nowa po zamknięciu lub uśpieniu przeglądarki: powrót po jego przekroczeniu wymaga logowania. Rozpoczęty świat nadal działa, a jego zapis nie jest usuwany przez wylogowanie. Rzeczywiste kliknięcia i klawiatura podczas wprowadzenia podtrzymują wyłącznie sesję, nie uruchamiają zegara ani bonusu gospodarki.
 
 ## Ekspedycje i propozycje aktywności
 

@@ -10,6 +10,7 @@
 - GitHub Pages jest podglądem deweloperskim, nie środowiskiem produkcyjnym. Push nie jest dowodem wdrożenia Google Cloud.
 - Gdy użytkownik zbiera uwagi „po GO”, czekaj z implementacją i publikacją. GO z 30 października 2026 obejmuje [zakres v18](docs/FRONTEND-V18-REQUIREMENTS.md); jawne parametry wdrożeniowe w tym dokumencie odróżniamy od wcześniejszych decyzji użytkownika.
 - Następne jawne zlecenie użytkownika obejmuje [uzupełnienie v19](docs/FRONTEND-V19-REQUIREMENTS.md): wylogowanie, robocze dokumenty i obowiązkowe potwierdzenia rejestracji, Excel 11 i scenariusze. Operator ma celowo dane „Lorem ipsum”; to nie jest gotowość dokumentów do sprzedaży. Ostateczna dyspozycja kosztowa: 100 USD/miesiąc jako alerty łącznie dla dwóch projektów; nie twierdź, że budżet ustawiono bez odczytu Google po zapisie.
+- GO z 31 października 2026 obejmuje [v20](docs/FRONTEND-V20-REQUIREMENTS.md): jednorazowe wprowadzenie, nazwanie i oprowadzanie przed startem czasu nowej wyspy, automatyczny zapis chmurowy co 30 s, usunięcie ręcznego panelu zapisu oraz trwały termin bezczynności sesji. Starsze wyspy bez znacznika wprowadzenia są już rozpoczęte; nie zeruj historii ani samouczka `admin1`–`admin3`. Zakres jest lokalny do czasu własnych potwierdzeń CI i promocji.
 
 Kontrakt promocji: [docs/RELEASE-PROCESS.md](docs/RELEASE-PROCESS.md).
 

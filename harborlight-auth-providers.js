@@ -1,7 +1,7 @@
 // OAuth is delegated to Firebase's maintained browser SDK. Only public Firebase
 // configuration is used here; provider secrets belong in the Firebase console.
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v19';
-import { DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v19';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v20';
+import { DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v20';
 import { validLegalAcceptance } from './harborlight-legal.js?v=legal-v1';
 
 const fail = (code, message) => Object.assign(new Error(message), { code });

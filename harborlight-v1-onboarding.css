@@ -1,0 +1,32 @@
+.island-onboarding{position:fixed;inset:0;box-sizing:border-box;width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:0;overflow:hidden;border:0;background:#001522a8;color:#f4f6ef;font:16px/1.5 Inter,ui-sans-serif,system-ui,sans-serif;color-scheme:dark;overscroll-behavior:none}
+.island-onboarding::backdrop{background:transparent}
+.island-onboarding.has-target{background:transparent}
+.island-onboarding *{box-sizing:border-box}
+.island-onboarding-card{position:fixed;left:50%;top:50%;width:min(610px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:28px;border:1px solid #d5b370;border-radius:19px;background:linear-gradient(145deg,#183d50,#0b2838 75%);box-shadow:0 18px 75px #001018b3;color:#edf4f4;overflow:auto;overscroll-behavior:contain;transform:translate(-50%,-50%);outline:none}
+.island-onboarding-card.is-tour{left:12px;top:12px;width:min(420px,calc(100vw - 24px));max-height:min(560px,calc(100dvh - 24px));padding:23px;transform:none}
+.island-onboarding h2{margin:0 34px 15px 0;color:#ffe2a2;font-size:clamp(22px,3vw,28px);line-height:1.2;letter-spacing:-.35px}
+.island-onboarding p{margin:0 0 13px}
+.island-onboarding-description{color:#dae7e9;font-size:15px;line-height:1.55}
+.island-onboarding-eyebrow{display:block;margin:0 0 9px;color:#dfbc77;font-size:11px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase}
+.island-onboarding-paused{margin:15px 0!important;padding:10px 12px;border:1px solid #8ca3ad55;border-radius:9px;background:#092331;color:#c4d7df;font-size:12px;line-height:1.4}
+.island-onboarding-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px}
+.island-onboarding-actions:has(> :only-child){justify-content:flex-end}
+.island-onboarding-action{display:inline-flex;align-items:center;justify-content:center;min-width:100px;min-height:46px;margin:0;padding:11px 17px;border:1px solid #f1d391;border-radius:10px;background:linear-gradient(#ebc87d,#c99b4b);color:#122b37;font:750 14px/1.3 Inter,system-ui,sans-serif;cursor:pointer;touch-action:manipulation}
+.island-onboarding-action.secondary{background:linear-gradient(#284e65,#17394e);border-color:#7295a9;color:#f1f7fa}
+.island-onboarding button:hover{filter:brightness(1.12)}
+.island-onboarding button:disabled{opacity:.5;cursor:default;filter:none}
+.island-onboarding button:focus-visible,.island-onboarding input:focus-visible{outline:3px solid #fff0be;outline-offset:3px}
+.island-onboarding-exit{position:absolute;right:12px;top:12px;width:42px;height:42px;display:grid;place-items:center;padding:0;border:1px solid #7695a8;border-radius:10px;background:#0a2434;color:#ffe3a5;font:32px/1 system-ui,sans-serif;cursor:pointer;touch-action:manipulation}
+.island-onboarding-card.is-tour .island-onboarding-eyebrow{padding-right:36px}
+.island-onboarding form label{display:block;margin:20px 0 8px;color:#ffe6af;font-size:15px;font-weight:700}
+.island-onboarding input{display:block;width:100%;min-width:0;min-height:49px;padding:10px 13px;border:1px solid #819eac;border-radius:9px;background:#092432;color:#f4f8f8;font:18px/1.4 Inter,system-ui,sans-serif}
+.island-onboarding input[aria-invalid=true]{border-color:#ffb09c}
+.island-onboarding form small{display:block;margin-top:7px;color:#b6ced8;font-size:12px}
+.island-onboarding-error{margin:13px 0!important;padding:11px 12px;border:1px solid #d6917d;border-radius:8px;background:#663730;color:#ffe5dc;font-size:14px}
+.island-onboarding-highlight{position:fixed;z-index:0;pointer-events:none;border:3px solid #ffe39a;border-radius:10px;box-shadow:0 0 0 9999px #001522a8,0 0 18px 5px #ffdb8066;transition:left .15s,top .15s,width .15s,height .15s}
+.island-onboarding-highlight[hidden],.island-onboarding-cursor[hidden]{display:none}
+.island-onboarding-cursor{position:fixed;z-index:1;width:34px;height:34px;pointer-events:none;color:#ffe4a0;filter:drop-shadow(0 2px 2px #00121a);font:700 34px/1 system-ui,sans-serif;transform:rotate(225deg)}
+.island-onboarding-card{z-index:2}
+@media(max-width:600px){.island-onboarding-card{padding:21px}.island-onboarding-card.is-tour{padding:18px;max-height:min(390px,calc(100dvh - 24px));width:min(380px,calc(100vw - 24px))}.island-onboarding h2{font-size:22px}.island-onboarding-description{font-size:14px}.island-onboarding-card.is-tour .island-onboarding-description{font-size:13px}.island-onboarding-card.is-tour .island-onboarding-paused{font-size:11px;padding:8px}.island-onboarding-actions{gap:8px}.island-onboarding-action{padding:10px 12px;min-width:91px;font-size:13px}.island-onboarding-exit{width:38px;height:38px}}
+@media(max-height:480px){.island-onboarding-card.is-tour{max-height:calc(100dvh - 16px);padding:15px}.island-onboarding-card.is-tour h2{font-size:19px;margin-bottom:9px}.island-onboarding-paused{margin:9px 0!important}.island-onboarding-actions{margin-top:10px}}
+@media(prefers-reduced-motion:reduce){.island-onboarding-highlight{transition:none}}

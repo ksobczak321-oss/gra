@@ -1,9 +1,9 @@
 // PRE-PROD preserves its test accounts. PROD uses Firebase email and OAuth accounts.
 // Passwords are sent only by the Firebase client and never saved in browser storage.
-import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v19';
-import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v19';
-import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v19';
-import { signInWithProvider } from './harborlight-auth-providers.js?v=frontend-v19';
+import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v20';
+import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v20';
+import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v20';
+import { signInWithProvider } from './harborlight-auth-providers.js?v=frontend-v20';
 import { legalAcceptance, validLegalAcceptance } from './harborlight-legal.js?v=legal-v1';
 
 registerTranslations({
@@ -318,9 +318,13 @@ registerTranslations({
         input.required = registering;
       }
     }
-    // The hosted service never persists the former nickname field. Do not
-    // collect an unused personal identifier while registering real accounts.
-    if (hostedMode) { name.closest('[data-register-only]').hidden = true; name.disabled = true; name.required = false; }
+    // Hosted accounts choose their island name after the introduction, inside
+    // the game. Neither a former nickname nor a premature island name belongs
+    // in account registration; the loopback preview keeps its old form.
+    if (hostedMode) for (const input of [name, islandName]) {
+      input.closest('[data-register-only]').hidden = true;
+      input.disabled = true; input.required = false;
+    }
     document.getElementById('auth-title').textContent = devMode ? 'Sign in to PRE-PROD' : registering ? 'Your island starts here.' : 'Welcome back.';
     document.getElementById('auth-intro').textContent = devMode ? 'Your island follows you between devices.' : registering ? 'A new adventure, a place to call your own.' : 'Return to the island you call home.';
     document.querySelector('#account-submit span').textContent = registering ? 'Create account' : 'Sign in';
@@ -359,12 +363,10 @@ registerTranslations({
     button.addEventListener('click', async () => {
       if (signingIn) return;
       if (!hostedMode) { announce('This provider requires configuration by the game owner.', 'error'); return; }
-      const chosen = mode === 'register' ? validateIslandName(islandName.value) : null;
-      if (chosen && !chosen.ok) { setError(islandName, chosen.message); islandName.focus(); return; }
       if (mode === 'register' && !validateRegistrationLegal()) return;
       signingIn = true; fields.disabled = true; form.setAttribute('aria-busy', 'true'); announce('Signing in…');
       try {
-        await signInWithProvider(devCloud, button.dataset.provider, { islandName: chosen?.name || '', testLogin: devMode ? email.value : '', testPassword: devMode ? password.value : '', registration: mode === 'register', legalAcceptance: mode === 'register' ? currentLegalAcceptance() : null });
+        await signInWithProvider(devCloud, button.dataset.provider, { testLogin: devMode ? email.value : '', testPassword: devMode ? password.value : '', registration: mode === 'register', legalAcceptance: mode === 'register' ? currentLegalAcceptance() : null });
         password.value = ''; setPasswordVisible(false);
         await finishHostedSignIn(mode === 'register' ? currentLegalAcceptance() : null);
       } catch (error) { password.value = ''; setPasswordVisible(false); announce(signInMessage(error), 'error'); }
@@ -379,7 +381,7 @@ registerTranslations({
     const fail = (input, message) => { setError(input, message); invalid.push(input); };
     email.value = email.value.trim();
     if (mode === 'register' && !hostedMode && name.value.trim().length < 2) fail(name, 'Enter a name with at least 2 characters.');
-    const chosenIslandName = mode === 'register' ? validateIslandName(islandName.value) : null;
+    const chosenIslandName = mode === 'register' && !hostedMode ? validateIslandName(islandName.value) : null;
     if (chosenIslandName && !chosenIslandName.ok) fail(islandName, chosenIslandName.message);
     if (devMode && !DEV_USERS.some(user => user.login === email.value)) fail(email, 'Enter your PRE-PROD username: admin1, admin2 or admin3.');
     else if (!email.value) fail(email, 'Enter your email address.');
@@ -400,7 +402,7 @@ registerTranslations({
       form.setAttribute('aria-busy', 'true');
       announce('Signing in…');
       try {
-        if (mode === 'register') await devCloud.registerEmail(email.value, password.value, { islandName: chosenIslandName.name, legalAcceptance: currentLegalAcceptance() });
+        if (mode === 'register') await devCloud.registerEmail(email.value, password.value, { legalAcceptance: currentLegalAcceptance() });
         else await devCloud.signIn(email.value, password.value);
         password.value = '';
         setPasswordVisible(false);

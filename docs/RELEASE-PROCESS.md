@@ -2,7 +2,7 @@
 
 Obowiązuje **DEV tutaj → GitHub i CI → PRE-PROD → PROD**. PRE-PROD to istniejący projekt `harborlight-dev`, PROD to `harborlight-prod`. Nazwy workflow `google-cloud-dev.yml`, środowiska GitHub i artefaktów `harborlight-dev-*` pozostają technicznym kontraktem; w starszych dowodach słowo DEV oznacza dzisiejszy PRE-PROD.
 
-Push, kontrola konfiguracji, test lokalny i publikacja to odrębne operacje. Aktualny zakres: [v18](FRONTEND-V18-REQUIREMENTS.md). Bieżące wyniki i faktyczne SHA zapisuje [dziennik](IMPLEMENTATION-LOG.md).
+Push, kontrola konfiguracji, test lokalny i publikacja to odrębne operacje. Aktualny zakres: [v18](FRONTEND-V18-REQUIREMENTS.md), [v19](FRONTEND-V19-REQUIREMENTS.md) i [v20](FRONTEND-V20-REQUIREMENTS.md). Bieżące wyniki i faktyczne SHA zapisuje [dziennik](IMPLEMENTATION-LOG.md).
 
 ## 1. Kod, GitHub i CI
 

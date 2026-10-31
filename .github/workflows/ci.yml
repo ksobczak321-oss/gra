@@ -145,7 +145,7 @@ jobs:
           import subprocess
           import sys
 
-          for test in ('tests/harborlight-dev-auth-smoke.py', 'tests/harborlight-dev-game-smoke.py', 'tests/harborlight-settings-signout-smoke.py', 'tests/harborlight-v18-auth-smoke.py'):
+          for test in ('tests/harborlight-dev-auth-smoke.py', 'tests/harborlight-dev-game-smoke.py', 'tests/harborlight-settings-signout-smoke.py', 'tests/harborlight-v18-auth-smoke.py', 'tests/harborlight-onboarding-v20-smoke.py'):
               status = subprocess.call([sys.executable, '-u', test])
               if status:
                   sys.exit(status)

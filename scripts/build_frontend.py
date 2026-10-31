@@ -52,6 +52,8 @@ PUBLIC_FILES = (
     "harborlight-v1-minigame-ui.js",
     "harborlight-v1-minigame.css",
     "harborlight-v1-minigames.js",
+    "harborlight-v1-onboarding-ui.js",
+    "harborlight-v1-onboarding.css",
     "harborlight-v1-play.css",
     "harborlight-v1-play.js",
     "harborlight-v1-profile.js",

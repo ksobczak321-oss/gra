@@ -16,9 +16,10 @@ export function parsePort(value = '8080') {
 export function createStarterIsland(now = Date.now()) {
   const buildings = Object.fromEntries(['house','farm','sawmill','quarry','dock','warehouse','lighthouse','lumber','windmill','townhall','chapel','market'].map(id => [id, { level: id === 'lighthouse' ? 0 : 1, workers: 0, ready: 0, workProgress: [] }]));
   return JSON.stringify({ version: 9, population: 12, capacity: 24, happiness: 20, baseHappiness: 20,
+    onboarding: { version: 1, stage: 'intro', index: 0, worldStartedAt: null, completedAt: null },
     resources: Object.fromEntries(['coins','wood','stone','grain','food','planks'].map(id => [id, 100])), buildings,
     welcome: { startedAt: now, until: now + 72 * 3600000 }, worldTimeMs: now, lastSimulatedAt: now, savedAt: now,
-    islandStartedAt: now, day: 1, minutes: 0, settings: { language: 'pl', motion: true, sound: true },
+    islandStartedAt: null, day: 1, minutes: 0, settings: { language: 'pl', motion: true, sound: true },
     engagement: { lastRealActivityAt: now, activeUntil: 0, activeSeconds: 0 } });
 }
 function configuredAccountApi(environment) {

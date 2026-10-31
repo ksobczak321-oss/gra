@@ -150,7 +150,8 @@ def run():
             saved = page.evaluate('({...localStorage})')
             session = json.loads(saved[SESSION_KEY])
             assert session['uid'] == 'dev-admin1' and session['login'] == 'admin1'
-            assert set(session) == {'projectId', 'uid', 'login', 'idToken', 'refreshToken', 'expiresAt'}
+            assert set(session) == {'projectId', 'uid', 'login', 'idToken', 'refreshToken', 'expiresAt', 'lastActivityAt'}
+            assert 0 <= page.evaluate('Date.now()') - session['lastActivityAt'] < 30000
             assert all('password' not in key.lower() for key in session)
             assert not any('wrong-fixture-password' in value for value in saved.values())
             method, url, payload = site.auth_calls[-1]

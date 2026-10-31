@@ -12,7 +12,8 @@ const token = (uid = UID, project = PROD_PROJECT) => ['header', Buffer.from(JSON
 const reply = (body, status = 200) => ({ status, ok: status >= 200 && status < 300, json: async () => body });
 const auth = overrides => ({ localId: UID, email: EMAIL, idToken: token(), refreshToken: 'real-refresh-token', expiresIn: '3600', ...overrides });
 const version = { revision: 1, updateTime: T1 };
-const islandReply = (revision = 1, generation = 2) => ({ island: { payload: '{"coins":100}', version: { revision, updateTime: T1 }, generation },
+const islandPayload = coins => JSON.stringify({version:9,population:12,lastSimulatedAt:NOW,resources:{coins,wood:100,stone:100,grain:100,food:100,planks:100},buildings:Object.fromEntries(['townhall','house','warehouse','farm','windmill','lumber','sawmill','quarry','dock','market','chapel','lighthouse'].map(id=>[id,{level:id==='lighthouse'?0:1}]))});
+const islandReply = (revision = 1, generation = 2) => ({ island: { payload: islandPayload(100), version: { revision, updateTime: T1 }, generation },
   account: { generation, expired: false, lastPlayedAt: NOW } });
 function harness(replies, hostname = 'harborlight-prod.web.app') {
   const values = new Map(), calls = [];
@@ -58,8 +59,8 @@ test('PROD island writes use the generation-aware server API and never direct cl
   const h = harness([reply(CONFIG), reply(auth()), reply(islandReply()), reply({ revision: 2, updateTime: T2, generation: 2 }), reply({ recorded: true })]);
   await h.client.signIn(EMAIL, 'captain-password');
   const loaded = await h.client.loadIsland(); assert.equal(loaded.generation, 2);
-  assert.deepEqual(await h.client.saveIsland('{"coins":110}', version), { revision: 2, updateTime: T2 });
-  assert.deepEqual(JSON.parse(h.calls[3].options.body), { payload: '{"coins":110}', expectedRevision: 1, generation: 2 });
+  assert.deepEqual(await h.client.saveIsland(islandPayload(110), version), { revision: 2, updateTime: T2 });
+  assert.deepEqual(JSON.parse(h.calls[3].options.body), { payload: islandPayload(110), expectedRevision: 1, generation: 2 });
   assert.equal(h.calls[3].options.method, 'PUT');
   assert.equal(h.calls[3].options.headers.Authorization, 'Bearer ' + token());
   await h.client.recordActivity(); assert.deepEqual(JSON.parse(h.calls[4].options.body), { generation: 2 });
@@ -175,9 +176,9 @@ test('PRE-PROD disabled API discovery retains its existing Firestore island with
   const name = 'projects/harborlight-dev/databases/(default)/documents/islands/' + uid;
   const h = harness([reply(config), reply({ error:'account_api_disabled' },503),
     reply(auth({ localId: uid, email:'admin1@dev.harborlight.pl', idToken:token(uid,'harborlight-dev') })),
-    reply({ name,fields:{schemaVersion:{integerValue:'1'},revision:{integerValue:'7'},payload:{stringValue:'{"coins":777}'}},updateTime:T1 })], 'harborlight-dev.web.app');
+    reply({ name,fields:{schemaVersion:{integerValue:'1'},revision:{integerValue:'7'},payload:{stringValue:islandPayload(777)}},updateTime:T1 })], 'harborlight-dev.web.app');
   await h.client.signIn('admin1','admin1'); const loaded = await h.client.loadIsland();
-  assert.equal(h.client.accountApiEnabled,false); assert.equal(loaded.payload,'{"coins":777}'); assert.equal(loaded.version.revision,7);
+  assert.equal(h.client.accountApiEnabled,false); assert.equal(loaded.payload,islandPayload(777)); assert.equal(loaded.version.revision,7);
   assert.equal(h.calls.at(-1).options.method,undefined);
 });
 
@@ -204,4 +205,41 @@ test('PRE-PROD provider linking explicitly signs into the existing UID instead o
   const cloud={enabled:true,preprod:true,getPublicConfig:async()=>({...CONFIG,projectId:'harborlight-dev'}),acceptExternalSession:async value=>{accepted=value;return{uid:value.uid};}};
   await signInWithProvider(cloud,'Google',{testLogin:'admin1',testPassword:'admin1',loadSdk:async()=>sdk});
   assert.equal(accepted.uid,'dev-admin1');assert.deepEqual(calls,[['password','admin1@dev.harborlight.pl','admin1'],['link']]);
+});
+
+test('the account API cannot silently restore a malformed cloud object as a new world', async () => {
+  const malformed = islandReply(); malformed.island.payload = '{}';
+  const h = harness([reply(CONFIG),reply(auth()),reply(malformed)]);
+  await h.client.signIn(EMAIL,'captain-password');
+  await assert.rejects(h.client.loadIsland(),{code:'invalid-cloud-data'});
+  assert.equal(h.calls.filter(call=>call.url==='/api/v1/island').length,1);
+  assert.equal(h.calls.at(-1).options.method,undefined);
+  await assert.rejects(h.client.saveIsland('{}',version),{code:'invalid-state'});
+  assert.equal(h.calls.length,3);
+});
+
+test('registration may defer the island name until after the in-game introduction', async () => {
+  const h = harness([reply(CONFIG),reply(auth())]);
+  const identity = await h.client.registerEmail(EMAIL,'captain-password',{legalAcceptance:legalAcceptance(true,true)});
+  assert.deepEqual(identity,{uid:UID,login:EMAIL});
+  assert.equal(h.calls.length,2);assert.ok(h.calls[1].url.includes('accounts:signUp'));
+  assert.ok(!('islandName' in JSON.parse(h.values.get(PROD_SESSION_KEY))));
+  assert.ok(h.calls.every(call=>!call.url.includes('accounts:update')&&!call.url.includes('/island')));
+  const noLegal=harness([]);
+  await assert.rejects(noLegal.client.registerEmail(EMAIL,'captain-password'),{code:'legal-required'});
+  assert.equal(noLegal.calls.length,0);
+  for(const islandName of [' ', 'x', '<invalid>', null]) {
+    const bad=harness([]);
+    await assert.rejects(bad.client.registerEmail(EMAIL,'captain-password',{islandName,legalAcceptance:legalAcceptance(true,true)}),{code:'invalid-island-name'});
+    assert.equal(bad.calls.length,0);
+  }
+});
+
+test('Google and Facebook registration defer naming without replacing a returning profile', async () => {
+  for (const provider of ['Google','Facebook']) {
+    const {sdk,calls}=providerSdk();
+    const cloud={enabled:true,preprod:false,getPublicConfig:async()=>CONFIG,acceptExternalSession:async()=>({uid:UID,islandName:'Existing Port'})};
+    const result=await signInWithProvider(cloud,provider,{registration:true,legalAcceptance:legalAcceptance(true,true),loadSdk:async()=>sdk});
+    assert.equal(result.islandName,'Existing Port');assert.ok(!calls.some(call=>call[0]==='profile'));
+  }
 });

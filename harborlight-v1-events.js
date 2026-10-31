@@ -2,7 +2,7 @@
 // reading a panel never rerolls an offer or applies an event a second time.
 // This module imports inventory only: residents/logistics can safely read its
 // modifiers, and the state coordinator supplies population-changing callbacks.
-import { centralAvailable, grantBonusMaterials, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v19';
+import { centralAvailable, grantBonusMaterials, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v20';
 
 const HOUR = 3600, DAY = 86400, EPS = 1e-7, SAFE = Number.MAX_SAFE_INTEGER;
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];

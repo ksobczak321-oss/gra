@@ -6,9 +6,10 @@
 <meta name="theme-color" content="#0877b4">
 <meta name="description" content="Grow your Harborlight island, develop its buildings and keep your residents happy.">
 <title>HARBORLIGHT — Your Island</title>
-<link rel="stylesheet" href="harborlight-v1-play.css?v=frontend-v19">
-<link rel="stylesheet" href="harborlight-v1-minigame.css?v=frontend-v19-fit2">
-<link rel="stylesheet" href="harborlight-v1-tutorial.css?v=frontend-v19">
+<link rel="stylesheet" href="harborlight-v1-play.css?v=frontend-v20">
+<link rel="stylesheet" href="harborlight-v1-minigame.css?v=frontend-v20-fit2">
+<link rel="stylesheet" href="harborlight-v1-tutorial.css?v=frontend-v20">
+<link rel="stylesheet" href="harborlight-v1-onboarding.css?v=frontend-v20">
 <style>
 :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0877b4;color:#fff}
 *{box-sizing:border-box}
@@ -72,7 +73,8 @@ body{background:radial-gradient(circle at 50% 42%,#21add5 0%,#0877b4 58%,#045c91
     const compact = matchMedia('(max-width:900px),(max-height:500px)').matches;
     portrait = matchMedia('(max-width:900px) and (orientation:portrait)').matches;
     document.body.classList.toggle('portrait-world', portrait);
-    const topInset = compact ? 120 : 0;
+    const mobileHeader = document.querySelector('.mobile-island-hud');
+    const topInset = compact ? Math.max(120, Math.ceil(mobileHeader?.getBoundingClientRect().bottom || 0) + 8) : 0;
     const touchDock = document.querySelector('.mobile-bottom-dock');
     const dockInset = portrait && touchDock ? Math.max(304, Math.ceil(innerHeight - touchDock.getBoundingClientRect().top) + 8) : 304;
     viewport.style.top = `${topInset}px`;
@@ -103,6 +105,14 @@ body{background:radial-gradient(circle at 50% 42%,#21add5 0%,#0877b4 58%,#045c91
   viewport.addEventListener('keydown', event => { if (portrait && event.target === viewport && ['ArrowLeft','ArrowRight'].includes(event.key)) { event.preventDefault(); panX = clampPan(panX + (event.key === 'ArrowLeft' ? 65 : -65)); positionWorld(); } });
   addEventListener('resize', resize, {passive:true});
   addEventListener('island-dock-layout', resize); resize();
+  // The introductory tour can centre an actual building on portrait screens.
+  // This moves only the camera; it never clicks or changes the building.
+  addEventListener('island-tour-focus', event => {
+    const region = event.detail?.region;
+    if (!portrait || !Array.isArray(region) || region.length !== 4 || !region.every(Number.isFinite)) return;
+    panX = clampPan(viewport.clientWidth / 2 - (region[0] + region[2] / 2) * worldScale);
+    positionWorld();
+  });
 
   const params = new URLSearchParams(location.search);
   if(params.get('debug') === '1') stage.classList.add('debug');
@@ -147,6 +157,6 @@ body{background:radial-gradient(circle at 50% 42%,#21add5 0%,#0877b4 58%,#045c91
 <dialog id="island-dialog" class="island-dialog" aria-labelledby="dialog-title"></dialog>
 <div id="island-toast" class="island-toast" role="status" aria-live="polite" hidden></div>
 <div id="placement-banner" class="placement-banner" hidden></div>
-<script type="module" src="harborlight-v1-play.js?v=frontend-v19"></script>
+<script type="module" src="harborlight-v1-play.js?v=frontend-v20"></script>
 </body>
 </html>

@@ -103,7 +103,8 @@ def run():
             expect(page.locator('.social-options')).to_be_visible()
             expect(page.locator('.social-button small')).to_have_count(0)
             expect(page.locator('#display-name')).to_be_hidden()
-            page.locator('#island-name').fill('Port Mew')
+            expect(page.locator('#island-name')).to_be_hidden()
+            expect(page.locator('#island-name')).to_be_disabled()
             page.locator('#email').fill(EMAIL)
             page.locator('#password').fill(PASSWORD)
             page.locator('#confirm-password').fill(PASSWORD)
@@ -118,12 +119,12 @@ def run():
             page.locator('#account-submit').click()
             expect(page).to_have_url(PROD + '/harborlight-v1-layered.html?profile=new-player')
             assert 'accounts:signUp' in site.auth_calls[0][1]
-            assert site.profile_calls[0]['displayName'] == 'HARBORLIGHT:Port Mew'
+            assert not site.profile_calls, 'Island naming belongs after the in-game introduction'
             assert len(site.legal_calls)==1
             stored = page.evaluate('({...localStorage})')
             session = json.loads(stored[SESSION_KEY])
             assert session['uid'] == UID and session['projectId'] == 'harborlight-prod'
-            assert session['islandName'] == 'Port Mew'
+            assert 'islandName' not in session
             assert not any(PASSWORD in value for value in stored.values())
             assert not any('island-real-player' in key for key in stored)
             assert not errors and not site.unexpected, (errors, site.unexpected)

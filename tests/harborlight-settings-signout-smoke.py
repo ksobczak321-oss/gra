@@ -67,8 +67,8 @@ def delayed_signout(browser, language, mobile):
     expect(page.locator('[data-settings-legal] a').last).to_have_attribute('href', 'harborlight-privacy.html')
     assert page.locator('[data-dev-signout]').count() == 1
     signout_box = signout.bounding_box()
-    account_box = page.locator('[data-dev-account]').bounding_box()
-    assert signout_box and account_box and signout_box['y'] < account_box['y'], 'Logout must be immediately visible above account details'
+    assert signout_box, 'Logout must be immediately visible in Settings'
+    assert page.locator('[data-dev-account],[data-cloud-save-now],[data-cloud-reload],[data-cloud-save-status]').count() == 0, 'The manual cloud account panel was removed'
 
     # Keep an actual settings command awaiting its server acknowledgement, then
     # request logout. Authentication must stay until that pending write settles.

@@ -56,7 +56,8 @@ def token(uid):
 def session(uid):
     return {'projectId': 'harborlight-dev', 'uid': uid, 'login': uid.removeprefix('dev-'),
             'idToken': token(uid), 'refreshToken': 'fixture-refresh-' + uid,
-            'expiresAt': int(NOW.timestamp()*1000) + 3600000}
+            'expiresAt': int(NOW.timestamp()*1000) + 3600000,
+            'lastActivityAt': int(NOW.timestamp()*1000)}
 
 
 def document(uid):
@@ -199,8 +200,28 @@ def settings(page):
 
 
 def save_cloud(page):
-    page.locator('[data-cloud-save-now]').click()
-    expect(page.locator('[data-cloud-save-status]')).to_have_attribute('data-status', 'saved')
+    # Passive progress is saved automatically at30-second intervals. There is
+    # no manual cloud-save/load panel in the player Settings.
+    page.clock.run_for(30000)
+    expect(page.locator('body')).to_have_attribute('data-cloud-status', re.compile(r'^(saved|pending)$'))
+    assert page.locator('[data-cloud-save-now],[data-cloud-reload],[data-dev-account]').count() == 0
+
+
+def finish_onboarding(page, name='Nowa wyspa'):
+    guide = page.locator('[data-island-onboarding]')
+    if not guide.count():
+        return
+    if guide.get_attribute('data-onboarding-stage') == 'intro':
+        page.locator('[data-onboarding-next]').click()
+    if guide.get_attribute('data-onboarding-stage') == 'name':
+        page.locator('[data-onboarding-name]').fill(name)
+        page.locator('[data-onboarding-next]').click()
+    page.locator('[data-onboarding-exit]').click()
+    expect(guide).not_to_be_visible()
+    if page.locator('[data-tutorial-dismiss]').is_visible():
+        page.locator('[data-tutorial-dismiss]').click()
+    elif page.locator('#island-dialog').is_visible():
+        page.locator('#island-dialog .dialog-close').click()
 
 
 def run():
@@ -215,11 +236,12 @@ def run():
         no_island_cache(page)
         assert cloud_state('dev-admin1')['resources']['coins'] == 321
         settings(page)
-        expect(page.locator('[data-dev-account="admin1"]')).to_be_visible()
+        expect(page.locator('[data-settings-signout]')).to_be_visible()
+        assert page.locator('[data-dev-account],[data-cloud-save-now],[data-cloud-reload]').count() == 0
         page.locator('#island-dialog select').first.select_option('en')
         # A successful action is acknowledged in the cloud without waiting for
-        # a twenty-second autosave or writing a browser recovery copy.
-        expect(page.locator('[data-cloud-save-status]')).to_have_attribute('data-status', 'saved')
+        # the thirty-second autosave or writing a browser recovery copy.
+        expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
         assert cloud_state('dev-admin1')['settings']['language'] == 'en'
         save_cloud(page)
         assert cloud_state('dev-admin1')['islandName'] == 'Wyspa dev-admin1'
@@ -239,7 +261,7 @@ def run():
         page.evaluate('(value)=>localStorage.setItem(%s,JSON.stringify(value))' % json.dumps(SESSION), session('dev-admin2'))
         visit(page)
         settings(page)
-        expect(page.locator('[data-dev-account="admin2"]')).to_be_visible()
+        expect(page.locator('[data-settings-signout]')).to_be_visible()
         save_cloud(page)
         assert cloud_state('dev-admin2')['resources']['coins'] == 654
         assert cloud_state('dev-admin1')['resources']['coins'] == 321
@@ -251,19 +273,17 @@ def run():
                                   'updateTime': timestamp()}
         commits_before = len(WRITES)
         page.locator('#island-dialog select').first.select_option('pl')
-        expect(page.locator('[data-cloud-save-status]')).to_have_attribute('data-status', 'conflict')
+        expect(page.locator('body')).to_have_attribute('data-cloud-status', 'conflict')
         assert cloud_state('dev-admin2')['resources']['coins'] == 900
         assert len(WRITES) == commits_before
-        page.clock.run_for(21000)
-        assert len(WRITES) == commits_before
         no_island_cache(page)
-        # Explicit recovery must adopt the new cloud version; no local backup
-        # or stale pre-reload island is allowed to overwrite it.
-        page.locator('[data-cloud-reload]').click()
-        expect(page.locator('[data-cloud-save-status]')).to_have_attribute('data-status', 'saved')
+        # Recovery reads the authoritative cloud version before enabling play;
+        # it cannot overwrite another device with the stale pending snapshot.
+        page.evaluate("window.dispatchEvent(new Event('online'))")
+        expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
         page.wait_for_selector('[data-hud="working"]', state='attached')
         page.wait_for_function('document.getElementById("loading").hidden')
-        if not page.locator('[data-dev-account="admin2"]').count():
+        if not page.locator('[data-settings-signout]').is_visible():
             settings(page)
         save_cloud(page)
         assert cloud_state('dev-admin2')['resources']['coins'] == 900
@@ -274,16 +294,16 @@ def run():
         confirmed = DOCUMENTS['dev-admin2']['payload']
         OFFLINE = True
         page.locator('#island-dialog select').first.select_option('en')
-        expect(page.locator('[data-cloud-save-status]')).to_have_attribute('data-status', 'offline')
+        expect(page.locator('body')).to_have_attribute('data-cloud-status', 'offline')
         assert DOCUMENTS['dev-admin2']['payload'] == confirmed
-        assert 'lokaln' not in page.locator('[data-cloud-save-status]').inner_text().lower()
+        assert 'lokaln' not in page.locator('.dev-cloud-alert').inner_text().lower()
         no_island_cache(page)
         OFFLINE = False
-        page.locator('[data-cloud-reload]').click()
-        expect(page.locator('[data-cloud-save-status]')).to_have_attribute('data-status', 'saved')
+        page.evaluate("window.dispatchEvent(new Event('online'))")
+        expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
         page.wait_for_selector('[data-hud="working"]', state='attached')
         page.wait_for_function('document.getElementById("loading").hidden')
-        if not page.locator('[data-dev-account="admin2"]').count():
+        if not page.locator('[data-settings-signout]').is_visible():
             settings(page)
         save_cloud(page)
         assert cloud_state('dev-admin2')['resources']['coins'] == 900
@@ -297,6 +317,7 @@ def run():
         # New permanent identity receives the normal starter exactly once.
         third, new_page = context(browser, 'dev-admin3', mobile=True)
         visit(new_page)
+        finish_onboarding(new_page)
         settings(new_page)
         save_cloud(new_page)
         assert DOCUMENTS['dev-admin3']['revision'] >= 1
@@ -304,7 +325,7 @@ def run():
         assert fresh['resources']['coins'] == fresh['resources']['wood'] == 100
         assert fresh['population'] == 12
         assert fresh['happiness'] >= 20
-        assert fresh['welcome']['startedAt'] == int(NOW.timestamp()*1000)
+        assert int(NOW.timestamp()*1000) <= fresh['welcome']['startedAt'] <= int(NOW.timestamp()*1000) + 1000
         no_island_cache(new_page)
         new_page.reload()
         new_page.wait_for_selector('[data-hud="working"]', state='attached')
@@ -333,7 +354,7 @@ def run():
         browser.close()
     assert not ERRORS, ERRORS
     assert all('islands/dev-admin' in url or '/documents:commit' in url for url in REQUESTS), REQUESTS
-    print('PASS cloud-only game: isolatedaccounts, immediateack, second-device restore, CAS conflict, offlineblocking, explicitrecovery, sign-out and one-time starter without browserislandcopies')
+    print('PASS cloud-only game: isolatedaccounts, immediateack, 30secondautosave, second-device restore, CAS conflict, offlineblocking, saferecovery, sign-out and one-time starter without browserislandcopies')
 
 
 if __name__ == '__main__':

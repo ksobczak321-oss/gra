@@ -1,6 +1,6 @@
 // Firebase owns credentials and verifies access to the UID-scoped documents.
 // Hosting selects the isolated project; runtime Firebase config never contains secrets.
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v19';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v20';
 import { LEGAL_DOCUMENTS, validLegalAcceptance } from './harborlight-legal.js?v=legal-v1';
 export const DEV_PROJECT = 'harborlight-dev';
 export const PROD_PROJECT = 'harborlight-prod';
@@ -8,6 +8,9 @@ export const PROD_SESSION_KEY = 'harborlight-prod-auth-v1';
 export const DEV_USERS = Object.freeze(['admin1', 'admin2', 'admin3'].map(login =>
   Object.freeze({ login, uid: `dev-${login}`, email: `${login}@dev.harborlight.pl` })));
 export const SESSION_KEY = 'harborlight-dev-auth-v1';
+// Authentication metadata only: closing/suspending a browser must not reset
+// the existing 30-minute idle deadline. No island data lives in this record.
+export const SESSION_IDLE_TIMEOUT_MS = 30 * 60_000 + 30_000;
 const HOST_PROJECTS = new Map([
   [`${DEV_PROJECT}.web.app`, DEV_PROJECT], [`${DEV_PROJECT}.firebaseapp.com`, DEV_PROJECT],
   [`${PROD_PROJECT}.web.app`, PROD_PROJECT], [`${PROD_PROJECT}.firebaseapp.com`, PROD_PROJECT],
@@ -77,9 +80,30 @@ function tokenClaims(token, uid, projectId = DEV_PROJECT) {
   } catch { return null; }
 }
 
-function payloadValid(payload) {
+const ISLAND_RESOURCE_IDS = ['coins', 'wood', 'stone', 'grain', 'food', 'planks'];
+const ISLAND_BUILDING_IDS = ['townhall', 'house', 'warehouse', 'farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'dock', 'market', 'chapel', 'lighthouse'];
+export function validIslandPayload(payload) {
   if (typeof payload !== 'string' || new TextEncoder().encode(payload).byteLength > MAX_PAYLOAD_BYTES) return false;
-  try { return isObject(JSON.parse(payload)); } catch { return false; }
+  try {
+    const island = JSON.parse(payload);
+    if (!isObject(island) || !Number.isSafeInteger(island.version) || island.version < 1 || island.version > 9 ||
+        !isObject(island.resources) || !isObject(island.buildings) ||
+        !Number.isSafeInteger(island.population) || island.population < 0) return false;
+    // Normalization intentionally supplies newly introduced legacy fields.
+    // A partial current save must never silently turn into a starter instead.
+    const resources = island.version <= 3 ? ISLAND_RESOURCE_IDS.filter(id => id !== 'grain') : ISLAND_RESOURCE_IDS;
+    if (!resources.every(id => Number.isFinite(island.resources[id]) && island.resources[id] >= 0 && island.resources[id] <= Number.MAX_SAFE_INTEGER)) return false;
+    const requiredBuildings = island.version >= 8 ? ISLAND_BUILDING_IDS : ['townhall', 'house', 'warehouse'];
+    if (!requiredBuildings.every(id => isObject(island.buildings[id]))) return false;
+    for (const id of ISLAND_BUILDING_IDS) {
+      if (island.buildings[id] === undefined) continue;
+      const building = island.buildings[id];
+      if (!isObject(building) || !Number.isSafeInteger(building.level) ||
+          building.level < (id === 'townhall' ? 1 : 0) || building.level > 100) return false;
+    }
+    const anchor = island.lastSimulatedAt ?? island.savedAt;
+    return island.version < 8 || Number.isFinite(anchor) && anchor >= 0 && anchor <= Number.MAX_SAFE_INTEGER;
+  } catch { return false; }
 }
 
 function versionValid(version) {
@@ -103,7 +127,7 @@ export function createDevCloud({
   const resolveUser = (uid, login = '', displayName = '') => preprod ? userByUid(uid) : safeUid(uid) ?
     { uid, login: validEmail(login) ? login : uid, ...(profileName(displayName) ? { islandName: profileName(displayName) } : {}) } : null;
   let configPromise, session = null, refreshPromise = null;
-  let generation = 0, islandGeneration = null, accountStatus = null;
+  let generation = 0, islandGeneration = null, accountStatus = null, activityWrittenAt = 0;
   const requireEnabled = () => { if (!enabled) throw fail('disabled'); };
   const identity = () => session ? { uid: session.uid, login: session.login, ...(session.islandName ? { islandName: session.islandName } : {}) } : null;
   // Access the browser storage getter only when a DEV session needs it. Some
@@ -162,19 +186,25 @@ export function createDevCloud({
     if (!user || parsed.projectId !== projectId || parsed.login !== user.login || !claims ||
         !tokenString(parsed.refreshToken) || !Number.isFinite(parsed.expiresAt) ||
         parsed.expiresAt < 0 || parsed.expiresAt > claims.exp * 1000) return null;
+    // Old sessions had no activity stamp. Their token issue time gives a
+    // conservative one-time migration; an overnight token cannot renew itself.
+    const lastActivityAt = parsed.lastActivityAt === undefined ?
+      (Number.isFinite(claims.iat) ? claims.iat * 1000 : parsed.expiresAt - 3_600_000) : parsed.lastActivityAt;
+    if (!Number.isFinite(lastActivityAt) || lastActivityAt < 0 || lastActivityAt > now() + 60_000) return null;
     // Discard unknown fields, so password-like data can never be copied back.
     return { projectId, uid: user.uid, login: user.login, idToken: parsed.idToken,
-      refreshToken: parsed.refreshToken, expiresAt: parsed.expiresAt, ...(user.islandName ? { islandName: user.islandName } : {}) };
+      refreshToken: parsed.refreshToken, expiresAt: parsed.expiresAt, lastActivityAt,
+      ...(user.islandName ? { islandName: user.islandName } : {}) };
   }
 
   function store(next) {
     try { sessionStorage().setItem(sessionKey, JSON.stringify(next)); } catch { throw fail('storage'); }
     if (session?.uid !== next.uid) { islandGeneration = null; accountStatus = null; }
-    session = next;
+    session = next; activityWrittenAt = next.lastActivityAt;
   }
 
   function clear() {
-    session = null; islandGeneration = null; accountStatus = null;
+    session = null; islandGeneration = null; accountStatus = null; activityWrittenAt = 0;
     generation++;
     try { sessionStorage().removeItem(sessionKey); } catch { throw fail('storage'); }
   }
@@ -201,13 +231,25 @@ export function createDevCloud({
     const claims = tokenClaims(idToken, user?.uid, projectId);
     if (!user || uid !== user.uid || !claims || claims.exp * 1000 <= now() ||
         !tokenString(refreshToken) || !integer(duration) || duration > 86_400) throw fail('auth-required');
-    return { projectId, uid, login: user.login, idToken, refreshToken,
+    return { projectId, uid, login: user.login, idToken, refreshToken, lastActivityAt: now(),
       expiresAt: Math.min(now() + duration * 1000, claims.exp * 1000), ...(user.islandName ? { islandName: user.islandName } : {}) };
+  }
+
+  const idleExpired = () => !!session && now() - session.lastActivityAt >= SESSION_IDLE_TIMEOUT_MS;
+  function recordSessionActivity() {
+    if (!session) return false;
+    if (idleExpired()) { clear(); return false; }
+    session.lastActivityAt = now();
+    // Input may arrive every frame. Persist at most once a second; the stamp is
+    // still updated in memory immediately and never renewed by a cloud save.
+    if (session.lastActivityAt - activityWrittenAt >= 1000) store({ ...session });
+    return true;
   }
 
   async function refresh(force = false) {
     requireEnabled();
     if (!session) throw fail('auth-required');
+    if (idleExpired()) { clear(); throw fail('auth-required'); }
     if (!force && session.expiresAt > now() + 60_000) return;
     if (refreshPromise) return refreshPromise;
     const previous = session, attempt = generation;
@@ -231,6 +273,9 @@ export function createDevCloud({
       let next;
       try { next = authSession(result.body, resolveUser(previous.uid, previous.login, previous.islandName ? 'HARBORLIGHT:' + previous.islandName : ''), true); }
       catch { clear(); throw fail('auth-required'); }
+      // Input can occur while the refresh request is in flight. Preserve its
+      // real activity stamp instead of treating token renewal as player input.
+      next.lastActivityAt = session.lastActivityAt;
       store(next);
     })().finally(() => { refreshPromise = null; });
     return refreshPromise;
@@ -260,10 +305,10 @@ export function createDevCloud({
   async function registerEmail(email, password, { islandName = '', legalAcceptance = null } = {}) {
     requireEnabled();
     if (preprod) throw fail('registration-disabled');
-    const normalized = String(email || '').trim().toLowerCase(), name = validateIslandName(islandName);
+    const normalized = String(email || '').trim().toLowerCase(), name = islandName === '' ? null : validateIslandName(islandName);
     if (!validEmail(normalized)) throw fail('invalid-email');
     if (typeof password !== 'string' || password.length < 8 || password.length > 128) throw fail('weak-password');
-    if (!name.ok) throw fail('invalid-island-name');
+    if (name && !name.ok) throw fail('invalid-island-name');
     if (!validLegalAcceptance(legalAcceptance)) throw fail('legal-required');
     const attempt = ++generation, settings = await config();
     const result = await request(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${encodeURIComponent(settings.apiKey)}`, {
@@ -274,6 +319,9 @@ export function createDevCloud({
     if (!result.ok) throw authError(result);
     if (String(result.body.email || '').toLowerCase() !== normalized) throw fail('auth-required');
     store(authSession(result.body, resolveUser(result.body.localId, normalized)));
+    // The normal registration flow names the cloud island after the welcome
+    // screen. Do not write an empty Auth displayName or create a world here.
+    if (!name) return identity();
     // Account creation has already succeeded. A profile update failing must not
     // claim otherwise or cause a second sign-up attempt with the same email.
     try {
@@ -323,6 +371,7 @@ export function createDevCloud({
     if (!enabled) return null;
     session = readStored();
     if (!session) { clear(); return null; }
+    if (idleExpired()) { clear(); return null; }
     try {
       await config();
       await refresh();
@@ -372,7 +421,7 @@ export function createDevCloud({
     }
     if (body.island === null) return null;
     const island = body.island;
-    if (!isObject(island) || !payloadValid(island.payload) || !versionValid(island.version) ||
+    if (!isObject(island) || !validIslandPayload(island.payload) || !versionValid(island.version) ||
         !Number.isSafeInteger(island.generation) || island.generation < 0) throw fail('invalid-cloud-data');
     islandGeneration = island.generation;
     return { payload: island.payload, version: island.version, generation: islandGeneration };
@@ -446,14 +495,14 @@ export function createDevCloud({
     const revision = Number(fields.revision?.integerValue);
     const payload = fields.payload?.stringValue;
     if (document.name !== name || fields.schemaVersion?.integerValue !== '1' ||
-        !integer(revision) || !payloadValid(payload) || !timestamp(document.updateTime)) throw fail('invalid-cloud-data');
+        !integer(revision) || !validIslandPayload(payload) || !timestamp(document.updateTime)) throw fail('invalid-cloud-data');
     return { payload, version: { revision, updateTime: document.updateTime } };
   }
 
   async function saveIsland(payload, version = null) {
     requireEnabled();
     if (!session) throw fail('auth-required');
-    if (!payloadValid(payload) || (version !== null && !versionValid(version)) ||
+    if (!validIslandPayload(payload) || (version !== null && !versionValid(version)) ||
         (version && !integer(version.revision + 1))) throw fail('invalid-state');
     await config();
     if (accountApiEnabled) {
@@ -479,5 +528,7 @@ export function createDevCloud({
     return { revision, updateTime };
   }
 
-  return { enabled, preprod, projectId, environment, sessionKey, get accountApiEnabled() { return accountApiEnabled; }, signIn, registerEmail, acceptExternalSession, getPublicConfig: config, getProfile, getLegalStatus, acceptLegal, restoreSession, signOut: clear, loadIsland, createIsland, saveIsland, recordActivity, redeemPromoCode, get accountStatus() { return accountStatus ? { ...accountStatus } : null; } };
+  return { enabled, preprod, projectId, environment, sessionKey, get accountApiEnabled() { return accountApiEnabled; },
+    get lastSessionActivityAt() { return session?.lastActivityAt ?? null; }, get sessionIdleExpired() { return idleExpired(); },
+    recordSessionActivity, signIn, registerEmail, acceptExternalSession, getPublicConfig: config, getProfile, getLegalStatus, acceptLegal, restoreSession, signOut: clear, loadIsland, createIsland, saveIsland, recordActivity, redeemPromoCode, get accountStatus() { return accountStatus ? { ...accountStatus } : null; } };
 }

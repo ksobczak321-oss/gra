@@ -74,6 +74,7 @@ function settle(schedule, premium) {
 
 export function advanceEngagementSchedule(state, seconds, { visible = false, focused = false, premium = false } = {}) {
   const schedule = ensure(state);
+  if (state?.onboarding?.version === 1 && state.onboarding.worldStartedAt === null && ['intro', 'name', 'tour'].includes(state.onboarding.stage)) return engagementOfferStatus(state);
   if (!finite(seconds) || seconds < 0) return engagementOfferStatus(state);
   if (visible && focused) schedule.activeSeconds = Math.min(Number.MAX_SAFE_INTEGER, schedule.activeSeconds + seconds);
   settle(schedule, premium === true);
