@@ -13,11 +13,19 @@ Dokumenty: [rejestr zmian](tracking/CHANGE-REGISTER.md), [plan testów ręcznych
 
 ## Analiza do decyzji, odrębna od wdrożenia
 
-- [Archipelag, pasażerowie, ceny i handel](design/ARCHIPELAGO-AND-TRADE-v23.md): odczytane wymagania użytkownika są oddzielone od wariantów i rekomendacji. Brakujące parametry obejmują interpretację kosztu, moment założenia córki, poziomy startowe, limit wysp i rodzaj ceny PvP.
+- [Archipelag, pasażerowie, ceny i handel](design/ARCHIPELAGO-AND-TRADE-v23.md): odczytane wymagania i zaakceptowane decyzje są oddzielone od pozostałych wariantów. Poziomy/zasoby startowe córki, dalsza wycena po trzeciej córce oraz szczegóły zwykłych rejsów wymagają rozstrzygnięcia.
 - [Liga, społeczność i dobroczynność](design/LEAGUE-COMMUNITY-CHARITY.md): konkretna propozycja kalendarza, punktacji, współpracy, ograniczonego finansowania oraz serwerowego rozliczania. Nie aktywowano ligi, prawdziwych darowizn, bonusów ani nowych przepływów monet.
 - [Planszówka 2–6 osób](design/BOARDGAME-LIGHTHOUSE-SESSION.md): scenariusz 50 minut, plansza budynków i dwie talie, fizyczne zadania oraz teoretyczny companion online. Nie ma implementacji QR, serwerowej sesji ani faktycznie przyznanych nagród.
 
-Użytkownik potwierdził: **najpierw analiza i decyzje**, **PvP jako sprzedaż materiałów za monety** oraz **kolejne wyspy od Ratusza 10, 13, 16, 19 i dalej co trzy poziomy**. To rozstrzyga kierunek, ale nie koszt, limit liczby wysp, stan startowy i szczegóły pasażerów. Nie przenosimy proponowanych parametrów do gry bez ich rozstrzygnięcia. Nowe zasady nie zostały opublikowane na PRE-PROD/PROD.
+Użytkownik potwierdził: **najpierw analiza i decyzje**, **PvP jako sprzedaż materiałów za monety** oraz **kolejne wyspy od Ratusza 10, 13, 16, 19**. W kolejnych pięciu odpowiedziach zatwierdził:
+
+- cenę jako sumę wszystkich rozbudów Ratusza i Domu od 1 do A — pierwsze trzy córki po 21 000 / 28 000 / 36 000 każdego z sześciu zasobów;
+- aktualizowanie prefiksów wszystkich córek po zmianie nazwy matki;
+- natychmiastowy teleport dokładnie sześciu osób z Domu matki przy kolonizacji, bez statku i 30-minutowego rejsu; zwykłe późniejsze przewozy nadal trwają 30 minut;
+- limit **20 wysp łącznie** oraz ochronę matki przed spadkiem poniżej **12 osób także przez dżumę i odejścia**;
+- pułap PvP równy bazowej cenie sprzedaży NPC do gracza, z możliwością tańszej oferty i odsprzedaży NPC.
+
+To zaakceptowane wymagania przyszłego wdrożenia. Nie zaimplementowano tych mechanik ani migracji, nie zmieniono kont i nie opublikowano nowych zasad na PRE-PROD/PROD. Stan startowy córki i szczegóły zwykłych rejsów pozostają otwarte.
 
 ## Koszty i poprzedni reset
 

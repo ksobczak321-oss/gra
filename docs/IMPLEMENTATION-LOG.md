@@ -715,3 +715,15 @@ Status: kod aplikacji **82152651a3edd490866a9c2c5f8cc5c4a7104492** zsynchronizow
 - PRE-PROD pozostaje **v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`**, promocja `41222765705`; PROD bez nowego wydania. Użytkownik zapowiedział samodzielne „Zacznij od nowa”, ale nie potwierdzono kliknięcia/wyniku. Ten przycisk odnawia jedną wyspę z zachowaniem danych konta i nie zastępuje pełnego resetu trzech kont. Nie wykonano żadnego resetu w tym zakresie.
 
 - Końcowy przegląd projektów usunął nieosiągalny próg pięciu występów w małej lidze, doprecyzował pośredni wpływ szczęścia z planszówki na populację/podatki oraz otwartą regułę jedzenia podczas oczekiwania statku i powrotu. Jawnie pokazano silną przewagę sumy trzech wyników nad solistą i rozróżniono proporcjonalny ekwiwalent emisji od operacji po pełne 1000 monet. To korekty propozycji, bez zmian działającej gospodarki.
+
+### 2026-10-31 — pięć odpowiedzi do analizy archipelagu: decyzje bez implementacji
+
+Status: zaktualizowano specyfikację, rejestr i projektowe przypadki ręczne. Nadal obowiązuje „najpierw analiza i decyzje”; nie zmieniono kodu aplikacji, wersji 0.9.1.1, zapisów graczy ani GCP. Historyczny tag `dev-0.9.1.1-20261031` pozostaje nieprzesuwany; jego CI nie jest wynikiem sprawdzenia tych późniejszych dokumentów.
+
+- Zaakceptowano sumę wszystkich rozbudów Ratusza i Domu 1→A: pierwsze trzy córki po 21 000 / 28 000 / 36 000 każdego z sześciu zasobów. Przy samym zwykłym zapasie ceny wymagają pojemności Magazynu odpowiednio 10 / 10 / 11; wydawalny bonus poza limitem pozostaje dozwolony.
+- Zmiana nazwy matki ma aktualizować wymuszony prefiks wszystkich córek, zachowując ich sufiksy i tożsamość.
+- Doprecyzowano kolonizację: dokładnie sześć rzeczywistych osób z Domu teleportuje się natychmiast na zakładaną córkę, bez rejsu, zajmowania statku i racji na podróż. Matka wymaga co najmniej 18 osób przed operacją. Zwykłe przewozy między istniejącymi wyspami nadal trwają 30 minut.
+- Przyjęto **20 wysp łącznie: matka i 19 córek**; przy progach 10/13/16 dziewiętnasta córka odblokowuje się na Ratuszu 64. Ochrona minimum 12 osób na matce obejmuje także dżumę i odejścia, również offline. Dla historycznej matki poniżej 12 migracja pozostaje do ustalenia.
+- Cena maksymalna PvP jest bazową ceną sprzedaży NPC do gracza. Dozwolone są niższe oferty i zysk z odsprzedaży NPC; usunięto dawny błędny warunek całkowitego zakazu takiego arbitrażu, zachowując zakaz duplikacji monet i towarów.
+- [Rejestr](tracking/CHANGE-REGISTER.md) ma **229 zmian**, w tym nowe osobne karty `HL-CHG-0826` (limit wysp) i `HL-CHG-0827` (teleport kolonistów). Karty mają decyzje accepted, implementację not_implemented i brak wdrożenia PRE-PROD/PROD. Zaktualizowano TC33–37 oraz powiązania; wszystkie nadal DRAFT/BLOCKED i NOT RUN.
+- Kontrola generatora, odnośników, spójności 229 zmian / 45 przypadków, `git diff --check` oraz **18 testów importera PASS**. Lokalny plan obejmuje 274 karty i nie odczytuje/zapisuje zdalnych Issues. Nie powtarzano testów działającej gry, ponieważ zmieniono wyłącznie dokumentację i kryteria przyszłych testów.

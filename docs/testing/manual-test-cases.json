@@ -454,7 +454,8 @@
       "definition_status": "DRAFT / BLOCKED",
       "manual_result": "NOT RUN",
       "changes": [
-        "HL-CHG-0810"
+        "HL-CHG-0810",
+        "HL-CHG-0811"
       ],
       "file": "manual/HL-TC-0033.md"
     },
@@ -467,7 +468,8 @@
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0812",
-        "HL-CHG-0813"
+        "HL-CHG-0813",
+        "HL-CHG-0827"
       ],
       "file": "manual/HL-TC-0034.md"
     },
@@ -495,7 +497,8 @@
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0818",
-        "HL-CHG-0819"
+        "HL-CHG-0819",
+        "HL-CHG-0826"
       ],
       "file": "manual/HL-TC-0036.md"
     },

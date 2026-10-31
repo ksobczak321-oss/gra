@@ -19,7 +19,7 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 
 ## Zakres i odbiór
 
-- Użytkownik potwierdził progi Ratusza 10, 13, 16, 19 i dalszy krok co trzy poziomy. Limit liczby wysp oraz pozostałe warunki kolonizacji są osobnymi decyzjami.
+- Użytkownik potwierdził progi Ratusza 10, 13, 16, 19 i dalszy krok co trzy poziomy, do przyjętego limitu 20 wysp łącznie; dziewiętnasta córka jest od Ratusza 64.
 
 ## Źródło
 
@@ -44,7 +44,7 @@ Powiązane przypadki do ręcznego przeklikania:
 
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
-- **Powiązane:** Brak.
+- **Powiązane:** [HL-CHG-0826](HL-CHG-0826.md)
 
 ## Uwagi
 

@@ -1,6 +1,6 @@
 # Backlog HARBORLIGHT — historia planowania i bieżący rejestr
 
-Od 31 października 2026 bieżące atomowe zmiany, decyzje i statusy są w [rejestrze 227 kart](tracking/CHANGE-REGISTER.md), a osobne przypadki ręczne w [planie testów](testing/MANUAL-TEST-PLAN.md). Aktualny kod DEV i rzeczywiste publikacje potwierdza [stan środowisk](ENVIRONMENT-STATUS.md). Poniższe sekcje zachowują historyczny plan v18 i wcześniejsze zgłoszenia; ich dawne wskazania wydania nie opisują obecnego PRE-PROD.
+Od 31 października 2026 bieżące atomowe zmiany, decyzje i statusy są w [rejestrze 229 kart](tracking/CHANGE-REGISTER.md), a osobne przypadki ręczne w [planie testów](testing/MANUAL-TEST-PLAN.md). Aktualny kod DEV i rzeczywiste publikacje potwierdza [stan środowisk](ENVIRONMENT-STATUS.md). Poniższe sekcje zachowują historyczny plan v18 i wcześniejsze zgłoszenia; ich dawne wskazania wydania nie opisują obecnego PRE-PROD.
 
 ## Historyczny zakres v18
 

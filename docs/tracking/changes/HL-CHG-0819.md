@@ -8,24 +8,26 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `proposed` |
+| Implementacja | `not_implemented` |
 | DEV | `analysis_only` |
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `open` |
+| Decyzja | `accepted` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
 ## Zakres i odbiór
 
-- Trzeba rozstrzygnąć koszt narastający od1 doA lub tylko pojedynczy awans oraz czy płacimy zasobami czy monetami.
+- Cena to suma wszystkich rozbudów Ratusza i Domu od poziomu 1 do A; darmowego poziomu 1 nie doliczamy ponownie.
+- Pierwsze trzy córki kosztują po 21 000, 28 000 i 36 000 każdego z sześciu zasobów: monet, drewna, kamienia, zboża, żywności i desek.
+- Przy zwykłym zapasie wymagany koszt i rezerwa żywności mieszczą się od Magazynu odpowiednio 10, 10 i 11. Legalny bonus poza limitem pozostaje wydawalny.
 
 ## Źródło
 
 Koszt wyspy jako suma kosztów Ratusza i Domu do poziomu 7, 8, 9…
 
-Odniesienie: `user_chat:last_request_2026-10-31`.
+Odniesienie: `user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_1`.
 
 Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.
 
@@ -45,6 +47,11 @@ Powiązane przypadki do ręcznego przeklikania:
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
 - **Powiązane:** Brak.
+
+## Uwagi
+
+- Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.
+- Kontynuacja A po trzeciej córce pozostaje do zatwierdzenia; wariant samego ostatniego awansu odrzucony.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

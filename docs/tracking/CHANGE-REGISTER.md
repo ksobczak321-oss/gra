@@ -1,6 +1,6 @@
 # HARBORLIGHT — rejestr zmian
 
-Stan ewidencji: **2026-10-31**. **227 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
+Stan ewidencji: **2026-10-31**. **229 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
 
 Źródło danych: [changes.json](changes.json). Karty odtwarza `python3 scripts/build_change_register.py`; `--check` sprawdza zgodność bez zapisów. Nie edytuj wygenerowanych kart zamiast źródła JSON.
 
@@ -304,22 +304,24 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0807 — Druga wyspa nie dubluje nagród raz na konto i ochrony powitalnej](changes/HL-CHG-0807.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0808 — Restart jednej wyspy blokowany przy drugim świecie, rejsie lub nierozliczonym handlu](changes/HL-CHG-0808.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0809 — Migracja pojedynczego świata do zapisu archipelagu zachowuje historię](changes/HL-CHG-0809.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
-| [HL-CHG-0810 — Nazwa wyspy córki ma wymuszony przedrostek nazwy matki](changes/HL-CHG-0810.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0811 — Zasada nazw po późniejszej zmianie nazwy matki](changes/HL-CHG-0811.md) | Decision | `open` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0812 — Założenie nowej wyspy odbiera sześć osób z domu matki](changes/HL-CHG-0812.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0813 — Na wyspie macierzystej zostaje minimum 12 mieszkańców](changes/HL-CHG-0813.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0810 — Nazwa wyspy córki ma wymuszony przedrostek nazwy matki](changes/HL-CHG-0810.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0811 — Zasada nazw po późniejszej zmianie nazwy matki](changes/HL-CHG-0811.md) | Decision | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0812 — Założenie nowej wyspy odbiera sześć osób z domu matki](changes/HL-CHG-0812.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0813 — Matka ma ochronę minimum 12 mieszkańców także przed dżumą i odejściami](changes/HL-CHG-0813.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0814 — Statek pasażerski mieści do 100 osób](changes/HL-CHG-0814.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0815 — Przewóz ludzi trwa 30 minut](changes/HL-CHG-0815.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0816 — Rejs jest albo pasażerski, albo towarowy](changes/HL-CHG-0816.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0817 — Przewóz osób musi określić pojemność celu, jedzenie i zachowanie tożsamości](changes/HL-CHG-0817.md) | Decision | `open` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0818 — Kolejne wyspy od Ratusza matki 10, 13, 16, 19 i dalej co trzy poziomy](changes/HL-CHG-0818.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0819 — Koszt wyspy jako suma kosztów Ratusza i Domu do poziomu 7, 8, 9…](changes/HL-CHG-0819.md) | Decision | `open` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0819 — Koszt wyspy jako suma kosztów Ratusza i Domu do poziomu 7, 8, 9…](changes/HL-CHG-0819.md) | Decision | `accepted` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0820 — Dostęp do zakupu wyspy tylko w Ratuszu i powiadomieniu po odblokowaniu](changes/HL-CHG-0820.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0821 — Rozszerzenie obecnego limitu dwóch wysp na wiele córek](changes/HL-CHG-0821.md) | Decision | `open` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0822 — Powrót NPC obok handlu między graczami](changes/HL-CHG-0822.md) | Decision | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0823 — Maksymalną cenę oferty wyznacza gra, gracz może zejść niżej](changes/HL-CHG-0823.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0823 — Maksymalną cenę oferty wyznacza gra, gracz może zejść niżej](changes/HL-CHG-0823.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0824 — Materiały między graczami są sprzedawane za monety](changes/HL-CHG-0824.md) | Decision | `accepted` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0825 — Startowe budynki i skopiowane poziomy po wprowadzeniu płatnych kolonii](changes/HL-CHG-0825.md) | Decision | `open` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0826 — Limit archipelagu: 20 wysp łącznie na konto](changes/HL-CHG-0826.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0827 — Kolonizacja teleportuje sześć osób bezpośrednio z Domu matki](changes/HL-CHG-0827.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
 
 <a id="hl-epic-soc"></a>
 

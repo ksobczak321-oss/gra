@@ -1,4 +1,4 @@
-# HL-CHG-0813 — Na wyspie macierzystej zostaje minimum 12 mieszkańców
+# HL-CHG-0813 — Matka ma ochronę minimum 12 mieszkańców także przed dżumą i odejściami
 
 **Typ:** Story · **Obszar:** Archipelag i handel v23 · **Epik:** `HL-EPIC-ARC`
 
@@ -13,19 +13,20 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `accepted_parameters_with_open_details` |
+| Decyzja | `accepted` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
 ## Zakres i odbiór
 
-- Kolonizacja wymaga co najmniej18 osób na matce oraz co najmniej6 faktycznie dostępnych w domu.
+- Na matce pozostaje minimum 12 osób po dobrowolnym wyjeździe, kolonizacji, dżumie i odejściach, także w rozliczeniu offline.
+- Ochrona ogranicza ubytek istniejących osób; nie zastępuje ich nowo generowanymi mieszkańcami.
 
 ## Źródło
 
-Na wyspie macierzystej zostaje minimum 12 mieszkańców
+Matka ma ochronę minimum 12 mieszkańców także przed dżumą i odejściami
 
-Odniesienie: `user_chat:last_request_2026-10-31`.
+Odniesienie: `user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_4`.
 
 Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.
 
@@ -45,6 +46,11 @@ Powiązane przypadki do ręcznego przeklikania:
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
 - **Powiązane:** Brak.
+
+## Uwagi
+
+- Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.
+- Migracja historycznej matki z mniej niż 12 osobami pozostaje do decyzji; córkom nie nadano automatycznie ochrony 12.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

@@ -13,19 +13,20 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `accepted_parameters_with_open_details` |
+| Decyzja | `accepted` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
 ## Zakres i odbiór
 
-- Limit jest egzekwowany na serwerze i nie tworzy arbitrażu względem handlu NPC.
+- Maksymalna cena PvP jest bazową ceną sprzedaży tego samego materiału i ilości przez NPC graczowi; nie ceną odkupu ani indywidualną inflacją zakupów.
+- Gracz może wystawić towar taniej; zakup taniej w PvP i odsprzedaż NPC drożej są dozwolone, przy rzeczywistym transferze monet i towarów dokładnie raz.
 
 ## Źródło
 
 Maksymalną cenę oferty wyznacza gra, gracz może zejść niżej
 
-Odniesienie: `user_chat:last_request_2026-10-31`.
+Odniesienie: `user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_5`.
 
 Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.
 
@@ -45,6 +46,11 @@ Powiązane przypadki do ręcznego przeklikania:
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
 - **Powiązane:** Brak.
+
+## Uwagi
+
+- Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.
+- Zaokrąglenia ilości, zmiana wersji bazowego cennika i ewentualne prowizje wymagają doprecyzowania; nie dodajemy zakazu zwykłego zysku handlowego.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

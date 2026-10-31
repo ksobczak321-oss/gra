@@ -8,24 +8,24 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `proposed` |
+| Implementacja | `not_implemented` |
 | DEV | `analysis_only` |
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `open` |
+| Decyzja | `accepted` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
 ## Zakres i odbiór
 
-- Trzeba ustalić propagację prefiksu, limity długości, unikalność i uniknięcie zagnieżdżonych prefiksów.
+- Zmiana nazwy matki aktualizuje prefiksy wszystkich córek, z zachowaniem sufiksów, identyfikatorów, zasobów i historii.
 
 ## Źródło
 
 Zasada nazw po późniejszej zmianie nazwy matki
 
-Odniesienie: `user_chat:last_request_2026-10-31`.
+Odniesienie: `user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_2`.
 
 Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.
 
@@ -36,11 +36,20 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 - **Scenariusze automatyczne:** nie przypisano.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
+Powiązane przypadki do ręcznego przeklikania:
+
+- [HL-TC-0033 — Nazwa wyspy córki zawsze ma wymuszony prefiks matki](../../testing/manual/HL-TC-0033.md) — `NOT RUN`.
+
 ## Relacje
 
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
 - **Powiązane:** Brak.
+
+## Uwagi
+
+- Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.
+- Limity długości i walidacja unikalności sufiksów są nadal szczegółami projektu, a nie dodatkowo zatwierdzonymi parametrami.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

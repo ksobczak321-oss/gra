@@ -1,6 +1,6 @@
 # Archipelag i handel — analiza v23 przed decyzjami
 
-Stan analizy: 31 października 2026. Punktem odniesienia jest kod `34f2eb3128fde2ce2d03429f5b0b180c66525412` i robocze uwagi użytkownika. Ten dokument nie zmienia mechanik, zapisów graczy ani wdrożeń. Wszystkie rekomendacje poniżej są **propozycjami**, a nie przyjętymi ustaleniami użytkownika.
+Stan analizy: 31 października 2026, uzupełniony o pięć odpowiedzi użytkownika do analizy. Punktem odniesienia reguł jest kod `34f2eb3128fde2ce2d03429f5b0b180c66525412`. Ten dokument nie zmienia mechanik, zapisów graczy ani wdrożeń. Ustalenia oznaczone jako przyjęte wynikają z odpowiedzi użytkownika; pozostałe rekomendacje są propozycjami.
 
 ## 1. Co użytkownik określił, a co pozostaje otwarte
 
@@ -8,31 +8,32 @@ Użytkownik określił następujący kierunek:
 
 - Wyspy córki mają nazwę z wymuszonym początkiem od nazwy wyspy macierzystej, np. `Dom - Ekspansja`.
 - Można przewozić ludzi między własnymi wyspami; statek pasażerski mieści 100 osób, rejs z ludźmi trwa 30 minut. Dany rejs przewozi albo towary, albo ludzi.
-- Nowa wyspa zabiera sześć istniejących osób z macierzystej. Wybierani ludzie muszą rzeczywiście być w Domu. Wyjazd nie może pozostawić na oryginalnej wyspie mniej niż 12 osób.
+- Nowa wyspa zabiera dokładnie sześć istniejących osób z Domu macierzystej: teleportują się natychmiast, bez rejsu. Zwykłe późniejsze przewozy pasażerskie nadal trwają 30 minut.
+- Wyspa macierzysta jest chroniona przed spadkiem poniżej 12 mieszkańców także przez dżumę i odejścia, a nie tylko dobrowolny wyjazd.
 - Zakładanie wyspy ma pojawić się w Ratuszu i w powiadomieniu po osiągnięciu wymaganego poziomu, bez nowej osobnej ikonki zakładania wyspy.
 - NPC i handel między graczami mają działać równolegle. Wycofuje to poprzednią zasadę zamknięcia handlu NPC od poziomu Ratusza 6.
 - Gra ustala maksymalną cenę, a gracz może zaoferować niższą.
 - Po każdych kolejnych trzech poziomach ma być dostępna następna wyspa. Użytkownik podał koszt jako sumę Ratusza A i Domu A, z A = 7/8/9 dla pierwszej/drugiej/trzeciej dodatkowej wyspy.
 
-Użytkownik odpowiedział na trzy pytania: **najpierw analiza i decyzje**, **sprzedaż materiałów za monety w PvP**, **progi Ratusza 10/13/16/19 i dalej co trzy poziomy**. Te kierunki są przyjęte; nie są jeszcze wdrożone. Dokładna interpretacja kosztu, stan startowy nowych wysp i szczegóły pasażerów wymagają doprecyzowania — tabela poniżej pokazuje, dlaczego.
+Użytkownik przyjął: **najpierw analiza i decyzje**, **sprzedaż materiałów za monety w PvP**, **progi Ratusza 10/13/16/19**, **limit 20 wysp łącznie**, **sumę wszystkich rozbudów Ratusza i Domu od 1 do A**, **aktualizowanie prefiksów po zmianie nazwy matki**, **natychmiastową kolonizację sześcioma osobami z Domu** oraz **ochronę matki do minimum 12 osób także przed zdarzeniami**. Maksymalna cena PvP to **bazowa cena sprzedaży NPC do gracza**; wolno wystawiać taniej i odsprzedawać zakupiony towar NPC. To ustalenia do przyszłego wdrożenia. Poziomy i zasoby startowe córki oraz szczegóły zwykłych rejsów pasażerskich pozostają otwarte.
 
 ## 2. Różnice wobec działającego modelu
 
 | Obszar | Obecny kod | Konsekwencja nowego kierunku |
 | --- | --- | --- |
 | Liczba wysp | Dwie, stałe `island-1` i `island-2`, metadane archipelagu v1 | Potrzebny format wielu wysp i migracja odczytu/zapisu/API, a nie sam nowy przycisk. |
-| Założenie drugiej | Ratusz matki 10, bez opłaty, bez zabierania mieszkańców | Nowa opłata i rzeczywiste przesiedlenie sześciu osób zmieniają gospodarkę. |
+| Założenie drugiej | Ratusz matki 10, bez opłaty, bez zabierania mieszkańców | Nowa opłata i natychmiastowy teleport sześciu rzeczywistych osób zmieniają gospodarkę. |
 | Nowa druga wyspa | 12 nowo utworzonych mieszkańców, po 100 wszystkich sześciu zasobów, wszystkie budynki 1; Ratusz i Magazyn jednorazowo kopiują poziomy matki | Start z sześcioma przesiedleńcami nie może zostawić jeszcze tych 12 nowych osób. Poziomy, zasoby i kopiowanie wymagają osobnej decyzji. |
 | Nazwy | Każda wyspa ma niezależne `islandName`, 2–40 znaków | Wymuszony prefiks musi uwzględnić zmianę nazwy matki oraz limit długości. |
 | Własny statek | Jeden rejs naraz; 1000 materiałów, 10 minut, bez monet; rozbudowa 1000 miejsc za 4,99 zł wyłącznie w symulacji | Dodajemy odrębny tryb pasażerski, nie dzielimy pojemności 100 ludzi przez przelicznik zakupionego ładunku. |
 | Mieszkańcy | Numeryczne ID unikalne tylko wewnątrz jednej wyspy, populacja minimum 6; normalizacja odtwarza brakujące osoby | Przenoszenie samych liczników populacji utworzyłoby lub usunęło inne osoby. Potrzebny trwały transfer konkretnych rekordów. |
-| Handel | Port NPC od Ratusza 4 do 5, barter NPC na Rynku od 2 do 5; PvP od 6, barter materiał–materiał, escrow i transakcje serwera | NPC pozostaje dostępny od 6. Sprzedaż PvP za monety wymaga nowej wersji kontraktu, jeśli użytkownik ją wybierze. |
+| Handel | Port NPC od Ratusza 4 do 5, barter NPC na Rynku od 2 do 5; PvP od 6, barter materiał–materiał, escrow i transakcje serwera | NPC pozostaje dostępny od 6. Potwierdzona sprzedaż PvP za monety wymaga nowej wersji kontraktu. |
 
 Źródła: [`harborlight-v1-archipelago.js`](../../harborlight-v1-archipelago.js), [`harborlight-v1-state.js`](../../harborlight-v1-state.js), [`harborlight-v1-residents.js`](../../harborlight-v1-residents.js), [`harborlight-v1-logistics.js`](../../harborlight-v1-logistics.js), [`backend/player-trade.mjs`](../../backend/player-trade.mjs).
 
 ## 3. Nazwy i tożsamość wysp
 
-**Propozycja:** matką jest zawsze pierwsza wyspa konta. Wyspa córka przechowuje wyłącznie własny sufiks, a jej bieżąca nazwa jest wyliczana jako `<bieżąca nazwa matki> - <sufiks>`. Nie wyciągamy tożsamości z tekstu nazwy: zapis, rejs, oferty i osoby odnoszą się do niezmiennego `islandId`.
+**Przyjęte:** bieżący prefiks córki zmienia się razem z nazwą matki. **Propozycja zapisu:** matką jest zawsze pierwsza wyspa konta; córka przechowuje własny sufiks, a jej bieżąca nazwa jest wyliczana jako `<bieżąca nazwa matki> - <sufiks>`. Nie wyciągamy tożsamości z tekstu nazwy: zapis, rejs, oferty i osoby odnoszą się do niezmiennego `islandId`.
 
 Przykład: `Dom` + `Ekspansja` daje `Dom - Ekspansja`. Zmiana matki na `Port` daje `Port - Ekspansja` bez zmiany ID, mieszkańców, rejsów czy zasobów. Zmiana nazwy córki edytuje sufiks; prefiks nie jest polem edytowalnym. Sufiksy powinny być jednoznaczne w archipelagu, również po normalizacji Unicode i wielkości liter — to propozycja walidacji, nie ustalona nowa reguła.
 
@@ -52,15 +53,15 @@ Pierwsza dodatkowa wyspa jest dziś od Ratusza 10. Użytkownik potwierdził dals
 | 4 | 5 | 19 | Nie określono; A = 10 jest tylko naturalną propozycją kontynuacji. |
 | 5 | 6 | 22 | Nie określono; A = 11 jest tylko propozycją. |
 
-**Ważna granica:** model ma maksymalny Ratusz **100**, a nie 24. Poziom 24 dotyczy pełnego wzrostu pojemności Magazynu. Reguła od 10 co trzy poziomy aż do 100 odblokowałaby **31 dodatkowych wysp, 32 łącznie**. Nie wolno uznać, że użytkownik już zaakceptował taki limit i jego koszty infrastruktury.
+**Przyjęty limit: 20 wysp łącznie — jedna macierzysta i 19 córek.** Dziewiętnasta córka odblokowuje się na Ratuszu **64** (`10 + 3 × 18`). Wyższe poziomy nie odblokowują dwudziestej córki. Model nadal ma maksymalny Ratusz 100; dawny rachunek 32 wysp opisywał wariant bez osobnego limitu i nie jest obowiązującym wymaganiem.
 
-**Propozycja:** kolejny próg sprawdza tylko Ratusz matki i wymaga istnienia poprzedniej córki. Zapobiega to odblokowaniom z tanich kopii Ratusza na córkach. Maksymalną liczbę wysp ustalamy osobno. W Ratuszu matki opcja założenia jest ukryta poniżej progu; po osiągnięciu progu pokazuje koszt i pozostałe niespełnione warunki. Jedno trwałe powiadomienie na kolejny próg zapobiega ponawianiu go przy każdym tyknięciu lub logowaniu. Nie dodajemy ikony „nowa wyspa” na mapie/dolnym pasku. Wybór już założonych wysp jest osobną istniejącą funkcją.
+**Propozycja:** kolejny próg sprawdza tylko Ratusz matki i wymaga istnienia poprzedniej córki. Zapobiega to odblokowaniom z tanich kopii Ratusza na córkach. Limit 20 wysp sprawdzamy niezależnie od poziomu. W Ratuszu matki opcja założenia jest ukryta poniżej progu; po osiągnięciu progu pokazuje koszt i pozostałe niespełnione warunki. Jedno trwałe powiadomienie na kolejny próg zapobiega ponawianiu go przy każdym tyknięciu lub logowaniu. Po osiągnięciu limitu nie proponujemy dalszej kolonizacji. Nie dodajemy ikony „nowa wyspa” na mapie/dolnym pasku. Wybór już założonych wysp jest osobną istniejącą funkcją.
 
 ## 5. Rzeczywiste koszty Ratusza i Domu
 
 Obliczenia wykonano bezpośrednio przez `buildingCost(state, building, { queued: false })` z obecnego modelu, dla kolejnych faktycznych poziomów. Każdy z tych dwóch budynków kosztuje przy rozbudowie z L na L+1 po `500 × L` monet, drewna, kamienia, zboża, żywności i desek. Nie użyto starego katalogowego `BUILDINGS[id].cost`, który dla tej gałęzi wyceny nie jest ceną rozbudowy.
 
-„Suma Ratusza A i Domu A” nie rozstrzyga, czy sumujemy pojedyncze rozbudowy, czy całą historię rozbudów. Różnica jest duża:
+**Przyjęte:** sumujemy całą historię rozbudów obu budynków od poziomu 1 do A. Kolumna pojedynczych awansów poniżej pozostaje porównaniem odrzuconego wariantu:
 
 | A | Ratusz 1→A, każdy z 6 zasobów | Dom 1→A, każdy z 6 zasobów | Suma obu 1→A, każdy z 6 zasobów | Tylko ostatni krok obu `(A−1)→A`, każdy z 6 zasobów |
 | --- | ---: | ---: | ---: | ---: |
@@ -74,7 +75,7 @@ Wzór kumulacyjny dla obu budynków od darmowego poziomu 1: `500 × A × (A−1)
 
 Jest jeszcze pułapka nazewnictwa UI: wycena pokazana budynkowi, który **już ma poziom A**, jest ceną jego awansu do A+1. Dla pary na poziomie 7/8/9 dałaby po 7000/8000/9000 każdego zasobu. To trzecia interpretacja, a nie koszt „osiągnięcia A”.
 
-**Propozycja do potwierdzenia:** nazwać koszt wprost: albo „cena ostatniej rozbudowy Ratusza i Domu do poziomu A”, albo „suma wszystkich rozbudów obu budynków od 1 do A”. Nie wdrażać droższego wariantu wyłącznie na podstawie skrótu „Ratusz A + Dom A”. Opłata za założenie nie powinna zależeć od chwilowej liczby budów ani otrzymywać 10% dopłaty kolejki; jest odrębną, stałą wyceną. Dopłata kolejki dziś istnieje dla rzeczywistych projektów, więc jej wyłączenie z tej opłaty należy zapisać jawnie.
+**Przyjęta nazwa kosztu:** „suma wszystkich rozbudów Ratusza i Domu od 1 do A”, płatna monetami i pięcioma materiałami. Pierwsze trzy córki kosztują po 21 000 / 28 000 / 36 000 każdego zasobu. **Pozostała propozycja techniczna:** stała opłata kolonizacji bez 10% dopłaty kolejki; nie jest ona zleceniem budowlanym. Kontynuacja poziomu wyceny A po trzeciej córce wymaga odrębnego zatwierdzenia.
 
 ### Czy te ceny mieszczą się w Magazynie?
 
@@ -93,7 +94,7 @@ Magazyn 9 mieści 102 515 materiałów łącznie. Nie wystarcza na kumulacyjne A
 
 Bonusowe materiały są wydawalne poza zwykłym limitem, ale nie wolno zakładać, że każdy gracz je posiada ani wymagać kupowania nagród dla wykonalności zadania. Istniejące rezerwacje budów, ofert czy portu dodatkowo pomniejszają dostępny zapas. Warunki pokazujemy na **dostępnych** zasobach, nie na samym widocznym `resources`.
 
-**Propozycja:** jeżeli wybrana zostanie droższa wycena kumulacyjna, zachować jawne wymaganie pojemności/zgromadzenia całego kosztu. Alternatywą jest osobny, wersjonowany fundusz kolonizacji do wpłat partiami, ale to nowa mechanika z zasadami anulowania i zwrotu, a nie zwykła rezerwacja budowlana. Dzisiejsza rezerwacja nie opróżnia fizycznie Magazynu do chwili odbioru — samo „zarezerwuj 105 000” nie rozwiąże braku miejsca.
+Użytkownik zaakceptował wycenę kumulacyjną oraz wynikające z niej pojemności: przy zwykłym zapasie pierwsze trzy ceny mieszczą się dopiero przy Magazynie odpowiednio 10, 10 i 11. Nie jest to dodatkowy bezwzględny próg poziomu, jeśli gracz legalnie ma wydawalny bonus poza limitem. Alternatywny fundusz kolonizacji do wpłat partiami nie został wybrany; byłby osobną mechaniką. Dzisiejsza rezerwacja nie opróżnia fizycznie Magazynu do chwili odbioru — samo „zarezerwuj 105 000” nie rozwiązuje braku miejsca.
 
 ## 6. Sześciu kolonistów i warunek 12 osób na matce
 
@@ -103,11 +104,13 @@ Dla pierwszego założenia minimalne warunki wynikają wprost: matka ma **co naj
 
 **Propozycja:** wybór sześciu osób jest jawny lub deterministyczny, a serwer ponownie sprawdza ich obecność i stan w transakcji zatwierdzenia. Spadek populacji przez dżumę między wyceną a kliknięciem może unieważnić wycenę; nie wolno wtedy pobrać zasobów i oddać pustej wyspy.
 
-Otwarte rozróżnienie: „nie mniej niż 12” w kontekście transportu może oznaczać ograniczenie dobrowolnych wyjazdów albo nową bezwzględną ochronę matki. Obecne zdarzenia, odejścia i normalizacja znają minimum **6**. **Propozycja minimalna:** 12 jest progiem wyjazdu z matki; zdarzenia nadal mają istniejące minimum 6, dopóki użytkownik nie potwierdzi mocniejszej ochrony. Jeżeli 12 ma obowiązywać bezwzględnie, zmiany muszą objąć również dżumę, odejścia i normalizację, nie tylko port. Dla wyjazdów z córek **propozycją** jest zachowanie dzisiejszego minimum sześciu osób.
+**Przyjęte:** minimum **12** na matce chroni także przed dżumą i odejściami. Przyszła zmiana musi objąć wszystkie ścieżki ubytku populacji: kolonizację, zwykłe wyjazdy, zdarzenia, odejścia i ich granice w rozliczeniu offline. Nie przywracamy po fakcie nowych losowych osób zamiast ochrony istniejących. Obecny kod nadal ma minimum 6 i wymaga osobnej implementacji/migracji; dla historycznej matki poniżej 12 sposób wyrównania pozostaje do decyzji. Dla córek nadal propozycją jest zachowanie minimum sześciu osób — użytkownik nie nadał im ochrony 12.
 
-Użytkownik nie określił, czy kolonizacja jest natychmiastowym przesiedleniem, czy pierwszym 30-minutowym rejsem. **Propozycja spójna z podróżami:** koszt i sześć osób przechodzą do operacji kolonizacji przy odpłynięciu; córka jest „w zakładaniu” i zaczyna normalną symulację dopiero po przybyciu. Do tego czasu nie wolno przepuścić pustej wyspy przez normalizator, który automatycznie dodałby minimum sześciu mieszkańców. Alternatywa natychmiastowej kolonizacji wymaga jawnego wyjątku od czasu pasażerów.
+**Przyjęty wyjątek dla kolonizacji:** dokładnie sześć osób teleportuje się bezpośrednio z Domu matki do Domu nowej córki przy zatwierdzeniu założenia. Nie płyną 30 minut, nie zajmują statku i nie potrzebują racji na podróż. Koszt, odjęcie sześciu rekordów matce i utworzenie córki z tymi rekordami stanowią jedną atomową operację; ponowienie nie tworzy kolejnej córki ani dodatkowych osób. Normalizator nowego świata nie może najpierw wygenerować startera 12 lub minimum 6, a potem dopisać kolonistów. Pozostaje do uzgodnienia stan budynków/zasobów oraz reguła startu zegara i wprowadzenia córki. Wyjątek nie skraca zwykłych rejsów między już istniejącymi wyspami.
 
 ## 7. Rejs pasażerski — proponowany kontrakt
+
+Ta sekcja dotyczy zwykłego przewozu między już istniejącymi wyspami. Jednorazowa kolonizacja sześcioma osobami jest opisanym wyżej, przyjętym wyjątkiem teleportacyjnym.
 
 | Element | Wymaganie lub oznaczona propozycja |
 | --- | --- |
@@ -143,7 +146,7 @@ Migrujemy z istniejących osób deterministycznie po `(islandId, dotychczasowy i
 
 `osoby na wszystkich wyspach + osoby w rejsach = osoby przed operacją`, z osobnym, jawnym uwzględnieniem narodzin/przybyć i odejść/śmierci między znacznikami czasu.
 
-Zapis musi zawierać `requestId`, stan rejsu, konkretne osoby, źródło, cel, `departedAt`, `arrivesAt`, generację archipelagu i potwierdzenie lądowania. Ponowienie wysyłki/lądowania po konflikcie, utracie internetu lub ponownym logowaniu nie może drugi raz odjąć ani dodać tych osób. Jedno atomowe zatwierdzenie obejmuje koszt, usunięcie źródłowych rekordów, rezerwację celu i utworzenie rejsu.
+Zapis zwykłego rejsu musi zawierać `requestId`, stan rejsu, konkretne osoby, źródło, cel, `departedAt`, `arrivesAt`, generację archipelagu i potwierdzenie lądowania. Ponowienie wysyłki/lądowania po konflikcie, utracie internetu lub ponownym logowaniu nie może drugi raz odjąć ani dodać tych osób. Osobna operacja kolonizacji zapisuje teleport i założenie córki jednocześnie, bez stanu rejsu i bez czasu oczekiwania.
 
 ## 8. Migracja dwóch obecnych wysp do wielu
 
@@ -155,9 +158,9 @@ Do rozstrzygnięcia pozostaje nowy start: zachować kopiowanie Ratusza/Magazynu,
 
 ### Granica pojemności zapisu i skalowania
 
-Obecny limit payloadu wynosi **700 000 bajtów**; Firestore ma ponadto własny limit dokumentu. Proste pomiary obecnego, skompaktowanego modelu dla dwóch spokojnych światów po 2400 osób dały ok. **235 187 bajtów**. Ekstrapolacja tego konkretnego stanu do 32 podobnych światów daje ok. **3 750 325 bajtów**, jeszcze bez dodatkowych aktywnych rejsów i rozbudowanej historii. To oszacowanie rozmiaru danych, nie pomiar wydajności ani obietnica kosztów GCP.
+Obecny limit payloadu wynosi **700 000 bajtów**; Firestore ma ponadto własny limit dokumentu. Proste pomiary obecnego, skompaktowanego modelu dla dwóch spokojnych światów po 2400 osób dały ok. **235 187 bajtów**. Nawet z przyjętym limitem 20 światów prosta ekstrapolacja daje około **2,4 MB**, jeszcze bez dodatkowych aktywnych rejsów i rozbudowanej historii. To przybliżenie rozmiaru danych, nie pomiar 20 światów, wydajności ani kosztów GCP.
 
-**Propozycja:** przed przyjęciem dużej liczby wysp wybrać jawny limit i rozdzielić zapisy światów na dokumenty, zachowując serwerowy atomowy rejestr rejsów/escrow. Samo podniesienie limitu JSON nie wystarczy. Autosave nie powinien co 30 sekund przepisywać wszystkich niezmienionych wysp. Jednoczesna symulacja wielu pełnych światów w przeglądarce również wymaga pomiaru, a koszty GCP wynikają z odczytów/zapisów i transferu, nie tylko liczby zalogowanych osób.
+Limit 20 został przyjęty. **Propozycja architektury:** rozdzielić zapisy światów na dokumenty, zachowując serwerowy atomowy rejestr kolonizacji/rejsów/escrow. Samo podniesienie limitu JSON nie wystarczy. Autosave nie powinien co 30 sekund przepisywać wszystkich niezmienionych wysp. Jednoczesna symulacja wielu pełnych światów w przeglądarce również wymaga pomiaru, a koszty GCP wynikają z odczytów/zapisów i transferu, nie tylko liczby zalogowanych osób.
 
 ## 9. NPC i PvP równolegle — cena, dochód i brak tworzenia monet
 
@@ -178,9 +181,9 @@ NPC-rynek barterowy ma dziś inną zasadę: paczki 10 dają 9, tylko w odpowiedn
 
 Użytkownik wybrał sprzedaż materiałów za monety. **Propozycja kontraktu:** oferta sprzedaje określony materiał i ilość za całkowitą dodatnią liczbę monet. Gra pokazuje limit, a wystawiający wybiera cenę równą lub niższą. Monetowy kontrakt musi otrzymać nową wersję; obecny backend akceptuje tylko pięć materiałów, bez monet. Nie można podmienić znaczenia `want.resource` w istniejących ofertach.
 
-Właściwa wartość limitu pozostaje do decyzji. **Propozycja:** limit opierać na cenie NPC sprzedaży do gracza dla porównywalnej ilości, z jawną wersją cennika i terminem wyceny. Nie używać bez wyjaśnienia ceny odkupu NPC ani indywidualnej inflacji sprzedającego, którą można podbić zakupami. Wariant ruchomego limitu według aktualnej ceny NPC wymaga określenia, czy istniejąca oferta pozostaje ważna po zmianie ceny; bezpieczniej zamrozić zaakceptowaną wycenę i ponownie sprawdzić stan oferty przy zawarciu.
+**Przyjęte:** maksymalna cena PvP to **bazowa cena, za którą NPC sprzedaje graczowi taką samą ilość materiału**. Nie jest to cena odkupu NPC ani indywidualna podwyżka z historii zakupów. **Do decyzji technicznej:** wersjonowanie wyceny i ważność istniejących ofert po zmianie bazowego cennika; propozycją jest zamrożenie zaakceptowanej wyceny z wersją i ponowna weryfikacja przy zawarciu.
 
-Przykład wyłącznie ilustrujący proponowany limit: jeśli 100 kamienia kosztuje u NPC 50 monet, sprzedający mógłby zażądać 50, 45 albo 30. Kupno za 30 i odsprzedaż NPC za 40 daje kupującemu 10 monet, ale drugi gracz realnie oddał kamień i otrzymał 30 — nie jest to samo w sobie duplikacja monet. Jeżeli celem ma być także zakaz takiego handlowego zysku, sam **maksymalny** pułap tego nie osiągnie; potrzebna byłaby dodatkowa minimalna cena albo zmiana odkupu NPC. Użytkownik nie zlecił jeszcze takiego minimum.
+Przykład przyjętej zasady: jeśli 100 kamienia kosztuje u NPC bazowo 50 monet, sprzedający może zażądać 50, 45 albo 30. Kupno za 30 i odsprzedaż NPC za 40 daje kupującemu 10 monet, ale drugi gracz realnie oddał kamień i otrzymał 30 — nie jest to samo w sobie duplikacja monet. Użytkownik zaakceptował tę konsekwencję; nie dodajemy zakazu odsprzedaży ani ceny minimalnej w celu jej wyeliminowania.
 
 Przy sprzedaży PvP monety są odejmowane nabywcy i dodawane sprzedającemu dokładnie raz; system nie dopisuje ich jako nowej nagrody za „sprzedaż”. Ewentualna prowizja jest osobnym odpływem monet. Nie dodajemy nowej prowizji bez decyzji. Statystyka „przychód ze sprzedaży” nie oznacza zysku ani nowo wyemitowanych monet; należy oddzielić obrót, opłatę i bilans.
 
@@ -200,12 +203,12 @@ Barter nie ma jednej „ceny maksymalnej” typu 50 monet, ponieważ oferta wymi
 
 ## 10. Decyzje potrzebne do czystej wersji
 
-Trzy pierwsze pytania zostały rozstrzygnięte: analiza przed wdrożeniem, PvP za monety oraz progi 10/13/16/19. Do spójnego wdrożenia należy jeszcze jawnie rozstrzygnąć:
+Po pięciu odpowiedziach użytkownika rozstrzygnięte są również cena kumulacyjna, dynamiczny prefiks, natychmiastowy teleport kolonistów, limit 20 wysp, ochrona matki 12 przed zdarzeniami oraz bazowy pułap ceny NPC z możliwością tańszej oferty i odsprzedaży. Do spójnego wdrożenia pozostają:
 
-1. Która z wycen jest zamierzona: pojedynczy ostatni awans czy kumulacyjne 1→A? Co dzieje się po trzeciej dodatkowej wyspie i jaki jest maksymalny limit wysp?
-2. Jakie poziomy, zasoby i moment startu otrzymuje nowa córka oraz czy jej sześciu kolonistów płynie 30 minut?
-3. Czy minimum 12 chroni matkę tylko przed dobrowolnym wyjazdem, czy również przed zdarzeniami; ile musi pozostać na córce?
-4. Czy pasażerowie potrzebują racji i czy cel wymaga wolnych łóżek oprócz limitu Ratusza? Czy po rejsie są od razu w Domu?
-5. Czy maksymalna cena to cena NPC sprzedaży, cena odkupu, czy inny pułap; czy jest zamrażana przy wystawianiu? Maksymalna cena sama nie zakazuje kupowania tanio i odsprzedawania drożej.
+1. Kontynuacja poziomu A do wyceny po trzeciej córce: A = 10, 11… to naturalna, ale nadal niezatwierdzona propozycja.
+2. Startowe poziomy i zasoby córki oraz start jej zegara/wprowadzenia. Sam teleport sześciu osób jest już natychmiastowy i bez rejsu.
+3. Minimum populacji dla córek oraz postępowanie z historyczną matką, która przed migracją ma mniej niż 12 osób; nie tworzymy brakujących osób bez jawnej reguły.
+4. Jedzenie, pojemność celu i moment dostępności osób po zwykłym rejsie pasażerskim, w tym oczekiwanie i powrót. Te reguły nie dotyczą natychmiastowej kolonizacji.
+5. Zaokrąglenia ceny dla niestandardowych ilości oraz ważność ofert po zmianie bazowego cennika; prowizja PvP nie została wybrana. Dalszy zakres osobnego Rynku barterowego NPC pozostaje do potwierdzenia.
 
 **Rekomendowana kolejność, jako propozycja:** zatwierdzić semantykę i wyceny; przygotować wersję zapisu wielu wysp oraz migrację; dopiero potem wprowadzać atomową kolonizację/pasażerów i wersję rynku. Żaden z tych etapów nie jest w tym dokumencie dowodem implementacji, testu chmury ani promocji do PRE-PROD/PROD.

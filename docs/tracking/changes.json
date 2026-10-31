@@ -10029,7 +10029,7 @@
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
         "summary": "Nazwa wyspy córki ma wymuszony przedrostek nazwy matki",
-        "reference": "user_chat:last_request_2026-10-31"
+        "reference": "user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_2"
       },
       "status": {
         "implementation": "not_implemented",
@@ -10037,10 +10037,10 @@
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted_parameters_with_open_details"
+        "decision": "accepted"
       },
       "acceptance": [
-        "Przykład: dom - ekspansja; gracz wybiera tylko sufiks, nie usuwa nazwy matki."
+        "Nazwa córki ma postać <bieżąca nazwa matki> - <własny sufiks>; użytkownik nie może usunąć prefiksu."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -10059,7 +10059,9 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP."
+      ]
     },
     {
       "id": "HL-CHG-0811",
@@ -10068,22 +10070,22 @@
       "type": "Decision",
       "title": "Zasada nazw po późniejszej zmianie nazwy matki",
       "source": {
-        "kind": "user_chat_proposal_or_open_decision",
+        "kind": "user_chat_and_approved_requirement",
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
         "summary": "Zasada nazw po późniejszej zmianie nazwy matki",
-        "reference": "user_chat:last_request_2026-10-31"
+        "reference": "user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_2"
       },
       "status": {
-        "implementation": "proposed",
+        "implementation": "not_implemented",
         "dev": "analysis_only",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "accepted"
       },
       "acceptance": [
-        "Trzeba ustalić propagację prefiksu, limity długości, unikalność i uniknięcie zagnieżdżonych prefiksów."
+        "Zmiana nazwy matki aktualizuje prefiksy wszystkich córek, z zachowaniem sufiksów, identyfikatorów, zasobów i historii."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -10102,7 +10104,10 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.",
+        "Limity długości i walidacja unikalności sufiksów są nadal szczegółami projektu, a nie dodatkowo zatwierdzonymi parametrami."
+      ]
     },
     {
       "id": "HL-CHG-0812",
@@ -10115,7 +10120,7 @@
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
         "summary": "Założenie nowej wyspy odbiera sześć osób z domu matki",
-        "reference": "user_chat:last_request_2026-10-31"
+        "reference": "user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_3"
       },
       "status": {
         "implementation": "not_implemented",
@@ -10123,14 +10128,17 @@
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted_parameters_with_open_details"
+        "decision": "accepted"
       },
       "acceptance": [
-        "Sześć rzeczywistych wolnych osób jest przeniesionych, a nie tworzonych obok dawnego startera12."
+        "Założenie córki zabiera dokładnie sześć rzeczywistych osób dostępnych w Domu matki, z zachowaniem ich stanu; nie generuje dodatkowego startera mieszkańców.",
+        "Matka przed kolonizacją ma co najmniej 18 osób, a po operacji co najmniej 12."
       ],
       "supersedes": [],
       "superseded_by": [],
-      "related_changes": [],
+      "related_changes": [
+        "HL-CHG-0827"
+      ],
       "issue_url": null,
       "published_to_github_issues": false,
       "evidence": {
@@ -10145,20 +10153,22 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP."
+      ]
     },
     {
       "id": "HL-CHG-0813",
       "epic": "HL-EPIC-ARC",
       "area": "Archipelag i handel v23",
       "type": "Story",
-      "title": "Na wyspie macierzystej zostaje minimum 12 mieszkańców",
+      "title": "Matka ma ochronę minimum 12 mieszkańców także przed dżumą i odejściami",
       "source": {
         "kind": "user_chat_and_approved_requirement",
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
-        "summary": "Na wyspie macierzystej zostaje minimum 12 mieszkańców",
-        "reference": "user_chat:last_request_2026-10-31"
+        "summary": "Matka ma ochronę minimum 12 mieszkańców także przed dżumą i odejściami",
+        "reference": "user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_4"
       },
       "status": {
         "implementation": "not_implemented",
@@ -10166,10 +10176,11 @@
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted_parameters_with_open_details"
+        "decision": "accepted"
       },
       "acceptance": [
-        "Kolonizacja wymaga co najmniej18 osób na matce oraz co najmniej6 faktycznie dostępnych w domu."
+        "Na matce pozostaje minimum 12 osób po dobrowolnym wyjeździe, kolonizacji, dżumie i odejściach, także w rozliczeniu offline.",
+        "Ochrona ogranicza ubytek istniejących osób; nie zastępuje ich nowo generowanymi mieszkańcami."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -10188,7 +10199,10 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.",
+        "Migracja historycznej matki z mniej niż 12 osobami pozostaje do decyzji; córkom nie nadano automatycznie ochrony 12."
+      ]
     },
     {
       "id": "HL-CHG-0814",
@@ -10384,11 +10398,13 @@
         "decision": "accepted"
       },
       "acceptance": [
-        "Użytkownik potwierdził progi Ratusza 10, 13, 16, 19 i dalszy krok co trzy poziomy. Limit liczby wysp oraz pozostałe warunki kolonizacji są osobnymi decyzjami."
+        "Użytkownik potwierdził progi Ratusza 10, 13, 16, 19 i dalszy krok co trzy poziomy, do przyjętego limitu 20 wysp łącznie; dziewiętnasta córka jest od Ratusza 64."
       ],
       "supersedes": [],
       "superseded_by": [],
-      "related_changes": [],
+      "related_changes": [
+        "HL-CHG-0826"
+      ],
       "issue_url": null,
       "published_to_github_issues": false,
       "evidence": {
@@ -10414,22 +10430,24 @@
       "type": "Decision",
       "title": "Koszt wyspy jako suma kosztów Ratusza i Domu do poziomu 7, 8, 9…",
       "source": {
-        "kind": "user_chat_proposal_or_open_decision",
+        "kind": "user_chat_and_approved_requirement",
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
         "summary": "Koszt wyspy jako suma kosztów Ratusza i Domu do poziomu 7, 8, 9…",
-        "reference": "user_chat:last_request_2026-10-31"
+        "reference": "user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_1"
       },
       "status": {
-        "implementation": "proposed",
+        "implementation": "not_implemented",
         "dev": "analysis_only",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "accepted"
       },
       "acceptance": [
-        "Trzeba rozstrzygnąć koszt narastający od1 doA lub tylko pojedynczy awans oraz czy płacimy zasobami czy monetami."
+        "Cena to suma wszystkich rozbudów Ratusza i Domu od poziomu 1 do A; darmowego poziomu 1 nie doliczamy ponownie.",
+        "Pierwsze trzy córki kosztują po 21 000, 28 000 i 36 000 każdego z sześciu zasobów: monet, drewna, kamienia, zboża, żywności i desek.",
+        "Przy zwykłym zapasie wymagany koszt i rezerwa żywności mieszczą się od Magazynu odpowiednio 10, 10 i 11. Legalny bonus poza limitem pozostaje wydawalny."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -10448,7 +10466,10 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.",
+        "Kontynuacja A po trzeciej córce pozostaje do zatwierdzenia; wariant samego ostatniego awansu odrzucony."
+      ]
     },
     {
       "id": "HL-CHG-0820",
@@ -10515,11 +10536,13 @@
         "decision": "open"
       },
       "acceptance": [
-        "Potrzebny model wielu światów, trwałeID, rozsądny limit i migracja istniejącego drugiego świata."
+        "Migracja zapisu dwóch światów do wielu musi zachować istniejące dane i stabilne identyfikatory. Przyjęty limit wynosi 20 wysp łącznie; projekt formatu i atomowego rozliczania pozostaje otwarty."
       ],
       "supersedes": [],
       "superseded_by": [],
-      "related_changes": [],
+      "related_changes": [
+        "HL-CHG-0826"
+      ],
       "issue_url": null,
       "published_to_github_issues": false,
       "evidence": {
@@ -10534,7 +10557,9 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Limit liczby wysp rozstrzygnięto osobno w HL-CHG-0826; ta karta pozostaje otwartym projektem migracji, bez dowodu implementacji."
+      ]
     },
     {
       "id": "HL-CHG-0822",
@@ -10592,7 +10617,7 @@
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
         "summary": "Maksymalną cenę oferty wyznacza gra, gracz może zejść niżej",
-        "reference": "user_chat:last_request_2026-10-31"
+        "reference": "user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_5"
       },
       "status": {
         "implementation": "not_implemented",
@@ -10600,10 +10625,11 @@
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted_parameters_with_open_details"
+        "decision": "accepted"
       },
       "acceptance": [
-        "Limit jest egzekwowany na serwerze i nie tworzy arbitrażu względem handlu NPC."
+        "Maksymalna cena PvP jest bazową ceną sprzedaży tego samego materiału i ilości przez NPC graczowi; nie ceną odkupu ani indywidualną inflacją zakupów.",
+        "Gracz może wystawić towar taniej; zakup taniej w PvP i odsprzedaż NPC drożej są dozwolone, przy rzeczywistym transferze monet i towarów dokładnie raz."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -10622,7 +10648,10 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.",
+        "Zaokrąglenia ilości, zmiana wersji bazowego cennika i ewentualne prowizje wymagają doprecyzowania; nie dodajemy zakazu zwykłego zysku handlowego."
+      ]
     },
     {
       "id": "HL-CHG-0824",
@@ -10711,6 +10740,107 @@
         "manual_execution": "NOT_RUN"
       },
       "notes": []
+    },
+    {
+      "id": "HL-CHG-0826",
+      "epic": "HL-EPIC-ARC",
+      "area": "Archipelag i handel v23",
+      "type": "Story",
+      "title": "Limit archipelagu: 20 wysp łącznie na konto",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Limit archipelagu: 20 wysp łącznie na konto",
+        "reference": "user_chat:response_annotations_2026_10_31/item_4"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "analysis_only",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Jedno konto ma najwyżej 20 wysp: jedną macierzystą i 19 córek.",
+        "Progi zaczynają się od Ratusza 10 i rosną co trzy poziomy; ostatnia, dziewiętnasta córka jest od Ratusza 64.",
+        "Wyższy poziom ani kopia Ratusza na córce nie pozwalają przekroczyć limitu 20."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0818",
+        "HL-CHG-0821"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Decyzja projektowa przyjęta; nie wdrożono mechaniki ani migracji i nie zmieniono stanu kont."
+      ]
+    },
+    {
+      "id": "HL-CHG-0827",
+      "epic": "HL-EPIC-ARC",
+      "area": "Archipelag i handel v23",
+      "type": "Story",
+      "title": "Kolonizacja teleportuje sześć osób bezpośrednio z Domu matki",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Kolonizacja teleportuje sześć osób bezpośrednio z Domu matki",
+        "reference": "user_chat:response_annotations_2026_10_31/item_3"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "analysis_only",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Dokładnie sześć istniejących osób z Domu matki natychmiast trafia do Domu zakładanej córki; nie płyną przez 30 minut.",
+        "Kolonizacja nie zajmuje statku i nie pobiera racji na podróż. Koszt, utworzenie córki i przeniesienie osób są jedną operacją, odporną na ponowienie.",
+        "Wyjątek teleportacyjny dotyczy wyłącznie założenia córki; zwykłe rejsy pasażerskie między istniejącymi wyspami nadal trwają 30 minut."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0812",
+        "HL-CHG-0813",
+        "HL-CHG-0815"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Decyzja projektowa przyjęta; nie wdrożono mechaniki ani migracji i nie zmieniono stanu kont."
+      ]
     },
     {
       "id": "HL-CHG-0901",

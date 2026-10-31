@@ -13,19 +13,20 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `accepted_parameters_with_open_details` |
+| Decyzja | `accepted` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
 ## Zakres i odbiór
 
-- Sześć rzeczywistych wolnych osób jest przeniesionych, a nie tworzonych obok dawnego startera12.
+- Założenie córki zabiera dokładnie sześć rzeczywistych osób dostępnych w Domu matki, z zachowaniem ich stanu; nie generuje dodatkowego startera mieszkańców.
+- Matka przed kolonizacją ma co najmniej 18 osób, a po operacji co najmniej 12.
 
 ## Źródło
 
 Założenie nowej wyspy odbiera sześć osób z domu matki
 
-Odniesienie: `user_chat:last_request_2026-10-31`.
+Odniesienie: `user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_3`.
 
 Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.
 
@@ -44,7 +45,11 @@ Powiązane przypadki do ręcznego przeklikania:
 
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
-- **Powiązane:** Brak.
+- **Powiązane:** [HL-CHG-0827](HL-CHG-0827.md)
+
+## Uwagi
+
+- Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

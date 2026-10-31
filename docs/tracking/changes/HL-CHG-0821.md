@@ -19,7 +19,7 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 
 ## Zakres i odbiór
 
-- Potrzebny model wielu światów, trwałeID, rozsądny limit i migracja istniejącego drugiego świata.
+- Migracja zapisu dwóch światów do wielu musi zachować istniejące dane i stabilne identyfikatory. Przyjęty limit wynosi 20 wysp łącznie; projekt formatu i atomowego rozliczania pozostaje otwarty.
 
 ## Źródło
 
@@ -40,7 +40,11 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
-- **Powiązane:** Brak.
+- **Powiązane:** [HL-CHG-0826](HL-CHG-0826.md)
+
+## Uwagi
+
+- Limit liczby wysp rozstrzygnięto osobno w HL-CHG-0826; ta karta pozostaje otwartym projektem migracji, bez dowodu implementacji.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 
