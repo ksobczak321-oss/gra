@@ -4,23 +4,38 @@ Aktualizacja: **31 października 2026**. Ten dokument jest głównym rejestrem t
 
 ## Stan potwierdzony
 
-Uzupełniony podgląd po uwagach ma nazwę **v22.1** (cache `frontend-v22-1`). Jego niezmiennym dowodem Git jest adnotowany tag [dev-v22.1-20261031](https://github.com/ksobczak321-oss/gra/tree/dev-v22.1-20261031): pełny commit, wynik i numery CI/Pages oraz hashe pakietu są w adnotacji. Tag powstaje dopiero po sukcesie obu przebiegów; jeżeli go jeszcze nie ma, odbiór nowego podglądu oczekuje na zakończenie. Odczyt dowodu opisuje [proces wydań](RELEASE-PROCESS.md#niezmienny-dowód-odbioru-dev).
+Uzupełnienie po uwagach ma nazwę **v22.1** (cache `frontend-v22-1`), pełny SHA **`092e75226fbb14cab09826f313e11d10891966d8`**. Adnotowany tag [dev-v22.1-20261031](https://github.com/ksobczak321-oss/gra/tree/dev-v22.1-20261031) został utworzony i opublikowany po sukcesie CI/Pages: wiąże commit, wyniki oraz hashe pakietu. Jest dowodem odbioru **DEV**, odrębnym od udanej promocji GCP opisanej poniżej. Odczyt tagu opisuje [proces wydań](RELEASE-PROCESS.md#niezmienny-dowód-odbioru-dev).
 
 | Miejsce | Kod i dowód | Co pozostaje do wykonania lub potwierdzenia |
 |---|---|---|
 | **DEV — przestrzeń robocza** | **v22.1**: wcześniejsze lekcje bez nagrody, kolejność oprowadzania szczęście → monety → mieszkańcy, nagrody 3×2 i wskazówka przez szczegóły Magazynu. **915 testów lokalnych PASS i 12 zestawów Chromium PASS**. | Pełny SHA i własny wynik CI/Pages wiąże opisany wyżej tag. Przygotowanie kodu nie jest publikacją GCP. |
-| **GitHub / CI — v22.1** | Dokładny commit aplikacji i numery CI/Pages zapisuje adnotacja nieprzesuwanego tagu **`dev-v22.1-20261031`**, utworzonego dopiero po sukcesie obu przebiegów. | Odczyt: `git show --no-patch dev-v22.1-20261031`; bez tagu nie potwierdzamy zakończenia nowego odbioru. Bazowy sukces v22 opisano poniżej jako historię. |
-| **GitHub Pages — podgląd DEV** | [Link roboczy v22.1](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v22-1). Przebieg publikacji i jego SHA potwierdza adnotacja powyższego tagu po sukcesie Pages. | Bezpośredni odczyt Pages z tej sesji blokuje brama sieciowa HTTP 403. Nie potwierdzono tu sieciowego odbioru serwowanych plików. Podgląd działa w pamięci; nie jest kontem chmurowym ani zapisem PRE-PROD. |
-| **PRE-PROD — GCP `harborlight-dev`** | Ostatnie potwierdzone wdrożenie: **v18**, SHA `6ec3c6d8625420fd96474a22a8b1d699672416cd`; [CI 41111528800 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41111528800), [wdrożenie 41112673285 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285). [Gra PRE-PROD](https://harborlight-dev.web.app). | Brak potwierdzonej nowszej promocji v19–v22. Po weryfikacji nowego wdrożenia zaplanowany osobny reset wszystkich trzech kont testowych. |
+| **GitHub / CI — v22.1** | SHA `092e75226fbb14cab09826f313e11d10891966d8`; [CI 41221965032 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41221965032). Adnotowany tag **`dev-v22.1-20261031`** opublikowany. | Odczyt: `git show --no-patch dev-v22.1-20261031`. Nowe zmiany aplikacji wymagają własnego SHA i CI. |
+| **GitHub Pages — podgląd DEV** | [Link roboczy v22.1](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v22-1); [Pages 41221964974 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41221964974) dla tego samego SHA. | Bezpośredni odczyt Pages z tej sesji blokuje brama sieciowa HTTP 403. Nie potwierdzono tu niezależnego odbioru serwowanych plików. Podgląd działa w pamięci; nie jest kontem chmurowym ani zapisem PRE-PROD. |
+| **PRE-PROD — GCP `harborlight-dev`** | **v22.1**, SHA `092e75226fbb14cab09826f313e11d10891966d8`; [promocja 41222765705, próba 1 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705), czas 2 min 10 s. [Gra PRE-PROD](https://harborlight-dev.web.app). Para artefaktów v2 opublikowana; szczegóły niżej. | Nie odczytano jeszcze zawartości ZIP potwierdzenia wydania ani faktycznej wartości włączenia API kont. Bezpośredni odczyt hostingu blokuje brama HTTP 403. Osobny reset kont nadal niewykonany. |
 | **PROD — GCP `harborlight-prod`** | Projekt i docelowa domena `harborlight.pl` są wskazane przez właściciela. | Brak potwierdzonej publikacji gry, powiązania domeny, propagacji DNS i certyfikatu. Nie promujemy kodu bez przejścia PRE-PROD. |
 
 Lokalny odbiór v22.1: **730 testów gry/synchronizacji/promocji, 62 backendu i 123 przygotowania/pakowania/konfiguracji — razem 915 PASS**, ponadto **12 zestawów Chromium PASS**. Pakiet przeglądarkowy ma 48 plików; wszystkie publiczne bajty porównano ze źródłami po testach. Odbiór jest izolowany: bez rzeczywistych zapisów lub resetów Google.
+
+## Ostatnia potwierdzona promocja PRE-PROD v22.1
+
+Publiczny status [41222765705](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705) potwierdza **SUCCESS**, próbę **1** i źródłowy SHA `092e75226fbb14cab09826f313e11d10891966d8`; źródłowe [CI 41221965032](https://github.com/ksobczak321-oss/gra/actions/runs/41221965032) również ma SUCCESS. Opublikowano:
+
+| Artefakt z próby 1 | SHA-256 ZIP podany przez GitHub |
+|---|---|
+| `harborlight-dev-frontend-41222765705-1` | `34f7235450a31ac2906acbe1b47d9f7d335a7b531cc55f0f35efb435c1be5622` |
+| `harborlight-dev-release-41222765705-1` | `70265c76a8f15bda330967e4cf6d9dc06c114f2428773c5cc13184a4b1b9b278` |
+
+To hashe ZIP artefaktów GitHub, nie odczytane wartości manifestu aplikacji ani digest obrazu backendu. Zawartości ZIP potwierdzenia wydania nie pobrano w tej sesji. Sukces workflow potwierdza przejście jego wymaganych kontroli, w tym zgodność testowanego trybu API z konfiguracją, lecz **nie ujawnia nam wartości tej konfiguracji**. Nie ogłaszamy włączenia API kont ani rynku na podstawie samego sukcesu. Brama sieciowa tej sesji zwraca 403 przy bezpośrednim odczycie `web.app`; nie jest to dowód błędu witryny.
+
+Reset wymaga jeszcze odczytu oryginalnego ZIP potwierdzenia i rzeczywistej konfiguracji/usług w sesji właściciela GCP. Przed resetem i ewentualną promocją PROD narzędzia muszą sprawdzić zawartość, hashe i aktualne wymagania wydania. Sam tag DEV nie zastępuje tych dowodów.
+
+## Historia wcześniejszych wydań
 
 Historyczny bazowy v22: `087000b2fe6faec97717f705f9fabcc0d3469803`, [CI 41220294183 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41220294183), [Pages 41220294194 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41220294194), 911 testów i 11 zestawów Chromium PASS. Poprawki po podglądzie mają odrębny powyższy odbiór v22.1.
 
 Historyczny lokalny odbiór bazy v21: **871 testów PASS i 10 zestawów Chromium PASS**. Jest dowodem testów tego zakresu, odrębnym od CI, podglądu Pages i publikacji w GCP. Lokalny kontener zbudowano i uruchomiono bez dostępu do chmury; nie jest to dowód aktualizacji Cloud Run.
 
-Potwierdzenie PRE-PROD v18 obejmuje sondy API, zgodność publicznych plików z manifestem, rzeczywiste logowanie/renderowanie istniejącej wyspy oraz izolację trzech kont bez nadpisywania ich postępu. Zachowano parę artefaktów v2 z próby 1:
+Poprzednia potwierdzona promocja PRE-PROD **v18**, SHA `6ec3c6d8625420fd96474a22a8b1d699672416cd`: [CI 41111528800 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41111528800), [wdrożenie 41112673285 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285), 30 października 2026. Obejmowała sondy API, zgodność publicznych plików z manifestem, rzeczywiste logowanie/renderowanie istniejącej wyspy oraz izolację trzech kont bez nadpisywania ich postępu. Zachowano parę artefaktów v2 z próby 1:
 
 - `harborlight-dev-frontend-41112673285-1`;
 - `harborlight-dev-release-41112673285-1`.
@@ -32,7 +47,7 @@ Zawartość i hashe tych artefaktów muszą być ponownie sprawdzone przez workf
 | Obszar | Status |
 |---|---|
 | Stałe konta PRE-PROD | Istnieją `admin1`, `admin2`, `admin3`, z UID `dev-admin1`, `dev-admin2`, `dev-admin3`, Firebase Authentication i prywatnym zapisem Firestore. |
-| API kont i rynek graczy v21 | Kod i lokalne testy są przygotowane. Aktywacja właściwego API, routingu, IAM i rzeczywisty odbiór nowego rynku na PRE-PROD nie zostały potwierdzone. Sam kod, odpowiedź anonimowa ani publikacja statycznych plików nie dowodzą aktywacji. |
+| API kont i rynek graczy | Kod jest częścią opublikowanego v22.1. Workflow zakończył testy w trybie zgodnym z konfiguracją, ale jej wartości nie odczytano. **Włączenie API kont i nowego rynku pozostaje nieustalone**; wymaga potwierdzenia wydania i rzeczywistego odczytu konfiguracji/API. |
 | Reset trzech kont po promocji | **Zlecony, niewykonany.** Obejmuje także `admin1`; szczegóły poniżej i w [instrukcji resetu](PREPROD-RESET.md). |
 | Prawdziwe Paynow i reklamy | Bez potwierdzonej aktywacji. DEV/PRE-PROD używają oznaczonych symulacji; PROD nie może przyznawać zakupu za symulację. |
 | Google/Facebook OAuth i posty | Kod ścieżek logowania nie dowodzi aktywacji dostawcy. Właścicielska konfiguracja i rzeczywisty odbiór są osobnymi warunkami; automatyczna publikacja na Facebooku jest odłożona. |
@@ -43,7 +58,7 @@ Najnowsze GO użytkownika z 31 października 2026 upoważnia do rozpoczęcia od 
 
 Reset dotyczy stanu gry kont testowych, nie tożsamości Authentication: UID, loginy i hasła pozostają te same. Przygotowanie narzędzia lub jego test na fiksturze nie jest wykonaniem resetu w Google. Operacja nie obejmuje PROD ani innych użytkowników. Procedura i dowody odczytu po zapisie: [PREPROD-RESET.md](PREPROD-RESET.md).
 
-**Bieżący wynik operacji: oczekuje na promocję i weryfikację; brak potwierdzenia resetu.**
+**Bieżący wynik operacji: promocja v22.1 ma SUCCESS; reset nadal niewykonany.** Kolejny etap wymaga oryginalnego ZIP potwierdzenia, odczytu konfiguracji/API oraz wykonania procedury w zalogowanej sesji właściciela GCP, z końcowym odczytem wszystkich trzech kont.
 
 ## Jak aktualizować rejestr
 
@@ -56,4 +71,4 @@ Przy każdej zmianie statusu zapisujemy osobno:
 5. Osobny wynik aktywacji nowej konfiguracji/usług i osobny wynik resetu wraz z kontrolą wszystkich trzech kont. Nie wpisujemy „gotowe” na podstawie samego uruchomienia skryptu.
 6. Przy PROD: źródłowe udane PRE-PROD, identyczny pakiet/digest, własny odbiór oraz domenę/DNS/TLS potwierdzone rzeczywistym odczytem.
 
-SHA i znane przebiegi GitHub v22 zapisano wyżej. Dowód uzupełnienia po podglądzie wiąże pełny commit z CI/Pages w opisanym tagu. Nie znamy numeru przyszłej promocji GCP/resetu; nie wpisujemy wymyślonych wartości. Aktualizację potwierdzamy dowodem, a nie samym zakończeniem pracy nad kodem.
+SHA, CI/Pages oraz udaną promocję v22.1 zapisano wyżej. Dowód DEV stanowi opisany tag; osobny dowód GCP to przebieg `41222765705` i jego artefakty. Wartość konfiguracji API, wynik resetu i publikacja PROD wymagają dalszych rzeczywistych odczytów; nie wpisujemy ich jako wykonanych. Aktualizację potwierdzamy dowodem, a nie samym zakończeniem pracy nad kodem.

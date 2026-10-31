@@ -2,7 +2,7 @@
 
 Użytkownik ustalił trzy konta: **admin1, admin2, admin3**, logowanie nazwą i hasłem oraz postęp dostępny na różnych urządzeniach. Początkowe hasła mają odpowiadać nazwom kont. Dotyczy to wyłącznie projektu `harborlight-dev`.
 
-DEV oznacza bieżącą przestrzeń roboczą; istniejący projekt `harborlight-dev` jest obecnym PRE-PROD. Jego ostatnie potwierdzone wydanie to v18 / `6ec3c6d` / [41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285). Aktualne wersje i dowody podaje [rejestr środowisk](ENVIRONMENT-STATUS.md); samo pobranie nowszego kodu nie publikuje go w GCP. Gra PRE-PROD: https://harborlight-dev.web.app.
+DEV oznacza bieżącą przestrzeń roboczą; istniejący projekt `harborlight-dev` jest obecnym PRE-PROD. Jego ostatnie potwierdzone wydanie to **v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`**, [promocja 41222765705, próba 1 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705). Osobny reset trzech kont pozostaje niewykonany; nie odczytano jeszcze wartości aktywacji API kont. Aktualne wersje i dowody podaje [rejestr środowisk](ENVIRONMENT-STATUS.md); samo pobranie nowszego kodu nie publikuje go w GCP. Gra PRE-PROD: https://harborlight-dev.web.app.
 
 ## Przygotowanie przez właściciela
 

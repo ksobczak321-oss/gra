@@ -94,11 +94,13 @@ OAuth Google/Facebook wymaga konfiguracji dostawcy i domen; prawdziwe Paynow/rek
 
 ## 5. Faktycznie potwierdzone wydanie
 
-Poniższy wpis opisuje ostatnie potwierdzone wydanie **GCP PRE-PROD**, nie najnowszy kod w Git. Zweryfikowana baza DEV v21 ma SHA `1fcfc8ba897a495a3878f15ed67595fa89071656` oraz [zielone CI 41218163406](https://github.com/ksobczak321-oss/gra/actions/runs/41218163406); to nie jest promocja GCP. Aktualny stan i brakujące dowody v22 podaje [rejestr](ENVIRONMENT-STATUS.md).
+Ostatnie potwierdzone wydanie **GCP PRE-PROD** to **v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`**. [CI 41221965032](https://github.com/ksobczak321-oss/gra/actions/runs/41221965032), [Pages 41221964974](https://github.com/ksobczak321-oss/gra/actions/runs/41221964974) i ręczna [promocja 41222765705, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705) mają SUCCESS. Promocja trwała 2 min 10 s; gra jest pod `https://harborlight-dev.web.app`. Adnotowany tag `dev-v22.1-20261031` potwierdza odrębny odbiór DEV.
 
-30 października 2026 pełne [CI 41111528800](https://github.com/ksobczak321-oss/gra/actions/runs/41111528800) oraz [PRE-PROD 41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285) dla **v18 / `6ec3c6d8625420fd96474a22a8b1d699672416cd`** zakończyły się sukcesem. Gra jest opublikowana pod `https://harborlight-dev.web.app`; potwierdzono obie sondy API, wszystkie bajty pakietu względem manifestu, odczytowe renderowanie istniejącej wyspy oraz izolację trzech kont. Wysp, haseł i postępu nie resetowano.
+Zachowano parę artefaktów v2 `harborlight-dev-frontend-41222765705-1` i `harborlight-dev-release-41222765705-1`. Publiczne hashe ZIP oraz granice odbioru są w [rejestrze](ENVIRONMENT-STATUS.md). Zawartość ZIP potwierdzenia wydania, digest backendu i faktyczna flaga API kont nie zostały tutaj odczytane. Sukces workflow potwierdza jego wymagane kontrole w trybie zgodnym z konfiguracją, lecz nie dowodzi nam, że API jest włączone. Narzędzia resetu i PROD muszą samodzielnie zweryfikować artefakty i rzeczywistą konfigurację.
 
-Zachowano parę `harborlight-dev-frontend-41112673285-1` i `harborlight-dev-release-41112673285-1`. Jest to potwierdzenie wydania v2; wewnętrznych wartości potwierdzenia ani hashy nie odczytano w tym czacie. Przed użyciem `dev_run_id` workflow PROD nadal musi sprawdzić dostępność, metadane, treść i hashe artefaktów oraz własne wymagania kont/API. Nowa publikacja PROD i DNS pozostają niepotwierdzone. Wcześniejsze udane `f161e45` / `41067599818` pozostaje w dzienniku jako historia.
+**Reset admin1–admin3 nadal niewykonany.** Jest osobnym etapem z sesji właściciela GCP po kontroli potwierdzenia i API, według [PREPROD-RESET.md](PREPROD-RESET.md). Wysp ani haseł nie zerowano w zwykłym deployu. PROD i DNS nie były promowane.
+
+Historyczne v18 / `6ec3c6d8625420fd96474a22a8b1d699672416cd`, [CI 41111528800](https://github.com/ksobczak321-oss/gra/actions/runs/41111528800) i [promocja 41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285) z 30 października pozostają w [historii rejestru](ENVIRONMENT-STATUS.md#historia-wcześniejszych-wydań) oraz dzienniku wraz z parą wcześniejszych artefaktów. Nie są bieżącym wdrożeniem.
 
 ## 6. Wycofanie
 
