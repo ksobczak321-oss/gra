@@ -2,7 +2,7 @@
 // reading a panel never rerolls an offer or applies an event a second time.
 // This module imports inventory only: residents/logistics can safely read its
 // modifiers, and the state coordinator supplies population-changing callbacks.
-import { centralAvailable, grantBonusMaterials, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v23-1';
+import { centralAvailable, grantBonusMaterials, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v24';
 
 const HOUR = 3600, DAY = 86400, EPS = 1e-7, SAFE = Number.MAX_SAFE_INTEGER;
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
@@ -140,7 +140,7 @@ function goodEvent(state, events, at, context) {
     title = 'Supplies rescued from the wreck'; titlePl = 'Ładunek ocalony z wraku';
     message = 'Rescued materials are available in your bonus stock.'; messagePl = 'Ocalone materiały są dostępne w zapasie bonusowym.';
   } else if (kind === 'castaway') {
-    const capacity = Math.min(level(state, 'house') * 24, town * 24);
+    const capacity = Math.min(level(state, 'house') * 24, town * 24) - Math.max(0, state.incomingPassengers || 0);
     if (integer(state.population) < capacity && typeof context.synchronizeResidents === 'function') {
       state.population = integer(state.population) + 1; context.synchronizeResidents(state); details = { people: 1 };
       title = 'A castaway joins the island'; titlePl = 'Rozbitek dołącza do wyspy';
@@ -166,7 +166,7 @@ function badEvent(state, events, at, context) {
   const kind = pick(events, WORLD_EVENT_RULES.badWeights), happinessPenalty = kind === 'plague' ? 10 : 5;
   let details, title, titlePl, message, messagePl, transportSlowPercent = 0;
   if (kind === 'plague') {
-    const requested = Math.min(Math.max(0, integer(state.population) - WORLD_EVENT_RULES.populationMinimum), Math.floor(integer(state.population) * WORLD_EVENT_RULES.maximumPopulationLoss));
+    const requested = Math.min(Math.max(0, integer(state.population) - (state.islandRole === 'daughter' ? 6 : 12)), Math.floor(integer(state.population) * WORLD_EVENT_RULES.maximumPopulationLoss));
     let people = 0;
     while (people < requested && typeof context.removeResident === 'function' && context.removeResident(state)) people++;
     if (people && typeof context.synchronizeResidents === 'function') context.synchronizeResidents(state);

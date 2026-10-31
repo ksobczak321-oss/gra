@@ -8,12 +8,12 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `not_implemented` |
-| DEV | `analysis_only` |
+| Implementacja | `partially_implemented` |
+| DEV | `standalone_prototype_online_excluded` |
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `accepted` |
+| Decyzja | `accepted_scope_limited_by_user` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
@@ -32,14 +32,16 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 
 ## Dowody
 
-- **Dokumenty:** [docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md](../../design/BOARDGAME-LIGHTHOUSE-SESSION.md)
-- **Kod:** nie przypisano.
-- **Scenariusze automatyczne:** nie przypisano.
+- **Dokumenty:** [docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md](../../design/BOARDGAME-LIGHTHOUSE-SESSION.md), [docs/boardgame/INTEGRACJA-ODLOZONA.md](../../boardgame/INTEGRACJA-ODLOZONA.md)
+- **Kod:** [docs/boardgame/session.mjs](../../boardgame/session.mjs), [docs/boardgame/telefon.html](../../boardgame/telefon.html)
+- **Scenariusze automatyczne:** [docs/boardgame/session.test.mjs](../../boardgame/session.test.mjs), [docs/boardgame/verify_phone.py](../../boardgame/verify_phone.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0041 — Planszówka 2–6 osób: sesja 45–60 min i jednokrotny skutek online](../../testing/manual/HL-TC-0041.md) — `NOT RUN`.
+
+Warstwy ruchu i kreatywnych scen są w zweryfikowanym samodzielnym prototypie. Integracja online jest wyłączona przez użytkownika; nie przyznaje się monet, zaliczeń ani punktów ligi. Fizyczna partia nadal NOT_RUN.
 
 ## Relacje
 
@@ -50,6 +52,7 @@ Powiązane przypadki do ręcznego przeklikania:
 ## Uwagi
 
 - Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.
+- BieżąceGO wdraża ruch i kreatywne zadania w samodzielnym prototypie; trzecia warstwa punktów/nagród online jest jawnie wyłączona wraz z integracją. Nie udajemy jej uruchomienia.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

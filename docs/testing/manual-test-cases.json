@@ -275,7 +275,8 @@
       "changes": [
         "HL-CHG-0406",
         "HL-CHG-0407",
-        "HL-CHG-0408"
+        "HL-CHG-0408",
+        "HL-CHG-0715"
       ],
       "file": "manual/HL-TC-0019.md"
     },
@@ -356,7 +357,7 @@
     },
     {
       "id": "HL-TC-0026",
-      "title": "Obecna druga wyspa kopiuje poziomy raz i zachowuje oba światy",
+      "title": "Migracja wcześniejszych dwóch wysp zachowuje światy i jednorazowo skopiowane poziomy",
       "area": "Archipelag — obecny baseline",
       "priority": "P0",
       "definition_status": "READY",
@@ -384,7 +385,7 @@
     },
     {
       "id": "HL-TC-0028",
-      "title": "Rynek baseline: próg 6, prawdziwa oferta i brak podwójnego przyjęcia",
+      "title": "Rynek graczy: transakcja materiał–monety i brak podwójnego przyjęcia",
       "area": "Handel — obecny baseline",
       "priority": "P0",
       "definition_status": "READY",
@@ -393,7 +394,9 @@
         "HL-CHG-0112",
         "HL-CHG-0113",
         "HL-CHG-0114",
-        "HL-CHG-0115"
+        "HL-CHG-0115",
+        "HL-CHG-0822",
+        "HL-CHG-0824"
       ],
       "file": "manual/HL-TC-0028.md"
     },
@@ -452,7 +455,7 @@
       "title": "Nazwa wyspy córki zawsze ma wymuszony prefiks matki",
       "area": "Projekt archipelagu",
       "priority": "P1",
-      "definition_status": "DRAFT / BLOCKED",
+      "definition_status": "READY",
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0810",
@@ -465,7 +468,7 @@
       "title": "Założenie córki zabiera 6 osób w Domu i zostawia matce co najmniej 12",
       "area": "Projekt kolonizacji",
       "priority": "P0",
-      "definition_status": "DRAFT / BLOCKED",
+      "definition_status": "READY",
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0812",
@@ -479,7 +482,7 @@
       "title": "Statek pasażerski przewozi do 100 osób w 30 minut",
       "area": "Projekt przewozu ludzi",
       "priority": "P0",
-      "definition_status": "DRAFT / BLOCKED",
+      "definition_status": "READY",
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0814",
@@ -494,7 +497,7 @@
       "title": "Kolejne wyspy: progi poziomu, koszt i wejście przez Ratusz",
       "area": "Projekt archipelagu",
       "priority": "P0",
-      "definition_status": "DRAFT / BLOCKED",
+      "definition_status": "READY",
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0818",
@@ -508,7 +511,7 @@
       "title": "Handel NPC i PvP działa równolegle z ceną maksymalną gry",
       "area": "Projekt handlu",
       "priority": "P0",
-      "definition_status": "DRAFT / BLOCKED",
+      "definition_status": "READY",
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0822",
@@ -521,7 +524,7 @@
       "title": "Liga miesięczna: granice sezonu, drużyny i punktacja",
       "area": "Projekt społeczności",
       "priority": "P1",
-      "definition_status": "DRAFT / BLOCKED",
+      "definition_status": "READY",
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0901",
@@ -535,7 +538,7 @@
       "title": "Dobroczynność przyjmuje wyłącznie kwalifikowane zarobione monety",
       "area": "Projekt dobroczynności",
       "priority": "P0",
-      "definition_status": "DRAFT / BLOCKED",
+      "definition_status": "READY",
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0902",
@@ -548,7 +551,7 @@
       "title": "Dobroczynność: limit budżetu i kontrolowane skutki bonusu szczęścia",
       "area": "Projekt dobroczynności",
       "priority": "P0",
-      "definition_status": "DRAFT / BLOCKED",
+      "definition_status": "READY",
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0904",
@@ -632,7 +635,7 @@
       "title": "Sojusz przy Rankingu: członkostwo i chat gry",
       "area": "Projekt sojuszy i komunikacji",
       "priority": "P1",
-      "definition_status": "DRAFT / BLOCKED",
+      "definition_status": "READY",
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0915",
@@ -640,6 +643,69 @@
         "HL-CHG-0917"
       ],
       "file": "manual/HL-TC-0046.md"
+    },
+    {
+      "id": "HL-TC-0047",
+      "title": "Pomoc rozdziela powrót do tutoriala i praktycznego samouczka",
+      "area": "Pomoc i samouczek",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0032",
+        "HL-CHG-0033"
+      ],
+      "file": "manual/HL-TC-0047.md"
+    },
+    {
+      "id": "HL-TC-0048",
+      "title": "Prywatny czat1:1 nie ujawnia rozmów ani danych kont osobom trzecim",
+      "area": "Prywatne wiadomości",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0931"
+      ],
+      "file": "manual/HL-TC-0048.md"
+    },
+    {
+      "id": "HL-TC-0049",
+      "title": "Liga: dwa zadania dziennie wyłącznie w ogłoszonych slotach Warszawy",
+      "area": "Harmonogram i wyzwania ligi",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0926",
+        "HL-CHG-0927",
+        "HL-CHG-0914",
+        "HL-CHG-0918"
+      ],
+      "file": "manual/HL-TC-0049.md"
+    },
+    {
+      "id": "HL-TC-0050",
+      "title": "Planszówka: komplet druku, czytelne kody i samodzielna sesja przy stole",
+      "area": "Planszówka do wydruku",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0906",
+        "HL-CHG-0921",
+        "HL-CHG-0922",
+        "HL-CHG-0928",
+        "HL-CHG-0929",
+        "HL-CHG-0930"
+      ],
+      "file": "manual/HL-TC-0050.md"
     }
-  ]
+  ],
+  "current_scope": {
+    "date": "2026-10-31",
+    "environment": "DEV only",
+    "physical_online_integration": "excluded_by_user",
+    "note": "Historyczny baseline poniżej nie dowodzi wykonania tych przypadków na bieżącym wydaniu."
+  }
 }

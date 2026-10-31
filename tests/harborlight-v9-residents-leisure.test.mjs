@@ -254,17 +254,17 @@ test('a House point raises final happiness even when a negative cause is applied
 });
 
 test('within the approved home-first departure group the least happy resident leaves', () => {
-  const state = island(8); arrived(state, 'farm', 6);
+  const state = island(13); arrived(state, 'farm', 6);
   const home = state.residents.filter(person => !person.workplace);
   home[0].happiness = -80; home[1].happiness = 80;
   const leaving = home[0].id;
   assert.equal(removeResidentForDeparture(state), true);
-  assert.equal(state.population, 7);
+  assert.equal(state.population, 12);
   assert.ok(!state.residents.some(person => person.id === leaving));
 });
 
 test('departure ties are randomized reproducibly and visiting residents remain protected', () => {
-  const state = island(8); state.residentRandomSeed = 0xfa65bf23;
+  const state = island(14); state.residentRandomSeed = 0xfa65bf23;
   const raw = structuredClone(state); raw.version = 8;
   const copy = structuredClone(state); normalizeResidents(copy, raw);
   removeResidentForDeparture(state); removeResidentForDeparture(copy);
@@ -272,7 +272,8 @@ test('departure ties are randomized reproducibly and visiting residents remain p
   assert.notEqual(state.residentRandomSeed, 0xfa65bf23);
   const visitor = state.residents[0]; visitor.happiness = -100;
   state.lighthouseVisits = [{ id: 1, residentIds: [visitor.id], remaining: HOUR }]; visitor.visitGroup = 1;
-  removeResidentForDeparture(state);
+  assert.equal(removeResidentForDeparture(state), true);
+  assert.equal(state.population, 12);
   assert.ok(state.residents.some(person => person.id === visitor.id));
 });
 

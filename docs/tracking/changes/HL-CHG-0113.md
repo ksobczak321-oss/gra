@@ -13,7 +13,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | CI | `passed_v22_1` |
 | PRE-PROD | `activation_unconfirmed` |
 | PROD | `not_deployed` |
-| Decyzja | `accepted` |
+| Decyzja | `superseded` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
@@ -41,14 +41,14 @@ Data pierwotnej wiadomości: nieustalona. Dokładnej daty pierwotnej wiadomości
 
 Powiązane przypadki do ręcznego przeklikania:
 
-- [HL-TC-0028 — Rynek baseline: próg 6, prawdziwa oferta i brak podwójnego przyjęcia](../../testing/manual/HL-TC-0028.md) — `NOT RUN`.
+- [HL-TC-0028 — Rynek graczy: transakcja materiał–monety i brak podwójnego przyjęcia](../../testing/manual/HL-TC-0028.md) — `NOT RUN`.
 
 CI potwierdza zestaw dla wskazanego SHA. Status code_deployed potwierdza obecność kodu w wydaniu, nie ręczne wykonanie tego przypadku ani aktywację zewnętrznej usługi.
 
 ## Relacje
 
 - **Zastępuje:** Brak.
-- **Zastąpione lub ograniczone przez:** Brak.
+- **Zastąpione lub ograniczone przez:** [HL-CHG-0824](HL-CHG-0824.md)
 - **Powiązane:** Brak.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).

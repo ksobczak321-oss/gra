@@ -1,24 +1,24 @@
 // Economy and progression for the interactive approved-screen prototype.
 // Pure data module: browser UI and Node tests share the same rules.
-import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange, townhallPopulationRequirement, playerTradeUnlocked } from './harborlight-v1-logistics.js?v=frontend-v23-1';
-export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty, townhallPopulationRequirement, playerTradeUnlocked } from './harborlight-v1-logistics.js?v=frontend-v23-1';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange, townhallPopulationRequirement, playerTradeUnlocked } from './harborlight-v1-logistics.js?v=frontend-v24';
+export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty, townhallPopulationRequirement, playerTradeUnlocked } from './harborlight-v1-logistics.js?v=frontend-v24';
 
-import { normalizeResidents, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds } from './harborlight-v1-residents.js?v=frontend-v23-1';
-export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v23-1';
+import { normalizeResidents, residentPopulationMinimum, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds } from './harborlight-v1-residents.js?v=frontend-v24';
+export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v24';
 
-import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction } from './harborlight-v1-activities.js?v=frontend-v23-1';
-import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v23-1';
-import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v23-1';
-import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v23-1';
-import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v23-1';
-import { normalizeIslandProfile, validateIslandName } from './harborlight-v1-profile.js?v=frontend-v23-1';
-import { consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v23-1';
-import { warsawParts, warsawDayKey, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v23-1';
-import { welcomeStatus, WELCOME_SECONDS } from './harborlight-v1-residents.js?v=frontend-v23-1';
-export { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v23-1';
-import { normalizeWorldEvents, advanceWorldEvents, nextWorldEvent, recordChapelBlessing, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v23-1';
-import { normalizeCommerce, commerceAction, nextCommerceEvent, advanceCommerce } from './harborlight-v1-commerce.js?v=frontend-v23-1';
-import { normalizeEngagementSchedule } from './harborlight-v1-engagement.js?v=frontend-v23-1';
+import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction } from './harborlight-v1-activities.js?v=frontend-v24';
+import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v24';
+import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v24';
+import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v24';
+import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v24';
+import { normalizeIslandProfile, validateIslandName } from './harborlight-v1-profile.js?v=frontend-v24';
+import { consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v24';
+import { warsawParts, warsawDayKey, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v24';
+import { welcomeStatus, WELCOME_SECONDS } from './harborlight-v1-residents.js?v=frontend-v24';
+export { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v24';
+import { normalizeWorldEvents, advanceWorldEvents, nextWorldEvent, recordChapelBlessing, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v24';
+import { normalizeCommerce, commerceAction, nextCommerceEvent, advanceCommerce } from './harborlight-v1-commerce.js?v=frontend-v24';
+import { normalizeEngagementSchedule } from './harborlight-v1-engagement.js?v=frontend-v24';
 
 export const RESOURCES = {
   coins: { name: 'Coins', short: 'coins', symbol: '◉', price: 1 },
@@ -82,7 +82,7 @@ export function createState(now = Date.now(), options = {}) {
   const state = {
     version: 9,
     islandGeneration: 1,
-    islandName: '', islandNameUpdatedAt: 0,
+    islandName: '', islandNameUpdatedAt: 0, islandId: 'island-1', islandRole: 'mother', islandSuffix: '',
     islandStartedAt: options.onboarding === true ? null : now,
     onboarding: { version: 1, stage: options.onboarding === true ? 'intro' : 'complete', index: 0,
       worldStartedAt: options.onboarding === true ? null : now, completedAt: options.onboarding === true ? null : now },
@@ -400,7 +400,8 @@ function resetPopulationProgress(state, direction = 0) {
 }
 
 function populationAtLimit(state, direction) {
-  return direction > 0 ? state.population >= state.capacity : direction < 0 && state.population <= 6;
+  const capacity = state.incomingPassengers > 0 ? Math.min(state.capacity, state.buildings.house.level * 24) - state.incomingPassengers : state.capacity;
+  return direction > 0 ? state.population >= capacity : direction < 0 && state.population <= residentPopulationMinimum(state);
 }
 
 function syncPopulationProgress(state) {
@@ -579,6 +580,12 @@ export function normalizeState(raw, now = Date.now()) {
     if (!building.level) building.ready = 0;
   }
   state.capacity = state.buildings.townhall.level * 24;
+  state.islandId = /^island-(?:[1-9]|1[0-9]|20)$/.test(raw.islandId || '') ? raw.islandId : 'island-1';
+  state.islandRole = raw.islandRole === 'daughter' ? 'daughter' : 'mother';
+  state.islandSuffix = validateIslandName(raw.islandSuffix).name;
+  state.incomingPassengers = integer(raw.incomingPassengers, 0, 0, 100);
+  state.charityReward = raw.charityReward?.happinessPoints === 20 && Number.isSafeInteger(raw.charityReward.expiresAt) ? { ...raw.charityReward } : null;
+  // Historical mothers below twelve retain their actual people; migration never invents residents.
   state.population = integer(raw.population, state.population, 6, state.capacity);
   state.happiness = typeof raw.happiness === 'number' && Number.isFinite(raw.happiness) ? Math.max(-100, Math.min(100, raw.happiness)) : 0;
   state.baseHappiness = typeof raw.baseHappiness === 'number' && Number.isFinite(raw.baseHappiness) ? Math.max(-100, Math.min(100, raw.baseHappiness)) : state.happiness;
@@ -594,7 +601,7 @@ export function normalizeState(raw, now = Date.now()) {
   const direction = Math.sign(populationRate(state.happiness));
   state.populationDirection = direction;
   if (direction && raw.populationDirection === direction &&
-      !(direction > 0 && state.population >= state.capacity) && !(direction < 0 && state.population <= 6)) {
+      !populationAtLimit(state, direction)) {
     state.populationProgress = amount(raw.populationProgress, 0, 0.999999999999);
   }
   let logisticsRaw = raw;
@@ -885,7 +892,7 @@ export function requestUpgrade(state, request) {
 
 export function residentPurchaseQuote(state, quantity = 1) {
   if (!Number.isSafeInteger(quantity) || quantity < 1) return bad('Choose a positive whole number of residents.');
-  const spaces = Math.max(0, Math.min(housingCapacity(state), state.buildings.townhall.level * 24) - state.population);
+  const spaces = Math.max(0, Math.min(housingCapacity(state), state.buildings.townhall.level * 24) - state.population - (state.incomingPassengers || 0));
   const unitCost = Object.fromEntries(Object.keys(RESOURCES).map(id => [id, 500 * state.buildings.townhall.level]));
   const cost = Object.fromEntries(Object.entries(unitCost).map(([id, value]) => [id, value * quantity]));
   return { ok: spaces >= quantity && canAfford(state, cost), spaces, max: spaces, quantity, unitCost, cost,

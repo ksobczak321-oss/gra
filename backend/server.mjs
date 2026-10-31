@@ -4,6 +4,10 @@ import { createAccountService, AccountServiceError } from './account-service.mjs
 import { createFirestoreStore } from './firestore-store.mjs';
 import { createFirebaseIdentityVerifier } from './firebase-auth.mjs';
 import { createPlayerTradeService } from './player-trade.mjs';
+import { createCommunityService } from './community-service.mjs';
+import { createCharityService } from './charity-service.mjs';
+import { createCharityLedgerStore } from './charity-ledger.mjs';
+import { createIslandDocumentStore } from './island-document-store.mjs';
 
 export function parsePort(value = '8080') {
   if (!/^\d+$/.test(String(value))) throw new Error('PORT must be an integer between 1 and 65535.');
@@ -27,18 +31,18 @@ function configuredAccountApi(environment) {
   if (process.env.HARBORLIGHT_ACCOUNT_API !== '1') return null;
   const projectId = process.env.HARBORLIGHT_PROJECT_ID || (['prod','production'].includes(environment) ? 'harborlight-prod' : ['dev','preprod'].includes(environment) ? 'harborlight-dev' : null);
   if (!projectId) return null;
-  const store = createFirestoreStore({ projectId, databaseId: process.env.HARBORLIGHT_DATABASE_ID || '(default)' });
+  const store = createCharityLedgerStore(createIslandDocumentStore(createFirestoreStore({ projectId, databaseId: process.env.HARBORLIGHT_DATABASE_ID || '(default)' })));
   const serviceEnvironment = projectId === 'harborlight-dev' ? 'preprod' : projectId === 'harborlight-prod' || ['prod','production'].includes(environment) ? 'production' : 'preprod';
-  return { service: createAccountService({ store, environment: serviceEnvironment }), trade: createPlayerTradeService({ store, environment: serviceEnvironment }), verify: createFirebaseIdentityVerifier({ projectId }), projectId };
+  return { service: createAccountService({ store, environment: serviceEnvironment }), trade: createPlayerTradeService({ store, environment: serviceEnvironment }), community: createCommunityService({ store, environment: serviceEnvironment }), charity: createCharityService({ store, environment: serviceEnvironment }), verify: createFirebaseIdentityVerifier({ projectId }), projectId };
 }
-function requestJson(request) {
+function requestJson(request, maximumBytes = 1_500_000) {
   return new Promise((resolve, reject) => {
     if (!(request.headers['content-type'] || '').toLowerCase().startsWith('application/json')) { request.resume(); reject(new AccountServiceError('json-required', 415)); return; }
     const pieces = []; let bytes = 0, failed = false;
     request.on('data', piece => {
       if (failed) return;
       bytes += piece.length;
-      if (bytes > 1500000) { failed = true; pieces.length = 0; reject(new AccountServiceError('request-too-large', 413)); return; }
+      if (bytes > maximumBytes) { failed = true; pieces.length = 0; reject(new AccountServiceError('request-too-large', 413)); return; }
       pieces.push(piece);
     });
     request.once('end', () => {
@@ -53,7 +57,7 @@ function requestJson(request) {
 export function createServer({
   environment = process.env.HARBORLIGHT_ENV || 'development',
   release = process.env.HARBORLIGHT_RELEASE || 'local',
-  readiness = { ready: true }, accountService = null, verifyIdentityToken = null, playerTradeService = null,
+  readiness = { ready: true }, accountService = null, verifyIdentityToken = null, playerTradeService = null, communityService = null, charityService = null,
   now = () => Date.now(), starter = createStarterIsland, accountProjectId = null
 } = {}) {
   let configured;
@@ -61,6 +65,8 @@ export function createServer({
     try { configured = configuredAccountApi(environment); } catch { configured = null; }
     accountService = configured?.service || null; verifyIdentityToken = configured?.verify || null;
     playerTradeService = configured?.trade || null;
+    communityService = configured?.community || null;
+    charityService = configured?.charity || null;
   }
   const accountApi = !!accountService && typeof verifyIdentityToken === 'function';
   const runtimeProjectId = configured?.projectId || accountProjectId || process.env.HARBORLIGHT_PROJECT_ID || (['prod','production'].includes(environment) ? 'harborlight-prod' : ['dev','preprod'].includes(environment) ? 'harborlight-dev' : null);
@@ -84,7 +90,7 @@ export function createServer({
         ...(isReadiness ? { scope: 'infrastructure', features: { accounts: accountApi, persistence: accountApi, gameApi: false } } : {}) });
       return;
     }
-    const routes = { '/api/v1/config': ['GET'], '/api/v1/island': ['GET','POST','PUT'], '/api/v1/activity': ['POST'], '/api/v1/promotions/redeem': ['POST'], '/api/v1/legal': ['GET','POST'], '/api/v1/trade/offers': ['GET','POST'], '/api/v1/trade/inbox': ['GET'] };
+    const routes = { '/api/v1/config': ['GET'], '/api/v1/island': ['GET','POST','PUT'], '/api/v1/activity': ['POST'], '/api/v1/promotions/redeem': ['POST'], '/api/v1/legal': ['GET','POST'], '/api/v1/trade/offers': ['GET','POST'], '/api/v1/trade/inbox': ['GET'], '/api/v1/community': ['GET','POST'], '/api/v1/charity': ['GET','POST'] };
     const offerCommand = /^\/api\/v1\/trade\/offers\/(trade_[a-f0-9]{40})\/(accept|cancel)$/.exec(path || '');
     const inboxCommand = /^\/api\/v1\/trade\/inbox\/(trade_[a-f0-9]{40})\/claim$/.exec(path || '');
     if (offerCommand || inboxCommand) routes[path] = ['POST'];
@@ -100,6 +106,20 @@ export function createServer({
       if (!identity?.uid) throw new AccountServiceError('auth-required', 401);
       const uid = identity.uid;
       if (runtimeEnvironment === 'preprod' && !['dev-admin1','dev-admin2','dev-admin3'].includes(uid)) throw new AccountServiceError('permission', 403);
+      if (path === '/api/v1/community') {
+        if (!communityService) throw new AccountServiceError('community-api-unavailable', 503);
+        if (request.method === 'GET') { send(200, await communityService.snapshot({ uid })); return; }
+        const body = await requestJson(request);
+        send(200, await communityService.dispatch({ ...body, uid })); return;
+      }
+      if (path === '/api/v1/charity') {
+        if (!charityService) throw new AccountServiceError('charity-api-unavailable', 503);
+        if (request.method === 'GET') { send(200, await charityService.status({ uid })); return; }
+        const body = await requestJson(request);
+        if (body.command === 'donate') { send(200, await charityService.donate({ uid, requestId: body.requestId, islandId: body.islandId })); return; }
+        if (body.command === 'claim') { send(200, await charityService.claimReward({ uid, donationId: body.donationId, islandId: body.islandId })); return; }
+        throw new AccountServiceError('charity-command-forbidden', 403);
+      }
       if (path.startsWith('/api/v1/trade/')) {
         if (!playerTradeService) throw new AccountServiceError('trade-api-unavailable', 503);
         if (request.method === 'GET') {
@@ -114,7 +134,7 @@ export function createServer({
         send(200, await playerTradeService.claimInbox({ ...common, inboxId: inboxCommand[1] })); return;
       }
       if (request.method === 'GET') { send(200, await (path === '/api/v1/legal' ? accountService.readLegalStatus({ uid }) : accountService.readIsland({ uid }))); return; }
-      const body = await requestJson(request);
+      const body = await requestJson(request, path === '/api/v1/island' && request.method === 'PUT' ? 29_000_000 : 1_500_000);
       if (path === '/api/v1/legal') {
         send(200, await accountService.acceptLegal({ uid, termsVersion: body.termsVersion, privacyVersion: body.privacyVersion,
           termsAccepted: body.termsAccepted, privacyAcknowledged: body.privacyAcknowledged })); return;

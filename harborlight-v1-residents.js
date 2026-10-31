@@ -1,7 +1,7 @@
 // Persistent residents and visits. Every duration is a real elapsed second.
-import { residentLeisureBonus } from './harborlight-v1-leisure.js?v=frontend-v23-1';
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v23-1';
-import { worldEventHappinessPenalty } from './harborlight-v1-events.js?v=frontend-v23-1';
+import { residentLeisureBonus } from './harborlight-v1-leisure.js?v=frontend-v24';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v24';
+import { worldEventHappinessPenalty } from './harborlight-v1-events.js?v=frontend-v24';
 export const RESIDENT_WORKPLACES = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'warehouse', 'dock', 'market'];
 export const NEED_GRACE_SECONDS = 12 * 3600;
 export const NEED_PENALTY = 5;
@@ -29,6 +29,7 @@ export const productionMultiplier = state => hasFoodForResidents(state) ? 1 : 0.
 const unlocked = (state, id) => state.buildings[id]?.level > 0 && state.buildings.townhall.level >= (id === 'market' ? 2 : id === 'dock' ? 4 : 1);
 const reachedGrace = seconds => seconds >= NEED_GRACE_SECONDS - EPS;
 const producerRecipes = { farm: null, lumber: null, quarry: null, windmill: 'grain', sawmill: 'wood' };
+export const residentPopulationMinimum = state => state.islandRole === 'daughter' ? 6 : 12;
 export const residentAtHome = person => !person.workplace && !person.visitGroup && !person.prayerRemaining && person.returnRemaining <= EPS && person.arrivalRemaining <= EPS;
 export const workingResidents = (state, id) => (state.residents || []).filter(person => person.workplace === id && person.arrivalRemaining <= EPS && !person.visitGroup);
 // Arrived employees continue paying taxes during a production blockage.
@@ -71,7 +72,8 @@ function allocateId(state, used = new Set((state.residents || []).map(person => 
   return id;
 }
 function newResident(state, happiness = 0, newborn = false) {
-  return { id: allocateId(state), happiness, hungerSeconds: 0, fedRecoverySeconds: 0, unemployedSeconds: 0,
+  const id = allocateId(state);
+  return { id, personUid: `${state.islandId || 'island-1'}:resident-${id}`, happiness, hungerSeconds: 0, fedRecoverySeconds: 0, unemployedSeconds: 0,
     newbornRemaining: newborn ? NEWBORN_HAPPINESS_SECONDS : 0,
     workplace: null, arrivalRemaining: 0, returnRemaining: 0, returnFrom: null, blockedSeconds: 0,
     visitGroup: null, prayerRemaining: 0, visitHappinessRemaining: 0, visitCooldownRemaining: 0,
@@ -232,7 +234,7 @@ export function normalizeResidents(state, raw = {}) {
     const snapshot = typeof saved.forcedHappinessSnapshot === 'number' ? saved.forcedHappinessSnapshot :
       state.lighthouseRemaining > EPS && typeof saved.globalLighthouseSnapshot === 'number' ? saved.globalLighthouseSnapshot :
       saved.visitHappinessRemaining > EPS && typeof saved.preVisitHappiness === 'number' ? saved.preVisitHappiness : null;
-    state.residents.push({ id, happiness: frozen ? 0 : bounded(saved.happiness, 0, -10000000, 10000000), newbornRemaining,
+    state.residents.push({ id, personUid: typeof saved.personUid === 'string' && /^[A-Za-z0-9:_-]{1,100}$/.test(saved.personUid) ? saved.personUid : `${state.islandId || 'island-1'}:resident-${id}`, happiness: frozen ? 0 : bounded(saved.happiness, 0, -10000000, 10000000), newbornRemaining,
       hungerSeconds: frozen ? 0 : bounded(saved.hungerSeconds), fedRecoverySeconds: frozen ? 0 : bounded(saved.fedRecoverySeconds, 0, 0, FED_RECOVERY_SECONDS),
       unemployedSeconds: frozen ? 0 : bounded(saved.unemployedSeconds),
       workplace: RESIDENT_WORKPLACES.includes(saved.workplace) && unlocked(state, saved.workplace) ? saved.workplace : null,
@@ -301,6 +303,7 @@ export function residentOffset(state, person) {
   let offset = (state.chapelRemaining > EPS ? state.buildings.chapel.level * 10 : 0) + (state.blessingRemaining > EPS ? 20 : 0);
   offset += (state.lighthouseVisitBonuses || []).reduce((sum, bonus) => sum + (bonus.remaining > EPS ? 10 : 0), 0);
   offset += residentLeisureBonus(state, person);
+  if (state.charityReward?.happinessPoints === 20 && state.charityReward.expiresAt > (state.worldTimeMs || state.lastSimulatedAt || 0)) offset += 20;
   offset -= worldEventHappinessPenalty(state);
   if (residentProductionBlocked(state, person)) offset -= Math.min(50, 10 * (1 + Math.floor((person.blockedSeconds + EPS) / 86400)));
   return offset;
@@ -348,6 +351,7 @@ export function nextResidentEvent(state) {
   const fed = hasFoodForResidents(state);
   const consider = value => { if (value > EPS) next = Math.min(next, value); };
   consider(welcomeStatus(state).remaining);
+  if (state.charityReward?.happinessPoints === 20) consider((state.charityReward.expiresAt - (state.worldTimeMs || state.lastSimulatedAt || 0)) / 1000);
   for (const person of state.residents || []) {
     consider(person.newbornRemaining);
     consider(person.arrivalRemaining); consider(person.returnRemaining); consider(person.prayerRemaining); consider(person.visitHappinessRemaining); consider(person.visitCooldownRemaining);
@@ -459,7 +463,7 @@ function removePerson(state, person, decrement = true) {
   state.returningWorkers = state.residents.filter(p => !p.workplace && p.returnRemaining > EPS).map(p => p.returnRemaining);
 }
 export function removeResidentForDeparture(state) {
-  if (state.population <= 6) return false;
+  if (state.population <= residentPopulationMinimum(state)) return false;
   const person = departureCandidate(state);
   if (!person) return false;
   removePerson(state, person);

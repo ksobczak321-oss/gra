@@ -83,28 +83,17 @@ test('population does not gate other buildings or cancel an already purchased le
   assert.equal(oldHighLevel.population, 12);
 });
 
-test('level6 replaces new NPC Market and Port transactions while level5 keeps them', () => {
-  const earlier = island(5);
-  earlier.resources = { coins:10000,wood:100,stone:0,grain:0,food:1000,planks:0 };
-  assert.equal(playerTradeUnlocked(earlier), false);
-  assert.equal(quoteTrade(earlier, { direction:'buy', resource:'stone', amount:100 }).ok, true);
-  assert.equal(act(earlier, { type:'marketOrder', resource:'wood', amount:10 }, NOW).ok, true);
-  const later = island(6);
-  later.market.stock.wood = 20;
-  const before = JSON.stringify(later);
-  assert.equal(playerTradeUnlocked(later), true);
-  for (const action of [
-    { type:'marketOrder', resource:'wood', amount:10 },
-    { type:'marketExchange', from:'wood', to:'stone', amount:10 },
-    { type:'trade', direction:'buy', resource:'stone', amount:100 },
-    { type:'trade', direction:'sell', resource:'wood', amount:100 }
-  ]) {
-    assert.equal(act(later, action, NOW).ok, false);
-    assert.equal(logisticsAction(later, action, NOW).ok, false);
-    assert.equal(JSON.stringify(later), before);
+test('NPC Market and Port remain usable alongside coin PvP from level6', () => {
+  for (const level of [5,6,10]) {
+    const state = island(level); state.resources = {coins:10000,wood:200,stone:0,grain:0,food:1000,planks:0};
+    assert.equal(playerTradeUnlocked(state),level>=6);
+    assert.equal(quoteTrade(state,{direction:'buy',resource:'stone',amount:100}).ok,true);
+    assert.equal(act(state,{type:'marketOrder',resource:'wood',amount:10},NOW).ok,true);
+    state.market.stock.wood=20;
+    assert.equal(act(state,{type:'marketExchange',from:'wood',to:'stone',amount:10},NOW).ok,true);
+    assert.equal(act(state,{type:'trade',direction:'sell',resource:'wood',amount:100},NOW).ok,true);
+    assert.ok(state.dock.orders.some(order=>order.direction==='sell'));
   }
-  assert.equal(act(later, { type:'marketDispatch', resource:'wood', amount:10 }, NOW).ok, true);
-  assert.equal(later.market.dispatch.wood, 10);
 });
 
 test('an NPC order accepted before level6 keeps its paid cargo and voyage after the transition', () => {

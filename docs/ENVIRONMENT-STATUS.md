@@ -2,11 +2,17 @@
 
 Aktualizacja: **31 października 2026**. Ten dokument jest głównym rejestrem tego, co rzeczywiście znajduje się na DEV, PRE-PROD i PROD. Historia czynności i wyników pozostaje w [dzienniku](IMPLEMENTATION-LOG.md), a warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-## Aktualne wydanie DEV i PRE-PROD — 0.9.1.2, pilne
+## Aktualny DEV — 0.10.0.0 / v24
+
+Nowe GO obejmuje [archipelag i społeczność](FRONTEND-V24-REQUIREMENTS.md), oba powroty w Pomocy oraz [samodzielną planszówkę](boardgame/README.md). Kod, migracja formatu zapisu i reguły są przygotowane i odebrane lokalnie w DEV: **878 testów Node, 141 testów Python oraz 16 zestawów Chromium na spakowanej grze — PASS**. Własne CI i publikacja Pages tego wydania wymagają osobnych dowodów. Pakiet przed zatwierdzeniem ma 54 pliki z manifestem; użyty w lokalnym odbiorze zerowy SHA był wyłącznie znacznikiem testu, a nie identyfikatorem wydania. Rejestr obejmuje 255 kart zmian oraz 50 ręcznych scenariuszy. [Lista do odhaczania](testing/qa-checklist.html) i [plan startowy](testing/START-HERE.md) pozostają oddzielne od automatycznych wyników. Żadnego z tych 50 scenariuszy nie oznaczono jako wykonanego ręcznie.
+
+**Bez promocji GCP i bez resetu kont. PRE-PROD pozostaje na poniższym 0.9.1.2; PROD nadal bez potwierdzonej publikacji.** Integracja sesji fizycznej z kontem online jest wyłączona. Gotowy ZIP obejmuje planszę, 24 karty, pionki, pudełko, instrukcję i QR. Model planszówki: 7 PASS (wliczone w Node878); geometria/fonty PDF, manifest/ZIP oraz dwie pełne partie przeglądarkowe 2/6 osób — PASS. Fizyczny test przy stole, składanie i odczyt wydrukowanego QR pozostają NOT RUN. Podgląd społeczności i finansowania ma jawny tryb demonstracyjny; realna kampania wymaga organizacji, środków i zaufanych potwierdzeń. Parametry prototypu DEV są odróżnione od potwierdzonych decyzji w wymaganiach.
+
+## Aktualne PRE-PROD — 0.9.1.2, pilne
 
 **Opublikowane i odebrane:** źródło **`3be1f9d2094f1432acacbb782eed1665fd00e6e1`**, [CI 41233382228 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233382228), [Pages 41233382382 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233382382), [bridge 41233723831 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233723831), [PRE-PROD 41233737873, próba 1 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233737873), czas **2 min 10 s**. [Gra PRE-PROD](https://harborlight-dev.web.app). Tag priorytetu w rejestrze: **pilne**; nieprzesuwany [tag Git urgent-0.9.1.2-20261031](https://github.com/ksobczak321-oss/gra/tree/urgent-0.9.1.2-20261031) jest opublikowany i wskazuje ten sam kod.
 
-Poprawka dodaje Polski/English w opisie i przy nazwie wyspy, zachowuje roboczą nazwę i etap, a język obowiązuje w dalszym interfejsie. Dane graczy, Authentication i postęp nie były resetowane. Pozostałe projekty pozostają odłożone; PROD bez promocji. Końcowa kontrola manifestu, publicznych plików oraz wymagane testy rzeczywistego hostingu przeszły w workflow. Wartości flagi API i wewnętrznego digestu backendu nie odczytano niezależnie z ZIP.
+Poprawka dodaje Polski/English w opisie i przy nazwie wyspy, zachowuje roboczą nazwę i etap, a język obowiązuje w dalszym interfejsie. Dane graczy, Authentication i postęp nie były resetowane. W tym wydaniu pilnym pozostałe projekty były odłożone; obecny DEV rozwija je osobno. PROD bez promocji. Końcowa kontrola manifestu, publicznych plików oraz wymagane testy rzeczywistego hostingu przeszły w workflow. Wartości flagi API i wewnętrznego digestu backendu nie odczytano niezależnie z ZIP.
 
 | Artefakt próby 1 | Publiczny SHA-256 ZIP GitHub |
 |---|---|

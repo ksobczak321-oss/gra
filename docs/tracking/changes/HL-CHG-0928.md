@@ -8,12 +8,12 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `not_implemented` |
-| DEV | `deferred` |
+| Implementacja | `printable_prototype` |
+| DEV | `print_artifacts_and_phone_verified` |
 | CI | `not_run_for_change` |
-| PRE-PROD | `not_deployed` |
-| PROD | `not_deployed` |
-| Decyzja | `deferred_pending_followup` |
+| PRE-PROD | `not_applicable_print_artifact` |
+| PROD | `not_applicable_print_artifact` |
+| Decyzja | `accepted` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
@@ -32,10 +32,16 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 
 ## Dowody
 
-- **Dokumenty:** [docs/FRONTEND-V23-1-REQUIREMENTS.md](../../FRONTEND-V23-1-REQUIREMENTS.md)
-- **Kod:** nie przypisano.
-- **Scenariusze automatyczne:** nie przypisano.
+- **Dokumenty:** [docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md](../../design/BOARDGAME-LIGHTHOUSE-SESSION.md), [docs/boardgame/README.md](../../boardgame/README.md), [docs/testing/manual/HL-TC-0050.md](../../testing/manual/HL-TC-0050.md)
+- **Kod:** [docs/boardgame/build_print.py](../../boardgame/build_print.py), [docs/boardgame/session.mjs](../../boardgame/session.mjs), [docs/boardgame/telefon.html](../../boardgame/telefon.html)
+- **Scenariusze automatyczne:** [docs/boardgame/session.test.mjs](../../boardgame/session.test.mjs), [docs/boardgame/verify_print.py](../../boardgame/verify_print.py), [docs/boardgame/verify_phone.py](../../boardgame/verify_phone.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
+
+Powiązane przypadki do ręcznego przeklikania:
+
+- [HL-TC-0050 — Planszówka: komplet druku, czytelne kody i samodzielna sesja przy stole](../../testing/manual/HL-TC-0050.md) — `NOT RUN`.
+
+Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages.
 
 ## Relacje
 

@@ -84,7 +84,8 @@ test('all 12 buildings have a concise bilingual purpose and whole-island goal', 
 });
 
 test('resident and warehouse introductions retain constraints and use new carrier base', () => {
-  assert.match(residentsPurpose('pl'), /co najmniej sześciu/);
+  assert.match(residentsPurpose('pl'), /matce pozostaje co najmniej dwunastu/);
+  assert.match(residentsPurpose('pl'), /córce sześciu/);
   assert.match(residentsPurpose('pl'), /przy 0%/);
   assert.match(warehousePurpose('pl'), /120 sztuk/);
   assert.match(warehousePurpose('pl'), /pięciominutowym/);

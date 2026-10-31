@@ -35,7 +35,7 @@ def world(mode='copy', population=12):
       s.buildings.house.level=3;s.buildings.warehouse.level=3;s.buildings.chapel.level=3;
       s.population=%d;
       s.resources={coins:1000000,wood:1000,stone:537,grain:500,food:1000,planks:1000};
-      if(%s==='gate'){
+      if(['gate','archipelago'].includes(%s)){
         s.resources={coins:1000000,wood:100000,stone:100000,grain:100000,food:100000,planks:100000};
         s.bonusMaterials={wood:99000,stone:99000,grain:99000,food:99000,planks:99000};
       }
@@ -43,12 +43,15 @@ def world(mode='copy', population=12):
       s=normalizeState(s,%d);
       console.log(JSON.stringify(s));
     ''' % (START, 6 if mode == 'peer' else 10 if mode == 'archipelago' else 3,
-           population, json.dumps(mode), START)
+           24 if mode == 'archipelago' and population == 12 else population, json.dumps(mode), START)
     return json.loads(subprocess.run(['node', '--input-type=module', '-e', script], cwd=SOURCE,
                                      capture_output=True, text=True, check=True).stdout)
 
 
 def enter(browser, state, *, mobile=False):
+    for key in list(cloud.DOCUMENTS):
+        if key.startswith(UID + '/worlds/'):
+            del cloud.DOCUMENTS[key]
     cloud.DOCUMENTS[UID] = {'payload': json.dumps(state), 'revision': 5, 'updateTime': cloud.timestamp()}
     context, page = cloud.context(browser, UID, mobile=mobile)
     cloud.visit(page)
@@ -114,7 +117,7 @@ def house_and_chapel(browser):
     context, page = enter(browser, world())
     building(page, 'house')
     guide = page.locator('[data-house-population-guide]')
-    for text in ['pięć minut', 'Szczęście steruje populacją', '0%', 'minimum sześciu', 'Ratusz', 'łóżka']:
+    for text in ['pięć minut', 'Szczęście steruje populacją', '0%', 'minimum dwunastu osób na matce lub sześciu na córce', 'Ratusz', 'łóżka']:
         expect(guide).to_contain_text(text)
     assignments = page.locator('[data-house-worker-assignments]')
     expect(assignments.locator('[data-worker-building="farm"][data-worker-delta="1"]')).to_be_visible()
@@ -175,17 +178,17 @@ def peer_market_gate(browser):
     page.locator('[data-market-entry]').click()
     expect(page.locator('[data-player-trade]')).to_be_visible()
     expect(page.locator('[data-player-trade-unavailable]')).to_contain_text('Nie pozorujemy')
-    assert not page.locator('[data-market-order],[data-market-exchange],#market-from,#market-to').count()
+    expect(page.locator('[data-market-exchange]')).to_be_visible()
     assert not page.locator('[data-create-trade-offer]').count(), 'An unconfigured service must not expose a fake successful offer form'
     close_panel(page)
     page.locator('#hit-boat').click()
     expect(page.locator('[data-player-trade]')).to_be_visible()
     expect(page.locator('[data-player-trade-unavailable]')).to_be_visible()
-    assert not page.locator('#island-dialog').get_by_role('button', name=re.compile(r'^(Kup|Sprzedaj|Buy|Sell) 100')).count()
+    assert page.locator('#island-dialog').get_by_role('button', name=re.compile(r'^(Kup|Sprzedaj|Buy|Sell) 100')).count() > 0
     exact_history()
     cloud.no_island_cache(page)
     context.close()
-    print('PASS21 level6 replaces new NPC Market/Harbor trades with player exchange; an unconfigured API is explained honestly', flush=True)
+    print('PASS24 level6 keeps NPC Market/Harbor alongside player coin sales; unavailable API is explained honestly', flush=True)
 
 
 def open_archipelago(page):
@@ -200,7 +203,7 @@ def archipelago_cloud_and_shipping(browser):
     low['buildings']['townhall']['level'] = 9
     context, page = enter(browser, low)
     open_archipelago(page)
-    expect(page.locator('[data-create-second-island-confirm]')).to_be_disabled()
+    expect(page.locator('[data-create-second-island-confirm]')).to_have_count(0)
     context.close()
 
     original = world('archipelago')
@@ -212,8 +215,9 @@ def archipelago_cloud_and_shipping(browser):
     expect(page.locator('[data-switch-island="island-2"]')).to_be_enabled()
     expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
     both = cloud.cloud_state(UID)
-    second = both['archipelago']['secondIsland']
-    assert second['islandName'] == 'Wyspa Bursztynowa'
+    second = both['archipelago']['islands']['island-2']
+    assert second['islandName'] == 'Port Zachowanego Postępu - Wyspa Bursztynowa'
+    assert second['population'] == 6 and both['population'] == 18
     assert second['buildings']['townhall']['level'] == 10
     assert second['buildings']['warehouse']['level'] == original['buildings']['warehouse']['level'] == 3
     assert all(value['level'] == 1 for key, value in second['buildings'].items() if key not in ['townhall', 'warehouse'])
@@ -226,14 +230,14 @@ def archipelago_cloud_and_shipping(browser):
     primary_filter = page.locator('#worldLayer').evaluate('(node)=>getComputedStyle(node).filter')
     page.locator('[data-switch-island="island-2"]').click()
     confirmed_island(page, 'island-2')
-    expect(page).to_have_title('Wyspa Bursztynowa — HARBORLIGHT')
+    expect(page).to_have_title('Port Zachowanego Postępu - Wyspa Bursztynowa — HARBORLIGHT')
     expect(page.locator('#island-dialog .eyebrow')).to_have_text('HARBORLIGHT · WYSPA 02')
     second_filter = page.locator('#worldLayer').evaluate('(node)=>getComputedStyle(node).filter')
     assert second_filter != primary_filter, 'The second island must have a visibly distinct palette'
     page.screenshot(path='/tmp/harborlight-v21-second-island.png')
     page.locator('[data-switch-island="island-1"]').click()
     confirmed_island(page, 'island-1')
-    assert cloud.cloud_state(UID)['resources']['wood'] == original['resources']['wood']
+    assert cloud.cloud_state(UID)['resources']['wood'] == original['resources']['wood'] - 21000
 
     # Ordinary material physically leaves the source once and reaches the
     # other island after10 real minutes, without a coin charge.
@@ -244,9 +248,9 @@ def archipelago_cloud_and_shipping(browser):
     voyage = sent['archipelago']['transfers'][0]
     assert voyage['arrivesAt'] - voyage['departedAt'] == 600000
     assert voyage['capacityAtDeparture'] == 1000
-    assert sent['resources']['wood'] == original['resources']['wood'] - 100
-    assert sent['archipelago']['secondIsland']['resources']['wood'] == 100
-    assert sent['resources']['coins'] == original['resources']['coins']
+    assert sent['resources']['wood'] == original['resources']['wood'] - 21000 - 100
+    assert sent['archipelago']['islands']['island-2']['resources']['wood'] == 0
+    assert sent['resources']['coins'] == original['resources']['coins'] - 21000
     expect(page.locator('[data-island-voyage-status]')).to_contain_text('Rejs')
     page.clock.fast_forward(599000)
     expect(page.locator('[data-island-voyage-status]')).to_contain_text('1 s')
@@ -255,15 +259,15 @@ def archipelago_cloud_and_shipping(browser):
     confirmed_island(page, 'island-2')
     delivered = cloud.cloud_state(UID)
     assert delivered['archipelago']['transfers'][0]['status'] == 'complete'
-    assert delivered['archipelago']['secondIsland']['resources']['wood'] == 200
-    assert delivered['resources']['wood'] == original['resources']['wood'] - 100
+    assert delivered['archipelago']['islands']['island-2']['resources']['wood'] == 100
+    assert delivered['resources']['wood'] == original['resources']['wood'] - 21000 - 100
     exact_history()
 
     page.reload()
     page.wait_for_function("document.body.dataset.activeIsland==='island-2'")
     page.wait_for_function('document.getElementById("loading").hidden')
     open_archipelago(page)
-    assert cloud.cloud_state(UID)['archipelago']['secondIsland']['resources']['wood'] == 200
+    assert cloud.cloud_state(UID)['archipelago']['islands']['island-2']['resources']['wood'] == 100
     expect(page.locator('[data-ship-capacity]')).to_have_text('1000')
     page.locator('[data-ship-capacity-units]').fill('1000')
     page.locator('[data-ship-capacity-payment]').click()
@@ -278,18 +282,41 @@ def archipelago_cloud_and_shipping(browser):
     assert len(paid['archipelago']['capacityReceipts']) == 1
     assert paid['archipelago']['capacityReceipts'][0]['grossGrosz'] == 499
     assert paid['commerce']['receipts'][-1]['kind'] == 'ship-capacity'
-    assert paid['resources']['coins'] == original['resources']['coins']
-    assert paid['archipelago']['secondIsland']['resources']['coins'] == 100
+    assert paid['resources']['coins'] == original['resources']['coins'] - 21000
+    assert paid['archipelago']['islands']['island-2']['resources']['coins'] == 0
     page.reload()
     page.wait_for_function("document.body.dataset.activeIsland==='island-2'")
     open_archipelago(page)
     expect(page.locator('[data-ship-capacity]')).to_have_text('2000')
     assert len(cloud.cloud_state(UID)['archipelago']['capacityReceipts']) == 1
-    assert cloud.cloud_state(UID)['archipelago']['secondIsland']['resources']['wood'] == 200
+    assert cloud.cloud_state(UID)['archipelago']['islands']['island-2']['resources']['wood'] == 100
+    # The paid cargo expansion does not expand the distinct100-passenger hold.
+    page.locator('[data-switch-island="island-1"]').click()
+    confirmed_island(page, 'island-1')
+    page.locator('[data-island-passenger-amount]').fill('2')
+    page.locator('[data-send-island-passengers]').click()
+    expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
+    moving = cloud.cloud_state(UID)
+    passenger = moving['archipelago']['transfers'][-1]
+    assert passenger['mode'] == 'passengers' and passenger['capacityAtDeparture'] == 100
+    assert passenger['passengerCount'] == 2 and passenger['mealFood'] == 1
+    assert passenger['arrivesAt'] - passenger['departedAt'] == 1800000
+    assert moving['population'] == 16 and moving['archipelago']['islands']['island-2']['population'] == 6
+    page.clock.fast_forward(1200000)
+    page.locator('[data-archipelago-panel] h3').first.click()  # Real pointer input renews the inactivity deadline.
+    page.clock.fast_forward(600000)
+    page.locator('[data-switch-island="island-2"]').click()
+    confirmed_island(page, 'island-2')
+    arrived = cloud.cloud_state(UID)
+    assert arrived['archipelago']['transfers'][-1]['status'] == 'complete'
+    assert arrived['archipelago']['islands']['island-2']['population'] == 8
+    identities = [person['personUid'] for person in arrived['residents']] + [person['personUid'] for person in arrived['archipelago']['islands']['island-2']['residents']]
+    assert len(identities) == len(set(identities)) == 24
+    assert arrived['resources']['coins'] == original['resources']['coins'] - 21000
     exact_history()
     cloud.no_island_cache(page)
     context.close()
-    print('PASS21 Town Hall10 unlock, copied levels once, distinct palette, cloud-preserved world switching, free10-minute cargo and499gr simulated capacity receipt exactly once', flush=True)
+    print('PASS24 funded TownHall10 founding, six actual colonists, prefix, copied levels, bounded cloud docs, free10-minute cargo and499gr simulated capacity exactly once', flush=True)
 
 
 def run():

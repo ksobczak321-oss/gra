@@ -1,6 +1,6 @@
 # Polityka prywatności HARBORLIGHT
 
-Wersja: 2026-10-31-draft2. Data projektu: 31 października 2026 r.
+Wersja: 2026-10-31-draft3. Data projektu: 31 października 2026 r.
 
 DOKUMENT ROBOCZY DO PRZEGLĄDU WŁAŚCICIELA. Pola „Lorem ipsum” są demonstracyjne. Przed publicznym uruchomieniem wymagają rzeczywistych danych administratora, działającego kontaktu i sprawdzenia konfiguracji dostawców oraz okresów przechowywania.
 
@@ -16,7 +16,13 @@ Dane konta obejmują identyfikator Firebase UID, adres e-mail lub identyfikator 
 
 Dane gry obejmują stan wyspy, zasoby, budynki, mieszkańców, zadania, zdarzenia i statystyki, ustawienia, historię powiadomień, wersję i generację zapisu, czasy działań oraz ostatnią rzeczywistą aktywność. Dla realizacji korzyści mogą być zapisywane historie nagród jednorazowych, kodów, poleceń i potwierdzonych uprawnień.
 
-Konto może obejmować dwie wyspy, wybór aktywnej wyspy, historię przewozów i pojemność wspólnego statku. Handel między graczami obejmuje wystawione oferty, rezerwacje materiałów, przyjęcia, anulowania, zwroty, czasy i identyfikatory służące zapobieganiu wielokrotnej realizacji tej samej operacji.
+Konto może obejmować do 20 wysp, ich niezmienne identyfikatory i powiązania matka–córka, aktualne nazwy i sufiksy, wybór aktywnej wyspy, osobne dokumenty stanów światów, konkretne rekordy przewożonych mieszkańców oraz historię przewozów i pojemność wspólnego statku. Handel NPC i sprzedaż materiałów graczom za monety obejmują oferty, rezerwacje materiałów i monet, przyjęcia, anulowania, zwroty, czasy i identyfikatory zapobiegające wielokrotnemu rozliczeniu.
+
+Funkcje społeczności obejmują publiczny pseudonim i techniczny identyfikator publiczny powiązany na serwerze z UID konta, nazwę/opis sojuszu, role, członkostwo i zgłoszenia przyjęcia, zamrożony skład ligi, próby, legalne akcje, wyniki i kosmetyczne uprawnienia. Taki identyfikator nie ujawnia innym graczom UID Firebase ani e-maila, lecz pozostaje daną osobową powiązaną z kontem, a nie pełną anonimizacją.
+
+Czat przetwarza tekst, rozmówców lub sojusz, autora i czas, identyfikatory dostarczenia, blokady, wyciszenia i zgłoszenia. Kanał sojuszu jest dostępny jego bieżącym członkom; rozmowę prywatną odczytują jej uczestnicy. Uprawniona obsługa może otrzymać zgłoszony fragment i niezbędny kontekst do rozpatrzenia nadużycia. Nie należy zamieszczać haseł, danych płatniczych ani danych wrażliwych w wiadomościach.
+
+Docelowa ewidencja dobroczynności obejmuje pochodzenie i zużycie partii monet, kampanię, limity, rezerwację, potwierdzenie przelewu i jednokrotny odbiór efektu wyspy. Obecnie realny program pozostaje wyłączony, a DEV oferuje jawnie oznaczoną symulację, bez prawdziwych przelewów. Nie przekazujemy danych gracza organizacji charytatywnej przez testowy przycisk. Ewentualne uruchomienie wymaga określenia organizacji, zasad i niezbędnego zakresu danych; nie oznacza publicznego ujawnienia prywatnego salda.
 
 Potwierdzenie dokumentów obejmuje UID, zaakceptowane wersje Regulaminu i Polityki prywatności oraz czas serwera. Nie zbieramy dodatkowo numeru PESEL, dokumentu tożsamości czy daty urodzenia tylko w celu zwykłego utworzenia konta.
 
@@ -25,6 +31,8 @@ Dane techniczne i bezpieczeństwa mogą obejmować adres IP, typ przeglądarki i
 ## 3. Cele i podstawy prawne
 
 Utworzenie konta, logowanie, udostępnienie wyspy, synchronizacja między urządzeniami i obsługa zgłoszeń służą zawarciu i wykonaniu umowy o usługę — art. 6 ust. 1 lit. b RODO. Podanie danych koniecznych do tej usługi jest dobrowolne, ale bez nich konto i trwały postęp nie mogą działać.
+
+Obsługa dobrowolnie wybranych sojuszy, wiadomości i ligi służy wykonaniu odpowiadających im funkcji usługi. Publiczna prezentacja pseudonimu, członkostwa i wyników jest ograniczona do celu danej funkcji; nie jest zgodą na marketing. Zgłoszenia treści, kontrola dostępu i przeciwdziałanie nadużyciom wymagają odrębnej oceny niezbędności i interesów użytkownika przed finalnym uruchomieniem.
 
 Bezpieczeństwo, zapobieganie nadużyciom, zapewnienie spójności zapisu, ustalenie i obrona roszczeń oraz niezbędna diagnostyka mogą opierać się na prawnie uzasadnionym interesie administratora — art. 6 ust. 1 lit. f RODO, z uwzględnieniem praw i interesów użytkownika.
 
@@ -40,7 +48,7 @@ Te metody działają dopiero po konfiguracji dostawcy przez właściciela. PRE-P
 
 Gracz sam wybiera i zatwierdza udostępnienie osiągnięcia. Otwarty formularz Facebooka lub funkcja systemowego udostępniania przekazuje wskazany link i treść do wybranego serwisu według jego zasad. Nie oznacza automatycznej publikacji. Gra nie uruchamia automatycznych postów na prywatnym profilu, osobistych powiadomień Facebooka ani publikacji na stronie gry bez odrębnego wdrożenia i uprawnienia.
 
-Wystawienie oferty wymiany udostępnia innym zalogowanym graczom nazwę wyspy, oferowany i oczekiwany materiał z ilościami, identyfikator i termin oferty. Adres e-mail, hasło i pełny zapis wyspy nie są częścią publicznej oferty. Techniczny UID właściciela służy serwerowi do kontroli uprawnień; inni gracze nie potrzebują go w odpowiedzi listy ofert. Własne oferty i prywatna skrzynka zwrotów są dostępne po uwierzytelnieniu. Publikacja oferty jest działaniem gracza w ramach usługi, nie zgodą na marketing.
+Wystawienie oferty sprzedaży udostępnia innym zalogowanym graczom nazwę wyspy, oferowany materiał i ilość, cenę w monetach gry oraz identyfikator i termin oferty. Historyczna oferta barterowa nadal pokazuje pierwotne materiały i ilości. Adres e-mail, hasło i pełny zapis wyspy nie są częścią publicznej oferty. Techniczny UID właściciela służy serwerowi do kontroli uprawnień; inni gracze nie potrzebują go w odpowiedzi listy ofert. Własne oferty i prywatna skrzynka zwrotów są dostępne po uwierzytelnieniu. Publikacja oferty jest działaniem gracza w ramach usługi, nie zgodą na marketing.
 
 ## 5. Dostawcy i odbiorcy danych
 
@@ -64,6 +72,8 @@ Dane bieżącego konta i wyspy są przechowywane w okresie utrzymywania usługi 
 
 Po zamknięciu konta dane niepotrzebne do dalszych zgodnych z prawem celów powinny zostać usunięte lub zanonimizowane. Historię niezbędną do rozliczeń, bezpieczeństwa, dochodzenia roszczeń lub obowiązku prawnego można zachować przez właściwy, uzasadniony okres. Dane rozliczeniowe — po uruchomieniu sprzedaży — mogą podlegać ustawowym okresom podatkowym, co do zasady liczonym przez pięć lat od końca roku, w którym upłynął termin płatności podatku.
 
+W przygotowanym API zwykłe wiadomości przestają być widoczne po 30 dniach, a osobno zgłoszony fragment ma znacznik retencji do 90 dni i ograniczony cel obsługi zgłoszenia. Filtrowanie widoczności nie jest równoznaczne z fizycznym usunięciem z bazy. Automatyczne fizyczne usuwanie przez TTL lub równoważną procedurę wymaga osobnej konfiguracji i sprawdzenia w środowisku chmurowym; w tym wdrożeniu DEV nie potwierdzono takiej aktywacji GCP. Przed udostępnieniem rzeczywistego czatu operator musi potwierdzić działające usuwanie i uzupełnić okresy kopii infrastruktury. Ulotna demonstracja DEV przechowuje syntetyczne rozmowy tylko w pamięci podglądu i traci je po odświeżeniu.
+
 Dokładna tabela retencji logów, kopii infrastrukturalnych, kont i dowodów potwierdzeń wymaga uzupełnienia przed finalną publikacją. Nie deklarujemy bezterminowego przechowywania każdej historii. Żądanie usunięcia danych rozpatrujemy także pod kątem ustawowych wyjątków i praw innych osób.
 
 ## 8. Pamięć przeglądarki i podobne technologie
@@ -71,6 +81,10 @@ Dokładna tabela retencji logów, kopii infrastrukturalnych, kont i dowodów pot
 Techniczna sesja logowania jest przechowywana w pamięci lokalnej przeglądarki, aby utrzymać dostęp do konta. Przechowujemy też wybór języka. Wylogowanie usuwa techniczną sesję aplikacji; nie usuwa zapisanej w chmurze wyspy. Użytkownik może zmienić ustawienia lub wyczyścić dane przeglądarki, co może wymagać ponownego logowania.
 
 Wyspa, jej kopia odzyskiwania i kolejka trwałego zapisu nie są przechowywane w localStorage ani sessionStorage. Lokalny DEV może mieć wyraźnie oznaczony, nietrwały podgląd w pamięci procesu. Odrębne techniczne mechanizmy własnych domen Google/Meta podlegają także informacjom tych dostawców.
+
+Samodzielny przewodnik planszówki na telefonie jest oddzielnym narzędziem bez logowania i bez połączenia z kontem gry. Opcjonalne imiona lub pseudonimy uczestników, ruchy, punkty i stan jednej partii zapisuje wyłącznie lokalnie na tym urządzeniu; przycisk usunięcia sesji lub wyczyszczenie danych przeglądarki usuwa ten zapis. Pobrany przewodnik działa offline i nie wysyła wyniku do serwera. Zeskanowanie QR otwiera stronę instrukcji; standardowe żądanie do hostingu może podlegać opisanym logom technicznym, ale nie przyznaje nagrody online.
+
+Interaktywna lista testów dla właściciela zapisuje lokalnie wyłącznie dokumentację QA: testera, opis buildu, wyniki i notatki; raport można wyeksportować do pliku. Nie przechowuje wyspy ani danych logowania i nie wysyła raportu automatycznie do gry. Nie należy wpisywać do notatek sekretów ani niepotrzebnych danych osobowych.
 
 Nie uruchomiono w tym wdrożeniu dodatkowych marketingowych plików cookie, komercyjnej sieci reklamowej ani opcjonalnej analityki odwiedzin. Jeżeli zostaną dodane, informacje i mechanizm wyboru zostaną zaktualizowane przed ich użyciem. Konieczne technologie sesji nie wymagają wymuszonej zgody na marketing.
 

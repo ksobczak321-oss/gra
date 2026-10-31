@@ -7,3 +7,8 @@
 !firestore-store.mjs
 !retention.mjs
 !player-trade.mjs
+!island-document-store.mjs
+!community-service.mjs
+!league-rules.mjs
+!charity-ledger.mjs
+!charity-service.mjs

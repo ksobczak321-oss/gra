@@ -41,7 +41,7 @@ Data pierwotnej wiadomości: nieustalona. Dokładnej daty pierwotnej wiadomości
 
 Powiązane przypadki do ręcznego przeklikania:
 
-- [HL-TC-0028 — Rynek baseline: próg 6, prawdziwa oferta i brak podwójnego przyjęcia](../../testing/manual/HL-TC-0028.md) — `NOT RUN`.
+- [HL-TC-0028 — Rynek graczy: transakcja materiał–monety i brak podwójnego przyjęcia](../../testing/manual/HL-TC-0028.md) — `NOT RUN`.
 
 CI potwierdza zestaw dla wskazanego SHA. Status code_deployed potwierdza obecność kodu w wydaniu, nie ręczne wykonanie tego przypadku ani aktywację zewnętrznej usługi.
 

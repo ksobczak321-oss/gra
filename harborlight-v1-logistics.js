@@ -1,11 +1,11 @@
 // Physical goods and event-based logistics. Durations are real elapsed seconds,
 // including catch-up after the browser is closed.
-import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v23-1';
-import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v23-1';
-import { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, normalizeBonusMaterials, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v23-1';
-import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v23-1';
-import { eventTransportMultiplier, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v23-1';
-export { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v23-1';
+import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v24';
+import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v24';
+import { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, normalizeBonusMaterials, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v24';
+import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v24';
+import { eventTransportMultiplier, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v24';
+export { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v24';
 export const workerEfficiency = productionMultiplier;
 // Paths improve cargo courses, independently of production and resident walks.
 export const transportEfficiency = (state, efficiency = workerEfficiency(state)) => efficiency * roadSpeedMultiplier(state) * activePlayMultiplier(state) * eventTransportMultiplier(state);
@@ -765,7 +765,6 @@ export function advanceLogistics(state,elapsed,efficiency=workerEfficiency(state
 
 export const portPrice = (resource,direction='buy') => ['planks','food'].includes(resource)?(direction==='sell'?140:150):(direction==='sell'?40:50);
 export function quoteTrade(state,action) {
-  if(playerTradeUnlocked(state))return bad('From Town Hall level 6, trade resources with other players instead of the island merchant.');
   if(!state.buildings.dock.level||!workplaceUnlocked(state,'dock'))return bad('Harbor trading unlocks at Town Hall level 4.');
   const {resource,direction}=action,amount=action.amount;
   if(!MATERIAL_IDS.includes(resource)||!['buy','sell'].includes(direction)||!quantity(amount)||amount%100)return bad('Trade whole batches of 100 materials.');
@@ -819,7 +818,6 @@ export function logisticsAction(state,action,now=Date.now()) {
     [state.transportPriority[i],state.transportPriority[j]]=[state.transportPriority[j],state.transportPriority[i]];return good('Transport priority updated.');
   }
   if(action.type==='marketOrder') {
-    if(playerTradeUnlocked(state))return bad('From Town Hall level 6, create or accept another player’s exchange offer. Existing Market goods can still be collected.');
     if(!workplaceUnlocked(state,'market'))return bad('The market unlocks at Town Hall level 2.');
     const resource=action.resource,amount=action.amount;
     if(!MATERIAL_IDS.includes(resource)||!quantity(amount))return bad('Enter a whole material quantity.');
@@ -829,7 +827,6 @@ export function logisticsAction(state,action,now=Date.now()) {
     state.market.orders.push({resource,amount});return good('Market workers will carry these goods. Each delivery is locked for one hour and expires after 24 hours.');
   }
   if(action.type==='marketExchange') {
-    if(playerTradeUnlocked(state))return bad('From Town Hall level 6, exchange prices are agreed between players. The automatic Market exchange is closed.');
     if(!workplaceUnlocked(state,'market'))return bad('The market unlocks at Town Hall level 2.');
     const {from,to}=action,amount=action.amount,groups=[['wood','stone','grain'],['planks','food']];
     if(from===to||!groups.some(g=>g.includes(from)&&g.includes(to)))return bad('Choose different goods from the same category.');

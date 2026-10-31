@@ -1,7 +1,7 @@
 // Firebase owns credentials and verifies access to the UID-scoped documents.
 // Hosting selects the isolated project; runtime Firebase config never contains secrets.
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v23-1';
-import { LEGAL_DOCUMENTS, validLegalAcceptance } from './harborlight-legal.js?v=legal-v2';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v24';
+import { LEGAL_DOCUMENTS, validLegalAcceptance } from './harborlight-legal.js?v=legal-v3';
 export const DEV_PROJECT = 'harborlight-dev';
 export const PROD_PROJECT = 'harborlight-prod';
 export const PROD_SESSION_KEY = 'harborlight-prod-auth-v1';
@@ -16,7 +16,8 @@ const HOST_PROJECTS = new Map([
   [`${PROD_PROJECT}.web.app`, PROD_PROJECT], [`${PROD_PROJECT}.firebaseapp.com`, PROD_PROJECT],
   ['harborlight.pl', PROD_PROJECT], ['www.harborlight.pl', PROD_PROJECT]
 ]);
-const MAX_PAYLOAD_BYTES = 700_000;
+const MAX_PAYLOAD_BYTES = 14_000_000;
+const MAX_WORLD_DOCUMENT_BYTES = 700_000;
 const MAX_TOKEN_LENGTH = 16_000;
 const safeUid = uid => typeof uid === 'string' && /^[A-Za-z0-9_-]{1,128}$/.test(uid);
 const validEmail = email => typeof email === 'string' && email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -70,8 +71,8 @@ const MESSAGES = {
   'trade-invalid-cursor': 'Nie można odczytać kolejnej strony. Odśwież listę.',
   'trade-invalid-limit': 'Nieprawidłowy rozmiar strony ofert.',
   'trade-return-exists': 'Zwrot tej oferty jest już zapisany. Sprawdź towary oczekujące na odbiór.',
-  'second-island-locked': 'Założenie drugiej wyspy wymaga potwierdzonego poziomu Ratusza 10 na pierwszej.',
-  'archipelago-island-loss': 'Zapis nie może usunąć istniejącej drugiej wyspy.',
+  'second-island-locked': 'Założenie kolejnej wyspy wymaga potwierdzonego odpowiedniego poziomu Ratusza na wyspie macierzystej.',
+  'archipelago-island-loss': 'Zapis nie może usunąć żadnej istniejącej wyspy archipelagu.',
   'unverified-ship-capacity': 'Zwiększenie pojemności wymaga potwierdzenia operatora płatności. Prawdziwe płatności nie są jeszcze włączone.'
 };
 const fail = code => Object.assign(new Error(MESSAGES[code]), { code });
@@ -132,11 +133,17 @@ export function validIslandPayload(payload) {
     const island = JSON.parse(payload);
     if (!validWorld(island)) return false;
     const group = island.archipelago;
-    if (group === undefined) return true;
-    if (!isObject(group) || group.version !== 1 || !['island-1', 'island-2'].includes(group.activeIslandId) ||
+    if (group === undefined) return new TextEncoder().encode(payload).byteLength <= MAX_WORLD_DOCUMENT_BYTES;
+    if (!isObject(group) || ![1,2].includes(group.version) || !/^island-(?:[1-9]|1[0-9]|20)$/.test(group.activeIslandId) ||
         !Number.isSafeInteger(group.shipCapacity) || group.shipCapacity < 1000 || !Array.isArray(group.transfers)) return false;
-    if (group.secondIsland !== null && (!validWorld(group.secondIsland) || group.secondIsland.archipelago !== undefined)) return false;
-    return group.activeIslandId !== 'island-2' || group.secondIsland !== null;
+    const children = group.version === 1 ? (group.secondIsland === null ? {} : { 'island-2': group.secondIsland }) : group.islands;
+    if (!isObject(children) || Object.keys(children).length > 19) return false;
+    const ids = Object.keys(children).sort((a,b) => Number(a.slice(7))-Number(b.slice(7)));
+    if (ids.some((id,index) => id !== `island-${index+2}`)) return false;
+    if (Object.values(children).some(world => !validWorld(world) || world.archipelago !== undefined || new TextEncoder().encode(JSON.stringify(world)).byteLength > MAX_WORLD_DOCUMENT_BYTES)) return false;
+    const primary = { ...island, archipelago: { ...group, ...(group.version === 2 ? { islands: {} } : {}) } };
+    if (new TextEncoder().encode(JSON.stringify(primary)).byteLength > MAX_WORLD_DOCUMENT_BYTES) return false;
+    return group.activeIslandId === 'island-1' || isObject(children[group.activeIslandId]);
   } catch { return false; }
 }
 
@@ -160,6 +167,7 @@ export function createDevCloud({
   const FIRESTORE = `https://firestore.googleapis.com/v1/${DATABASE}/documents`;
   const resolveUser = (uid, login = '', displayName = '') => preprod ? userByUid(uid) : safeUid(uid) ?
     { uid, login: validEmail(login) ? login : uid, ...(profileName(displayName) ? { islandName: profileName(displayName) } : {}) } : null;
+  const daughterDocuments = new Map();
   let configPromise, session = null, refreshPromise = null;
   let generation = 0, islandGeneration = null, accountStatus = null, activityWrittenAt = 0;
   const requireEnabled = () => { if (!enabled) throw fail('disabled'); };
@@ -234,11 +242,12 @@ export function createDevCloud({
   function store(next) {
     try { sessionStorage().setItem(sessionKey, JSON.stringify(next)); } catch { throw fail('storage'); }
     if (session?.uid !== next.uid) { islandGeneration = null; accountStatus = null; }
+    if (session?.uid !== next.uid) daughterDocuments.clear();
     session = next; activityWrittenAt = next.lastActivityAt;
   }
 
   function clear() {
-    session = null; islandGeneration = null; accountStatus = null; activityWrittenAt = 0;
+    session = null; islandGeneration = null; accountStatus = null; activityWrittenAt = 0; daughterDocuments.clear();
     generation++;
     try { sessionStorage().removeItem(sessionKey); } catch { throw fail('storage'); }
   }
@@ -436,7 +445,7 @@ export function createDevCloud({
     // meaningful promotion/retention failures before treating generic 409 as a
     // concurrent-write conflict. Never expose arbitrary provider diagnostics.
     const apiError = typeof result.body.error === 'string' ? result.body.error : null;
-    if (apiError && (/^trade-[a-z-]{1,64}$/.test(apiError) || ['second-island-locked', 'archipelago-island-loss', 'unverified-ship-capacity'].includes(apiError))) throw fail(apiError);
+    if (apiError && (/^(?:trade|community|charity)-[a-z-]{1,64}$/.test(apiError) || ['second-island-locked', 'archipelago-island-loss', 'unverified-ship-capacity'].includes(apiError))) throw fail(apiError);
     if (apiError && ['island-expired', 'invalid-code', 'promotion-not-started', 'promotion-ended', 'promotion-exhausted', 'unsupported-promotion-verification', 'legal-required'].includes(apiError)) throw fail(apiError);
     if (apiError && ['invalid-island', 'invalid-generation', 'invalid-revision', 'inventory-overflow'].includes(apiError)) throw fail('invalid-state');
     if ([409, 412].includes(result.status) || result.body.error?.status === 'FAILED_PRECONDITION' ||
@@ -527,6 +536,10 @@ export function createDevCloud({
     if (!result.ok || !isObject(result.body)) throw fail('trade-api-unavailable');
     return result.body;
   }
+  async function requestGameService(path, body = null) {
+    if (typeof path !== 'string' || !/^\/api\/v1\/(?:community|charity)(?:\/[A-Za-z0-9_-]+)*(?:\?[A-Za-z0-9_=&%.-]*)?$/.test(path)) throw fail('invalid-state');
+    return tradeRequest(path, body);
+  }
   function tradeId(value) {
     if (typeof value !== 'string' || !/^[A-Za-z0-9_-]{1,100}$/.test(value)) throw fail('trade-invalid-offer');
     return value;
@@ -537,7 +550,7 @@ export function createDevCloud({
     return cursor;
   };
   const listTradeOffers = ({ islandId = 'island-1', cursor = null } = {}) => {
-    if (!['island-1', 'island-2'].includes(islandId)) throw fail('trade-invalid-island');
+    if (!/^island-(?:[1-9]|1[0-9]|20)$/.test(islandId)) throw fail('trade-invalid-island');
     const params = new URLSearchParams({ islandId });
     const next = tradeCursor(cursor); if (next) params.set('cursor', next);
     return tradeRequest(`/api/v1/trade/offers?${params}`);
@@ -566,12 +579,41 @@ export function createDevCloud({
     }
     const name = `${DATABASE}/documents/islands/${session.uid}`;
     const result = await firestoreRequest(`https://firestore.googleapis.com/v1/${name}`);
-    if (result.status === 404) return null;
+    if (result.status === 404) { daughterDocuments.clear(); return null; }
     const document = result.body, fields = document.fields || {};
-    const revision = Number(fields.revision?.integerValue);
-    const payload = fields.payload?.stringValue;
-    if (document.name !== name || fields.schemaVersion?.integerValue !== '1' ||
-        !integer(revision) || !validIslandPayload(payload) || !timestamp(document.updateTime)) throw fail('invalid-cloud-data');
+    const revision = Number(fields.revision?.integerValue), schemaVersion = Number(fields.schemaVersion?.integerValue);
+    let payload = fields.payload?.stringValue;
+    if (document.name !== name || ![1,2].includes(schemaVersion) || !integer(revision) || typeof payload !== 'string' || !timestamp(document.updateTime)) throw fail('invalid-cloud-data');
+    const loaded = new Map();
+    if (schemaVersion === 2) {
+      const ids = (fields.worldIds?.arrayValue?.values || []).map(item => item.stringValue);
+      if (ids.length > 19 || new Set(ids).size !== ids.length || ids.some(id => !/^island-(?:[2-9]|1[0-9]|20)$/.test(id))) throw fail('invalid-cloud-data');
+      let state; try { state = JSON.parse(payload); } catch { throw fail('invalid-cloud-data'); }
+      if (state.archipelago?.version !== 2 || !isObject(state.archipelago.islands) || Object.keys(state.archipelago.islands).length) throw fail('invalid-cloud-data');
+      const rootGeneration = Number(fields.generation?.integerValue || 1);
+      for (const id of ids) {
+        const childName = `${name}/worlds/${id}`;
+        const found = await firestoreRequest(`https://firestore.googleapis.com/v1/${childName}`);
+        const child = found.body, text = child.fields?.payload?.stringValue;
+        if (!found.ok || child.name !== childName || typeof text !== 'string' || new TextEncoder().encode(text).byteLength > MAX_WORLD_DOCUMENT_BYTES || Number(child.fields?.generation?.integerValue) !== rootGeneration || !timestamp(child.updateTime)) throw fail('invalid-cloud-data');
+        let world; try { world = JSON.parse(text); } catch { throw fail('invalid-cloud-data'); }
+        if (!validWorld(world) || world.archipelago !== undefined) throw fail('invalid-cloud-data');
+        loaded.set(id, { payload: text, updateTime: child.updateTime }); state.archipelago.islands[id] = world;
+      }
+      // Separate REST document GETs have no shared snapshot. Confirm that the
+      // account CAS did not change while fetching daughters; all writers update
+      // that root atomically with their dirty children. Never admit a mixture
+      // of an old mother and newly committed daughter into the running game.
+      if (ids.length) {
+        const confirmed = await firestoreRequest(`https://firestore.googleapis.com/v1/${name}`);
+        if (!confirmed.ok || confirmed.body.name !== name || confirmed.body.updateTime !== document.updateTime || Number(confirmed.body.fields?.revision?.integerValue) !== revision) throw fail('conflict');
+      }
+      payload = JSON.stringify(state);
+    }
+    if (!validIslandPayload(payload)) throw fail('invalid-cloud-data');
+    islandGeneration = Number(fields.generation?.integerValue || 1);
+    if (!Number.isSafeInteger(islandGeneration) || islandGeneration < 1) throw fail('invalid-cloud-data');
+    daughterDocuments.clear(); for (const [id,item] of loaded) daughterDocuments.set(id,item);
     return { payload, version: { revision, updateTime: document.updateTime } };
   }
 
@@ -589,24 +631,46 @@ export function createDevCloud({
       return { revision: result.body.revision, updateTime: result.body.updateTime };
     }
     const revision = version ? version.revision + 1 : 1;
+    const world = JSON.parse(payload), rootName = `${DATABASE}/documents/islands/${session.uid}`;
+    const children = world.archipelago?.version === 2 ? world.archipelago.islands : null;
+    if (!children && daughterDocuments.size) throw fail('archipelago-island-loss');
+    const writes = [], nextDaughters = new Map(), generation = islandGeneration || 1;
+    if (children) {
+      for (const [id, child] of Object.entries(children)) {
+        const text = JSON.stringify(child), previous = daughterDocuments.get(id);
+        if (new TextEncoder().encode(text).byteLength > MAX_WORLD_DOCUMENT_BYTES) throw fail('invalid-state');
+        nextDaughters.set(id, { payload: text, updateTime: previous?.updateTime });
+        if (previous?.payload === text) continue;
+        writes.push({ update: { name: `${rootName}/worlds/${id}`, fields: {
+          payload: { stringValue: text }, generation: { integerValue: String(generation) }
+        } }, currentDocument: previous ? { updateTime: previous.updateTime } : { exists: false } });
+      }
+      if ([...daughterDocuments.keys()].some(id => !Object.hasOwn(children,id))) throw fail('archipelago-island-loss');
+      world.archipelago.islands = {};
+    }
+    const rootPayload = JSON.stringify(world);
+    if (new TextEncoder().encode(rootPayload).byteLength > MAX_WORLD_DOCUMENT_BYTES) throw fail('invalid-state');
+    writes.unshift({ update: { name: rootName, fields: {
+      schemaVersion: { integerValue: children ? '2' : '1' }, revision: { integerValue: String(revision) },
+      payload: { stringValue: rootPayload }, ...(children ? { generation: { integerValue: String(generation) }, worldIds: { arrayValue: { values: Object.keys(children).map(id => ({ stringValue:id })) } } } : {})
+    } }, currentDocument: version ? { updateTime: version.updateTime } : { exists: false },
+    updateTransforms: [{ fieldPath: 'updatedAt', setToServerValue: 'REQUEST_TIME' }] });
     const result = await firestoreRequest(`${FIRESTORE}:commit`, { method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ writes: [{
-        update: { name: `${DATABASE}/documents/islands/${session.uid}`, fields: {
-          schemaVersion: { integerValue: '1' }, revision: { integerValue: String(revision) },
-          payload: { stringValue: payload }
-        } },
-        currentDocument: version ? { updateTime: version.updateTime } : { exists: false },
-        updateTransforms: [{ fieldPath: 'updatedAt', setToServerValue: 'REQUEST_TIME' }]
-      }] }) });
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ writes }) });
     const updateTime = result.body.writeResults?.[0]?.updateTime;
-    if (!result.ok || result.body.writeResults?.length !== 1 || !timestamp(updateTime)) throw fail('invalid-cloud-data');
+    if (!result.ok || result.body.writeResults?.length !== writes.length || !timestamp(updateTime)) throw fail('invalid-cloud-data');
+    let writeIndex = 1;
+    for (const [id,item] of nextDaughters) {
+      if (daughterDocuments.get(id)?.payload !== item.payload) item.updateTime = result.body.writeResults[writeIndex++]?.updateTime;
+      if (!timestamp(item.updateTime)) throw fail('invalid-cloud-data');
+    }
+    daughterDocuments.clear(); for (const [id,item] of nextDaughters) daughterDocuments.set(id,item);
     return { revision, updateTime };
   }
 
   return { enabled, preprod, projectId, environment, sessionKey, get accountApiEnabled() { return accountApiEnabled; },
     get lastSessionActivityAt() { return session?.lastActivityAt ?? null; }, get sessionIdleExpired() { return idleExpired(); },
     recordSessionActivity, signIn, registerEmail, acceptExternalSession, getPublicConfig: config, getProfile, getLegalStatus, acceptLegal, restoreSession, signOut: clear, loadIsland, createIsland, saveIsland, recordActivity, redeemPromoCode,
-    listTradeOffers, listTradeReturns, createTradeOffer, acceptTradeOffer, cancelTradeOffer, claimTradeReturn,
+    requestGameService, listTradeOffers, listTradeReturns, createTradeOffer, acceptTradeOffer, cancelTradeOffer, claimTradeReturn,
     get accountStatus() { return accountStatus ? { ...accountStatus } : null; } };
 }

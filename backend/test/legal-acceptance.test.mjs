@@ -40,6 +40,23 @@ test('retry preserves first server time and does not renew play activity',async(
   assert.equal(first.acceptedAt,second.acceptedAt);assert.equal(second.alreadyAccepted,true);
   assert.equal(f.records.get('accounts/existing').lastPlayedAt,NOW-1000);
 });
+test('a draft2 acknowledgement cannot admit a new draft3 world and its audit receipt is preserved',async()=>{
+  const f=fixture(), uid='old-draft-user', version='2026-10-31-draft2';
+  const old={uid,termsVersion:version,privacyVersion:version,acceptedAt:NOW-1000,privacyAcknowledgedAt:NOW-1000,draft:true};
+  const oldPath='accounts/'+uid+'/legalAcceptances/'+version+'_'+version;
+  f.records.set('accounts/'+uid,{legalAcceptance:structuredClone(old),lastPlayedAt:NOW-1000});
+  f.records.set(oldPath,structuredClone(old));
+  assert.equal((await f.service.readLegalStatus({uid})).required,true);
+  await assert.rejects(f.service.startIsland({uid,payload}),{code:'legal-required'});
+  await assert.rejects(f.service.acceptLegal({uid,...acceptance,termsVersion:version,privacyVersion:version}),{code:'legal-required'});
+  assert.equal(f.writes,0);
+  const next=await f.service.acceptLegal({uid,...acceptance});
+  assert.equal(next.termsVersion,'2026-10-31-draft3');
+  assert.equal(next.privacyVersion,'2026-10-31-draft3');
+  assert.deepEqual(f.records.get(oldPath),old);
+  assert.equal(f.records.get('accounts/'+uid).lastPlayedAt,NOW-1000);
+  assert.equal((await f.service.readLegalStatus({uid})).required,false);
+});
 test('existing worlds and permanent PRE-PROD users are not reset or forced through registration',async()=>{
   const f=fixture();f.records.set('islands/old',{payload,revision:8,generation:1,updatedAt:NOW});
   const old=structuredClone(f.records.get('islands/old'));

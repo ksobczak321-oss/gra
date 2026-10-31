@@ -8,8 +8,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `not_implemented` |
-| DEV | `analysis_only` |
+| Implementacja | `implemented` |
+| DEV | `packaged_browser_pass` |
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
@@ -34,13 +34,18 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 ## Dowody
 
 - **Dokumenty:** [docs/design/LEAGUE-COMMUNITY-CHARITY.md](../../design/LEAGUE-COMMUNITY-CHARITY.md), [docs/FRONTEND-V23-1-REQUIREMENTS.md](../../FRONTEND-V23-1-REQUIREMENTS.md)
-- **Kod:** nie przypisano.
-- **Scenariusze automatyczne:** nie przypisano.
+- **Kod:** [backend/community-service.mjs](../../../backend/community-service.mjs), [backend/league-rules.mjs](../../../backend/league-rules.mjs), [harborlight-v1-community-client.js](../../../harborlight-v1-community-client.js), [harborlight-v1-community-ui.js](../../../harborlight-v1-community-ui.js)
+- **Scenariusze automatyczne:** [backend/test/community-service.test.mjs](../../../backend/test/community-service.test.mjs), [tests/harborlight-community-v24-smoke.py](../../../tests/harborlight-community-v24-smoke.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0038 — Liga miesięczna: granice sezonu, drużyny i punktacja](../../testing/manual/HL-TC-0038.md) — `NOT RUN`.
+- [HL-TC-0049 — Liga: dwa zadania dziennie wyłącznie w ogłoszonych slotach Warszawy](../../testing/manual/HL-TC-0049.md) — `NOT RUN`.
+
+Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.
+
+Końcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.
 
 ## Relacje
 

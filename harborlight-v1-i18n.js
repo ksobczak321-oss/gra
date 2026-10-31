@@ -1,4 +1,4 @@
-import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v23-1';
+import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v24';
 
 /** English is the source language. Polish strings are presentation only: saves,
  * identifiers, action payloads and user-entered values are never translated. */
@@ -307,6 +307,9 @@ No active bonuses or penalties.|Brak aktywnych premii i kar.
 Until the timer ends|Do końca odliczania
 Chapel blessing|Błogosławieństwo kaplicy
 Chapel upgrade bonus|Premia za rozbudowę kaplicy
+Light of Gratitude|Światło Wdzięczności
++20 pp happiness · illuminated Harbor|+20 p.p. szczęścia · rozświetlony Port
+A confirmed charity transfer grants one six-hour bonus on this island. It cannot stack or restart on refresh. Lighthouse 100% and the initial settling rules still take priority.|Potwierdzony przelew dobroczynny daje jedną premię przez sześć godzin na tej wyspie. Premia nie kumuluje się i nie odnawia po odświeżeniu. Pierwszeństwo zachowują 100% Latarni i zasady początkowego zadomowienia mieszkańców.
 Lighthouse upgrade bonus|Premia za rozbudowę latarni
 Lighthouse visitors returned|Powrót zwiedzających latarnię
 Lighthouse visit reward|Nagroda za zwiedzanie latarni

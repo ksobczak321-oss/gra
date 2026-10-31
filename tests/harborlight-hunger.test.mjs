@@ -276,7 +276,7 @@ test('birth and departure events change meal demand at their exact time', () => 
   assert.equal(growing.population, 17);
   close(growing.resources.food + growing.foodCredit, 65);
   assert.ok(growing.residents.filter(resident => resident.newbornRemaining > 0).every(resident => resident.happiness === 0));
-  const shrinking = island({ happiness: -100 });
+  const shrinking = island({ happiness: -100 }); shrinking.islandRole = 'daughter';
   // Overcrowding offsets feeding recovery, keeping the loss rate at its clamp.
   shrinking.buildings.house.level = 0;
   tick(shrinking, 2 * HOUR);
@@ -293,7 +293,7 @@ test('housing and mature hunger penalties add for each individual, then the mean
   close(state.happiness, -11);
   assert.ok(state.residents.every(resident => Math.abs(resident.happiness + 11) < 1e-7));
   tick(state, 100 * HOUR);
-  assert.equal(state.population, 6);
+  assert.equal(state.population, 12);
   assert.equal(state.happiness, -100);
 });
 
@@ -535,7 +535,7 @@ test('individual records and both timers survive save without duplicate identiti
 });
 
 test('long and split ticks agree through both twelve-hour thresholds, clipping and multiple departures', () => {
-  const whole = island({ food: 1 });
+  const whole = island({ food: 1, population: 18 });
   worker(whole, 'dock', 3);
   worker(whole, 'market', 3);
   const split = reload(whole);
@@ -546,12 +546,12 @@ test('long and split ticks agree through both twelve-hour thresholds, clipping a
     tick(split, seconds);
     remaining -= seconds;
   }
-  assert.equal(whole.population, 6);
+  assert.equal(whole.population, 12);
   assert.equal(split.population, whole.population);
   assert.deepEqual(whole.resources, split.resources);
   close(whole.happiness, split.happiness);
   close(whole.populationProgress, split.populationProgress);
-  assert.equal(whole.residents.length, 6);
+  assert.equal(whole.residents.length, 12);
   whole.residents.forEach(resident => {
     const other = person(split, resident.id);
     assert.ok(other, `resident ${resident.id} survives both integrations`);

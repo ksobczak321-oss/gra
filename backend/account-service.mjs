@@ -2,10 +2,12 @@
 // No default in-memory production store and no external calls are made here.
 // Payload economy remains the current client-calculated model; provider payment
 // verification is deliberately outside this service and cannot be faked by it.
+import { createCharityLedgerStore } from './charity-ledger.mjs';
+import { createIslandDocumentStore, MAX_ARCHIPELAGO_BYTES } from './island-document-store.mjs';
 const DAY = 86400000;
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const RESOURCES = ['coins', ...MATERIALS];
-const MAX_PAYLOAD_BYTES = 700000;
+const MAX_PAYLOAD_BYTES = MAX_ARCHIPELAGO_BYTES;
 const PREPROD_USERS = ['dev-admin1', 'dev-admin2', 'dev-admin3'];
 const warsaw = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Warsaw', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' });
 const parts = time => Object.fromEntries(warsaw.formatToParts(new Date(time)).filter(p => p.type !== 'literal').map(p => [p.type, Number(p.value)]));
@@ -13,7 +15,7 @@ const object = value => value !== null && typeof value === 'object' && !Array.is
 const positive = value => Number.isSafeInteger(value) && value > 0;
 const nonnegative = value => Number.isSafeInteger(value) && value >= 0;
 const ACCOUNT_PROGRESS_FIELDS = ['commerce', 'loyalty', 'socialRewards', 'referrals', 'engagementSchedule', 'welcome'];
-export const LEGAL_DOCUMENT_VERSIONS = Object.freeze({ termsVersion: '2026-10-31-draft2', privacyVersion: '2026-10-31-draft2' });
+export const LEGAL_DOCUMENT_VERSIONS = Object.freeze({ termsVersion: '2026-10-31-draft3', privacyVersion: '2026-10-31-draft3' });
 const acceptedLegal = account => account?.legalAcceptance?.termsVersion === LEGAL_DOCUMENT_VERSIONS.termsVersion &&
   account?.legalAcceptance?.privacyVersion === LEGAL_DOCUMENT_VERSIONS.privacyVersion && Number.isSafeInteger(account?.legalAcceptance?.acceptedAt);
 
@@ -66,12 +68,18 @@ function islandPayload(value) {
   if (!object(state) || !object(state.resources) || RESOURCES.some(id => !Number.isFinite(state.resources[id]) || state.resources[id] < 0 || state.resources[id] > Number.MAX_SAFE_INTEGER)) fail('invalid-island', 400);
   if (state.archipelago !== undefined) {
     const group = state.archipelago;
-    if (!object(group) || group.version !== 1 || !['island-1','island-2'].includes(group.activeIslandId) || !positive(group.shipCapacity) || group.shipCapacity < 1000 || !Array.isArray(group.transfers) || group.transfers.length > 1000 || !Array.isArray(group.capacityReceipts) || group.capacityReceipts.length > 10000) fail('invalid-island', 400);
-    const second = group.secondIsland;
-    if (second !== null && (!object(second) || second.archipelago !== undefined || !object(second.resources) || RESOURCES.some(id => !Number.isFinite(second.resources[id]) || second.resources[id] < 0 || second.resources[id] > Number.MAX_SAFE_INTEGER) || !object(second.buildings))) fail('invalid-island', 400);
-    if (second && (!Number.isSafeInteger(second.version) || second.version < 1 || second.version > 9 || !nonnegative(second.population) || !Number.isFinite(second.lastSimulatedAt) || second.lastSimulatedAt < 0 ||
-      ['house','farm','sawmill','quarry','dock','warehouse','lighthouse','lumber','windmill','townhall','chapel','market'].some(id => !object(second.buildings[id]) || !nonnegative(second.buildings[id].level) || second.buildings[id].level > 100 || id === 'townhall' && second.buildings[id].level < 1))) fail('invalid-island', 400);
-    if (group.activeIslandId === 'island-2' && !second) fail('invalid-island', 400);
+    const idOK = id => /^island-(?:[1-9]|1[0-9]|20)$/.test(id);
+    if (!object(group) || ![1,2].includes(group.version) || !idOK(group.activeIslandId) || !positive(group.shipCapacity) || group.shipCapacity < 1000 || !Array.isArray(group.transfers) || group.transfers.length > 1000 || !Array.isArray(group.capacityReceipts) || group.capacityReceipts.length > 10000) fail('invalid-island', 400);
+    const children = group.version === 1 ? (group.secondIsland === null ? {} : { 'island-2': group.secondIsland }) : group.islands;
+    if (!object(children) || Object.keys(children).length > 19 || Object.keys(children).some(id => !idOK(id) || id === 'island-1')) fail('invalid-island', 400);
+    const ids = Object.keys(children).sort((a,b) => Number(a.slice(7))-Number(b.slice(7)));
+    if (ids.some((id,index) => id !== `island-${index+2}`)) fail('invalid-island', 400);
+    for (const second of Object.values(children)) {
+      if (!object(second) || second.archipelago !== undefined || !object(second.resources) || RESOURCES.some(id => !Number.isFinite(second.resources[id]) || second.resources[id] < 0 || second.resources[id] > Number.MAX_SAFE_INTEGER) || !object(second.buildings)) fail('invalid-island', 400);
+      if (!Number.isSafeInteger(second.version) || second.version < 1 || second.version > 9 || !nonnegative(second.population) || !Number.isFinite(second.lastSimulatedAt) || second.lastSimulatedAt < 0 ||
+        ['house','farm','sawmill','quarry','dock','warehouse','lighthouse','lumber','windmill','townhall','chapel','market'].some(id => !object(second.buildings[id]) || !nonnegative(second.buildings[id].level) || second.buildings[id].level > 100 || id === 'townhall' && second.buildings[id].level < 1)) fail('invalid-island', 400);
+    }
+    if (group.activeIslandId !== 'island-1' && !children[group.activeIslandId]) fail('invalid-island', 400);
   }
   return state;
 }
@@ -105,6 +113,7 @@ export function threeMonthDeadline(lastPlayedAt) {
 
 export function createAccountService({ store, now = () => Date.now(), environment = 'production', exemptUids = environment === 'production' ? [] : PREPROD_USERS } = {}) {
   if (!store || typeof store.runTransaction !== 'function') throw new TypeError('A durable transactional account store is required.');
+  store = createCharityLedgerStore(createIslandDocumentStore(store));
   const exempt = new Set(exemptUids);
   const expiredMutation = Symbol('expired-mutation');
   // Expiry must commit before the caller receives 410. Throwing from the
@@ -213,8 +222,13 @@ export function createAccountService({ store, now = () => Date.now(), environmen
         }
       }
       const previousState = islandPayload(island.payload);
-      if (previousState.archipelago?.secondIsland && !state.archipelago?.secondIsland) fail('archipelago-island-loss', 409);
-      if (state.archipelago?.secondIsland && !previousState.archipelago?.secondIsland && (previousState.buildings?.townhall?.level || 0) < 10) fail('second-island-locked', 409);
+      const worlds = value => value.archipelago?.version === 2 ? value.archipelago.islands : value.archipelago?.secondIsland ? { 'island-2': value.archipelago.secondIsland } : {};
+      const beforeIds = Object.keys(worlds(previousState)), afterIds = Object.keys(worlds(state));
+      if (beforeIds.some(id => !afterIds.includes(id))) fail('archipelago-island-loss', 409);
+      for (const id of afterIds.filter(id => !beforeIds.includes(id))) {
+        const required = 10 + 3 * (Number(id.slice(7)) - 2);
+        if ((previousState.buildings?.townhall?.level || 0) < required) fail('second-island-locked', 409);
+      }
       const nextPayload = JSON.stringify(state);
       if (Buffer.byteLength(nextPayload, 'utf8') > MAX_PAYLOAD_BYTES) fail('invalid-island', 409);
       const next = { schemaVersion: 1, revision: expectedRevision + 1, generation, payload: nextPayload, updatedAt: at };

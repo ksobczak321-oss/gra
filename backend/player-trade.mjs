@@ -1,17 +1,21 @@
-// Server-owned escrow for player-set material exchanges. Island production is
+// Server-owned escrow for material sales; historical v1 barter contracts keep their meaning. Island production is
 // still calculated by the existing client; this service owns only the exchange,
 // its receipts, and returns. It never trusts a caller UID or offered balances.
 import { createHash } from 'node:crypto';
 import { AccountServiceError, threeMonthDeadline } from './account-service.mjs';
+import { createIslandDocumentStore, MAX_ARCHIPELAGO_BYTES } from './island-document-store.mjs';
+import { createCharityLedgerStore } from './charity-ledger.mjs';
 
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
-const DAY = 86400000, MAX_BYTES = 700000, MAX_OPEN = 10;
+const DAY = 86400000, MAX_BYTES = MAX_ARCHIPELAGO_BYTES, MAX_OPEN = 10;
+export const PLAYER_TRADE_PRICE_VERSION = 'npc-base-2026-10';
+export const maximumTradePrice = (resource, quantity) => MATERIALS.includes(resource) && Number.isSafeInteger(quantity) && quantity > 0 && quantity <= 10000000 ? Math.floor((['food', 'planks'].includes(resource) ? 150 : 50) * quantity / 100) : null;
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const safe = value => Number.isSafeInteger(value) && value >= 0;
 const amount = value => Number.isFinite(value) ? Math.max(0, value) : 0;
 const fail = (code, status = 409) => { throw new AccountServiceError(code, status); };
 const uidValue = uid => typeof uid === 'string' && /^[A-Za-z0-9:_-]{1,128}$/.test(uid) ? uid : fail('invalid-account', 400);
-const islandIdValue = id => ['island-1', 'island-2'].includes(id) ? id : fail('trade-invalid-island', 400);
+const islandIdValue = id => typeof id === 'string' && /^island-(?:[1-9]|1[0-9]|20)$/.test(id) ? id : fail('trade-invalid-island', 400);
 const idValue = id => typeof id === 'string' && /^trade_[a-f0-9]{40}$/.test(id) ? id : fail('trade-invalid-offer', 400);
 const requestIdValue = id => typeof id === 'string' && /^[A-Za-z0-9_-]{8,100}$/.test(id) ? id : fail('trade-invalid-request', 400);
 const revisionValue = value => Number.isSafeInteger(value) && value >= 1 ? value : fail('invalid-revision', 400);
@@ -29,8 +33,8 @@ function readState(island) {
   return state;
 }
 function selectWorld(state, islandId) {
-  const world = islandIdValue(islandId) === 'island-1' ? state : state.archipelago?.version === 1 ? state.archipelago.secondIsland : null;
-  if (!object(world) || !object(world.resources) || !object(world.buildings) || MATERIALS.some(id => !Number.isFinite(world.resources[id]) || world.resources[id] < 0 || world.resources[id] > Number.MAX_SAFE_INTEGER)) fail('trade-invalid-island', 400);
+  const world = islandIdValue(islandId) === 'island-1' ? state : state.archipelago?.version === 2 ? state.archipelago.islands?.[islandId] : state.archipelago?.version === 1 && islandId === 'island-2' ? state.archipelago.secondIsland : null;
+  if (!object(world) || !object(world.resources) || !object(world.buildings) || ['coins', ...MATERIALS].some(id => !Number.isFinite(world.resources[id]) || world.resources[id] < 0 || world.resources[id] > Number.MAX_SAFE_INTEGER)) fail('trade-invalid-island', 400);
   return world;
 }
 const worldKey = world => Number.isFinite(world.islandStartedAt) ? String(world.islandStartedAt) : world.onboarding?.worldStartedAt === null ? 'pending' : Number.isFinite(world.onboarding?.worldStartedAt) ? String(world.onboarding.worldStartedAt) : 'legacy';
@@ -44,6 +48,7 @@ function reserved(world, id) {
 const warehouseLevel = world => Math.min(24, Math.floor(amount(world.buildings.warehouse?.level)));
 function available(world, id) { return Math.max(0, Math.floor(world.resources[id] - reserved(world, id) - (id === 'food' ? 50 * warehouseLevel(world) : 0))); }
 function room(world, id) {
+  if (id === 'coins') return Math.max(0, Number.MAX_SAFE_INTEGER - world.resources.coins);
   const level = Math.max(0, Math.floor(amount(world.buildings.warehouse?.level)));
   const factor = level ? 1.5 ** (level - 1) : 0;
   const perResource = Math.floor(Math.min(10000000, 1000 * factor)), total = Math.floor(Math.min(40000000, 4000 * factor));
@@ -53,6 +58,7 @@ function room(world, id) {
 }
 function spend(world, id, value) {
   if (available(world, id) < value) fail('trade-insufficient-stock');
+  if (id === 'coins') { world.resources.coins -= value; return 0; }
   const usedBonus = Math.min(bonus(world, id), value);
   world.bonusMaterials = { ...(world.bonusMaterials || {}), [id]: bonus(world, id) - usedBonus };
   world.resources[id] -= value; world.bonusInventoryVersion = 1;
@@ -68,18 +74,24 @@ function item(value) {
   if (!object(value) || !MATERIALS.includes(value.resource) || !Number.isSafeInteger(value.amount) || value.amount < 1 || value.amount > 10000000 || Object.keys(value).some(key => !['resource', 'amount'].includes(key))) fail('trade-invalid-material', 400);
   return { resource: value.resource, amount: value.amount };
 }
+function coinPrice(value, give) {
+  if (!object(value) || value.resource !== 'coins' || Object.keys(value).some(key => !['resource', 'amount'].includes(key))) fail('trade-coins-required', 400);
+  if (!Number.isSafeInteger(value.amount) || value.amount < 1 || value.amount > maximumTradePrice(give.resource, give.amount)) fail('trade-price-exceeds-maximum', 400);
+  return { resource: 'coins', amount: value.amount };
+}
 function envelope(island) {
   const updatedAt = typeof island.updatedAt === 'string' ? island.updatedAt : new Date(island.updatedAt).toISOString();
   return { payload: island.payload, generation: island.generation ?? 1, version: { revision: island.revision, updateTime: updatedAt } };
 }
 function publicOffer(offer, uid, at) {
-  return { id: offer.id, ...(offer.ownerUid === uid ? { ownerUid: uid } : {}), ownerIslandId: offer.ownerIslandId, ownerIslandName: offer.ownerIslandName,
+  return { id: offer.id, version: offer.version ?? 1, legacyBarter: offer.version !== 2, ...(offer.version === 2 ? { maximumPrice: maximumTradePrice(offer.give.resource, offer.give.amount), priceVersion: offer.priceVersion } : {}), ...(offer.ownerUid === uid ? { ownerUid: uid } : {}), ownerIslandId: offer.ownerIslandId, ownerIslandName: offer.ownerIslandName,
     give: offer.give, want: offer.want, createdAt: offer.createdAt, expiresAt: offer.expiresAt, status: offer.status,
     expired: offer.status === 'open' && at >= offer.expiresAt, isMine: offer.ownerUid === uid };
 }
 
 export function createPlayerTradeService({ store, now = () => Date.now(), environment = 'production' } = {}) {
   if (!store || typeof store.runTransaction !== 'function') throw new TypeError('A durable transactional trade store is required.');
+  store = createCharityLedgerStore(createIslandDocumentStore(store), { now });
   const serverTime = () => { const at = now(); if (!safe(at)) fail('invalid-server-clock', 500); return at; };
   function validateWorld(uid, account, island, generation, expectedRevision = null, islandId = 'island-1', eligible = true) {
     uidValue(uid);
@@ -119,7 +131,7 @@ export function createPlayerTradeService({ store, now = () => Date.now(), enviro
     if (typeof store.listTradeOffers !== 'function') fail('trade-api-unavailable', 503);
     const page = await store.listTradeOffers({ limit, cursor, at });
     const offers = (page.offers || []).filter(offer => offer.status === 'open' && offer.expiresAt > at).map(offer => publicOffer(offer, uid, at));
-    return { offers, ownOffers: own, cursor: page.cursor ?? null, rules: { minimumLevel: 6, expiresAfterSeconds: 86400, fee: 0, maximumOpenOffers: MAX_OPEN } };
+    return { offers, ownOffers: own, cursor: page.cursor ?? null, rules: { minimumLevel: 6, expiresAfterSeconds: 86400, fee: 0, maximumOpenOffers: MAX_OPEN, offerVersion: 2, paymentResource: 'coins', priceVersion: PLAYER_TRADE_PRICE_VERSION, maximumPricePer100: { wood: 50, stone: 50, grain: 50, food: 150, planks: 150 }, legacyBarterAccepted: true } };
   }
   async function listInbox({ uid, limit = 50, cursor = null }) {
     uidValue(uid);
@@ -130,8 +142,7 @@ export function createPlayerTradeService({ store, now = () => Date.now(), enviro
   }
   async function createOffer({ uid, requestId, islandId = 'island-1', generation, expectedRevision, give, want }) {
     uidValue(uid); requestIdValue(requestId); islandIdValue(islandId); revisionValue(expectedRevision);
-    give = item(give); want = item(want);
-    if (give.resource === want.resource) fail('trade-same-material', 400);
+    give = item(give); want = coinPrice(want, give);
     const at = serverTime(), id = 'trade_' + hash(uid + '\0' + requestId).slice(0, 40);
     return store.runTransaction(async tx => {
       const account = await tx.get(accountPath(uid)), island = await tx.get(rootPath(uid));
@@ -147,12 +158,12 @@ export function createPlayerTradeService({ store, now = () => Date.now(), enviro
         // An explicit world reset forfeits its old island stock. Such escrow
         // cannot be paid into the replacement world or keep its offer slots
         // blocked forever; offers belonging to the other island still count.
-        const source = offer.ownerIslandId === 'island-1' ? data.state : data.state.archipelago?.secondIsland;
+        const source = offer.ownerIslandId === 'island-1' ? data.state : data.state.archipelago?.version === 2 ? data.state.archipelago.islands?.[offer.ownerIslandId] : data.state.archipelago?.secondIsland;
         if (source && worldKey(source) === offer.ownerWorldKey) live.push(existingId);
       }
       if (live.length >= MAX_OPEN) fail('trade-too-many-offers');
       const bonusAmount = spend(data.world, give.resource, give.amount);
-      const offer = { version: 1, id, ownerUid: uid, ownerIslandId: islandId, ownerIslandName: String(data.world.islandName || '').slice(0, 80),
+      const offer = { version: 2, priceVersion: PLAYER_TRADE_PRICE_VERSION, id, ownerUid: uid, ownerIslandId: islandId, ownerIslandName: [...String(data.world.islandName || '')].slice(0, 83).join(''),
         ownerGeneration: generation, ownerWorldKey: worldKey(data.world), give, want, escrowBonus: bonusAmount, status: 'open', createdAt: at, expiresAt: at + DAY };
       const next = changed(island, data.state, at);
       await tx.set(rootPath(uid), next); await tx.set(offerPath(id), offer);
@@ -175,6 +186,14 @@ export function createPlayerTradeService({ store, now = () => Date.now(), enviro
       if (meta.existing) return { alreadyApplied: true, offer: publicOffer(offer, uid, at), island: envelope(island) };
       if (offer.status !== 'open') fail('trade-offer-closed');
       if (at >= offer.expiresAt) fail('trade-offer-expired');
+      item(offer.give);
+      if (offer.version === 2) {
+        if (offer.priceVersion !== PLAYER_TRADE_PRICE_VERSION) fail('trade-price-version-unsupported');
+        coinPrice(offer.want, offer.give);
+      } else if (offer.version === 1 || offer.version === undefined) {
+        item(offer.want);
+        if (offer.give.resource === offer.want.resource) fail('trade-same-material', 400);
+      } else fail('trade-contract-unsupported');
       const maker = validateWorld(offer.ownerUid, makerAccount, makerIsland, offer.ownerGeneration, null, offer.ownerIslandId);
       if (worldKey(maker.world) !== offer.ownerWorldKey) fail('trade-world-changed');
       spend(buyer.world, offer.want.resource, offer.want.amount);

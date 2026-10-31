@@ -41,7 +41,7 @@ Data pierwotnej wiadomości: nieustalona. Dokładnej daty pierwotnej wiadomości
 
 Powiązane przypadki do ręcznego przeklikania:
 
-- [HL-TC-0026 — Obecna druga wyspa kopiuje poziomy raz i zachowuje oba światy](../../testing/manual/HL-TC-0026.md) — `NOT RUN`.
+- [HL-TC-0026 — Migracja wcześniejszych dwóch wysp zachowuje światy i jednorazowo skopiowane poziomy](../../testing/manual/HL-TC-0026.md) — `NOT RUN`.
 
 CI potwierdza zestaw dla wskazanego SHA. Status code_deployed potwierdza obecność kodu w wydaniu, nie ręczne wykonanie tego przypadku ani aktywację zewnętrznej usługi.
 

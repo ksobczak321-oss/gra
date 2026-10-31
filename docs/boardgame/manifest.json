@@ -1,0 +1,53 @@
+{
+  "prototypeVersion": "1.0-print-prototype",
+  "onlineIntegration": false,
+  "physicalPlaytested": false,
+  "qrUrl": "https://ksobczak321-oss.github.io/gra/docs/boardgame/telefon.html",
+  "files": [
+    {
+      "path": "druk/HARBORLIGHT-QR-instrukcja.png",
+      "bytes": 2667,
+      "sha256": "336a0e230d153ae36587231416e457d7e486bb7132f2f56bf2de362923bf755c"
+    },
+    {
+      "path": "druk/HARBORLIGHT-QR-instrukcja.svg",
+      "bytes": 23375,
+      "sha256": "9898f84db5ad6ac1592faf11592e063408af67abbc9e4526a8b6aaa6e050966d"
+    },
+    {
+      "path": "druk/HARBORLIGHT-etykieta-QR-A4.pdf",
+      "bytes": 56575,
+      "sha256": "c6de75ea27e95fc412a1d201d3a2dbdc33cbabfe95c812d842cf2d393af9fef0"
+    },
+    {
+      "path": "druk/HARBORLIGHT-instrukcja.pdf",
+      "bytes": 5097081,
+      "sha256": "d4ab919215827f16bf090861e4e5be76210ea9c580d67d74bf0f506fb23dcf04"
+    },
+    {
+      "path": "druk/HARBORLIGHT-karty-24-dupleks-A4.pdf",
+      "bytes": 5094250,
+      "sha256": "cbb62a62ea050f94bf00e84863fb039ed4925fd28bd56b4b0ae51e989865fe64"
+    },
+    {
+      "path": "druk/HARBORLIGHT-pionki-i-zetony-A4.pdf",
+      "bytes": 50341,
+      "sha256": "2d704506ffd72025d372f0f20f2d4f6610676070fb41e689e94ac14ffb11aceb"
+    },
+    {
+      "path": "druk/HARBORLIGHT-plansza-A3.pdf",
+      "bytes": 5081943,
+      "sha256": "6295a61c88210accf2a500a39a5098e939fcb152c0069d0162a42d3605d37288"
+    },
+    {
+      "path": "druk/HARBORLIGHT-plansza-A4-kafelki.pdf",
+      "bytes": 5105134,
+      "sha256": "eacca2ea66a5612848df7dd6d90e33a21cb375be6184b568c0694f5b4b2aadff"
+    },
+    {
+      "path": "druk/HARBORLIGHT-pudelko-A4.pdf",
+      "bytes": 5077427,
+      "sha256": "7d3c01d0d62758f2bb3e8ca62c9282728179e45f382c8ee3642b6adce0d5b907"
+    }
+  ]
+}

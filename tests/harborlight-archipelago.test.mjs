@@ -11,8 +11,9 @@ const NOW = Date.parse('2026-10-31T12:00:00Z');
 const adapters = { createState, normalizeState, advanceTo };
 const bundle = (level = 10) => {
   const state = createState(NOW); state.buildings.townhall.level = level;
-  state.buildings.warehouse.level = 4;
-  return Arch.restoreArchipelago(state, adapters, NOW);
+  state.buildings.warehouse.level = 4; state.islandName = 'Matka';
+  state.population = 18; state.resources = Object.fromEntries(['coins','wood','stone','grain','food','planks'].map(id=>[id, 100000]));
+  return Arch.restoreArchipelago(normalizeState(state,NOW), adapters, NOW);
 };
 const two = () => {
   const account = bundle();
@@ -45,14 +46,15 @@ test('second island unlocks at level10 and inherits only Town Hall and Warehouse
   const firstTutorial = structuredClone(account.primary.tutorial);
   const until = account.primary.welcome.until;
   assert.equal(Arch.createSecondIsland(account, { name: '  Druga  Zatoka  ' }, NOW).ok, true);
-  assert.equal(account.secondary.islandName, 'Druga Zatoka');
+  assert.equal(account.secondary.islandName, 'Matka - Druga Zatoka');
   for (const [id, building] of Object.entries(account.secondary.buildings)) {
     assert.equal(building.level, id === 'townhall' ? 10 : id === 'warehouse' ? 4 : 1, id);
     assert.equal(building.workers, 0, id);
   }
   assert.equal(account.secondary.lighthouseRemaining, 0, 'a starting lighthouse does not grant a construction reward');
   assert.equal(account.secondary.welcome.until, until, 'second island cannot restart the 72-hour account welcome');
-  assert.equal(account.secondary.population, 12);
+  assert.equal(account.secondary.population, 6);
+  assert.equal(account.primary.population, 12);
   assert.equal(account.secondary.capacity, 240);
   assert.equal(account.secondary.onboarding.stage, 'complete');
   assert.deepEqual(account.primary.tutorial, firstTutorial);
@@ -74,8 +76,8 @@ test('active world switching preserves primary-root serialization and shared acc
   const output = Arch.serializeArchipelago(account);
   assert.equal(output.islandName, 'Pierwsza');
   assert.equal(output.resources.coins, 101);
-  assert.equal(output.archipelago.secondIsland.resources.coins, 202);
-  assert.equal(Object.hasOwn(output.archipelago.secondIsland, 'commerce'), false);
+  assert.equal(output.archipelago.islands['island-2'].resources.coins, 202);
+  assert.equal(Object.hasOwn(output.archipelago.islands['island-2'], 'commerce'), false);
   const again = Arch.restoreArchipelago(output, adapters, NOW);
   assert.equal(Arch.activeIsland(again).resources.coins, 202);
   assert.equal(again.secondary.commerce, again.primary.commerce);
@@ -137,6 +139,7 @@ test('shipment guards reject coins, unsupported quantities, own-world routes and
     assert.equal(Arch.quoteIslandTransfer(account, { toIslandId: 'island-2', cargo }, NOW).ok, false);
   }
   assert.equal(Arch.quoteIslandTransfer(account, { toIslandId: 'island-1', cargo: { wood: 1 } }, NOW).ok, false);
+  account.primary.resources.food = 200;
   assert.equal(Arch.quoteIslandTransfer(account, { toIslandId: 'island-2', cargo: { food: 1 } }, NOW).ok, false);
   account.primary.resources.wood = 2000;
   assert.equal(Arch.quoteIslandTransfer(account, { toIslandId: 'island-2', cargo: { wood: 1001 } }, NOW).ok, false);
@@ -201,11 +204,11 @@ test('capacity purchases are explicit Paynow DEV simulations, persistent and ide
 
 test('corrupt world, cargo or capacity metadata fails closed rather than recreating a world', () => {
   for (const mutate of [
-    saved => { saved.archipelago.secondIsland = {}; },
+    saved => { saved.archipelago.islands['island-2'] = {}; },
     saved => { saved.archipelago.activeIslandId = 'island-3'; },
     saved => { saved.archipelago.shipCapacity = 2000; },
     saved => { saved.archipelago.transfers = [{ id: 'voyage-1' }]; },
-    saved => { saved.archipelago.secondIsland.archipelago = {}; }
+    saved => { saved.archipelago.islands['island-2'].archipelago = {}; }
   ]) {
     const saved = Arch.serializeArchipelago(two()); mutate(saved);
     assert.throws(() => Arch.restoreArchipelago(saved, adapters, NOW), error => error.code === 'invalid-cloud-data');
@@ -240,7 +243,7 @@ test('only the latest50 completed free voyages are retained, with active cargo a
   Arch.advanceArchipelago(account, NOW + 600000);
   const template = structuredClone(account.transfers[0]);
   account.transfers = Array.from({ length: 55 }, (_, index) => ({ ...structuredClone(template), id: `voyage-${index + 1}` }));
-  account.sequence = 55;
+  account.sequence = 55; account.secondary.resources.stone = 1;
   assert.equal(Arch.sendIslandTransfer(account, { toIslandId: 'island-1', fromIslandId: 'island-2', cargo: { stone: 1 } }, NOW + 600000).ok, true);
   const snapshot = Arch.serializeArchipelago(account);
   assert.equal(snapshot.archipelago.transfers.length, 51);
@@ -305,8 +308,137 @@ test('two full2400-person worlds fit the existing700k cloud payload without tupl
   const bytes = Buffer.byteLength(JSON.stringify(serialized));
   assert.ok(bytes < 700000, `${bytes} bytes`);
   assert.equal(serialized.residents.length, 2400);
-  assert.equal(serialized.archipelago.secondIsland.residents.length, 2400);
+  assert.equal(serialized.archipelago.islands['island-2'].residents.length, 2400);
   const reopened = Arch.restoreArchipelago(serialized, adapters, NOW);
   assert.deepEqual(reopened.primary.residents, account.primary.residents);
   assert.deepEqual(reopened.secondary.residents, account.secondary.residents);
+});
+
+test('old two-world metadata migrates without retroactive fees, resident removal or history loss', () => {
+  const first = createState(NOW), second = createState(NOW);
+  first.islandName='Dom';second.islandName='Zastana';second.resources.coins=321;
+  first.archipelago={version:1,activeIslandId:'island-2',secondIsland:second,sequence:0,transfers:[],shipCapacity:1000,capacityReceipts:[]};
+  const migrated=Arch.restoreArchipelago(first,adapters,NOW);
+  assert.equal(migrated.primary.population,12);assert.equal(migrated.secondary.population,12);
+  assert.equal(migrated.primary.resources.coins,100);assert.equal(migrated.secondary.resources.coins,321);
+  assert.equal(migrated.secondary.islandName,'Dom - Zastana');
+  assert.equal(Arch.serializeArchipelago(migrated).archipelago.version,2);
+  assert.equal(Arch.activeIsland(migrated),migrated.secondary);
+});
+
+test('founding spends the full cumulative price and teleports the same six Home residents exactly once', () => {
+  const account=bundle(), before=account.primary.residents.slice(0,6).map(person=>person.personUid);
+  const total=account.primary.population;
+  account.primary.residents[0].happiness=27;
+  const result=Arch.createNextIsland(account,{name:'Ekspansja'},NOW);
+  assert.equal(result.ok,true);assert.equal(result.quote.valuationLevel,7);
+  for(const id of ['coins','wood','stone','grain','food','planks']) {
+    assert.equal(account.primary.resources[id],79000);assert.equal(account.secondary.resources[id],0);
+  }
+  assert.equal(account.primary.population+account.secondary.population,total);
+  assert.deepEqual(account.secondary.residents.map(person=>person.personUid),before);
+  assert.equal(account.secondary.residents[0].happiness,27);
+  assert.equal(account.secondary.houseHappinessPool.grantPopulation,6);
+  assert.equal(account.secondary.houseHappinessPool.points,6);
+  assert.equal(Arch.createNextIsland(account,{name:'Ponownie'},NOW).ok,false);
+  assert.equal(account.primary.population,12);
+});
+
+test('all nineteen daughters unlock sequentially at10/13/16 and the twentieth total is an absolute cap', () => {
+  const primary=createState(NOW);primary.islandName='Dom';primary.population=2400;
+  for(const id of ['townhall','warehouse','house'])primary.buildings[id].level=100;
+  for(const id of Object.keys(primary.resources))primary.resources[id]=10000000;
+  const account=Arch.restoreArchipelago(normalizeState(primary,NOW),adapters,NOW);
+  for(let ordinal=1;ordinal<=19;ordinal++){
+    const quote=Arch.quoteNextIsland(account,{},NOW);
+    assert.equal(quote.requiredLevel,10+3*(ordinal-1));assert.equal(quote.valuationLevel,ordinal+6);
+    assert.equal(quote.cost.coins,500*(ordinal+6)*(ordinal+5));
+    assert.equal(Arch.createNextIsland(account,{name:`Wyspa ${ordinal}`},NOW).ok,true);
+  }
+  assert.equal(Arch.archipelagoStatus(account,NOW).worlds.length,20);
+  assert.equal(Arch.createNextIsland(account,{name:'Za dużo'},NOW).ok,false);
+  const restored=restore(account);
+  assert.equal(Arch.worldFor(restored,'island-20').population,6);
+  assert.equal(Arch.switchIsland(restored,'island-20',NOW).ok,true);
+});
+
+test('renaming the mother updates daughter prefixes and preserves suffix, people, IDs and legacy low population', () => {
+  const account=two(), people=structuredClone(account.secondary.residents);
+  assert.equal(Arch.renameArchipelagoIsland(account,'island-1','Nowy Dom',NOW).ok,true);
+  assert.equal(account.secondary.islandName,'Nowy Dom - Wyspa Jesienna');
+  assert.equal(Arch.renameArchipelagoIsland(account,'island-2','Przystań',NOW).ok,true);
+  assert.equal(account.secondary.islandName,'Nowy Dom - Przystań');
+  assert.deepEqual(account.secondary.residents,people);
+  const low=createState(NOW);low.population=8;low.residents=low.residents.slice(0,8);
+  const legacy=Arch.restoreArchipelago(low,adapters,NOW);
+  assert.equal(legacy.primary.population,8);assert.equal(legacy.primary.residents.length,8);
+  assert.equal(Arch.createNextIsland(legacy,{name:'Nie teraz'},NOW).ok,false);
+});
+
+function passengerAccount() {
+  const account=two();account.primary.population=18;
+  account.primary=normalizeState(account.primary,NOW);
+  for(const state of [account.primary,account.secondary]){
+    state.resources.food=1000;state.welcome={startedAt:0,until:0};state.baseHappiness=0;state.happiness=0;
+    for(const person of state.residents){person.happiness=0;person.newbornRemaining=0;person.unemployedSeconds=0;}
+  }
+  return account;
+}
+
+test('passengers use the same shared ship, arrive after30 real minutes, and preserve people across reload/duplicate unload', () => {
+  const account=passengerAccount(), total=account.primary.population+account.secondary.population;
+  const sent=Arch.sendPassengerTransfer(account,{toIslandId:'island-2',amount:3},NOW);
+  assert.equal(sent.ok,true);assert.equal(sent.quote.capacity,100);assert.equal(sent.quote.seconds,1800);
+  assert.equal(account.primary.population,15);assert.equal(account.secondary.incomingPassengers,3);
+  assert.equal(Arch.sendIslandTransfer(account,{toIslandId:'island-2',cargo:{wood:1}},NOW).ok,false);
+  assert.equal(Arch.sendPassengerTransfer(account,{toIslandId:'island-2',amount:1},NOW).ok,false);
+  const restored=restore(account,NOW+900000);
+  Arch.advanceArchipelago(restored,NOW+1799000);
+  assert.equal(restored.secondary.population,6);assert.equal(restored.transfers[0].status,'sailing');
+  Arch.advanceArchipelago(restored,NOW+1800000);
+  assert.equal(restored.secondary.population,9);assert.equal(restored.secondary.incomingPassengers,0);
+  assert.equal(restored.primary.population+restored.secondary.population,total);
+  for(const uid of sent.quote.personUids){
+    assert.equal(restored.secondary.residents.filter(person=>person.personUid===uid).length,1);
+    assert.equal(restored.primary.residents.filter(person=>person.personUid===uid).length,0);
+    assert.equal(restored.secondary.residents.find(person=>person.personUid===uid).unemployedSeconds,1800);
+  }
+  assert.equal(Arch.unloadIslandTransfer(restored,sent.transfer.id,NOW+1800000).duplicate,true);
+  assert.equal(restore(restored).secondary.population,9);
+});
+
+test('passenger meals consume the same food as staying Home, including odd groups and fractional meal credit', () => {
+  const traveling=passengerAccount(), staying=restore(traveling);
+  const sourceCoins=traveling.primary.resources.coins;
+  assert.equal(Arch.sendPassengerTransfer(traveling,{toIslandId:'island-2',amount:3},NOW).ok,true);
+  Arch.advanceArchipelago(traveling,NOW+1800000);Arch.advanceArchipelago(staying,NOW+1800000);
+  const foodTotal=account=>[account.primary,account.secondary].reduce((sum,state)=>sum+state.resources.food+state.foodCredit,0);
+  assert.ok(Math.abs(foodTotal(traveling)-foodTotal(staying))<1e-7);
+  assert.equal(traveling.primary.resources.coins,sourceCoins);
+});
+
+test('passenger departures require actual Home residents, population floors and available destination beds', () => {
+  const account=passengerAccount();
+  assert.equal(Arch.quotePassengerTransfer(account,{toIslandId:'island-2',amount:7},NOW).ok,false,'mother keeps12');
+  assert.equal(Arch.quotePassengerTransfer(account,{fromIslandId:'island-2',toIslandId:'island-1',amount:1},NOW).ok,false,'daughter keeps6');
+  const person=account.primary.residents[0];person.returnRemaining=10;
+  assert.equal(Arch.quotePassengerTransfer(account,{toIslandId:'island-2',passengerIds:[person.id]},NOW).ok,false,'walking home is not yet Home');
+  person.returnRemaining=0;account.secondary.population=24;account.secondary=normalizeState(account.secondary,NOW);
+  assert.equal(Arch.quotePassengerTransfer(account,{toIslandId:'island-2',amount:1},NOW).ok,false,'beds are mandatory');
+  assert.equal(Arch.quotePassengerTransfer(passengerAccount(),{toIslandId:'island-2',passengerIds:{length:2}},NOW).ok,false,'malformed selection is rejected instead of throwing');
+});
+
+test('corrupt passenger identities and workplace state fail at restore before mutating any destination', () => {
+  const account=passengerAccount();
+  assert.equal(Arch.sendPassengerTransfer(account,{toIslandId:'island-2',amount:2},NOW).ok,true);
+  const original=Arch.serializeArchipelago(account);
+  for(const corrupt of [
+    transfer=>{transfer.passengers[1]=structuredClone(transfer.passengers[0]);},
+    transfer=>{transfer.passengers[0].workplace='farm';},
+    transfer=>{transfer.passengers[0].hungerSeconds=-1;}
+  ]){
+    const snapshot=structuredClone(original);corrupt(snapshot.archipelago.transfers[0]);
+    assert.throws(()=>Arch.restoreArchipelago(snapshot,adapters,NOW),error=>error.code==='invalid-cloud-data');
+    assert.equal(snapshot.archipelago.islands['island-2'].population,6);
+  }
 });

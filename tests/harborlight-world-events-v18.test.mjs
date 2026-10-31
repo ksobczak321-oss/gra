@@ -132,7 +132,7 @@ test('beetles remove only free wood and keep construction reservations and carri
 });
 
 test('plague preserves the population minimum and does not destroy a departing carrier cargo', () => {
-  const seed = seedFor('plague', 'negative'), state = island({ chapel: 3 });
+  const seed = seedFor('plague', 'negative'), state = island({ chapel: 3 }); state.islandRole = 'daughter';
   state.buildings.warehouse.workers = 12;
   for (const person of state.residents) person.workplace = 'warehouse';
   state.residents[0].happiness = -50;
@@ -143,7 +143,10 @@ test('plague preserves the population minimum and does not destroy a departing c
   assert.equal(state.haulTrips.warehouse[0].amount, 120);
   assert.equal(state.haulTrips.warehouse[0].remaining, 100);
   assert.equal(worldEventHappinessPenalty(state), 10);
-  const minimum = island({ chapel: 3, population: 6 }); dueBad(minimum, seed); advance(minimum, 1);
+  const mother = island({ chapel: 3, population: 12 }); dueBad(mother, seed); advance(mother, 1);
+  assert.equal(mother.population, 12, 'the mother is protected against plague below twelve');
+  assert.equal(mother.worldEvents.history[0].details.peopleLost, 0);
+  const minimum = island({ chapel: 3, population: 6 }); minimum.islandRole = 'daughter'; dueBad(minimum, seed); advance(minimum, 1);
   assert.equal(minimum.population, 6);
   assert.equal(worldEventHappinessPenalty(minimum), 10);
 });

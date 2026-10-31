@@ -1,4 +1,4 @@
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v23-1';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v24';
 
 const pick = (language, pl, en) => language === 'pl' ? pl : en;
 const valueFor = (value, language) => typeof value === 'string' ? value : value?.[language] || value?.pl || value?.en || '';
@@ -30,8 +30,11 @@ export function createIslandOnboarding(options = {}) {
   const highlight = node('div', { class: 'island-onboarding-highlight', 'data-onboarding-highlight': '', 'aria-hidden': 'true', hidden: true });
   const cursor = node('div', { class: 'island-onboarding-cursor', 'data-onboarding-cursor': '', 'aria-hidden': 'true', hidden: true }, '➤');
   const card = node('section', { class: 'island-onboarding-card', 'data-onboarding-card': '', tabindex: '-1' });
+  const replay = options.replay === true;
+  if (replay) root.dataset.onboardingReplay = 'true';
   const paused = () => node('p', { class: 'island-onboarding-paused', 'data-onboarding-paused': '' },
-    pick(language, '⏸ Czas na wyspie jest zatrzymany. Ruszy po zakończeniu lub zamknięciu oprowadzania.', '⏸ Island time is paused. It starts when you finish or close the tour.'));
+    replay ? pick(language, 'Czas na rozpoczętej wyspie biegnie dalej. To oprowadzanie nie zmienia postępu ani nagród.', 'Time on your started island keeps running. This tour does not change progress or rewards.') :
+      pick(language, '⏸ Czas na wyspie jest zatrzymany. Ruszy po zakończeniu lub zamknięciu oprowadzania.', '⏸ Island time is paused. It starts when you finish or close the tour.'));
   root.append(highlight, cursor, card);
 
   function showError(message) {
@@ -142,11 +145,11 @@ export function createIslandOnboarding(options = {}) {
       current.index = clamp(current.index, 0, Math.max(0, steps.length - 1));
       const step = steps[current.index];
       const last = current.index >= steps.length - 1;
-      card.append(control('×', () => finish(true), { class: 'island-onboarding-exit', 'data-onboarding-exit': '', 'aria-label': pick(language, 'Zakończ oprowadzanie i rozpocznij grę', 'Close the tour and start playing') }),
+      card.append(control('×', () => finish(true), { class: 'island-onboarding-exit', 'data-onboarding-exit': '', 'aria-label': replay ? pick(language, 'Zamknij oprowadzanie', 'Close the tour') : pick(language, 'Zakończ oprowadzanie i rozpocznij grę', 'Close the tour and start playing') }),
         node('small', { class: 'island-onboarding-eyebrow', 'data-onboarding-counter': '' }, pick(language, `Poznaj wyspę · ${current.index + 1} z ${steps.length}`, `Explore your island · ${current.index + 1} of ${steps.length}`)),
         title(valueFor(step?.title, language)), description(node('p', {}, valueFor(step?.text, language))), paused(),
         node('div', { class: 'island-onboarding-actions' }, control(pick(language, '← Wstecz', '← Back'), () => commit({ ...current, index: current.index - 1 }), { 'data-onboarding-previous': '', 'data-onboarding-first': String(current.index === 0), disabled: current.index === 0, class: 'island-onboarding-action secondary' }),
-          control(last ? pick(language, 'Rozpocznij grę →', 'Start playing →') : nextLabel(), () => last ? finish(false) : commit({ ...current, index: current.index + 1 }), { 'data-onboarding-next': '' })));
+          control(last ? replay ? pick(language, 'Wróć do gry →', 'Return to game →') : pick(language, 'Rozpocznij grę →', 'Start playing →') : nextLabel(), () => last ? finish(false) : commit({ ...current, index: current.index + 1 }), { 'data-onboarding-next': '' })));
       root.dataset.onboardingStep = step?.id || '';
       try {
         await step?.prepare?.();

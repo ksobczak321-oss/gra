@@ -78,6 +78,12 @@ jobs:
       - name: Verify generated change cards and their index
         run: python3 scripts/build_change_register.py --check
 
+      - name: Verify generated manual QA checklist and case index
+        run: python3 scripts/build_manual_checklist.py --check
+
+      - name: Test standalone physical game scenario
+        run: node --test docs/boardgame/session.test.mjs
+
       - name: Verify generated legal documents match their reviewed drafts
         run: python3 scripts/build_legal_pages.py --check
 
@@ -154,7 +160,7 @@ jobs:
           import subprocess
           import sys
 
-          for test in ('tests/harborlight-dev-auth-smoke.py', 'tests/harborlight-dev-game-smoke.py', 'tests/harborlight-settings-signout-smoke.py', 'tests/harborlight-v18-auth-smoke.py', 'tests/harborlight-onboarding-v20-smoke.py', 'tests/harborlight-v21-features-smoke.py'):
+          for test in ('tests/harborlight-dev-auth-smoke.py', 'tests/harborlight-dev-game-smoke.py', 'tests/harborlight-settings-signout-smoke.py', 'tests/harborlight-v18-auth-smoke.py', 'tests/harborlight-onboarding-v20-smoke.py', 'tests/harborlight-v21-features-smoke.py', 'tests/harborlight-help-v24-smoke.py', 'tests/harborlight-community-v24-smoke.py', 'tests/harborlight-charity-v24-smoke.py', 'tests/harborlight-manual-checklist-smoke.py'):
               status = subprocess.call([sys.executable, '-u', test])
               if status:
                   sys.exit(status)

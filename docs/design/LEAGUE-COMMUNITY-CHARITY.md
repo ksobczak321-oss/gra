@@ -1,21 +1,31 @@
 # Liga Portów, sojusze i dobroczynność — ustalenia i projekt wykonania
 
-Stan: 31 października 2026, po kolejnych odpowiedziach użytkownika. **Dokumentacja, bez implementacji, aktywacji programu, wpłat, czatu ani publikacji GCP.** Poniżej oddzielamy przyjęte kierunki od proponowanych liczb i reguł obsługi. Kwoty programu nie są aktywną publiczną ofertą; rezerwowanie środków wymaga dopiero uruchomienia z rzeczywistym zabezpieczeniem pieniędzy.
+Stan:31 października2026, po nowym **GO wyłącznie DEV**. Wersja przygotowywanego kodu to **0.10.0.0**; PRE-PROD pozostaje ostatnim potwierdzonym0.9.1.2, a PROD nie jest objęty tym zadaniem. Nowe GO zastępuje wcześniejsze odłożenie tych mechanik, z wyjątkiem integracji planszówki online.
+
+## Co istnieje w DEV i co jest parametrem wdrożeniowym
+
+- Serwerowe [community-service.mjs](../../backend/community-service.mjs) i wspólne [league-rules.mjs](../../backend/league-rules.mjs): sojusze, skład sezonowy, osobny czat sojuszu i rozmowy1:1, kontrola uprawnień, próby i punktacja. Interfejs: [community-ui](../../harborlight-v1-community-ui.js), [klient](../../harborlight-v1-community-client.js). Trening obejmuje siedem zadań logicznych i siedem zręcznościowych.
+- [Księga monet](../../backend/charity-ledger.mjs), [usługa dobroczynności](../../backend/charity-service.mjs) i [panel](../../harborlight-v1-charity.js) rozdzielają zaufane operacje serwera od jawnej, nietrwałej symulacji DEV. Brak realnej organizacji, finansowania i potwierdzenia przelewu nie staje się publicznym zobowiązaniem przez kliknięcie testowego przycisku. **Granica bezpieczeństwa:** rzeczywista gospodarka nadal przyjmuje całe stany obliczone klientem. Każdy taki nieautorytatywny zapis, również o zerowej zmianie netto monet, unieważnia całą kwalifikowaną część; samo saldo pozostaje jako niekwalifikowane. Dzięki temu wydanie monet i odrobienie tej samej kwoty nie pierze ich pochodzenia. **Realny program pozostaje wyłączony** do wdrożenia autorytatywnych komend gospodarki i podłączenia zaufanego emitenta oraz faktycznego finansowania. Funkcjonalny przepływ DEV jest wyraźnie symulowany, a nie produkcyjnym potwierdzeniem zarobków klienta.
+- Przyjęta przez użytkownika formuła drużyny: średnia zamrożonego składu oraz+2 za kolejnego aktywnego, do+8. Przyjęte są również+20p.p. szczęścia przez6h na jednej wyspie po potwierdzeniu przelewu oraz rozświetlenie Portu.
+- **Parametry wdrożeniowe prototypu DEV, nie dopisana odpowiedź użytkownika:** dni15–21; Warszawa;19:00–20:00 zręczność,20:00–21:00 logika; po dwie próby na zadanie; wynik dnia to średnia obu, brakujące zadanie=0. Pytanie o ich korektę pozostaje otwarte; interfejs i API muszą pokazywać ten sam aktualny wariant. Dawne okno06:00–23:00 jest zastąpioną propozycją.
+- Lokalny odbiór dobroczynności:12testów backendu,6 klienta/symulacji,1API oraz cztery warianty przeglądarkowe PL/EN, komputer/telefon — PASS. Potwierdzono+20p.p. i Port, także na telefonie; nie przeprowadzono realnego finansowania ani przelewu. Przygotowany kod i testy lokalne nie oznaczają aktywacji API ani programu w GCP. Bieżący [rejestr środowisk](../ENVIRONMENT-STATUS.md) oraz dowody [rejestru zmian](../tracking/CHANGE-REGISTER.md) rozstrzygają testy i wdrożenia. Ręczne przypadki nadal mają wynikNOT RUN.
+
+Poniżej zachowano uzasadnienia i projektowane następne etapy. Gdy dana liczba nie ma potwierdzenia użytkownika, jest jawnie opisana jako parametr DEV lub propozycja, a nie zaakceptowana decyzja.
 
 ## Przyjęte przez użytkownika
 
-- Ligę rozliczamy **średnią wyników i premią za współpracę rosnącą wraz z liczbą uczestników sojuszu**, zamiast dawnej sumy trzech najlepszych. Dokładny wzór poniżej jest propozycją.
+- Ligę rozliczamy **średnią wyników i premią za współpracę rosnącą wraz z liczbą uczestników sojuszu**, zamiast dawnej sumy trzech najlepszych. Użytkownik przyjął później średnią całego zgłoszonego składu i+2 za kolejną aktywną osobę, maksymalnie+8 przy pięciu osobach.
 - Przy Rankingu pojawia się pole/sekcja **Sojusz**: zakładanie, dołączanie, odchodzenie i prawdziwy czat w grze. Gotowe sygnały mogą być dodatkiem, nie zastępują wpisywania wiadomości.
 - Program dobroczynny przyjmuje **1000 kwalifikowanych zarobionych monet → 1 zł operatora**, najwyżej raz na osobę w miesiącu i co najmniej 30 dni między operacjami. Zmiana wyspy nie odnawia limitu.
 - Przyjęto wcześniej sfinansowaną, globalną pulę bety najwyżej **50 zł miesięcznie**, a później dodatkowo najwyżej **5% rzeczywistej marży poprzedniego miesiąca**. Brak miejsca w puli oznacza brak pobrania monet.
 - Potrzebny jest widoczny przycisk programu, serwerowa księga pochodzenia i zużycia monet oraz wykluczenie **wszystkich wpływów handlowych**, także pośredniego zakupu materiałów za kupione monety i ich odsprzedaży.
-- Nagrodą ma być rozświetlenie Portu **oraz rzeczywisty bonus szczęścia**. Wycofano rekomendację ograniczenia nagrody wyłącznie do kosmetyki. Wysokość, czas i moment odbioru bonusu są nadal propozycją do zatwierdzenia.
+- Nagrodą ma być rozświetlenie Portu **oraz rzeczywisty bonus szczęścia**. Wycofano rekomendację ograniczenia nagrody wyłącznie do kosmetyki. Późniejsza odpowiedź przyjęła+20p.p. przez6h na jednej wyspie po potwierdzeniu przelewu; uprawnienie do odbioru wDEV nie ma dodatkowej siedmiodniowej daty wygaśnięcia.
 
-Nie przyjmujemy, że powyższe decyzje aktywują ligę lub darowizny w obecnej grze. Numer aplikacji, wyspy graczy i poprzednie wydanie PRE-PROD pozostają bez zmian.
+Nowe GO uruchamia implementację wDEV; nie jest promocją do PRE-PROD ani zleceniem przelewu. Zapisów kont nie resetujemy.
 
 ## Kalendarz i udział w lidze
 
-Rekomendacja to **dni 15–21 miesiąca**, w strefie `Europe/Warsaw`: zawsze siedem dni, ale nie zawsze poniedziałek–niedziela. To nadal proponowana interpretacja „trzeciego tygodnia”. Alternatywny trzeci pełny tydzień poniedziałek–niedziela wypada np. 16–22 listopada i 21–27 grudnia 2026; przed implementacją trzeba wybrać jedną definicję i pokazywać daty graczom.
+Rekomendacja to **dni 15–21 miesiąca**, w strefie `Europe/Warsaw`: zawsze siedem dni, ale nie zawsze poniedziałek–niedziela. To nadal proponowana interpretacja „trzeciego tygodnia”. Alternatywny trzeci pełny tydzień poniedziałek–niedziela wypada np. 16–22 listopada i 21–27 grudnia 2026; DEV używa jawnego wariantu15–21 i pokazuje daty graczom; ewentualna inna definicja wymaga korekty kodu/opisów przed promocją.
 
 | Dni | Proponowane działanie |
 |---|---|
@@ -32,13 +42,13 @@ Za mecz są 3 punkty tabeli za wygraną, 1 za remis, 0 za porażkę. Remis tabel
 
 Przy stabilnej liczbie drużyn można wprowadzić klasy Liga Przystani, Liga Żeglarzy i Liga Latarników z awansem dwóch najlepszych i spadkiem dwóch ostatnich w pełnej grupie. To późniejszy etap, nie automatyczny podział kilku pierwszych graczy na puste ligi. Awaria operatora wymaga wspólnego przedłużenia lub anulowania kolejki, zamiast automatycznych walkowerów.
 
-## Średnia i premia współpracy — proponowana konkretna formuła
+## Średnia i premia współpracy — przyjęta formuła
 
 Dla każdego dnia serwer używa składu sezonowego zamrożonego przed pierwszą kolejką:
 
 - `N`: liczba kont zapisanych w składzie na sezon, 1–5; nie bieżąca liczba osób na czacie.
-- `s_i`: lepszy zweryfikowany wynik konta z dwóch prób danego dnia, od 0 do 100. Brak próby albo wyjście z drużyny oznacza 0 w kolejnych dniach.
-- `K`: liczba tych zapisanych osób, które uzyskały co najmniej **16 punktów**, czyli zaliczyły co najmniej jeden z pięciu celów. To definicja udziału w proponowanym wyzwaniu ligowym, nie zamiennik ogólnej aktywności sesji, ruchu myszy lub logowania.
+- `s_i`: średnia lepszego wyniku zadania logicznego i lepszego wyniku zręcznościowego, każde z dwóch prób; brakujące zadanie=0, zakres wyniku dnia0–100. Brak próby albo wyjście z drużyny oznacza 0 w kolejnych dniach.
+- `K`: liczba tych zapisanych osób, które uzyskały co najmniej **16 punktów**, liczone z wyniku dnia, np. po jednym celu w każdym z dwóch zadań. To definicja udziału w proponowanym wyzwaniu ligowym, nie zamiennik ogólnej aktywności sesji, ruchu myszy lub logowania.
 - `średnia = suma(s_i) / N`, `premia = 2 × max(0, K−1)`, najwyżej **8 punktów**.
 - **`wynik meczu = średnia + premia`**, obliczony bez zaokrąglania części i dopiero na końcu zaokrąglony do dwóch miejsc po przecinku. Zakres 0–108. Nie obcinamy go do 100, bo ukryłoby to różnicę między najlepszymi pełnymi sojuszami.
 
@@ -54,9 +64,9 @@ Solista może więc pokonać przeciętny kompletny sojusz, a większa **aktywnie
 
 Dwa pojedyncze słabe wyniki nie mogą zniknąć z mianownika przez usunięcie ich autorów. Nie wybieramy po meczu samych najlepszych członków ani średniej tylko obecnych. Każdy gracz nadal ma indywidualny zapis udziału niezależny od sukcesu zespołu.
 
-## Sojusz przy Rankingu — przyszły ekran i cykl członkostwa
+## Sojusz przy Rankingu — ekran DEV i cykl członkostwa
 
-Proponowany układ: **Ranking → Sojusz**, zawsze widoczne pole z nazwą własnego sojuszu albo przyciskiem „Załóż lub znajdź sojusz”. Wewnątrz: członkowie, zaproszenia, tabela ligi, czat oraz „Opuść sojusz”. Nie dodajemy tego teraz do działającego UI.
+Proponowany układ: **Ranking → Sojusz**, zawsze widoczne pole z nazwą własnego sojuszu albo przyciskiem „Załóż lub znajdź sojusz”. Wewnątrz: członkowie, zaproszenia, tabela ligi, czat oraz „Opuść sojusz”. Nowe GO obejmuje ten ekranDEV; jego obecność nie dowodzi aktywacji API GCP.
 
 | Działanie | Proponowane zachowanie |
 |---|---|
@@ -73,7 +83,7 @@ Proponowany układ: **Ranking → Sojusz**, zawsze widoczne pole z nazwą własn
 
 ## Czat sojuszu w grze
 
-Użytkownik wybrał **prawdziwy tekstowy czat**. Rekomendowany pierwszy zakres to kanał własnego sojuszu; globalny czat i prywatne rozmowy jeden na jeden nie są częścią tej decyzji.
+Użytkownik wybrał **prawdziwy tekstowy czat**. Późniejsza dyspozycja rozszerzyła zakres do **dwóch rodzajów rozmów: kanał własnego sojuszu oraz prywatne rozmowy1:1 między graczami**, również z różnych sojuszy. Nie tworzymy globalnego publicznego pokoju. Serwer sprawdza uczestnictwo rozmowy prywatnej przy każdym odczycie i wysłaniu, a blokada jest egzekwowana także dla starej otwartej karty.
 
 - Serwer sprawdza członkostwo przy każdym odczycie, wysłaniu i wznowieniu kanału. Po odejściu stare połączenie traci dostęp; sam ukryty przycisk nie jest zabezpieczeniem. Nie można pobrać wiadomości obcej drużyny po podaniu jej ID.
 - Propozycja produktu: wiadomości do 500 znaków, najwyżej 5 w 10 sekund, bez załączników. Zwykłe wiadomości wygasają po 30 dniach. Fragment celowo zgłoszony do sprawdzenia może pozostać do 90 dni z ograniczonym dostępem operatora; te wartości wymagają zatwierdzenia w polityce danych.
@@ -81,33 +91,49 @@ Użytkownik wybrał **prawdziwy tekstowy czat**. Rekomendowany pierwszy zakres t
 - Po zaakceptowanym wysłaniu pojawia się potwierdzenie. Brak sieci nie udaje dostarczonej wiadomości; ponowienie z tym samym ID nie powiela wpisu. Tekst jest renderowany jako tekst, bez uruchamiania HTML lub skryptów.
 - Skróty „zagram rano”, „potrzebuję zastępstwa” i pinezka trasy są dodatkiem do zwykłego wpisywania, a nie jedyną formą rozmowy. Nie wysyłamy automatycznych wiadomości ani postów poza grę.
 
-## Siedem proponowanych zadań ligowych
+## Siedem zadań logicznych — bieżący prototyp DEV
 
-Każde zadanie jest osobną, równą dla wszystkich **miniaturową symulacją**, nie operacją na prawdziwej wyspie. Nie zużywa kupionych materiałów, nie korzysta z płatnej pojemności statku i nie skraca prawdziwego rejsu. Na dzień są **dwie próby do trzech minut**, lepsza liczy się do wyniku. Cały udział mieści się w około 10 minutach. Gracz wybiera moment w godzinach 06:00–23:00 Warszawy; jest to nadal proponowane okno. Nie można dokupić czasu, prób ani reklamy poprawiającej wynik.
+Każde zadanie jest osobną, równą dla wszystkich **miniaturową symulacją**, nie operacją na prawdziwej wyspie. Nie zużywa kupionych materiałów, nie korzysta z płatnej pojemności statku i nie skraca prawdziwego rejsu. WDEV każdy dzień zawiera **dwa odrębne zadania**. Logiczne ma dwie próby do180s w slocie20:00–21:00, zręcznościowe — dwie próby do45s w slocie19:00–20:00 Warszawy. Lepszy wynik każdego zadania liczy się do średniej dnia, a niezagrane zadanie daje0. Trening jest dostępny o dowolnej porze i nie punktuje w prawdziwej lidze. Dawne dowolne godziny06:00–23:00 nie obowiązują w tym prototypie. **Koniec okna:** faktyczny zegar próby kończy się wcześniej z dwóch momentów: jej własnego limitu lub zamknięcia slotu. Po zamknięciu nie można wykonać nowej akcji. Wolno natomiast zapisać wyłącznie wynik już przyjętych akcji do momentu ostatecznych wyników23. dnia; to rozliczenie, nie dodatkowy czas na grę. Nie można dokupić czasu, prób ani reklamy poprawiającej wynik.
 
-W każdym dniu jest **pięć jednoznacznych celów**, każdy zaliczany najwyżej raz. Proponowana wspólna punktacja to `16 × c`, gdzie c jest liczbą zaliczonych celów, plus przy wszystkich pięciu `20 × (180−t)/180`, gdzie t to czas ukończenia w sekundach ograniczony do 0–180. Wynik zaokrąglamy na końcu do dwóch miejsc: maksymalnie 100; pełne ukończenie na granicy czasu daje 80; cztery cele dają 64. Błędne ruchy nie zaliczają celu i zużywają czas, nie mogą dawać dodatnich punktów. Serwer weryfikuje legalne przejścia i wynik; nie ufa polu `verified` z przeglądarki.
+W każdym zadaniu jest **pięć jednoznacznych celów**, każdy zaliczany najwyżej raz. W logicznym punktacja to `16 × c`, gdzie c jest liczbą zaliczonych celów, plus przy wszystkich pięciu `20 × (180−t)/180`, gdzie t to serwerowy czas osiągnięcia kompletu pięciu celów w sekundach ograniczony do0–180, a nie chwila późniejszego kliknięcia zapisu wyniku. Wynik zaokrąglamy na końcu do dwóch miejsc: maksymalnie 100; pełne ukończenie na granicy czasu daje 80; cztery cele dają 64. Błędne ruchy nie zaliczają celu i zużywają czas, nie mogą dawać dodatnich punktów. Serwer weryfikuje legalne przejścia i wynik; nie ufa polu `verified` z przeglądarki.
 
 | Dzień / zadanie | Co robi gracz | Pięć celów i równe warunki |
 |---|---|---|
-| **1. Ostatni konwój** | Pakuje i przewozi pięć oznaczonych partii po 20 sztuk do trzech wskazanych nabrzeży; łódź mieści 40. | Każda dostarczona właściwa partia daje jeden cel. Żadnej nie wolno skopiować ani zostawić równocześnie w dwóch miejscach. |
-| **2. Fabryka bez zatoru** | Układa pięć małych łańcuchów zboże→żywność lub drewno→deski, dobierając wejście i obsadę. | Każde poprawnie zbilansowane zamówienie to cel. Wzory 2:1 i wydajności są pokazane; zakup premii nie jest opcją. |
-| **3. Mapa po sztormie** | Wyznacza trasy pięciu konwojów na tej samej sieci sześciu węzłów z dwoma zamkniętymi odcinkami. | Jeden cel za konwój po legalnej drodze do wskazanego miejsca. Nie wystarcza samo narysowanie kreski przez przeszkodę. |
+| **1. Ostatni konwój** | Pakuje i przewozi pięć oznaczonych partii po 20 sztuk do dwóch wskazanych nabrzeżyA/B; łódź mieści 40. | Każda dostarczona właściwa partia daje jeden cel. Żadnej nie wolno skopiować ani zostawić równocześnie w dwóch miejscach. |
+| **2. Fabryka bez zatoru** | Dla pięciu zamówień wybiera poprawny produkt, materiał wejściowy i ilość w recepturze zboże→żywność lub drewno→deski. Prototyp używa jawnych wariantów decyzji, bez osobnego zarządzania obsadą. | Każde poprawnie zbilansowane zamówienie to cel. Wzory 2:1 i wydajności są pokazane; zakup premii nie jest opcją. |
+| **3. Mapa po sztormie** | Dla pięciu konwojów wybiera spośród pokazanych wariantów trasęPort→Magazyn→Kamieniołom→Latarnia, unikając niedopuszczalnego przejścia. Rozbudowana sieć sześciu węzłów była pierwotną koncepcją, a nie aktualnym edytorem mapy. | Jeden cel za konwój po legalnej drodze do wskazanego miejsca. Nie wystarcza samo narysowanie kreski przez przeszkodę. |
 | **4. Miasto w drodze** | Przenosi pięć grup po dwie osoby z matki mającej 22 ludzi do dwóch schronień po sześć miejsc; łódź mieści cztery. | Cel za każdą legalnie przyjętą grupę. Na matce pozostaje minimum 12, schronienia nie mogą się przepełnić. To skrócona plansza zadania, nie rzeczywisty 30-minutowy transport. |
 | **5. Rynek kapitana** | Porównuje pięć zestawów ofert na potrzebne ilości towarów i wybiera najtańsze legalne zakupy. | Cel za każdą poprawną decyzję ilość+cena. Limit to pokazana bazowa cena NPC; tani zakup i legalna odsprzedaż nie są oszustwem. |
-| **6. Sieć sygnałów** | Łączy pięć punktów przekaźnikowych z Latarnią, rozdzielając ograniczone łączniki i omijając uszkodzenia. | Cel za każdy punkt, do którego istnieje legalna ciągła ścieżka. Wszystkie konta mają te same łączniki i ograniczenia. |
-| **7. Rejs mistrzów** | Realizuje pięć zamówień łączących trasę, poprawną recepturę i dopuszczalny koszt; kolejność wybiera sam. | Cel za całe zamówienie; częściowa produkcja bez dostawy nie wystarcza. Te same warianty wejścia dla całej kolejki. |
+| **6. Sieć sygnałów** | Dla pięciu punktów wybiera poprawną ścieżkę sygnałuLatarnia→A→C→punkt, odrzucając uszkodzoną trasę i połączenie bezLatarni. Przydział osobnych żetonów łączników pozostaje przyszłą rozbudową. | Cel za każdy punkt, do którego istnieje legalna ciągła ścieżka. Wszystkie konta mają te same łączniki i ograniczenia. |
+| **7. Rejs mistrzów** | Rozwiązuje pięć decyzji łączących bezpieczną trasę, recepturę2:1 i dopuszczalny koszt; komplet warunków musi zgadzać się w jednym wariancie. | Cel za całe zamówienie; częściowa produkcja bez dostawy nie wystarcza. Te same warianty wejścia dla całej kolejki. |
+
+### Drugie zadanie każdego dnia: zręczność
+
+| Dzień | Wariant DEV | Co jest mierzone |
+|---|---|---|
+|1|Łowcy gwiazd|Trafienia poruszających się złotych gwiazd z pominięciem pułapek.|
+|2|Serce Portu|Trafienia zielonych serc; czerwone usuwają wcześniejsze trafienie.|
+|3|Puls Latarni|Kliknięcia tylko w dozwolonym zielonym impulsie.|
+|4|Ruchome nabrzeża|Przechwycenia skrzyń w wyróżnionym oknie dostawy.|
+|5|Kod radiowy|Powtarzana kolejność gwiazda→serce→romb.|
+|6|Pirackie pułapki|Skarby z unikaniem czaszek, które usuwają dwa wcześniejsze trafienia.|
+|7|Konstelacja załogi|Czytelne kolejne cele świetlne według instrukcji pokazywanej przy próbie.|
+
+W zręcznościowym każde cztery aktualnie zachowane legalne trafienia zaliczają jeden z pięciu celów. Punktacja to16 za cel oraz20 za komplet pięciu, pomniejszone o4 za błąd i ograniczone od dołu do0; pułap100. Złapanie pułapki usuwa odpowiednio jedno lub dwa wcześniejsze trafienia i aktualizuje liczbę celów. **Ten wariant nie ma premii za pozostały czas** — obiekty pojawiają się według tego samego zegara dla wszystkich, więc taka premia czyniłaby100 nieosiągalnym. Serwer odtwarza pozycję/czas celu i legalność akcji, nie przyjmuje klienckiego pola wyniku. Wyjście z sojuszu nie usuwa zamrożonego slotu sezonowego. Punkty stołowe nie biorą udziału w lidze.
 
 Parametry, plansze i treść zadań są do prototypu i testu trudności. W obrębie jednej kolejki wszystkie konta dostają tę samą wersję/ziarno oraz limity; kolejka kolejnego sezonu może mieć nową wersję. Dwie próby pozwalają nauczyć się zadania wszystkim na tych samych zasadach. Podpowiedzi drużyny na czacie są legalne, ale serwer nie przekazuje gotowego wyniku ani dodatkowego czasu. Po zakończeniu próby harmonogram zwykłych reklam/minigier wraca do bezpiecznego momentu; nie zasłania trwającego wyzwania.
 
-## Proponowane nagrody ligowe
+## Nagrody DEV i późniejsze rozwinięcia
 
 | Odbiorca / warunek | Nagroda |
 |---|---|
 | Każdy: udział w co najmniej trzech różnych dniach z zaliczonym celem | Odznaka „Załoga sezonu” i wpis do kroniki. |
-| Każdy: co najmniej 20 z 35 celów i udział w `min(5, liczba zaplanowanych meczów drużyny)` dniach | Ramka profilu „Kurier Portów”. Przy krótszej grupie próg celów skaluje się do `ceil(20 × liczba meczów / 7)`. |
-| Drużyna: miejsce 1/2/3 w grupie | Złoty/srebrny/brązowy proporzec oraz sezonowa dekoracja Portu. |
-| Drużyna: wszyscy członkowie zamrożonego składu aktywni przez `min(3, liczba meczów)` dni | Wspólny znak „Pełna załoga”; jednoosobowy sojusz dostaje osobny znak „Samotny kapitan” przy takim samym udziale. |
+| Każdy: co najmniej40 z70 celów i udział w5 różnych dniach | Ramka „Kurier Portów”; w aktualnymDEV próg jest stały, bez skalowania liczbą meczów. Zadania osobiste są dostępne we wszystkie7 dni. |
+| Drużyna: miejsce1/2/3 w grupie co najmniej4 drużyn | Kosmetyczne uprawnienie złote/srebrne/brązowe. Graficzny proporzec na mapiePortu jest późniejszą oprawą, nie elementem bieżącego renderera. |
+| Drużyna: wszyscy członkowie zamrożonego składu mają zaliczony cel przez co najmniej3 różne dni | Wspólny znak „Pełna załoga”; jednoosobowy sojusz dostaje osobny znak „Samotny kapitan” przy takim samym udziale. |
 | Indywidualne osiągnięcie mimo przegranej zespołu | Osobisty wynik pozostaje widoczny; porażka nie zabiera zdobytej odznaki. |
+
+**OdbiórDEV:** serwer pozwala odebrać kosmetyczne uprawnienia jednokrotnie za sezon od23. dnia miesiąca; ponowne żądanie zwraca istniejące rozliczenie. Zapis uprawnienia i jego widoczność w panelu nie oznaczają narysowanej flagi/dekoracji na mapie wyspy. Nietrwały podgląd nie udaje wygranej prawdziwego sezonu.
 
 Nagrody są przypisane do konta, niewymienialne i bez ceny odkupu. **Nie dają punktów ligi, podatku, produkcji ani kwalifikowanych monet dobroczynnych.** Liczba kupionych wysp nie mnoży nagrody. Historia rozliczenia ma własny identyfikator; odświeżenie strony lub ponowny odbiór nie duplikują dekoracji. Odbiór po powrocie z nieobecności zachowuje przyznane uprawnienie. Odznaka nie jest incydentem ani dowodem wdrożenia serwerowego rankingu.
 
@@ -162,7 +188,7 @@ Przed potwierdzeniem pokazujemy 1000 monet do zużycia, 1 zł do rezerwacji, poz
 
 Przy 50 zł program ma najwyżej 50 pełnych operacji. Dla 1000 uczestników nie zapewnia miejsca każdemu. Nie pokazujemy globalnej puli jako indywidualnie gwarantowanego złotego. Brak udziału nie blokuje zwykłych działań, ale wybrany przez użytkownika rzeczywisty bonus szczęścia jest korzyścią gospodarczą, więc nie twierdzimy już, że uczestnik nie zyskuje żadnej przewagi. Przy kolejnych kampaniach można rozważyć pierwszeństwo wcześniej pominiętych, bez automatycznego pobierania monet.
 
-## Serwerowe pochodzenie monet — zaakceptowany kierunek
+## Serwerowe pochodzenie monet — kontrakt i granica aktualnego DEV
 
 Obecny portfel jest wyliczany przez klienta. Sama liczba `coins`, historia `statistics.taxCollected` lub deklaracja `earned: true` nie są podstawą zobowiązania w złotych. Użytkownik zaakceptował **serwerowy rejestr źródeł i wydawania monet**, z jednokrotnym rozliczeniem; implementacja dopiero musi powstać. Istniejący serwer escrow handlu nie czyni całej gospodarki zaufaną.
 
@@ -178,6 +204,8 @@ Wyłączenie wszystkich wpływów handlowych zamyka ścieżkę **kupione monety 
 
 Każdy wydatek zmniejsza konkretne partie salda. Nie wolno wydać zarobionych monet na budowę, a potem przekazać ich historycznego licznika ponownie. Proponowany konserwatywny porządek zwykłych wydatków to najpierw monety kwalifikowane, potem pozostałe; musi być jawny. Alternatywa oddzielnego portfela wymaga decyzji produktu. Zwrot przywraca dokładnie pierwotne pochodzenie.
 
+**Aktualna granica wdrożenia:** zaufane transakcje księgi zachowują ewidencję partii i zużywają kwalifikowane monety w pierwszej kolejności. Nieautorytatywny zapis pełnej wyspy z klienta nie udowadnia jednak jej obrotów brutto — nawet przy niezmienionym saldzie. Taki zapis bez jawnego zaufanego autora księgi zmienia całą pozostałą kwalifikowaną część na niekwalifikowaną, zachowując faktyczne monety. Ta konserwatywna blokada zabezpiecza wyłączony program; nie oznacza pełnego przeniesienia gospodarki na serwer.
+
 Jedna transakcja serwera weryfikuje kwalifikowane 1000 monet, oba limity osoby, pulę, cel i identyfikator żądania. Dopiero wtedy jednocześnie rezerwuje 1 zł i umarza właściwe monety. Klient nie podaje wiążących `fundAvailable`, `verified` ani limitów. Utrata odpowiedzi nie tworzy drugiej rezerwacji; wyspy jednego konta mają wspólną księgę i limit. Maksymalny budżet jest kontrolowany transakcyjnie, także przy równoległych zgłoszeniach wielu osób.
 
 Rozróżniamy **rezerwację → rzeczywisty przelew → publikację potwierdzenia → odbiór bonusu**. Gdy przelew nie nastąpi, zwrot monet zachowuje pochodzenie i zamyka rezerwację dokładnie raz. Nie wypłaca bonusu ani drugiego zwrotu; uwolnienie puli również jest idempotentne. Ponowne przyjęcie do anulowanej kampanii wymaga jawnych zasad operatora, a nie automatycznego odnowienia limitu przez klienta.
@@ -186,13 +214,13 @@ Rozróżniamy **rezerwację → rzeczywisty przelew → publikację potwierdzeni
 
 **Przyjęte wymaganie:** dodajemy do projektu prawdziwe szczęście oraz rozświetlenie Portu. Poprzednia rekomendacja „tylko dekoracja” jest zastąpiona. Prawdziwe szczęście może zwiększyć populację, a później dochód z podatków. Limity pieniędzy ograniczają zobowiązanie operatora, ale nie są dowodem idealnego balansu lub rentowności.
 
-**Propozycja parametrów do zatwierdzenia:** **+20 punktów procentowych szczęścia na 6 godzin**, na jednej wskazanej własnej wyspie, dla jej istniejących mieszkańców w chwili odbioru. Najwyżej jeden taki odbiór na konto za kampanię i dodatkowo 30 dni od poprzedniego odbioru; liczba wysp nie mnoży efektu. Nowi mieszkańcy nie powodują wielokrotnego przyznania tej samej premii. Obowiązuje normalny limit 100%, pierwszeństwo Latarni oraz brak kumulowania i przedłużania aktywnego bonusu dobroczynnego. To nie jest mnożnik produkcji ani podatku, ale jego pośredni efekt populacyjny pozostaje rzeczywisty.
+**Przyjęte parametry:** **+20 punktów procentowych szczęścia na6 godzin**, na jednej wskazanej własnej wyspie, jako czasowy efekt uwzględniany przez reguły szczęścia mieszkańców. Nie omija osobnego okresu osiedlania ani pierwszeństwa wymuszonego100%. Najwyżej jeden taki odbiór na konto za kampanię i dodatkowo 30 dni od poprzedniego odbioru; liczba wysp nie mnoży efektu. Nowi mieszkańcy nie powodują wielokrotnego przyznania tej samej premii. Obowiązuje normalny limit 100%, pierwszeństwo Latarni oraz brak kumulowania i przedłużania aktywnego bonusu dobroczynnego. To nie jest mnożnik produkcji ani podatku, ale jego pośredni efekt populacyjny pozostaje rzeczywisty.
 
-**Proponowany moment:** dopiero po potwierdzonym rzeczywistym przelewie. Od chwili rezerwacji gracz widzi kartę **„Nagroda oczekuje na przelew: +20 p.p. przez 6 h”**, lecz jeszcze nic nie naliczamy. Po publikacji potwierdzenia dostaje **„Odbierz Światło Wdzięczności”** i siedem dni na świadomy odbiór; sześciogodzinny zegar rusza po zatwierdzeniu odbioru przez serwer. Te czasowe parametry i okno odbioru także są propozycją, nie automatycznie zatwierdzonymi liczbami użytkownika. Przed przekazaniem monet trzeba pokazać, że nagroda nie zacznie działać natychmiast.
+**Przyjęty moment:** dopiero po potwierdzonym rzeczywistym przelewie. Od chwili rezerwacji gracz widzi kartę **„Nagroda oczekuje na przelew: +20 p.p. przez 6 h”**, lecz jeszcze nic nie naliczamy. Po publikacji potwierdzenia dostaje **„Odbierz Światło Wdzięczności”**; sześciogodzinny zegar rusza po zatwierdzeniu odbioru przez serwer. +20p.p./6h/po potwierdzeniu są przyjęte. Siedmiodniowe okno odbioru było wcześniejszą propozycją, ale **nie jest regułą aktualnegoDEV**: potwierdzone, niewykorzystane uprawnienie nie wygasa po siedmiu dniach. Przed przekazaniem monet trzeba pokazać, że nagroda nie zacznie działać natychmiast.
 
-Serwer zapisuje konkretną kampanię, przelew, konto, instancję/generację wyspy, `rewardClaimId` i czas końca efektu. Podwójny klik, utrata odpowiedzi, zmiana aktywnej wyspy albo ponowny odczyt starej odznaki nie odnawiają nagrody. Jeżeli poprzedni efekt lub limit 30 dni jeszcze trwa, odbiór nie pobiera niczego i okno siedmiu dni rozpoczyna się dopiero od faktycznej gotowości odbioru. Niedostępna/usunięta wyspa nie odbiera ani nie kasuje uprawnienia automatycznie: przed odbiorem trzeba wskazać legalny istniejący świat, a efekt przyznaje się tylko tam. Reset po przyznaniu nie odtwarza raz zużytego uprawnienia.
+Serwer zapisuje konkretną kampanię, przelew, konto, instancję/generację wyspy, `rewardClaimId` i czas końca efektu. Podwójny klik, utrata odpowiedzi, zmiana aktywnej wyspy albo ponowny odczyt starej odznaki nie odnawiają nagrody. Jeżeli poprzedni efekt lub serwerowy limit30dni jeszcze trwa, odbiór niczego nie pobiera; można ponowić go po uzyskaniu gotowości, bez dodatkowego siedmiodniowego terminu. Niedostępna/usunięta wyspa nie odbiera ani nie kasuje uprawnienia automatycznie: przed odbiorem trzeba wskazać legalny istniejący świat, a efekt przyznaje się tylko tam. Reset po przyznaniu nie odtwarza raz zużytego uprawnienia.
 
-Rozświetlenie wspólnego Portu i mural aktualizują się po potwierdzonym przelewie, z opisem rzeczywiście przelanej kwoty; nie udają wpłaty przy samej rezerwacji. Pamiątkowa odznaka pozostaje po wygaśnięciu szczęścia, ale nie jest kolejnym kuponem. Odróżniamy kosmetyczną historię od jednorazowego prawa do rzeczywistego efektu.
+W aktualnymDEV osobisty Port rozświetla się wraz z odebranym sześciogodzinnym efektem i gaśnie po jego końcu. Historia potwierdzonej operacji pozostaje, lecz nie jest kolejnym kuponem. Wspólny mural i publiczna prezentacja kampanii to propozycje dalszej oprawy; nie opisujemy ich jako istniejącego ekranu. Sama rezerwacja nie daje światła ani szczęścia.
 
 ## Rentowność: obliczenia bez zgadywania reklam
 
@@ -243,4 +271,4 @@ Przy tej polityce pełna stała pula 50 zł wymaga co najmniej 1000 zł potwierd
 - Kampania pokazuje cel, organizację, miesiąc, liczbę operacji, kwotę zarezerwowaną i rzeczywiście przelaną, datę i potwierdzenie bez niepotrzebnych prywatnych danych. Nie publikuje e-maili, sald lub płatności graczy; nie wysyła automatycznych postów FB.
 - Przed prawdziwym programem potrzebne są dane operatora zamiast „Lorem ipsum”, uzgodnione zasady działalności i księgowania, odbiorca, publiczne reguły, zabezpieczony fundusz oraz zaufany serwer. Dokumentacja i symulacja Paynow nie spełniają tych warunków. Nie zakładamy konkretnego odliczenia podatkowego wpłaty.
 
-**Nadal otwarte:** definicja kalendarza, dokładny wzór i limit wielkości sojuszu, reguły członkostwa w sezonie, parametry czatu, trudność siedmiu zadań, dokładne nagrody ligowe, kwalifikacja źródeł niehandlowych, organizacja i termin przelewu, parametry+20 p.p./6 h oraz okno odbioru. **Przyjęte są** kierunek średnia+premia, tworzenie/dołączanie/odchodzenie i czat, przycisk dobroczynności, finansowe limity, serwerowa księga, wykluczenie handlu i rzeczywisty bonus szczęścia. Żaden program nie został aktywowany przez ten dokument.
+**Nadal otwarte do korekty przed dalszą promocją:** potwierdzenie parametrów kalendarza i slotówDEV, balans trudności czternastu zadań, ostateczne nagrody/sezonowe klasy, polityka retencji czatu do przeglądu dokumentów, konfiguracja zaufanego emitenta i rzeczywistego finansowania, organizacja/termin przelewu oraz ewentualna przyszła zmiana zasad odbioru. Formuła średniej+premii oraz+20p.p./6h po przelewie zostały już przyjęte; nie pytamy o nie ponownie. **Przyjęte są** kierunek średnia+premia, tworzenie/dołączanie/odchodzenie i czat, przycisk dobroczynności, finansowe limity, serwerowa księga, wykluczenie handlu i rzeczywisty bonus szczęścia. Żaden program nie został aktywowany przez ten dokument.

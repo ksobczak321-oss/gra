@@ -1,35 +1,45 @@
 # HARBORLIGHT — ręczny plan testów i osobne przypadki
 
-Plan utworzony 31 października 2026. **46 osobnych przypadków; wszystkie wyniki ręczne: NOT RUN.** Nie jest to raport wykonania ani potwierdzenie skuteczności nowych mechanik. Każdy plik `HL-TC-…` może stanowić treść osobnego zgłoszenia typu Test Case; sam plik nie oznacza utworzenia natywnego GitHub Issue.
+**Zacznij od [listy do odhaczania](START-HERE.md) albo [interaktywnego raportu QA](qa-checklist.html).** Zestaw obejmuje50 osobnych przypadków. Wszystkie wyniki ręczne pozostają **NOT RUN**; dokument jest planem odbioru, nie potwierdzeniem wykonania. Można go rozpocząć od poniedziałku2 listopada2026 po wskazaniu testowanego buildu i przygotowaniu danych.
+
+## Jak odhaczać pojedyncze przypadki
+
+1. Wpisz rzeczywisty build/SHA, środowisko i testera. Nie łącz wyników dwóch wydań bez ponownego wykonania odpowiednich kroków.
+2. Otwórz osobną kartę `HL-TC-…`, przygotuj jej fixture i przejdź kroki z oczekiwaniami.
+3. Zaznacz PASS, FAIL albo BLOCKED i zapisz krótki dowód. Pole wyboru na liście oznacza „wykonano i zapisano wynik”, nie automatyczny sukces.
+4. Wyeksportuj raport JSON z interaktywnej listy. Możesz go wczytać na drugim urządzeniu. Wyniki tej listy nie wysyłają się automatycznie do Git ani do GCP.
+
+W interaktywnej liście wynik, notatka, tester i opis buildu są zapisywane lokalnie jako **dokumentacja QA**, oddzielnie od gry; lista nie zapisuje i nie odczytuje wysp graczy. Eksport stanowi kopię na wypadek usunięcia danych przeglądarki. Widok pliku HTML na GitHub pokazuje kod — uruchom pobrany HTML lub opublikowaną stronę Pages.
 
 ## Metodyka
 
-- **Epik / zmiana:** stabilne wymaganie i historia decyzji w [rejestrze zmian](../tracking/CHANGE-REGISTER.md). Jeden przypadek może sprawdzać kilka powiązanych wymagań.
-- **Test Case:** odrębny plik poniżej z danymi, krokami, oczekiwaniem i własnym wynikiem.
-- **Bug / incydent:** powstaje dopiero po rzeczywistym FAIL, z buildem, krokami odtworzenia, oczekiwanym i uzyskanym wynikiem oraz dowodem. Nie nazywamy niewykonanego testu incydentem.
-- **Stan definicji** READY lub DRAFT/BLOCKED jest osobny od **wyniku wykonania** NOT RUN/PASS/FAIL/BLOCKED. Historyczny sukces automatyzacji nie ustawia manualnego PASS.
-- P0: utrata danych/środków, dostęp i kluczowa atomowość; P1: istotna reguła lub podstawowa obsługa.
+- **Epik / zmiana:** stabilne wymaganie i decyzje w [rejestrze zmian](../tracking/CHANGE-REGISTER.md).
+- **Test Case:** osobny plik poniżej z danymi, krokami i oczekiwaniami. Pliki w Git nie są automatycznie natywnymi GitHub Issues.
+- **Bug / incydent:** dopiero po rzeczywistym FAIL: build, kroki, oczekiwany i uzyskany wynik oraz dowód.
+- **Definicja READY** oznacza kompletny scenariusz, nie dostępność usługi ani wykonanie testu. **DRAFT / BLOCKED** wymaga doprecyzowania lub przygotowania funkcji. Wynik wykonania to niezależne NOT RUN/PASS/FAIL/BLOCKED.
+- P0: dane, dostęp, środki i atomowość; P1: ważna reguła lub obsługa. Wynik wcześniejszej automatyzacji nigdy nie ustawia ręcznego PASS.
 
 ## Środowiska i dane
 
-Historyczny punkt odniesienia definicji przypadków to **v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`**, [promocja 41222765705](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705). To nie wykonanie poniższych przypadków. Aktualny [rejestr środowisk](../ENVIRONMENT-STATUS.md) ma pierwszeństwo przed tą migawką. Włączenie API kont/rynku nie jest tutaj potwierdzone; scenariusz wymagający tej usługi jest BLOCKED bez rzeczywistego potwierdzenia.
+**DEV** to przestrzeń robocza i deweloperski podgląd Pages. **PRE-PROD** to `https://harborlight-dev.web.app` w projekcieGCP `harborlight-dev`. **PROD** nie jest objęty nowym GO. Bieżący [rejestr środowisk](../ENVIRONMENT-STATUS.md) rozstrzyga, które funkcje rzeczywiście są opublikowane. Push i Pages nie są promocją do GCP.
 
-Widoczna wersja **0.9.1.1** jest nowym zakresem DEV w tym zadaniu; nie przypisujemy jej wcześniejszemu PRE-PROD bez własnej promocji. Wersja interfejsu jest inna niż `state.version`, rewizja zapisu i generacja wyspy.
+Historyczny baseline definicji to v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`; ostatnia potwierdzona pilna promocja przed nowym zakresem to0.9.1.2 / `3be1f9d2094f1432acacbb782eed1665fd00e6e1`, [przebieg41233737873](https://github.com/ksobczak321-oss/gra/actions/runs/41233737873). Żaden z tych sukcesów nie jest wykonaniem poniższych przypadków ani dowodem aktywacji nowych API. Nowy zakres archipelagu, ligi, czatów i dobroczynności odbieramy wyłącznie na DEV, zgodnie z rzeczywistą gotowością modułów.
 
-Nie używać prawdziwego admin1 ani innych stałych kont jako danych jednorazowych. Użytkownik zlecił odrębny reset trzech profili po promocji, ale nie ma potwierdzenia jego wykonania. Przycisk „Rozpocznij nową wyspę” jest osobnym mechanizmem zachowującym historię/uprawnienia i nie dowodzi resetu wszystkich kont.
+Profile QA są specyfikacją danych do przygotowania w izolowanym harnessie, nie dodatkowymi kontami istniejącymi w GCP. Brak fixture, kontrolowanego zegara lub potrzebnej usługi oznacza BLOCKED z przyczyną. Nie zmieniaj czasu komputera i prawdziwej bazy, aby wymusić warunek testowy. Lokalny nietrwały podgląd nie zastępuje testu trwałości chmury.
 
-Profile QA to **specyfikacje danych do przygotowania w izolowanym harnessie**, a nie dodatkowe konta istniejące w GCP. Źródła fixture są wskazane w przypadkach. Jeżeli tester nie ma przygotowanego profilu i kontrolowanego zegara, zapisuje BLOCKED; nie zmienia czasu komputera, prawdziwej bazy ani salda konta, by osiągnąć warunek. QA-CLOUD wymaga atrapy REST albo osobnego właścicielsko przygotowanego środowiska z jednorazowymi kontami. Podgląd Pages jest nietrwały i nie zastępuje testu chmury.
+Nie używaj `admin1`–`admin3` jako danych jednorazowych; nie resetuj i nie podmieniaj ich historii. Osobne historyczne zlecenie resetu po promocji nie uprawnia do dowolnego czyszczenia danych podczas QA. Próby płatności i dobroczynności korzystają z oznaczonej symulacji DEV, bez rzeczywistych przelewów.
 
-Przy powtarzaniu testów należy zapisać rzeczywisty SHA/build, nazwę fixture i czas. Zamknięcie kontekstu QA usuwa ulotne dane; czyszczenie nie uruchamia owner-resetu ani retencji PROD. Testy kosztów korzystają z odczytu właściciela, bez tworzenia nowych eksportów i płatnych zasobów.
+## Proponowana kolejność odbioru
 
-## Kolejność odbioru
+1. Dostęp i integralność: TC19–23, TC29, TC31.
+2. Nowa gra i czytelność: TC01–05, TC30, TC43–45 oraz nowe powroty w PomocyTC47.
+3. Gospodarka i mieszkańcy: TC06–18, TC24–25.
+4. Archipelag i handel: migracjaTC26, transport towarówTC27, transakcjeTC28, nowe regułyTC33–37.
+5. Sojusze i liga: TC46, prywatne wiadomościTC48, ligaTC38 i sloty/dwa zadaniaTC49.
+6. Dobroczynność i pochodzenie monet: TC39–40; tylko izolowana symulacja.
+7. Odczyt operacyjny i retencja: TC32, TC42. Papierowa gra i druk: TC50. **TC41 pozostaje BLOCKED: integracja planszówki online jest wyłączona z GO.**
 
-1. Dostęp i integralność danych: TC19–23, TC29, TC31.
-2. Nowa gra, samouczek i aktualne objaśnienia: TC01–05, TC30 oraz TC43–45.
-3. Gospodarka, ludzie, zdarzenia i minigry: TC06–18 oraz TC24–25.
-4. Obecny archipelag i aktywowane API wymian: TC26–28; usługi niepotwierdzone oznaczyć BLOCKED.
-5. Odczyt operacyjny i retencja w izolacji: TC32 i TC42.
-6. Nowe projekty TC33–41 oraz TC46 dopiero po zatwierdzeniu decyzji i implementacji; obecnie DRAFT/BLOCKED. Papierowy prototyp planszówki można osobno ocenić bez przyznawania nagród online. Punkty stołowe, punkty za zadania online i punkty ligi są odrębnymi pojęciami. Zmiana członkostwa w sojuszu nie może obchodzić zamrożonego składu sezonu, a były członek traci bieżący dostęp do chatu.
+TC26 jest obecnie testem zachowania wcześniejszych dwóch światów podczas migracji; nowa kolonizacja ma osobneTC34–36. TC28 sprawdza integralność sprzedaży materiałów za monety, aTC37 pułap ceny i równoległy handelNPC. Nie zaliczamy nowej logiki na podstawie dawnego darmowego założenia drugiej wyspy lub barteru.
 
 ## Indeks
 
@@ -60,34 +70,36 @@ Przy powtarzaniu testów należy zapisać rzeczywisty SHA/build, nazwę fixture 
 | [HL-TC-0023 — Wylogowanie z Ustawień i trwała granica bezczynności](manual/HL-TC-0023.md) | Sesja | P0 | READY | NOT RUN |
 | [HL-TC-0024 — Usuwanie powiadomień dotyczy tylko przeczytanych i respektuje filtry](manual/HL-TC-0024.md) | Powiadomienia | P1 | READY | NOT RUN |
 | [HL-TC-0025 — Awans Ratusza 3→4 wymaga 54 mieszkańców, inne budynki nie](manual/HL-TC-0025.md) | Rozwój | P1 | READY | NOT RUN |
-| [HL-TC-0026 — Obecna druga wyspa kopiuje poziomy raz i zachowuje oba światy](manual/HL-TC-0026.md) | Archipelag — obecny baseline | P0 | READY | NOT RUN |
+| [HL-TC-0026 — Migracja wcześniejszych dwóch wysp zachowuje światy i jednorazowo skopiowane poziomy](manual/HL-TC-0026.md) | Archipelag — obecny baseline | P0 | READY | NOT RUN |
 | [HL-TC-0027 — Towary: 1000 sztuk, 10 minut i pojedynczy rozładunek](manual/HL-TC-0027.md) | Archipelag — obecny baseline | P0 | READY | NOT RUN |
-| [HL-TC-0028 — Rynek baseline: próg 6, prawdziwa oferta i brak podwójnego przyjęcia](manual/HL-TC-0028.md) | Handel — obecny baseline | P0 | READY | NOT RUN |
+| [HL-TC-0028 — Rynek graczy: transakcja materiał–monety i brak podwójnego przyjęcia](manual/HL-TC-0028.md) | Handel — obecny baseline | P0 | READY | NOT RUN |
 | [HL-TC-0029 — „Zacznij od nowa” nie jest pełnym resetem trzech kont](manual/HL-TC-0029.md) | Reset | P0 | READY | NOT RUN |
 | [HL-TC-0030 — Wersja gry jest widoczna w Ustawieniach](manual/HL-TC-0030.md) | Interfejs i wydanie | P1 | READY | NOT RUN |
 | [HL-TC-0031 — Promocja zachowuje kolejność DEV → PRE-PROD → PROD](manual/HL-TC-0031.md) | Wydanie | P0 | READY | NOT RUN |
 | [HL-TC-0032 — Raport kosztów ostatnich 24 godzin ma rzeczywisty zakres i walutę](manual/HL-TC-0032.md) | Koszty | P1 | READY | NOT RUN |
-| [HL-TC-0033 — Nazwa wyspy córki zawsze ma wymuszony prefiks matki](manual/HL-TC-0033.md) | Projekt archipelagu | P1 | DRAFT / BLOCKED | NOT RUN |
-| [HL-TC-0034 — Założenie córki zabiera 6 osób w Domu i zostawia matce co najmniej 12](manual/HL-TC-0034.md) | Projekt kolonizacji | P0 | DRAFT / BLOCKED | NOT RUN |
-| [HL-TC-0035 — Statek pasażerski przewozi do 100 osób w 30 minut](manual/HL-TC-0035.md) | Projekt przewozu ludzi | P0 | DRAFT / BLOCKED | NOT RUN |
-| [HL-TC-0036 — Kolejne wyspy: progi poziomu, koszt i wejście przez Ratusz](manual/HL-TC-0036.md) | Projekt archipelagu | P0 | DRAFT / BLOCKED | NOT RUN |
-| [HL-TC-0037 — Handel NPC i PvP działa równolegle z ceną maksymalną gry](manual/HL-TC-0037.md) | Projekt handlu | P0 | DRAFT / BLOCKED | NOT RUN |
-| [HL-TC-0038 — Liga miesięczna: granice sezonu, drużyny i punktacja](manual/HL-TC-0038.md) | Projekt społeczności | P1 | DRAFT / BLOCKED | NOT RUN |
-| [HL-TC-0039 — Dobroczynność przyjmuje wyłącznie kwalifikowane zarobione monety](manual/HL-TC-0039.md) | Projekt dobroczynności | P0 | DRAFT / BLOCKED | NOT RUN |
-| [HL-TC-0040 — Dobroczynność: limit budżetu i kontrolowane skutki bonusu szczęścia](manual/HL-TC-0040.md) | Projekt dobroczynności | P0 | DRAFT / BLOCKED | NOT RUN |
+| [HL-TC-0033 — Nazwa wyspy córki zawsze ma wymuszony prefiks matki](manual/HL-TC-0033.md) | Projekt archipelagu | P1 | READY | NOT RUN |
+| [HL-TC-0034 — Założenie córki zabiera 6 osób w Domu i zostawia matce co najmniej 12](manual/HL-TC-0034.md) | Projekt kolonizacji | P0 | READY | NOT RUN |
+| [HL-TC-0035 — Statek pasażerski przewozi do 100 osób w 30 minut](manual/HL-TC-0035.md) | Projekt przewozu ludzi | P0 | READY | NOT RUN |
+| [HL-TC-0036 — Kolejne wyspy: progi poziomu, koszt i wejście przez Ratusz](manual/HL-TC-0036.md) | Projekt archipelagu | P0 | READY | NOT RUN |
+| [HL-TC-0037 — Handel NPC i PvP działa równolegle z ceną maksymalną gry](manual/HL-TC-0037.md) | Projekt handlu | P0 | READY | NOT RUN |
+| [HL-TC-0038 — Liga miesięczna: granice sezonu, drużyny i punktacja](manual/HL-TC-0038.md) | Projekt społeczności | P1 | READY | NOT RUN |
+| [HL-TC-0039 — Dobroczynność przyjmuje wyłącznie kwalifikowane zarobione monety](manual/HL-TC-0039.md) | Projekt dobroczynności | P0 | READY | NOT RUN |
+| [HL-TC-0040 — Dobroczynność: limit budżetu i kontrolowane skutki bonusu szczęścia](manual/HL-TC-0040.md) | Projekt dobroczynności | P0 | READY | NOT RUN |
 | [HL-TC-0041 — Planszówka 2–6 osób: sesja 45–60 min i jednokrotny skutek online](manual/HL-TC-0041.md) | Projekt planszówki | P1 | DRAFT / BLOCKED | NOT RUN |
 | [HL-TC-0042 — Trzy miesiące nieaktywności zachowują konto i jednorazowe uprawnienia](manual/HL-TC-0042.md) | Retencja | P0 | READY | NOT RUN |
 | [HL-TC-0043 — Lekcja Budowy prowadzi przez szczegóły do widocznego priorytetu](manual/HL-TC-0043.md) | Samouczek i nawigacja | P1 | READY | NOT RUN |
 | [HL-TC-0044 — Sześć kafelków nagrody ma równy układ 3×2](manual/HL-TC-0044.md) | Interfejs nagród | P1 | READY | NOT RUN |
 | [HL-TC-0045 — Opis kart zasobów i podatków odpowiada rzeczywistym wartościom](manual/HL-TC-0045.md) | Objaśnienia gospodarki | P1 | READY | NOT RUN |
-| [HL-TC-0046 — Sojusz przy Rankingu: członkostwo i chat gry](manual/HL-TC-0046.md) | Projekt sojuszy i komunikacji | P1 | DRAFT / BLOCKED | NOT RUN |
+| [HL-TC-0046 — Sojusz przy Rankingu: członkostwo i chat gry](manual/HL-TC-0046.md) | Projekt sojuszy i komunikacji | P1 | READY | NOT RUN |
+| [HL-TC-0047 — Pomoc rozdziela powrót do tutoriala i praktycznego samouczka](manual/HL-TC-0047.md) | Pomoc i samouczek | P0 | READY | NOT RUN |
+| [HL-TC-0048 — Prywatny czat1:1 nie ujawnia rozmów ani danych kont osobom trzecim](manual/HL-TC-0048.md) | Prywatne wiadomości | P0 | READY | NOT RUN |
+| [HL-TC-0049 — Liga: dwa zadania dziennie wyłącznie w ogłoszonych slotach Warszawy](manual/HL-TC-0049.md) | Harmonogram i wyzwania ligi | P0 | READY | NOT RUN |
+| [HL-TC-0050 — Planszówka: komplet druku, czytelne kody i samodzielna sesja przy stole](manual/HL-TC-0050.md) | Planszówka do wydruku | P1 | READY | NOT RUN |
 
-## Format zgłoszenia niezgodności
+## Raport i zgłoszenia
 
-Po FAIL utwórz odrębny Bug: tytuł z obserwowalnym skutkiem, powiązany `HL-TC` i `HL-CHG`, środowisko/SHA, dane QA, najkrótsze kroki odtworzenia, wynik oczekiwany i rzeczywisty, dowód oraz wpływ. Nie dołączaj tokenów Firebase, haseł ani prywatnego payloadu. Naprawa nie zmienia starego FAIL na PASS: dopisz osobny wynik ponownego odbioru z nowym buildem.
+[ListaSTART-HERE](START-HERE.md) zawiera szablon pojedynczego wyniku. Interaktywny raport pozwala filtrować przypadki, zapisywać notatki i pobraćJSON. Zrzuty oraz logi nie mogą zawierać tokenów ani prywatnych danych. Po FAIL zgłoszenie błędu odnosi się do stabilnegoID testu iSHA buildu.
 
-## Archiwum i dane maszynowe
+Kanoniczna lista: [manual-test-cases.json](manual-test-cases.json). Interaktywną listę iMarkdown odtwarza `python3 scripts/build_manual_checklist.py`; `--check` sprawdza zgodność. Indywidualne karty są wersjonowanymi dokumentami. Importer [publish_tracking_issues.py](../../scripts/publish_tracking_issues.py) może później opublikować je jako osobneIssues dopiero w uwierzytelnionej sesji właściciela. W tym zestawie nie utworzono fikcyjnych numerówIssues.
 
-- [JSON nowych 46 przypadków](manual-test-cases.json) — stabilne ID, powiązania i status NOT RUN.
-- [Historyczny plan v18 —155 scenariuszy](../TEST-SCENARIOS-v18.md) i [jego JSON](../test-scenarios-v18.json) pozostają archiwalną migawką. Nie podmieniono ich historycznych wyników; nowy zestaw grupuje główne ścieżki ręcznego odbioru i nowe projektowane funkcje.
-- Wyniki lokalnej automatyzacji i promocji zapisuje [dziennik](../IMPLEMENTATION-LOG.md). Nie są one wykonaniem tego planu przez człowieka.
+Starszy [zestaw155 scenariuszyv18](../TEST-SCENARIOS-v18.md), [jegoJSON](../test-scenarios-v18.json) iExcel11 są archiwalnymi migawkami. Nie są bieżącym wynikiem ręcznego odbioru nowegoDEV. Rzeczywiste wyniki automatyzacji i promocji zapisuje [dziennik](../IMPLEMENTATION-LOG.md).

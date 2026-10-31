@@ -8,12 +8,12 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `proposed` |
-| DEV | `analysis_only` |
+| Implementacja | `implemented` |
+| DEV | `packaged_browser_pass` |
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `open` |
+| Decyzja | `accepted_scope_with_dev_parameters` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
@@ -32,15 +32,23 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 ## Dowody
 
 - **Dokumenty:** [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md), [docs/design/ARCHIPELAGO-AND-TRADE-v23.md](../../design/ARCHIPELAGO-AND-TRADE-v23.md)
-- **Kod:** nie przypisano.
-- **Scenariusze automatyczne:** nie przypisano.
+- **Kod:** [harborlight-v1-archipelago.js](../../../harborlight-v1-archipelago.js), [harborlight-v1-residents.js](../../../harborlight-v1-residents.js), [harborlight-v1-state.js](../../../harborlight-v1-state.js), [harborlight-dev-cloud.js](../../../harborlight-dev-cloud.js), [backend/island-document-store.mjs](../../../backend/island-document-store.mjs), [backend/player-trade.mjs](../../../backend/player-trade.mjs)
+- **Scenariusze automatyczne:** [tests/harborlight-archipelago.test.mjs](../../../tests/harborlight-archipelago.test.mjs), [backend/test/island-document-store.test.mjs](../../../backend/test/island-document-store.test.mjs), [backend/test/player-trade.test.mjs](../../../backend/test/player-trade.test.mjs), [tests/harborlight-v21-features-smoke.py](../../../tests/harborlight-v21-features-smoke.py), [tests/harborlight-v21-cloud.test.mjs](../../../tests/harborlight-v21-cloud.test.mjs)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
+
+DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.
+
+Końcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.
 
 ## Relacje
 
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
 - **Powiązane:** Brak.
+
+## Uwagi
+
+- Jawny parametrDEV do ewentualnej korekty, nie odpowiedź użytkownika: kopiaRatusza/Magazynu, reszta1,6 przesiedleńców,0 startowych zasobów; na córce minimum6, wolne miejsca u celu, brak dodatkowej opłaty/racji i normalne żywienie. A po9 kontynuowane10,11…
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

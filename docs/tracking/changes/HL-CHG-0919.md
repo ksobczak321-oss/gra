@@ -8,8 +8,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `not_implemented` |
-| DEV | `analysis_only` |
+| Implementacja | `implemented` |
+| DEV | `packaged_browser_pass_real_program_disabled` |
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
@@ -33,13 +33,17 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 ## Dowody
 
 - **Dokumenty:** [docs/design/LEAGUE-COMMUNITY-CHARITY.md](../../design/LEAGUE-COMMUNITY-CHARITY.md)
-- **Kod:** nie przypisano.
-- **Scenariusze automatyczne:** nie przypisano.
+- **Kod:** [backend/charity-ledger.mjs](../../../backend/charity-ledger.mjs), [backend/charity-service.mjs](../../../backend/charity-service.mjs), [harborlight-v1-charity.js](../../../harborlight-v1-charity.js), [harborlight-v1-residents.js](../../../harborlight-v1-residents.js), [harborlight-v1-effects.js](../../../harborlight-v1-effects.js)
+- **Scenariusze automatyczne:** [backend/test/charity.test.mjs](../../../backend/test/charity.test.mjs), [tests/harborlight-charity-v24.test.mjs](../../../tests/harborlight-charity-v24.test.mjs), [tests/harborlight-charity-v24-smoke.py](../../../tests/harborlight-charity-v24-smoke.py), [backend/test/charity-api.test.mjs](../../../backend/test/charity-api.test.mjs)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0040 — Dobroczynność: limit budżetu i kontrolowane skutki bonusu szczęścia](../../testing/manual/HL-TC-0040.md) — `NOT RUN`.
+
+LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.
+
+Końcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.
 
 ## Relacje
 
@@ -50,6 +54,7 @@ Powiązane przypadki do ręcznego przeklikania:
 ## Uwagi
 
 - Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.
+- Realna dobroczynność NIE jest gotowa do aktywacji: brak autorytatywnej gospodarki i podłączonego zaufanego emitenta/funduszu. DEV służy funkcjonalnemu odbiorowi oznaczonej symulacji.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

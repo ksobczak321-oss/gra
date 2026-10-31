@@ -9,11 +9,11 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `not_implemented` |
-| DEV | `analysis_only` |
+| DEV | `deferred` |
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `accepted_parameters_with_open_details` |
+| Decyzja | `deferred_by_user` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
@@ -51,6 +51,7 @@ Powiązane przypadki do ręcznego przeklikania:
 ## Uwagi
 
 - Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.
+- Najnowsze GO wyłącza integrację gry fizycznej z grą online. Samodzielny drukowany prototyp pozostaje w zakresie; nie przyznajemy punktów/nagród online ani nie dodajemy działającej sesji online.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

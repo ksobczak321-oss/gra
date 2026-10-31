@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { createPlayerTradeService } from '../player-trade.mjs';
+import { createPlayerTradeService, maximumTradePrice, PLAYER_TRADE_PRICE_VERSION } from '../player-trade.mjs';
 import { createAccountService } from '../account-service.mjs';
 
 const NOW = Date.parse('2026-10-31T12:00:00Z');
@@ -45,10 +45,10 @@ function fixture(environment='production') {
 const data=(f,uid='one')=>JSON.parse(f.store.get(`islands/${uid}`).payload);
 const revision=(f,uid='one')=>f.store.get(`islands/${uid}`).revision;
 function alter(f,uid,change) {const doc=f.store.get(`islands/${uid}`),state=JSON.parse(doc.payload);change(state);doc.payload=JSON.stringify(state);f.store.put(`islands/${uid}`,doc);}
-const create=(f,extra={})=>f.service.createOffer({uid:'one',requestId:'create_12345',generation:1,expectedRevision:revision(f),islandId:'island-1',give:{resource:'wood',amount:100},want:{resource:'stone',amount:50},...extra});
+const create=(f,extra={})=>f.service.createOffer({uid:'one',requestId:'create_12345',generation:1,expectedRevision:revision(f),islandId:'island-1',give:{resource:'wood',amount:100},want:{resource:'coins',amount:50},...extra});
 const rejects=(promise,code)=>assert.rejects(promise,error=>error.code===code);
 
-test('an offer escrows material once; full acceptance atomically exchanges both islands and conserves goods',async()=>{
+test('a coin sale escrows material once; acceptance atomically transfers coins and goods without minting',async()=>{
   const f=fixture();const created=await create(f),id=created.offer.id;
   assert.equal(data(f).resources.wood,400);assert.equal(revision(f),5);
   const publicList = await f.service.listOffers({ uid: 'two' });
@@ -56,7 +56,8 @@ test('an offer escrows material once; full acceptance atomically exchanges both 
   assert.equal(publicList.offers[0].ownerIslandName, 'one');
   const repeat=await create(f,{expectedRevision:4});assert.equal(repeat.alreadyApplied,true);assert.equal(revision(f),5);
   const accepted=await f.service.acceptOffer({uid:'two',offerId:id,requestId:'accept_12345',generation:1,expectedRevision:4,islandId:'island-1'});
-  assert.equal(accepted.offer.status,'accepted');assert.equal(data(f).resources.stone,550);assert.equal(data(f,'two').resources.stone,450);
+  assert.equal(accepted.offer.status,'accepted');assert.equal(data(f).resources.coins,150);assert.equal(data(f,'two').resources.coins,50);
+  assert.equal(data(f).resources.coins+data(f,'two').resources.coins,200);
   assert.equal(data(f).resources.wood,400);assert.equal(data(f,'two').resources.wood,600);
   assert.equal(data(f).resources.wood+data(f,'two').resources.wood,1000);
   assert.equal(revision(f),6);assert.equal(revision(f,'two'),5);
@@ -81,31 +82,32 @@ test('unlock, caller versions, offer shape and owner checks fail without removin
   await rejects(create(f,{expectedRevision:undefined}),'invalid-revision');
   await rejects(create(f,{generation:2}),'island-expired');
   await rejects(create(f,{give:{resource:'coins',amount:1}}),'trade-invalid-material');
-  await rejects(create(f,{want:{resource:'wood',amount:1}}),'trade-same-material');
+  await rejects(create(f,{want:{resource:'wood',amount:1}}),'trade-coins-required');
   await rejects(create(f,{give:{resource:'wood',amount:-1}}),'trade-invalid-material');
   const offer=(await create(f)).offer;
   await rejects(f.service.acceptOffer({uid:'one',offerId:offer.id,requestId:'self_accept_123',generation:1,expectedRevision:5}),'trade-own-offer');
   await rejects(f.service.cancelOffer({uid:'two',offerId:offer.id,requestId:'steal_cancel_123',generation:1,expectedRevision:4}),'trade-not-owner');
 });
 
-test('construction reservations and protected Food cannot be offered or spent as payment',async()=>{
+test('construction reservations and protected Food cannot be offered; buyers need the quoted coins',async()=>{
   const f=fixture();alter(f,'one',s=>s.constructionProjects=[{reservedMaterials:{wood:450}}]);
   await rejects(create(f),'trade-insufficient-stock');
   await rejects(create(f,{give:{resource:'food',amount:51}}),'trade-insufficient-stock');
   assert.equal(revision(f),4);
-  const offer=(await create(f,{give:{resource:'stone',amount:100},want:{resource:'food',amount:51}})).offer;
+  const offer=(await create(f,{give:{resource:'stone',amount:100},want:{resource:'coins',amount:50}})).offer;
+  alter(f,'two',s=>s.resources.coins=49);
   await rejects(f.service.acceptOffer({uid:'two',offerId:offer.id,requestId:'food_accept_123',generation:1,expectedRevision:4}),'trade-insufficient-stock');
   assert.equal(data(f,'two').resources.food,100);
 });
 
-test('incoming ordinary inventory must fit on both sides; failure rolls back buyer payment',async()=>{
+test('incoming ordinary inventory must fit; failed delivery rolls back buyer coins and overflow rolls back both sides',async()=>{
   const f=fixture(),offer=(await create(f)).offer;
   alter(f,'two',s=>s.resources.wood=1000);
   await rejects(f.service.acceptOffer({uid:'two',offerId:offer.id,requestId:'full_accept_123',generation:1,expectedRevision:4}),'trade-storage-full');
-  assert.equal(data(f,'two').resources.stone,500);assert.equal(f.store.get(`playerTradeOffers/${offer.id}`).status,'open');
-  alter(f,'two',s=>s.resources.wood=500);alter(f,'one',s=>s.resources.stone=1000);
+  assert.equal(data(f,'two').resources.coins,100);assert.equal(f.store.get(`playerTradeOffers/${offer.id}`).status,'open');
+  alter(f,'two',s=>s.resources.wood=500);alter(f,'one',s=>s.resources.coins=Number.MAX_SAFE_INTEGER-49);
   await rejects(f.service.acceptOffer({uid:'two',offerId:offer.id,requestId:'full_accept_456',generation:1,expectedRevision:4}),'trade-storage-full');
-  assert.equal(data(f,'two').resources.stone,500);
+  assert.equal(data(f,'two').resources.coins,100);
 });
 
 test('cancellation restores bonus provenance and keeps ordinary overflow in a durable partial-claim inbox',async()=>{
@@ -139,7 +141,7 @@ test('expiry is checked at acceptance and only an owner POST settles a return; G
 
 test('more than one page of old OPEN offers cannot hide a current offer; closed future offers remain filtered',async()=>{
   const f=fixture();
-  const base={ownerUid:'two',ownerIslandId:'island-1',ownerIslandName:'Aktualna wyspa',give:{resource:'wood',amount:10},want:{resource:'stone',amount:5},status:'open',createdAt:NOW-86400000,expiresAt:NOW-1};
+  const base={version:1,ownerUid:'two',ownerIslandId:'island-1',ownerIslandName:'Aktualna wyspa',give:{resource:'wood',amount:10},want:{resource:'stone',amount:5},status:'open',createdAt:NOW-86400000,expiresAt:NOW-1};
   for(let n=0;n<60;n++) {
     const id='trade_'+n.toString(16).padStart(40,'0');f.store.put(`playerTradeOffers/${id}`,{...base,id});
   }
@@ -159,13 +161,13 @@ test('island-2 trades affect only its resources and preserve primary, transfers,
   const before=data(f),offer=(await create(f,{islandId:'island-2'})).offer;
   assert.equal(data(f).resources.wood,before.resources.wood);assert.equal(data(f).archipelago.secondIsland.resources.wood,400);
   await f.service.acceptOffer({uid:'two',offerId:offer.id,requestId:'second_accept_123',generation:1,expectedRevision:4});
-  const after=data(f);assert.deepEqual(after.resources,before.resources);assert.equal(after.archipelago.secondIsland.resources.stone,550);
+  const after=data(f);assert.deepEqual(after.resources,before.resources);assert.equal(after.archipelago.secondIsland.resources.coins,150);
   assert.deepEqual(after.archipelago.transfers,before.archipelago.transfers);assert.deepEqual(after.archipelago.capacityReceipts,before.archipelago.capacityReceipts);assert.equal(after.archipelago.shipCapacity,2000);
 });
 
 test('request IDs cannot be reused for a different price or operation, and a replaced world cannot receive old escrow',async()=>{
   const f=fixture(),offer=(await create(f)).offer;
-  await rejects(create(f,{want:{resource:'stone',amount:1}}),'trade-request-reused');
+  await rejects(create(f,{want:{resource:'coins',amount:1}}),'trade-request-reused');
   alter(f,'one',s=>s.islandStartedAt=NOW+1);
   await rejects(f.service.cancelOffer({uid:'one',offerId:offer.id,requestId:'changed_cancel_123',generation:1,expectedRevision:5}),'trade-world-changed');
   await rejects(f.service.acceptOffer({uid:'two',offerId:offer.id,requestId:'changed_accept_123',generation:1,expectedRevision:4}),'trade-world-changed');
@@ -186,4 +188,98 @@ test('production capacity requires a trusted payment and ordinary saves cannot d
   await rejects(service.saveIsland({uid:'one',payload:JSON.stringify(state),generation:1,expectedRevision:5}),'archipelago-island-loss');
   const locked=fixture();state=data(locked);state.archipelago={version:1,activeIslandId:'island-1',secondIsland:world(),transfers:[],shipCapacity:1000,capacityReceipts:[]};
   await rejects(createAccountService({store:locked.store,now:()=>NOW}).saveIsland({uid:'one',payload:JSON.stringify(state),generation:1,expectedRevision:4}),'second-island-locked');
+});
+
+test('NPC base prices cap whole-coin sales for all five materials without banning cheap resale', async () => {
+  for (const resource of ['wood','stone','grain','food','planks']) {
+    const maximum = ['food','planks'].includes(resource) ? 150 : 50;
+    assert.equal(maximumTradePrice(resource,100), maximum);
+    const f = fixture();
+    alter(f,'one',s=>s.resources[resource]=1000);
+    alter(f,'two',s=>s.resources.coins=1000);
+    const stateBefore = JSON.stringify([...f.store.records]);
+    await rejects(create(f,{give:{resource,amount:100},want:{resource:'coins',amount:maximum+1}}),'trade-price-exceeds-maximum');
+    assert.equal(JSON.stringify([...f.store.records]),stateBefore,'invalid price cannot escrow stock');
+    const sale = await create(f,{give:{resource,amount:100},want:{resource:'coins',amount:1}});
+    assert.equal(sale.offer.version,2);
+    assert.equal(sale.offer.maximumPrice,maximum);
+    assert.equal(sale.offer.priceVersion,PLAYER_TRADE_PRICE_VERSION);
+    const result = await f.service.acceptOffer({uid:'two',offerId:sale.offer.id,requestId:'cheap_accept_123',generation:1,expectedRevision:4});
+    assert.equal(result.offer.status,'accepted');
+    assert.equal(data(f).resources.coins,101);
+    assert.equal(data(f,'two').resources.coins,999);
+  }
+  assert.equal(maximumTradePrice('wood',3),1,'odd quantity cap rounds downward, never above the NPC base rate');
+  assert.equal(maximumTradePrice('wood',1),0);
+  const f=fixture();
+  await rejects(create(f,{give:{resource:'wood',amount:1},want:{resource:'coins',amount:1}}),'trade-price-exceeds-maximum');
+  for(const price of [0,-1,0.5,NaN,Infinity,Number.MAX_SAFE_INTEGER]) {
+    await rejects(create(f,{want:{resource:'coins',amount:price}}),'trade-price-exceeds-maximum');
+  }
+  await rejects(create(f,{want:{resource:'coins',amount:1,verified:true}}),'trade-coins-required');
+});
+
+test('an already stored v1 barter remains literal when accepted or refunded', async () => {
+  const f=fixture(),id='trade_'+'a'.repeat(40);
+  const old={version:1,id,ownerUid:'one',ownerIslandId:'island-1',ownerIslandName:'Historyczny Port',ownerGeneration:1,
+    ownerWorldKey:String(NOW-100000),give:{resource:'wood',amount:100},want:{resource:'stone',amount:50},
+    escrowBonus:0,status:'open',createdAt:NOW-1000,expiresAt:NOW+86400000};
+  f.store.put(`playerTradeOffers/${id}`,old);
+  f.store.put('accounts/one',{...f.store.get('accounts/one'),openTradeOfferIds:[id]});
+  alter(f,'one',s=>s.resources.wood-=100);
+  const listed=await f.service.listOffers({uid:'two'});
+  assert.equal(listed.offers[0].legacyBarter,true);
+  assert.equal(listed.offers[0].want.resource,'stone');
+  const accepted=await f.service.acceptOffer({uid:'two',offerId:id,requestId:'legacy_accept_123',generation:1,expectedRevision:4});
+  assert.equal(accepted.offer.version,1);
+  assert.equal(data(f).resources.stone,550);
+  assert.equal(data(f,'two').resources.stone,450);
+  assert.equal(data(f).resources.coins,100);
+  assert.equal(data(f,'two').resources.coins,100,'legacy material demand is never relabeled as a coin price');
+  const refund=fixture();
+  refund.store.put(`playerTradeOffers/${id}`,old);
+  alter(refund,'one',s=>s.resources.wood-=100);
+  const cancelled=await refund.service.cancelOffer({uid:'one',offerId:id,requestId:'legacy_cancel_123',generation:1,expectedRevision:4});
+  assert.equal(cancelled.returned,100);assert.equal(data(refund).resources.wood,500);
+});
+
+test('acceptance revalidates the saved price contract and rejects corrupt versions atomically', async () => {
+  for(const change of [offer=>offer.want.amount=51,offer=>offer.priceVersion='future-price',offer=>offer.version=3]) {
+    const f=fixture(),offer=(await create(f)).offer;
+    const key=`playerTradeOffers/${offer.id}`,saved=f.store.get(key);change(saved);f.store.put(key,saved);
+    const before=JSON.stringify([...f.store.records]);
+    await assert.rejects(f.service.acceptOffer({uid:'two',offerId:offer.id,requestId:'tampered_accept_123',generation:1,expectedRevision:4}));
+    assert.equal(JSON.stringify([...f.store.records]),before);
+  }
+});
+
+test('a coin sale can use island20 while preserving other worlds and the root history', async () => {
+  const f=fixture();
+  alter(f,'one',s=>{
+    s.buildings.townhall.level=64;
+    s.archipelago={version:2,activeIslandId:'island-20',islands:Object.fromEntries(Array.from({length:19},(_,n)=>['island-'+(n+2),world('Córka '+(n+2),10)])),transfers:[],shipCapacity:1000,capacityReceipts:[]};
+  });
+  const before=data(f),created=await create(f,{islandId:'island-20'});
+  const saved=JSON.parse(created.island.payload);
+  assert.equal(saved.archipelago.islands['island-20'].resources.wood,400);
+  assert.deepEqual(saved.resources,before.resources);
+  assert.deepEqual(saved.archipelago.islands['island-2'],before.archipelago.islands['island-2']);
+  const accepted=await f.service.acceptOffer({uid:'two',offerId:created.offer.id,requestId:'twentieth_accept_123',generation:1,expectedRevision:4});
+  assert.equal(JSON.parse(accepted.island.payload).resources.coins,50);
+  await rejects(create(f,{islandId:'island-21',requestId:'twenty_first_123'}),'trade-invalid-island');
+});
+
+test('ordinary trade saves fail closed for charity eligibility and retries do not touch the ledger', async () => {
+  const f=fixture();
+  f.store.put('charityWallets/one',{schema:1,qualified:30,unqualified:70,revision:2});
+  f.store.put('charityWallets/two',{schema:1,qualified:80,unqualified:20,revision:2});
+  const offer=(await create(f)).offer;
+  const request={uid:'two',offerId:offer.id,requestId:'provenance_accept_123',generation:1,expectedRevision:4};
+  await f.service.acceptOffer(request);
+  const seller=f.store.get('charityWallets/one'),buyer=f.store.get('charityWallets/two');
+  assert.equal(seller.qualified,0);assert.equal(seller.unqualified,150,'opaque trade saves cannot certify retained qualification');
+  assert.equal(buyer.qualified,0);assert.equal(buyer.unqualified,50,'the buyer cannot donate spent or unverified coins');
+  await f.service.acceptOffer(request);
+  assert.deepEqual(f.store.get('charityWallets/one'),seller);
+  assert.deepEqual(f.store.get('charityWallets/two'),buyer);
 });

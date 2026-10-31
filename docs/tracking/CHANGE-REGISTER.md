@@ -1,12 +1,12 @@
 # HARBORLIGHT — rejestr zmian
 
-Stan ewidencji: **2026-10-31**. **251 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
+Stan ewidencji: **2026-10-31**. **255 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
 
 Źródło danych: [changes.json](changes.json). Karty odtwarza `python3 scripts/build_change_register.py`; `--check` sprawdza zgodność bez zapisów. Nie edytuj wygenerowanych kart zamiast źródła JSON.
 
 ## Zakres i granice
 
-Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami.
+Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona.
 
 Rejestr nie publikuje prywatnych kwot Billing ani danych osobistych związanych z JDG.
 
@@ -76,6 +76,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0029 — Usunięcie przycisku Latarni spod ekspedycji](changes/HL-CHG-0029.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0030 — Wycofana uwaga o Porcie ze starego zrzutu ekranu](changes/HL-CHG-0030.md) | Decision | `withdrawn` | `not_applicable` | `not_applicable` |
 | [HL-CHG-0031 — Wybór języka PL/EN przy pierwszym wprowadzeniu i nazwie wyspy](changes/HL-CHG-0031.md) | Story | `accepted` | `verified` | `code_deployed_0_9_1_2` |
+| [HL-CHG-0032 — Pomoc: Wróć do tutoriala ponownie pokazuje objaśnienia gry](changes/HL-CHG-0032.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 
 <a id="hl-epic-tut"></a>
 
@@ -83,6 +84,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 
 | Zmiana | Typ | Decyzja | DEV | PRE-PROD |
 |---|---|---|---|---|
+| [HL-CHG-0033 — Pomoc: Wróć do samouczka wznawia praktyczne lekcje](changes/HL-CHG-0033.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0040 — 25 lekcji wymaga rzeczywistych działań zamiast odczytania opisu](changes/HL-CHG-0040.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0041 — Migracja zachowuje stare ukończenia i odebrane nagrody](changes/HL-CHG-0041.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0042 — Przepełnienie blokuje następne skrzynie, pozostawiając działania zużywające zasoby](changes/HL-CHG-0042.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
@@ -112,7 +114,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0110 — Port i Targ odświeżają rzeczywiste etapy przewozu w otwartym panelu](changes/HL-CHG-0110.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0111 — Próg 75% ludności dla Ratusza od awansu 3→4](changes/HL-CHG-0111.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0112 — Historyczna decyzja: od TH6 tylko handel graczy zamiast NPC](changes/HL-CHG-0112.md) | Decision | `superseded` | `verified` | `code_deployed_v22_1` |
-| [HL-CHG-0113 — Wymiany materiałów między graczami z własnym przelicznikiem](changes/HL-CHG-0113.md) | Story | `accepted` | `verified_with_isolated_services` | `activation_unconfirmed` |
+| [HL-CHG-0113 — Wymiany materiałów między graczami z własnym przelicznikiem](changes/HL-CHG-0113.md) | Story | `superseded` | `verified_with_isolated_services` | `activation_unconfirmed` |
 | [HL-CHG-0114 — Serwerowa rezerwacja i atomowe przyjęcie jednej oferty](changes/HL-CHG-0114.md) | Bug | `accepted` | `verified_with_isolated_services` | `activation_unconfirmed` |
 | [HL-CHG-0115 — Zwroty anulowanych i wygasłych ofert nie znikają przy pełnym magazynie](changes/HL-CHG-0115.md) | Bug | `accepted` | `verified_with_isolated_services` | `activation_unconfirmed` |
 | [HL-CHG-0116 — Ścieżki jako rzeczywisty wydatek kamienia i premia przewozu](changes/HL-CHG-0116.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
@@ -294,6 +296,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0711 — Przegląd prawny Regulaminu i Polityki prywatności](changes/HL-CHG-0711.md) | Ops | `deferred` | `not_applicable` | `not_active` |
 | [HL-CHG-0712 — Porównanie prowizji operatorów i przykładów płatności 1–500 zł](changes/HL-CHG-0712.md) | Story | `answered_or_documented` | `documentation_available` | `not_applicable` |
 | [HL-CHG-0713 — Tag pilne w rejestrze oraz oznaczanie pilnych wydań Git](changes/HL-CHG-0713.md) | Story | `accepted` | `verified` | `not_applicable` |
+| [HL-CHG-0714 — Osobna lista ręcznego odbioru z wynikami, notatkami i eksportem](changes/HL-CHG-0714.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0715 — Dokumenty draft3 opisują archipelag i społeczność oraz wymagają aktualnych potwierdzeń](changes/HL-CHG-0715.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 
 <a id="hl-epic-arc"></a>
 
@@ -310,24 +314,24 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0807 — Druga wyspa nie dubluje nagród raz na konto i ochrony powitalnej](changes/HL-CHG-0807.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0808 — Restart jednej wyspy blokowany przy drugim świecie, rejsie lub nierozliczonym handlu](changes/HL-CHG-0808.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0809 — Migracja pojedynczego świata do zapisu archipelagu zachowuje historię](changes/HL-CHG-0809.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
-| [HL-CHG-0810 — Nazwa wyspy córki ma wymuszony przedrostek nazwy matki](changes/HL-CHG-0810.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0811 — Zasada nazw po późniejszej zmianie nazwy matki](changes/HL-CHG-0811.md) | Decision | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0812 — Założenie nowej wyspy odbiera sześć osób z domu matki](changes/HL-CHG-0812.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0813 — Matka ma ochronę minimum 12 mieszkańców także przed dżumą i odejściami](changes/HL-CHG-0813.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0814 — Statek pasażerski mieści do 100 osób](changes/HL-CHG-0814.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0815 — Przewóz ludzi trwa 30 minut](changes/HL-CHG-0815.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0816 — Rejs jest albo pasażerski, albo towarowy](changes/HL-CHG-0816.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0817 — Przewóz osób musi określić pojemność celu, jedzenie i zachowanie tożsamości](changes/HL-CHG-0817.md) | Decision | `open` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0818 — Kolejne wyspy od Ratusza matki 10, 13, 16, 19 i dalej co trzy poziomy](changes/HL-CHG-0818.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0819 — Koszt wyspy jako suma kosztów Ratusza i Domu do poziomu 7, 8, 9…](changes/HL-CHG-0819.md) | Decision | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0820 — Dostęp do zakupu wyspy tylko w Ratuszu i powiadomieniu po odblokowaniu](changes/HL-CHG-0820.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0821 — Rozszerzenie obecnego limitu dwóch wysp na wiele córek](changes/HL-CHG-0821.md) | Decision | `open` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0822 — Powrót NPC obok handlu między graczami](changes/HL-CHG-0822.md) | Decision | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0823 — Maksymalną cenę oferty wyznacza gra, gracz może zejść niżej](changes/HL-CHG-0823.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0824 — Materiały między graczami są sprzedawane za monety](changes/HL-CHG-0824.md) | Decision | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0825 — Startowe budynki i skopiowane poziomy po wprowadzeniu płatnych kolonii](changes/HL-CHG-0825.md) | Decision | `open` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0826 — Limit archipelagu: 20 wysp łącznie na konto](changes/HL-CHG-0826.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0827 — Kolonizacja teleportuje sześć osób bezpośrednio z Domu matki](changes/HL-CHG-0827.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0810 — Nazwa wyspy córki ma wymuszony przedrostek nazwy matki](changes/HL-CHG-0810.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0811 — Zasada nazw po późniejszej zmianie nazwy matki](changes/HL-CHG-0811.md) | Decision | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0812 — Założenie nowej wyspy odbiera sześć osób z domu matki](changes/HL-CHG-0812.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0813 — Matka ma ochronę minimum 12 mieszkańców także przed dżumą i odejściami](changes/HL-CHG-0813.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0814 — Statek pasażerski mieści do 100 osób](changes/HL-CHG-0814.md) | Story | `accepted_parameters_with_open_details` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0815 — Przewóz ludzi trwa 30 minut](changes/HL-CHG-0815.md) | Story | `accepted_parameters_with_open_details` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0816 — Rejs jest albo pasażerski, albo towarowy](changes/HL-CHG-0816.md) | Story | `accepted_parameters_with_open_details` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0817 — Przewóz osób musi określić pojemność celu, jedzenie i zachowanie tożsamości](changes/HL-CHG-0817.md) | Decision | `accepted_scope_with_dev_parameters` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0818 — Kolejne wyspy od Ratusza matki 10, 13, 16, 19 i dalej co trzy poziomy](changes/HL-CHG-0818.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0819 — Koszt wyspy jako suma kosztów Ratusza i Domu do poziomu 7, 8, 9…](changes/HL-CHG-0819.md) | Decision | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0820 — Dostęp do zakupu wyspy tylko w Ratuszu i powiadomieniu po odblokowaniu](changes/HL-CHG-0820.md) | Story | `accepted_parameters_with_open_details` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0821 — Rozszerzenie obecnego limitu dwóch wysp na wiele córek](changes/HL-CHG-0821.md) | Decision | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0822 — Powrót NPC obok handlu między graczami](changes/HL-CHG-0822.md) | Decision | `accepted_parameters_with_open_details` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0823 — Maksymalną cenę oferty wyznacza gra, gracz może zejść niżej](changes/HL-CHG-0823.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0824 — Materiały między graczami są sprzedawane za monety](changes/HL-CHG-0824.md) | Decision | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0825 — Startowe budynki i skopiowane poziomy po wprowadzeniu płatnych kolonii](changes/HL-CHG-0825.md) | Decision | `accepted_scope_with_dev_parameters` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0826 — Limit archipelagu: 20 wysp łącznie na konto](changes/HL-CHG-0826.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0827 — Kolonizacja teleportuje sześć osób bezpośrednio z Domu matki](changes/HL-CHG-0827.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 
 <a id="hl-epic-soc"></a>
 
@@ -335,37 +339,37 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 
 | Zmiana | Typ | Decyzja | DEV | PRE-PROD |
 |---|---|---|---|---|
-| [HL-CHG-0901 — Miesięczna liga w trzecim tygodniu i przewaga sojuszu nad solo](changes/HL-CHG-0901.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0902 — Na cele dobroczynne tylko monety zarobione w grze](changes/HL-CHG-0902.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0903 — Serwerowa księga pochodzenia i jednokrotnego zużycia monet charytatywnych](changes/HL-CHG-0903.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0904 — Przelicznik 1000 monet na 1 zł właściciela z ograniczonym budżetem](changes/HL-CHG-0904.md) | Decision | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0905 — Limity darowizn i kontrolowane skutki bonusu szczęścia](changes/HL-CHG-0905.md) | Decision | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0906 — Planszowa sesja 2–6 osób 45–60 minut z lekkim RPG](changes/HL-CHG-0906.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0901 — Miesięczna liga w trzecim tygodniu i przewaga sojuszu nad solo](changes/HL-CHG-0901.md) | Story | `accepted_parameters_with_open_details` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0902 — Na cele dobroczynne tylko monety zarobione w grze](changes/HL-CHG-0902.md) | Story | `accepted` | `packaged_browser_pass_real_program_disabled` | `not_deployed` |
+| [HL-CHG-0903 — Serwerowa księga pochodzenia i jednokrotnego zużycia monet charytatywnych](changes/HL-CHG-0903.md) | Story | `accepted` | `packaged_browser_pass_real_program_disabled` | `not_deployed` |
+| [HL-CHG-0904 — Przelicznik 1000 monet na 1 zł właściciela z ograniczonym budżetem](changes/HL-CHG-0904.md) | Decision | `accepted` | `packaged_browser_pass_real_program_disabled` | `not_deployed` |
+| [HL-CHG-0905 — Limity darowizn i kontrolowane skutki bonusu szczęścia](changes/HL-CHG-0905.md) | Decision | `accepted_parameters_with_open_details` | `packaged_browser_pass_real_program_disabled` | `not_deployed` |
+| [HL-CHG-0906 — Planszowa sesja 2–6 osób 45–60 minut z lekkim RPG](changes/HL-CHG-0906.md) | Story | `accepted` | `print_artifacts_and_phone_verified` | `not_applicable_print_artifact` |
 | [HL-CHG-0907 — Plansza budynków, Latarnia w środku i dwa rodzaje kart](changes/HL-CHG-0907.md) | Story | `superseded` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0908 — Fizyczne zadania z efektami online, QR lub telefon jako companion](changes/HL-CHG-0908.md) | Decision | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0909 — Społeczność wokół współpracy i rywalizacji](changes/HL-CHG-0909.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0908 — Fizyczne zadania z efektami online, QR lub telefon jako companion](changes/HL-CHG-0908.md) | Decision | `deferred_by_user` | `deferred` | `not_deployed` |
+| [HL-CHG-0909 — Społeczność wokół współpracy i rywalizacji](changes/HL-CHG-0909.md) | Story | `accepted_parameters_with_open_details` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0910 — Proponowana polityka kolejnych podbić czterech segmentów wersji](changes/HL-CHG-0910.md) | Decision | `open` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0911 — Historyczna odłożona planszówka/AR dla 2–4 osób](changes/HL-CHG-0911.md) | Decision | `superseded` | `not_applicable` | `not_applicable` |
 | [HL-CHG-0912 — Warstwa AR planszówki pozostawiona na później](changes/HL-CHG-0912.md) | Decision | `deferred` | `not_applicable` | `not_active` |
 | [HL-CHG-0913 — Pierwsza publikacja gry w Google Play otrzyma wersję 1.0.0.0](changes/HL-CHG-0913.md) | Decision | `accepted` | `documented` | `not_applicable` |
-| [HL-CHG-0914 — Punktacja ligi: średnia wyników i premia rosnąca ze współpracą](changes/HL-CHG-0914.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0915 — Zakładanie sojuszu, dołączanie i swobodne odchodzenie](changes/HL-CHG-0915.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0916 — Czat gry i uprawnienia członków sojuszu](changes/HL-CHG-0916.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0917 — Pole Sojusz obok Rankingu](changes/HL-CHG-0917.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0918 — Proponowane zadania ligowe, mierzalna punktacja i nagrody](changes/HL-CHG-0918.md) | Story | `open` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0919 — Widoczny przycisk udziału w dobroczynności](changes/HL-CHG-0919.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0920 — Dobroczynność daje rozświetlenie portu i rzeczywiste szczęście](changes/HL-CHG-0920.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0921 — Planszówka: jedna talia fizyczna i treści na telefonie](changes/HL-CHG-0921.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0922 — Własne pionki i ruch graczy po planszy](changes/HL-CHG-0922.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0923 — Trzy warstwy planszówki: ruch, kreatywne zadania i skutki online](changes/HL-CHG-0923.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0924 — Zaliczone zadania przy stole przynoszą punkty i korzyści online](changes/HL-CHG-0924.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0925 — Przycisk Gra fizyczna uruchamia sesję przy stole](changes/HL-CHG-0925.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0926 — Liga ma jawny harmonogram i sloty czasowe zadań](changes/HL-CHG-0926.md) | Story | `deferred_pending_followup` | `deferred` | `not_deployed` |
-| [HL-CHG-0927 — Każdy dzień ligi ma zadanie podstawowe i zręcznościowe](changes/HL-CHG-0927.md) | Story | `deferred_pending_followup` | `deferred` | `not_deployed` |
-| [HL-CHG-0928 — Planszówka: nieme pokazywanie przedmiotów i słowa czytane wspak](changes/HL-CHG-0928.md) | Story | `deferred_pending_followup` | `deferred` | `not_deployed` |
-| [HL-CHG-0929 — Projekt planszy, kart i pionków do wydruku](changes/HL-CHG-0929.md) | Story | `deferred_pending_followup` | `deferred` | `not_deployed` |
-| [HL-CHG-0930 — Pudełko, opakowanie, instrukcja i kody QR planszówki](changes/HL-CHG-0930.md) | Story | `deferred_pending_followup` | `deferred` | `not_deployed` |
-| [HL-CHG-0931 — Osobny czat sojuszu i prywatne rozmowy jeden na jeden](changes/HL-CHG-0931.md) | Story | `deferred_pending_followup` | `deferred` | `not_deployed` |
+| [HL-CHG-0914 — Punktacja ligi: średnia wyników i premia rosnąca ze współpracą](changes/HL-CHG-0914.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0915 — Zakładanie sojuszu, dołączanie i swobodne odchodzenie](changes/HL-CHG-0915.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0916 — Czat gry i uprawnienia członków sojuszu](changes/HL-CHG-0916.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0917 — Pole Sojusz obok Rankingu](changes/HL-CHG-0917.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0918 — Proponowane zadania ligowe, mierzalna punktacja i nagrody](changes/HL-CHG-0918.md) | Story | `accepted_scope_with_dev_parameters` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0919 — Widoczny przycisk udziału w dobroczynności](changes/HL-CHG-0919.md) | Story | `accepted` | `packaged_browser_pass_real_program_disabled` | `not_deployed` |
+| [HL-CHG-0920 — Dobroczynność daje rozświetlenie portu i rzeczywiste szczęście](changes/HL-CHG-0920.md) | Story | `accepted` | `packaged_browser_pass_real_program_disabled` | `not_deployed` |
+| [HL-CHG-0921 — Planszówka: jedna talia fizyczna i treści na telefonie](changes/HL-CHG-0921.md) | Story | `accepted` | `print_artifacts_and_phone_verified` | `not_applicable_print_artifact` |
+| [HL-CHG-0922 — Własne pionki i ruch graczy po planszy](changes/HL-CHG-0922.md) | Story | `accepted` | `print_artifacts_and_phone_verified` | `not_applicable_print_artifact` |
+| [HL-CHG-0923 — Trzy warstwy planszówki: ruch, kreatywne zadania i skutki online](changes/HL-CHG-0923.md) | Story | `accepted_scope_limited_by_user` | `standalone_prototype_online_excluded` | `not_deployed` |
+| [HL-CHG-0924 — Zaliczone zadania przy stole przynoszą punkty i korzyści online](changes/HL-CHG-0924.md) | Story | `deferred_by_user` | `deferred` | `not_deployed` |
+| [HL-CHG-0925 — Przycisk Gra fizyczna uruchamia sesję przy stole](changes/HL-CHG-0925.md) | Story | `deferred_by_user` | `deferred` | `not_deployed` |
+| [HL-CHG-0926 — Liga ma jawny harmonogram i sloty czasowe zadań](changes/HL-CHG-0926.md) | Story | `accepted_scope_with_dev_parameters` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0927 — Każdy dzień ligi ma zadanie podstawowe i zręcznościowe](changes/HL-CHG-0927.md) | Story | `accepted_scope_with_dev_parameters` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0928 — Planszówka: nieme pokazywanie przedmiotów i słowa czytane wspak](changes/HL-CHG-0928.md) | Story | `accepted` | `print_artifacts_and_phone_verified` | `not_applicable_print_artifact` |
+| [HL-CHG-0929 — Projekt planszy, kart i pionków do wydruku](changes/HL-CHG-0929.md) | Story | `accepted` | `print_artifacts_and_phone_verified` | `not_applicable_print_artifact` |
+| [HL-CHG-0930 — Pudełko, opakowanie, instrukcja i kody QR planszówki](changes/HL-CHG-0930.md) | Story | `accepted` | `print_artifacts_and_phone_verified` | `not_applicable_print_artifact` |
+| [HL-CHG-0931 — Osobny czat sojuszu i prywatne rozmowy jeden na jeden](changes/HL-CHG-0931.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 
 ## Utrzymanie
 

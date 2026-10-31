@@ -1,8 +1,8 @@
 // Daily attractions and completed road tiers. All clocks use elapsed world
 // seconds, so the same rules apply while the island is open and offline.
 // This module intentionally imports no state, residents or logistics module.
-import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v23-1';
-import { centralAvailable, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v23-1';
+import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v24';
+import { centralAvailable, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v24';
 
 export const LEISURE_DAY_SECONDS = 86400;
 export const ATTRACTION_EFFECT_SECONDS = 21600;

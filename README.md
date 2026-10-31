@@ -1,6 +1,10 @@
 # HARBORLIGHT
 
-Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarni. Bazowe reguły **frontend-v18** zatwierdzono przez GO użytkownika 30 października 2026: [pełne wymagania](docs/FRONTEND-V18-REQUIREMENTS.md), [reguły gospodarki](docs/ECONOMY-RULES.md) i [budynki](docs/BUILDINGS.md). Bieżący przygotowywany zakres DEV to [0.9.1.2 / v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md); opublikowane PRE-PROD ma wcześniejsze v22.1, obejmujące [v22](docs/FRONTEND-V22-REQUIREMENTS.md) i [v21](docs/FRONTEND-V21-REQUIREMENTS.md).
+Aktualny rozwój **DEV 0.10.0.0**: archipelag, społeczność, liga, dobroczynność i Pomoc. PRE-PROD pozostaje na 0.9.1.2; nowe GO nie obejmuje promocji GCP. [Zakres i parametry DEV](docs/FRONTEND-V24-REQUIREMENTS.md) · [stan środowisk](docs/ENVIRONMENT-STATUS.md).
+
+**[Testy do odhaczania — zacznij tutaj](docs/testing/START-HERE.md)** · **[Interaktywna lista 50 scenariuszy](docs/testing/qa-checklist.html)** · **[Planszówka: kompletny ZIP, plansza, karty, pionki, pudełko i instrukcja](docs/boardgame/README.md)**. Integracja sesji fizycznej z kontami online jest odłożona.
+
+Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarni. Bazowe reguły **frontend-v18** zatwierdzono przez GO użytkownika 30 października 2026: [pełne wymagania](docs/FRONTEND-V18-REQUIREMENTS.md), [reguły gospodarki](docs/ECONOMY-RULES.md) i [budynki](docs/BUILDINGS.md). Bieżący zakres DEV to [0.10.0.0 / v24](docs/FRONTEND-V24-REQUIREMENTS.md); opublikowane PRE-PROD zachowuje pilne [0.9.1.2 / v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md).
 
 **[Stan środowisk i dowody wydań](docs/ENVIRONMENT-STATUS.md)** to główny rejestr wersji DEV, PRE-PROD i PROD. **0.9.1.2 jest opublikowane na PRE-PROD**: kolejność szczęście → monety → mieszkańcy, nagrody 3×2 i wskazanie szczegółów Magazynu przed priorytetem. Adnotowany tag `dev-v22.1-20261031` jest opublikowanym dowodem DEV/CI/Pages ([odczyt](docs/RELEASE-PROCESS.md#niezmienny-dowód-odbioru-dev)); osobny sukces GCP opisano poniżej. Włączenie API kont i reset danych nadal wymagają odrębnego potwierdzenia.
 
@@ -8,18 +12,18 @@ Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarn
 
 | Miejsce | Stan |
 |---|---|
-| DEV — ta przestrzeń robocza | **0.9.1.2**, wybór PL/EN przy nazwie wyspy. Własne CI/Pages i promocja PRE-PROD SUCCESS; [dowody](docs/ENVIRONMENT-STATUS.md). Tag `pilne`; projekty nowych mechanik pozostają odłożone. |
+| DEV — ta przestrzeń robocza | **0.10.0.0**, archipelag, społeczność, liga, dobroczynność i Pomoc. Własny odbiór CI/Pages tego zakresu jest odrębny od historycznej poprawki `pilne`. Bez nowej promocji GCP. |
 | PRE-PROD — `harborlight-dev` | [Graj](https://harborlight-dev.web.app): **0.9.1.2 / `3be1f9d2094f1432acacbb782eed1665fd00e6e1`**, [promocja41233737873/próba1 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233737873), 2m10s. Wybór PL/EN przy nazwie wyspy; konta i postęp zachowane. |
 | PROD — `harborlight-prod` / `harborlight.pl` | Brak potwierdzonej publikacji i powiązania domeny. |
-| GitHub Pages | [Podgląd DEV0.9.1.2](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v23-1), Pages41233382382 SUCCESS. Podgląd w pamięci, odrębny od kont chmurowych. |
+| GitHub Pages | [Podgląd DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v24). Nowe pliki wymagają własnego sukcesu publikacji Pages. Podgląd działa w pamięci, odrębnie od kont chmurowych. |
 
 PRE-PROD ma trzy osobne konta `admin1`, `admin2`, `admin3`. Odczytowy odbiór wdrożenia blokuje zapisy gry i nie resetuje postępu. Promocja v22.1 zakończyła się sukcesem, lecz [zlecony reset wszystkich trzech kont](docs/PREPROD-RESET.md), także `admin1`, **nadal nie został wykonany**. Wymaga oryginalnego ZIP potwierdzenia wydania i odczytu konfiguracji/usług w sesji właściciela GCP; UID, loginy i hasła pozostaną zachowane. Nie odczytano jeszcze wartości włączenia API kont. Bezpośredni odczyt `web.app` z tej sesji blokuje brama HTTP 403. [Rejestr](docs/ENVIRONMENT-STATUS.md) zachowuje hashe ZIP obu nowych artefaktów oraz historyczne dowody v18.
 
 W [v22](docs/FRONTEND-V22-REQUIREMENTS.md) udane działanie wykonane przed swoją lekcją usuwa ją z dalszego samouczka bez skrzyni i nagrody. Kolejny krok nie czeka na powtórzenie czynności ani odbiór nieistniejącej premii; wcześniej przyznane nagrody zostają zachowane.
 
-## Pilna poprawka DEV 0.9.1.2
+## Wcześniejsza pilna poprawka 0.9.1.2
 
-[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Testy są oczekujące; promocja PRE-PROD następuje dopiero po własnym zielonym CI. Nie resetujemy kont. Pozostałe uwagi odłożono do dalszej rozmowy. Rejestr ma 251 zmian i 46 przypadków ręcznych.
+[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Poprawka przeszła własne CI i promocję PRE-PROD; dowody zapisano w rejestrze środowisk. Nie resetowano kont. Tamten zakres miał 251 zmian i 46 ręcznych przypadków; nowy DEV ma 255 zmian i 50 przypadków.
 
 ## Poprzedni zakres DEV 0.9.1.1
 

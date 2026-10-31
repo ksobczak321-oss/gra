@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "as_of": "2026-10-31",
-  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami.",
+  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona.",
   "environment_baseline": {
     "application_source_sha": "092e75226fbb14cab09826f313e11d10891966d8",
     "ci_run_id": 41221965032,
@@ -1110,7 +1110,8 @@
         "source_sha": "82152651a3edd490866a9c2c5f8cc5c4a7104492",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41226626826",
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "DEV: wersja 0.9.1.1 widoczna w czterech wariantach PL/EN × komputer/telefon; 933 testy i 12 zestawów Chromium PASS.",
@@ -1564,7 +1565,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -1616,7 +1618,8 @@
         "source_sha": "3be1f9d2094f1432acacbb782eed1665fd00e6e1",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41233382228",
         "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41233737873",
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "Pilny zakres DEV → własne CI → PRE-PROD. Testy i rzeczywista promocja wymagają odrębnego potwierdzenia; nie resetujemy kont.",
@@ -1628,6 +1631,100 @@
       "tags": [
         "pilne"
       ]
+    },
+    {
+      "id": "HL-CHG-0032",
+      "epic": "HL-EPIC-UI",
+      "area": "Pomoc i ręczny odbiór",
+      "type": "Story",
+      "title": "Pomoc: Wróć do tutoriala ponownie pokazuje objaśnienia gry",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Jawne GO po pilnej poprawce języka; nowy zakres wyłącznie DEV.",
+        "summary": "Pomoc: Wróć do tutoriala ponownie pokazuje objaśnienia gry",
+        "reference": "chat:GO-DEV-po-pilnej-zmianie"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Pomoc zawiera osobne wejście do ponownego oprowadzania interfejsu.",
+        "Powrót nie zmienia nazwy, czasu rozpoczętego świata, salda, lekcji ani odebranych nagród.",
+        "Zamknięcie oprowadzania pozwala wrócić do istniejącej gry."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/testing/manual/HL-TC-0047.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-onboarding-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-help-v24-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny tests/harborlight-help-v24-smoke.py: PASS w czterech wariantach PL/EN, komputer/telefon. Ponowne oprowadzanie zachowuje historię,777 monet i odebrane nagrody, pozwala biec zegarowi już rozpoczętego świata i nie tworzy zapisu wyspy w pamięci przeglądarki. Powrót do praktycznych lekcji wznawia istniejący kurs. Własne CI całego wydania pozostaje odrębnym dowodem; brak promocji nowego zakresu do GCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0033",
+      "epic": "HL-EPIC-TUT",
+      "area": "Pomoc i ręczny odbiór",
+      "type": "Story",
+      "title": "Pomoc: Wróć do samouczka wznawia praktyczne lekcje",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Jawne GO po pilnej poprawce języka; nowy zakres wyłącznie DEV.",
+        "summary": "Pomoc: Wróć do samouczka wznawia praktyczne lekcje",
+        "reference": "chat:GO-DEV-po-pilnej-zmianie"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Pomoc ma oddzielny przycisk powrotu do praktycznego samouczka.",
+        "Wznawiane są pozostałe lekcje; ukończone, wcześniej wykonane i nagrodzone zachowują stan.",
+        "Przycisk nie rozpoczyna nowej wyspy ani nie przyznaje ponownie skrzyń."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/testing/manual/HL-TC-0047.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-tutorial-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-help-v24-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny tests/harborlight-help-v24-smoke.py: PASS w czterech wariantach PL/EN, komputer/telefon. Ponowne oprowadzanie zachowuje historię,777 monet i odebrane nagrody, pozwala biec zegarowi już rozpoczętego świata i nie tworzy zapisu wyspy w pamięci przeglądarki. Powrót do praktycznych lekcji wznawia istniejący kurs. Własne CI całego wydania pozostaje odrębnym dowodem; brak promocji nowego zakresu do GCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+      },
+      "notes": []
     },
     {
       "id": "HL-CHG-0040",
@@ -2782,13 +2879,15 @@
         "ci": "passed_v22_1",
         "preprod": "activation_unconfirmed",
         "prod": "not_deployed",
-        "decision": "accepted"
+        "decision": "superseded"
       },
       "acceptance": [
         "Od TH6 gracz może zaproponować pełną wymianę pięciu materiałów, po uruchomieniu właściwego API."
       ],
       "supersedes": [],
-      "superseded_by": [],
+      "superseded_by": [
+        "HL-CHG-0824"
+      ],
       "related_changes": [],
       "issue_url": null,
       "published_to_github_issues": false,
@@ -4302,7 +4401,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "Efekty dźwiękowe i krótka fanfara skrzyń już istnieją. Ten odłożony zakres dotyczy dalszej ścieżki muzycznej i licencji; nie oznacza braku wszystkich dźwięków."
@@ -4401,7 +4501,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "Reguła ex aequo została wskazana przez użytkownika. Sama wieloosobowa tabela i autorytatywna agregacja pozostają do wdrożenia."
@@ -4445,7 +4546,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -4487,7 +4589,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -4531,7 +4634,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -4946,7 +5050,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -5386,7 +5491,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -5647,7 +5753,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -5689,7 +5796,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -5733,7 +5841,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -6807,7 +6916,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -7114,7 +7224,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -7158,7 +7269,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -7400,7 +7512,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [],
       "related_native_issue_urls": [
@@ -7445,7 +7558,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -7593,7 +7707,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "Późniejszy wpis zmienia tylko wskazany wyjątek; pozostała reguła nadal obowiązuje.",
@@ -7689,7 +7804,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -7893,7 +8009,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -7984,7 +8101,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -8028,7 +8146,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -8578,7 +8697,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "Publiczny rejestr nie przechowuje prywatnych kwot konta właściciela. Ostatnia doba wymaga aktualnego odczytu rozliczeń i wyraźnego okna, nie ekstrapolacji ze starej kwoty.",
@@ -8625,7 +8745,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -8721,7 +8842,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "Definicja 100 CCU jest ustalona. Nie potwierdzono pojemności ani skalowania paczkami 100 kont; osobny wpis HL-CHG-0621 wymaga pomiarów.",
@@ -8813,7 +8935,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "Odpowiedź wynika z rozmowy o modelu biznesowym; nie jest zmianą kodu ani potwierdzeniem przychodu."
@@ -9059,7 +9182,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -9166,7 +9290,8 @@
         "source_sha": "3be1f9d2094f1432acacbb782eed1665fd00e6e1",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41233382228",
         "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41233737873",
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "Implementacja i lokalne kontrole są odrębne od uruchomienia bridge, publikacji tagu i faktycznej promocji PRE-PROD; wymagane osobne dowody.",
@@ -9222,7 +9347,8 @@
         "source_sha": "3be1f9d2094f1432acacbb782eed1665fd00e6e1",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41233382228",
         "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41233737873",
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "Odpowiedź użytkownika potwierdza mismatch manifestu w Node, ale bez expected/observed nie rozstrzyga propagacji CDN. Przyczyna nie jest przedstawiana jako pewna.",
@@ -9357,7 +9483,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -9399,7 +9526,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -9441,7 +9569,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -9483,7 +9612,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -9525,7 +9655,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "Nie znaleziono w aktualnym repo pliku logo do druku. Nie twierdzimy, że brak pliku dowodzi niewykonania dawnej generacji w czacie."
@@ -9572,7 +9703,8 @@
         "source_sha": "82152651a3edd490866a9c2c5f8cc5c4a7104492",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41226626826",
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "Wpisy są oddzielnymi kartami plikowymi w Git. Nie zostały opublikowane jako natywne GitHub Issues; issue_url jest null. Dostęp do API GitHub nie jest zalogowany.",
@@ -9619,7 +9751,8 @@
         "source_sha": "82152651a3edd490866a9c2c5f8cc5c4a7104492",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41226626826",
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "45 osobnych plików HL-TC z kryteriami i powiązaniami jest gotowych; ręczne wykonanie nie zostało potwierdzone.",
@@ -9665,7 +9798,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -9707,7 +9841,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -9747,7 +9882,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "Historia zawiera potwierdzenie przeczytania porównania i wyboru Paynow; nie odtworzono w repo pełnej dawnej odpowiedzi z bieżącymi źródłami cen, więc kwot prowizji nie traktujemy jako zweryfikowanych dzisiaj."
@@ -9797,12 +9933,121 @@
         "source_sha": "3be1f9d2094f1432acacbb782eed1665fd00e6e1",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41233382228",
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "Implementacja i lokalne kontrole są odrębne od uruchomienia bridge, publikacji tagu i faktycznej promocji PRE-PROD; wymagane osobne dowody.",
         "Końcowe CI41233382228, Pages41233382382, bridge41233723831 i PRE-PROD41233737873/próba1 mają SUCCESS dla 3be1f9d2094f1432acacbb782eed1665fd00e6e1. Brak resetu kont. Tag Git urgent-0.9.1.2-20261031 opublikowany; wcześniejsza nieudana próba pozostaje historią."
       ]
+    },
+    {
+      "id": "HL-CHG-0714",
+      "epic": "HL-EPIC-OPS",
+      "area": "Pomoc i ręczny odbiór",
+      "type": "Story",
+      "title": "Osobna lista ręcznego odbioru z wynikami, notatkami i eksportem",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Jawne GO po pilnej poprawce języka; nowy zakres wyłącznie DEV.",
+        "summary": "Osobna lista ręcznego odbioru z wynikami, notatkami i eksportem",
+        "reference": "chat:GO-DEV-po-pilnej-zmianie"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Każdy przypadek ma stabilny ID i odsyłacz do osobnej karty.",
+        "Lista QA rozróżnia NOT RUN, PASS, FAIL i BLOCKED; wynik automatyczny nie zalicza testu ręcznego.",
+        "Raport zapisuje build, środowisko, testera i notatki oraz daje eksport/import JSON; nie zmienia wysp ani nie udaje publikacji GitHub Issues."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/testing/START-HERE.md",
+          "docs/testing/MANUAL-TEST-PLAN.md"
+        ],
+        "code": [
+          "scripts/build_manual_checklist.py",
+          "docs/testing/qa-checklist.html"
+        ],
+        "automated_tests": [
+          "tests/harborlight-manual-checklist-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny Chromium:50kart, filtrowanie, trwałość raportu QA, osobny build każdego wyniku, tekst bez wykonywania HTML, eksport/import JSON, odrzucenie błędnego importu bez utraty oraz układ360px — PASS. Generatory checklisty i rejestru przechodzą --check. Wszystkie wyniki ręcznych testów gry pozostają NOT RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN. ListaQA jest osobną dokumentacjąPages; jej zestaw przeglądarkowy odczytuje własny plik HTML, nie dodaje go do54plikowego pakietu gry ani nie zapisuje danych wysp."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0715",
+      "epic": "HL-EPIC-OPS",
+      "area": "Dokumenty i rejestracja",
+      "type": "Story",
+      "title": "Dokumenty draft3 opisują archipelag i społeczność oraz wymagają aktualnych potwierdzeń",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "GO obejmuje spójność opisów z nowymi funkcjami wyłącznie DEV; dane operatora nadal celowo Lorem ipsum.",
+        "summary": "Rozszerzenie opisów Regulaminu i prywatności o nowy zakres DEV bez przypisywania mu aktywacji GCP.",
+        "reference": "chat:GO-DEV-po-pilnej-zmianie; chat:opisy-zgodne-z-logika"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Regulamin i prywatność draft3 opisują20wysp, NPC+monetowyPvP, sojusze, czat iDM, ligę oraz jawną symulację dobroczynności z wyłączonym programem realnym.",
+        "Pseudonimy i role są odróżnione od anonimowości;30dni widoczności i90dni zgłoszeń nie udają aktywowanego fizycznego usuwaniaTTL wGCP.",
+        "Przewodnik gry fizycznej i raportQA mają osobne lokalne dane, bez zapisu wysp online i bez przyznawania nagród fizycznej sesji.",
+        "Wersje klienta, serwera i wygenerowanychHTML są identyczne:2026-10-31-draft3. Draft2 nie uprawnia nowego świata do pominięcia aktualnych potwierdzeń; stary dowód pozostaje w historii.",
+        "Zmiana dokumentów nie resetuje istniejących światów i stałych kontPRE-PROD; Lorem ipsum i status roboczy pozostają do późniejszej weryfikacji."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0701",
+        "HL-CHG-0702",
+        "HL-CHG-0710",
+        "HL-CHG-0711"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/TERMS-DRAFT.pl.md",
+          "docs/PRIVACY-DRAFT.pl.md"
+        ],
+        "code": [
+          "harborlight-legal.js",
+          "backend/account-service.mjs",
+          "scripts/build_legal_pages.py",
+          "harborlight-terms.html",
+          "harborlight-privacy.html"
+        ],
+        "automated_tests": [
+          "tests/harborlight-legal.test.mjs",
+          "backend/test/legal-acceptance.test.mjs",
+          "tests/harborlight-v18-auth-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Wszystkie wersje draft3 i wygenerowaneHTML są zgodne (--checkPASS). Pełny lokalny zestawNode po zmianie:878PASS/0FAIL, w tym test starego potwierdzenia draft2, wymagania aktualnej wersji dla nowego świata i zachowania starego dowodu. WłasneCI pozostaje osobnym dowodem. Istniejące światy i stałe konta nie są resetowane. Dokumenty nadal robocze zLorem ipsum; realna sprzedaż/dobroczynność pozostają wyłączone. Nowy zakres wyłącznieDEV.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+      },
+      "notes": []
     },
     {
       "id": "HL-CHG-0801",
@@ -10259,8 +10504,8 @@
         "reference": "user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_2"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -10279,12 +10524,26 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP."
@@ -10304,8 +10563,8 @@
         "reference": "user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_2"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -10324,12 +10583,26 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.",
@@ -10350,8 +10623,8 @@
         "reference": "user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_3"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -10373,12 +10646,26 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP."
@@ -10398,8 +10685,8 @@
         "reference": "user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_4"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -10419,16 +10706,31 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.",
-        "Migracja historycznej matki z mniej niż 12 osobami pozostaje do decyzji; córkom nie nadano automatycznie ochrony 12."
+        "Migracja historycznej matki z mniej niż 12 osobami pozostaje do decyzji; córkom nie nadano automatycznie ochrony 12.",
+        "Opisy DEV używają właściwego minimum12/6 i numeru każdej wyspy, genericznych błędów dla kolejnych wysp i rozróżnienia bazowej pojemnościcargo od rozszerzeń; historia starego modelu pozostaje oddzielna."
       ]
     },
     {
@@ -10445,8 +10747,8 @@
         "reference": "user_chat:last_request_2026-10-31"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -10465,12 +10767,26 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": []
     },
@@ -10488,8 +10804,8 @@
         "reference": "user_chat:last_request_2026-10-31"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -10508,12 +10824,26 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": []
     },
@@ -10531,8 +10861,8 @@
         "reference": "user_chat:last_request_2026-10-31"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -10551,12 +10881,26 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": []
     },
@@ -10574,12 +10918,12 @@
         "reference": "user_chat:last_request_2026-10-31"
       },
       "status": {
-        "implementation": "proposed",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "accepted_scope_with_dev_parameters"
       },
       "acceptance": [
         "Nie gubimy osób i ich szczęścia, nie duplikujemy podatków, nie wysyłamy pracowników lub osób w drodze bez reguły."
@@ -10594,14 +10938,30 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
-      "notes": []
+      "notes": [
+        "Jawny parametrDEV do ewentualnej korekty, nie odpowiedź użytkownika: kopiaRatusza/Magazynu, reszta1,6 przesiedleńców,0 startowych zasobów; na córce minimum6, wolne miejsca u celu, brak dodatkowej opłaty/racji i normalne żywienie. A po9 kontynuowane10,11…"
+      ]
     },
     {
       "id": "HL-CHG-0818",
@@ -10617,8 +10977,8 @@
         "reference": "user_chat:last_request_2026-10-31"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -10639,12 +10999,26 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Potwierdzenie użytkownika w odpowiedzi na pytanie z 31 października 2026: „Tak: 10, 13, 16, 19…”. Najpierw analiza i decyzje, bez wdrożenia mechaniki w tym zakresie."
@@ -10664,8 +11038,8 @@
         "reference": "user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_1"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -10686,12 +11060,26 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.",
@@ -10712,8 +11100,8 @@
         "reference": "user_chat:last_request_2026-10-31"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -10732,12 +11120,26 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": []
     },
@@ -10755,12 +11157,12 @@
         "reference": "user_chat:last_request_2026-10-31"
       },
       "status": {
-        "implementation": "proposed",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "accepted"
       },
       "acceptance": [
         "Migracja zapisu dwóch światów do wielu musi zachować istniejące dane i stabilne identyfikatory. Przyjęty limit wynosi 20 wysp łącznie; projekt formatu i atomowego rozliczania pozostaje otwarty."
@@ -10777,15 +11179,30 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
-        "Limit liczby wysp rozstrzygnięto osobno w HL-CHG-0826; ta karta pozostaje otwartym projektem migracji, bez dowodu implementacji."
+        "Limit liczby wysp rozstrzygnięto osobno w HL-CHG-0826; ta karta pozostaje otwartym projektem migracji, bez dowodu implementacji.",
+        "Opisy DEV używają właściwego minimum12/6 i numeru każdej wyspy, genericznych błędów dla kolejnych wysp i rozróżnienia bazowej pojemnościcargo od rozszerzeń; historia starego modelu pozostaje oddzielna."
       ]
     },
     {
@@ -10802,8 +11219,8 @@
         "reference": "user_chat:last_request_2026-10-31"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -10824,12 +11241,26 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": []
     },
@@ -10847,8 +11278,8 @@
         "reference": "user_chat:last_request_2026-10-31; user_chat:response_annotations_2026_10_31/item_5"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -10868,12 +11299,26 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.",
@@ -10894,8 +11339,8 @@
         "reference": "user_chat:last_request_2026-10-31"
       },
       "status": {
-        "implementation": "proposed",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -10904,7 +11349,9 @@
       "acceptance": [
         "Użytkownik wybrał sprzedaż materiałów za monety zamiast dotychczasowego barteru PvP. Gra ustala maksymalną cenę; szczegółowy przelicznik i migracja istniejących ofert pozostają do decyzji."
       ],
-      "supersedes": [],
+      "supersedes": [
+        "HL-CHG-0113"
+      ],
       "superseded_by": [],
       "related_changes": [],
       "issue_url": null,
@@ -10914,12 +11361,26 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Odpowiedź użytkownika z 31 października 2026: „Materiały sprzedawane za monety”. Kierunek zaakceptowany, implementacja jeszcze niewykonana."
@@ -10939,12 +11400,12 @@
         "reference": "user_chat:last_request_2026-10-31"
       },
       "status": {
-        "implementation": "proposed",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "accepted_scope_with_dev_parameters"
       },
       "acceptance": [
         "Nowy koszt oraz sześciu kolonistów trzeba pogodzić z dotychczasowym TH/Magazyn kopiowanym z matki."
@@ -10959,14 +11420,30 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
-      "notes": []
+      "notes": [
+        "Jawny parametrDEV do ewentualnej korekty, nie odpowiedź użytkownika: kopiaRatusza/Magazynu, reszta1,6 przesiedleńców,0 startowych zasobów; na córce minimum6, wolne miejsca u celu, brak dodatkowej opłaty/racji i normalne żywienie. A po9 kontynuowane10,11…"
+      ]
     },
     {
       "id": "HL-CHG-0826",
@@ -10982,8 +11459,8 @@
         "reference": "user_chat:response_annotations_2026_10_31/item_4"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -11007,12 +11484,26 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Decyzja projektowa przyjęta; nie wdrożono mechaniki ani migracji i nie zmieniono stanu kont."
@@ -11032,8 +11523,8 @@
         "reference": "user_chat:response_annotations_2026_10_31/item_3"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -11058,12 +11549,26 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Decyzja projektowa przyjęta; nie wdrożono mechaniki ani migracji i nie zmieniono stanu kont."
@@ -11083,8 +11588,8 @@
         "reference": "user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_1"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -11104,12 +11609,21 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/community-service.mjs",
+          "backend/league-rules.mjs",
+          "harborlight-v1-community-client.js",
+          "harborlight-v1-community-ui.js"
+        ],
+        "automated_tests": [
+          "backend/test/community-service.test.mjs",
+          "tests/harborlight-community-v24-smoke.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
@@ -11129,8 +11643,8 @@
         "reference": "user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_3"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass_real_program_disabled",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -11149,15 +11663,28 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/charity-ledger.mjs",
+          "backend/charity-service.mjs",
+          "harborlight-v1-charity.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-effects.js"
+        ],
+        "automated_tests": [
+          "backend/test/charity.test.mjs",
+          "tests/harborlight-charity-v24.test.mjs",
+          "tests/harborlight-charity-v24-smoke.py",
+          "backend/test/charity-api.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
-        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
+        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.",
+        "Realna dobroczynność NIE jest gotowa do aktywacji: brak autorytatywnej gospodarki i podłączonego zaufanego emitenta/funduszu. DEV służy funkcjonalnemu odbiorowi oznaczonej symulacji."
       ]
     },
     {
@@ -11174,8 +11701,8 @@
         "reference": "user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_3"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass_real_program_disabled",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -11195,15 +11722,28 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/charity-ledger.mjs",
+          "backend/charity-service.mjs",
+          "harborlight-v1-charity.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-effects.js"
+        ],
+        "automated_tests": [
+          "backend/test/charity.test.mjs",
+          "tests/harborlight-charity-v24.test.mjs",
+          "tests/harborlight-charity-v24-smoke.py",
+          "backend/test/charity-api.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
-        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
+        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.",
+        "Realna dobroczynność NIE jest gotowa do aktywacji: brak autorytatywnej gospodarki i podłączonego zaufanego emitenta/funduszu. DEV służy funkcjonalnemu odbiorowi oznaczonej symulacji."
       ]
     },
     {
@@ -11220,8 +11760,8 @@
         "reference": "user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_2"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass_real_program_disabled",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -11242,15 +11782,28 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/charity-ledger.mjs",
+          "backend/charity-service.mjs",
+          "harborlight-v1-charity.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-effects.js"
+        ],
+        "automated_tests": [
+          "backend/test/charity.test.mjs",
+          "tests/harborlight-charity-v24.test.mjs",
+          "tests/harborlight-charity-v24-smoke.py",
+          "backend/test/charity-api.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
-        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
+        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.",
+        "Realna dobroczynność NIE jest gotowa do aktywacji: brak autorytatywnej gospodarki i podłączonego zaufanego emitenta/funduszu. DEV służy funkcjonalnemu odbiorowi oznaczonej symulacji."
       ]
     },
     {
@@ -11267,8 +11820,8 @@
         "reference": "user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_4"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass_real_program_disabled",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -11289,15 +11842,28 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/charity-ledger.mjs",
+          "backend/charity-service.mjs",
+          "harborlight-v1-charity.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-effects.js"
+        ],
+        "automated_tests": [
+          "backend/test/charity.test.mjs",
+          "tests/harborlight-charity-v24.test.mjs",
+          "tests/harborlight-charity-v24-smoke.py",
+          "backend/test/charity-api.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
-        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
+        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.",
+        "Realna dobroczynność NIE jest gotowa do aktywacji: brak autorytatywnej gospodarki i podłączonego zaufanego emitenta/funduszu. DEV służy funkcjonalnemu odbiorowi oznaczonej symulacji."
       ]
     },
     {
@@ -11314,12 +11880,12 @@
         "reference": "user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_5"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "printable_prototype",
+        "dev": "print_artifacts_and_phone_verified",
         "ci": "not_run_for_change",
-        "preprod": "not_deployed",
-        "prod": "not_deployed",
-        "decision": "accepted_parameters_with_open_details"
+        "preprod": "not_applicable_print_artifact",
+        "prod": "not_applicable_print_artifact",
+        "decision": "accepted"
       },
       "acceptance": [
         "Gra fizyczna ma zapewniać samodzielną dobrą zabawę 2–6 osobom przez 45–60 minut, z lekkim RPG, pionkami i ruchami.",
@@ -11334,15 +11900,25 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md"
+          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md",
+          "docs/boardgame/README.md",
+          "docs/testing/manual/HL-TC-0050.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "docs/boardgame/build_print.py",
+          "docs/boardgame/session.mjs",
+          "docs/boardgame/telefon.html"
+        ],
+        "automated_tests": [
+          "docs/boardgame/session.test.mjs",
+          "docs/boardgame/verify_print.py",
+          "docs/boardgame/verify_phone.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages."
       },
       "notes": [
         "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
@@ -11389,7 +11965,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
         "Użytkownik odrzucił dwie talie: bieżący kierunek to jedna talia fizyczna i treść wyświetlana na telefonie. Plansza budynków i centralna Latarnia pozostają."
@@ -11410,11 +11987,11 @@
       },
       "status": {
         "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "dev": "deferred",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted_parameters_with_open_details"
+        "decision": "deferred_by_user"
       },
       "acceptance": [
         "Scenariusz ma łączyć ruch po planszy, zadania/kalambury z telefonu i rozliczane punkty lub korzyści online.",
@@ -11435,10 +12012,12 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
-        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
+        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.",
+        "Najnowsze GO wyłącza integrację gry fizycznej z grą online. Samodzielny drukowany prototyp pozostaje w zakresie; nie przyznajemy punktów/nagród online ani nie dodajemy działającej sesji online."
       ]
     },
     {
@@ -11455,8 +12034,8 @@
         "reference": "user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_1"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -11476,12 +12055,21 @@
           "docs/ENVIRONMENT-STATUS.md",
           "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/community-service.mjs",
+          "backend/league-rules.mjs",
+          "harborlight-v1-community-client.js",
+          "harborlight-v1-community-ui.js"
+        ],
+        "automated_tests": [
+          "backend/test/community-service.test.mjs",
+          "tests/harborlight-community-v24-smoke.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
@@ -11528,7 +12116,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -11572,7 +12161,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -11615,7 +12205,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -11660,7 +12251,8 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": []
     },
@@ -11678,8 +12270,8 @@
         "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_1; user_chat:deferred_slots_print_chat_2026_10_31/item_1"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -11702,12 +12294,21 @@
           "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
           "docs/FRONTEND-V23-1-REQUIREMENTS.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/community-service.mjs",
+          "backend/league-rules.mjs",
+          "harborlight-v1-community-client.js",
+          "harborlight-v1-community-ui.js"
+        ],
+        "automated_tests": [
+          "backend/test/community-service.test.mjs",
+          "tests/harborlight-community-v24-smoke.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.",
@@ -11728,8 +12329,8 @@
         "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_1"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -11751,12 +12352,21 @@
         "documents": [
           "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/community-service.mjs",
+          "backend/league-rules.mjs",
+          "harborlight-v1-community-client.js",
+          "harborlight-v1-community-ui.js"
+        ],
+        "automated_tests": [
+          "backend/test/community-service.test.mjs",
+          "tests/harborlight-community-v24-smoke.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
@@ -11776,8 +12386,8 @@
         "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_1"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -11798,12 +12408,21 @@
         "documents": [
           "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/community-service.mjs",
+          "backend/league-rules.mjs",
+          "harborlight-v1-community-client.js",
+          "harborlight-v1-community-ui.js"
+        ],
+        "automated_tests": [
+          "backend/test/community-service.test.mjs",
+          "tests/harborlight-community-v24-smoke.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
@@ -11823,8 +12442,8 @@
         "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_1"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -11846,12 +12465,21 @@
         "documents": [
           "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/community-service.mjs",
+          "backend/league-rules.mjs",
+          "harborlight-v1-community-client.js",
+          "harborlight-v1-community-ui.js"
+        ],
+        "automated_tests": [
+          "backend/test/community-service.test.mjs",
+          "tests/harborlight-community-v24-smoke.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
@@ -11871,12 +12499,12 @@
         "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_1"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "accepted_scope_with_dev_parameters"
       },
       "acceptance": [
         "Projekt pokazuje konkretne zadania i nagrody, porównywalne dla solo i sojuszu.",
@@ -11894,12 +12522,21 @@
         "documents": [
           "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/community-service.mjs",
+          "backend/league-rules.mjs",
+          "harborlight-v1-community-client.js",
+          "harborlight-v1-community-ui.js"
+        ],
+        "automated_tests": [
+          "backend/test/community-service.test.mjs",
+          "tests/harborlight-community-v24-smoke.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
@@ -11919,8 +12556,8 @@
         "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_2"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass_real_program_disabled",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -11942,15 +12579,28 @@
         "documents": [
           "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/charity-ledger.mjs",
+          "backend/charity-service.mjs",
+          "harborlight-v1-charity.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-effects.js"
+        ],
+        "automated_tests": [
+          "backend/test/charity.test.mjs",
+          "tests/harborlight-charity-v24.test.mjs",
+          "tests/harborlight-charity-v24-smoke.py",
+          "backend/test/charity-api.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
-        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.",
+        "Realna dobroczynność NIE jest gotowa do aktywacji: brak autorytatywnej gospodarki i podłączonego zaufanego emitenta/funduszu. DEV służy funkcjonalnemu odbiorowi oznaczonej symulacji."
       ]
     },
     {
@@ -11967,8 +12617,8 @@
         "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_4; user_chat:deferred_slots_print_chat_2026_10_31/item_2"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass_real_program_disabled",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
@@ -11990,16 +12640,29 @@
           "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
           "docs/FRONTEND-V23-1-REQUIREMENTS.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/charity-ledger.mjs",
+          "backend/charity-service.mjs",
+          "harborlight-v1-charity.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-effects.js"
+        ],
+        "automated_tests": [
+          "backend/test/charity.test.mjs",
+          "tests/harborlight-charity-v24.test.mjs",
+          "tests/harborlight-charity-v24-smoke.py",
+          "backend/test/charity-api.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.",
-        "Użytkownik zaakceptował wskazane parametry, ale odłożył wdrożenie tych mechanik; pilne GO dotyczy wyłącznie języka."
+        "Użytkownik zaakceptował wskazane parametry, ale odłożył wdrożenie tych mechanik; pilne GO dotyczy wyłącznie języka.",
+        "Realna dobroczynność NIE jest gotowa do aktywacji: brak autorytatywnej gospodarki i podłączonego zaufanego emitenta/funduszu. DEV służy funkcjonalnemu odbiorowi oznaczonej symulacji."
       ]
     },
     {
@@ -12016,11 +12679,11 @@
         "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_5"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "printable_prototype",
+        "dev": "print_artifacts_and_phone_verified",
         "ci": "not_run_for_change",
-        "preprod": "not_deployed",
-        "prod": "not_deployed",
+        "preprod": "not_applicable_print_artifact",
+        "prod": "not_applicable_print_artifact",
         "decision": "accepted"
       },
       "acceptance": [
@@ -12038,14 +12701,25 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md"
+          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md",
+          "docs/boardgame/README.md",
+          "docs/testing/manual/HL-TC-0050.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "docs/boardgame/build_print.py",
+          "docs/boardgame/session.mjs",
+          "docs/boardgame/telefon.html"
+        ],
+        "automated_tests": [
+          "docs/boardgame/session.test.mjs",
+          "docs/boardgame/verify_print.py",
+          "docs/boardgame/verify_phone.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
@@ -12065,11 +12739,11 @@
         "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_5"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "printable_prototype",
+        "dev": "print_artifacts_and_phone_verified",
         "ci": "not_run_for_change",
-        "preprod": "not_deployed",
-        "prod": "not_deployed",
+        "preprod": "not_applicable_print_artifact",
+        "prod": "not_applicable_print_artifact",
         "decision": "accepted"
       },
       "acceptance": [
@@ -12086,14 +12760,25 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md"
+          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md",
+          "docs/boardgame/README.md",
+          "docs/testing/manual/HL-TC-0050.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "docs/boardgame/build_print.py",
+          "docs/boardgame/session.mjs",
+          "docs/boardgame/telefon.html"
+        ],
+        "automated_tests": [
+          "docs/boardgame/session.test.mjs",
+          "docs/boardgame/verify_print.py",
+          "docs/boardgame/verify_phone.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
@@ -12113,12 +12798,12 @@
         "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_5"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "implementation": "partially_implemented",
+        "dev": "standalone_prototype_online_excluded",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted"
+        "decision": "accepted_scope_limited_by_user"
       },
       "acceptance": [
         "Przejście planszy i punkty, rozbudowane zadania typu kalambury oraz skutki na koncie online tworzą jeden spójny scenariusz.",
@@ -12134,17 +12819,26 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md"
+          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md",
+          "docs/boardgame/INTEGRACJA-ODLOZONA.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "docs/boardgame/session.mjs",
+          "docs/boardgame/telefon.html"
+        ],
+        "automated_tests": [
+          "docs/boardgame/session.test.mjs",
+          "docs/boardgame/verify_phone.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Warstwy ruchu i kreatywnych scen są w zweryfikowanym samodzielnym prototypie. Integracja online jest wyłączona przez użytkownika; nie przyznaje się monet, zaliczeń ani punktów ligi. Fizyczna partia nadal NOT_RUN."
       },
       "notes": [
-        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.",
+        "BieżąceGO wdraża ruch i kreatywne zadania w samodzielnym prototypie; trzecia warstwa punktów/nagród online jest jawnie wyłączona wraz z integracją. Nie udajemy jej uruchomienia."
       ]
     },
     {
@@ -12162,11 +12856,11 @@
       },
       "status": {
         "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "dev": "deferred",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted_parameters_with_open_details"
+        "decision": "deferred_by_user"
       },
       "acceptance": [
         "Zadania fizyczne dają kontu gracza punkty lub korzyści jak za aktywności, z jasno opisanym zastosowaniem, limitem i pojedynczym rozliczeniem.",
@@ -12190,10 +12884,12 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
-        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.",
+        "Najnowsze GO wyłącza integrację gry fizycznej z grą online. Samodzielny drukowany prototyp pozostaje w zakresie; nie przyznajemy punktów/nagród online ani nie dodajemy działającej sesji online."
       ]
     },
     {
@@ -12211,11 +12907,11 @@
       },
       "status": {
         "implementation": "not_implemented",
-        "dev": "analysis_only",
+        "dev": "deferred",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted"
+        "decision": "deferred_by_user"
       },
       "acceptance": [
         "W przyszłej aplikacji gracz wybiera Gra fizyczna i uruchamia scenariusz na telefonie.",
@@ -12238,10 +12934,12 @@
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": ""
       },
       "notes": [
-        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.",
+        "Najnowsze GO wyłącza integrację gry fizycznej z grą online. Samodzielny drukowany prototyp pozostaje w zakresie; nie przyznajemy punktów/nagród online ani nie dodajemy działającej sesji online."
       ]
     },
     {
@@ -12258,12 +12956,12 @@
         "reference": "user_chat:deferred_slots_print_chat_2026_10_31/item_1"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "deferred",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "deferred_pending_followup"
+        "decision": "accepted_scope_with_dev_parameters"
       },
       "acceptance": [
         "Zadania mają jasne okna wykonania. Godziny 19–20 lub 20–21 to przykłady użytkownika, a nie zatwierdzony harmonogram.",
@@ -12278,12 +12976,21 @@
         "documents": [
           "docs/FRONTEND-V23-1-REQUIREMENTS.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/community-service.mjs",
+          "backend/league-rules.mjs",
+          "harborlight-v1-community-client.js",
+          "harborlight-v1-community-ui.js"
+        ],
+        "automated_tests": [
+          "backend/test/community-service.test.mjs",
+          "tests/harborlight-community-v24-smoke.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
@@ -12303,12 +13010,12 @@
         "reference": "user_chat:deferred_slots_print_chat_2026_10_31/item_7"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "deferred",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "deferred_pending_followup"
+        "decision": "accepted_scope_with_dev_parameters"
       },
       "acceptance": [
         "Obok dotychczasowego zadania dnia pojawia się zadanie zręcznościowe w godzinach ligi, np. łapanie losowo pojawiających się obiektów.",
@@ -12323,12 +13030,21 @@
         "documents": [
           "docs/FRONTEND-V23-1-REQUIREMENTS.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/community-service.mjs",
+          "backend/league-rules.mjs",
+          "harborlight-v1-community-client.js",
+          "harborlight-v1-community-ui.js"
+        ],
+        "automated_tests": [
+          "backend/test/community-service.test.mjs",
+          "tests/harborlight-community-v24-smoke.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
@@ -12348,12 +13064,12 @@
         "reference": "user_chat:deferred_slots_print_chat_2026_10_31/item_3"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "deferred",
+        "implementation": "printable_prototype",
+        "dev": "print_artifacts_and_phone_verified",
         "ci": "not_run_for_change",
-        "preprod": "not_deployed",
-        "prod": "not_deployed",
-        "decision": "deferred_pending_followup"
+        "preprod": "not_applicable_print_artifact",
+        "prod": "not_applicable_print_artifact",
+        "decision": "accepted"
       },
       "acceptance": [
         "Bank ma uwzględniać pokazywanie przedmiotów wyspy, rozbitków i piratów bez mówienia i pisania oraz odgadywanie słów czytanych wspak.",
@@ -12366,14 +13082,25 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md",
+          "docs/boardgame/README.md",
+          "docs/testing/manual/HL-TC-0050.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "docs/boardgame/build_print.py",
+          "docs/boardgame/session.mjs",
+          "docs/boardgame/telefon.html"
+        ],
+        "automated_tests": [
+          "docs/boardgame/session.test.mjs",
+          "docs/boardgame/verify_print.py",
+          "docs/boardgame/verify_phone.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages."
       },
       "notes": [
         "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
@@ -12393,12 +13120,12 @@
         "reference": "user_chat:deferred_slots_print_chat_2026_10_31/item_4"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "deferred",
+        "implementation": "printable_prototype",
+        "dev": "print_artifacts_and_phone_verified",
         "ci": "not_run_for_change",
-        "preprod": "not_deployed",
-        "prod": "not_deployed",
-        "decision": "deferred_pending_followup"
+        "preprod": "not_applicable_print_artifact",
+        "prod": "not_applicable_print_artifact",
+        "decision": "accepted"
       },
       "acceptance": [
         "Przygotować później drukowalne projekty planszy, jednej talii kart i pionków zgodne z zatwierdzanym scenariuszem.",
@@ -12411,14 +13138,25 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md",
+          "docs/boardgame/README.md",
+          "docs/testing/manual/HL-TC-0050.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "docs/boardgame/build_print.py",
+          "docs/boardgame/session.mjs",
+          "docs/boardgame/telefon.html"
+        ],
+        "automated_tests": [
+          "docs/boardgame/session.test.mjs",
+          "docs/boardgame/verify_print.py",
+          "docs/boardgame/verify_phone.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages."
       },
       "notes": [
         "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
@@ -12438,12 +13176,12 @@
         "reference": "user_chat:deferred_slots_print_chat_2026_10_31/item_5"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "deferred",
+        "implementation": "printable_prototype",
+        "dev": "print_artifacts_and_phone_verified",
         "ci": "not_run_for_change",
-        "preprod": "not_deployed",
-        "prod": "not_deployed",
-        "decision": "deferred_pending_followup"
+        "preprod": "not_applicable_print_artifact",
+        "prod": "not_applicable_print_artifact",
+        "decision": "accepted"
       },
       "acceptance": [
         "Do projektu drukowanego dołączyć pudełko/opakowanie, instrukcję oraz kody QR.",
@@ -12456,14 +13194,25 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md",
+          "docs/boardgame/README.md",
+          "docs/testing/manual/HL-TC-0050.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "docs/boardgame/build_print.py",
+          "docs/boardgame/session.mjs",
+          "docs/boardgame/telefon.html"
+        ],
+        "automated_tests": [
+          "docs/boardgame/session.test.mjs",
+          "docs/boardgame/verify_print.py",
+          "docs/boardgame/verify_phone.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages."
       },
       "notes": [
         "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
@@ -12483,12 +13232,12 @@
         "reference": "user_chat:deferred_slots_print_chat_2026_10_31/item_6"
       },
       "status": {
-        "implementation": "not_implemented",
-        "dev": "deferred",
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "deferred_pending_followup"
+        "decision": "accepted"
       },
       "acceptance": [
         "Czat sojuszu pozostaje, a gracze mają móc osobno prowadzić prywatne rozmowy jeden na jeden.",
@@ -12503,12 +13252,21 @@
         "documents": [
           "docs/FRONTEND-V23-1-REQUIREMENTS.md"
         ],
-        "code": [],
-        "automated_tests": [],
+        "code": [
+          "backend/community-service.mjs",
+          "backend/league-rules.mjs",
+          "harborlight-v1-community-client.js",
+          "harborlight-v1-community-ui.js"
+        ],
+        "automated_tests": [
+          "backend/test/community-service.test.mjs",
+          "tests/harborlight-community-v24-smoke.py"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
-        "manual_execution": "NOT_RUN"
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
       },
       "notes": [
         "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."

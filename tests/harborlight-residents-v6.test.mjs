@@ -158,7 +158,7 @@ test('Lighthouse construction forces 100% even from negative happiness and resto
 });
 
 test('departure removes home and travel residents first and never removes visitors', () => {
-  const s = fixture(); const protectedIds = s.residents.slice(0, 2).map(p => p.id); visit(s, protectedIds);
+  const s = fixture(); s.islandRole = 'daughter'; const protectedIds = s.residents.slice(0, 2).map(p => p.id); visit(s, protectedIds);
   hire(s, 'lumber', 1);
   const walking = s.residents.find(p => p.workplace === 'lumber'); walking.happiness = -90;
   assert.equal(removeResidentForDeparture(s), true);
@@ -168,7 +168,7 @@ test('departure removes home and travel residents first and never removes visito
 });
 
 test('departures honor largest crew and the latest harbor, market, sawmill, quarry tie order', () => {
-  const s = fixture();
+  const s = fixture(); s.islandRole = 'daughter';
   for (const id of ['dock', 'market', 'quarry', 'sawmill']) hire(s, id, 3, true);
   assert.equal(availableResidentCount(s), 0);
   removeResidentForDeparture(s); assert.equal(s.buildings.dock.workers, 2);
@@ -177,11 +177,12 @@ test('departures honor largest crew and the latest harbor, market, sawmill, quar
   assert.equal(s.population, 9);
 });
 
-test('population departures stop at six or when all candidates are protected visitors', () => {
+test('daughter departures stop at six and mother departures stop at twelve or protected visitors', () => {
   const s = fixture(); s.buildings.lighthouse.level = 6;
   visit(s, s.residents.map(p => p.id));
   assert.equal(removeResidentForDeparture(s), false); assert.equal(s.population, 12);
-  const min = fixture(6); assert.equal(removeResidentForDeparture(min), false); assert.equal(min.population, 6);
+  const mother = fixture(); assert.equal(removeResidentForDeparture(mother), false);
+  const min = fixture(6); min.islandRole = 'daughter'; assert.equal(removeResidentForDeparture(min), false); assert.equal(min.population, 6);
 });
 
 test('free daily entries and simultaneous capacity are independent limits', () => {
@@ -235,7 +236,7 @@ test('quota histories and unused paid entries survive reload', () => {
 });
 
 test('a departing carrier leaves loaded cargo in flight without an assigned worker', () => {
-  const s = fixture(); hire(s, 'warehouse', 12, true);
+  const s = fixture(); s.islandRole = 'daughter'; hire(s, 'warehouse', 12, true);
   const carrier = s.residents.filter(person => person.workplace === 'warehouse')[11];
   carrier.happiness = -90; // The chosen crew loses its least happy member.
   s.haulTrips = { warehouse: [{ worker: 11, amount: 40, resource: 'wood', remaining: 10 }] };

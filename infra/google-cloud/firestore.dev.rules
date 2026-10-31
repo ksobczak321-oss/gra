@@ -8,8 +8,9 @@ service cloud.firestore {
     }
     function validIsland() {
       let data = request.resource.data;
-      return data.keys().hasOnly(['schemaVersion', 'revision', 'payload', 'updatedAt']) &&
-        data.schemaVersion is int && data.schemaVersion == 1 && data.revision is int && data.revision > 0 &&
+      return data.keys().hasOnly(['schemaVersion', 'revision', 'payload', 'updatedAt', 'worldIds', 'generation']) &&
+        data.schemaVersion is int && data.schemaVersion in [1, 2] && data.revision is int && data.revision > 0 &&
+        (data.schemaVersion == 1 || (data.worldIds is list && data.worldIds.size() <= 19 && data.generation is int && data.generation > 0)) &&
         data.payload is string && data.payload.size() > 0 &&
         data.payload.toUtf8().size() <= 700000 && data.updatedAt == request.time;
     }
@@ -17,7 +18,27 @@ service cloud.firestore {
       allow get: if ownsIsland(uid);
       allow create: if ownsIsland(uid) && validIsland() && request.resource.data.revision == 1;
       allow update: if ownsIsland(uid) && validIsland() &&
-        request.resource.data.revision == resource.data.revision + 1;
+        request.resource.data.revision == resource.data.revision + 1 &&
+        (!('generation' in resource.data) || request.resource.data.generation == resource.data.generation);
+    }
+    // Account CAS and daughter updates are committed together. Direct clients
+    // can access only their own three PRE-PROD fixtures; deploy these rules
+    // separately before enabling the new multi-world format in PRE-PROD.
+    match /islands/{uid}/worlds/{islandId} {
+      function validDaughter() {
+        let data = request.resource.data;
+        let root = /databases/$(database)/documents/islands/$(uid);
+        let after = getAfter(root).data;
+        return islandId.matches('island-([2-9]|1[0-9]|20)') &&
+          data.keys().hasOnly(['payload', 'generation']) && data.payload is string &&
+          data.payload.toUtf8().size() > 0 && data.payload.toUtf8().size() <= 700000 &&
+          data.generation is int && data.generation > 0 && data.generation == after.generation && after.schemaVersion == 2 &&
+          after.worldIds.hasAny([islandId]) &&
+          ((!exists(root) && after.revision == 1) ||
+            (exists(root) && after.revision == get(root).data.revision + 1));
+      }
+      allow get: if ownsIsland(uid) && exists(/databases/$(database)/documents/islands/$(uid));
+      allow create, update: if ownsIsland(uid) && validDaughter();
     }
   }
 }

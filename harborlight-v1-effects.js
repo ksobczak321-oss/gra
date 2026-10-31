@@ -1,9 +1,9 @@
 // One read-only view of active benefits and penalties, shared by Town Hall and
 // transition notifications. Countdown changes alone never create a new notice.
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v23-1';
-import { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v23-1';
-import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v23-1';
-import { worldEventRows } from './harborlight-v1-events.js?v=frontend-v23-1';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v24';
+import { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v24';
+import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v24';
+import { worldEventRows } from './harborlight-v1-events.js?v=frontend-v24';
 const EPS = 1e-7;
 const GRACE = 12 * 3600;
 const workplaceNames = { farm: 'Farm', windmill: 'Windmill', lumber: 'Lumber Camp', sawmill: 'Sawmill', quarry: 'Quarry', warehouse: 'Warehouse', market: 'Market', dock: 'Harbor' };
@@ -34,6 +34,11 @@ export function activeEffects(state = {}) {
   const effects = [], people = peopleOf(state), eligible = people.filter(person => !frozen(person));
   const allScope = scopeOf(eligible, people);
   const allIds = idsOf(eligible);
+  const charityRemaining = (finite(state.charityReward?.expiresAt) - finite(state.worldTimeMs, finite(state.lastSimulatedAt))) / 1000;
+  if (state.charityReward?.happinessPoints === 20 && charityRemaining > EPS) effects.push(effectRow('charity-gratitude', 'Light of Gratitude', 'positive', '+20 pp happiness · illuminated Harbor', allScope, {
+    amount: 20, residentIds: allIds, remaining: charityRemaining,
+    explain: 'A confirmed charity transfer grants one six-hour bonus on this island. It cannot stack or restart on refresh. Lighthouse 100% and the initial settling rules still take priority.'
+  }));
   const welcome = welcomeStatus(state);
   if (welcome.active) effects.push(effectRow('welcome', 'Welcome bonus', 'positive', 'Happiness cannot fall below 20%', scopeOf(people, people), {
     amount: 20, residentIds: idsOf(people), remaining: welcome.remaining,

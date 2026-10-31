@@ -1,0 +1,300 @@
+{
+  "id": "ostatni-rejs-1",
+  "version": "1.0-print-prototype",
+  "title": "Ostatni rejs przed świtem",
+  "players": [
+    2,
+    6
+  ],
+  "rounds": 8,
+  "roundSeconds": 300,
+  "sceneSeconds": 90,
+  "qrUrl": "https://ksobczak321-oss.github.io/gra/docs/boardgame/telefon.html",
+  "opening": "Statek Powracający czeka za mgłą. Latarnia milczy, a mieszkańcy pamiętają tę samą noc zupełnie inaczej. Obejdźcie wyspę, zdobądźcie Załogę, Mechanizm i Kod. Macie osiem rund do świtu. Najlepsze pomysły bywają niedorzeczne — ale ostatni statek naprawdę potrzebuje waszego światła.",
+  "route": [
+    "Port",
+    "Magazyn",
+    "Dom",
+    "Gospodarstwo",
+    "Młyn",
+    "Kaplica",
+    "Ratusz",
+    "Kamieniołom",
+    "Drwale",
+    "Tartak",
+    "Targ",
+    "Przystań",
+    "Port",
+    "Latarnia"
+  ],
+  "roles": [
+    {
+      "name": "Latarnik",
+      "motto": "Wszystko wygląda lepiej, gdy włączy się światło.",
+      "color": "#cf9f39",
+      "shape": "słońce"
+    },
+    {
+      "name": "Nawigator",
+      "motto": "Nigdy się nie gubię. Odkrywam dodatkowe drogi.",
+      "color": "#267f9b",
+      "shape": "trójkąt"
+    },
+    {
+      "name": "Magazynier",
+      "motto": "Nie ma chaosu. Są rzeczy w niewłaściwej skrzyni.",
+      "color": "#9563a7",
+      "shape": "kwadrat"
+    },
+    {
+      "name": "Cieśla",
+      "motto": "Jeśli się rusza, dodam deskę. Jeśli nie — też.",
+      "color": "#b9583d",
+      "shape": "romb"
+    },
+    {
+      "name": "Opiekun Domu",
+      "motto": "Najpierw ludzie, potem nawet najbardziej genialny plan.",
+      "color": "#4e8e68",
+      "shape": "serce"
+    },
+    {
+      "name": "Radca",
+      "motto": "Proszę o protokół z tego znakomitego nieporozumienia.",
+      "color": "#586bb4",
+      "shape": "gwiazda"
+    }
+  ],
+  "deck": [
+    "Port",
+    "Magazyn",
+    "Dom",
+    "Ratusz",
+    "Kaplica",
+    "Drwale"
+  ],
+  "scenes": [
+    {
+      "id": "F01",
+      "act": 1,
+      "title": "Świadek, który jest skrzynią",
+      "place": "Magazyn",
+      "type": "kalambury",
+      "public": "Odtwórzcie trzy wspomnienia skrzyni i wskażcie miejsce przemiany drewna w deski. Wspomnienia nie pokazują wszystkich przystanków.",
+      "secret": "Bez mówienia i pisania pokaż: pusta skrzynia w Porcie, drewno odebrane u Drwali, deski oddane pod Latarnią. Pomiędzy drugim i trzecim wspomnieniem drewno przetworzono w Tartaku. Zagraj deszcz w drugim obrazie.",
+      "answer": "Wspomnienia: Port → Drwale → Latarnia. Drewno zmieniło się w deski po drodze w Tartaku.",
+      "check": "Trzy miejsca we właściwej kolejności i wskazany Tartak.",
+      "hint": "Skrzynia pamięta trzy zdjęcia, a nie całą trasę.",
+      "accessible": "Siedzący mim może wskazywać budynki ruchem dłoni; zamiast całego ciała użyjcie wyciętego znacznika skrzyni."
+    },
+    {
+      "id": "F02",
+      "act": 1,
+      "title": "Maszyna obrażona na instrukcję",
+      "place": "Młyn",
+      "type": "dźwięki i gesty",
+      "public": "Ustalcie recepturę maszyny i odrzućcie jeden niewłaściwy składnik. Odpowiedź ułóżcie ze znaczników.",
+      "secret": "Jesteś workiem i maszyną. Masz do dyspozycji tylko trzy wymyślone dźwięki oraz gesty. Maszyna zjada 2 zboża i daje 1 żywność. Gdy ktoś podaje deskę, obraża się. Nie używaj cyfr ani nazw składników.",
+      "answer": "2 zboża → 1 żywność. Deska nie jest składnikiem.",
+      "check": "Właściwe dwie porcje wejścia, jedna wyjścia i odrzucona deska.",
+      "hint": "Maszyna chce dwa razy to samo.",
+      "accessible": "Dźwięki zastąpcie trzema umówionymi gestami lub kolorowymi znacznikami."
+    },
+    {
+      "id": "F03",
+      "act": 1,
+      "title": "Posiedzenie bez rzeczowników",
+      "place": "Ratusz",
+      "type": "teatr ograniczeń",
+      "public": "Wybierzcie dwa budynki do naprawy we właściwej kolejności i wyjaśnijcie powód. Urzędnik nie może używać rzeczowników.",
+      "secret": "Najpierw trzeba naprawić Magazyn, potem Port: zapasy giną, zanim przybędą kolejne. Mów tylko czasownikami i przysłówkami oraz gestykuluj. Drugi aktor może co chwilę pytać: Proszę o doprecyzowanie.",
+      "answer": "Magazyn przed Portem, aby najpierw zabezpieczyć to, co już mamy.",
+      "check": "Oba budynki we właściwej kolejności oraz sens ochrony zapasu.",
+      "hint": "Nie warto dowozić więcej do dziurawego schowka.",
+      "accessible": "Całość można pokazać gestami bez mówienia; zgadujący układają dwa papierowe znaczniki."
+    },
+    {
+      "id": "F04",
+      "act": 1,
+      "title": "Procesja odwrotnych emocji",
+      "place": "Kaplica",
+      "type": "kalambury",
+      "public": "Przetłumaczcie dwie wiadomości. Uwaga: emocje aktora znaczą coś odwrotnego, ale same czynności są prawdziwe.",
+      "secret": "Bez mówienia, pisania i liter pokaż: zapasy są bezpieczne — jak wielką tragedię; mieszkańcy potrzebują odpoczynku — jak wielkie zwycięstwo. Nie pokazuj głodu ani pożaru.",
+      "answer": "Zapasy są bezpieczne. Mieszkańcom potrzeba odpoczynku.",
+      "check": "Obie wiadomości, bez pomylenia emocji z treścią.",
+      "hint": "Dobra wiadomość jest zagrana źle, a kłopot — z entuzjazmem.",
+      "accessible": "Zagraj wszystko mimiką i dłońmi z miejsca; można użyć wyciętych twarzy."
+    },
+    {
+      "id": "F05",
+      "act": 2,
+      "title": "Kapitan bez własnej mapy",
+      "place": "Port",
+      "type": "nawigacja metaforą",
+      "public": "Poprowadźcie znacznik po mapce: Port–Magazyn; Magazyn–Drwale; Drwale–Latarnia; Magazyn–Kamieniołom; Kamieniołom–Latarnia. Droga Magazyn–Drwale jest zamknięta. Kapitan nie może powiedzieć lewo lub prawo ani dotknąć pionka.",
+      "secret": "Poprowadź załogę trasą Port → Magazyn → Kamieniołom → Latarnia. Opisuj miejsca czynnościami, porównaniami i gestami, bez ich nazw. To mapka sceny, nie tor marszu na planszy.",
+      "answer": "Port → Magazyn → Kamieniołom → Latarnia.",
+      "check": "Właściwy cel i wyłącznie otwarte odcinki.",
+      "hint": "Kamień też zna drogę do światła.",
+      "accessible": "Nawigator może wskazywać numerowane połączenia zamiast przesuwać znacznik."
+    },
+    {
+      "id": "F06",
+      "act": 2,
+      "title": "Teatr źle zmontowanych części",
+      "place": "Tartak",
+      "type": "reżyseria",
+      "public": "Zobaczycie trzy czynności w błędnej kolejności. Reżyser może podawać wyłącznie numery obrazów. Poprawcie spektakl i odegrajcie go ponownie.",
+      "secret": "Wymyśl gest pobrania drewna, obróbki i dostawy deski. Odegraj kolejno: dostawa, pobranie, obróbka. Udawaj, że to absolutnie rozsądna kolejność. Reżyser musi ją poprawić.",
+      "answer": "Pobranie → obróbka → dostawa, czyli obrazy 2 → 3 → 1.",
+      "check": "Poprawna kolejność i jedno poprawne powtórzenie przez aktora.",
+      "hint": "Najpierw musisz coś mieć, żeby coś z tym zrobić.",
+      "accessible": "Gesty mogą wykonywać tylko dłonie albo trzy papierowe znaczniki."
+    },
+    {
+      "id": "F07",
+      "act": 2,
+      "title": "Trzech lokatorów w jednym płaszczu",
+      "place": "Dom",
+      "type": "szybka zmiana ról",
+      "public": "Rozdzielcie pomoc: jedzenie, odpoczynek i światło. Każda z trzech postaci może użyć jednego gestu i jednego niepowtarzanego słowa.",
+      "secret": "Odegraj głodnego pracownika, przepracowanego mieszkańca i zadowolonego gościa szukającego drogi. Pierwszy potrzebuje żywności, drugi odpoczynku, trzeci światła. Za każdym razem zmień postawę.",
+      "answer": "Głodny → żywność; przepracowany → odpoczynek; gość → światło.",
+      "check": "Wszystkie trzy poprawne przydziały.",
+      "hint": "Pomoc nie musi być taka sama dla każdego.",
+      "accessible": "Zmiana roli może oznaczać tylko zmianę koloru znacznika lub kierunku dłoni."
+    },
+    {
+      "id": "F08",
+      "act": 2,
+      "title": "Rysopis sprawcy: wiatr",
+      "place": "Drwale",
+      "type": "komiks",
+      "public": "Odczytajcie przyczynę, skutek i ratunek z komiksu. Rysownik ma 30 sekund; bez liter, cyfr i strzałek. Nie oceniamy urody rysunku.",
+      "secret": "Narysuj trzy kadry: wiatr odwraca drogowskaz; załoga idzie do złego budynku; kształt Latarni pomaga jej rozpoznać kierunek. Po 30 sekundach wolno tylko obracać kartkę, nie dopowiadać.",
+      "answer": "Odwrócony drogowskaz → zła droga → orientacja na Latarnię.",
+      "check": "Właściwy sens wszystkich trzech etapów.",
+      "hint": "Nie każdy zły kierunek oznacza złego nawigatora.",
+      "accessible": "Rysowanie zastąpcie układaniem prostych figur lub wskazywaniem kształtów; limit pozostaje taki sam."
+    },
+    {
+      "id": "F09",
+      "act": 2,
+      "title": "Aukcja rzeczy, której nie wolno nazwać",
+      "place": "Targ",
+      "type": "improwizowany handel",
+      "public": "Odgadnijcie, co sprzedaje handlarz, i powtórzcie dwa argumenty. Zakazane słowa: czas, minuta, czekać. Nie ustalacie realnej ceny.",
+      "secret": "Sprzedajesz spokojne okno rozładunku. Obiecujesz: mniej strat, bezpieczeństwo ludzi, porządek. Nie sprzedajesz statku ani towaru. Klient może dopytywać po każdej obietnicy.",
+      "answer": "Spokojne okno na rozładunek; dwa z trzech: mniej strat, bezpieczeństwo, porządek.",
+      "check": "Przedmiot niematerialny i co najmniej dwa trafne argumenty.",
+      "hint": "Tego nie da się zamknąć w skrzyni, ale dzięki temu skrzynie przetrwają.",
+      "accessible": "Argumenty można przedstawić krótkimi zapisanymi zdaniami z zachowaniem zakazanych słów."
+    },
+    {
+      "id": "F10",
+      "act": 2,
+      "title": "Instrukcja z przyszłości",
+      "place": "Kamieniołom",
+      "type": "budowanie z opisu",
+      "public": "Zbudujcie układ z pięciu pasków według wspomnienia. Opisującemu nie wolno mówić: most, belka, pionowo, poziomo. Układ może leżeć płasko.",
+      "secret": "Układ ma dwie podpory obok siebie i trzy poprzeczne połączenia między nimi, jak drabina o trzech szczeblach. Opowiadaj, jakbyś wspominał budowę po dwudziestu latach. Nie dotykaj pasków.",
+      "answer": "Dwie równoległe podpory połączone trzema poprzecznymi paskami.",
+      "check": "Pięć pasków w jednym połączonym układzie; palec może przejść od jednego końca do drugiego.",
+      "hint": "Wyobraź sobie drabinę, która postanowiła odpocząć.",
+      "accessible": "Osoba układająca może kierować cudzą dłonią słownie, bez dotykania uczestnika."
+    },
+    {
+      "id": "F11",
+      "act": 3,
+      "title": "Radio tłumaczy za dosłownie",
+      "place": "Przystań",
+      "type": "sygnał ratunkowy",
+      "public": "Ustalcie, gdzie statek ma zaczekać i jaki sygnał go wezwie. Każdy rzeczownik operator zastępuje gestem. Można użyć papierowych pasków zamiast dźwięku.",
+      "secret": "Statek ma czekać za mielizną, aż pokażecie dwa krótkie i jeden długi sygnał. Zacznij jak surowy dowódca, potem powtórz jak bardzo uprzejmy gość. Sens musi zostać ten sam.",
+      "answer": "Czekać za mielizną. Sygnał: krótki–krótki–długi.",
+      "check": "Właściwe miejsce oczekiwania i prawidłowy wzór sygnału.",
+      "hint": "To nie jest numer telefonu. Dwa małe i jeden duży.",
+      "accessible": "Gesty i ułożenie dwóch krótkich oraz jednego długiego paska są pełnoprawnym rozwiązaniem."
+    },
+    {
+      "id": "F12",
+      "act": 3,
+      "title": "Sześć sekund po premierze",
+      "place": "Latarnia",
+      "type": "teatr od końca",
+      "public": "Złóżcie finał we właściwej kolejności. Macie najwyżej trzy komendy STOP i jeden zbędny symbol: monetę.",
+      "secret": "Odegraj od końca: radość bezpiecznego statku, błysk Latarni, naprawa mechanizmu. Aktor nie mówi i nie pisze. Pozwól reżyserom zmienić kolejność trzech obrazów.",
+      "answer": "Naprawa → sygnał → bezpieczny powrót. Moneta nie jest częścią sekwencji.",
+      "check": "Poprawne trzy etapy i odrzucona moneta.",
+      "hint": "Nie da się dopłynąć za światłem, którego jeszcze nie ma.",
+      "accessible": "Trzy obrazy można odegrać samymi rękami albo trzema znacznikami."
+    },
+    {
+      "id": "F13",
+      "act": 2,
+      "title": "Papuga czyta wspak",
+      "place": "Przystań",
+      "type": "słowa od tyłu",
+      "public": "Odgadnijcie trzy słowa usłyszane od końca, a potem pokażcie nimi krótką historię rozbitka. Papuga nie może podać zwykłej wersji słów.",
+      "secret": "Przeczytaj kolejno, bez sylabizowania: ACIWTOK, KETIBZOR, YTARIP. To są: KOTWICA, ROZBITEK, PIRATY. Możesz powtórzyć każde wspak maksymalnie trzy razy. Gdy grupa odgadnie, wybierzcie gestami scenę: rozbitek ukrywa kotwicę przed piratami.",
+      "answer": "KOTWICA, ROZBITEK, PIRATY. Scena: rozbitek ukrywa kotwicę przed piratami.",
+      "check": "Trzy hasła oraz rozpoznawalna wspólna scena; nie trzeba odtwarzać identycznego zdania.",
+      "hint": "To przedmiot statku, osoba po katastrofie i nieproszeni goście.",
+      "accessible": "Jeśli czytanie lub słuchanie utrudnia grę, pokaż odwrócone litery na telefonie, bez zwykłych odpowiedzi.",
+      "backwardsWords": [
+        {
+          "normal": "KOTWICA",
+          "backwards": "ACIWTOK"
+        },
+        {
+          "normal": "ROZBITEK",
+          "backwards": "KETIBZOR"
+        },
+        {
+          "normal": "PIRATY",
+          "backwards": "YTARIP"
+        }
+      ]
+    },
+    {
+      "id": "F14",
+      "act": 2,
+      "title": "Biuro rzeczy zgubionych przez piratów",
+      "place": "Port",
+      "type": "kalambury bez słów",
+      "public": "Rozpoznajcie trzy przedmioty i wybierzcie jeden do ratowania statku. Aktor nie mówi, nie pisze, nie rysuje liter i nie wskazuje prawdziwego przedmiotu w pokoju.",
+      "secret": "Pokaż kolejno: lunetę, koło ratunkowe i skrzynię skarbów. Każdy przedmiot odegraj inaczej: jakby był za ciężki, za delikatny albo miał własne zdanie. Do ratowania człowieka ze statku wybierzcie koło ratunkowe.",
+      "answer": "Luneta, koło ratunkowe, skrzynia skarbów. Do ratunku: koło ratunkowe.",
+      "check": "Co najmniej dwa rozpoznane przedmioty oraz właściwy wybór ratunkowy.",
+      "hint": "Nie wszystko, co najcenniejsze, najbardziej się przydaje.",
+      "accessible": "Wystarczą gesty dłoni i mimika; nie trzeba wstawać."
+    },
+    {
+      "id": "F15",
+      "act": 2,
+      "title": "Strażnik dźwięków nie z tej bajki",
+      "place": "Dom",
+      "type": "pomyłkowe efekty",
+      "public": "Rozpoznajcie trzy czynności. Aktor gra bez słów, a dźwiękowiec dodaje do każdej zupełnie niepasujący efekt. Nie wolno nazywać czynności.",
+      "secret": "Pokaż łowienie ryby, rozwieszanie żagla i zapalanie latarni. Drugi aktor dobiera odgłosy, jakby to były odpowiednio: biuro, kosmos i cyrk. Przy dwóch osobach wykonawca robi oba zadania naprzemiennie.",
+      "answer": "Łowienie ryby → rozwieszanie żagla → zapalanie latarni; kolejność jest dowolna, liczy się sens trzech czynności.",
+      "check": "Trzy czynności poprawnie nazwane mimo mylących dźwięków.",
+      "hint": "Słuch może żartować, ale dłonie mówią prawdę.",
+      "accessible": "Dźwiękowiec używa trzech niepasujących rysunków lub min; żadnego wymogu słyszenia."
+    },
+    {
+      "id": "F16",
+      "act": 2,
+      "title": "Rozbitek i instrukcja do niczego",
+      "place": "Ratusz",
+      "type": "wynalazek na niby",
+      "public": "Stwórzcie ratunkowy wynalazek z trzech fikcyjnych przedmiotów i pokażcie go bez nazw. Zgadujący muszą odtworzyć trzy części i jego zastosowanie.",
+      "secret": "Masz beczkę, parasol i sznurek. Zbuduj na niby dryfującą boję z zadaszeniem, która oznaczy bezpieczne wejście do portu. Nie używaj prawdziwych przedmiotów. Drugi aktor może udawać uparty wiatr.",
+      "answer": "Beczka + parasol + sznurek; pływający znak bezpiecznego wejścia do portu.",
+      "check": "Wszystkie trzy części i sens oznaczenia drogi; inne spójne ratunkowe zastosowanie również jest poprawne.",
+      "hint": "Nie musicie płynąć tym wynalazkiem. Ma pokazać drogę innym.",
+      "accessible": "Cały wynalazek może być pokazany na siedząco dłońmi; alternatywnie narysowany bez liter."
+    }
+  ]
+}

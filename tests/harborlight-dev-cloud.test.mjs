@@ -406,3 +406,50 @@ test('valid legacy cloud islands remain readable without newer tutorial or onboa
   assert.equal((await h.client.loadIsland()).payload, payload);
   assert.equal(h.calls.length, 1);assert.equal(h.calls[0].options.method, undefined);
 });
+
+test('twenty-world-capable Firestore storage hydrates daughters and CAS autosave only writes a changed world', async () => {
+  const first=JSON.parse(islandPayload(345)), second=JSON.parse(islandPayload(678));
+  second.islandRole='daughter';second.islandId='island-2';second.islandName='Dom - Córka';
+  first.archipelago={version:2,activeIslandId:'island-2',islands:{},shipCapacity:1000,transfers:[],capacityReceipts:[]};
+  const root=document({fields:{schemaVersion:{integerValue:'2'},revision:{integerValue:'4'},payload:{stringValue:JSON.stringify(first)},worldIds:{arrayValue:{values:[{stringValue:'island-2'}]}}}});
+  const child={name:NAME+'/worlds/island-2',fields:{payload:{stringValue:JSON.stringify(second)},generation:{integerValue:'1'}},updateTime:TIME1};
+  const h=await signedIn([response(root),response(child),response(root)]);
+  const loaded=await h.client.loadIsland();
+  assert.equal(JSON.parse(loaded.payload).archipelago.islands['island-2'].resources.coins,678);
+  h.replies.push((_url,options)=>{
+    const writes=JSON.parse(options.body).writes;
+    assert.equal(writes.length,1,'unchanged daughter is not rewritten');
+    assert.equal(writes[0].update.fields.schemaVersion.integerValue,'2');
+    assert.deepEqual(JSON.parse(writes[0].update.fields.payload.stringValue).archipelago.islands,{});
+    return response({writeResults:[{updateTime:TIME2}]});
+  });
+  const saved=await h.client.saveIsland(loaded.payload,loaded.version);
+  const next=JSON.parse(loaded.payload);next.archipelago.islands['island-2'].resources.coins++;
+  h.replies.push((_url,options)=>{
+    const writes=JSON.parse(options.body).writes;
+    assert.equal(writes.length,2);assert.equal(writes[1].update.name,NAME+'/worlds/island-2');
+    assert.deepEqual(writes[1].currentDocument,{updateTime:TIME1});
+    assert.deepEqual(writes[0].currentDocument,{updateTime:TIME2});
+    return response({writeResults:[{updateTime:TIME2},{updateTime:TIME2}]});
+  });
+  await h.client.saveIsland(JSON.stringify(next),saved);
+});
+
+test('a missing daughter cannot silently collapse a sharded save into a starter island', async () => {
+  const first=JSON.parse(islandPayload(345));
+  first.archipelago={version:2,activeIslandId:'island-2',islands:{},shipCapacity:1000,transfers:[]};
+  const root=document({fields:{schemaVersion:{integerValue:'2'},revision:{integerValue:'4'},payload:{stringValue:JSON.stringify(first)},worldIds:{arrayValue:{values:[{stringValue:'island-2'}]}}}});
+  const h=await signedIn([response(root),response({error:{status:'NOT_FOUND'}},404)]);
+  await assert.rejects(h.client.loadIsland(),{code:'invalid-cloud-data'});
+  assert.equal(h.calls.filter(call=>call.options?.method==='POST').length,0);
+});
+
+test('concurrent root change during daughter GETs fails closed instead of admitting a mixed snapshot', async () => {
+  const first=JSON.parse(islandPayload(345)), second=JSON.parse(islandPayload(678));
+  first.archipelago={version:2,activeIslandId:'island-2',islands:{},shipCapacity:1000,transfers:[]};
+  const root=document({fields:{schemaVersion:{integerValue:'2'},revision:{integerValue:'4'},payload:{stringValue:JSON.stringify(first)},worldIds:{arrayValue:{values:[{stringValue:'island-2'}]}}}});
+  const child={name:NAME+'/worlds/island-2',fields:{payload:{stringValue:JSON.stringify(second)},generation:{integerValue:'1'}},updateTime:TIME2};
+  const changed={...root,updateTime:TIME2,fields:{...root.fields,revision:{integerValue:'5'}}};
+  const h=await signedIn([response(root),response(child),response(changed)]);
+  await assert.rejects(h.client.loadIsland(),{code:'conflict'});
+});

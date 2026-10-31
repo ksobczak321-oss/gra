@@ -62,9 +62,15 @@ def session(uid):
 
 def document(uid):
     value = DOCUMENTS[uid]
-    return {'name': PREFIX + uid, 'fields': {'schemaVersion': {'integerValue': '1'},
-            'revision': {'integerValue': str(value['revision'])}, 'payload': {'stringValue': value['payload']}},
-            'updateTime': value['updateTime']}
+    if '/worlds/' in uid:
+        fields = {'payload': {'stringValue': value['payload']}, 'generation': {'integerValue': str(value.get('generation', 1))}}
+    else:
+        fields = {'schemaVersion': {'integerValue': str(value.get('schemaVersion', 1))},
+                  'revision': {'integerValue': str(value['revision'])}, 'payload': {'stringValue': value['payload']}}
+        if value.get('schemaVersion') == 2:
+            fields['generation'] = {'integerValue': str(value.get('generation', 1))}
+            fields['worldIds'] = {'arrayValue': {'values': [{'stringValue': key} for key in value.get('worldIds', [])]}}
+    return {'name': PREFIX + uid, 'fields': fields, 'updateTime': value['updateTime']}
 
 
 def firebase(route):
@@ -85,31 +91,47 @@ def firebase(route):
     except (ValueError, KeyError, IndexError):
         return reply(status=401, json={'error': {'status': 'UNAUTHENTICATED'}})
     if request.method == 'GET':
-        wanted = unquote(urlsplit(request.url).path).rsplit('/', 1)[1]
-        if wanted != uid:
+        path = unquote(urlsplit(request.url).path)
+        wanted = path.split('/documents/islands/', 1)[-1]
+        if wanted != uid and not (wanted.startswith(uid + '/worlds/island-') and re.fullmatch(r'island-(?:[2-9]|1[0-9]|20)', wanted.rsplit('/', 1)[-1])):
             return reply(status=403, json={'error': {'status': 'PERMISSION_DENIED'}})
         if wanted not in DOCUMENTS:
             return reply(status=404, json={'error': {'status': 'NOT_FOUND'}})
         return reply(json=document(wanted))
     body = request.post_data_json
     assert request.url.endswith('/documents:commit'), request.url
-    assert len(body['writes']) == 1
-    write = body['writes'][0]
-    assert write['update']['name'] == PREFIX + uid
-    assert write['updateTransforms'] == [{'fieldPath': 'updatedAt', 'setToServerValue': 'REQUEST_TIME'}]
-    existing = DOCUMENTS.get(uid)
-    condition = write['currentDocument']
-    if (condition == {'exists': False} and existing) or (
-            condition != {'exists': False} and (not existing or condition.get('updateTime') != existing['updateTime'])):
-        return reply(status=409, json={'error': {'status': 'FAILED_PRECONDITION'}})
-    fields = write['update']['fields']
-    revision = int(fields['revision']['integerValue'])
-    assert revision == (existing['revision'] + 1 if existing else 1)
-    assert fields['schemaVersion'] == {'integerValue': '1'}
-    updated = timestamp()
-    DOCUMENTS[uid] = {'payload': fields['payload']['stringValue'], 'revision': revision, 'updateTime': updated}
+    assert 1 <= len(body['writes']) <= 20
+    draft = dict(DOCUMENTS)
+    results = []
+    for write in body['writes']:
+        name = write['update']['name']
+        assert name.startswith(PREFIX)
+        wanted = name[len(PREFIX):]
+        assert wanted == uid or (wanted.startswith(uid + '/worlds/') and re.fullmatch(r'island-(?:[2-9]|1[0-9]|20)', wanted.rsplit('/', 1)[-1]))
+        existing = DOCUMENTS.get(wanted)
+        condition = write['currentDocument']
+        if (condition == {'exists': False} and existing) or (condition != {'exists': False} and (not existing or condition.get('updateTime') != existing['updateTime'])):
+            return reply(status=409, json={'error': {'status': 'FAILED_PRECONDITION'}})
+        fields = write['update']['fields']
+        updated = timestamp()
+        if wanted == uid:
+            assert write['updateTransforms'] == [{'fieldPath': 'updatedAt', 'setToServerValue': 'REQUEST_TIME'}]
+            revision = int(fields['revision']['integerValue'])
+            assert revision == (existing['revision'] + 1 if existing else 1)
+            schema = int(fields['schemaVersion']['integerValue'])
+            assert schema in [1, 2]
+            draft[wanted] = {'payload': fields['payload']['stringValue'], 'revision': revision, 'updateTime': updated, 'schemaVersion': schema}
+            if schema == 2:
+                draft[wanted]['generation'] = int(fields['generation']['integerValue'])
+                draft[wanted]['worldIds'] = [item['stringValue'] for item in fields['worldIds']['arrayValue'].get('values', [])]
+        else:
+            assert int(fields['generation']['integerValue']) > 0
+            draft[wanted] = {'payload': fields['payload']['stringValue'], 'generation': int(fields['generation']['integerValue']), 'updateTime': updated}
+        results.append({'updateTime': updated})
+    DOCUMENTS.clear()
+    DOCUMENTS.update(draft)
     WRITES.append(uid)
-    return reply(json={'writeResults': [{'updateTime': updated}], 'commitTime': updated})
+    return reply(json={'writeResults': results, 'commitTime': results[0]['updateTime']})
 
 
 def identity_lookup(route):
@@ -182,7 +204,12 @@ def visit(page):
 
 
 def cloud_state(uid):
-    return json.loads(DOCUMENTS[uid]['payload'])
+    value = DOCUMENTS[uid]
+    state = json.loads(value['payload'])
+    if value.get('schemaVersion') == 2:
+        for island_id in value.get('worldIds', []):
+            state['archipelago']['islands'][island_id] = json.loads(DOCUMENTS[uid + '/worlds/' + island_id]['payload'])
+    return state
 
 
 def no_island_cache(page):

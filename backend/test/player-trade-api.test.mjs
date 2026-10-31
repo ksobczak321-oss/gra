@@ -31,7 +31,7 @@ test('auction routes require authentication and receive identity only from the v
   assert.deepEqual(calls[0],['list',{uid:'verified-owner',islandId:'island-2',limit:10,cursor:'page'}]);
   assert.equal((await request('/api/v1/trade/inbox?limit=5')).status,200);
   assert.deepEqual(calls[1],['inbox',{uid:'verified-owner',limit:5,cursor:null}]);
-  const body={uid:'victim',requestId:'operation_123',islandId:'island-2',generation:3,expectedRevision:8,give:{resource:'stone',amount:20},want:{resource:'wood',amount:30},createdAt:1,verified:true};
+  const body={uid:'victim',requestId:'operation_123',islandId:'island-2',generation:3,expectedRevision:8,give:{resource:'stone',amount:20},want:{resource:'coins',amount:10},createdAt:1,verified:true};
   assert.equal((await request('/api/v1/trade/offers','POST',body)).status,201);
   assert.deepEqual(calls[2],['create',{uid:'verified-owner',requestId:body.requestId,generation:3,expectedRevision:8,islandId:'island-2',give:body.give,want:body.want}]);
   assert.equal((await request(`/api/v1/trade/offers/${OFFER}/accept`,'POST',body)).status,200);
@@ -77,7 +77,7 @@ test('real HTTP exchange between two verified identities keeps escrow, global re
   const {request}=await fixture(t,{serviceOverride:service,accountOverride:account,identities:{maker:'one',buyer:'two'}});
   const maker=(path,method='GET',body)=>request(path,method,body,'Bearer maker');
   const buyer=(path,method='GET',body)=>request(path,method,body,'Bearer buyer');
-  const offerBody={uid:'two',requestId:'http_create_123',islandId:'island-2',generation:1,expectedRevision:1,give:{resource:'wood',amount:100},want:{resource:'stone',amount:50}};
+  const offerBody={uid:'two',requestId:'http_create_123',islandId:'island-2',generation:1,expectedRevision:1,give:{resource:'wood',amount:100},want:{resource:'coins',amount:50}};
   const created=await maker('/api/v1/trade/offers','POST',offerBody);assert.equal(created.status,201);assert.equal(created.body.offer.ownerUid,'one');
   const id=created.body.offer.id;
   assert.equal(snapshot('one').archipelago.secondIsland.resources.wood,400);assert.deepEqual(snapshot('one').resources,originalOne.resources);
@@ -85,7 +85,7 @@ test('real HTTP exchange between two verified identities keeps escrow, global re
   const board=await buyer('/api/v1/trade/offers?islandId=island-1');assert.equal(board.body.offers[0].id,id);
   const acceptedBody={uid:'one',requestId:'http_accept_123',islandId:'island-1',generation:1,expectedRevision:1};
   const accepted=await buyer(`/api/v1/trade/offers/${id}/accept`,'POST',acceptedBody);assert.equal(accepted.status,200);
-  assert.equal(snapshot('one').archipelago.secondIsland.resources.stone,550);assert.equal(snapshot('two').resources.stone,450);assert.equal(snapshot('two').resources.wood,600);
+  assert.equal(snapshot('one').archipelago.secondIsland.resources.coins,150);assert.equal(snapshot('two').resources.coins,50);assert.equal(snapshot('two').resources.wood,600);
   assert.equal(records.get('islands/one').revision,3);assert.equal(records.get('islands/two').revision,2);
   assert.deepEqual(snapshot('two').archipelago.secondIsland,originalTwo.archipelago.secondIsland);
   assert.deepEqual(snapshot('one').tutorial,originalOne.tutorial);assert.deepEqual(snapshot('one').archipelago.transfers,originalOne.archipelago.transfers);
