@@ -1,6 +1,6 @@
 # Polityka prywatności HARBORLIGHT
 
-Wersja: 2026-10-30-draft1. Data projektu: 30 października 2026 r.
+Wersja: 2026-10-31-draft2. Data projektu: 31 października 2026 r.
 
 DOKUMENT ROBOCZY DO PRZEGLĄDU WŁAŚCICIELA. Pola „Lorem ipsum” są demonstracyjne. Przed publicznym uruchomieniem wymagają rzeczywistych danych administratora, działającego kontaktu i sprawdzenia konfiguracji dostawców oraz okresów przechowywania.
 
@@ -15,6 +15,8 @@ Polityka opisuje dane potrzebne do konta i rozgrywki HARBORLIGHT. Potwierdzenie 
 Dane konta obejmują identyfikator Firebase UID, adres e-mail lub identyfikator dostawcy logowania, wybraną nazwę wyspy oraz techniczne informacje o metodzie logowania i sesji. Nie należy wpisywać danych wrażliwych ani cudzych danych w nazwie wyspy.
 
 Dane gry obejmują stan wyspy, zasoby, budynki, mieszkańców, zadania, zdarzenia i statystyki, ustawienia, historię powiadomień, wersję i generację zapisu, czasy działań oraz ostatnią rzeczywistą aktywność. Dla realizacji korzyści mogą być zapisywane historie nagród jednorazowych, kodów, poleceń i potwierdzonych uprawnień.
+
+Konto może obejmować dwie wyspy, wybór aktywnej wyspy, historię przewozów i pojemność wspólnego statku. Handel między graczami obejmuje wystawione oferty, rezerwacje materiałów, przyjęcia, anulowania, zwroty, czasy i identyfikatory służące zapobieganiu wielokrotnej realizacji tej samej operacji.
 
 Potwierdzenie dokumentów obejmuje UID, zaakceptowane wersje Regulaminu i Polityki prywatności oraz czas serwera. Nie zbieramy dodatkowo numeru PESEL, dokumentu tożsamości czy daty urodzenia tylko w celu zwykłego utworzenia konta.
 
@@ -37,6 +39,8 @@ Po wyborze aktywnego logowania Google lub Facebook dostawca uwierzytelnia użytk
 Te metody działają dopiero po konfiguracji dostawcy przez właściciela. PRE-PROD dopuszcza trzy stałe UID; powiązanie dostawcy z kontem testowym nie resetuje jego tożsamości ani wyspy. Produkcyjne konta są odrębne.
 
 Gracz sam wybiera i zatwierdza udostępnienie osiągnięcia. Otwarty formularz Facebooka lub funkcja systemowego udostępniania przekazuje wskazany link i treść do wybranego serwisu według jego zasad. Nie oznacza automatycznej publikacji. Gra nie uruchamia automatycznych postów na prywatnym profilu, osobistych powiadomień Facebooka ani publikacji na stronie gry bez odrębnego wdrożenia i uprawnienia.
+
+Wystawienie oferty wymiany udostępnia innym zalogowanym graczom nazwę wyspy, oferowany i oczekiwany materiał z ilościami, identyfikator i termin oferty. Adres e-mail, hasło i pełny zapis wyspy nie są częścią publicznej oferty. Techniczny UID właściciela służy serwerowi do kontroli uprawnień; inni gracze nie potrzebują go w odpowiedzi listy ofert. Własne oferty i prywatna skrzynka zwrotów są dostępne po uwierzytelnieniu. Publikacja oferty jest działaniem gracza w ramach usługi, nie zgodą na marketing.
 
 ## 5. Dostawcy i odbiorcy danych
 

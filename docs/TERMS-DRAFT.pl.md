@@ -1,6 +1,6 @@
 # Regulamin gry HARBORLIGHT
 
-Wersja: 2026-10-30-draft1. Data projektu: 30 października 2026 r.
+Wersja: 2026-10-31-draft2. Data projektu: 31 października 2026 r.
 
 DOKUMENT ROBOCZY DO PRZEGLĄDU WŁAŚCICIELA. Dane operatora „Lorem ipsum” są danymi demonstracyjnymi i wymagają zastąpienia przed publicznym uruchomieniem usługi. Dokument nie potwierdza gotowości prawnej sprzedaży. Obecnie prawdziwe płatności i reklamy komercyjne nie są uruchomione.
 
@@ -44,13 +44,17 @@ Przed skierowaniem usługi do dzieci, uruchomieniem profilowanych reklam albo zb
 
 ## 6. Przebieg gry i wirtualne zasoby
 
-Pierwsze wejście do gry rozpoczyna własną wyspę z pakietem startowym. Ponowne logowanie wznawia ten sam zapis i nie przyznaje ponownie korzyści oznaczonych „raz na konto”. Czas świata i związane z nim procesy mogą upływać także po wylogowaniu. Gra rozlicza aktywność i nieobecność według zasad wyświetlonych w interfejsie.
+Pierwsze wejście tworzy własną wyspę z pakietem startowym i zatrzymanym czasem. Gracz poznaje grę, nadaje nazwę wyspie i przechodzi lub zamyka oprowadzanie; dopiero wtedy rusza zegar świata oraz praktyczny samouczek. Ponowne logowanie wznawia ten sam zapis i nie przyznaje ponownie korzyści oznaczonych „raz na konto”. Po rozpoczęciu świata związane z nim procesy mogą upływać także po wylogowaniu. Gra rozlicza aktywność i nieobecność według zasad wyświetlonych w interfejsie.
 
 Monety, materiały, mieszkańcy, budynki oraz uprawnienia służą wyłącznie do rozgrywki. Nie są pieniądzem, lokatą, instrumentem inwestycyjnym ani obietnicą wymiany na gotówkę. Brak możliwości wypłaty wirtualnej waluty nie wyłącza ustawowych praw do reklamacji lub zwrotu należności.
 
 Budowy, dostawy, efekty i zdarzenia mają własne czasy, limity i warunki. Niewypłacona pula ekspedycji może przepaść po przegranej, rezygnacji albo upływie czasu rundy. Zdarzenia świata mogą powodować opisane straty. Dodatkowy czas kupuje się dobrowolnie przed końcem rundy; nie ma automatycznego obciążenia za przegraną.
 
 Zapas bonusowy jest wydawalny i nie zajmuje limitu zwykłych dostaw. Szczegółowe wartości, dostępność usług, koszty i ograniczenia należy sprawdzić w aktualnym opisie przed wykonaniem działania. Błędy opisu można zgłosić operatorowi.
+
+Od poziomu Ratusza 6 handel materiałami z innymi graczami zastępuje nowe transakcje z grą. Wystawiający określa ilość oddawanego i oczekiwanego materiału, a oferta jest widoczna dla innych graczy wraz z nazwą wyspy. Towary są rezerwowane do pełnego przyjęcia oferty lub jej anulowania; domyślny termin ważności wynosi 24 godziny. Wymiana nie przewiduje wypłaty pieniędzy. Brak miejsca może wstrzymać przyjęcie, a zwrot pozostaje do odbioru zamiast przepadać. Niedostępna usługa serwerowa nie jest zastępowana fikcyjnymi ofertami.
+
+Od Ratusza 10 pierwszej wyspy można założyć drugą. Przy utworzeniu przejmuje poziomy Ratusza i Magazynu pierwszej wyspy; późniejszy rozwój jest niezależny, a historie zakupów i jednorazowych uprawnień są wspólne. Przewóz własnych materiałów trwa 10 minut i nie ma opłaty za rejs. Podstawowa pojemność wspólnego statku wynosi 1000 sztuk; brak miejsca docelowego oznacza oczekiwanie na rozładunek. Zwiększenie pojemności jest osobnym produktem z ceną widoczną przed zatwierdzeniem, obecnie wyłącznie w oznaczonej symulacji Paynow bez pobierania pieniędzy.
 
 ## 7. Zakupy i płatności
 

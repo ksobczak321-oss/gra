@@ -1,25 +1,26 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v20';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v20';
-import * as State from './harborlight-v1-state.js?v=frontend-v20';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v20';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v20';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v20';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v20';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v20';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v20';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v20';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v20';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v20';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v20';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v20';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v20';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v20';
-import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v20';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v20';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v20';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v20-fit2';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v20';
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v20';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v21';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v21';
+import * as State from './harborlight-v1-state.js?v=frontend-v21';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v21';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v21';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v21';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v21';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v21';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v21';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v21';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v21';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v21';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v21';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v21';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v21';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v21';
+import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v21';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v21';
+import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v21';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v21-fit2';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v21';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v21';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v21';
 
 I18n.registerTranslations({
   "Choose a minigame": "Wybierz minigrę",
@@ -67,6 +68,41 @@ I18n.registerTranslations({
   "Food, work, housing and temporary attractions influence happiness. Develop all buildings, improve paths and complete tasks while keeping residents happy.": "Na szczęście wpływają jedzenie, praca, mieszkanie i czasowe atrakcje. Rozwijaj budynki, ulepszaj ścieżki i wykonuj zadania, dbając o mieszkańców."
 });
 
+I18n.registerTranslations({
+  'Choose an existing island.': 'Wybierz istniejącą wyspę.',
+  'Island selected.': 'Wybrano wyspę.',
+  'Your second island has already been founded.': 'Druga wyspa została już założona.',
+  'Reach Town Hall level 10 on your first island to found a second island.': 'Aby założyć drugą wyspę, osiągnij poziom Ratusza 10 na pierwszej.',
+  'Your second island is ready. Its Town Hall and Warehouse inherited their current levels once.': 'Druga wyspa jest gotowa. Jej Ratusz i Magazyn jednorazowo przejęły bieżące poziomy.',
+  'Found your second island before transporting goods between islands.': 'Przed transportem między wyspami załóż drugą wyspę.',
+  'Choose two different islands.': 'Wybierz dwie różne wyspy.',
+  'Choose positive whole quantities of materials. Coins cannot be transported.': 'Wybierz dodatnie, całkowite ilości materiałów. Monet nie można przewozić.',
+  'Both islands need a Harbor.': 'Obie wyspy potrzebują Portu.',
+  'The ship is busy. Finish unloading its current cargo first.': 'Statek jest zajęty. Najpierw dokończ rozładunek obecnego ładunku.',
+  'This cargo exceeds the ship capacity.': 'Ten ładunek przekracza pojemność statku.',
+  'Use available central stock; reserved goods and the protected Food reserve cannot be shipped.': 'Użyj wolnego zapasu centralnego. Nie można wysyłać zarezerwowanych towarów ani chronionej rezerwy żywności.',
+  'The voyage history has reached its supported limit.': 'Historia rejsów osiągnęła obsługiwany limit.',
+  'The voyage arrival time exceeds the supported clock.': 'Czas przybycia statku przekracza obsługiwany zakres zegara.',
+  'Free transport takes 10 real minutes.': 'Bezpłatny transport trwa 10 rzeczywistych minut.',
+  'The ship departed. No coins were charged.': 'Statek wypłynął. Nie pobrano monet.',
+  'Cargo unloaded.': 'Ładunek rozładowany.',
+  'The remaining cargo is waiting visibly on the ship. Free warehouse space, then unload it.': 'Pozostały ładunek czeka na statku. Zwolnij miejsce w Magazynie, a następnie go rozładuj.',
+  'Choose an existing voyage.': 'Wybierz istniejący rejs.',
+  'The ship has not arrived yet.': 'Statek jeszcze nie dopłynął.',
+  'This cargo has already been unloaded.': 'Ten ładunek został już rozładowany.',
+  'Found a second island before expanding the transport ship.': 'Przed powiększeniem statku załóż drugą wyspę.',
+  'Choose between 1 and 100 capacity increments per purchase.': 'W jednym zakupie wybierz od 1 do 100 rozszerzeń pojemności.',
+  'The supported ship-capacity limit has been reached.': 'Osiągnięto obsługiwany limit pojemności statku.',
+  'Permanent ship capacity quote.': 'Wycena trwałego zwiększenia pojemności statku.',
+  'Real ship-capacity payments are not enabled. No money was charged.': 'Prawdziwe płatności za pojemność statku nie są włączone. Nie pobrano pieniędzy.',
+  'A valid simulated payment receipt is required.': 'Wymagane jest prawidłowe potwierdzenie symulowanej płatności.',
+  'This payment receipt has already been used for a different purchase.': 'To potwierdzenie płatności wykorzystano już do innego zakupu.',
+  'This capacity purchase was already applied.': 'To zwiększenie pojemności zostało już przyznane.',
+  'This receipt belongs to a different capacity purchase.': 'To potwierdzenie dotyczy innego zwiększenia pojemności.',
+  'DEV payment simulation completed. No real money was charged.': 'Symulacja płatności DEV zakończona. Nie pobrano prawdziwych pieniędzy.',
+  'Choose an island name with 2–40 characters, without control characters or angle brackets.': 'Wybierz nazwę wyspy od 2 do 40 znaków, bez znaków sterujących ani nawiasów < >.'
+});
+
 const devCloud = createDevCloud();
 let devAccount = null, devSync = null, devSyncStatus = 'loading';
 let devCloudUiReady = false, devCloudAlert = null, devSigningOut = false;
@@ -90,7 +126,23 @@ const toastElement = document.getElementById('island-toast');
 const placementBanner = document.getElementById('placement-banner');
 const LOCAL_PREVIEW = !devCloud.enabled && Commerce.runtimeCapabilities().environment === 'development';
 const LOOPBACK_PREVIEW = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
-let state;
+let state, archipelago;
+const worldAdapters = { normalizeState, createState, advanceTo: State.advanceTo };
+function readWorldPayload(raw) {
+  archipelago = Archipelago.restoreArchipelago(raw, worldAdapters, Date.now());
+  state = Archipelago.activeIsland(archipelago);
+  return state;
+}
+function worldPayload() {
+  if (archipelago.activeIslandId === 'island-2') {
+    archipelago.secondary = state;
+    // Some actions replace an account object (for example premium expiry)
+    // rather than mutating its shared reference. Preserve that replacement.
+    for (const field of Archipelago.SHARED_ACCOUNT_FIELDS) if (state[field] !== undefined) archipelago.primary[field] = state[field];
+  }
+  else archipelago.primary = state;
+  return Archipelago.serializeArchipelago(archipelago);
+}
 async function waitForCloudRetry(error) {
   const expired=error?.code==='island-expired';
   let english=false;
@@ -121,7 +173,7 @@ if (devAccount) {
   for (;;) {
     try {
       const payload=await devSync.open(JSON.stringify(createState(Date.now(), { onboarding: true })));
-      try { state=normalizeState(JSON.parse(payload)); }
+      try { readWorldPayload(JSON.parse(payload)); }
       catch { devSync.pause('invalid-cloud-data'); throw Object.assign(new Error('Invalid cloud save'),{code:'invalid-cloud-data'}); }
       break;
     } catch(error) {
@@ -137,10 +189,11 @@ if (devAccount) {
   }
 } else if (LOCAL_PREVIEW) {
   const fixture=LOOPBACK_PREVIEW && globalThis.__HARBORLIGHT_DEV_FIXTURE__;
-  state=fixture ? normalizeState(structuredClone(fixture)) : createState(Date.now(), { onboarding: NEW_PLAYER_PROFILE });
+  readWorldPayload(fixture ? structuredClone(fixture) : createState(Date.now(), { onboarding: NEW_PLAYER_PROFILE }));
   if(LOOPBACK_PREVIEW) {
     delete globalThis.__HARBORLIGHT_DEV_FIXTURE__;
     Object.defineProperty(window,'__HARBORLIGHT_DEV_STATE__',{configurable:true,get:()=>structuredClone(state)});
+    Object.defineProperty(window,'__HARBORLIGHT_DEV_ARCHIPELAGO__',{configurable:true,get:()=>structuredClone(worldPayload())});
   }
 } else {
   location.replace('harborlight-auth.html?mode=login');
@@ -154,6 +207,11 @@ let miniController = null;
 let miniGameStatus = '';
 let miniSavedAt = 0;
 let miniLastTiltActive = false;
+let tradeMutationBusy = false;
+let uncertainTradeRequest = null;
+let playerTradeCache = null, playerTradeError = '', playerTradeLoading = false;
+let islandResetBusy = false;
+let shippingPanelSignature = '';
 let tutorialCelebration = null;
 let tutorialReady = false;
 let onboardingFlow = null;
@@ -183,7 +241,8 @@ function settleActiveTick() {
   if (onboardingFlow?.active && !worldExperienceReady) return;
   if (devSync && !devSync.writable) return;
   const now = Date.now();
-  if (typeof State.advanceTo === 'function') State.advanceTo(state, now);
+  if (archipelago) Archipelago.advanceArchipelago(archipelago, now);
+  else if (typeof State.advanceTo === 'function') State.advanceTo(state, now);
   else tick(state, Math.max(0, (now - lastTick) / 1000));
   lastTick = now;
 }
@@ -213,6 +272,7 @@ const card = (...children) => el('section', { class: 'info-card' }, ...children)
 
 let lastServerActivityAt=-Infinity;
 function act(...args) {
+  if (tradeMutationBusy) return { ok: false, message: uiCopy('Wait for the exchange to be confirmed.', 'Poczekaj na potwierdzenie wymiany.') };
   if (devSync && (!devSync.writable || devSync.status==='saving')) return {ok:false,message:'Cloud confirmation is required before another action.'};
   const result=modelAct(...args);
   if (result.ok && args[1]?.type === 'userActivity' && devAccount && devCloud.recordSessionActivity?.() === false) {
@@ -225,16 +285,16 @@ function act(...args) {
   return result;
 }
 function save(immediate=false) {
+  if (tradeMutationBusy) return Promise.resolve(false);
   if (devSigningOut || !devSync) return Promise.resolve(!devSigningOut);
-  if (!devSync.queue(JSON.stringify(state))) return Promise.resolve(false);
+  if (!devSync.queue(JSON.stringify(worldPayload()))) return Promise.resolve(false);
   return immediate ? devSync.flush() : Promise.resolve(true);
 }
 function restoreSyncedIsland(payload) {
   // A retry adopts either the server-confirmed pending write or a newer remote
   // version. Never replace an unreachable island with a fresh starter.
-  const restored = normalizeState(JSON.parse(payload));
   miniController?.dispose(); miniController = null;
-  state = restored; lastTick = Date.now();
+  readWorldPayload(JSON.parse(payload)); lastTick = Date.now();
   if (!devCloudUiReady) return;
   // Recovery is still locked while this callback runs. Resume interface
   // commands only after the coordinator has published its recovered status.
@@ -259,6 +319,13 @@ function restoreSyncedIsland(payload) {
     renderHUD();
     if (panel && dialog.open) renderPanel();
   });
+}
+async function reloadConfirmedIsland() {
+  if (!devSync) throw new Error(uiCopy('Cloud sign-in is required.', 'Wymagane jest logowanie do chmury.'));
+  const payload = await devSync.reloadCloud();
+  restoreSyncedIsland(payload);
+  await Promise.resolve();
+  return state;
 }
 
 function toast(message) {
@@ -563,6 +630,8 @@ const transportRate = id => `${activeCrew(id)} carriers · ${Logistics.haulCapac
 function renderHUD() {
   estimateFrame++;
   document.title = `${islandDisplayName(state, language())} — HARBORLIGHT`;
+  document.body.dataset.activeIsland = archipelago.activeIslandId;
+  renderIslandSelection();
   document.querySelector('title').setAttribute('data-i18n-ignore', '');
   document.querySelectorAll('[data-island-name]').forEach(node => { node.textContent = islandDisplayName(state, language()); node.title = islandDisplayName(state, language()); });
   mobileHeading.querySelector('[data-mobile-control="home"]').textContent = islandDisplayName(state, language());
@@ -632,6 +701,7 @@ function renderHUD() {
   renderMobileDock();
   renderActivityStack();
   refreshLivePanel();
+  refreshIslandShipping();
   renderWorldAdditions();
   stage.dispatchEvent(new Event('island-statechange'));
   refreshTaskAcceptance();
@@ -771,6 +841,8 @@ function refreshLivePanel() {
   }
   dialog.querySelectorAll('[data-construction-status]').forEach(node => { node.textContent = constructionDescription(node.dataset.constructionStatus); });
   dialog.querySelectorAll('[data-upgrade-building]').forEach(node => { const id = node.dataset.upgradeBuilding; node.disabled = !upgradeEligibility(state, id).ok || !canAfford(state, buildingCost(state, id)); });
+  dialog.querySelectorAll('[data-townhall-population-prerequisite]').forEach(node => { node.textContent = townhallPopulationRequirement().textContent; });
+  dialog.querySelectorAll('[data-upgrade-lock]').forEach(node => { const eligibility = upgradeEligibility(state, node.dataset.upgradeLock); node.hidden = eligibility.ok; node.textContent = eligibility.ok ? '' : upgradeEligibilityMessage(eligibility); });
   dialog.querySelectorAll('[data-upgrade-cost]').forEach(node => { const available = spendable(node.dataset.upgradeCost), required = node.dataset.costSource === 'resident' ? State.residentPurchaseQuote?.(state)?.cost?.[node.dataset.upgradeCost] ?? Number(node.dataset.required) : panel?.kind === 'building' ? buildingCost(state, panel.id)?.[node.dataset.upgradeCost] ?? Number(node.dataset.required) : Number(node.dataset.required); node.dataset.required = required; node.textContent = `${count(available)} / ${count(required)}`; node.classList.toggle('is-affordable', available >= required); node.classList.toggle('is-short', available < required); node.setAttribute('aria-label', `${nameOf(node.dataset.upgradeCost)}: in storage ${count(available)}, required ${count(required)}; ${available >= required ? 'enough' : 'short'}`); });
   dialog.querySelectorAll('[data-stock]').forEach(node => { node.textContent = count(state.resources[node.dataset.stock]); });
   const live = { population: `${state.population} / ${state.capacity}`, 'current-population': count(state.population), workers: totalWorkers(state), free: freeWorkers(state), arriving: state.residents.filter(person => person.workplace && person.arrivalRemaining > 0).length, returning: (state.returningWorkers || []).length, 'next-return': returnDescription(), 'worker-limit': '12 × building level', happiness: happinessText(), level: state.buildings.townhall.level, growth: populationDescription(), 'growth-rate': populationGrowthRateText(), capacity: state.capacity, housing: housingCapacity(state), unhoused: unhousedResidents(state), penalty: housingPenaltyText(), 'housing-status': housingDescription() };
@@ -1185,13 +1257,14 @@ function buildingPanel(id) {
     effects.classList.add('building-effects-preview');
     main.append(effects, el('div', { class: 'building-quick-actions' },
       button('All bonuses and penalties', () => openPanel('effects'), { class: 'action secondary' }),
-      button('Construction and queue', () => openPanel('construction'), { class: 'action secondary', 'data-construction-entry': '' })));
+      button('Construction and queue', () => openPanel('construction'), { class: 'action secondary', 'data-construction-entry': '' }),
+      button(uiCopy('Your islands', 'Twoje wyspy'), () => openPanel('archipelago'), { class: 'action secondary', 'data-archipelago-entry': '' })));
   }
   if (id === 'warehouse') {
     const limits = warehouseLimits(state);
     main.append(el('div', { class: 'stat-grid building-warehouse-summary' }, stat('Storage used', el('span', {}, el('span', { 'data-logistics-stat': 'used' }, count(warehouseUsed(state))), ' / ', el('span', { 'data-logistics-stat': 'total' }, count(limits.total)))), stat('Capacity per resource', el('span', { 'data-logistics-stat': 'per-resource' }, count(limits.perResource))), stat('Transport capacity', el('span', { 'data-logistics-stat': 'carrier-rate' }, transportRate('warehouse')))));
   }
-  if (id === 'house') main.append(houseHappinessPanel(), button('Manage all workers', () => openPanel('workers'), { class: 'action secondary', 'data-manage-workers': '' }));
+  if (id === 'house') main.append(houseAssignmentPanel(), houseHappinessPanel(), button('Manage all workers', () => openPanel('workers'), { class: 'action secondary', 'data-manage-workers': '' }));
   if (id === 'chapel') main.append(compactBlessingPanel());
   if (id === 'lighthouse') main.append(el('p', { class: 'notice', 'data-lighthouse-bonus': '' }, lighthouseDescription()), button('Lighthouse visits', () => openPanel('building-details', id), { class: 'action secondary', disabled: !value.level }));
   if (id === 'dock') main.append(button('Open Harbor orders', () => openPanel('trade'), { class: 'action secondary' }));
@@ -1206,9 +1279,10 @@ function buildingPanel(id) {
   const upgradeButton = button(maxLevel ? 'Maximum level' : value.level ? 'Upgrade' : 'Build', () => perform({ type: value.level ? 'upgrade' : 'build', building: id }), { disabled: maxLevel || townhallLocked || !canAfford(state, cost), 'data-upgrade-building': id });
   const upgradeSection = card(upgradeHeading(id, maxLevel ? 'Fully upgraded' : value.construction ? `Next level: ${plannedLevel(state, id) + 1}` : value.level ? 'Building upgrade' : 'Construction'),
     maxLevel ? null : upgradeCostView(cost),
-    townhallLocked ? el('p', { class: 'notice building-lock', 'data-upgrade-lock': id }, eligibility.message) : null,
+    townhallLocked ? el('p', { class: 'notice building-lock', 'data-upgrade-lock': id, 'data-i18n-ignore': '' }, upgradeEligibilityMessage(eligibility)) : null,
     el('div', { class: 'ordinary-upgrade-action' }, upgradeButton, producerUpgradeTimes(id)),
-    townhallLocked ? button('Upgrade Town Hall', () => openPanel('building', 'townhall'), { class: 'action secondary' }) : null);
+    townhallLocked && id !== 'townhall' ? button('Upgrade Town Hall', () => openPanel('building', 'townhall'), { class: 'action secondary' }) : null,
+    id === 'townhall' && plannedLevel(state, id) >= 3 ? townhallPopulationRequirement() : null);
   upgradeSection.dataset.buildingUpgrade = id;
   upgrades.append(upgradeSection, compactBuildingPremium(id));
   const project = value.construction || value.premiumService;
@@ -1222,12 +1296,13 @@ function buildingPanel(id) {
 function compactBuildingPremium(id) {
   const content = card(informationHeading(`compact-premium-${id}`, 'Premium building options', ...premiumInformationParagraphs()),
     el('div', { class: 'compact-premium-actions' }, quotedButton('Buy building package', () => Activities.quotePremiumBuilding?.(state, id, { buildingCost }), { type: 'premiumBuyBuilding', building: id }, { 'data-premium-buy': id }), paymentButton({ kind: 'building', building: id }),
-      PRODUCTION_RECIPES[id] ? premiumTransportButton({ route: 'producer', building: id }) : null));
+      PRODUCTION_RECIPES[id] ? premiumTransportButton({ route: 'producer', building: id }, { payment: false }) : null));
   content.classList.add('compact-building-premium');
   return content;
 }
 function compactBlessingPanel() {
   return card(informationHeading('compact-blessings', 'Blessings', 'A manual blessing grants +50 of every resource and +20 happiness for one hour. One free use renews at Warsaw midnight and does not accumulate. Paid and ad uses share a four-hour cooldown after the previous paid or ad effect ends.', chapelCareDescription()),
+    chapelGraceWrathPanel(),
     el('div', { class: 'stat-grid' }, stat('Free daily use', el('span', { 'data-daily-blessing-remaining': '' }, dailyBlessing().remaining)), stat('Paid blessing cooldown', el('span', { 'data-compact-blessing-cooldown': '' }, durationText(state.paidBlessingCooldownRemaining || 0)))),
     el('div', { class: 'building-quick-actions' },
       button('Activate free blessing', () => perform({ type: 'blessing' }), { disabled: state.blessingRemaining > 0 || !dailyBlessing().available, 'data-blessing': '' }),
@@ -1268,16 +1343,44 @@ function buildingsPanel() {
     el('div', { class: 'panel-grid' }, BUILDING_DOCK_ORDER.map(id => card(el('h3', {}, titleOf(id)), el('p', { 'data-building-purpose': id }, buildingPurpose(id)), el('p', {}, `Level ${state.buildings[id].level} / ${buildingLevelLimit(state, id)}`), button('Details and upgrades', () => openPanel('building', id))))));
 }
 function resourcesPanel(selected) {
-  return el('div', {}, note(warehousePurpose()), selected === 'food' ? feedingPanel() : null, selected ? note(`${nameOf(selected)} — stock in the ${selected === 'coins' ? 'treasury' : 'central warehouse'}: ${count(state.resources[selected])}.`) : null,
+  return el('div', {}, note(warehousePurpose()), resourceNotationPanel(), selected === 'food' ? feedingPanel() : null, selected ? note(`${nameOf(selected)} — stock in the ${selected === 'coins' ? 'treasury' : 'central warehouse'}: ${count(state.resources[selected])}.`) : null,
     selected === 'coins' ? card(el('h3', {}, 'Treasury'),
       stat('Coins', el('span', { 'data-stock': 'coins' }, count(state.resources.coins))),
       note('Coins are stored separately and do not use goods storage.'),
+      treasuryIncomeDescription(),
       button('Open House', () => openPanel('building', 'house'), { class: 'action secondary' })) : null,
     warehouseOverview(),
     button('Trade at the harbor', () => openPanel('trade')), button('Warehouse and carriers', () => openPanel('building', 'warehouse'), { class: 'action secondary' }),
     el('h3', {}, 'Production and transport'),
     note('Farm → grain → Windmill → food. Lumber Camp → wood → Sawmill → planks. Quarry → stone. Carriers deliver finished goods from buildings to the warehouse.'),
     el('div', { class: 'panel-grid' }, productionBuildings.map(id => productionCard(id, true))), transportPriorityPanel());
+}
+function resourceNotationPanel() {
+  return card(el('h3', {}, uiCopy('Reading resource cards', 'Jak czytać karty zasobów')),
+    el('p', { class: 'notice', 'data-resource-notation': '', 'data-i18n-ignore': '' }, uiCopy(
+      'Example: Stone 0 / 537 (0), → 0 units/h means 0 units in the Quarry’s local store, 537 stored in the central Warehouse, 0 in transport and a current hourly balance of zero. The hourly line is the net balance at the current crew and bonuses; an up or down arrow shows growth or consumption.',
+      'Przykład: Kamień 0 / 537 (0), → 0 szt./h oznacza 0 sztuk przy Kamieniołomie, 537 sztuk w magazynie centralnym, 0 w transporcie i obecny bilans godzinowy równy zero. Dolny wiersz pokazuje bilans przy obecnej obsadzie i premiach; strzałka w górę lub w dół oznacza przyrost albo ubywanie.')),
+    el('p', { class: 'notice', 'data-i18n-ignore': '' }, uiCopy('Reward stock is already spendable in central storage even above ordinary capacity. It is not a second shipment waiting to arrive.', 'Zapas z nagród jest od razu wydawalny w magazynie centralnym, także ponad zwykłą pojemność. Nie jest dodatkową dostawą czekającą na przyjazd.')));
+}
+function treasuryIncomeDescription() {
+  return el('section', { class: 'treasury-income', 'data-treasury-income': '', 'data-i18n-ignore': '' },
+    el('h4', {}, uiCopy('Taxes, advertisements and minigames', 'Podatki, reklamy i minigry')),
+    el('p', {}, uiCopy('Taxes are paid by residents who have actually reached their assigned workplace: each assigned resident who has arrived pays 1 coin per hour before bonuses, including during a production blockage or while waiting for cargo. Available residents, people walking to work, Lighthouse visitors and people returning Home do not pay. A recalled carrier carrying a load continues paying until leaving the workplace. Active play doubles this income; after 48 hours without play it halves. The Chapel upgrade bonus doubles tax income while it lasts.', 'Podatki płacą mieszkańcy, którzy rzeczywiście dotarli do przydzielonego miejsca pracy: każdy przydzielony mieszkaniec po dojściu daje bazowo 1 monetę na godzinę, także podczas przestoju produkcji lub oczekiwania na ładunek. Wolni mieszkańcy, idący do pracy, zwiedzający Latarnię i wracający do Domu nie płacą. Wycofany tragarz z ładunkiem płaci do chwili opuszczenia stanowiska. Aktywna gra podwaja dochód, a po 48 godzinach bez gry spada on o połowę. Premia za rozbudowę Kaplicy podwaja podatki na czas swojego działania.')),
+    el('p', {}, uiCopy('Optional rewarded ads grant the displayed material bonus, blessing or extra expedition time only after completion. Standard invitations use active play time: first an ad offer after 4–8 minutes, then a choice of minigame or material bonus. With the no-ads entitlement the same eligible bonus can be collected without a film, with the same limits. DEV advertisements and payments are explicitly simulated.', 'Dobrowolna reklama z nagrodą daje pokazane materiały, błogosławieństwo lub czas ekspedycji dopiero po ukończeniu. Zaproszenia liczą aktywną grę: najpierw propozycja reklamy po 4–8 minutach, potem wybór minigry albo premii materiałowej. Uprawnienie „bez reklam” pozwala odebrać dostępny bonus bez filmu, z tymi samymi limitami. Reklamy i płatności na DEV są wyraźnie oznaczoną symulacją.')),
+    el('p', {}, uiCopy('Expeditions let you choose Marble maze or Picture triples. Round rewards are 50, 100, 200, 400 coins before time penalties, so the accumulated pots are 50, 150, 350, 750. Cash out to keep the pot or risk it in the next round; losing or running out of time clears the unclaimed pot. Buying additional time is voluntary.', 'W ekspedycjach wybierasz kulki w labiryncie albo dopasowywanie trójek. Nagrody rund wynoszą 50, 100, 200, 400 monet przed potrąceniem za czas, więc pula rośnie do 50, 150, 350, 750. Wypłać ją albo zaryzykuj w kolejnej rundzie; przegrana lub koniec czasu zeruje niewypłaconą pulę. Dokupienie czasu jest dobrowolne.')));
+}
+function houseAssignmentPanel() {
+  return card(el('h3', {}, uiCopy('Assign residents to work', 'Przydziel mieszkańcom pracę')),
+    el('p', { class: 'notice', 'data-house-population-guide': '', 'data-i18n-ignore': '' }, uiCopy('Choose a building and use + or − to assign or recall a resident. New workers walk for five minutes before starting work. Happiness controls population: positive average happiness attracts people, 0% keeps the population stable, and negative happiness causes departures down to a minimum of six. The Town Hall sets the population limit; the House supplies beds.', 'Wybierz budynek i użyj + lub −, aby przydzielić albo wycofać mieszkańca. Nowi pracownicy idą pięć minut, zanim rozpoczną pracę. Szczęście steruje populacją: dodatnia średnia przyciąga ludzi, 0% utrzymuje stałą liczbę, a ujemna powoduje odejścia do minimum sześciu osób. Ratusz wyznacza limit populacji, a Dom zapewnia łóżka.')),
+    el('div', { class: 'house-worker-assignments', 'data-house-worker-assignments': '' }, ...WORKPLACE_IDS.map(id => card(el('h4', {}, titleOf(id)), workerStat(id)))),
+    button(uiCopy('Population and happiness details', 'Szczegóły populacji i szczęścia'), () => openPanel('residents'), { class: 'action secondary' }));
+}
+function townhallPopulationRequirement() {
+  const rule = Logistics.townhallPopulationRequirement(state);
+  return el('p', { class: 'notice', 'data-townhall-population-prerequisite': '', 'data-i18n-ignore': '' }, uiCopy(`Town Hall upgrade to level ${rule.targetLevel}: ${rule.populationCurrent} / ${rule.populationRequired} required residents. From 3 → 4 onward, the requirement is 75% of the preceding level’s population capacity (${rule.populationCapacity} at level ${rule.populationLevel}). Queued upgrades use the level they are ordered for. This rule applies only to the Town Hall.`, `Awans Ratusza na poziom ${rule.targetLevel}: ${rule.populationCurrent} / ${rule.populationRequired} wymaganych mieszkańców. Od awansu 3 → 4 potrzeba 75% limitu ludności poprzedniego poziomu (${rule.populationCapacity} na poziomie ${rule.populationLevel}). Kolejka sprawdza poziom, na który zamawiasz rozbudowę. Ta zasada dotyczy tylko Ratusza.`));
+}
+function upgradeEligibilityMessage(eligibility) {
+  return eligibility?.code === 'townhall-population' ? uiCopy(eligibility.message, `Awans Ratusza na poziom ${eligibility.targetLevel} wymaga co najmniej ${eligibility.populationRequired} mieszkańców (75% limitu poziomu ${eligibility.populationLevel}). Obecnie: ${eligibility.populationCurrent}.`) : text(eligibility?.message || '');
 }
 function productionCard(id, navigation = false) {
   const recipe = PRODUCTION_RECIPES[id];
@@ -1531,6 +1634,7 @@ function populationDescription() {
   return `${overcrowded ? 'Estimate at current happiness: ' : ''}${rate > 0 ? 'A new resident' : 'One resident leaves'} in ${time}.${overcrowded ? ' Overcrowding changes this rate.' : ''}`;
 }
 function tradePanel() {
+  if (state.buildings.townhall.level >= 6) return el('div', {}, playerTradePanel(), islandShippingPanel(), legacyHarborOrders());
   if (!workplaceUnlocked(state, 'dock')) return el('div', {}, note('The Harbor unlocks at Town Hall level 4.'), button('Market — barter goods', () => openPanel('market')), button('Upgrade Town Hall', () => openPanel('building', 'townhall'), { class: 'action secondary' }));
   const dock = state.dock || { stock: {}, orders: [] };
   const offers = MATERIAL_IDS.map(id => {
@@ -1541,7 +1645,7 @@ function tradePanel() {
       button(`Sell 100 → ${count(sell?.price ?? base[0])} coins`, () => perform({ type: 'trade', resource: id, amount: 100, direction: 'sell' }), { disabled: sell?.ok === false }),
       button(`Buy 100 for ${count(buy?.price ?? base[1])} coins`, () => perform({ type: 'trade', resource: id, amount: 100, direction: 'buy' }), { class: 'action secondary', disabled: buy?.ok === false }));
   });
-  return el('div', {}, note('Orders use full lots of 100. Purchase prices are frozen when ordered. Consecutive purchases within 3 hours increase the base price linearly. Every voyage takes 5 minutes; Harbor workers handle both transport stages.'),
+  return el('div', {}, islandShippingPanel(), note(uiCopy('Until Town Hall 5 you trade with the game. From Town Hall 6, player offers replace new game trades; existing orders still finish.', 'Do poziomu Ratusza 5 handlujesz z grą. Od poziomu 6 oferty innych graczy zastępują nowe transakcje z grą; istniejące zamówienia kończą się normalnie.')), note('Orders use full lots of 100. Purchase prices are frozen when ordered. Consecutive purchases within 3 hours increase the base price linearly. Every voyage takes 5 minutes; Harbor workers handle both transport stages.'),
     el('div', { class: 'stat-grid' }, stat('Harbor stock', `${count(Logistics.dockUsed?.(state) || 0)} / ${count(Logistics.dockCapacity?.(state)?.total || Logistics.dockCapacity?.(state) || 4000)}`), stat('Carriers', transportRate('dock'))),
     button('Open Market — goods for goods', () => openPanel('market'), { class: 'action secondary' }),
     el('div', { class: 'panel-grid' }, offers),
@@ -1550,6 +1654,290 @@ function tradePanel() {
       el('p', { 'data-harbor-order-status': order.id, 'data-i18n-ignore': '' }, harborOrderText(order)),
       ...['dockInbound', 'dockLoad', 'dockUnload', 'dockOutbound'].map(route => premiumTransportButton({ route, order: order.id })))),
     !(dock.orders || []).some(order => order.stage !== 'complete') ? note('No active shipping orders.') : null);
+}
+
+function tradeViewOpen() {
+  return ['trade', 'market'].includes(panel?.kind) || panel?.kind === 'building-details' && panel.id === 'market';
+}
+function tradeServiceReady() {
+  return !!devAccount && devCloud.accountApiEnabled === true && typeof devCloud.listTradeOffers === 'function';
+}
+async function refreshPlayerTrade(cursor = null) {
+  if (playerTradeLoading || !tradeServiceReady()) return;
+  playerTradeLoading = true; playerTradeError = '';
+  try {
+    if (!await save(true)) throw new Error(uiCopy('Wait for the cloud save.', 'Poczekaj na zapis w chmurze.'));
+    const offers = await devCloud.listTradeOffers({ islandId: archipelago.activeIslandId, ...(cursor ? { cursor } : {}) });
+    const returns = typeof devCloud.listTradeReturns === 'function' ? await devCloud.listTradeReturns() : { inbox: [] };
+    playerTradeCache = { ...offers, offers: cursor ? [...(playerTradeCache?.offers || []), ...(offers.offers || [])] : offers.offers || [], inbox: returns.inbox || [], inboxCursor: returns.cursor || null };
+  } catch (error) { playerTradeError = error.message || uiCopy('Offers could not be loaded.', 'Nie udało się pobrać ofert.'); }
+  finally { playerTradeLoading = false; if (dialog.open && tradeViewOpen()) renderPanel(); }
+}
+async function moreTradeReturns() {
+  if (!playerTradeCache?.inboxCursor || playerTradeLoading) return;
+  playerTradeLoading = true;
+  try {
+    const page = await devCloud.listTradeReturns({ cursor: playerTradeCache.inboxCursor });
+    playerTradeCache.inbox = [...new Map([...playerTradeCache.inbox, ...(page.inbox || [])].map(item => [item.id, item])).values()];
+    playerTradeCache.inboxCursor = page.cursor || null;
+  } catch (error) { playerTradeError = error.message; }
+  finally { playerTradeLoading = false; if (dialog.open && tradeViewOpen()) renderPanel(); }
+}
+async function mutatePlayerTrade(kind, id, values = {}, retry = null) {
+  if (tradeMutationBusy || !tradeServiceReady()) return;
+  if (uncertainTradeRequest && !retry) { toast(uiCopy('Resolve the pending exchange before starting another.', 'Najpierw potwierdź oczekującą operację wymiany.')); return; }
+  let intent;
+  try {
+    settleActiveTick();
+    if (!await save(true)) throw new Error(uiCopy('The cloud save must finish before trading.', 'Zapis w chmurze musi zakończyć się przed wymianą.'));
+    const body = retry?.body || { ...values, islandId: archipelago.activeIslandId, expectedRevision: devSync.version?.revision,
+      generation: devCloud.accountStatus?.generation ?? state.islandGeneration ?? 1, requestId: crypto.randomUUID() };
+    intent = { kind, id, values, body };
+    tradeMutationBusy = true;
+    let result;
+    if (kind === 'create') result = await devCloud.createTradeOffer(body);
+    else if (kind === 'accept') result = await devCloud.acceptTradeOffer(id, body);
+    else if (kind === 'cancel') result = await devCloud.cancelTradeOffer(id, body);
+    else result = await devCloud.claimTradeReturn(id, body);
+    await reloadConfirmedIsland();
+    uncertainTradeRequest = null;
+    if (kind === 'accept' && result?.offer?.status === 'accepted') {
+      tradeMutationBusy = false;
+      const lesson = act(state, { type: 'tutorialPlayerTrade', receiptId: result.offer.id }, Date.now(), { playerTradeVerified: true });
+      if (lesson.ok) await save(true);
+    }
+    playerTradeCache = null; playerTradeError = '';
+    toast(uiCopy('Exchange confirmed in the cloud.', 'Operacja wymiany potwierdzona w chmurze.'));
+  } catch (error) {
+    // A missing response may still mean the server committed the operation.
+    // Reload before any further action and retain the same request identifier
+    // for an explicit retry; never publish a second offer after a lost ACK.
+    if (intent && ['offline', 'rate-limited', 'timeout'].includes(error.code)) uncertainTradeRequest = intent;
+    else uncertainTradeRequest = null;
+    try { if (intent && devSync) await reloadConfirmedIsland(); } catch { /* The normal cloud error/recovery flow remains active. */ }
+    playerTradeCache = null;
+    playerTradeError = error.message || uiCopy('The exchange could not be confirmed.', 'Nie udało się potwierdzić wymiany.'); toast(playerTradeError);
+  }
+  finally { tradeMutationBusy = false; renderHUD(); if (dialog.open && tradeViewOpen()) renderPanel(); }
+}
+function playerTradePanel() {
+  const root = el('section', { class: 'player-trade-panel', 'data-player-trade': '' },
+    el('h3', {}, uiCopy('Player exchange offers', 'Oferty wymiany między graczami')),
+    el('p', { class: 'notice', 'data-i18n-ignore': '' }, uiCopy('Your island’s name, offered goods and requested exchange will be visible to other signed-in players.', 'Nazwa Twojej wyspy, oferowane towary i oczekiwana wymiana będą widoczne dla innych zalogowanych graczy.')),
+    el('p', { class: 'notice', 'data-i18n-ignore': '' }, uiCopy('From Town Hall 6 you trade only with other players. Choose what and how much you offer, and the exact goods and quantity you want in return. There is no exchange fee. Offers are fulfilled in full, and expire after 24 hours. Offered goods are reserved until acceptance or return.', 'Od Ratusza 6 handlujesz wyłącznie z innymi graczami. Wybierz, co i ile oferujesz oraz jakich towarów i w jakiej ilości oczekujesz w zamian. Nie ma opłaty za wymianę. Oferty są realizowane w całości i wygasają po 24 godzinach. Wystawione towary są zarezerwowane do przyjęcia oferty albo zwrotu.')));
+  if (!tradeServiceReady()) {
+    root.append(el('p', { class: 'notice', 'data-player-trade-unavailable': '', 'data-i18n-ignore': '' }, uiCopy('Player trading needs a signed-in account and the exchange service. This environment has not connected the service yet. No offer or exchange is simulated.', 'Handel między graczami wymaga zalogowanego konta i usługi wymiany. To środowisko nie ma jeszcze połączonej usługi. Nie pozorujemy wystawienia oferty ani wymiany.')));
+    return root;
+  }
+  if (uncertainTradeRequest) root.append(card(el('h4', {}, uiCopy('Exchange awaiting confirmation', 'Operacja czeka na potwierdzenie')),
+    note(uiCopy('Retry checks the same operation. It will not reserve or exchange these goods twice.', 'Ponowienie sprawdzi tę samą operację. Nie zarezerwuje ani nie wymieni towarów drugi raz.')),
+    button(uiCopy('Confirm the pending operation', 'Potwierdź oczekującą operację'), () => void mutatePlayerTrade(uncertainTradeRequest.kind, uncertainTradeRequest.id, uncertainTradeRequest.values, uncertainTradeRequest), { class: 'action secondary', disabled: tradeMutationBusy, 'data-retry-player-trade': '' })));
+  if (!playerTradeCache && !playerTradeLoading && !playerTradeError) queueMicrotask(refreshPlayerTrade);
+  const resourceChoice = (key, selected) => el('select', { 'aria-label': key === 'give' ? uiCopy('Offered resource', 'Oferowany zasób') : uiCopy('Requested resource', 'Oczekiwany zasób'), [`data-trade-${key}-resource`]: '' }, MATERIAL_IDS.map(id => el('option', { value: id, selected: id === selected }, nameOf(id))));
+  const give = resourceChoice('give', 'stone'), want = resourceChoice('want', 'wood');
+  const giveAmount = el('input', { type: 'number', min: '1', step: '1', value: '100', 'aria-label': uiCopy('Offered quantity', 'Oferowana ilość'), 'data-trade-give-amount': '' });
+  const wantAmount = el('input', { type: 'number', min: '1', step: '1', value: '100', 'aria-label': uiCopy('Requested quantity', 'Oczekiwana ilość'), 'data-trade-want-amount': '' });
+  const form = el('form', { class: 'player-trade-form', 'data-trade-create': '', onsubmit: event => {
+    event.preventDefault();
+    void mutatePlayerTrade('create', null, { give: { resource: give.value, amount: Number(giveAmount.value) }, want: { resource: want.value, amount: Number(wantAmount.value) } });
+  } }, el('h4', {}, uiCopy('Create an exchange offer', 'Wystaw ofertę wymiany')),
+    el('label', {}, uiCopy('I give', 'Oddaję'), give, giveAmount), el('label', {}, uiCopy('I want', 'Oczekuję'), want, wantAmount),
+    el('button', { type: 'submit', class: 'action', disabled: tradeMutationBusy || !!uncertainTradeRequest, 'data-create-trade-offer': '' }, uiCopy('Reserve goods and publish offer', 'Zarezerwuj towary i wystaw ofertę')));
+  root.append(form, button(playerTradeLoading ? uiCopy('Loading…', 'Wczytywanie…') : uiCopy('Refresh offers', 'Odśwież oferty'), () => { playerTradeCache = null; void refreshPlayerTrade(); }, { class: 'action secondary', disabled: playerTradeLoading || tradeMutationBusy, 'data-refresh-trade': '' }));
+  if (playerTradeError) root.append(el('p', { class: 'notice', role: 'alert', 'data-player-trade-error': '', 'data-i18n-ignore': '' }, playerTradeError));
+  const offers = [...new Map([...(playerTradeCache?.ownOffers || []), ...(playerTradeCache?.offers || [])].filter(offer => offer.status === 'open' || offer.isMine || offer.ownerUid === devAccount.uid).map(offer => [offer.id, offer])).values()];
+  if (playerTradeCache && !offers.length) root.append(note(uiCopy('No offers yet. You can create the first one.', 'Nie ma jeszcze ofert. Możesz wystawić pierwszą.')));
+  root.append(el('div', { class: 'player-trade-offers', 'data-trade-offers': '' }, ...offers.map(offer => {
+    const mine = offer.isMine || offer.ownerUid === devAccount.uid;
+    const expired = offer.expired === true || Date.now() >= offer.expiresAt;
+    const item = card(el('h4', { 'data-i18n-ignore': '' }, offer.ownerIslandName || uiCopy('Player island', 'Wyspa gracza')),
+      el('p', { 'data-i18n-ignore': '' }, `${count(offer.give?.amount)} ${text(nameOf(offer.give?.resource))} ⇄ ${count(offer.want?.amount)} ${text(nameOf(offer.want?.resource))}`),
+      el('small', { 'data-i18n-ignore': '' }, expired ? uiCopy('Expired', 'Wygasła') : uiCopy(`Expires in ${durationText((offer.expiresAt - Date.now()) / 1000)}`, `Wygasa za ${durationText((offer.expiresAt - Date.now()) / 1000)}`)));
+    item.dataset.tradeOffer = offer.id;
+    if (mine && offer.status === 'open') item.append(button(expired ? uiCopy('Collect returned goods', 'Odbierz zwrot') : uiCopy('Cancel and return goods', 'Anuluj i zwróć towary'), () => void mutatePlayerTrade('cancel', offer.id), { class: 'action secondary', disabled: tradeMutationBusy || !!uncertainTradeRequest, 'data-cancel-trade': offer.id }));
+    else if (!mine && !expired && offer.status === 'open') item.append(button(uiCopy('Accept this exchange', 'Przyjmij wymianę'), () => void mutatePlayerTrade('accept', offer.id), { disabled: tradeMutationBusy || !!uncertainTradeRequest, 'data-accept-trade': offer.id }));
+    return item;
+  })));
+  if (playerTradeCache?.cursor) root.append(button(uiCopy('Load more offers', 'Wczytaj kolejne oferty'), () => void refreshPlayerTrade(playerTradeCache.cursor), { class: 'action secondary', disabled: playerTradeLoading, 'data-more-trade-offers': '' }));
+  for (const entry of playerTradeCache?.inbox || []) root.append(card(el('h4', {}, uiCopy('Goods waiting for storage space', 'Towary oczekujące na miejsce')),
+    el('small', { 'data-i18n-ignore': '' }, `${uiCopy('Destination', 'Cel')}: ${islandNameFor(entry.islandId || 'island-1')}`),
+    el('p', { 'data-i18n-ignore': '' }, `${count(entry.amount ?? entry.remaining)} ${text(nameOf(entry.resource))}`),
+    button(uiCopy('Unload as much as fits', 'Rozładuj tyle, ile się zmieści'), () => void mutatePlayerTrade('claim', entry.id), { class: 'action secondary', disabled: tradeMutationBusy, 'data-claim-trade-return': entry.id })));
+  if (playerTradeCache?.inboxCursor) root.append(button(uiCopy('Load more returned goods', 'Wczytaj kolejne zwroty'), () => void moreTradeReturns(), { class: 'action secondary', disabled: playerTradeLoading, 'data-more-trade-returns': '' }));
+  return root;
+}
+function legacyHarborOrders() {
+  const orders = (state.dock?.orders || []).filter(order => order.stage !== 'complete' && order.stage !== 'expired');
+  return orders.length ? card(el('h3', {}, uiCopy('Earlier shipping orders', 'Wcześniejsze zamówienia statku')), ...orders.map(order => el('p', { 'data-harbor-order-status': order.id, 'data-i18n-ignore': '' }, `${count(order.amount)} ${text(nameOf(order.resource))}: ${harborOrderText(order)}`))) : null;
+}
+
+function islandNameFor(id) {
+  const world = id === 'island-2' ? archipelago.secondary : archipelago.primary;
+  return world ? islandDisplayName(world, language()) : uiCopy('Second island', 'Druga wyspa');
+}
+function allowIslandMutation() {
+  if (tradeMutationBusy || devSync && (!devSync.writable || devSync.status === 'saving')) { toast(devSync ? devSyncMessage() : uiCopy('Wait for the exchange confirmation.', 'Poczekaj na potwierdzenie wymiany.')); return false; }
+  return true;
+}
+function renderIslandSelection() {
+  let strip = document.querySelector('[data-island-selection]');
+  if (!archipelago.secondary) { strip?.remove(); return; }
+  if (!strip) { strip = el('nav', { class: 'island-choice-bar', 'data-island-selection': '', 'data-i18n-ignore': '', 'aria-label': uiCopy('Choose your island', 'Wybierz swoją wyspę') }); document.body.append(strip); }
+  const signature = JSON.stringify([archipelago.activeIslandId, archipelago.primary.islandName, archipelago.secondary.islandName, language()]);
+  if (strip.dataset.signature !== signature) {
+    strip.dataset.signature = signature;
+    strip.replaceChildren(...['island-1', 'island-2'].map((id, index) => button(`${index + 1} · ${islandNameFor(id)}`, () => void switchArchipelagoIsland(id), { class: 'island-choice', 'data-quick-island': id, 'aria-pressed': archipelago.activeIslandId === id, disabled: archipelago.activeIslandId === id, title: islandNameFor(id) })));
+  }
+  const mobileHeader = document.querySelector('.mobile-island-hud');
+  strip.style.top = `${matchMedia('(max-width:900px),(max-height:500px)').matches ? (mobileHeader?.getBoundingClientRect().bottom || 120) + 5 : 66}px`;
+}
+function resetWorldInterface() {
+  miniController?.dispose(); miniController = null; puzzle = null;
+  placement = null; placementBanner.hidden = true;
+  activitySignature = ''; worldSignature = ''; mobileDockSignature = ''; leisureDockSignature = '';
+  estimateCache.clear(); tutorialGuideSignature = ''; tutorialPanelSignature = '';
+  deferredTutorialRewards.clear();
+  document.querySelector('[data-active-tutorial-guide]')?.remove();
+  document.querySelector('[data-tutorial-pointer]')?.remove();
+  playerTradeCache = null; playerTradeError = '';
+  shippingPanelSignature = '';
+}
+function refreshIslandShipping() {
+  if (!dialog.open || !dialog.querySelector('[data-island-shipping]')) return;
+  const signature = JSON.stringify([!!archipelago.secondary, archipelago.shipCapacity, archipelago.activeIslandId, archipelago.transfers.map(item => [item.id, item.status, item.remainingCargo])]);
+  if (shippingPanelSignature !== signature) { shippingPanelSignature = signature; renderPanel(); return; }
+  for (const node of dialog.querySelectorAll('[data-island-voyage-status]')) {
+    const voyage = archipelago.transfers.find(item => item.id === node.dataset.islandVoyageStatus);
+    if (voyage?.status === 'sailing') node.textContent = uiCopy(`Sailing: ${durationText(Math.max(0, (voyage.arrivesAt - Date.now()) / 1000))} remaining`, `Rejs: pozostało ${durationText(Math.max(0, (voyage.arrivesAt - Date.now()) / 1000))}`);
+  }
+}
+function islandResetBlocked() {
+  return !!archipelago.secondary || archipelago.transfers.some(item => item.status !== 'complete') || !!uncertainTradeRequest;
+}
+async function resetSingleIsland() {
+  if (islandResetBusy || islandResetBlocked()) { toast(uiCopy('Keep the archipelago and finish outstanding shipments or exchanges before resetting.', 'Zachowaj archipelag i zakończ oczekujące transporty oraz wymiany przed resetem.')); return; }
+  if (devSync && (!devSync.writable || devSync.status === 'saving')) { toast(devSyncMessage()); return; }
+  islandResetBusy = true;
+  try {
+    if (!await save(true)) { toast(devSyncMessage()); return; }
+    if (tradeServiceReady()) {
+      const returns = await devCloud.listTradeReturns();
+      const offers = state.buildings.townhall.level >= 6 ? await devCloud.listTradeOffers({ islandId: archipelago.activeIslandId }) : { ownOffers: [] };
+      if ((returns.inbox || []).length || (offers.ownOffers || []).some(item => item.status === 'open')) {
+        toast(uiCopy('Cancel outstanding offers and collect all returned goods before starting over.', 'Przed rozpoczęciem od nowa anuluj własne oferty i odbierz wszystkie zwroty towarów.')); return;
+      }
+    }
+    readWorldPayload(Commerce.preserveAccountProgress(state, createState(Date.now(), { onboarding: true })));
+    resetWorldInterface();
+    if (!await save(true)) { renderHUD(); toast(devSyncMessage()); return; }
+    tutorialReady = false; worldExperienceReady = false; closePanel(true);
+    renderHUD(); await beginOnboarding();
+  } catch (error) { toast(error.message || uiCopy('The reset could not be verified.', 'Nie udało się zweryfikować resetu.')); }
+  finally { islandResetBusy = false; }
+}
+async function switchArchipelagoIsland(id) {
+  if (tradeMutationBusy || devSync && !devSync.writable || archipelago.activeIslandId === id) return;
+  settleActiveTick();
+  if (!await save(true)) { toast(devSyncMessage()); return; }
+  const result = Archipelago.switchIsland(archipelago, id, Date.now());
+  if (!result.ok) { toast(result.message); return; }
+  state = Archipelago.activeIsland(archipelago);
+  resetWorldInterface(); closePanel(true);
+  if (!await save(true)) { renderHUD(); return; }
+  renderHUD(); openPanel('archipelago');
+}
+async function createArchipelagoIsland(name) {
+  if (tradeMutationBusy || devSync && !devSync.writable) return;
+  settleActiveTick();
+  // The server must see the earned level 10 before accepting a second world.
+  if (!await save(true)) { toast(devSyncMessage()); return; }
+  const result = Archipelago.createSecondIsland(archipelago, { name }, Date.now());
+  if (!result.ok) { toast(result.message); return; }
+  await save(true); renderHUD(); if (dialog.open) renderPanel();
+}
+function archipelagoPanel() {
+  const content = el('section', { class: 'archipelago-panel', 'data-archipelago-panel': '' },
+    el('h3', {}, uiCopy('Your two islands', 'Twoje dwie wyspy')),
+    el('p', { class: 'notice', 'data-i18n-ignore': '' }, uiCopy('The first island’s Town Hall 10 unlocks one second island. At creation, its Town Hall and Warehouse inherit the first island’s current levels once; all other buildings start at level 1. Later upgrades belong to each island independently. Both islands keep running when you switch or sign out.', 'Ratusz 10 na pierwszej wyspie odblokowuje jedną drugą wyspę. Przy założeniu jej Ratusz i Magazyn jednorazowo przejmują bieżące poziomy z pierwszej wyspy, a pozostałe budynki zaczynają na poziomie 1. Późniejsze rozbudowy są niezależne dla każdej wyspy. Obie wyspy działają także po przełączeniu i wylogowaniu.')),
+    card(el('h4', { 'data-i18n-ignore': '' }, `I · ${islandNameFor('island-1')}`),
+      stat(uiCopy('Town Hall', 'Ratusz'), archipelago.primary.buildings.townhall.level),
+      button(archipelago.activeIslandId === 'island-1' ? uiCopy('Current island', 'Bieżąca wyspa') : uiCopy('Go to first island', 'Przejdź na pierwszą wyspę'), () => void switchArchipelagoIsland('island-1'), { class: 'action secondary', disabled: archipelago.activeIslandId === 'island-1', 'data-switch-island': 'island-1' })));
+  if (archipelago.secondary) content.append(card(el('h4', { 'data-i18n-ignore': '' }, `II · ${islandNameFor('island-2')}`),
+    stat(uiCopy('Town Hall', 'Ratusz'), archipelago.secondary.buildings.townhall.level),
+    button(archipelago.activeIslandId === 'island-2' ? uiCopy('Current island', 'Bieżąca wyspa') : uiCopy('Go to second island', 'Przejdź na drugą wyspę'), () => void switchArchipelagoIsland('island-2'), { class: 'action secondary', disabled: archipelago.activeIslandId === 'island-2', 'data-switch-island': 'island-2' })));
+  else {
+    const input = el('input', { type: 'text', minlength: '2', maxlength: '40', required: true, 'aria-label': uiCopy('Second island name', 'Nazwa drugiej wyspy'), 'data-second-island-name': '', placeholder: uiCopy('Name the second island', 'Nazwij drugą wyspę') });
+    content.append(el('form', { class: 'archipelago-create', 'data-create-second-island': '', onsubmit: event => { event.preventDefault(); void createArchipelagoIsland(input.value); } },
+      input, el('button', { type: 'submit', class: 'action', disabled: archipelago.primary.buildings.townhall.level < 10, 'data-create-second-island-confirm': '' }, uiCopy('Found the second island', 'Załóż drugą wyspę'))));
+  }
+  content.append(islandShippingPanel());
+  return content;
+}
+function islandShippingPanel() {
+  const section = card(el('h3', {}, uiCopy('Shipping between your islands', 'Transport między Twoimi wyspami')),
+    el('p', { class: 'notice', 'data-i18n-ignore': '' }, uiCopy('One shared ship carries up to 1000 items for free in 10 minutes each way. Both islands need a working Port. If ordinary destination storage is full, remaining ordinary cargo stays visibly on the ship; free space and unload it. Reward-origin cargo keeps its reward status outside ordinary capacity. Another voyage can start after the ship is empty.', 'Jeden wspólny statek bezpłatnie przewozi do 1000 sztuk w 10 minut w jedną stronę. Obie wyspy potrzebują działającego Portu. Gdy zwykły magazyn docelowy jest pełny, reszta zwykłego ładunku pozostaje widoczna na statku; zrób miejsce i ją rozładuj. Towary pochodzące z nagród zachowują status nagród poza zwykłą pojemnością. Kolejny rejs ruszy po opróżnieniu statku.')));
+  section.dataset.islandShipping = '';
+  if (!archipelago.secondary) {
+    section.append(button(uiCopy('Second island — unlocks at Town Hall 10', 'Druga wyspa — od Ratusza 10'), () => openPanel('archipelago'), { class: 'action secondary', 'data-archipelago-entry': '' }));
+    return section;
+  }
+  section.append(stat(uiCopy('Ship capacity', 'Pojemność statku'), el('span', { 'data-ship-capacity': '' }, count(archipelago.shipCapacity))));
+  const destination = archipelago.activeIslandId === 'island-1' ? 'island-2' : 'island-1';
+  const cargoInputs = new Map();
+  const form = el('form', { class: 'island-shipping-form', 'data-island-transfer-form': '', onsubmit: event => {
+    event.preventDefault(); if (!allowIslandMutation()) return; settleActiveTick();
+    const cargo = Object.fromEntries([...cargoInputs].map(([id, input]) => [id, Number(input.value)]).filter(([, amount]) => amount > 0));
+    const result = Archipelago.sendIslandTransfer(archipelago, { fromIslandId: archipelago.activeIslandId, toIslandId: destination, cargo }, Date.now());
+    if (!result.ok) { toast(result.message); return; }
+    void save(true); renderHUD(); if (dialog.open) renderPanel();
+  } }, el('p', { 'data-i18n-ignore': '' }, `${uiCopy('Destination', 'Cel')}: ${islandNameFor(destination)}`),
+    ...MATERIAL_IDS.map(id => {
+      const input = el('input', { type: 'number', min: '0', step: '1', value: '0', 'aria-label': text(nameOf(id)), 'data-island-cargo': id });
+      cargoInputs.set(id, input);
+      return el('label', {}, nameOf(id), input);
+    }), el('button', { type: 'submit', class: 'action', 'data-send-island-transfer': '' }, uiCopy('Send ship — free', 'Wyślij statek — bezpłatnie')));
+  section.append(form);
+  for (const transfer of archipelago.transfers || []) {
+    if (transfer.status === 'complete') continue;
+    const remaining = Math.max(0, ((transfer.arrivesAt ?? transfer.arrivalAt ?? Date.now()) - Date.now()) / 1000);
+    const cargo = transfer.remainingCargo || transfer.cargo || {};
+    const row = card(el('h4', { 'data-i18n-ignore': '' }, `${islandNameFor(transfer.fromIslandId)} → ${islandNameFor(transfer.toIslandId)}`),
+      el('p', { 'data-i18n-ignore': '', 'data-island-voyage-status': transfer.id }, transfer.status === 'waiting' ? uiCopy('Waiting for destination storage space', 'Czeka na miejsce w magazynie docelowym') : uiCopy(`Sailing: ${durationText(remaining)} remaining`, `Rejs: pozostało ${durationText(remaining)}`)),
+      el('p', { 'data-i18n-ignore': '' }, costText(cargo)));
+    if (transfer.status === 'waiting') row.append(button(uiCopy('Unload cargo that fits', 'Rozładuj mieszczący się towar'), () => {
+      if (!allowIslandMutation()) return;
+      const result = Archipelago.unloadIslandTransfer(archipelago, transfer.id, Date.now());
+      if (!result.ok) toast(result.message); else void save(true);
+      renderHUD(); if (dialog.open) renderPanel();
+    }, { class: 'action secondary', 'data-unload-island-transfer': transfer.id }));
+    section.append(row);
+  }
+  const units = el('input', { type: 'number', min: '1000', max: '100000', step: '1000', value: '1000', 'aria-label': uiCopy('Additional ship capacity', 'Dodatkowa pojemność statku'), 'data-ship-capacity-units': '' });
+  section.append(card(el('h4', {}, uiCopy('Increase ship capacity', 'Zwiększ pojemność statku')),
+    el('p', { class: 'notice', 'data-i18n-ignore': '' }, uiCopy('A permanent additional 1000 items costs PLN 4.99. Each purchase can include 1–100 expansions (up to PLN 499), and purchases can be repeated. The quote is shown before confirmation. Shipping itself remains free. DEV uses a Paynow simulation, and no money is charged.', 'Trwałe dodatkowe 1000 sztuk kosztuje 4,99 zł. Jeden zakup obejmuje 1–100 rozszerzeń (do 499 zł), a zakupy można powtarzać. Wycenę zobaczysz przed potwierdzeniem. Sam przewóz pozostaje bezpłatny. DEV używa symulacji Paynow i nie pobiera pieniędzy.')),
+    units, button(uiCopy('Paynow — increase capacity', 'Paynow — zwiększ pojemność'), () => openShipCapacityPayment(Number(units.value)), { class: 'action paynow-payment-link', 'data-ship-capacity-payment': '' })));
+  return section;
+}
+function openShipCapacityPayment(units) {
+  if (document.getElementById('ship-capacity-checkout')) return;
+  const increments = units / Archipelago.ARCHIPELAGO_RULES.capacityUnit;
+  const quote = Archipelago.quoteShipCapacity(archipelago, { units: increments });
+  if (!quote.ok) { toast(quote.message); return; }
+  const caps = Commerce.runtimeCapabilities();
+  const popup = createFlowDialog('ship-capacity-checkout', 'Paynow', el('div', { 'data-i18n-ignore': '' },
+    el('img', { src: 'assets/paynow-wordmark.svg', alt: 'Paynow', class: 'paynow-logo' }),
+    el('p', {}, uiCopy(`Additional capacity: ${count(units)} items`, `Dodatkowa pojemność: ${count(units)} sztuk`)),
+    el('strong', { 'data-ship-capacity-price': '' }, new Intl.NumberFormat(language() === 'pl' ? 'pl-PL' : 'en-GB', { style: 'currency', currency: 'PLN' }).format(quote.grossGrosz / 100)),
+    el('p', { class: 'simulation-label' }, caps.simulatedPayments ? uiCopy('SIMULATION — no money will be charged', 'SYMULACJA — bez pobrania pieniędzy') : uiCopy('Real payments await provider confirmation; capacity is not granted here.', 'Prawdziwe płatności wymagają potwierdzenia operatora; tutaj nie przyznajemy pojemności.'))));
+  const close = () => { popup.close(); popup.remove(); };
+  if (caps.simulatedPayments) popup.querySelector('.flow-body').append(button(uiCopy('Confirm simulated payment', 'Potwierdź symulowaną płatność'), () => {
+    if (!allowIslandMutation()) return;
+    const result = Archipelago.completeShipCapacityPurchase(archipelago, { units: increments, receiptId: `sim-ship-${crypto.randomUUID()}` }, { ...simulationContext(), environment: caps.environment, devSimulation: true });
+    if (!result.ok) { toast(result.message); return; }
+    void save(true); close(); renderHUD(); if (dialog.open) renderPanel();
+  }, { 'data-confirm-ship-capacity-payment': '' }));
+  popup.querySelector('.flow-body').append(button('Cancel', close));
+  popup.addEventListener('cancel', event => { event.preventDefault(); close(); }); localize(popup); popup.showModal();
 }
 
 function harborOrderText(order) {
@@ -1647,8 +2035,18 @@ function blessingDescription() {
 function chapelCareDescription() {
   return uiCopy('From Chapel level 3, use a manual blessing at least every 3 + Chapel level days. Neglect can trigger a harmful wreck 6–15 days after that grace period. The Lighthouse protects the island while its global bonus lasts.', 'Od poziomu Kaplicy 3 używaj ręcznego błogosławieństwa co najwyżej co 3 + poziom Kaplicy dni. Zaniedbanie może sprowadzić szkodliwy wrak po kolejnych 6–15 dniach. Latarnia chroni wyspę przez czas swojej globalnej premii.');
 }
+function chapelGraceWrathPanel() {
+  const level = state.buildings.chapel.level;
+  const allowedDays = 3 + level;
+  return el('section', { class: 'chapel-care-guide', 'data-chapel-grace-wrath': '', 'data-i18n-ignore': '' },
+    el('h4', {}, uiCopy('Divine grace and wrath', 'Łaska i gniew boży')),
+    el('p', {}, uiCopy('Grace appears as favourable wreck events: treasure, supplies, a castaway or a temporary Farm bonus. They are random events, not a guaranteed extra reward for each blessing. A manual blessing gives its stated material and happiness reward immediately.', 'Łaska objawia się w sprzyjających wydarzeniach związanych z wrakiem: skarbie, zapasach, rozbitku lub czasowej premii Farmy. To zdarzenia losowe, a nie gwarantowana dodatkowa nagroda za każde błogosławieństwo. Ręczne błogosławieństwo od razu daje podane zasoby i premię do szczęścia.')),
+    el('p', {}, level < 3 ? uiCopy('Neglect is monitored from Chapel level 3. Before that level, lack of blessings does not start the divine-wrath forecast.', 'Zaniedbanie jest monitorowane od poziomu Kaplicy 3. Wcześniej brak błogosławieństw nie uruchamia prognozy gniewu bożego.') : uiCopy(`Use a manual blessing at least once every ${allowedDays} days (3 + Chapel level). After exceeding that allowance, a harmful wreck may occur after a further 6–15 days: plague, royal tax, beetles or damaged roads. A new blessing renews the allowance. Plague does not reduce population below six. The Lighthouse protects the island while its global bonus lasts.`, `Używaj ręcznego błogosławieństwa co najwyżej co ${allowedDays} dni (3 + poziom Kaplicy). Po przekroczeniu tego odstępu, po kolejnych 6–15 dniach może wystąpić szkodliwy wrak: dżuma, podatek królewski, korniki lub uszkodzone drogi. Kolejne błogosławieństwo odnawia dozwolony odstęp. Dżuma nie zmniejsza populacji poniżej sześciu osób. Latarnia chroni wyspę przez czas swojej globalnej premii.`)),
+    worldEventsPanel());
+}
 function blessingPanel() {
   return card(el('h3', {}, 'Chapel and blessings'),
+    chapelGraceWrathPanel(),
     note('Completing a Chapel upgrade gives everyone +10 happiness per new level for 10 hours. Level 1 has no passive bonus.'),
     el('p', { 'data-chapel-time': '', class: 'notice' }, blessingDescription()),
     note('A manual blessing grants +50 of every resource and +20 happiness to everyone for one hour. One free use renews at Warsaw midnight without accumulating. Only one manual blessing can be active at a time.'),
@@ -1660,6 +2058,7 @@ function blessingPanel() {
 }
 function marketPanel() {
   if (!workplaceUnlocked(state, 'market')) return note('The Market unlocks at Town Hall level 2.');
+  if (state.buildings.townhall.level >= 6) return el('div', {}, playerTradePanel(), card(el('h3', {}, uiCopy('Earlier Market stock', 'Wcześniejszy zapas Targu')), note(uiCopy('New game exchanges have ended. Existing goods can still return to the Warehouse.', 'Nowe wymiany z grą są zakończone. Wcześniejsze towary nadal możesz odesłać do Magazynu.')), ...MATERIAL_IDS.filter(id => state.market.stock[id] > 0).map(id => button(`${text(nameOf(id))}: ${count(state.market.stock[id])} → ${uiCopy('Warehouse', 'Magazyn')}`, () => perform({ type: 'marketDispatch', resource: id, amount: Math.max(0, state.market.stock[id] - (state.market.dispatch?.[id] || 0)) }), { class: 'action secondary', 'data-market-dispatch': id }))));
   const rows = MATERIAL_IDS.map(id => card(el('h3', {}, nameOf(id)),
     el('div', { class: 'stat-grid' }, stat('Available at Market', el('span', { 'data-market-stock': id }, count(state.market.stock[id]))), stat('Locked for one hour', el('span', { 'data-market-locked': id }, count(state.market.locked.filter(lot => lot.resource === id).reduce((sum, lot) => sum + lot.amount, 0))))),
     button('Bring 10 to Market', () => perform({ type: 'marketOrder', resource: id, amount: 10 }), { class: 'action secondary', 'data-market-order': id }),
@@ -1707,9 +2106,9 @@ function refreshQuoteButton(node) {
   node.disabled = !quote || quote.ok === false || !Number.isFinite(coins) || state.resources.coins < coins;
   node.title = quote?.message || (state.resources.coins < coins ? 'Not enough coins.' : '');
 }
-function premiumTransportButton(action) {
+function premiumTransportButton(action, { payment = true } = {}) {
   const labels = { producer: 'Deliver local stock now', construction: 'Deliver building materials now', marketInbound: 'Bring goods to Market now', marketOutbound: 'Return Market goods now', dockInbound: 'Deliver to Harbor now', dockLoad: 'Load ship now', dockOutbound: 'Bring Harbor goods home now', dockUnload: 'Unload ship now' };
-  return el('div', { class: 'transport-payment-options' }, quotedButton(labels[action.route] || 'Instant transport', () => Activities.quoteTransport?.(state, action), { type: 'premiumTransport', ...action }, { class: 'action secondary', 'data-premium-route': action.route }), paymentButton({ kind: 'transport', ...action }));
+  return el('div', { class: 'transport-payment-options' }, quotedButton(labels[action.route] || 'Instant transport', () => Activities.quoteTransport?.(state, action), { type: 'premiumTransport', ...action }, { class: 'action secondary', 'data-premium-route': action.route }), payment ? paymentButton({ kind: 'transport', ...action }) : null);
 }
 function refreshUpgradeEstimate(node, id) {
   const project = state.buildings[id].construction || state.buildings[id].premiumService;
@@ -1773,7 +2172,7 @@ function premiumBuildingPanel(id) {
   const content = card(informationHeading(`premium-${id}`, 'Premium building options', ...premiumInformationParagraphs()));
   content.classList.add('premium-building-panel');
   const actions = el('div', { class: 'upgrade-premium-buttons' }, quotedButton('Buy building package', () => Activities.quotePremiumBuilding?.(state, id, { buildingCost }), { type: 'premiumBuyBuilding', building: id }, { 'data-premium-buy': id }), paymentButton({ kind: 'building', building: id }));
-  if (PRODUCTION_RECIPES[id]) actions.append(premiumTransportButton({ route: 'producer', building: id }));
+  if (PRODUCTION_RECIPES[id]) actions.append(premiumTransportButton({ route: 'producer', building: id }, { payment: false }));
   content.append(el('div', { class: 'upgrade-action-estimate-row' }, actions, upgradeEstimateView(id)));
   appendProjectPremiumControls(content, id);
   return content;
@@ -1822,7 +2221,9 @@ async function redeemPromoFromServer(code) {
   finally { if (control?.isConnected) control.disabled = false; }
 }
 function paymentButton(action) {
-  return button('Paynow payment', () => openPayment(action), { class: 'action paynow-payment-link', 'data-paynow-kind': action.kind, ...(action.building ? { 'data-paynow-building': action.building } : {}) });
+  const labels = { building: ['Paynow — building package', 'Paynow — pakiet budynku'], transport: ['Paynow — transport', 'Paynow — transport'], blessing: ['Paynow — blessing', 'Paynow — błogosławieństwo'], coins: ['Paynow — coins', 'Paynow — monety'] };
+  const label = labels[action.kind] || ['Paynow payment', 'Płatność Paynow'];
+  return button(uiCopy(...label), () => openPayment(action), { class: 'action paynow-payment-link', 'data-paynow-kind': action.kind, ...(action.building ? { 'data-paynow-building': action.building } : {}) });
 }
 function openPayment(action) {
   if (document.getElementById('paynow-checkout')) return;
@@ -1969,6 +2370,9 @@ function devSyncMessage() {
     'auth-required':['Sesja wygasła. Zaloguj się ponownie.','Your session expired. Sign in again.'],
     permission:['Brak dostępu do zapisu. Działania są wstrzymane.','Cloud access denied. Actions are paused.'],
     configuration:['Usługa kont wymaga konfiguracji. Działania są wstrzymane.','The account service requires setup. Actions are paused.'],
+    'second-island-locked':['Druga wyspa wymaga potwierdzonego Ratusza 10 na pierwszej. Ponów po zapisaniu postępu.','The second island requires cloud-confirmed Town Hall 10 on the first. Retry after saving progress.'],
+    'archipelago-island-loss':['Zapis nie może usunąć istniejącej drugiej wyspy. Wstrzymano działania, aby zachować postęp.','This save cannot remove the existing second island. Actions are paused to preserve progress.'],
+    'unverified-ship-capacity':['Pojemność statku wymaga prawidłowego potwierdzenia płatności. Nie rozpoczęto prawdziwej płatności.','Ship capacity requires a valid payment confirmation. No real payment was started.'],
     'invalid-state':['Serwer nie przyjął zapisu. Wczytaj ostatni potwierdzony stan.','The server rejected the save. Reload the last confirmed state.'],
     'invalid-cloud-data':['Nie można odczytać zapisu. Nie zostanie nadpisany.','The cloud save cannot be read and will not be overwritten.'],
     'island-expired':['Wyspa wygasła po trzech miesiącach bez gry. Odśwież stronę, aby rozpocząć nową.','The island expired after three months without play. Reload the page to start again.']
@@ -2204,7 +2608,7 @@ function renderPanel() {
   const rosterScroll = dialog.querySelector('[data-resident-list]')?.scrollTop || 0;
   closeInfoPopup(false);
   miniController?.dispose(); miniController = null;
-  const titles = { home: islandDisplayName(state, language()), menu: islandDisplayName(state, language()), buildings: 'Buildings', resources: 'Warehouse and transport', residents: 'Residents', trade: 'Harbor trade', tasks: 'Tasks', objective: gameGoal().title, settings: 'Settings', time: 'Island time', premium: 'Premium options', expeditions: 'Expeditions', map: 'Island map', decorations: 'Decorations', paths: 'Paths and bridges', reset: 'New island' };
+  const titles = { home: islandDisplayName(state, language()), menu: islandDisplayName(state, language()), buildings: 'Buildings', resources: 'Warehouse and transport', residents: 'Residents', trade: 'Harbor trade', archipelago: uiCopy('Your islands', 'Twoje wyspy'), tasks: 'Tasks', objective: gameGoal().title, settings: 'Settings', time: 'Island time', premium: 'Premium options', expeditions: 'Expeditions', map: 'Island map', decorations: 'Decorations', paths: 'Paths and bridges', reset: 'New island' };
   let title = titles[panel.kind] || titleOf(panel.id);
   let body;
   switch (panel.kind) {
@@ -2216,6 +2620,7 @@ function renderPanel() {
     case 'residents': body = residentsPanel(); break;
     case 'workers': title = 'Manage all workers'; body = residentsPanel(true); break;
     case 'trade': body = tradePanel(); break;
+    case 'archipelago': body = archipelagoPanel(); break;
     case 'market': title = 'Market'; body = marketPanel(); break;
     case 'construction': title = 'Construction and queue'; body = constructionPanel(); break;
     case 'notifications': title = 'Notifications'; body = notificationsPanel(); break;
@@ -2233,15 +2638,7 @@ function renderPanel() {
     case 'map': body = el('div', {}, note('Choose a district to locate it on the island.'), el('div', { class: 'panel-grid' }, Object.keys(buildingRegions).map(id => button(titleOf(id), () => {
       closePanel(); const node = document.getElementById(`hit-world-${id}`); node.focus(); node.classList.add('world-pulse'); setTimeout(() => node.classList.remove('world-pulse'), 3000);
     })))); break;
-    case 'reset': body = el('div', {}, note(uiCopy('Starting over replaces this island. Account purchase history and one-time entitlements are retained. Island resources are lost.', 'Rozpoczęcie od nowa zastąpi tę wyspę. Historia zakupów i jednorazowe uprawnienia konta pozostają zachowane. Zasoby wyspy zostaną utracone.')), button('Yes, start over', async () => {
-      if(devSync && (!devSync.writable || devSync.status==='saving')){toast(devSyncMessage());return;}
-      state=Commerce.preserveAccountProgress(state,createState(Date.now(), { onboarding: true }));puzzle=null;
-      if(!await save(true)){renderHUD();toast(devSyncMessage());return;}
-      tutorialReady=false;worldExperienceReady=false;closePanel(true);
-      document.querySelector('[data-active-tutorial-guide]')?.remove();
-      document.querySelector('[data-tutorial-pointer]')?.remove();
-      renderHUD();await beginOnboarding();
-    }, { class:'action danger','data-reset-island':'' }), button('Keep my island', () => openPanel('settings'), { class:'action secondary' })); break;
+    case 'reset': body = el('div', {}, note(uiCopy('Starting over replaces this island. Account purchase history and one-time entitlements are retained. Island resources are lost.', 'Rozpoczęcie od nowa zastąpi tę wyspę. Historia zakupów i jednorazowe uprawnienia konta pozostają zachowane. Zasoby wyspy zostaną utracone.')), button('Yes, start over', () => void resetSingleIsland(), { class:'action danger','data-reset-island':'', disabled:islandResetBlocked() }), islandResetBlocked() ? note(uiCopy('Starting over is unavailable while you own two islands, have cargo aboard, or await an exchange confirmation. Your other island and goods must be preserved.', 'Rozpoczęcie od nowa jest niedostępne przy dwóch wyspach, ładunku na statku lub oczekującym potwierdzeniu wymiany. Druga wyspa i towary muszą zostać zachowane.')) : null, button('Keep my island', () => openPanel('settings'), { class:'action secondary' })); break;
     default: body = el('div', {}, note(gameGoal().description),
       stat('Loyalty — consecutive days', `${state.loyalty.streak} / 10`),
       Progression.loyaltyStatus?.(state)?.eligible ? button('Claim daily reward', () => perform({ type: 'claimLoyalty' }), { 'data-claim-loyalty': '' }) : null,
@@ -2249,7 +2646,7 @@ function renderPanel() {
       button('Notifications', () => openPanel('notifications'), { class: 'action secondary' }),
       button('Premium options', () => openPanel('premium'), { class: 'action secondary' }),
       el('div', { class: 'stat-grid' }, stat('Town Hall level', el('span', { 'data-population-stat': 'level' }, state.buildings.townhall.level)), stat('Residents', el('span', { 'data-population-stat': 'population' }, `${state.population} / ${state.capacity}`)), stat('Happiness', el('span', { 'data-population-stat': 'happiness' }, happinessText())), stat('Day', state.day)),
-      el('div', { class: 'panel-grid' }, [['rules', 'Island rules'], ['objective', 'Main objective'], ['buildings', 'Buildings'], ['expeditions', 'Expeditions'], ['tasks', 'Tasks'], ['residents', 'Residents'], ['resources', 'Warehouse'], ['trade', 'Trade'], ['map', 'Island map'], ['tutorial', 'Tutorial'], ['settings', 'Settings']].map(([kind, label]) => button(label, () => openPanel(kind)))),
+      el('div', { class: 'panel-grid' }, [['rules', 'Island rules'], ['objective', 'Main objective'], ['buildings', 'Buildings'], ['expeditions', 'Expeditions'], ['tasks', 'Tasks'], ['residents', 'Residents'], ['resources', 'Warehouse'], ['trade', 'Trade'], ['archipelago', uiCopy('Your islands', 'Twoje wyspy')], ['map', 'Island map'], ['tutorial', 'Tutorial'], ['settings', 'Settings']].map(([kind, label]) => button(label, () => openPanel(kind), kind === 'archipelago' ? { 'data-archipelago-open': '' } : {}))),
       button('Return to island', closePanel, { class: 'action secondary' }));
   }
   const scroll = dialog.querySelector('.dialog-body')?.scrollTop || 0;
@@ -2259,7 +2656,7 @@ function renderPanel() {
   const showPanelBack = panelHistory.length > 0 && panel.kind !== 'puzzle';
   dialog.replaceChildren(el('header', { class: `dialog-header${showPanelBack ? ' has-panel-back' : ''}` },
     showPanelBack ? button('←', backPanel, { class: 'dialog-back', 'aria-label': 'Back to previous menu', 'data-panel-back': '' }) : null,
-    el('div', {}, el('span', { class: 'eyebrow' }, 'HARBORLIGHT · ISLAND 01'), el('h2', { id: 'dialog-title', 'data-i18n-ignore': ['home', 'menu'].includes(panel.kind) && !!state.islandName }, title)), button('×', closePanel, { class: 'dialog-close', 'aria-label': 'Close window' })), el('div', { class: 'dialog-body' }, panelNotice ? el('p', { class: 'notice action-feedback', role: 'status' }, panelNotice) : null, body));
+    el('div', {}, el('span', { class: 'eyebrow', 'data-i18n-ignore': '' }, `HARBORLIGHT · ${uiCopy('ISLAND', 'WYSPA')} ${archipelago.activeIslandId === 'island-2' ? '02' : '01'}`), el('h2', { id: 'dialog-title', 'data-i18n-ignore': ['home', 'menu'].includes(panel.kind) && !!state.islandName }, title)), button('×', closePanel, { class: 'dialog-close', 'aria-label': 'Close window' })), el('div', { class: 'dialog-body' }, panelNotice ? el('p', { class: 'notice action-feedback', role: 'status' }, panelNotice) : null, body));
   if (rosterOpen) {
     const roster = dialog.querySelector('[data-resident-roster]');
     if (roster) { roster.open = true; refreshResidentRosters(); roster.querySelector('[data-resident-list]').scrollTop = rosterScroll; }
@@ -2393,6 +2790,8 @@ function islandRulesPanel() {
     card(el('h3', {}, 'Residents and food'), note('Give residents jobs and keep Food in the central Warehouse. Workers need five minutes to reach work; hunger slows production and transport.')),
     card(el('h3', {}, 'Production and transport'), note('Production waits in local storage until carriers deliver it. Upgrades spend central materials, then transport and construction take place in separate phases.')),
     card(el('h3', {}, 'Happiness and progress'), note('Food, work, housing and temporary attractions influence happiness. Develop all buildings, improve paths and complete tasks while keeping residents happy.')),
+    resourceNotationPanel(),
+    card(el('h3', {}, uiCopy('Town Hall population requirement', 'Ludność wymagana przez Ratusz')), el('p', { class: 'notice', 'data-i18n-ignore': '' }, uiCopy('From Town Hall 3 → 4, every further Town Hall upgrade requires at least 75% of the current level’s population limit, rounded up: level 3 has 72 places, so 54 residents are required for level 4. Other buildings do not have this population requirement.', 'Od awansu Ratusza 3 → 4 każda kolejna rozbudowa Ratusza wymaga co najmniej 75% limitu ludności bieżącego poziomu, zaokrąglonego w górę: poziom 3 ma 72 miejsca, więc do poziomu 4 potrzeba 54 mieszkańców. Inne budynki nie mają tego wymogu ludności.'))),
     button('Continue tutorial', () => openPanel('tutorial'), { class: 'action secondary' }));
 }
 function finishTutorialReward(achievement, type) {
@@ -2422,9 +2821,11 @@ function refreshTutorialExperience() {
   if (!tutorialReady) return;
   if (expeditionSession()) { document.querySelector('[data-active-tutorial-guide]')?.remove(); document.querySelector('[data-tutorial-pointer]')?.remove(); return; }
   const status = Progression.tutorialStatus(state), rows = Progression.tutorialRows(state);
-  const row = rows.find(item => !item.completed);
+  const row = rows.find(item => item.canClaim || item.pendingDecision) || rows.find(item => !item.completed);
   const host = dialog.open ? dialog.querySelector('.dialog-body') : document.body;
-  const signature = JSON.stringify([language(), panel?.kind, panel?.id, status, row?.visited, row?.canObserve, row?.completed, row?.canClaim]);
+  const signature = JSON.stringify([language(), panel?.kind, panel?.id, status,
+    rows.map(item => [item.id, item.completed, item.claimed, item.canClaim, item.pendingDecision, item.skipped, item.shared, item.rewardBlocked]),
+    row?.settlement?.eligible, row?.settlement?.code, row?.settlement?.reason]);
   if (panel?.kind === 'tutorial' && tutorialPanelSignature !== signature) { tutorialPanelSignature = signature; renderPanel(); return; }
   const existing = document.querySelector('[data-active-tutorial-guide]');
   if (signature !== tutorialGuideSignature || !existing?.isConnected) {
@@ -2602,7 +3003,7 @@ function onboardingSteps() {
   const categories = [
     ['administration', 'Administracja', 'Administration', 'Ratusz, Dom, Magazyn, Targ, Port, Kaplica i Latarnia. Wybierz kartę budynku, aby sprawdzić jego działanie, obsadę, koszty i rozbudowę.', 'Find the Town Hall, House, Warehouse, Market, Harbour, Chapel and Lighthouse. Select a building card for its purpose, workers, costs and upgrades.'],
     ['economy', 'Gospodarka', 'Economy', 'Tu wybierasz budynki produkujące i przetwarzające zasoby. Obsada produkuje, a tragarze Magazynu odbierają gotowe towary.', 'Find the buildings that produce and process resources. Assigned workers produce goods, and Warehouse carriers collect them.'],
-    ['resources', 'Zasoby', 'Resources', 'Karty zasobów pokazują obsadę, lokalny zapas, stan magazynu centralnego i towary w drodze. Kliknięcie zasobu otwiera odpowiedni budynek produkcyjny.', 'Resource cards show workers, local stock, central stock and goods in transit. Select a resource to open its production building.'],
+    ['resources', 'Zasoby', 'Resources', 'Przykład Kamień 0 / 537 (0), → 0 szt./h: 0 przy Kamieniołomie, 537 w magazynie centralnym, 0 w transporcie i zerowy bilans godzinowy. Karty pokazują też obsadę. Kliknięcie zasobu otwiera jego budynek produkcyjny.', 'Example Stone 0 / 537 (0), → 0 units/h: 0 at the Quarry, 537 in central storage, 0 in transit and zero hourly balance. Cards also show the crew. Select a resource to open its production building.'],
     ['decorations', 'Dekoracje i atrakcje', 'Decorations and attractions', 'Atrakcje dają czasowe premie do szczęścia za monety. Przed zakupem sprawdź cenę, objętych premią mieszkańców i czas trwania efektu.', 'Attractions provide temporary happiness bonuses for coins. Check the price, affected residents and effect duration before buying.'],
     ['paths', 'Ścieżki', 'Paths', 'Ulepszanie ścieżek kosztuje kamień i usprawnia przewóz. Ukończ wszystkie odcinki bieżącego poziomu, zanim przejdziesz do następnego.', 'Path improvements cost Stone and improve transport. Finish every section of the current level before starting the next.']
   ];

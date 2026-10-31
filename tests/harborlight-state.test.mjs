@@ -47,9 +47,9 @@ test('townhall and house provide their capacities only when real construction fi
  for(const id of Object.keys(s.buildings).filter(id=>id!=='townhall')){s.buildings[id].level=2;const stock={...s.resources};assert.equal(act(s,{type:'upgrade',building:id}).ok,false,id);assert.deepEqual(s.resources,stock);}
 });
 test('level six works and employment capacity follows the individual building level',()=>{
- const s=funded(5);crew(s,'warehouse',6);assert.equal(act(s,{type:'upgrade',building:'townhall'}).ok,true);finish(s,'townhall');assert.equal(s.capacity,144);assert.equal(workerLimit(s,'farm'),12);
+ const s=funded(5);s.population=90;synchronizeResidents(s);crew(s,'warehouse',6);assert.equal(act(s,{type:'upgrade',building:'townhall'}).ok,true);finish(s,'townhall');assert.equal(s.capacity,144);assert.equal(workerLimit(s,'farm'),12);
  s.population=144;s.buildings.house.level=6;s.buildings.farm.level=6;assert.equal(workerLimit(s,'farm'),72);
- s.population=13;assert.equal(workerLimit(s,'farm'),72);assert.equal(act(s,{type:'assign',building:'farm',delta:72}).ok,false);assert.ok(MAX_BUILDING_LEVEL>=6);
+ s.population=13;synchronizeResidents(s);assert.equal(workerLimit(s,'farm'),72);assert.equal(act(s,{type:'assign',building:'farm',delta:72}).ok,false);assert.ok(MAX_BUILDING_LEVEL>=6);
 });
 test('only the eight workplaces accept assignments; market and dock unlock at two and four',()=>{
  assert.deepEqual(new Set(WORKPLACE_IDS),new Set(['farm','windmill','lumber','sawmill','quarry','warehouse','dock','market']));
@@ -235,8 +235,11 @@ test('paid entitlement adds four active slots but ordinary upgrades still requir
 });
 test('paid pipeline can reserve more future levels than the regular queue capacity',()=>{
  const s=idle(20);s.buildings.warehouse.level=20;s.premium.expiresAt=s.worldTimeMs+3600000;for(const id of Object.keys(s.resources))s.resources[id]=1000000;
- for(let index=0;index<25;index++){assert.equal(act(s,{type:'upgrade',building:'townhall'}).ok,true);assert.equal(act(s,{type:'upgrade',building:'farm'}).ok,true);}
- assert.equal(s.constructionProjects.length,50);assert.equal(constructionCounts(s).active,2);assert.equal(constructionCounts(s).queued,48);assert.equal(s.constructionProjects.at(-1).targetLevel,26);assert.ok(s.resources.wood>0);assert.equal(warehouseUsed(s)<=warehouseLimits(s).total,true);
+ s.population=480;synchronizeResidents(s);
+ // Premium still admits a queue beyond the normal two places, while each
+ // queued Town Hall level must meet its own75% population prerequisite.
+ for(let index=0;index<7;index++){assert.equal(act(s,{type:'upgrade',building:'townhall'}).ok,true);assert.equal(act(s,{type:'upgrade',building:'farm'}).ok,true);}
+ assert.equal(s.constructionProjects.length,14);assert.equal(constructionCounts(s).active,2);assert.equal(constructionCounts(s).queued,12);assert.equal(s.constructionProjects.at(-1).targetLevel,8);assert.ok(s.resources.wood>0);assert.equal(warehouseUsed(s)<=warehouseLimits(s).total,true);
 });
 test('paid forecast waits for actual central arrival, charges a fee and reserves materials once',()=>{
  const s=idle(2);s.premium.expiresAt=s.worldTimeMs+3600000;s.resources.grain=122;s.buildings.farm.ready=10;crew(s,'warehouse',1);const coins=s.resources.coins;assert.equal(act(s,{type:'forecastPlan',building:'farm'}).ok,true);assert.equal(s.buildings.farm.construction.stage,'planned');assert.equal(s.resources.wood,100);assert.ok(s.resources.coins<coins);assert.ok(Number.isFinite(estimateMaterialsSeconds(s,s.buildings.farm.construction.cost)));tick(s,299);assert.equal(s.buildings.farm.construction.stage,'planned');tick(s,1);assert.equal(s.buildings.farm.construction.stage,'transport');assert.equal(s.resources.wood,100);assert.equal(centralAvailable(s,'wood'),20);assert.equal(s.resources.grain,132);assert.equal(centralAvailable(s,'grain'),0);const after=saved(s);assert.equal(after.resources.wood,100);assert.equal(centralAvailable(after,'wood'),20);assert.equal(after.buildings.farm.construction.stage,'transport');

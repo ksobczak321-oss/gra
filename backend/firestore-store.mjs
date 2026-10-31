@@ -108,5 +108,47 @@ export function createFirestoreStore({ projectId, databaseId = '(default)', fetc
     const last = documents.at(-1), next = documents.length === limit ? Buffer.from(JSON.stringify({ name: last.name, lastPlayedAt: accounts.at(-1).lastPlayedAt })).toString('base64url') : null;
     return { accounts, cursor: next };
   }
-  return { runTransaction, listAccounts };
+  // The expiry range and ordering use one automatically indexed field plus
+  // document name. Old OPEN offers cannot clog page one indefinitely, and no
+  // composite status/expiry index or mutation during GET is required.
+  // This adapter never accepts arbitrary collection paths or filter fields.
+  function pageCursor(cursor, prefix) {
+    if (cursor === null) return null;
+    if (typeof cursor !== 'string' || cursor.length > 4096 || !/^[A-Za-z0-9_-]+$/.test(cursor)) throw new TypeError('Invalid trade cursor.');
+    let name; try { name = JSON.parse(Buffer.from(cursor, 'base64url').toString('utf8')).name; } catch { throw new TypeError('Invalid trade cursor.'); }
+    if (typeof name !== 'string' || !name.startsWith(prefix) || !/^trade_[a-f0-9]{40}$/.test(name.slice(prefix.length))) throw new TypeError('Invalid trade cursor.');
+    return name;
+  }
+  async function listTradeOffers({ limit = 50, cursor = null, at } = {}) {
+    if (!Number.isSafeInteger(limit) || limit < 1 || limit > 50) throw new TypeError('Invalid trade page size.');
+    if (!Number.isSafeInteger(at) || at < 0) throw new TypeError('Invalid trade query clock.');
+    const prefix = `${database}/documents/playerTradeOffers/`, start = pageCursor(cursor, prefix);
+    const structuredQuery = { from: [{ collectionId: 'playerTradeOffers' }],
+      where: { fieldFilter: { field: { fieldPath: 'expiresAt' }, op: 'GREATER_THAN', value: { integerValue: String(at) } } },
+      orderBy: [{ field: { fieldPath: 'expiresAt' }, direction: 'ASCENDING' }, { field: { fieldPath: '__name__' }, direction: 'ASCENDING' }], limit };
+    if (start) {
+      const expiresAt = JSON.parse(Buffer.from(cursor, 'base64url').toString('utf8')).expiresAt;
+      if (!Number.isSafeInteger(expiresAt) || expiresAt < 0) throw new TypeError('Invalid trade cursor expiry.');
+      structuredQuery.startAt = { values: [{ integerValue: String(expiresAt) }, { referenceValue: start }], before: false };
+    }
+    const queried = await request(`${root}:runQuery`, bodyOptions({ structuredQuery }));
+    if (!queried.response.ok || !Array.isArray(queried.body)) throw new FirestoreStoreError();
+    const documents = queried.body.filter(row => row.document).map(row => row.document);
+    if (documents.some(document => !document.name?.startsWith(prefix) || !/^trade_[a-f0-9]{40}$/.test(document.name.slice(prefix.length)))) throw new FirestoreStoreError('invalid-cloud-document');
+    const offers = documents.map(document => decodeFields(document.fields || {}));
+    if (offers.some(offer => !Number.isSafeInteger(offer.expiresAt) || offer.expiresAt <= at)) throw new FirestoreStoreError('invalid-cloud-document');
+    return { offers, cursor: documents.length === limit ? Buffer.from(JSON.stringify({ name: documents.at(-1).name, expiresAt: offers.at(-1).expiresAt })).toString('base64url') : null };
+  }
+  async function listTradeInbox({ uid, limit = 50, cursor = null } = {}) {
+    if (typeof uid !== 'string' || !/^[A-Za-z0-9:_-]{1,128}$/.test(uid) || !Number.isSafeInteger(limit) || limit < 1 || limit > 50) throw new TypeError('Invalid trade inbox page.');
+    const prefix = `${database}/documents/accounts/${uid}/tradeInbox/`, start = pageCursor(cursor, prefix);
+    const structuredQuery = { from: [{ collectionId: 'tradeInbox' }], orderBy: [{ field: { fieldPath: '__name__' }, direction: 'ASCENDING' }], limit };
+    if (start) structuredQuery.startAt = { values: [{ referenceValue: start }], before: false };
+    const queried = await request(`${root}/accounts/${uid}:runQuery`, bodyOptions({ structuredQuery }));
+    if (!queried.response.ok || !Array.isArray(queried.body)) throw new FirestoreStoreError();
+    const documents = queried.body.filter(row => row.document).map(row => row.document);
+    if (documents.some(document => !document.name?.startsWith(prefix) || !/^trade_[a-f0-9]{40}$/.test(document.name.slice(prefix.length)))) throw new FirestoreStoreError('invalid-cloud-document');
+    return { items: documents.map(document => decodeFields(document.fields || {})), cursor: documents.length === limit ? Buffer.from(JSON.stringify({ name: documents.at(-1).name })).toString('base64url') : null };
+  }
+  return { runTransaction, listAccounts, listTradeOffers, listTradeInbox };
 }

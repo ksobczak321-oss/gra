@@ -1,5 +1,5 @@
-import { registerTranslations } from './harborlight-v1-i18n.js?v=frontend-v20';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v20';
+import { registerTranslations } from './harborlight-v1-i18n.js?v=frontend-v21';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v21';
 
 // Presentation copy for the current learning flow. Player-entered text never
 // passes through this catalogue.
@@ -154,7 +154,7 @@ export const V16_COPY = {
 
 export function registerTutorialCopy(lessons = []) {
   for (const lesson of lessons) {
-    const copy = LESSON_COPY[lesson.id];
+    const copy = lesson.titlePl && lesson.descriptionPl ? [lesson.titlePl, lesson.descriptionPl] : LESSON_COPY[lesson.id];
     if (!copy) continue;
     V16_COPY[lesson.title] = copy[0];
     V16_COPY[lesson.description] = copy[1];
@@ -165,6 +165,6 @@ export function registerTutorialCopy(lessons = []) {
 registerTutorialCopy(TUTORIAL_LESSONS);
 
 export function tutorialLessonText(row, language = 'en') {
-  const copy = language === 'pl' ? LESSON_COPY[row.id] : null;
+  const copy = language === 'pl' ? row.balanced && row.titlePl && row.descriptionPl ? [row.titlePl, row.descriptionPl] : LESSON_COPY[row.id] : null;
   return { title: copy?.[0] || row.title, description: copy?.[1] || row.description };
 }

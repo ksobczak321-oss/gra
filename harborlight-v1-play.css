@@ -735,3 +735,24 @@ body.portrait-world .dock-tabs{display:none!important}
 }
 .settings-session-actions{display:flex;justify-content:flex-end;margin-bottom:14px}.settings-session-actions .settings-signout{min-width:150px}
 .settings-legal-links{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}.settings-legal-links a{display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border:1px solid #6d8d9d;border-radius:9px;color:#ffe1a0;text-underline-offset:3px}.settings-legal-links a:focus-visible{outline:3px solid #ffe0a0;outline-offset:3px}
+.treasury-income,.chapel-care-guide{margin:14px 0;color:#d5e5e8;font-size:14px;line-height:1.6}
+.treasury-income h4,.chapel-care-guide h4,.house-worker-assignments h4{margin:10px 0;color:#ffe1a5}
+.house-worker-assignments{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.house-worker-assignments>.info-card{min-width:0;padding:10px}
+.house-worker-assignments .producer-workers{padding:6px;min-width:0}
+.player-trade-form,.island-shipping-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0;padding:14px;border:1px solid #64818d80;border-radius:12px;background:#0e2b3c}
+.player-trade-form h4,.player-trade-form>.action,.island-shipping-form>p,.island-shipping-form>.action{grid-column:1/-1}
+.player-trade-form label,.island-shipping-form label{display:grid;gap:7px;min-width:0;color:#d5e7e9;font-size:13px}
+.player-trade-form input,.player-trade-form select,.island-shipping-form input,.archipelago-create input,[data-ship-capacity-units]{width:100%;min-width:0;min-height:44px;padding:9px 10px;border:1px solid #718e9f;border-radius:8px;background:#092b3e;color:#eef7f5;font:inherit}
+.player-trade-offers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:15px}
+.player-trade-offers .info-card{margin:0;min-width:0;overflow-wrap:anywhere}
+.archipelago-create{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;margin:14px 0}
+.archipelago-panel h3,.player-trade-panel h3{color:#ffe0a0}
+.island-choice-bar{position:fixed;z-index:45;left:50%;display:flex;gap:5px;width:min(550px,calc(100vw - 20px));padding:5px;border:1px solid #c8ac72;border-radius:11px;background:#12374be8;box-shadow:0 4px 15px #00172377;transform:translateX(-50%)}
+.island-choice{flex:1;min-width:0;min-height:35px;padding:6px 10px;border:1px solid #678591;border-radius:7px;background:#173a4b;color:#d6e9e9;font:650 12px/1.25 Inter,system-ui,sans-serif;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;cursor:pointer}
+.island-choice[aria-pressed=true]{border-color:#f0cf83;background:#5a552f;color:#ffe4a8;cursor:default}
+body[data-active-island="island-2"] #worldLayer{filter:hue-rotate(-15deg) saturate(.82) sepia(.16)}
+body[data-active-island="island-2"] #stage{background:#337d91}
+body[data-active-island="island-2"] .island-choice-bar{border-color:#e5ba96;background:#3f4355ed}
+body[data-active-island="island-2"] .topbar-brand,body[data-active-island="island-2"] .mobile-hud-brand{color:#ffd1ab}
+@media(max-width:600px){.house-worker-assignments,.player-trade-offers,.archipelago-create{grid-template-columns:minmax(0,1fr)}.player-trade-form,.island-shipping-form{gap:8px;padding:10px}.player-trade-form input,.player-trade-form select,.island-shipping-form input{font-size:14px}.treasury-income,.chapel-care-guide{font-size:13px}.island-choice{padding-inline:5px;font-size:11px}}

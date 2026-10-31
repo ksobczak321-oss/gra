@@ -1,6 +1,6 @@
-# Sterowanie i zapis HARBORLIGHT — frontend v20
+# Sterowanie i zapis HARBORLIGHT — frontend v21
 
-Instrukcja bieżącego kodu DEV: [reguły v18](FRONTEND-V18-REQUIREMENTS.md), [uzupełnienie v19](FRONTEND-V19-REQUIREMENTS.md) i [pierwsze wejście oraz zapis v20](FRONTEND-V20-REQUIREMENTS.md). Nie stanowi potwierdzenia publikacji. Ostatni potwierdzony PRE-PROD to v18 / `6ec3c6d` / [41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285) na `harborlight-dev.web.app`; wyniki późniejszych zmian i promocji rozdziela [dziennik](IMPLEMENTATION-LOG.md). Aktualny arkusz to Excel 11; wcześniejsze wersje pozostają archiwami.
+Instrukcja bieżącego kodu DEV: [reguły v18](FRONTEND-V18-REQUIREMENTS.md), [uzupełnienie v19](FRONTEND-V19-REQUIREMENTS.md) [pierwsze wejście oraz zapis v20](FRONTEND-V20-REQUIREMENTS.md) i [samouczek/rynek/archipelag v21](FRONTEND-V21-REQUIREMENTS.md). Nie stanowi potwierdzenia publikacji. Ostatni potwierdzony PRE-PROD to v18 / `6ec3c6d` / [41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285) na `harborlight-dev.web.app`; wyniki późniejszych zmian i promocji rozdziela [dziennik](IMPLEMENTATION-LOG.md). Ostatni arkusz to Excel 11, migawka wcześniejszych reguł; nie obejmuje v21, a wcześniejsze wersje pozostają archiwami.
 
 ## Wejście i zapis
 
@@ -24,11 +24,13 @@ Wprowadzenie dotyczy nowych światów z jego znacznikiem. Starsze zapisy bez teg
 
 25 kolejnych kroków wymaga faktycznego działania lub rzeczywistej dostawy/produkcji. Samo przeczytanie, otwarcie okna albo odrzucona komenda nie przyznaje nagrody. Strzałka wskazuje przycisk związany z bieżącym zadaniem.
 
-Początek uczy przydzielenia rolnika, tragarza, młynarza i drwala. Piąty krok udostępnia jednorazową pomoc do rozbudowy Ratusza; dalej uczysz się szczęścia, kamienia/desek, priorytetu i dostawy, dodatkowego tragarza, przetwarzania, punktów Domu, filtrów powiadomień, rozbudów, ścieżek, atrakcji, Kaplicy, Targu, Latarni, przyjęcia zadania, ekspedycji, odwołania pracownika i darowizny.
+**Historyczny program v3:** początek uczy przydzielenia rolnika, tragarza, młynarza i drwala. Piąty krok udostępnia jednorazową pomoc do rozbudowy Ratusza; dalej uczysz się szczęścia, kamienia/desek, priorytetu i dostawy, dodatkowego tragarza, przetwarzania, punktów Domu, filtrów powiadomień, rozbudów, ścieżek, atrakcji, Kaplicy, Targu, Latarni, przyjęcia zadania, ekspedycji, odwołania pracownika i darowizny.
 
-Pomoc pokrywa braki do 500 monet, po 500 drewna/kamienia/zboża/desek i600 żywności. Materiały bonusowe są wydawalne od razu. Rzeczywiste zamówienie Ratusza zalicza krok, ale nie pomija dostaw i budowania.
+Pomoc historycznego programu v3 pokrywa braki do 500 monet, po 500 drewna/kamienia/zboża/desek i600 żywności. Materiały bonusowe są wydawalne od razu. Rzeczywiste zamówienie Ratusza zalicza krok, ale nie pomija dostaw i budowania.
 
-Skrzynia losuje 100–300 każdego z pięciu materiałów, bez monet. Losowanie jest trwałe; jednorazowe Share daje identyczną zawartość, Skip pozostawia podstawową nagrodę. Odebrane starsze lekcje nie są wypłacane ponownie. Gdy dostępny zapas przekracza limit jednego materiału lub całkowity limit Magazynu, kolejne skrzynie i ich podwajanie czekają na wydanie materiałów; zarządzanie, rozbudowa, pomoc oraz nagrody reklamowe/zadań pozostają dostępne.
+Skrzynia historycznego programu v3 losuje 100–300 każdego z pięciu materiałów, bez monet. Losowanie jest trwałe; jednorazowe Share daje identyczną zawartość, Skip pozostawia podstawową nagrodę. Odebrane starsze lekcje nie są wypłacane ponownie. Gdy dostępny zapas przekracza limit jednego materiału lub całkowity limit Magazynu, kolejne skrzynie i ich podwajanie czekają na wydanie materiałów; zarządzanie, rozbudowa, pomoc oraz nagrody reklamowe/zadań pozostają dostępne.
+
+**Nowy program v21:** 25 kroków przeplata przydziały tragarza, rolnika i drwala z rzeczywistym wydawaniem zasobów na Ratusz, Kamieniołom i inne działania. Dopasowane nagrody trafiają do zwykłego zapasu i są rozliczane przed kolejną lekcją. Końcowe jawne rozliczenie wymaga odebrania poprzednich nagród i wykorzystania nadwyżek; uzupełnia tylko wolne zwykłe miejsce, nie usuwa żadnych materiałów. Celem jest pełny Magazyn bez oczekujących skrzyń. Starszy program i jego odebrane premie są zachowane.
 
 Samouczek otwiera się po uruchomieniu świata do ukończenia lub świadomej rezygnacji. Powrót na konto i ręczne wznowienie zachowują ukończone kroki oraz odebrane nagrody. Trwająca minigra ma pierwszeństwo — skrzynia i przewodnik czekają, zamiast zużywać limit rundy.
 
@@ -42,7 +44,19 @@ Karta budynku pokazuje rzeczywiste dostępne materiały, koszt, etap dostaw i os
 
 Pojemność zwykłych dostaw jest oddzielna od wydawalnych materiałów bonusowych. Producent przechowuje lokalny zapas, a zasoby centralne można wydać po dostarczeniu. Natychmiastowy przewóz sprawdza miejsce także dla wcześniejszych ładunków w drodze przed pobraniem opłaty. Targ i Port odświeżają etapy na otwartej karcie; towar podjęty przed terminem ważności kończy rozpoczęty przewóz.
 
-Smutna buźka nad producentem oznacza faktycznie aktywną karę przestoju. Szczegóły rozróżniają brak surowca od braku miejsca i uwzględniają indywidualne zegary pracowników. Premie/kary są dostępne w Ratuszu; informacje o podatkach pozostają ukryte w interfejsie.
+Dolna karta zasobu ma postać `lokalny / centralny (w transporcie)` oraz osobny bilans godzinowy. Kamień `0 / 537 (0)` i `0 szt./h` to zero przy Kamieniołomie,537 w Magazynie centralnym,zero w drodze i zerowy bieżący bilans. Nie jest to ilość oczekującej nagrody.
+
+Smutna buźka nad producentem oznacza faktycznie aktywną karę przestoju. Szczegóły rozróżniają brak surowca od braku miejsca i uwzględniają indywidualne zegary pracowników. Premie/kary są dostępne w Ratuszu; menu Monet objaśnia podatników, aktywność, reklamy i minigry. Dom pokazuje przydziały, dzienną pulę szczęścia i wpływ średniego szczęścia na populację.
+
+## Ratusz, wymiany graczy i druga wyspa
+
+Od awansu 3→4 Ratusz potrzebuje 75% limitu ludności poziomu poprzedzającego cel: 54 dla4,72 dla5,90 dla6. Inne budynki nie mają tego wymogu. Nowe plany premium/kolejki również go sprawdzają; dawnych zatwierdzonych projektów nie cofamy.
+
+Od Ratusza 6 rynek graczy zastępuje nowe transakcje NPC. Wskaż oddawany zasób i ilość oraz oczekiwany zasób i ilość; przelicznik ustalają gracze. Oferta jest rezerwowana na serwerze i realizowana w całości. Wymagana jest dostępna przestrzeń po obu stronach. Zwrot po anulowaniu lub wygaśnięciu czeka w trwałej skrzynce, jeśli magazyn jest pełny. Bez aktywnego API interfejs wyjaśnia brak połączenia, nie pokazuje pozornego rynku. Wcześniejsze zamówienia NPC mogą zakończyć podróż.
+
+Od Ratusza 10 można założyć drugą wyspę. Zaczyna od poziomu 1 budynków, poza jednorazową kopią poziomu Ratusza i Magazynu pierwszej. Nazwa i odmienna kolorystyka wskazują bieżącą wyspę. Późniejszy rozwój jest niezależny, a oba światy i przewozy zachowuje wspólny zapis konta.
+
+Port przewozi między własnymi wyspami 1000 sztuk w 10 minut bez opłaty za rejs. Przy pełnym docelowym magazynie zwykły ładunek czeka na miejsce; materiał bonusowy zachowuje wcześniejsze zwolnienie z limitu. Można dokupić wielokrotności1000 pojemności po 4,99 zł; wDEV zakup jest jawnie symulowany, bez pobrania pieniędzy. Wyspy nie dublują wspólnych uprawnień ani już odebranych nagród konta.
 
 ## Szczęście, czas i aktywność
 
@@ -64,7 +78,7 @@ Harmonogram aktywnego czasu jest zapisywany: pierwsza propozycja reklamy w4–8 
 
 Uprawnienie bez reklam w standardowej grze wymaga potwierdzonych zakupów brutto co najmniej 1999 gr w ostatnich 30 dniach. Standardowe bonusy są wtedy dostępne bez filmu przy tych samych limitach. Reklamy za dodatkowy czas ekspedycji pozostają. Punkt 4–8 minut automatycznie uruchamia dalszy harmonogram raz; odbiór bonusu nie uruchamia go drugi raz. To odrębne uprawnienie od pakietu budowlanego 24 h za monety.
 
-Przycisk płatności prowadzi do Paynow lub oznaczonej symulacji. Symulacja działa wyłącznie poza PROD, nie pobiera pieniędzy i nie jest dowodem działającego operatora. Zakupy budynku/transportu za zdobyte monety od Ratusza 4, odrębne zakupy za pieniądze od poziomu 1. Kody mają nagrody i globalne limity rozliczane na serwerze; wpisanie tekstu w przeglądarce nie potwierdza realizacji.
+W opcjach premium budynku jest jedna płatność do tego samego zakupu. Przycisk płatności prowadzi do Paynow lub oznaczonej symulacji. Symulacja działa wyłącznie poza PROD, nie pobiera pieniędzy i nie jest dowodem działającego operatora. Zakupy budynku/transportu za zdobyte monety od Ratusza 4, odrębne zakupy za pieniądze od poziomu 1. Kody mają nagrody i globalne limity rozliczane na serwerze; wpisanie tekstu w przeglądarce nie potwierdza realizacji.
 
 Gracz sam inicjuje i zatwierdza udostępnienie osiągnięcia. Nie publikujemy automatycznie na jego profilu ani stronie gry. Logowanie przez Facebooka nie daje osobistego kanału powiadomień; automatyzacja FB pozostaje odłożona.
 

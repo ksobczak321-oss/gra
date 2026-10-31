@@ -3,6 +3,7 @@ import { pathToFileURL } from 'node:url';
 import { createAccountService, AccountServiceError } from './account-service.mjs';
 import { createFirestoreStore } from './firestore-store.mjs';
 import { createFirebaseIdentityVerifier } from './firebase-auth.mjs';
+import { createPlayerTradeService } from './player-trade.mjs';
 
 export function parsePort(value = '8080') {
   if (!/^\d+$/.test(String(value))) throw new Error('PORT must be an integer between 1 and 65535.');
@@ -27,7 +28,8 @@ function configuredAccountApi(environment) {
   const projectId = process.env.HARBORLIGHT_PROJECT_ID || (['prod','production'].includes(environment) ? 'harborlight-prod' : ['dev','preprod'].includes(environment) ? 'harborlight-dev' : null);
   if (!projectId) return null;
   const store = createFirestoreStore({ projectId, databaseId: process.env.HARBORLIGHT_DATABASE_ID || '(default)' });
-  return { service: createAccountService({ store, environment: projectId === 'harborlight-dev' ? 'preprod' : projectId === 'harborlight-prod' || ['prod','production'].includes(environment) ? 'production' : 'preprod' }), verify: createFirebaseIdentityVerifier({ projectId }), projectId };
+  const serviceEnvironment = projectId === 'harborlight-dev' ? 'preprod' : projectId === 'harborlight-prod' || ['prod','production'].includes(environment) ? 'production' : 'preprod';
+  return { service: createAccountService({ store, environment: serviceEnvironment }), trade: createPlayerTradeService({ store, environment: serviceEnvironment }), verify: createFirebaseIdentityVerifier({ projectId }), projectId };
 }
 function requestJson(request) {
   return new Promise((resolve, reject) => {
@@ -51,13 +53,14 @@ function requestJson(request) {
 export function createServer({
   environment = process.env.HARBORLIGHT_ENV || 'development',
   release = process.env.HARBORLIGHT_RELEASE || 'local',
-  readiness = { ready: true }, accountService = null, verifyIdentityToken = null,
+  readiness = { ready: true }, accountService = null, verifyIdentityToken = null, playerTradeService = null,
   now = () => Date.now(), starter = createStarterIsland, accountProjectId = null
 } = {}) {
   let configured;
   if (!accountService && !verifyIdentityToken) {
     try { configured = configuredAccountApi(environment); } catch { configured = null; }
     accountService = configured?.service || null; verifyIdentityToken = configured?.verify || null;
+    playerTradeService = configured?.trade || null;
   }
   const accountApi = !!accountService && typeof verifyIdentityToken === 'function';
   const runtimeProjectId = configured?.projectId || accountProjectId || process.env.HARBORLIGHT_PROJECT_ID || (['prod','production'].includes(environment) ? 'harborlight-prod' : ['dev','preprod'].includes(environment) ? 'harborlight-dev' : null);
@@ -81,7 +84,10 @@ export function createServer({
         ...(isReadiness ? { scope: 'infrastructure', features: { accounts: accountApi, persistence: accountApi, gameApi: false } } : {}) });
       return;
     }
-    const routes = { '/api/v1/config': ['GET'], '/api/v1/island': ['GET','POST','PUT'], '/api/v1/activity': ['POST'], '/api/v1/promotions/redeem': ['POST'], '/api/v1/legal': ['GET','POST'] };
+    const routes = { '/api/v1/config': ['GET'], '/api/v1/island': ['GET','POST','PUT'], '/api/v1/activity': ['POST'], '/api/v1/promotions/redeem': ['POST'], '/api/v1/legal': ['GET','POST'], '/api/v1/trade/offers': ['GET','POST'], '/api/v1/trade/inbox': ['GET'] };
+    const offerCommand = /^\/api\/v1\/trade\/offers\/(trade_[a-f0-9]{40})\/(accept|cancel)$/.exec(path || '');
+    const inboxCommand = /^\/api\/v1\/trade\/inbox\/(trade_[a-f0-9]{40})\/claim$/.exec(path || '');
+    if (offerCommand || inboxCommand) routes[path] = ['POST'];
     if (!routes[path]) { send(404, { error: 'not_found' }); return; }
     if (!accountApi) { send(503, { error: 'account_api_disabled' }); return; }
     if (!routes[path].includes(request.method)) { response.setHeader('Allow', routes[path].join(', ')); send(405, { error: 'method_not_allowed' }); return; }
@@ -94,6 +100,19 @@ export function createServer({
       if (!identity?.uid) throw new AccountServiceError('auth-required', 401);
       const uid = identity.uid;
       if (runtimeEnvironment === 'preprod' && !['dev-admin1','dev-admin2','dev-admin3'].includes(uid)) throw new AccountServiceError('permission', 403);
+      if (path.startsWith('/api/v1/trade/')) {
+        if (!playerTradeService) throw new AccountServiceError('trade-api-unavailable', 503);
+        if (request.method === 'GET') {
+          const query = new URL(request.url, 'http://localhost').searchParams;
+          const limit = query.has('limit') ? Number(query.get('limit')) : 50, cursor = query.get('cursor');
+          send(200, await (path === '/api/v1/trade/offers' ? playerTradeService.listOffers({ uid, islandId: query.get('islandId') || 'island-1', limit, cursor }) : playerTradeService.listInbox({ uid, limit, cursor }))); return;
+        }
+        const body = await requestJson(request);
+        const common = { uid, requestId: body.requestId, generation: body.generation, expectedRevision: body.expectedRevision };
+        if (path === '/api/v1/trade/offers') { send(201, await playerTradeService.createOffer({ ...common, islandId: body.islandId, give: body.give, want: body.want })); return; }
+        if (offerCommand) { send(200, await playerTradeService[offerCommand[2] === 'accept' ? 'acceptOffer' : 'cancelOffer']({ ...common, offerId: offerCommand[1], ...(offerCommand[2] === 'accept' ? { islandId: body.islandId } : {}) })); return; }
+        send(200, await playerTradeService.claimInbox({ ...common, inboxId: inboxCommand[1] })); return;
+      }
       if (request.method === 'GET') { send(200, await (path === '/api/v1/legal' ? accountService.readLegalStatus({ uid }) : accountService.readIsland({ uid }))); return; }
       const body = await requestJson(request);
       if (path === '/api/v1/legal') {

@@ -3,13 +3,14 @@
 // other community rewards remain unavailable until their integrations exist.
 import {
   MATERIAL_IDS, stockRoom, receiveMaterials, notify,
-  quoteInstantTransport, instantTransport, estimateMaterialsSeconds, availableGoods, haulCapacity
-} from './harborlight-v1-logistics.js?v=frontend-v20';
-import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v20';
+  quoteInstantTransport, instantTransport, estimateMaterialsSeconds, availableGoods, haulCapacity,
+  townhallPopulationRequirement
+} from './harborlight-v1-logistics.js?v=frontend-v21';
+import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v21';
 import { secondsUntilWarsawMidnight } from './harborlight-v1-calendar.js';
 import { MINI_GAME_RULES, miniGameRoundRules, createMiniGame, normalizeMiniGame,
-  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v20';
-export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v20';
+  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v21';
+export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v21';
 
 const HOUR = 3600;
 const QUEST_LIFE = 6 * HOUR;
@@ -580,6 +581,10 @@ function warehouseCarryCapacity(state) {
 }
 export function quotePremiumBuilding(state, building, context = {}) {
   if (!context.cashPurchase && level(state, 'townhall') < ACTIVITY_RULES.premiumUnlockLevel) return bad('Buying a building without materials unlocks at Town Hall level 4.');
+  if (building === 'townhall') {
+    const population = townhallPopulationRequirement(state);
+    if (!population.ok) return { ...population, code: 'townhall-population', message: `The Town Hall upgrade to level ${population.targetLevel} requires at least ${population.populationRequired} residents (75% of level ${population.populationLevel} capacity). Current population: ${population.populationCurrent}.` };
+  }
   if (typeof context.buildingCost !== 'function') return bad('The construction price is not available.');
   const cost = context.buildingCost(state, building, { queued: false, premiumService: true });
   if (!plain(cost)) return bad('This building does not exist.');
@@ -598,6 +603,10 @@ export function quotePremiumBuilding(state, building, context = {}) {
 export function quoteForecastPlan(state, building, context = {}) {
   if (typeof context.buildingCost !== 'function') return bad('The construction price is not available.');
   if (!(state.premium?.expiresAt > (validNumber(state.worldTimeMs) ? state.worldTimeMs : Date.now()))) return bad('A construction package is required to schedule expected deliveries.');
+  if (building === 'townhall') {
+    const population = townhallPopulationRequirement(state);
+    if (!population.ok) return { ...population, code: 'townhall-population', message: `The Town Hall upgrade to level ${population.targetLevel} requires at least ${population.populationRequired} residents (75% of level ${population.populationLevel} capacity). Current population: ${population.populationCurrent}.` };
+  }
   const cost = context.buildingCost(state, building, { queued: true });
   if (!plain(cost)) return bad('This building does not exist.');
   const missing = Object.fromEntries(MATERIAL_IDS.map(id => [id, Math.max(0, nonnegative(cost[id]) - availableMaterial(state, id))]));

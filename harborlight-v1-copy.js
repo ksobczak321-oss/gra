@@ -8,8 +8,8 @@ const purposes = {
   lumber: ['Produces wood for construction and processing at the Sawmill.', 'Dostarcza drewno do budowy i przetwarzania w tartaku.'],
   sawmill: ['Turns two wood from central storage into one plank for construction.', 'Przetwarza dwie sztuki drewna z magazynu centralnego na jedną deskę do budowy.'],
   warehouse: ['Stores the island’s materials and sends carriers to collect production and supply construction.', 'Przechowuje zasoby wyspy, a jego tragarze odbierają produkcję i dostarczają materiały na budowy.'],
-  market: ['Exchanges goods for other goods within the same category, with a 10% margin.', 'Wymienia towary na inne towary z tej samej kategorii z marżą 10%.'],
-  dock: ['Buys and sells materials for coins and handles their journeys by ship.', 'Umożliwia kupowanie i sprzedawanie materiałów za monety oraz ich przewóz statkiem.'],
+  market: ['Until Town Hall 5, exchanges goods within the same category with a 10% margin. From level 6, player-set exchange offers replace game trades.', 'Do poziomu Ratusza 5 wymienia towary w tej samej kategorii z marżą 10%. Od poziomu 6 wymiany z grą zastępują oferty, których warunki ustalają gracze.'],
+  dock: ['Until Town Hall 5, buys and sells materials for coins. From level 6, trading is between players; from the first island’s Town Hall 10 the Harbor also ships goods to your second island.', 'Do poziomu Ratusza 5 kupuje i sprzedaje materiały za monety. Od poziomu 6 handel odbywa się między graczami; od Ratusza 10 na pierwszej wyspie Port przewozi także towary na Twoją drugą wyspę.'],
   chapel: ['Grants blessings that provide materials and temporary happiness bonuses.', 'Udziela błogosławieństw zapewniających zasoby i czasowe premie do szczęścia.'],
   lighthouse: ['Rewards restoration with temporary bonuses and offers visits that improve residents’ happiness.', 'Za odbudowę przyznaje czasowe premie i oferuje zwiedzanie poprawiające szczęście mieszkańców.']
 };

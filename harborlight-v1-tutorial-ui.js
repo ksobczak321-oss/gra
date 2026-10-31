@@ -1,4 +1,4 @@
-import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v20';
+import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v21';
 
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const MATERIAL_NAMES = { en: ['Wood', 'Stone', 'Grain', 'Food', 'Planks'], pl: ['Drewno', 'Kamień', 'Zboże', 'Żywność', 'Deski'] };
@@ -14,8 +14,9 @@ function node(tag, attributes = {}, ...children) {
   return element;
 }
 const action = (label, callback, attributes = {}) => node('button', { type: 'button', class: 'tutorial-action', onclick: callback, ...attributes }, label);
-const rowsFor = options => { registerTutorialCopy(options.progression.TUTORIAL_LESSONS || []); return options.progression.tutorialRows(options.state); };
-const nextRow = rows => rows.find(row => row.canClaim) || rows.find(row => !row.completed);
+const rowsFor = options => { registerTutorialCopy(options.state.tutorial?.curriculum === 3 ? options.progression.LEGACY_TUTORIAL_LESSONS || [] : options.progression.TUTORIAL_LESSONS || []); return options.progression.tutorialRows(options.state); };
+const lessonCopy = (row, language) => row?.balanced ? { title: pick(language, row.title, row.titlePl || row.title), description: pick(language, row.description, row.descriptionPl || row.description) } : tutorialLessonText(row, language);
+const nextRow = rows => rows.find(row => row.canClaim || row.pendingDecision) || rows.find(row => !row.completed);
 const fraction = (value, total, language) => pick(language, `Step ${value} of ${total}`, `Krok ${value} z ${total}`);
 
 export function createTutorialPanel(options) {
@@ -28,22 +29,25 @@ export function createTutorialPanel(options) {
     'Spend stored materials before opening or doubling another tutorial chest. Building, production and other island actions remain available.',
     'Wydaj zgromadzone materiały, zanim otworzysz lub podwoisz kolejną skrzynię. Rozbudowa, produkcja i zarządzanie wyspą pozostają dostępne.')));
   if (current) {
-    const copy = tutorialLessonText(current, language);
+    const copy = lessonCopy(current, language);
     const controls = node('div', { class: 'tutorial-v16-actions' });
     if (current.id === 'townhall-upgrade' && !status.buildingSuppliesClaimed && !current.completed) controls.append(action(pick(language, 'Collect building supplies', 'Odbierz materiały do budowy'), () => onAction({ type: 'prepareTutorialUpgrade' }), { 'data-tutorial-supplies': '' }));
-    if (current.canClaim) controls.append(action(pick(language, 'Open reward chest', 'Otwórz skrzynię z nagrodą'), () => onAction({ type: 'claimTutorial', taskId: current.id }), { 'data-tutorial-claim': current.id }));
+    if (current.canClaim) controls.append(action(pick(language, current.balanced ? 'Receive reward' : 'Open reward chest', current.balanced ? 'Odbierz premię' : 'Otwórz skrzynię z nagrodą'), () => onAction({ type: 'claimTutorial', taskId: current.id }), { 'data-tutorial-claim': current.id }));
+    else if (current.pendingDecision) controls.append(action(pick(language, 'Confirm received reward', 'Potwierdź odebraną premię'), () => onAction({ type: 'seeTutorialReward', taskId: current.id }), { 'data-tutorial-review': current.id }));
+    else if (current.subject === 'finish-tutorial') controls.append(action(pick(language, 'Finish and fill the Warehouse', 'Zakończ i uzupełnij Magazyn'), () => onAction({ type: 'finishTutorial' }), { 'data-finish-tutorial': '', disabled: !current.settlement?.eligible }));
     else {
       controls.append(action(pick(language, 'Go to this place', 'Przejdź do wskazanego miejsca'), () => onVisit(current.route), { 'data-tutorial-visit': current.id }));
     }
     root.append(node('section', { class: 'tutorial-v16-current', 'data-tutorial-current': current.id },
       node('span', { class: 'tutorial-v16-eyebrow' }, fraction(current.index, rows.length, language)), node('h3', {}, copy.title), node('p', {}, copy.description),
-      node('p', { class: 'tutorial-v16-reward' }, pick(language, 'Reward: a chest with 100–300 of each of the five materials.', 'Nagroda: skrzynia z 100–300 sztuk każdego z pięciu materiałów.')),
-      controls, node('small', { class: 'tutorial-v16-hint' }, pick(language, 'Follow the highlighted control and complete the actual action. Reading alone never grants a chest.', 'Wykonaj wskazane strzałką działanie. Samo przeczytanie instrukcji nie przyznaje skrzyni.')),
-      current.kind === 'condition' ? node('small', { class: 'tutorial-v16-hint' }, pick(language, 'This step completes after the real delivery or production event. Your island keeps working.', 'Krok zaliczy się po prawdziwej dostawie albo produkcji. Twoja wyspa cały czas pracuje.')) : null));
+      node('p', { class: 'tutorial-v16-reward' }, current.balanced ? pick(language, current.rewardKind === 'supply' ? 'Reward: missing upgrade materials and a Coin bonus, delivered immediately.' : current.rewardKind === 'final' ? 'Final reward: free ordinary Warehouse capacity is filled, plus 500 Coins.' : current.rewardKind === 'road' ? 'Reward: 200 Coins and the missing Stone for the next path section.' : current.rewardKind === 'coins' ? 'Reward: Coins, while the previous materials are spent on a real upgrade.' : 'Reward: 100 Coins and up to 25 of each material that fits ordinary storage.', current.rewardKind === 'supply' ? 'Premia: brakujące materiały następnej rozbudowy i bonus monet, dostępne od razu.' : current.rewardKind === 'final' ? 'Premia końcowa: uzupełnienie wolnej zwykłej pojemności Magazynu oraz 500 monet.' : current.rewardKind === 'road' ? 'Premia: 200 monet i brakujący kamień na następny odcinek ścieżki.' : current.rewardKind === 'coins' ? 'Premia: monety, gdy poprzednie materiały są zużywane na prawdziwą rozbudowę.' : 'Premia: 100 monet i do 25 sztuk każdego materiału mieszczącego się w zwykłym magazynie.') : pick(language, 'Reward: a chest with 100–300 of each of the five materials.', 'Nagroda: skrzynia z 100–300 sztuk każdego z pięciu materiałów.')),
+      current.settlement && !current.settlement.eligible ? node('p', { class: 'tutorial-v18-storage-warning', 'data-tutorial-settlement-blocked': '' }, pick(language, current.settlement.reason, current.settlement.reasonPl)) : null,
+      controls, node('small', { class: 'tutorial-v16-hint' }, pick(language, 'Follow the highlighted control and complete the actual action. Reading alone never grants a reward.', 'Wykonaj wskazane strzałką działanie. Samo przeczytanie instrukcji nie przyznaje premii.')),
+      current.kind === 'condition' ? node('small', { class: 'tutorial-v16-hint' }, pick(language, 'This step completes after the actual construction, delivery or production event. Your island keeps working.', 'Krok zaliczy się po prawdziwej budowie, dostawie albo produkcji. Twoja wyspa cały czas pracuje.')) : null));
   } else root.append(node('section', { class: 'tutorial-v16-current is-finished', 'data-tutorial-finished': '' }, node('span', { class: 'tutorial-v16-finished-mark', 'aria-hidden': 'true' }, '✓'), node('h3', {}, pick(language, 'Your island is in good hands', 'Twoja wyspa jest w dobrych rękach')), node('p', {}, pick(language, 'All 25 lessons are complete. You can revisit the guide here whenever you need it.', 'Wszystkie 25 lekcji ukończone. Możesz wrócić do tego przewodnika, kiedy tylko zechcesz.'))));
   const rewards = rows.filter(row => row.claimed && !!state.tutorial?.chests?.[row.id] && !row.shared && !row.skipped);
-  if (rewards.length) root.append(node('section', { class: 'tutorial-v16-pending' }, node('h4', {}, pick(language, 'Your chest bonuses', 'Premie do Twoich skrzyń')), ...rewards.map(row => action(pick(language, `Review: ${tutorialLessonText(row, language).title}`, `Sprawdź: ${tutorialLessonText(row, language).title}`), () => onAction({ type: 'seeTutorialReward', taskId: row.id }), { class: 'tutorial-action secondary', 'data-tutorial-review': row.id }))));
-  root.append(node('details', { class: 'tutorial-v16-list' }, node('summary', {}, pick(language, 'All 25 lessons', 'Wszystkie 25 lekcji')), node('ol', {}, ...rows.map(row => node('li', { class: row.completed ? 'is-complete' : '', 'data-tutorial-list-item': row.id }, node('span', { 'aria-hidden': 'true' }, row.completed ? '✓' : String(row.index)), node('span', {}, tutorialLessonText(row, language).title))))));
+  if (rewards.length) root.append(node('section', { class: 'tutorial-v16-pending' }, node('h4', {}, pick(language, 'Received rewards to confirm', 'Odebrane premie do potwierdzenia')), ...rewards.map(row => action(pick(language, `Review: ${lessonCopy(row, language).title}`, `Sprawdź: ${lessonCopy(row, language).title}`), () => onAction({ type: 'seeTutorialReward', taskId: row.id }), { class: 'tutorial-action secondary', 'data-tutorial-review': row.id }))));
+  root.append(node('details', { class: 'tutorial-v16-list' }, node('summary', {}, pick(language, 'All 25 lessons', 'Wszystkie 25 lekcji')), node('ol', {}, ...rows.map(row => node('li', { class: row.completed ? 'is-complete' : '', 'data-tutorial-list-item': row.id }, node('span', { 'aria-hidden': 'true' }, row.completed ? '✓' : String(row.index)), node('span', {}, lessonCopy(row, language).title))))));
   root.append(node('div', { class: 'tutorial-v16-footer' },
     action(pick(language, 'Back to island', 'Wróć na wyspę'), onClose, { class: 'tutorial-action secondary', 'data-tutorial-later': '' }),
     status.autoOpenDisabled && !status.finished ? action(pick(language, 'Resume automatic tutorial', 'Wznów samouczek przy wejściu'), () => onAction({ type: 'resumeTutorial' }), { class: 'tutorial-action quiet', 'data-tutorial-resume': '' }) : !status.finished ? action(pick(language, 'Stop showing automatically', 'Nie pokazuj automatycznie'), () => { if (onAction({ type: 'dismissTutorial' }) !== false) onClose?.(); }, { class: 'tutorial-action quiet', 'data-tutorial-dismiss': '' }) : null));
@@ -58,13 +62,13 @@ export function createTutorialGuide(options) {
   if (status.autoOpenDisabled || status.finished && !storageBlocked) return null;
   const current = nextRow(rows) || rows.find(row => row.rewardBlocked);
   if (!current) return null;
-  const copy = tutorialLessonText(current, language);
+  const copy = lessonCopy(current, language);
   return node('aside', { class: 'tutorial-v16-guide', 'data-tutorial-guide': current.id, 'data-tutorial-target': current.completed ? '' : current.guideSelector || '', 'data-i18n-ignore': '', 'aria-label': pick(language, 'Current tutorial step', 'Aktualny krok samouczka') },
     node('div', { class: 'tutorial-v16-guide-copy' }, node('small', {}, fraction(current.index, status.total, language)), node('strong', {}, copy.title)),
     storageBlocked ? node('small', { class: 'tutorial-v18-storage-warning', 'data-tutorial-storage-blocked': '' }, pick(language, 'Chests are waiting: spend the excess materials. Island actions remain available.', 'Skrzynie czekają: wydaj nadmiar materiałów. Działania wyspy pozostają dostępne.')) : null,
     node('div', { class: 'tutorial-v16-guide-actions' },
       current.id === 'townhall-upgrade' && !status.buildingSuppliesClaimed && !current.completed ? action(pick(language, 'Collect building supplies', 'Odbierz materiały do budowy'), () => onAction({ type: 'prepareTutorialUpgrade' }), { 'data-tutorial-supplies': '' }) : null,
-      current.canClaim ? action(pick(language, 'Open chest', 'Otwórz skrzynię'), () => onAction({ type: 'claimTutorial', taskId: current.id }), { 'data-tutorial-claim': current.id }) : action(pick(language, 'Go to the action', 'Przejdź do działania'), () => onVisit(current.route), { 'data-tutorial-go': current.id }),
+      current.canClaim ? action(pick(language, current.balanced ? 'Receive reward' : 'Open chest', current.balanced ? 'Odbierz premię' : 'Otwórz skrzynię'), () => onAction({ type: 'claimTutorial', taskId: current.id }), { 'data-tutorial-claim': current.id }) : current.pendingDecision ? action(pick(language, 'Confirm reward', 'Potwierdź premię'), () => onAction({ type: 'seeTutorialReward', taskId: current.id }), { 'data-tutorial-review': current.id }) : current.subject === 'finish-tutorial' ? action(pick(language, 'Finish tutorial', 'Zakończ samouczek'), () => onVisit('tutorial'), { 'data-tutorial-go': current.id }) : action(pick(language, 'Go to the action', 'Przejdź do działania'), () => onVisit(current.route), { 'data-tutorial-go': current.id }),
       action(pick(language, 'Tutorial', 'Samouczek'), () => onVisit('tutorial'), { class: 'tutorial-action secondary', 'data-tutorial-return': '' })));
 }
 
@@ -105,7 +109,8 @@ function fanfare(enabled) {
 export function showTutorialAchievement({ achievement, row, language = 'en', onShare, onSkip, onClose, animations = true, sound = true }) {
   const id = achievement.lessonId || achievement.id || row?.id;
   const previousFocus = document.activeElement;
-  const copy = row ? tutorialLessonText(row, language) : { title: achievement.title };
+  const copy = row ? lessonCopy(row, language) : { title: achievement.title };
+  const balanced = row?.balanced === true;
   const popup = node('dialog', { class: 'tutorial-v16-celebration', 'data-tutorial-achievement': id, 'data-i18n-ignore': '', 'aria-labelledby': 'tutorial-success-title' });
   const animated = animations && !globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   if (animated) {
@@ -114,10 +119,10 @@ export function showTutorialAchievement({ achievement, row, language = 'en', onS
     popup.append(confetti);
   }
   const content = node('div', { class: 'tutorial-v16-celebration-content' },
-    node('p', { class: 'tutorial-v16-eyebrow' }, pick(language, 'Lesson complete', 'Lekcja ukończona')), node('h2', { id: 'tutorial-success-title' }, pick(language, 'Well done!', 'Brawo!')), node('p', { class: 'tutorial-success-lesson' }, copy.title), chestPicture(),
+    node('p', { class: 'tutorial-v16-eyebrow' }, pick(language, 'Lesson complete', 'Lekcja ukończona')), node('h2', { id: 'tutorial-success-title' }, pick(language, 'Well done!', 'Brawo!')), node('p', { class: 'tutorial-success-lesson' }, copy.title), balanced ? node('span', { class: 'tutorial-v16-finished-mark', 'aria-hidden': 'true' }, '✓') : chestPicture(),
     node('strong', { class: 'tutorial-success-received' }, pick(language, 'Your reward is already yours', 'Twoja nagroda jest już odebrana')),
-    node('div', { class: 'tutorial-chest-materials' }, ...MATERIALS.map((material, index) => node('div', { 'data-tutorial-reward-material': material }, node('span', {}, MATERIAL_NAMES[language === 'pl' ? 'pl' : 'en'][index]), node('strong', { 'data-tutorial-reward-quantity': material }, achievement.reward?.[material] || row?.reward?.[material] || 0)))),
-    node('p', { class: 'tutorial-double-description' }, pick(language, 'Share your success to receive exactly the same resources once more.', 'Pochwal się sukcesem i odbierz dokładnie te same zasoby jeszcze raz.')));
+    node('div', { class: 'tutorial-chest-materials' }, ...(balanced ? ['coins', ...MATERIALS].filter(id => (achievement.reward?.[id] || row?.reward?.[id] || 0) > 0) : MATERIALS).map(material => node('div', { 'data-tutorial-reward-material': material }, node('span', {}, material === 'coins' ? pick(language, 'Coins', 'Monety') : MATERIAL_NAMES[language === 'pl' ? 'pl' : 'en'][MATERIALS.indexOf(material)]), node('strong', { 'data-tutorial-reward-quantity': material }, achievement.reward?.[material] || row?.reward?.[material] || 0)))),
+    node('p', { class: 'tutorial-double-description' }, balanced ? pick(language, 'The reward is already available. Confirm it to continue: no extra chest is waiting for later delivery.', 'Premia jest już dostępna. Potwierdź ją, aby przejść dalej: nie czeka dodatkowa skrzynia na późniejszą dostawę.') : pick(language, 'Share your success to receive exactly the same resources once more.', 'Pochwal się sukcesem i odbierz dokładnie te same zasoby jeszcze raz.')));
   let disposed = false, busy = false;
   function dispose() {
     if (disposed) return;
@@ -132,6 +137,13 @@ export function showTutorialAchievement({ achievement, row, language = 'en', onS
     finally { busy = false; }
   }
   const share = action(pick(language, 'Share on Facebook · chest ×2', 'Udostępnij na Facebooku · skrzynia ×2'), () => finish(onShare), { 'data-tutorial-share': id, disabled: row?.canShare === false });
+  if (balanced) {
+    const next = action(pick(language, 'Continue →', 'Dalej →'), () => finish(onSkip), { 'data-tutorial-skip': id });
+    content.append(node('div', { class: 'tutorial-v16-actions' }, next));
+    popup.append(content); popup.addEventListener('cancel', event => { event.preventDefault(); finish(onSkip); });
+    document.body.append(popup); popup.showModal(); next.focus(); fanfare(sound !== false);
+    return { element: popup, dispose };
+  }
   content.append(node('div', { class: 'tutorial-v16-actions' }, share,
     action(pick(language, 'Skip sharing', 'Pomiń udostępnianie'), () => finish(onSkip), { class: 'tutorial-action secondary', 'data-tutorial-skip': id })),
     node('small', { class: 'tutorial-v16-hint' }, row?.canShare === false ? pick(language, 'Spend stored materials before doubling another chest. Your existing reward remains available.', 'Wydaj zgromadzone materiały przed podwojeniem skrzyni. Odebrana nagroda pozostaje dostępna.') : pick(language, 'You choose and approve sharing yourself. Nothing is published automatically.', 'Samodzielnie wybierasz i zatwierdzasz udostępnienie. Nic nie publikuje się automatycznie.')),

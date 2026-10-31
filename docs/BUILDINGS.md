@@ -1,27 +1,27 @@
-# Budynki i mieszkaniec — frontend v18
+# Budynki i mieszkaniec — frontend v21
 
-Opis bieżącego kodu uzupełnia [zatwierdzony zakres v18](FRONTEND-V18-REQUIREMENTS.md) i [reguły gospodarki](ECONOMY-RULES.md). Nie stanowi potwierdzenia publikacji. Ostatni potwierdzony PRE-PROD to v18 / `6ec3c6d`, workflow `41112673285`; nowe uzupełnienie interfejsu i dokumentów [v19](FRONTEND-V19-REQUIREMENTS.md) wymaga osobnego odbioru. Stan wydań zapisuje [dziennik](IMPLEMENTATION-LOG.md). Aktualny jest Excel 11, a poprzednie arkusze pozostają archiwami.
+Opis bieżącego kodu DEV łączy [bazę v18](FRONTEND-V18-REQUIREMENTS.md), [rozszerzenie v21](FRONTEND-V21-REQUIREMENTS.md) i [reguły gospodarki](ECONOMY-RULES.md). Nie stanowi potwierdzenia publikacji. Ostatni potwierdzony PRE-PROD to v18 / `6ec3c6d`, workflow `41112673285`; nowszy kod wymaga własnego CI i promocji. Stan wydań zapisuje [dziennik](IMPLEMENTATION-LOG.md). Excel 11 jest migawką wcześniejszych reguł; nie zawiera nowych zmian v21.
 
 L to obecny własny poziom, N — nowy. Kwoty bazowe; kolejka dodaje 10% każdego składnika, w górę do sztuk. T jest rzeczywistym czasem od pierwszego odbioru do ostatniej dostawy, także przez przerwy. Aktywność wpływająca na przewóz zmienia więc również wynikową fazę budowania.
 
 | Budynek / EN | Po co jest | Ludzie: start / limit | Korzyść poziomu | Koszt ulepszenia | Sama budowa | Ważna zasada |
 |---|---|---|---|---|---|---|
-| Ratusz / Town Hall | Określa poziom wyspy, limit mieszkańców i granicę rozbudowy innych budynków. | 0 | 24 × L mieszkańców; L budów + L kolejki | 500 × L każdego z 6 zasobów | T | Efekty u góry; zarządzanie budową tylko tutaj |
-| Dom / House | Zapewnia miejsca mieszkalne, wolne osoby do pracy i codzienną pulę szczęścia. | 0 | 24 × L łóżek; dzienna pula według populacji | 500 × L każdego z 6 zasobów | T | Zbiorcze zarządzanie pracą tylko tutaj; automat 23:58 |
+| Ratusz / Town Hall | Określa poziom wyspy, limit mieszkańców i granicę rozbudowy innych budynków. | 0 | 24 × L mieszkańców; L budów + L kolejki | 500 × L każdego z 6 zasobów | T | Od 3→4 min.75% ludności poziomu poprzedzającego cel; od TH6 handel graczy, od TH10 druga wyspa |
+| Dom / House | Zapewnia miejsca mieszkalne, wolne osoby do pracy i codzienną pulę szczęścia. | 0 | 24 × L łóżek; dzienna pula według populacji | 500 × L każdego z 6 zasobów | T | Przydziały i dzienne szczęście; także widok Pracujący; automat 23:58 |
 | Farma / Farm | Produkuje zboże, które młyn przetwarza na żywność. | 0 / 12 × własny L | 20/24/26/28… szt./os./h; bufor 200L | L × (72 drewna +72 kamienia +120 zboża) | T | Osobne postępy; magazyn lokalny i centrala |
 | Młyn / Windmill | Przetwarza 2 zboża z centrali na 1 żywność dla mieszkańców. | 0 / 12 × własny L | 20/24/26/28… szt./os./h; bufor 200L | 2L × (72 drewna +72 kamienia +120 żywności) | T | Wejście pobierane przy gotowej sztuce |
 | Kamieniołom / Quarry | Wydobywa kamień do rozbudowy budynków i ulepszania ścieżek. | 0 / 12 × własny L | 20/24/26/28… szt./os./h; bufor 200L | 2L × (72 drewna +192 kamienia) | T | Suma kamienia konstrukcyjnego i własnego produktu |
 | Drwale / Lumber Camp | Dostarczają drewno do budowy i przetwarzania w tartaku. | 0 / 12 × własny L | 20/24/26/28… szt./os./h; bufor 200L | 2L × (192 drewna +72 kamienia) | T | Suma drewna konstrukcyjnego i własnego produktu |
 | Tartak / Sawmill | Przetwarza 2 drewna z centrali na 1 deskę do budowy. | 0 / 12 × własny L | 20/24/26/28… szt./os./h; bufor 200L | 2L × (72 drewna +72 kamienia +120 desek) | T | Wejście pobierane przy gotowej sztuce |
 | Magazyn / Warehouse | Przechowuje zasoby i wysyła tragarzy po produkcję oraz z materiałami na budowy. | 0 / 12 × własny L | L1:120/kurs; pojemność ×1,5 i ładunek ×1,1 do L24, potem tylko obsada | 300 × L każdego z 6 zasobów | T | Rezerwa 50 × min(L,24); zapas bonusowy nie zajmuje limitu zwykłych dostaw |
-| Targ / Market | Wymienia towary na inne w tej samej grupie z marżą 10%, od Ratusza 2. | 0 / 12 × własny L | L1: 1000 łącznie i 120/kurs, dalej odpowiednio ×1,5 i ×1,1 | 300 × L każdego z 6 zasobów | T | 10 → 9; 1 h blokady; własny transport; wymiana przy 0 obsady |
-| Port / Harbor | Kupuje i sprzedaje materiały za monety oraz obsługuje ich transport statkiem, od Ratusza 4. | 0 / 12 × własny L | L1: 1000/rodzaj, 4000 łącznie, 120/kurs; potem limity ×1,5 i ładunek ×1,1 | 400 × L każdego z 6 zasobów | T | Paczki 100; 2 etapy transportu; osobne partie 24 h |
+| Targ / Market | DoTH5 wymienia towary w tej samej grupie z marżą 10%, od Ratusza 2; od TH6 nowe wymiany tylko między graczami. | 0 / 12 × własny L | L1: 1000 łącznie i 120/kurs, dalej odpowiednio ×1,5 i ×1,1 | 300 × L każdego z 6 zasobów | T | 10 → 9; 1 h blokady; własny transport; wymiana przy 0 obsady |
+| Port / Harbor | Od TH4 do TH5 kupuje/sprzedaje materiały z grą; od TH6 rynek graczy; także przewóz między własnymi wyspami. | 0 / 12 × własny L | L1: 1000/rodzaj, 4000 łącznie, 120/kurs; potem limity ×1,5 i ładunek ×1,1 | 400 × L każdego z 6 zasobów | T | Paczki 100; 2 etapy transportu; osobne partie 24 h |
 | Kaplica / Chapel | Udziela błogosławieństw zapewniających zasoby i czasowe szczęście. | 0 | +10 × N pp oraz mechaniczne podatki ×2 na 10 h | N × (180 monet +20 drewna +60 kamienia +10 desek) | 3T × (N−1) | 1 darmowe/dzień Warszawy; płatne/reklamowe 4 h od końca; opieka odL3 |
 | Latarnia / Lighthouse | Nagradza odbudowę premiami i oferuje wizyty podnoszące szczęście mieszkańców. | 0 | 100% H i produkcja ×2 przez 24 h × N | 500 × max(1,L) każdego z 6 zasobów | 4T | Poziom 0: Ruiny; własne nazwy 1–100; wizyty 4 h, osobiste 24 h, grupa +10 pp/6 h |
 
 ## Człowiek, szczęście i aktywność
 
-Mieszkaniec ma trwałe ID, indywidualne H, miejsce pracy/pobytu i niezależne zegary. Nowa wyspa zaczyna z12 osobami, bez obsady i bazowym 20% szczęścia. Przez 72 h minimum 20% obejmuje także nowo przybyłych i nie tworzy długu kar.
+Mieszkaniec ma trwałe ID, indywidualne H, miejsce pracy/pobytu i niezależne zegary. Pierwsza wyspa zaczyna z12 osobami, bez obsady i bazowym 20% szczęścia. Jej czas i 72-godzinna ochrona ruszają po zakończeniu wprowadzenia. Przez 72 h minimum 20% obejmuje także nowo przybyłych i nie tworzy długu kar. Druga wyspa nie odnawia wykorzystanej ochrony konta.
 
 Wymuszone 100% ma pierwszeństwo nad ochroną powitalną i standardowym 24-godzinnym 0% nowych osób. Przybyły podczas Latarnianej premii korzysta do wspólnego końca; nie dostaje nowego pełnego czasu za sam moment przyjścia. Po końcu wymuszenia/ochrony wracają normalne zasady wieku i aktywnych efektów.
 
@@ -51,13 +51,21 @@ Dobre wraki co 36–60 h; podczas globalnych 100% jedno dobre może czekać, zł
 
 ## Budynki w samouczku
 
-25 kroków wymaga realnych przydziałów, produkcji/dostawy, zamówień, ustawienia priorytetu/filtra, punktów Domu, ścieżki, atrakcji, błogosławieństwa, Targu, Latarni, zadania, ekspedycji, odwołania i darowizny. Pierwsze cztery prowadzą do Gospodarstwa, Magazynu, Młyna i Drwali. Nie ma przycisku zaliczającego samo przeczytanie.
+Nowy program v21 ma 25 rzeczywistych kroków. Przydziały tragarza, rolnika i drwala przeplatają się z wydawaniem materiałów na rozbudowę i pozostałe działania. Nagrody są dopasowane do kolejnych potrzeb i zwykłego miejsca w Magazynie. Końcowe jawne rozliczenie uzupełnia wolne miejsce; wymaga odebrania poprzednich nagród i wykorzystania nadwyżek. Nie kasuje zewnętrznych bonusów ani zasobów. Celem jest pełny zwykły magazyn bez czekających skrzyń.
 
-Piąta akcja udostępnia jednorazowe materiały do Ratusza: budżet 500 monet, po 500 materiałów i600 żywności. Przepełnienie nie blokuje pomocy ani działań zużywających zapas. Kolejne skrzynie 100–300 pięciu materiałów i ich podwojenia czekają na wydanie nadmiaru. Odebrane nagrody starszych zapisów pozostają zachowane, a minigra odkłada popup skrzyni do bezpiecznego momentu.
+Starszy program v3 zachowuje własne 25 lekcji, pomoc piątego kroku oraz wylosowane skrzynie 100–300 pięciu materiałów. To zasady historycznych wysp, a nie nowego programu. Odebranych nagród nie wypłacamy drugi raz. Przepełnienie nie blokuje rozbudowy ani zarządzania, a trwająca minigra odkłada popup do bezpiecznego momentu. Nie ma przycisku zaliczającego samo przeczytanie.
+
+## Próg Ratusza, rynek i druga wyspa
+
+Awans Ratusza od 3→4 wymaga co najmniej `ceil(0,75 × 24 × (docelowy poziom − 1))` mieszkańców:54 dla4,72 dla5,90 dla6. Warunek obejmuje nowe projekty premium i kolejkę, dotyczy wyłącznie Ratusza i nie anuluje wcześniej zatwierdzonych projektów.
+
+Od TH6 nowych transakcji NPC nie rozpoczynamy. Gracze sami ustalają ilości oddawane i oczekiwane; serwer rezerwuje ofertę i rozlicza przyjęcie atomowo. Brak miejsca wstrzymuje wymianę, a niemieszczący się zwrot czeka w trwałej skrzynce. Wcześniejsze zamówienia Targu/Portu kończą dotychczasowy przewóz. Działający rynek w chmurze wymaga osobnej aktywacji API.
+
+Od TH10 można raz utworzyć drugą wyspę. Jej Ratusz i Magazyn kopiują bieżące poziomy pierwszej wyspy; wszystkie inne budynki zaczynają na 1. Potem rozwój jest niezależny, a kolorystyka i nazwa wskazują aktywną wyspę. Transport własnym Portem:1000 sztuk, 10 minut, bez opłaty za rejs; brak zwykłego miejsca odkłada rozładunek zwykłych materiałów; bonus zachowuje odrębne pochodzenie. Zwiększenie pojemności:4,99 zł za 1000 sztuk jako oznaczona symulacja Paynow naDEV, bez prawdziwego pobrania środków. Historie i uprawnienia pozostają wspólne dla konta.
 
 ## Wspólne widoki i ekspedycje
 
-Administracja i Gospodarka zachowują równe miniatury, poziomy i podpisane obsady. Przy produkcji rzeczywista wydajność rośnie 20/24/26/28… zamiast stałej 20; przestój rozróżnia brak wejścia/miejsca oraz indywidualną karę. Kolumny kart są wyrównane, przewozy odświeżają ETA i etapy, a popup skrócenia pokazuje faktycznie oszczędzony czas. Podatki pozostają mechaniką silnika ukrytą w UI.
+Administracja i Gospodarka zachowują równe miniatury, poziomy i podpisane obsady. Przy produkcji rzeczywista wydajność rośnie 20/24/26/28… zamiast stałej 20; przestój rozróżnia brak wejścia/miejsca oraz indywidualną karę. Kolumny kart są wyrównane, przewozy odświeżają ETA i etapy, a popup skrócenia pokazuje faktycznie oszczędzony czas. Menu Monet wyjaśnia podatki, reklamy i minigry; przybyły przypisany pracownik płaci podatek także przy blokadzie produkcji.
 
 Gracz wybiera kulki albo trójki. Nagrody rund 50,100,200,400… dają pulę 50,150,350,750… . Kontynuacja ryzykuje niewypłaconą serię, wypłata ją kończy. Dodatkowy czas kupuje się przed terminem dobrowolnie; nie ma automatycznych opłat za przekroczenie. Obecny dobór wdrożeniowy:30 s/10 monet maks.2/rundę, reklama 60 s maks.1/rundę.
 

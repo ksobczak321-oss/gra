@@ -1,4 +1,4 @@
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v20';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v21';
 
 const pick = (language, pl, en) => language === 'pl' ? pl : en;
 const valueFor = (value, language) => typeof value === 'string' ? value : value?.[language] || value?.pl || value?.en || '';
@@ -82,8 +82,8 @@ export function createIslandOnboarding(options = {}) {
           'Obejmujesz opiekę nad małą osadą na wyspie. Zapewnij mieszkańcom domy, żywność i pracę, a z czasem rozbuduj ją w tętniący życiem port.',
           'You take care of a small island settlement. Give your residents homes, food and jobs, then grow it into a thriving harbour.')),
         node('p', {}, pick(language,
-          'Przydzielaj pracowników, rozwijaj produkcję i pilnuj transportu — materiały muszą dotrzeć tam, gdzie są potrzebne. Szczęście mieszkańców wpływa na rozwój wyspy, a kolejne poziomy Ratusza otwierają nowe możliwości.',
-          'Assign workers, develop production and manage transport: materials need to reach the places that use them. Residents’ happiness affects the island’s growth, and Town Hall upgrades open new possibilities.')),
+          'Przydzielaj pracowników, rozwijaj produkcję i pilnuj transportu — materiały muszą dotrzeć tam, gdzie są potrzebne. Szczęście mieszkańców wpływa na przyrost populacji. Karty zasobów czytasz jako zapas lokalny / centralny (w transporcie), a dolny wiersz pokazuje bilans na godzinę.',
+          'Assign workers, develop production and manage transport: materials need to reach the places that use them. Residents’ happiness controls population growth. Read resource cards as local / central stock (in transit); the lower line shows the hourly balance.')),
         node('p', {}, pick(language,
           'Ekspedycje i zadania przynoszą dodatkowe nagrody. Najpierw nazwiesz wyspę i poznasz jej najważniejsze miejsca; potem samouczek przeprowadzi Cię przez pierwsze prawdziwe działania.',
           'Expeditions and tasks bring extra rewards. First you will name your island and get to know its main controls; the tutorial will then guide you through your first real actions.'))), paused(),

@@ -18,7 +18,7 @@ spec.loader.exec_module(base)
 PROD = 'https://harborlight.pl'
 SESSION_KEY = 'harborlight-prod-auth-v1'
 EMAIL, PASSWORD, UID = 'captain@example.invalid', 'captain-password', 'real-player-123'
-LEGAL_VERSION = '2026-10-30-draft1'
+LEGAL_VERSION = '2026-10-31-draft2'
 
 
 def token():

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  ACTIVE_PLAY_SECONDS, REFERRAL_WINDOW_SECONDS, TUTORIAL_LESSONS,
+  ACTIVE_PLAY_SECONDS, REFERRAL_WINDOW_SECONDS, LEGACY_TUTORIAL_LESSONS as TUTORIAL_LESSONS,
   normalizeProgression, progressionAction, registerMeaningfulActivity,
   activePlayMultiplier, engagementStatus, advanceProgression, nextProgressionEvent,
   tutorialRows, recordProgressionAction, recordProgressionLogin, loyaltyStatus,
@@ -22,7 +22,7 @@ function island(now = START) {
     residents: Array.from({ length: 12 }, (_, index) => ({ id: index + 1, workplace: null, newbornRemaining: 0, arrivalRemaining: 0 })),
     warehousePriorities: [], statistics: { collected: 0 }, notifications: [], loyalty: { lastDay: null, streak: 0 }
   };
-  normalizeProgression(state, {});
+  normalizeProgression(state, { tutorial: { version: 3 } });
   return state;
 }
 function activity(state) { return progressionAction(state, { type: 'userActivity', visible: true, focused: true }); }

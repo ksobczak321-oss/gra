@@ -1,7 +1,7 @@
 // Firebase owns credentials and verifies access to the UID-scoped documents.
 // Hosting selects the isolated project; runtime Firebase config never contains secrets.
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v20';
-import { LEGAL_DOCUMENTS, validLegalAcceptance } from './harborlight-legal.js?v=legal-v1';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v21';
+import { LEGAL_DOCUMENTS, validLegalAcceptance } from './harborlight-legal.js?v=legal-v2';
 export const DEV_PROJECT = 'harborlight-dev';
 export const PROD_PROJECT = 'harborlight-prod';
 export const PROD_SESSION_KEY = 'harborlight-prod-auth-v1';
@@ -47,7 +47,32 @@ const MESSAGES = {
   'promotion-not-started': 'Ten kod nie jest jeszcze aktywny.',
   'promotion-ended': 'Termin użycia tego kodu minął.',
   'promotion-exhausted': 'Limit użyć tego kodu został wyczerpany.',
-  'unsupported-promotion-verification': 'Ten kod wymaga niepodłączonej weryfikacji Facebooka.'
+  'unsupported-promotion-verification': 'Ten kod wymaga niepodłączonej weryfikacji Facebooka.',
+  'trade-api-unavailable': 'Handel między graczami wymaga aktywnej usługi serwerowej.',
+  'trade-invalid-offer': 'Oferta handlowa jest nieprawidłowa.',
+  'trade-invalid-island': 'Wybierz dostępną wyspę.',
+  'trade-storage-full': 'Brakuje miejsca na towary z wymiany. Zwolnij miejsce w magazynie.',
+  'trade-level-required': 'Handel między graczami jest dostępny od poziomu Ratusza 6.',
+  'trade-insufficient-stock': 'Brakuje dostępnych towarów. Rezerwacje budowy i zapas żywności są chronione.',
+  'trade-own-offer': 'Nie można przyjąć własnej oferty.',
+  'trade-not-owner': 'Możesz anulować tylko własną ofertę.',
+  'trade-offer-not-found': 'Ta oferta nie jest już dostępna. Odśwież listę.',
+  'trade-offer-closed': 'Ta oferta została już zakończona. Odśwież listę.',
+  'trade-offer-expired': 'Oferta wygasła. Właściciel może odebrać zwrot towarów.',
+  'trade-too-many-offers': 'Możesz mieć najwyżej 10 otwartych ofert. Najpierw zakończ wcześniejsze.',
+  'trade-request-reused': 'To potwierdzenie dotyczy innej operacji. Odśwież listę ofert.',
+  'trade-same-material': 'Wybierz dwa różne materiały do wymiany.',
+  'trade-world-changed': 'Wyspa powiązana z tą ofertą została zmieniona. Towary nie zostaną dopisane do innego świata.',
+  'trade-island-unavailable': 'Wyspa powiązana z wymianą jest niedostępna.',
+  'trade-inbox-not-found': 'Ten zwrot nie jest dostępny lub został już odebrany.',
+  'trade-invalid-material': 'Wybierz materiał i dodatnią, całkowitą liczbę sztuk.',
+  'trade-invalid-request': 'Nieprawidłowe potwierdzenie operacji wymiany.',
+  'trade-invalid-cursor': 'Nie można odczytać kolejnej strony. Odśwież listę.',
+  'trade-invalid-limit': 'Nieprawidłowy rozmiar strony ofert.',
+  'trade-return-exists': 'Zwrot tej oferty jest już zapisany. Sprawdź towary oczekujące na odbiór.',
+  'second-island-locked': 'Założenie drugiej wyspy wymaga potwierdzonego poziomu Ratusza 10 na pierwszej.',
+  'archipelago-island-loss': 'Zapis nie może usunąć istniejącej drugiej wyspy.',
+  'unverified-ship-capacity': 'Zwiększenie pojemności wymaga potwierdzenia operatora płatności. Prawdziwe płatności nie są jeszcze włączone.'
 };
 const fail = code => Object.assign(new Error(MESSAGES[code]), { code });
 const userByUid = uid => DEV_USERS.find(user => user.uid === uid);
@@ -82,10 +107,7 @@ function tokenClaims(token, uid, projectId = DEV_PROJECT) {
 
 const ISLAND_RESOURCE_IDS = ['coins', 'wood', 'stone', 'grain', 'food', 'planks'];
 const ISLAND_BUILDING_IDS = ['townhall', 'house', 'warehouse', 'farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'dock', 'market', 'chapel', 'lighthouse'];
-export function validIslandPayload(payload) {
-  if (typeof payload !== 'string' || new TextEncoder().encode(payload).byteLength > MAX_PAYLOAD_BYTES) return false;
-  try {
-    const island = JSON.parse(payload);
+function validWorld(island) {
     if (!isObject(island) || !Number.isSafeInteger(island.version) || island.version < 1 || island.version > 9 ||
         !isObject(island.resources) || !isObject(island.buildings) ||
         !Number.isSafeInteger(island.population) || island.population < 0) return false;
@@ -103,6 +125,18 @@ export function validIslandPayload(payload) {
     }
     const anchor = island.lastSimulatedAt ?? island.savedAt;
     return island.version < 8 || Number.isFinite(anchor) && anchor >= 0 && anchor <= Number.MAX_SAFE_INTEGER;
+}
+export function validIslandPayload(payload) {
+  if (typeof payload !== 'string' || new TextEncoder().encode(payload).byteLength > MAX_PAYLOAD_BYTES) return false;
+  try {
+    const island = JSON.parse(payload);
+    if (!validWorld(island)) return false;
+    const group = island.archipelago;
+    if (group === undefined) return true;
+    if (!isObject(group) || group.version !== 1 || !['island-1', 'island-2'].includes(group.activeIslandId) ||
+        !Number.isSafeInteger(group.shipCapacity) || group.shipCapacity < 1000 || !Array.isArray(group.transfers)) return false;
+    if (group.secondIsland !== null && (!validWorld(group.secondIsland) || group.secondIsland.archipelago !== undefined)) return false;
+    return group.activeIslandId !== 'island-2' || group.secondIsland !== null;
   } catch { return false; }
 }
 
@@ -402,6 +436,7 @@ export function createDevCloud({
     // meaningful promotion/retention failures before treating generic 409 as a
     // concurrent-write conflict. Never expose arbitrary provider diagnostics.
     const apiError = typeof result.body.error === 'string' ? result.body.error : null;
+    if (apiError && (/^trade-[a-z-]{1,64}$/.test(apiError) || ['second-island-locked', 'archipelago-island-loss', 'unverified-ship-capacity'].includes(apiError))) throw fail(apiError);
     if (apiError && ['island-expired', 'invalid-code', 'promotion-not-started', 'promotion-ended', 'promotion-exhausted', 'unsupported-promotion-verification', 'legal-required'].includes(apiError)) throw fail(apiError);
     if (apiError && ['invalid-island', 'invalid-generation', 'invalid-revision', 'inventory-overflow'].includes(apiError)) throw fail('invalid-state');
     if ([409, 412].includes(result.status) || result.body.error?.status === 'FAILED_PRECONDITION' ||
@@ -479,6 +514,47 @@ export function createDevCloud({
     return { ...result.body, island: await loadIsland() };
   }
 
+  async function tradeRequest(path, body = null) {
+    requireEnabled();
+    if (!session) throw fail('auth-required');
+    await config();
+    // A private Firestore island is not an auction server. Never replace a
+    // missing cross-account service with local/fictitious counterparties.
+    if (!accountApiEnabled) throw fail('trade-api-unavailable');
+    const result = await firestoreRequest(path, body === null ? {} : {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+    });
+    if (!result.ok || !isObject(result.body)) throw fail('trade-api-unavailable');
+    return result.body;
+  }
+  function tradeId(value) {
+    if (typeof value !== 'string' || !/^[A-Za-z0-9_-]{1,100}$/.test(value)) throw fail('trade-invalid-offer');
+    return value;
+  }
+  const tradeCursor = cursor => {
+    if (cursor === null || cursor === undefined) return null;
+    if (typeof cursor !== 'string' || cursor.length > 4096 || !/^[A-Za-z0-9_-]+$/.test(cursor)) throw fail('trade-invalid-cursor');
+    return cursor;
+  };
+  const listTradeOffers = ({ islandId = 'island-1', cursor = null } = {}) => {
+    if (!['island-1', 'island-2'].includes(islandId)) throw fail('trade-invalid-island');
+    const params = new URLSearchParams({ islandId });
+    const next = tradeCursor(cursor); if (next) params.set('cursor', next);
+    return tradeRequest(`/api/v1/trade/offers?${params}`);
+  };
+  const tradeMutation = (path, body) => {
+    if (!isObject(body)) throw fail('trade-invalid-offer');
+    return tradeRequest(path, body);
+  };
+  const createTradeOffer = body => tradeMutation('/api/v1/trade/offers', body);
+  const listTradeReturns = ({ cursor = null } = {}) => {
+    const next = tradeCursor(cursor);
+    return tradeRequest('/api/v1/trade/inbox' + (next ? `?cursor=${encodeURIComponent(next)}` : ''));
+  };
+  const acceptTradeOffer = (id, body) => tradeMutation(`/api/v1/trade/offers/${tradeId(id)}/accept`, body);
+  const cancelTradeOffer = (id, body) => tradeMutation(`/api/v1/trade/offers/${tradeId(id)}/cancel`, body);
+  const claimTradeReturn = (id, body) => tradeMutation(`/api/v1/trade/inbox/${tradeId(id)}/claim`, body);
+
   async function loadIsland() {
     requireEnabled();
     if (!session) throw fail('auth-required');
@@ -530,5 +606,7 @@ export function createDevCloud({
 
   return { enabled, preprod, projectId, environment, sessionKey, get accountApiEnabled() { return accountApiEnabled; },
     get lastSessionActivityAt() { return session?.lastActivityAt ?? null; }, get sessionIdleExpired() { return idleExpired(); },
-    recordSessionActivity, signIn, registerEmail, acceptExternalSession, getPublicConfig: config, getProfile, getLegalStatus, acceptLegal, restoreSession, signOut: clear, loadIsland, createIsland, saveIsland, recordActivity, redeemPromoCode, get accountStatus() { return accountStatus ? { ...accountStatus } : null; } };
+    recordSessionActivity, signIn, registerEmail, acceptExternalSession, getPublicConfig: config, getProfile, getLegalStatus, acceptLegal, restoreSession, signOut: clear, loadIsland, createIsland, saveIsland, recordActivity, redeemPromoCode,
+    listTradeOffers, listTradeReturns, createTradeOffer, acceptTradeOffer, cancelTradeOffer, claimTradeReturn,
+    get accountStatus() { return accountStatus ? { ...accountStatus } : null; } };
 }

@@ -1,12 +1,12 @@
 # HARBORLIGHT
 
-Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarni. Aktywny zakres **frontend-v18** zatwierdzono przez GO użytkownika 30 października 2026: [pełne wymagania](docs/FRONTEND-V18-REQUIREMENTS.md), [reguły gospodarki](docs/ECONOMY-RULES.md) i [budynki](docs/BUILDINGS.md).
+Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarni. Bazowe reguły **frontend-v18** zatwierdzono przez GO użytkownika 30 października 2026: [pełne wymagania](docs/FRONTEND-V18-REQUIREMENTS.md), [reguły gospodarki](docs/ECONOMY-RULES.md) i [budynki](docs/BUILDINGS.md). Bieżące rozszerzenie DEV opisuje [v21](docs/FRONTEND-V21-REQUIREMENTS.md).
 
 ## Wersja lokalna a opublikowana
 
 | Miejsce | Stan |
 |---|---|
-| DEV — ta przestrzeń robocza | [v20](docs/FRONTEND-V20-REQUIREMENTS.md): wprowadzenie z nazwaniem wyspy i oprowadzaniem, zatrzymany czas przed startem, automatyczny zapis co 30 s i obsługa bezczynnej sesji. Lokalne testy zakończone; bez nowej publikacji GCP. Zawiera uzupełnienie v19. |
+| DEV — ta przestrzeń robocza | [v21](docs/FRONTEND-V21-REQUIREMENTS.md): równowaga samouczka, objaśnienia, handel graczy, próg ludności i druga wyspa. Lokalna regresja: 871 testów i 10 zestawów Chromium PASS; bez nowej publikacji GCP. Zawiera v19 i v20. |
 | PRE-PROD — `harborlight-dev` | [Gra](https://harborlight-dev.web.app), opublikowane v18 / `6ec3c6d`; [sukces 41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285), testy hostingu i kont, oba artefakty v2. |
 | PROD — `harborlight-prod` / `harborlight.pl` | Brak potwierdzonej publikacji i powiązania domeny. |
 | GitHub Pages | Podgląd deweloperski, nie PROD; nie dowodzi promocji PRE-PROD. |
@@ -24,13 +24,15 @@ PRE-PROD zachowuje trzy osobne konta `admin1`, `admin2`, `admin3`, ich UID i wys
 - Codzienne darmowe błogosławieństwo, wydarzenia dobre/złe, regularność Kaplicy, lojalność 50–200 sześciu zasobów oraz czytelne powiadomienia.
 - Postęp konta wyłącznie w chmurze. Brak lokalnej wyspy i lokalnej kopii odzyskiwania; brak połączenia blokuje zatwierdzanie działań. Język i techniczna sesja logowania nie są zapisem postępu.
 
-Nowe parametry cen dodatkowego czasu i wag wydarzeń są jawnie opisane jako konfigurowalne wartości wdrożeniowe. Aktualny [Excel 11](docs/arkusze/HARBORLIGHT11-zasady.xlsx) zawiera bieżące reguły i [scenariusze testowe](docs/TEST-SCENARIOS-v18.md). Starsze arkusze pozostają archiwami i nie są nadpisywane.
+Nowe parametry cen dodatkowego czasu i wag wydarzeń są jawnie opisane jako konfigurowalne wartości wdrożeniowe. Ostatni wygenerowany [Excel 11](docs/arkusze/HARBORLIGHT11-zasady.xlsx) jest migawką reguł v18/v19 i [scenariuszy testowych](docs/TEST-SCENARIOS-v18.md); nie obejmuje rozszerzeń v20/v21. Starsze arkusze pozostają archiwami i nie są nadpisywane.
 
 Uzupełnienie v19 dodaje bezpośrednie wylogowanie i odnośniki do dokumentów w Ustawieniach. Rejestracja wymaga osobnej akceptacji [roboczego Regulaminu](docs/TERMS-DRAFT.pl.md) i potwierdzenia przeczytania [Polityki prywatności](docs/PRIVACY-DRAFT.pl.md); nowe konta otrzymują wersjonowane potwierdzenie serwera. Dane operatora „Lorem ipsum” wymagają uzupełnienia przed publicznym uruchomieniem. Stałe konta PRE-PROD zachowują dostęp i historię.
 
 Nowy zakres [v20](docs/FRONTEND-V20-REQUIREMENTS.md) zaczyna nową wyspę od opisu gry, jej nazwania i oprowadzania po interfejsie. Zegar rusza po ukończeniu lub zamknięciu oprowadzania, a następnie zaczyna się standardowy samouczek. Istniejące światy i postęp lekcji są zachowane. Postęp zapisuje się automatycznie co 30 sekund wyłącznie w chmurze; ręczny panel zapisu zastępuje bezpośrednie wylogowanie. Sesja po przekroczeniu bezczynności nie odnawia się samoczynnie po ponownym otwarciu przeglądarki. Lokalne 821 testów i osiem zestawów Chromium przeszło; zakres nadal wymaga własnego CI i osobnej promocji PRE-PROD.
 
 ## Konta i integracje
+
+Zakres [v21](docs/FRONTEND-V21-REQUIREMENTS.md) przeplata nagrody nowego 25-krokowego samouczka z wydawaniem zasobów i dąży do zakończenia z pełnym magazynem bez zaległych skrzyń. Zachowuje stare postępy i nagrody. Rozbudowa Ratusza od 3→4 wymaga 75% ludności poprzedzającego poziomu; od Ratusza 6 handel graczy zastępuje nowe zlecenia NPC. Ratusz 10 pozwala utworzyć drugą wyspę, z jednorazowym skopiowaniem poziomów Ratusza i Magazynu. Własny statek przewozi 1000 sztuk w 10 minut bez opłaty za rejs; płatne zwiększenie pojemności jest w DEV symulacją. Te zmiany wymagają osobnego odbioru reguł, pakietu, usług i promocji.
 
 PRE-PROD ma rzeczywiste Firebase Authentication/Firestore dla stałych kont testowych. Kod produkcyjnych kont obsługuje e-mail oraz ścieżki Google/Facebook, lecz aktywacja dostawców, domen i aplikacji wymaga właścicielskiej konfiguracji. Brak konfiguracji nie jest zastępowany pozorowanym logowaniem. Gracz sam inicjuje i zatwierdza udostępnienie osiągnięcia; automatyczne posty strony i osobisty facebookowy push są odłożone.
 

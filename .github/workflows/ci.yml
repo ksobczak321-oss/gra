@@ -98,7 +98,7 @@ jobs:
           python3 scripts/build_frontend.py --commit "$GITHUB_SHA" \
             --output build/frontend --archive build/harborlight-frontend.tar.gz
 
-      - name: Test packaged v18 game in Chromium
+      - name: Test packaged game and both tutorial programs in Chromium
         id: browser
         env:
           HARBORLIGHT_FRONTEND_ROOT: ${{ github.workspace }}/build/frontend
@@ -110,7 +110,7 @@ jobs:
           import subprocess
           import sys
 
-          for test in ('tests/harborlight-frontend-v17-smoke.py', 'tests/harborlight-frontend-v18-smoke.py', 'tests/harborlight-tutorial-v18-smoke.py'):
+          for test in ('tests/harborlight-frontend-v17-smoke.py', 'tests/harborlight-frontend-v18-smoke.py', 'tests/harborlight-tutorial-v18-smoke.py', 'tests/harborlight-tutorial-v21-smoke.py'):
               print('Starting browser acceptance: ' + test, flush=True)
               status = subprocess.call([sys.executable, '-u', test])
               if status:
@@ -145,7 +145,7 @@ jobs:
           import subprocess
           import sys
 
-          for test in ('tests/harborlight-dev-auth-smoke.py', 'tests/harborlight-dev-game-smoke.py', 'tests/harborlight-settings-signout-smoke.py', 'tests/harborlight-v18-auth-smoke.py', 'tests/harborlight-onboarding-v20-smoke.py'):
+          for test in ('tests/harborlight-dev-auth-smoke.py', 'tests/harborlight-dev-game-smoke.py', 'tests/harborlight-settings-signout-smoke.py', 'tests/harborlight-v18-auth-smoke.py', 'tests/harborlight-onboarding-v20-smoke.py', 'tests/harborlight-v21-features-smoke.py'):
               status = subprocess.call([sys.executable, '-u', test])
               if status:
                   sys.exit(status)
@@ -171,6 +171,7 @@ jobs:
             ${{ runner.temp }}/harborlight-browser.log
             /tmp/harborlight-v18-*.png
             /tmp/harborlight-v17-*.png
+            /tmp/harborlight-v21-*.png
           if-no-files-found: error
           retention-days: 7
 
@@ -182,5 +183,6 @@ jobs:
           path: |
             ${{ runner.temp }}/harborlight-dev-browser.log
             /tmp/harborlight-dev-*.png
+            /tmp/harborlight-v21-*.png
           if-no-files-found: error
           retention-days: 7

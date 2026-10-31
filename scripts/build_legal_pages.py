@@ -8,7 +8,7 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 DOCUMENTS = [('TERMS-DRAFT.pl.md', 'harborlight-terms.html', 'Regulamin gry HARBORLIGHT'),
              ('PRIVACY-DRAFT.pl.md', 'harborlight-privacy.html', 'Polityka prywatności HARBORLIGHT')]
-VERSION = '2026-10-30-draft1'
+VERSION = '2026-10-31-draft2'
 
 
 def inline(text):
@@ -27,7 +27,7 @@ def render(markdown, title):
         else:
             cls = ' class="legal-draft"' if block.startswith('DOKUMENT ROBOCZY') else ' class="legal-version"' if block.startswith('Wersja:') else ''
             blocks.append('<p'+cls+'>'+inline(block.replace('\n',' '))+'</p>')
-    return '<!doctype html>\n<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>'+escape(title)+'</title><link rel="stylesheet" href="harborlight-legal.css?v=legal-v1"></head>\n<body><main data-legal-version="'+VERSION+'"><nav aria-label="Dokumenty gry"><a href="harborlight-auth.html?mode=register">Rejestracja i logowanie</a><a href="harborlight-terms.html">Regulamin</a><a href="harborlight-privacy.html">Polityka prywatności</a></nav>\n'+'\n'.join(blocks)+'\n<p class="legal-footer">HARBORLIGHT · Dokument do przeglądu właściciela · Możesz zapisać lub wydrukować tę stronę funkcjami przeglądarki.</p></main></body></html>\n'
+    return '<!doctype html>\n<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>'+escape(title)+'</title><link rel="stylesheet" href="harborlight-legal.css?v=legal-v2"></head>\n<body><main data-legal-version="'+VERSION+'"><nav aria-label="Dokumenty gry"><a href="harborlight-auth.html?mode=register">Rejestracja i logowanie</a><a href="harborlight-terms.html">Regulamin</a><a href="harborlight-privacy.html">Polityka prywatności</a></nav>\n'+'\n'.join(blocks)+'\n<p class="legal-footer">HARBORLIGHT · Dokument do przeglądu właściciela · Możesz zapisać lub wydrukować tę stronę funkcjami przeglądarki.</p></main></body></html>\n'
 
 
 def main():

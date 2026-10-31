@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { TUTORIAL_LESSONS, TUTORIAL_VERSION, normalizeProgression, progressionAction,
+import { LEGACY_TUTORIAL_LESSONS as TUTORIAL_LESSONS, TUTORIAL_VERSION, normalizeProgression, progressionAction,
   advanceProgression, recordProgressionAction, tutorialRows, tutorialStatus,
   tutorialPendingRewards, tutorialWarehouseOverfull } from '../harborlight-v1-progression.js';
 import { receiveMaterials } from '../harborlight-v1-logistics.js';
@@ -17,7 +17,7 @@ function island() {
     buildings: { townhall: { level: 1 }, warehouse: { level: 1 } },
     residents: Array.from({ length: 12 }, (_, id) => ({ id: id + 1, workplace: null, arrivalRemaining: 0 })),
     statistics: { collected: 0, crafted: 0 }, warehousePriorities: [], constructionProjects: [], notifications: [] };
-  normalizeProgression(state, {});
+  normalizeProgression(state, { tutorial: { version: 3 } });
   return state;
 }
 const action = (state, type, extra = {}) => progressionAction(state, { type, ...extra }, context);
@@ -104,6 +104,7 @@ test('condition lessons require a fresh physical delivery and a fresh processed 
 
 test('a real starter can collect four chests, receive spendable help and order the Town Hall upgrade', () => {
   const state = createState(NOW), run = command => act(state, command, NOW);
+  normalizeProgression(state, { ...state, tutorial: { version: 3 } });
   for (const [taskId, building] of [['rules-read', 'farm'], ['island-map', 'warehouse'], ['first-job', 'windmill'], ['food-check', 'lumber']]) {
     assert.equal(run({ type: 'assign', building, delta: 1 }).ok, true);
     assert.equal(run({ type: 'claimTutorial', taskId }).ok, true);
@@ -121,6 +122,7 @@ test('a real starter can collect four chests, receive spendable help and order t
 
 test('the seed57 fourth chest still has a celebration and Skip when its reward overfills storage', () => {
   const state = createState(NOW), run = command => act(state, command, NOW);
+  normalizeProgression(state, { ...state, tutorial: { version: 3 } });
   for (const [taskId, building] of [['rules-read', 'farm'], ['island-map', 'warehouse'], ['first-job', 'windmill'], ['food-check', 'lumber']]) {
     assert.equal(run({ type: 'assign', building, delta: 1 }).ok, true);
     assert.equal(run({ type: 'claimTutorial', taskId }).ok, true);

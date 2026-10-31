@@ -13,7 +13,7 @@ const object = value => value !== null && typeof value === 'object' && !Array.is
 const positive = value => Number.isSafeInteger(value) && value > 0;
 const nonnegative = value => Number.isSafeInteger(value) && value >= 0;
 const ACCOUNT_PROGRESS_FIELDS = ['commerce', 'loyalty', 'socialRewards', 'referrals', 'engagementSchedule', 'welcome'];
-export const LEGAL_DOCUMENT_VERSIONS = Object.freeze({ termsVersion: '2026-10-30-draft1', privacyVersion: '2026-10-30-draft1' });
+export const LEGAL_DOCUMENT_VERSIONS = Object.freeze({ termsVersion: '2026-10-31-draft2', privacyVersion: '2026-10-31-draft2' });
 const acceptedLegal = account => account?.legalAcceptance?.termsVersion === LEGAL_DOCUMENT_VERSIONS.termsVersion &&
   account?.legalAcceptance?.privacyVersion === LEGAL_DOCUMENT_VERSIONS.privacyVersion && Number.isSafeInteger(account?.legalAcceptance?.acceptedAt);
 
@@ -64,6 +64,15 @@ function islandPayload(value) {
   let state;
   try { state = JSON.parse(value); } catch { fail('invalid-island', 400); }
   if (!object(state) || !object(state.resources) || RESOURCES.some(id => !Number.isFinite(state.resources[id]) || state.resources[id] < 0 || state.resources[id] > Number.MAX_SAFE_INTEGER)) fail('invalid-island', 400);
+  if (state.archipelago !== undefined) {
+    const group = state.archipelago;
+    if (!object(group) || group.version !== 1 || !['island-1','island-2'].includes(group.activeIslandId) || !positive(group.shipCapacity) || group.shipCapacity < 1000 || !Array.isArray(group.transfers) || group.transfers.length > 1000 || !Array.isArray(group.capacityReceipts) || group.capacityReceipts.length > 10000) fail('invalid-island', 400);
+    const second = group.secondIsland;
+    if (second !== null && (!object(second) || second.archipelago !== undefined || !object(second.resources) || RESOURCES.some(id => !Number.isFinite(second.resources[id]) || second.resources[id] < 0 || second.resources[id] > Number.MAX_SAFE_INTEGER) || !object(second.buildings))) fail('invalid-island', 400);
+    if (second && (!Number.isSafeInteger(second.version) || second.version < 1 || second.version > 9 || !nonnegative(second.population) || !Number.isFinite(second.lastSimulatedAt) || second.lastSimulatedAt < 0 ||
+      ['house','farm','sawmill','quarry','dock','warehouse','lighthouse','lumber','windmill','townhall','chapel','market'].some(id => !object(second.buildings[id]) || !nonnegative(second.buildings[id].level) || second.buildings[id].level > 100 || id === 'townhall' && second.buildings[id].level < 1))) fail('invalid-island', 400);
+    if (group.activeIslandId === 'island-2' && !second) fail('invalid-island', 400);
+  }
   return state;
 }
 function rewardValue(value) {
@@ -193,10 +202,19 @@ export function createAccountService({ store, now = () => Date.now(), environmen
       if ((island?.revision || 0) !== expectedRevision) fail('island-conflict', 409);
       if (!island && account.islandExpiredAt) fail('island-expired', 410);
       if (environment === 'production') {
-        const trustedCommerce = island ? islandPayload(island.payload).commerce : null;
+        const trustedState = islandPayload(island.payload), trustedCommerce = trustedState.commerce;
         state.commerce = { ...(object(state.commerce) ? state.commerce : {}), receipts: trustedCommerce?.receipts || [],
           promoClaims: trustedCommerce?.promoClaims || {}, adReceipts: trustedCommerce?.adReceipts || [], ad: null };
+        const trustedCapacity = positive(trustedState.archipelago?.shipCapacity) ? trustedState.archipelago.shipCapacity : 1000;
+        if (state.archipelago?.shipCapacity > trustedCapacity) fail('unverified-ship-capacity', 409);
+        if (state.archipelago) {
+          state.archipelago.shipCapacity = trustedCapacity;
+          state.archipelago.capacityReceipts = structuredClone(trustedState.archipelago?.capacityReceipts || []);
+        }
       }
+      const previousState = islandPayload(island.payload);
+      if (previousState.archipelago?.secondIsland && !state.archipelago?.secondIsland) fail('archipelago-island-loss', 409);
+      if (state.archipelago?.secondIsland && !previousState.archipelago?.secondIsland && (previousState.buildings?.townhall?.level || 0) < 10) fail('second-island-locked', 409);
       const nextPayload = JSON.stringify(state);
       if (Buffer.byteLength(nextPayload, 'utf8') > MAX_PAYLOAD_BYTES) fail('invalid-island', 409);
       const next = { schemaVersion: 1, revision: expectedRevision + 1, generation, payload: nextPayload, updatedAt: at };

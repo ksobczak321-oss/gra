@@ -49,7 +49,7 @@ class BackendPackageTests(unittest.TestCase):
         context = context_files()
         self.assertTrue(context <= {'Dockerfile', 'package.json', 'server.mjs',
                                    'account-service.mjs', 'firebase-auth.mjs',
-                                   'firestore-store.mjs', 'retention.mjs'})
+                                   'firestore-store.mjs', 'retention.mjs', 'player-trade.mjs'})
         for private in ['test/server.test.mjs', '.env', 'gha-creds-example.json',
                         'private.mjs', 'node_modules/dependency/index.mjs']:
             self.assertNotIn(private, context)

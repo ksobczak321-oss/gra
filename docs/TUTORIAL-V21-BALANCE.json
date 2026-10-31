@@ -1,0 +1,1009 @@
+{
+  "scope": "DEV isolated model simulation; no cloud writes",
+  "curriculum": 4,
+  "start": "2026-10-31T10:00:00Z",
+  "elapsedSeconds": 32100,
+  "summary": {
+    "completed": 25,
+    "claimed": 25,
+    "total": 25,
+    "finished": true,
+    "autoOpenDisabled": false,
+    "shouldAutoOpen": false,
+    "nextLessonId": null,
+    "buildingSuppliesClaimed": true,
+    "ordinaryWarehouseUsed": 6000,
+    "bonusMaterials": {
+      "wood": 0,
+      "stone": 0,
+      "grain": 0,
+      "food": 0,
+      "planks": 0
+    },
+    "pendingRewards": 0
+  },
+  "trace": [
+    {
+      "index": 1,
+      "lessonId": "rules-read",
+      "action": "assign-farm",
+      "elapsedSeconds": 0,
+      "before": {
+        "coins": 100,
+        "wood": 100,
+        "stone": 100,
+        "grain": 100,
+        "food": 100,
+        "planks": 100
+      },
+      "after": {
+        "coins": 200,
+        "wood": 125,
+        "stone": 125,
+        "grain": 125,
+        "food": 125,
+        "planks": 125
+      },
+      "reward": {
+        "wood": 25,
+        "stone": 25,
+        "grain": 25,
+        "food": 25,
+        "planks": 25,
+        "coins": 100
+      },
+      "supplies": null,
+      "ordinaryUsed": 625,
+      "warehouseLevel": 1,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 2,
+      "lessonId": "island-map",
+      "action": "assign-warehouse",
+      "elapsedSeconds": 0,
+      "before": {
+        "coins": 200,
+        "wood": 125,
+        "stone": 125,
+        "grain": 125,
+        "food": 125,
+        "planks": 125
+      },
+      "after": {
+        "coins": 300,
+        "wood": 150,
+        "stone": 150,
+        "grain": 150,
+        "food": 150,
+        "planks": 150
+      },
+      "reward": {
+        "wood": 25,
+        "stone": 25,
+        "grain": 25,
+        "food": 25,
+        "planks": 25,
+        "coins": 100
+      },
+      "supplies": null,
+      "ordinaryUsed": 750,
+      "warehouseLevel": 1,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 3,
+      "lessonId": "first-job",
+      "action": "assign-lumber",
+      "elapsedSeconds": 0,
+      "before": {
+        "coins": 300,
+        "wood": 150,
+        "stone": 150,
+        "grain": 150,
+        "food": 150,
+        "planks": 150
+      },
+      "after": {
+        "coins": 400,
+        "wood": 175,
+        "stone": 175,
+        "grain": 175,
+        "food": 175,
+        "planks": 175
+      },
+      "reward": {
+        "wood": 25,
+        "stone": 25,
+        "grain": 25,
+        "food": 25,
+        "planks": 25,
+        "coins": 100
+      },
+      "supplies": null,
+      "ordinaryUsed": 875,
+      "warehouseLevel": 1,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 4,
+      "lessonId": "food-check",
+      "action": "assign-windmill",
+      "elapsedSeconds": 0,
+      "before": {
+        "coins": 400,
+        "wood": 175,
+        "stone": 175,
+        "grain": 175,
+        "food": 175,
+        "planks": 175
+      },
+      "after": {
+        "coins": 500,
+        "wood": 200,
+        "stone": 200,
+        "grain": 200,
+        "food": 200,
+        "planks": 200
+      },
+      "reward": {
+        "wood": 25,
+        "stone": 25,
+        "grain": 25,
+        "food": 25,
+        "planks": 25,
+        "coins": 100
+      },
+      "supplies": null,
+      "ordinaryUsed": 1000,
+      "warehouseLevel": 1,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 5,
+      "lessonId": "townhall-upgrade",
+      "action": "upgrade-townhall",
+      "elapsedSeconds": 0,
+      "before": {
+        "coins": 500,
+        "wood": 200,
+        "stone": 200,
+        "grain": 200,
+        "food": 200,
+        "planks": 200
+      },
+      "after": {
+        "coins": 200,
+        "wood": 500,
+        "stone": 500,
+        "grain": 500,
+        "food": 600,
+        "planks": 500
+      },
+      "reward": {
+        "coins": 200
+      },
+      "supplies": {
+        "coins": 0,
+        "wood": 300,
+        "stone": 300,
+        "grain": 300,
+        "food": 400,
+        "planks": 300
+      },
+      "ordinaryUsed": 2600,
+      "warehouseLevel": 1,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 6,
+      "lessonId": "happiness-action",
+      "action": "transport-priority",
+      "elapsedSeconds": 0,
+      "before": {
+        "coins": 200,
+        "wood": 500,
+        "stone": 500,
+        "grain": 500,
+        "food": 600,
+        "planks": 500
+      },
+      "after": {
+        "coins": 300,
+        "wood": 525,
+        "stone": 525,
+        "grain": 525,
+        "food": 625,
+        "planks": 525
+      },
+      "reward": {
+        "wood": 25,
+        "stone": 25,
+        "grain": 25,
+        "food": 25,
+        "planks": 25,
+        "coins": 100
+      },
+      "supplies": null,
+      "ordinaryUsed": 2725,
+      "warehouseLevel": 1,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 7,
+      "lessonId": "workplace-journey",
+      "action": "assign-quarry",
+      "elapsedSeconds": 0,
+      "before": {
+        "coins": 300,
+        "wood": 525,
+        "stone": 525,
+        "grain": 525,
+        "food": 625,
+        "planks": 525
+      },
+      "after": {
+        "coins": 400,
+        "wood": 550,
+        "stone": 550,
+        "grain": 550,
+        "food": 650,
+        "planks": 550
+      },
+      "reward": {
+        "wood": 25,
+        "stone": 25,
+        "grain": 25,
+        "food": 25,
+        "planks": 25,
+        "coins": 100
+      },
+      "supplies": null,
+      "ordinaryUsed": 2850,
+      "warehouseLevel": 1,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 8,
+      "lessonId": "resources-dock",
+      "action": "building-townhall-2",
+      "elapsedSeconds": 9600,
+      "before": {
+        "coins": 400,
+        "wood": 550,
+        "stone": 550,
+        "grain": 550,
+        "food": 650,
+        "planks": 550
+      },
+      "after": {
+        "coins": 525,
+        "wood": 151,
+        "stone": 384,
+        "grain": 6,
+        "food": 183,
+        "planks": 50
+      },
+      "reward": {
+        "stone": 234,
+        "coins": 100
+      },
+      "supplies": null,
+      "ordinaryUsed": 774,
+      "warehouseLevel": 1,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 9,
+      "lessonId": "transport-priority",
+      "action": "upgrade-quarry",
+      "elapsedSeconds": 9600,
+      "before": {
+        "coins": 525,
+        "wood": 151,
+        "stone": 384,
+        "grain": 6,
+        "food": 183,
+        "planks": 50
+      },
+      "after": {
+        "coins": 725,
+        "wood": 151,
+        "stone": 384,
+        "grain": 6,
+        "food": 183,
+        "planks": 50
+      },
+      "reward": {
+        "coins": 200
+      },
+      "supplies": null,
+      "ordinaryUsed": 774,
+      "warehouseLevel": 1,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 10,
+      "lessonId": "first-delivery",
+      "action": "assign-sawmill",
+      "elapsedSeconds": 9600,
+      "before": {
+        "coins": 725,
+        "wood": 151,
+        "stone": 384,
+        "grain": 6,
+        "food": 183,
+        "planks": 50
+      },
+      "after": {
+        "coins": 825,
+        "wood": 176,
+        "stone": 409,
+        "grain": 31,
+        "food": 208,
+        "planks": 75
+      },
+      "reward": {
+        "wood": 25,
+        "stone": 25,
+        "grain": 25,
+        "food": 25,
+        "planks": 25,
+        "coins": 100
+      },
+      "supplies": null,
+      "ordinaryUsed": 899,
+      "warehouseLevel": 1,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 11,
+      "lessonId": "storage-limits",
+      "action": "assign-warehouse",
+      "elapsedSeconds": 9600,
+      "before": {
+        "coins": 825,
+        "wood": 176,
+        "stone": 409,
+        "grain": 31,
+        "food": 208,
+        "planks": 75
+      },
+      "after": {
+        "coins": 925,
+        "wood": 201,
+        "stone": 434,
+        "grain": 56,
+        "food": 233,
+        "planks": 100
+      },
+      "reward": {
+        "wood": 25,
+        "stone": 25,
+        "grain": 25,
+        "food": 25,
+        "planks": 25,
+        "coins": 100
+      },
+      "supplies": null,
+      "ordinaryUsed": 1024,
+      "warehouseLevel": 1,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 12,
+      "lessonId": "food-chain",
+      "action": "building-quarry-2",
+      "elapsedSeconds": 10800,
+      "before": {
+        "coins": 925,
+        "wood": 201,
+        "stone": 434,
+        "grain": 56,
+        "food": 233,
+        "planks": 100
+      },
+      "after": {
+        "coins": 1030,
+        "wood": 300,
+        "stone": 300,
+        "grain": 300,
+        "food": 400,
+        "planks": 300
+      },
+      "reward": {
+        "wood": 251,
+        "stone": 239,
+        "grain": 251,
+        "food": 156,
+        "planks": 192,
+        "coins": 100
+      },
+      "supplies": null,
+      "ordinaryUsed": 1600,
+      "warehouseLevel": 1,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 13,
+      "lessonId": "house-points",
+      "action": "upgrade-warehouse",
+      "elapsedSeconds": 10800,
+      "before": {
+        "coins": 1030,
+        "wood": 300,
+        "stone": 300,
+        "grain": 300,
+        "food": 400,
+        "planks": 300
+      },
+      "after": {
+        "coins": 930,
+        "wood": 300,
+        "stone": 300,
+        "grain": 300,
+        "food": 400,
+        "planks": 300
+      },
+      "reward": {
+        "coins": 200
+      },
+      "supplies": null,
+      "ordinaryUsed": 1600,
+      "warehouseLevel": 1,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 14,
+      "lessonId": "personal-happiness",
+      "action": "house-points",
+      "elapsedSeconds": 10800,
+      "before": {
+        "coins": 930,
+        "wood": 300,
+        "stone": 300,
+        "grain": 300,
+        "food": 400,
+        "planks": 300
+      },
+      "after": {
+        "coins": 1030,
+        "wood": 325,
+        "stone": 325,
+        "grain": 325,
+        "food": 425,
+        "planks": 325
+      },
+      "reward": {
+        "wood": 25,
+        "stone": 25,
+        "grain": 25,
+        "food": 25,
+        "planks": 25,
+        "coins": 100
+      },
+      "supplies": null,
+      "ordinaryUsed": 1725,
+      "warehouseLevel": 1,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 15,
+      "lessonId": "upgrade-cost",
+      "action": "building-warehouse-2",
+      "elapsedSeconds": 13800,
+      "before": {
+        "coins": 1030,
+        "wood": 325,
+        "stone": 325,
+        "grain": 325,
+        "food": 425,
+        "planks": 325
+      },
+      "after": {
+        "coins": 1141,
+        "wood": 72,
+        "stone": 72,
+        "grain": 120,
+        "food": 138,
+        "planks": 49
+      },
+      "reward": {
+        "wood": 70,
+        "stone": 8,
+        "grain": 106,
+        "coins": 100
+      },
+      "supplies": null,
+      "ordinaryUsed": 451,
+      "warehouseLevel": 2,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 16,
+      "lessonId": "construction-queue",
+      "action": "upgrade-farm",
+      "elapsedSeconds": 13800,
+      "before": {
+        "coins": 1141,
+        "wood": 72,
+        "stone": 72,
+        "grain": 120,
+        "food": 138,
+        "planks": 49
+      },
+      "after": {
+        "coins": 1341,
+        "wood": 72,
+        "stone": 172,
+        "grain": 120,
+        "food": 138,
+        "planks": 49
+      },
+      "reward": {
+        "stone": 100,
+        "coins": 200
+      },
+      "supplies": null,
+      "ordinaryUsed": 551,
+      "warehouseLevel": 2,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 17,
+      "lessonId": "path-upgrade",
+      "action": "upgrade-road",
+      "elapsedSeconds": 13800,
+      "before": {
+        "coins": 1341,
+        "wood": 72,
+        "stone": 172,
+        "grain": 120,
+        "food": 138,
+        "planks": 49
+      },
+      "after": {
+        "coins": 1441,
+        "wood": 97,
+        "stone": 97,
+        "grain": 145,
+        "food": 163,
+        "planks": 74
+      },
+      "reward": {
+        "wood": 25,
+        "stone": 25,
+        "grain": 25,
+        "food": 25,
+        "planks": 25,
+        "coins": 100
+      },
+      "supplies": null,
+      "ordinaryUsed": 576,
+      "warehouseLevel": 2,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 18,
+      "lessonId": "daily-attractions",
+      "action": "buy-attraction",
+      "elapsedSeconds": 13800,
+      "before": {
+        "coins": 1441,
+        "wood": 97,
+        "stone": 97,
+        "grain": 145,
+        "food": 163,
+        "planks": 74
+      },
+      "after": {
+        "coins": 1575,
+        "wood": 97,
+        "stone": 97,
+        "grain": 145,
+        "food": 163,
+        "planks": 74
+      },
+      "reward": {
+        "coins": 200
+      },
+      "supplies": null,
+      "ordinaryUsed": 576,
+      "warehouseLevel": 2,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 19,
+      "lessonId": "chapel-blessing",
+      "action": "chapel-blessing",
+      "elapsedSeconds": 13800,
+      "before": {
+        "coins": 1575,
+        "wood": 97,
+        "stone": 97,
+        "grain": 145,
+        "food": 163,
+        "planks": 74
+      },
+      "after": {
+        "coins": 1825,
+        "wood": 147,
+        "stone": 147,
+        "grain": 195,
+        "food": 213,
+        "planks": 124
+      },
+      "reward": {
+        "coins": 200
+      },
+      "supplies": null,
+      "ordinaryUsed": 576,
+      "warehouseLevel": 2,
+      "bonus": {
+        "wood": 50,
+        "stone": 50,
+        "grain": 50,
+        "food": 50,
+        "planks": 50
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 20,
+      "lessonId": "market-rules",
+      "action": "building-farm-2",
+      "elapsedSeconds": 14700,
+      "before": {
+        "coins": 1825,
+        "wood": 147,
+        "stone": 147,
+        "grain": 195,
+        "food": 213,
+        "planks": 124
+      },
+      "after": {
+        "coins": 1929,
+        "wood": 1000,
+        "stone": 1000,
+        "grain": 1000,
+        "food": 1100,
+        "planks": 1000
+      },
+      "reward": {
+        "wood": 935,
+        "stone": 913,
+        "grain": 935,
+        "food": 882,
+        "planks": 861,
+        "coins": 100
+      },
+      "supplies": null,
+      "ordinaryUsed": 5003,
+      "warehouseLevel": 2,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 47,
+        "planks": 50
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 21,
+      "lessonId": "lighthouse-visits",
+      "action": "upgrade-townhall",
+      "elapsedSeconds": 14700,
+      "before": {
+        "coins": 1929,
+        "wood": 1000,
+        "stone": 1000,
+        "grain": 1000,
+        "food": 1100,
+        "planks": 1000
+      },
+      "after": {
+        "coins": 1129,
+        "wood": 1000,
+        "stone": 1000,
+        "grain": 1000,
+        "food": 1100,
+        "planks": 1000
+      },
+      "reward": {
+        "coins": 200
+      },
+      "supplies": null,
+      "ordinaryUsed": 5003,
+      "warehouseLevel": 2,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 47,
+        "planks": 50
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 22,
+      "lessonId": "lighthouse-task",
+      "action": "building-townhall-3",
+      "elapsedSeconds": 22080,
+      "before": {
+        "coins": 1129,
+        "wood": 1000,
+        "stone": 1000,
+        "grain": 1000,
+        "food": 1100,
+        "planks": 1000
+      },
+      "after": {
+        "coins": 1258,
+        "wood": 500,
+        "stone": 500,
+        "grain": 500,
+        "food": 600,
+        "planks": 500
+      },
+      "reward": {
+        "wood": 500,
+        "stone": 402,
+        "grain": 498,
+        "food": 476,
+        "planks": 464,
+        "coins": 100
+      },
+      "supplies": null,
+      "ordinaryUsed": 2600,
+      "warehouseLevel": 2,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 23,
+      "lessonId": "expedition-rules",
+      "action": "upgrade-lighthouse",
+      "elapsedSeconds": 22080,
+      "before": {
+        "coins": 1258,
+        "wood": 500,
+        "stone": 500,
+        "grain": 500,
+        "food": 600,
+        "planks": 500
+      },
+      "after": {
+        "coins": 958,
+        "wood": 500,
+        "stone": 500,
+        "grain": 500,
+        "food": 600,
+        "planks": 500
+      },
+      "reward": {
+        "coins": 200
+      },
+      "supplies": null,
+      "ordinaryUsed": 2600,
+      "warehouseLevel": 2,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 24,
+      "lessonId": "returning-workers",
+      "action": "building-lighthouse-1",
+      "elapsedSeconds": 32100,
+      "before": {
+        "coins": 958,
+        "wood": 500,
+        "stone": 500,
+        "grain": 500,
+        "food": 600,
+        "planks": 500
+      },
+      "after": {
+        "coins": 1197,
+        "wood": 0,
+        "stone": 138,
+        "grain": 0,
+        "food": 130,
+        "planks": 60
+      },
+      "reward": {
+        "coins": 200
+      },
+      "supplies": null,
+      "ordinaryUsed": 328,
+      "warehouseLevel": 2,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    },
+    {
+      "index": 25,
+      "lessonId": "island-review",
+      "action": "finish-tutorial",
+      "elapsedSeconds": 32100,
+      "before": {
+        "coins": 1197,
+        "wood": 0,
+        "stone": 138,
+        "grain": 0,
+        "food": 130,
+        "planks": 60
+      },
+      "after": {
+        "coins": 1697,
+        "wood": 1200,
+        "stone": 1200,
+        "grain": 1200,
+        "food": 1200,
+        "planks": 1200
+      },
+      "reward": {
+        "coins": 500,
+        "wood": 1200,
+        "grain": 1200,
+        "planks": 1140,
+        "food": 1070,
+        "stone": 1062
+      },
+      "supplies": null,
+      "ordinaryUsed": 6000,
+      "warehouseLevel": 2,
+      "bonus": {
+        "wood": 0,
+        "stone": 0,
+        "grain": 0,
+        "food": 0,
+        "planks": 0
+      },
+      "pendingTutorialRewards": 0
+    }
+  ]
+}
