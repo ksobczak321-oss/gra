@@ -335,22 +335,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          curl --fail --silent --show-error --retry 8 --retry-all-errors \
-            --retry-connrefused --retry-delay 3 --connect-timeout 10 --max-time 20 \
-            --header 'Cache-Control: no-cache' \
-            "$HARBORLIGHT_FRONTEND_URL/release.json?commit=$GITHUB_SHA" \
-            --output "$RUNNER_TEMP/harborlight-hosted-release.json"
-          node --input-type=module - "$RUNNER_TEMP/harborlight-hosted-release.json" <<'JS'
-          import { readFileSync } from 'node:fs';
-          import { createHash } from 'node:crypto';
-          const bytes = readFileSync(process.argv[2]);
-          const manifest = JSON.parse(bytes.toString('utf8'));
-          const digest = createHash('sha256').update(bytes).digest('hex');
-          if (manifest.schema_version !== 1 || manifest.commit !== process.env.GITHUB_SHA ||
-              digest !== process.env.HARBORLIGHT_FRONTEND_MANIFEST_SHA256) {
-            throw new Error('Hosted frontend is not the exact bundle of this source commit');
-          }
-          JS
+          node infra/google-cloud/verify-hosted-release.mjs \
+            build/frontend/release.json "$RUNNER_TEMP/harborlight-hosted-release.json"
 
       - name: Test the actual hosted game in Chromium
         id: hosted_browser

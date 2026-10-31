@@ -19,7 +19,7 @@ W [v22](docs/FRONTEND-V22-REQUIREMENTS.md) udane działanie wykonane przed swoj�
 
 ## Pilna poprawka DEV 0.9.1.2
 
-[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Testy są oczekujące; promocja PRE-PROD następuje dopiero po własnym zielonym CI. Nie resetujemy kont. Pozostałe uwagi odłożono do dalszej rozmowy. Rejestr ma 250 zmian i 46 przypadków ręcznych.
+[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Testy są oczekujące; promocja PRE-PROD następuje dopiero po własnym zielonym CI. Nie resetujemy kont. Pozostałe uwagi odłożono do dalszej rozmowy. Rejestr ma 251 zmian i 46 przypadków ręcznych.
 
 ## Poprzedni zakres DEV 0.9.1.1
 

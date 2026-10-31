@@ -1584,8 +1584,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_local",
-        "ci": "awaiting_current_release",
-        "preprod": "not_deployed",
+        "ci": "passed_source_11f6ff1",
+        "preprod": "verification_failed_after_hosting_publication",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -1613,15 +1613,16 @@
         "automated_tests": [
           "tests/harborlight-onboarding-v20-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
-        "preprod_run_url": null,
+        "source_sha": "11f6ff1e7f46bd1fabb7c55da137244cf2848b08",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41232065516",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41232457485",
         "manual_execution": "NOT_RUN"
       },
       "notes": [
         "Pilny zakres DEV → własne CI → PRE-PROD. Testy i rzeczywista promocja wymagają odrębnego potwierdzenia; nie resetujemy kont.",
         "Użytkownik zlecił tag pilne i bezpośrednią promocję PRE-PROD po sukcesie DEV/CI. Weryfikacja i rzeczywista promocja są osobnymi stanami.",
-        "Lokalnie: 739 testów Node PASS (w tym 9 bridge), 13 scenariuszy onboarding Chromium PASS, Settings PL/EN komputer/telefon PASS, 12 testów pakowania i 18 importera PASS. Przerwany zapis zachowuje spójny język i draft, odzyskanie wykonuje jeden zapis bez resetu."
+        "Lokalnie: 739 testów Node PASS (w tym 9 bridge), 13 scenariuszy onboarding Chromium PASS, Settings PL/EN komputer/telefon PASS, 12 testów pakowania i 18 importera PASS. Przerwany zapis zachowuje spójny język i draft, odzyskanie wykonuje jeden zapis bez resetu.",
+        "Pierwsza promocja 41232457485, próba1, opublikowała Hosting, ale odrzuciła manifest jako niezgodny z oczekiwanym pakietem. Brak pełnego odbioru i artefaktów; możliwy częściowo opublikowany frontend. Nie resetowano danych."
       ],
       "tags": [
         "pilne"
@@ -9132,8 +9133,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_local",
-        "ci": "awaiting_current_release",
-        "preprod": "not_deployed",
+        "ci": "passed_source_11f6ff1",
+        "preprod": "dispatch_completed_deploy_failed",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -9161,13 +9162,72 @@
         "automated_tests": [
           "tests/harborlight-urgent-preprod-dispatch.test.mjs"
         ],
+        "source_sha": "11f6ff1e7f46bd1fabb7c55da137244cf2848b08",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41232065516",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41232457485",
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Implementacja i lokalne kontrole są odrębne od uruchomienia bridge, publikacji tagu i faktycznej promocji PRE-PROD; wymagane osobne dowody.",
+        "Bridge 41232445801 SUCCESS automatycznie uruchomił istniejący deploy41232457485 z właściwym SHA. Deploy nie przeszedł późniejszej weryfikacji manifestu; sukces bridge nie jest sukcesem GCP."
+      ]
+    },
+    {
+      "id": "HL-CHG-0624",
+      "epic": "HL-EPIC-INF",
+      "area": "Infrastruktura i wydania",
+      "type": "Ops",
+      "title": "Ścisła kontrola gotowości manifestu po publikacji Hostingu",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Ścisła kontrola gotowości manifestu po publikacji Hostingu",
+        "reference": "user_chat:urgent_preprod_manifest_mismatch_2026_10_31"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_local",
+        "ci": "awaiting_current_release",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Po publikacji kontrola ograniczoną liczbę razy odczytuje manifest, także gdy HTTP200 zawiera jeszcze niezgodną treść.",
+        "Sukces nadal wymaga schematu1, dokładnego SHA commita i SHA256 całych bajtów; nie akceptujemy starego lub zmienionego pakietu.",
+        "Błąd podaje bezpieczne expected/observed metadane i przyczynę, bez surowego body lub sekretów. Błędną lokalną konfigurację odrzucamy przed siecią."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0031",
+        "HL-CHG-0623"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+        ],
+        "code": [
+          "infra/google-cloud/verify-hosted-release.mjs",
+          ".github/workflows/google-cloud-dev.yml"
+        ],
+        "automated_tests": [
+          "tests/harborlight-hosted-release-check.test.mjs"
+        ],
         "source_sha": null,
         "ci_run_url": null,
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
       "notes": [
-        "Implementacja i lokalne kontrole są odrębne od uruchomienia bridge, publikacji tagu i faktycznej promocji PRE-PROD; wymagane osobne dowody."
+        "Odpowiedź użytkownika potwierdza mismatch manifestu w Node, ale bez expected/observed nie rozstrzyga propagacji CDN. Przyczyna nie jest przedstawiana jako pewna.",
+        "Lokalnie pełny Node747PASS, końcowy verifier8PASS. Limit12prób/85s, no-cache i cachebuster; surowa odpowiedź ani niezaufany tekst nie są publikowane. Bajty aplikacji nie zmieniły się względem przeglądarkowo sprawdzonej 0.9.1.2."
+      ],
+      "tags": [
+        "pilne"
       ]
     },
     {

@@ -10,8 +10,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `verified_local` |
-| CI | `awaiting_current_release` |
-| PRE-PROD | `not_deployed` |
+| CI | `passed_source_11f6ff1` |
+| PRE-PROD | `dispatch_completed_deploy_failed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -36,6 +36,9 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 - **Dokumenty:** [docs/FRONTEND-V23-1-REQUIREMENTS.md](../../FRONTEND-V23-1-REQUIREMENTS.md), [docs/RELEASE-PROCESS.md](../../RELEASE-PROCESS.md)
 - **Kod:** [.github/workflows/promote-urgent-preprod.yml](../../../.github/workflows/promote-urgent-preprod.yml), [infra/google-cloud/urgent-preprod-dispatch.mjs](../../../infra/google-cloud/urgent-preprod-dispatch.mjs)
 - **Scenariusze automatyczne:** [tests/harborlight-urgent-preprod-dispatch.test.mjs](../../../tests/harborlight-urgent-preprod-dispatch.test.mjs)
+- **Kod dowodowy:** `11f6ff1e7f46bd1fabb7c55da137244cf2848b08`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41232065516.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/41232457485.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 ## Relacje
@@ -47,6 +50,7 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 ## Uwagi
 
 - Implementacja i lokalne kontrole są odrębne od uruchomienia bridge, publikacji tagu i faktycznej promocji PRE-PROD; wymagane osobne dowody.
+- Bridge 41232445801 SUCCESS automatycznie uruchomił istniejący deploy41232457485 z właściwym SHA. Deploy nie przeszedł późniejszej weryfikacji manifestu; sukces bridge nie jest sukcesem GCP.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

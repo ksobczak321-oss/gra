@@ -10,8 +10,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `verified_local` |
-| CI | `awaiting_current_release` |
-| PRE-PROD | `not_deployed` |
+| CI | `passed_source_11f6ff1` |
+| PRE-PROD | `verification_failed_after_hosting_publication` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -38,6 +38,9 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 - **Dokumenty:** [docs/FRONTEND-V23-1-REQUIREMENTS.md](../../FRONTEND-V23-1-REQUIREMENTS.md)
 - **Kod:** [harborlight-v1-onboarding-ui.js](../../../harborlight-v1-onboarding-ui.js), [harborlight-v1-play.js](../../../harborlight-v1-play.js)
 - **Scenariusze automatyczne:** [tests/harborlight-onboarding-v20-smoke.py](../../../tests/harborlight-onboarding-v20-smoke.py)
+- **Kod dowodowy:** `11f6ff1e7f46bd1fabb7c55da137244cf2848b08`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41232065516.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/41232457485.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
@@ -55,6 +58,7 @@ Powiązane przypadki do ręcznego przeklikania:
 - Pilny zakres DEV → własne CI → PRE-PROD. Testy i rzeczywista promocja wymagają odrębnego potwierdzenia; nie resetujemy kont.
 - Użytkownik zlecił tag pilne i bezpośrednią promocję PRE-PROD po sukcesie DEV/CI. Weryfikacja i rzeczywista promocja są osobnymi stanami.
 - Lokalnie: 739 testów Node PASS (w tym 9 bridge), 13 scenariuszy onboarding Chromium PASS, Settings PL/EN komputer/telefon PASS, 12 testów pakowania i 18 importera PASS. Przerwany zapis zachowuje spójny język i draft, odzyskanie wykonuje jeden zapis bez resetu.
+- Pierwsza promocja 41232457485, próba1, opublikowała Hosting, ale odrzuciła manifest jako niezgodny z oczekiwanym pakietem. Brak pełnego odbioru i artefaktów; możliwy częściowo opublikowany frontend. Nie resetowano danych.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

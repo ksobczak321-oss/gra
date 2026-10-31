@@ -35,4 +35,10 @@ Odnotowano bez dalszego opracowania:
 - [0930](tracking/changes/HL-CHG-0930.md): pudełko, opakowanie, instrukcja i QR; bez generowania teraz plików lub zgadywania adresów.
 - [0931](tracking/changes/HL-CHG-0931.md): obok czatu sojuszu osobne prywatne rozmowy jeden na jeden.
 
-Rejestr obejmuje **250 zmian**; liczba ręcznych przypadków pozostaje **46**, z wynikami NOT RUN. Przygotowanie dokumentów nie jest realizacją druku, czatu, ligi, bonusów lub wdrożenia.
+Rejestr obejmuje **251 zmian**; liczba ręcznych przypadków pozostaje **46**, z wynikami NOT RUN. Przygotowanie dokumentów nie jest realizacją druku, czatu, ligi, bonusów lub wdrożenia.
+
+## Korekta odbioru po pierwszej nieudanej promocji
+
+CI/Pages dla `11f6ff1e7f46bd1fabb7c55da137244cf2848b08` i bridge przeszły, lecz deploy `41232457485` zakończył się po publikacji Hostingu na niezgodnym manifeście. Log nie ujawnił, czy różnił się commit, schemat czy digest. Nie uznano tej próby za pełny odbiór, a propagacja pozostaje hipotezą.
+
+Nowy `verify-hosted-release.mjs` najpierw sprawdza lokalny manifest i expected hash. Następnie do 12 razy, z budżetem 85 sekund, pobiera manifest z no-cache i unikalnym parametrem. Sukces nadal wymaga schematu 1, właściwego SHA i SHA256 całych bajtów. Dotyczy to również odpowiedzi HTTP200; niezgodna treść nie jest przyjmowana. Bezpieczna publiczna adnotacja pokazuje klasyfikację i prawidłowe identyfikatory/hashes, bez raw body. Osiem scenariuszy helpera i pełny Node747PASS; publiczne bajty gry są identyczne z poprzednim odbiorem przeglądarkowym. Nowy commit otrzymuje własne CI przed ponowną promocją. Ta korekta dotyczy wyłącznie PRE-PROD, bez zmian PROD lub danych.
