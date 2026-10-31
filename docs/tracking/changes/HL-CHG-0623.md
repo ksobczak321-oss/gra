@@ -9,9 +9,9 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `verified_local` |
-| CI | `passed_source_11f6ff1` |
-| PRE-PROD | `dispatch_completed_deploy_failed` |
+| DEV | `verified` |
+| CI | `passed_source_3be1f9d` |
+| PRE-PROD | `dispatch_and_deploy_success` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -36,9 +36,9 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 - **Dokumenty:** [docs/FRONTEND-V23-1-REQUIREMENTS.md](../../FRONTEND-V23-1-REQUIREMENTS.md), [docs/RELEASE-PROCESS.md](../../RELEASE-PROCESS.md)
 - **Kod:** [.github/workflows/promote-urgent-preprod.yml](../../../.github/workflows/promote-urgent-preprod.yml), [infra/google-cloud/urgent-preprod-dispatch.mjs](../../../infra/google-cloud/urgent-preprod-dispatch.mjs)
 - **Scenariusze automatyczne:** [tests/harborlight-urgent-preprod-dispatch.test.mjs](../../../tests/harborlight-urgent-preprod-dispatch.test.mjs)
-- **Kod dowodowy:** `11f6ff1e7f46bd1fabb7c55da137244cf2848b08`.
-- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41232065516.
-- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/41232457485.
+- **Kod dowodowy:** `3be1f9d2094f1432acacbb782eed1665fd00e6e1`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41233382228.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/41233737873.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 ## Relacje
@@ -51,6 +51,7 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 
 - Implementacja i lokalne kontrole są odrębne od uruchomienia bridge, publikacji tagu i faktycznej promocji PRE-PROD; wymagane osobne dowody.
 - Bridge 41232445801 SUCCESS automatycznie uruchomił istniejący deploy41232457485 z właściwym SHA. Deploy nie przeszedł późniejszej weryfikacji manifestu; sukces bridge nie jest sukcesem GCP.
+- Końcowe CI41233382228, Pages41233382382, bridge41233723831 i PRE-PROD41233737873/próba1 mają SUCCESS dla 3be1f9d2094f1432acacbb782eed1665fd00e6e1. Brak resetu kont. Tag Git urgent-0.9.1.2-20261031 opublikowany; wcześniejsza nieudana próba pozostaje historią.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

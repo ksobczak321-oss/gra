@@ -9,9 +9,9 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `verified_local` |
-| CI | `awaiting_current_release` |
-| PRE-PROD | `not_deployed` |
+| DEV | `verified` |
+| CI | `passed_source_3be1f9d` |
+| PRE-PROD | `code_deployed_0_9_1_2` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -38,6 +38,9 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 - **Dokumenty:** [docs/FRONTEND-V23-1-REQUIREMENTS.md](../../FRONTEND-V23-1-REQUIREMENTS.md)
 - **Kod:** [infra/google-cloud/verify-hosted-release.mjs](../../../infra/google-cloud/verify-hosted-release.mjs), [.github/workflows/google-cloud-dev.yml](../../../.github/workflows/google-cloud-dev.yml)
 - **Scenariusze automatyczne:** [tests/harborlight-hosted-release-check.test.mjs](../../../tests/harborlight-hosted-release-check.test.mjs)
+- **Kod dowodowy:** `3be1f9d2094f1432acacbb782eed1665fd00e6e1`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41233382228.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/41233737873.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 ## Relacje
@@ -50,6 +53,7 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 
 - Odpowiedź użytkownika potwierdza mismatch manifestu w Node, ale bez expected/observed nie rozstrzyga propagacji CDN. Przyczyna nie jest przedstawiana jako pewna.
 - Lokalnie pełny Node747PASS, końcowy verifier8PASS. Limit12prób/85s, no-cache i cachebuster; surowa odpowiedź ani niezaufany tekst nie są publikowane. Bajty aplikacji nie zmieniły się względem przeglądarkowo sprawdzonej 0.9.1.2.
+- Końcowe CI41233382228, Pages41233382382, bridge41233723831 i PRE-PROD41233737873/próba1 mają SUCCESS dla 3be1f9d2094f1432acacbb782eed1665fd00e6e1. Brak resetu kont. Tag Git urgent-0.9.1.2-20261031 opublikowany; wcześniejsza nieudana próba pozostaje historią.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

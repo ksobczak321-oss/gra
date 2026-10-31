@@ -42,3 +42,7 @@ Rejestr obejmuje **251 zmian**; liczba ręcznych przypadków pozostaje **46**, z
 CI/Pages dla `11f6ff1e7f46bd1fabb7c55da137244cf2848b08` i bridge przeszły, lecz deploy `41232457485` zakończył się po publikacji Hostingu na niezgodnym manifeście. Log nie ujawnił, czy różnił się commit, schemat czy digest. Nie uznano tej próby za pełny odbiór, a propagacja pozostaje hipotezą.
 
 Nowy `verify-hosted-release.mjs` najpierw sprawdza lokalny manifest i expected hash. Następnie do 12 razy, z budżetem 85 sekund, pobiera manifest z no-cache i unikalnym parametrem. Sukces nadal wymaga schematu 1, właściwego SHA i SHA256 całych bajtów. Dotyczy to również odpowiedzi HTTP200; niezgodna treść nie jest przyjmowana. Bezpieczna publiczna adnotacja pokazuje klasyfikację i prawidłowe identyfikatory/hashes, bez raw body. Osiem scenariuszy helpera i pełny Node747PASS; publiczne bajty gry są identyczne z poprzednim odbiorem przeglądarkowym. Nowy commit otrzymuje własne CI przed ponowną promocją. Ta korekta dotyczy wyłącznie PRE-PROD, bez zmian PROD lub danych.
+
+## Wynik końcowy
+
+Źródło `3be1f9d2094f1432acacbb782eed1665fd00e6e1`: CI41233382228, Pages41233382382, bridge41233723831 i PRE-PROD41233737873/próba1 SUCCESS; oba artefakty v2 opublikowane. Tag `urgent-0.9.1.2-20261031` opublikowany. Historia pierwszego nieudanego wdrożenia pozostaje powyżej; nie resetowano kont, wersja0.9.1.2 działa na PRE-PROD. Szczegółowe dowody: [stan środowisk](ENVIRONMENT-STATUS.md).

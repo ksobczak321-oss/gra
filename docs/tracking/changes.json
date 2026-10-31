@@ -1583,9 +1583,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_local",
-        "ci": "passed_source_11f6ff1",
-        "preprod": "verification_failed_after_hosting_publication",
+        "dev": "verified",
+        "ci": "passed_source_3be1f9d",
+        "preprod": "code_deployed_0_9_1_2",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -1613,16 +1613,17 @@
         "automated_tests": [
           "tests/harborlight-onboarding-v20-smoke.py"
         ],
-        "source_sha": "11f6ff1e7f46bd1fabb7c55da137244cf2848b08",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41232065516",
-        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41232457485",
+        "source_sha": "3be1f9d2094f1432acacbb782eed1665fd00e6e1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41233382228",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41233737873",
         "manual_execution": "NOT_RUN"
       },
       "notes": [
         "Pilny zakres DEV → własne CI → PRE-PROD. Testy i rzeczywista promocja wymagają odrębnego potwierdzenia; nie resetujemy kont.",
         "Użytkownik zlecił tag pilne i bezpośrednią promocję PRE-PROD po sukcesie DEV/CI. Weryfikacja i rzeczywista promocja są osobnymi stanami.",
         "Lokalnie: 739 testów Node PASS (w tym 9 bridge), 13 scenariuszy onboarding Chromium PASS, Settings PL/EN komputer/telefon PASS, 12 testów pakowania i 18 importera PASS. Przerwany zapis zachowuje spójny język i draft, odzyskanie wykonuje jeden zapis bez resetu.",
-        "Pierwsza promocja 41232457485, próba1, opublikowała Hosting, ale odrzuciła manifest jako niezgodny z oczekiwanym pakietem. Brak pełnego odbioru i artefaktów; możliwy częściowo opublikowany frontend. Nie resetowano danych."
+        "Pierwsza promocja 41232457485, próba1, opublikowała Hosting, ale odrzuciła manifest jako niezgodny z oczekiwanym pakietem. Brak pełnego odbioru i artefaktów; możliwy częściowo opublikowany frontend. Nie resetowano danych.",
+        "Końcowe CI41233382228, Pages41233382382, bridge41233723831 i PRE-PROD41233737873/próba1 mają SUCCESS dla 3be1f9d2094f1432acacbb782eed1665fd00e6e1. Brak resetu kont. Tag Git urgent-0.9.1.2-20261031 opublikowany; wcześniejsza nieudana próba pozostaje historią."
       ],
       "tags": [
         "pilne"
@@ -9132,9 +9133,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_local",
-        "ci": "passed_source_11f6ff1",
-        "preprod": "dispatch_completed_deploy_failed",
+        "dev": "verified",
+        "ci": "passed_source_3be1f9d",
+        "preprod": "dispatch_and_deploy_success",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -9162,14 +9163,15 @@
         "automated_tests": [
           "tests/harborlight-urgent-preprod-dispatch.test.mjs"
         ],
-        "source_sha": "11f6ff1e7f46bd1fabb7c55da137244cf2848b08",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41232065516",
-        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41232457485",
+        "source_sha": "3be1f9d2094f1432acacbb782eed1665fd00e6e1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41233382228",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41233737873",
         "manual_execution": "NOT_RUN"
       },
       "notes": [
         "Implementacja i lokalne kontrole są odrębne od uruchomienia bridge, publikacji tagu i faktycznej promocji PRE-PROD; wymagane osobne dowody.",
-        "Bridge 41232445801 SUCCESS automatycznie uruchomił istniejący deploy41232457485 z właściwym SHA. Deploy nie przeszedł późniejszej weryfikacji manifestu; sukces bridge nie jest sukcesem GCP."
+        "Bridge 41232445801 SUCCESS automatycznie uruchomił istniejący deploy41232457485 z właściwym SHA. Deploy nie przeszedł późniejszej weryfikacji manifestu; sukces bridge nie jest sukcesem GCP.",
+        "Końcowe CI41233382228, Pages41233382382, bridge41233723831 i PRE-PROD41233737873/próba1 mają SUCCESS dla 3be1f9d2094f1432acacbb782eed1665fd00e6e1. Brak resetu kont. Tag Git urgent-0.9.1.2-20261031 opublikowany; wcześniejsza nieudana próba pozostaje historią."
       ]
     },
     {
@@ -9187,9 +9189,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_local",
-        "ci": "awaiting_current_release",
-        "preprod": "not_deployed",
+        "dev": "verified",
+        "ci": "passed_source_3be1f9d",
+        "preprod": "code_deployed_0_9_1_2",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -9217,14 +9219,15 @@
         "automated_tests": [
           "tests/harborlight-hosted-release-check.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
-        "preprod_run_url": null,
+        "source_sha": "3be1f9d2094f1432acacbb782eed1665fd00e6e1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41233382228",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41233737873",
         "manual_execution": "NOT_RUN"
       },
       "notes": [
         "Odpowiedź użytkownika potwierdza mismatch manifestu w Node, ale bez expected/observed nie rozstrzyga propagacji CDN. Przyczyna nie jest przedstawiana jako pewna.",
-        "Lokalnie pełny Node747PASS, końcowy verifier8PASS. Limit12prób/85s, no-cache i cachebuster; surowa odpowiedź ani niezaufany tekst nie są publikowane. Bajty aplikacji nie zmieniły się względem przeglądarkowo sprawdzonej 0.9.1.2."
+        "Lokalnie pełny Node747PASS, końcowy verifier8PASS. Limit12prób/85s, no-cache i cachebuster; surowa odpowiedź ani niezaufany tekst nie są publikowane. Bajty aplikacji nie zmieniły się względem przeglądarkowo sprawdzonej 0.9.1.2.",
+        "Końcowe CI41233382228, Pages41233382382, bridge41233723831 i PRE-PROD41233737873/próba1 mają SUCCESS dla 3be1f9d2094f1432acacbb782eed1665fd00e6e1. Brak resetu kont. Tag Git urgent-0.9.1.2-20261031 opublikowany; wcześniejsza nieudana próba pozostaje historią."
       ],
       "tags": [
         "pilne"
@@ -9765,8 +9768,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_documentation",
-        "ci": "awaiting_current_release",
+        "dev": "verified",
+        "ci": "passed_source_3be1f9d",
         "preprod": "not_applicable",
         "prod": "not_applicable",
         "decision": "accepted"
@@ -9791,13 +9794,14 @@
           "scripts/build_change_register.py"
         ],
         "automated_tests": [],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "3be1f9d2094f1432acacbb782eed1665fd00e6e1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41233382228",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
       "notes": [
-        "Implementacja i lokalne kontrole są odrębne od uruchomienia bridge, publikacji tagu i faktycznej promocji PRE-PROD; wymagane osobne dowody."
+        "Implementacja i lokalne kontrole są odrębne od uruchomienia bridge, publikacji tagu i faktycznej promocji PRE-PROD; wymagane osobne dowody.",
+        "Końcowe CI41233382228, Pages41233382382, bridge41233723831 i PRE-PROD41233737873/próba1 mają SUCCESS dla 3be1f9d2094f1432acacbb782eed1665fd00e6e1. Brak resetu kont. Tag Git urgent-0.9.1.2-20261031 opublikowany; wcześniejsza nieudana próba pozostaje historią."
       ]
     },
     {

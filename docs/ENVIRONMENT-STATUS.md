@@ -2,7 +2,20 @@
 
 Aktualizacja: **31 października 2026**. Ten dokument jest głównym rejestrem tego, co rzeczywiście znajduje się na DEV, PRE-PROD i PROD. Historia czynności i wyników pozostaje w [dzienniku](IMPLEMENTATION-LOG.md), a warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-## Pilny zakres DEV — wersja 0.9.1.2 (v23.1)
+## Aktualne wydanie DEV i PRE-PROD — 0.9.1.2, pilne
+
+**Opublikowane i odebrane:** źródło **`3be1f9d2094f1432acacbb782eed1665fd00e6e1`**, [CI 41233382228 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233382228), [Pages 41233382382 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233382382), [bridge 41233723831 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233723831), [PRE-PROD 41233737873, próba 1 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233737873), czas **2 min 10 s**. [Gra PRE-PROD](https://harborlight-dev.web.app). Tag priorytetu w rejestrze: **pilne**; nieprzesuwany [tag Git urgent-0.9.1.2-20261031](https://github.com/ksobczak321-oss/gra/tree/urgent-0.9.1.2-20261031) jest opublikowany i wskazuje ten sam kod.
+
+Poprawka dodaje Polski/English w opisie i przy nazwie wyspy, zachowuje roboczą nazwę i etap, a język obowiązuje w dalszym interfejsie. Dane graczy, Authentication i postęp nie były resetowane. Pozostałe projekty pozostają odłożone; PROD bez promocji. Końcowa kontrola manifestu, publicznych plików oraz wymagane testy rzeczywistego hostingu przeszły w workflow. Wartości flagi API i wewnętrznego digestu backendu nie odczytano niezależnie z ZIP.
+
+| Artefakt próby 1 | Publiczny SHA-256 ZIP GitHub |
+|---|---|
+| `harborlight-dev-frontend-41233737873-1` | `0cb747023ad430c647c045913ef2712d8c475f9344fe3e14a4ddee3b713bde56` |
+| `harborlight-dev-release-41233737873-1` | `3da4a3be0466a81597eec76c130c69b2d0bcffbc3e6dd377fa2f33aac1aadae1` |
+
+Lokalny deterministyczny pakiet tego SHA: 49 plików z manifestem, 10 841 951 bajtów; archiwum SHA-256 `8fba6ec781e959d855273b333e1922ce3db113b058a51f2c8c92c3071435fd1f`, manifest `31185615e64a8dca97440799125a1e13bd160cf3dbc609991e0e05e9c3c3ce0e`. Publiczne bajty są identyczne z przeglądarkowo sprawdzoną poprawką: 13 scenariuszy wprowadzenia i Settings PL/EN desktop/mobile PASS. Pełny Node747PASS, pakowanie12PASS, importer18PASS; niezależny ręczny odbiór46przypadków nadal NOT RUN. Pierwsza próba11f6ff1/41232457485 była nieudana; nie uznajemy jej za odbiór ani nie przesuwamy jej statusu na sukces. Przyczyny ówczesnej niezgodności nie rozstrzygnięto; nowa kontrola zachowuje pełną zgodność i bounded retries.
+
+## Historia przygotowania pilnej poprawki 0.9.1.2
 
 **Pierwszy przebieg:** źródło `11f6ff1e7f46bd1fabb7c55da137244cf2848b08`, [CI 41232065516 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41232065516), [Pages 41232065503 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41232065503), [bridge 41232445801 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41232445801). Automatyczna [promocja 41232457485, próba 1 — FAILURE](https://github.com/ksobczak321-oss/gra/actions/runs/41232457485) zatrzymała się po publikacji Hostingu na kontroli dokładnego manifestu; nie utworzono pary artefaktów. Ostatni pełny odbiór pozostaje v22.1, ale aktualny Hosting może już zawierać częściowo opublikowaną 0.9.1.2. Nie potwierdzamy starej serwowanej wersji ani sukcesu nowej. Brak resetu kont. Przygotowywana jest ścisła kontrola gotowości manifestu; nie traktujemy hipotezy propagacji jako ustalonej przyczyny.
 
@@ -32,15 +45,15 @@ Uzupełnienie po uwagach ma nazwę **v22.1** (cache `frontend-v22-1`), pełny SH
 
 | Miejsce | Kod i dowód | Co pozostaje do wykonania lub potwierdzenia |
 |---|---|---|
-| **DEV — przestrzeń robocza** | **0.9.1.2 / pilny zakres v23.1**: wybór PL/EN przy nazwie wyspy, tag rejestru `pilne`. Lokalnie 739 Node + 12 pakowania + 18 importera PASS, 13 przypadków onboarding i zestaw Settings Chromium PASS. | Własny commit, CI/Pages i promocja PRE-PROD wymagają potwierdzenia; wcześniejsze wyniki 0.9.1.1 nie zastępują odbioru nowego kodu. |
+| **DEV — przestrzeń robocza** | **0.9.1.2**, źródło `3be1f9d2094f1432acacbb782eed1665fd00e6e1`, lokalne kontrole i własne CI/Pages SUCCESS. | Tag `pilne`; kod odebrany także na PRE-PROD. Projekty społeczne/planszowe odłożone. |
 | **GitHub / CI — v22.1** | SHA `092e75226fbb14cab09826f313e11d10891966d8`; [CI 41221965032 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41221965032). Adnotowany tag **`dev-v22.1-20261031`** opublikowany. | Odczyt: `git show --no-patch dev-v22.1-20261031`. Nowe zmiany aplikacji wymagają własnego SHA i CI. |
-| **GitHub Pages — podgląd DEV** | [Link roboczy 0.9.1.1](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v23); [Pages 41226626838 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41226626838) dla `82152651a3edd490866a9c2c5f8cc5c4a7104492`. | Bezpośredni odczyt Pages z tej sesji blokuje brama sieciowa HTTP 403. Nie potwierdzono tu niezależnego odbioru serwowanych plików. Podgląd działa w pamięci; nie jest kontem chmurowym ani zapisem PRE-PROD. |
-| **PRE-PROD — GCP `harborlight-dev`** | **v22.1**, SHA `092e75226fbb14cab09826f313e11d10891966d8`; [promocja 41222765705, próba 1 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705), czas 2 min 10 s. [Gra PRE-PROD](https://harborlight-dev.web.app). Para artefaktów v2 opublikowana; szczegóły niżej. | Nie odczytano jeszcze zawartości ZIP potwierdzenia wydania ani faktycznej wartości włączenia API kont. Bezpośredni odczyt hostingu blokuje brama HTTP 403. Osobny reset kont nadal niewykonany. |
+| **GitHub Pages — podgląd DEV** | [Podgląd 0.9.1.2](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v23-1); Pages41233382382 SUCCESS dla3be1f9d. | Podgląd w pamięci, odrębny od kont PRE-PROD; bezpośredni odczyt tej sesji ogranicza brama sieciowa. |
+| **PRE-PROD — GCP `harborlight-dev`** | **0.9.1.2 / `3be1f9d2094f1432acacbb782eed1665fd00e6e1`**, [41233737873 próba1 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233737873); 2m10s, oba artefakty opublikowane. | Konta nie były resetowane. ZIP potwierdzenia nie został odczytany niezależnie; nie wnioskuj o włączeniu API z samego sukcesu. |
 | **PROD — GCP `harborlight-prod`** | Projekt i docelowa domena `harborlight.pl` są wskazane przez właściciela. | Brak potwierdzonej publikacji gry, powiązania domeny, propagacji DNS i certyfikatu. Nie promujemy kodu bez przejścia PRE-PROD. |
 
 Lokalny odbiór v22.1: **730 testów gry/synchronizacji/promocji, 62 backendu i 123 przygotowania/pakowania/konfiguracji — razem 915 PASS**, ponadto **12 zestawów Chromium PASS**. Pakiet przeglądarkowy ma 48 plików; wszystkie publiczne bajty porównano ze źródłami po testach. Odbiór jest izolowany: bez rzeczywistych zapisów lub resetów Google.
 
-## Ostatnia potwierdzona promocja PRE-PROD v22.1
+## Historyczna promocja PRE-PROD v22.1
 
 Publiczny status [41222765705](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705) potwierdza **SUCCESS**, próbę **1** i źródłowy SHA `092e75226fbb14cab09826f313e11d10891966d8`; źródłowe [CI 41221965032](https://github.com/ksobczak321-oss/gra/actions/runs/41221965032) również ma SUCCESS. Opublikowano:
 

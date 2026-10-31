@@ -9,9 +9,9 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `verified_local` |
-| CI | `passed_source_11f6ff1` |
-| PRE-PROD | `verification_failed_after_hosting_publication` |
+| DEV | `verified` |
+| CI | `passed_source_3be1f9d` |
+| PRE-PROD | `code_deployed_0_9_1_2` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -38,9 +38,9 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 - **Dokumenty:** [docs/FRONTEND-V23-1-REQUIREMENTS.md](../../FRONTEND-V23-1-REQUIREMENTS.md)
 - **Kod:** [harborlight-v1-onboarding-ui.js](../../../harborlight-v1-onboarding-ui.js), [harborlight-v1-play.js](../../../harborlight-v1-play.js)
 - **Scenariusze automatyczne:** [tests/harborlight-onboarding-v20-smoke.py](../../../tests/harborlight-onboarding-v20-smoke.py)
-- **Kod dowodowy:** `11f6ff1e7f46bd1fabb7c55da137244cf2848b08`.
-- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41232065516.
-- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/41232457485.
+- **Kod dowodowy:** `3be1f9d2094f1432acacbb782eed1665fd00e6e1`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41233382228.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/41233737873.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
@@ -59,6 +59,7 @@ Powiązane przypadki do ręcznego przeklikania:
 - Użytkownik zlecił tag pilne i bezpośrednią promocję PRE-PROD po sukcesie DEV/CI. Weryfikacja i rzeczywista promocja są osobnymi stanami.
 - Lokalnie: 739 testów Node PASS (w tym 9 bridge), 13 scenariuszy onboarding Chromium PASS, Settings PL/EN komputer/telefon PASS, 12 testów pakowania i 18 importera PASS. Przerwany zapis zachowuje spójny język i draft, odzyskanie wykonuje jeden zapis bez resetu.
 - Pierwsza promocja 41232457485, próba1, opublikowała Hosting, ale odrzuciła manifest jako niezgodny z oczekiwanym pakietem. Brak pełnego odbioru i artefaktów; możliwy częściowo opublikowany frontend. Nie resetowano danych.
+- Końcowe CI41233382228, Pages41233382382, bridge41233723831 i PRE-PROD41233737873/próba1 mają SUCCESS dla 3be1f9d2094f1432acacbb782eed1665fd00e6e1. Brak resetu kont. Tag Git urgent-0.9.1.2-20261031 opublikowany; wcześniejsza nieudana próba pozostaje historią.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

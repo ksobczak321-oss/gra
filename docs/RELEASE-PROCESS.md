@@ -98,9 +98,13 @@ Kod API kont, limitów kodów i retencji wymaga właścicielskiej aktywacji: [RU
 
 OAuth Google/Facebook wymaga konfiguracji dostawcy i domen; prawdziwe Paynow/reklamy — usług operatora i zaufanych potwierdzeń. Symulacje dozwolone tylko poza PROD. Nie nadajemy szerokich ról ani nie zapisujemy sekretów w repozytorium w celu obejścia błędu. Retencja nie ma publicznego endpointu kasowania; narzędzie właściciela domyślnie działa w dry-run i wymaga osobnego jawnego włączenia mutacji.
 
-## 5. Faktycznie potwierdzone wydanie
+## 5. Bieżące i historyczne potwierdzenia
 
-Ostatnie potwierdzone wydanie **GCP PRE-PROD** to **v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`**. [CI 41221965032](https://github.com/ksobczak321-oss/gra/actions/runs/41221965032), [Pages 41221964974](https://github.com/ksobczak321-oss/gra/actions/runs/41221964974) i ręczna [promocja 41222765705, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705) mają SUCCESS. Promocja trwała 2 min 10 s; gra jest pod `https://harborlight-dev.web.app`. Adnotowany tag `dev-v22.1-20261031` potwierdza odrębny odbiór DEV.
+Bieżące PRE-PROD to **0.9.1.2 / `3be1f9d2094f1432acacbb782eed1665fd00e6e1`**: CI `41233382228`, Pages `41233382382`, bridge `41233723831` i promocja `41233737873`, próba 1 — **SUCCESS**. Tag `urgent-0.9.1.2-20261031` jest opublikowany. Gra: https://harborlight-dev.web.app. Oba artefakty v2, digests i granice odbioru podaje [rejestr środowisk](ENVIRONMENT-STATUS.md). Konta i postęp zachowane, PROD bez promocji. Pierwszy nieudany przebieg `41232457485` pozostaje historycznym FAILURE.
+
+### Historia v22.1
+
+Historyczne potwierdzone wydanie **GCP PRE-PROD** to **v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`**. [CI 41221965032](https://github.com/ksobczak321-oss/gra/actions/runs/41221965032), [Pages 41221964974](https://github.com/ksobczak321-oss/gra/actions/runs/41221964974) i ręczna [promocja 41222765705, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705) mają SUCCESS. Promocja trwała 2 min 10 s; gra jest pod `https://harborlight-dev.web.app`. Adnotowany tag `dev-v22.1-20261031` potwierdza odrębny odbiór DEV.
 
 Zachowano parę artefaktów v2 `harborlight-dev-frontend-41222765705-1` i `harborlight-dev-release-41222765705-1`. Publiczne hashe ZIP oraz granice odbioru są w [rejestrze](ENVIRONMENT-STATUS.md). Zawartość ZIP potwierdzenia wydania, digest backendu i faktyczna flaga API kont nie zostały tutaj odczytane. Sukces workflow potwierdza jego wymagane kontrole w trybie zgodnym z konfiguracją, lecz nie dowodzi nam, że API jest włączone. Narzędzia resetu i PROD muszą samodzielnie zweryfikować artefakty i rzeczywistą konfigurację.
 

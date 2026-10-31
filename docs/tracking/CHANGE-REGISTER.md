@@ -75,7 +75,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0028 — Usunięcie słowa Wyrusz z wejścia do ekspedycji](changes/HL-CHG-0028.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0029 — Usunięcie przycisku Latarni spod ekspedycji](changes/HL-CHG-0029.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0030 — Wycofana uwaga o Porcie ze starego zrzutu ekranu](changes/HL-CHG-0030.md) | Decision | `withdrawn` | `not_applicable` | `not_applicable` |
-| [HL-CHG-0031 — Wybór języka PL/EN przy pierwszym wprowadzeniu i nazwie wyspy](changes/HL-CHG-0031.md) | Story | `accepted` | `verified_local` | `verification_failed_after_hosting_publication` |
+| [HL-CHG-0031 — Wybór języka PL/EN przy pierwszym wprowadzeniu i nazwie wyspy](changes/HL-CHG-0031.md) | Story | `accepted` | `verified` | `code_deployed_0_9_1_2` |
 
 <a id="hl-epic-tut"></a>
 
@@ -272,8 +272,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0620 — Aktywacja API kont i rynku wymaga osobnego potwierdzenia konfiguracji](changes/HL-CHG-0620.md) | Ops | `accepted` | `verified_with_isolated_services` | `activation_unconfirmed` |
 | [HL-CHG-0621 — Pomiar przepustowości i polityka skali dla kolejnych 100 graczy jednocześnie](changes/HL-CHG-0621.md) | Ops | `open` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0622 — Cloud Run: minimum 0, maksimum 2 instancje i współbieżność 20](changes/HL-CHG-0622.md) | Ops | `accepted` | `verified` | `code_deployed_v22_1` |
-| [HL-CHG-0623 — Automatyczna promocja wyłącznie autoryzowanej pilnej wersji 0.9.1.2 po CI](changes/HL-CHG-0623.md) | Ops | `accepted` | `verified_local` | `dispatch_completed_deploy_failed` |
-| [HL-CHG-0624 — Ścisła kontrola gotowości manifestu po publikacji Hostingu](changes/HL-CHG-0624.md) | Ops | `accepted` | `verified_local` | `not_deployed` |
+| [HL-CHG-0623 — Automatyczna promocja wyłącznie autoryzowanej pilnej wersji 0.9.1.2 po CI](changes/HL-CHG-0623.md) | Ops | `accepted` | `verified` | `dispatch_and_deploy_success` |
+| [HL-CHG-0624 — Ścisła kontrola gotowości manifestu po publikacji Hostingu](changes/HL-CHG-0624.md) | Ops | `accepted` | `verified` | `code_deployed_0_9_1_2` |
 
 <a id="hl-epic-ops"></a>
 
@@ -293,7 +293,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0710 — Uzupełnienie prawdziwych danych operatora przed uruchomieniem sprzedaży](changes/HL-CHG-0710.md) | Ops | `deferred` | `not_applicable` | `not_active` |
 | [HL-CHG-0711 — Przegląd prawny Regulaminu i Polityki prywatności](changes/HL-CHG-0711.md) | Ops | `deferred` | `not_applicable` | `not_active` |
 | [HL-CHG-0712 — Porównanie prowizji operatorów i przykładów płatności 1–500 zł](changes/HL-CHG-0712.md) | Story | `answered_or_documented` | `documentation_available` | `not_applicable` |
-| [HL-CHG-0713 — Tag pilne w rejestrze oraz oznaczanie pilnych wydań Git](changes/HL-CHG-0713.md) | Story | `accepted` | `verified_documentation` | `not_applicable` |
+| [HL-CHG-0713 — Tag pilne w rejestrze oraz oznaczanie pilnych wydań Git](changes/HL-CHG-0713.md) | Story | `accepted` | `verified` | `not_applicable` |
 
 <a id="hl-epic-arc"></a>
 

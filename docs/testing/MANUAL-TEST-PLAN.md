@@ -12,7 +12,7 @@ Plan utworzony 31 października 2026. **46 osobnych przypadków; wszystkie wynik
 
 ## Środowiska i dane
 
-Ostatni potwierdzony PRE-PROD to **v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`**, [promocja 41222765705](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705). To nie wykonanie poniższych przypadków. Aktualny [rejestr środowisk](../ENVIRONMENT-STATUS.md) ma pierwszeństwo przed tą migawką. Włączenie API kont/rynku nie jest tutaj potwierdzone; scenariusz wymagający tej usługi jest BLOCKED bez rzeczywistego potwierdzenia.
+Historyczny punkt odniesienia definicji przypadków to **v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`**, [promocja 41222765705](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705). To nie wykonanie poniższych przypadków. Aktualny [rejestr środowisk](../ENVIRONMENT-STATUS.md) ma pierwszeństwo przed tą migawką. Włączenie API kont/rynku nie jest tutaj potwierdzone; scenariusz wymagający tej usługi jest BLOCKED bez rzeczywistego potwierdzenia.
 
 Widoczna wersja **0.9.1.1** jest nowym zakresem DEV w tym zadaniu; nie przypisujemy jej wcześniejszemu PRE-PROD bez własnej promocji. Wersja interfejsu jest inna niż `state.version`, rewizja zapisu i generacja wyspy.
 

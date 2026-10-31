@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `verified_documentation` |
-| CI | `awaiting_current_release` |
+| DEV | `verified` |
+| CI | `passed_source_3be1f9d` |
 | PRE-PROD | `not_applicable` |
 | PROD | `not_applicable` |
 | Decyzja | `accepted` |
@@ -35,6 +35,8 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 - **Dokumenty:** [docs/FRONTEND-V23-1-REQUIREMENTS.md](../../FRONTEND-V23-1-REQUIREMENTS.md), [docs/RELEASE-PROCESS.md](../../RELEASE-PROCESS.md)
 - **Kod:** [scripts/build_change_register.py](../../../scripts/build_change_register.py)
 - **Scenariusze automatyczne:** nie przypisano.
+- **Kod dowodowy:** `3be1f9d2094f1432acacbb782eed1665fd00e6e1`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41233382228.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 ## Relacje
@@ -46,6 +48,7 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 ## Uwagi
 
 - Implementacja i lokalne kontrole są odrębne od uruchomienia bridge, publikacji tagu i faktycznej promocji PRE-PROD; wymagane osobne dowody.
+- Końcowe CI41233382228, Pages41233382382, bridge41233723831 i PRE-PROD41233737873/próba1 mają SUCCESS dla 3be1f9d2094f1432acacbb782eed1665fd00e6e1. Brak resetu kont. Tag Git urgent-0.9.1.2-20261031 opublikowany; wcześniejsza nieudana próba pozostaje historią.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 
