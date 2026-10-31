@@ -1,6 +1,6 @@
 # Polityka prywatności HARBORLIGHT
 
-Wersja: 2026-10-31-draft3. Data projektu: 31 października 2026 r.
+Wersja: 2026-10-31-draft4. Data projektu: 31 października 2026 r.
 
 DOKUMENT ROBOCZY DO PRZEGLĄDU WŁAŚCICIELA. Pola „Lorem ipsum” są demonstracyjne. Przed publicznym uruchomieniem wymagają rzeczywistych danych administratora, działającego kontaktu i sprawdzenia konfiguracji dostawców oraz okresów przechowywania.
 

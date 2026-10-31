@@ -451,6 +451,7 @@ def lost_finish_acknowledgement(browser):
     # Recovery must start the standard tutorial after the cloud coordinator
     # has become writable, so its first real worker assignment still works.
     page.locator('[data-tutorial-visit="rules-read"]').click()
+    page.locator('#hit-world-farm').click()
     page.locator('[data-worker-building="farm"][data-worker-delta="1"]').click()
     expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
     assert cloud.cloud_state(UID)['buildings']['farm']['workers'] == 1

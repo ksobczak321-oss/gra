@@ -1,8 +1,8 @@
 // These versions identify the exact draft documents shown before registration.
 // Necessary service processing uses its own legal basis, not a forced GDPR consent.
 export const LEGAL_DOCUMENTS = Object.freeze({
-  terms: Object.freeze({ version: '2026-10-31-draft3', href: 'harborlight-terms.html', title: 'Regulamin gry' }),
-  privacy: Object.freeze({ version: '2026-10-31-draft3', href: 'harborlight-privacy.html', title: 'Polityka prywatności' }),
+  terms: Object.freeze({ version: '2026-10-31-draft4', href: 'harborlight-terms.html', title: 'Regulamin gry' }),
+  privacy: Object.freeze({ version: '2026-10-31-draft4', href: 'harborlight-privacy.html', title: 'Polityka prywatności' }),
   draft: true
 });
 export function validLegalAcceptance(value) {

@@ -29,9 +29,9 @@ def model(through=0, extra=False):
                                     text=True, capture_output=True, check=True).stdout)
 
 
-def enter(browser, value):
-    context = browser.new_context(viewport={'width': 1366, 'height': 768}, reduced_motion='reduce')
-    context.add_init_script('localStorage.setItem("harborlight-language","pl");window.__HARBORLIGHT_DEV_FIXTURE__=' + json.dumps(value, ensure_ascii=False))
+def enter(browser, value, *, language='pl', mobile=False, motion='reduce'):
+    context = browser.new_context(viewport={'width': 390 if mobile else 1366, 'height': 844 if mobile else 768}, reduced_motion=motion, is_mobile=mobile, has_touch=mobile)
+    context.add_init_script('localStorage.setItem("harborlight-language",' + json.dumps(language) + ');window.__HARBORLIGHT_DEV_FIXTURE__=' + json.dumps(value, ensure_ascii=False))
     page = context.new_page()
     page.on('pageerror', lambda error: qa.ERRORS.append(str(error)))
     now = datetime.fromtimestamp(value['worldTimeMs'] / 1000, tz=timezone.utc)
@@ -50,6 +50,8 @@ def immediate_first_rewards(browser):
     for index, (lesson, building) in enumerate([('rules-read', 'farm'), ('island-map', 'warehouse'), ('first-job', 'lumber'), ('food-check', 'windmill')]):
         if index:
             page.locator('[data-tutorial-go="%s"]' % lesson).click()
+        expect(page.locator('#island-dialog')).not_to_be_visible()
+        page.locator('#hit-world-' + building).click()
         before = qa.state(page)
         page.locator('[data-worker-building="%s"][data-worker-delta="1"]' % building).click()
         popup = page.locator('[data-tutorial-achievement="%s"]' % lesson)

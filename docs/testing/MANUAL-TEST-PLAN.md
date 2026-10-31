@@ -1,6 +1,6 @@
 # HARBORLIGHT — ręczny plan testów i osobne przypadki
 
-**Zacznij od [listy do odhaczania](START-HERE.md) albo [interaktywnego raportu QA](qa-checklist.html).** Zestaw obejmuje50 osobnych przypadków. Wszystkie wyniki ręczne pozostają **NOT RUN**; dokument jest planem odbioru, nie potwierdzeniem wykonania. Można go rozpocząć od poniedziałku2 listopada2026 po wskazaniu testowanego buildu i przygotowaniu danych.
+**Zacznij od [listy do odhaczania](START-HERE.md) albo [interaktywnego raportu QA](qa-checklist.html).** Zestaw obejmuje53 osobne przypadki. Wszystkie wyniki ręczne pozostają **NOT RUN**; dokument jest planem odbioru, nie potwierdzeniem wykonania. Można go rozpocząć od poniedziałku2 listopada2026 po wskazaniu testowanego buildu i przygotowaniu danych.
 
 ## Jak odhaczać pojedyncze przypadki
 
@@ -32,7 +32,7 @@ Nie używaj `admin1`–`admin3` jako danych jednorazowych; nie resetuj i nie pod
 ## Proponowana kolejność odbioru
 
 1. Dostęp i integralność: TC19–23, TC29, TC31.
-2. Nowa gra i czytelność: TC01–05, TC30, TC43–45 oraz nowe powroty w PomocyTC47.
+2. Nowa gra i czytelność: TC01–05, TC30, TC43–45 oraz powroty w PomocyTC47, prowadzenie po mapieTC51 i przegląd polszczyznyTC52–53.
 3. Gospodarka i mieszkańcy: TC06–18, TC24–25.
 4. Archipelag i handel: migracjaTC26, transport towarówTC27, transakcjeTC28, nowe regułyTC33–37.
 5. Sojusze i liga: TC46, prywatne wiadomościTC48, ligaTC38 i sloty/dwa zadaniaTC49.
@@ -95,6 +95,9 @@ TC26 jest obecnie testem zachowania wcześniejszych dwóch światów podczas mig
 | [HL-TC-0048 — Prywatny czat1:1 nie ujawnia rozmów ani danych kont osobom trzecim](manual/HL-TC-0048.md) | Prywatne wiadomości | P0 | READY | NOT RUN |
 | [HL-TC-0049 — Liga: dwa zadania dziennie wyłącznie w ogłoszonych slotach Warszawy](manual/HL-TC-0049.md) | Harmonogram i wyzwania ligi | P0 | READY | NOT RUN |
 | [HL-TC-0050 — Planszówka: komplet druku, czytelne kody i samodzielna sesja przy stole](manual/HL-TC-0050.md) | Planszówka do wydruku | P1 | READY | NOT RUN |
+| [HL-TC-0051 — Samouczek wskazuje budynek na mapie i czeka na rzeczywiste kliknięcie](manual/HL-TC-0051.md) | Samouczek i mapa | P1 | READY | NOT RUN |
+| [HL-TC-0052 — Polszczyzna wszystkich 25 lekcji jest naturalna i zgodna z klikanymi elementami](manual/HL-TC-0052.md) | Polskie teksty samouczka | P1 | READY | NOT RUN |
+| [HL-TC-0053 — Polska wersja całej gry: panele, błędy, akcje i powiadomienia](manual/HL-TC-0053.md) | Pełny przegląd polszczyzny | P1 | READY | NOT RUN |
 
 ## Raport i zgłoszenia
 

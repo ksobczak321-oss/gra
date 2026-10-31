@@ -272,3 +272,42 @@ test('save/load preserves bilingual world-event notifications and their event id
   assert.equal(savedNotice.titlePl, notice.titlePl);
   assert.equal(savedNotice.messagePl, notice.messagePl);
 });
+
+test('Polish wreck notifications decline actual coin rewards and keep the numeric receipt unchanged', () => {
+  const examples = new Map();
+  for (let index = 1; index <= 1000 && examples.size < 2; index++) {
+    const state = island(); state.buildings.townhall.level = 1;
+    const before = state.resources.coins;
+    dueGood(state, Math.imul(index, 0x9e3779b1) >>> 0 || 1); advance(state, 1);
+    const receipt = state.worldEvents.history[0];
+    if (receipt?.kind !== 'tax-refund' || ![21, 22].includes(receipt.details.coins)) continue;
+    const coins = receipt.details.coins;
+    assert.equal(state.resources.coins, before + coins);
+    assert.match(state.notifications[0].messagePl, coins === 22 ? /22 monety\./ : /21 monet\./);
+    assert.equal(state.notifications[0].message, `The wreck brought ${coins} coins.`);
+    examples.set(coins, true);
+  }
+  assert.equal(examples.size, 2, 'Both Polish grammatical forms must be exercised through real events');
+});
+
+test('Polish plague copy distinguishes one lost resident from a protected population', () => {
+  const state = island({ chapel: 3, population: 13 });
+  dueBad(state, seedFor('plague', 'negative')); advance(state, 1);
+  assert.equal(state.worldEvents.history[0].details.peopleLost, 1);
+  assert.match(state.notifications[0].messagePl, /1 mieszkańca\./);
+  assert.doesNotMatch(state.notifications[0].messagePl, /1 mieszkańców/);
+  assert.equal(state.population, 12); assert.equal(worldEventHappinessPenalty(state), 10);
+  const protectedState = island({ chapel: 3, population: 12 });
+  dueBad(protectedState, seedFor('plague', 'negative')); advance(protectedState, 1);
+  assert.equal(protectedState.population, 12);
+  assert.match(protectedState.notifications[0].messagePl, /Nikt nie zginął.*minimalna liczba mieszkańców jest chroniona/);
+  assert.equal(worldEventHappinessPenalty(protectedState), 10);
+});
+
+test('Polish fertilizer copy names the grain-producing farm and its actual modifier', () => {
+  const state = island(); dueGood(state, seedFor('fertilizer', 'positive')); advance(state, 1);
+  assert.equal(eventProductionMultiplier(state, 'farm'), 1.25);
+  assert.match(state.notifications[0].messagePl, /gospodarstwo.*25%.*zboża/);
+  assert.doesNotMatch(state.notifications[0].messagePl, /Farmy/);
+  assert.match(worldEventRows(state, 'pl')[0].description, /Produkcja zboża \+25%/);
+});

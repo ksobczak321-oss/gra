@@ -196,7 +196,7 @@ def run():
             site.offline = True
             page.locator('#password').fill('admin1')
             page.locator('#account-submit').click()
-            expect(page.locator('#account-status')).to_have_text('Nie udało się połączyć z logowaniem. Sprawdź połączenie i spróbuj ponownie.')
+            expect(page.locator('#account-status')).to_have_text('Nie udało się połączyć z usługą logowania. Sprawdź połączenie z internetem i spróbuj ponownie.')
             expect(page.locator('#account-fields')).to_be_enabled()
             expect(page.locator('#password')).to_have_value('')
             assert not errors and not site.unexpected

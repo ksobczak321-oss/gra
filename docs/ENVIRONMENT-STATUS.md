@@ -2,7 +2,11 @@
 
 Aktualizacja: **31 października 2026**. Ten dokument jest głównym rejestrem tego, co rzeczywiście znajduje się na DEV, PRE-PROD i PROD. Historia czynności i wyników pozostaje w [dzienniku](IMPLEMENTATION-LOG.md), a warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-## Aktualny DEV — 0.10.0.0 / v24, komplet PL
+## DEV w przygotowaniu — 0.10.1.0 / v25
+
+Zakres: prowadzenie wszystkich lekcji od budynku na mapie do rzeczywistej czynności, przegląd całej polskiej wersji gry, wspólne okno obu zadań ligowych 19:00–21:00 czasu Warszawy oraz zapis potwierdzonych parametrów wysp. [Wymagania v25](FRONTEND-V25-REQUIREMENTS.md), [zakres przeglądu języka](POLISH-REVIEW-v25.md). Wersja lokalna0.10.1.0, cache frontend-v25. Lokalny odbiór: **897 Node + 141 Python + 18 zestawów Chromium PASS**, w tym 112 rzeczywistych widoków PL na komputerze i telefonie, bez wykrytych angielskich elementów. Trzy generatory `--check` PASS. Rejestr: 261 zmian i 53 przypadki ręczne NOT RUN; importer 314 kart w dry-run. [Dowody lokalne](DEV-0.10.1.0-VALIDATION.md). Własny commit, CI i publikacja tego zakresu jeszcze niepotwierdzone. Poniższy odebrany v24 pozostaje ostatnim potwierdzonym podglądem. PRE-PROD0.9.1.2 i PROD bez zmian; bez resetu kont.
+
+## Ostatni odebrany DEV — 0.10.0.0 / v24, komplet PL
 
 **Końcowe źródło: `1b3de32869c8164ed8d0b85df7ea743ca76a3719`.** [CI41238818669 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41238818669),5min15s; [Pages41238818743 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41238818743),24s. Nieprzesuwany adnotowany tag `dev-0.10.0.0-pl-20261031` wiąże źródło i dowody. [Podgląd DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v24-2) działa w pamięci, odrębnie od kont GCP. [Dokładny odbiór i hashe](DEV-0.10.0.0-VALIDATION.md).
 
@@ -53,7 +57,7 @@ Lokalnie **730 testów gry/synchronizacji/promocji + 62 backendu + 141 Python = 
 
 Pakiet aplikacji dla `8215265`: **49 plików z manifestem, 10 838 477 bajtów**, SHA-256 archiwum `64be76270ffd19e7e6715f21cb06970fe5519fd54f1ce6e77104764b150489f4`, manifestu `89cfabb18cbdb831ad044c76c1b0c1a2b476ae65dffede1ff807db3d6777ec37`. Wszystkie 48 plików zawartości porównano bajtowo z pakietem sprawdzonym przez 12 zestawów Chromium. To lokalny dowód pakowania źródłowego wydania, nie artefakt promocji GCP. Dokładny końcowy SHA dokumentacji, jego CI/Pages i hashe własnego pakietu wiąże nieprzesuwany tag DEV; nie zastępuje on CI wymaganego przed przyszłą promocją.
 
-## Stan potwierdzony
+## Historyczny odbiór v22.1 i pilnej poprawki 0.9.1.2
 
 Uzupełnienie po uwagach ma nazwę **v22.1** (cache `frontend-v22-1`), pełny SHA **`092e75226fbb14cab09826f313e11d10891966d8`**. Adnotowany tag [dev-v22.1-20261031](https://github.com/ksobczak321-oss/gra/tree/dev-v22.1-20261031) został utworzony i opublikowany po sukcesie CI/Pages: wiąże commit, wyniki oraz hashe pakietu. Jest dowodem odbioru **DEV**, odrębnym od udanej promocji GCP opisanej poniżej. Odczyt tagu opisuje [proces wydań](RELEASE-PROCESS.md#niezmienny-dowód-odbioru-dev).
 

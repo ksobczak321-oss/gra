@@ -763,3 +763,9 @@ body[data-active-island="island-2"] .topbar-brand,body[data-active-island="islan
 /* Mother prefixes and daughter suffixes can total 83 characters. */
 .archipelago-panel .info-card{min-width:0;overflow-wrap:anywhere}
 .archipelago-panel input,.island-shipping-form select{max-width:100%;min-width:0}
+
+/* The practical tutorial points at real island buildings before their controls. */
+.world-hotspot.tutorial-map-target{border-color:#ffe19a;background:#ffdc7226;outline:3px solid #fff0b6;outline-offset:4px;animation:tutorial-map-glow 1.4s ease-in-out infinite}
+@keyframes tutorial-map-glow{0%,100%{background:#ffdc7210;box-shadow:inset 0 0 12px #ffdf7055,0 0 0 5px #e5b94e30}50%{background:#ffdc7248;box-shadow:inset 0 0 40px #ffdf70aa,0 0 0 9px #ffe19a80}}
+@media(prefers-reduced-motion:reduce){.world-hotspot.tutorial-map-target{animation:none!important}}
+body.reduce-motion .world-hotspot.tutorial-map-target{animation:none!important}

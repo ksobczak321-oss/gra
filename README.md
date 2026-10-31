@@ -1,10 +1,10 @@
 # HARBORLIGHT
 
-Aktualny rozwój **DEV 0.10.0.0**: archipelag, społeczność, liga, dobroczynność i Pomoc. PRE-PROD pozostaje na 0.9.1.2; nowe GO nie obejmuje promocji GCP. [Zakres i parametry DEV](docs/FRONTEND-V24-REQUIREMENTS.md) · [stan środowisk](docs/ENVIRONMENT-STATUS.md).
+Aktualny rozwój **DEV 0.10.1.0**: prowadzenie samouczka przez mapę, przegląd całej polskiej wersji i wspólne okno ligi 19:00–21:00. PRE-PROD pozostaje na 0.9.1.2; nowe GO nie obejmuje promocji GCP. [Zakres DEV v25](docs/FRONTEND-V25-REQUIREMENTS.md) · [stan środowisk](docs/ENVIRONMENT-STATUS.md).
 
-**[Testy do odhaczania — zacznij tutaj](docs/testing/START-HERE.md)** · **[Interaktywna lista 50 scenariuszy](docs/testing/qa-checklist.html)** · **[Planszówka: kompletny ZIP, plansza, karty, pionki, pudełko i instrukcja](docs/boardgame/README.md)**. Integracja sesji fizycznej z kontami online jest odłożona.
+**[Testy do odhaczania — zacznij tutaj](docs/testing/START-HERE.md)** · **[Interaktywna lista 53 scenariuszy](docs/testing/qa-checklist.html)** · **[Planszówka: kompletny ZIP, plansza, karty, pionki, pudełko i instrukcja](docs/boardgame/README.md)**. Integracja sesji fizycznej z kontami online jest odłożona.
 
-Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarni. Bazowe reguły **frontend-v18** zatwierdzono przez GO użytkownika 30 października 2026: [pełne wymagania](docs/FRONTEND-V18-REQUIREMENTS.md), [reguły gospodarki](docs/ECONOMY-RULES.md) i [budynki](docs/BUILDINGS.md). Bieżący zakres DEV to [0.10.0.0 / v24](docs/FRONTEND-V24-REQUIREMENTS.md); opublikowane PRE-PROD zachowuje pilne [0.9.1.2 / v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md).
+Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarni. Bazowe reguły **frontend-v18** zatwierdzono przez GO użytkownika 30 października 2026: [pełne wymagania](docs/FRONTEND-V18-REQUIREMENTS.md), [reguły gospodarki](docs/ECONOMY-RULES.md) i [budynki](docs/BUILDINGS.md). Bieżący zakres DEV to [0.10.1.0 / v25](docs/FRONTEND-V25-REQUIREMENTS.md); opublikowane PRE-PROD zachowuje pilne [0.9.1.2 / v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md).
 
 **[Stan środowisk i dowody wydań](docs/ENVIRONMENT-STATUS.md)** to główny rejestr wersji DEV, PRE-PROD i PROD. **0.9.1.2 jest opublikowane na PRE-PROD**: kolejność szczęście → monety → mieszkańcy, nagrody 3×2 i wskazanie szczegółów Magazynu przed priorytetem. Adnotowany tag `dev-v22.1-20261031` jest opublikowanym dowodem DEV/CI/Pages ([odczyt](docs/RELEASE-PROCESS.md#niezmienny-dowód-odbioru-dev)); osobny sukces GCP opisano poniżej. Włączenie API kont i reset danych nadal wymagają odrębnego potwierdzenia.
 
@@ -12,7 +12,7 @@ Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarn
 
 | Miejsce | Stan |
 |---|---|
-| DEV — ta przestrzeń robocza | **0.10.0.0**, archipelag, społeczność, liga, dobroczynność i Pomoc. Kod `1b3de32…`, CI41238818669 i Pages41238818743 mają SUCCESS; tag `dev-0.10.0.0-pl-20261031` wiąże końcowy odbiór. Bez nowej promocji GCP. |
+| DEV — ta przestrzeń robocza | **0.10.1.0**, prowadzenie przez mapę i polski całej gry. Lokalnie 897 Node + 141 Python + 18 zestawów Chromium PASS, w tym 112 widoków PL. Własny Git/CI/Pages jeszcze niepotwierdzony. Bez nowej promocji GCP. |
 | PRE-PROD — `harborlight-dev` | [Graj](https://harborlight-dev.web.app): **0.9.1.2 / `3be1f9d2094f1432acacbb782eed1665fd00e6e1`**, [promocja41233737873/próba1 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233737873), 2m10s. Wybór PL/EN przy nazwie wyspy; konta i postęp zachowane. |
 | PROD — `harborlight-prod` / `harborlight.pl` | Brak potwierdzonej publikacji i powiązania domeny. |
 | GitHub Pages | [Podgląd DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v24-2). Pages41238818743 dla `1b3de32…` ma SUCCESS. Podgląd działa w pamięci, odrębnie od kont chmurowych. |
@@ -23,7 +23,7 @@ W [v22](docs/FRONTEND-V22-REQUIREMENTS.md) udane działanie wykonane przed swoj�
 
 ## Wcześniejsza pilna poprawka 0.9.1.2
 
-[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Poprawka przeszła własne CI i promocję PRE-PROD; dowody zapisano w rejestrze środowisk. Nie resetowano kont. Tamten zakres miał 251 zmian i 46 ręcznych przypadków; nowy DEV ma 256 zmian i 50 przypadków.
+[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Poprawka przeszła własne CI i promocję PRE-PROD; dowody zapisano w rejestrze środowisk. Nie resetowano kont. Tamten zakres miał 251 zmian i 46 ręcznych przypadków; nowy DEV ma 261 zmian i 53 przypadki.
 
 ## Poprzedni zakres DEV 0.9.1.1
 

@@ -1733,6 +1733,304 @@
       "notes": []
     },
     {
+      "id": "HL-CHG-0034",
+      "epic": "HL-EPIC-UI",
+      "area": "Język i komunikaty archipelagu",
+      "type": "Bug",
+      "title": "Nowe odmowy kolonizacji i rejsów są po polsku przy języku PL",
+      "source": {
+        "kind": "audit_followup_to_user_go",
+        "date": "2026-10-31",
+        "date_note": "Przegląd końcowy wdrażanego DEV, bez nowego zakresu GCP.",
+        "summary": "Brakujące PL komunikaty nowych mechanik znalezione po odbiorze pierwszego źródłav24.",
+        "reference": "chat:GO-DEV-po-pilnej-zmianie"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "targeted_packaged_browser_pass",
+        "ci": "passed",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted_scope_bugfix"
+      },
+      "acceptance": [
+        "Przy12mieszkańcach matki odmowa kolonizacji jest po polsku i zachowuje stan gry.",
+        "Przy brakującym materiale odmowa pokazuje po polsku wymóg wszystkich zasobów.",
+        "Odmowy rejsu opisują po polsku minimum12/6, obecność w Domu, miejsca, normalne posiłki i zajęty statek.",
+        "Dynamiczny próg kolejnej wyspy jest tłumaczony, EN zachowuje tekst oryginalny; cache24-2 odświeża poprzedni podgląd.",
+        "Etykiety monet, materiałów i ładunku są po polsku przy PL; własne nazwy wysp nie są tłumaczone."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0031",
+        "HL-CHG-0810",
+        "HL-CHG-0815",
+        "HL-CHG-0822"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/DEV-0.10.0.0-VALIDATION.md",
+          "docs/testing/manual/HL-TC-0034.md",
+          "docs/testing/manual/HL-TC-0035.md"
+        ],
+        "code": [
+          "harborlight-v1-i18n.js",
+          "harborlight-v1-play.js",
+          "harborlight-v1-layered.html"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v15-i18n.test.mjs",
+          "tests/harborlight-v21-features-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Uzupełniono PL odmowy i dynamiczny próg Ratusza.12testów i18n,12pakowania i cały scenariusz archipelagu na nowym pakiecie PASS, w tym rzeczywiste odmowy przy12osobach i braku drewna. Własne CI/Pages źródła potwierdzono poniżej. Poprzedni tag DEV pozostaje historyczny i nie jest przesuwany.\nKońcowe źródło:1b3de32869c8164ed8d0b85df7ea743ca76a3719; CI41238818669 i Pages41238818743 SUCCESS, tag dev-0.10.0.0-pl-20261031, cache frontend-v24-2. Powtórny pełny Node878/0FAIL i12pakowania PASS; własny CI zaliczył także16zestawów Chromium; wszystkie16ponowiono lokalnie z wynikiem PASS. Wcześniejsze tagi zachowano, bez GCP/resetu.",
+        "source_sha": "1b3de32869c8164ed8d0b85df7ea743ca76a3719",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41238818669"
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0036",
+      "epic": "HL-EPIC-TUT",
+      "area": "Samouczek i prowadzenie po mapie",
+      "type": "Story",
+      "title": "Samouczek najpierw wskazuje budynek na mapie i czeka na kliknięcie gracza",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "NoweGO po potwierdzeniu wspólnego okna ligi; dodatkowe prowadzenie i polskie teksty wyłącznie DEV.",
+        "summary": "Użytkownik chce, by zamiast automatycznie otwierać budynek samouczek polecał znaleźć go na mapie, wskazywał miganiem i podświetleniem oraz używał naturalnej polszczyzny.",
+        "reference": "chat:GO-DEV-prowadzenie-po-mapie-i-human-polski25lekcji"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_full_suite_and_packaged_browsers_pass",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Lekcja budynku poleca odnalezienie go na mapie, pokazuje miganie i podświetlone miejsce kliknięcia, zamiast automatycznie otwierać jego okno.",
+        "Dopiero kliknięcie gracza otwiera budynek; potem wskaźnik prowadzi do właściwej widocznej czynności, a w razie potrzeby przez szczegóły budynku.",
+        "Podświetlenie nie wykonuje operacji, nie zalicza lekcji i nie przyznaje nagród; istniejąceID, nagrody, automatyczne pomijanie i historia pozostają.",
+        "Przy wyłączonych animacjach lub prefers-reduced-motion cel pozostaje czytelny statycznie; komputer i telefon mają faktycznie dostępne miejsce kliknięcia."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0008",
+        "HL-CHG-0026",
+        "HL-CHG-0040"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V25-REQUIREMENTS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-tutorial-ui.js",
+          "harborlight-v1-tutorial.css"
+        ],
+        "automated_tests": [
+          "tests/harborlight-tutorial-map-v25-smoke.py",
+          "tests/harborlight-tutorial-priority-v22-smoke.py",
+          "tests/harborlight-tutorial-v21-smoke.py",
+          "tests/harborlight-tutorial-v18-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Samouczek wskazuje rzeczywisty budynek na mapie, czeka na kliknięcie gracza i dopiero potem prowadzi do widocznej czynności. Nowy test mapy ma 5 wariantów PASS; regresje priorytetów 4, kursu zrównoważonego 3 i historycznego 3 również przeszły. Zachowano ID, warunki, nagrody i historię; samo oglądanie nie zalicza lekcji.\n\nKońcowy odbiór lokalny po zamrożeniu: 897 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS, 18 zestawów Chromium PASS. W tym rzeczywisty przegląd 112 widoków zakończony bez wykrytej reszty EN i bez błędu wykonania. Własne CI i Pages nowego commitu oczekują na potwierdzenie; nie dziedziczą wyniku wcześniejszego SHA. Ręczne scenariusze pozostają NOT_RUN. Brak promocji GCP, resetu kont i integracji planszówki online."
+      },
+      "notes": [
+        "Statyczny wariant przy ograniczeniu ruchu jest sposobem zapewnienia dostępności, nie nową decyzją o mechanice."
+      ]
+    },
+    {
+      "id": "HL-CHG-0037",
+      "epic": "HL-EPIC-TUT",
+      "area": "Samouczek i polskie teksty",
+      "type": "Story",
+      "title": "Naturalny i poprawny polski w tytułach i instrukcjach25 lekcji",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "NoweGO po potwierdzeniu wspólnego okna ligi; dodatkowe prowadzenie i polskie teksty wyłącznie DEV.",
+        "summary": "Użytkownik chce, by zamiast automatycznie otwierać budynek samouczek polecał znaleźć go na mapie, wskazywał miganiem i podświetleniem oraz używał naturalnej polszczyzny.",
+        "reference": "chat:GO-DEV-prowadzenie-po-mapie-i-human-polski25lekcji"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_full_suite_and_packaged_browsers_pass",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przegląd obejmuje polskie tytuły, opisy i wskazówki wszystkich25 praktycznych lekcji.",
+        "Teksty są naturalne, poprawnie odmienione i konsekwentnie używają nazw faktycznych budynków i przycisków.",
+        "Instrukcja opisuje kolejność: znajdź budynek na mapie, otwórz go i wykonaj czynność, zgodnie z rzeczywistą nawigacją.",
+        "Nie zmieniamyID, nagród, warunków zaliczenia, kolejności ani historii; ocena językowa człowieka pozostaje odrębnym ręcznym odbiorem."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0036",
+        "HL-CHG-0040"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V25-REQUIREMENTS.md",
+          "docs/POLISH-REVIEW-v25.md"
+        ],
+        "code": [
+          "harborlight-v1-progression.js",
+          "harborlight-v1-v16-copy.js"
+        ],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Poprawiono polskie tytuły i opisy 25 bieżących oraz 25 historycznych lekcji. Porównanie eksportowanych danych zachowuje ID, kolejność, warunki, nagrody, trasy i selektory. Nawigacja zaczyna się od mapy, nazwy odpowiadają rzeczywistym kontrolkom. Ręczna ocena wszystkich lekcji nadal oczekuje na wykonanie.\n\nKońcowy odbiór lokalny po zamrożeniu: 897 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS, 18 zestawów Chromium PASS. W tym rzeczywisty przegląd 112 widoków zakończony bez wykrytej reszty EN i bez błędu wykonania. Własne CI i Pages nowego commitu oczekują na potwierdzenie; nie dziedziczą wyniku wcześniejszego SHA. Ręczne scenariusze pozostają NOT_RUN. Brak promocji GCP, resetu kont i integracji planszówki online."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0038",
+      "epic": "HL-EPIC-UI",
+      "area": "Polski język całej gry",
+      "type": "Story",
+      "title": "Naturalna i kompletna polszczyzna całej gry, także komunikatów dynamicznych",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Późniejsza adnotacja rozszerza wcześniej zatwierdzony przegląd tekstów samouczka na cały interfejs.",
+        "summary": "Uwaga dotycząca tłumaczeń polskich dotyczy nie tylko samouczka — wszystko trzeba przejrzeć.",
+        "reference": "chat:rozszerzenie-human-polski-na-cala-gre"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_full_suite_and_packaged_browsers_pass",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "PrzeglądPL obejmuje całą grę: wejście/logowanie, HUD, mapę, budynki, gospodarkę, mieszkańców, zdarzenia, zadania, minigry, monetyzacjęDEV, archipelag/handel, Pomoc/Ustawienia i społeczność.",
+        "Teksty stałe i dynamiczne, w tym odmowy, potwierdzenia i powiadomienia, są naturalne, poprawnie odmienione i zgodne z nazwami faktycznych elementów.",
+        "WybórPL nie pozostawia angielskiego zdania lub technicznego klucza w miejscu komunikatu gracza; treści użytkowników i nazwy własne nie podlegają automatycznemu tłumaczeniu.",
+        "Zmiana tekstu nie zmienia zasad gospodarki, czasów, nagród, limitów, historii ani kontroli dostępu.",
+        "Ręczny przegląd całej gry i25 lekcji pozostaje osobnymNOT RUN do wykonania przez człowieka."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0034",
+        "HL-CHG-0036",
+        "HL-CHG-0037"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V25-REQUIREMENTS.md",
+          "docs/testing/manual/HL-TC-0053.md",
+          "docs/POLISH-REVIEW-v25.md"
+        ],
+        "code": [
+          "harborlight-v1-i18n.js",
+          "harborlight-v1-copy.js",
+          "harborlight-v1-play.js",
+          "harborlight-auth.js",
+          "harborlight-v1-community-ui.js",
+          "harborlight-v1-charity.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-polish-copy-v25.test.mjs",
+          "tests/harborlight-polish-panels-smoke.py",
+          "tests/harborlight-world-events-v18.test.mjs",
+          "tests/harborlight-effects-v8.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Przejrzano całą grę: interfejs, budynki, modele rozgrywki, logowanie i chmurę, oprowadzanie, społeczność, ligę oraz Pomagam. Kierunkowy zestaw i18n/tekstów ma 25 PASS; skan 313 pełnych zdań z 9 modeli nie wykrył reszt w swoim zakresie. Końcowy rzeczywisty odczyt 112 widoków (56 komputer + 56 telefon), wraz z treścią i ARIA: PASS, 0 wykrytych angielskich elementów, execution_error:null. Nie zmieniono monet ani własnych nazw. Historia zapisanych powiadomień i treści użytkowników nie została przepisana; ręczny przegląd całej gry nadal NOT RUN.\n\nKońcowy odbiór lokalny po zamrożeniu: 897 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS, 18 zestawów Chromium PASS. W tym rzeczywisty przegląd 112 widoków zakończony bez wykrytej reszty EN i bez błędu wykonania. Własne CI i Pages nowego commitu oczekują na potwierdzenie; nie dziedziczą wyniku wcześniejszego SHA. Ręczne scenariusze pozostają NOT_RUN. Brak promocji GCP, resetu kont i integracji planszówki online."
+      },
+      "notes": [
+        "Wcześniejsze diagnostyczne ekrany wykryły mieszane zdania, liczbę z NBSP, nagłówek kolejki, rozwinięty opis tragarza/roster, wycenę, ARIA kwoty i tłumaczenie własnej nazwy opcji transportu. Poprawki sprawdzono ponownie na końcowym pakiecie; wcześniejszy sam odczyt ekranów nie był PASS języka.",
+        "Błogosławieństwo opisano jako +20 p.p. przez godzinę, zgodnie z rzeczywistym efektem 20 p.p./3600 s, zamiast sugerować przyrost 20 p.p. na każdą godzinę. To korekta opisu, nie zmiana zasad.",
+        "Ręczna ocena polszczyzny TC52/TC53 nadal NOT_RUN. Statyczny skan i 112 wybranych stanów nie są obietnicą poprawności każdej przyszłej treści."
+      ]
+    },
+    {
+      "id": "HL-CHG-0039",
+      "epic": "HL-EPIC-MIN",
+      "area": "Ekspedycje i kupno czasu",
+      "type": "Bug",
+      "title": "Kupno czasu potwierdza dodane sekundy zamiast nadpisywać sukces opisem wyceny",
+      "source": {
+        "kind": "implementation_audit_under_user_go",
+        "date": "2026-10-31",
+        "date_note": "Rzeczywista niezgodność wykryta przez test akcji podczas zatwierdzonego przeglądu polskich komunikatów.",
+        "summary": "Wynik poprawnego zakupu czasu zawierał opis wyceny, który nadpisywał komunikat sukcesu; saldo i sekundy były naliczane poprawnie.",
+        "reference": "chat:GO-globalny-przeglad-polski; test:runtime-expedition-extra-time-message"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_full_suite_and_packaged_browsers_pass",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Po dozwolonym kupnie dodatkowego czasu gracz otrzymuje potwierdzenie faktycznie dodanych sekund i pobranych monet.",
+        "Opis wyceny lub dostępności nie nadpisuje komunikatu ukończonej operacji.",
+        "Koszt, liczba sekund, limity, stan rundy i rzeczywiste obciążenie salda pozostają bez zmian.",
+        "Odmowy przy limicie, końcu rundy lub trwającej reklamie nadal odpowiadają rzeczywistemu stanowi."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0038",
+        "HL-CHG-0305"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/POLISH-REVIEW-v25.md"
+        ],
+        "code": [
+          "harborlight-v1-activities.js",
+          "harborlight-v1-i18n.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-polish-copy-v25.test.mjs",
+          "tests/harborlight-v18-activities.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Poprawiono kolejność składania wyniku kupna czasu: komunikat potwierdza faktycznie dodane sekundy i pobrane monety, zamiast opisu wyceny. Jednowierszowa poprawka nie zmienia kosztu, czasu, limitów ani rzeczywistego obciążenia. Testy akcji i języka oraz pełne regresje przeszły; ręczne TC16 i TC53 nadal NOT RUN.\n\nKońcowy odbiór lokalny po zamrożeniu: 897 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS, 18 zestawów Chromium PASS. W tym rzeczywisty przegląd 112 widoków zakończony bez wykrytej reszty EN i bez błędu wykonania. Własne CI i Pages nowego commitu oczekują na potwierdzenie; nie dziedziczą wyniku wcześniejszego SHA. Ręczne scenariusze pozostają NOT_RUN. Brak promocji GCP, resetu kont i integracji planszówki online."
+      },
+      "notes": []
+    },
+    {
       "id": "HL-CHG-0040",
       "epic": "HL-EPIC-TUT",
       "area": "Samouczek i nagrody",
@@ -10768,188 +11066,16 @@
         "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted_parameters_with_open_details"
+        "decision": "accepted"
       },
       "acceptance": [
         "Limit pasażerów jest oddzielny od towarowej pojemności1000 i jej płatnych zwiększeń."
       ],
       "supersedes": [],
       "superseded_by": [],
-      "related_changes": [],
-      "issue_url": null,
-      "published_to_github_issues": false,
-      "evidence": {
-        "documents": [
-          "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
-          "docs/DEV-0.10.0.0-VALIDATION.md"
-        ],
-        "code": [
-          "harborlight-v1-archipelago.js",
-          "harborlight-v1-residents.js",
-          "harborlight-v1-state.js",
-          "harborlight-dev-cloud.js",
-          "backend/island-document-store.mjs",
-          "backend/player-trade.mjs"
-        ],
-        "automated_tests": [
-          "tests/harborlight-archipelago.test.mjs",
-          "backend/test/island-document-store.test.mjs",
-          "backend/test/player-trade.test.mjs",
-          "tests/harborlight-v21-features-smoke.py",
-          "tests/harborlight-v21-cloud.test.mjs"
-        ],
-        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
-        "preprod_run_url": null,
-        "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
-      },
-      "notes": []
-    },
-    {
-      "id": "HL-CHG-0815",
-      "epic": "HL-EPIC-ARC",
-      "area": "Archipelag i handel v23",
-      "type": "Story",
-      "title": "Przewóz ludzi trwa 30 minut",
-      "source": {
-        "kind": "user_chat_and_approved_requirement",
-        "date": "2026-10-31",
-        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
-        "summary": "Przewóz ludzi trwa 30 minut",
-        "reference": "user_chat:last_request_2026-10-31"
-      },
-      "status": {
-        "implementation": "implemented",
-        "dev": "packaged_browser_pass",
-        "ci": "passed",
-        "preprod": "not_deployed",
-        "prod": "not_deployed",
-        "decision": "accepted_parameters_with_open_details"
-      },
-      "acceptance": [
-        "Czas podróży i zachowanie po reload/offline są trwałe i nie podlegają nieuzgodnionym mnożnikom."
+      "related_changes": [
+        "HL-CHG-0932"
       ],
-      "supersedes": [],
-      "superseded_by": [],
-      "related_changes": [],
-      "issue_url": null,
-      "published_to_github_issues": false,
-      "evidence": {
-        "documents": [
-          "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
-          "docs/DEV-0.10.0.0-VALIDATION.md"
-        ],
-        "code": [
-          "harborlight-v1-archipelago.js",
-          "harborlight-v1-residents.js",
-          "harborlight-v1-state.js",
-          "harborlight-dev-cloud.js",
-          "backend/island-document-store.mjs",
-          "backend/player-trade.mjs"
-        ],
-        "automated_tests": [
-          "tests/harborlight-archipelago.test.mjs",
-          "backend/test/island-document-store.test.mjs",
-          "backend/test/player-trade.test.mjs",
-          "tests/harborlight-v21-features-smoke.py",
-          "tests/harborlight-v21-cloud.test.mjs"
-        ],
-        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
-        "preprod_run_url": null,
-        "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
-      },
-      "notes": []
-    },
-    {
-      "id": "HL-CHG-0816",
-      "epic": "HL-EPIC-ARC",
-      "area": "Archipelag i handel v23",
-      "type": "Story",
-      "title": "Rejs jest albo pasażerski, albo towarowy",
-      "source": {
-        "kind": "user_chat_and_approved_requirement",
-        "date": "2026-10-31",
-        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
-        "summary": "Rejs jest albo pasażerski, albo towarowy",
-        "reference": "user_chat:last_request_2026-10-31"
-      },
-      "status": {
-        "implementation": "implemented",
-        "dev": "packaged_browser_pass",
-        "ci": "passed",
-        "preprod": "not_deployed",
-        "prod": "not_deployed",
-        "decision": "accepted_parameters_with_open_details"
-      },
-      "acceptance": [
-        "W jednym rejsie nie mieszamy ludzi i dóbr; wspólny statek nie wykonuje dwóch podróży jednocześnie."
-      ],
-      "supersedes": [],
-      "superseded_by": [],
-      "related_changes": [],
-      "issue_url": null,
-      "published_to_github_issues": false,
-      "evidence": {
-        "documents": [
-          "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
-          "docs/DEV-0.10.0.0-VALIDATION.md"
-        ],
-        "code": [
-          "harborlight-v1-archipelago.js",
-          "harborlight-v1-residents.js",
-          "harborlight-v1-state.js",
-          "harborlight-dev-cloud.js",
-          "backend/island-document-store.mjs",
-          "backend/player-trade.mjs"
-        ],
-        "automated_tests": [
-          "tests/harborlight-archipelago.test.mjs",
-          "backend/test/island-document-store.test.mjs",
-          "backend/test/player-trade.test.mjs",
-          "tests/harborlight-v21-features-smoke.py",
-          "tests/harborlight-v21-cloud.test.mjs"
-        ],
-        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
-        "preprod_run_url": null,
-        "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
-      },
-      "notes": []
-    },
-    {
-      "id": "HL-CHG-0817",
-      "epic": "HL-EPIC-ARC",
-      "area": "Archipelag i handel v23",
-      "type": "Decision",
-      "title": "Przewóz osób musi określić pojemność celu, jedzenie i zachowanie tożsamości",
-      "source": {
-        "kind": "user_chat_proposal_or_open_decision",
-        "date": "2026-10-31",
-        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
-        "summary": "Przewóz osób musi określić pojemność celu, jedzenie i zachowanie tożsamości",
-        "reference": "user_chat:last_request_2026-10-31"
-      },
-      "status": {
-        "implementation": "implemented",
-        "dev": "packaged_browser_pass",
-        "ci": "passed",
-        "preprod": "not_deployed",
-        "prod": "not_deployed",
-        "decision": "accepted_scope_with_dev_parameters"
-      },
-      "acceptance": [
-        "Nie gubimy osób i ich szczęścia, nie duplikujemy podatków, nie wysyłamy pracowników lub osób w drodze bez reguły."
-      ],
-      "supersedes": [],
-      "superseded_by": [],
-      "related_changes": [],
       "issue_url": null,
       "published_to_github_issues": false,
       "evidence": {
@@ -10980,7 +11106,194 @@
         "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
-        "Jawny parametrDEV do ewentualnej korekty, nie odpowiedź użytkownika: kopiaRatusza/Magazynu, reszta1,6 przesiedleńców,0 startowych zasobów; na córce minimum6, wolne miejsca u celu, brak dodatkowej opłaty/racji i normalne żywienie. A po9 kontynuowane10,11…"
+        "Późniejsze potwierdzenie użytkownika: dalszeA=10,11…; kopiaRatusza/Magazynu, reszta budynków1,6 istniejących kolonistów,0 startowych zasobów, minimum6 na córce, wolne miejsca u celu oraz normalny posiłek0,5 żywności/osobę na30min bez dodatkowej opłaty monetowej. Wcześniejsze notatki o oczekiwaniu na decyzję opisują etap historyczny, nie bieżącą blokadę."
+      ]
+    },
+    {
+      "id": "HL-CHG-0815",
+      "epic": "HL-EPIC-ARC",
+      "area": "Archipelag i handel v23",
+      "type": "Story",
+      "title": "Przewóz ludzi trwa 30 minut",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Przewóz ludzi trwa 30 minut",
+        "reference": "user_chat:last_request_2026-10-31"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
+        "ci": "passed",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Czas podróży i zachowanie po reload/offline są trwałe i nie podlegają nieuzgodnionym mnożnikom."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0932"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
+      },
+      "notes": [
+        "Późniejsze potwierdzenie użytkownika: dalszeA=10,11…; kopiaRatusza/Magazynu, reszta budynków1,6 istniejących kolonistów,0 startowych zasobów, minimum6 na córce, wolne miejsca u celu oraz normalny posiłek0,5 żywności/osobę na30min bez dodatkowej opłaty monetowej. Wcześniejsze notatki o oczekiwaniu na decyzję opisują etap historyczny, nie bieżącą blokadę."
+      ]
+    },
+    {
+      "id": "HL-CHG-0816",
+      "epic": "HL-EPIC-ARC",
+      "area": "Archipelag i handel v23",
+      "type": "Story",
+      "title": "Rejs jest albo pasażerski, albo towarowy",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Rejs jest albo pasażerski, albo towarowy",
+        "reference": "user_chat:last_request_2026-10-31"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
+        "ci": "passed",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "W jednym rejsie nie mieszamy ludzi i dóbr; wspólny statek nie wykonuje dwóch podróży jednocześnie."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0932"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
+      },
+      "notes": [
+        "Późniejsze potwierdzenie użytkownika: dalszeA=10,11…; kopiaRatusza/Magazynu, reszta budynków1,6 istniejących kolonistów,0 startowych zasobów, minimum6 na córce, wolne miejsca u celu oraz normalny posiłek0,5 żywności/osobę na30min bez dodatkowej opłaty monetowej. Wcześniejsze notatki o oczekiwaniu na decyzję opisują etap historyczny, nie bieżącą blokadę."
+      ]
+    },
+    {
+      "id": "HL-CHG-0817",
+      "epic": "HL-EPIC-ARC",
+      "area": "Archipelag i handel v23",
+      "type": "Decision",
+      "title": "Przewóz osób musi określić pojemność celu, jedzenie i zachowanie tożsamości",
+      "source": {
+        "kind": "user_chat_proposal_or_open_decision",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Przewóz osób musi określić pojemność celu, jedzenie i zachowanie tożsamości",
+        "reference": "user_chat:last_request_2026-10-31"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "packaged_browser_pass",
+        "ci": "passed",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nie gubimy osób i ich szczęścia, nie duplikujemy podatków, nie wysyłamy pracowników lub osób w drodze bez reguły."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0932"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-dev-cloud.js",
+          "backend/island-document-store.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/island-document-store.test.mjs",
+          "backend/test/player-trade.test.mjs",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-v21-cloud.test.mjs"
+        ],
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
+      },
+      "notes": [
+        "Historia wcześniejszej analizy/prototypu: Jawny parametrDEV do ewentualnej korekty, nie odpowiedź użytkownika: kopiaRatusza/Magazynu, reszta1,6 przesiedleńców,0 startowych zasobów; na córce minimum6, wolne miejsca u celu, brak dodatkowej opłaty/racji i normalne żywienie. A po9 kontynuowane10,11…",
+        "Późniejsze potwierdzenie użytkownika: dalszeA=10,11…; kopiaRatusza/Magazynu, reszta budynków1,6 istniejących kolonistów,0 startowych zasobów, minimum6 na córce, wolne miejsca u celu oraz normalny posiłek0,5 żywności/osobę na30min bez dodatkowej opłaty monetowej. Wcześniejsze notatki o oczekiwaniu na decyzję opisują etap historyczny, nie bieżącą blokadę."
       ]
     },
     {
@@ -11073,7 +11386,9 @@
       ],
       "supersedes": [],
       "superseded_by": [],
-      "related_changes": [],
+      "related_changes": [
+        "HL-CHG-0932"
+      ],
       "issue_url": null,
       "published_to_github_issues": false,
       "evidence": {
@@ -11104,8 +11419,9 @@
         "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
-        "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.",
-        "Kontynuacja A po trzeciej córce pozostaje do zatwierdzenia; wariant samego ostatniego awansu odrzucony."
+        "Historia wcześniejszej analizy/prototypu: Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.",
+        "Historia wcześniejszej analizy/prototypu: Kontynuacja A po trzeciej córce pozostaje do zatwierdzenia; wariant samego ostatniego awansu odrzucony.",
+        "Późniejsze potwierdzenie użytkownika: dalszeA=10,11…; kopiaRatusza/Magazynu, reszta budynków1,6 istniejących kolonistów,0 startowych zasobów, minimum6 na córce, wolne miejsca u celu oraz normalny posiłek0,5 żywności/osobę na30min bez dodatkowej opłaty monetowej. Wcześniejsze notatki o oczekiwaniu na decyzję opisują etap historyczny, nie bieżącą blokadę."
       ]
     },
     {
@@ -11432,14 +11748,16 @@
         "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted_scope_with_dev_parameters"
+        "decision": "accepted"
       },
       "acceptance": [
         "Nowy koszt oraz sześciu kolonistów trzeba pogodzić z dotychczasowym TH/Magazyn kopiowanym z matki."
       ],
       "supersedes": [],
       "superseded_by": [],
-      "related_changes": [],
+      "related_changes": [
+        "HL-CHG-0932"
+      ],
       "issue_url": null,
       "published_to_github_issues": false,
       "evidence": {
@@ -11470,7 +11788,8 @@
         "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
-        "Jawny parametrDEV do ewentualnej korekty, nie odpowiedź użytkownika: kopiaRatusza/Magazynu, reszta1,6 przesiedleńców,0 startowych zasobów; na córce minimum6, wolne miejsca u celu, brak dodatkowej opłaty/racji i normalne żywienie. A po9 kontynuowane10,11…"
+        "Historia wcześniejszej analizy/prototypu: Jawny parametrDEV do ewentualnej korekty, nie odpowiedź użytkownika: kopiaRatusza/Magazynu, reszta1,6 przesiedleńców,0 startowych zasobów; na córce minimum6, wolne miejsca u celu, brak dodatkowej opłaty/racji i normalne żywienie. A po9 kontynuowane10,11…",
+        "Późniejsze potwierdzenie użytkownika: dalszeA=10,11…; kopiaRatusza/Magazynu, reszta budynków1,6 istniejących kolonistów,0 startowych zasobów, minimum6 na córce, wolne miejsca u celu oraz normalny posiłek0,5 żywności/osobę na30min bez dodatkowej opłaty monetowej. Wcześniejsze notatki o oczekiwaniu na decyzję opisują etap historyczny, nie bieżącą blokadę."
       ]
     },
     {
@@ -11623,7 +11942,7 @@
         "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted_parameters_with_open_details"
+        "decision": "accepted"
       },
       "acceptance": [
         "Liga ma opierać wynik sojuszu na średniej wyników i rosnącej premii współpracy, a nie sumie trzech najlepszych wyników.",
@@ -11631,7 +11950,9 @@
       ],
       "supersedes": [],
       "superseded_by": [],
-      "related_changes": [],
+      "related_changes": [
+        "HL-CHG-0932"
+      ],
       "issue_url": null,
       "published_to_github_issues": false,
       "evidence": {
@@ -11657,7 +11978,8 @@
         "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
-        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
+        "Historia wcześniejszej analizy/prototypu: Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.",
+        "Aktualna decyzja użytkownika: oba rodzaje zadania ligi we wspólnym oknie19:00–21:00 czasuWarszawy;15–21 miesiąca, po dwie próby i średnia obu, brakujące=0. Wcześniejszy podział19–20/20–21 jest historią wydania0.10.0.0. Zmianę zachowania i nowy odbiór prowadziHL-CHG-0932; dawneCI pozostaje dowodem wyłącznie wskazanego dawnegoSHA."
       ]
     },
     {
@@ -12322,7 +12644,8 @@
       "supersedes": [],
       "superseded_by": [],
       "related_changes": [
-        "HL-CHG-0901"
+        "HL-CHG-0901",
+        "HL-CHG-0932"
       ],
       "issue_url": null,
       "published_to_github_issues": false,
@@ -12349,8 +12672,9 @@
         "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
-        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.",
-        "Użytkownik zaakceptował wskazane parametry, ale odłożył wdrożenie tych mechanik; pilne GO dotyczy wyłącznie języka."
+        "Historia wcześniejszej analizy/prototypu: Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.",
+        "Historia wcześniejszej analizy/prototypu: Użytkownik zaakceptował wskazane parametry, ale odłożył wdrożenie tych mechanik; pilne GO dotyczy wyłącznie języka.",
+        "Aktualna decyzja użytkownika: oba rodzaje zadania ligi we wspólnym oknie19:00–21:00 czasuWarszawy;15–21 miesiąca, po dwie próby i średnia obu, brakujące=0. Wcześniejszy podział19–20/20–21 jest historią wydania0.10.0.0. Zmianę zachowania i nowy odbiór prowadziHL-CHG-0932; dawneCI pozostaje dowodem wyłącznie wskazanego dawnegoSHA."
       ]
     },
     {
@@ -13008,7 +13332,7 @@
         "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted_scope_with_dev_parameters"
+        "decision": "accepted"
       },
       "acceptance": [
         "Zadania mają jasne okna wykonania. Godziny 19–20 lub 20–21 to przykłady użytkownika, a nie zatwierdzony harmonogram.",
@@ -13016,7 +13340,9 @@
       ],
       "supersedes": [],
       "superseded_by": [],
-      "related_changes": [],
+      "related_changes": [
+        "HL-CHG-0932"
+      ],
       "issue_url": null,
       "published_to_github_issues": false,
       "evidence": {
@@ -13041,7 +13367,8 @@
         "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
-        "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
+        "Historia wcześniejszej analizy/prototypu: Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka.",
+        "Aktualna decyzja użytkownika: oba rodzaje zadania ligi we wspólnym oknie19:00–21:00 czasuWarszawy;15–21 miesiąca, po dwie próby i średnia obu, brakujące=0. Wcześniejszy podział19–20/20–21 jest historią wydania0.10.0.0. Zmianę zachowania i nowy odbiór prowadziHL-CHG-0932; dawneCI pozostaje dowodem wyłącznie wskazanego dawnegoSHA."
       ]
     },
     {
@@ -13326,64 +13653,81 @@
       ]
     },
     {
-      "id": "HL-CHG-0034",
-      "epic": "HL-EPIC-UI",
-      "area": "Język i komunikaty archipelagu",
-      "type": "Bug",
-      "title": "Nowe odmowy kolonizacji i rejsów są po polsku przy języku PL",
+      "id": "HL-CHG-0932",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga i harmonogram",
+      "type": "Story",
+      "title": "Oba zadania ligi mają wspólne okno 19:00–21:00 Warszawy",
       "source": {
-        "kind": "audit_followup_to_user_go",
+        "kind": "user_chat_and_approved_requirement",
         "date": "2026-10-31",
-        "date_note": "Przegląd końcowy wdrażanego DEV, bez nowego zakresu GCP.",
-        "summary": "Brakujące PL komunikaty nowych mechanik znalezione po odbiorze pierwszego źródłav24.",
-        "reference": "chat:GO-DEV-po-pilnej-zmianie"
+        "date_note": "Późniejsza odpowiedź użytkownika po odbiorze wcześniejszego wariantuDEV; nie zastępujemy nią historii jegoCI.",
+        "summary": "Użytkownik wybrał wspólne 19:00–21:00 dla zadania logicznego i zręcznościowego oraz potwierdził pozostałe grupy parametrów wysp.",
+        "reference": "chat:potwierdzenie-parametrow-i-wspolne-okno-ligi-po-DEV0.10.0.0"
       },
       "status": {
         "implementation": "implemented",
-        "dev": "targeted_packaged_browser_pass",
-        "ci": "passed",
+        "dev": "local_full_suite_and_packaged_browsers_pass",
+        "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted_scope_bugfix"
+        "decision": "accepted"
       },
       "acceptance": [
-        "Przy12mieszkańcach matki odmowa kolonizacji jest po polsku i zachowuje stan gry.",
-        "Przy brakującym materiale odmowa pokazuje po polsku wymóg wszystkich zasobów.",
-        "Odmowy rejsu opisują po polsku minimum12/6, obecność w Domu, miejsca, normalne posiłki i zajęty statek.",
-        "Dynamiczny próg kolejnej wyspy jest tłumaczony, EN zachowuje tekst oryginalny; cache24-2 odświeża poprzedni podgląd.",
-        "Etykiety monet, materiałów i ładunku są po polsku przy PL; własne nazwy wysp nie są tłumaczone."
+        "W dniach 15–21 oba zadania, logiczne i zręcznościowe, są dostępne w jednym oknie 19:00–21:00 Europe/Warsaw; gracz wybiera kolejność.",
+        "Oba rodzaje działają o19:00 i 20:00. Przed 19:00 i od 21:00 nowe punktujące akcje/próby są zamknięte; strefaWarszawy respektuje czas letni i zimowy.",
+        "Pozostają dwie próby każdego rodzaju, średnia dwóch wyników dnia i0 za niezagrane. Rozliczenie już przyjętych akcji nie dodaje czasu na grę.",
+        "Interfejs, API, opisy i testy wskazują to samo okno. Wcześniejszy podział19–20/20–21 oraz jego wynikiCI są zachowaną historią.",
+        "Dokumenty prawne i potwierdzenia mają zgodną wersję2026-10-31-draft4; draft2/draft3 nie omijają bieżącej akceptacji nowego świata, a stare dowody pozostają.",
+        "Zakres pozostaje wyłącznie DEV, bez promocji GCP, resetu kont lub integracji planszówki online."
       ],
       "supersedes": [],
       "superseded_by": [],
       "related_changes": [
-        "HL-CHG-0031",
-        "HL-CHG-0810",
-        "HL-CHG-0815",
-        "HL-CHG-0822"
+        "HL-CHG-0715",
+        "HL-CHG-0817",
+        "HL-CHG-0819",
+        "HL-CHG-0825",
+        "HL-CHG-0901",
+        "HL-CHG-0914",
+        "HL-CHG-0918",
+        "HL-CHG-0926",
+        "HL-CHG-0927"
       ],
       "issue_url": null,
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/DEV-0.10.0.0-VALIDATION.md",
-          "docs/testing/manual/HL-TC-0034.md",
-          "docs/testing/manual/HL-TC-0035.md"
+          "docs/FRONTEND-V24-REQUIREMENTS.md",
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
+          "docs/TERMS-DRAFT.pl.md",
+          "docs/PRIVACY-DRAFT.pl.md",
+          "docs/testing/manual/HL-TC-0049.md"
         ],
         "code": [
-          "harborlight-v1-i18n.js",
-          "harborlight-v1-play.js",
-          "harborlight-v1-layered.html"
+          "backend/league-rules.mjs",
+          "backend/community-service.mjs",
+          "harborlight-v1-community-ui.js",
+          "harborlight-legal.js",
+          "backend/account-service.mjs",
+          "scripts/build_legal_pages.py"
         ],
         "automated_tests": [
-          "tests/harborlight-v15-i18n.test.mjs",
-          "tests/harborlight-v21-features-smoke.py"
+          "backend/test/community-service.test.mjs",
+          "tests/harborlight-community-v24-smoke.py",
+          "tests/harborlight-legal.test.mjs",
+          "backend/test/legal-acceptance.test.mjs",
+          "tests/harborlight-v18-auth-smoke.py"
         ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Uzupełniono PL odmowy i dynamiczny próg Ratusza.12testów i18n,12pakowania i cały scenariusz archipelagu na nowym pakiecie PASS, w tym rzeczywiste odmowy przy12osobach i braku drewna. Własne CI/Pages źródła potwierdzono poniżej. Poprzedni tag DEV pozostaje historyczny i nie jest przesuwany.\nKońcowe źródło:1b3de32869c8164ed8d0b85df7ea743ca76a3719; CI41238818669 i Pages41238818743 SUCCESS, tag dev-0.10.0.0-pl-20261031, cache frontend-v24-2. Powtórny pełny Node878/0FAIL i12pakowania PASS; własny CI zaliczył także16zestawów Chromium; wszystkie16ponowiono lokalnie z wynikiem PASS. Wcześniejsze tagi zachowano, bez GCP/resetu.",
-        "source_sha": "1b3de32869c8164ed8d0b85df7ea743ca76a3719",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41238818669"
+        "release_note": "Oba rodzaje zadania ligi działają w tym samym oknie 19:00–21:00 Europe/Warsaw; gracz wybiera kolejność. Testy sprawdzają oba rodzaje o 19:00/20:00, odmowę poza oknem, czas letni/zimowy i granicę zamknięcia. Zachowano po dwie próby, średnią obu wyników i 0 za brak zadania. Dokumenty draft4, klient i serwer są zgodne; stare potwierdzenia draft2/draft3 nie omijają aktualnej wersji dla nowego świata, a ich historia pozostaje.\n\nKońcowy odbiór lokalny po zamrożeniu: 897 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS, 18 zestawów Chromium PASS. W tym rzeczywisty przegląd 112 widoków zakończony bez wykrytej reszty EN i bez błędu wykonania. Własne CI i Pages nowego commitu oczekują na potwierdzenie; nie dziedziczą wyniku wcześniejszego SHA. Ręczne scenariusze pozostają NOT_RUN. Brak promocji GCP, resetu kont i integracji planszówki online."
       },
-      "notes": []
+      "notes": [
+        "Wcześniejsze karty zachowują dowody źródła351baaf6b21386b2f2641875269e6f7d9c2d44fd. To potwierdzenie poprzedniego wariantu, nie nowego wspólnego okna."
+      ]
     }
   ]
 }

@@ -42,6 +42,10 @@ Data pierwotnej wiadomości: 2026-10-31. Przegląd końcowy wdrażanego DEV, bez
 - **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41238818669.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
+Powiązane przypadki do ręcznego przeklikania:
+
+- [HL-TC-0053 — Polska wersja całej gry: panele, błędy, akcje i powiadomienia](../../testing/manual/HL-TC-0053.md) — `NOT RUN`.
+
 Uzupełniono PL odmowy i dynamiczny próg Ratusza.12testów i18n,12pakowania i cały scenariusz archipelagu na nowym pakiecie PASS, w tym rzeczywiste odmowy przy12osobach i braku drewna. Własne CI/Pages źródła potwierdzono poniżej. Poprzedni tag DEV pozostaje historyczny i nie jest przesuwany.
 Końcowe źródło:1b3de32869c8164ed8d0b85df7ea743ca76a3719; CI41238818669 i Pages41238818743 SUCCESS, tag dev-0.10.0.0-pl-20261031, cache frontend-v24-2. Powtórny pełny Node878/0FAIL i12pakowania PASS; własny CI zaliczył także16zestawów Chromium; wszystkie16ponowiono lokalnie z wynikiem PASS. Wcześniejsze tagi zachowano, bez GCP/resetu.
 

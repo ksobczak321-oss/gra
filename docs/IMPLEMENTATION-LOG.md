@@ -796,3 +796,12 @@ UzupełnieniePL obejmuje także etykiety kosztów i ładunków; nazwy nadane wys
 Końcowe źródło PL:`1b3de32869c8164ed8d0b85df7ea743ca76a3719`, CI41238818669 SUCCESS(5m15s), Pages41238818743 SUCCESS(24s). Tag `dev-0.10.0.0-pl-20261031` bez przesuwania pierwszego tagu. Archiwum78d62aee489b7f8ea529b4a7e7435a430f463dd5fa9b7201e5c2fbe55925d51b, manifest8c1a4fa8f4c20d94037f647e19009bbe2e8376b406f6e7fb7de1f193cab93174,54pliki/10 955 440bajtów. Ponownie878Node PASS oraz12pakowania;16zestawów Chromium i141Python są wymagane i zaliczone w nowym CI. Bez zmian GCP/historii kont.
 
 Końcowy lokalny odbiór pakietuPL:wszystkie16zestawówChromium PASS, bez wyjątków; pliki zawartości identyczne z archiwum rzeczywistegoSHA1b3de328…. Importer306kart nadal wyłącznie dry-run.
+
+
+## 2026-10-31 — DEV 0.10.1.0 / v25: prowadzenie i polski całej gry
+
+GO użytkownika obejmuje praktyczne prowadzenie 25 lekcji od mapy, naturalny polski całego interfejsu oraz oba zadania ligi w jednym oknie 19:00–21:00 Warszawy. Potwierdzone parametry archipelagu zapisano jako decyzje, bez zmiany danych. Kod zachowuje warunki i nagrody lekcji, schemat świata 9, historię i nazwy własne. Wersja 0.10.1.0/cache frontend-v25; [zakres](FRONTEND-V25-REQUIREMENTS.md) i [przegląd PL](POLISH-REVIEW-v25.md).
+
+Prowadzenie wymaga rzeczywistego kliknięcia podświetlonego budynku, a potem właściwej kontrolki. Ograniczony ruch ma statyczne wskazanie. Teksty obejmują 25 obecnych i 25 historycznych lekcji, budynki, gospodarkę, zdarzenia, logowanie, społeczność i płatności testowe. Znaleziono też błędny opis błogosławieństwa (+20 p.p. przez godzinę), nadpisywanie potwierdzenia kupna sekund przez tekst wyceny oraz tłumaczenie nazwy wyspy w opcji transportu; poprawiono je bez zmiany parametrów gospodarki.
+
+Regulamin i prywatność pozostają szkicami Lorem ipsum; aktualizacja opisu ligi ma wersję 2026-10-31-draft4. Nie jest to odbiór prawny ani uruchomienie sprzedaży. Rejestr 261 zmian i 53 przypadki ręczne NOT RUN; fizyczna integracja nadal BLOCKED. Lokalny odbiór: 897 Node + 141 Python + 18 zestawów Chromium PASS. Audyt odczytał 112 rzeczywistych widoków PL z 0 wykrytych angielskich elementów; własne nazwy i monety zachowane. Trzy generatory --check i importer 314 kart w dry-run PASS. Dwa testy starszej treści komunikatów zaktualizowano i ponowiono bez zmiany badanego pakietu. Własny Git/CI/Pages tego wydania jeszcze niepotwierdzony. Bez GCP, resetu kont i PROD.

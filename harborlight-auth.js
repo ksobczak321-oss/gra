@@ -1,10 +1,10 @@
 // PRE-PROD preserves its test accounts. PROD uses Firebase email and OAuth accounts.
 // Passwords are sent only by the Firebase client and never saved in browser storage.
-import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v24-2';
-import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v24-2';
-import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v24-2';
-import { signInWithProvider } from './harborlight-auth-providers.js?v=frontend-v24-2';
-import { legalAcceptance, validLegalAcceptance } from './harborlight-legal.js?v=legal-v3';
+import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v25';
+import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v25';
+import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v25';
+import { signInWithProvider } from './harborlight-auth-providers.js?v=frontend-v25';
+import { legalAcceptance, validLegalAcceptance } from './harborlight-legal.js?v=legal-v4';
 
 registerTranslations({
   'Terms of Service': 'Regulamin gry',
@@ -16,10 +16,10 @@ registerTranslations({
   'I have read the Privacy policy.': 'Potwierdzam zapoznanie się z Polityką prywatności.',
   'Accept the Terms of Service to finish registration.': 'Zaakceptuj Regulamin, aby dokończyć rejestrację.',
   'Confirm that you have read the Privacy policy.': 'Potwierdź zapoznanie się z Polityką prywatności.',
-  'Draft documents contain demonstrative operator details. Review them before confirming.': 'Dokumenty robocze zawierają demonstracyjne dane operatora Lorem ipsum. Przeczytaj je przed potwierdzeniem.',
-  'These confirmations do not consent to marketing or waive consumer rights.': 'Te potwierdzenia nie są zgodą marketingową ani zrzeczeniem się praw konsumenta.',
+  'Draft documents contain demonstrative operator details. Review them before confirming.': 'To robocze dokumenty z przykładowymi danymi operatora („Lorem ipsum”). Przeczytaj je, zanim potwierdzisz.',
+  'These confirmations do not consent to marketing or waive consumer rights.': 'Potwierdzenie dokumentów nie oznacza zgody na marketing ani rezygnacji z praw konsumenta.',
   'Finish registration': 'Dokończ rejestrację',
-  'Your sign-in identity is ready. Confirm the documents before a new island is created.': 'Tożsamość logowania jest gotowa. Potwierdź dokumenty przed utworzeniem nowej wyspy.',
+  'Your sign-in identity is ready. Confirm the documents before a new island is created.': 'Logowanie potwierdzone. Zaakceptuj Regulamin i potwierdź zapoznanie się z Polityką prywatności, aby dokończyć rejestrację.',
   'Confirm and continue': 'Potwierdź i kontynuuj',
   'Saving your confirmation…': 'Zapisywanie potwierdzenia…',
   'Document versions changed. Refresh the page and read the current documents.': 'Wersja dokumentów zmieniła się. Odśwież stronę i przeczytaj aktualne dokumenty.',
@@ -103,7 +103,7 @@ registerTranslations({
   'Too many attempts. Wait a moment and try again.': 'Zbyt wiele prób. Zaczekaj chwilę i spróbuj ponownie.',
   'DEV accounts are not configured yet. Ask the owner to finish their setup.': 'Konta DEV nie są jeszcze skonfigurowane. Poproś właściciela o dokończenie konfiguracji.',
   'Your browser could not save the session. Allow local storage and try again.': 'Przeglądarka nie mogła zapisać sesji. Zezwól na zapisywanie danych i spróbuj ponownie.',
-  'Could not connect to sign-in. Check your connection and try again.': 'Nie udało się połączyć z logowaniem. Sprawdź połączenie i spróbuj ponownie.',
+  'Could not connect to sign-in. Check your connection and try again.': 'Nie udało się połączyć z usługą logowania. Sprawdź połączenie z internetem i spróbuj ponownie.',
   'Your session expired. Sign in again.': 'Sesja wygasła. Zaloguj się ponownie.',
   'Could not sign in. Try again in a moment.': 'Nie udało się zalogować. Spróbuj ponownie za chwilę.'
 });
@@ -111,7 +111,7 @@ registerTranslations({
 registerTranslations({
   'Enter your PRE-PROD username: admin1, admin2 or admin3.': 'Wpisz login PRE-PROD: admin1, admin2 lub admin3.',
   'or use your test login': 'lub użyj loginu testowego',
-  'Google/Facebook support linked test accounts only. Enter your test login and password to link a provider.': 'Google/Facebook obsługuje tylko powiązane konta testowe. Aby powiązać dostawcę, wpisz login i hasło konta testowego.',
+  'Google/Facebook support linked test accounts only. Enter your test login and password to link a provider.': 'Na PRE-PROD przez Google lub Facebook zalogujesz się tylko na wcześniej powiązane konto testowe. Aby je połączyć, wpisz login i hasło konta testowego HARBORLIGHT.',
   'HARBORLIGHT — PRE-PROD sign-in': 'HARBORLIGHT — logowanie PRE-PROD',
   'PRE-PROD TEST ACCOUNTS': 'KONTA TESTOWE PRE-PROD',
   'Sign in to PRE-PROD': 'Zaloguj się do PRE-PROD',
@@ -120,13 +120,13 @@ registerTranslations({
   'Use your PRE-PROD login and password. Your progress is saved in the cloud.': 'Użyj loginu i hasła do konta PRE-PROD. Postęp jest zapisywany w chmurze.',
   'Sign in with Google, Facebook or your email. Your progress is saved in the cloud.': 'Zaloguj się przez Google, Facebook albo e-mail. Postęp jest zapisywany w chmurze.',
   'Account setup is incomplete. Ask the owner to finish its configuration.': 'Konfiguracja kont nie jest zakończona. Poproś właściciela o jej dokończenie.',
-  'This email already has an account. Sign in instead.': 'Ten adres e-mail ma już konto. Zaloguj się.',
-  'This provider is not linked to the selected permanent PRE-PROD account. Use its password to link it.': 'Ten dostawca nie jest powiązany z wybranym stałym kontem PRE-PROD. Użyj jego hasła, aby go powiązać.',
-  'This provider requires configuration by the game owner.': 'Ta metoda logowania wymaga konfiguracji dostawcy przez właściciela gry.',
+  'This email already has an account. Sign in instead.': 'Z tym adresem e-mail jest już powiązane konto. Zaloguj się.',
+  'This provider is not linked to the selected permanent PRE-PROD account. Use its password to link it.': 'Wybrana metoda logowania nie jest powiązana z tym kontem testowym PRE-PROD. Podaj hasło tego konta HARBORLIGHT, aby ją włączyć.',
+  'This provider requires configuration by the game owner.': 'Ta metoda logowania nie jest jeszcze dostępna. Właściciel gry musi dokończyć jej konfigurację.',
   'Sign-in cancelled.': 'Logowanie anulowane.',
   'Allow the sign-in popup in your browser.': 'Zezwól przeglądarce na otwarcie okna logowania.',
   'This email uses another sign-in method. Sign in using that method first.': 'Ten adres korzysta z innej metody logowania. Zaloguj się dotychczasową metodą.',
-  'Could not connect to the sign-in provider. Try again.': 'Nie udało się połączyć z dostawcą logowania. Spróbuj ponownie.'
+  'Could not connect to the sign-in provider. Try again.': 'Nie udało się połączyć z usługą logowania. Spróbuj ponownie.'
 });
 
 (() => {

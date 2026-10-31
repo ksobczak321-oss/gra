@@ -229,6 +229,7 @@ def actionable_tutorial(browser):
     expect(page.locator('[data-tutorial-current]')).to_have_attribute('data-tutorial-current', 'rules-read')
     assert not page.locator('[data-tutorial-observe]').count()
     page.locator('[data-tutorial-visit="rules-read"]').click()
+    page.locator('#hit-world-farm').click()
     assert not state(page)['tutorial']['completed'].get('rules-read')
     expect(page.locator('[data-tutorial-pointer]')).to_be_visible()
     page.locator('[data-worker-building="farm"][data-worker-delta="1"]').click()
@@ -237,6 +238,7 @@ def actionable_tutorial(browser):
     expect(page.locator('[data-tutorial-achievement="rules-read"]')).to_be_visible()
     page.locator('[data-tutorial-skip="rules-read"]').click()
     page.locator('[data-tutorial-go="island-map"]').click()
+    page.locator('#hit-world-warehouse').click()
     expect(page.locator('[data-worker-building="warehouse"][data-worker-delta="1"]')).to_have_class(__import__('re').compile('tutorial-action-target'))
     page.locator('[data-worker-building="warehouse"][data-worker-delta="1"]').click()
     assert state(page)['tutorial']['completed']['island-map']

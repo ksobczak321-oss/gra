@@ -5,12 +5,12 @@ import {
   MATERIAL_IDS, stockRoom, receiveMaterials, notify,
   quoteInstantTransport, instantTransport, estimateMaterialsSeconds, availableGoods, haulCapacity,
   townhallPopulationRequirement
-} from './harborlight-v1-logistics.js?v=frontend-v24-2';
-import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v24-2';
+} from './harborlight-v1-logistics.js?v=frontend-v25';
+import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v25';
 import { secondsUntilWarsawMidnight } from './harborlight-v1-calendar.js';
 import { MINI_GAME_RULES, miniGameRoundRules, createMiniGame, normalizeMiniGame,
-  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v24-2';
-export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v24-2';
+  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v25';
+export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v25';
 
 const HOUR = 3600;
 const QUEST_LIFE = 6 * HOUR;
@@ -716,7 +716,7 @@ export function activityAction(state, action, context = {}) {
       consumeMaterial(state, 'coins', quote.coins);
       run.roundLimit += quote.seconds; run.extraTimePurchases = integer(run.extraTimePurchases) + 1;
       run.remaining = expeditionRoundStatus(state, run).remaining;
-      return good('Added ' + quote.seconds + ' seconds for ' + quote.coins + ' coins.', quote);
+      return { ...quote, message: 'Added ' + quote.seconds + ' seconds for ' + quote.coins + ' coins.' };
     }
     if (type === 'expeditionAdBegin') {
       if (run.adPause) return bad('An ad is already in progress.');

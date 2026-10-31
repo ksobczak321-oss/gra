@@ -1,6 +1,6 @@
 # Regulamin gry HARBORLIGHT
 
-Wersja: 2026-10-31-draft3. Data projektu: 31 października 2026 r.
+Wersja: 2026-10-31-draft4. Data projektu: 31 października 2026 r.
 
 DOKUMENT ROBOCZY DO PRZEGLĄDU WŁAŚCICIELA. Dane operatora „Lorem ipsum” są danymi demonstracyjnymi i wymagają zastąpienia przed publicznym uruchomieniem usługi. Dokument nie potwierdza gotowości prawnej sprzedaży. Obecnie prawdziwe płatności i reklamy komercyjne nie są uruchomione.
 
@@ -64,7 +64,7 @@ W przygotowanym DEV gracz może utworzyć sojusz, poprosić o przyjęcie do nieg
 
 Dostępne rodzaje rozmów to czat własnego sojuszu oraz prywatne rozmowy gracz–gracz. Wiadomości prywatne nie są publicznym pokojem, a serwer sprawdza uczestnictwo rozmowy. Obowiązują blokowanie, wyciszanie, zgłaszanie i limity pokazywane w interfejsie. Nie wolno publikować treści bezprawnych, nękać ani ujawniać cudzych danych. Odbiorca może zachować otrzymaną treść; moderator może otrzymać zgłoszony fragment w celu rozpatrzenia naruszenia. Szczegóły przechowywania opisuje Polityka prywatności.
 
-Parametry prototypu ligi DEV to dni 15–21 miesiąca, czas Europe/Warsaw: zadanie zręcznościowe 19:00–20:00, logiczne 20:00–21:00, po dwie próby każdego rodzaju. Wynik dnia to średnia obu zadań; niezagrane daje 0. Wynik sojuszu opiera się na średniej zamrożonego składu i premii współpracy do +8. Trening jest oddzielny od punktującej próby. Zakup, reklama i liczba własnych wysp nie dają dodatkowych prób ani czasu ligi. Nagrody mają charakter kosmetyczny; zapis uprawnienia nie jest obietnicą wypłaty pieniędzy. Obowiązują warunki i terminarz pokazane dla konkretnego sezonu.
+Potwierdzone zasady ligi DEV to dni15–21 miesiąca, czasEurope/Warsaw: zadania logiczne i zręcznościowe są dostępne w tym samym wspólnym oknie19:00–21:00, po dwie próby każdego rodzaju. Gracz wybiera kolejność; o19:00 i20:00 dostępne są oba rodzaje, a od21:00 nowe akcje punktujące są zamknięte. Wynik dnia to średnia obu zadań; niezagrane daje 0. Wynik sojuszu opiera się na średniej zamrożonego składu i premii współpracy do +8. Trening jest oddzielny od punktującej próby. Zakup, reklama i liczba własnych wysp nie dają dodatkowych prób ani czasu ligi. Nagrody mają charakter kosmetyczny; zapis uprawnienia nie jest obietnicą wypłaty pieniędzy. Obowiązują warunki i terminarz pokazane dla konkretnego sezonu.
 
 Podgląd bez aktywnego API może udostępniać wyraźnie opisaną, ulotną demonstrację z syntetycznymi osobami. Nie jest ona potwierdzeniem publikacji czatu, rankingu lub ligi w PRE-PROD albo PROD i nie wysyła wiadomości do Facebooka ani innych zewnętrznych serwisów.
 

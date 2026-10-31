@@ -87,6 +87,7 @@ def first_five_actions(browser):
     assert snapshot(page)['tutorial']['completed'] == {}
     assert not page.locator('[data-tutorial-observe]').count()
     page.locator('[data-tutorial-visit="rules-read"]').click()
+    page.locator('#hit-world-farm').click()
     assert snapshot(page)['buildings']['farm']['workers'] == 0
     assert snapshot(page)['tutorial']['completed'] == {}
     assert snapshot(page)['tutorial']['chests'] == {}
@@ -99,6 +100,7 @@ def first_five_actions(browser):
     for index, (lesson, building) in enumerate(steps):
         if index:
             page.locator(f'[data-tutorial-go="{lesson}"]').click()
+            page.locator('#hit-world-' + building).click()
         before = snapshot(page)
         assert not before['tutorial']['completed'].get(lesson)
         assert_arrow(page, building).click()
@@ -121,6 +123,7 @@ def first_five_actions(browser):
     assert overfull['tutorial']['claimed']['food-check']
     page.locator('[data-tutorial-go="townhall-upgrade"]').click()
     page.locator('[data-tutorial-supplies]').click()
+    page.locator('#hit-world-townhall').click()
     supplied = snapshot(page)
     assert supplied['tutorial']['buildingSuppliesClaimed']
     assert supplied['resources']['coins'] == 500

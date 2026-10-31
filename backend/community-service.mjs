@@ -122,7 +122,7 @@ export function createCommunityService({ store, now = () => Date.now(), environm
     const ownGroup = groups.find(group => group.some(t => t.id === participation?.teamId)), ownStanding = ownGroup?.find(t => t.id === participation?.teamId);
     const rewards = leagueRewards(teams.find(t => t.id === participation?.teamId), p.uid);
     rewards.teamDecoration = rewards.playedDays > 0 && ownGroup?.length >= 4 && ownStanding?.rank <= 3 ? ['gold', 'silver', 'bronze'][ownStanding.rank - 1] : null;
-    return { season, calendar: cal, groups, friendly: standings.length < 4, ownTeamId: participation?.teamId || null, registered: !!participation?.teamId, rewards, schedule: { days: [15, 21], arcade: '19:00–20:00', logic: '20:00–21:00', zone: LEAGUE_RULES.zone, perTaskAttempts: 2, dailyScore: 'average-of-two-tasks' } };
+    return { season, calendar: cal, serverTime: at, groups, friendly: standings.length < 4, ownTeamId: participation?.teamId || null, registered: !!participation?.teamId, rewards, schedule: { days: [15, 21], arcade: '19:00–21:00', logic: '19:00–21:00', zone: LEAGUE_RULES.zone, perTaskAttempts: 2, dailyScore: 'average-of-two-tasks' } };
   }
   function leagueRewards(team, uid) {
     const days = Object.values(team?.scores?.[uid] || {}), played = days.filter(d => (d.logic?.goals || 0) + (d.arcade?.goals || 0) > 0).length;
@@ -230,7 +230,7 @@ export function createCommunityService({ store, now = () => Date.now(), environm
         const day = practice ? Math.max(1, Math.min(7, Math.floor(data.day || 1))) : cal.round;
         let teamId = null, roster = null;
         if (!practice) {
-          if (!cal.playing || cal.slot !== kind) fail('league-slot-closed');
+          if (!cal.availableKinds.includes(kind)) fail('league-slot-closed');
           const participant = await tx.get(participantPath(cal.season, uid)); if (!participant || p.allianceId !== participant.teamId) fail('league-roster-required');
           roster = await tx.get(teamPath(cal.season, participant.teamId)); if (!roster?.roster.some(r => r.uid === uid)) fail('league-roster-required'); teamId = participant.teamId;
         }
@@ -238,7 +238,7 @@ export function createCommunityService({ store, now = () => Date.now(), environm
         const counter = await tx.get(counterPath) || { count: 0 };
         if (!practice && counter.count >= LEAGUE_RULES.attempts) fail('league-attempt-limit');
         const id = 'try_' + hash(uid + '\0' + requestId).slice(0, 40), challenge = createLeagueChallenge({ day, kind, seed: parseInt(hash(cal.season + '\0' + day).slice(0, 6), 16) });
-        const deadlineAt = Math.min(at + challenge.duration, practice ? at + challenge.duration : at + (60 - cal.minute) * 60000 - at % 60000);
+        const deadlineAt = Math.min(at + challenge.duration, practice ? at + challenge.duration : cal.windowEndsAt);
         const attempt = { id, uid, season: cal.season, day, kind, teamId, epoch: p.epoch, practice, startedAt: at, deadlineAt, challenge, progress: emptyLeagueProgress(), status: 'playing', sequence: 0 };
         tx.put(counterPath, { count: counter.count + 1 }); tx.put(attemptPath(uid, id), attempt); tx.put(ppath(uid), { ...p, activeAttemptId: id }); return finish(publicAttempt(attempt, at));
       }
@@ -249,7 +249,7 @@ export function createCommunityService({ store, now = () => Date.now(), environm
         let team = null;
         if (!attempt.practice) {
           const cal = leagueCalendar(at);
-          if (command === 'attemptAction' && (cal.season !== attempt.season || cal.round !== attempt.day || cal.slot !== attempt.kind)) fail('league-slot-closed');
+          if (command === 'attemptAction' && (cal.season !== attempt.season || cal.round !== attempt.day || !cal.availableKinds.includes(attempt.kind))) fail('league-slot-closed');
           if (command === 'attemptFinish' && (cal.season > attempt.season || cal.season === attempt.season && cal.day >= 23)) fail('league-results-final');
           if (p.allianceId !== attempt.teamId || p.epoch !== attempt.epoch) fail('league-membership-changed');
           team = await tx.get(teamPath(attempt.season, attempt.teamId)); if (!team?.roster.some(r => r.uid === uid)) fail('league-roster-required');

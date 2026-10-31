@@ -1,11 +1,17 @@
 // Shared, deterministic challenge rules. Scores are recomputed by the API from
 // accepted actions and its own clock; a caller-supplied score is never used.
-export const LEAGUE_RULES = Object.freeze({ zone: 'Europe/Warsaw', firstDay: 15, lastDay: 21, arcadeHour: 19, logicHour: 20, attempts: 2, allianceLimit: 5, maxDuration: 180000, chatLimit: 500 });
+export const LEAGUE_RULES = Object.freeze({ zone: 'Europe/Warsaw', firstDay: 15, lastDay: 21, windowStartHour: 19, windowEndHour: 21, attempts: 2, allianceLimit: 5, maxDuration: 180000, chatLimit: 500 });
 const warsaw = new Intl.DateTimeFormat('en-CA', { timeZone: LEAGUE_RULES.zone, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
 export function leagueCalendar(at = Date.now()) {
   const p = Object.fromEntries(warsaw.formatToParts(new Date(at)).filter(x => x.type !== 'literal').map(x => [x.type, Number(x.value)]));
   const season = `${p.year}-${String(p.month).padStart(2, '0')}`;
-  return { ...p, season, round: p.day >= 15 && p.day <= 21 ? p.day - 14 : 0, registration: p.day >= 8 && p.day <= 14, playing: p.day >= 15 && p.day <= 21, slot: p.hour === LEAGUE_RULES.arcadeHour ? 'arcade' : p.hour === LEAGUE_RULES.logicHour ? 'logic' : null };
+  const playing = p.day >= LEAGUE_RULES.firstDay && p.day <= LEAGUE_RULES.lastDay;
+  const open = playing && p.hour >= LEAGUE_RULES.windowStartHour && p.hour < LEAGUE_RULES.windowEndHour;
+  // Warsaw switches DST overnight. The evening window uses a single offset;
+  // subtracting whole remaining wall-clock minutes also preserves milliseconds.
+  const windowEndsAt = open ? at + ((LEAGUE_RULES.windowEndHour - p.hour) * 60 - p.minute) * 60000 - at % 60000 : null;
+  return { ...p, season, round: playing ? p.day - LEAGUE_RULES.firstDay + 1 : 0, registration: p.day >= 8 && p.day <= 14, playing,
+    slot: open ? 'shared' : null, availableKinds: open ? ['arcade', 'logic'] : [], windowEndsAt };
 }
 export const LOGIC_TASKS = Object.freeze([
   { pl: 'Ostatni konwój', en: 'The last convoy', instruction: ['Przewieź pięć partii po 20 sztuk. Łódź mieści dwie partie; każdą dostarcz do wskazanego nabrzeża.', 'Deliver five 20-unit batches to their labelled quays. Your boat carries two batches.'] },

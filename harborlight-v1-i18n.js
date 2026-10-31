@@ -1,4 +1,4 @@
-import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v24-2';
+import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v25';
 
 /** English is the source language. Polish strings are presentation only: saves,
  * identifiers, action payloads and user-entered values are never translated. */
@@ -80,7 +80,7 @@ Confirm|Potwierdź
 Continue|Kontynuuj
 Back|Wróć
 Next|Dalej
-Previous|Poprzednie
+Previous|Wstecz
 Save|Zapisz
 Read|Przeczytane
 New|Nowe
@@ -96,7 +96,7 @@ Island day and time|Dzień i godzina na wyspie
 Island day|Dzień na wyspie
 Island time|Czas na wyspie
 Workers|Pracownicy
-Workforce|Siła robocza
+Workforce|Obsada
 Working|Pracujący
 Working residents|Pracujący mieszkańcy
 Active workers|Aktywni pracownicy
@@ -206,13 +206,13 @@ No upgrades planned. Select a building on the island.|Nie zaplanowano rozbudowy.
 Plan waiting for production and transport.|Plan czeka na produkcję i transport.
 Materials reserved, including the 10% queue surcharge. Waiting for a construction slot.|Materiały zarezerwowano wraz z dopłatą 10% za kolejkę. Oczekiwanie na wolne miejsce budowy.
 Waiting for an available construction slot and carriers.|Oczekiwanie na wolne miejsce budowy i tragarzy.
-Estimated remaining transport time and subsequent building phase.|Szacowany pozostały czas transportu oraz następującej po nim budowy.
+Estimated remaining transport time and subsequent building phase.|Szacowany czas pozostałego transportu i późniejszej budowy.
 Estimated transport + building|Szacowany transport + budowa
 Estimated delivery and building time|Szacowany czas dostawy i budowy
 Estimated delivery and building time|Szacowany czas dostawy i budowy
 Estimate unavailable|Szacunek niedostępny
-Assign warehouse carriers to calculate the time.|Przydziel tragarzy w magazynie, aby obliczyć czas.
-Assign warehouse carriers to estimate delivery and building time.|Przydziel tragarzy w magazynie, aby oszacować czas dostawy i budowy.
+Assign warehouse carriers to calculate the time.|Przydziel tragarzy do magazynu, aby obliczyć czas.
+Assign warehouse carriers to estimate delivery and building time.|Przydziel tragarzy do magazynu, aby oszacować czas dostawy i budowy.
 Assign warehouse|Przydziel do magazynu
 warehouse carriers|tragarze magazynu
 Warehouse and carriers|Magazyn i tragarze
@@ -337,8 +337,8 @@ Island construction|Budowy na wyspie
 Chapel and blessings|Kaplica i błogosławieństwa
 Blessing|Błogosławieństwo
 Blessing active|Błogosławieństwo aktywne
-Upgrade bonus active|Premia za rozbudowę aktywna
-Ready for a blessing|Gotowa na błogosławieństwo
+Upgrade bonus active|Działa premia za rozbudowę
+Ready for a blessing|Możesz użyć błogosławieństwa
 No active upgrade bonus.|Brak aktywnej premii za rozbudowę.
 Activate free blessing|Użyj darmowego błogosławieństwa
 Lighthouse visits|Zwiedzanie latarni
@@ -369,7 +369,7 @@ Open Market — goods for goods|Otwórz targ — towar za towar
 Market — barter goods|Targ — wymiana towarów
 Market — barter without coins|Targ — wymiana bez monet
 Available at Market|Dostępne na targu
-Locked for one hour|Zablokowane na godzinę
+Locked for one hour|Dostępne po godzinie
 Bring 10 to Market|Przynieś 10 na targ
 Return goods to Warehouse|Odnieś towary do magazynu
 Goods offered|Oferowany towar
@@ -378,7 +378,7 @@ Quantity to exchange|Ilość do wymiany
 Delivery to Market|Dostawa na targ
 Exchange goods|Wymień towary
 Exchange — 10% fee|Wymiana — prowizja 10%
-No locked goods|Brak zablokowanych towarów
+No locked goods|Żadne towary nie czekają na odblokowanie
 Shipping orders|Zlecenia portowe
 No active shipping orders.|Brak aktywnych zleceń portowych.
 The Harbor unlocks at Town Hall level 4.|Port jest dostępny od 4. poziomu ratusza.
@@ -417,7 +417,7 @@ Deposited|Przekazano
 Start task|Rozpocznij zadanie
 Start this task|Rozpocznij to zadanie
 View task|Zobacz zadanie
-Active · deliver goods|Aktywne · przekaż towary
+Active · deliver goods|Zadanie trwa · przekaż towary
 Task confirmation|Potwierdzenie zadania
 Confirm task|Potwierdź zadanie
 Confirm acceptance|Potwierdź przyjęcie
@@ -429,7 +429,7 @@ Start this task to begin contributing goods. Only one task can be active.|Rozpoc
 Current pot|Obecna pula
 Unclaimed pot|Nieodebrana pula
 Potential reward|Potencjalna nagroda
-Actual potential reward|Aktualna możliwa nagroda
+Actual potential reward|Nagroda możliwa do zdobycia
 Next win|Kolejne zwycięstwo
 Resume expedition|Wznów ekspedycję
 Start expedition|Rozpocznij ekspedycję
@@ -572,7 +572,7 @@ A carrier takes one material per trip, including a partial load. The base round 
 Each row shows the current carrier, cargo, route and remaining delivery time. A new worker first walks five minutes from Home. An idle worker will take the next available job; an already loaded shipment keeps its cargo.|Każdy wiersz pokazuje tragarza, ładunek, trasę i pozostały czas dostawy. Nowy pracownik najpierw idzie 5 minut z domu. Wolny pracownik podejmie kolejne dostępne zlecenie; już załadowany transport zachowuje ładunek.
 Choose up to three priorities from goods and Construction. Selected priorities stay highlighted and numbered. Click a selected priority to remove it; the remaining priorities move up.|Wybierz do trzech priorytetów spośród towarów i budowy. Wybrane priorytety są podświetlone i ponumerowane. Kliknij wybrany priorytet, aby go usunąć; pozostałe przesuną się wyżej.
 Each repeating block contains 10 trips: one priority gets 8 trips and 2 random; two priorities get 5 + 3 and 2 random; three get 5 + 3 + 2. Priorities stay active until you change them. Unavailable goods are skipped so carriers can continue with an available delivery.|Każdy powtarzany blok obejmuje 10 kursów: jeden priorytet otrzymuje 8 kursów, a 2 są losowe; dwa priorytety otrzymują 5 + 3 kursy i 2 losowe; trzy otrzymują 5 + 3 + 2. Priorytety działają do ich zmiany. Niedostępne towary są pomijane, aby tragarze mogli realizować inne dostawy.
-Each resident consumes 1 Food per real hour from central storage, including while offline. Eating adds 1 happiness point per hour. Without food, work efficiency immediately falls to 50%; after 12 continuous hungry hours the resident also loses 5 points per hour. Food reserved for meals cannot be spent twice.|Każdy mieszkaniec zużywa 1 żywności z magazynu centralnego na godzinę czasu rzeczywistego, także po wylogowaniu. Jedzenie dodaje 1 punkt szczęścia na godzinę. Bez żywności wydajność od razu spada do 50%; po 12 godzinach ciągłego głodu mieszkaniec traci też 5 punktów na godzinę. Żywności zarezerwowanej na posiłki nie można wydać ponownie.
+Each resident consumes 1 Food per real hour from central storage, including while offline. Eating adds 1 happiness point per hour. Without food, work efficiency immediately falls to 50%; after 12 continuous hungry hours the resident also loses 5 points per hour. Food reserved for meals cannot be spent twice.|Każdy mieszkaniec zużywa jedną jednostkę żywności z magazynu centralnego na godzinę czasu rzeczywistego, także po wylogowaniu. Jedzenie dodaje 1 punkt szczęścia na godzinę. Bez żywności wydajność od razu spada do 50%; po 12 godzinach ciągłego głodu mieszkaniec traci też 5 punktów na godzinę. Żywności zarezerwowanej na posiłki nie można wydać ponownie.
 Each workplace can employ up to 12 × its own building level, limited by free residents at home. Each resident has one assignment. Workers shows assigned / free at Home / this building’s limit.|Każdy budynek zatrudnia do 12 × własny poziom, o ile są wolni mieszkańcy w domu. Mieszkaniec ma tylko jeden przydział. Pole Pracownicy pokazuje: przydzieleni / wolni w domu / limit tego budynku.
 A released worker takes 5 minutes to return home. During that time they are unavailable and do not work. You can assign them again after they return.|Zwolniony pracownik wraca do domu przez 5 minut. W tym czasie jest niedostępny i nie pracuje. Możesz przydzielić go ponownie po powrocie.
 Production per worker is 10, 12, 13, 14… units per hour by the workplace’s own level. Hunger halves production and transport immediately. Releasing a worker discards their unfinished unit.|Produkcja jednego pracownika wynosi 10, 12, 13, 14… sztuk na godzinę zależnie od poziomu jego budynku. Głód od razu zmniejsza produkcję i transport o połowę. Zwolnienie pracownika usuwa postęp nieukończonej sztuki.
@@ -610,7 +610,7 @@ Only one task can be active. Deliver goods from central storage in instalments. 
 Deposited goods cannot be withdrawn. Complete every requirement before the deadline to receive the displayed reward.|Przekazanych towarów nie można wycofać. Uzupełnij wszystkie wymagania przed terminem, aby otrzymać pokazaną nagrodę.
 Donated goods cannot be withdrawn. Complete every requirement before the deadline to receive the displayed reward.|Przekazanych towarów nie można wycofać. Uzupełnij wszystkie wymagania przed terminem, aby otrzymać pokazaną nagrodę.
 Five attractions are available in the bottom dock. Offers refresh every 24 hours. Each purchase grants its displayed happiness to the displayed residents for six hours.|Na dolnym pasku dostępnych jest pięć atrakcji. Oferta odnawia się co 24 godziny. Każdy zakup daje wskazaną premię szczęścia wskazanym mieszkańcom przez sześć godzin.
-Buying the same attraction repeatedly grants 100%, 75%, 50%, 25%, then 0% of its original benefit. A 24-hour break restores its full benefit.|Kolejne zakupy tej samej atrakcji dają 100%, 75%, 50%, 25%, a potem 0% pierwotnej premii. Przerwa 24 godzin przywraca pełny efekt.
+Buying the same attraction repeatedly grants 100%, 75%, 50%, 25%, then 0% of its original benefit. A 24-hour break restores its full benefit.|Kolejne zakupy tej samej atrakcji dają 100%, 75%, 50%, 25%, a potem 0% pierwotnej premii. Przerwa trwająca 24 godziny przywraca pełny efekt.
 Upgrade 100 path sections through five levels. Each section upgrade costs 100 Stone and is immediate. All 100 sections must reach the previous level before you start the next.|Ulepsz 100 odcinków ścieżek przez pięć poziomów. Ulepszenie odcinka kosztuje 100 kamienia i działa natychmiast. Wszystkie 100 odcinków musi osiągnąć poprzedni poziom przed rozpoczęciem kolejnego.
 Animations are paused by your system’s reduced-motion preference. Enable the checkbox to turn on water, smoke and island movement.|Animacje są wstrzymane przez systemowe ograniczenie ruchu. Włącz pole wyboru, aby uruchomić wodę, dym i ruch na wyspie.
 Animations are off. Enable the checkbox to turn on water, smoke and island movement.|Animacje są wyłączone. Włącz pole wyboru, aby uruchomić wodę, dym i ruch na wyspie.
@@ -629,7 +629,7 @@ The upgrade gives both benefits for 24 hours × the achieved Lighthouse level. N
 Each returning group has its own six-hour population bonus. Overlapping groups add their bonuses.|Każda powracająca grupa ma własną sześciogodzinną premię dla populacji. Nakładające się grupy sumują premie.
 The personal benefit starts after the four-hour visit and lasts for 24 hours.|Indywidualna premia zaczyna działać po czterogodzinnym zwiedzaniu i trwa 24 godziny.
 Every new resident starts with 24 hours of frozen 0% happiness; normal calculation begins afterwards.|Każdy nowy mieszkaniec przez pierwsze 24 godziny ma stałe 0% szczęścia; potem rozpoczyna się zwykłe naliczanie.
-Food is assigned automatically. Each resident consumes one Food per hour.|Żywność jest przydzielana automatycznie. Każdy mieszkaniec zużywa jedną sztukę żywności na godzinę.
+Food is assigned automatically. Each resident consumes one Food per hour.|Żywność jest przydzielana automatycznie. Każdy mieszkaniec zużywa jedną jednostkę żywności na godzinę.
 The work benefit starts on arrival. A production blockage pauses this benefit.|Premia za pracę zaczyna działać po przybyciu. Blokada produkcji wstrzymuje tę premię.
 The efficiency reduction starts immediately when food runs out; the happiness penalty has a separate 12-hour grace period.|Wydajność spada natychmiast po wyczerpaniu żywności; kara do szczęścia ma osobny 12-godzinny okres ochronny.
 The penalty begins after twelve continuous hours without food. Earlier hours are not penalized retrospectively.|Kara zaczyna działać po dwunastu godzinach ciągłego braku żywności. Za wcześniejsze godziny nie nalicza się jej wstecz.
@@ -691,7 +691,7 @@ Exchange in batches of 10: you receive 9 after the fee.|Wymieniaj partie po 10 s
 Not enough unlocked goods in the market.|Na targu brakuje odblokowanych towarów.
 Invalid collection order.|Nieprawidłowe zlecenie odbioru.
 Goods are waiting for collection by warehouse workers.|Towary czekają na odbiór przez magazynierów.
-Assigned workers process materials. Production requires time and inputs from the central warehouse.|Przydzieleni pracownicy przetwarzają materiały. Produkcja wymaga czasu i surowców z magazynu centralnego.
+Assigned workers process materials. Production requires time and inputs from the central warehouse.|Pracownicy przetwarzają materiały po przydzieleniu ich do budynku. Potrzebują na to czasu i surowców z magazynu centralnego.
 Invalid transport priority change.|Nieprawidłowa zmiana priorytetu transportu.
 This material is already at the end of the priority list.|Ten materiał jest już na końcu listy priorytetów.
 Transport priority updated.|Zmieniono priorytety transportu.
@@ -718,7 +718,7 @@ Buying a building without materials unlocks at Town Hall level 4.|Zakup budynku 
 The construction price is not available.|Cena budowy jest niedostępna.
 A construction package is required to schedule expected deliveries.|Planowanie przyszłych dostaw wymaga pakietu budowlanego.
 These materials are already available. Order a normal upgrade.|Te materiały są już dostępne. Zleć zwykłą rozbudowę.
-The missing materials have no feasible production and delivery route.|Brakujące materiały nie mają wykonalnej drogi produkcji i dostawy.
+The missing materials have no feasible production and delivery route.|Brakujących materiałów nie można obecnie wyprodukować i dostarczyć.
 This package cannot be extended further.|Nie można dalej przedłużyć tego pakietu.
 There are no goods to transport.|Nie ma towarów do przewiezienia.
 Not enough coins for instant transport.|Za mało monet na transport natychmiastowy.
@@ -879,9 +879,9 @@ Let a carrier deliver at least one batch of finished goods to the Warehouse.|Poc
 Choose a transport priority|Wybierz priorytet transportu
 Select a material or Construction as a numbered transport priority.|Wybierz materiał lub budowę jako numerowany priorytet transportu.
 Learn the food chain|Poznaj łańcuch żywności
-The Farm makes grain. The Windmill uses two central grain to make one local Food.|Gospodarstwo produkuje zboże. Młyn zużywa dwie sztuki zboża z magazynu centralnego, aby wyprodukować jedną żywności przy budynku.
+The Farm makes grain. The Windmill uses two central grain to make one local Food.|Gospodarstwo produkuje zboże. Młyn pobiera dwie jednostki zboża z magazynu centralnego i wytwarza jedną jednostkę żywności, która czeka przy budynku na odbiór.
 Keep food at Home|Zapewnij żywność mieszkańcom
-Each resident automatically eats one Food per hour, supplied only from central storage.|Każdy mieszkaniec automatycznie zjada jedną żywności na godzinę, pobieraną wyłącznie z magazynu centralnego.
+Each resident automatically eats one Food per hour, supplied only from central storage.|Każdy mieszkaniec zjada jedną jednostkę żywności na godzinę. Jedzenie jest pobierane automatycznie, wyłącznie z magazynu centralnego.
 Read personal happiness|Sprawdź szczęście mieszkańców
 Each person has individual happiness. The island value is the population average.|Każdy mieszkaniec ma własne szczęście. Wartość wyspy jest średnią populacji.
 Learn House happiness points|Poznaj punkty szczęścia domu
@@ -915,7 +915,7 @@ Check food, jobs, storage, active effects and plans. You are ready to manage the
 Learn the island in 25 short steps: five tasks on each of your first five active days. Complete tasks and claim their displayed rewards.|Poznaj wyspę w 25 krótkich krokach: po pięć zadań przez pierwsze pięć aktywnych dni. Wykonuj zadania i odbieraj pokazane nagrody.
 Reward claimed|Nagroda odebrana
 Available on this active day|Dostępne w tym aktywnym dniu
-Read and complete|Przeczytaj i ukończ
+Read and complete|Przeczytaj instrukcję i wykonaj zadanie
 In progress|W toku
 Other notifications|Pozostałe powiadomienia
 Choose which categories are shown. All events remain in your island history.|Wybierz wyświetlane kategorie. Wszystkie zdarzenia pozostają w historii wyspy.
@@ -963,16 +963,24 @@ function priorityRule(pattern, replacement) { rules.unshift([pattern, replacemen
 const tr = text => translate(text, 'pl');
 const plural = (number, one, few, many) => { const n = Math.abs(Number(String(number).replace(/[\s,]/g, ''))); return n === 1 ? one : Number.isInteger(n) && n % 10 >= 2 && n % 10 <= 4 && !(n % 100 >= 12 && n % 100 <= 14) ? few : many; };
 const coins = n => `${n} ${plural(n, 'moneta', 'monety', 'monet')}`;
+const coinsAfterFor = n => `${n} ${plural(n, 'monetę', 'monety', 'monet')}`;
+const materialAmount = (amount, resource, grammaticalCase = 'nominative') => {
+  const n = String(amount).trim(), id = String(resource).toLowerCase();
+  if (id === 'coins' || id === 'coin') return grammaticalCase === 'accusative' ? coinsAfterFor(n) : coins(n);
+  if (id === 'planks' || id === 'plank') return `${n} ${plural(n, grammaticalCase === 'accusative' ? 'deskę' : 'deska', 'deski', 'desek')}`;
+  const massNouns = { wood: 'drewna', stone: 'kamienia', grain: 'zboża', food: 'żywności' };
+  return massNouns[id] ? `${n} jedn. ${massNouns[id]}` : `${n} ${tr(resource)}`;
+};
 const recipients = n => `${n} ${Number(String(n).replace(/[\s,]/g, '')) === 1 ? 'osoby' : 'osób'}`;
 rule(/^Reward(?: received)?:\s*(.*)$/s, (_, value) => `Nagroda${_.startsWith('Reward received') ? ' otrzymana' : ''}: ${tr(value)}`);
 rule(/^Reward ×(\d+):\s*(.*)$/s, (_, multiplier, value) => `Nagroda ×${multiplier}: ${tr(value)}`);
 rule(/^(Bonus|Penalty|Status|Ended|Updated):\s*(.*)$/s, (_, prefix, value) => `${tr(prefix)}: ${tr(value)}`);
 rule(/^(.*) — (details|stock|construction and upgrades|visits and upgrades)$/, (_, name, suffix) => `${tr(name)} — ${({ details: 'szczegóły', stock: 'zapas', 'construction and upgrades': 'budowa i rozbudowa', 'visits and upgrades': 'zwiedzanie i rozbudowa' })[suffix]}`);
 rule(/^Resident #?(\d+)(.*)$/s, (_, id, rest) => `Mieszkaniec #${id}${tr(rest)}`);
-rule(/^All ([\d, ]+) residents$/, (_, n) => `Wszyscy mieszkańcy: ${n}`);
-rule(/^([\d, ]+) (resident|residents)$/, (_, n) => `${n} ${plural(n, 'mieszkaniec', 'mieszkańcy', 'mieszkańców')}`);
-rule(/^Level ([\d, ]+)(.*)$/s, (_, n, rest) => `Poziom ${n}${tr(rest)}`);
-rule(/^Lv\. ([\d, ]+)$/, (_, n) => `Poz. ${n}`);
+rule(/^All ([\d,\s]+) residents$/, (_, n) => `Wszyscy mieszkańcy: ${n}`);
+rule(/^([\d,\s]+) (resident|residents)$/, (_, n) => `${n} ${plural(n, 'mieszkaniec', 'mieszkańcy', 'mieszkańców')}`);
+rule(/^Level ([\d,\s]+)(.*)$/s, (_, n, rest) => `Poziom ${n}${tr(rest)}`);
+rule(/^Lv\. ([\d,\s]+)$/, (_, n) => `Poz. ${n}`);
 rule(/^Day (\d+)(.*)$/s, (_, n, rest) => `Dzień ${n}${tr(rest)}`);
 rule(/^(.*), level (\d+)(.*)$/s, (_, name, level, rest) => `${tr(name)}, poziom ${level}${tr(rest)}`);
 rule(/^Next level:\s*(\d+)$/, (_, n) => `Kolejny poziom: ${n}`);
@@ -981,11 +989,11 @@ rule(/^Upgrade the Town Hall to level (\d+) first\.$/, (_, n) => `Najpierw uleps
 rule(/^Town Hall level (\d+) allows other buildings to reach the same level\.$/, (_, n) => `Ratusz poziomu ${n} pozwala rozbudowywać pozostałe budynki do tego samego poziomu.`);
 rule(/^Available (?:at|from) Town Hall level (\d+)\.$/, (_, n) => `Dostępne od ${n}. poziomu ratusza.`);
 rule(/^This building unlocks at level (\d+)\.$/, (_, n) => `Ten budynek jest dostępny od poziomu ${n}.`);
-rule(/^The House provides ([\d, ]+) beds\.$/, (_, n) => `Dom zapewnia ${n} miejsc mieszkalnych.`);
-rule(/^([\d, ]+) residents · ([\d, ]+) beds$/, (_, people, beds) => `${people} mieszkańców · ${beds} łóżek`);
+rule(/^The House provides ([\d,\s]+) beds\.$/, (_, n) => `Dom zapewnia ${n} miejsc mieszkalnych.`);
+rule(/^([\d,\s]+) residents · ([\d,\s]+) beds$/, (_, people, beds) => `${people} mieszkańców · ${beds} łóżek`);
 rule(/^Housing:\s*(.*)$/, (_, value) => `Miejsca mieszkalne: ${value}`);
 rule(/^Working:\s*(.*)$/s, (_, value) => `Pracujący: ${tr(value.replace(/, arriving:/g, ', przybywający:').replace(/, returning home:/g, ', wracający do domu:'))}`);
-rule(/^Working: ([\d, ]+)(.*)$/s, (_, n, rest) => `Pracujący: ${n}${tr(rest)}`);
+rule(/^Working: ([\d,\s]+)(.*)$/s, (_, n, rest) => `Pracujący: ${n}${tr(rest)}`);
 rule(/^Workers arrive in (.*)$/, (_, duration) => `Pracownicy dotrą za ${tr(duration)}`);
 rule(/^Arriving in (.*)$/, (_, duration) => `Przybycie za ${tr(duration)}`);
 rule(/^Walking to (.*?)( · .*)?$/, (_, building, rest = '') => `W drodze: ${tr(building)}${tr(rest)}`);
@@ -993,13 +1001,13 @@ rule(/^Returning home · (.*)$/, (_, duration) => `Powrót do domu · ${tr(durat
 rule(/^Next worker returns in (.*)$/, (_, duration) => `Kolejny pracownik wróci za ${tr(duration)}`);
 rule(/^Next unit in (.*?)(\.)?$/, (_, duration, dot = '') => `Następna sztuka za ${tr(duration)}${dot}`);
 rule(/^Waiting for (Wood|Stone|Food|Grain|Planks)$/, (_, name) => `Oczekiwanie na zasób: ${tr(name)}`);
-rule(/^([\d,. ]+) units\/h$/, (_, n) => `${n} szt./godz.`);
-rule(/^([\d,. ]+) food\/h$/, (_, n) => `${n} żywności/godz.`);
-rule(/^([\d,. ]+) carriers · ([\d,. ]+) per trip$/, (_, crew, load) => `Tragarze: ${crew} · ${load} na kurs`);
-rule(/^([\d,. ]+) carriers ready for their next delivery\.$/, (_, n) => `Tragarze gotowi do kolejnej dostawy: ${n}.`);
-rule(/^([\d,. ]+) residents currently producing at (.*)$/, (_, n, building) => `Obecnie produkujący: ${n} · ${tr(building)}`);
-rule(/^([\d,. ]+) (.*) to local storage in (.*)$/, (_, n, resource, duration) => `Do magazynu przy budynku: ${n} ${tr(resource)} za ${tr(duration)}`);
-rule(/^([\d,. ]+) (delivery|deliveries) in progress · next completes in (.*)$/, (_, n, _delivery, duration) => `Dostawy w toku: ${n} · kolejna zakończy się za ${tr(duration)}`);
+rule(/^([\d,.\s]+) units\/h$/, (_, n) => `${n} szt./godz.`);
+rule(/^([\d,.\s]+) food\/h$/, (_, n) => `${n} żywności/godz.`);
+rule(/^([\d,.\s]+) carriers · ([\d,.\s]+) per trip$/, (_, crew, load) => `Tragarze: ${crew} · ${load} na kurs`);
+rule(/^([\d,.\s]+) carriers ready for their next delivery\.$/, (_, n) => `Tragarze gotowi do kolejnej dostawy: ${n}.`);
+rule(/^([\d,.\s]+) residents currently producing at (.*)$/, (_, n, building) => `Obecnie produkujący: ${n} · ${tr(building)}`);
+rule(/^([\d,.\s]+) (.*) to local storage in (.*)$/, (_, n, resource, duration) => `Do magazynu przy budynku: ${materialAmount(n, resource)} za ${tr(duration)}`);
+rule(/^([\d,.\s]+) (delivery|deliveries) in progress · next completes in (.*)$/, (_, n, _delivery, duration) => `Dostawy w toku: ${n} · kolejna zakończy się za ${tr(duration)}`);
 rule(/^No workers are returning home\.$/, () => 'Żaden pracownik nie wraca do domu.');
 rule(/^Construction:\s*(.*?) · Queue:\s*(.*)$/s, (_, active, queued) => `Budowa: ${tr(active)} · Kolejka: ${tr(queued)}`);
 rule(/^Building level (\d+): (.*) remaining\.$/, (_, level, duration) => `Budowa poziomu ${level}: pozostało ${tr(duration)}.`);
@@ -1011,12 +1019,12 @@ rule(/^(Transport|Construction) · ETA: (.*)$/, (_, phase, duration) => `${tr(ph
 rule(/^Estimated transport: (.*?)\. Building phase: (.*?)\. Total: (.*?)\. Changes to staffing or delivery priorities recalculate this estimate\.$/, (_, transport, building, total) => `Szacowany transport: ${tr(transport)}. Budowa: ${tr(building)}. Łącznie: ${tr(total)}. Zmiana obsady lub priorytetów dostaw aktualizuje szacunek.`);
 rule(/^([^:]+): in storage (.*?), required (.*?); (enough|short)$/, (_, name, have, need, status) => `${tr(name)}: w magazynie ${have}, potrzeba ${need}; ${status === 'enough' ? 'wystarcza' : 'brakuje'}`);
 rule(/^(Release worker|Assign worker|Assign to limit|Release all|Prioritize|Move up|Move down):?\s*(.*)$/, (_, action, building) => `${({ 'Release worker':'Zwolnij pracownika', 'Assign worker':'Przydziel pracownika', 'Assign to limit':'Przydziel do limitu', 'Release all':'Zwolnij wszystkich', Prioritize:'Ustaw priorytet', 'Move up':'Przesuń wyżej', 'Move down':'Przesuń niżej' })[action]}${building ? `: ${tr(building)}` : ''}`);
-rule(/^([\d, ]+) visitors return in (.*)\. This visit cannot be recalled\.$/, (_, n, duration) => `Zwiedzający wrócą za ${tr(duration)}: ${n} osób. Nie można ich odwołać.`);
-rule(/^([\d, ]+) selected \/ ([\d, ]+) free places$/, (_, selected, free) => `Wybrano ${selected} / wolne miejsca: ${free}`);
+rule(/^([\d,\s]+) visitors return in (.*)\. This visit cannot be recalled\.$/, (_, n, duration) => `Zwiedzający wrócą za ${tr(duration)}: ${n} osób. Nie można ich odwołać.`);
+rule(/^([\d,\s]+) selected \/ ([\d,\s]+) free places$/, (_, selected, free) => `Wybrano ${selected} / wolne miejsca: ${free}`);
 rule(/^Send resident (\d+) to Lighthouse$/, (_, id) => `Wyślij mieszkańca ${id} na zwiedzanie latarni`);
 rule(/^Buy visit package (\d*)$/, (_, n) => `Kup pakiet zwiedzania ${n}`.trim());
 rule(/^Rolling 24-hour entries: (\d+) free \+ (\d+) paid\. Free entries: (\d+) per 24 hours; (\d+) extra packages remain\.$/, (_, free, paid, limit, packages) => `Wejścia w ostatnich 24 godzinach: ${free} darmowych + ${paid} płatnych. Darmowy limit: ${limit} na 24 godziny; pozostałe dodatkowe pakiety: ${packages}.`);
-rule(/^Paid blessing · ([\d, ]+) coins$/, (_, n) => `Płatne błogosławieństwo · ${coins(n)}`);
+rule(/^Paid blessing · ([\d,\s]+) coins$/, (_, n) => `Płatne błogosławieństwo · ${coins(n)}`);
 rule(/^Blessing: \+20 happiness for (.*?)\.$/, (_, duration) => `Błogosławieństwo: +20 szczęścia przez ${tr(duration)}.`);
 rule(/^Uses remaining: (\d+)\.$/, (_, n) => `Pozostałe użycia: ${n}.`);
 rule(/^Next paid blessing in (.*)\.$/, (_, duration) => `Kolejne płatne błogosławieństwo za ${tr(duration)}.`);
@@ -1034,41 +1042,42 @@ rule(/^(.+): familiarity$/, (_, title) => `${tr(title)}: przyzwyczajenie`);
 rule(/^(.+): production blockage$/, (_, title) => `${tr(title)}: blokada produkcji`);
 rule(/^Next purchase gives (\d+)% of its original happiness bonus$/, (_, n) => `Kolejny zakup daje ${n}% pierwotnej premii do szczęścia`);
 rule(/^All 100 path sections have reached level (\d+)\. Travel time is divided by (.*?)\; ship voyages and residents walking to work keep their own rules\.$/, (_, level, factor) => `Wszystkie 100 odcinków osiągnęło poziom ${level}. Czas transportu jest dzielony przez ${factor}; rejsy i droga mieszkańców do pracy zachowują własne zasady.`);
-rule(/^([\d, ]+) residents have no bed\. Each missing bed adds a one-point hourly happiness penalty to eligible residents\.$/, (_, n) => `Mieszkańcy bez łóżka: ${n}. Każde brakujące łóżko dodaje uprawnionym mieszkańcom karę jednego punktu szczęścia na godzinę.`);
+rule(/^([\d,\s]+) residents have no bed\. Each missing bed adds a one-point hourly happiness penalty to eligible residents\.$/, (_, n) => `Mieszkańcy bez łóżka: ${n}. Każde brakujące łóżko dodaje uprawnionym mieszkańcom karę jednego punktu szczęścia na godzinę.`);
 rule(/^Next resident in (.*)$/, (_, duration) => `Nowy mieszkaniec za ${tr(duration)}`);
 rule(/^Population capacity of (\d+) reached\. Upgrade the Town Hall to increase capacity\.$/, (_, n) => `Osiągnięto limit ${n} mieszkańców. Ulepsz ratusz, aby zwiększyć limit.`);
 rule(/^Everyone has a home: (.*?) spaces occupied\. No overcrowding penalty\.$/, (_, amounts) => `Każdy ma miejsce w domu: zajęto ${amounts} miejsc. Brak kary za przeludnienie.`);
 rule(/^Overcrowding: (\d+) residents have no home\. Happiness falls by (\d+) percentage points per real hour\.$/, (_, n, loss) => `Przeludnienie: mieszkańcy bez miejsca w domu: ${n}. Szczęście spada o ${loss} punktów procentowych na godzinę czasu rzeczywistego.`);
 rule(/^Storage full: −(\d+) happiness for each worker here\. Work is waiting for space\.$/, (_, loss) => `Pełny magazyn: −${loss} szczęścia dla każdego pracownika tutaj. Praca czeka na wolne miejsce.`);
-rule(/^Growth · \+([\d,. ]+) residents\/h$/, (_, n) => `Przyrost · +${n} mieszkańców/godz.`);
-rule(/^Decline · −([\d,. ]+) residents\/h$/, (_, n) => `Spadek · −${n} mieszkańców/godz.`);
+rule(/^Growth · \+([\d,.\s]+) residents\/h$/, (_, n) => `Przyrost · +${n} mieszkańców/godz.`);
+rule(/^Decline · −([\d,.\s]+) residents\/h$/, (_, n) => `Spadek · −${n} mieszkańców/godz.`);
 rule(/^Central: (.*?) · Harbor: (.*?)$/, (_, central, port) => `Magazyn centralny: ${central} · port: ${port}`);
-rule(/^Sell 100 → ([\d, ]+) coins$/, (_, n) => `Sprzedaj 100 → ${coins(n)}`);
-rule(/^Buy 100 for ([\d, ]+) coins$/, (_, n) => `Kup 100 za ${n} monet`);
-rule(/^(Purchase|Sale): (\d+) (.*)$/, (_, direction, amount, resource) => `${direction === 'Purchase' ? 'Zakup' : 'Sprzedaż'}: ${amount} ${tr(resource)}`);
-rule(/^Stage: (\w+) · agreed price ([\d, ]+) coins(.*)$/, (_, phase, price, rest) => `Etap: ${tr(phase)} · uzgodniona cena: ${coins(price)}${tr(rest)}`);
+rule(/^Sell 100 → ([\d,\s]+) coins$/, (_, n) => `Sprzedaj 100 → ${coins(n)}`);
+rule(/^Buy 100 for ([\d,\s]+) coins$/, (_, n) => `Kup 100 za ${coinsAfterFor(n)}`);
+rule(/^(Purchase|Sale): (\d+) (.*)$/, (_, direction, amount, resource) => `${direction === 'Purchase' ? 'Zakup' : 'Sprzedaż'}: ${materialAmount(amount, resource)}`);
+rule(/^([\d,.\s]+) (Wood|Stone|Food|Grain|Planks|wood|stone|food|grain|planks)$/, (_, amount, resource) => materialAmount(amount, resource));
+rule(/^Stage: (\w+) · agreed price ([\d,\s]+) coins(.*)$/, (_, phase, price, rest) => `Etap: ${tr(phase)} · uzgodniona cena: ${coins(price)}${tr(rest)}`);
 rule(/^Delivery to Market: (.*)$/, (_, name) => `Dostawa na targ: ${tr(name)}`);
-rule(/^([\d, ]+) remaining$/, (_, n) => `Pozostało: ${n}`);
-rule(/^(.+) · ([\d, ]+) coins$/, (_, label, n) => `${tr(label)} · ${coins(n)}`);
-rule(/^([\d, ]+) coins$/, (_, n) => coins(n));
+rule(/^([\d,\s]+) remaining$/, (_, n) => `Pozostało: ${n}`);
+rule(/^(.+) · ([\d,\s]+) coins$/, (_, label, n) => `${tr(label)} · ${coins(n)}`);
+rule(/^([\d,\s]+) coins$/, (_, n) => coins(n));
 rule(/^Shorten building time by (\d+)%$/, (_, n) => `Skróć budowę o ${n}%`);
-rule(/^Cash out ([\d, ]+) coins$/, (_, n) => `Wypłać ${n} monet`);
-rule(/^Risk ([\d, ]+) for ([\d, ]+)$/, (_, current, next) => `Zaryzykuj ${current}, aby zdobyć ${next}`);
-rule(/^Leaving now pays ([\d, ]+) coins into your island treasury\.$/, (_, n) => `Wyjście wypłaci ${n} monet do skarbca wyspy.`);
-rule(/^Leaving during this round loses the unclaimed pot of ([\d, ]+) coins\.$/, (_, n) => `Wyjście podczas tej rundy spowoduje utratę nieodebranej puli ${n} monet.`);
+rule(/^Cash out ([\d,\s]+) coins$/, (_, n) => `Wypłać ${coinsAfterFor(n)}`);
+rule(/^Risk ([\d,\s]+) for ([\d,\s]+)$/, (_, current, next) => `Zaryzykuj ${current}, aby zdobyć ${next}`);
+rule(/^Leaving now pays ([\d,\s]+) coins into your island treasury\.$/, (_, n) => `Wyjście wypłaci ${n} monet do skarbca wyspy.`);
+rule(/^Leaving during this round loses the unclaimed pot of ([\d,\s]+) coins\.$/, (_, n) => `Wyjście podczas tej rundy spowoduje utratę nieodebranej puli ${n} monet.`);
 rule(/^Confirm in (.*)$/, (_, duration) => `Potwierdź w ciągu ${tr(duration)}`);
 rule(/^Time left: (.*)$/, (_, duration) => `Pozostały czas: ${tr(duration)}`);
 rule(/^Overtime: (.*)$/, (_, duration) => `Dodatkowy czas: ${tr(duration)}`);
-rule(/^Potential pot: ([\d, ]+) coins$/, (_, n) => `Potencjalna pula: ${coins(n)}`);
-rule(/^Penalty: −([\d, ]+) coins$/, (_, n) => `Kara: −${n} monet`);
+rule(/^Potential pot: ([\d,\s]+) coins$/, (_, n) => `Potencjalna pula: ${coins(n)}`);
+rule(/^Penalty: −([\d,\s]+) coins$/, (_, n) => `Kara: −${n} monet`);
 rule(/^Moves used: (\d+)(.*)$/, (_, n, rest) => `Wykonane ruchy: ${n}${tr(rest)}`);
 rule(/^(.+), row (\d+), column (\d+)$/, (_, tile, row, col) => `${tr(tile)}, wiersz ${row}, kolumna ${col}`);
 rule(/^(Start task · reward|Start task · bonus|Active · bonus|Resume task · bonus|Bonus locked|Accept task · reward|View · bonus|Deliver · bonus) ×(\d+)$/, (_, label, multiplier) => `${({ 'Start task · reward':'Rozpocznij zadanie · nagroda', 'Start task · bonus':'Rozpocznij zadanie · premia', 'Active · bonus':'Aktywne · premia', 'Resume task · bonus':'Wznów zadanie · premia', 'Bonus locked':'Zapisana premia', 'Accept task · reward':'Przyjmij zadanie · nagroda', 'View · bonus':'Zobacz · premia', 'Deliver · bonus':'Przekaż · premia' })[label]} ×${multiplier}`);
-rule(/^([\d, ]+) remaining happiness points were given to the least happy residents\.$/, (_, n) => `Pozostałe punkty szczęścia przekazano najmniej szczęśliwym mieszkańcom: ${n}.`);
-rule(/^([\d, ]+) happiness points are available for the next 24 hours\.$/, (_, n) => `Punkty szczęścia dostępne na kolejne 24 godziny: ${n}.`);
-rule(/^Distributed ([\d, ]+) House happiness points\.$/, (_, n) => `Rozdzielono ${n} punktów szczęścia domu.`);
-rule(/^Resident (\d+) received (\d+) happiness points\.$/, (_, id, n) => `Mieszkaniec ${id} otrzymał ${n} punktów szczęścia.`);
-rule(/^([\d, ]+) happiness points were given to ([\d, ]+) residents\.$/, (_, points, people) => `Przekazano ${points} punktów szczęścia mieszkańcom: ${people}.`);
+rule(/^([\d,\s]+) remaining happiness points were given to the least happy residents\.$/, (_, n) => `Pozostałe punkty szczęścia przekazano najmniej szczęśliwym mieszkańcom: ${n}.`);
+rule(/^([\d,\s]+) happiness points are available for the next 24 hours\.$/, (_, n) => `Punkty szczęścia dostępne na kolejne 24 godziny: ${n}.`);
+rule(/^Distributed ([\d,\s]+) House happiness points\.$/, (_, n) => `Rozdzielono ${n} ${plural(n, 'punkt', 'punkty', 'punktów')} szczęścia z domu.`);
+rule(/^Resident (\d+) received (\d+) happiness points\.$/, (_, id, n) => `Mieszkaniec ${id} otrzymał ${n} ${plural(n, 'punkt', 'punkty', 'punktów')} szczęścia.`);
+rule(/^([\d,\s]+) happiness points were given to ([\d,\s]+) residents\.$/, (_, points, people) => `Przekazano ${points} ${plural(points, 'punkt', 'punkty', 'punktów')} szczęścia. Liczba odbiorców: ${people}.`);
 // Reusable short fragments also cover value-only nodes and messages assembled
 // by the simulation. Longer complete sentences above always take precedence.
 entries(`
@@ -1316,7 +1325,7 @@ Share your completed task|Udostępnij ukończone zadanie
 Finish or cash out the current expedition series before starting another.|Ukończ obecną serię ekspedycji lub wypłać jej pulę przed rozpoczęciem następnej.
 There is no pending presence confirmation for this series.|Ta seria nie oczekuje na potwierdzenie obecności.
 Presence confirmed. The expedition clock has continued while this prompt was open.|Potwierdzono obecność. Czas ekspedycji biegł także podczas wyświetlania tego okna.
-There is no completed expedition pot to cash out.|Nie ma ukończonej puli ekspedycji do wypłaty.
+There is no completed expedition pot to cash out.|Nie ma jeszcze ukończonego etapu, z którego można wypłacić pulę.
 Your coin balance cannot hold this pot.|Twoje saldo monet nie pomieści tej puli.
 This expedition run has already ended.|Ta seria ekspedycji już się zakończyła.
 This expedition stage has already been settled.|Ten etap ekspedycji został już rozliczony.
@@ -1373,15 +1382,15 @@ rule(/^(.+) donation for (.+)$/, (_, resource, title) => `Darowizna: ${tr(resour
 rule(/^(.+): priority (\d+), remove priority$/, (_, resource, n) => `${tr(resource)}: priorytet ${n}, usuń priorytet`);
 rule(/^Construction slots and the queue are full \((.*?)\)\. Wait for an upgrade to finish\.$/, (_, slots) => `Miejsca budowy i kolejka są pełne (${slots}). Poczekaj na ukończenie rozbudowy.`);
 rule(/^The package adds 4 construction slots, an unlimited queue and plans based on future deliveries\. Expires (.*)\.$/, (_, date) => `Pakiet dodaje 4 miejsca budowy, nieograniczoną kolejkę i planowanie przyszłych dostaw. Wygasa: ${date}.`);
-rule(/^24 hours for ([\d, ]+) coins: \+4 active construction places, unlimited queue and planning from forecast deliveries\. Renewing adds another 24 hours to the remaining duration\. Queued material costs include a 10% surcharge\.$/, (_, n) => `24 godziny za ${n} monet: +4 miejsca budowy, nieograniczona kolejka i planowanie przyszłych dostaw. Odnowienie dodaje kolejne 24 godziny do pozostałego czasu. Koszty materiałów w kolejce uwzględniają dopłatę 10%.`);
-rule(/^Each fed worker produces ([\d,. ]+) units per hour at this building level\. Hunger halves output immediately\. The Lighthouse bonus doubles material production\. Local storage holds 200 units per building level\. Storage shows current stock \/ current capacity \/ capacity after one upgrade\. Carriers carry one material per trip\. The base round trip takes 5 minutes; path levels increase carrier speed and, from level 3, load\. Workplace upgrades also increase load\.$/, (_, rate) => `Na tym poziomie budynku każdy najedzony pracownik produkuje ${rate} sztuk na godzinę. Głód od razu zmniejsza wydajność o połowę. Premia latarni podwaja produkcję materiałów. Magazyn lokalny mieści 200 sztuk na poziom budynku. Wyświetlane są: zapas / obecna pojemność / pojemność po ulepszeniu. Tragarze przewożą jeden materiał na kurs. Podstawowy kurs w obie strony trwa 5 minut; poziomy ścieżek zwiększają szybkość tragarzy, a od poziomu 3 także ładowność. Rozbudowa miejsca pracy również zwiększa ładowność.`);
-rule(/^Each (.+) requires (\d+) (.+) from the central warehouse \(2:1\)\.$/, (_, output, amount, input) => `Produkt: ${tr(output)}. Każda sztuka wymaga ${amount} ${tr(input)} z magazynu centralnego (2:1).`);
-rule(/^Per unit: (\d+) (.+) from the central warehouse → 1 (.+)\.$/, (_, amount, input, output) => `Na sztukę: ${amount} ${tr(input)} z magazynu centralnego → 1 ${tr(output)}.`);
-rule(/^Missing central warehouse input: (\d+) (.+) per unit\.$/, (_, amount, input) => `Brak surowca w magazynie centralnym: ${amount} ${tr(input)} na sztukę.`);
-rule(/^(\d+) (.+) needed from central storage per unit\.$/, (_, amount, input) => `Na sztukę potrzeba z magazynu centralnego: ${amount} ${tr(input)}.`);
+priorityRule(/^24 hours for ([\d,\s]+) coins: \+4 active construction places, unlimited queue and planning from forecast deliveries\. Renewing adds another 24 hours to the remaining duration\. Queued material costs include a 10% surcharge\.$/, (_, n) => `Pakiet na 24 godziny kosztuje ${coinsAfterFor(n)}. Daje 4 dodatkowe miejsca budowy, nieograniczoną kolejkę i planowanie rozbudowy z przyszłych dostaw. Odnowienie wydłuża pozostały czas o kolejne 24 godziny. Materiały dla rozbudów w kolejce kosztują o 10% więcej.`);
+rule(/^Each fed worker produces ([\d,.\s]+) units per hour at this building level\. Hunger halves output immediately\. The Lighthouse bonus doubles material production\. Local storage holds 200 units per building level\. Storage shows current stock \/ current capacity \/ capacity after one upgrade\. Carriers carry one material per trip\. The base round trip takes 5 minutes; path levels increase carrier speed and, from level 3, load\. Workplace upgrades also increase load\.$/, (_, rate) => `Na tym poziomie budynku każdy najedzony pracownik produkuje ${rate} sztuk na godzinę. Głód od razu zmniejsza wydajność o połowę. Premia latarni podwaja produkcję materiałów. Magazyn lokalny mieści 200 sztuk na poziom budynku. Wyświetlane są: zapas / obecna pojemność / pojemność po ulepszeniu. Tragarze przewożą jeden materiał na kurs. Podstawowy kurs w obie strony trwa 5 minut; poziomy ścieżek zwiększają szybkość tragarzy, a od poziomu 3 także ładowność. Rozbudowa miejsca pracy również zwiększa ładowność.`);
+rule(/^Each (.+) requires (\d+) (.+) from the central warehouse \(2:1\)\.$/, (_, output, amount, input) => `Produkt: ${tr(output)}. Do wytworzenia jednej jednostki potrzeba ${materialAmount(amount, input)} z magazynu centralnego (2:1).`);
+rule(/^Per unit: (\d+) (.+) from the central warehouse → 1 (.+)\.$/, (_, amount, input, output) => `Przelicznik: ${materialAmount(amount, input)} z magazynu centralnego → ${materialAmount(1, output)}.`);
+rule(/^Missing central warehouse input: (\d+) (.+) per unit\.$/, (_, amount, input) => `Brak surowca w magazynie centralnym: ${materialAmount(amount, input)} na jednostkę produktu.`);
+rule(/^(\d+) (.+) needed from central storage per unit\.$/, (_, amount, input) => `Na jednostkę produktu potrzeba ${materialAmount(amount, input)} z magazynu centralnego.`);
 rule(/^(.+) — stock in the (treasury|central warehouse): (.*)\.$/, (_, resource, place, amount) => `${tr(resource)} — zapas ${place === 'treasury' ? 'w skarbcu' : 'w magazynie centralnym'}: ${amount}.`);
-rule(/^Leaving now pays ([\d, ]+) coins into your island treasury\.$/, (_, n) => `Wyjście wypłaci ${n} monet do skarbca wyspy.`);
-rule(/^Leaving during this round loses the unclaimed pot of ([\d, ]+) coins\.$/, (_, n) => `Wyjście podczas tej rundy spowoduje utratę nieodebranej puli ${n} monet.`);
+rule(/^Leaving now pays ([\d,\s]+) coins into your island treasury\.$/, (_, n) => `Wyjście wypłaci ${n} monet do skarbca wyspy.`);
+rule(/^Leaving during this round loses the unclaimed pot of ([\d,\s]+) coins\.$/, (_, n) => `Wyjście podczas tej rundy spowoduje utratę nieodebranej puli ${n} monet.`);
 
 entries(`
 HARBORLIGHT — Your Island|HARBORLIGHT — Twoja wyspa
@@ -1455,11 +1464,11 @@ central warehouse|magazyn centralny
 rule(/^Task accepted\. Reward multiplier ×(\d+) is locked\. The active task cannot be cancelled\.$/, (_, n) => `Przyjęto zadanie. Zapisano mnożnik nagrody ×${n}. Aktywnego zadania nie można anulować.`);
 rule(/^Achievement bonus received: (\d+) coins\.$/, (_, n) => `Odebrano premię za osiągnięcie: ${n} monet.`);
 rule(/^\+(\d+) coins for choosing to share your completed task\. Facebook publishing is not connected yet\.$/, (_, n) => `+${n} monet za wybór udostępnienia ukończonego zadania. Publikowanie na Facebooku nie jest jeszcze podłączone.`);
-rule(/^Construction shortened by (\d+) seconds for (\d+) coins\.$/, (_, seconds, price) => `Skrócono budowę o ${seconds} sekund za ${price} monet.`);
-rule(/^Building purchased for (\d+) coins\. It will be ready in 10 seconds\.$/, (_, n) => `Kupiono budynek za ${n} monet. Będzie gotowy za 10 sekund.`);
-rule(/^Expected-delivery plan scheduled\. Fee: (\d+) coins\.$/, (_, n) => `Zaplanowano przyszłe dostawy. Opłata: ${n} monet.`);
+rule(/^Construction shortened by (\d+) seconds for (\d+) coins\.$/, (_, seconds, price) => `Skrócono budowę o ${seconds} ${plural(seconds, 'sekundę', 'sekundy', 'sekund')} za ${coinsAfterFor(price)}.`);
+rule(/^Building purchased for (\d+) coins\. It will be ready in 10 seconds\.$/, (_, n) => `Kupiono budynek za ${coinsAfterFor(n)}. Będzie gotowy za 10 sekund.`);
+rule(/^Expected-delivery plan scheduled\. Fee: (\d+) coins\.$/, (_, n) => `Zaplanowano przyszłe dostawy. Opłata: ${coins(n)}.`);
 rule(/^The entire (\d+)-coin pot is now at risk\. A timely win adds 50 coins to its actual remainder\.$/, (_, n) => `Cała pula ${n} monet jest teraz stawką. Zwycięstwo w czasie dodaje 50 monet do jej rzeczywistej pozostałości.`);
-rule(/^Cashed out (\d+) expedition coins to your island\.$/, (_, n) => `Wypłacono na wyspę ${n} monet z ekspedycji.`);
+rule(/^Cashed out (\d+) expedition coins to your island\.$/, (_, n) => `Wypłacono na wyspę ${coinsAfterFor(n)} z ekspedycji.`);
 rule(/^Level (\d+) complete\. Pot: (\d+) coins\. Cash out or risk it on the next level\.$/, (_, level, n) => `Poziom ${level} ukończony. Pula: ${n} monet. Wypłać ją lub zaryzykuj na następnym poziomie.`);
 rule(/^Order paid: (\d+) coins\. Ship arrives in 5 minutes\.$/, (_, n) => `Opłacono zlecenie: ${n} monet. Statek przypłynie za 5 minut.`);
 rule(/^Sale reserved\. Payment of (\d+) coins follows loading and departure\.$/, (_, n) => `Zarezerwowano sprzedaż. Zapłata ${n} monet nastąpi po załadunku i wypłynięciu.`);
@@ -1573,7 +1582,7 @@ Use or collect goods, or upgrade this building.|Zużyj lub odbierz towary albo r
 Material storage limit reached|Osiągnięto limit magazynowania zasobu
 The expected materials have arrived in the warehouse. The full cost is now reserved.|Spodziewane materiały dotarły do magazynu. Pełny koszt jest już zarezerwowany.
 A construction slot is available. Reserved materials are waiting for transport.|Zwolniło się miejsce budowy. Zarezerwowane materiały czekają na transport.
-No shared storage space remains. Upgrade the warehouse or use some goods.|Brakuje wspólnego miejsca w magazynie. Rozbuduj magazyn lub zużyj część towarów.
+No shared storage space remains. Upgrade the warehouse or use some goods.|W magazynie zabrakło łącznego miejsca na towary. Rozbuduj go lub zużyj część zapasów.
 Exchange goods or order their collection by warehouse workers.|Wymień towary albo zleć ich odbiór do magazynu centralnego.
 Construction has started. It will take as long as material transport.|Budowa rozpoczęta. Potrwa tyle samo co transport materiałów.
 storage is full|magazyn jest pełny
@@ -1582,9 +1591,9 @@ Another attraction is active. Wait until its six-hour effect ends.|Trwa inna atr
 No eligible residents can gain happiness from this attraction.|Żaden uprawniony mieszkaniec nie może teraz otrzymać szczęścia z tej atrakcji.
 Upgrading one path section costs 100 unreserved stone from the central Warehouse.|Ulepszenie jednego odcinka ścieżki kosztuje 100 niezarezerwowanego kamienia z magazynu centralnego.
 Choose an island name with 2–40 characters, without control characters or angle brackets.|Wybierz nazwę wyspy o długości 2–40 znaków, bez znaków sterujących i nawiasów ostrokątnych.
-Your browser could not save the island name. Allow local storage and try again.|Przeglądarka nie mogła zapisać nazwy wyspy. Zezwól na zapis lokalny i spróbuj ponownie.
+Your browser could not save the island name. Allow local storage and try again.|Nie udało się zapisać nazwy wyspy. Sprawdź dostęp do zapisu i spróbuj ponownie.
 Every new resident starts with 24 hours of frozen 0% happiness. Hunger and unemployment counters also start only after this period.|Każdy nowy mieszkaniec przez pierwsze 24 godziny ma stałe 0% szczęścia. Dopiero po tym okresie zaczynają działać także liczniki głodu i bezrobocia.
-Food is shared equally and assigned automatically. Each resident consumes one Food per hour; a full uninterrupted hour of feeding resets the hunger counter.|Żywność jest przydzielana automatycznie i dzielona po równo. Każdy mieszkaniec zużywa jedną sztukę żywności na godzinę; pełna godzina nieprzerwanego karmienia zeruje licznik głodu.
+Food is shared equally and assigned automatically. Each resident consumes one Food per hour; a full uninterrupted hour of feeding resets the hunger counter.|Żywność jest przydzielana automatycznie i dzielona po równo. Każdy mieszkaniec zużywa jedną jednostkę żywności na godzinę; pełna godzina nieprzerwanego karmienia zeruje licznik głodu.
 The penalty stops as soon as food is available. The remembered hunger timer resets after one uninterrupted hour of feeding; a short meal pauses it without clearing it.|Kara ustaje, gdy tylko pojawia się żywność. Zapamiętany licznik głodu zeruje pełna godzina nieprzerwanego karmienia; krótszy posiłek tylko go wstrzymuje.
 Unfed time accumulates until a full uninterrupted hour of feeding clears it. After twelve hours the penalty applies only while food is unavailable, without backcharging the first twelve hours.|Czas bez jedzenia narasta, aż wyzeruje go pełna godzina nieprzerwanego karmienia. Po dwunastu godzinach kara działa tylko podczas braku żywności i nie jest naliczana wstecz za pierwsze dwanaście godzin.
 Reward goods delivered|Dostarczono towary z nagrody
@@ -1629,11 +1638,11 @@ Only one task can be active. Deliver goods from central storage in instalments. 
 
 // Specific complete messages must run before broad prefixes such as "Level N".
 rules.unshift([
-  /^Level ([\d, ]+) complete\. Pot: ([\d, ]+) coins\. Cash out or risk it on the next level\.$/,
+  /^Level ([\d,\s]+) complete\. Pot: ([\d,\s]+) coins\. Cash out or risk it on the next level\.$/,
   (_, level, n) => `Poziom ${level} ukończony. Pula: ${coins(n)}. Wypłać nagrodę lub zaryzykuj całą pulę na kolejnym poziomie.`
 ]);
 rules.unshift([
-  /^([\d, ]+) stored reward items moved into the central warehouse\.$/,
+  /^([\d,\s]+) stored reward items moved into the central warehouse\.$/,
   (_, n) => `Towary z nagrody przeniesione do magazynu centralnego: ${n}.`
 ]);
 rules.unshift([
@@ -1652,37 +1661,37 @@ priorityRule(/^(.+): materials reserved$/, (_, name) => `${tr(name)}: zarezerwow
 priorityRule(/^(.+): upgrade started$/, (_, name) => `${tr(name)}: rozpoczęto rozbudowę`);
 priorityRule(/^(.+): upgrade cancelled$/, (_, name) => `${tr(name)}: anulowano rozbudowę`);
 priorityRule(/^(.+): materials delivered$/, (_, name) => `${tr(name)}: dostarczono materiały`);
-priorityRule(/^For ([\d,. ]+) hours: happiness is 100% and material production ×2\.$/, (_, hours) => `Przez ${hours} godz.: szczęście wynosi 100%, a produkcja materiałów jest podwojona.`);
-priorityRule(/^For 10 hours: \+([\d,. ]+) happiness(?: for every resident)?(?: and taxes ×2)?\.$/, (_, amount) => `Przez 10 godz.: +${amount} p.p. szczęścia dla każdego mieszkańca.`);
-priorityRule(/^For ([\d,. ]+) hours: \+100 happiness for everyone and material production ×2\.(?: Taxes are unchanged\.)?$/, (_, hours) => `Przez ${hours} godz.: szczęście mieszkańców wynosi 100%, a produkcja materiałów jest podwojona.`);
+priorityRule(/^For ([\d,.\s]+) hours: happiness is 100% and material production ×2\.$/, (_, hours) => `Przez ${hours} godz.: szczęście wynosi 100%, a produkcja materiałów jest podwojona.`);
+priorityRule(/^For 10 hours: \+([\d,.\s]+) happiness(?: for every resident)?(?: and taxes ×2)?\.$/, (_, amount) => `Przez 10 godz.: +${amount} p.p. szczęścia dla każdego mieszkańca.`);
+priorityRule(/^For ([\d,.\s]+) hours: \+100 happiness for everyone and material production ×2\.(?: Taxes are unchanged\.)?$/, (_, hours) => `Przez ${hours} godz.: szczęście mieszkańców wynosi 100%, a produkcja materiałów jest podwojona.`);
 priorityRule(/^Storage full: (.+)\. Production is waiting for transport\.$/, (_, name) => `Pełny magazyn przy budynku: ${tr(name)}. Produkcja czeka na transport.`);
 priorityRule(/^The central warehouse has no more space for (.+)\.$/, (_, resource) => `W magazynie centralnym brakuje miejsca na zasób: ${tr(resource)}.`);
-priorityRule(/^([\d,. ]+) (.+) reached port storage after its purchase deadline\.$/, (_, count, resource) => `Towary trafiły do portu po upływie terminu zakupu: ${count} ${tr(resource)}.`);
-priorityRule(/^([\d,. ]+) (.+) expired after 24 hours\.$/, (_, count, resource) => `Towary przepadły po 24 godzinach: ${count} ${tr(resource)}.`);
-priorityRule(/^([\d,. ]+) (.+) expired after its purchase deadline\.$/, (_, count, resource) => `Towary przepadły po upływie terminu zakupu: ${count} ${tr(resource)}.`);
-priorityRule(/^Sold ([\d,. ]+) (.+) for ([\d,. ]+) coins\.$/, (_, count, resource, price) => `Sprzedano ${count} ${tr(resource)} za ${price} monet.`);
-priorityRule(/^Bought ([\d,. ]+) (.+) for ([\d,. ]+) coins\.$/, (_, count, resource, price) => `Kupiono ${count} ${tr(resource)} za ${price} monet.`);
-priorityRule(/^([\d,. ]+) (.+) is ready for unloading\.$/, (_, count, resource) => `Towary gotowe do rozładunku: ${count} ${tr(resource)}.`);
-priorityRule(/^([\d,. ]+) uncollected (.+) expired 24 hours after the ship arrived\.$/, (_, count, resource) => `Nieodebrane towary przepadły 24 godziny po przypłynięciu statku: ${count} ${tr(resource)}.`);
-priorityRule(/^([\d,. ]+) (.+) reserved\. Harbor workers carry and load it; ([\d,. ]+) coins arrive when the ship departs\.$/, (_, count, resource, price) => `Zarezerwowano ${count} ${tr(resource)}. Pracownicy portu przewiozą i załadują towary; po wypłynięciu statku otrzymasz ${price} monet.`);
+priorityRule(/^([\d,.\s]+) (.+) reached port storage after its purchase deadline\.$/, (_, count, resource) => `Towary trafiły do portu po upływie terminu zakupu: ${materialAmount(count, resource)}.`);
+priorityRule(/^([\d,.\s]+) (.+) expired after 24 hours\.$/, (_, count, resource) => `Towary przepadły po 24 godzinach: ${materialAmount(count, resource)}.`);
+priorityRule(/^([\d,.\s]+) (.+) expired after its purchase deadline\.$/, (_, count, resource) => `Towary przepadły po upływie terminu zakupu: ${materialAmount(count, resource)}.`);
+priorityRule(/^Sold ([\d,.\s]+) (.+) for ([\d,.\s]+) coins\.$/, (_, count, resource, price) => `Sprzedano ${materialAmount(count, resource, 'accusative')} za ${coinsAfterFor(price)}.`);
+priorityRule(/^Bought ([\d,.\s]+) (.+) for ([\d,.\s]+) coins\.$/, (_, count, resource, price) => `Kupiono ${materialAmount(count, resource, 'accusative')} za ${coinsAfterFor(price)}.`);
+priorityRule(/^([\d,.\s]+) (.+) is ready for unloading\.$/, (_, count, resource) => `Towary gotowe do rozładunku: ${materialAmount(count, resource)}.`);
+priorityRule(/^([\d,.\s]+) uncollected (.+) expired 24 hours after the ship arrived\.$/, (_, count, resource) => `Nieodebrane towary przepadły 24 godziny po przypłynięciu statku: ${materialAmount(count, resource)}.`);
+priorityRule(/^([\d,.\s]+) (.+) reserved\. Harbor workers carry and load it; ([\d,.\s]+) coins arrive when the ship departs\.$/, (_, count, resource, price) => `Zarezerwowano ${materialAmount(count, resource, 'accusative')}. Pracownicy portu przewiozą i załadują towary. Po wypłynięciu statku otrzymasz ${coinsAfterFor(price)}.`);
 priorityRule(/^Select the highlighted location: (.+)\.$/, (_, name) => `Wybierz podświetlone miejsce: ${tr(name)}.`);
 priorityRule(/^Another attraction is active\. Available in (.+)\.$/, (_, duration) => `Trwa inna atrakcja. Kolejna będzie dostępna za ${tr(duration)}.`);
-priorityRule(/^(.+): ([\d,. ]+) coins, \+([\d,. ]+) happiness for ([\d,. ]+) (?:resident|residents) for 6 hours$/, (_, title, price, amount, people) => `${tr(title)}: ${coins(price)}, +${amount} p.p. szczęścia dla ${recipients(people)} przez 6 godzin`);
-priorityRule(/^\+([\d,. ]+) pp for ([\d,. ]+) (?:resident|residents) · 6 h\. Offers refresh in (.+)$/, (_, amount, people, duration) => `+${amount} p.p. dla ${recipients(people)} · 6 godz. Oferty odnowią się za ${tr(duration)}`);
-priorityRule(/^\+([\d,. ]+) pp happiness for ([\d,. ]+) (?:resident|residents) for 6 hours\. Cost: ([\d,. ]+) coins\.$/, (_, amount, people, price) => `+${amount} p.p. szczęścia dla ${recipients(people)} przez 6 godzin. Koszt: ${coins(price)}.`);
-priorityRule(/^(.+): \+([\d,. ]+) pp happiness for ([\d,. ]+) residents for 6 hours\.$/, (_, title, amount, people) => `${tr(title)}: +${amount} p.p. szczęścia dla ${recipients(people)} przez 6 godzin.`);
+priorityRule(/^(.+): ([\d,.\s]+) coins, \+([\d,.\s]+) happiness for ([\d,.\s]+) (?:resident|residents) for 6 hours$/, (_, title, price, amount, people) => `${tr(title)}: ${coins(price)}, +${amount} p.p. szczęścia dla ${recipients(people)} przez 6 godzin`);
+priorityRule(/^\+([\d,.\s]+) pp for ([\d,.\s]+) (?:resident|residents) · 6 h\. Offers refresh in (.+)$/, (_, amount, people, duration) => `+${amount} p.p. dla ${recipients(people)} · 6 godz. Oferty odnowią się za ${tr(duration)}`);
+priorityRule(/^\+([\d,.\s]+) pp happiness for ([\d,.\s]+) (?:resident|residents) for 6 hours\. Cost: ([\d,.\s]+) coins\.$/, (_, amount, people, price) => `+${amount} p.p. szczęścia dla ${recipients(people)} przez 6 godzin. Koszt: ${coins(price)}.`);
+priorityRule(/^(.+): \+([\d,.\s]+) pp happiness for ([\d,.\s]+) residents for 6 hours\.$/, (_, title, amount, people) => `${tr(title)}: +${amount} p.p. szczęścia dla ${recipients(people)} przez 6 godzin.`);
 priorityRule(/^Happiness: (.+) — residents and population growth$/, (_, value) => `Szczęście: ${value} — mieszkańcy i zmiany populacji`);
 priorityRule(/^Residents: (.+); Town Hall capacity: (.+); housing: (.+); unhoused: (.+); working: (.+); available: (.+) — residents and worker assignments$/, (_, people, capacity, housing, unhoused, working, available) => `Mieszkańcy: ${people}; limit ratusza: ${capacity}; miejsca mieszkalne: ${housing}; bez domu: ${unhoused}; pracujący: ${working}; wolni: ${available} — mieszkańcy i przydział pracowników`);
-priorityRule(/^Granted ([\d,. ]+) coins for verified sharing\.$/, (_, amount) => `Przyznano ${amount} monet za potwierdzone udostępnienie.`);
-priorityRule(/^(.+): ([\d,. ]+) coins and materials received\.$/, (_, title, amount) => `${tr(title)}: otrzymano ${amount} monet oraz materiały.`);
-priorityRule(/^([\d,. ]+) extra visitor entries for ([\d,. ]+) coins\. Entries expire after 24 hours\.$/, (_, entries, price) => `Dodatkowe wejścia: ${entries} za ${price} monet. Wejścia wygasają po 24 godzinach.`);
-priorityRule(/^([\d,. ]+) residents have 100% happiness for 24 hours\. Their group adds \+10 pp to the population while its bonus lasts\.$/, (_, people) => `Premia 100% szczęścia przez 24 godziny dla ${recipients(people)}. Ich grupa daje całej populacji +10 p.p. przez czas działania premii.`);
-priorityRule(/^This visitor package costs ([\d,. ]+) coins\.$/, (_, price) => `Ten pakiet zwiedzania kosztuje ${price} monet.`);
-priorityRule(/^([\d,. ]+) extra visitor entries purchased for ([\d,. ]+) coins\.$/, (_, entries, price) => `Kupiono ${entries} dodatkowych wejść za ${price} monet.`);
-priorityRule(/^The Lighthouse has ([\d,. ]+) free visitor places\.$/, (_, count) => `Wolne miejsca zwiedzania w latarni: ${count}.`);
-priorityRule(/^([\d,. ]+) happiness points are available until the next Warsaw midnight\.$/, (_, count) => `Do najbliższej północy czasu polskiego dostępne są punkty szczęścia: ${count}.`);
-priorityRule(/^([\d,. ]+) residents moved into the House\. Their happiness remains at 0% for their first 24 hours\.$/, (_, count) => `Nowi mieszkańcy w Domu: ${count}. Przez pierwsze 24 godziny ich szczęście pozostaje na 0%.`);
-priorityRule(/^Exchanged ([\d,. ]+) (.+) for ([\d,. ]+) (.+)\. Market fee: 10%\.$/, (_, count, from, output, to) => `Wymieniono ${count} ${tr(from)} na ${output} ${tr(to)}. Marża targu wynosi 10%.`);
+priorityRule(/^Granted ([\d,.\s]+) coins for verified sharing\.$/, (_, amount) => `Przyznano ${coinsAfterFor(amount)} za potwierdzone udostępnienie.`);
+priorityRule(/^(.+): ([\d,.\s]+) coins and materials received\.$/, (_, title, amount) => `${tr(title)}: otrzymano ${coinsAfterFor(amount)} oraz materiały.`);
+priorityRule(/^([\d,.\s]+) extra visitor entries for ([\d,.\s]+) coins\. Entries expire after 24 hours\.$/, (_, entries, price) => `Dodatkowe wejścia: ${entries} za ${coinsAfterFor(price)}. Wejścia wygasają po 24 godzinach.`);
+priorityRule(/^([\d,.\s]+) residents have 100% happiness for 24 hours\. Their group adds \+10 pp to the population while its bonus lasts\.$/, (_, people) => `Premia 100% szczęścia przez 24 godziny dla ${recipients(people)}. Ich grupa daje całej populacji +10 p.p. przez czas działania premii.`);
+priorityRule(/^This visitor package costs ([\d,.\s]+) coins\.$/, (_, price) => `Ten pakiet zwiedzania kosztuje ${coinsAfterFor(price)}.`);
+priorityRule(/^([\d,.\s]+) extra visitor entries purchased for ([\d,.\s]+) coins\.$/, (_, entries, price) => `Kupiono dodatkowe wejścia: ${entries} za ${coinsAfterFor(price)}.`);
+priorityRule(/^The Lighthouse has ([\d,.\s]+) free visitor places\.$/, (_, count) => `Wolne miejsca zwiedzania w latarni: ${count}.`);
+priorityRule(/^([\d,.\s]+) happiness points are available until the next Warsaw midnight\.$/, (_, count) => `Do najbliższej północy czasu polskiego dostępne są punkty szczęścia: ${count}.`);
+priorityRule(/^([\d,.\s]+) residents moved into the House\. Their happiness remains at 0% for their first 24 hours\.$/, (_, count) => `Nowi mieszkańcy w Domu: ${count}. Przez pierwsze 24 godziny ich szczęście pozostaje na 0%.`);
+priorityRule(/^Exchanged ([\d,.\s]+) (.+) for ([\d,.\s]+) (.+)\. Market fee: 10%\.$/, (_, count, from, output, to) => `Wymieniono ${materialAmount(count, from, 'accusative')} na ${materialAmount(output, to, 'accusative')}. Prowizja targu wynosi 10%.`);
 priorityRule(/^(.+) reached Town Hall level (\d+) in HARBORLIGHT! Build your own island: (.+)$/, (_, name, level, url) => `${name} osiąga ${level}. poziom ratusza w HARBORLIGHT! Rozwijaj własną wyspę: ${url}`);
 
 entries(`
@@ -1694,7 +1703,7 @@ Open Market exchange|Wymiana na targu
 Blessings|Błogosławieństwa
 Free uses remaining|Pozostałe darmowe użycia
 Paid blessing cooldown|Przerwa między płatnymi błogosławieństwami
-A manual blessing grants +50 of every resource and +20 happiness for one hour. Free uses depend on the Chapel level. The next paid blessing is available four hours after the previous effect ends.|Ręczne błogosławieństwo daje po 50 każdego zasobu i +20 p.p. szczęścia na godzinę. Liczba darmowych użyć zależy od poziomu Kaplicy. Kolejne płatne błogosławieństwo jest dostępne cztery godziny po zakończeniu poprzedniego efektu.
+A manual blessing grants +50 of every resource and +20 happiness for one hour. Free uses depend on the Chapel level. The next paid blessing is available four hours after the previous effect ends.|Ręczne błogosławieństwo daje po 50 każdego zasobu i +20 p.p. szczęścia przez godzinę. Liczba darmowych użyć zależy od poziomu Kaplicy. Kolejne płatne błogosławieństwo jest dostępne cztery godziny po zakończeniu poprzedniego efektu.
 Harbor workers carry goods between central storage, Harbor storage and the ship.|Pracownicy portu przewożą towary między magazynem centralnym, magazynem portowym i statkiem.
 Delivered building materials|Dostarczone materiały budowlane
 A carrier takes one material per trip, including a partial load. The base round trip is 5 minutes; completed path levels reduce it. Level 1 carries 120 units per trip. Hunger halves effective transport. Central replenishment comes before construction unless you change priorities. Food reserve: 50 × Warehouse level.|Tragarz przewozi jeden rodzaj materiału na kurs, także przy niepełnym ładunku. Podstawowy kurs w obie strony trwa 5 minut; ukończone poziomy ścieżek skracają ten czas. Na poziomie 1 tragarz przenosi do 120 sztuk. Głód zmniejsza wydajność transportu o połowę. Uzupełnianie magazynu centralnego ma pierwszeństwo przed budową, jeśli nie zmienisz priorytetów. Rezerwa żywności wynosi 50 × poziom Magazynu.
@@ -1714,12 +1723,12 @@ Only one attraction can be active across the island. Its effect lasts six hours;
 `);
 priorityRule(/^The next attraction is available in (.+)\.$/, (_, duration) => `Kolejna atrakcja będzie dostępna za ${tr(duration)}.`);
 priorityRule(/^Available in (.+)$/, (_, duration) => `Dostępne za ${tr(duration)}`);
-priorityRule(/^([\d,. ]+)% of population$/, (_, share) => `${share}% mieszkańców`);
-priorityRule(/^([\d,. ]+) coins paid\. The ship arrives in 5 minutes; harbor workers unload and return the cargo to the warehouse\.$/, (_, price) => `Zapłacono ${price} monet. Statek przypłynie za 5 minut, a pracownicy portu rozładują i odwiozą towary do magazynu centralnego.`);
+priorityRule(/^([\d,.\s]+)% of population$/, (_, share) => `${share}% mieszkańców`);
+priorityRule(/^([\d,.\s]+) coins paid\. The ship arrives in 5 minutes; harbor workers unload and return the cargo to the warehouse\.$/, (_, price) => `Zapłacono ${price} monet. Statek przypłynie za 5 minut, a pracownicy portu rozładują i odwiozą towary do magazynu centralnego.`);
 priorityRule(/^(.+) per 10 trips · next allocation (\d+) \/ 10$/, (_, shares, position) => `${tr(shares.replace(/\b2 random\b/g, '2 losowe'))} na 10 kursów · kolejny przydział ${position} / 10`);
-priorityRule(/^([\d,. ]+) extra entries are available for 24 hours\. Paid package (\d+) of 3\.$/, (_, entries, ordinal) => `Dodatkowe wejścia dostępne przez 24 godziny: ${entries}. Płatny pakiet ${ordinal} z 3.`);
-priorityRule(/^([\d,. ]+) residents will return in four hours\. The group cannot be withdrawn\.$/, (_, count) => `Zwiedzanie potrwa cztery godziny. Liczba uczestników: ${count}. Nie można odwołać tej grupy.`);
-priorityRule(/^([\d,. ]+) residents sent to the Lighthouse\. Their bonuses begin when they return in four hours\.$/, (_, count) => `Wysłano do latarni grupę ${count} osób. Premie zaczną działać po ich powrocie za cztery godziny.`);
+priorityRule(/^([\d,.\s]+) extra entries are available for 24 hours\. Paid package (\d+) of 3\.$/, (_, entries, ordinal) => `Dodatkowe wejścia dostępne przez 24 godziny: ${entries}. Płatny pakiet ${ordinal} z 3.`);
+priorityRule(/^([\d,.\s]+) residents will return in four hours\. The group cannot be withdrawn\.$/, (_, count) => `Zwiedzanie potrwa cztery godziny. Liczba uczestników: ${count}. Nie można odwołać tej grupy.`);
+priorityRule(/^([\d,.\s]+) residents sent to the Lighthouse\. Their bonuses begin when they return in four hours\.$/, (_, count) => `Wysłano mieszkańców do latarni. Liczba uczestników: ${count}. Premie zaczną działać po powrocie za cztery godziny.`);
 
 // Approved v18 rules and transaction feedback.
 registerTranslations({
@@ -1749,16 +1758,16 @@ registerTranslations({
   "Island economy": "Gospodarka wyspy",
   "Island": "Wyspa",
   "You choose and confirm the post yourself. The choice bonus does not verify Facebook publication.": "Samodzielnie wybierasz i zatwierdzasz publikację. Bonus za wybór udostępnienia nie potwierdza opublikowania posta na Facebooku.",
-  "A manual blessing grants +50 of every resource and +20 happiness for one hour. One free use renews at Warsaw midnight and does not accumulate. Paid and ad uses share a four-hour cooldown after the previous paid or ad effect ends.": "Ręczne błogosławieństwo daje po 50 każdego zasobu i +20 pp szczęścia na godzinę. Jedno darmowe użycie odnawia się o północy Warszawy, bez kumulowania. Płatne i reklamowe użycia mają wspólną blokadę czterech godzin od końca poprzedniego płatnego lub reklamowego efektu.",
-  "A level 1 Warehouse holds 4,000 ordinary units in total and up to 1,000 of each material. Capacity grows by 50% per level up to 40 million total and 10 million per material at level 24. Later Warehouse levels only add worker places. Spendable reward stock does not use ordinary capacity. Coins are kept separately.": "Magazyn 1 mieści 4000 zwykłych materiałów łącznie i do 1000 każdego rodzaju. Pojemność rośnie o 50% na poziom do 40 mln łącznie i 10 mln danego materiału na poziomie 24. Dalsze poziomy dodają tylko miejsca pracy. Wydawalny zapas z nagród nie zajmuje zwykłej pojemności. Monety są przechowywane osobno.",
-  "Each resident consumes 1 Food per real hour from central storage, including while offline. Eating adds 1 happiness point per hour. Without food, work efficiency immediately falls to 50%; after 12 accumulated hungry hours the resident also loses 5 points per hour. Feeding stops the penalty immediately; one full uninterrupted hour of feeding resets the hunger clock. Food reserved for meals cannot be spent twice.": "Każdy mieszkaniec zużywa 1 żywność na rzeczywistą godzinę z magazynu centralnego, również podczas nieobecności. Posiłki dają +1 pp szczęścia na godzinę. Brak jedzenia od razu obniża wydajność do 50%; po 12 zgromadzonych godzinach głodu działa też kara −5 pp/h. Karmienie od razu zatrzymuje karę, a pełna godzina nieprzerwanego karmienia zeruje licznik głodu. Żywności zarezerwowanej na posiłki nie można wydać drugi raz.",
-  "Eating adds +1 point per hour and actual work adds another +1. After twelve accumulated hungry hours, hunger costs −5 points/hour until feeding resumes; one full uninterrupted fed hour resets that clock. Assignment pauses the unemployment penalty during the walk; arrival resets its clock. Returning home counts as unemployment.": "Posiłki dają +1 pp na godzinę, a rzeczywista praca kolejne +1. Po dwunastu zgromadzonych godzinach głodu działa kara −5 pp/h do wznowienia karmienia; pełna godzina nieprzerwanego karmienia zeruje licznik. Przydzielenie do pracy wstrzymuje karę bezrobocia na czas dojścia, a dotarcie zeruje licznik. Powrót do domu jest czasem bezrobocia.",
-  "A manual blessing grants +50 of every resource and +20 happiness to everyone for one hour. One free use renews at Warsaw midnight without accumulating. Only one manual blessing can be active at a time.": "Ręczne błogosławieństwo daje po 50 każdego zasobu i +20 pp szczęścia na godzinę. Jedno darmowe użycie odnawia się o północy Warszawy, bez kumulowania. Jednocześnie może działać jedno ręczne błogosławieństwo.",
-  "A paid blessing costs 100 × Chapel level coins and has the same effect. Paid and ad uses share a 4-hour cooldown from the end of the previous paid or ad effect. A free daily use does not move that deadline. Active blessings cannot overlap.": "Płatne błogosławieństwo kosztuje 100 × poziom Kaplicy monet i daje ten sam efekt. Płatne i reklamowe użycia mają wspólną blokadę 4 godzin od końca poprzedniego takiego efektu. Darmowe użycie nie przesuwa tego terminu. Aktywne błogosławieństwa nie mogą się nakładać.",
+  "A manual blessing grants +50 of every resource and +20 happiness for one hour. One free use renews at Warsaw midnight and does not accumulate. Paid and ad uses share a four-hour cooldown after the previous paid or ad effect ends.": "Ręczne błogosławieństwo daje po 50 każdego zasobu i +20 p.p. szczęścia przez godzinę. Jedno darmowe użycie odnawia się o północy Warszawy, bez kumulowania. Po zakończeniu płatnego lub reklamowego błogosławieństwa trzeba odczekać cztery godziny przed kolejnym użyciem którejkolwiek z tych opcji.",
+  "A level 1 Warehouse holds 4,000 ordinary units in total and up to 1,000 of each material. Capacity grows by 50% per level up to 40 million total and 10 million per material at level 24. Later Warehouse levels only add worker places. Spendable reward stock does not use ordinary capacity. Coins are kept separately.": "Magazyn 1 mieści 4000 zwykłych materiałów łącznie i do 1000 każdego rodzaju. Pojemność rośnie o 50% na poziom do 40 mln łącznie i 10 mln danego materiału na poziomie 24. Dalsza rozbudowa zwiększa tylko liczbę miejsc pracy. Materiały z nagród można wydawać; nie zajmują zwykłego miejsca w magazynie. Monety są przechowywane osobno.",
+  "Each resident consumes 1 Food per real hour from central storage, including while offline. Eating adds 1 happiness point per hour. Without food, work efficiency immediately falls to 50%; after 12 accumulated hungry hours the resident also loses 5 points per hour. Feeding stops the penalty immediately; one full uninterrupted hour of feeding resets the hunger clock. Food reserved for meals cannot be spent twice.": "Każdy mieszkaniec zużywa jedną jednostkę żywności na godzinę czasu rzeczywistego, również podczas twojej nieobecności. Żywność pochodzi z magazynu centralnego. Posiłki dają +1 p.p. szczęścia na godzinę. Brak jedzenia od razu obniża wydajność do 50%; po 12 zgromadzonych godzinach głodu działa też kara −5 p.p./godz. Zapewnienie jedzenia od razu zatrzymuje karę. Pełna godzina nieprzerwanych posiłków zeruje licznik głodu. Żywności zarezerwowanej na posiłki nie można wydać drugi raz.",
+  "Eating adds +1 point per hour and actual work adds another +1. After twelve accumulated hungry hours, hunger costs −5 points/hour until feeding resumes; one full uninterrupted fed hour resets that clock. Assignment pauses the unemployment penalty during the walk; arrival resets its clock. Returning home counts as unemployment.": "Posiłki dają +1 p.p. na godzinę, a rzeczywista praca kolejne +1. Po dwunastu zgromadzonych godzinach głodu działa kara −5 p.p./godz. do wznowienia karmienia; pełna godzina nieprzerwanego karmienia zeruje licznik. Przydzielenie do pracy wstrzymuje karę za bezrobocie na czas dojścia. Dotarcie do miejsca pracy zeruje licznik bezrobocia. Powrót do domu jest czasem bezrobocia.",
+  "A manual blessing grants +50 of every resource and +20 happiness to everyone for one hour. One free use renews at Warsaw midnight without accumulating. Only one manual blessing can be active at a time.": "Ręczne błogosławieństwo daje po 50 każdego zasobu i +20 p.p. szczęścia przez godzinę. Jedno darmowe użycie odnawia się o północy Warszawy, bez kumulowania. Jednocześnie może działać jedno ręczne błogosławieństwo.",
+  "A paid blessing costs 100 × Chapel level coins and has the same effect. Paid and ad uses share a 4-hour cooldown from the end of the previous paid or ad effect. A free daily use does not move that deadline. Active blessings cannot overlap.": "Płatne błogosławieństwo kosztuje 100 × poziom Kaplicy monet i daje ten sam efekt. Po zakończeniu płatnego lub reklamowego błogosławieństwa trzeba odczekać 4 godziny przed kolejnym użyciem którejkolwiek z tych opcji. Darmowe użycie nie przesuwa tego terminu. Aktywne błogosławieństwa nie mogą się nakładać.",
   "Choose which categories appear in the list and on the bell. The island keeps the latest 100 notifications. Only read notifications can be deleted manually.": "Wybierz kategorie widoczne na liście i w dzwoneczku. Wyspa zachowuje 100 najnowszych wiadomości. Ręcznie można usuwać tylko przeczytane.",
   "Confirm your presence to continue. The round clock continues while this prompt is open. Extra seconds can be bought voluntarily before the deadline.": "Potwierdź obecność, aby kontynuować. Zegar rundy biegnie podczas tego okna. Dodatkowe sekundy można kupić dobrowolnie przed końcem czasu.",
   "For the island’s first 72 hours every resident, including new arrivals, has at least 20% happiness. Forced 100% takes priority. Expiry removes the protection without subtracting twenty points or charging hidden losses.": "Przez pierwsze 72 godziny wyspy każdy mieszkaniec, także nowo przybyły, ma co najmniej 20% szczęścia. Wymuszone 100% ma pierwszeństwo. Koniec ochrony nie odejmuje dwudziestu punktów ani nie rozlicza ukrytych strat.",
-  "The upgrade gives both benefits for 24 hours × the achieved Lighthouse level. New arrivals also receive 100%, only until the shared effect ends. Lost residents and resources are not restored.": "Ulepszenie daje obie premie na 24 godziny × osiągnięty poziom Latarni. Nowi mieszkańcy również mają 100%, tylko do wspólnego końca efektu. Utraceni mieszkańcy i zasoby nie wracają.",
+  "The upgrade gives both benefits for 24 hours × the achieved Lighthouse level. New arrivals also receive 100%, only until the shared effect ends. Lost residents and resources are not restored.": "Ulepszenie daje obie premie na 24 godziny × osiągnięty poziom Latarni. Nowi mieszkańcy również otrzymują 100% szczęścia, do zakończenia tej samej premii. Utraceni mieszkańcy i zasoby nie wracają.",
   "The initial 24-hour settling period suspends hunger and unemployment counters. Forced 100% takes priority, followed by the Welcome bonus minimum; otherwise happiness stays at 0%.": "Pierwsze 24 godziny osiedlania wstrzymują liczniki głodu i bezrobocia. Pierwszeństwo ma wymuszone 100%, następnie powitalne minimum; poza tym szczęście pozostaje na 0%.",
   "Meaningful activity in the focused visible game keeps this benefit active for five minutes. Food, population clocks and effect durations keep real time. The Lighthouse production bonus can combine with it.": "Rzeczywiste działanie w widocznej, aktywnej karcie odnawia tę premię na pięć minut. Jedzenie, przyrost populacji i efekty biegną w czasie rzeczywistym. Premia produkcji z Latarni może się z nią łączyć.",
   "Only time after 48 hours without real play is slowed. Earlier offline hours retain their original multipliers; automatic session refresh does not count as play.": "Spowolnienie obejmuje tylko czas po 48 godzinach bez rzeczywistego grania. Wcześniejsze godziny zachowują właściwe mnożniki; automatyczne odnowienie sesji nie jest graniem.",
@@ -1794,7 +1803,7 @@ registerTranslations({
   "The reward receipt was already used or is invalid.": "Potwierdzenie nagrody zostało już użyte lub jest nieprawidłowe.",
   "The ad provider has not confirmed the reward.": "Dostawca reklamy nie potwierdził nagrody.",
   "This reward invitation has already ended.": "To zaproszenie do nagrody już się zakończyło.",
-  "Material reward received.": "Odebrano nagrodę materiałową.",
+  "Material reward received.": "Odebrano materiały z nagrody.",
   "This reward cannot be delivered.": "Nie można przyznać tej nagrody.",
   "Reward received.": "Odebrano nagrodę.",
   "Enter a valid promotional code.": "Wpisz poprawny kod promocyjny.",
@@ -1802,27 +1811,27 @@ registerTranslations({
   "Code redemption requires confirmation from the server.": "Wykorzystanie kodu wymaga potwierdzenia serwera.",
   "The promotional reward is invalid.": "Nagroda z kodu jest nieprawidłowa.",
   "Promotional code redeemed.": "Wykorzystano kod promocyjny.",
-  "Each farmer produces 20 grain per hour at level 1, 24 at level 2, and two more per level thereafter. Harvests wait locally for warehouse workers.": "Każdy najedzony pracownik produkuje zboże: 20 szt./h na poziomie 1, 24 na poziomie 2, dalej o 2 więcej na poziom. Gotowy produkt czeka na tragarzy.",
-  "Each worker produces 20 planks per hour at level 1, 24 at level 2, and two more per level thereafter. Each plank requires 2 wood from central storage.": "Każdy najedzony pracownik produkuje deski: 20 szt./h na poziomie 1, 24 na poziomie 2, dalej o 2 więcej na poziom. Gotowy produkt czeka na tragarzy. Jedna sztuka wymaga dwóch sztuk surowca z magazynu centralnego.",
-  "Each quarry worker produces 20 stone per hour at level 1, 24 at level 2, and two more per level thereafter. Stone waits locally for transport.": "Każdy najedzony pracownik produkuje kamień: 20 szt./h na poziomie 1, 24 na poziomie 2, dalej o 2 więcej na poziom. Gotowy produkt czeka na tragarzy.",
-  "At level 1 each carrier carries 120 items per base five-minute course; storage holds 1,000 per material and 4,000 total. Capacity grows by 50% up to 10 million per material and 40 million total. After level 24 only crew capacity grows; separate road upgrades still apply.": "Magazyn 1 mieści 1000 każdego materiału i 4000 łącznie; podstawowy kurs przenosi 120 sztuk w 5 minut. Pojemność rośnie o 50% do 10 mln każdego materiału i 40 mln łącznie. Po poziomie 24 rośnie tylko obsada. Drogi nadal niezależnie usprawniają transport.",
-  "Each lumberjack produces 20 wood per hour at level 1, 24 at level 2, and two more per level thereafter. Wood waits locally for transport.": "Każdy najedzony pracownik produkuje drewno: 20 szt./h na poziomie 1, 24 na poziomie 2, dalej o 2 więcej na poziom. Gotowy produkt czeka na tragarzy.",
-  "Each miller produces 20 food per hour at level 1, 24 at level 2, and two more per level thereafter. Each Food requires 2 grain from central storage.": "Każdy najedzony pracownik produkuje żywność: 20 szt./h na poziomie 1, 24 na poziomie 2, dalej o 2 więcej na poziom. Gotowy produkt czeka na tragarzy. Jedna sztuka wymaga dwóch sztuk surowca z magazynu centralnego.",
-  "Completing an upgrade grants +10 happiness × the new level for 10 hours. One free blessing renews at Warsaw midnight without accumulation. Every manual blessing gives +50 of every resource and +20 happiness for one hour. Paid and ad blessings share a four-hour wait after their effect ends.": "Ulepszenie daje +10 × nowy poziom pp szczęścia przez 10 godzin. Jedno darmowe błogosławieństwo odnawia się o północy Warszawy bez kumulowania. Ręczne użycie daje po 50 każdego zasobu i +20 pp na godzinę. Płatne i reklamowe użycia mają wspólną blokadę 4 godzin od końca efektu."
+  "Each farmer produces 20 grain per hour at level 1, 24 at level 2, and two more per level thereafter. Harvests wait locally for warehouse workers.": "Bazowa wydajność jednego rolnika wynosi 20 jednostek zboża na godzinę na 1. poziomie gospodarstwa i 24 na 2. poziomie. Każdy kolejny poziom dodaje 2 jednostki na godzinę. Zebrane zboże czeka przy budynku na odbiór przez tragarzy.",
+  "Each worker produces 20 planks per hour at level 1, 24 at level 2, and two more per level thereafter. Each plank requires 2 wood from central storage.": "Bazowa wydajność jednego pracownika tartaku wynosi 20 desek na godzinę na 1. poziomie i 24 na 2. poziomie. Każdy kolejny poziom dodaje 2 deski na godzinę. Jedna deska wymaga 2 jednostek drewna z magazynu centralnego. Gotowe deski czekają przy budynku na tragarzy.",
+  "Each quarry worker produces 20 stone per hour at level 1, 24 at level 2, and two more per level thereafter. Stone waits locally for transport.": "Bazowa wydajność jednego pracownika kamieniołomu wynosi 20 jednostek kamienia na godzinę na 1. poziomie i 24 na 2. poziomie. Każdy kolejny poziom dodaje 2 jednostki na godzinę. Wydobyty kamień czeka przy budynku na transport.",
+  "At level 1 each carrier carries 120 items per base five-minute course; storage holds 1,000 per material and 4,000 total. Capacity grows by 50% up to 10 million per material and 40 million total. After level 24 only crew capacity grows; separate road upgrades still apply.": "Magazyn na 1. poziomie mieści po 1000 sztuk każdego materiału, łącznie do 4000 sztuk. Jeden tragarz przewozi do 120 sztuk w podstawowym, pięciominutowym kursie. Pojemność rośnie o 50% na poziom, do 10 mln sztuk każdego materiału i 40 mln łącznie. Po 24. poziomie przybywa tylko miejsc pracy. Ulepszenia ścieżek dodatkowo usprawniają transport.",
+  "Each lumberjack produces 20 wood per hour at level 1, 24 at level 2, and two more per level thereafter. Wood waits locally for transport.": "Bazowa wydajność jednego drwala wynosi 20 jednostek drewna na godzinę na 1. poziomie i 24 na 2. poziomie. Każdy kolejny poziom dodaje 2 jednostki na godzinę. Drewno czeka przy budynku na transport.",
+  "Each miller produces 20 food per hour at level 1, 24 at level 2, and two more per level thereafter. Each Food requires 2 grain from central storage.": "Bazowa wydajność jednego młynarza wynosi 20 jednostek żywności na godzinę na 1. poziomie młyna i 24 na 2. poziomie. Każdy kolejny poziom dodaje 2 jednostki na godzinę. Jedna jednostka żywności wymaga 2 jednostek zboża z magazynu centralnego. Gotowa żywność czeka przy młynie na tragarzy.",
+  "Completing an upgrade grants +10 happiness × the new level for 10 hours. One free blessing renews at Warsaw midnight without accumulation. Every manual blessing gives +50 of every resource and +20 happiness for one hour. Paid and ad blessings share a four-hour wait after their effect ends.": "Rozbudowa daje premię do szczęścia równą 10 × nowy poziom kaplicy, wyrażoną w punktach procentowych, przez 10 godzin. Jedno darmowe błogosławieństwo odnawia się o północy czasu warszawskiego; niewykorzystane nie przechodzi na kolejny dzień. Każde ręczne błogosławieństwo daje po 50 każdego zasobu i +20 p.p. szczęścia przez godzinę. Po zakończeniu płatnego lub reklamowego błogosławieństwa obie te opcje mają wspólną, czterogodzinną przerwę."
 });
 
 registerTranslations({
-  "Each eligible resident receives the temporary happiness bonus. During the initial settling period Lighthouse100% and the Welcome minimum take priority; otherwise happiness remains0%.": "Uprawnieni mieszkańcy otrzymują czasową premię szczęścia. Podczas początkowego osiedlania pierwszeństwo mają Latarniane 100% i powitalne minimum; poza tym szczęście pozostaje na 0%."
+  "Each eligible resident receives the temporary happiness bonus. During the initial settling period Lighthouse100% and the Welcome minimum take priority; otherwise happiness remains0%.": "Uprawnieni mieszkańcy otrzymują czasową premię szczęścia. Przez początkowy okres zadomowienia pierwszeństwo mają premia latarni (100%) i powitalne minimum szczęścia. Jeśli żadna z tych premii nie działa, szczęście pozostaje na 0%."
 });
 registerTranslations({
-  'Each eligible resident receives the temporary happiness bonus. During the initial settling period, Lighthouse 100% and the Welcome minimum take priority; otherwise happiness remains at 0%.': 'Uprawnieni mieszkańcy otrzymują czasową premię szczęścia. Podczas początkowego osiedlania pierwszeństwo mają Latarniane 100% i powitalne minimum; poza tym szczęście pozostaje na 0%.'
+  'Each eligible resident receives the temporary happiness bonus. During the initial settling period, Lighthouse 100% and the Welcome minimum take priority; otherwise happiness remains at 0%.': 'Uprawnieni mieszkańcy otrzymują czasową premię szczęścia. Przez początkowy okres zadomowienia pierwszeństwo mają premia latarni (100%) i powitalne minimum szczęścia. Jeśli żadna z tych premii nie działa, szczęście pozostaje na 0%.'
 });
 registerTranslations({
   'Cloud confirmation is required before another action.': 'Przed kolejnym działaniem wymagane jest potwierdzenie zapisu przez chmurę.',
   'Development preview runs in memory. Hosted accounts save exclusively in the cloud.': 'Podgląd deweloperski działa w pamięci. Konta środowiska chmurowego zapisują postęp wyłącznie w chmurze.',
   'New residents cannot receive House happiness points during their first 24 hours.': 'Nowym mieszkańcom nie można przydzielać punktów szczęścia z Domu przez pierwsze 24 godziny.',
   'Base production per worker is 20, 24, 26, 28… units per hour by the workplace’s own level, before temporary multipliers. Hunger halves production and transport immediately. Releasing a worker discards their unfinished unit.': 'Bazowa wydajność pracownika przed czasowymi mnożnikami wynosi 20, 24, 26, 28… sztuk na godzinę zależnie od poziomu miejsca pracy. Głód od razu zmniejsza produkcję i szybkość przewozu o połowę. Zwolnienie pracownika usuwa postęp jego niedokończonej sztuki.',
-  'A resident costs the full next Town Hall upgrade price in all six resources. An available House bed and Town Hall population place are required. New residents settle in for 24 hours: Lighthouse protection gives 100%, Welcome protection gives a minimum of 20%, otherwise happiness stays at 0%.': 'Mieszkaniec kosztuje tyle, co pełna kolejna rozbudowa Ratusza, we wszystkich sześciu zasobach. Wymaga wolnego łóżka w Domu i miejsca w limicie Ratusza. Przez pierwsze 24 godziny osiedlania ochrona Latarniana daje 100% szczęścia, powitalna co najmniej 20%, a poza nimi szczęście pozostaje na 0%.',
+  'A resident costs the full next Town Hall upgrade price in all six resources. An available House bed and Town Hall population place are required. New residents settle in for 24 hours: Lighthouse protection gives 100%, Welcome protection gives a minimum of 20%, otherwise happiness stays at 0%.': 'Mieszkaniec kosztuje tyle, co pełna kolejna rozbudowa Ratusza, we wszystkich sześciu zasobach. Wymaga wolnego łóżka w domu i miejsca w limicie ratusza. Przez pierwsze 24 godziny zadomowienia premia latarni daje 100% szczęścia, a premia powitalna zapewnia co najmniej 20%. Jeśli żadna z nich nie działa, szczęście pozostaje na 0%.',
   'Cloud sign-in is required.': 'Wymagane jest zalogowanie do chmury.'
 });
 
@@ -1843,7 +1852,7 @@ Choose valid resident identifiers.|Wybierz prawidłowych mieszkańców.
 Choose between one and 100 passengers per voyage.|Wybierz od 1 do 100 pasażerów na rejs.
 All selected passengers must actually be at Home.|Wszyscy wybrani pasażerowie muszą rzeczywiście przebywać w Domu.
 The destination needs free Town Hall population places and House beds for all passengers.|U celu potrzebne są wolne miejsca w limicie Ratusza i łóżka w Domu dla wszystkich pasażerów.
-Prepare normal meals for the thirty-minute voyage: half a Food per passenger. This is their ordinary meal, without a transport fee.|Przygotuj zwykłe posiłki na 30-minutowy rejs: po pół jednostki żywności na pasażera. To normalne żywienie, bez opłaty za przewóz.
+Prepare normal meals for the thirty-minute voyage: half a Food per passenger. This is their ordinary meal, without a transport fee.|Przygotuj posiłki na 30-minutowy rejs: po pół jednostki żywności na pasażera. To zwykłe zużycie jedzenia; nie płacisz za sam przewóz.
 The voyage exceeds the supported clock or history.|Rejs przekracza obsługiwany zakres zegara lub historii.
 Passengers travel for thirty real minutes, using ordinary meals and no coin fee.|Pasażerowie podróżują przez 30 rzeczywistych minut ze zwykłymi posiłkami, bez opłaty w monetach.
 Passengers departed. Their ordinary meals are packed; no transport fee was charged.|Pasażerowie wypłynęli. Zwykłe posiłki są spakowane; nie pobrano opłaty za przewóz.
@@ -1851,3 +1860,97 @@ Passengers have already arrived.|Pasażerowie już przybyli.
 Passengers arrived at Home. Their identities and personal progress were preserved.|Pasażerowie przybyli do Domu. Zachowali swoją tożsamość i osobisty postęp.
 `);
 rule(/^Reach Town Hall level (\d+) on your mother island first\.$/, (_, level) => `Najpierw osiągnij poziom Ratusza ${level} na wyspie macierzystej.`);
+
+// Reviewed Polish copy for live expedition controls and world-event panels.
+entries(`
+Finish or cancel the ad before buying time.|Zakończ lub pomiń reklamę, zanim kupisz dodatkowy czas.
+The time purchase limit for this round has been reached.|W tej rundzie wykorzystano już limit zakupów dodatkowego czasu.
+Additional time quote.|Koszt dodatkowego czasu.
+An ad is already in progress.|Reklama już trwa.
+Start the ad before the round deadline and confirm your presence first.|Najpierw potwierdź obecność, a następnie uruchom reklamę przed końcem rundy.
+The ad limit for this round has been reached.|W tej rundzie wykorzystano już limit reklam.
+The round is paused while the ad is in progress. The island world continues.|Na czas reklamy runda zostaje wstrzymana. Czas na wyspie nadal biegnie.
+This ad is no longer pending.|Ta reklama nie oczekuje już na zakończenie.
+The round deadline has passed.|Upłynął czas rundy.
+Ad skipped. No extra time was awarded. The round continues.|Pominięto reklamę, więc nie przyznano dodatkowego czasu. Runda trwa dalej.
+This ad completion was already used.|Nagrodę za tę reklamę już wykorzystano.
+The ad reward for this round was already received.|Nagrodę reklamową za tę rundę już odebrano.
+Your balance cannot hold this reward.|Odebranie nagrody przekroczyłoby limit twojego salda.
+Finish or cancel the ad before playing the round.|Zakończ lub pomiń reklamę, aby wrócić do rundy.
+Move the board with a valid tilt input.|Użyj myszy lub przechyl telefon, aby poruszyć planszą.
+Board tilt updated.|Zmieniono nachylenie planszy.
+Choose a covered card that has not been matched.|Wybierz zakrytą kartę, która nie została jeszcze dopasowana.
+Card revealed.|Odkryto kartę.
+Use the time purchase or a verified rewarded-ad completion.|Kup dodatkowy czas albo odbierz potwierdzoną nagrodę za reklamę.
+Unusual fertilizer|Niezwykły nawóz
+Plague|Dżuma
+Wood-boring beetles|Plaga korników
+Royal tax|Podatek królewski
+Damaged roads|Uszkodzone drogi
+Shipwreck effects keep their own clocks. Lighthouse protection overrides happiness loss without restoring residents or materials already lost.|Skutki rozbicia statku mają osobne liczniki czasu. Premia latarni ma pierwszeństwo przed karami do szczęścia, ale nie przywraca utraconych mieszkańców ani zasobów.
+World event|Wydarzenie na wyspie
+Coins waiting for wallet space|Monety oczekujące na zwolnienie miejsca
+Treasure from the wreck|Skarb z wraku
+Royal tax refund|Zwrot podatku królewskiego
+Supplies rescued from the wreck|Zapasy uratowane z wraku
+A castaway joins the island|Rozbitek dołącza do mieszkańców
+Castaway compensation|Rekompensata za rozbitka
+Plague from the wreck|Dżuma z wraku
+An unexpected royal tax|Niespodziewany podatek królewski
+Roads damaged by the wreck|Drogi uszkodzone przez wrak
+Residents who have finished settling in receive the bonus. For new arrivals, only Lighthouse protection and the Welcome minimum apply during their initial 24 hours.|Premię otrzymują mieszkańcy, którzy zakończyli już okres zadomowienia. Przez pierwsze 24 godziny nowo przybyłych chronią jedynie premia latarni i powitalne minimum szczęścia.
+`);
+priorityRule(/^Added (\d+) seconds for (\d+) coins\.$/, (_, seconds, price) => `Dodano ${seconds} ${plural(seconds, 'sekundę', 'sekundy', 'sekund')} za ${coinsAfterFor(price)}.`);
+priorityRule(/^Added (\d+) seconds for the verified ad\.$/, (_, seconds) => `Dodano ${seconds} ${plural(seconds, 'sekundę', 'sekundy', 'sekund')} za potwierdzoną reklamę.`);
+priorityRule(/^Farm production \+([\d., ]+)%$/, (_, n) => `Produkcja zboża +${n}%`);
+priorityRule(/^Carrying speed −([\d., ]+)%$/, (_, n) => `Prędkość transportu −${n}%`);
+priorityRule(/^Happiness −([\d., ]+) pp$/, (_, n) => `Szczęście −${n} p.p.`);
+
+priorityRule(/^The entire (\d+)-coin pot is now at risk\. A timely win adds up to (\d+) coins\.$/, (_, pot, reward) => `Stawką jest cała pula: ${coins(pot)}. Zwycięstwo przed końcem czasu może dodać do niej nawet ${coinsAfterFor(reward)}.`);
+
+// Current model results, reviewed alongside the live panels rather than inferred
+// from short word fragments. English keys remain save- and action-independent.
+entries(`
+The introduction is complete. Your island clock has started.|Wprowadzenie zostało ukończone. Czas na twojej wyspie właśnie ruszył.
+This island has already started. Your existing progress is preserved.|Ta wyspa już działa. Twój dotychczasowy postęp zostaje zachowany.
+Choose your island name before finishing the introduction.|Nadaj nazwę wyspie, zanim zakończysz wprowadzenie.
+Choose a valid introduction step.|Wybierz dostępny krok wprowadzenia.
+Choose your island name before the island tour.|Nadaj nazwę wyspie, zanim rozpoczniesz oprowadzanie.
+Introduction progress saved.|Zapisano postęp wprowadzenia.
+Finish or leave the island tour before starting gameplay.|Zakończ oprowadzanie albo je pomiń, aby rozpocząć grę.
+Introduction activity does not start the island clock.|Czynności wykonywane podczas wprowadzenia nie uruchamiają czasu na wyspie.
+This advertisement reward was already received.|Nagrodę za tę reklamę już odebrano.
+Confirm your presence before buying time.|Potwierdź obecność, zanim kupisz dodatkowy czas.
+Additional time must be bought before the deadline.|Dodatkowy czas możesz kupić tylko przed końcem rundy.
+This mini-game round is no longer active.|Ta runda minigry już się zakończyła.
+Not enough coins for additional time.|Masz za mało monet, aby kupić dodatkowy czas.
+Choose Marble maze or Picture triples.|Wybierz kulki w labiryncie albo dopasowywanie trójek.
+Complete the current mini-game to win this round.|Ukończ bieżącą minigrę, aby wygrać tę rundę.
+Make room in the central warehouse, including incoming cargo, before sending this whole batch.|Zwolnij miejsce w magazynie centralnym, zanim wyślesz całą tę partię. Uwzględnij też miejsce na towary, które są już w drodze.
+The penalty is paused on assignment and while walking to work. Only arriving resets the remembered timer; recalling a resident early does not grant a new grace period. Returning home counts as unemployment.|Kara przestaje działać po przydzieleniu mieszkańca do pracy i podczas jego drogi do budynku. Licznik bezrobocia zeruje się dopiero po dotarciu na miejsce. Odwołanie mieszkańca wcześniej nie daje nowego okresu ochronnego. Drogę powrotną do domu wlicza się do czasu bezrobocia.
+Rescued materials are available in your bonus stock.|Uratowane materiały trafiły do zapasu z nagród i możesz je już wydawać.
+One rescued resident moved into the House.|Uratowany rozbitek dołączył do mieszkańców i zajął wolne łóżko.
+Farm production is increased by 25% for six hours.|Przez sześć godzin gospodarstwo produkuje o 25% więcej zboża.
+`);
+
+// Match the complete live Town Hall threshold reason before word fragments.
+priorityRule(/^The Town Hall upgrade to level (\d+) requires at least (\d+) residents \(75% of level (\d+) capacity\)\. Current population: (\d+)\.$/, (_, next, required, current, population) => `Rozbudowa ratusza do ${next}. poziomu wymaga co najmniej ${required} ${Number(required) === 1 ? 'mieszkańca' : 'mieszkańców'} (75% limitu ludności na ${current}. poziomie). Obecna liczba mieszkańców: ${population}.`);
+
+priorityRule(/^(House|Farm|Sawmill|Quarry|Harbor|Warehouse|Lighthouse|Lumber Camp|Windmill|Town Hall|Chapel|Market): level (\d+)$/, (_, building, level) => `${tr(building)}: poziom ${level}`);
+
+entries(`
+A carrier takes one material per trip, including a partial load. The base round trip is 5 minutes; completed path levels reduce it. Level 1 carries 120 units per trip. Hunger halves effective transport. Central replenishment comes before construction unless you change priorities. Food reserve: 50 × Warehouse level, capped at level 24.|Tragarz przewozi w jednym kursie jeden rodzaj materiału. Może wyruszyć także z niepełnym ładunkiem. Podstawowy kurs w obie strony trwa 5 minut; ukończone poziomy ścieżek skracają ten czas. Na 1. poziomie magazynu tragarz przewozi do 120 sztuk. Głód zmniejsza wydajność transportu o połowę. Uzupełnianie magazynu centralnego ma pierwszeństwo przed budową, chyba że zmienisz priorytety. Chroniona rezerwa żywności wynosi 50 × poziom magazynu, przy czym do obliczeń bierze się najwyżej 24. poziom.
+`);
+
+priorityRule(/^(Estimate at current happiness: )?(A new resident|One resident leaves) in (.+?)\.( Overcrowding changes this rate\.)?$/, (_, estimate, event, duration, overcrowding) => `${estimate ? 'Szacunek przy obecnym szczęściu: ' : ''}${event === 'A new resident' ? 'Nowy mieszkaniec' : 'Jeden mieszkaniec odejdzie'} za ${tr(duration)}.${overcrowding ? ' Przeludnienie wpływa na ten szacunek.' : ''}`);
+
+entries(`
+Payment amount in PLN|Kwota płatności w PLN
+`);
+
+// Queue headings may already contain a localized building name from titleOf().
+priorityRule(/^(House|Farm|Sawmill|Quarry|Harbor|Warehouse|Lighthouse|Lumber Camp|Windmill|Town Hall|Chapel|Market|Dom|Gospodarstwo|Tartak|Kamieniołom|Port|Magazyn|Latarnia morska|Drwale|Młyn|Ratusz|Kaplica|Targ) → level (\d+)$/, (_, building, level) => `${tr(building)} → poziom ${level}`);
+priorityRule(/^\+([\d,.\s]+)% (speed|load)$/, (_, value, kind) => `+${value}% ${kind === 'speed' ? 'szybkości' : 'ładowności'}`);
+entries(`
+Construction package quote.|Wycena pakietu budowlanego.
+`);

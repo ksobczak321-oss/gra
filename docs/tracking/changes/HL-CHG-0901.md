@@ -13,7 +13,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | CI | `passed` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `accepted_parameters_with_open_details` |
+| Decyzja | `accepted` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
@@ -53,11 +53,12 @@ Odbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCES
 
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
-- **Powiązane:** Brak.
+- **Powiązane:** [HL-CHG-0932](HL-CHG-0932.md)
 
 ## Uwagi
 
-- Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.
+- Historia wcześniejszej analizy/prototypu: Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.
+- Aktualna decyzja użytkownika: oba rodzaje zadania ligi we wspólnym oknie19:00–21:00 czasuWarszawy;15–21 miesiąca, po dwie próby i średnia obu, brakujące=0. Wcześniejszy podział19–20/20–21 jest historią wydania0.10.0.0. Zmianę zachowania i nowy odbiór prowadziHL-CHG-0932; dawneCI pozostaje dowodem wyłącznie wskazanego dawnegoSHA.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

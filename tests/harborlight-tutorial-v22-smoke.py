@@ -102,6 +102,7 @@ def early_house_then_reload(browser):
         # The pending Farm lesson still pays its normal immediate reward. The
         # House action neither steals nor duplicates that already earned reward.
         page.locator('[data-tutorial-visit="rules-read"]').click()
+        page.locator('#hit-world-farm').click()
         farm_before = cloud.cloud_state(UID)
         page.locator('[data-worker-building="farm"][data-worker-delta="1"]').click()
         expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
@@ -148,6 +149,7 @@ def early_house_then_reload(browser):
 
         # The real next action remains available and leads to the third lesson.
         page.locator('[data-tutorial-visit="island-map"]').click()
+        page.locator('#hit-world-warehouse').click()
         page.locator('[data-worker-building="warehouse"][data-worker-delta="1"]').click()
         expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
         page.locator('[data-tutorial-claim="island-map"]').click()
@@ -171,6 +173,7 @@ def mobile_reward_grid(browser):
         assert page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
         expect(page.locator('[data-tutorial-current]')).to_have_attribute('data-tutorial-current', 'rules-read')
         page.locator('[data-tutorial-visit="rules-read"]').click()
+        page.locator('#hit-world-farm').click()
         page.locator('[data-worker-building="farm"][data-worker-delta="1"]').click()
         expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
         page.locator('[data-tutorial-claim="rules-read"]').click()

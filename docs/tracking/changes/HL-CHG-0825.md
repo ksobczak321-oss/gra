@@ -13,7 +13,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | CI | `passed` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `accepted_scope_with_dev_parameters` |
+| Decyzja | `accepted` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
@@ -48,11 +48,12 @@ Odbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCES
 
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
-- **Powiązane:** Brak.
+- **Powiązane:** [HL-CHG-0932](HL-CHG-0932.md)
 
 ## Uwagi
 
-- Jawny parametrDEV do ewentualnej korekty, nie odpowiedź użytkownika: kopiaRatusza/Magazynu, reszta1,6 przesiedleńców,0 startowych zasobów; na córce minimum6, wolne miejsca u celu, brak dodatkowej opłaty/racji i normalne żywienie. A po9 kontynuowane10,11…
+- Historia wcześniejszej analizy/prototypu: Jawny parametrDEV do ewentualnej korekty, nie odpowiedź użytkownika: kopiaRatusza/Magazynu, reszta1,6 przesiedleńców,0 startowych zasobów; na córce minimum6, wolne miejsca u celu, brak dodatkowej opłaty/racji i normalne żywienie. A po9 kontynuowane10,11…
+- Późniejsze potwierdzenie użytkownika: dalszeA=10,11…; kopiaRatusza/Magazynu, reszta budynków1,6 istniejących kolonistów,0 startowych zasobów, minimum6 na córce, wolne miejsca u celu oraz normalny posiłek0,5 żywności/osobę na30min bez dodatkowej opłaty monetowej. Wcześniejsze notatki o oczekiwaniu na decyzję opisują etap historyczny, nie bieżącą blokadę.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

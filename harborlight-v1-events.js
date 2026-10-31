@@ -2,7 +2,7 @@
 // reading a panel never rerolls an offer or applies an event a second time.
 // This module imports inventory only: residents/logistics can safely read its
 // modifiers, and the state coordinator supplies population-changing callbacks.
-import { centralAvailable, grantBonusMaterials, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v24-2';
+import { centralAvailable, grantBonusMaterials, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v25';
 
 const HOUR = 3600, DAY = 86400, EPS = 1e-7, SAFE = Number.MAX_SAFE_INTEGER;
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
@@ -10,6 +10,11 @@ const object = value => value && typeof value === 'object' && !Array.isArray(val
 const finite = (value, fallback = 0) => typeof value === 'number' && Number.isFinite(value) ? value : fallback;
 const amount = (value, fallback = 0, max = SAFE) => Math.min(max, Math.max(0, finite(value, fallback)));
 const integer = (value, fallback = 0, max = SAFE) => Math.floor(amount(value, fallback, max));
+// These forms affect Polish copy only; event quantities and saved receipts stay numeric.
+const polishAmountWord = (value, one, few, many) => value === 1 ? one :
+  value % 10 >= 2 && value % 10 <= 4 && (value % 100 < 12 || value % 100 > 14) ? few : many;
+const coinObject = value => polishAmountWord(value, 'monetę', 'monety', 'monet');
+const materialUnits = value => polishAmountWord(value, 'jednostkę', 'jednostki', 'jednostek');
 const level = (state, building) => integer(state.buildings?.[building]?.level, 0, 100);
 const worldNow = state => amount(state.worldTimeMs ?? state.lastSimulatedAt);
 const protectedByLighthouse = state => finite(state.lighthouseRemaining) > EPS;
@@ -133,31 +138,31 @@ function goodEvent(state, events, at, context) {
     details = { coins };
     title = kind === 'treasure' ? 'Treasure from the wreck' : 'Royal tax refund';
     titlePl = kind === 'treasure' ? 'Skarb z wraku' : 'Zwrot podatku królewskiego';
-    message = `The wreck brought ${coins} coins.`; messagePl = `Wrak przyniósł ${coins} monet.`;
+    message = `The wreck brought ${coins} coins.`; messagePl = `Ze wraku odzyskano ${coins} ${coinObject(coins)}.`;
   } else if (kind === 'supplies') {
     const materials = Object.fromEntries(MATERIALS.map(id => [id, randomInt(events, 50, 150)]));
     grantBonusMaterials(state, materials); details = { materials };
     title = 'Supplies rescued from the wreck'; titlePl = 'Ładunek ocalony z wraku';
-    message = 'Rescued materials are available in your bonus stock.'; messagePl = 'Ocalone materiały są dostępne w zapasie bonusowym.';
+    message = 'Rescued materials are available in your bonus stock.'; messagePl = 'Ocalone materiały trafiły do zapasu z nagród. Możesz je wydać; nie zajmują zwykłej pojemności magazynu.';
   } else if (kind === 'castaway') {
     const capacity = Math.min(level(state, 'house') * 24, town * 24) - Math.max(0, state.incomingPassengers || 0);
     if (integer(state.population) < capacity && typeof context.synchronizeResidents === 'function') {
       state.population = integer(state.population) + 1; context.synchronizeResidents(state); details = { people: 1 };
-      title = 'A castaway joins the island'; titlePl = 'Rozbitek dołącza do wyspy';
-      message = 'One rescued resident moved into the House.'; messagePl = 'Jeden ocalony mieszkaniec zamieszkał w Domu.';
+      title = 'A castaway joins the island'; titlePl = 'Rozbitek zamieszkał na wyspie';
+      message = 'One rescued resident moved into the House.'; messagePl = 'Uratowany rozbitek dołączył do mieszkańców i zajął wolne łóżko.';
     } else {
       const coins = grantCoins(state, events, WORLD_EVENT_RULES.fullHouseCompensationPerTownHall * town);
       details = { people: 0, coins, substituted: true };
-      title = 'Castaway compensation'; titlePl = 'Rekompensata za rozbitka';
+      title = 'Castaway compensation'; titlePl = 'Rekompensata za brak miejsca';
       message = `No resident place was available. You received ${coins} coins instead.`;
-      messagePl = `Brakowało miejsca dla mieszkańca. Zamiast niego otrzymujesz ${coins} monet.`;
+      messagePl = `Nie było miejsca dla nowego mieszkańca. Rekompensata wynosi ${coins} ${polishAmountWord(coins, 'moneta', 'monety', 'monet')}.`;
     }
   } else {
     events.effects.push({ id: `wreck-effect-${events.sequence + 1}`, kind, untilMs: at + WORLD_EVENT_RULES.effectSeconds * 1000,
       farmBonusPercent: 25, transportSlowPercent: 0, happinessPenalty: 0 });
     details = { farmBonusPercent: 25, duration: WORLD_EVENT_RULES.effectSeconds };
-    title = 'Unusual fertilizer'; titlePl = 'Nieznany nawóz';
-    message = 'Farm production is increased by 25% for six hours.'; messagePl = 'Produkcja Farmy rośnie o 25% na sześć godzin.';
+    title = 'Unusual fertilizer'; titlePl = 'Niezwykły nawóz';
+    message = 'Farm production is increased by 25% for six hours.'; messagePl = 'Przez sześć godzin gospodarstwo produkuje o 25% więcej zboża.';
   }
   return emit(state, events, { at, kind, polarity: 'positive', title, titlePl, message, messagePl, details });
 }
@@ -171,26 +176,27 @@ function badEvent(state, events, at, context) {
     while (people < requested && typeof context.removeResident === 'function' && context.removeResident(state)) people++;
     if (people && typeof context.synchronizeResidents === 'function') context.synchronizeResidents(state);
     details = { peopleLost: people, requestedPeople: requested };
-    title = 'Plague from the wreck'; titlePl = 'Dżuma z wraku';
+    title = 'Plague from the wreck'; titlePl = 'Dżuma na wyspie';
     message = `${people} residents were lost. Happiness −10 pp for six hours.`;
-    messagePl = `Utracono ${people} mieszkańców. Szczęście −10 pp przez sześć godzin.`;
+    messagePl = people ? `Dżuma zabrała ${people} ${people === 1 ? 'mieszkańca' : 'mieszkańców'}. Przez sześć godzin szczęście jest niższe o 10 p.p.` :
+      'Nikt nie zginął: minimalna liczba mieszkańców jest chroniona. Przez sześć godzin szczęście jest niższe o 10 p.p.';
   } else if (kind === 'royal-tax') {
     const percentage = randomInt(events, 0, 20), coins = consumeMaterial(state, 'coins', Math.floor(integer(state.resources?.coins) * percentage / 100));
     details = { percentage, coinsLost: coins };
     title = 'An unexpected royal tax'; titlePl = 'Niespodziewany podatek królewski';
     message = `${coins} available coins were collected. Happiness −5 pp for six hours.`;
-    messagePl = `Pobrano ${coins} dostępnych monet. Szczęście −5 pp przez sześć godzin.`;
+    messagePl = `Pobrano ${coins} ${coinObject(coins)} z wolnego salda. Przez sześć godzin szczęście jest niższe o 5 p.p.`;
   } else if (kind === 'beetles') {
     const percentage = randomInt(events, 0, 20), wood = consumeMaterial(state, 'wood', Math.floor(centralAvailable(state, 'wood') * percentage / 100));
     details = { percentage, woodLost: wood };
     title = 'Wood-boring beetles'; titlePl = 'Plaga korników';
     message = `${wood} unreserved wood was lost. Happiness −5 pp for six hours.`;
-    messagePl = `Utracono ${wood} niezarezerwowanego drewna. Szczęście −5 pp przez sześć godzin.`;
+    messagePl = `Korniki zniszczyły ${wood} ${materialUnits(wood)} drewna z dostępnego zapasu. Przez sześć godzin szczęście jest niższe o 5 p.p.`;
   } else {
     transportSlowPercent = randomInt(events, 0, 50); details = { transportSlowPercent };
     title = 'Roads damaged by the wreck'; titlePl = 'Drogi uszkodzone po katastrofie';
     message = `Carrying speed −${transportSlowPercent}% and happiness −5 pp for six hours.`;
-    messagePl = `Prędkość transportu −${transportSlowPercent}% i szczęście −5 pp przez sześć godzin.`;
+    messagePl = `Przez sześć godzin szczęście jest niższe o 5 p.p.${transportSlowPercent ? ` Transport jest wolniejszy o ${transportSlowPercent}%.` : ''}`;
   }
   events.effects.push({ id: `wreck-effect-${events.sequence + 1}`, kind, untilMs: at + WORLD_EVENT_RULES.effectSeconds * 1000,
     happinessPenalty, transportSlowPercent, farmBonusPercent: 0 });
@@ -280,16 +286,16 @@ export const worldEventHappinessPenalty = state => activeEffects(state).reduce((
 export function worldEventRows(state, language = 'pl') {
   const events = state.worldEvents, polish = language === 'pl';
   if (!object(events)) return [];
-  const names = { fertilizer: ['Unusual fertilizer', 'Nieznany nawóz'], plague: ['Plague', 'Dżuma'], 'royal-tax': ['Royal tax', 'Podatek królewski'], beetles: ['Wood-boring beetles', 'Plaga korników'], 'damaged-roads': ['Damaged roads', 'Uszkodzone drogi'] };
+  const names = { fertilizer: ['Unusual fertilizer', 'Niezwykły nawóz'], plague: ['Plague', 'Dżuma'], 'royal-tax': ['Royal tax', 'Podatek królewski'], beetles: ['Wood-boring beetles', 'Plaga korników'], 'damaged-roads': ['Damaged roads', 'Uszkodzone drogi'] };
   const rows = activeEffects(state).map(effect => {
     const parts = [];
-    if (effect.farmBonusPercent) parts.push(polish ? `Produkcja Farmy +${effect.farmBonusPercent}%` : `Farm production +${effect.farmBonusPercent}%`);
+    if (effect.farmBonusPercent) parts.push(polish ? `Produkcja zboża +${effect.farmBonusPercent}%` : `Farm production +${effect.farmBonusPercent}%`);
     if (effect.transportSlowPercent) parts.push(polish ? `Prędkość transportu −${effect.transportSlowPercent}%` : `Carrying speed −${effect.transportSlowPercent}%`);
-    if (effect.happinessPenalty) parts.push(polish ? `Szczęście −${effect.happinessPenalty} pp` : `Happiness −${effect.happinessPenalty} pp`);
+    if (effect.happinessPenalty) parts.push(polish ? `Szczęście −${effect.happinessPenalty} p.p.` : `Happiness −${effect.happinessPenalty} pp`);
     return { id: effect.id, title: (names[effect.kind] || ['World event', 'Wydarzenie na wyspie'])[polish ? 1 : 0], description: parts.join(' · '),
       remaining: Math.max(0, (effect.untilMs - events.clockMs) / 1000), polarity: effect.happinessPenalty ? 'negative' : 'positive' };
   });
-  if (events.deferredCoins !== '0') rows.push({ id: 'wreck-coins-waiting', title: polish ? 'Monety oczekują na miejsce w saldzie' : 'Coins waiting for wallet space',
+  if (events.deferredCoins !== '0') rows.push({ id: 'wreck-coins-waiting', title: polish ? 'Monety oczekujące na zwolnienie miejsca' : 'Coins waiting for wallet space',
     description: events.deferredCoins, remaining: null, polarity: 'neutral' });
   return rows;
 }

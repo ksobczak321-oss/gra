@@ -57,7 +57,7 @@ test('time unit conversion does not duplicate punctuation', () => {
 
 test('multi-sentence population status preserves the complete zero-happiness clause before splitting separators', () => {
   assert.equal(translate('0% happiness · no population growth or decline. Overcrowding lowers happiness and may cause population decline.', 'pl'), '0% szczęścia · populacja nie rośnie ani nie maleje. Przeludnienie obniża szczęście i może powodować spadek populacji.');
-  assert.equal(translate('8 Food · 2 random per 10 trips · next allocation 4 / 10', 'pl'), '8 Żywność · 2 losowe na 10 kursów · kolejny przydział 4 / 10');
+  assert.equal(translate('8 Food · 2 random per 10 trips · next allocation 4 / 10', 'pl'), '8 jedn. żywności · 2 losowe na 10 kursów · kolejny przydział 4 / 10');
 });
 
 test('all 100 achieved Lighthouse levels have distinct bilingual names and level zero is Ruins', () => {
@@ -84,9 +84,9 @@ test('all 12 buildings have a concise bilingual purpose and whole-island goal', 
 });
 
 test('resident and warehouse introductions retain constraints and use new carrier base', () => {
-  assert.match(residentsPurpose('pl'), /matce pozostaje co najmniej dwunastu/);
-  assert.match(residentsPurpose('pl'), /córce sześciu/);
-  assert.match(residentsPurpose('pl'), /przy 0%/);
+  assert.match(residentsPurpose('pl'), /macierzystej pozostaje co najmniej 12 osób/);
+  assert.match(residentsPurpose('pl'), /córce — 6/);
+  assert.match(residentsPurpose('pl'), /Przy szczęściu 0%/);
   assert.match(warehousePurpose('pl'), /120 sztuk/);
   assert.match(warehousePurpose('pl'), /pięciominutowym/);
   assert.equal(translate(residentsPurpose(), 'pl'), residentsPurpose('pl'));

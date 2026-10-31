@@ -18,7 +18,7 @@ spec.loader.exec_module(base)
 PROD = 'https://harborlight.pl'
 SESSION_KEY = 'harborlight-prod-auth-v1'
 EMAIL, PASSWORD, UID = 'captain@example.invalid', 'captain-password', 'real-player-123'
-LEGAL_VERSION = '2026-10-31-draft3'
+LEGAL_VERSION = '2026-10-31-draft4'
 
 
 def token():
@@ -173,7 +173,7 @@ def run():
             expect(page.locator('#account-fields')).to_be_enabled()
             for provider in ['Google', 'Facebook']:
                 page.locator('[data-provider="' + provider + '"]').click()
-                expect(page.locator('#account-status')).to_have_text('Ta metoda logowania wymaga konfiguracji dostawcy przez właściciela gry.')
+                expect(page.locator('#account-status')).to_have_text('Ta metoda logowania nie jest jeszcze dostępna. Właściciel gry musi dokończyć jej konfigurację.')
             assert site.sdk_calls and not site.auth_calls
             assert page.evaluate('localStorage.getItem(%s)' % json.dumps(SESSION_KEY)) is None
             assert not errors and not site.unexpected, (errors, site.unexpected)

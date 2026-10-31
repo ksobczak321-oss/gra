@@ -65,6 +65,9 @@ Pełna metodyka i zależności: [MANUAL-TEST-PLAN.md](MANUAL-TEST-PLAN.md). Bie�
 - [ ] [HL-TC-0048 — Prywatny czat1:1 nie ujawnia rozmów ani danych kont osobom trzecim](manual/HL-TC-0048.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0049 — Liga: dwa zadania dziennie wyłącznie w ogłoszonych slotach Warszawy](manual/HL-TC-0049.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0050 — Planszówka: komplet druku, czytelne kody i samodzielna sesja przy stole](manual/HL-TC-0050.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0051 — Samouczek wskazuje budynek na mapie i czeka na rzeczywiste kliknięcie](manual/HL-TC-0051.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0052 — Polszczyzna wszystkich 25 lekcji jest naturalna i zgodna z klikanymi elementami](manual/HL-TC-0052.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0053 — Polska wersja całej gry: panele, błędy, akcje i powiadomienia](manual/HL-TC-0053.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
 
 ## Wynik pojedynczego przypadku
 

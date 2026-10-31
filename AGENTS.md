@@ -2,6 +2,8 @@
 
 ## Rozwój i publikacja
 
+- **Najnowsze GO DEV0.10.1.0 / v25:** [zakres](docs/FRONTEND-V25-REQUIREMENTS.md) obejmuje prowadzenie 25 lekcji przez mapę, naturalną polszczyznę **całej gry**, wspólne okno obu zadań ligi19:00–21:00 Warszawa oraz potwierdzenie parametrów wysp. Nie zmieniaj warunków ani nagród lekcji przy redakcji tekstów; zachowaj ID, historię i nazwy użytkowników. Wyłącznie DEV i Git/CI/Pages; bez GCP, resetu i integracji fizycznej. Bieżący odbiór musi mieć własny SHA/CI — dawne dowody v24 nie wystarczają.
+
 - **Najnowsze GO, po pilnej poprawce:** [DEV 0.10.0.0 / v24](docs/FRONTEND-V24-REQUIREMENTS.md) wdraża wcześniejsze projekty archipelagu, transportu, handlu, społeczności, ligi i dobroczynności oraz powroty w Pomocy. W tym zakresie wcześniejsze zapisy „bez GO” poniżej są historią. Autoryzowano **tylko DEV i Git/CI/Pages**, bez nowej promocji PRE-PROD/PROD lub resetu. Samodzielna planszówka ma gotowe materiały, ale integracja fizycznych sesji z kontami online pozostaje wyłączona. Zachowaj rozróżnienie potwierdzonych reguł i jawnych parametrów prototypu DEV.
 
 - **DEV** oznacza tę przestrzeń roboczą. **PRE-PROD** to projekt Google Cloud `harborlight-dev`, **PROD** to `harborlight-prod`. Nazwy istniejących workflow `google-cloud-dev.yml`, artefaktów `harborlight-dev-*` i zasobów pozostają techniczne; nie zmieniaj ich wyłącznie z powodu nowego nazewnictwa.
@@ -52,3 +54,5 @@ Kontrakt promocji: [docs/RELEASE-PROCESS.md](docs/RELEASE-PROCESS.md).
 - Pierwszy odbiór DEV v24/0.10.0.0: kod `351baaf6b21386b2f2641875269e6f7d9c2d44fd`, CI41237587670 SUCCESS (4m46s), Pages41237587641 SUCCESS (23s), tag `dev-0.10.0.0-20261031`. Lokalnie878Node+141Python+16zestawówChromium PASS, 54pliki z manifestem. [Pełny dowód](docs/DEV-0.10.0.0-VALIDATION.md). PRE-PROD nadal0.9.1.2/3be1f9d…; bez migracji GCP, resetu i PROD.
 
 - Końcowy DEV v24/0.10.0.0 z pełnymi komunikatami PL: `1b3de32869c8164ed8d0b85df7ea743ca76a3719`, CI41238818669 SUCCESS(5m15s), Pages41238818743 SUCCESS(24s), tag `dev-0.10.0.0-pl-20261031`, cache frontend-v24-2. Wcześniejszego tagu nie przesuwano.256kart/50ręcznych NOT RUN; PRE-PROD nadal0.9.1.2, bez resetu i PROD.
+
+- Lokalny odbiór DEV v25/0.10.1.0: **897 Node + 141 Python + 18 zestawów Chromium PASS**, w tym112 rzeczywistych widoków PL bez wykrytych angielskich elementów. Schemat9 i historia zachowane. [Odbiór v25](docs/DEV-0.10.1.0-VALIDATION.md) wymaga jeszcze własnego źródła/CI/Pages; PRE-PROD bez zmian.

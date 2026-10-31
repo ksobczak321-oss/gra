@@ -1,6 +1,6 @@
 # HARBORLIGHT — rejestr zmian
 
-Stan ewidencji: **2026-10-31**. **256 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
+Stan ewidencji: **2026-10-31**. **261 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
 
 Źródło danych: [changes.json](changes.json). Karty odtwarza `python3 scripts/build_change_register.py`; `--check` sprawdza zgodność bez zapisów. Nie edytuj wygenerowanych kart zamiast źródła JSON.
 
@@ -78,6 +78,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0031 — Wybór języka PL/EN przy pierwszym wprowadzeniu i nazwie wyspy](changes/HL-CHG-0031.md) | Story | `accepted` | `verified` | `code_deployed_0_9_1_2` |
 | [HL-CHG-0032 — Pomoc: Wróć do tutoriala ponownie pokazuje objaśnienia gry](changes/HL-CHG-0032.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0034 — Nowe odmowy kolonizacji i rejsów są po polsku przy języku PL](changes/HL-CHG-0034.md) | Bug | `accepted_scope_bugfix` | `targeted_packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0038 — Naturalna i kompletna polszczyzna całej gry, także komunikatów dynamicznych](changes/HL-CHG-0038.md) | Story | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
 
 <a id="hl-epic-tut"></a>
 
@@ -86,6 +87,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | Zmiana | Typ | Decyzja | DEV | PRE-PROD |
 |---|---|---|---|---|
 | [HL-CHG-0033 — Pomoc: Wróć do samouczka wznawia praktyczne lekcje](changes/HL-CHG-0033.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0036 — Samouczek najpierw wskazuje budynek na mapie i czeka na kliknięcie gracza](changes/HL-CHG-0036.md) | Story | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
+| [HL-CHG-0037 — Naturalny i poprawny polski w tytułach i instrukcjach25 lekcji](changes/HL-CHG-0037.md) | Story | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
 | [HL-CHG-0040 — 25 lekcji wymaga rzeczywistych działań zamiast odczytania opisu](changes/HL-CHG-0040.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0041 — Migracja zachowuje stare ukończenia i odebrane nagrody](changes/HL-CHG-0041.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0042 — Przepełnienie blokuje następne skrzynie, pozostawiając działania zużywające zasoby](changes/HL-CHG-0042.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
@@ -169,6 +172,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 
 | Zmiana | Typ | Decyzja | DEV | PRE-PROD |
 |---|---|---|---|---|
+| [HL-CHG-0039 — Kupno czasu potwierdza dodane sekundy zamiast nadpisywać sukces opisem wyceny](changes/HL-CHG-0039.md) | Bug | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
 | [HL-CHG-0301 — Wybór kulek lub trójek zamiast nieczytelnych serii losowania](changes/HL-CHG-0301.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0302 — Przycisk reklamy w obu minigrach](changes/HL-CHG-0302.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0303 — Dawny niezdefiniowany bonus przycisku reklamy zastąpiony konkretnym czasem](changes/HL-CHG-0303.md) | Decision | `superseded` | `not_applicable` | `not_applicable` |
@@ -319,10 +323,10 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0811 — Zasada nazw po późniejszej zmianie nazwy matki](changes/HL-CHG-0811.md) | Decision | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0812 — Założenie nowej wyspy odbiera sześć osób z domu matki](changes/HL-CHG-0812.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0813 — Matka ma ochronę minimum 12 mieszkańców także przed dżumą i odejściami](changes/HL-CHG-0813.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
-| [HL-CHG-0814 — Statek pasażerski mieści do 100 osób](changes/HL-CHG-0814.md) | Story | `accepted_parameters_with_open_details` | `packaged_browser_pass` | `not_deployed` |
-| [HL-CHG-0815 — Przewóz ludzi trwa 30 minut](changes/HL-CHG-0815.md) | Story | `accepted_parameters_with_open_details` | `packaged_browser_pass` | `not_deployed` |
-| [HL-CHG-0816 — Rejs jest albo pasażerski, albo towarowy](changes/HL-CHG-0816.md) | Story | `accepted_parameters_with_open_details` | `packaged_browser_pass` | `not_deployed` |
-| [HL-CHG-0817 — Przewóz osób musi określić pojemność celu, jedzenie i zachowanie tożsamości](changes/HL-CHG-0817.md) | Decision | `accepted_scope_with_dev_parameters` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0814 — Statek pasażerski mieści do 100 osób](changes/HL-CHG-0814.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0815 — Przewóz ludzi trwa 30 minut](changes/HL-CHG-0815.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0816 — Rejs jest albo pasażerski, albo towarowy](changes/HL-CHG-0816.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0817 — Przewóz osób musi określić pojemność celu, jedzenie i zachowanie tożsamości](changes/HL-CHG-0817.md) | Decision | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0818 — Kolejne wyspy od Ratusza matki 10, 13, 16, 19 i dalej co trzy poziomy](changes/HL-CHG-0818.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0819 — Koszt wyspy jako suma kosztów Ratusza i Domu do poziomu 7, 8, 9…](changes/HL-CHG-0819.md) | Decision | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0820 — Dostęp do zakupu wyspy tylko w Ratuszu i powiadomieniu po odblokowaniu](changes/HL-CHG-0820.md) | Story | `accepted_parameters_with_open_details` | `packaged_browser_pass` | `not_deployed` |
@@ -330,7 +334,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0822 — Powrót NPC obok handlu między graczami](changes/HL-CHG-0822.md) | Decision | `accepted_parameters_with_open_details` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0823 — Maksymalną cenę oferty wyznacza gra, gracz może zejść niżej](changes/HL-CHG-0823.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0824 — Materiały między graczami są sprzedawane za monety](changes/HL-CHG-0824.md) | Decision | `accepted` | `packaged_browser_pass` | `not_deployed` |
-| [HL-CHG-0825 — Startowe budynki i skopiowane poziomy po wprowadzeniu płatnych kolonii](changes/HL-CHG-0825.md) | Decision | `accepted_scope_with_dev_parameters` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0825 — Startowe budynki i skopiowane poziomy po wprowadzeniu płatnych kolonii](changes/HL-CHG-0825.md) | Decision | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0826 — Limit archipelagu: 20 wysp łącznie na konto](changes/HL-CHG-0826.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0827 — Kolonizacja teleportuje sześć osób bezpośrednio z Domu matki](changes/HL-CHG-0827.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 
@@ -340,7 +344,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 
 | Zmiana | Typ | Decyzja | DEV | PRE-PROD |
 |---|---|---|---|---|
-| [HL-CHG-0901 — Miesięczna liga w trzecim tygodniu i przewaga sojuszu nad solo](changes/HL-CHG-0901.md) | Story | `accepted_parameters_with_open_details` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0901 — Miesięczna liga w trzecim tygodniu i przewaga sojuszu nad solo](changes/HL-CHG-0901.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0902 — Na cele dobroczynne tylko monety zarobione w grze](changes/HL-CHG-0902.md) | Story | `accepted` | `packaged_browser_pass_real_program_disabled` | `not_deployed` |
 | [HL-CHG-0903 — Serwerowa księga pochodzenia i jednokrotnego zużycia monet charytatywnych](changes/HL-CHG-0903.md) | Story | `accepted` | `packaged_browser_pass_real_program_disabled` | `not_deployed` |
 | [HL-CHG-0904 — Przelicznik 1000 monet na 1 zł właściciela z ograniczonym budżetem](changes/HL-CHG-0904.md) | Decision | `accepted` | `packaged_browser_pass_real_program_disabled` | `not_deployed` |
@@ -365,12 +369,13 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0923 — Trzy warstwy planszówki: ruch, kreatywne zadania i skutki online](changes/HL-CHG-0923.md) | Story | `accepted_scope_limited_by_user` | `standalone_prototype_online_excluded` | `not_deployed` |
 | [HL-CHG-0924 — Zaliczone zadania przy stole przynoszą punkty i korzyści online](changes/HL-CHG-0924.md) | Story | `deferred_by_user` | `deferred` | `not_deployed` |
 | [HL-CHG-0925 — Przycisk Gra fizyczna uruchamia sesję przy stole](changes/HL-CHG-0925.md) | Story | `deferred_by_user` | `deferred` | `not_deployed` |
-| [HL-CHG-0926 — Liga ma jawny harmonogram i sloty czasowe zadań](changes/HL-CHG-0926.md) | Story | `accepted_scope_with_dev_parameters` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0926 — Liga ma jawny harmonogram i sloty czasowe zadań](changes/HL-CHG-0926.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0927 — Każdy dzień ligi ma zadanie podstawowe i zręcznościowe](changes/HL-CHG-0927.md) | Story | `accepted_scope_with_dev_parameters` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0928 — Planszówka: nieme pokazywanie przedmiotów i słowa czytane wspak](changes/HL-CHG-0928.md) | Story | `accepted` | `print_artifacts_and_phone_verified` | `not_applicable_print_artifact` |
 | [HL-CHG-0929 — Projekt planszy, kart i pionków do wydruku](changes/HL-CHG-0929.md) | Story | `accepted` | `print_artifacts_and_phone_verified` | `not_applicable_print_artifact` |
 | [HL-CHG-0930 — Pudełko, opakowanie, instrukcja i kody QR planszówki](changes/HL-CHG-0930.md) | Story | `accepted` | `print_artifacts_and_phone_verified` | `not_applicable_print_artifact` |
 | [HL-CHG-0931 — Osobny czat sojuszu i prywatne rozmowy jeden na jeden](changes/HL-CHG-0931.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0932 — Oba zadania ligi mają wspólne okno 19:00–21:00 Warszawy](changes/HL-CHG-0932.md) | Story | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
 
 ## Utrzymanie
 

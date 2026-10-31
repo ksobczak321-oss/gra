@@ -13,7 +13,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | CI | `passed` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `accepted_parameters_with_open_details` |
+| Decyzja | `accepted` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
@@ -52,7 +52,11 @@ Odbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCES
 
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
-- **Powiązane:** Brak.
+- **Powiązane:** [HL-CHG-0932](HL-CHG-0932.md)
+
+## Uwagi
+
+- Późniejsze potwierdzenie użytkownika: dalszeA=10,11…; kopiaRatusza/Magazynu, reszta budynków1,6 istniejących kolonistów,0 startowych zasobów, minimum6 na córce, wolne miejsca u celu oraz normalny posiłek0,5 żywności/osobę na30min bez dodatkowej opłaty monetowej. Wcześniejsze notatki o oczekiwaniu na decyzję opisują etap historyczny, nie bieżącą blokadę.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

@@ -1,9 +1,10 @@
 // One read-only view of active benefits and penalties, shared by Town Hall and
 // transition notifications. Countdown changes alone never create a new notice.
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v24-2';
-import { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v24-2';
-import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v24-2';
-import { worldEventRows } from './harborlight-v1-events.js?v=frontend-v24-2';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v25';
+import { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v25';
+import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v25';
+import { worldEventRows } from './harborlight-v1-events.js?v=frontend-v25';
+import { ATTRACTIONS } from './harborlight-v1-leisure.js?v=frontend-v25';
 const EPS = 1e-7;
 const GRACE = 12 * 3600;
 const workplaceNames = { farm: 'Farm', windmill: 'Windmill', lumber: 'Lumber Camp', sawmill: 'Sawmill', quarry: 'Quarry', warehouse: 'Warehouse', market: 'Market', dock: 'Harbor' };
@@ -24,7 +25,8 @@ function scopeOf(selected, everyone) {
   const count = selected.length;
   return count === everyone.length && count > 0 ? `All ${count} residents` : `${count} ${count === 1 ? 'resident' : 'residents'}`;
 }
-const titleFromId = id => String(id || 'Attraction').split(/[-_]/).filter(Boolean).map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
+const attractionTitles = new Map(ATTRACTIONS.map(item => [item.id, item.name]));
+const titleFromId = id => attractionTitles.get(id) || String(id || 'Attraction').split(/[-_]/).filter(Boolean).map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
 function effectRow(id, title, polarity, effect, scope, options = {}) {
   return { id, title, polarity, effect, scope, amount: null, residentIds: [], remaining: null, endCondition: '', explain: '', ...options };
 }
@@ -46,7 +48,7 @@ export function activeEffects(state = {}) {
   }));
   if (finite(state.blessingRemaining) > EPS) effects.push(effectRow('manual-blessing', 'Chapel blessing', 'positive', '+20 pp happiness', allScope, {
     amount: 20, residentIds: allIds, remaining: state.blessingRemaining,
-    explain: 'Each eligible resident receives the temporary happiness bonus. During the initial settling period, Lighthouse 100% and the Welcome minimum take priority; otherwise happiness remains at 0%.'
+    explain: 'Residents who have finished settling in receive the bonus. For new arrivals, only Lighthouse protection and the Welcome minimum apply during their initial 24 hours.'
   }));
   if (finite(state.chapelRemaining) > EPS) {
     const amount = 10 * finite(state.buildings?.chapel?.level);

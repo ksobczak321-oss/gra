@@ -2,11 +2,11 @@
 
 Stan:31 października2026, po nowym **GO wyłącznie DEV**. Historyczny punkt odniesienia analizy to `34f2eb3128fde2ce2d03429f5b0b180c66525412`; poniższa tabela „Obecny kod” dokumentuje ten wcześniejszy model, nie gotowość nowego wydania. Nowe GO zastępuje dawną fazę „najpierw analiza”; nie obejmuje PRE-PROD/PROD ani resetu historii.
 
-## Bieżący zakres implementacji i parametry DEV
+## Bieżący zakres implementacji i potwierdzone parametry
 
 Przygotowywany kodDEV0.10.0.0 rozszerza archipelag do20 wysp, metadanych wersji2 i oddzielnych dokumentów świata. Implementacja obejmuje wymuszony prefiks nazwy córki, zachowanie wcześniejszych dwóch światów bez opłaty wstecz, nowe koszty/kolonizację sześcioma rzeczywistymi osobami zDomu, ochronę matki minimum12, pasażerów100/30min oraz osobny tryb cargo. RynekPvP sprzedaje materiały za monety obokNPC; pułap ceny wynika z bazowej sprzedażyNPC. Faktyczne zakończenie/testy mają odrębne dowody w [rejestrze zmian](../tracking/CHANGE-REGISTER.md) i [środowisk](../ENVIRONMENT-STATUS.md).
 
-**Jawne parametry wdrożeniowe DEV, oczekujące ewentualnej korekty użytkownika — nie dopisana odpowiedź na pytanie:** poA9 kontynuacjaA10,A11…; córka ma kopięRatusza/Magazynu, pozostałe budynki1 i dokładnie6 przesiedleńców, bez dodatkowych100 zasobów; na córce zostaje minimum6 osób; zwykli pasażerowie wymagają miejsca u celu. Transport nie ma opłaty pieniężnej ani dodatkowego kosztu ponad normalne żywienie: zwykły posiłek na30min,0,5 żywności na osobę z uwzględnieniem zachowanego kredytu posiłków, jest przygotowywany przy wypłynięciu. Osoby nie jedzą tej samej porcji drugi raz na wyspie źródłowej. Kolonizacja jest natychmiastowa i nie zajmuje statku; zwykły rejs trwa30min. Nie odnawiamy samouczka, ochrony ani nagród raz na konto.
+**Parametry uzupełniające potwierdzone następnie przez użytkownika:** poA9 kontynuacjaA10,A11…; córka ma kopięRatusza/Magazynu, pozostałe budynki1 i dokładnie6 przesiedleńców, bez dodatkowych100 zasobów; na córce zostaje minimum6 osób; zwykli pasażerowie wymagają miejsca u celu. Transport nie ma opłaty pieniężnej ani dodatkowego kosztu ponad normalne żywienie: zwykły posiłek na30min,0,5 żywności na osobę z uwzględnieniem zachowanego kredytu posiłków, jest przygotowywany przy wypłynięciu. Osoby nie jedzą tej samej porcji drugi raz na wyspie źródłowej. Kolonizacja jest natychmiastowa i nie zajmuje statku; zwykły rejs trwa30min. Nie odnawiamy samouczka, ochrony ani nagród raz na konto.
 
 Kod przygotowany/testowany lokalnie nie oznacza wdrożenia GCP. Wcześniejsze PRE-PROD0.9.1.2 pozostaje osobnym potwierdzonym wydaniem. Poniższa analiza zachowuje historyczne uzasadnienia, rozróżniając przyjęte decyzje i parametry techniczne.
 
@@ -23,7 +23,7 @@ Użytkownik określił następujący kierunek:
 - Gra ustala maksymalną cenę, a gracz może zaoferować niższą.
 - Po każdych kolejnych trzech poziomach ma być dostępna następna wyspa. Użytkownik podał koszt jako sumę Ratusza A i Domu A, z A = 7/8/9 dla pierwszej/drugiej/trzeciej dodatkowej wyspy.
 
-Użytkownik przyjął: **najpierw analiza i decyzje**, **sprzedaż materiałów za monety w PvP**, **progi Ratusza 10/13/16/19**, **limit 20 wysp łącznie**, **sumę wszystkich rozbudów Ratusza i Domu od 1 do A**, **aktualizowanie prefiksów po zmianie nazwy matki**, **natychmiastową kolonizację sześcioma osobami z Domu** oraz **ochronę matki do minimum 12 osób także przed zdarzeniami**. Maksymalna cena PvP to **bazowa cena sprzedaży NPC do gracza**; wolno wystawiać taniej i odsprzedawać zakupiony towar NPC. To ustalenia objęte nowymGO naDEV. Startowe poziomy/zasoby i detale rejsu mają jawny wariant prototypu opisany wyżej, do ewentualnej korekty użytkownika.
+Użytkownik przyjął: **najpierw analiza i decyzje**, **sprzedaż materiałów za monety w PvP**, **progi Ratusza 10/13/16/19**, **limit 20 wysp łącznie**, **sumę wszystkich rozbudów Ratusza i Domu od 1 do A**, **aktualizowanie prefiksów po zmianie nazwy matki**, **natychmiastową kolonizację sześcioma osobami z Domu** oraz **ochronę matki do minimum 12 osób także przed zdarzeniami**. Maksymalna cena PvP to **bazowa cena sprzedaży NPC do gracza**; wolno wystawiać taniej i odsprzedawać zakupiony towar NPC. To ustalenia objęte nowymGO naDEV. Startowe poziomy/zasoby i detale rejsu opisane wyżej zostały następnie potwierdzone przez użytkownika. Sekcje2–9 poniżej zachowują wcześniejszą analizę i stan otwartych propozycji z tamtej chwili; bieżące potwierdzenia i kontrakt mają pierwszeństwo nad historycznym słowem „otwarte”. Aktualny kontrakt: [ARCHIPELAGO-DEV-v24.md](ARCHIPELAGO-DEV-v24.md).
 
 ## 2. Różnice wobec historycznego modelu v22.1
 
@@ -209,14 +209,13 @@ Barter nie ma jednej „ceny maksymalnej” typu 50 monet, ponieważ oferta wymi
 - Zachować dzisiejsze limity 10 otwartych ofert, czas 24 h i obsługę zwrotów/inbox do czasu wyraźnej zmiany; nie należy ich mylić z proponowanym pułapem ceny.
 - Produkcja i zwykła gospodarka nadal są obliczane klientem. Serwerowe escrow chroni rozliczenie oferty, ale samo nie czyni całej gospodarki autorytatywną. Rozwój handlu i monetyzacji wymaga świadomego uwzględnienia tej granicy.
 
-## 10. Otwarte korekty po przygotowaniu wariantu DEV
+## 10. Wynik późniejszych decyzji
 
-Po pięciu odpowiedziach użytkownika rozstrzygnięte są również cena kumulacyjna, dynamiczny prefiks, natychmiastowy teleport kolonistów, limit 20 wysp, ochrona matki 12 przed zdarzeniami oraz bazowy pułap ceny NPC z możliwością tańszej oferty i odsprzedaży. WariantDEV korzysta z jawnych parametrów wymienionych na początku. Do korekty lub potwierdzenia przed dalszą promocją pozostają:
+Wcześniej potwierdzono cenę kumulacyjną, dynamiczny prefiks, natychmiastowy teleport kolonistów,20 wysp, ochronę matki12 i bazowy pułap cenyNPC. Po wdrożeniu wariantuDEV użytkownik potwierdził również:
 
-1. Kontynuacja poziomu A do wyceny po trzeciej córce: A = 10, 11… to naturalna, ale nadal niezatwierdzona propozycja.
-2. Startowe poziomy i zasoby córki oraz start jej zegara/wprowadzenia. Sam teleport sześciu osób jest już natychmiastowy i bez rejsu.
-3. Minimum populacji dla córek oraz postępowanie z historyczną matką, która przed migracją ma mniej niż 12 osób; nie tworzymy brakujących osób bez jawnej reguły.
-4. Jedzenie, pojemność celu i moment dostępności osób po zwykłym rejsie pasażerskim, w tym oczekiwanie i powrót. Te reguły nie dotyczą natychmiastowej kolonizacji.
-5. Zaokrąglenia ceny dla niestandardowych ilości oraz ważność ofert po zmianie bazowego cennika; prowizja PvP nie została wybrana. Dalszy zakres osobnego Rynku barterowego NPC pozostaje do potwierdzenia.
+1. DalszeA=10,11… po trzeciej córce.
+2. Jednorazową kopięRatusza/Magazynu matki, pozostałe budynki1, dokładnie6 istniejących kolonistów i0 darmowych zasobów nowej córki.
+3. Minimum6 na córce oraz wolne miejscaRatusza i łóżka u celu zwykłego rejsu.
+4. Zwykłe posiłki0,5 żywności na osobę na30min, z kredytem posiłków i bez dodatkowej opłaty monetowej.
 
-**Kolejność odbioru:** migracja danych i osobne dokumenty światów → reguły kolonizacji i zachowanie konkretnych osób → rejsy i rynek → opisy/UI → testy własnego buildu. NoweGO autoryzuje tę pracę wDEV; dokument nie jest dowodem testu chmury ani promocji do PRE-PROD/PROD.
+Otwarte uwagi sekcji2–9 są historią analizy, nie ponownym pytaniem o te rozstrzygnięte parametry. Reguły techniczne zaokrągleń, chronionych zapasów i literalnych starych ofert opisuje aktualny [kontraktDEV](ARCHIPELAGO-DEV-v24.md). Potwierdzenie zasad nie jest promocjąGCP ani wykonaniem resetu kont.

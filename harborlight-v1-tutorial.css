@@ -19,3 +19,12 @@
 .dialog-body>.tutorial-v16-guide{top:0;bottom:auto;margin:0 0 14px}
 .tutorial-v18-storage-warning{padding:12px 14px;border:1px solid #e5b862;border-radius:12px;background:#57462555;color:#ffe3a1;line-height:1.45}
 .tutorial-guide-floating{pointer-events:none}.tutorial-guide-floating .tutorial-action{pointer-events:auto}
+
+.tutorial-v25-stage-hint{margin:8px 0 0;color:#ffe5a4;font-size:12px;font-weight:700;line-height:1.45;overflow-wrap:anywhere}
+.tutorial-v25-stage-hint[hidden]{display:none}
+
+/* Guide backgrounds never cover the real controls behind a sticky card. */
+.tutorial-v16-guide{pointer-events:none}.tutorial-v16-guide .tutorial-action{pointer-events:auto}
+
+/* In dialogs, reserve real space instead of pinning an opaque card over actions. */
+.dialog-body>.tutorial-v16-guide{position:relative;top:auto;bottom:auto}

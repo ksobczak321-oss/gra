@@ -71,12 +71,43 @@ test('five member capacity and simultaneous captain approval cannot overfill an 
   assert.equal(result.filter(x=>x.status==='fulfilled').length,1); assert.equal((await f.service.snapshot({uid:'one'})).alliance.members.length,5);
 });
 
-test('Warsaw slots use local wall clock across summer/winter and league formula retains inactive zeros',()=>{
-  assert.equal(leagueCalendar(Date.parse('2026-06-15T17:00:00Z')).slot,'arcade');
-  assert.equal(leagueCalendar(Date.parse('2026-11-15T18:00:00Z')).slot,'arcade');
-  assert.equal(leagueCalendar(Date.parse('2026-11-15T19:00:00Z')).slot,'logic');
-  assert.equal(leagueCalendar(Date.parse('2026-11-15T20:00:00Z')).slot,null);
+test('both league tasks share 19–21 Warsaw in summer and winter, with a strict closing boundary',()=>{
+  for (const [start, end] of [['2026-06-15T17:00:00Z','2026-06-15T19:00:00Z'],['2026-11-15T18:00:00Z','2026-11-15T20:00:00Z']]) {
+    const at = Date.parse(start), closes = Date.parse(end);
+    assert.deepEqual(leagueCalendar(at-1).availableKinds, []);
+    for (const moment of [at, at+3600000, closes-1]) {
+      const cal=leagueCalendar(moment);
+      assert.deepEqual(cal.availableKinds,['arcade','logic']);assert.equal(cal.slot,'shared');assert.equal(cal.windowEndsAt,closes);
+    }
+    assert.deepEqual(leagueCalendar(closes).availableKinds,[]);assert.equal(leagueCalendar(closes).slot,null);
+  }
+  for (const day of [14,22]) assert.deepEqual(leagueCalendar(Date.parse(`2026-11-${day}T18:00:00Z`)).availableKinds,[]);
   assert.equal(leagueTeamScore([80,80,80,80,80]),88); assert.equal(leagueTeamScore([95,0,0,0,0]),19); assert.equal(leagueTeamScore([95]),95);
+});
+
+test('either task can start in either hour, while each retains its own two-attempt quota',async()=>{
+  for (const start of ['2026-11-15T18:15:00Z','2026-11-15T19:15:00Z']) {
+    const f=await fixture();await ally(f);await f.call('one','leagueEnroll');f.time(Date.parse(start));
+    const schedule=(await f.call('one','leagueRead')).schedule;
+    assert.equal(schedule.arcade,'19:00–21:00');assert.equal(schedule.logic,'19:00–21:00');
+    for (const kind of ['logic','arcade']) {
+      for(let trial=0;trial<2;trial++) { const a=await f.call('one','attemptStart',{kind});assert.equal(a.challenge.kind,kind); }
+      await rejects(f.call('one','attemptStart',{kind}),'league-attempt-limit');
+    }
+  }
+});
+
+test('crossing 20:00 does not cut either task short',async()=>{
+  for (const kind of ['logic','arcade']) {
+    const f=await fixture();await ally(f);await f.call('one','leagueEnroll');f.time(Date.parse('2026-11-15T18:59:50Z'));
+    const a=await f.call('one','attemptStart',{kind});assert.equal(a.deadlineAt-a.startedAt,a.challenge.duration);
+    if(kind==='logic') {
+      await f.call('one','attemptAction',{attemptId:a.attemptId,sequence:0,action:{type:'load',batch:0}});
+      f.advance(11000);const accepted=await f.call('one','attemptAction',{attemptId:a.attemptId,sequence:1,action:{type:'deliver',batch:0,destination:'A'}});assert.equal(accepted.progress.goals.length,1);
+    } else {
+      f.advance(11000);const accepted=await f.call('one','attemptAction',{attemptId:a.attemptId,sequence:0,action:{type:'catch',targetId:9}});assert.equal(accepted.sequence,1);
+    }
+  }
 });
 
 test('frozen roster keeps the denominator after a member leaves and invalidates an in-flight attempt',async()=>{

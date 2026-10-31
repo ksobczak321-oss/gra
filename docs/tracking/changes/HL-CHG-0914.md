@@ -55,12 +55,13 @@ Odbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCES
 
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
-- **Powiązane:** [HL-CHG-0901](HL-CHG-0901.md)
+- **Powiązane:** [HL-CHG-0901](HL-CHG-0901.md), [HL-CHG-0932](HL-CHG-0932.md)
 
 ## Uwagi
 
-- Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.
-- Użytkownik zaakceptował wskazane parametry, ale odłożył wdrożenie tych mechanik; pilne GO dotyczy wyłącznie języka.
+- Historia wcześniejszej analizy/prototypu: Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.
+- Historia wcześniejszej analizy/prototypu: Użytkownik zaakceptował wskazane parametry, ale odłożył wdrożenie tych mechanik; pilne GO dotyczy wyłącznie języka.
+- Aktualna decyzja użytkownika: oba rodzaje zadania ligi we wspólnym oknie19:00–21:00 czasuWarszawy;15–21 miesiąca, po dwie próby i średnia obu, brakujące=0. Wcześniejszy podział19–20/20–21 jest historią wydania0.10.0.0. Zmianę zachowania i nowy odbiór prowadziHL-CHG-0932; dawneCI pozostaje dowodem wyłącznie wskazanego dawnegoSHA.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

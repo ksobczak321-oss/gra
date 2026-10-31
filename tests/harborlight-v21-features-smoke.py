@@ -177,7 +177,7 @@ def peer_market_gate(browser):
     building(page, 'market')
     page.locator('[data-market-entry]').click()
     expect(page.locator('[data-player-trade]')).to_be_visible()
-    expect(page.locator('[data-player-trade-unavailable]')).to_contain_text('Nie pozorujemy')
+    expect(page.locator('[data-player-trade-unavailable]')).to_have_text('Handel między graczami wymaga konta gry i uruchomionej usługi handlu. W tym podglądzie nie jest jeszcze dostępny.')
     expect(page.locator('[data-market-exchange]')).to_be_visible()
     assert not page.locator('[data-create-trade-offer]').count(), 'An unconfigured service must not expose a fake successful offer form'
     close_panel(page)

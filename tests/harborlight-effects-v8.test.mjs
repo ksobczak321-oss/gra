@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { activeEffects, normalizeEffectNotifications, syncEffectNotifications } from '../harborlight-v1-effects.js';
+import { translate } from '../harborlight-v1-i18n.js';
 
 function island() {
   return { population: 3, activeSeconds: 0, worldTimeMs: 1_800_000_000_000,
@@ -105,6 +106,17 @@ test('attraction purchases keep individual recipients and timers, and familiarit
   assert.match(byId(state, 'familiarity-puppet-show').effect, /purchase unavailable/);
   state.leisure.habits['puppet-show'].resetRemaining = 0;
   assert.equal(byId(state, 'familiarity-puppet-show'), undefined);
+});
+
+test('familiarity keeps the canonical translated attraction name after its personal bonus has expired', () => {
+  const state = island();
+  state.leisure.effects = [];
+  state.leisure.habits['flower-beds'] = { uses: 1, resetRemaining: 18 * 3600 };
+  const before = JSON.stringify(state), row = byId(state, 'familiarity-flower-beds');
+  assert.equal(row.title, 'Flower beds: familiarity');
+  assert.doesNotMatch(translate(row.title, 'pl'), /Flower|Beds|familiarity/);
+  assert.match(row.effect, /75%/);
+  assert.equal(JSON.stringify(state), before);
 });
 
 test('only fully completed road tiers create a permanent speed and load benefit', () => {

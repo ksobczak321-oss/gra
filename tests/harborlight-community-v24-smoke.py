@@ -40,6 +40,86 @@ def identity(page, value):
     expect(page.locator('[data-community-panel]')).to_be_visible()
 
 
+
+def shared_window_contract(browser, base):
+    """Exercise the UI/API contract with authenticated response fixtures.
+
+    This deliberately bypasses the demo client: the two independent start
+    payloads must remain valid both before and after 20:00, then disappear at
+    21:00 while unrestricted practice stays available.
+    """
+    document = """<!doctype html><html><head><meta charset="utf-8"></head><body>
+    <script type="module">
+      import {createCommunityPanel} from './harborlight-v1-community-ui.js?v=contract';
+      import {createLeagueChallenge,emptyLeagueProgress} from './harborlight-v1-league.js?v=contract';
+      const q=new URLSearchParams(location.search),at=Number(q.get('at'));
+      const hour=Number(q.get('hour')),open=hour>=19&&hour<21;
+      const calendar={season:'2026-11',day:15,round:1,playing:true,registration:false,
+        slot:open?'shared':null,availableKinds:open?['arcade','logic']:[],windowEndsAt:Date.parse('2026-11-15T20:00:00Z')};
+      window.__COMMUNITY_CALLS__=[];
+      const client={simulation:false,snapshot:async()=>({self:{id:'own',name:'Captain',blocked:[],muted:[]},
+        alliance:{id:'team',name:'Crew',captainId:'other',members:[],pending:[]},players:[],alliances:[],calendar,serverTime:at}),
+        request:async(command,data={})=>{
+          window.__COMMUNITY_CALLS__.push({command,...data});
+          if(command==='leagueRead')return{season:'2026-11',calendar,groups:[],friendly:false,registered:true,
+            rewards:{playedDays:0,goals:0},serverTime:at};
+          if(command==='attemptStart')return{attemptId:'contract_attempt',challenge:createLeagueChallenge({day:1,kind:data.kind}),
+            progress:emptyLeagueProgress(),sequence:0,practice:false,status:'playing',startedAt:at,serverTime:at,
+            deadlineAt:Math.min(at+(data.kind==='arcade'?45000:180000),calendar.windowEndsAt)};
+          throw new Error('Unexpected fixture command: '+command);
+        }};
+      let panel;
+      window.mountContract=()=>{panel?.dispose();panel?.remove();client.activeAttempt=null;
+        panel=createCommunityPanel({client,language:q.get('language')||'pl',initialTab:'league'});document.body.append(panel);};
+      window.mountContract();
+    </script></body></html>"""
+
+    def asset(route):
+        if urlsplit(route.request.url).path == '/community-contract.html':
+            return route.fulfill(body=document, content_type='text/html')
+        target = (FRONTEND_ROOT / unquote(urlsplit(route.request.url).path).lstrip('/')).resolve()
+        if not target.is_relative_to(FRONTEND_ROOT) or not target.is_file():
+            return route.fulfill(status=404, body='Missing fixture asset')
+        return route.fulfill(body=target.read_bytes(), content_type=mimetypes.guess_type(str(target))[0] or 'application/octet-stream')
+
+    for language in ['pl', 'en']:
+        for hour, minute in [(19, 15), (20, 15), (21, 0)]:
+            current = datetime(2026, 11, 15, hour-1, minute, tzinfo=timezone.utc)
+            context = browser.new_context(viewport={'width': 1100, 'height': 900})
+            context.route(base + '/**', asset)
+            page = context.new_page()
+            page.clock.install(time=current)
+            page.clock.pause_at(current)
+            page.goto(base+'/community-contract.html?at=%d&hour=%d&language=%s' % (current.timestamp()*1000, hour, language))
+            panel = page.locator('[data-community-panel]')
+            expect(panel.locator('[data-league-schedule]')).to_contain_text('19:00–21:00')
+            if hour < 21:
+                for kind in ['arcade', 'logic']:
+                    expect(panel.locator('[data-league-start-kind]')).to_have_count(2)
+                    panel.locator('[data-league-start-kind="%s"]' % kind).click()
+                    assert page.evaluate('window.__COMMUNITY_CALLS__.filter(x=>x.command==="attemptStart").at(-1).kind') == kind
+                    page.evaluate('window.mountContract()')
+                expect(panel.locator('[data-league-start-kind]')).to_have_count(2)
+            else:
+                expect(panel.locator('[data-league-start-kind]')).to_have_count(0)
+                expect(panel.get_by_role('button', name='Ćwicz' if language == 'pl' else 'Practice', exact=True)).to_be_visible()
+            assert '19:00–20:00' not in panel.inner_text()
+            assert '20:00–21:00' not in panel.inner_text()
+            context.close()
+    current = datetime(2026, 11, 15, 19, 59, 59, tzinfo=timezone.utc)
+    context = browser.new_context()
+    context.route(base+'/**', asset)
+    page = context.new_page()
+    page.clock.install(time=current)
+    page.clock.pause_at(current)
+    page.goto(base+'/community-contract.html?at=%d&hour=20&language=pl' % (current.timestamp()*1000))
+    expect(page.locator('[data-league-start-kind]')).to_have_count(2)
+    page.clock.run_for(1100)
+    expect(page.locator('[data-league-start-kind]')).to_have_count(0)
+    expect(page.get_by_role('button', name='Ćwicz', exact=True)).to_be_visible()
+    context.close()
+    print('PASS community shared league window: PL/EN at19:15 and20:15 start both distinct kinds; at21:00 no ranked starts; open UI closes live at21:00 and practice remains')
+
 def run():
     base = 'http://127.0.0.1:47383'
     errors = []
@@ -90,8 +170,10 @@ def run():
                     panel.get_by_role('button', name='Odblokuj gracza' if language == 'pl' else 'Unblock player', exact=True).click()
                     identity(page, 'demo_1')
                     panel.locator('[data-community-tab="league"]').click()
-                    expect(panel).to_contain_text('19:00–20:00')
-                    expect(panel).to_contain_text('20:00–21:00')
+                    expect(panel.locator('[data-league-schedule]')).to_contain_text('19:00–21:00')
+                    expect(panel.locator('[data-league-schedule]')).to_contain_text('Wybierasz kolejność' if language == 'pl' else 'Choose either order')
+                    assert '19:00–20:00' not in panel.inner_text()
+                    assert '20:00–21:00' not in panel.inner_text()
                     panel.get_by_role('button', name='Ćwicz' if language == 'pl' else 'Practice', exact=True).click()
                     panel.get_by_role('button', name='Załaduj' if language == 'pl' else 'Load', exact=True).first.click()
                     panel.get_by_role('button', name='Dostarcz do A' if language == 'pl' else 'Deliver to A', exact=True).click()
@@ -110,6 +192,7 @@ def run():
                     page.locator('.dialog-close').click()
                     context.close()
                     print('PASS community: alliance request/approval, identity switch, plaintext chat, private messages/block, league logic+arcade and bounded layout: %s/%s' % (language, 'mobile' if mobile else 'desktop'))
+                shared_window_contract(browser, base)
                 assert not errors, errors
             finally:
                 browser.close()

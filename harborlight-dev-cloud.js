@@ -1,7 +1,7 @@
 // Firebase owns credentials and verifies access to the UID-scoped documents.
 // Hosting selects the isolated project; runtime Firebase config never contains secrets.
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v24-2';
-import { LEGAL_DOCUMENTS, validLegalAcceptance } from './harborlight-legal.js?v=legal-v3';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v25';
+import { LEGAL_DOCUMENTS, validLegalAcceptance } from './harborlight-legal.js?v=legal-v4';
 export const DEV_PROJECT = 'harborlight-dev';
 export const PROD_PROJECT = 'harborlight-prod';
 export const PROD_SESSION_KEY = 'harborlight-prod-auth-v1';
@@ -25,18 +25,18 @@ const profileName = value => validateIslandName(typeof value === 'string' && val
 const MESSAGES = {
   disabled: 'Logowanie jest dostępne na hostingu PRE-PROD lub PROD.',
   'registration-disabled': 'Rejestracja jest wyłączona na PRE-PROD. Użyj stałego konta testowego.',
-  'email-in-use': 'Ten adres e-mail ma już konto. Zaloguj się.',
+  'email-in-use': 'Z tym adresem e-mail jest już powiązane konto. Zaloguj się.',
   'weak-password': 'Hasło musi mieć co najmniej 8 znaków.',
   'invalid-email': 'Wpisz prawidłowy adres e-mail.',
   'invalid-island-name': 'Nazwa wyspy musi mieć od 2 do 40 znaków.',
   'legal-required': 'Przed ukończeniem rejestracji zaakceptuj Regulamin i potwierdź zapoznanie się z Polityką prywatności.',
   'legal-outdated': 'Wersja dokumentów zmieniła się. Odśwież stronę i przeczytaj aktualne dokumenty.',
-  configuration: 'Konfiguracja logowania tego środowiska nie jest zakończona.',
+  configuration: 'Logowanie nie zostało jeszcze uruchomione. Skontaktuj się z obsługą gry.',
   'invalid-login': 'Wpisz login admin1, admin2 albo admin3.',
   'invalid-credentials': 'Nieprawidłowy login lub hasło.',
   'account-disabled': 'To konto testowe jest wyłączone.',
   'rate-limited': 'Zbyt wiele prób. Spróbuj ponownie za chwilę.',
-  storage: 'Przeglądarka nie może zapisać sesji. Zezwól na pamięć lokalną.',
+  storage: 'Nie udało się zapisać sesji logowania. Zezwól przeglądarce na zapisywanie danych dla tej strony.',
   'auth-required': 'Sesja wygasła. Zaloguj się ponownie.',
   permission: 'Brak dostępu do zapisu wyspy. Sprawdź konfigurację kont.',
   offline: 'Nie można połączyć się z chmurą. Spróbuj ponownie.',
@@ -48,7 +48,7 @@ const MESSAGES = {
   'promotion-not-started': 'Ten kod nie jest jeszcze aktywny.',
   'promotion-ended': 'Termin użycia tego kodu minął.',
   'promotion-exhausted': 'Limit użyć tego kodu został wyczerpany.',
-  'unsupported-promotion-verification': 'Ten kod wymaga niepodłączonej weryfikacji Facebooka.',
+  'unsupported-promotion-verification': 'Ten kod wymaga potwierdzenia przez Facebooka. Ta funkcja nie jest jeszcze dostępna.',
   'trade-api-unavailable': 'Handel między graczami wymaga aktywnej usługi serwerowej.',
   'trade-invalid-offer': 'Oferta handlowa jest nieprawidłowa.',
   'trade-invalid-island': 'Wybierz dostępną wyspę.',

@@ -1,8 +1,8 @@
 // OAuth is delegated to Firebase's maintained browser SDK. Only public Firebase
 // configuration is used here; provider secrets belong in the Firebase console.
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v24-2';
-import { DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v24-2';
-import { validLegalAcceptance } from './harborlight-legal.js?v=legal-v3';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v25';
+import { DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v25';
+import { validLegalAcceptance } from './harborlight-legal.js?v=legal-v4';
 
 const fail = (code, message) => Object.assign(new Error(message), { code });
 export async function loadFirebaseProviderSdk() {
@@ -18,10 +18,10 @@ export function providerError(error) {
   if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') return fail('provider-cancelled', 'Logowanie anulowane.');
   if (['auth/invalid-credential', 'auth/invalid-login-credentials', 'auth/wrong-password', 'auth/user-not-found'].includes(code)) return fail('invalid-credentials', 'Login lub hasło są nieprawidłowe.');
   if (code === 'auth/popup-blocked') return fail('popup-blocked', 'Przeglądarka zablokowała okno logowania. Zezwól na jego otwarcie.');
-  if (['auth/account-exists-with-different-credential', 'auth/credential-already-in-use'].includes(code)) return fail('account-link-required', 'Ten adres ma już konto z inną metodą logowania. Zaloguj się dotychczasową metodą.');
-  if (['auth/operation-not-allowed', 'auth/unauthorized-domain', 'auth/invalid-api-key', 'auth/invalid-oauth-client-id', 'auth/configuration-not-found'].includes(code)) return fail('provider-configuration', 'Ta metoda logowania wymaga konfiguracji dostawcy przez właściciela gry.');
+  if (['auth/account-exists-with-different-credential', 'auth/credential-already-in-use'].includes(code)) return fail('account-link-required', 'Z tym adresem e-mail jest już powiązane konto. Zaloguj się metodą, której używasz do tego konta.');
+  if (['auth/operation-not-allowed', 'auth/unauthorized-domain', 'auth/invalid-api-key', 'auth/invalid-oauth-client-id', 'auth/configuration-not-found'].includes(code)) return fail('provider-configuration', 'Ta metoda logowania nie jest jeszcze dostępna. Właściciel gry musi dokończyć jej konfigurację.');
   if (['auth/user-disabled'].includes(code)) return fail('account-disabled', 'To konto jest wyłączone.');
-  return fail('provider-unavailable', 'Nie udało się połączyć z dostawcą logowania. Spróbuj ponownie.');
+  return fail('provider-unavailable', 'Nie udało się połączyć z usługą logowania. Spróbuj ponownie.');
 }
 
 export async function signInWithProvider(cloud, providerName, { islandName = '', testLogin = '', testPassword = '', registration = false, legalAcceptance = null, loadSdk = loadFirebaseProviderSdk } = {}) {
@@ -56,7 +56,7 @@ export async function signInWithProvider(cloud, providerName, { islandName = '',
         result = await sdk.signInWithPopup(auth, provider);
       }
     } else result = await sdk.signInWithPopup(auth, provider);
-    if (cloud.preprod && (!DEV_USERS.some(user => user.uid === result.user.uid) || testUser && result.user.uid !== testUser.uid)) throw fail('provider-not-linked', 'Ten dostawca nie jest powiązany z wybranym stałym kontem PRE-PROD.');
+    if (cloud.preprod && (!DEV_USERS.some(user => user.uid === result.user.uid) || testUser && result.user.uid !== testUser.uid)) throw fail('provider-not-linked', 'Wybrana metoda logowania nie jest powiązana z tym kontem testowym PRE-PROD.');
     if (chosenName) await sdk.updateProfile(result.user, { displayName: 'HARBORLIGHT:' + chosenName.name });
     const idToken = await result.user.getIdToken(!!chosenName);
     return await cloud.acceptExternalSession({ uid: result.user.uid, idToken, refreshToken: result.user.refreshToken });

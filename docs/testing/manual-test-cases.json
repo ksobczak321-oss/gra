@@ -228,7 +228,8 @@
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0304",
-        "HL-CHG-0305"
+        "HL-CHG-0305",
+        "HL-CHG-0039"
       ],
       "file": "manual/HL-TC-0016.md"
     },
@@ -276,7 +277,8 @@
         "HL-CHG-0406",
         "HL-CHG-0407",
         "HL-CHG-0408",
-        "HL-CHG-0715"
+        "HL-CHG-0715",
+        "HL-CHG-0932"
       ],
       "file": "manual/HL-TC-0019.md"
     },
@@ -529,7 +531,8 @@
       "changes": [
         "HL-CHG-0901",
         "HL-CHG-0914",
-        "HL-CHG-0918"
+        "HL-CHG-0918",
+        "HL-CHG-0932"
       ],
       "file": "manual/HL-TC-0038.md"
     },
@@ -680,7 +683,8 @@
         "HL-CHG-0926",
         "HL-CHG-0927",
         "HL-CHG-0914",
-        "HL-CHG-0918"
+        "HL-CHG-0918",
+        "HL-CHG-0932"
       ],
       "file": "manual/HL-TC-0049.md"
     },
@@ -700,6 +704,47 @@
         "HL-CHG-0930"
       ],
       "file": "manual/HL-TC-0050.md"
+    },
+    {
+      "id": "HL-TC-0051",
+      "title": "Samouczek wskazuje budynek na mapie i czeka na rzeczywiste kliknięcie",
+      "area": "Samouczek i mapa",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0036",
+        "HL-CHG-0037"
+      ],
+      "file": "manual/HL-TC-0051.md"
+    },
+    {
+      "id": "HL-TC-0052",
+      "title": "Polszczyzna wszystkich 25 lekcji jest naturalna i zgodna z klikanymi elementami",
+      "area": "Polskie teksty samouczka",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0037",
+        "HL-CHG-0036"
+      ],
+      "file": "manual/HL-TC-0052.md"
+    },
+    {
+      "id": "HL-TC-0053",
+      "title": "Polska wersja całej gry: panele, błędy, akcje i powiadomienia",
+      "area": "Pełny przegląd polszczyzny",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0038",
+        "HL-CHG-0037",
+        "HL-CHG-0034",
+        "HL-CHG-0039"
+      ],
+      "file": "manual/HL-TC-0053.md"
     }
   ],
   "current_scope": {

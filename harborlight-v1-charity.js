@@ -76,8 +76,8 @@ export function createCharityPreviewAdapter({ environment, getState, getWorld = 
 }
 
 const errors = {
-  'charity-account-limit': ['Można pomóc raz w miesiącu Warszawy i nie częściej niż co 30 dni.', 'Donate once per Warsaw calendar month and at least 30 days apart.'],
-  'charity-insufficient-qualified-coins': ['Potrzebujesz 1000 kwalifikowanych monet. Kupione monety, handel i nieznane stare saldo nie kwalifikują się.', 'You need 1,000 qualifying coins. Purchases, trade and unknown historical balances do not qualify.'],
+  'charity-account-limit': ['Możesz pomóc raz w miesiącu kalendarzowym i nie częściej niż co 30 dni. Terminy liczymy według czasu w Warszawie.', 'Donate once per Warsaw calendar month and at least 30 days apart.'],
+  'charity-insufficient-qualified-coins': ['Potrzebujesz 1000 monet uprawnionych do udziału w akcji. Nie wliczamy monet kupionych, wpływów z handlu ani starszych monet o nieznanym pochodzeniu.', 'You need 1,000 qualifying coins. Purchases, trade and unknown historical balances do not qualify.'],
   'charity-insufficient-island-coins': ['Na wybranej wyspie brakuje 1000 monet.', 'The selected island needs 1,000 coins.'],
   'charity-fund-exhausted': ['Pula tego miesiąca jest wykorzystana. Monety nie zostały pobrane.', 'This month’s fund is exhausted. No coins were taken.'],
   'charity-reward-awaits-transfer': ['Nagroda czeka na potwierdzenie przelewu.', 'The reward awaits confirmation of the transfer.'],
@@ -90,6 +90,7 @@ export function charityErrorMessage(error, language = 'pl') {
 
 export function createCharityPanel({ adapter, islandId = 'island-1', language = 'pl', onChanged = () => {} } = {}) {
   const pl = language === 'pl', text = (polish, english) => pl ? polish : english;
+  const money = cents => new Intl.NumberFormat(pl ? 'pl-PL' : 'en-GB', { style: 'currency', currency: 'PLN' }).format(cents / 100);
   const node = (tag, content, attrs = {}) => { const element = document.createElement(tag); if (content !== undefined) element.textContent = content; Object.entries(attrs).forEach(([key, value]) => element.setAttribute(key, value)); return element; };
   const host = node('section', undefined, { 'data-charity-panel': '', class: 'charity-panel' }), statusLine = node('p', '', { role: 'status', 'aria-live': 'polite' });
   const content = node('div'); host.append(node('h3', text('Pomagam — Światło Wdzięczności', 'Give back — Light of Gratitude')), statusLine, content);
@@ -105,12 +106,12 @@ export function createCharityPanel({ adapter, islandId = 'island-1', language = 
     result.disabled = !allowed; result.addEventListener('click', () => run(operation)); return result;
   };
   async function refresh() {
-    if (!adapter?.status) { content.replaceChildren(node('p', text('Program oczekuje na uruchomienie serwerowej księgi i wybór organizacji.', 'The campaign awaits the server ledger and a selected charity.'))); return; }
+    if (!adapter?.status) { content.replaceChildren(node('p', text('Akcja nie została jeszcze uruchomiona. Organizator musi wskazać odbiorcę pomocy i przygotować rozliczenia.', 'The campaign awaits the server ledger and a selected charity.'))); return; }
     const state = await adapter.status(), campaign = state.campaign; content.replaceChildren();
-    if (state.mode === 'simulation') content.append(node('p', text('SYMULACJA DEV — brak prawdziwych przelewów. Księga podglądu znika po odświeżeniu.', 'DEV SIMULATION — no real transfers. The preview ledger disappears on refresh.'), { class: 'notice' }));
-    content.append(node('p', text('1000 kwalifikowanych monet = 1 zł z zabezpieczonej puli operatora. Raz w miesiącu Warszawy, minimum 30 dni odstępu. Najpierw wydajesz monety kwalifikowane.', '1,000 qualifying coins = PLN 1 from the operator’s reserved fund. Once per Warsaw month, at least 30 days apart. Ordinary spending uses qualifying coins first.')),
-      node('p', text(`Kwalifikowane monety: ${Math.floor(state.qualifiedCoins)}. Pozostałe: ${Math.floor(state.unqualifiedCoins)}.`, `Qualifying coins: ${Math.floor(state.qualifiedCoins)}. Other coins: ${Math.floor(state.unqualifiedCoins)}.`)));
-    if (campaign) content.append(node('p', `${campaign.organization}: ${campaign.goal}`), node('p', text(`Pozostała pula: ${(campaign.availableCents / 100).toFixed(2)} zł z ${(campaign.budgetCents / 100).toFixed(2)} zł.`, `Available fund: PLN ${(campaign.availableCents / 100).toFixed(2)} of PLN ${(campaign.budgetCents / 100).toFixed(2)}.`)));
+    if (state.mode === 'simulation') content.append(node('p', text('SYMULACJA DEV — brak prawdziwych przelewów. Dane tej próby znikną po odświeżeniu strony.', 'DEV SIMULATION — no real transfers. The preview ledger disappears on refresh.'), { class: 'notice' }));
+    content.append(node('p', text('Za 1000 monet uprawnionych do udziału w akcji organizator przekazuje 1 zł z odłożonej puli. Możesz pomóc raz w miesiącu kalendarzowym i nie częściej niż co 30 dni; terminy liczymy według czasu w Warszawie. Przy zwykłych wydatkach najpierw zużywasz monety uprawnione do udziału w akcji.', '1,000 qualifying coins = PLN 1 from the operator’s reserved fund. Once per Warsaw month, at least 30 days apart. Ordinary spending uses qualifying coins first.')),
+      node('p', text(`Monety, które możesz przeznaczyć na pomoc: ${Math.floor(state.qualifiedCoins)}. Pozostałe monety: ${Math.floor(state.unqualifiedCoins)}.`, `Qualifying coins: ${Math.floor(state.qualifiedCoins)}. Other coins: ${Math.floor(state.unqualifiedCoins)}.`)));
+    if (campaign) content.append(node('p', `${campaign.organization}: ${campaign.goal}`), node('p', text(`Pozostała pula: ${money(campaign.availableCents)} z ${money(campaign.budgetCents)}.`, `Available fund: ${money(campaign.availableCents)} of ${money(campaign.budgetCents)}.`)));
     const form = node('div', undefined, { class: 'charity-actions' }), consent = node('input', undefined, { type: 'checkbox', 'data-charity-confirm': '' }), label = node('label');
     label.append(consent, document.createTextNode(text(' Potwierdzam zużycie 1000 monet. +20 p.p. szczęścia przez 6 h odbiorę dopiero po potwierdzeniu przelewu.', ' I confirm spending 1,000 coins. I can claim +20 happiness points for 6 hours only after the transfer is confirmed.')));
     const donate = button(text(state.mode === 'simulation' ? 'Test: przekaż 1000 monet → 1 zł' : 'Przekaż 1000 monet — operator wpłaci 1 zł', state.mode === 'simulation' ? 'Test: give 1,000 coins → PLN 1' : 'Give 1,000 coins — operator donates PLN 1'), async () => {

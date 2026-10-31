@@ -15,7 +15,7 @@ const object = value => value !== null && typeof value === 'object' && !Array.is
 const positive = value => Number.isSafeInteger(value) && value > 0;
 const nonnegative = value => Number.isSafeInteger(value) && value >= 0;
 const ACCOUNT_PROGRESS_FIELDS = ['commerce', 'loyalty', 'socialRewards', 'referrals', 'engagementSchedule', 'welcome'];
-export const LEGAL_DOCUMENT_VERSIONS = Object.freeze({ termsVersion: '2026-10-31-draft3', privacyVersion: '2026-10-31-draft3' });
+export const LEGAL_DOCUMENT_VERSIONS = Object.freeze({ termsVersion: '2026-10-31-draft4', privacyVersion: '2026-10-31-draft4' });
 const acceptedLegal = account => account?.legalAcceptance?.termsVersion === LEGAL_DOCUMENT_VERSIONS.termsVersion &&
   account?.legalAcceptance?.privacyVersion === LEGAL_DOCUMENT_VERSIONS.privacyVersion && Number.isSafeInteger(account?.legalAcceptance?.acceptedAt);
 
