@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `verified_documentation` |
-| CI | `awaiting_current_release` |
+| CI | `passed_source_8215265` |
 | PRE-PROD | `not_applicable` |
 | PROD | `not_applicable` |
 | Decyzja | `accepted` |
@@ -19,7 +19,7 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 
 ## Zakres i odbiór
 
-- Każdy przypadek ma stabilneID, kroki, oczekiwany wynik, powiązane zmiany i faktyczny stan ręcznego wykonania.
+- Każdy przypadek ma stabilne ID, kroki, oczekiwany wynik, powiązane zmiany i faktyczny stan ręcznego wykonania.
 
 ## Źródło
 
@@ -34,6 +34,8 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 - **Dokumenty:** [docs/testing/MANUAL-TEST-PLAN.md](../../testing/MANUAL-TEST-PLAN.md), [docs/testing/manual-test-cases.json](../../testing/manual-test-cases.json)
 - **Kod:** nie przypisano.
 - **Scenariusze automatyczne:** nie przypisano.
+- **Kod dowodowy:** `82152651a3edd490866a9c2c5f8cc5c4a7104492`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41226626826.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 ## Relacje
@@ -46,6 +48,7 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 
 - 45 osobnych plików HL-TC z kryteriami i powiązaniami jest gotowych; ręczne wykonanie nie zostało potwierdzone.
 - Dziewięć przypadków dotyczy propozycji i pozostaje projektowych lub zablokowanych; wszystkie ręczne wyniki są NOT RUN.
+- Kod i pierwotny zestaw kart przeszły CI 41226626826 dla 8215265. Późniejsze odpowiedzi użytkownika o progach i monetach są osobnym uzupełnieniem dokumentacji; jego własny odbiór zapisuje tag wydania DEV.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

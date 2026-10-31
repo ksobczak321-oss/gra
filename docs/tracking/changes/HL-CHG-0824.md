@@ -1,4 +1,4 @@
-# HL-CHG-0824 — Rozliczanie nowej ceny: monety czy przelicznik wymiany materiałów
+# HL-CHG-0824 — Materiały między graczami są sprzedawane za monety
 
 **Typ:** Decision · **Obszar:** Archipelag i handel v23 · **Epik:** `HL-EPIC-ARC`
 
@@ -13,17 +13,17 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `open` |
+| Decyzja | `accepted` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
 ## Zakres i odbiór
 
-- Nie zamieniamy samodzielnie dotychczasowego barteru w sprzedaż za monety bez ustalenia jednostki ceny.
+- Użytkownik wybrał sprzedaż materiałów za monety zamiast dotychczasowego barteru PvP. Gra ustala maksymalną cenę; szczegółowy przelicznik i migracja istniejących ofert pozostają do decyzji.
 
 ## Źródło
 
-Rozliczanie nowej ceny: monety czy przelicznik wymiany materiałów
+Materiały między graczami są sprzedawane za monety
 
 Odniesienie: `user_chat:last_request_2026-10-31`.
 
@@ -41,6 +41,10 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
 - **Powiązane:** Brak.
+
+## Uwagi
+
+- Odpowiedź użytkownika z 31 października 2026: „Materiały sprzedawane za monety”. Kierunek zaakceptowany, implementacja jeszcze niewykonana.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

@@ -17,7 +17,7 @@ Dokumenty: [rejestr zmian](tracking/CHANGE-REGISTER.md), [plan testów ręcznych
 - [Liga, społeczność i dobroczynność](design/LEAGUE-COMMUNITY-CHARITY.md): konkretna propozycja kalendarza, punktacji, współpracy, ograniczonego finansowania oraz serwerowego rozliczania. Nie aktywowano ligi, prawdziwych darowizn, bonusów ani nowych przepływów monet.
 - [Planszówka 2–6 osób](design/BOARDGAME-LIGHTHOUSE-SESSION.md): scenariusz 50 minut, plansza budynków i dwie talie, fizyczne zadania oraz teoretyczny companion online. Nie ma implementacji QR, serwerowej sesji ani faktycznie przyznanych nagród.
 
-Pytania o analizę versus implementację nowych mechanik, rodzaj handlu PvP i progi 10/13/16 pozostają oczekujące. Przy braku odpowiedzi postępujemy z analizą i jednoznaczną zmianą wersji interfejsu. Nie przenosimy proponowanych parametrów do gry bez ich rozstrzygnięcia. Nowe zasady nie zostały opublikowane na PRE-PROD/PROD.
+Użytkownik potwierdził: **najpierw analiza i decyzje**, **PvP jako sprzedaż materiałów za monety** oraz **kolejne wyspy od Ratusza 10, 13, 16, 19 i dalej co trzy poziomy**. To rozstrzyga kierunek, ale nie koszt, limit liczby wysp, stan startowy i szczegóły pasażerów. Nie przenosimy proponowanych parametrów do gry bez ich rozstrzygnięcia. Nowe zasady nie zostały opublikowane na PRE-PROD/PROD.
 
 ## Koszty i poprzedni reset
 

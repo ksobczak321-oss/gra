@@ -312,13 +312,13 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0815 — Przewóz ludzi trwa 30 minut](changes/HL-CHG-0815.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0816 — Rejs jest albo pasażerski, albo towarowy](changes/HL-CHG-0816.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0817 — Przewóz osób musi określić pojemność celu, jedzenie i zachowanie tożsamości](changes/HL-CHG-0817.md) | Decision | `open` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0818 — Kolejna wyspa po każdych kolejnych trzech poziomach gry](changes/HL-CHG-0818.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0818 — Kolejne wyspy od Ratusza matki 10, 13, 16, 19 i dalej co trzy poziomy](changes/HL-CHG-0818.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0819 — Koszt wyspy jako suma kosztów Ratusza i Domu do poziomu 7, 8, 9…](changes/HL-CHG-0819.md) | Decision | `open` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0820 — Dostęp do zakupu wyspy tylko w Ratuszu i powiadomieniu po odblokowaniu](changes/HL-CHG-0820.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0821 — Rozszerzenie obecnego limitu dwóch wysp na wiele córek](changes/HL-CHG-0821.md) | Decision | `open` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0822 — Powrót NPC obok handlu między graczami](changes/HL-CHG-0822.md) | Decision | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0823 — Maksymalną cenę oferty wyznacza gra, gracz może zejść niżej](changes/HL-CHG-0823.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0824 — Rozliczanie nowej ceny: monety czy przelicznik wymiany materiałów](changes/HL-CHG-0824.md) | Decision | `open` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0824 — Materiały między graczami są sprzedawane za monety](changes/HL-CHG-0824.md) | Decision | `accepted` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0825 — Startowe budynki i skopiowane poziomy po wprowadzeniu płatnych kolonii](changes/HL-CHG-0825.md) | Decision | `open` | `analysis_only` | `not_deployed` |
 
 <a id="hl-epic-soc"></a>

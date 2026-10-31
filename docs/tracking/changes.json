@@ -1080,7 +1080,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_local",
-        "ci": "awaiting_current_release",
+        "ci": "passed_source_8215265",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -1107,14 +1107,14 @@
         "automated_tests": [
           "tests/harborlight-settings-signout-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "82152651a3edd490866a9c2c5f8cc5c4a7104492",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41226626826",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
       "notes": [
-        "DEV:0.9.1.1 faktycznie widoczne; Settings Chromium: 4 przypadki PL/EN × komputer/telefon PASS oraz pełnyNode: 730 PASS zgłoszone przez root.",
-        "Własne CI i promocja tej etykiety nie zostały jeszcze potwierdzone. PRE-PROD nadal ma aplikację 092e752… sprzed tej poprawki."
+        "DEV: wersja 0.9.1.1 widoczna w czterech wariantach PL/EN × komputer/telefon; 933 testy i 12 zestawów Chromium PASS.",
+        "CI 41226626826 i Pages 41226626838 mają SUCCESS dla 82152651a3edd490866a9c2c5f8cc5c4a7104492. PRE-PROD nadal ma aplikację 092e752… sprzed tej poprawki."
       ]
     },
     {
@@ -9371,7 +9371,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_documentation",
-        "ci": "awaiting_current_release",
+        "ci": "passed_source_8215265",
         "preprod": "not_applicable",
         "prod": "not_applicable",
         "decision": "accepted"
@@ -9393,14 +9393,15 @@
           "scripts/build_change_register.py"
         ],
         "automated_tests": [],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "82152651a3edd490866a9c2c5f8cc5c4a7104492",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41226626826",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
       "notes": [
         "Wpisy są oddzielnymi kartami plikowymi w Git. Nie zostały opublikowane jako natywne GitHub Issues; issue_url jest null. Dostęp do API GitHub nie jest zalogowany.",
-        "227 kart i 11 epików w plikach; generator --check oraz wszystkie lokalne linki sprawdzone. To nie jest wynik CI nowego wydania."
+        "227 kart i 11 epików w plikach; generator --check oraz wszystkie lokalne linki sprawdzone. Pierwotny zestaw przeszedł następnie wskazane CI.",
+        "Kod i pierwotny zestaw kart przeszły CI 41226626826 dla 8215265. Późniejsze odpowiedzi użytkownika o progach i monetach są osobnym uzupełnieniem dokumentacji; jego własny odbiór zapisuje tag wydania DEV."
       ]
     },
     {
@@ -9419,13 +9420,13 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_documentation",
-        "ci": "awaiting_current_release",
+        "ci": "passed_source_8215265",
         "preprod": "not_applicable",
         "prod": "not_applicable",
         "decision": "accepted"
       },
       "acceptance": [
-        "Każdy przypadek ma stabilneID, kroki, oczekiwany wynik, powiązane zmiany i faktyczny stan ręcznego wykonania."
+        "Każdy przypadek ma stabilne ID, kroki, oczekiwany wynik, powiązane zmiany i faktyczny stan ręcznego wykonania."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -9439,14 +9440,15 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "82152651a3edd490866a9c2c5f8cc5c4a7104492",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41226626826",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
       "notes": [
         "45 osobnych plików HL-TC z kryteriami i powiązaniami jest gotowych; ręczne wykonanie nie zostało potwierdzone.",
-        "Dziewięć przypadków dotyczy propozycji i pozostaje projektowych lub zablokowanych; wszystkie ręczne wyniki są NOT RUN."
+        "Dziewięć przypadków dotyczy propozycji i pozostaje projektowych lub zablokowanych; wszystkie ręczne wyniki są NOT RUN.",
+        "Kod i pierwotny zestaw kart przeszły CI 41226626826 dla 8215265. Późniejsze odpowiedzi użytkownika o progach i monetach są osobnym uzupełnieniem dokumentacji; jego własny odbiór zapisuje tag wydania DEV."
       ]
     },
     {
@@ -10365,12 +10367,12 @@
       "epic": "HL-EPIC-ARC",
       "area": "Archipelag i handel v23",
       "type": "Story",
-      "title": "Kolejna wyspa po każdych kolejnych trzech poziomach gry",
+      "title": "Kolejne wyspy od Ratusza matki 10, 13, 16, 19 i dalej co trzy poziomy",
       "source": {
         "kind": "user_chat_and_approved_requirement",
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
-        "summary": "Kolejna wyspa po każdych kolejnych trzech poziomach gry",
+        "summary": "Kolejne wyspy od Ratusza matki 10, 13, 16, 19 i dalej co trzy poziomy",
         "reference": "user_chat:last_request_2026-10-31"
       },
       "status": {
@@ -10379,10 +10381,10 @@
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted_parameters_with_open_details"
+        "decision": "accepted"
       },
       "acceptance": [
-        "Progi10/13/16 są propozycją do potwierdzenia; nie zapisujemy ich jako uzgodnionych bez odpowiedzi."
+        "Użytkownik potwierdził progi Ratusza 10, 13, 16, 19 i dalszy krok co trzy poziomy. Limit liczby wysp oraz pozostałe warunki kolonizacji są osobnymi decyzjami."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -10401,7 +10403,9 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Potwierdzenie użytkownika w odpowiedzi na pytanie z 31 października 2026: „Tak: 10, 13, 16, 19…”. Najpierw analiza i decyzje, bez wdrożenia mechaniki w tym zakresie."
+      ]
     },
     {
       "id": "HL-CHG-0819",
@@ -10625,12 +10629,12 @@
       "epic": "HL-EPIC-ARC",
       "area": "Archipelag i handel v23",
       "type": "Decision",
-      "title": "Rozliczanie nowej ceny: monety czy przelicznik wymiany materiałów",
+      "title": "Materiały między graczami są sprzedawane za monety",
       "source": {
         "kind": "user_chat_proposal_or_open_decision",
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
-        "summary": "Rozliczanie nowej ceny: monety czy przelicznik wymiany materiałów",
+        "summary": "Materiały między graczami są sprzedawane za monety",
         "reference": "user_chat:last_request_2026-10-31"
       },
       "status": {
@@ -10639,10 +10643,10 @@
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "accepted"
       },
       "acceptance": [
-        "Nie zamieniamy samodzielnie dotychczasowego barteru w sprzedaż za monety bez ustalenia jednostki ceny."
+        "Użytkownik wybrał sprzedaż materiałów za monety zamiast dotychczasowego barteru PvP. Gra ustala maksymalną cenę; szczegółowy przelicznik i migracja istniejących ofert pozostają do decyzji."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -10661,7 +10665,9 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Odpowiedź użytkownika z 31 października 2026: „Materiały sprzedawane za monety”. Kierunek zaakceptowany, implementacja jeszcze niewykonana."
+      ]
     },
     {
       "id": "HL-CHG-0825",

@@ -1,4 +1,4 @@
-# HL-CHG-0818 — Kolejna wyspa po każdych kolejnych trzech poziomach gry
+# HL-CHG-0818 — Kolejne wyspy od Ratusza matki 10, 13, 16, 19 i dalej co trzy poziomy
 
 **Typ:** Story · **Obszar:** Archipelag i handel v23 · **Epik:** `HL-EPIC-ARC`
 
@@ -13,17 +13,17 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `accepted_parameters_with_open_details` |
+| Decyzja | `accepted` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
 ## Zakres i odbiór
 
-- Progi10/13/16 są propozycją do potwierdzenia; nie zapisujemy ich jako uzgodnionych bez odpowiedzi.
+- Użytkownik potwierdził progi Ratusza 10, 13, 16, 19 i dalszy krok co trzy poziomy. Limit liczby wysp oraz pozostałe warunki kolonizacji są osobnymi decyzjami.
 
 ## Źródło
 
-Kolejna wyspa po każdych kolejnych trzech poziomach gry
+Kolejne wyspy od Ratusza matki 10, 13, 16, 19 i dalej co trzy poziomy
 
 Odniesienie: `user_chat:last_request_2026-10-31`.
 
@@ -45,6 +45,10 @@ Powiązane przypadki do ręcznego przeklikania:
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
 - **Powiązane:** Brak.
+
+## Uwagi
+
+- Potwierdzenie użytkownika w odpowiedzi na pytanie z 31 października 2026: „Tak: 10, 13, 16, 19…”. Najpierw analiza i decyzje, bez wdrożenia mechaniki w tym zakresie.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

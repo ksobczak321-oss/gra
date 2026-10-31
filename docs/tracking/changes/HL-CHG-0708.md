@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `verified_documentation` |
-| CI | `awaiting_current_release` |
+| CI | `passed_source_8215265` |
 | PRE-PROD | `not_applicable` |
 | PROD | `not_applicable` |
 | Decyzja | `accepted` |
@@ -34,6 +34,8 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 - **Dokumenty:** [docs/tracking/CHANGE-REGISTER.md](../CHANGE-REGISTER.md), [docs/tracking/changes.json](../changes.json)
 - **Kod:** [scripts/build_change_register.py](../../../scripts/build_change_register.py)
 - **Scenariusze automatyczne:** nie przypisano.
+- **Kod dowodowy:** `82152651a3edd490866a9c2c5f8cc5c4a7104492`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41226626826.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 ## Relacje
@@ -45,7 +47,8 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 ## Uwagi
 
 - Wpisy są oddzielnymi kartami plikowymi w Git. Nie zostały opublikowane jako natywne GitHub Issues; issue_url jest null. Dostęp do API GitHub nie jest zalogowany.
-- 227 kart i 11 epików w plikach; generator --check oraz wszystkie lokalne linki sprawdzone. To nie jest wynik CI nowego wydania.
+- 227 kart i 11 epików w plikach; generator --check oraz wszystkie lokalne linki sprawdzone. Pierwotny zestaw przeszedł następnie wskazane CI.
+- Kod i pierwotny zestaw kart przeszły CI 41226626826 dla 8215265. Późniejsze odpowiedzi użytkownika o progach i monetach są osobnym uzupełnieniem dokumentacji; jego własny odbiór zapisuje tag wydania DEV.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

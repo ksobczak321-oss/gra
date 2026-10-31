@@ -131,7 +131,7 @@ W pierwszej sesji wynik należy do **konta gospodarza i wskazanej przy starcie w
 
 Proponowana pierwsza nagroda jest niewielka i niehandlowa: pamiątka scenariusza z dewizą, odznaka za pierwsze ukończenie oraz opcjonalny efekt **+2 punkty szczęścia dla maksymalnie sześciu mieszkańców przez dwie godziny**, najwyżej raz na tydzień ISO na konto, od poniedziałku 00:00 do kolejnego poniedziałku w strefie Europe/Warsaw, bez kumulowania niewykorzystanych odbiorów. Dokładny bonus wymaga testów balansu. Nie przyznajemy monet, materiałów, nowych osób, poziomu Latarni ani ponownej ochrony powitalnej. Bonus nie kumuluje się, nie przedłuża globalnego wymuszenia 100% i respektuje obecne limity oraz końce efektów. Wybór gości i dewizy zmienia pamiątkę, nie wartość ekonomiczną wypłaty.
 
-Wynik nie zasila punktów przyszłej ligi ani przelicznika charytatywnego. Inaczej samodzielne wielokrotne „przeklikanie” kart mogłoby tworzyć przewagę lub zobowiązanie właściciela w złotych. Powtórzenie scenariusza pozostaje normalną zabawą przy stole, nawet gdy konto wyczerpało tygodniowy bonus.
+Wynik nie zasila punktów przyszłej ligi ani nie przyznaje bezpośrednio monet kwalifikowanych do dobroczynności. Ewentualny rzeczywisty bonus szczęścia może jednak pośrednio zwiększyć populację i późniejsze podatki; trzeba ocenić ten skutek przy audycie kwalifikowanych źródeł. Nie obiecujemy zerowego wpływu ekonomicznego, a globalna pula dobroczynna nadal ogranicza zobowiązanie w złotych. Samodzielne wielokrotne „przeklikanie” kart nie może odnawiać bonusu ani limitów. Powtórzenie scenariusza pozostaje normalną zabawą przy stole, nawet gdy konto wyczerpało tygodniowy bonus.
 
 Przyszłe rozliczenie powinno przebiegać tak:
 

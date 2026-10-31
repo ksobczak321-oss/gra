@@ -36,6 +36,7 @@ Nie przenosimy niezakończonej kolejki na następny miesiąc. Awaria operatora w
 
 - Drużyna ma **1–5 kont**, jedno konto należy do jednej drużyny w danym sezonie. Dwie wyspy jednego konta nie dają dwóch miejsc, dwóch limitów prób ani dodatkowego funduszu.
 - Wynik drużyny to suma **trzech najlepszych** wyników członków, każdy najwyżej 100 punktów. Maksimum wynosi 300. Przy jednym graczu maksimum to 100, przy dwóch 200. Solo może pokonać słabo grający lub nieobecny sojusz, ale nie ma tej samej szansy co trzech dobrze grających partnerów — to świadomy element współpracy.
+- To silna przewaga: w proponowanym przeliczniku dwie ukończone próby dają co najmniej 120 punktów, więc solista z maksimum 100 ich nie pokona. Jeśli intencją jest jedynie niewielka przewaga sojuszu, trzeba zamiast sumy wybrać średnią z ograniczoną premią współpracy; nie są to równoważne warianty.
 - Pozostałe dwie osoby mogą zastąpić zapracowanych kolegów. Nie trzeba być w komplecie ani logować się równocześnie. Nie ma dodatkowych punktów za czwartą i piątą wpłatę, reklamę albo kupiony pakiet.
 - Skład jest zamknięty przed startem. Zaproszenia nie są wysyłane automatycznie na Facebooku; gracz sam przekazuje link lub kod. Przenoszenie graczy po poznaniu przeciwnika nie zmienia wyniku bieżącego sezonu.
 - Osobisty dziennik udziału działa także przy przegranym meczu. Solo ma osobne odznaki i może później dołączyć do sojuszu, bez wymazywania historii konta.
@@ -70,7 +71,7 @@ To propozycja nowego wyzwania, a nie opis istniejącego, gotowego trybu. Zanim z
 4. **Powracający rozbitek lub statek ligi:** krótka historia zmieniająca ilustrację i zadanie sezonu. Losowy motyw nie zmienia szans punktowych rywali.
 5. **Port Dobroczynności:** wspólny mural rozświetla się po potwierdzonym przekazaniu pieniędzy. Widać cel, kwotę i potwierdzenie, a nie ranking „najbogatszych dobroczyńców”.
 
-Nagrody pierwszego sezonu: proporzec za udział w co najmniej pięciu kolejkach, medal pozycji w tabeli i dekoracja za współpracę. Są przypisane do konta, niewymienialne i nie mają ceny odkupu. Nie zwiększają podatków, produkcji, populacji ani kwalifikowanych monet dobroczynnych. Awans daje prestiż i nowych przeciwników, nie narastający mnożnik przewagi.
+Nagrody pierwszego sezonu: proporzec za udział w co najmniej `min(5, liczba zaplanowanych meczów drużyny)` kolejkach, medal pozycji w tabeli i dekoracja za współpracę. Dzięki temu także grupa pięciu drużyn z czterema meczami ma osiągalny próg. Są przypisane do konta, niewymienialne i nie mają ceny odkupu. Nie zwiększają podatków, produkcji, populacji ani kwalifikowanych monet dobroczynnych. Awans daje prestiż i nowych przeciwników, nie narastający mnożnik przewagi.
 
 ## Dlaczego nie wolno obiecać nieograniczonego „1000 monet = 1 zł”
 
@@ -86,6 +87,8 @@ Jawne założenia poniższego przykładu: 30 dni, stała obsada, efektywne 2 god
 | 48 pracujących | 37 440 | 37,44 zł na konto |
 | 2400 pracujących, rozwinięta wyspa | 1 872 000 | 1872 zł na konto |
 | 4800 pracujących łącznie na dwóch rozwiniętych wyspach | 3 744 000 | 3744 zł na konto |
+
+Kwoty w tabeli są proporcjonalnym ekwiwalentem całej emisji monet. Faktyczne operacje po 1000 monet rozliczają pełne złote: z 9360 monet można od razu wykonać dziewięć operacji, a pozostałe 360 zostaje na później. Nie przekazujemy ułamka złotego za niepełny pakiet. Przy zachowaniu reszt w kolejnych miesiącach proporcjonalny ekwiwalent obrazuje długoterminowy koszt; nie jest dokładną liczbą wpłat jednego miesiąca od pustego salda.
 
 Teoretyczne 2400 osób wynika z limitu Ratusza 100; nie oznacza natychmiast dostępnej obsady. Gdy efekt podatkowy Kaplicy działa przez cały rozpatrywany okres, wynik modelu byłby jeszcze dwukrotnie większy. Do realnego kosztu nie wystarczy znać liczbę graczy, trzeba także ograniczyć kwotę finansowaną przez operatora.
 

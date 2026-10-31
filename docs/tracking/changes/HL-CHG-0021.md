@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `verified_local` |
-| CI | `awaiting_current_release` |
+| CI | `passed_source_8215265` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -34,6 +34,8 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 - **Dokumenty:** [docs/VERSIONING.md](../../VERSIONING.md)
 - **Kod:** [harborlight-version.js](../../../harborlight-version.js), [harborlight-v1-play.js](../../../harborlight-v1-play.js)
 - **Scenariusze automatyczne:** [tests/harborlight-settings-signout-smoke.py](../../../tests/harborlight-settings-signout-smoke.py)
+- **Kod dowodowy:** `82152651a3edd490866a9c2c5f8cc5c4a7104492`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41226626826.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
@@ -48,8 +50,8 @@ Powiązane przypadki do ręcznego przeklikania:
 
 ## Uwagi
 
-- DEV:0.9.1.1 faktycznie widoczne; Settings Chromium: 4 przypadki PL/EN × komputer/telefon PASS oraz pełnyNode: 730 PASS zgłoszone przez root.
-- Własne CI i promocja tej etykiety nie zostały jeszcze potwierdzone. PRE-PROD nadal ma aplikację 092e752… sprzed tej poprawki.
+- DEV: wersja 0.9.1.1 widoczna w czterech wariantach PL/EN × komputer/telefon; 933 testy i 12 zestawów Chromium PASS.
+- CI 41226626826 i Pages 41226626838 mają SUCCESS dla 82152651a3edd490866a9c2c5f8cc5c4a7104492. PRE-PROD nadal ma aplikację 092e752… sprzed tej poprawki.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

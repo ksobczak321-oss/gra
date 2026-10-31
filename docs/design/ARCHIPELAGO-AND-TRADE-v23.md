@@ -14,7 +14,7 @@ Użytkownik określił następujący kierunek:
 - Gra ustala maksymalną cenę, a gracz może zaoferować niższą.
 - Po każdych kolejnych trzech poziomach ma być dostępna następna wyspa. Użytkownik podał koszt jako sumę Ratusza A i Domu A, z A = 7/8/9 dla pierwszej/drugiej/trzeciej dodatkowej wyspy.
 
-W chwili tworzenia dokumentu oczekują trzy pytania: analiza czy wdrożenie jednoznacznych części; PvP za monety czy pozostawienie barteru; potwierdzenie progów 10/13/16/19 albo podanie innych. **Nie przyjmujemy odpowiedzi za użytkownika.** Dokładna interpretacja kosztu, stan startowy nowych wysp i szczegóły pasażerów również wymagają doprecyzowania — tabela poniżej pokazuje, dlaczego.
+Użytkownik odpowiedział na trzy pytania: **najpierw analiza i decyzje**, **sprzedaż materiałów za monety w PvP**, **progi Ratusza 10/13/16/19 i dalej co trzy poziomy**. Te kierunki są przyjęte; nie są jeszcze wdrożone. Dokładna interpretacja kosztu, stan startowy nowych wysp i szczegóły pasażerów wymagają doprecyzowania — tabela poniżej pokazuje, dlaczego.
 
 ## 2. Różnice wobec działającego modelu
 
@@ -42,9 +42,9 @@ Historyczne wydarzenie/oferta może przechowywać nazwę z chwili utworzenia. Bi
 
 ## 4. Kolejne odblokowania, powiadomienie i Ratusz
 
-Pierwsza dodatkowa wyspa jest dziś od Ratusza 10. Jeżeli użytkownik potwierdzi dalszy krok co trzy poziomy, początek sekwencji będzie następujący:
+Pierwsza dodatkowa wyspa jest dziś od Ratusza 10. Użytkownik potwierdził dalszy krok co trzy poziomy; początek sekwencji jest następujący:
 
-| Dodatkowa wyspa | Wyspa łącznie | Proponowany Ratusz matki | Podany przez użytkownika poziom A do wyceny |
+| Dodatkowa wyspa | Wyspa łącznie | Potwierdzony próg Ratusza | Podany przez użytkownika poziom A do wyceny |
 | --- | --- | --- | --- |
 | 1 | 2 | 10 | 7 |
 | 2 | 3 | 13 | 8 |
@@ -131,6 +131,8 @@ Nie wolno skopiować wraz z ludźmi `foodCredit`, `taxProgress`, zasobów, nagr�
 
 Jedzenie podczas rejsu nie zostało określone. Brak poboru przez 30 minut daje oszczędność `0,5 × liczba pasażerów` żywności i może zachęcać do stałego wożenia bezrobotnych. **Propozycja do decyzji:** przy odpłynięciu wyodrębnić racje na rejs (3 żywności dla sześciu osób, 50 dla stu) jako jawny koszt materiałowy, bez opłaty monetami i bez naruszenia chronionej rezerwy. Zaokrąglenia nieparzystych grup wymagają zdefiniowania; nie wolno po prostu skopiować ułamkowej porcji z matki. Ta propozycja nie jest dodatkowym uzgodnionym kosztem.
 
+Racje na 30 minut nie rozwiązują stanu `waiting` ani podróży powrotnej. **Otwarte do decyzji:** źródło dalszego wyżywienia i zachowanie przy jego braku. Minimalna propozycja to jawne dalsze rozliczanie żywności z wyspy źródłowej przy oczekiwaniu/powrocie, bez obchodzenia rezerwacji i chronionego zapasu; jeżeli legalnie dostępnej żywności zabraknie, biegną zwykłe skutki głodu. Trzeba pokazać tę odpowiedzialność przed wypłynięciem. Nie dopuszczamy nieograniczonego darmowego pobytu na statku ani arbitralnego dopisania racji. Rejs do celu i powrót mają osobne przedziały, bez podwójnego pobrania za te same minuty.
+
 **Propozycja:** nie losować nowego ryzyka śmierci na morzu, dopóki użytkownik go nie zleci. Dżuma na wyspie nie wybiera osób, których fizycznie tam nie ma. Nie oznacza to leczenia głodu/resetu szczęścia: zachowane osobiste stany i ich zegary są nadal rozliczane, a zasady racji należy uzgodnić. Przy odtworzeniu po 60 minutach rejs zostaje rozliczony dokładnie w chwili 30. minuty, a pozostałe 30 minut już w miejscu docelowym — nie całe 60 minut w obu światach.
 
 ### Niepowtarzalność osób i operacji
@@ -172,9 +174,9 @@ Ceny kupna rosną według dzisiejszej historii zakupów danego materiału z trze
 
 NPC-rynek barterowy ma dziś inną zasadę: paczki 10 dają 9, tylko w odpowiedniej grupie materiałów. Nie wolno pomylić tej 10% straty ze spreadem monet w porcie ani automatycznie przenieść jej do prowizji PvP.
 
-### Jeśli użytkownik wybierze monety w PvP
+### Potwierdzona sprzedaż materiałów za monety w PvP
 
-**Propozycja:** oferta sprzedaje określony materiał i ilość za całkowitą dodatnią liczbę monet. Gra pokazuje limit, a wystawiający wybiera cenę równą lub niższą. Monetowy kontrakt musi otrzymać nową wersję; obecny backend akceptuje tylko pięć materiałów, bez monet. Nie można podmienić znaczenia `want.resource` w istniejących ofertach.
+Użytkownik wybrał sprzedaż materiałów za monety. **Propozycja kontraktu:** oferta sprzedaje określony materiał i ilość za całkowitą dodatnią liczbę monet. Gra pokazuje limit, a wystawiający wybiera cenę równą lub niższą. Monetowy kontrakt musi otrzymać nową wersję; obecny backend akceptuje tylko pięć materiałów, bez monet. Nie można podmienić znaczenia `want.resource` w istniejących ofertach.
 
 Właściwa wartość limitu pozostaje do decyzji. **Propozycja:** limit opierać na cenie NPC sprzedaży do gracza dla porównywalnej ilości, z jawną wersją cennika i terminem wyceny. Nie używać bez wyjaśnienia ceny odkupu NPC ani indywidualnej inflacji sprzedającego, którą można podbić zakupami. Wariant ruchomego limitu według aktualnej ceny NPC wymaga określenia, czy istniejąca oferta pozostaje ważna po zmianie ceny; bezpieczniej zamrozić zaakceptowaną wycenę i ponownie sprawdzić stan oferty przy zawarciu.
 
@@ -182,9 +184,9 @@ Przykład wyłącznie ilustrujący proponowany limit: jeśli 100 kamienia kosztu
 
 Przy sprzedaży PvP monety są odejmowane nabywcy i dodawane sprzedającemu dokładnie raz; system nie dopisuje ich jako nowej nagrody za „sprzedaż”. Ewentualna prowizja jest osobnym odpływem monet. Nie dodajemy nowej prowizji bez decyzji. Statystyka „przychód ze sprzedaży” nie oznacza zysku ani nowo wyemitowanych monet; należy oddzielić obrót, opłatę i bilans.
 
-### Jeśli użytkownik pozostawi barter
+### Odrzucony wariant dalszego barteru PvP — kontekst migracji
 
-Nie istnieje jedna „cena maksymalna” typu 50 monet, ponieważ oferta wymienia dwa materiały i dwie ilości. **Propozycja:** albo zachować wolne proporcje i wyświetlać orientacyjną wartość NPC, albo ustalić limit stosunku wartości `wartość żądana / wartość oferowana` według jawnego, wspólnego cennika materiałów. W drugim wariancie trzeba uzgodnić mnożnik, stronę ograniczenia i zasady wartości bonusów. Nie zakładamy samodzielnie przelicznika 1:1 między drewnem i deskami.
+Barter nie ma jednej „ceny maksymalnej” typu 50 monet, ponieważ oferta wymienia dwa materiały i dwie ilości. Użytkownik wybrał już wariant monetowy; nie wdrażamy alternatywnego przelicznika barterowego. Istniejące oferty nadal potrzebują jawnego zakończenia lub zwrotu według starego kontraktu, bez zmiany znaczenia zapisanych ilości.
 
 ### Co faktycznie chroni przed arbitrażem i duplikacją
 
@@ -198,7 +200,7 @@ Nie istnieje jedna „cena maksymalna” typu 50 monet, ponieważ oferta wymieni
 
 ## 10. Decyzje potrzebne do czystej wersji
 
-Trzy już zadane pytania pozostają nadrzędne. Do spójnego wdrożenia należy dodatkowo jawnie rozstrzygnąć:
+Trzy pierwsze pytania zostały rozstrzygnięte: analiza przed wdrożeniem, PvP za monety oraz progi 10/13/16/19. Do spójnego wdrożenia należy jeszcze jawnie rozstrzygnąć:
 
 1. Która z wycen jest zamierzona: pojedynczy ostatni awans czy kumulacyjne 1→A? Co dzieje się po trzeciej dodatkowej wyspie i jaki jest maksymalny limit wysp?
 2. Jakie poziomy, zasoby i moment startu otrzymuje nowa córka oraz czy jej sześciu kolonistów płynie 30 minut?
