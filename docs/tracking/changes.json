@@ -1648,7 +1648,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -1665,7 +1665,8 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/testing/manual/HL-TC-0047.md"
+          "docs/testing/manual/HL-TC-0047.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-play.js",
@@ -1675,7 +1676,9 @@
           "tests/harborlight-help-v24-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny tests/harborlight-help-v24-smoke.py: PASS w czterech wariantach PL/EN, komputer/telefon. Ponowne oprowadzanie zachowuje historię,777 monet i odebrane nagrody, pozwala biec zegarowi już rozpoczętego świata i nie tworzy zapisu wyspy w pamięci przeglądarki. Powrót do praktycznych lekcji wznawia istniejący kurs. Własne CI całego wydania pozostaje odrębnym dowodem; brak promocji nowego zakresu do GCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "Lokalny tests/harborlight-help-v24-smoke.py: PASS w czterech wariantach PL/EN, komputer/telefon. Ponowne oprowadzanie zachowuje historię,777 monet i odebrane nagrody, pozwala biec zegarowi już rozpoczętego świata i nie tworzy zapisu wyspy w pamięci przeglądarki. Powrót do praktycznych lekcji wznawia istniejący kurs. Własne CI całego wydania pozostaje odrębnym dowodem; brak promocji nowego zakresu do GCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN.",
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670"
       },
       "notes": []
     },
@@ -1695,7 +1698,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -1712,7 +1715,8 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/testing/manual/HL-TC-0047.md"
+          "docs/testing/manual/HL-TC-0047.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-play.js",
@@ -1722,7 +1726,9 @@
           "tests/harborlight-help-v24-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny tests/harborlight-help-v24-smoke.py: PASS w czterech wariantach PL/EN, komputer/telefon. Ponowne oprowadzanie zachowuje historię,777 monet i odebrane nagrody, pozwala biec zegarowi już rozpoczętego świata i nie tworzy zapisu wyspy w pamięci przeglądarki. Powrót do praktycznych lekcji wznawia istniejący kurs. Własne CI całego wydania pozostaje odrębnym dowodem; brak promocji nowego zakresu do GCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "Lokalny tests/harborlight-help-v24-smoke.py: PASS w czterech wariantach PL/EN, komputer/telefon. Ponowne oprowadzanie zachowuje historię,777 monet i odebrane nagrody, pozwala biec zegarowi już rozpoczętego świata i nie tworzy zapisu wyspy w pamięci przeglądarki. Powrót do praktycznych lekcji wznawia istniejący kurs. Własne CI całego wydania pozostaje odrębnym dowodem; brak promocji nowego zakresu do GCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN.",
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670"
       },
       "notes": []
     },
@@ -9957,7 +9963,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -9975,7 +9981,8 @@
       "evidence": {
         "documents": [
           "docs/testing/START-HERE.md",
-          "docs/testing/MANUAL-TEST-PLAN.md"
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "scripts/build_manual_checklist.py",
@@ -9985,7 +9992,9 @@
           "tests/harborlight-manual-checklist-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny Chromium:50kart, filtrowanie, trwałość raportu QA, osobny build każdego wyniku, tekst bez wykonywania HTML, eksport/import JSON, odrzucenie błędnego importu bez utraty oraz układ360px — PASS. Generatory checklisty i rejestru przechodzą --check. Wszystkie wyniki ręcznych testów gry pozostają NOT RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN. ListaQA jest osobną dokumentacjąPages; jej zestaw przeglądarkowy odczytuje własny plik HTML, nie dodaje go do54plikowego pakietu gry ani nie zapisuje danych wysp."
+        "release_note": "Lokalny Chromium:50kart, filtrowanie, trwałość raportu QA, osobny build każdego wyniku, tekst bez wykonywania HTML, eksport/import JSON, odrzucenie błędnego importu bez utraty oraz układ360px — PASS. Generatory checklisty i rejestru przechodzą --check. Wszystkie wyniki ręcznych testów gry pozostają NOT RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN. ListaQA jest osobną dokumentacjąPages; jej zestaw przeglądarkowy odczytuje własny plik HTML, nie dodaje go do54plikowego pakietu gry ani nie zapisuje danych wysp.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN.",
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670"
       },
       "notes": []
     },
@@ -10005,7 +10014,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -10030,7 +10039,8 @@
       "evidence": {
         "documents": [
           "docs/TERMS-DRAFT.pl.md",
-          "docs/PRIVACY-DRAFT.pl.md"
+          "docs/PRIVACY-DRAFT.pl.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-legal.js",
@@ -10045,7 +10055,9 @@
           "tests/harborlight-v18-auth-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Wszystkie wersje draft3 i wygenerowaneHTML są zgodne (--checkPASS). Pełny lokalny zestawNode po zmianie:878PASS/0FAIL, w tym test starego potwierdzenia draft2, wymagania aktualnej wersji dla nowego świata i zachowania starego dowodu. WłasneCI pozostaje osobnym dowodem. Istniejące światy i stałe konta nie są resetowane. Dokumenty nadal robocze zLorem ipsum; realna sprzedaż/dobroczynność pozostają wyłączone. Nowy zakres wyłącznieDEV.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "Wszystkie wersje draft3 i wygenerowaneHTML są zgodne (--checkPASS). Pełny lokalny zestawNode po zmianie:878PASS/0FAIL, w tym test starego potwierdzenia draft2, wymagania aktualnej wersji dla nowego świata i zachowania starego dowodu. WłasneCI pozostaje osobnym dowodem. Istniejące światy i stałe konta nie są resetowane. Dokumenty nadal robocze zLorem ipsum; realna sprzedaż/dobroczynność pozostają wyłączone. Nowy zakres wyłącznieDEV.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN.",
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670"
       },
       "notes": []
     },
@@ -10506,7 +10518,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -10522,7 +10534,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -10539,11 +10552,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP."
@@ -10565,7 +10578,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -10581,7 +10594,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -10598,11 +10612,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.",
@@ -10625,7 +10639,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -10644,7 +10658,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -10661,11 +10676,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP."
@@ -10687,7 +10702,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -10704,7 +10719,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -10721,11 +10737,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.",
@@ -10749,7 +10765,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_parameters_with_open_details"
@@ -10765,7 +10781,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -10782,11 +10799,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": []
     },
@@ -10806,7 +10823,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_parameters_with_open_details"
@@ -10822,7 +10839,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -10839,11 +10857,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": []
     },
@@ -10863,7 +10881,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_parameters_with_open_details"
@@ -10879,7 +10897,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -10896,11 +10915,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": []
     },
@@ -10920,7 +10939,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_scope_with_dev_parameters"
@@ -10936,7 +10955,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -10953,11 +10973,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Jawny parametrDEV do ewentualnej korekty, nie odpowiedź użytkownika: kopiaRatusza/Magazynu, reszta1,6 przesiedleńców,0 startowych zasobów; na córce minimum6, wolne miejsca u celu, brak dodatkowej opłaty/racji i normalne żywienie. A po9 kontynuowane10,11…"
@@ -10979,7 +10999,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -10997,7 +11017,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -11014,11 +11035,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Potwierdzenie użytkownika w odpowiedzi na pytanie z 31 października 2026: „Tak: 10, 13, 16, 19…”. Najpierw analiza i decyzje, bez wdrożenia mechaniki w tym zakresie."
@@ -11040,7 +11061,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -11058,7 +11079,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -11075,11 +11097,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.",
@@ -11102,7 +11124,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_parameters_with_open_details"
@@ -11118,7 +11140,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -11135,11 +11158,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": []
     },
@@ -11159,7 +11182,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -11177,7 +11200,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -11194,11 +11218,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Limit liczby wysp rozstrzygnięto osobno w HL-CHG-0826; ta karta pozostaje otwartym projektem migracji, bez dowodu implementacji.",
@@ -11221,7 +11245,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_parameters_with_open_details"
@@ -11239,7 +11263,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -11256,11 +11281,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": []
     },
@@ -11280,7 +11305,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -11297,7 +11322,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -11314,11 +11340,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Ustalenie zaakceptowane w odpowiedzi do analizy; nadal bez GO na wdrożenie mechaniki i bez promocji GCP.",
@@ -11341,7 +11367,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -11359,7 +11385,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -11376,11 +11403,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Odpowiedź użytkownika z 31 października 2026: „Materiały sprzedawane za monety”. Kierunek zaakceptowany, implementacja jeszcze niewykonana."
@@ -11402,7 +11429,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_scope_with_dev_parameters"
@@ -11418,7 +11445,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -11435,11 +11463,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Jawny parametrDEV do ewentualnej korekty, nie odpowiedź użytkownika: kopiaRatusza/Magazynu, reszta1,6 przesiedleńców,0 startowych zasobów; na córce minimum6, wolne miejsca u celu, brak dodatkowej opłaty/racji i normalne żywienie. A po9 kontynuowane10,11…"
@@ -11461,7 +11489,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -11482,7 +11510,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -11499,11 +11528,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Decyzja projektowa przyjęta; nie wdrożono mechaniki ani migracji i nie zmieniono stanu kont."
@@ -11525,7 +11554,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -11547,7 +11576,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md"
+          "docs/design/ARCHIPELAGO-AND-TRADE-v23.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -11564,11 +11594,11 @@
           "tests/harborlight-v21-features-smoke.py",
           "tests/harborlight-v21-cloud.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Decyzja projektowa przyjęta; nie wdrożono mechaniki ani migracji i nie zmieniono stanu kont."
@@ -11590,7 +11620,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_parameters_with_open_details"
@@ -11607,7 +11637,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/community-service.mjs",
@@ -11619,11 +11650,11 @@
           "backend/test/community-service.test.mjs",
           "tests/harborlight-community-v24-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
@@ -11645,7 +11676,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass_real_program_disabled",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -11661,7 +11692,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/charity-ledger.mjs",
@@ -11676,11 +11708,11 @@
           "tests/harborlight-charity-v24-smoke.py",
           "backend/test/charity-api.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.",
@@ -11703,7 +11735,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass_real_program_disabled",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -11720,7 +11752,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/charity-ledger.mjs",
@@ -11735,11 +11768,11 @@
           "tests/harborlight-charity-v24-smoke.py",
           "backend/test/charity-api.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.",
@@ -11762,7 +11795,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass_real_program_disabled",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -11780,7 +11813,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/charity-ledger.mjs",
@@ -11795,11 +11829,11 @@
           "tests/harborlight-charity-v24-smoke.py",
           "backend/test/charity-api.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.",
@@ -11822,7 +11856,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass_real_program_disabled",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_parameters_with_open_details"
@@ -11840,7 +11874,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/charity-ledger.mjs",
@@ -11855,11 +11890,11 @@
           "tests/harborlight-charity-v24-smoke.py",
           "backend/test/charity-api.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.",
@@ -11882,7 +11917,7 @@
       "status": {
         "implementation": "printable_prototype",
         "dev": "print_artifacts_and_phone_verified",
-        "ci": "not_run_for_change",
+        "ci": "scenario_model_and_source_passed",
         "preprod": "not_applicable_print_artifact",
         "prod": "not_applicable_print_artifact",
         "decision": "accepted"
@@ -11902,7 +11937,8 @@
         "documents": [
           "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md",
           "docs/boardgame/README.md",
-          "docs/testing/manual/HL-TC-0050.md"
+          "docs/testing/manual/HL-TC-0050.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "docs/boardgame/build_print.py",
@@ -11914,11 +11950,11 @@
           "docs/boardgame/verify_print.py",
           "docs/boardgame/verify_phone.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages."
+        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
@@ -12036,7 +12072,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_parameters_with_open_details"
@@ -12053,7 +12089,8 @@
       "evidence": {
         "documents": [
           "docs/ENVIRONMENT-STATUS.md",
-          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/community-service.mjs",
@@ -12065,11 +12102,11 @@
           "backend/test/community-service.test.mjs",
           "tests/harborlight-community-v24-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
@@ -12272,7 +12309,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -12292,7 +12329,8 @@
       "evidence": {
         "documents": [
           "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
-          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/community-service.mjs",
@@ -12304,11 +12342,11 @@
           "backend/test/community-service.test.mjs",
           "tests/harborlight-community-v24-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.",
@@ -12331,7 +12369,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -12350,7 +12388,8 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/community-service.mjs",
@@ -12362,11 +12401,11 @@
           "backend/test/community-service.test.mjs",
           "tests/harborlight-community-v24-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
@@ -12388,7 +12427,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -12406,7 +12445,8 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/community-service.mjs",
@@ -12418,11 +12458,11 @@
           "backend/test/community-service.test.mjs",
           "tests/harborlight-community-v24-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
@@ -12444,7 +12484,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -12463,7 +12503,8 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/community-service.mjs",
@@ -12475,11 +12516,11 @@
           "backend/test/community-service.test.mjs",
           "tests/harborlight-community-v24-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
@@ -12501,7 +12542,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_scope_with_dev_parameters"
@@ -12520,7 +12561,8 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/community-service.mjs",
@@ -12532,11 +12574,11 @@
           "backend/test/community-service.test.mjs",
           "tests/harborlight-community-v24-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
@@ -12558,7 +12600,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass_real_program_disabled",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -12577,7 +12619,8 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/charity-ledger.mjs",
@@ -12592,11 +12635,11 @@
           "tests/harborlight-charity-v24-smoke.py",
           "backend/test/charity-api.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.",
@@ -12619,7 +12662,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass_real_program_disabled",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -12638,7 +12681,8 @@
       "evidence": {
         "documents": [
           "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
-          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/charity-ledger.mjs",
@@ -12653,11 +12697,11 @@
           "tests/harborlight-charity-v24-smoke.py",
           "backend/test/charity-api.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.",
@@ -12681,7 +12725,7 @@
       "status": {
         "implementation": "printable_prototype",
         "dev": "print_artifacts_and_phone_verified",
-        "ci": "not_run_for_change",
+        "ci": "scenario_model_and_source_passed",
         "preprod": "not_applicable_print_artifact",
         "prod": "not_applicable_print_artifact",
         "decision": "accepted"
@@ -12703,7 +12747,8 @@
         "documents": [
           "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md",
           "docs/boardgame/README.md",
-          "docs/testing/manual/HL-TC-0050.md"
+          "docs/testing/manual/HL-TC-0050.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "docs/boardgame/build_print.py",
@@ -12715,11 +12760,11 @@
           "docs/boardgame/verify_print.py",
           "docs/boardgame/verify_phone.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages."
+        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
@@ -12741,7 +12786,7 @@
       "status": {
         "implementation": "printable_prototype",
         "dev": "print_artifacts_and_phone_verified",
-        "ci": "not_run_for_change",
+        "ci": "scenario_model_and_source_passed",
         "preprod": "not_applicable_print_artifact",
         "prod": "not_applicable_print_artifact",
         "decision": "accepted"
@@ -12762,7 +12807,8 @@
         "documents": [
           "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md",
           "docs/boardgame/README.md",
-          "docs/testing/manual/HL-TC-0050.md"
+          "docs/testing/manual/HL-TC-0050.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "docs/boardgame/build_print.py",
@@ -12774,11 +12820,11 @@
           "docs/boardgame/verify_print.py",
           "docs/boardgame/verify_phone.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages."
+        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
@@ -12800,7 +12846,7 @@
       "status": {
         "implementation": "partially_implemented",
         "dev": "standalone_prototype_online_excluded",
-        "ci": "not_run_for_change",
+        "ci": "scenario_model_and_source_passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_scope_limited_by_user"
@@ -12820,7 +12866,8 @@
       "evidence": {
         "documents": [
           "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md",
-          "docs/boardgame/INTEGRACJA-ODLOZONA.md"
+          "docs/boardgame/INTEGRACJA-ODLOZONA.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "docs/boardgame/session.mjs",
@@ -12830,11 +12877,11 @@
           "docs/boardgame/session.test.mjs",
           "docs/boardgame/verify_phone.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Warstwy ruchu i kreatywnych scen są w zweryfikowanym samodzielnym prototypie. Integracja online jest wyłączona przez użytkownika; nie przyznaje się monet, zaliczeń ani punktów ligi. Fizyczna partia nadal NOT_RUN."
+        "release_note": "Warstwy ruchu i kreatywnych scen są w zweryfikowanym samodzielnym prototypie. Integracja online jest wyłączona przez użytkownika; nie przyznaje się monet, zaliczeń ani punktów ligi. Fizyczna partia nadal NOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.",
@@ -12958,7 +13005,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_scope_with_dev_parameters"
@@ -12974,7 +13021,8 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/community-service.mjs",
@@ -12986,11 +13034,11 @@
           "backend/test/community-service.test.mjs",
           "tests/harborlight-community-v24-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
@@ -13012,7 +13060,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_scope_with_dev_parameters"
@@ -13028,7 +13076,8 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/community-service.mjs",
@@ -13040,11 +13089,11 @@
           "backend/test/community-service.test.mjs",
           "tests/harborlight-community-v24-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
@@ -13066,7 +13115,7 @@
       "status": {
         "implementation": "printable_prototype",
         "dev": "print_artifacts_and_phone_verified",
-        "ci": "not_run_for_change",
+        "ci": "scenario_model_and_source_passed",
         "preprod": "not_applicable_print_artifact",
         "prod": "not_applicable_print_artifact",
         "decision": "accepted"
@@ -13084,7 +13133,8 @@
         "documents": [
           "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md",
           "docs/boardgame/README.md",
-          "docs/testing/manual/HL-TC-0050.md"
+          "docs/testing/manual/HL-TC-0050.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "docs/boardgame/build_print.py",
@@ -13096,11 +13146,11 @@
           "docs/boardgame/verify_print.py",
           "docs/boardgame/verify_phone.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages."
+        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
@@ -13122,7 +13172,7 @@
       "status": {
         "implementation": "printable_prototype",
         "dev": "print_artifacts_and_phone_verified",
-        "ci": "not_run_for_change",
+        "ci": "scenario_model_and_source_passed",
         "preprod": "not_applicable_print_artifact",
         "prod": "not_applicable_print_artifact",
         "decision": "accepted"
@@ -13140,7 +13190,8 @@
         "documents": [
           "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md",
           "docs/boardgame/README.md",
-          "docs/testing/manual/HL-TC-0050.md"
+          "docs/testing/manual/HL-TC-0050.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "docs/boardgame/build_print.py",
@@ -13152,11 +13203,11 @@
           "docs/boardgame/verify_print.py",
           "docs/boardgame/verify_phone.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages."
+        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
@@ -13178,7 +13229,7 @@
       "status": {
         "implementation": "printable_prototype",
         "dev": "print_artifacts_and_phone_verified",
-        "ci": "not_run_for_change",
+        "ci": "scenario_model_and_source_passed",
         "preprod": "not_applicable_print_artifact",
         "prod": "not_applicable_print_artifact",
         "decision": "accepted"
@@ -13196,7 +13247,8 @@
         "documents": [
           "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md",
           "docs/boardgame/README.md",
-          "docs/testing/manual/HL-TC-0050.md"
+          "docs/testing/manual/HL-TC-0050.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "docs/boardgame/build_print.py",
@@ -13208,11 +13260,11 @@
           "docs/boardgame/verify_print.py",
           "docs/boardgame/verify_phone.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages."
+        "release_note": "Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
@@ -13234,7 +13286,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "packaged_browser_pass",
-        "ci": "not_run_for_change",
+        "ci": "passed",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -13250,7 +13302,8 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md",
+          "docs/DEV-0.10.0.0-VALIDATION.md"
         ],
         "code": [
           "backend/community-service.mjs",
@@ -13262,11 +13315,11 @@
           "backend/test/community-service.test.mjs",
           "tests/harborlight-community-v24-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "351baaf6b21386b2f2641875269e6f7d9c2d44fd",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41237587670",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN."
+        "release_note": "Lokalnie16testów backendu społeczności i5klientaPASS; źródłowy testUI:2warianty PLkomputer/ENtelefonPASS. Cały lokalny zestawNode po draft3:878PASS/0FAIL. Zadania14treningów są rzeczywiście grywalne, z jawnym rozdzieleniem treningu i ligi; skład sezonowy jest zamrożony, wiadomości rozdzielone na sojusz/DM. Timer respektuje wcześniejszy koniec slotu; później wolno rozliczyć tylko już przyjęte akcje do ostatecznych wyników23. dnia. Wynik zręczności nie ma premii czasowej; kosmetyczne uprawnienie nie udaje narysowanej flagi mapy. Parametry kalendarza to wariantDEV, nie dopisana decyzja użytkownika. WłasneCI/Pages wymaga osobnego potwierdzenia. Brak aktywacjiGCP; ręcznieNOT_RUN.\n\nKońcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.\n\nOdbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN."
       },
       "notes": [
         "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."

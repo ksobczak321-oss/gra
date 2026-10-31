@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `packaged_browser_pass` |
-| CI | `not_run_for_change` |
+| CI | `passed` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -33,14 +33,18 @@ Data pierwotnej wiadomości: 2026-10-31. Jawne GO po pilnej poprawce języka; no
 
 ## Dowody
 
-- **Dokumenty:** [docs/testing/START-HERE.md](../../testing/START-HERE.md), [docs/testing/MANUAL-TEST-PLAN.md](../../testing/MANUAL-TEST-PLAN.md)
+- **Dokumenty:** [docs/testing/START-HERE.md](../../testing/START-HERE.md), [docs/testing/MANUAL-TEST-PLAN.md](../../testing/MANUAL-TEST-PLAN.md), [docs/DEV-0.10.0.0-VALIDATION.md](../../DEV-0.10.0.0-VALIDATION.md)
 - **Kod:** [scripts/build_manual_checklist.py](../../../scripts/build_manual_checklist.py), [docs/testing/qa-checklist.html](../../testing/qa-checklist.html)
 - **Scenariusze automatyczne:** [tests/harborlight-manual-checklist-smoke.py](../../../tests/harborlight-manual-checklist-smoke.py)
+- **Kod dowodowy:** `351baaf6b21386b2f2641875269e6f7d9c2d44fd`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41237587670.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Lokalny Chromium:50kart, filtrowanie, trwałość raportu QA, osobny build każdego wyniku, tekst bez wykonywania HTML, eksport/import JSON, odrzucenie błędnego importu bez utraty oraz układ360px — PASS. Generatory checklisty i rejestru przechodzą --check. Wszystkie wyniki ręcznych testów gry pozostają NOT RUN.
 
-Końcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN. ListaQA jest osobną dokumentacjąPages; jej zestaw przeglądarkowy odczytuje własny plik HTML, nie dodaje go do54plikowego pakietu gry ani nie zapisuje danych wysp.
+Końcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN. ListaQA jest osobną dokumentacjąPages; jej zestaw przeglądarkowy odczytuje własny plik HTML, nie dodaje go do54plikowego pakietu gry ani nie zapisuje danych wysp.
+
+Odbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN.
 
 ## Relacje
 

@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `packaged_browser_pass` |
-| CI | `not_run_for_change` |
+| CI | `passed` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted_scope_with_dev_parameters` |
@@ -31,9 +31,11 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 
 ## Dowody
 
-- **Dokumenty:** [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md), [docs/design/ARCHIPELAGO-AND-TRADE-v23.md](../../design/ARCHIPELAGO-AND-TRADE-v23.md)
+- **Dokumenty:** [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md), [docs/design/ARCHIPELAGO-AND-TRADE-v23.md](../../design/ARCHIPELAGO-AND-TRADE-v23.md), [docs/DEV-0.10.0.0-VALIDATION.md](../../DEV-0.10.0.0-VALIDATION.md)
 - **Kod:** [harborlight-v1-archipelago.js](../../../harborlight-v1-archipelago.js), [harborlight-v1-residents.js](../../../harborlight-v1-residents.js), [harborlight-v1-state.js](../../../harborlight-v1-state.js), [harborlight-dev-cloud.js](../../../harborlight-dev-cloud.js), [backend/island-document-store.mjs](../../../backend/island-document-store.mjs), [backend/player-trade.mjs](../../../backend/player-trade.mjs)
 - **Scenariusze automatyczne:** [tests/harborlight-archipelago.test.mjs](../../../tests/harborlight-archipelago.test.mjs), [backend/test/island-document-store.test.mjs](../../../backend/test/island-document-store.test.mjs), [backend/test/player-trade.test.mjs](../../../backend/test/player-trade.test.mjs), [tests/harborlight-v21-features-smoke.py](../../../tests/harborlight-v21-features-smoke.py), [tests/harborlight-v21-cloud.test.mjs](../../../tests/harborlight-v21-cloud.test.mjs)
+- **Kod dowodowy:** `351baaf6b21386b2f2641875269e6f7d9c2d44fd`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41237587670.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
@@ -42,7 +44,9 @@ Powiązane przypadki do ręcznego przeklikania:
 
 DEV0.10.0.0: lokalne modele/chmura52PASS, źródłowy v21Chromium5przypadkówPASS (finansowana kolonizacja, odczyt osobnych dokumentów, cargo i przybycie2pasażerów, zachowanie24tożsamości). Pełny lokalny zestawNode po draft3:878PASS/0FAIL. Model obejmuje limit20wysp i sekwencję19córek; źródłowy test przeglądarki nie jest ręcznym odbiorem20pełnych wysp. WłasneCI/Pages wymaga odrębnego potwierdzenia. ParametryDEV nie są dopisaną odpowiedzią użytkownika. Brak promocjiGCP i resetu kont; ręcznieNOT_RUN.
 
-Końcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.
+Końcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.
+
+Odbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN.
 
 ## Relacje
 

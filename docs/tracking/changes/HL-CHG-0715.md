@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `packaged_browser_pass` |
-| CI | `not_run_for_change` |
+| CI | `passed` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -35,9 +35,11 @@ Data pierwotnej wiadomości: 2026-10-31. GO obejmuje spójność opisów z nowym
 
 ## Dowody
 
-- **Dokumenty:** [docs/TERMS-DRAFT.pl.md](../../TERMS-DRAFT.pl.md), [docs/PRIVACY-DRAFT.pl.md](../../PRIVACY-DRAFT.pl.md)
+- **Dokumenty:** [docs/TERMS-DRAFT.pl.md](../../TERMS-DRAFT.pl.md), [docs/PRIVACY-DRAFT.pl.md](../../PRIVACY-DRAFT.pl.md), [docs/DEV-0.10.0.0-VALIDATION.md](../../DEV-0.10.0.0-VALIDATION.md)
 - **Kod:** [harborlight-legal.js](../../../harborlight-legal.js), [backend/account-service.mjs](../../../backend/account-service.mjs), [scripts/build_legal_pages.py](../../../scripts/build_legal_pages.py), [harborlight-terms.html](../../../harborlight-terms.html), [harborlight-privacy.html](../../../harborlight-privacy.html)
 - **Scenariusze automatyczne:** [tests/harborlight-legal.test.mjs](../../../tests/harborlight-legal.test.mjs), [backend/test/legal-acceptance.test.mjs](../../../backend/test/legal-acceptance.test.mjs), [tests/harborlight-v18-auth-smoke.py](../../../tests/harborlight-v18-auth-smoke.py)
+- **Kod dowodowy:** `351baaf6b21386b2f2641875269e6f7d9c2d44fd`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41237587670.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
@@ -46,7 +48,9 @@ Powiązane przypadki do ręcznego przeklikania:
 
 Wszystkie wersje draft3 i wygenerowaneHTML są zgodne (--checkPASS). Pełny lokalny zestawNode po zmianie:878PASS/0FAIL, w tym test starego potwierdzenia draft2, wymagania aktualnej wersji dla nowego świata i zachowania starego dowodu. WłasneCI pozostaje osobnym dowodem. Istniejące światy i stałe konta nie są resetowane. Dokumenty nadal robocze zLorem ipsum; realna sprzedaż/dobroczynność pozostają wyłączone. Nowy zakres wyłącznieDEV.
 
-Końcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.
+Końcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.
+
+Odbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN.
 
 ## Relacje
 

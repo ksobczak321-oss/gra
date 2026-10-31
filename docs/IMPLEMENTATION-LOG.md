@@ -776,3 +776,10 @@ Powstał samodzielny prototyp „Ostatni rejs przed świtem”: komplet PDF/ZIP 
 Lokalny odbiór końcowy: **878 Node PASS /0FAIL**, **141 Python PASS** (11zestawów), **16zestawów Chromium PASS na zamrożonym pakiecie**; generatory rejestru, checklisty i dokumentów prawnych --check PASS. Pierwszy pełny Node873/875 wskazał dwa stare testy zejścia matki poniżej12; poprawiono dane, zachowując sprawdzanie kolejności i losowania odejść. Wcześniejsze błędy parsowania nowego UI i granicy slotu zostały naprawione przed końcowym pełnym odbiorem. Prototyp fizyczny ma7testów modelu (wliczone w878), kontrolę PDF/fontów/CRC/hash i dwie partie przeglądarkowe2/6osób PASS; fizyczny playtest/składanie/skan są osobno NOT RUN.
 
 Harmonogram ligi i pozostałe jawne parametry DEV opisano w wymaganiachv24 jako odwracalne założenia po pytaniach, bez przypisywania użytkownikowi odpowiedzi, których nie udzielił. Własne SHA/CI/Pages zostaną zapisane po synchronizacji. PRE-PROD nadal0.9.1.2/3be1f9d…, PROD bez potwierdzonej publikacji, historie admin1–admin3 bez zmian.
+
+
+### Potwierdzenie synchronizacji i CI DEV v24
+
+Kod aplikacji: `351baaf6b21386b2f2641875269e6f7d9c2d44fd`. CI41237587670 SUCCESS (4m46s), Pages41237587641 SUCCESS (23s). Lokalny pakiet rzeczywistego SHA ma54pliki/10 951 651bajtów; SHA-256 archiwum `e2d681a91e27266272483254bc43881c1bc4e0ff9cbec892ed9ca72ff711b0eb`, manifestu `591f68a03550a6aed69374dbe3dd584c8da6d45d6cccb9732d7ac2e2541b102f`. Weryfikacja archiwum PASS; wszystkie53pliki zawartości identyczne z pakietem odebranym przez16zestawówChromium. Nieprzesuwany tag `dev-0.10.0.0-20261031` wiąże te dowody. Bezpośredni odczyt Pages z tej sesji blokuje brama CONNECT403; nie przedstawiamy jej jako błędu gry. Sukces publikacji potwierdza workflow.
+
+Późniejszy commit dotyczy wyłącznie rejestru i dowodów. Brak promocji GCP, stosowania reguł, resetu admin1–admin3 i integracji nagród fizycznych. Importer nadal305kart w dry-run, bez utworzenia natywnych Issues. Ręczne50przypadków nadal NOT RUN.

@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `partially_implemented` |
 | DEV | `standalone_prototype_online_excluded` |
-| CI | `not_run_for_change` |
+| CI | `scenario_model_and_source_passed` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted_scope_limited_by_user` |
@@ -32,9 +32,11 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 
 ## Dowody
 
-- **Dokumenty:** [docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md](../../design/BOARDGAME-LIGHTHOUSE-SESSION.md), [docs/boardgame/INTEGRACJA-ODLOZONA.md](../../boardgame/INTEGRACJA-ODLOZONA.md)
+- **Dokumenty:** [docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md](../../design/BOARDGAME-LIGHTHOUSE-SESSION.md), [docs/boardgame/INTEGRACJA-ODLOZONA.md](../../boardgame/INTEGRACJA-ODLOZONA.md), [docs/DEV-0.10.0.0-VALIDATION.md](../../DEV-0.10.0.0-VALIDATION.md)
 - **Kod:** [docs/boardgame/session.mjs](../../boardgame/session.mjs), [docs/boardgame/telefon.html](../../boardgame/telefon.html)
 - **Scenariusze automatyczne:** [docs/boardgame/session.test.mjs](../../boardgame/session.test.mjs), [docs/boardgame/verify_phone.py](../../boardgame/verify_phone.py)
+- **Kod dowodowy:** `351baaf6b21386b2f2641875269e6f7d9c2d44fd`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41237587670.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
@@ -42,6 +44,8 @@ Powiązane przypadki do ręcznego przeklikania:
 - [HL-TC-0041 — Planszówka 2–6 osób: sesja 45–60 min i jednokrotny skutek online](../../testing/manual/HL-TC-0041.md) — `NOT RUN`.
 
 Warstwy ruchu i kreatywnych scen są w zweryfikowanym samodzielnym prototypie. Integracja online jest wyłączona przez użytkownika; nie przyznaje się monet, zaliczeń ani punktów ligi. Fizyczna partia nadal NOT_RUN.
+
+Odbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN.
 
 ## Relacje
 

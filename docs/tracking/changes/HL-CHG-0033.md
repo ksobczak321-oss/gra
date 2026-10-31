@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `packaged_browser_pass` |
-| CI | `not_run_for_change` |
+| CI | `passed` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -33,9 +33,11 @@ Data pierwotnej wiadomości: 2026-10-31. Jawne GO po pilnej poprawce języka; no
 
 ## Dowody
 
-- **Dokumenty:** [docs/testing/manual/HL-TC-0047.md](../../testing/manual/HL-TC-0047.md)
+- **Dokumenty:** [docs/testing/manual/HL-TC-0047.md](../../testing/manual/HL-TC-0047.md), [docs/DEV-0.10.0.0-VALIDATION.md](../../DEV-0.10.0.0-VALIDATION.md)
 - **Kod:** [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-tutorial-ui.js](../../../harborlight-v1-tutorial-ui.js)
 - **Scenariusze automatyczne:** [tests/harborlight-help-v24-smoke.py](../../../tests/harborlight-help-v24-smoke.py)
+- **Kod dowodowy:** `351baaf6b21386b2f2641875269e6f7d9c2d44fd`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41237587670.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
@@ -44,7 +46,9 @@ Powiązane przypadki do ręcznego przeklikania:
 
 Lokalny tests/harborlight-help-v24-smoke.py: PASS w czterech wariantach PL/EN, komputer/telefon. Ponowne oprowadzanie zachowuje historię,777 monet i odebrane nagrody, pozwala biec zegarowi już rozpoczętego świata i nie tworzy zapisu wyspy w pamięci przeglądarki. Powrót do praktycznych lekcji wznawia istniejący kurs. Własne CI całego wydania pozostaje odrębnym dowodem; brak promocji nowego zakresu do GCP.
 
-Końcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.
+Końcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.
+
+Odbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN.
 
 ## Relacje
 

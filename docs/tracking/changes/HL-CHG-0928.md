@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `printable_prototype` |
 | DEV | `print_artifacts_and_phone_verified` |
-| CI | `not_run_for_change` |
+| CI | `scenario_model_and_source_passed` |
 | PRE-PROD | `not_applicable_print_artifact` |
 | PROD | `not_applicable_print_artifact` |
 | Decyzja | `accepted` |
@@ -32,9 +32,11 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 
 ## Dowody
 
-- **Dokumenty:** [docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md](../../design/BOARDGAME-LIGHTHOUSE-SESSION.md), [docs/boardgame/README.md](../../boardgame/README.md), [docs/testing/manual/HL-TC-0050.md](../../testing/manual/HL-TC-0050.md)
+- **Dokumenty:** [docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md](../../design/BOARDGAME-LIGHTHOUSE-SESSION.md), [docs/boardgame/README.md](../../boardgame/README.md), [docs/testing/manual/HL-TC-0050.md](../../testing/manual/HL-TC-0050.md), [docs/DEV-0.10.0.0-VALIDATION.md](../../DEV-0.10.0.0-VALIDATION.md)
 - **Kod:** [docs/boardgame/build_print.py](../../boardgame/build_print.py), [docs/boardgame/session.mjs](../../boardgame/session.mjs), [docs/boardgame/telefon.html](../../boardgame/telefon.html)
 - **Scenariusze automatyczne:** [docs/boardgame/session.test.mjs](../../boardgame/session.test.mjs), [docs/boardgame/verify_print.py](../../boardgame/verify_print.py), [docs/boardgame/verify_phone.py](../../boardgame/verify_phone.py)
+- **Kod dowodowy:** `351baaf6b21386b2f2641875269e6f7d9c2d44fd`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41237587670.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
@@ -42,6 +44,8 @@ Powiązane przypadki do ręcznego przeklikania:
 - [HL-TC-0050 — Planszówka: komplet druku, czytelne kody i samodzielna sesja przy stole](../../testing/manual/HL-TC-0050.md) — `NOT RUN`.
 
 Samodzielny prototyp: plansza A3/A4, 24 karty, 6 pionków i żetony, pudełko, instrukcja, prawdziwy QR i telefoniczny przewodnik offline. Test modelu: 7 PASS; kontrola geometrii, stron, osadzonych fontów, SHA manifestu i CRC ZIP: PASS; przeglądarka — pełne 8 rund dla 2 i 6 osób, sekrety, reload, punkty i mobile bez połączeń zewnętrznych: PASS. Nie przeprowadzono fizycznej partii, skanowania wydrukowanego QR ani składania pudełka; ręcznie NOT_RUN. Brak integracji i nagród online. Adres QR wymaga osobnej udanej publikacji Pages.
+
+Odbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN.
 
 ## Relacje
 

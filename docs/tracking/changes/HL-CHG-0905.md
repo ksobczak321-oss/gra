@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `packaged_browser_pass_real_program_disabled` |
-| CI | `not_run_for_change` |
+| CI | `passed` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted_parameters_with_open_details` |
@@ -33,9 +33,11 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 
 ## Dowody
 
-- **Dokumenty:** [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md), [docs/design/LEAGUE-COMMUNITY-CHARITY.md](../../design/LEAGUE-COMMUNITY-CHARITY.md)
+- **Dokumenty:** [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md), [docs/design/LEAGUE-COMMUNITY-CHARITY.md](../../design/LEAGUE-COMMUNITY-CHARITY.md), [docs/DEV-0.10.0.0-VALIDATION.md](../../DEV-0.10.0.0-VALIDATION.md)
 - **Kod:** [backend/charity-ledger.mjs](../../../backend/charity-ledger.mjs), [backend/charity-service.mjs](../../../backend/charity-service.mjs), [harborlight-v1-charity.js](../../../harborlight-v1-charity.js), [harborlight-v1-residents.js](../../../harborlight-v1-residents.js), [harborlight-v1-effects.js](../../../harborlight-v1-effects.js)
 - **Scenariusze automatyczne:** [backend/test/charity.test.mjs](../../../backend/test/charity.test.mjs), [tests/harborlight-charity-v24.test.mjs](../../../tests/harborlight-charity-v24.test.mjs), [tests/harborlight-charity-v24-smoke.py](../../../tests/harborlight-charity-v24-smoke.py), [backend/test/charity-api.test.mjs](../../../backend/test/charity-api.test.mjs)
+- **Kod dowodowy:** `351baaf6b21386b2f2641875269e6f7d9c2d44fd`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41237587670.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
@@ -44,7 +46,9 @@ Powiązane przypadki do ręcznego przeklikania:
 
 LokalniePASS: backend12, klient/symulacja6, API1 oraz testUI w czterech wariantach PL/EN i komputer/telefon. Sprawdzono wejścia Port/Ranking, testowe1000 monet, pojedyncze zużycie, bramkę potwierdzenia, rzeczywiste+20p.p./6h, rozświetlenie Portu także na telefonie i brak zapisu wyspy w pamięci przeglądarki. Rzeczywista gospodarka nadal zapisuje pełne stany klienta: każdy nieautorytatywny zapis bez zaufanego autora księgi unieważnia całą kwalifikowaną część również przy zmianie netto0; faktyczne saldo pozostaje. Realny program WYŁĄCZONY do wdrożenia autorytatywnych komend, zaufanego emitenta, organizacji i rzeczywistego finansowania/przelewu. DEV to jawna nietrwała symulacja, nie produkcyjna kwalifikacja zarobków. WłasneCI pozostaje odrębnym dowodem; ręcznieNOT_RUN, brak promocjiGCP.
 
-Końcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. WłasneCI/Pages nowego commitu oczekuje na potwierdzenie; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.
+Końcowy lokalny odbiór po zamrożeniu kodu i draft3:Node878PASS/0FAIL,11zestawówPython141PASS oraz wszystkie16zestawów przeglądarkowychPASS. Publiczny preflight obejmował54pliki z technicznym zastępczymSHA; nie jest artefaktem wydania ani dowodem prawdziwegoSHA. Własne CI/Pages źródła potwierdzono poniżej; brak promocjiGCP, migracji danych chmurowych i resetu kont. Wyniki ręczneNOT_RUN.
+
+Odbiór źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd: CI41237587670 SUCCESS, Pages41237587641 SUCCESS, tag dev-0.10.0.0-20261031. To dowód DEV; nowy zakres nie był promowany do GCP. Materiały fizyczne mają lokalną kontrolę plików i scenariusza, bez fizycznego playtestu. Ręczne wykonanie pozostaje NOT_RUN.
 
 ## Relacje
 
