@@ -1,4 +1,4 @@
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v25';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v25-2';
 
 const pick = (language, pl, en) => language === 'pl' ? pl : en;
 const valueFor = (value, language) => typeof value === 'string' ? value : value?.[language] || value?.pl || value?.en || '';
@@ -98,7 +98,7 @@ export function createIslandOnboarding(options = {}) {
           if (select) select.value = language;
         }
         onError(error);
-        showError(pick(language, 'Nie udało się potwierdzić języka. Sprawdź połączenie i spróbuj ponownie.', 'The language could not be confirmed. Check your connection and try again.'));
+        showError(pick(language, 'Nie udało się zapisać wybranego języka. Sprawdź połączenie i spróbuj ponownie.', 'The language could not be confirmed. Check your connection and try again.'));
       }
     } finally { if (!destroyed) setBusy(false); }
   }
@@ -121,7 +121,7 @@ export function createIslandOnboarding(options = {}) {
           'Obejmujesz opiekę nad małą osadą na wyspie. Zapewnij mieszkańcom domy, żywność i pracę, a z czasem rozbuduj ją w tętniący życiem port.',
           'You take care of a small island settlement. Give your residents homes, food and jobs, then grow it into a thriving harbour.')),
         node('p', {}, pick(language,
-          'Przydzielaj pracowników, rozwijaj produkcję i pilnuj transportu — materiały muszą dotrzeć tam, gdzie są potrzebne. Szczęście mieszkańców wpływa na przyrost populacji. Karty zasobów czytasz jako zapas lokalny / centralny (w transporcie), a dolny wiersz pokazuje bilans na godzinę.',
+          'Daj mieszkańcom pracę i zadbaj o to, by wyprodukowane materiały trafiały do magazynu. Im szczęśliwsi są mieszkańcy, tym chętniej na wyspę przybywają nowe osoby. Na karcie zasobu widzisz kolejno zapas przy budynku, w magazynie centralnym i w transporcie. Niżej sprawdzisz, ile go przybywa lub ubywa na godzinę.',
           'Assign workers, develop production and manage transport: materials need to reach the places that use them. Residents’ happiness controls population growth. Read resource cards as local / central stock (in transit); the lower line shows the hourly balance.')),
         node('p', {}, pick(language,
           'Ekspedycje i zadania przynoszą dodatkowe nagrody. Najpierw nazwiesz wyspę i poznasz jej najważniejsze miejsca; potem samouczek przeprowadzi Cię przez pierwsze prawdziwe działania.',
@@ -132,7 +132,7 @@ export function createIslandOnboarding(options = {}) {
       const form = node('form', { 'data-onboarding-name-form': '', onsubmit: event => {
         event.preventDefault();
         const result = validateIslandName(input.value);
-        if (!result.ok) { input.setAttribute('aria-invalid', 'true'); showError(pick(language, 'Wybierz nazwę o długości 2–40 znaków, bez znaków sterujących i nawiasów < >.', 'Choose a name of 2–40 characters without control characters or < > brackets.')); input.focus(); return; }
+        if (!result.ok) { input.setAttribute('aria-invalid', 'true'); showError(pick(language, 'Wpisz nazwę mającą od 2 do 40 znaków w jednym wierszu. Pomiń nawiasy < > i niewidoczne znaki, np. tabulatory.', 'Choose a name of 2–40 characters without control characters or < > brackets.')); input.focus(); return; }
         input.removeAttribute('aria-invalid'); void commit({ stage: 'tour', index: 0, islandName: result.name });
       } });
       input.addEventListener('input', () => { nameDraft = input.value; input.removeAttribute('aria-invalid'); });

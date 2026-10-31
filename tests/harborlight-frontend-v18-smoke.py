@@ -264,7 +264,7 @@ def descriptions_match_rules(browser):
     page.locator('#hit-world-chapel').click()
     body = page.locator('#island-dialog')
     expect(body).to_contain_text('północy Warszawy')
-    assert '3 + poziom Kaplicy' in body.text_content()
+    assert '3 + poziom kaplicy' in body.text_content()
     assert '6–15' in body.text_content()
     context.close()
     print('PASS18 descriptions: distinct population arrival/departure rates, exponential round/pot rewards, Warsaw blessing and Chapel neglect grace', flush=True)

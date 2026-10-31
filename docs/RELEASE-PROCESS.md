@@ -25,9 +25,17 @@ Tag nie jest przesuwany i nie uruchamia publikacji GCP. Pozwala zapisać wynik j
 
 ## 2. Promocja na PRE-PROD
 
+### Autoryzowana promocja 0.10.1.0
+
+Użytkownik zlecił promocję końcowej wersji po zielonych testach. Zamknięta allowlista bridge obejmuje `[preprod:0.10.1.0]` i historyczne `[preprod:0.9.1.2]`. Ten sam sprawdzony dispatcher nadal wymaga właściwego repozytorium, push na main, świeżego sukcesu CI dokładnego SHA, deduplikacji i niezmienionego main. Nie zmienia WIF ani istniejącego workflow wdrażania; nie uruchamia PROD lub resetu.
+
+Przed umieszczeniem markera końcowego wydania trzeba potwierdzić kontrakt zapisu. [Właściciel przekazał potwierdzenie dla0.10.1.0](PREPROD-V25-PREPARATION.md). Nowy klient zapisuje format wielu wysp także dla jednej wyspy. W trybie bez API stare reguły schema1 odrzuciłyby zapis schema2. Nowsze prywatne reguły obsługują oba formaty oraz własne dokumenty córek i muszą być aktywne przed publikacją frontendu. Istniejący `prepare-dev-users.py --apply --passwords-match-logins` aktualizuje zarządzane reguły, zachowuje istniejące UID, hasła i wyspy oraz odczytuje wynik. W trybie API-only celowo odmawia przywrócenia bezpośrednich zapisów; wtedy używamy działającej konfiguracji API i odpowiednich uprawnień runtime, bez włączania ich w ciemno.
+
+Hurtowa migracja lub reset nie są potrzebne: adapter odczytuje istniejący zapis i rozdziela dokumenty przy następnym zapisie z kontrolą rewizji. Odczytowy test hostingu nie potwierdza automatycznego zapisu — jego osobny wynik zapisujemy w TC31. Do potwierdzenia SHA rozpoczętego deployu nie przesuwamy main ani nie ponawiamy niepewnego dispatchu.
+
 ### Autoryzowana pilna poprawka 0.9.1.2
 
-Użytkownik jawnie zlecił promocję natychmiast po sukcesie DEV/CI. Dla tej konkretnej wersji [bridge](../.github/workflows/promote-urgent-preprod.yml) reaguje na ukończenie właściwego CI i tylko marker `[preprod:0.9.1.2]` w źródłowym commicie. Ma `contents:read` i `actions:write`, bez OIDC. Uruchamia przez API istniejący ręczny workflow poniżej; nie wykonuje deployu sam i nie zmienia blokad WIF/CI. Ponownie sprawdza repozytorium, workflow, próbę CI, SHA, dotychczasowe deploye i bieżący main. Inne poprawki nie są automatycznie promowane tym mechanizmem.
+Użytkownik jawnie zlecił promocję natychmiast po sukcesie DEV/CI. Dla tej konkretnej wersji [bridge](../.github/workflows/promote-urgent-preprod.yml) reaguje na ukończenie właściwego CI i tylko marker `[preprod:0.9.1.2]` w źródłowym commicie. Ma `contents:read` i `actions:write`, bez OIDC. Uruchamia przez API istniejący ręczny workflow poniżej; nie wykonuje deployu sam i nie zmienia blokad WIF/CI. Ponownie sprawdza repozytorium, workflow, próbę CI, SHA, dotychczasowe deploye i bieżący main. Pierwotny wyjątek obejmował tylko0.9.1.2; późniejsza jawna autoryzacja0.10.1.0 jest opisana powyżej. Pozostałe wersje nie są automatycznie promowane tym mechanizmem.
 
 Do potwierdzenia źródła rozpoczętej promocji nie przesuwamy main: API `workflow_dispatch ref=main` nie obsługuje atomowego warunku oczekiwanego SHA. Nie ponawiamy niepewnego POST; najpierw odczytujemy faktyczny przebieg i jego SHA. Tag rejestru `pilne` oraz adnotowany tag Git `urgent-0.9.1.2-20261031` służą oznaczeniu poprawki i dowodom, a nie zastępują odbioru GCP. Ten wyjątek dotyczy zleconego PRE-PROD, nie PROD ani resetu danych.
 

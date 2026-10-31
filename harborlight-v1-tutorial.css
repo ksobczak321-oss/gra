@@ -23,6 +23,12 @@
 .tutorial-v25-stage-hint{margin:8px 0 0;color:#ffe5a4;font-size:12px;font-weight:700;line-height:1.45;overflow-wrap:anywhere}
 .tutorial-v25-stage-hint[hidden]{display:none}
 
+/* Three actions (supplies, map and course) must not squeeze the explanation
+   into a zero-width column and make this fixed card taller than the screen. */
+.tutorial-v16-guide{flex-wrap:wrap}
+.tutorial-v16-guide-copy{flex:1 1 180px}
+.tutorial-v16-guide-actions{flex:0 1 auto;max-width:100%;flex-wrap:wrap}
+
 /* Guide backgrounds never cover the real controls behind a sticky card. */
 .tutorial-v16-guide{pointer-events:none}.tutorial-v16-guide .tutorial-action{pointer-events:auto}
 

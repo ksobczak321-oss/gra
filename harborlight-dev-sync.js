@@ -1,6 +1,6 @@
 // Cloud-only island persistence. Authentication storage is separate; this
 // coordinator never reads or writes an island in browser storage.
-import { accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v25';
+import { accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v25-2';
 
 export const CLOUD_AUTOSAVE_MS = 30_000;
 const RETRY_MIN_MS = 5_000, RETRY_MAX_MS = 30_000;

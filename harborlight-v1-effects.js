@@ -1,10 +1,10 @@
 // One read-only view of active benefits and penalties, shared by Town Hall and
 // transition notifications. Countdown changes alone never create a new notice.
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v25';
-import { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v25';
-import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v25';
-import { worldEventRows } from './harborlight-v1-events.js?v=frontend-v25';
-import { ATTRACTIONS } from './harborlight-v1-leisure.js?v=frontend-v25';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v25-2';
+import { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v25-2';
+import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v25-2';
+import { worldEventRows } from './harborlight-v1-events.js?v=frontend-v25-2';
+import { ATTRACTIONS } from './harborlight-v1-leisure.js?v=frontend-v25-2';
 const EPS = 1e-7;
 const GRACE = 12 * 3600;
 const workplaceNames = { farm: 'Farm', windmill: 'Windmill', lumber: 'Lumber Camp', sawmill: 'Sawmill', quarry: 'Quarry', warehouse: 'Warehouse', market: 'Market', dock: 'Harbor' };

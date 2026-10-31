@@ -1,6 +1,7 @@
-name: Promote authorized urgent 0.9.1.2 after CI
+name: Promote authorized PRE-PROD release after CI
 
 # A narrow bridge for the owner's explicit DEV -> PRE-PROD instruction.
+# Only the explicit release markers allowlisted by the dispatcher are accepted.
 # Deployment itself remains exclusively in the existing gated workflow.
 on:
   workflow_run:
@@ -12,7 +13,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: urgent-preprod-0.9.1.2
+  group: authorized-preprod-release
   cancel-in-progress: false
 
 jobs:

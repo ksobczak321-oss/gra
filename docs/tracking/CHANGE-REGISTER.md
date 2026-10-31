@@ -1,6 +1,6 @@
 # HARBORLIGHT — rejestr zmian
 
-Stan ewidencji: **2026-10-31**. **261 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
+Stan ewidencji: **2026-10-31**. **263 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
 
 Źródło danych: [changes.json](changes.json). Karty odtwarza `python3 scripts/build_change_register.py`; `--check` sprawdza zgodność bez zapisów. Nie edytuj wygenerowanych kart zamiast źródła JSON.
 
@@ -88,7 +88,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 |---|---|---|---|---|
 | [HL-CHG-0033 — Pomoc: Wróć do samouczka wznawia praktyczne lekcje](changes/HL-CHG-0033.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0036 — Samouczek najpierw wskazuje budynek na mapie i czeka na kliknięcie gracza](changes/HL-CHG-0036.md) | Story | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
-| [HL-CHG-0037 — Naturalny i poprawny polski w tytułach i instrukcjach25 lekcji](changes/HL-CHG-0037.md) | Story | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
+| [HL-CHG-0037 — Naturalny i poprawny polski w tytułach i instrukcjach 25 lekcji](changes/HL-CHG-0037.md) | Story | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
 | [HL-CHG-0040 — 25 lekcji wymaga rzeczywistych działań zamiast odczytania opisu](changes/HL-CHG-0040.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0041 — Migracja zachowuje stare ukończenia i odebrane nagrody](changes/HL-CHG-0041.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0042 — Przepełnienie blokuje następne skrzynie, pozostawiając działania zużywające zasoby](changes/HL-CHG-0042.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
@@ -99,6 +99,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0047 — Odtwarzanie wcześniejszych czynności ze starych wiarygodnych dowodów](changes/HL-CHG-0047.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0048 — Trwająca minigra ma pierwszeństwo przed samouczkiem i skrzynią](changes/HL-CHG-0048.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0049 — Starszy program skrzyń i podwajania zachowuje rozliczone decyzje](changes/HL-CHG-0049.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
+| [HL-CHG-0933 — Podpowiedź z trzema przyciskami zachowuje czytelny opis i mieści się na ekranie](changes/HL-CHG-0933.md) | Bug | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
 
 <a id="hl-epic-eco"></a>
 
@@ -281,6 +282,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0622 — Cloud Run: minimum 0, maksimum 2 instancje i współbieżność 20](changes/HL-CHG-0622.md) | Ops | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0623 — Automatyczna promocja wyłącznie autoryzowanej pilnej wersji 0.9.1.2 po CI](changes/HL-CHG-0623.md) | Ops | `accepted` | `verified` | `dispatch_and_deploy_success` |
 | [HL-CHG-0624 — Ścisła kontrola gotowości manifestu po publikacji Hostingu](changes/HL-CHG-0624.md) | Ops | `accepted` | `verified` | `code_deployed_0_9_1_2` |
+| [HL-CHG-0934 — Jawna promocja 0.10.1.0 po zielonym CI, bez resetu kont](changes/HL-CHG-0934.md) | Ops | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
 
 <a id="hl-epic-ops"></a>
 

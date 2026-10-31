@@ -805,3 +805,16 @@ GO użytkownika obejmuje praktyczne prowadzenie 25 lekcji od mapy, naturalny pol
 Prowadzenie wymaga rzeczywistego kliknięcia podświetlonego budynku, a potem właściwej kontrolki. Ograniczony ruch ma statyczne wskazanie. Teksty obejmują 25 obecnych i 25 historycznych lekcji, budynki, gospodarkę, zdarzenia, logowanie, społeczność i płatności testowe. Znaleziono też błędny opis błogosławieństwa (+20 p.p. przez godzinę), nadpisywanie potwierdzenia kupna sekund przez tekst wyceny oraz tłumaczenie nazwy wyspy w opcji transportu; poprawiono je bez zmiany parametrów gospodarki.
 
 Regulamin i prywatność pozostają szkicami Lorem ipsum; aktualizacja opisu ligi ma wersję 2026-10-31-draft4. Nie jest to odbiór prawny ani uruchomienie sprzedaży. Rejestr 261 zmian i 53 przypadki ręczne NOT RUN; fizyczna integracja nadal BLOCKED. Lokalny odbiór: 897 Node + 141 Python + 18 zestawów Chromium PASS. Audyt odczytał 112 rzeczywistych widoków PL z 0 wykrytych angielskich elementów; własne nazwy i monety zachowane. Trzy generatory --check i importer 314 kart w dry-run PASS. Dwa testy starszej treści komunikatów zaktualizowano i ponowiono bez zmiany badanego pakietu. Własny Git/CI/Pages tego wydania jeszcze niepotwierdzony. Bez GCP, resetu kont i PROD.
+
+
+Publikacja źródła v25: `b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9` wysłany na `main`. CI41244467302 i Pages41244467250 w toku. Pakiet54 pliki / 10988081 bajtów; archiwum SHA-256 `0fc5f47e2147c8e567e126960a7d75a509ccbf752eeac81a4575461b27b33a74`, manifest `8b98dd5c51a3aa603a93f3598fe78c0130f4d377ca419088b2d47da64db28d56`. Weryfikacja archiwum i zgodność 53 plików treści z końcowym pakietem przeglądarkowym PASS. Tag czeka na własne sukcesy.
+
+
+### Dalsze doprecyzowanie i autoryzacja PRE-PROD
+
+Użytkownik wymaga przyjaznego, naturalnego polskiego stylu, nie wyłącznie braku angielskich elementów. Przeredagowano 12 krótkich i 12 pełnych opisów oraz główne instrukcje zasobów, podatków, mieszkańców, reklam i ekspedycji. Zachowano liczby i reguły. Pierwszy podgląd b1cd650 miał PagesSUCCESS41s, lecz CI41244467302FAILURE2m48s: trzy przyciski historycznego kroku ściskały opis i wychodziły poza ekran. Naprawiono zawijanie; regresja sprawdza rzeczywistą geometrię na360px i kliknięcie bez wymuszenia. Nowy końcowy cache frontend-v25-2, nowy odbiór wymagany.
+
+Następna dyspozycja autoryzuje PRE-PROD po zielonych testach, bez resetu kont. Zamknięta allowlista bridge obejmuje marker0.10.1.0 obok historycznego0.9.1.2, zachowując dokładnySHA i wszystkie blokady. Weryfikacja ujawniła wymóg nowszych reguł Firestore dla fallback nawet przy jednej wyspie. Przygotowany skrypt właściciela aktualizuje zarządzane prywatne reguły i zachowuje konta/hasła/postęp; w API-only odmawia przywrócenia directwrite. O faktycznym zastosowaniu i promocji będzie osobny dowód. Rejestr263 zmian/53manualNOT_RUN.
+
+
+Końcowy lokalny odbiór dalszej redakcji i naprawy:898Node/141Python/18ChromiumPASS. Nowy raport obejmuje112widoków PL; nie ma wykrytych reszt EN ani błędu wykonania. Właściciel dostarczył wynik skryptu f161e45→b1cd650: konta/hasła zachowane i prywatny zapis gotowy; minimalny [dowód](PREPROD-V25-PREPARATION.md) rozróżnia to od niezależnego odczytu GCP i publikacji aplikacji. Końcowe źródło, CI i autoryzowana promocja będą miały odrębne wpisy.

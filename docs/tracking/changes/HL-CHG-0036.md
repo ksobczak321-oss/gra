@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `local_full_suite_and_packaged_browsers_pass` |
-| CI | `not_run_for_change` |
+| CI | `pending_new_source` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -21,16 +21,16 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 
 - Lekcja budynku poleca odnalezienie go na mapie, pokazuje miganie i podświetlone miejsce kliknięcia, zamiast automatycznie otwierać jego okno.
 - Dopiero kliknięcie gracza otwiera budynek; potem wskaźnik prowadzi do właściwej widocznej czynności, a w razie potrzeby przez szczegóły budynku.
-- Podświetlenie nie wykonuje operacji, nie zalicza lekcji i nie przyznaje nagród; istniejąceID, nagrody, automatyczne pomijanie i historia pozostają.
+- Podświetlenie nie wykonuje operacji, nie zalicza lekcji i nie przyznaje nagród; istniejące ID, nagrody, automatyczne pomijanie i historia pozostają.
 - Przy wyłączonych animacjach lub prefers-reduced-motion cel pozostaje czytelny statycznie; komputer i telefon mają faktycznie dostępne miejsce kliknięcia.
 
 ## Źródło
 
 Użytkownik chce, by zamiast automatycznie otwierać budynek samouczek polecał znaleźć go na mapie, wskazywał miganiem i podświetleniem oraz używał naturalnej polszczyzny.
 
-Odniesienie: `chat:GO-DEV-prowadzenie-po-mapie-i-human-polski25lekcji`.
+Odniesienie: `chat:GO-DEV-prowadzenie-po-mapie-i-human-polski 25lekcji`.
 
-Data pierwotnej wiadomości: 2026-10-31. NoweGO po potwierdzeniu wspólnego okna ligi; dodatkowe prowadzenie i polskie teksty wyłącznie DEV.
+Data pierwotnej wiadomości: 2026-10-31. Nowe GO po potwierdzeniu wspólnego okna ligi; dodatkowe prowadzenie i polskie teksty wyłącznie DEV.
 
 ## Dowody
 
@@ -46,7 +46,11 @@ Powiązane przypadki do ręcznego przeklikania:
 
 Samouczek wskazuje rzeczywisty budynek na mapie, czeka na kliknięcie gracza i dopiero potem prowadzi do widocznej czynności. Nowy test mapy ma 5 wariantów PASS; regresje priorytetów 4, kursu zrównoważonego 3 i historycznego 3 również przeszły. Zachowano ID, warunki, nagrody i historię; samo oglądanie nie zalicza lekcji.
 
-Końcowy odbiór lokalny po zamrożeniu: 897 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS, 18 zestawów Chromium PASS. W tym rzeczywisty przegląd 112 widoków zakończony bez wykrytej reszty EN i bez błędu wykonania. Własne CI i Pages nowego commitu oczekują na potwierdzenie; nie dziedziczą wyniku wcześniejszego SHA. Ręczne scenariusze pozostają NOT_RUN. Brak promocji GCP, resetu kont i integracji planszówki online.
+Historyczny podgląd b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9 miał lokalnie 897 Node, 141 Python i 18 zestawów Chromium PASS. Pages 41244467250 zakończyło się SUCCESS (41 s), natomiast własne CI 41244467302 zakończyło się FAIL: historyczna podpowiedź z trzema przyciskami miała niepoprawną geometrię. Te dowody nie potwierdzają późniejszej poprawki układu ani dalszej redakcji polskich opisów. Nowy lokalny odbiór po późniejszych poprawkach opisano poniżej; nowe źródło, CI i promocja oczekują na potwierdzenie. Nie wykonano resetu kont ani promocji PROD.
+
+Późniejsze GO użytkownika upoważnia do PRE-PROD po zielonym CI dokładnego nowego SHA i odbiorze wdrożenia, z zachowaniem kont i historii. Samo upoważnienie nie jest dowodem publikacji.
+
+Końcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.
 
 ## Relacje
 

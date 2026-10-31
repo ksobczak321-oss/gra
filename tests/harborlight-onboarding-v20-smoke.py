@@ -129,7 +129,7 @@ def onboarding_language_switch(browser, *, language, mobile):
     page.locator('[data-onboarding-next]').click()
     expect(name).to_have_attribute('aria-invalid', 'true')
     expect(page.locator('[data-onboarding-error]')).to_contain_text(
-        'Wybierz nazwę' if language == 'pl' else 'Choose a name')
+        'Wpisz nazwę' if language == 'pl' else 'Choose a name')
 
     name.fill(draft)
     selector.select_option(other)

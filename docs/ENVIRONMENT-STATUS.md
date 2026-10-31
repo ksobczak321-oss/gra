@@ -2,9 +2,13 @@
 
 Aktualizacja: **31 października 2026**. Ten dokument jest głównym rejestrem tego, co rzeczywiście znajduje się na DEV, PRE-PROD i PROD. Historia czynności i wyników pozostaje w [dzienniku](IMPLEMENTATION-LOG.md), a warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-## DEV w przygotowaniu — 0.10.1.0 / v25
+## DEV 0.10.1.0 / v25 — końcowa redakcja w przygotowaniu
 
-Zakres: prowadzenie wszystkich lekcji od budynku na mapie do rzeczywistej czynności, przegląd całej polskiej wersji gry, wspólne okno obu zadań ligowych 19:00–21:00 czasu Warszawy oraz zapis potwierdzonych parametrów wysp. [Wymagania v25](FRONTEND-V25-REQUIREMENTS.md), [zakres przeglądu języka](POLISH-REVIEW-v25.md). Wersja lokalna0.10.1.0, cache frontend-v25. Lokalny odbiór: **897 Node + 141 Python + 18 zestawów Chromium PASS**, w tym 112 rzeczywistych widoków PL na komputerze i telefonie, bez wykrytych angielskich elementów. Trzy generatory `--check` PASS. Rejestr: 261 zmian i 53 przypadki ręczne NOT RUN; importer 314 kart w dry-run. [Dowody lokalne](DEV-0.10.1.0-VALIDATION.md). Własny commit, CI i publikacja tego zakresu jeszcze niepotwierdzone. Poniższy odebrany v24 pozostaje ostatnim potwierdzonym podglądem. PRE-PROD0.9.1.2 i PROD bez zmian; bez resetu kont.
+Zakres: prowadzenie 25 lekcji przez rzeczywiste kliknięcia mapy, naturalny polski całej gry, wspólne okno ligi 19:00–21:00 i potwierdzone parametry archipelagu. Ostatnie doprecyzowanie dotyczy prostego, przyjaznego języka opisów: co gracz może zrobić i po co. Przeredagowano 12 krótkich i 12 pełnych opisów budynków oraz główne instrukcje. Cache końcowej poprawki: `frontend-v25-2`.
+
+Pierwszy podgląd: `b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9`; [Pages41244467250 SUCCESS, 41s](https://github.com/ksobczak321-oss/gra/actions/runs/41244467250), ale [CI41244467302 FAILURE, 2m48s](https://github.com/ksobczak321-oss/gra/actions/runs/41244467302). CI wykryło układ trzech przycisków historycznego samouczka wychodzący poza ekran. Nie tworzono tagu odbioru ani promocji tego kandydata. Naprawa zawijania i nowy test geometrii są gotowe. Końcowy pakiet przeszedł 898 Node + 141 Python + 18 zestawów Chromium, w tym ponowny odczyt112widoków. Wymaga nowego SHA i własnego CI. Wyników wcześniejszego pakietu nie przypisujemy nowej redakcji.
+
+[Wymagania v25](FRONTEND-V25-REQUIREMENTS.md) · [Przegląd polszczyzny](POLISH-REVIEW-v25.md) · [Odbiór wydania](DEV-0.10.1.0-VALIDATION.md). Rejestr: 263 zmiany i 53 ręczne przypadki NOT RUN. Użytkownik autoryzował PRE-PROD po testach. Właściciel potwierdził już [przygotowanie zgodnych prywatnych reguł zapisu](PREPROD-V25-PREPARATION.md), zachowując konta i postęp. Flagi API nie odczytano niezależnie; promocja zachowuje dotychczasowy tryb. Bez resetu kont i PROD. Bieżące PRE-PROD nadal poniżej0.9.1.2.
 
 ## Ostatni odebrany DEV — 0.10.0.0 / v24, komplet PL
 

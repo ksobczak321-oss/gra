@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `local_full_suite_and_packaged_browsers_pass` |
-| CI | `not_run_for_change` |
+| CI | `pending_new_source` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -20,11 +20,11 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 ## Zakres i odbiór
 
 - W dniach 15–21 oba zadania, logiczne i zręcznościowe, są dostępne w jednym oknie 19:00–21:00 Europe/Warsaw; gracz wybiera kolejność.
-- Oba rodzaje działają o19:00 i 20:00. Przed 19:00 i od 21:00 nowe punktujące akcje/próby są zamknięte; strefaWarszawy respektuje czas letni i zimowy.
-- Pozostają dwie próby każdego rodzaju, średnia dwóch wyników dnia i0 za niezagrane. Rozliczenie już przyjętych akcji nie dodaje czasu na grę.
-- Interfejs, API, opisy i testy wskazują to samo okno. Wcześniejszy podział19–20/20–21 oraz jego wynikiCI są zachowaną historią.
-- Dokumenty prawne i potwierdzenia mają zgodną wersję2026-10-31-draft4; draft2/draft3 nie omijają bieżącej akceptacji nowego świata, a stare dowody pozostają.
-- Zakres pozostaje wyłącznie DEV, bez promocji GCP, resetu kont lub integracji planszówki online.
+- Oba rodzaje działają o 19:00 i 20:00. Przed 19:00 i od 21:00 nowe punktujące akcje/próby są zamknięte; strefa Warszawy respektuje czas letni i zimowy.
+- Pozostają dwie próby każdego rodzaju, średnia dwóch wyników dnia i 0 za niezagrane. Rozliczenie już przyjętych akcji nie dodaje czasu na grę.
+- Interfejs, API, opisy i testy wskazują to samo okno. Wcześniejszy podział 19–20/20–21 oraz jego wyniki CI są zachowaną historią.
+- Dokumenty prawne i potwierdzenia mają zgodną wersję 2026-10-31-draft4; draft2/draft3 nie omijają bieżącej akceptacji nowego świata, a stare dowody pozostają.
+- Początkowe GO obejmowało DEV; późniejsza odrębna dyspozycja dopuszcza PRE-PROD po testach i zielonym CI nowego źródła. Reset kont, PROD oraz integracja planszówki online nadal nie są wykonywane w tej promocji.
 
 ## Źródło
 
@@ -32,7 +32,7 @@ Użytkownik wybrał wspólne 19:00–21:00 dla zadania logicznego i zręczności
 
 Odniesienie: `chat:potwierdzenie-parametrow-i-wspolne-okno-ligi-po-DEV0.10.0.0`.
 
-Data pierwotnej wiadomości: 2026-10-31. Późniejsza odpowiedź użytkownika po odbiorze wcześniejszego wariantuDEV; nie zastępujemy nią historii jegoCI.
+Data pierwotnej wiadomości: 2026-10-31. Późniejsza odpowiedź użytkownika po odbiorze wcześniejszego wariantu DEV; nie zastępujemy nią historii jego CI.
 
 ## Dowody
 
@@ -49,7 +49,11 @@ Powiązane przypadki do ręcznego przeklikania:
 
 Oba rodzaje zadania ligi działają w tym samym oknie 19:00–21:00 Europe/Warsaw; gracz wybiera kolejność. Testy sprawdzają oba rodzaje o 19:00/20:00, odmowę poza oknem, czas letni/zimowy i granicę zamknięcia. Zachowano po dwie próby, średnią obu wyników i 0 za brak zadania. Dokumenty draft4, klient i serwer są zgodne; stare potwierdzenia draft2/draft3 nie omijają aktualnej wersji dla nowego świata, a ich historia pozostaje.
 
-Końcowy odbiór lokalny po zamrożeniu: 897 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS, 18 zestawów Chromium PASS. W tym rzeczywisty przegląd 112 widoków zakończony bez wykrytej reszty EN i bez błędu wykonania. Własne CI i Pages nowego commitu oczekują na potwierdzenie; nie dziedziczą wyniku wcześniejszego SHA. Ręczne scenariusze pozostają NOT_RUN. Brak promocji GCP, resetu kont i integracji planszówki online.
+Historyczny podgląd b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9 miał lokalnie 897 Node, 141 Python i 18 zestawów Chromium PASS. Pages 41244467250 zakończyło się SUCCESS (41 s), natomiast własne CI 41244467302 zakończyło się FAIL: historyczna podpowiedź z trzema przyciskami miała niepoprawną geometrię. Te dowody nie potwierdzają późniejszej poprawki układu ani dalszej redakcji polskich opisów. Nowy lokalny odbiór po późniejszych poprawkach opisano poniżej; nowe źródło, CI i promocja oczekują na potwierdzenie. Nie wykonano resetu kont ani promocji PROD.
+
+Późniejsze GO użytkownika upoważnia do PRE-PROD po zielonym CI dokładnego nowego SHA i odbiorze wdrożenia, z zachowaniem kont i historii. Samo upoważnienie nie jest dowodem publikacji.
+
+Końcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.
 
 ## Relacje
 
@@ -59,7 +63,7 @@ Końcowy odbiór lokalny po zamrożeniu: 897 testów Node PASS / 0 FAIL, 141 tes
 
 ## Uwagi
 
-- Wcześniejsze karty zachowują dowody źródła351baaf6b21386b2f2641875269e6f7d9c2d44fd. To potwierdzenie poprzedniego wariantu, nie nowego wspólnego okna.
+- Wcześniejsze karty zachowują dowody źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd. To potwierdzenie poprzedniego wariantu, nie nowego wspólnego okna.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

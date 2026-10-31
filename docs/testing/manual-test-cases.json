@@ -436,7 +436,8 @@
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0604",
-        "HL-CHG-0605"
+        "HL-CHG-0605",
+        "HL-CHG-0934"
       ],
       "file": "manual/HL-TC-0031.md"
     },
@@ -714,7 +715,8 @@
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0036",
-        "HL-CHG-0037"
+        "HL-CHG-0037",
+        "HL-CHG-0933"
       ],
       "file": "manual/HL-TC-0051.md"
     },

@@ -1,6 +1,6 @@
 # HARBORLIGHT
 
-Aktualny rozwój **DEV 0.10.1.0**: prowadzenie samouczka przez mapę, przegląd całej polskiej wersji i wspólne okno ligi 19:00–21:00. PRE-PROD pozostaje na 0.9.1.2; nowe GO nie obejmuje promocji GCP. [Zakres DEV v25](docs/FRONTEND-V25-REQUIREMENTS.md) · [stan środowisk](docs/ENVIRONMENT-STATUS.md).
+Aktualny rozwój **DEV 0.10.1.0**: prowadzenie samouczka przez mapę, przegląd całej polskiej wersji i wspólne okno ligi 19:00–21:00. PRE-PROD pozostaje na 0.9.1.2 do autoryzowanej promocji po testach końcowej wersji. [Zakres DEV v25](docs/FRONTEND-V25-REQUIREMENTS.md) · [stan środowisk](docs/ENVIRONMENT-STATUS.md).
 
 **[Testy do odhaczania — zacznij tutaj](docs/testing/START-HERE.md)** · **[Interaktywna lista 53 scenariuszy](docs/testing/qa-checklist.html)** · **[Planszówka: kompletny ZIP, plansza, karty, pionki, pudełko i instrukcja](docs/boardgame/README.md)**. Integracja sesji fizycznej z kontami online jest odłożona.
 
@@ -12,7 +12,7 @@ Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarn
 
 | Miejsce | Stan |
 |---|---|
-| DEV — ta przestrzeń robocza | **0.10.1.0**, prowadzenie przez mapę i polski całej gry. Lokalnie 897 Node + 141 Python + 18 zestawów Chromium PASS, w tym 112 widoków PL. Własny Git/CI/Pages jeszcze niepotwierdzony. Bez nowej promocji GCP. |
+| DEV — ta przestrzeń robocza | **0.10.1.0**, prowadzenie przez mapę i naturalne polskie opisy całej gry. Końcowy pakiet: 898 Node + 141 Python + 18 zestawów Chromium PASS, w tym112widoków. Nowy commit/CI w przygotowaniu; późniejsza promocja PRE-PROD autoryzowana bez resetu. |
 | PRE-PROD — `harborlight-dev` | [Graj](https://harborlight-dev.web.app): **0.9.1.2 / `3be1f9d2094f1432acacbb782eed1665fd00e6e1`**, [promocja41233737873/próba1 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233737873), 2m10s. Wybór PL/EN przy nazwie wyspy; konta i postęp zachowane. |
 | PROD — `harborlight-prod` / `harborlight.pl` | Brak potwierdzonej publikacji i powiązania domeny. |
 | GitHub Pages | [Podgląd DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v24-2). Pages41238818743 dla `1b3de32…` ma SUCCESS. Podgląd działa w pamięci, odrębnie od kont chmurowych. |
@@ -23,7 +23,7 @@ W [v22](docs/FRONTEND-V22-REQUIREMENTS.md) udane działanie wykonane przed swoj�
 
 ## Wcześniejsza pilna poprawka 0.9.1.2
 
-[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Poprawka przeszła własne CI i promocję PRE-PROD; dowody zapisano w rejestrze środowisk. Nie resetowano kont. Tamten zakres miał 251 zmian i 46 ręcznych przypadków; nowy DEV ma 261 zmian i 53 przypadki.
+[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Poprawka przeszła własne CI i promocję PRE-PROD; dowody zapisano w rejestrze środowisk. Nie resetowano kont. Tamten zakres miał 251 zmian i 46 ręcznych przypadków; nowy DEV ma 263 zmiany i 53 przypadki.
 
 ## Poprzedni zakres DEV 0.9.1.1
 

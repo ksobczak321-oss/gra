@@ -5,6 +5,7 @@ import { validateCiRun } from './promotion.mjs';
 export const REPOSITORY = 'ksobczak321-oss/gra';
 export const REPOSITORY_ID = 1428128759;
 export const MARKER = '[preprod:0.9.1.2]';
+export const AUTHORIZED_MARKERS = Object.freeze([MARKER, '[preprod:0.10.1.0]']);
 const CI_PATH = '.github/workflows/ci.yml';
 const CI_NAME = 'Validate HARBORLIGHT source';
 const DEPLOY_PATH = '.github/workflows/google-cloud-dev.yml';
@@ -41,7 +42,9 @@ export async function dispatchUrgent(api, event, identity) {
   validateWorkflow(await api.getWorkflow(run.workflow_id), run.workflow_id);
   const commit = await api.getCommit(fresh.sourceSha);
   if (commit?.sha !== fresh.sourceSha || typeof commit.commit?.message !== 'string') fail('Invalid source commit response.');
-  if (!commit.commit.message.includes(MARKER)) return { dispatched: false, reason: 'no-urgent-marker', sourceSha: fresh.sourceSha };
+  if (!AUTHORIZED_MARKERS.some(marker => commit.commit.message.includes(marker))) {
+    return { dispatched: false, reason: 'no-urgent-marker', sourceSha: fresh.sourceSha };
+  }
 
   const deployments = await api.listDeploymentRuns(fresh.sourceSha);
   if (!Array.isArray(deployments)) fail('Invalid deployment lookup.');

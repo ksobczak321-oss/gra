@@ -29,7 +29,7 @@ test('current building descriptions explain concrete recipes and preserve actual
   assert.match(sawmill, /Jedna deska wymaga 2 jednostek drewna z magazynu centralnego/);
   assert.equal(BUILDINGS.sawmill.inputRate, 2);
   assert.match(translate(BUILDINGS.warehouse.description, 'pl'), /1000.*4000.*120.*pięciominutowym.*50%.*10 mln.*40 mln.*24/);
-  assert.match(buildingPurpose('dock', 'pl'), /Od 4\. poziomu.*od 6\..*10, 13, 16.*20 wysp/);
+  assert.match(buildingPurpose('dock', 'pl'), /Od 4\. poziomu.*Od 6\..*10, 13, 16.*20 wysp/);
   assert.match(residentsPurpose('pl'), /macierzystej.*12.*córce.*6.*0%.*100%.*30 minut.*72 godziny.*20%/);
   assert.match(warehousePurpose('pl'), /nagród.*ponad zwykłym limitem/);
 });

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { createUrgentApi, dispatchUrgent, eligibleCi, MARKER, REPOSITORY, REPOSITORY_ID } from '../infra/google-cloud/urgent-preprod-dispatch.mjs';
+import { AUTHORIZED_MARKERS, createUrgentApi, dispatchUrgent, eligibleCi, MARKER, REPOSITORY, REPOSITORY_ID } from '../infra/google-cloud/urgent-preprod-dispatch.mjs';
 
 const sourceSha = 'a'.repeat(40);
 const identity = { repository: REPOSITORY, repositoryId: String(REPOSITORY_ID) };
@@ -10,12 +10,12 @@ const ci = overrides => ({ id: 123, run_attempt: 1, workflow_id: 456, name: 'Val
 const event = overrides => ({ action: 'completed', workflow_run: ci(overrides) });
 const deployment = overrides => ({ id: 789, repository, head_repository: repository, head_sha: sourceSha, head_branch: 'main',
   path: '.github/workflows/google-cloud-dev.yml', event: 'workflow_dispatch', status: 'queued', ...overrides });
-function fixture(overrides = {}) {
+function fixture(overrides = {}, marker = MARKER) {
   const calls = [];
   const api = {
     getRun: async id => { calls.push(['run', id]); return ci(); },
     getWorkflow: async id => { calls.push(['workflow', id]); return { id: 456, path: '.github/workflows/ci.yml', name: 'Validate HARBORLIGHT source', state: 'active' }; },
-    getCommit: async sha => { calls.push(['commit', sha]); return { sha: sourceSha, commit: { message: `Fix language ${MARKER}` } }; },
+    getCommit: async sha => { calls.push(['commit', sha]); return { sha: sourceSha, commit: { message: `Fix language ${marker}` } }; },
     listDeploymentRuns: async sha => { calls.push(['deployments', sha]); return []; },
     getMain: async () => { calls.push(['main']); return { ref: 'refs/heads/main', object: { type: 'commit', sha: sourceSha } }; },
     dispatch: async () => { calls.push(['dispatch']); },
@@ -51,14 +51,43 @@ test('fresh CI and workflow metadata must agree with the event and attempt', asy
   await assert.rejects(dispatchUrgent(fixture().api, { ...event(), action: 'requested' }, identity));
 });
 
-test('only the exact urgent marker in the API-read source commit can request promotion', async () => {
-  for (const message of ['Ordinary update', '[preprod:0.9.1.3]', '[preprod:0.9.1.20]']) {
+test('only the exact allowlisted markers in the API-read source commit can request promotion', async () => {
+  assert.deepEqual(AUTHORIZED_MARKERS, ['[preprod:0.9.1.2]', '[preprod:0.10.1.0]']);
+  assert.equal(Object.isFrozen(AUTHORIZED_MARKERS), true);
+  for (const marker of AUTHORIZED_MARKERS) {
+    const { api, calls } = fixture({}, marker);
+    assert.equal((await dispatchUrgent(api, event(), identity)).dispatched, true);
+    assert.deepEqual(calls, [['run', 123], ['workflow', 456], ['commit', sourceSha], ['deployments', sourceSha], ['main'], ['dispatch']]);
+  }
+  for (const message of ['Ordinary update', '[preprod:0.9.1.3]', '[preprod:0.9.1.20]', '[preprod:0.10.1.1]',
+    '[preprod:0.10.1.00]', '[preprod:0.10.1.0-beta]', '[preprod:*]', '[preprod:0.10.1.0', '[PREPROD:0.10.1.0]']) {
     const { api, calls } = fixture({ getCommit: async () => ({ sha: sourceSha, commit: { message } }) });
     assert.equal((await dispatchUrgent(api, event(), identity)).reason, 'no-urgent-marker');
     assert.ok(!calls.some(c => ['main', 'dispatch'].includes(c[0])));
   }
   const { api } = fixture({ getCommit: async () => ({ sha: 'b'.repeat(40), commit: { message: MARKER } }) });
   await assert.rejects(dispatchUrgent(api, event(), identity), /source commit/);
+});
+
+test('the new release marker cannot bypass CI identity, freshness, main or duplicate gates', async () => {
+  const marker = '[preprod:0.10.1.0]';
+  for (const change of [{ conclusion: 'failure' }, { event: 'workflow_dispatch' }, { head_branch: 'feature' },
+    { repository: { ...repository, id: 1 } }, { head_repository: { ...repository, full_name: 'fork/gra' } }]) {
+    const { api, calls } = fixture({}, marker);
+    await assert.rejects(dispatchUrgent(api, event(change), identity));
+    assert.deepEqual(calls, []);
+  }
+  const stale = fixture({ getRun: async () => ci({ run_attempt: 2 }) }, marker);
+  await assert.rejects(dispatchUrgent(stale.api, event(), identity), /fresh CI run/);
+  assert.ok(!stale.calls.some(call => call[0] === 'dispatch'));
+
+  const moved = fixture({ getMain: async () => ({ ref: 'refs/heads/main', object: { type: 'commit', sha: 'b'.repeat(40) } }) }, marker);
+  assert.equal((await dispatchUrgent(moved.api, event(), identity)).reason, 'main-moved');
+  assert.ok(!moved.calls.some(call => call[0] === 'dispatch'));
+
+  const duplicate = fixture({ listDeploymentRuns: async () => [deployment({ status: 'completed', conclusion: 'cancelled' })] }, marker);
+  assert.equal((await dispatchUrgent(duplicate.api, event(), identity)).reason, 'deployment-already-exists');
+  assert.ok(!duplicate.calls.some(call => ['main', 'dispatch'].includes(call[0])));
 });
 
 test('known movement of main blocks dispatch after successful CI and duplicate lookup', async () => {

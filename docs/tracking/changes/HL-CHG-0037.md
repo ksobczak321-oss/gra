@@ -1,4 +1,4 @@
-# HL-CHG-0037 — Naturalny i poprawny polski w tytułach i instrukcjach25 lekcji
+# HL-CHG-0037 — Naturalny i poprawny polski w tytułach i instrukcjach 25 lekcji
 
 **Typ:** Story · **Obszar:** Samouczek i polskie teksty · **Epik:** `HL-EPIC-TUT`
 
@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `local_full_suite_and_packaged_browsers_pass` |
-| CI | `not_run_for_change` |
+| CI | `pending_new_source` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -19,18 +19,18 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 
 ## Zakres i odbiór
 
-- Przegląd obejmuje polskie tytuły, opisy i wskazówki wszystkich25 praktycznych lekcji.
+- Przegląd obejmuje polskie tytuły, opisy i wskazówki wszystkich 25 praktycznych lekcji.
 - Teksty są naturalne, poprawnie odmienione i konsekwentnie używają nazw faktycznych budynków i przycisków.
 - Instrukcja opisuje kolejność: znajdź budynek na mapie, otwórz go i wykonaj czynność, zgodnie z rzeczywistą nawigacją.
-- Nie zmieniamyID, nagród, warunków zaliczenia, kolejności ani historii; ocena językowa człowieka pozostaje odrębnym ręcznym odbiorem.
+- Nie zmieniamy ID, nagród, warunków zaliczenia, kolejności ani historii; ocena językowa człowieka pozostaje odrębnym ręcznym odbiorem.
 
 ## Źródło
 
 Użytkownik chce, by zamiast automatycznie otwierać budynek samouczek polecał znaleźć go na mapie, wskazywał miganiem i podświetleniem oraz używał naturalnej polszczyzny.
 
-Odniesienie: `chat:GO-DEV-prowadzenie-po-mapie-i-human-polski25lekcji`.
+Odniesienie: `chat:GO-DEV-prowadzenie-po-mapie-i-human-polski 25lekcji`.
 
-Data pierwotnej wiadomości: 2026-10-31. NoweGO po potwierdzeniu wspólnego okna ligi; dodatkowe prowadzenie i polskie teksty wyłącznie DEV.
+Data pierwotnej wiadomości: 2026-10-31. Nowe GO po potwierdzeniu wspólnego okna ligi; dodatkowe prowadzenie i polskie teksty wyłącznie DEV.
 
 ## Dowody
 
@@ -47,7 +47,11 @@ Powiązane przypadki do ręcznego przeklikania:
 
 Poprawiono polskie tytuły i opisy 25 bieżących oraz 25 historycznych lekcji. Porównanie eksportowanych danych zachowuje ID, kolejność, warunki, nagrody, trasy i selektory. Nawigacja zaczyna się od mapy, nazwy odpowiadają rzeczywistym kontrolkom. Ręczna ocena wszystkich lekcji nadal oczekuje na wykonanie.
 
-Końcowy odbiór lokalny po zamrożeniu: 897 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS, 18 zestawów Chromium PASS. W tym rzeczywisty przegląd 112 widoków zakończony bez wykrytej reszty EN i bez błędu wykonania. Własne CI i Pages nowego commitu oczekują na potwierdzenie; nie dziedziczą wyniku wcześniejszego SHA. Ręczne scenariusze pozostają NOT_RUN. Brak promocji GCP, resetu kont i integracji planszówki online.
+Historyczny podgląd b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9 miał lokalnie 897 Node, 141 Python i 18 zestawów Chromium PASS. Pages 41244467250 zakończyło się SUCCESS (41 s), natomiast własne CI 41244467302 zakończyło się FAIL: historyczna podpowiedź z trzema przyciskami miała niepoprawną geometrię. Te dowody nie potwierdzają późniejszej poprawki układu ani dalszej redakcji polskich opisów. Nowy lokalny odbiór po późniejszych poprawkach opisano poniżej; nowe źródło, CI i promocja oczekują na potwierdzenie. Nie wykonano resetu kont ani promocji PROD.
+
+Późniejsze GO użytkownika upoważnia do PRE-PROD po zielonym CI dokładnego nowego SHA i odbiorze wdrożenia, z zachowaniem kont i historii. Samo upoważnienie nie jest dowodem publikacji.
+
+Końcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.
 
 ## Relacje
 

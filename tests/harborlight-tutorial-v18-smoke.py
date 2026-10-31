@@ -32,12 +32,12 @@ def install(page, value):
     page.wait_for_function('document.getElementById("loading").hidden && !!window.__HARBORLIGHT_DEV_STATE__')
 
 
-def open_fixture(browser, mode='tutorial', *, now=None):
+def open_fixture(browser, mode='tutorial', *, now=None, width=1366, height=768):
     old_now = qa.NOW
     if now:
         qa.NOW = now
     try:
-        context, page = qa.open_page(browser)
+        context, page = qa.open_page(browser, width=width, height=height)
     finally:
         qa.NOW = old_now
     page.add_init_script('''(() => {
@@ -81,8 +81,8 @@ def dismiss_chest(page, lesson):
     expect(popup).not_to_be_visible()
 
 
-def first_five_actions(browser):
-    context, page = open_fixture(browser)
+def first_four_actions(browser, *, width=1366, height=768):
+    context, page = open_fixture(browser, width=width, height=height)
     expect(page.locator('[data-tutorial-current]')).to_have_attribute('data-tutorial-current', 'rules-read')
     assert snapshot(page)['tutorial']['completed'] == {}
     assert not page.locator('[data-tutorial-observe]').count()
@@ -118,9 +118,34 @@ def first_five_actions(browser):
             expect(page.locator('[data-tutorial-share="food-check"]')).to_be_disabled()
         dismiss_chest(page, lesson)
 
+    return context, page
+
+
+def assert_supplies_guide_geometry(page):
+    # This exact legacy state failed in CI: the fourth chest has been
+    # acknowledged and the new supplies action joins the map/course buttons.
+    # All three must fit before Playwright or the player tries to scroll them.
+    guide = page.locator('[data-active-tutorial-guide].tutorial-guide-floating')
+    expect(guide).to_be_visible()
+    expect(guide).to_be_in_viewport(ratio=0.99)
+    expect(guide.locator('button')).to_have_count(3)
+    bounds = guide.bounding_box()
+    copy = guide.locator('.tutorial-v16-guide-copy').bounding_box()
+    assert bounds and copy and copy['width'] >= 160, 'The lesson explanation must remain readable'
+    for control in guide.locator('button').all():
+        expect(control).to_be_in_viewport(ratio=0.99)
+        box = control.bounding_box()
+        assert box and box['x'] >= bounds['x'] - 1 and box['y'] >= bounds['y'] - 1
+        assert box['x'] + box['width'] <= bounds['x'] + bounds['width'] + 1
+        assert box['y'] + box['height'] <= bounds['y'] + bounds['height'] + 1
+
+
+def first_five_actions(browser):
+    context, page = first_four_actions(browser)
     overfull = snapshot(page)
     assert sum(overfull['resources'][material] for material in MATERIALS) > 4000
     assert overfull['tutorial']['claimed']['food-check']
+    assert_supplies_guide_geometry(page)
     page.locator('[data-tutorial-go="townhall-upgrade"]').click()
     page.locator('[data-tutorial-supplies]').click()
     page.locator('#hit-world-townhall').click()
@@ -184,6 +209,25 @@ def first_five_actions(browser):
     print('PASS firstfive real tutorial actions: arrows, no reading reward, four chests, overfull gate, spendable upgrade help and physical pickup recovery', flush=True)
 
 
+def legacy_supplies_mobile(browser):
+    context, page = first_four_actions(browser, width=360, height=640)
+    try:
+        before = snapshot(page)
+        assert_supplies_guide_geometry(page)
+        page.locator('[data-tutorial-go="townhall-upgrade"]').click()
+        assert snapshot(page)['resources'] == before['resources']
+        assert snapshot(page)['tutorial']['completed'] == before['tutorial']['completed']
+        page.locator('[data-tutorial-supplies]').click()
+        townhall = page.locator('#hit-world-townhall')
+        expect(townhall).to_have_attribute('data-tutorial-map-target', 'townhall-upgrade')
+        expect(townhall).to_be_in_viewport(ratio=0.99)
+        townhall.click()
+        expect(page.locator('[data-upgrade-building="townhall"]')).to_be_enabled()
+    finally:
+        context.close()
+    print('PASS25 legacy fourth-chest supplies, map and tutorial buttons fit on360px and lead to the real TownHall', flush=True)
+
+
 def loyalty_once_per_warsaw_day(browser):
     context, page = open_fixture(browser, 'loyalty', now=datetime(2026, 10, 30, 22, 59, 55, tzinfo=timezone.utc))
     page.locator('#hit-home').click()
@@ -245,7 +289,7 @@ def run():
             browser = playwright.chromium.launch(executable_path=os.environ.get('HARBORLIGHT_CHROMIUM', '/usr/bin/chromium'),
                                                  headless=True, args=['--no-sandbox', '--disable-dev-shm-usage'])
             try:
-                for check in (first_five_actions, loyalty_once_per_warsaw_day, expedition_defers_tutorial_reward):
+                for check in (first_five_actions, legacy_supplies_mobile, loyalty_once_per_warsaw_day, expedition_defers_tutorial_reward):
                     check(browser)
                 assert not qa.ERRORS, qa.ERRORS
             finally:

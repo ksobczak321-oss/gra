@@ -96,12 +96,12 @@ def resource_notation_and_payment(browser):
     page.locator('#hit-resource-coins').click()
     notation = page.locator('[data-resource-notation]')
     expect(notation).to_contain_text('537')
-    expect(notation).to_contain_text('Kamieniołomie')
+    expect(notation).to_contain_text('kamieniołomie')
     expect(notation).to_contain_text('magazynie centralnym')
     expect(notation).to_contain_text('w transporcie')
-    expect(notation).to_contain_text('bilans godzinowy')
+    expect(notation).to_contain_text('zapas nie rośnie ani nie maleje')
     taxes = page.locator('[data-treasury-income]')
-    for text in ['Podatki', 'rzeczywiście dotarli', 'Wolni mieszkańcy', 'reklama', '50, 100, 200, 400', '50, 150, 350, 750']:
+    for text in ['Podatki', 'dotarł do swojego miejsca pracy', 'Mieszkańcy w domu', 'reklamy', '50, 100, 200 i 400', '50, 150, 350 i 750']:
         expect(taxes).to_contain_text(text)
     building(page, 'sawmill')
     premium = page.locator('.compact-building-premium')
@@ -117,7 +117,7 @@ def house_and_chapel(browser):
     context, page = enter(browser, world())
     building(page, 'house')
     guide = page.locator('[data-house-population-guide]')
-    for text in ['pięć minut', 'Szczęście steruje populacją', '0%', 'minimum dwunastu osób na matce lub sześciu na córce', 'Ratusz', 'łóżka']:
+    for text in ['pięć minut', 'Dbaj o szczęście mieszkańców', '0%', 'co najmniej 12 osób', 'wyspie córce — 6', 'ratusz', 'łóżka']:
         expect(guide).to_contain_text(text)
     assignments = page.locator('[data-house-worker-assignments]')
     expect(assignments.locator('[data-worker-building="farm"][data-worker-delta="1"]')).to_be_visible()

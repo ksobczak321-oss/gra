@@ -1,9 +1,9 @@
 // PRE-PROD preserves its test accounts. PROD uses Firebase email and OAuth accounts.
 // Passwords are sent only by the Firebase client and never saved in browser storage.
-import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v25';
-import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v25';
-import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v25';
-import { signInWithProvider } from './harborlight-auth-providers.js?v=frontend-v25';
+import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v25-2';
+import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v25-2';
+import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v25-2';
+import { signInWithProvider } from './harborlight-auth-providers.js?v=frontend-v25-2';
 import { legalAcceptance, validLegalAcceptance } from './harborlight-legal.js?v=legal-v4';
 
 registerTranslations({
@@ -57,7 +57,7 @@ registerTranslations({
   'Island name': 'Nazwa wyspy',
   'Name your island': 'Nadaj nazwę swojej wyspie',
   'Use 2–40 characters. This name will appear on your island.': 'Użyj od 2 do 40 znaków. Ta nazwa będzie widoczna na Twojej wyspie.',
-  'Choose an island name with 2–40 characters, without control characters or angle brackets.': 'Podaj nazwę wyspy od 2 do 40 znaków, bez znaków sterujących ani nawiasów < i >.',
+  'Choose an island name with 2–40 characters, without control characters or angle brackets.': 'Wpisz nazwę mającą od 2 do 40 znaków w jednym wierszu. Pomiń nawiasy < > i niewidoczne znaki, np. tabulatory.',
   'Your browser could not save the island name. Allow local storage and try again.': 'Przeglądarka nie mogła zapisać nazwy wyspy. Zezwól na zapisywanie danych i spróbuj ponownie.',
   'Your island name is saved on this device. Your account has not been created. Continue as a guest to explore your island.': 'Nazwa wyspy została zapisana na tym urządzeniu. Twoje konto nie zostało utworzone. Kontynuuj jako gość, aby odkrywać wyspę.',
   'Email address': 'Adres e-mail',
@@ -99,10 +99,10 @@ registerTranslations({
   'Signing in…': 'Logowanie…',
   'Checking your session…': 'Sprawdzanie sesji…',
   'The username or password is incorrect.': 'Login lub hasło są nieprawidłowe.',
-  'This account is disabled. Contact the island owner.': 'To konto jest wyłączone. Skontaktuj się z właścicielem wyspy.',
+  'This account is disabled. Contact the island owner.': 'To konto jest wyłączone. Skontaktuj się z obsługą gry.',
   'Too many attempts. Wait a moment and try again.': 'Zbyt wiele prób. Zaczekaj chwilę i spróbuj ponownie.',
   'DEV accounts are not configured yet. Ask the owner to finish their setup.': 'Konta DEV nie są jeszcze skonfigurowane. Poproś właściciela o dokończenie konfiguracji.',
-  'Your browser could not save the session. Allow local storage and try again.': 'Przeglądarka nie mogła zapisać sesji. Zezwól na zapisywanie danych i spróbuj ponownie.',
+  'Your browser could not save the session. Allow local storage and try again.': 'Nie udało się zapamiętać logowania. Sprawdź, czy przeglądarka pozwala tej stronie zapisywać dane, i spróbuj ponownie.',
   'Could not connect to sign-in. Check your connection and try again.': 'Nie udało się połączyć z usługą logowania. Sprawdź połączenie z internetem i spróbuj ponownie.',
   'Your session expired. Sign in again.': 'Sesja wygasła. Zaloguj się ponownie.',
   'Could not sign in. Try again in a moment.': 'Nie udało się zalogować. Spróbuj ponownie za chwilę.'

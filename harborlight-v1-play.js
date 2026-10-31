@@ -1,30 +1,30 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v25';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v25';
-import * as State from './harborlight-v1-state.js?v=frontend-v25';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v25';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v25';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v25';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v25';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v25';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v25';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v25';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v25';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v25';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v25';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v25';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v25';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v25';
-import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v25';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v25';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v25';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v25-fit2';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v25';
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v25';
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v25';
-import { GAME_VERSION } from './harborlight-version.js?v=frontend-v25';
-import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v25';
-import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v25';
-import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v25';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v25-2';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v25-2';
+import * as State from './harborlight-v1-state.js?v=frontend-v25-2';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v25-2';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v25-2';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v25-2';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v25-2';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v25-2';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v25-2';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v25-2';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v25-2';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v25-2';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v25-2';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v25-2';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v25-2';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v25-2';
+import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v25-2';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v25-2';
+import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v25-2';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v25-2-fit2';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v25-2';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v25-2';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v25-2';
+import { GAME_VERSION } from './harborlight-version.js?v=frontend-v25-2';
+import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v25-2';
+import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v25-2';
+import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v25-2';
 
 I18n.registerTranslations({
   "Choose a minigame": "Wybierz minigrę",
@@ -1386,19 +1386,19 @@ function resourceNotationPanel() {
   return card(el('h3', {}, uiCopy('Reading resource cards', 'Jak czytać karty zasobów')),
     el('p', { class: 'notice', 'data-resource-notation': '', 'data-i18n-ignore': '' }, uiCopy(
       'Example: Stone 0 / 537 (0), → 0 units/h means 0 units in the Quarry’s local store, 537 stored in the central Warehouse, 0 in transport and a current hourly balance of zero. The hourly line is the net balance at the current crew and bonuses; an up or down arrow shows growth or consumption.',
-      'Przykład: Kamień 0 / 537 (0), → 0 szt./h oznacza 0 sztuk przy Kamieniołomie, 537 sztuk w magazynie centralnym, 0 w transporcie i obecny bilans godzinowy równy zero. Dolny wiersz pokazuje bilans przy obecnej obsadzie i premiach; strzałka w górę lub w dół oznacza przyrost albo ubywanie.')),
-    el('p', { class: 'notice', 'data-i18n-ignore': '' }, uiCopy('Reward stock is already spendable in central storage even above ordinary capacity. It is not a second shipment waiting to arrive.', 'Zapas z nagród jest od razu wydawalny w magazynie centralnym, także ponad zwykłą pojemność. Nie jest dodatkową dostawą czekającą na przyjazd.')));
+      'Jak czytać „Kamień 0 / 537 (0)”? Pierwsza liczba to kamień czekający przy kamieniołomie. Druga pokazuje zapas w magazynie centralnym, a liczba w nawiasie — ilość w transporcie. W tym przykładzie masz więc 537 sztuk w magazynie i nic w drodze. Wiersz „→ 0 szt./h” oznacza, że przy obecnej liczbie pracowników i aktywnych bonusach zapas nie rośnie ani nie maleje. Strzałka w górę pokazuje przyrost, a w dół — ubywanie zasobu.')),
+    el('p', { class: 'notice', 'data-i18n-ignore': '' }, uiCopy('Reward stock is already spendable in central storage even above ordinary capacity. It is not a second shipment waiting to arrive.', 'Materiały z nagród trafiają od razu do magazynu centralnego i możesz je od razu wydawać. Nie zajmują miejsca przeznaczonego na zwykłe dostawy, więc łączny zapas może przekroczyć limit magazynu. Nie musisz czekać na ich dowóz.')));
 }
 function treasuryIncomeDescription() {
   return el('section', { class: 'treasury-income', 'data-treasury-income': '', 'data-i18n-ignore': '' },
     el('h4', {}, uiCopy('Taxes, advertisements and minigames', 'Podatki, reklamy i minigry')),
-    el('p', {}, uiCopy('Taxes are paid by residents who have actually reached their assigned workplace: each assigned resident who has arrived pays 1 coin per hour before bonuses, including during a production blockage or while waiting for cargo. Available residents, people walking to work, Lighthouse visitors and people returning Home do not pay. A recalled carrier carrying a load continues paying until leaving the workplace. Active play doubles this income; after 48 hours without play it halves. The Chapel upgrade bonus doubles tax income while it lasts.', 'Podatki płacą mieszkańcy, którzy rzeczywiście dotarli do przydzielonego miejsca pracy: każdy przydzielony mieszkaniec po dojściu daje bazowo 1 monetę na godzinę, także podczas przestoju produkcji lub oczekiwania na ładunek. Wolni mieszkańcy, idący do pracy, zwiedzający Latarnię i wracający do Domu nie płacą. Wycofany tragarz z ładunkiem płaci do chwili opuszczenia stanowiska. Aktywna gra podwaja dochód, a po 48 godzinach bez gry spada on o połowę. Premia za rozbudowę Kaplicy podwaja podatki na czas swojego działania.')),
-    el('p', {}, uiCopy('Optional rewarded ads grant the displayed material bonus, blessing or extra expedition time only after completion. Standard invitations use active play time: first an ad offer after 4–8 minutes, then a choice of minigame or material bonus. With the no-ads entitlement the same eligible bonus can be collected without a film, with the same limits. DEV advertisements and payments are explicitly simulated.', 'Dobrowolna reklama z nagrodą daje pokazane materiały, błogosławieństwo lub czas ekspedycji dopiero po ukończeniu. Zaproszenia liczą aktywną grę: najpierw propozycja reklamy po 4–8 minutach, potem wybór minigry albo premii materiałowej. Uprawnienie „bez reklam” pozwala odebrać dostępny bonus bez filmu, z tymi samymi limitami. Reklamy i płatności na DEV są wyraźnie oznaczoną symulacją.')),
-    el('p', {}, uiCopy('Expeditions let you choose Marble maze or Picture triples. Round rewards are 50, 100, 200, 400 coins before time penalties, so the accumulated pots are 50, 150, 350, 750. Cash out to keep the pot or risk it in the next round; losing or running out of time clears the unclaimed pot. Buying additional time is voluntary.', 'W ekspedycjach wybierasz kulki w labiryncie albo dopasowywanie trójek. Nagrody rund wynoszą 50, 100, 200, 400 monet przed potrąceniem za czas, więc pula rośnie do 50, 150, 350, 750. Wypłać ją albo zaryzykuj w kolejnej rundzie; przegrana lub koniec czasu zeruje niewypłaconą pulę. Dokupienie czasu jest dobrowolne.')));
+    el('p', {}, uiCopy('Taxes are paid by residents who have actually reached their assigned workplace: each assigned resident who has arrived pays 1 coin per hour before bonuses, including during a production blockage or while waiting for cargo. Available residents, people walking to work, Lighthouse visitors and people returning Home do not pay. A recalled carrier carrying a load continues paying until leaving the workplace. Active play doubles this income; after 48 hours without play it halves. The Chapel upgrade bonus doubles tax income while it lasts.', 'Każdy mieszkaniec, który dotarł do swojego miejsca pracy, płaci 1 monetę podatku na godzinę przed doliczeniem bonusów. Płaci także wtedy, gdy produkcja stoi lub czeka na ładunek. Mieszkańcy w domu, w drodze do pracy, na zwiedzaniu latarni i wracający do domu nie płacą podatków. Tragarz odwołany z pracy kończy dostawę i płaci do chwili opuszczenia stanowiska. Podczas aktywnej gry dochód jest dwukrotnie większy. Po 48 godzinach bez gry spada o połowę. Bonus za rozbudowę kaplicy dodatkowo podwaja podatki przez cały czas swojego działania.')),
+    el('p', {}, uiCopy('Optional rewarded ads grant the displayed material bonus, blessing or extra expedition time only after completion. Standard invitations use active play time: first an ad offer after 4–8 minutes, then a choice of minigame or material bonus. With the no-ads entitlement the same eligible bonus can be collected without a film, with the same limits. DEV advertisements and payments are explicitly simulated.', 'Po obejrzeniu reklamy odbierzesz wskazaną wcześniej nagrodę: materiały, błogosławieństwo albo dodatkowy czas ekspedycji. Pierwszą propozycję reklamy zobaczysz po 4–8 minutach aktywnej gry. Później gra zaproponuje wybór minigry lub materiałów. Jeśli masz opcję „bez reklam”, odbierzesz taki sam dostępny bonus bez oglądania filmu; limity pozostają te same. Na DEV reklamy i płatności są oznaczone jako symulacja.')),
+    el('p', {}, uiCopy('Expeditions let you choose Marble maze or Picture triples. Round rewards are 50, 100, 200, 400 coins before time penalties, so the accumulated pots are 50, 150, 350, 750. Cash out to keep the pot or risk it in the next round; losing or running out of time clears the unclaimed pot. Buying additional time is voluntary.', 'Wybierz jedną z dwóch minigier: kulki w labiryncie albo dopasowywanie trójek. Za kolejne wygrane rundy dostaniesz 50, 100, 200 i 400 monet, pomniejszone o karę za czas. Przed tym potrąceniem uzbierasz więc kolejno 50, 150, 350 i 750 monet. Przed następną rundą możesz wypłacić zebraną pulę albo zagrać dalej, ryzykując jej utratę. Jeśli przegrasz lub skończy się czas, niewypłacone monety przepadną. Dodatkowe sekundy możesz dokupić, jeśli chcesz.')));
 }
 function houseAssignmentPanel() {
   return card(el('h3', {}, uiCopy('Assign residents to work', 'Przydziel mieszkańcom pracę')),
-    el('p', { class: 'notice', 'data-house-population-guide': '', 'data-i18n-ignore': '' }, uiCopy('Choose a building and use + or − to assign or recall a resident. New workers walk for five minutes before starting work. Happiness controls population: positive average happiness attracts people, 0% keeps the population stable, and negative happiness causes departures down to twelve on the mother island or six on a daughter. The Town Hall sets the population limit; the House supplies beds.', 'Wybierz budynek i użyj + lub −, aby przydzielić albo wycofać mieszkańca. Nowi pracownicy idą pięć minut, zanim rozpoczną pracę. Szczęście steruje populacją: dodatnia średnia przyciąga ludzi, 0% utrzymuje stałą liczbę, a ujemna powoduje odejścia do minimum dwunastu osób na matce lub sześciu na córce. Ratusz wyznacza limit populacji, a Dom zapewnia łóżka.')),
+    el('p', { class: 'notice', 'data-house-population-guide': '', 'data-i18n-ignore': '' }, uiCopy('Choose a building and use + or − to assign or recall a resident. New workers walk for five minutes before starting work. Happiness controls population: positive average happiness attracts people, 0% keeps the population stable, and negative happiness causes departures down to twelve on the mother island or six on a daughter. The Town Hall sets the population limit; the House supplies beds.', 'Wybierz budynek i kliknij +, aby wysłać do niego mieszkańca. Przyciskiem − odwołasz go do domu. Dotarcie do nowej pracy zajmuje pięć minut. Dbaj o szczęście mieszkańców: gdy jego średnia jest dodatnia, na wyspę przybywają nowe osoby. Przy 0% liczba mieszkańców się nie zmienia, a przy ujemnej średniej zaczynają odchodzić. Na wyspie macierzystej zostaje jednak co najmniej 12 osób, a na wyspie córce — 6. Rozbuduj ratusz, aby zwiększyć limit mieszkańców, a dom — aby zapewnić im łóżka.')),
     el('div', { class: 'house-worker-assignments', 'data-house-worker-assignments': '' }, ...WORKPLACE_IDS.map(id => card(el('h4', {}, titleOf(id)), workerStat(id)))),
     button(uiCopy('Population and happiness details', 'Szczegóły populacji i szczęścia'), () => openPanel('residents'), { class: 'action secondary' }));
 }
@@ -2079,7 +2079,7 @@ function blessingDescription() {
   return `${automatic} ${manual}${state.paidBlessingCooldownRemaining > 0 ? ` Next paid blessing in ${durationText(state.paidBlessingCooldownRemaining)}.` : ''}`;
 }
 function chapelCareDescription() {
-  return uiCopy('From Chapel level 3, use a manual blessing at least every 3 + Chapel level days. Neglect can trigger a harmful wreck 6–15 days after that grace period. The Lighthouse protects the island while its global bonus lasts.', 'Od poziomu Kaplicy 3 używaj ręcznego błogosławieństwa co najwyżej co 3 + poziom Kaplicy dni. Zaniedbanie może sprowadzić szkodliwy wrak po kolejnych 6–15 dniach. Latarnia chroni wyspę przez czas swojej globalnej premii.');
+  return uiCopy('From Chapel level 3, use a manual blessing at least every 3 + Chapel level days. Neglect can trigger a harmful wreck 6–15 days after that grace period. The Lighthouse protects the island while its global bonus lasts.', 'Od 3. poziomu kaplicy pamiętaj o regularnym odbieraniu błogosławieństw. Przerwa między nimi nie powinna być dłuższa niż 3 + poziom kaplicy dni. Po przekroczeniu tego czasu masz jeszcze 6–15 dni, zanim na wyspę może trafić niebezpieczny wrak. Bonus latarni chroni przed tym zdarzeniem przez cały czas swojego działania.');
 }
 function chapelGraceWrathPanel() {
   const level = state.buildings.chapel.level;
@@ -2931,7 +2931,7 @@ function updateTutorialPointer(row) {
     target.classList.add('tutorial-map-target'); target.dataset.tutorialMapTarget = row.id; target.dataset.tutorialMapBuilding = row.route;
     if (revealTarget) window.dispatchEvent(new CustomEvent('island-tour-focus', { detail: { region: buildingRegions[row.route] } }));
   } else { target.classList.remove('tutorial-map-target'); delete target.dataset.tutorialMapTarget; delete target.dataset.tutorialMapBuilding; }
-  const label = phase === 'map' ? uiCopy(`▼ Find ${titleOf(row.route)} on the map and click it`, `▼ Znajdź na mapie: ${text(titleOf(row.route))}. Kliknij ten budynek.`)
+  const label = phase === 'map' ? uiCopy(`▼ Find ${titleOf(row.route)} on the map and click it`, `▼ Znajdź na mapie podświetlony budynek „${text(titleOf(row.route))}” i kliknij go.`)
     : phase === 'details' ? uiCopy('▼ First open building details', '▼ Kliknij „Więcej o budynku”')
     : phase === 'supplies' ? uiCopy('▼ Collect the building supplies first', '▼ Najpierw odbierz materiały na rozbudowę')
     : phase === 'wait' ? uiCopy('▼ Follow the real delivery and construction progress here', '▼ Tutaj sprawdzisz postęp dostaw i budowy. Poczekaj na ich zakończenie.')
