@@ -1,4 +1,4 @@
-import { LOGIC_TASKS, ARCADE_TASKS, logicChoices, arcadeTarget } from './harborlight-v1-league.js?v=frontend-v24';
+import { LOGIC_TASKS, ARCADE_TASKS, logicChoices, arcadeTarget } from './harborlight-v1-league.js?v=frontend-v24-1';
 const pick = (language, pl, en) => language === 'en' ? en : pl;
 const node = (tag, attrs = {}, ...children) => { const el = document.createElement(tag); for (const [k,v] of Object.entries(attrs)) { if(k.startsWith('on'))el.addEventListener(k.slice(2),v);else if(k==='class')el.className=v;else if(v!==false&&v!=null)el.setAttribute(k,v===true?'':String(v)); } for(const child of children.flat())if(child!=null)el.append(child instanceof Node?child:document.createTextNode(String(child)));return el; };
 const copy = (lang, value) => value?.[lang === 'en' ? 1 : 0] || '';

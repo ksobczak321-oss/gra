@@ -1,4 +1,4 @@
-import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v24';
+import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v24-1';
 
 /** English is the source language. Polish strings are presentation only: saves,
  * identifiers, action payloads and user-entered values are never translated. */
@@ -1643,6 +1643,8 @@ rules.unshift([
 
 entries(`
 Your island name has been saved.|Zapisano nazwę wyspy.
+At least six residents must remain on a daughter island.|Na wyspie córce musi pozostać co najmniej sześciu mieszkańców.
+At least twelve residents must remain on the mother island.|Na wyspie macierzystej musi pozostać co najmniej dwunastu mieszkańców.
 Lighthouse construction has started. It will take twice as long as transport.|Budowa latarni rozpoczęta. Potrwa dwa razy tyle co transport.
 `);
 priorityRule(/^Resident (\d+) received (\d+) happiness points\.$/, (_, id, points) => `Mieszkaniec ${id} otrzymał ${points} ${plural(points, 'punkt', 'punkty', 'punktów')} szczęścia.`);
@@ -1823,3 +1825,29 @@ registerTranslations({
   'A resident costs the full next Town Hall upgrade price in all six resources. An available House bed and Town Hall population place are required. New residents settle in for 24 hours: Lighthouse protection gives 100%, Welcome protection gives a minimum of 20%, otherwise happiness stays at 0%.': 'Mieszkaniec kosztuje tyle, co pełna kolejna rozbudowa Ratusza, we wszystkich sześciu zasobach. Wymaga wolnego łóżka w Domu i miejsca w limicie Ratusza. Przez pierwsze 24 godziny osiedlania ochrona Latarniana daje 100% szczęścia, powitalna co najmniej 20%, a poza nimi szczęście pozostaje na 0%.',
   'Cloud sign-in is required.': 'Wymagane jest zalogowanie do chmury.'
 });
+
+// Archipelago v24: explain failed commands in the selected UI language too.
+entries(`
+Your archipelago already has the maximum of 20 islands.|Twój archipelag ma już maksymalne 20 wysp.
+Founding requires 18 residents on the mother island, including six actually at Home; twelve must remain.|Założenie wymaga 18 mieszkańców na matce, w tym sześciu rzeczywiście w Domu; dwunastu musi pozostać.
+Founding requires the displayed cumulative cost in available coins and all five materials, above protected Food.|Założenie wymaga wskazanego łącznego kosztu w dostępnych monetach i pięciu materiałach, ponad chronioną rezerwę żywności.
+Choose a different daughter-island suffix.|Wybierz inną końcówkę nazwy wyspy córki.
+Six residents teleport immediately from Home. The mother island keeps at least twelve.|Sześciu mieszkańców teleportuje się natychmiast z Domu. Na matce pozostaje co najmniej dwunastu.
+Your daughter island is ready. Six existing residents teleported from Home; its Town Hall and Warehouse inherited their levels once.|Wyspa córka jest gotowa. Sześciu istniejących mieszkańców teleportowało się z Domu; Ratusz i Magazyn jednorazowo przejęły poziomy matki.
+Your island name has been saved.|Zapisano nazwę wyspy.
+At least six residents must remain on a daughter island.|Na wyspie córce musi pozostać co najmniej sześciu mieszkańców.
+At least twelve residents must remain on the mother island.|Na wyspie macierzystej musi pozostać co najmniej dwunastu mieszkańców.
+Choose two different existing islands.|Wybierz dwie różne, istniejące wyspy.
+The shared ship is busy with cargo or passengers.|Wspólny statek jest zajęty przewozem towarów albo pasażerów.
+Choose valid resident identifiers.|Wybierz prawidłowych mieszkańców.
+Choose between one and 100 passengers per voyage.|Wybierz od 1 do 100 pasażerów na rejs.
+All selected passengers must actually be at Home.|Wszyscy wybrani pasażerowie muszą rzeczywiście przebywać w Domu.
+The destination needs free Town Hall population places and House beds for all passengers.|U celu potrzebne są wolne miejsca w limicie Ratusza i łóżka w Domu dla wszystkich pasażerów.
+Prepare normal meals for the thirty-minute voyage: half a Food per passenger. This is their ordinary meal, without a transport fee.|Przygotuj zwykłe posiłki na 30-minutowy rejs: po pół jednostki żywności na pasażera. To normalne żywienie, bez opłaty za przewóz.
+The voyage exceeds the supported clock or history.|Rejs przekracza obsługiwany zakres zegara lub historii.
+Passengers travel for thirty real minutes, using ordinary meals and no coin fee.|Pasażerowie podróżują przez 30 rzeczywistych minut ze zwykłymi posiłkami, bez opłaty w monetach.
+Passengers departed. Their ordinary meals are packed; no transport fee was charged.|Pasażerowie wypłynęli. Zwykłe posiłki są spakowane; nie pobrano opłaty za przewóz.
+Passengers have already arrived.|Pasażerowie już przybyli.
+Passengers arrived at Home. Their identities and personal progress were preserved.|Pasażerowie przybyli do Domu. Zachowali swoją tożsamość i osobisty postęp.
+`);
+rule(/^Reach Town Hall level (\d+) on your mother island first\.$/, (_, level) => `Najpierw osiągnij poziom Ratusza ${level} na wyspie macierzystej.`);

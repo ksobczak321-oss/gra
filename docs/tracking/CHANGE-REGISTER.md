@@ -1,6 +1,6 @@
 # HARBORLIGHT — rejestr zmian
 
-Stan ewidencji: **2026-10-31**. **255 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
+Stan ewidencji: **2026-10-31**. **256 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
 
 Źródło danych: [changes.json](changes.json). Karty odtwarza `python3 scripts/build_change_register.py`; `--check` sprawdza zgodność bez zapisów. Nie edytuj wygenerowanych kart zamiast źródła JSON.
 
@@ -77,6 +77,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0030 — Wycofana uwaga o Porcie ze starego zrzutu ekranu](changes/HL-CHG-0030.md) | Decision | `withdrawn` | `not_applicable` | `not_applicable` |
 | [HL-CHG-0031 — Wybór języka PL/EN przy pierwszym wprowadzeniu i nazwie wyspy](changes/HL-CHG-0031.md) | Story | `accepted` | `verified` | `code_deployed_0_9_1_2` |
 | [HL-CHG-0032 — Pomoc: Wróć do tutoriala ponownie pokazuje objaśnienia gry](changes/HL-CHG-0032.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0034 — Nowe odmowy kolonizacji i rejsów są po polsku przy języku PL](changes/HL-CHG-0034.md) | Bug | `accepted_scope_bugfix` | `targeted_packaged_browser_pass` | `not_deployed` |
 
 <a id="hl-epic-tut"></a>
 

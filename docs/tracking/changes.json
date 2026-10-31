@@ -13324,6 +13324,61 @@
       "notes": [
         "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
       ]
+    },
+    {
+      "id": "HL-CHG-0034",
+      "epic": "HL-EPIC-UI",
+      "area": "Język i komunikaty archipelagu",
+      "type": "Bug",
+      "title": "Nowe odmowy kolonizacji i rejsów są po polsku przy języku PL",
+      "source": {
+        "kind": "audit_followup_to_user_go",
+        "date": "2026-10-31",
+        "date_note": "Przegląd końcowy wdrażanego DEV, bez nowego zakresu GCP.",
+        "summary": "Brakujące PL komunikaty nowych mechanik znalezione po odbiorze pierwszego źródłav24.",
+        "reference": "chat:GO-DEV-po-pilnej-zmianie"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "targeted_packaged_browser_pass",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted_scope_bugfix"
+      },
+      "acceptance": [
+        "Przy12mieszkańcach matki odmowa kolonizacji jest po polsku i zachowuje stan gry.",
+        "Przy brakującym materiale odmowa pokazuje po polsku wymóg wszystkich zasobów.",
+        "Odmowy rejsu opisują po polsku minimum12/6, obecność w Domu, miejsca, normalne posiłki i zajęty statek.",
+        "Dynamiczny próg kolejnej wyspy jest tłumaczony, EN zachowuje tekst oryginalny; cache24-1 odświeża poprzedni podgląd."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0031",
+        "HL-CHG-0810",
+        "HL-CHG-0815",
+        "HL-CHG-0822"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/DEV-0.10.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-i18n.js",
+          "harborlight-v1-play.js",
+          "harborlight-v1-layered.html"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v15-i18n.test.mjs",
+          "tests/harborlight-v21-features-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Uzupełniono PL odmowy i dynamiczny próg Ratusza.12testów i18n,12pakowania i cały scenariusz archipelagu na nowym pakiecie PASS, w tym rzeczywiste odmowy przy12osobach i braku drewna. WłasneCI/Pages nowego źródła wymagają odrębnego potwierdzenia. Poprzedni tag DEV pozostaje historyczny i nie jest przesuwany."
+      },
+      "notes": []
     }
   ]
 }

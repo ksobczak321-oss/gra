@@ -783,3 +783,10 @@ Harmonogram ligi i pozostałe jawne parametry DEV opisano w wymaganiachv24 jako 
 Kod aplikacji: `351baaf6b21386b2f2641875269e6f7d9c2d44fd`. CI41237587670 SUCCESS (4m46s), Pages41237587641 SUCCESS (23s). Lokalny pakiet rzeczywistego SHA ma54pliki/10 951 651bajtów; SHA-256 archiwum `e2d681a91e27266272483254bc43881c1bc4e0ff9cbec892ed9ca72ff711b0eb`, manifestu `591f68a03550a6aed69374dbe3dd584c8da6d45d6cccb9732d7ac2e2541b102f`. Weryfikacja archiwum PASS; wszystkie53pliki zawartości identyczne z pakietem odebranym przez16zestawówChromium. Nieprzesuwany tag `dev-0.10.0.0-20261031` wiąże te dowody. Bezpośredni odczyt Pages z tej sesji blokuje brama CONNECT403; nie przedstawiamy jej jako błędu gry. Sukces publikacji potwierdza workflow.
 
 Późniejszy commit dotyczy wyłącznie rejestru i dowodów. Brak promocji GCP, stosowania reguł, resetu admin1–admin3 i integracji nagród fizycznych. Importer nadal305kart w dry-run, bez utworzenia natywnych Issues. Ręczne50przypadków nadal NOT RUN.
+
+
+### Uzupełnienie PL po końcowym przeglądzie v24
+
+Wykryto brak polskich tłumaczeń nowych komunikatów odmowy kolonizacji i przewozu pasażerów. Dodano komplet stałych komunikatów i regułę dynamicznego progu Ratusza, bez zmiany gospodarki. Cache publicznych modułów przechodzi na frontend-v24-1, aby poprzednio otwarty podgląd otrzymał poprawkę. Rozszerzono rzeczywisty scenariusz przeglądarkowy o odmowę przy12mieszkańcach i brakującym drewnie; oba komunikaty oraz cały scenariusz transportów przeszły na nowym pakiecie. Lokalnie12testów i18n oraz12pakowania PASS. Wcześniejszy tag dev-0.10.0.0-20261031 pozostaje niezmieniony; uzupełnienie wymaga odrębnego źródła/CI/tagu. GCP bez zmian.
+
+Uzupełnienie ma osobną kartę HL-CHG-0034. Bieżący rejestr:256zmian/50przypadków ręcznych,306kart importera; wcześniejsze liczby255/305 są historią pierwszego źródła.

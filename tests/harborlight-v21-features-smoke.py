@@ -206,6 +206,24 @@ def archipelago_cloud_and_shipping(browser):
     expect(page.locator('[data-create-second-island-confirm]')).to_have_count(0)
     context.close()
 
+    short = world('archipelago')
+    short['population'] = 12
+    short['residents'] = short['residents'][:12]
+    context, page = enter(browser, short)
+    open_archipelago(page)
+    expect(page.locator('[data-archipelago-panel]')).to_contain_text('Założenie wymaga 18 mieszkańców na matce')
+    expect(page.locator('[data-create-second-island-confirm]')).to_be_disabled()
+    context.close()
+
+    missing = world('archipelago')
+    missing['resources']['wood'] = 0
+    missing['bonusMaterials']['wood'] = 0
+    context, page = enter(browser, missing)
+    open_archipelago(page)
+    expect(page.locator('[data-archipelago-panel]')).to_contain_text('Założenie wymaga wskazanego łącznego kosztu')
+    expect(page.locator('[data-create-second-island-confirm]')).to_be_disabled()
+    context.close()
+
     original = world('archipelago')
     context, page = enter(browser, original)
     open_archipelago(page)
