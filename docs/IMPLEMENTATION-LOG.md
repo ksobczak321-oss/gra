@@ -790,3 +790,5 @@ Późniejszy commit dotyczy wyłącznie rejestru i dowodów. Brak promocji GCP, 
 Wykryto brak polskich tłumaczeń nowych komunikatów odmowy kolonizacji i przewozu pasażerów. Dodano komplet stałych komunikatów i regułę dynamicznego progu Ratusza, bez zmiany gospodarki. Cache publicznych modułów przechodzi na frontend-v24-1, aby poprzednio otwarty podgląd otrzymał poprawkę. Rozszerzono rzeczywisty scenariusz przeglądarkowy o odmowę przy12mieszkańcach i brakującym drewnie; oba komunikaty oraz cały scenariusz transportów przeszły na nowym pakiecie. Lokalnie12testów i18n oraz12pakowania PASS. Wcześniejszy tag dev-0.10.0.0-20261031 pozostaje niezmieniony; uzupełnienie wymaga odrębnego źródła/CI/tagu. GCP bez zmian.
 
 Uzupełnienie ma osobną kartę HL-CHG-0034. Bieżący rejestr:256zmian/50przypadków ręcznych,306kart importera; wcześniejsze liczby255/305 są historią pierwszego źródła.
+
+UzupełnieniePL obejmuje także etykiety kosztów i ładunków; nazwy nadane wyspom pozostają wyłączone z tłumaczenia. Końcowy cache tej korekty:frontend-v24-2.

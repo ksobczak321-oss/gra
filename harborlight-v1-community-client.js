@@ -1,4 +1,4 @@
-import { LEAGUE_RULES, leagueCalendar, createLeagueChallenge, emptyLeagueProgress, applyLeagueAction, leagueAttemptScore } from './harborlight-v1-league.js?v=frontend-v24-1';
+import { LEAGUE_RULES, leagueCalendar, createLeagueChallenge, emptyLeagueProgress, applyLeagueAction, leagueAttemptScore } from './harborlight-v1-league.js?v=frontend-v24-2';
 const requestId = () => globalThis.crypto?.randomUUID?.().replaceAll('-', '_') || `request_${Date.now()}_${Math.random().toString(36).slice(2)}`;
 const error = code => Object.assign(new Error(code), { code });
 export function createCommunityClient({ send, load } = {}) {

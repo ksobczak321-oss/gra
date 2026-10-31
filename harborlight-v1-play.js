@@ -1,30 +1,30 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v24-1';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v24-1';
-import * as State from './harborlight-v1-state.js?v=frontend-v24-1';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v24-1';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v24-1';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v24-1';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v24-1';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v24-1';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v24-1';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v24-1';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v24-1';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v24-1';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v24-1';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v24-1';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v24-1';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v24-1';
-import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v24-1';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v24-1';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v24-1';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v24-1-fit2';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v24-1';
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v24-1';
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v24-1';
-import { GAME_VERSION } from './harborlight-version.js?v=frontend-v24-1';
-import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v24-1';
-import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v24-1';
-import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v24-1';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v24-2';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v24-2';
+import * as State from './harborlight-v1-state.js?v=frontend-v24-2';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v24-2';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v24-2';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v24-2';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v24-2';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v24-2';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v24-2';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v24-2';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v24-2';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v24-2';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v24-2';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v24-2';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v24-2';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v24-2';
+import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v24-2';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v24-2';
+import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v24-2';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v24-2-fit2';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v24-2';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v24-2';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v24-2';
+import { GAME_VERSION } from './harborlight-version.js?v=frontend-v24-2';
+import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v24-2';
+import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v24-2';
+import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v24-2';
 
 I18n.registerTranslations({
   "Choose a minigame": "Wybierz minigrę",
@@ -266,7 +266,7 @@ const count = value => I18n.formatNumber(Math.floor(value || 0), language());
 const text = value => I18n.translate(String(value), language());
 function localize(root = document.body) { I18n.translateDOM(root, language()); document.documentElement.lang = language(); }
 const titleOf = id => BUILDINGS[id]?.name || id;
-const costText = cost => Object.entries(cost || {}).map(([id, value]) => `${nameOf(id)}: ${count(value)}`).join(' · ');
+const costText = cost => Object.entries(cost || {}).map(([id, value]) => `${text(nameOf(id))}: ${count(value)}`).join(' · ');
 const button = (label, fn, attributes = {}) => el('button', { type: 'button', class: 'action', onclick: fn, ...attributes }, label);
 const note = text => el('p', { class: 'notice' }, omitTaxInformation(text));
 const card = (...children) => el('section', { class: 'info-card' }, ...children);
@@ -1886,12 +1886,12 @@ async function createArchipelagoIsland(name) {
 }
 function archipelagoPanel() {
   const status = Archipelago.archipelagoStatus(archipelago), quote = status.nextIsland;
-  const content = el('section', { class: 'archipelago-panel', 'data-archipelago-panel': '', 'data-i18n-ignore': '' },
+  const content = el('section', { class: 'archipelago-panel', 'data-archipelago-panel': '' },
     el('h3', {}, uiCopy('Your archipelago', 'Twój archipelag')),
     note(uiCopy('Your mother island unlocks daughters at Town Hall levels 10, 13, 16 and every three levels, up to 20 islands total. A daughter’s name always begins with the current mother name. Founding instantly moves six existing residents who are actually at Home, leaving at least twelve on the mother island.', 'Ratusz matki odblokowuje córki na poziomach 10, 13, 16 i co trzy kolejne, do 20 wysp łącznie. Nazwa córki zawsze zaczyna się od bieżącej nazwy matki. Założenie natychmiast przenosi sześciu istniejących mieszkańców rzeczywiście obecnych w Domu; na matce musi pozostać co najmniej dwunastu.')));
   for (const world of status.worlds) {
     const rename = el('input', { type: 'text', minlength: '2', maxlength: '40', required: true, value: world.id === 'island-1' ? world.name : world.suffix, 'aria-label': uiCopy('Name or daughter suffix', 'Nazwa matki lub końcówka córki'), 'data-rename-island-input': world.id });
-    content.append(card(el('h4', {}, world.name), stat(uiCopy('Town Hall', 'Ratusz'), world.townhallLevel), stat(uiCopy('Residents', 'Mieszkańcy'), world.population),
+    content.append(card(el('h4', { 'data-i18n-ignore': '' }, world.name), stat(uiCopy('Town Hall', 'Ratusz'), world.townhallLevel), stat(uiCopy('Residents', 'Mieszkańcy'), world.population),
       button(archipelago.activeIslandId === world.id ? uiCopy('Current island', 'Bieżąca wyspa') : uiCopy('Go to island', 'Przejdź na wyspę'), () => void switchArchipelagoIsland(world.id), { class: 'action secondary', disabled: archipelago.activeIslandId === world.id, 'data-switch-island': world.id }),
       el('form', { onsubmit: event => { event.preventDefault(); if (!allowIslandMutation()) return; const result = Archipelago.renameArchipelagoIsland(archipelago, world.id, rename.value); if (!result.ok) toast(result.message); else { void save(true); renderHUD(); renderPanel(); } } }, rename, el('button', { class: 'action secondary', type: 'submit', 'data-rename-island': world.id }, uiCopy('Save name', 'Zapisz nazwę')))));
   }
@@ -1901,7 +1901,7 @@ function archipelagoPanel() {
       note(uiCopy(`Cumulative Town Hall and House upgrades 1→${quote.valuationLevel}, each resource: ${count(quote.cost.coins)}. Six residents must be at Home; the mother keeps twelve.`, `Suma rozbudów Ratusza i Domu 1→${quote.valuationLevel}, każdego zasobu: ${count(quote.cost.coins)}. Sześć osób musi być w Domu; na matce pozostaje dwanaście.`)),
       resourceList(quote.cost), !quote.ok ? note(text(quote.message)) : null,
       el('form', { class: 'archipelago-create', 'data-create-second-island': '', onsubmit: event => { event.preventDefault(); void createArchipelagoIsland(input.value); } },
-        el('span', {}, `${archipelago.primary.islandName} - `), input, el('button', { type: 'submit', class: 'action', disabled: !quote.ok, 'data-create-second-island-confirm': '' }, uiCopy('Found daughter island', 'Załóż wyspę córkę')))));
+        el('span', { 'data-i18n-ignore': '' }, `${archipelago.primary.islandName} - `), input, el('button', { type: 'submit', class: 'action', disabled: !quote.ok, 'data-create-second-island-confirm': '' }, uiCopy('Found daughter island', 'Załóż wyspę córkę')))));
   }
   content.append(islandShippingPanel());
   return content;

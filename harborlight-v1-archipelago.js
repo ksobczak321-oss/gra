@@ -1,11 +1,11 @@
 // The client snapshot keeps a mother-root account revision with up to twenty
 // worlds. Cloud adapters persist bounded per-world documents atomically.
 // Simulation is injected: this module does not import the state coordinator.
-import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v24-1';
-import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v24-1';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v24-1';
-import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v24-1';
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v24-1';
+import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v24-2';
+import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v24-2';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v24-2';
+import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v24-2';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v24-2';
 
 export const ISLAND_IDS = Object.freeze(Array.from({ length: 20 }, (_, index) => `island-${index + 1}`));
 export const ARCHIPELAGO_RULES = Object.freeze({ version: 2, secondIslandLevel: 10, maximumIslands: 20, islandLevelStep: 3, colonists: 6,

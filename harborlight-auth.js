@@ -1,9 +1,9 @@
 // PRE-PROD preserves its test accounts. PROD uses Firebase email and OAuth accounts.
 // Passwords are sent only by the Firebase client and never saved in browser storage.
-import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v24-1';
-import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v24-1';
-import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v24-1';
-import { signInWithProvider } from './harborlight-auth-providers.js?v=frontend-v24-1';
+import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v24-2';
+import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v24-2';
+import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v24-2';
+import { signInWithProvider } from './harborlight-auth-providers.js?v=frontend-v24-2';
 import { legalAcceptance, validLegalAcceptance } from './harborlight-legal.js?v=legal-v3';
 
 registerTranslations({

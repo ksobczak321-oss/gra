@@ -228,6 +228,8 @@ def archipelago_cloud_and_shipping(browser):
     context, page = enter(browser, original)
     open_archipelago(page)
     expect(page.locator('[data-create-second-island-confirm]')).to_be_enabled()
+    expect(page.locator('[data-archipelago-panel]')).to_contain_text('Monety')
+    expect(page.locator('[data-archipelago-panel]')).to_contain_text('Drewno')
     page.locator('[data-second-island-name]').fill('Wyspa Bursztynowa')
     page.locator('[data-create-second-island-confirm]').click()
     expect(page.locator('[data-switch-island="island-2"]')).to_be_enabled()

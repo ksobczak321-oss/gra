@@ -4,7 +4,7 @@ Aktualizacja: **31 października 2026**. Ten dokument jest głównym rejestrem t
 
 ## Aktualny DEV — 0.10.0.0 / v24
 
-**Uzupełnienie PL w odbiorze:** dopisano polskie odmowy kolonizacji i rejsów oraz odświeżono cache do `frontend-v24-1`. Poprzedni potwierdzony kod poniżej zachowuje własne dowody i tag; uzupełnienie wymaga własnego CI/Pages.
+**Uzupełnienie PL w odbiorze:** dopisano polskie odmowy kolonizacji i rejsów oraz odświeżono cache do `frontend-v24-2`. Poprzedni potwierdzony kod poniżej zachowuje własne dowody i tag; uzupełnienie wymaga własnego CI/Pages.
 
 Źródło: **`351baaf6b21386b2f2641875269e6f7d9c2d44fd`**. [Pages41237587641 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41237587641),23s. [CI41237587670 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41237587670). [Dokładny lokalny odbiór i hashe](DEV-0.10.0.0-VALIDATION.md). [PodglądDEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v24) działa w pamięci, odrębnie od kont GCP. Wysłanie do Git i sukces Pages nie są promocją PRE-PROD.
 

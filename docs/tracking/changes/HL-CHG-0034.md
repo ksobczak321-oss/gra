@@ -22,7 +22,8 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 - Przy12mieszkańcach matki odmowa kolonizacji jest po polsku i zachowuje stan gry.
 - Przy brakującym materiale odmowa pokazuje po polsku wymóg wszystkich zasobów.
 - Odmowy rejsu opisują po polsku minimum12/6, obecność w Domu, miejsca, normalne posiłki i zajęty statek.
-- Dynamiczny próg kolejnej wyspy jest tłumaczony, EN zachowuje tekst oryginalny; cache24-1 odświeża poprzedni podgląd.
+- Dynamiczny próg kolejnej wyspy jest tłumaczony, EN zachowuje tekst oryginalny; cache24-2 odświeża poprzedni podgląd.
+- Etykiety monet, materiałów i ładunku są po polsku przy PL; własne nazwy wysp nie są tłumaczone.
 
 ## Źródło
 
