@@ -8,26 +8,26 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `proposed` |
+| Implementacja | `not_implemented` |
 | DEV | `analysis_only` |
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `open` |
+| Decyzja | `accepted_parameters_with_open_details` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
 ## Zakres i odbiór
 
-- Limit darowizn i skończony budżet operatora obowiązują niezależnie od nagrody szczęścia.
-- Szczęście może pośrednio zwiększać ludność i podatki; propozycja wymaga policzenia tego skutku oraz zabezpieczenia przed samofinansującą się pętlą darowizn.
-- Cele i dowody rzeczywistych przelewów są przejrzyste.
+- Program ma rozświetlać port i dawać rzeczywisty bonus szczęścia, z zachowaniem limitu osoby i globalnej puli operatora.
+- Wysokość, czas trwania i moment przyznania bonusu wymagają zatwierdzenia; premia może pośrednio zwiększać populację i podatki.
+- Limit puli ogranicza zobowiązanie finansowe, lecz nie dowodzi rentowności ani zbalansowania gospodarki.
 
 ## Źródło
 
 Limity darowizn i kontrolowane skutki bonusu szczęścia
 
-Odniesienie: `user_chat:last_request_2026-10-31`.
+Odniesienie: `user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_4`.
 
 Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.
 
@@ -47,6 +47,10 @@ Powiązane przypadki do ręcznego przeklikania:
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
 - **Powiązane:** Brak.
+
+## Uwagi
+
+- Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

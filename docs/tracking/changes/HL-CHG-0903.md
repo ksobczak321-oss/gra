@@ -8,24 +8,25 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `proposed` |
+| Implementacja | `not_implemented` |
 | DEV | `analysis_only` |
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `open` |
+| Decyzja | `accepted` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
 ## Zakres i odbiór
 
-- Przeniesienie, wymiana, zakup i restart nie umożliwiają ponownej kwalifikacji tej samej wartości.
+- Serwer prowadzi pochodzenie i jednokrotne zużycie monet; nie przyjmuje deklaracji earned z klienta.
+- Kupno materiałów za monety kupione, sprzedaż materiałów, transfery i restart nie zamieniają tej wartości w kwalifikowane monety; wszystkie wpływy handlowe są niekwalifikowane.
 
 ## Źródło
 
 Serwerowa księga pochodzenia i jednokrotnego zużycia monet charytatywnych
 
-Odniesienie: `user_chat:last_request_2026-10-31`.
+Odniesienie: `user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_3`.
 
 Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.
 
@@ -45,6 +46,10 @@ Powiązane przypadki do ręcznego przeklikania:
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
 - **Powiązane:** Brak.
+
+## Uwagi
+
+- Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

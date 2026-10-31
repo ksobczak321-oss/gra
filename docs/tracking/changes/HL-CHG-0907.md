@@ -8,12 +8,12 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `proposed` |
+| Implementacja | `historical_only` |
 | DEV | `analysis_only` |
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `open` |
+| Decyzja | `superseded` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
@@ -36,15 +36,15 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 - **Scenariusze automatyczne:** nie przypisano.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Powiązane przypadki do ręcznego przeklikania:
-
-- [HL-TC-0041 — Planszówka 2–6 osób: sesja 45–60 min i jednokrotny skutek online](../../testing/manual/HL-TC-0041.md) — `NOT RUN`.
-
 ## Relacje
 
 - **Zastępuje:** Brak.
-- **Zastąpione lub ograniczone przez:** Brak.
+- **Zastąpione lub ograniczone przez:** [HL-CHG-0921](HL-CHG-0921.md)
 - **Powiązane:** Brak.
+
+## Uwagi
+
+- Użytkownik odrzucił dwie talie: bieżący kierunek to jedna talia fizyczna i treść wyświetlana na telefonie. Plansza budynków i centralna Latarnia pozostają.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

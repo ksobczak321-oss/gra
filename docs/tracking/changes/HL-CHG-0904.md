@@ -8,24 +8,26 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `proposed` |
+| Implementacja | `not_implemented` |
 | DEV | `analysis_only` |
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `open` |
+| Decyzja | `accepted` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
 ## Zakres i odbiór
 
-- Przyszłe zobowiązanie jest policzone dla graczy i limitów; brak przychodu nie tworzy nieograniczonego długu.
+- 1000 kwalifikowanych monet przydziela 1 zł z zabezpieczonej puli operatora, najwyżej raz na osobę w miesiącu i co najmniej 30 dni po poprzedniej operacji.
+- Pula pilotażowa wynosi najwyżej 50 zł łącznie; późniejsza pula nie przekracza 50 zł, 5% rzeczywistej marży poprzedniego miesiąca ani faktycznie wydzielonych środków.
+- Brak dostępnej puli lub niewystarczające saldo nie pobiera monet. Zatwierdzenie projektu nie jest wykonaniem przelewu.
 
 ## Źródło
 
 Przelicznik 1000 monet na 1 zł właściciela z ograniczonym budżetem
 
-Odniesienie: `user_chat:last_request_2026-10-31`.
+Odniesienie: `user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_2`.
 
 Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.
 
@@ -45,6 +47,10 @@ Powiązane przypadki do ręcznego przeklikania:
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
 - **Powiązane:** Brak.
+
+## Uwagi
+
+- Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

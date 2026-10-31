@@ -1,6 +1,6 @@
 # HARBORLIGHT — ręczny plan testów i osobne przypadki
 
-Plan utworzony 31 października 2026. **45 osobnych przypadków; wszystkie wyniki ręczne: NOT RUN.** Nie jest to raport wykonania ani potwierdzenie skuteczności nowych mechanik. Każdy plik `HL-TC-…` może stanowić treść osobnego zgłoszenia typu Test Case; sam plik nie oznacza utworzenia natywnego GitHub Issue.
+Plan utworzony 31 października 2026. **46 osobnych przypadków; wszystkie wyniki ręczne: NOT RUN.** Nie jest to raport wykonania ani potwierdzenie skuteczności nowych mechanik. Każdy plik `HL-TC-…` może stanowić treść osobnego zgłoszenia typu Test Case; sam plik nie oznacza utworzenia natywnego GitHub Issue.
 
 ## Metodyka
 
@@ -29,7 +29,7 @@ Przy powtarzaniu testów należy zapisać rzeczywisty SHA/build, nazwę fixture 
 3. Gospodarka, ludzie, zdarzenia i minigry: TC06–18 oraz TC24–25.
 4. Obecny archipelag i aktywowane API wymian: TC26–28; usługi niepotwierdzone oznaczyć BLOCKED.
 5. Odczyt operacyjny i retencja w izolacji: TC32 i TC42.
-6. Nowe projekty TC33–41 dopiero po zatwierdzeniu decyzji i implementacji; obecnie DRAFT/BLOCKED. Papierowy prototyp planszówki można osobno ocenić bez przyznawania nagród online.
+6. Nowe projekty TC33–41 oraz TC46 dopiero po zatwierdzeniu decyzji i implementacji; obecnie DRAFT/BLOCKED. Papierowy prototyp planszówki można osobno ocenić bez przyznawania nagród online. Punkty stołowe, punkty za zadania online i punkty ligi są odrębnymi pojęciami. Zmiana członkostwa w sojuszu nie może obchodzić zamrożonego składu sezonu, a były członek traci bieżący dostęp do chatu.
 
 ## Indeks
 
@@ -80,6 +80,7 @@ Przy powtarzaniu testów należy zapisać rzeczywisty SHA/build, nazwę fixture 
 | [HL-TC-0043 — Lekcja Budowy prowadzi przez szczegóły do widocznego priorytetu](manual/HL-TC-0043.md) | Samouczek i nawigacja | P1 | READY | NOT RUN |
 | [HL-TC-0044 — Sześć kafelków nagrody ma równy układ 3×2](manual/HL-TC-0044.md) | Interfejs nagród | P1 | READY | NOT RUN |
 | [HL-TC-0045 — Opis kart zasobów i podatków odpowiada rzeczywistym wartościom](manual/HL-TC-0045.md) | Objaśnienia gospodarki | P1 | READY | NOT RUN |
+| [HL-TC-0046 — Sojusz przy Rankingu: członkostwo i chat gry](manual/HL-TC-0046.md) | Projekt sojuszy i komunikacji | P1 | DRAFT / BLOCKED | NOT RUN |
 
 ## Format zgłoszenia niezgodności
 
@@ -87,6 +88,6 @@ Po FAIL utwórz odrębny Bug: tytuł z obserwowalnym skutkiem, powiązany `HL-TC
 
 ## Archiwum i dane maszynowe
 
-- [JSON nowych 45 przypadków](manual-test-cases.json) — stabilne ID, powiązania i status NOT RUN.
+- [JSON nowych 46 przypadków](manual-test-cases.json) — stabilne ID, powiązania i status NOT RUN.
 - [Historyczny plan v18 —155 scenariuszy](../TEST-SCENARIOS-v18.md) i [jego JSON](../test-scenarios-v18.json) pozostają archiwalną migawką. Nie podmieniono ich historycznych wyników; nowy zestaw grupuje główne ścieżki ręcznego odbioru i nowe projektowane funkcje.
 - Wyniki lokalnej automatyzacji i promocji zapisuje [dziennik](../IMPLEMENTATION-LOG.md). Nie są one wykonaniem tego planu przez człowieka.

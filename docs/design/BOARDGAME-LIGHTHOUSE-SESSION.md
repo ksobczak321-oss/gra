@@ -1,155 +1,173 @@
-# HARBORLIGHT przy stole — „Noc, w której zgasła Latarnia”
+# HARBORLIGHT przy stole — „Ostatni rejs przed świtem”
 
-Status: **propozycja do decyzji, wyłącznie projekt teoretyczny**. Data: 31 października 2026. Nie dodano trybu planszowego do aplikacji, nie zmieniono gospodarki i nie przyznano nagród. Parametry poniżej są propozycją projektu, a nie zatwierdzonym balansem.
+Stan: **nowy projekt po odpowiedzi użytkownika, bez implementacji i bez testu przy stole**. Data: 31 października 2026. Zastępuje poprzednią wersję „Noc, w której zgasła Latarnia”. Użytkownik wybrał jedną talię, ruch pionków, zadania z telefonu oraz rzeczywisty zysk dla konta online. Liczby punktów, przebieg i wysokość nagród poniżej są propozycją do zatwierdzenia.
 
-## Rekomendacja
+## O czym jest gra i dlaczego warto usiąść bez konta online
 
-Kooperacyjna przygoda dla **2–6 osób na około 50 minut**, z jednym telefonem prowadzącym rozgrywkę. Przynajmniej gospodarz ma konto HARBORLIGHT i otwartą grę. Pozostałe osoby mogą od razu grać jako goście. Plansza odpowiada budynkom gry; duża Latarnia pośrodku jest wspólnym celem. Grupa układa towary, wyznacza trasy, planuje pracę mieszkańców, buduje niewielki model i podejmuje decyzje rady wyspy.
+Na wyspie zgasła Latarnia, a ostatni statek czeka za mgłą. Każdy z graczy jest innym, nieco ekscentrycznym mieszkańcem: zarozumiałym nawigatorem, przesadnie skrupulatną magazynierką, cieślą przekonanym, że wszystko da się naprawić deską. W osiem rund grupa musi obejść wyspę, zdobyć trzy części sygnału i wspólnie sprowadzić statek. Trasy i decyzje dają osobiste punkty; sceny wymagają podpowiadania, improwizacji, rysowania i współpracy. Zwycięstwo wyspy jest wspólne, ale epilog wyróżnia także indywidualnych bohaterów.
 
-Opowieść: przed nocnym sztormem gasną światła na szlaku. Mieszkańcy mają żywność i materiały, lecz potrzebują organizacji, sprawnego mechanizmu i poprawnego sygnału. Gracze pomagają Latarnikowi, decydując jednocześnie, ile zapasów przeznaczyć na bezpieczne sprowadzenie gości do portu. Rozwiązania przy stole zmieniają przebieg wspólnej historii. Nie ma napadów na inne konta ani strat na zwykłej wyspie gospodarza.
+Gra jest przeznaczona dla **2–6 osób na 45–60 minut**. Standard to 5 minut przygotowania, osiem rund po 5 minut i 5 minut finału: **50 minut**. Dwa lub sześć pionków nie zmienia liczby rund i zadań. Nikt nie odpada, nie musi śpiewać, dotykać drugiej osoby, biegać ani udawać sytuacji naruszającej jego granice. Każda scena ma równoważny wariant siedzący, pisany lub wskazywany.
 
-W repozytorium [koncepcja HARBORLIGHT](../HARBORLIGHT-CONCEPT.md) opisuje związek ekspedycji z rozwojem osady, a [backlog](../BACKLOG.md) wymienia planszówkę/AR jako odłożony kierunek. Nie znaleziono wcześniejszej, kompletnej instrukcji fizycznej HARBORLIGHT. BLACKOUT i PANIC PETS pozostają osobnymi historycznymi eksperymentami. Ta propozycja wykorzystuje aktualne budynki i receptury HARBORLIGHT, nie dawne pomysły piekarni czy zwierząt z dokumentu koncepcyjnego.
+Nie trzeba znać gospodarki HARBORLIGHT: potrzebne receptury, role i symbole są na planszy i w instrukcji sceny. To pełna zabawa przy stole, z początkiem, decyzjami i zakończeniem, a nie seria kliknięć w celu otrzymania nagrody.
 
-## Plansza i dokładnie dwa rodzaje kart
+## Trzy warstwy tej samej sesji
 
-Na obrzeżu planszy są: Ratusz, Dom, Magazyn, Gospodarstwo, Młyn, Drwale, Tartak, Kamieniołom, Port, Targ i Kaplica. Drogi prowadzą do dużego znaku Latarni w środku. Obok niej znajdują się trzy miejsca: **Załoga, Mechanizm, Sygnał**. Targ jest miejscem rozmów i decyzji; ta sesja nie rozstrzyga otwartego projektu nowych cen handlu online.
-
-Są **dwie talie**:
-
-| Rodzaj | Przeznaczenie | Zawartość sesji próbnej |
+| Warstwa | Co robią uczestnicy | Co jest wynikiem |
 |---|---|---|
-| **Zlecenia wyspy** | Konkretne zadanie fizyczne, budynek, warunek ukończenia, podpowiedź i wynik. | Osiem kart Z1–Z8. |
-| **Opowieść** | Zdarzenie, rozmowa postaci, wybór z konsekwencją i zakończenie. | Cztery karty O1–O4. |
+| **1. Wyspa na stole** | Przemieszczają własne pionki po budynkach, wybierają tempo i zagrywają karty Szlaku. | Osobiste punkty wyprawy oraz pozycja przed finałem. |
+| **2. Wyspa w opowieści** | Odgrywają sceny z telefonu: kalambury z ograniczeniami, naradę, szyfr, naprawę i negocjacje. | Do ośmiu zaliczonych zadań, trzy części sygnału i wspólna historia. |
+| **3. Konto online** | Po sesji odbierają potwierdzony wynik w kategorii „Zadania przy stole”. | Proponowany trwały postęp oraz ograniczona nagroda, bez zaliczania samouczka lub zadań Latarni. |
 
-Role są wydrukowane na krawędzi planszy i pokazane w telefonie. Nie tworzą trzeciej talii. Poza kartami potrzebne są papierowe znaczniki mieszkańców i zasobów, sześć pionków, ołówek, kartka i kilka papierowych pasków. Nie potrzeba żadnego narzędzia, nagrania głosu, filmowania uczestników ani drugiego telefonu. Zwykły minutnik może być zastąpiony zegarem aplikacji.
+To nie są trzy osobne gry po godzinie. W każdej rundzie ruch prowadzi do sceny, scena zmienia sytuację przy stole, a zaliczenie staje się przyszłym zdarzeniem konta. Osobiste punkty ruchu nie są monetami, punkty aktywności nie są punktami ligi, a wspólny wynik nie jest poziomem Latarni online.
 
-Pierwszy prototyp może powstać na kartce A3. Nie potrzebuje opłaconej produkcji, generowania grafiki, kamery rozpoznającej przedmioty ani rozszerzonej rzeczywistości.
+## Przyszły ekran „Gra fizyczna”
 
-## Czas i przebieg
+Proponowana ścieżka: **Ustawienia / Ranking i aktywności → Gra fizyczna → Nowa sesja**. Dokładne miejsce przycisku wymaga projektu interfejsu; sam przycisk nie istnieje obecnie.
 
-| Minuty | Etap | Przebieg |
+Gospodarz wybiera scenariusz, liczbę osób 2–6 i tryb „z kontem online” albo „bez nagród online”. Wpisuje imiona postaci, a telefon prowadzi historię, wybiera osiem scen z banku dwunastu, pilnuje czasu i zapisuje wynik. Jedna osoba nie musi być stałym mistrzem gry — telefon przechodzi do wykonawcy sceny. Właściciel telefonu także gra i zgaduje w rundach, w których nie zna rozwiązania.
+
+Jeden telefon wystarcza do całej sesji. Nie wymaga skanowania QR, instalacji u gości ani logowania cudzego konta na urządzeniu gospodarza. W przyszłości QR na pudełku może otwierać instrukcję; nie jest dowodem wykonania zadania i nie jest drugą talią.
+
+## Zawartość pudełka: jedna talia i prawdziwe pionki
+
+- plansza z dwunastoma polami szlaku na obwodzie: jedenaście budynków i przystanek przy Porcie, oraz dużą Latarnią w środku;
+- po jednym pionku i znaczniku punktów dla każdego z maksymalnie sześciu uczestników;
+- **jedna talia 24 kart Szlaku**: po cztery karty Portu, Magazynu, Domu, Ratusza, Kaplicy i Drwali;
+- trzy znaczniki części sygnału: **Mechanizm, Załoga, Kod**;
+- sześć żetonów podpowiedzi, osiem znaczników sukcesu, jeden znacznik rundy;
+- kilkanaście zwykłych znaczników drewna/zboża/żywności, kartka i ołówek do niektórych scen.
+
+Każda karta Szlaku ma symbol specjalności i dwie opcje: **ruch o 1 i 2 punkty** albo **ruch o 2 i 1 punkt**. Jeżeli koniec ruchu jest na budynku wydrukowanym na zagranej karcie, daje jeszcze 1 punkt specjalności. To nie trzecia opcja ruchu. Gracz wybiera kartę z ręki trzech: wolniejsze obejście zwiększa punkty, szybsze daje szansę dotrzeć do Latarni przed finałem. Cała grupa musi ustalić, kto ryzykuje wolniejszą drogę.
+
+Punktacja ruchu dotyczy zakończonej tury, nie każdego miniętego pola. Ponowne przestawienie pionka i cofnięcie decyzji po poznaniu wyniku sceny nie daje kolejnych punktów. Talie dobierania i odrzuconych to dwa stosy **tego samego jednego rodzaju kart**, nie druga talia zdarzeń. Gdy stos się skończy, odrzucone karty tasujemy ponownie.
+
+## Mapa, która rzeczywiście daje się przejść
+
+Numeracja jest wydrukowana zgodnie z ruchem wskazówek zegara:
+
+`0 Port → 1 Magazyn → 2 Dom → 3 Gospodarstwo → 4 Młyn → 5 Kaplica → 6 Ratusz → 7 Kamieniołom → 8 Drwale → 9 Tartak → 10 Targ → 11 Przystań → 12 Port → 13 Latarnia (środek)`.
+
+Przystań 11 to dodatkowe pole szlaku przy Porcie, a nie drugi budynek dodany do gry online. Port 0/12 to ten sam narysowany budynek, ale znacznik okrążenia odróżnia start od powrotu. Strzałki pokazują pełny obwód i ostatnią drogę do środka. Nie wolno wejść do Latarni skrótem z dowolnego budynku. Każdy startuje na pozycji 0. Pionki mogą stać razem, nie zbijają się i nie blokują drogi. Przekroczenie 13 kończy ruch dokładnie w Latarni; nie trzeba wyrzucić dokładnej liczby.
+
+Osiem ruchów po jednym lub dwa pola daje od 8 do 16 kroków. Aby dotrzeć do środka, potrzeba co najmniej pięciu dwupolowych ruchów: `5×2 + 3×1 = 13`. Każdy ma taką możliwość niezależnie od losowania, ponieważ **każda karta** oferuje obie prędkości. Nie ma partii przegranej przez brak dobrej kostki.
+
+Wejście do Latarni daje jednorazowo 3 punkty i kończy wędrówkę tej osoby. W następnych rundach nadal bierze udział w scenach i może podpowiadać grupie, ale nie zagrywa karty ruchu, nie dostaje zastępczych punktów marszu ani drugiego bonusu wejścia. Wspólna historia biegnie zawsze przez osiem rund.
+
+## Przygotowanie i lekki RPG
+
+Każdy wybiera imię i jedno zdanie postaci, np. „Jestem cieślą, który nigdy nie przyznaje, że coś się chwieje”. Role i ich charakter są drukiem na planszy lub opisem w telefonie, nie osobnymi kartami. Rozdzielamy sześć ról możliwie równo: Latarnik, Nawigator, Magazynier, Cieśla, Opiekun Domu, Radca. Przy dwóch osobach każda prowadzi trzy postacie; przy sześciu — jedną. Nie trzeba grać głosem lub naśladować akcentu.
+
+Zawsze dostępnych jest **sześć wspólnych podpowiedzi**, niezależnie od liczby osób. Wykonawca może odkryć jedną przed końcem sceny. Podpowiedź nie odbiera zaliczenia ani nagrody; ograniczona liczba wymusza decyzję, kiedy jej użyć. Po wykorzystaniu żeton odkładamy do pudełka.
+
+Przed startem gospodarz czyta: „Statek *Powracający* ma przybyć o świcie. Latarnia milczy, a mieszkańcy mają ze sobą historię tak niezgodną, że nikt nie wie, od czego zacząć. Wróćcie z trzech dzielnic z Mechanizmem, Załogą i Kodem. Jeżeli trzeba, dogadajcie się bez jednego rozsądnego zdania”.
+
+## Pięciominutowa runda
+
+1. **Plan i ruch — 45 s:** każdy wybiera kartę z trzech, odkrywa ją i przesuwa swój pionek. Telefon zapisuje pozycje; punkty ruchu są widoczne na fizycznym torze.
+2. **Scena — 30 s instrukcji i 90 s działania:** telefon od początku pokazuje publiczny cel i warunek sprawdzenia, bez zdradzania poprawnej odpowiedzi. Wybrany wykonawca ogląda tajny ekran; przy 3–6 osobach drugi wykonawca także czyta sekret, zanim obaj zasłonią go i nacisną „Gotowe”. Zgadujący widzą timer i publiczny cel. Drugim wykonawcą jest następna osoba przy stole; przy dwóch osobach sekret czyta tylko jedna, a druga zawsze pozostaje zgadującym.
+3. **Sprawdzenie — 45 s:** zgadujący zatwierdzają końcową odpowiedź; dopiero potem telefon odkrywa rozwiązanie i przykłady poprawnego sensu odpowiedzi. Grupa ocenia je według znanego wcześniej warunku, zaznaczając „wykonane” albo „próbowaliśmy”; ewentualny spór kończy się brakiem zaliczenia bez kary dla zwykłego konta.
+4. **Wybór fabularny i zapis — 60 s:** krótka decyzja scenariusza, znacznik sukcesu, dobór kart do trzech i zmiana prowadzącego.
+5. **Oddech — do 30 s:** śmiech, dopowiedzenie postaci, wyjaśnienie następnego ruchu. Nie przedłużamy każdej sceny aż do sukcesu.
+
+Łącznie 300 s. Można zakończyć rundę wcześniej, lecz nie skracać czasu innym uczestnikom. Na pierwszą partię wolno dodać łącznie do dziesięciu minut wyjaśnień. Nie ma dodatkowych tur za każdą osobę; wszyscy poruszają się w tym samym etapie. Przy sześciu osobach wykonawcy i zgadujący rotują, aby nikt nie był przez osiem scen wyłącznie sekretarzem.
+
+## Bank dwunastu scen — kalambury z prawdziwą sytuacją do rozwiązania
+
+Każda scena mieści się w 90 s i ma jawny warunek sprawdzenia, np. „ułóż trzy etapy we właściwej kolejności”. Konkretna poprawna kolejność pozostaje tajna. Z rozwiązaniem zapoznają się wyłącznie wykonawcy. Przy dwóch osobach telefon pokazuje sekret jednej; druga zgaduje. Przy 3–6 osobach dwie wykonują role i obie czytają sekret przed startem, pozostali zgadują albo układają rozwiązanie. Zadania nie wymagają znajomości nazw z gry. Poniższy bank jest kompletną instrukcją projektu, więc zawiera również tajne odpowiedzi — aplikacja nie pokazuje całego wiersza zgadującym. Po zamknięciu odpowiedzi telefon pokazuje 2–3 wzorcowe sformułowania; grupa ocenia **sens rozwiązania**, nie identyczne zdanie. Nie zakładamy automatycznej oceny gry aktorskiej lub swobodnej wypowiedzi przez aplikację.
+
+| Kod / miejsce i tytuł | Tajna scena oraz fizyczne działanie | Warunek sukcesu i wariant 2/6 |
 |---|---|---|
-| 0–5 | Przyjazd załogi | Gospodarz otwiera sesję, grupa wybiera role, poznaje trzy wskaźniki i odczytuje początek historii. |
-| 5–15 | Akt I: przygotować wyspę | Rundy Z1 i Z2; po Z2 rozpatruje się O1. |
-| 15–30 | Akt II: uruchomić szlak | Rundy Z3, Z4 i Z5; po Z4 rozpatruje się O2. |
-| 30–45 | Akt III: zapalić światło | Rundy Z6, Z7 i Z8; po Z6 rozpatruje się O3, po Z8 — O4. |
-| 45–50 | Epilog | Grupa odczytuje zakończenie, gospodarz ogląda podsumowanie skutków i zatwierdza jednorazowy wynik. |
+| **F01 Magazyn — „Świadek, który jest skrzynią”** | Wykonawca gra skrzynię, która „pamięta” trzy wybrane chwile: była pusta w Porcie, dostała drewno u Drwali, oddała deski przy Latarni. Pomiędzy drugą a trzecią chwilą drewno zostało przetworzone w Tartaku; ten etap jest jawnie wspomniany w instrukcji i nie odbywa się u Drwali. Bez nazw budynków aktor pokazuje trzy zapamiętane obrazy. Telefon podaje na końcu zwrot: „w drugim obrazie pada deszcz”, więc bez słów musi odróżnić drewno od desek. | Grupa układa trzy znaczniki wspominanych miejsc we właściwej kolejności **Port → Drwale → Latarnia** i wskazuje, że przemiana drewno→deski nastąpiła po drodze w **Tartaku**; nie traktuje trzech wspomnień jako pełnej mapy produkcji. Dwie osoby: jeden mim i jeden układający. Sześć: dwaj świadkowie pokazują po kawałku, cztery osoby składają zeznanie. |
+| **F02 Młyn — „Maszyna obrażona na instrukcję”** | Wykonawcy są trybem i workiem zboża. Mogą używać tylko trzech dźwięków wymyślonych przez siebie. Mają pokazać, że maszyna rusza dopiero po dwóch porcjach zboża, a daje jedną żywność; próba nakarmienia jej deską ją „obraża”. | Zgadujący układają **2 zboża → 1 żywność** i odrzucają deskę jako wejście. Dwie osoby: jeden odgrywa kolejno worek i maszynę; druga ustawia recepturę. Sześć: dwie role, pozostali wnioskują. Receptura jest zagadką sceny, nie egzaminem z gry. |
+| **F03 Ratusz — „Posiedzenie bez rzeczowników”** | Radca musi przekonać wyspę, żeby najpierw naprawić magazyn, dopiero potem port, ponieważ giną zapasy. Wolno używać czasowników i gestów, lecz nie nazw osób, miejsc lub rzeczy. Drugi wykonawca sabotuje powagę urzędowym „proszę o doprecyzowanie”, bez zmiany celu. | Grupa wskazuje oba budynki i kolejność **Magazyn przed Portem**, uzasadniając ochroną zapasu. Dwie osoby: radca kontra interpretator. Sześć: dwoje urzędników, czworo obywateli musi uzgodnić jedną odpowiedź. |
+| **F04 Kaplica — „Procesja odwrotnych emocji”** | Wykonawca przekazuje komunikat „zapasy są bezpieczne, ale mieszkańcy potrzebują odpoczynku”, pokazując pierwszą połowę jak tragedię, a drugą jak wielki sukces. Nie wolno mówić ani pokazywać liter. Publiczny ekran uprzedza zgadujących, że emocje kłamią. | Rozpoznać **bezpieczny zapas** i **potrzebę odpoczynku**, bez uznania katastrofy. Dwie osoby: jeden mim, jeden interpretator. Sześć: dwa przeciwne emocjonalnie monologi gestów, pozostali negocjują znaczenie. |
+| **F05 Port — „Kapitan, który nie widzi własnej mapy”** | Wykonawca widzi trasę Port→Magazyn→Kamieniołom→Latarnia. Nie wolno mu dotknąć pionka lub powiedzieć „lewo/prawo”. Kieruje zgadującego metaforami czynności, np. „tam, gdzie śpi kamień”. Zamknięty jest odcinek Magazyn→Drwale. | Zgadujący prowadzi znacznik po dozwolonej trasie bez zamkniętego odcinka. Dwie osoby: narrator i nawigator. Sześć: narrator, aktor udający falę oraz cztery osoby wspólnie wskazujące ruch. Publiczny schemat ma drogi Port–Magazyn, Magazyn–Drwale, Drwale–Latarnia, Magazyn–Kamieniołom, Kamieniołom–Latarnia; zamknięty jest odcinek Magazyn–Drwale. To mała mapa sceny na ekranie, odrębna od toru pionków; sekret aktora obejmuje cel i instrukcję trasy. |
+| **F06 Tartak — „Teatr źle zmontowanych części”** | Trzy pokazane gesty oznaczają „weź drewno”, „przetwórz”, „dostarcz deskę”. Wykonawca musi zagrać je w błędnej kolejności, jakby była najzupełniej rozsądna. Zgadujący reżyseruje poprawkę, wskazując numer czynności; nie może sam przedstawiać gestów. | Ustawić **pobranie → obróbka → dostawa**, potem wykonawca powtarza poprawną scenę bez podpowiedzi. Dwie osoby: jeden aktor i reżyser. Sześć: dwaj aktorzy grają maszynę i dostawcę, reszta reżyseruje. |
+| **F07 Dom — „Trzech lokatorów w jednym płaszczu”** | Wykonawca odgrywa trzy postacie: głodnego pracownika, przepracowanego mieszkańca i zadowolonego gościa. Każda ma tylko jeden gest i jedno słowo, którego nie może powtórzyć. Grupa dysponuje trzema symbolami: żywność, odpoczynek, światło. | Przypisać **żywność głodnemu**, **odpoczynek przepracowanemu**, a **światło gościowi**. Dwie osoby: jeden gra trzy role, druga rozdziela pomoc. Sześć: dwie osoby dzielą trzy role; pozostali uzgadniają przydział. |
+| **F08 Drwale — „Rysopis sprawcy: wiatr”** | Wykonawca rysuje przez 30 s komiks z trzech kadrów, bez liter, cyfr i strzałek: wiatr przewraca drogowskaz, załoga idzie do złego budynku, zauważa błąd dzięki kształtowi Latarni. Potem nie wolno już mówić, tylko obracać kartkę. | Odtworzyć przyczynę: **odwrócony drogowskaz**, skutek: **zła droga**, rozwiązanie: **orientacja na Latarnię**. Dwie osoby: rysownik i komentator. Sześć: pierwszy rysuje, drugi gra świadectwo wiatru, reszta odczytuje. Nie oceniamy urody rysunku. |
+| **F09 Targ — „Aukcja rzeczy, której nie wolno nazwać”** | Wykonawca jest sprzedawcą **czasu na spokojne rozładowanie statku**. Musi „sprzedać” go za trzy argumenty, bez słów „czas”, „minuta”, „czekać” i bez wymyślania realnej ceny. Klient dopytuje po każdej obietnicy. | Zgadujący rozpoznaje, że ofertą jest **spokojne okno rozładunku**, a nie statek lub towar, i powtarza dwa z trzech argumentów: mniej strat, bezpieczeństwo ludzi, porządek. Dwie osoby: sprzedawca i klient. Sześć: sprzedawca, nadgorliwy pomocnik oraz czteroosobowa komisja klientów. To teatr, nie handel pieniędzmi. |
+| **F10 Kamieniołom — „Instrukcja z przyszłości”** | Wykonawca ogląda pięcioelementowy układ mostu: dwa pionowe brzegi i trzy poprzeczne belki. Ma go opisać tak, jakby budowę wspominał po latach, bez słów „most”, „belka”, „pionowo”, „poziomo”. Druga osoba układa papierowe paski. | Powstaje układ dwóch podpór i trzech połączeń, po którym da się poprowadzić palcem od znacznika wejścia do wyjścia. Dwie osoby: pamiętnikarz i budowniczy. Sześć: dwie sprzeczające się postacie odgrywają pamięć; cztery osoby uzgadniają konstrukcję. Płaski układ jest pełnym rozwiązaniem. |
+| **F11 Przystań — „Radio, które tłumaczy za dosłownie”** | Wykonawca dostał „statek ma czekać za mielizną, aż pokażemy dwa krótkie i jeden długi sygnał”. Każdy rzeczownik musi zastąpić gestem, a resztę może powiedzieć. Telefon raz zamienia „rozkaz” w „prośbę”, więc postać musi zachować sens mimo zmiany tonu. | Ustalić **oczekiwanie za mielizną** oraz wzór **krótki–krótki–długi**; zgadujący wystukuje go lub układa krótkie/długie paski. Dwie osoby: operator i odbiorca. Sześć: dwóch operatorów radiowych, reszta interpretuje. Bez wymogu słyszenia: gesty i paski są równoważne. |
+| **F12 Latarnia — „Sześć sekund po premierze”** | Wykonawca gra finał sztuki od końca: najpierw radość statku, potem błysk, potem naprawę mechanizmu. Grupa może zatrzymać aktora najwyżej trzy razy i przestawić jeden obraz. Telefon ujawnia cztery symbole, z których jeden — moneta — jest zbędny. | Złożyć **naprawa → sygnał → bezpieczny powrót** i odrzucić monetę jako warunek uruchomienia. Dwie osoby: jeden aktor i reżyser. Sześć: dwóch aktorów przedstawia statek/Latarnika, cztery osoby montują scenę. To nie oznacza darmowego zakupu w gospodarce online. |
 
-Każda runda ma pięć minut: do 30 s na odczytanie zlecenia, trzy minuty na wspólną czynność, do 45 s na sprawdzenie wyniku i do 45 s na kartę Opowieści albo krótką rozmowę postaci. Telefon nie żąda reklam ani pobocznej minigry między tymi etapami.
+Te zadania nie polegają na odgadnięciu samotnego hasła „statek”. Trzeba odczytać przyczynę, intencję albo sekwencję, a potem fizycznie ułożyć rozwiązanie. Kalambury mają dawać zabawne sceny i różne interpretacje; rozwiązanie ekonomicznej łamigłówki nie może zastąpić całej części aktorskiej.
 
-Przy sprawnej grupie epilog zaczyna się wcześniej — dolną granicą celu jest 45 minut. Przy pierwszym podejściu dopuszczamy łącznie do dziesięciu dodatkowych minut wyjaśnień, dając maksymalnie 60 minut. Nie dokładamy czasu za każdą pomyłkę. Nieudane zlecenie przesuwa historię dalej; nie wymaga zaczynania sesji od zera.
+## Jak telefon wybiera osiem scen i prowadzi fabułę
 
-## Role i udział 2–6 osób
+Scenariusz ma trzy akty. Telefon losuje bez powtórek dwie sceny z F01–F04, cztery z F05–F10, a na końcu F11 i F12. Zachowuje ten sam zestaw po wznowieniu. Pionek nie musi znajdować się na budynku z tytułu sceny — jego postać może „nadawać ze swojego miejsca”, a tytuł opisuje miejsce wspólnego wydarzenia. W przyszłości można dobierać scenę do pozycji; nie obiecujemy tego w pierwszym prototypie.
 
-Każda rola ma publiczną motywację i jedną pomoc na całą sesję:
+- **Akt I, rundy 1–2 — Wiarygodny świadek:** za co najmniej jeden sukces grupa dostaje część **Załoga**. Po rundzie 2 wybiera, czy oficjalną wersję zdarzeń opowie mieszkaniec Domu, czy urzędnik Ratusza. Zmienia to tekst kolejnych scen i epilog, nie trudność.
+- **Akt II, rundy 3–6 — Dwie drogi do tego samego portu:** za co najmniej dwa sukcesy dostaje **Mechanizm**. Po rundzie 4 wybiera „pomoc spóźnionemu” — jedna osoba z końca trasy przesuwa się o 1 bez punktów — albo „zapisać świadectwo” — każdy dopisuje jedno zdanie postaci, a grupa odzyskuje jedną zużytą podpowiedź. Decyzja dotyczy tylko stołu, nie realnego transportu ludzi.
+- **Akt III, rundy 7–8 — Głos we mgle:** zaliczenie F11 albo F12 daje **Kod**. Przed finałem każdy dopowiada po jednym krótkim zdaniu, co jego postać zrobi jutro. Telefon składa z tego pamiątkowy epilog; nie trzeba nagrywać głosu.
 
-| Rola | Motywacja postaci | Jednorazowa pomoc |
-|---|---|---|
-| Latarnik | „Światło ma wrócić przed nocą.” | Odkrywa jedną podpowiedź do Z8. |
-| Intendent Magazynu | „Nic nie może zginąć między skrzyniami.” | Pozwala poprawić jeden ruch zasobu przed sprawdzeniem Z1 albo Z3. |
-| Cieśla | „Dobra konstrukcja daje oparcie całej wyspie.” | Odkrywa prawidłowe położenie jednego elementu w Z5. |
-| Nawigator | „Bezpieczna droga jest równie ważna jak cel.” | Pozwala wcześniej przeczytać opcje O3. |
-| Opiekun Domu | „Za każdym znacznikiem stoi człowiek.” | Przywraca jeden punkt Morale, do limitu czterech. |
-| Radca Ratusza | „Wspólna decyzja wymaga wytłumaczenia.” | Raz znosi utratę Morale przy wyborze przewozu ładunku w O3. |
+Jeżeli grupa nie spełniła warunku jednej części, może naprawić **jedną** brakującą część za trzy niewykorzystane podpowiedzi: wskazuje błąd, odtwarza poprawne rozwiązanie i zapisuje naprawę. Naprawa pomaga finałowi, ale nie dodaje sukcesu zadania ani nagrody online za wcześniej niezaliczoną scenę.
 
-Zawsze dostępnych jest sześć pomocy, niezależnie od liczby graczy. Przy dwóch osobach każda prowadzi trzy role; przy trzech — dwie; przy czterech lub pięciu role rozdziela się możliwie równo; przy sześciu każdy ma jedną. Obsługa telefonu nie daje gospodarzowi dodatkowego głosu ani umiejętności.
+## Punkty, finał i zwycięstwo przy stole
 
-Zadania wykonuje się równolegle. Przy większym stole część osób układa, część kontroluje recepturę lub trasę, a część odczytuje wskazówki. Prowadzenie każdej kolejnej rundy przechodzi do następnej osoby. W głosowaniu każdy człowiek ma jeden głos; remis rozstrzyga prowadzący bieżącej rundy. Pomoc innemu graczowi jest legalną częścią współpracy.
+Za udaną scenę każdy uczestniczący w rundzie dostaje 1 osobisty punkt. Przy porażce nikt nie traci wcześniejszych punktów. Punkty ruchu, specjalności i wejścia do środka są liczone oddzielnie, a na końcu sumowane w jedną **sławę wyprawy**. Więcej osób nie mnoży wspólnych sukcesów: K jest zawsze liczbą zaliczonych scen, od 0 do 8.
 
-## Wskaźniki scenariusza
+Po ósmej rundzie sprawdzamy:
 
-To **osobne zasoby scenariusza**, nie pieniądze lub zapasy pobrane z konta online:
+- **Pełne światło:** trzy części sygnału oraz co najmniej połowa pionków w Latarni, zaokrąglona w górę. Statek wraca, a epilog pamięta decyzje postaci.
+- **Światło do świtu:** dwie części oraz co najmniej jeden pionek w Latarni. Statek bezpiecznie czeka, grupa wysyła sygnał i dostaje zakończenie z otwartym ciągiem dalszym.
+- **Port opowieści:** inne wyniki. Załoga pozostaje w bezpiecznym porcie; telefon pokazuje, którego fragmentu zabrakło. To zakończenie fabularne, bez kary na koncie.
 
-- **Zaopatrzenie S**: początkowo 3, zakres 0–12. Każde wykonane Zlecenie daje +1 S. Wydatki ponosi się tylko na wybranych kartach Opowieści.
-- **Morale M**: początkowo 3, zakres 0–4. Nieudane Zlecenie obniża M o jeden. Rozmowy i pomoc Opiekuna mogą je odtworzyć.
-- **Elementy Latarni**: Załoga, Mechanizm i Sygnał. Zdobywa się je odpowiednio za Z2, Z5 i Z8.
+Tytuł **Bohatera wyprawy** ma osoba z najwyższą sławą; remis daje wspólny tytuł. Każdy otrzymuje również nazwę zasługi wynikającą z roli i decyzji. Zwycięstwo osobiste nie odbiera grupie wspólnego finału i nie zwiększa nagrody konta gospodarza. Za pełne światło nie ma drugiego ukrytego mnożnika pieniędzy.
 
-Grupa zapisuje także liczbę bezpiecznie sprowadzonych grup gości. To znacznik fabuły, nie dodatkowi mieszkańcy przyznawani w rzeczywistej grze.
+### Przykład sprawdzenia liczb dla czterech osób
 
-Każde zlecenie kończy się jedną odpowiedzią: wykonane albo niewykonane. Nie ma cząstkowych premii za wielokrotne przekładanie tych samych elementów. Podpowiedź albo łatwiejszy dostępny wariant nie obniża nagrody.
+Wspólny sukces scen to `K=6`: akt I 2/2, akt II 2/4, akt III 2/2 — są wszystkie trzy części. Załoga wybiera „zapisać świadectwo”, więc nie ma bonusowego kroku. Przyjmujemy wskazane w tabeli dopasowania kart do budynków.
 
-## Dwanaście kart do pierwszej rozgrywki
+| Osoba | Osiem wybranych ruchów | Pozycja końcowa | Punkty marszu | Specjalności | Wejście | Sceny | Sława |
+|---|---|---:|---:|---:|---:|---:|---:|
+| Ada | 2,2,2,2,2,1,1,1 | 13 | 11 | 1 | 3 | 6 | **21** |
+| Bartek | 1,2,1,2,1,2,2,2 | 13 | 11 | 2 | 3 | 6 | **22** |
+| Celina | 1,1,2,1,2,1,2,2 | 12 | 12 | 2 | 0 | 6 | **20** |
+| Darek | 2,2,1,2,1,2,2,1 | 13 | 11 | 0 | 3 | 6 | **20** |
 
-W poniższej tabeli **N oznacza liczbę uczestników**. Symbole zasobów są zwykłymi znacznikami, nie dodatkowymi rodzajami kart. Po zakończeniu zlecenia jego rekwizyty wracają do wspólnego pudełka; nie zużywają zaopatrzenia S.
+Ada/Bartek/Darek mają po pięć ruchów dwupolowych i trzy pojedyncze: `5×1 + 3×2 = 11` punktów marszu. Celina ma cztery dwupolowe i cztery pojedyncze: `4×1 + 4×2 = 12`. Trzy z czterech pionków są w środku, więc wraz z trzema częściami jest **Pełne światło**. Bartek ma 22 punkty i tytuł Bohatera, ale nagroda online zależy od sześciu zaliczonych scen, nie jego osobistej przewagi. To kontrola arytmetyczna, nie rozegrany test balansu.
 
-| Karta | Czynność fizyczna i warunek | Skutek scenariusza |
-|---|---|---|
-| **Z1 — Inwentaryzacja po sztormie / Magazyn** | Każdy dostaje jeden znacznik drewna i jeden zboża. Grupa rozkłada 2N znaczników: drewno do Tartaku, zboże do Młyna. Prowadzący sprawdza na głos liczbę na obu polach. | Po sukcesie +1 S. Proste wspólne wejście w zasady. |
-| **Z2 — Posiłek dla załogi / Młyn i Dom** | Z 2N znaczników zboża należy ułożyć N par. Każdą pełną parę zastępuje się jednym znacznikiem żywności, a każdy uczestnik kieruje jedną żywność do Domu. Nie wolno podwójnie wykorzystać zboża. | Po sukcesie +1 S i element **Załoga**. |
-| **Z3 — Deski na przeprawę / Drwale i Tartak** | Grupa dostaje 2N drewna. Należy fizycznie przeprowadzić je przez Drwali → Magazyn → Tartak, utworzyć N par i położyć N desek przy drodze do Latarni. W jednej chwili dany znacznik może być na jednym polu. | Po sukcesie +1 S. Uczy dostępności i pochodzenia zasobów. |
-| **Z4 — Zamknięty przesmyk / Port i drogi** | Na grafie opisanym niżej trzeba ułożyć trasę Port → Latarnia, omijając zamknięty odcinek. Przenieść nią N paczek, po najwyżej dwie naraz, wracając pionkiem do Portu przed kolejnym zabraniem. Inna osoba sprawdza trasę i bilans paczek. | Po sukcesie +1 S. Dalej O2. |
-| **Z5 — Most latarników / ścieżki** | Wspólnie układa się z papierowych elementów przeprawę według wzoru: dwa równoległe brzegi, trzy poprzeczne deski i dwa łączniki. Musi istnieć ciągła droga od obu znaczników wejścia do wyjścia. Można wybrać układ płaski albo mały model przestrzenny; oba mają ten sam warunek. | Po sukcesie +1 S i element **Mechanizm**. |
-| **Z6 — Rada pracy / Ratusz i Dom** | Rozdzielić osiem znaczników mieszkańców, pozostawiając jednego w Domu. Trzeba zasilić dwa łańcuchy: zboże → żywność oraz drewno → deski, bez niedoboru wejścia przy podanych na karcie wydajnościach. Wspólnie uzasadnić przydział. Poprawny przykład niżej. | Po sukcesie +1 S. Dalej O3. |
-| **Z7 — Komu ma służyć światło? / Kaplica i Targ** | Każdy kładzie swój pionek przy wybranym budynku i uzasadnia jednym zdaniem, kogo ten budynek chroni. Grupa wspólnie wybiera jedną z trzech dewiz: „Najpierw ocalamy ludzi”, „Zapas chroni przyszłość”, „Światło służy wszystkim”. Każdy oddaje głos, wskazuje albo zapisuje symbol; przyjmujemy wynik większości i regułę remisu. | Po spełnieniu obu warunków +1 S. Dewiza trafia do epilogu; nie ma jednej moralnie poprawnej odpowiedzi. |
-| **Z8 — Sygnał w mgle / Latarnia** | Z sześciu wskazówek odtworzyć kolejność trzech grup świateł, układając sześć znaczników w trzech polach. Wskazówki rozdziela się między uczestników. Nie trzeba sprawności manualnej — inna osoba może układać zgodnie z instrukcją mówiącego. Wzór niżej. | Po sukcesie +1 S i element **Sygnał**. Dalej O4. |
-| **O1 — Wieje od wschodu** | Po Z2: **zabezpieczyć konwój**, płacąc 1 S i odkrywając jedną dodatkową podpowiedź do Z4, albo **uspokoić mieszkańców**, otrzymując +1 M do limitu czterech. Wybrany bohater wypowiada jedno zdanie do mieszkańców. | Dwa równoprawne sposoby przygotowania. Nie zmienia się rzeczywisty czas ani zasoby online. |
-| **O2 — Goście na bezpiecznej mieliźnie** | Po Z4: wysłać łódź, płacąc 2 S, otrzymać +1 M i jeden znacznik sprowadzonych gości; albo wysłać wskazówki do schronienia, bez kosztu i bez znacznika gości. Drugi wybór oznacza bezpieczne przeczekanie sztormu, nie śmierć postaci. | Epilog pamięta decyzję. Można chronić zapasy bez karania graczy drastyczną sceną. |
-| **O3 — Ostatni kurs przed nocą** | Po Z6: **kurs pasażerski** kosztuje 1 S, daje +1 M i jeden znacznik gości; **kurs towarowy** daje +1 S i odbiera 1 M, chyba że Radca użyje pomocy. Głosują wszyscy. | Fabularne rozróżnienie transportu ludzi i towarów; nie uruchamia rzeczywistego rejsu online. |
-| **O4 — Światło dla wracających** | Po Z8: **sygnał podstawowy** wymaga dwóch elementów, M≥1 i wydania 3 S. **Pełne światło** wymaga trzech elementów, M≥2, przynajmniej jednego znacznika gości i wydania 4 S. Brakujący jeden element można naprawić kosztem dodatkowego 1 S, jeśli grupa wskaże i poprawi swój wcześniejszy błąd. | Podstawowy albo pełny sukces. Bez spełnienia warunków: epilog „Bezpieczne oczekiwanie na świt” i informacja, co poprawić następnym razem. Zwykła wyspa nie ponosi straty. |
+## Tryb samodzielny: bez konta, nadal jedna talia
 
-### Konkretne rozwiązania do prototypu
+Przy stole można uruchomić przyszły publiczny scenariusz w telefonie bez logowania — zegar, instrukcje i wyniki sesji są wtedy nietrwałym podglądem bez nagrody. Nie jest to obietnica działania istniejącego klienta bez sieci.
 
-**Z4 — graf:** pola A=Port, B=Magazyn, C=Drwale, D=Kamieniołom, E=Latarnia. Drogi: A–B, B–C, B–D, C–E, D–E. Odcinek B–C jest zamknięty. Poprawna droga to A–B–D–E. Przy sześciu paczkach potrzeba trzech kursów po dwie; jedna paczka nie może pozostać równocześnie w Porcie i przy Latarni. Ten schemat można narysować bez specjalnego wydruku.
+Bez telefonu można użyć jednej wydrukowanej instrukcji scenariusza: publiczny opis jest na jednej stronie, a tajne rozwiązania w osobnym zasłanianym fragmencie. Jedna osoba w danej rundzie odczytuje sekret swojej sceny i nie zgaduje; w następnej prowadzi ktoś inny. Nie powstaje druga talia. Uczestnicy wybierają osiem scen według tej samej reguły i używają zwykłego minutnika. Wynik jest pełnoprawnym wynikiem gry przy stole, lecz papierowy przebieg nie jest później automatycznie importowany jako udowodniona nagroda online.
 
-**Z6 — model liczbowy:** wszystkie budynki mają poziom 1, pracownicy są już na miejscu, używamy bazowej wydajności 20 szt./os./h bez dodatkowych mnożników. Młyn zużywa 2 zboża na żywność, Tartak — 2 drewna na deskę. Poprawny przydział to **2 Gospodarstwo, 1 Młyn, 2 Drwale, 1 Tartak, 1 Magazyn i 1 Dom**. Daje 40 zboża na 20 żywności oraz 40 drewna na 20 desek. Osiem osób potrzebuje 8 żywności/h; zapas rośnie o 12/h. To osobna planszowa zagadka, a nie zmiana obsady konta gospodarza.
+## Zysk konta online: nowa kategoria aktywności, konkretna korzyść
 
-**Z8 — sześć wskazówek:** są trzy grupy; pierwsza ma dwa światła; środkowa jedno; ostatnia trzy; kolory to odpowiednio biały/zielony/złoty; grupy czytamy od symbolu Portu w stronę Latarni. Rozwiązanie: **2 białe → 1 zielone → 3 złote**. Przy dwóch osobach każda otrzymuje trzy wskazówki, przy trzech — dwie, przy czterech–sześciu rozdziela się je możliwie równo. Informacje można odczytać, przekazać gestem albo pokazać w powiększeniu. Nie wymagamy zapamiętania ani rozróżniania samych kolorów: liczby i kształty powtarzają znaczenie barw.
+Aktualna gra **nie ma uniwersalnego XP za wszystkie zadania**. Obecny ranking ma inną formułę, a zadania Latarni mają własne wymagania, wpłaty i nagrody. Nie wolno nazwać nowego pola istniejącymi „punktami zadań”, wypełnić 25 lekcji samouczka ani odebrać zaplanowanej nagrody Latarni samym kliknięciem z planszówki.
 
-### Przykład pełnej sesji
+**Propozycja do zatwierdzenia:** powstaje kontowy dziennik **„Zadania przy stole”**. Za każdą zaliczoną scenę użytkownik otrzymuje 1 punkt wypraw, najwyżej osiem za jedną rozliczaną sesję tygodniowo. Punkty są trwałe i odblokowują kolejne kosmetyki: po 8 — proporzec „Pierwsza załoga”, po 24 — dekorację dzwonu przy Porcie, po 48 — skórkę znaków na własnym statku. To nie poziomy budynków, nie produkcja i nie nagrody ligi.
 
-Grupa zaczyna z S=3, M=3. Wykonuje sześć z ośmiu Zleceń, w tym Z2, Z5 i Z8; nie udają się Z3 i Z6. Przebieg z uwzględnieniem limitu Morale wygląda tak:
+Dodatkowo proponujemy **50 monet za każdą z pierwszych pięciu zaliczonych scen**, najwyżej **250 monet na konto na tydzień ISO**. Dla K=6 przykład daje **6 punktów wypraw + 250 monet**. Przy K=3: 3 punkty + 150 monet. Ruch pionkiem, specjalność karty, zwycięstwo osobiste i liczba gości nie zwiększają pieniędzy. Nie ma nieograniczonej serii 50→100→200 znanej z ekspedycji.
 
-| Moment | Zaopatrzenie S | Morale M | Stan opowieści |
-|---|---:|---:|---|
-| Po Z1, Z2 i O1 — uspokoić mieszkańców | 5 | 4 | Załoga |
-| Po nieudanym Z3, udanym Z4 i O2 — wysłać łódź | 4 | 4 | Załoga, jedna sprowadzona grupa |
-| Po udanym Z5, nieudanym Z6 i O3 — pasażerowie | 4 | 4 | Załoga i Mechanizm, dwie grupy |
-| Po Z7 i Z8 | 6 | 4 | Wszystkie trzy elementy i dwie grupy |
-| Po O4 — pełne światło | 2 | 4 | Pełny sukces |
+Oba limity dotyczą **jednej rozliczonej sesji na konto w tygodniu Warszawy**, od poniedziałku 00:00 do kolejnego poniedziałku. Nie sumujemy scen z kilku partii ani kilku miejsc przy stole. Tydzień przypisuje się według rozpoczęcia sesji, a nie późniejszego odbioru kodu. Użytkownik przed odbiorem widzi, czy ma wolny limit; powtórna zabawa jest zawsze możliwa bez kolejnej nagrody. Dokładne progi i sposób informowania uczestnika bez własnego telefonu wymagają odbioru interfejsu.
 
-Epilog pamięta dewizę i decyzje. Dwie pomyłki nie odebrały grupie szansy na dobry finał.
+Poprzedni wariant „tylko pamiątka i opcjonalne +2 szczęścia” jest **zastąpiony** tym projektem punktów, odblokowań i ograniczonych monet. Nie dokładamy obu wariantów do siebie. Wysokość 50/250 i progi kosmetyków pozostają propozycjami balansu, nie zatwierdzonymi cenami czy już istniejącą funkcją.
 
-To kontrola arytmetycznej wykonalności scenariusza, nie pomiar trudności. Celem przyszłych prób jest udana pierwsza sesja większości grup, a nie konieczność perfekcyjnej gry. Po testach przy stole można zmienić koszt finału albo poziom podpowiedzi.
+### Kto może odebrać wynik
 
-## Jeden telefon, kody QR i towarzyszenie gry online
+Docelowo **każdy rzeczywisty uczestnik mający konto online może odebrać wynik**, w swoim własnym tygodniowym limicie. Konto gospodarza jest tylko jednym miejscem. Za gości gospodarz nie otrzymuje dodatkowych monet ani punktów. Osoby bez konta grają pełną grę bez nagrody online i bez przymusu rejestracji.
 
-| Wariant | Zalety | Ograniczenia | Propozycja |
-|---|---|---|---|
-| **Jeden telefon z kodami Z1/O1** | Wystarczy konto gospodarza; aplikacja zna kolejność, zegar i decyzje. Druk nie wymaga skanowania. | Gospodarz jest sekretarzem, więc trzeba rotować prowadzenie rozmowy. | **Pierwszy prototyp.** Pole do wpisania krótkiego kodu lub wybór następnej karty. |
-| Statyczny QR na karcie | Szybko otwiera instrukcję, lektora lub większy tekst; pomaga trafić do tej samej definicji. | Zdjęcie kodu da się skopiować; kamera wymaga obsługi, światła i zgody urządzenia. QR nie dowodzi wykonania zadania. | Wygodny skrót dodany później, zawsze z tekstowym kodem obok. |
-| Telefony wszystkich uczestników | Można przekazywać indywidualne wskazówki i głosować bez podawania telefonu. | Więcej przygotowania, połączeń i rozpraszania; nie każdy gość ma konto lub baterię. | Późniejszy tryb opcjonalny, nie warunek gry. |
+Wystarcza jeden telefon: przy starcie każde miejsce otrzymuje prosty kod uczestnictwa, który można zapisać na kartce; to nie nowa karta lub talia. Kod nie zawiera hasła i nie loguje do konta. Po zakończeniu uczestnik może we własnej zalogowanej grze wpisać kod i przypisać **jedno miejsce** do swojego konta. Proponowana ważność to 72 godziny od finału. Konto musi istnieć przed rozpoczęciem sesji, żeby nie dopisywać po wyniku nowych kont do pustych miejsc. Gospodarz nigdy nie dostaje cudzych danych logowania.
 
-Na pierwsze spotkanie nie proponujemy drukowania jednorazowego QR na każdej fizycznej karcie. Karty mają być wielokrotnego użytku. Jednorazowość rozliczenia zapewnia przyszła **sesja serwerowa**, a nie niszczenie karty ani sam skan.
+Serwer nie pozwala zrealizować tego samego miejsca drugi raz ani przypisać dwóch miejsc do jednego konta. Każdy odbiorca wybiera własną wyspę, a jego nagroda nie trafia do świata gospodarza. Wiele urządzeń, kodów i wysp nie odnawia limitu. Jedna osoba nie może pobierać kilku nagród przez multikonta; same konta i kody nie dowodzą jednak, ile osób siedziało przy stole. Kod potwierdza uprawnienie do wyniku zapisanej sesji, **nie fizyczną obecność**. Dokładniejsza ochrona przed nadużyciami jest etapem projektu serwera.
 
-Otwarta gra gospodarza powinna mieć osobny ekran „Przy stole” z nazwą wyspy, zegarem, wskaźnikami scenariusza i widocznym stanem zapisu. Zwykła gospodarka nadal biegnie zgodnie z czasem rzeczywistym; kartami nie przyspieszamy budów i nie zamrażamy jedzenia. Zwykłe propozycje ekspedycji i powiadomienia czekają do bezpiecznego zakończenia sesji, zamiast zasłaniać zadanie. To wymaga przyszłej integracji harmonogramu, nie istnieje obecnie.
+Najwcześniejszy test techniczny może zacząć od nagrody gospodarza, ale nie jest to docelowa zasada scenariusza. Korzyść dla pozostałych uczestników z kontem jest częścią projektu.
 
-Rzeczywiste naciśnięcie odpowiedzi lub zatwierdzenie wyboru może być aktywnością użytkownika. Sam uruchomiony ekran, automatyczny zegar albo heartbeat nie są dowodem aktywnego grania i nie mają odnawiać sesji w nieskończoność. Przy pięciominutowych rundach grupa naturalnie korzysta z telefonu częściej niż obecny próg bezczynności.
+### Rozliczenie raz i powiązanie ze zwykłą grą
 
-## Teoretyczny kontrakt skutków online
+1. Serwer tworzy `sessionId`, wersję scenariusza, gospodarza i jego wyspę/generację, stałą liczbę miejsc, niepowtarzalne kody oraz tydzień wyniku. Konto gospodarza ma jedno miejsce; pozostałe kody można później odebrać wyłącznie we własnej sesji logowania.
+2. Losowanie ośmiu scen, role, żądania i kolejność zapisywane są w chmurze. Po rozłączeniu wracamy do ostatniego potwierdzonego kroku. Nie powstaje lokalna wyspa lub ukryta kolejka wypłat; na papierze można dokończyć zabawę bez nowego dowodu online.
+3. Rozliczenie nalicza K z zapisanych, odrębnych zdarzeń. Potwierdza zaangażowanie aplikacji, **nie udowadnia fizycznego odegrania sceny ani obecności sześciu osób**. Niskie limity ograniczają koszt; kod QR lub kamera nie rozwiązują tego zaufania. Dla prawdziwych nagród potrzebny jest serwerowy rejestr i kontrola nadużyć, nie klientowe `verified:true`.
+4. Finał utrwala K i zamyka wynik. Odbiór kodu atomowo sprawdza konto, miejsce i wolny limit tygodniowy, zapisuje punkty, monety, odblokowania, wskazaną wyspę/generację oraz paragon. Ponowienie po utracie odpowiedzi zwraca ten sam wynik; równoległe odebranie przez dwie osoby ma jednego zwycięzcę, bez drugiej wypłaty.
+5. Zmiana aktywnej wyspy nie tworzy drugiego limitu. Reset świata w trakcie odbioru wymaga zgodnej generacji; ponowienie nie przenosi już wypłaconej nagrody na nową wyspę. Reset i trzymiesięczna retencja nie odnawiają kontowego licznika. Odrębnie trzeba ustalić zachowanie niedokończonej sesji po resecie świata gospodarza i limit rozpoczynania/anulowania partii — nie są one przyjętymi parametrami.
+6. Monety ze źródła `physical_session` są **niekwalifikowane do dobroczynności**, a punkty nie trafiają do ligi. Monetowy wpływ do zwykłego salda może pośrednio zmienić dotychczasowy ranking Ratusz×monety; nie twierdzimy, że nagroda jest pozbawiona wpływu na gospodarkę.
 
-W pierwszej sesji wynik należy do **konta gospodarza i wskazanej przy starcie wyspy**. Goście nie muszą zakładać kont; liczba gości nie mnoży nagrody. Gospodarz przed startem widzi, jakie efekty są proponowane, i świadomie wybiera udział konta albo tryb bez nagrody. Głosowanie przy stole nie może wydać prawdziwych monet lub materiałów bez osobnego wyraźnego potwierdzenia właściciela; w tej propozycji takich wydatków nie ma.
+W trybie „Gra fizyczna” zwykłe jedzenie, budowy i zegar świata nadal biegną. Rzeczywiste odsłonięcie instrukcji, odpowiedź albo zatwierdzenie rundy jest aktywnością; sam ekran, heartbeat i minutnik nie odnawiają sesji w nieskończoność. Przy pięciominutowych rundach telefon jest normalnie obsługiwany częściej niż próg 30 minut. Powiadomienia i oferty minigier czekają do bezpiecznego końca sceny; ta integracja jeszcze nie istnieje. Wylogowanie lub brak chmury nie oznaczają przyznania nagrody, lecz nie zabraniają dokończyć gry na stole.
 
-Proponowana pierwsza nagroda jest niewielka i niehandlowa: pamiątka scenariusza z dewizą, odznaka za pierwsze ukończenie oraz opcjonalny efekt **+2 punkty szczęścia dla maksymalnie sześciu mieszkańców przez dwie godziny**, najwyżej raz na tydzień ISO na konto, od poniedziałku 00:00 do kolejnego poniedziałku w strefie Europe/Warsaw, bez kumulowania niewykorzystanych odbiorów. Dokładny bonus wymaga testów balansu. Nie przyznajemy monet, materiałów, nowych osób, poziomu Latarni ani ponownej ochrony powitalnej. Bonus nie kumuluje się, nie przedłuża globalnego wymuszenia 100% i respektuje obecne limity oraz końce efektów. Wybór gości i dewizy zmienia pamiątkę, nie wartość ekonomiczną wypłaty.
+## Co zatwierdzić i czego jeszcze nie sprawdzono
 
-Wynik nie zasila punktów przyszłej ligi ani nie przyznaje bezpośrednio monet kwalifikowanych do dobroczynności. Ewentualny rzeczywisty bonus szczęścia może jednak pośrednio zwiększyć populację i późniejsze podatki; trzeba ocenić ten skutek przy audycie kwalifikowanych źródeł. Nie obiecujemy zerowego wpływu ekonomicznego, a globalna pula dobroczynna nadal ogranicza zobowiązanie w złotych. Samodzielne wielokrotne „przeklikanie” kart nie może odnawiać bonusu ani limitów. Powtórzenie scenariusza pozostaje normalną zabawą przy stole, nawet gdy konto wyczerpało tygodniowy bonus.
+Przyjęty kierunek: jedna talia + telefon, pionki i ruch, pełna zabawa bez korzyści online, a dla konta rzeczywisty postęp z fizycznych zadań. Do decyzji pozostają 24 karty, mapa i punktacja, parametry nagrody 1 punkt/50 monet i limit 250, progi kosmetyków, ważność kodów 72 h oraz reguły rozpoczynania/anulowania sesji. Docelowe uprawnienie każdego uczestnika z kontem wynika z kierunku użytkownika; sposób powiązania kodem pozostaje propozycją techniczną.
 
-Przyszłe rozliczenie powinno przebiegać tak:
-
-1. Serwer tworzy losowe `sessionId`, zapisuje gospodarza, identyfikator i instancję/generację wyspy, wersję scenariusza, limit efektu i czas rozpoczęcia. Jedno konto ma najwyżej jedną aktywną sesję planszową.
-2. Każdy krok i wybór jest zapisywany w chmurze z numerem kolejności oraz niepowtarzalnym identyfikatorem żądania. Serwer akceptuje tylko legalną kartę i stan; klient nie podaje dowolnej nagrody.
-3. QR zawiera wyłącznie identyfikator definicji karty. Nie zawiera tokena logowania, polecenia wypłaty ani źródła dodatkowej waluty. Skopiowanie kodu nie tworzy nowej sesji ani nowego uprawnienia.
-4. Finał jest wyliczany z zapisanego przebiegu. Gospodarz widzi podsumowanie i zatwierdza wynik. Serwer atomowo zapisuje wynik oraz fakt wykorzystania ewentualnego limitu i przyznaje efekt dokładnie raz.
-5. Ponowienie tego samego żądania po utracie odpowiedzi zwraca poprzedni wynik. Równoległa karta, cofnięta wersja i ponowny skan nie wypłacają kolejnej premii. Zmiana aktywnej wyspy podczas sesji nie pozwala rozliczyć jej również na drugiej. Usunięcie albo zastąpienie świata unieważnia jego niedokończoną sesję; integracja musi objąć także ręczne „Rozpocznij od nowa”, a nie jedynie automatyczne wygaszanie konta.
-6. Przerwa w połączeniu nie zmienia się w udany zapis. Grupa może dokończyć opowieść na papierze; aplikacja wznawia ostatni potwierdzony etap albo pokazuje zakończenie próbne bez nowego bonusu. Nie odtwarzamy zmyślonej listy kroków jako dowodu ekonomicznej nagrody. Nie powstaje lokalna kopia wyspy ani ukryta kolejka wypłat.
-
-Te mechanizmy mogą ograniczyć podwójne rozliczenie i masowe żądania. **Nie udowodnią, że przy stole rzeczywiście siedziało sześć osób ani że zadanie wykonano fizycznie.** Dlatego niska wartość skutku, limit konta i brak wpływu na rywalizację są ważniejsze niż obietnica „bezpiecznego QR”. Nie ma potrzeby weryfikowania twarzy, lokalizacji lub nagrań gości.
-
-## Co ustalić i sprawdzić przy pierwszym stole
-
-Rekomendacja do zatwierdzenia: jeden telefon, kooperacja, osiem Zleceń i cztery Opowieści, 50 minut, brak wydawania zwykłych zasobów konta, pamiątka oraz mały ograniczony efekt zamiast wypłaty monet. Nie wymaga zmiany zasad kupowania nowych wysp i nie zakłada, że nowe mechanizmy portu są już wdrożone.
-
-Pierwsze trzy próby powinny objąć grupy dwu-, cztero- i sześcioosobowe. Mierzymy czas, udział każdej osoby, liczbę potrzebnych podpowiedzi, jasność decyzji i zrozumienie zakończenia. Sprawdzamy też wariant bez skanowania, układ płaski zamiast budowania modelu, przerwane połączenie oraz dwukrotne zatwierdzenie wyniku. Test fizyczny ocenia zabawę; odrębny przyszły test integracji ocenia zapis i jednorazowość efektu. Do czasu ich wykonania wszystkie wyniki pozostają **nieprzetestowane przy stole**.
-
-## Rozbudowa po sprawdzeniu pierwszej przygody
-
-Ten sam zestaw pól i dwa rodzaje kart mogą obsłużyć kolejne 50-minutowe rozdziały: **„Trzech kapitanów”** o planowaniu dostaw i uczciwych umowach oraz **„Ogród po burzy”** o odtworzeniu źródeł żywności i wspólnej przestrzeni. Zmieniają się Zlecenia, Opowieści i pamiątka, a nie konstrukcja aplikacji przy każdym scenariuszu. Temat ekologiczny nie uruchamia automatycznie darowizn; ewentualny program charytatywny ma osobny budżet i zatwierdzenie. Dodatkowe scenariusze to dalsze propozycje, bez gotowej talii i bez implementacji.
+Nie rozegrano dotąd sesji fizycznej. Pierwsze próby powinny objąć stoły 2/4/6 osób i zmierzyć: czas rund, zrozumienie sekretów, częstotliwość podpowiedzi, udział każdej osoby, dotarcie pionków oraz chęć zagrania ponownie. Oddzielnie trzeba sprawdzić rozłączenie, stary zapis, ponowny finał, reset wyspy i limity tygodnia. Dobrej zabawy nie dowodzi poprawna arytmetyka; bez tego odbioru nie oznaczamy scenariusza jako gotowego produktu.

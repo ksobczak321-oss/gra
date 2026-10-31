@@ -523,7 +523,9 @@
       "definition_status": "DRAFT / BLOCKED",
       "manual_result": "NOT RUN",
       "changes": [
-        "HL-CHG-0901"
+        "HL-CHG-0901",
+        "HL-CHG-0914",
+        "HL-CHG-0918"
       ],
       "file": "manual/HL-TC-0038.md"
     },
@@ -549,7 +551,9 @@
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0904",
-        "HL-CHG-0905"
+        "HL-CHG-0905",
+        "HL-CHG-0919",
+        "HL-CHG-0920"
       ],
       "file": "manual/HL-TC-0040.md"
     },
@@ -562,8 +566,12 @@
       "manual_result": "NOT RUN",
       "changes": [
         "HL-CHG-0906",
-        "HL-CHG-0907",
-        "HL-CHG-0908"
+        "HL-CHG-0908",
+        "HL-CHG-0921",
+        "HL-CHG-0922",
+        "HL-CHG-0923",
+        "HL-CHG-0924",
+        "HL-CHG-0925"
       ],
       "file": "manual/HL-TC-0041.md"
     },
@@ -617,6 +625,20 @@
         "HL-CHG-0023"
       ],
       "file": "manual/HL-TC-0045.md"
+    },
+    {
+      "id": "HL-TC-0046",
+      "title": "Sojusz przy Rankingu: członkostwo i chat gry",
+      "area": "Projekt sojuszy i komunikacji",
+      "priority": "P1",
+      "definition_status": "DRAFT / BLOCKED",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0915",
+        "HL-CHG-0916",
+        "HL-CHG-0917"
+      ],
+      "file": "manual/HL-TC-0046.md"
     }
   ]
 }

@@ -1,77 +1,119 @@
-# Liga Portów, społeczność i dobroczynność — propozycja do decyzji
+# Liga Portów, sojusze i dobroczynność — ustalenia i projekt wykonania
 
-Status: **projekt, bez aktywacji mechanik, płatności, wpłat ani publikacji**. Kwoty i limity poniżej są propozycją, nie publicznym zobowiązaniem operatora. W szczególności nie uruchamiają automatycznego przekazywania pieniędzy po zebraniu monet. Dokument dotyczy przyszłego rozszerzenia; nie zmienia obecnych zasad wyspy ani jej zapisu.
+Stan: 31 października 2026, po kolejnych odpowiedziach użytkownika. **Dokumentacja, bez implementacji, aktywacji programu, wpłat, czatu ani publikacji GCP.** Poniżej oddzielamy przyjęte kierunki od proponowanych liczb i reguł obsługi. Kwoty programu nie są aktywną publiczną ofertą; rezerwowanie środków wymaga dopiero uruchomienia z rzeczywistym zabezpieczeniem pieniędzy.
 
-## Rekomendacja na pierwszy sezon
+## Przyjęte przez użytkownika
 
-„Liga Portów” odbywa się raz w miesiącu, przez siedem dni. Sojusz liczy najwyżej pięć osób; do wyniku meczu liczą się trzy najlepsze wyniki dzienne. Samotny kapitan może wystawić własną jednoosobową drużynę, lecz dobrze współpracujący sojusz ma większą szansę na mistrzostwo. Każdy gracz zachowuje osobną ścieżkę nagród za udział.
+- Ligę rozliczamy **średnią wyników i premią za współpracę rosnącą wraz z liczbą uczestników sojuszu**, zamiast dawnej sumy trzech najlepszych. Dokładny wzór poniżej jest propozycją.
+- Przy Rankingu pojawia się pole/sekcja **Sojusz**: zakładanie, dołączanie, odchodzenie i prawdziwy czat w grze. Gotowe sygnały mogą być dodatkiem, nie zastępują wpisywania wiadomości.
+- Program dobroczynny przyjmuje **1000 kwalifikowanych zarobionych monet → 1 zł operatora**, najwyżej raz na osobę w miesiącu i co najmniej 30 dni między operacjami. Zmiana wyspy nie odnawia limitu.
+- Przyjęto wcześniej sfinansowaną, globalną pulę bety najwyżej **50 zł miesięcznie**, a później dodatkowo najwyżej **5% rzeczywistej marży poprzedniego miesiąca**. Brak miejsca w puli oznacza brak pobrania monet.
+- Potrzebny jest widoczny przycisk programu, serwerowa księga pochodzenia i zużycia monet oraz wykluczenie **wszystkich wpływów handlowych**, także pośredniego zakupu materiałów za kupione monety i ich odsprzedaży.
+- Nagrodą ma być rozświetlenie Portu **oraz rzeczywisty bonus szczęścia**. Wycofano rekomendację ograniczenia nagrody wyłącznie do kosmetyki. Wysokość, czas i moment odbioru bonusu są nadal propozycją do zatwierdzenia.
 
-Rywalizacja powinna korzystać z krótkiego, równego dla wszystkich wyzwania, a nie z bogactwa wysp, liczby reklam lub zakupów. Na początek nagrodami są odznaki, proporce, dekoracje i historia sezonów. Nie dodajemy kolejnego dużego źródła monet ani materiałów do dopiero równoważonej gospodarki.
+Nie przyjmujemy, że powyższe decyzje aktywują ligę lub darowizny w obecnej grze. Numer aplikacji, wyspy graczy i poprzednie wydanie PRE-PROD pozostają bez zmian.
 
-Dobroczynność jest osobnym programem: **1000 kwalifikowanych, zarobionych monet przydziela 1 zł z wcześniej sfinansowanej puli operatora**. Nie należy mylić jej z istniejącym oddawaniem zasobów na zadania Latarni. Rekomendacja dla bety to maksymalnie jedna taka operacja na osobę w miesiącu, dodatkowo odstęp co najmniej 30 dni, i globalna pula najwyżej 50 zł. Przycisk nie odbiera monet, jeżeli nie może jednocześnie zarezerwować pieniędzy z puli. Darowizny nie dają punktów ligi ani indywidualnej przewagi nad graczami, którzy nie uczestniczą.
+## Kalendarz i udział w lidze
 
-## Kalendarz: co znaczy „trzeci tydzień”
+Rekomendacja to **dni 15–21 miesiąca**, w strefie `Europe/Warsaw`: zawsze siedem dni, ale nie zawsze poniedziałek–niedziela. To nadal proponowana interpretacja „trzeciego tygodnia”. Alternatywny trzeci pełny tydzień poniedziałek–niedziela wypada np. 16–22 listopada i 21–27 grudnia 2026; przed implementacją trzeba wybrać jedną definicję i pokazywać daty graczom.
 
-Wszystkie terminy poniżej odnoszą się do `Europe/Warsaw`, łącznie ze zmianą czasu. Trzeba wybrać jedną definicję i pokazywać graczowi konkretne daty.
-
-| Wariant | Znaczenie | Zalety i konsekwencje |
-|---|---|---|
-| **Rekomendowany: dni 15–21** | Od 15. dnia miesiąca 00:00 do końca 21. dnia. Zawsze siedem dni. | Łatwo zapamiętać; dni tygodnia zmieniają się między sezonami. To stały tydzień wydarzenia, a nie zawsze poniedziałek–niedziela. |
-| Trzeci pełny tydzień | Trzecie poniedziałek–niedziela, które w całości mieszczą się w miesiącu. | Piłkarski rytm, ale daty przesuwają się i mogą wypaść później. W listopadzie 2026 to 16–22 listopada, w grudniu 21–27 grudnia. |
-
-Przykład rekomendowanego planu:
-
-| Dni miesiąca | Działanie |
+| Dni | Proponowane działanie |
 |---|---|
-| 1–7 | Pokazanie poprzednich wyników, rekrutacja, bezpłatny trening wyzwania. |
-| 8–14 | Zgłoszenia, dobór grup i ustalenie składu. Skład zamyka się 14. dnia o 23:59:59. |
-| **15–21** | Siedem kolejek ligi; po jednym przeciwniku dziennie w grupie ośmiu drużyn. |
-| 22 | Krótkie rozliczenie wyników i anomalii; wyniki do tego momentu są oznaczone jako wstępne. |
-| 23–28 | Wręczenie nagród, kronika sezonu, trening i dobrowolne mecze towarzyskie. |
-| 29–31, gdy występują | Przerwa, bez utraty nagród za „brak aktywności ligowej”. |
+| 1–7 | Kronika poprzedniego sezonu, trening i rekrutacja. |
+| 8–14 | Zapisy, dobór grup, deklaracja składu; zamknięcie 14. dnia o 23:59:59. |
+| 15–21 | Siedem kolejek; grupa ośmiu drużyn gra każdy z każdym. |
+| 22 | Wyniki wstępne, kontrola powtórzeń i anomalii. |
+| 23–28 | Wyniki ostateczne, odbiór nagród i mecze towarzyskie. |
+| Pozostałe dni | Przerwa bez utraty zwykłego postępu wyspy. |
 
-Nie przenosimy niezakończonej kolejki na następny miesiąc. Awaria operatora wymaga wspólnej decyzji o przedłużeniu kolejki albo jej unieważnieniu, a nie automatycznego walkowera dla dotkniętych graczy.
+Proponowany sojusz liczy **1–5 kont**. Aby zgłosić się do ligi, gracz zakłada sojusz albo dołącza do istniejącego; jednoosobowy sojusz jest legalną drogą dla solisty. Zwykła gra pozostaje dostępna bez sojuszu. Dwie lub dwadzieścia wysp jednego konta nie tworzy dodatkowych zawodników ani prób.
 
-## Mała liga zamiast wyścigu największych sojuszy
+Za mecz są 3 punkty tabeli za wygraną, 1 za remis, 0 za porażkę. Remis tabeli: bezpośredni mecz, różnica punktów meczowych, suma punktów meczowych, a przy pełnej równości wspólne miejsce. Nie rozstrzygamy zakupem ani dodatkową płatną próbą. Dla mniej niż 32 drużyn wystarczają grupy po 4–8; cztery zespoły mogą rozegrać sześć spotkań z rewanżami. Nie porównujemy surowych punktów tabeli grup o różnej liczbie meczów. Przy trzech i mniejszej liczbie zgłoszeń najpierw trening i turniej towarzyski, bez udawania pełnej ligi zawodowej.
 
-- Drużyna ma **1–5 kont**, jedno konto należy do jednej drużyny w danym sezonie. Dwie wyspy jednego konta nie dają dwóch miejsc, dwóch limitów prób ani dodatkowego funduszu.
-- Wynik drużyny to suma **trzech najlepszych** wyników członków, każdy najwyżej 100 punktów. Maksimum wynosi 300. Przy jednym graczu maksimum to 100, przy dwóch 200. Solo może pokonać słabo grający lub nieobecny sojusz, ale nie ma tej samej szansy co trzech dobrze grających partnerów — to świadomy element współpracy.
-- To silna przewaga: w proponowanym przeliczniku dwie ukończone próby dają co najmniej 120 punktów, więc solista z maksimum 100 ich nie pokona. Jeśli intencją jest jedynie niewielka przewaga sojuszu, trzeba zamiast sumy wybrać średnią z ograniczoną premią współpracy; nie są to równoważne warianty.
-- Pozostałe dwie osoby mogą zastąpić zapracowanych kolegów. Nie trzeba być w komplecie ani logować się równocześnie. Nie ma dodatkowych punktów za czwartą i piątą wpłatę, reklamę albo kupiony pakiet.
-- Skład jest zamknięty przed startem. Zaproszenia nie są wysyłane automatycznie na Facebooku; gracz sam przekazuje link lub kod. Przenoszenie graczy po poznaniu przeciwnika nie zmienia wyniku bieżącego sezonu.
-- Osobisty dziennik udziału działa także przy przegranym meczu. Solo ma osobne odznaki i może później dołączyć do sojuszu, bez wymazywania historii konta.
+Przy stabilnej liczbie drużyn można wprowadzić klasy Liga Przystani, Liga Żeglarzy i Liga Latarników z awansem dwóch najlepszych i spadkiem dwóch ostatnich w pełnej grupie. To późniejszy etap, nie automatyczny podział kilku pierwszych graczy na puste ligi. Awaria operatora wymaga wspólnego przedłużenia lub anulowania kolejki, zamiast automatycznych walkowerów.
 
-Grupa ośmiu drużyn gra siedem kolejek „każdy z każdym”. Za zwycięstwo są 3 punkty tabeli, za remis 1, za porażkę 0. Proponowana kolejność rozstrzygania remisu w tabeli: bezpośredni mecz, różnica punktów meczowych, suma zdobytych punktów meczowych; przy pełnej równości wspólne miejsce. Portfel, wydatki i dodatkowy płatny mecz nie są rozstrzygnięciem.
+## Średnia i premia współpracy — proponowana konkretna formuła
 
-Przy małej populacji gry nie tworzymy pustych profesjonalnych lig. Dla mniej niż 32 zgłoszonych drużyn wystarczą grupy po 4–8 zespołów i jedna wspólna klasa rozgrywkowa. Cztery drużyny mogą zagrać mecz i rewanż przez sześć dni, z dniem rezerwowym. Inna wielkość grupy dostaje odpowiednio mniej kolejek; nie porównujemy surowych punktów tabeli grup o różnej liczbie meczów.
+Dla każdego dnia serwer używa składu sezonowego zamrożonego przed pierwszą kolejką:
 
-Po uzyskaniu stabilnej liczby drużyn można wprowadzić klasy „Liga Przystani”, „Liga Żeglarzy” i „Liga Latarników”, z awansem dwóch najlepszych oraz spadkiem dwóch ostatnich w pełnej grupie. Nowy zespół zaczyna w klasie otwartej. Przebudowa większości składu wymaga ponownego ustalenia poziomu, aby doświadczone osoby nie wracały bez końca do początkujących po zmianie nazwy drużyny.
+- `N`: liczba kont zapisanych w składzie na sezon, 1–5; nie bieżąca liczba osób na czacie.
+- `s_i`: lepszy zweryfikowany wynik konta z dwóch prób danego dnia, od 0 do 100. Brak próby albo wyjście z drużyny oznacza 0 w kolejnych dniach.
+- `K`: liczba tych zapisanych osób, które uzyskały co najmniej **16 punktów**, czyli zaliczyły co najmniej jeden z pięciu celów. To definicja udziału w proponowanym wyzwaniu ligowym, nie zamiennik ogólnej aktywności sesji, ruchu myszy lub logowania.
+- `średnia = suma(s_i) / N`, `premia = 2 × max(0, K−1)`, najwyżej **8 punktów**.
+- **`wynik meczu = średnia + premia`**, obliczony bez zaokrąglania części i dopiero na końcu zaokrąglony do dwóch miejsc po przecinku. Zakres 0–108. Nie obcinamy go do 100, bo ukryłoby to różnicę między najlepszymi pełnymi sojuszami.
 
-## Krótkie granie, bez przewagi nocnego dyżuru
+| Przykład | Średnia | Premia | Wynik |
+|---|---:|---:|---:|
+| Solista: 95 | 95 | 0 | **95** |
+| Pięć osób po 80 | 80 | 8 | **88** |
+| Trzy osoby: 96, 94, 92 | 94 | 4 | **98** |
+| Dopisane bierne konta: 95, 0, 0, 0, 0 | 19 | 0 | **19** |
+| Pięć osób po 100 | 100 | 8 | **108** |
 
-Rekomendacja: gracz wybiera własne **maksymalnie 10 minut** na grę ligową dziennie, w przedziale 06:00–23:00 Warszawy. Ma dwie próby tego samego wyzwania, najwyżej po trzy minuty; do wyniku trafia lepsza. Reszta czasu służy instrukcji i wspólnemu planowaniu. Wynik kolejki zamyka się o 23:00, a nie przy kolejnym logowaniu kapitana.
+Solista może więc pokonać przeciętny kompletny sojusz, a większa **aktywnie współpracująca** załoga ma premię. Bierna liczba kont nie wystarcza do jej uzyskania i obniża średnią. Bonus ma być zrozumiałą zachętą do współpracy, nie dowodem, że za kontami siedzą różni ludzie; unikalność konta i ochronę przed botami trzeba sprawdzać osobno.
 
-Duże, pojedyncze okno wieczorne wykluczałoby część pracujących i rodziców. Dlatego wspólna prezentacja meczu, np. o 20:00, może być wydarzeniem towarzyskim, lecz obecność na niej nie daje punktów. Samo pozostawienie aplikacji otwartej przez noc, aktywna produkcja przez 24 godziny lub oglądanie kolejnych reklam nie poprawia wyniku.
+Dwa pojedyncze słabe wyniki nie mogą zniknąć z mianownika przez usunięcie ich autorów. Nie wybieramy po meczu samych najlepszych członków ani średniej tylko obecnych. Każdy gracz nadal ma indywidualny zapis udziału niezależny od sukcesu zespołu.
 
-Propozycja równego wyzwania to „Rejs kurierów”: wszyscy otrzymują taką samą małą planszę logistyczną, zasoby i limit czasu. Zadaniem jest dostarczyć wskazany ładunek przez kilka poprawnych odcinków. To osobna próba ligowa; nie zużywa materiałów z głównej wyspy i nie korzysta z kupionej ładowności statku.
+## Sojusz przy Rankingu — przyszły ekran i cykl członkostwa
 
-Przykładowy, wymagający jeszcze sprawdzenia przez testy przelicznik:
+Proponowany układ: **Ranking → Sojusz**, zawsze widoczne pole z nazwą własnego sojuszu albo przyciskiem „Załóż lub znajdź sojusz”. Wewnątrz: członkowie, zaproszenia, tabela ligi, czat oraz „Opuść sojusz”. Nie dodajemy tego teraz do działającego UI.
 
-- ukończona próba: `max(60, 100 − 5 × błędy − 2 × pełne 30 s po drugiej minucie)`;
-- nieukończona próba: najwyżej 49 punktów, proporcjonalnie do poprawnie dostarczonego ładunku;
-- koniec po trzech minutach, bez dokupowania czasu, reklam, premii produkcji i resetowania próby za pieniądze.
+| Działanie | Proponowane zachowanie |
+|---|---|
+| Założenie | Nazwa, krótki opis i proporzec; bez opłaty, założyciel staje się kapitanem. Nazwa jest publiczną nazwą grupy, nie e-mailem konta. |
+| Dołączenie | Wyszukiwarka i prośba albo prywatny kod/link zaproszenia. Użytkownik sam potwierdza; brak automatycznych zaproszeń FB. Jedno konto należy do jednego sojuszu naraz. |
+| Kapitan | Akceptuje zgłoszenia, zaprasza, przekazuje rolę i zarządza bieżącym członkostwem. Nie przejmuje wysp, zakupów ani punktów innych osób. |
+| Odejście | Możliwe od razu, także podczas sezonu. Odbiera dostęp do czatu i uprawnień grupy; nie usuwa historycznego wyniku. Gdy wychodzi kapitan, może przekazać rolę; przy braku wyboru propozycją jest najstarszy stażem pozostały członek. |
+| Usunięcie przez kapitana | Kończy bieżące członkostwo i dostęp do czatu. Nie usuwa slotu ani dawnych wyników z zamrożonego składu sezonu. |
+| Nowy członek w trakcie ligi | Może rozmawiać i trenować po przyjęciu, ale do składu punktującego trafia dopiero od kolejnego sezonu. |
+| Zmiana klubu w sezonie | Dołączenie społecznościowe jest dozwolone, ale konto nie punktuje dla nowej drużyny w tym samym sezonie. Nie przenosi swoich punktów między zespołami. |
+| Rozwiązanie sojuszu | Pusty sojusz znika z aktywnego wyszukiwania; sezonowa tabela zachowuje historyczny identyfikator, nazwę i wyniki do zakończenia rozliczenia. |
 
-To propozycja nowego wyzwania, a nie opis istniejącego, gotowego trybu. Zanim zostanie użyte obecne dopasowywanie trójek albo kulki, ich punktacja musi być porównywalna i sprawdzana przez serwer. Nie można przyjąć wyniku przesłanego przez klienta jako zweryfikowanego tylko dlatego, że pole nazywa się `verified`.
+**Członkostwo społeczne i skład sezonowy są odrębne.** Po odejściu wcześniejsze punkty pozostają w historycznym slocie drużyny, a następne dni tego slotu mają 0; mianownik N się nie zmienia. Konto może trenować i zachować już zdobyte osobiste osiągnięcia, ale nie wpisuje drugiego ligowego wyniku do innej drużyny. Komunikat przed startem sezonu wyjaśnia tę konsekwencję; nikogo nie zatrzymujemy na czacie lub w grupie do końca miesiąca. Zmiana członkostwa w trakcie rozpoczętej próby wymaga rozstrzygnięcia serwera według chwili zatwierdzenia wyjścia, a nie zegara klienta; po potwierdzonym wyjściu nie można dokończyć punktującej próby dla dawnego składu.
 
-## Rzeczy społecznościowe, które warto dodać najpierw
+## Czat sojuszu w grze
 
-1. **Wizytówka portu i kronika załogi:** osiągnięcia, ostatnie mecze, wspólny proporzec; bez publikowania wielkości zakupów.
-2. **Tablica prostych sygnałów:** „zagram rano”, „potrzebuję zastępstwa”, „trasa gotowa”. Na początek gotowe komunikaty zamiast kosztownego w moderowaniu otwartego czatu.
-3. **Wspólny plan rejsu:** kapitan wskazuje dwa warianty trasy, a członkowie głosują. To ułatwia współpracę, nie przekazuje dodatkowych zasobów.
-4. **Powracający rozbitek lub statek ligi:** krótka historia zmieniająca ilustrację i zadanie sezonu. Losowy motyw nie zmienia szans punktowych rywali.
-5. **Port Dobroczynności:** wspólny mural rozświetla się po potwierdzonym przekazaniu pieniędzy. Widać cel, kwotę i potwierdzenie, a nie ranking „najbogatszych dobroczyńców”.
+Użytkownik wybrał **prawdziwy tekstowy czat**. Rekomendowany pierwszy zakres to kanał własnego sojuszu; globalny czat i prywatne rozmowy jeden na jeden nie są częścią tej decyzji.
 
-Nagrody pierwszego sezonu: proporzec za udział w co najmniej `min(5, liczba zaplanowanych meczów drużyny)` kolejkach, medal pozycji w tabeli i dekoracja za współpracę. Dzięki temu także grupa pięciu drużyn z czterema meczami ma osiągalny próg. Są przypisane do konta, niewymienialne i nie mają ceny odkupu. Nie zwiększają podatków, produkcji, populacji ani kwalifikowanych monet dobroczynnych. Awans daje prestiż i nowych przeciwników, nie narastający mnożnik przewagi.
+- Serwer sprawdza członkostwo przy każdym odczycie, wysłaniu i wznowieniu kanału. Po odejściu stare połączenie traci dostęp; sam ukryty przycisk nie jest zabezpieczeniem. Nie można pobrać wiadomości obcej drużyny po podaniu jej ID.
+- Propozycja produktu: wiadomości do 500 znaków, najwyżej 5 w 10 sekund, bez załączników. Zwykłe wiadomości wygasają po 30 dniach. Fragment celowo zgłoszony do sprawdzenia może pozostać do 90 dni z ograniczonym dostępem operatora; te wartości wymagają zatwierdzenia w polityce danych.
+- Widoczny pseudonim i nazwa wyspy, bez adresów e-mail, UID Firebase, danych płatniczych i prywatnych sald. Gracz może wyciszyć rozmowę, zablokować autora i zgłosić konkretną wiadomość. Kapitan nie dostaje dostępu do sekretów kont.
+- Po zaakceptowanym wysłaniu pojawia się potwierdzenie. Brak sieci nie udaje dostarczonej wiadomości; ponowienie z tym samym ID nie powiela wpisu. Tekst jest renderowany jako tekst, bez uruchamiania HTML lub skryptów.
+- Skróty „zagram rano”, „potrzebuję zastępstwa” i pinezka trasy są dodatkiem do zwykłego wpisywania, a nie jedyną formą rozmowy. Nie wysyłamy automatycznych wiadomości ani postów poza grę.
+
+## Siedem proponowanych zadań ligowych
+
+Każde zadanie jest osobną, równą dla wszystkich **miniaturową symulacją**, nie operacją na prawdziwej wyspie. Nie zużywa kupionych materiałów, nie korzysta z płatnej pojemności statku i nie skraca prawdziwego rejsu. Na dzień są **dwie próby do trzech minut**, lepsza liczy się do wyniku. Cały udział mieści się w około 10 minutach. Gracz wybiera moment w godzinach 06:00–23:00 Warszawy; jest to nadal proponowane okno. Nie można dokupić czasu, prób ani reklamy poprawiającej wynik.
+
+W każdym dniu jest **pięć jednoznacznych celów**, każdy zaliczany najwyżej raz. Proponowana wspólna punktacja to `16 × c`, gdzie c jest liczbą zaliczonych celów, plus przy wszystkich pięciu `20 × (180−t)/180`, gdzie t to czas ukończenia w sekundach ograniczony do 0–180. Wynik zaokrąglamy na końcu do dwóch miejsc: maksymalnie 100; pełne ukończenie na granicy czasu daje 80; cztery cele dają 64. Błędne ruchy nie zaliczają celu i zużywają czas, nie mogą dawać dodatnich punktów. Serwer weryfikuje legalne przejścia i wynik; nie ufa polu `verified` z przeglądarki.
+
+| Dzień / zadanie | Co robi gracz | Pięć celów i równe warunki |
+|---|---|---|
+| **1. Ostatni konwój** | Pakuje i przewozi pięć oznaczonych partii po 20 sztuk do trzech wskazanych nabrzeży; łódź mieści 40. | Każda dostarczona właściwa partia daje jeden cel. Żadnej nie wolno skopiować ani zostawić równocześnie w dwóch miejscach. |
+| **2. Fabryka bez zatoru** | Układa pięć małych łańcuchów zboże→żywność lub drewno→deski, dobierając wejście i obsadę. | Każde poprawnie zbilansowane zamówienie to cel. Wzory 2:1 i wydajności są pokazane; zakup premii nie jest opcją. |
+| **3. Mapa po sztormie** | Wyznacza trasy pięciu konwojów na tej samej sieci sześciu węzłów z dwoma zamkniętymi odcinkami. | Jeden cel za konwój po legalnej drodze do wskazanego miejsca. Nie wystarcza samo narysowanie kreski przez przeszkodę. |
+| **4. Miasto w drodze** | Przenosi pięć grup po dwie osoby z matki mającej 22 ludzi do dwóch schronień po sześć miejsc; łódź mieści cztery. | Cel za każdą legalnie przyjętą grupę. Na matce pozostaje minimum 12, schronienia nie mogą się przepełnić. To skrócona plansza zadania, nie rzeczywisty 30-minutowy transport. |
+| **5. Rynek kapitana** | Porównuje pięć zestawów ofert na potrzebne ilości towarów i wybiera najtańsze legalne zakupy. | Cel za każdą poprawną decyzję ilość+cena. Limit to pokazana bazowa cena NPC; tani zakup i legalna odsprzedaż nie są oszustwem. |
+| **6. Sieć sygnałów** | Łączy pięć punktów przekaźnikowych z Latarnią, rozdzielając ograniczone łączniki i omijając uszkodzenia. | Cel za każdy punkt, do którego istnieje legalna ciągła ścieżka. Wszystkie konta mają te same łączniki i ograniczenia. |
+| **7. Rejs mistrzów** | Realizuje pięć zamówień łączących trasę, poprawną recepturę i dopuszczalny koszt; kolejność wybiera sam. | Cel za całe zamówienie; częściowa produkcja bez dostawy nie wystarcza. Te same warianty wejścia dla całej kolejki. |
+
+Parametry, plansze i treść zadań są do prototypu i testu trudności. W obrębie jednej kolejki wszystkie konta dostają tę samą wersję/ziarno oraz limity; kolejka kolejnego sezonu może mieć nową wersję. Dwie próby pozwalają nauczyć się zadania wszystkim na tych samych zasadach. Podpowiedzi drużyny na czacie są legalne, ale serwer nie przekazuje gotowego wyniku ani dodatkowego czasu. Po zakończeniu próby harmonogram zwykłych reklam/minigier wraca do bezpiecznego momentu; nie zasłania trwającego wyzwania.
+
+## Proponowane nagrody ligowe
+
+| Odbiorca / warunek | Nagroda |
+|---|---|
+| Każdy: udział w co najmniej trzech różnych dniach z zaliczonym celem | Odznaka „Załoga sezonu” i wpis do kroniki. |
+| Każdy: co najmniej 20 z 35 celów i udział w `min(5, liczba zaplanowanych meczów drużyny)` dniach | Ramka profilu „Kurier Portów”. Przy krótszej grupie próg celów skaluje się do `ceil(20 × liczba meczów / 7)`. |
+| Drużyna: miejsce 1/2/3 w grupie | Złoty/srebrny/brązowy proporzec oraz sezonowa dekoracja Portu. |
+| Drużyna: wszyscy członkowie zamrożonego składu aktywni przez `min(3, liczba meczów)` dni | Wspólny znak „Pełna załoga”; jednoosobowy sojusz dostaje osobny znak „Samotny kapitan” przy takim samym udziale. |
+| Indywidualne osiągnięcie mimo przegranej zespołu | Osobisty wynik pozostaje widoczny; porażka nie zabiera zdobytej odznaki. |
+
+Nagrody są przypisane do konta, niewymienialne i bez ceny odkupu. **Nie dają punktów ligi, podatku, produkcji ani kwalifikowanych monet dobroczynnych.** Liczba kupionych wysp nie mnoży nagrody. Historia rozliczenia ma własny identyfikator; odświeżenie strony lub ponowny odbiór nie duplikują dekoracji. Odbiór po powrocie z nieobecności zachowuje przyznane uprawnienie. Odznaka nie jest incydentem ani dowodem wdrożenia serwerowego rankingu.
+
+## Społeczność poza meczem
+
+Kronika sojuszu, wspólny proporzec, możliwość przypięcia planu rejsu i głosowanie nad trasą tworzą powód do powrotu także po przegranym dniu. Krótka historia rozbitka albo statku sezonu może zmienić wygląd i opis zadania, ale nie warunki punktowe rywali. Wspólne rozświetlenie Portu Dobroczynności pokazuje cel i potwierdzone przelewy; nie tworzy rankingu najbogatszych ani automatycznych postów na Facebooku.
 
 ## Dlaczego nie wolno obiecać nieograniczonego „1000 monet = 1 zł”
 
@@ -92,7 +134,7 @@ Kwoty w tabeli są proporcjonalnym ekwiwalentem całej emisji monet. Faktyczne o
 
 Teoretyczne 2400 osób wynika z limitu Ratusza 100; nie oznacza natychmiast dostępnej obsady. Gdy efekt podatkowy Kaplicy działa przez cały rozpatrywany okres, wynik modelu byłby jeszcze dwukrotnie większy. Do realnego kosztu nie wystarczy znać liczbę graczy, trzeba także ograniczyć kwotę finansowaną przez operatora.
 
-| Kwalifikowane konta w miesiącu | Bez ograniczenia, po 12 pracujących | Bez ograniczenia, po 48 pracujących | Limit 1000 monet/konto/miesiąc, bez globalnej puli | **Z rekomendowaną pulą globalną 50 zł** |
+| Kwalifikowane konta w miesiącu | Bez ograniczenia, po 12 pracujących | Bez ograniczenia, po 48 pracujących | Limit 1000 monet/konto/miesiąc, bez globalnej puli | **Z przyjętą pulą globalną najwyżej 50 zł** |
 |---:|---:|---:|---:|---:|
 | 100 | 936 zł | 3744 zł | maks. 100 zł | **maks. 50 zł** |
 | 500 | 4680 zł | 18 720 zł | maks. 500 zł | **maks. 50 zł** |
@@ -100,56 +142,57 @@ Teoretyczne 2400 osób wynika z limitu Ratusza 100; nie oznacza natychmiast dost
 
 W tej tabeli 100/500/1000 to **różne, kwalifikowane konta uczestniczące w miesiącu**, a nie gracze jednocześnie. Ustalona wcześniej jednostka skalowania infrastruktury to równocześni gracze; 100 CCU może oznaczać znacznie więcej niż 100 kont w miesiącu. Globalna pula chroni koszt niezależnie od tej różnicy.
 
-## Dobroczynność: zamknięta pula zamiast wymiany waluty
+## Dobroczynność: przyjęte limity i przyszły przycisk
 
-Rekomendowane reguły pilotażu:
-
-| Element | Propozycja |
+| Element | Przyjęte ograniczenie / otwarty szczegół |
 |---|---|
-| Przelicznik | 1000 kwalifikowanych monet przydziela 1 zł z puli operatora. Brak wypłaty dla gracza i brak prawa wymiany jego portfela na gotówkę. |
-| Częstotliwość | Maksymalnie raz na osobę w miesiącu Warszawy oraz co najmniej 30 dni od poprzedniej zatwierdzonej operacji. Zmiana wyspy nie odnawia limitu. |
-| Pula startowa | Najwyżej 50 zł, **dopiero po świadomym zatwierdzeniu i wydzieleniu tej kwoty przez właściciela**. Dziś nie jest to obietnica wpłaty. |
-| Kwalifikacja | Proponowane: konto starsze niż 14 dni, co najmniej 5 odrębnych dni rzeczywistej aktywności, Ratusz co najmniej 4. Wykluczone konta techniczne, testowe i monety z symulacji. Te progi nie zastępują ochrony przed botami. |
-| Brak pieniędzy w puli | Przycisk niczego nie odejmuje. Pokazuje „Pula tego miesiąca jest wykorzystana”. Można dobrowolnie zapisać zainteresowanie kolejną kampanią, bez automatycznego pobrania monet. |
-| Cel | Przed otwarciem kampanii wskazana jedna organizacja i konkretny cel; bez płatnego głosowania i bez indywidualnych przelewów na konta graczy. |
-| Termin operatora | Proponowane: zbiorczy przelew do 7. dnia następnego miesiąca, potem potwierdzenie i zamknięcie kampanii. Termin wymaga zatwierdzenia operatora. |
-| Niewykorzystana pula | Nie tworzy automatycznie większego budżetu następnego miesiąca. Każdy nowy miesiąc ma osobno zatwierdzony limit i faktycznie zabezpieczone pieniądze. |
+| Przelicznik | **1000 kwalifikowanych monet → 1 zł** z puli operatora. Brak wypłaty dla gracza i brak wymiany jego portfela na gotówkę. |
+| Częstotliwość | Najwyżej raz na osobę w miesiącu Warszawy oraz co najmniej 30 dni od poprzedniej zatwierdzonej operacji. Równocześnie oba warunki; zmiana wyspy ich nie odnawia. |
+| Pula startowa | Przyjęta beta: najwyżej **50 zł globalnie w miesiącu**, przed aktywacją faktycznie wydzielone. Akceptacja projektu nie oznacza, że środki już odłożono lub przelano. |
+| Dalsze miesiące | `min(50 zł, 5% faktycznej marży poprzedniego miesiąca, faktycznie wydzielone środki)`, zaokrąglone w dół do pełnych złotych. Brak marży po pilotażu oznacza pulę 0. |
+| Brak puli | Brak odjęcia monet i komunikat „Pula tego miesiąca jest wykorzystana”. Lista zainteresowania nie pobiera niczego automatycznie. |
+| Kwalifikacja | Nadal proponowane: konto starsze niż 14 dni, pięć różnych dni rzeczywistej aktywności, Ratusz co najmniej 4. Konta techniczne/testowe i symulowane wpływy są wykluczone. |
+| Cel | Jedna rzeczywista organizacja i konkretny cel kampanii do wskazania przed aktywacją; brak przelewów do graczy. |
+| Przelew | Nadal propozycja: zbiorczo do 7. dnia następnego miesiąca, potem potwierdzenie. Przekroczenie terminu nie może zostać ukryte jako sukces. |
+| Niewykorzystana pula | Bez automatycznego przenoszenia i powiększania kolejnego miesiąca. Nowy limit ma osobne rzeczywiste finansowanie. |
 
-Przy limicie 50 zł program ma najwyżej 50 pełnych operacji. Dla 1000 uczestników nie zapewnia miejsca każdemu. Trzeba powiedzieć to wprost; nie pokazywać pełnej puli jako indywidualnie gwarantowanej nagrody. Ponieważ uczestnictwo nie kupuje przewagi w grze, brak miejsca nie blokuje normalnego postępu. Przy kolejnych edycjach można dawać pierwszeństwo osobom, które wcześniej nie miały dostępnej puli; nie wolno obciążyć ich automatycznie po zapisaniu się na listę.
+**Proponowane miejsce przycisku:** w oknie Portu widoczna zakładka **„Pomagam”**, bez nowej ikony budynku. Na niej: cel, miesiąc, stan puli, kwalifikowane saldo i przycisk **„Przekaż 1000 monet — operator wpłaci 1 zł”**. Dodatkowy odnośnik przy Rankingu prowadzi do tej samej zakładki, bez drugiego niezależnego checkoutu. Wybrana lokalizacja jest propozycją; wymaganie widocznego przycisku jest przyjęte.
 
-Przykładowy przyszły tekst interfejsu: „Przekaż 1000 zarobionych monet, aby przeznaczyć 1 zł z puli sponsorskiej HARBORLIGHT na [cel]. Pieniądze wpłaca operator. Pozostało [X] zł. To nie jest płatność gracza ani wypłata gotówki”. Ten tekst wolno pokazać jako aktywną ofertę dopiero po spełnieniu warunków finansowych i technicznych.
+Przed potwierdzeniem pokazujemy 1000 monet do zużycia, 1 zł do rezerwacji, pozostały limit osoby oraz informację o nagrodzie oczekującej na faktyczny przelew. Użytkownik zatwierdza jedną operację; nie płaci Paynow i nie podaje numeru rachunku. Po zatwierdzeniu ekran rozróżnia **„Zarezerwowano 1 zł”** od **„Organizacja otrzymała przelew”**. Przycisk nie może być aktywną ofertą przed uruchomieniem serwerowej księgi, rzeczywistym zabezpieczeniem puli i wyborem celu.
 
-## Pochodzenie monet i blokada prania przez handel
+Przy 50 zł program ma najwyżej 50 pełnych operacji. Dla 1000 uczestników nie zapewnia miejsca każdemu. Nie pokazujemy globalnej puli jako indywidualnie gwarantowanego złotego. Brak udziału nie blokuje zwykłych działań, ale wybrany przez użytkownika rzeczywisty bonus szczęścia jest korzyścią gospodarczą, więc nie twierdzimy już, że uczestnik nie zyskuje żadnej przewagi. Przy kolejnych kampaniach można rozważyć pierwszeństwo wcześniej pominiętych, bez automatycznego pobierania monet.
 
-Obecny portfel jest wyliczany przez klienta. Sama liczba `coins`, historia `statistics.taxCollected` lub zadeklarowane przez przeglądarkę `earned: true` nie są podstawą zobowiązania pieniężnego. Przed prawdziwą akcją potrzebny jest **serwerowy rejestr źródeł i wydawania monet**, z idempotentnymi potwierdzeniami. Nie wystarczy nowa etykieta w UI.
+## Serwerowe pochodzenie monet — zaakceptowany kierunek
 
-Rekomendowane klasy:
+Obecny portfel jest wyliczany przez klienta. Sama liczba `coins`, historia `statistics.taxCollected` lub deklaracja `earned: true` nie są podstawą zobowiązania w złotych. Użytkownik zaakceptował **serwerowy rejestr źródeł i wydawania monet**, z jednokrotnym rozliczeniem; implementacja dopiero musi powstać. Istniejący serwer escrow handlu nie czyni całej gospodarki zaufaną.
 
-| Źródło | Kwalifikacja do programu |
+| Źródło | Kwalifikacja |
 |---|---|
-| Podatek podstawowy naliczony przez zaufany model serwera | Może kwalifikować się w ustalonym limicie. Nie przyjmujemy klientowego licznika jako dowodu. Część z płatnych mnożników pozostaje domyślnie niekwalifikowana. |
-| Zweryfikowane bezpłatne zadanie lub osiągnięcie | Tylko źródła z białej listy, raz na zdarzenie; do czasu audytu sposobu zdobycia nagrody domyślnie niekwalifikowane. |
-| Kupione monety, płatny bonus, prezent operatora lub test | Niekwalifikowane. |
-| Sprzedaż towarów grze albo graczowi, wymiana, transfer, prezent między kontami | **Niekwalifikowane niezależnie od pochodzenia towaru.** Sam handel nie tworzy nowych kwalifikowanych monet. |
-| Polecenia, publikacje, nagrody ligi, jednorazowe premie, nieznany zapis historyczny | Domyślnie niekwalifikowane. Nie odtwarzamy „zarobionych monet” z całego dawnego salda. |
+| Podatek podstawowy z zaufanego rozliczenia serwera | Może kwalifikować się w limicie. Część z płatnych mnożników domyślnie niekwalifikowana; dokładna biała lista do zatwierdzenia. |
+| Zweryfikowane bezpłatne zadanie | Tylko źródła z białej listy i raz na zdarzenie; przed audytem domyślnie niekwalifikowane. |
+| Kupione monety, płatny bonus, prezent operatora, test | Niekwalifikowane. |
+| **Wszelkie wpływy handlowe**: sprzedaż NPC/PvP, wymiana, transfer, prezent między kontami | **Niekwalifikowane niezależnie od pochodzenia towaru.** To przyjęte wykluczenie, nie otwarty wariant. |
+| Polecenia, publikacje, nagrody ligi/planszówki, nieznany zapis historyczny | Domyślnie niekwalifikowane; nie odtwarzamy uprawnienia z samego dawnego salda. Punkty zadaniowe z planszówki nie są monetami. |
 
-Wyłączenie **wszystkich wpływów handlowych** rozcina ścieżkę „kupione monety → materiały → sprzedaż → dobroczynność”, bez konieczności od razu znakowania każdej deski w całej gospodarce. Jeśli w przyszłości wpływy handlowe mają się kwalifikować, trzeba najpierw przenosić pochodzenie także przez zakup, wytwarzanie, transport, wymianę i konta pośrednie. Sam dowód, że ostatnia transakcja nie była zakupem Paynow, nie wystarcza.
+Wyłączenie wszystkich wpływów handlowych zamyka ścieżkę **kupione monety → materiały → sprzedaż → rzekomo zarobione monety** bez znakowania każdej deski. Legalny zysk z taniego zakupu PvP i sprzedaży NPC pozostaje dozwolony, ale nie kwalifikuje się do programu. Jeśli wpływy handlowe miałyby się kwalifikować później, potrzebny jest nowy projekt śledzący pochodzenie przez produkcję i konta pośrednie; ostatnia operacja inna niż Paynow nie dowodzi zarobku kwalifikowanego.
 
-Każde wydanie monet musi równocześnie zmniejszać odpowiednie partie salda. Gracz nie może najpierw wydać zarobionych monet na budowę, a później przekazać ich historycznego licznika drugi raz. Proponowany konserwatywny porządek zwykłych wydatków to najpierw kwalifikowane monety, potem pozostałe; musi być jawny. Alternatywą jest osobny, zrozumiały portfel z wyborem źródła — wymaga osobnej decyzji produktowej. Przy zwrocie operacji wraca dokładnie jej pochodzenie, a nie nowa partia „zarobionych” monet.
+Każdy wydatek zmniejsza konkretne partie salda. Nie wolno wydać zarobionych monet na budowę, a potem przekazać ich historycznego licznika ponownie. Proponowany konserwatywny porządek zwykłych wydatków to najpierw monety kwalifikowane, potem pozostałe; musi być jawny. Alternatywa oddzielnego portfela wymaga decyzji produktu. Zwrot przywraca dokładnie pierwotne pochodzenie.
 
-Jedna transakcja serwera sprawdza dostępne kwalifikowane 1000 monet, limit osoby, kwotę w puli, cel i powtórzenie żądania. Dopiero wtedy jednocześnie rezerwuje 1 zł i umarza właściwe partie monet. Nie przyjmuje `fundAvailable`, `verified` ani liczby aktywnych kont podanej przez klienta. Utrata odpowiedzi nie powoduje drugiego odjęcia. Wyspy jednego konta korzystają ze wspólnego limitu i rejestru.
+Jedna transakcja serwera weryfikuje kwalifikowane 1000 monet, oba limity osoby, pulę, cel i identyfikator żądania. Dopiero wtedy jednocześnie rezerwuje 1 zł i umarza właściwe monety. Klient nie podaje wiążących `fundAvailable`, `verified` ani limitów. Utrata odpowiedzi nie tworzy drugiej rezerwacji; wyspy jednego konta mają wspólną księgę i limit. Maksymalny budżet jest kontrolowany transakcyjnie, także przy równoległych zgłoszeniach wielu osób.
 
-Stany trzeba odróżnić: **przydzielono z puli → operator wykonał przelew → opublikowano potwierdzenie**. Przydział nie może być opisany „organizacja już dostała pieniądze”. Jeśli zapowiedziany przelew nie nastąpi, procedura zwrotu monet zachowuje ich pierwotne pochodzenie i zamyka odpowiadającą rezerwację; nie dopisuje nowych bonusów.
+Rozróżniamy **rezerwację → rzeczywisty przelew → publikację potwierdzenia → odbiór bonusu**. Gdy przelew nie nastąpi, zwrot monet zachowuje pochodzenie i zamyka rezerwację dokładnie raz. Nie wypłaca bonusu ani drugiego zwrotu; uwolnienie puli również jest idempotentne. Ponowne przyjęcie do anulowanej kampanii wymaga jawnych zasad operatora, a nie automatycznego odnowienia limitu przez klienta.
 
-## Bonus szczęścia: nie ukrywać wpływu na gospodarkę
+## Realny bonus szczęścia i rozświetlenie Portu
 
-Prawdziwe szczęście mieszkańców wpływa na przyrost populacji. Więcej mieszkańców może później pracować i płacić podatki. Dlatego nawet bonus bez napisu „monety ×2” ma pośredni efekt ekonomiczny; nie należy przedstawiać go jako całkowicie pozbawionego takiego wpływu.
+**Przyjęte wymaganie:** dodajemy do projektu prawdziwe szczęście oraz rozświetlenie Portu. Poprzednia rekomendacja „tylko dekoracja” jest zastąpiona. Prawdziwe szczęście może zwiększyć populację, a później dochód z podatków. Limity pieniędzy ograniczają zobowiązanie operatora, ale nie są dowodem idealnego balansu lub rentowności.
 
-**Rekomendacja na start:** odznaka, animacja rozświetlenia Portu i wspólny mural po potwierdzonym przelewie, bez zmiany rzeczywistego szczęścia. To najmniejszy koszt i brak pętli „premia → dodatkowy dochód → kolejna wpłata”. Nie opisujemy dekoracji jako +X punktów rzeczywistego szczęścia.
+**Propozycja parametrów do zatwierdzenia:** **+20 punktów procentowych szczęścia na 6 godzin**, na jednej wskazanej własnej wyspie, dla jej istniejących mieszkańców w chwili odbioru. Najwyżej jeden taki odbiór na konto za kampanię i dodatkowo 30 dni od poprzedniego odbioru; liczba wysp nie mnoży efektu. Nowi mieszkańcy nie powodują wielokrotnego przyznania tej samej premii. Obowiązuje normalny limit 100%, pierwszeństwo Latarni oraz brak kumulowania i przedłużania aktywnego bonusu dobroczynnego. To nie jest mnożnik produkcji ani podatku, ale jego pośredni efekt populacyjny pozostaje rzeczywisty.
 
-Jeśli właściciel chce także rzeczywistej premii, proponowany wariant do osobnego zatwierdzenia to **wspólne +10 punktów procentowych na 15 minut, najwyżej raz w miesiącu, po potwierdzonym przelewie**, dla kwalifikowanych aktywnych mieszkańców/kont uczestniczących i nieuczestniczących. Bez kumulowania, mnożnika podatku i produkcji, bez przyznawania za każdą operację oraz bez punktów ligi. Obowiązuje zwykły limit 100% i pierwszeństwo wymuszonego 100% Latarni.
+**Proponowany moment:** dopiero po potwierdzonym rzeczywistym przelewie. Od chwili rezerwacji gracz widzi kartę **„Nagroda oczekuje na przelew: +20 p.p. przez 6 h”**, lecz jeszcze nic nie naliczamy. Po publikacji potwierdzenia dostaje **„Odbierz Światło Wdzięczności”** i siedem dni na świadomy odbiór; sześciogodzinny zegar rusza po zatwierdzeniu odbioru przez serwer. Te czasowe parametry i okno odbioru także są propozycją, nie automatycznie zatwierdzonymi liczbami użytkownika. Przed przekazaniem monet trzeba pokazać, że nagroda nie zacznie działać natychmiast.
 
-Wspólna premia nie zamienia indywidualnego przekazania monet w zakup przewagi, lecz nadal wymaga sprawdzenia wpływu na populację. To opcja po testach gospodarki, a nie ścisła gwarancja braku pośrednich korzyści. Ochroną realnych pieniędzy pozostaje zawsze wcześniej sfinansowana, nieprzekraczalna pula; efekt szczęścia nie może jej powiększać.
+Serwer zapisuje konkretną kampanię, przelew, konto, instancję/generację wyspy, `rewardClaimId` i czas końca efektu. Podwójny klik, utrata odpowiedzi, zmiana aktywnej wyspy albo ponowny odczyt starej odznaki nie odnawiają nagrody. Jeżeli poprzedni efekt lub limit 30 dni jeszcze trwa, odbiór nie pobiera niczego i okno siedmiu dni rozpoczyna się dopiero od faktycznej gotowości odbioru. Niedostępna/usunięta wyspa nie odbiera ani nie kasuje uprawnienia automatycznie: przed odbiorem trzeba wskazać legalny istniejący świat, a efekt przyznaje się tylko tam. Reset po przyznaniu nie odtwarza raz zużytego uprawnienia.
+
+Rozświetlenie wspólnego Portu i mural aktualizują się po potwierdzonym przelewie, z opisem rzeczywiście przelanej kwoty; nie udają wpłaty przy samej rezerwacji. Pamiątkowa odznaka pozostaje po wygaśnięciu szczęścia, ale nie jest kolejnym kuponem. Odróżniamy kosmetyczną historię od jednorazowego prawa do rzeczywistego efektu.
 
 ## Rentowność: obliczenia bez zgadywania reklam
 
@@ -175,7 +218,7 @@ Jeżeli później potwierdzony wkład z reklam wynosi `A`, a płatności dają `
 
 ### Fundusz utrzymywany z marży poprzedniego miesiąca
 
-Po jednorazowej, świadomie opłaconej promocji startowej rekomenduję:
+Użytkownik przyjął następującą regułę po jednorazowej, świadomie sfinansowanej promocji startowej:
 
 `M = max(0, rzeczywiście rozliczone wpływy − rzeczywiste prowizje/podatki/zwroty − GCP − inne koszty − uzgodniona rezerwa)`
 
@@ -191,22 +234,13 @@ Po jednorazowej, świadomie opłaconej promocji startowej rekomenduję:
 
 Przy tej polityce pełna stała pula 50 zł wymaga co najmniej 1000 zł potwierdzonej marży przed jej wydzieleniem. To konserwatywna reguła pozostawiająca 95% tej marży na biznes, a nie matematyczne twierdzenie, że 50 zł darowizny zawsze wymaga 1000 zł zysku. Większa pula, np. 200 zł przy rosnącej społeczności, wymaga nowej decyzji, rzeczywistych danych i odpowiedniego zabezpieczenia — nie włącza się automatycznie po osiągnięciu 500 lub 1000 graczy.
 
-## Ograniczanie multikont i kosztu obsługi
+## Multikonta, koszt obsługi i warunki uruchomienia
 
-- Jeden uczestnik, jedno kwalifikowane konto w sezonie i programie; jedno konto nie dostaje dodatkowego miejsca za drugą wyspę. Sam Firebase UID i inny e-mail nie dowodzą, że gra inna osoba.
-- Staż, odrębne dni aktywności i osiągnięty poziom ograniczają natychmiastowe zakładanie farm kont, lecz nie stanowią gwarancji przeciw botom. Nagrody za rejestrację i polecenie nie są kwalifikowanymi monetami.
-- Serwer egzekwuje limity prób, terminy, składy i zużycie puli; ponowienie żądania ma ten sam skutek co jedna operacja. Wynik klienta i jego zegar nie są dowodem ukończenia zadania.
-- Sygnały masowego tworzenia kont, urządzeń i powiązanych transakcji służą do ograniczania nadużyć i sprawdzenia spornych przypadków. Nie blokujemy automatycznie całego gospodarstwa domowego wyłącznie za wspólny adres IP. Zakres danych i retencja wymagają jawnego opisania.
-- Najpierw sprawdzamy anomalie i zamykamy wynik sezonu, potem przyznajemy nagrody. Nie wstrzymujemy całej zwykłej wyspy z powodu sporu o kosmetyczny medal.
-- Dla kontroli obciążenia można przyjąć techniczny budżet około 50 podstawowych żądań ligowych na konto i sezon: 28 rozpoczęć/zakończeń dla dwóch prób przez siedem dni oraz ograniczone odczyty tablicy i składu. Nie jest to wycena GCP; retry, moderacja i dowody gry mają własny koszt.
-- Przykładowy limit dowodu próby 64 KiB daje do 896 KiB na konto przy 14 próbach, około 875 MiB dla 1000 kont, bez replikacji i narzutu. To limit projektu do sprawdzenia, nie pomiar aktualnego klienta. Nie zapisujemy bez limitu klatek ruchu przez całe doby.
+- Jeden uczestnik ma jedno kwalifikowane konto; inny e-mail i Firebase UID nie dowodzą innej osoby. Staż i dni aktywności ograniczają proste farmy, ale nie zapewniają odporności na boty. Wspólne domowe IP nie jest samo w sobie podstawą blokady wszystkich domowników.
+- Serwer egzekwuje skład, terminy, próby, wynik, budżet i jednokrotny odbiór. Klientowy zegar i zapis całej wyspy nie są dowodem ukończenia wyzwania lub zarobienia monet. Sygnały nadużyć wymagają rzeczywistego sprawdzenia, bez wstrzymywania zwykłej wyspy za sporny medal.
+- Proponowany budżet około 50 podstawowych żądań ligowych na konto i sezon obejmuje 28 rozpoczęć/zakończeń 14 prób i ograniczone odczyty tabeli; **nie obejmuje nowego czatu**, ponowień i moderacji. Czat wymaga osobnego pomiaru odczytów/wysyłki i limitów kosztowych, bez odpytywania pełnej historii co sekundę.
+- Przykładowy limit dowodu próby 64 KiB daje 896 KiB na konto za 14 prób, około 875 MiB przy 1000 kont, przed narzutem i replikacją. To projektowy limit do zmierzenia, nie koszt aktualnego GCP.
+- Kampania pokazuje cel, organizację, miesiąc, liczbę operacji, kwotę zarezerwowaną i rzeczywiście przelaną, datę i potwierdzenie bez niepotrzebnych prywatnych danych. Nie publikuje e-maili, sald lub płatności graczy; nie wysyła automatycznych postów FB.
+- Przed prawdziwym programem potrzebne są dane operatora zamiast „Lorem ipsum”, uzgodnione zasady działalności i księgowania, odbiorca, publiczne reguły, zabezpieczony fundusz oraz zaufany serwer. Dokumentacja i symulacja Paynow nie spełniają tych warunków. Nie zakładamy konkretnego odliczenia podatkowego wpłaty.
 
-## Przejrzystość i warunki rozpoczęcia
-
-Potwierdzenie kampanii powinno pokazywać: nazwę organizacji, cel, miesiąc Warszawy, liczbę zatwierdzonych operacji, dokładną przydzieloną i przelaną kwotę oraz datę przelewu. Dokument operatora można udostępnić z usuniętymi danymi, których publikacja nie jest potrzebna. Numer konta gracza, jego e-mail, jego transakcje płatnicze i prywatne dane nie są częścią publicznego dowodu. Gracz sam decyduje, czy chce pochwalić się odznaką; nie wysyłamy automatycznych postów ani oznaczeń FB.
-
-Przed prawdziwą akcją muszą istnieć rzeczywiste dane operatora zamiast „Lorem ipsum”, ukończone ustalenia dotyczące działalności i księgowania, wybrany odbiorca, publiczne zasady oraz zabezpieczony budżet. Sam plan otwarcia JDG i techniczna atrapa Paynow nie spełniają tych warunków. Nie zakładamy prawa do podatkowego odliczenia wpłaty ani konkretnej klasyfikacji prawnej programu bez weryfikacji.
-
-Najważniejszym ograniczeniem technicznym jest dziś zaufanie do gospodarki: backend kont i transakcje wymiany nie są jeszcze pełnym serwerowym modelem zarabiania. **Nie uruchamiać realnego przelicznika od klientowo wyliczonego salda.** Do tego czasu można dopracować ligowe prototypy, kosmetyczne nagrody i wygląd wspólnego Portu, bez zobowiązań pieniężnych.
-
-Do decyzji właściciela pozostają: definicja trzeciego tygodnia, zgoda na pierwszy budżet maksymalnie 50 zł, docelowa organizacja, reguła 5% marży, zestaw kwalifikowanych źródeł monet oraz kosmetyczny albo późniejszy wspólny bonus szczęścia. Żadna z tych propozycji nie została przez ten dokument aktywowana.
+**Nadal otwarte:** definicja kalendarza, dokładny wzór i limit wielkości sojuszu, reguły członkostwa w sezonie, parametry czatu, trudność siedmiu zadań, dokładne nagrody ligowe, kwalifikacja źródeł niehandlowych, organizacja i termin przelewu, parametry+20 p.p./6 h oraz okno odbioru. **Przyjęte są** kierunek średnia+premia, tworzenie/dołączanie/odchodzenie i czat, przycisk dobroczynności, finansowe limity, serwerowa księga, wykluczenie handlu i rzeczywisty bonus szczęścia. Żaden program nie został aktywowany przez ten dokument.

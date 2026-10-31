@@ -8,24 +8,25 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `proposed` |
+| Implementacja | `not_implemented` |
 | DEV | `analysis_only` |
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `open` |
+| Decyzja | `accepted_parameters_with_open_details` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
 ## Zakres i odbiór
 
-- Kreatywne propozycje obejmują cele wspólne i mechanizmy przynależności, z jasnym kosztem moderacji.
+- Gracz widzi pole Sojusz przy Rankingu, może zakładać sojusze, dołączać i odchodzić oraz komunikować się czatem gry.
+- Dokładne zasady członkostwa, składu ligowego i czatu są projektem do oceny przed implementacją.
 
 ## Źródło
 
 Społeczność wokół współpracy i rywalizacji
 
-Odniesienie: `user_chat:last_request_2026-10-31`.
+Odniesienie: `user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_1`.
 
 Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.
 
@@ -41,6 +42,10 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
 - **Powiązane:** Brak.
+
+## Uwagi
+
+- Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

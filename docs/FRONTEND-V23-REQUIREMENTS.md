@@ -14,8 +14,8 @@ Dokumenty: [rejestr zmian](tracking/CHANGE-REGISTER.md), [plan testów ręcznych
 ## Analiza do decyzji, odrębna od wdrożenia
 
 - [Archipelag, pasażerowie, ceny i handel](design/ARCHIPELAGO-AND-TRADE-v23.md): odczytane wymagania i zaakceptowane decyzje są oddzielone od pozostałych wariantów. Poziomy/zasoby startowe córki, dalsza wycena po trzeciej córce oraz szczegóły zwykłych rejsów wymagają rozstrzygnięcia.
-- [Liga, społeczność i dobroczynność](design/LEAGUE-COMMUNITY-CHARITY.md): konkretna propozycja kalendarza, punktacji, współpracy, ograniczonego finansowania oraz serwerowego rozliczania. Nie aktywowano ligi, prawdziwych darowizn, bonusów ani nowych przepływów monet.
-- [Planszówka 2–6 osób](design/BOARDGAME-LIGHTHOUSE-SESSION.md): scenariusz 50 minut, plansza budynków i dwie talie, fizyczne zadania oraz teoretyczny companion online. Nie ma implementacji QR, serwerowej sesji ani faktycznie przyznanych nagród.
+- [Liga, społeczność i dobroczynność](design/LEAGUE-COMMUNITY-CHARITY.md): użytkownik wybrał średnią z rosnącą premią współpracy, pole Sojusz przy Rankingu, zakładanie/dołączanie/odchodzenie i czat gry. Zaakceptował limity finansowania, serwerowe pochodzenie monet z wyłączeniem wszystkich wpływów handlowych, przycisk udziału oraz rozświetlenie i rzeczywiste szczęście. Konkretna formuła premii, zadania/nagrody i wysokość/czas bonusu H są propozycjami. Nie aktywowano ligi, czatu, prawdziwych darowizn, bonusów ani nowych przepływów monet.
+- [Planszówka 2–6 osób](design/BOARDGAME-LIGHTHOUSE-SESSION.md): nowy projekt zastępuje dwie talie **jedną talią i treściami z telefonu**. Każdy ma pionek i wykonuje ruchy, a scenariusz łączy przejście planszy/punkty, kreatywne zadania typu kalambury i zaliczane korzyści online. Wejście „Gra fizyczna” jest wymaganiem przyszłej aplikacji, nie dodanym przyciskiem. Wartość korzyści i reguły scenariusza są do oceny; nie ma serwerowej sesji, faktycznych wypłat ani testu przy stole.
 
 Użytkownik potwierdził: **najpierw analiza i decyzje**, **PvP jako sprzedaż materiałów za monety** oraz **kolejne wyspy od Ratusza 10, 13, 16, 19**. W kolejnych pięciu odpowiedziach zatwierdził:
 

@@ -10849,22 +10849,23 @@
       "type": "Story",
       "title": "Miesięczna liga w trzecim tygodniu i przewaga sojuszu nad solo",
       "source": {
-        "kind": "user_chat_proposal_or_open_decision",
+        "kind": "user_chat_and_approved_requirement",
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
         "summary": "Miesięczna liga w trzecim tygodniu i przewaga sojuszu nad solo",
-        "reference": "user_chat:last_request_2026-10-31"
+        "reference": "user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_1"
       },
       "status": {
-        "implementation": "proposed",
+        "implementation": "not_implemented",
         "dev": "analysis_only",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "accepted_parameters_with_open_details"
       },
       "acceptance": [
-        "Kalendarz, punkty, rozmiar sojuszu, nagrody i uczciwy udział solo wymagają projektu oraz decyzji."
+        "Liga ma opierać wynik sojuszu na średniej wyników i rosnącej premii współpracy, a nie sumie trzech najlepszych wyników.",
+        "Dokładna formuła premii, skład i kalendarz wymagają zatwierdzenia parametrów; użytkownik oczekuje pokazania proponowanych zadań i nagród."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -10883,7 +10884,9 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
+      ]
     },
     {
       "id": "HL-CHG-0902",
@@ -10892,22 +10895,22 @@
       "type": "Story",
       "title": "Na cele dobroczynne tylko monety zarobione w grze",
       "source": {
-        "kind": "user_chat_proposal_or_open_decision",
+        "kind": "user_chat_and_approved_requirement",
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
         "summary": "Na cele dobroczynne tylko monety zarobione w grze",
-        "reference": "user_chat:last_request_2026-10-31"
+        "reference": "user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_3"
       },
       "status": {
-        "implementation": "proposed",
+        "implementation": "not_implemented",
         "dev": "analysis_only",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "accepted"
       },
       "acceptance": [
-        "Pochodzenie jest rozliczane oddzielnie od monet kupionych i nie daje się wyczyścić sprzedażą materiałów."
+        "Do dobroczynności kwalifikują się wyłącznie zarobione monety ze źródeł zatwierdzanych przez serwer; kupione monety i wszystkie wpływy handlowe są wyłączone."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -10926,7 +10929,9 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
+      ]
     },
     {
       "id": "HL-CHG-0903",
@@ -10935,22 +10940,23 @@
       "type": "Story",
       "title": "Serwerowa księga pochodzenia i jednokrotnego zużycia monet charytatywnych",
       "source": {
-        "kind": "user_chat_proposal_or_open_decision",
+        "kind": "user_chat_and_approved_requirement",
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
         "summary": "Serwerowa księga pochodzenia i jednokrotnego zużycia monet charytatywnych",
-        "reference": "user_chat:last_request_2026-10-31"
+        "reference": "user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_3"
       },
       "status": {
-        "implementation": "proposed",
+        "implementation": "not_implemented",
         "dev": "analysis_only",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "accepted"
       },
       "acceptance": [
-        "Przeniesienie, wymiana, zakup i restart nie umożliwiają ponownej kwalifikacji tej samej wartości."
+        "Serwer prowadzi pochodzenie i jednokrotne zużycie monet; nie przyjmuje deklaracji earned z klienta.",
+        "Kupno materiałów za monety kupione, sprzedaż materiałów, transfery i restart nie zamieniają tej wartości w kwalifikowane monety; wszystkie wpływy handlowe są niekwalifikowane."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -10969,7 +10975,9 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
+      ]
     },
     {
       "id": "HL-CHG-0904",
@@ -10978,22 +10986,24 @@
       "type": "Decision",
       "title": "Przelicznik 1000 monet na 1 zł właściciela z ograniczonym budżetem",
       "source": {
-        "kind": "user_chat_proposal_or_open_decision",
+        "kind": "user_chat_and_approved_requirement",
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
         "summary": "Przelicznik 1000 monet na 1 zł właściciela z ograniczonym budżetem",
-        "reference": "user_chat:last_request_2026-10-31"
+        "reference": "user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_2"
       },
       "status": {
-        "implementation": "proposed",
+        "implementation": "not_implemented",
         "dev": "analysis_only",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "accepted"
       },
       "acceptance": [
-        "Przyszłe zobowiązanie jest policzone dla graczy i limitów; brak przychodu nie tworzy nieograniczonego długu."
+        "1000 kwalifikowanych monet przydziela 1 zł z zabezpieczonej puli operatora, najwyżej raz na osobę w miesiącu i co najmniej 30 dni po poprzedniej operacji.",
+        "Pula pilotażowa wynosi najwyżej 50 zł łącznie; późniejsza pula nie przekracza 50 zł, 5% rzeczywistej marży poprzedniego miesiąca ani faktycznie wydzielonych środków.",
+        "Brak dostępnej puli lub niewystarczające saldo nie pobiera monet. Zatwierdzenie projektu nie jest wykonaniem przelewu."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -11012,7 +11022,9 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
+      ]
     },
     {
       "id": "HL-CHG-0905",
@@ -11021,24 +11033,24 @@
       "type": "Decision",
       "title": "Limity darowizn i kontrolowane skutki bonusu szczęścia",
       "source": {
-        "kind": "user_chat_proposal_or_open_decision",
+        "kind": "user_chat_and_approved_requirement",
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
         "summary": "Limity darowizn i kontrolowane skutki bonusu szczęścia",
-        "reference": "user_chat:last_request_2026-10-31"
+        "reference": "user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_4"
       },
       "status": {
-        "implementation": "proposed",
+        "implementation": "not_implemented",
         "dev": "analysis_only",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "accepted_parameters_with_open_details"
       },
       "acceptance": [
-        "Limit darowizn i skończony budżet operatora obowiązują niezależnie od nagrody szczęścia.",
-        "Szczęście może pośrednio zwiększać ludność i podatki; propozycja wymaga policzenia tego skutku oraz zabezpieczenia przed samofinansującą się pętlą darowizn.",
-        "Cele i dowody rzeczywistych przelewów są przejrzyste."
+        "Program ma rozświetlać port i dawać rzeczywisty bonus szczęścia, z zachowaniem limitu osoby i globalnej puli operatora.",
+        "Wysokość, czas trwania i moment przyznania bonusu wymagają zatwierdzenia; premia może pośrednio zwiększać populację i podatki.",
+        "Limit puli ogranicza zobowiązanie finansowe, lecz nie dowodzi rentowności ani zbalansowania gospodarki."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -11057,7 +11069,9 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
+      ]
     },
     {
       "id": "HL-CHG-0906",
@@ -11066,22 +11080,23 @@
       "type": "Story",
       "title": "Planszowa sesja 2–6 osób 45–60 minut z lekkim RPG",
       "source": {
-        "kind": "user_chat_proposal_or_open_decision",
+        "kind": "user_chat_and_approved_requirement",
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
         "summary": "Planszowa sesja 2–6 osób 45–60 minut z lekkim RPG",
-        "reference": "user_chat:last_request_2026-10-31"
+        "reference": "user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_5"
       },
       "status": {
-        "implementation": "proposed",
+        "implementation": "not_implemented",
         "dev": "analysis_only",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "accepted_parameters_with_open_details"
       },
       "acceptance": [
-        "Co najmniej jedna osoba ma konto, ekran gry jest aktywny, a sesja działa przy różnej liczbie osób."
+        "Gra fizyczna ma zapewniać samodzielną dobrą zabawę 2–6 osobom przez 45–60 minut, z lekkim RPG, pionkami i ruchami.",
+        "Telefon z grą gospodarza prowadzi scenariusz; grający online otrzymuje ograniczone korzyści za zaliczone zadania."
       ],
       "supersedes": [
         "HL-CHG-0911"
@@ -11102,7 +11117,9 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
+      ]
     },
     {
       "id": "HL-CHG-0907",
@@ -11118,18 +11135,20 @@
         "reference": "user_chat:last_request_2026-10-31"
       },
       "status": {
-        "implementation": "proposed",
+        "implementation": "historical_only",
         "dev": "analysis_only",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "superseded"
       },
       "acceptance": [
         "Teoria opisuje role, kolejność i konkretny grywalny scenariusz bez trzeciego typu kart."
       ],
       "supersedes": [],
-      "superseded_by": [],
+      "superseded_by": [
+        "HL-CHG-0921"
+      ],
       "related_changes": [],
       "issue_url": null,
       "published_to_github_issues": false,
@@ -11145,7 +11164,9 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Użytkownik odrzucił dwie talie: bieżący kierunek to jedna talia fizyczna i treść wyświetlana na telefonie. Plansza budynków i centralna Latarnia pozostają."
+      ]
     },
     {
       "id": "HL-CHG-0908",
@@ -11154,22 +11175,23 @@
       "type": "Decision",
       "title": "Fizyczne zadania z efektami online, QR lub telefon jako companion",
       "source": {
-        "kind": "user_chat_proposal_or_open_decision",
+        "kind": "user_chat_and_approved_requirement",
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
         "summary": "Fizyczne zadania z efektami online, QR lub telefon jako companion",
-        "reference": "user_chat:last_request_2026-10-31"
+        "reference": "user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_5"
       },
       "status": {
-        "implementation": "proposed",
+        "implementation": "not_implemented",
         "dev": "analysis_only",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "accepted_parameters_with_open_details"
       },
       "acceptance": [
-        "Na razie tylko projekt; stałyQR nie jest unikalnym dowodem, wynik sesji nie może być farmiony."
+        "Scenariusz ma łączyć ruch po planszy, zadania/kalambury z telefonu i rozliczane punkty lub korzyści online.",
+        "Przycisk Gra fizyczna uruchamia przyszły tryb; QR pozostaje opcjonalnym skrótem instrukcji i nie dowodzi wykonania fizycznego zadania."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -11188,7 +11210,9 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
+      ]
     },
     {
       "id": "HL-CHG-0909",
@@ -11197,22 +11221,23 @@
       "type": "Story",
       "title": "Społeczność wokół współpracy i rywalizacji",
       "source": {
-        "kind": "user_chat_proposal_or_open_decision",
+        "kind": "user_chat_and_approved_requirement",
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
         "summary": "Społeczność wokół współpracy i rywalizacji",
-        "reference": "user_chat:last_request_2026-10-31"
+        "reference": "user_chat:last_request_2026-10-31; user_chat:social_boardgame_annotations_2026_10_31/item_1"
       },
       "status": {
-        "implementation": "proposed",
+        "implementation": "not_implemented",
         "dev": "analysis_only",
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "open"
+        "decision": "accepted_parameters_with_open_details"
       },
       "acceptance": [
-        "Kreatywne propozycje obejmują cele wspólne i mechanizmy przynależności, z jasnym kosztem moderacji."
+        "Gracz widzi pole Sojusz przy Rankingu, może zakładać sojusze, dołączać i odchodzić oraz komunikować się czatem gry.",
+        "Dokładne zasady członkostwa, składu ligowego i czatu są projektem do oceny przed implementacją."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -11231,7 +11256,9 @@
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN"
       },
-      "notes": []
+      "notes": [
+        "Późniejsza odpowiedź użytkownika rozstrzyga kierunek projektu. Brak GO na implementację, zdalnych zapisów i aktywacji; liczbowe propozycje dokumentu nie są automatycznie zatwierdzone."
+      ]
     },
     {
       "id": "HL-CHG-0910",
@@ -11409,6 +11436,581 @@
         "manual_execution": "NOT_RUN"
       },
       "notes": []
+    },
+    {
+      "id": "HL-CHG-0914",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Punktacja ligi: średnia wyników i premia rosnąca ze współpracą",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Punktacja ligi: średnia wyników i premia rosnąca ze współpracą",
+        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_1"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "analysis_only",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted_parameters_with_open_details"
+      },
+      "acceptance": [
+        "Wynik jest średnią wyników, z premią rosnącą wraz z udziałem większej liczby członków sojuszu.",
+        "Suma trzech najlepszych wyników jest odrzucona; konkretna funkcja, limity i traktowanie nieobecnych pozostają propozycją."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0901"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+      ]
+    },
+    {
+      "id": "HL-CHG-0915",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Zakładanie sojuszu, dołączanie i swobodne odchodzenie",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Zakładanie sojuszu, dołączanie i swobodne odchodzenie",
+        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_1"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "analysis_only",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Gracz może założyć sojusz, dołączyć do niego i opuścić go.",
+        "Skład na sezon oraz skutki odejścia dla wyników ligi i dostępu do czatu muszą być jawnie oddzielone od zwykłego członkostwa."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0909",
+        "HL-CHG-0914"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+      ]
+    },
+    {
+      "id": "HL-CHG-0916",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Czat gry i uprawnienia członków sojuszu",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Czat gry i uprawnienia członków sojuszu",
+        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_1"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "analysis_only",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Gra ma oferować rzeczywistą komunikację tekstową; gotowe sygnały nie zastępują czatu.",
+        "Projekt określa dostęp po odejściu, uprawnienia, wyciszenie/zgłoszenie i ograniczenia wysyłania bez obiecywania wdrożonej moderacji."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0915"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+      ]
+    },
+    {
+      "id": "HL-CHG-0917",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Pole Sojusz obok Rankingu",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Pole Sojusz obok Rankingu",
+        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_1"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "analysis_only",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przy Rankingu jest widoczne pole Sojusz z aktualnym członkostwem albo możliwością założenia/dołączenia.",
+        "Nawigacja prowadzi do członków, czatu i rozgrywek bez dodawania niepowiązanych przycisków."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0915",
+        "HL-CHG-0916"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+      ]
+    },
+    {
+      "id": "HL-CHG-0918",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Proponowane zadania ligowe, mierzalna punktacja i nagrody",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Proponowane zadania ligowe, mierzalna punktacja i nagrody",
+        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_1"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "analysis_only",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "open"
+      },
+      "acceptance": [
+        "Projekt pokazuje konkretne zadania i nagrody, porównywalne dla solo i sojuszu.",
+        "Liczby punktów, progi udziału i rodzaj nagród są propozycjami, nie wynikami testów lub działającą ligą."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0901",
+        "HL-CHG-0914"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+      ]
+    },
+    {
+      "id": "HL-CHG-0919",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Widoczny przycisk udziału w dobroczynności",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Widoczny przycisk udziału w dobroczynności",
+        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_2"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "analysis_only",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Gracz ma mieć widoczny przycisk prowadzący do programu dobroczynnego, z celem, przelicznikiem, saldem kwalifikowanym i pozostałą pulą.",
+        "Potwierdzenie nie pobiera monet bez możliwości jednoczesnego zarezerwowania 1 zł; stan rezerwacji jest odrębny od rzeczywistego przelewu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0904",
+        "HL-CHG-0903"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+      ]
+    },
+    {
+      "id": "HL-CHG-0920",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Dobroczynność daje rozświetlenie portu i rzeczywiste szczęście",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Dobroczynność daje rozświetlenie portu i rzeczywiste szczęście",
+        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_4"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "analysis_only",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted_parameters_with_open_details"
+      },
+      "acceptance": [
+        "Oprócz rozświetlenia uczestnik otrzymuje rzeczywisty bonus szczęścia; wariant wyłącznie kosmetyczny jest zastąpiony.",
+        "Szczegółowe punkty procentowe, czas i moment odbioru są propozycją; nagroda nie odnawia limitów darowizn i nie tworzy punktów ligi."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0905"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+      ]
+    },
+    {
+      "id": "HL-CHG-0921",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Planszówka: jedna talia fizyczna i treści na telefonie",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Planszówka: jedna talia fizyczna i treści na telefonie",
+        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_5"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "analysis_only",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Jedna fizyczna talia zastępuje dwie talie poprzedniego projektu.",
+        "Telefon wyświetla zadania, opowieść i wybory; plansza nadal ma budynki i dużą Latarnię."
+      ],
+      "supersedes": [
+        "HL-CHG-0907"
+      ],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0906"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+      ]
+    },
+    {
+      "id": "HL-CHG-0922",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Własne pionki i ruch graczy po planszy",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Własne pionki i ruch graczy po planszy",
+        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_5"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "analysis_only",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Każdy uczestnik ma pionek i podejmuje ruchy po planszy, zdobywając punkty.",
+        "Ruch i decyzje mają znaczenie dla rozgrywki; gra fizyczna ma bawić niezależnie od bonusu konta."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0906",
+        "HL-CHG-0921"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+      ]
+    },
+    {
+      "id": "HL-CHG-0923",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Trzy warstwy planszówki: ruch, kreatywne zadania i skutki online",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Trzy warstwy planszówki: ruch, kreatywne zadania i skutki online",
+        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_5"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "analysis_only",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przejście planszy i punkty, rozbudowane zadania typu kalambury oraz skutki na koncie online tworzą jeden spójny scenariusz.",
+        "Projekt pokazuje konkretne kreatywne zadania i przebieg gry, bez twierdzenia o wykonanym teście przy stole."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0921",
+        "HL-CHG-0922"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+      ]
+    },
+    {
+      "id": "HL-CHG-0924",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Zaliczone zadania przy stole przynoszą punkty i korzyści online",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Zaliczone zadania przy stole przynoszą punkty i korzyści online",
+        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_5"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "analysis_only",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted_parameters_with_open_details"
+      },
+      "acceptance": [
+        "Zadania fizyczne dają kontu gracza punkty lub korzyści jak za aktywności, z jasno opisanym zastosowaniem, limitem i pojedynczym rozliczeniem.",
+        "Nie nazywamy tego istniejącym XP bez takiej waluty; nie pomijamy lekcji samouczka, nie zaliczamy fikcyjnych dostaw Latarni ani wyników ligi.",
+        "Każdy uczestnik z kontem ma docelowo własne korzyści i limit; gospodarz nie otrzymuje premii za gości. Rodzaj, wartość, sposób powiązania miejsca i serwerowe rozliczenie są propozycjami do zatwierdzenia."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0908",
+        "HL-CHG-0923"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+      ]
+    },
+    {
+      "id": "HL-CHG-0925",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Przycisk Gra fizyczna uruchamia sesję przy stole",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Przycisk Gra fizyczna uruchamia sesję przy stole",
+        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_5"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "analysis_only",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "W przyszłej aplikacji gracz wybiera Gra fizyczna i uruchamia scenariusz na telefonie.",
+        "Ekran pokazuje instrukcje, ruchy, zadania i wynik; samo pozostawienie go otwartego nie udaje aktywności użytkownika."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0921",
+        "HL-CHG-0924"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+      ]
     }
   ]
 }

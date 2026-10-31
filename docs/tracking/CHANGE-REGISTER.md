@@ -1,6 +1,6 @@
 # HARBORLIGHT — rejestr zmian
 
-Stan ewidencji: **2026-10-31**. **229 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
+Stan ewidencji: **2026-10-31**. **241 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
 
 Źródło danych: [changes.json](changes.json). Karty odtwarza `python3 scripts/build_change_register.py`; `--check` sprawdza zgodność bez zapisów. Nie edytuj wygenerowanych kart zamiast źródła JSON.
 
@@ -329,19 +329,31 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 
 | Zmiana | Typ | Decyzja | DEV | PRE-PROD |
 |---|---|---|---|---|
-| [HL-CHG-0901 — Miesięczna liga w trzecim tygodniu i przewaga sojuszu nad solo](changes/HL-CHG-0901.md) | Story | `open` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0902 — Na cele dobroczynne tylko monety zarobione w grze](changes/HL-CHG-0902.md) | Story | `open` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0903 — Serwerowa księga pochodzenia i jednokrotnego zużycia monet charytatywnych](changes/HL-CHG-0903.md) | Story | `open` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0904 — Przelicznik 1000 monet na 1 zł właściciela z ograniczonym budżetem](changes/HL-CHG-0904.md) | Decision | `open` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0905 — Limity darowizn i kontrolowane skutki bonusu szczęścia](changes/HL-CHG-0905.md) | Decision | `open` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0906 — Planszowa sesja 2–6 osób 45–60 minut z lekkim RPG](changes/HL-CHG-0906.md) | Story | `open` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0907 — Plansza budynków, Latarnia w środku i dwa rodzaje kart](changes/HL-CHG-0907.md) | Story | `open` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0908 — Fizyczne zadania z efektami online, QR lub telefon jako companion](changes/HL-CHG-0908.md) | Decision | `open` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0909 — Społeczność wokół współpracy i rywalizacji](changes/HL-CHG-0909.md) | Story | `open` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0901 — Miesięczna liga w trzecim tygodniu i przewaga sojuszu nad solo](changes/HL-CHG-0901.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0902 — Na cele dobroczynne tylko monety zarobione w grze](changes/HL-CHG-0902.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0903 — Serwerowa księga pochodzenia i jednokrotnego zużycia monet charytatywnych](changes/HL-CHG-0903.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0904 — Przelicznik 1000 monet na 1 zł właściciela z ograniczonym budżetem](changes/HL-CHG-0904.md) | Decision | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0905 — Limity darowizn i kontrolowane skutki bonusu szczęścia](changes/HL-CHG-0905.md) | Decision | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0906 — Planszowa sesja 2–6 osób 45–60 minut z lekkim RPG](changes/HL-CHG-0906.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0907 — Plansza budynków, Latarnia w środku i dwa rodzaje kart](changes/HL-CHG-0907.md) | Story | `superseded` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0908 — Fizyczne zadania z efektami online, QR lub telefon jako companion](changes/HL-CHG-0908.md) | Decision | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0909 — Społeczność wokół współpracy i rywalizacji](changes/HL-CHG-0909.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0910 — Proponowana polityka kolejnych podbić czterech segmentów wersji](changes/HL-CHG-0910.md) | Decision | `open` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0911 — Historyczna odłożona planszówka/AR dla 2–4 osób](changes/HL-CHG-0911.md) | Decision | `superseded` | `not_applicable` | `not_applicable` |
 | [HL-CHG-0912 — Warstwa AR planszówki pozostawiona na później](changes/HL-CHG-0912.md) | Decision | `deferred` | `not_applicable` | `not_active` |
 | [HL-CHG-0913 — Pierwsza publikacja gry w Google Play otrzyma wersję 1.0.0.0](changes/HL-CHG-0913.md) | Decision | `accepted` | `documented` | `not_applicable` |
+| [HL-CHG-0914 — Punktacja ligi: średnia wyników i premia rosnąca ze współpracą](changes/HL-CHG-0914.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0915 — Zakładanie sojuszu, dołączanie i swobodne odchodzenie](changes/HL-CHG-0915.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0916 — Czat gry i uprawnienia członków sojuszu](changes/HL-CHG-0916.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0917 — Pole Sojusz obok Rankingu](changes/HL-CHG-0917.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0918 — Proponowane zadania ligowe, mierzalna punktacja i nagrody](changes/HL-CHG-0918.md) | Story | `open` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0919 — Widoczny przycisk udziału w dobroczynności](changes/HL-CHG-0919.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0920 — Dobroczynność daje rozświetlenie portu i rzeczywiste szczęście](changes/HL-CHG-0920.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0921 — Planszówka: jedna talia fizyczna i treści na telefonie](changes/HL-CHG-0921.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0922 — Własne pionki i ruch graczy po planszy](changes/HL-CHG-0922.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0923 — Trzy warstwy planszówki: ruch, kreatywne zadania i skutki online](changes/HL-CHG-0923.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0924 — Zaliczone zadania przy stole przynoszą punkty i korzyści online](changes/HL-CHG-0924.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0925 — Przycisk Gra fizyczna uruchamia sesję przy stole](changes/HL-CHG-0925.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
 
 ## Utrzymanie
 
