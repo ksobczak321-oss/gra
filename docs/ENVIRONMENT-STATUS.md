@@ -2,13 +2,21 @@
 
 Aktualizacja: **31 października 2026**. Ten dokument jest głównym rejestrem tego, co rzeczywiście znajduje się na DEV, PRE-PROD i PROD. Historia czynności i wyników pozostaje w [dzienniku](IMPLEMENTATION-LOG.md), a warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
+## Nowy zakres DEV — wersja 0.9.1.1 (wewnętrzny etap v23)
+
+Po wcześniejszej publikacji v22.1 użytkownik zlecił nowe opracowanie. W DEV widoczna wersja w Ustawieniach to **0.9.1.1** (nowy moduł `harborlight-version.js`, cache `frontend-v23`). Implementacja obejmuje tę etykietę, rejestr zmian, ręczne przypadki oraz importer kart do Issues; mechaniki wielu wysp, pasażerów i nowego handlu są [analizą do decyzji](FRONTEND-V23-REQUIREMENTS.md), a liga/dobroczynność/planszówka są projektami. Własne Git/CI/Pages tego zakresu wymagają potwierdzenia; tag v22.1 poniżej dotyczy wcześniejszej aplikacji.
+
+Lokalnie **730 testów gry/synchronizacji/promocji + 62 backendu + 141 Python = 933 PASS**, ponadto **12 zestawów Chromium PASS**. Do testów Python wliczono 18 testów importera na izolowanych danych; nie tworzyły Issues. Sprawdzono widoczną wersję 0.9.1.1 po polsku i angielsku, na komputerze i telefonie, oraz zachowanie schematu świata 9. Ręczne przypadki nadal mają wynik NOT RUN.
+
+**PRE-PROD nadal ma poniższy kod v22.1 `092e752…`, bez nowej etykiety 0.9.1.1.** W tym zakresie nie uruchomiono promocji GCP ani resetu kont, nie aktywowano płatności, darowizn lub publikacji społecznościowych. Rzeczywisty koszt GCP ostatnich 24 godzin jest niedostępny; przygotowana kwerenda nie jest pomiarem. Natywne Issues są nieopublikowane z powodu nieprawidłowego tokena; karty są przygotowane do synchronizacji przez właściciela.
+
 ## Stan potwierdzony
 
 Uzupełnienie po uwagach ma nazwę **v22.1** (cache `frontend-v22-1`), pełny SHA **`092e75226fbb14cab09826f313e11d10891966d8`**. Adnotowany tag [dev-v22.1-20261031](https://github.com/ksobczak321-oss/gra/tree/dev-v22.1-20261031) został utworzony i opublikowany po sukcesie CI/Pages: wiąże commit, wyniki oraz hashe pakietu. Jest dowodem odbioru **DEV**, odrębnym od udanej promocji GCP opisanej poniżej. Odczyt tagu opisuje [proces wydań](RELEASE-PROCESS.md#niezmienny-dowód-odbioru-dev).
 
 | Miejsce | Kod i dowód | Co pozostaje do wykonania lub potwierdzenia |
 |---|---|---|
-| **DEV — przestrzeń robocza** | **v22.1**: wcześniejsze lekcje bez nagrody, kolejność oprowadzania szczęście → monety → mieszkańcy, nagrody 3×2 i wskazówka przez szczegóły Magazynu. **915 testów lokalnych PASS i 12 zestawów Chromium PASS**. | Pełny SHA i własny wynik CI/Pages wiąże opisany wyżej tag. Przygotowanie kodu nie jest publikacją GCP. |
+| **DEV — przestrzeń robocza** | **0.9.1.1 / zakres v23**, widoczna wersja, rejestr zmian i testów oraz projekty nowych zasad, opisane wyżej. **933 testy lokalne PASS i 12 zestawów Chromium PASS**. | Własny commit i CI nowego zakresu wymagają potwierdzenia; poniższe CI/Pages v22.1 są wcześniejszą bazą. Brak nowej promocji GCP. |
 | **GitHub / CI — v22.1** | SHA `092e75226fbb14cab09826f313e11d10891966d8`; [CI 41221965032 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41221965032). Adnotowany tag **`dev-v22.1-20261031`** opublikowany. | Odczyt: `git show --no-patch dev-v22.1-20261031`. Nowe zmiany aplikacji wymagają własnego SHA i CI. |
 | **GitHub Pages — podgląd DEV** | [Link roboczy v22.1](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v22-1); [Pages 41221964974 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41221964974) dla tego samego SHA. | Bezpośredni odczyt Pages z tej sesji blokuje brama sieciowa HTTP 403. Nie potwierdzono tu niezależnego odbioru serwowanych plików. Podgląd działa w pamięci; nie jest kontem chmurowym ani zapisem PRE-PROD. |
 | **PRE-PROD — GCP `harborlight-dev`** | **v22.1**, SHA `092e75226fbb14cab09826f313e11d10891966d8`; [promocja 41222765705, próba 1 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705), czas 2 min 10 s. [Gra PRE-PROD](https://harborlight-dev.web.app). Para artefaktów v2 opublikowana; szczegóły niżej. | Nie odczytano jeszcze zawartości ZIP potwierdzenia wydania ani faktycznej wartości włączenia API kont. Bezpośredni odczyt hostingu blokuje brama HTTP 403. Osobny reset kont nadal niewykonany. |

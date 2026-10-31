@@ -1,4 +1,8 @@
-# Backlog HARBORLIGHT — frontend v18
+# Backlog HARBORLIGHT — historia planowania i bieżący rejestr
+
+Od 31 października 2026 bieżące atomowe zmiany, decyzje i statusy są w [rejestrze 227 kart](tracking/CHANGE-REGISTER.md), a osobne przypadki ręczne w [planie testów](testing/MANUAL-TEST-PLAN.md). Aktualny kod DEV i rzeczywiste publikacje potwierdza [stan środowisk](ENVIRONMENT-STATUS.md). Poniższe sekcje zachowują historyczny plan v18 i wcześniejsze zgłoszenia; ich dawne wskazania wydania nie opisują obecnego PRE-PROD.
+
+## Historyczny zakres v18
 
 Bieżący zakres wyznaczają [zatwierdzone wymagania v18](FRONTEND-V18-REQUIREMENTS.md), [reguły](ECONOMY-RULES.md) i [kontrakt promocji](RELEASE-PROCESS.md). GO z30 października 2026 uruchomiło lokalną implementację. Poniższa lista nie oznacza publikacji: PRE-PROD nadal ma ostatnie potwierdzone `f161e45`, workflow `41067599818`; nowe wyniki zapisuje [dziennik](IMPLEMENTATION-LOG.md).
 

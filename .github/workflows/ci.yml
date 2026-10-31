@@ -72,6 +72,12 @@ jobs:
       - name: Test monthly billing alert configuration safety
         run: python3 tests/harborlight-budget.test.py
 
+      - name: Test dry-run tracking issue import and idempotency
+        run: python3 tests/harborlight-tracking-issues.test.py
+
+      - name: Verify generated change cards and their index
+        run: python3 scripts/build_change_register.py --check
+
       - name: Verify generated legal documents match their reviewed drafts
         run: python3 scripts/build_legal_pages.py --check
 

@@ -34,6 +34,7 @@ PUBLIC_FILES = (
     "harborlight-legal.css",
     "harborlight-terms.html",
     "harborlight-privacy.html",
+    "harborlight-version.js",
     "harborlight-v1-activities.js",
     "harborlight-v1-ambient.js",
     "harborlight-v1-archipelago.js",

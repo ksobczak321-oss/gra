@@ -8,7 +8,7 @@ Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarn
 
 | Miejsce | Stan |
 |---|---|
-| DEV — ta przestrzeń robocza | [v22.1](docs/FRONTEND-V22-REQUIREMENTS.md), SHA `092e75226fbb14cab09826f313e11d10891966d8`. **915 testów lokalnych i 12 zestawów Chromium PASS**; [CI 41221965032 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41221965032). Opublikowany tag `dev-v22.1-20261031`. |
+| DEV — ta przestrzeń robocza | **0.9.1.1 / zakres v23**: widoczna wersja w Ustawieniach, rejestr zmian i ręcznych testów oraz projekty nowych zasad. Własne dowody Git/CI tego zakresu podaje [rejestr środowisk](docs/ENVIRONMENT-STATUS.md). Wcześniejszy tag v22.1 pozostaje historią, nie dowodem nowych zmian. |
 | PRE-PROD — `harborlight-dev` | [Graj](https://harborlight-dev.web.app): **v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`**, [promocja 41222765705, próba 1 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705), 2 min 10 s; oba artefakty v2 opublikowane. |
 | PROD — `harborlight-prod` / `harborlight.pl` | Brak potwierdzonej publikacji i powiązania domeny. |
 | GitHub Pages | [Link roboczy — v22.1](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v22-1), [Pages 41221964974 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41221964974). Nietrwały podgląd DEV, bez zapisu kont PRE-PROD. Bezpośredni odczyt z tej sesji blokuje brama HTTP 403; dowód publikacji pochodzi z GitHub Actions. |
@@ -16,6 +16,14 @@ Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarn
 PRE-PROD ma trzy osobne konta `admin1`, `admin2`, `admin3`. Odczytowy odbiór wdrożenia blokuje zapisy gry i nie resetuje postępu. Promocja v22.1 zakończyła się sukcesem, lecz [zlecony reset wszystkich trzech kont](docs/PREPROD-RESET.md), także `admin1`, **nadal nie został wykonany**. Wymaga oryginalnego ZIP potwierdzenia wydania i odczytu konfiguracji/usług w sesji właściciela GCP; UID, loginy i hasła pozostaną zachowane. Nie odczytano jeszcze wartości włączenia API kont. Bezpośredni odczyt `web.app` z tej sesji blokuje brama HTTP 403. [Rejestr](docs/ENVIRONMENT-STATUS.md) zachowuje hashe ZIP obu nowych artefaktów oraz historyczne dowody v18.
 
 W [v22](docs/FRONTEND-V22-REQUIREMENTS.md) udane działanie wykonane przed swoją lekcją usuwa ją z dalszego samouczka bez skrzyni i nagrody. Kolejny krok nie czeka na powtórzenie czynności ani odbiór nieistniejącej premii; wcześniej przyznane nagrody zostają zachowane.
+
+## Bieżący zakres DEV 0.9.1.1
+
+W Ustawieniach dodano widoczne **0.9.1.1**; schema świata i zapis pozostają odrębne. [Zakres v23](docs/FRONTEND-V23-REQUIREMENTS.md) obejmuje również przegląd historii czatu, [osobne karty zmian](docs/tracking/CHANGE-REGISTER.md) i [ręczne przypadki testowe](docs/testing/MANUAL-TEST-PLAN.md), z wynikami NOT RUN do rzeczywistego odbioru. Karty są w Git; natywnych GitHub Issues jeszcze nie utworzono z powodu braku poprawnej autoryzacji. [Importer](scripts/README-tracking-issues.md) domyślnie tylko pokazuje plan.
+
+Do decyzji są konkretne projekty: [wyspy/pasażerowie/handel](docs/design/ARCHIPELAGO-AND-TRADE-v23.md), [liga/społeczność/dobroczynność](docs/design/LEAGUE-COMMUNITY-CHARITY.md), [planszówka 2–6 osób](docs/design/BOARDGAME-LIGHTHOUSE-SESSION.md). Nie są działającymi mechanikami nowego PRE-PROD. [Polityka wersji](docs/VERSIONING.md) odróżnia numer produktu od SHA i numerów sklepów; pierwsze wydanie Google Play użytkownik wskazał jako 1.0.0.0.
+
+Rzeczywisty koszt ostatnich 24 h jest nieustalony z powodu braku dostępu do Billing; [przygotowany odczyt](docs/GCP-COST-CONTROL.md#odczyt-ostatnich-24-godzin--zlecenie-31-października) nie jest wynikiem finansowym. Nie wykonywano pełnego resetu trzech kont.
 
 ## Co zmienia v18
 

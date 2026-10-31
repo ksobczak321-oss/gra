@@ -51,3 +51,21 @@ PRE-PROD Cloud Run ma minimum 0 i maksimum 2 instancje na rewizję, 1 vCPU, 512 
 - [Budżety Google Cloud](https://docs.cloud.google.com/billing/docs/how-to/budgets), [Spend Cap](https://docs.cloud.google.com/billing/docs/how-to/budgets-spend-caps#eligible-services), [raporty kosztów](https://docs.cloud.google.com/billing/docs/how-to/reports).
 
 Bezpośrednie strony dokumentacji i API Google były ograniczone sieciowo. Nie odczytano tutaj kosztu przez uwierzytelnione API ani nie potwierdzono kwalifikacji poszczególnych usług do Spend Cap. Schematy z oficjalnych repozytoriów Google odczytano poprawnie; prywatny odczyt raportu właściciela pozostaje osobnym źródłem danych.
+
+## Odczyt ostatnich 24 godzin — zlecenie 31 października
+
+W tej sesji nie ma konektora Billing, narzędzi `gcloud`/`bq` ani poświadczeń GCP. **Rzeczywisty koszt ostatniej doby pozostaje nieustalony.** Nie zastępujemy go historyczną kwotą z czatu ani szacunkiem. Nie włączano eksportu, API, budżetu lub innych zasobów w celu tego odczytu.
+
+Punkt odniesienia zlecenia: `2026-10-31T17:24:21Z`; żądane ruchome okno to `[2026-10-30T17:24:21Z, 2026-10-31T17:24:21Z)` (18:24:21 czasu Warszawy obu dni). Raport dzienny w konsoli obejmuje dni kalendarzowe, więc nie należy przedstawiać sumy dwóch zaznaczonych dni jako dokładnych 24 godzin.
+
+Jeśli konto ma **już istniejący** standardowy eksport Cloud Billing do BigQuery, przygotowano odczytową [kwerendę](../infra/google-cloud/sql/cost-last-24h.sql). Wymaga podstawienia rzeczywistego projektu i zbioru danych eksportu; nie znamy tej ścieżki i nie zgadujemy jej. Parametr `window_end` wiąże wynik z konkretnym momentem. Przykład po podstawieniu ścieżki w SQL, w sesji właściciela z dostępem do istniejącego eksportu:
+
+```sh
+bq query --use_legacy_sql=false --maximum_bytes_billed=1073741824 \
+  --parameter='window_end:TIMESTAMP:2026-10-31T17:24:21Z' \
+  < infra/google-cloud/sql/cost-last-24h.sql
+```
+
+Zapytanie grupuje dwa projekty po usługach i walutach, podaje koszt przed kredytami, kredyty i wynik netto. Kredyty mają znak od Google i są dodawane do kosztu; nie odejmujemy ich drugi raz. Limit odczytu wynosi 1 GiB; zapytanie BigQuery może samo podlegać jego rozliczeniu. Bez istniejącego eksportu ta komenda nie da wyniku, a włączenie eksportu teraz nie gwarantuje natychmiastowego odtworzenia całej wcześniejszej doby.
+
+Zakres to zaraportowane wiersze według `usage_start_time`, nie ostateczna faktura: dane mogą docierać z opóźnieniem, a dłuższe przedziały użycia, podatki i późniejsze korekty wymagają odrębnej interpretacji. Brak wierszy nie dowodzi automatycznie zerowego zużycia. Kwerenda nie została uruchomiona na prywatnym zbiorze; wynik finansowy nie został potwierdzony. Indywidualnego rachunku nie umieszczamy w publicznym Git.

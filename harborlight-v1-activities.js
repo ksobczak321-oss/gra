@@ -5,12 +5,12 @@ import {
   MATERIAL_IDS, stockRoom, receiveMaterials, notify,
   quoteInstantTransport, instantTransport, estimateMaterialsSeconds, availableGoods, haulCapacity,
   townhallPopulationRequirement
-} from './harborlight-v1-logistics.js?v=frontend-v22-1';
-import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v22-1';
+} from './harborlight-v1-logistics.js?v=frontend-v23';
+import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v23';
 import { secondsUntilWarsawMidnight } from './harborlight-v1-calendar.js';
 import { MINI_GAME_RULES, miniGameRoundRules, createMiniGame, normalizeMiniGame,
-  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v22-1';
-export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v22-1';
+  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v23';
+export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v23';
 
 const HOUR = 3600;
 const QUEST_LIFE = 6 * HOUR;

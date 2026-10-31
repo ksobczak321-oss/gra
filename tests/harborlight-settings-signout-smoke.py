@@ -28,6 +28,7 @@ def seed():
 
 def assert_history():
     saved = fixture.cloud_state(UID)
+    assert saved['version'] == 9, 'Public game version must not replace the saved-world schema'
     assert saved['resources']['coins'] == 777
     assert saved['islandName'] == 'Port admin1'
     assert saved['population'] == 12
@@ -62,6 +63,13 @@ def delayed_signout(browser, language, mobile):
     signout = page.locator('[data-settings-signout]')
     expect(signout).to_be_visible()
     expect(signout).to_have_text('Wyloguj się' if language == 'pl' else 'Sign out')
+    version = page.locator('[data-settings-version]')
+    expect(version).to_be_visible()
+    expect(version).to_contain_text('Wersja gry' if language == 'pl' else 'Game version')
+    expect(version.locator('[data-game-version]')).to_have_text('0.9.1.1')
+    version_box = version.bounding_box()
+    assert version_box and version_box['y'] >= 0, 'Game version must be visible when Settings opens'
+    assert version_box['y'] + version_box['height'] <= page.viewport_size['height'], version_box
     expect(page.locator('[data-settings-legal] a')).to_have_count(2)
     expect(page.locator('[data-settings-legal] a').first).to_have_attribute('href', 'harborlight-terms.html')
     expect(page.locator('[data-settings-legal] a').last).to_have_attribute('href', 'harborlight-privacy.html')
@@ -116,12 +124,14 @@ def run():
                                      headless=True, args=['--no-sandbox'])
         try:
             delayed_signout(browser, 'pl', False)
+            delayed_signout(browser, 'en', False)
+            delayed_signout(browser, 'pl', True)
             delayed_signout(browser, 'en', True)
             offline_signout(browser)
             assert not fixture.ERRORS, fixture.ERRORS
         finally:
             browser.close()
-    print('PASS Settings logout: prominent PL/EN desktop/mobile button waits for pending cloud acknowledgement; offline logout preserves confirmed admin1 history; no island cache')
+    print('PASS Settings version0.9.1.1 and logout in PL/EN on desktop/mobile: pending cloud acknowledgement, offline logout and existing world-schema/history preserved; no island cache')
 
 
 if __name__ == '__main__':
