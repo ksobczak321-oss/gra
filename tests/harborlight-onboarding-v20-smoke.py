@@ -101,6 +101,7 @@ def persisted_tour_and_skip(browser):
     page.locator('[data-onboarding-previous]').click()
     expect(guide).to_have_attribute('data-onboarding-step', first_step)
     page.locator('[data-onboarding-next]').click()
+    expect(guide).to_have_attribute('data-onboarding-step', second_step)
     page.clock.run_for(61000)
     frozen(saved(page), original)
     assert cloud.cloud_state(UID)['islandName'] == 'Port Żółtej Latarni'
