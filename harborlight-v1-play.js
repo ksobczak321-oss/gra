@@ -1,26 +1,26 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v22';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v22';
-import * as State from './harborlight-v1-state.js?v=frontend-v22';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v22';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v22';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v22';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v22';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v22';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v22';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v22';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v22';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v22';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v22';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v22';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v22';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v22';
-import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v22';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v22';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v22';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v22-fit2';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v22';
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v22';
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v22';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v22-1';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v22-1';
+import * as State from './harborlight-v1-state.js?v=frontend-v22-1';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v22-1';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v22-1';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v22-1';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v22-1';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v22-1';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v22-1';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v22-1';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v22-1';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v22-1';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v22-1';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v22-1';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v22-1';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v22-1';
+import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v22-1';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v22-1';
+import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v22-1';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v22-1-fit2';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v22-1';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v22-1';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v22-1';
 
 I18n.registerTranslations({
   "Choose a minigame": "Wybierz minigrę",
@@ -2804,18 +2804,45 @@ function finishTutorialReward(achievement, type) {
 function updateTutorialPointer(row) {
   let pointer = document.querySelector('[data-tutorial-pointer]');
   const selector = row?.guideSelector || row?.targetSelector;
-  let target;
-  try { target = selector && [...document.querySelectorAll(selector)].find(node => node.getClientRects().length); } catch { target = null; }
+  const scope = dialog.open ? dialog : document;
+  const visible = selector => {
+    try { return selector && [...scope.querySelectorAll(selector)].find(node => node.getClientRects().length && getComputedStyle(node).visibility !== 'hidden'); }
+    catch { return null; }
+  };
+  let target = visible(selector), navigation = '';
+  // Some lesson controls live one level below a building's compact panel.
+  // Guide the real route into that view before pointing at the final action.
+  if (!target && selector && row && panel?.kind === 'building' && panel.id === row.route) {
+    target = visible(`[data-building-more="${row.route}"]`);
+    navigation = target ? 'details' : '';
+  }
+  if (!target && selector && row) {
+    target = visible(`[data-tutorial-go="${row.id}"], [data-tutorial-visit="${row.id}"]`);
+    navigation = target ? 'route' : '';
+  }
   if (!target || !target.getClientRects().length || row.completed || expeditionSession() || state.tutorial.autoOpenDisabled) { pointer?.remove(); document.querySelectorAll('.tutorial-action-target').forEach(node => node.classList.remove('tutorial-action-target')); return; }
   if (!pointer) pointer = el('div', { class: 'tutorial-action-pointer', 'data-tutorial-pointer': '', 'data-i18n-ignore': '', role: 'status' });
   const pointerHost = target.closest('dialog') || document.body;
   if (pointer.parentElement !== pointerHost) pointerHost.append(pointer);
   document.querySelectorAll('.tutorial-action-target').forEach(node => { if (node !== target) node.classList.remove('tutorial-action-target'); });
+  const revealTarget = !target.classList.contains('tutorial-action-target');
   target.classList.add('tutorial-action-target');
-  const rect = target.getBoundingClientRect();
-  pointer.textContent = uiCopy('▼ Click here to complete this step', '▼ Kliknij tutaj, aby wykonać krok');
-  pointer.style.left = `${Math.max(8, Math.min(innerWidth - 220, rect.left + rect.width / 2 - 110))}px`;
-  pointer.style.top = `${Math.max(8, rect.top - 46)}px`;
+  pointer.textContent = navigation === 'details' ? uiCopy('▼ First open building details', '▼ Najpierw otwórz szczegóły budynku') : navigation ? uiCopy('▼ Go to the action', '▼ Przejdź do działania') : row.subject === 'transport-priority' ? uiCopy('▼ Set the transport priority', '▼ Ustaw priorytet transportu') : uiCopy('▼ Click here to complete this step', '▼ Kliknij tutaj, aby wykonać krok');
+  const positionPointer = () => {
+    if (!target.isConnected || !pointer.isConnected || !target.classList.contains('tutorial-action-target')) return;
+    const rect = target.getBoundingClientRect(), width = pointer.offsetWidth, height = pointer.offsetHeight;
+    pointer.style.left = `${Math.max(8, Math.min(innerWidth - width - 8, rect.left + rect.width / 2 - width / 2))}px`;
+    pointer.style.top = `${Math.max(8, Math.min(innerHeight - height - 8, rect.top - height - 8))}px`;
+  };
+  positionPointer();
+  if (revealTarget) queueMicrotask(() => {
+    if (!target.isConnected || !pointer.isConnected || !target.classList.contains('tutorial-action-target')) return;
+    // openPanel restores scroll and focuses its header after renderPanel has
+    // refreshed this guide. Reveal once after those synchronous resets, while
+    // ordinary HUD ticks preserve any later manual scrolling by the player.
+    target.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
+    positionPointer();
+  });
 }
 function refreshTutorialExperience() {
   if (!tutorialReady) return;
@@ -2988,8 +3015,8 @@ function onboardingSteps() {
     step('home', 'Twoja wyspa', 'Your island', 'Tu widzisz nazwę swojej wyspy. Kliknięcie otwiera jej podsumowanie: cele, zasady, budynki, zadania, ekspedycje i handel.', 'This is your island’s name. Open its overview for goals, rules, buildings, tasks, expeditions and trade.', targetHud('home')),
     step('level', 'Poziom wyspy', 'Island level', 'To poziom Ratusza. Wyznacza limit mieszkańców i najwyższy dostępny poziom rozbudowy budynków. Kliknij go, aby sprawdzić koszt i kolejkę rozbudowy Ratusza.', 'This is the Town Hall level. It sets the population limit and the highest available building level. Open it to see the Town Hall upgrade cost and queue.', targetHud('level')),
     step('happiness', 'Szczęście mieszkańców', 'Residents’ happiness', 'Szczęście to średnia dla mieszkańców. Dodatnie przyciąga nowych ludzi, ujemne powoduje odejścia, a 0% utrzymuje liczbę ludności. Jedzenie, praca, mieszkania i premie wpływają na wynik.', 'This is residents’ average happiness. Positive happiness attracts people, negative happiness causes departures, and 0% keeps the population stable. Food, work, homes and bonuses affect it.', targetHud('happiness')),
-    step('population', 'Mieszkańcy i miejsca', 'Residents and places', 'Sprawdź liczbę mieszkańców, limit Ratusza i dostępne łóżka. W tym oknie przydzielasz wolnych mieszkańców do pracy i sprawdzasz, czy mają dom oraz żywność.', 'Check the population, Town Hall limit and available beds. Open this panel to assign available residents to work and check their housing and food.', targetHud('population')),
     step('coins', 'Monety', 'Coins', 'Monety służą do handlu, atrakcji i wybranych przyspieszeń. Zarabiasz je między innymi dzięki pracującym mieszkańcom, zadaniom i ekspedycjom. Kliknięcie pokazuje stan zasobów.', 'Use coins for trade, attractions and selected speed-ups. Working residents, tasks and expeditions can earn them. Open this control to inspect your resources.', targetHud('coins')),
+    step('population', 'Mieszkańcy i miejsca', 'Residents and places', 'Sprawdź liczbę mieszkańców, limit Ratusza i dostępne łóżka. W tym oknie przydzielasz wolnych mieszkańców do pracy i sprawdzasz, czy mają dom oraz żywność.', 'Check the population, Town Hall limit and available beds. Open this panel to assign available residents to work and check their housing and food.', targetHud('population')),
     step('working', 'Pracujący mieszkańcy', 'Working residents', 'Ta liczba pokazuje osoby, które rzeczywiście dotarły do pracy. Nowo przydzielony pracownik najpierw idzie do budynku; dopiero potem rozpoczyna pracę. Kliknij, aby zarządzać obsadą.', 'This count shows residents who have actually reached work. A newly assigned worker first walks to the building, then starts working. Open it to manage assignments.', targetHud('working')),
     step('arrival', 'Następny mieszkaniec', 'Next resident', 'Tu zobaczysz przewidywany czas przybycia lub odejścia mieszkańca przy obecnym szczęściu. Dla nowych osób potrzebujesz wolnych miejsc; zmiana szczęścia zmienia ten czas.', 'This estimates the next arrival or departure at the current happiness. New residents need available population space; changing happiness changes this estimate.', targetHud('arrival')),
     step('points', 'Punkty', 'Points', 'Wynik godzinowy to poziom Ratusza pomnożony przez monety. Gra zapisuje go po każdej pełnej godzinie. Kliknięcie prowadzi do ustawień i podsumowania wyniku.', 'Your hourly score is the Town Hall level multiplied by your coins. It is recorded on each full hour. Open this control for Settings and the score summary.', targetHud('points')),

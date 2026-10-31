@@ -1,4 +1,4 @@
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v22';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v22-1';
 
 const pick = (language, pl, en) => language === 'pl' ? pl : en;
 const valueFor = (value, language) => typeof value === 'string' ? value : value?.[language] || value?.pl || value?.en || '';

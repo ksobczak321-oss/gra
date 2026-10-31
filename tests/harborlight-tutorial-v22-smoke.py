@@ -41,6 +41,28 @@ def close_panel(page):
         page.locator('#island-dialog .dialog-close').click()
 
 
+def reward_grid(page, popup):
+    tiles = popup.locator('[data-tutorial-reward-material]')
+    expect(tiles).to_have_count(6)
+    boxes = tiles.evaluate_all('''nodes => nodes.map(node => {
+      const box=node.getBoundingClientRect(), label=node.querySelector('span');
+      return {x:box.x,y:box.y,width:box.width,right:box.right,
+        fits:node.scrollWidth<=node.clientWidth+1 && label.scrollWidth<=label.clientWidth+1,
+        labelSize:parseFloat(getComputedStyle(label).fontSize)};
+    })''')
+    assert all(box['fits'] and box['labelSize'] >= 11 for box in boxes), boxes
+    for row in [boxes[:3], boxes[3:]]:
+        assert max(box['y'] for box in row) - min(box['y'] for box in row) <= 1, boxes
+        assert row[0]['x'] < row[1]['x'] < row[2]['x'], boxes
+    assert boxes[3]['y'] > boxes[0]['y'] + 10, boxes
+    for first, second in zip(boxes[:3], boxes[3:]):
+        assert abs(first['x'] - second['x']) <= 1, boxes
+        assert abs(first['width'] - second['width']) <= 1, boxes
+    assert min(box['x'] for box in boxes) >= 0, boxes
+    assert max(box['right'] for box in boxes) <= page.viewport_size['width'], boxes
+    page.screenshot(path='/tmp/harborlight-v22-reward-%s.png' % page.viewport_size['width'])
+
+
 def early_house_then_reload(browser):
     initial = fresh_world()
     assert not initial['tutorial']['completed'] and not initial['tutorial']['claimed']
@@ -88,6 +110,7 @@ def early_house_then_reload(browser):
         page.locator('[data-tutorial-claim="rules-read"]').click()
         reward = page.locator('[data-tutorial-achievement="rules-read"]')
         expect(reward).to_be_visible()
+        reward_grid(page, reward)
         expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
         received = cloud.cloud_state(UID)
         assert received['resources']['coins'] == farm_before['resources']['coins'] + 100
@@ -140,11 +163,32 @@ def early_house_then_reload(browser):
     print('PASS22 actual early House action disappears without reward; Farm and Warehouse retain normal rewards, visible numbering and cloud reload history', flush=True)
 
 
+def mobile_reward_grid(browser):
+    cloud.DOCUMENTS[UID] = {'payload': json.dumps(fresh_world()), 'revision': 5, 'updateTime': cloud.timestamp()}
+    context, page = cloud.context(browser, UID, mobile=True)
+    try:
+        page.set_viewport_size({'width': 360, 'height': 800})
+        assert page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
+        expect(page.locator('[data-tutorial-current]')).to_have_attribute('data-tutorial-current', 'rules-read')
+        page.locator('[data-tutorial-visit="rules-read"]').click()
+        page.locator('[data-worker-building="farm"][data-worker-delta="1"]').click()
+        expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
+        page.locator('[data-tutorial-claim="rules-read"]').click()
+        reward = page.locator('[data-tutorial-achievement="rules-read"]')
+        expect(reward).to_be_visible()
+        reward_grid(page, reward)
+        cloud.no_island_cache(page)
+    finally:
+        context.close()
+    print('PASS22 six real reward tiles form a readable3×2 grid on desktop and360px mobile without horizontal overflow', flush=True)
+
+
 def run():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(executable_path=os.environ.get('HARBORLIGHT_CHROMIUM', '/usr/bin/chromium'), headless=True, args=['--no-sandbox'])
         try:
             early_house_then_reload(browser)
+            mobile_reward_grid(browser)
             assert not cloud.ERRORS, cloud.ERRORS
         finally:
             browser.close()

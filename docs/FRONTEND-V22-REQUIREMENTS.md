@@ -34,3 +34,14 @@ Do czasu odrębnego potwierdzenia w [rejestrze](ENVIRONMENT-STATUS.md) reset ma 
 Testy powinny objąć wcześniejsze punkty Domu, serię kilku przyszłych działań, różne przydziały tego samego typu, brak nagrody i skrzyni za pominięcie, możliwość przejścia do następnej lekcji, zachowane dawne nagrody, zapis/wczytanie oraz pełną ścieżkę równowagi v21. Odbiór przeglądarkowy ma sprawdzić rzeczywistą listę i bieżącą podpowiedź po zniknięciu kroku.
 
 Narzędzie resetu jest testowane wyłącznie na izolowanych fiksturach przed promocją. Rzeczywisty odczyt wszystkich trzech kont po operacji i niezmienność ich tożsamości stanowią osobny dowód wykonania w PRE-PROD.
+
+## Uzupełnienie po podglądzie roboczym v22
+
+Uwagi użytkownika z tego samego dnia, przed promocją:
+
+- Początkowe oprowadzanie idzie zgodnie z górnym paskiem: nazwa → poziom → szczęście → monety → mieszkańcy, potem dotychczasowa kolejność. Nie wraca do monet po mieszkańcach.
+- Okno premii z monetami i pięcioma materiałami układa sześć kafelków w **dwa rzędy po trzy**, z czytelnymi etykietami i ilościami również na telefonie. Usuwamy układ pięć plus jeden.
+- Lekcja priorytetów prowadzi przez rzeczywistą drogę w interfejsie: najpierw wskazuje przycisk **Szczegóły budynku** w skróconym panelu Magazynu, potem kontrolkę priorytetu w szczegółach. Samo wejście w szczegóły nie kończy lekcji i nie daje nagrody.
+- Cache uzupełnionego podglądu ma oznaczenie `frontend-v22-1`, aby przeglądarka pobrała nowe moduły i style po wcześniejszym odbiorze v22.
+
+Źródłowy zakres v22 `087000b2fe6faec97717f705f9fabcc0d3469803` przeszedł [CI 41220294183](https://github.com/ksobczak321-oss/gra/actions/runs/41220294183) i [Pages 41220294194](https://github.com/ksobczak321-oss/gra/actions/runs/41220294194). Nie jest to odbiór powyższego uzupełnienia; wymaga ono własnych testów, commitu i CI przed promocją.

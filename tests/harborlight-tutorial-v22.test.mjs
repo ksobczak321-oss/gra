@@ -96,6 +96,76 @@ test('only changed notification categories and selected priorities create action
   assert.equal(state.tutorial.actionLedger.counts['transport-priority'], 1);
 });
 
+test('the current balanced priority lesson requires Construction rather than an unrelated material priority', () => {
+  const { state } = runTutorialCourse({ through: 5 });
+  assert.equal(tutorialStatus(state).nextLessonId, 'happiness-action');
+  const resources = structuredClone(state.resources);
+  assert.equal(run(state, { type: 'warehousePriority', resource: 'wood' }).ok, true);
+  assert.deepEqual(state.warehousePriorities, ['wood']);
+  assert.equal(state.tutorial.completed['happiness-action'], undefined);
+  assert.equal(state.tutorial.skippedLessons['happiness-action'], undefined);
+  assert.equal(state.tutorial.chests['happiness-action'], undefined);
+  assert.deepEqual(state.resources, resources);
+  const restored = reload(state);
+  assert.equal(tutorialStatus(restored).nextLessonId, 'happiness-action');
+  assert.equal(run(restored, { type: 'warehousePriority', resource: 'construction' }).ok, true);
+  assert.deepEqual(restored.warehousePriorities, ['wood', 'construction']);
+  assert.equal(restored.tutorial.completed['happiness-action'], true);
+  assert.equal(restored.tutorial.skippedLessons['happiness-action'], undefined);
+  assert.ok(restored.tutorial.chests['happiness-action']);
+  assert.equal(restored.tutorial.actionLedger.counts['transport-priority'], 1);
+});
+
+test('an early unrelated priority does not remove the balanced lesson, while selecting Construction does so without a chest', () => {
+  const state = createState(NOW), resources = structuredClone(state.resources);
+  assert.equal(run(state, { type: 'warehousePriority', priorities: ['stone'] }).ok, true);
+  assert.equal(state.tutorial.completed['happiness-action'], undefined);
+  assert.equal(state.tutorial.skippedLessons['happiness-action'], undefined);
+  assert.equal(state.tutorial.actionLedger.counts['transport-priority'], undefined);
+  assert.equal(run(state, { type: 'warehousePriority', resource: 'construction' }).ok, true);
+  assert.equal(state.tutorial.skippedLessons['happiness-action'], true);
+  assert.equal(state.tutorial.chests['happiness-action'], undefined);
+  assert.equal(state.tutorial.claimed['happiness-action'], undefined);
+  assert.equal(state.tutorial.actionLedger.counts['transport-priority'], 1);
+  assert.deepEqual(state.resources, resources);
+});
+
+test('old selected priorities migrate against the correct curriculum requirement', () => {
+  for (const curriculum of [3, 4]) for (const resource of ['wood', 'construction']) {
+    const state = curriculum === 3 ? legacy() : createState(NOW);
+    assert.equal(run(state, { type: 'warehousePriority', resource }).ok, true);
+    const lessonId = curriculum === 3 ? 'transport-priority' : 'happiness-action';
+    // Restore the shape of a pre-v22 save: the actual chosen priority was
+    // retained, but independent actions were not yet recorded by the tutorial.
+    delete state.tutorial.actionLedger; delete state.tutorial.skippedLessons;
+    delete state.tutorial.completed[lessonId];
+    const restored = reload(state), expected = curriculum === 3 || resource === 'construction';
+    assert.equal(restored.tutorial.skippedLessons[lessonId] === true, expected, `${curriculum}: ${resource}`);
+    assert.equal(restored.tutorial.completed[lessonId] === true, expected, `${curriculum}: ${resource}`);
+    assert.equal(restored.tutorial.chests[lessonId], undefined);
+    assert.equal(restored.tutorial.claimed[lessonId], undefined);
+  }
+});
+
+test('the current legacy lesson still accepts a selected material priority', () => {
+  const state = legacy();
+  for (const [id, building] of [['rules-read', 'farm'], ['island-map', 'warehouse'], ['first-job', 'windmill'], ['food-check', 'lumber']]) {
+    assert.equal(run(state, { type: 'assign', building, delta: 1 }).ok, true);
+    claim(state, id);
+  }
+  assert.equal(run(state, { type: 'prepareTutorialUpgrade' }).ok, true);
+  assert.equal(run(state, { type: 'upgrade', building: 'townhall' }).ok, true);
+  assert.equal(run(state, { type: 'houseHappinessAll', amount: 1 }).ok, true);
+  assert.equal(run(state, { type: 'assign', building: 'quarry', delta: 1 }).ok, true);
+  assert.equal(run(state, { type: 'assign', building: 'sawmill', delta: 1 }).ok, true);
+  assert.equal(tutorialStatus(state).nextLessonId, 'transport-priority');
+  assert.equal(run(state, { type: 'warehousePriority', resource: 'wood' }).ok, true);
+  assert.deepEqual(state.warehousePriorities, ['wood']);
+  assert.equal(state.tutorial.completed['transport-priority'], true);
+  assert.equal(state.tutorial.skippedLessons['transport-priority'], undefined);
+  assert.ok(state.tutorial.chests['transport-priority']);
+});
+
 test('successful action evidence covers every actionable subject in both existing curricula', () => {
   const commands = {
     'assign-farm': { type: 'assign', building: 'farm', delta: 1 }, 'assign-warehouse': { type: 'assign', building: 'warehouse', delta: 1 },

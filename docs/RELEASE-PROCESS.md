@@ -12,6 +12,17 @@ CI waliduje model gry i migracje, reguły promocji, API, odizolowany zestaw plik
 
 Lista publicznych plików jest jawna. Archiwum nie zawiera repozytorium Git, dokumentacji, sekretów ani historycznych gier. `release.json` wiąże pełny SHA z hashami i rozmiarami zawartości. Hash manifestu i archiwum są osobnymi dowodami.
 
+### Niezmienny dowód odbioru DEV
+
+Podgląd po poprawkach v22 ma cache `frontend-v22-1` i otrzymuje adnotowany tag **`dev-v22.1-20261031`** dopiero po potwierdzeniu sukcesu CI i Pages. Tag wskazuje dokładny commit aplikacji, a jego adnotacja zawiera pełny SHA, numery przebiegów, wynik lokalnej regresji, hashe pakietu oraz oddzielne stany PRE-PROD/resetu/PROD. Brak tagu lub brak sukcesu wskazanego CI oznacza, że odbiór nie został potwierdzony.
+
+```sh
+git fetch origin tag dev-v22.1-20261031
+git show --no-patch dev-v22.1-20261031
+```
+
+Tag nie jest przesuwany i nie uruchamia publikacji GCP. Pozwala zapisać wynik już zakończonego CI w samym Git, bez zmiany sprawdzonego commitu aplikacji. Przy późniejszym kodzie powstaje nowy dowód; historyczny tag nie zastępuje wymaganego CI dokładnego SHA promowanego przez workflow. Bieżące rozróżnienie środowisk pozostaje w [ENVIRONMENT-STATUS.md](ENVIRONMENT-STATUS.md).
+
 ## 2. Promocja na PRE-PROD
 
 [Techniczny workflow DEV](../.github/workflows/google-cloud-dev.yml) uruchamia się ręcznie z `main` po zielonym CI **tego samego pełnego SHA**. Kontrola bez poświadczeń Google blokuje brak dowodu przed dostępem do WIF.

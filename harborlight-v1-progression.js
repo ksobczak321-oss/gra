@@ -1,7 +1,7 @@
 // Persistent learning, meaningful activity and future verified social hooks.
 // No DOM, network requests or account creation happen in this module.
-import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v22';
-import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v22';
+import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v22-1';
+import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v22-1';
 
 export const ACTIVE_PLAY_SECONDS = 300;
 export const ABANDONED_PLAY_SECONDS = 48 * 3600;
@@ -52,7 +52,7 @@ export const LEGACY_TUTORIAL_LESSONS = Object.freeze([
   lesson('happiness-action', 6, 'Make your residents happier', 'Give House happiness points, grant a blessing or purchase an attraction. Complete one real happiness action.', 'action', 'increase-happiness', 'house', 'townhall-upgrade', '[data-house-everyone]'),
   lesson('workplace-journey', 7, 'Start gathering Stone', 'Assign one resident to the Quarry. Walking residents no longer receive the unemployment penalty, and start paying tax after arrival.', 'action', 'assign-quarry', 'quarry', 'happiness-action', '[data-worker-building="quarry"][data-worker-delta="1"]'),
   lesson('resources-dock', 8, 'Start making Planks', 'Assign one resident to the Sawmill. The worker consumes two central Wood when each Plank is finished.', 'action', 'assign-sawmill', 'sawmill', 'workplace-journey', '[data-worker-building="sawmill"][data-worker-delta="1"]'),
-  lesson('transport-priority', 9, 'Choose a transport priority', 'Choose a numbered material or Construction priority in the Warehouse.', 'action', 'transport-priority', 'warehouse', 'resources-dock', '[data-priority-resource]'),
+  lesson('transport-priority', 9, 'Choose a transport priority', 'Open the Warehouse building details, then choose a numbered material or Construction priority.', 'action', 'transport-priority', 'warehouse', 'resources-dock', '[data-warehouse-priority]'),
   lesson('first-delivery', 10, 'Receive a real delivery', 'Wait for a carrier to finish a delivery into central storage. Opening a panel does not complete this step.', 'condition', 'delivery', 'warehouse', 'transport-priority'),
   lesson('storage-limits', 11, 'Add another carrier', 'Assign one more Warehouse carrier to improve delivery throughput. This needs a new assignment for this lesson.', 'action', 'assign-warehouse', 'warehouse', 'first-delivery', '[data-worker-building="warehouse"][data-worker-delta="1"]'),
   lesson('food-chain', 12, 'Finish a processed product', 'Let a Windmill or Sawmill worker finish one product. Actual production completes this step automatically.', 'condition', 'crafted', 'windmill', 'storage-limits'),
@@ -83,7 +83,7 @@ export const TUTORIAL_LESSONS = Object.freeze([
   balancedLesson('first-job', 3, 'Assign a lumber worker', 'Przydziel drwala', 'Assign one Lumber Camp worker. Actions performed when taught grant a small immediate reward or funds for the next real upgrade. Actions already performed independently remove their step without a reward.', 'Przydziel jednego drwala. Działania wykonane według bieżącej lekcji dają małą premię od razu albo środki na następną rozbudowę. Kroki wykonane wcześniej samodzielnie znikają bez premii.', 'action', 'assign-lumber', 'lumber', 'small', null, '[data-worker-building="lumber"][data-worker-delta="1"]'),
   balancedLesson('food-check', 4, 'Assign a Windmill worker', 'Przydziel pracownika Młyna', 'A Windmill worker turns two central Grain into one Food. Residents consume Food, so production and delivery both matter.', 'Pracownik Młyna zamienia dwie sztuki zboża z centrali w jedną żywność. Mieszkańcy jedzą, dlatego potrzebna jest i produkcja, i dostawa.', 'action', 'assign-windmill', 'windmill', 'small', null, '[data-worker-building="windmill"][data-worker-delta="1"]'),
   balancedLesson('townhall-upgrade', 5, 'Order Town Hall level 2', 'Zleć Ratusz na poziom 2', 'Collect the one-time building budget, then order the Town Hall upgrade. Resources are reserved now and physically leave storage when carriers pick them up.', 'Odbierz jednorazowy budżet budowy i zleć rozbudowę Ratusza. Zasoby zostaną zarezerwowane, a fizycznie opuszczą magazyn po odebraniu przez tragarzy.', 'action', 'upgrade-townhall', 'townhall', 'coins', null, '[data-upgrade-building="townhall"]'),
-  balancedLesson('happiness-action', 6, 'Prioritize construction transport', 'Nadaj priorytet transportowi na budowę', 'Choose Construction as a Warehouse priority so carriers supply the Town Hall instead of continually collecting production.', 'Wybierz Budowę jako priorytet Magazynu, aby tragarze dostarczali materiały do Ratusza zamiast stale odbierać produkcję.', 'action', 'transport-priority', 'warehouse', 'small', null, '[data-warehouse-priority="construction"]'),
+  balancedLesson('happiness-action', 6, 'Prioritize construction transport', 'Nadaj priorytet transportowi na budowę', 'Open Warehouse building details, then choose Construction as a priority so carriers supply the Town Hall instead of continually collecting production.', 'Otwórz szczegóły budynku Magazynu, a następnie wybierz Budowę jako priorytet, aby tragarze dostarczali materiały do Ratusza zamiast stale odbierać produkcję.', 'action', 'transport-priority', 'warehouse', 'small', null, '[data-warehouse-priority="construction"]'),
   balancedLesson('workplace-journey', 7, 'Assign a Quarry worker', 'Przydziel kamieniarza', 'Assign a Quarry worker while the Town Hall is being built. After walking to work, fed workers produce and pay tax.', 'Przydziel pracownika Kamieniołomu, gdy Ratusz jest rozbudowywany. Po dojściu do pracy najedzeni pracownicy produkują i płacą podatki.', 'action', 'assign-quarry', 'quarry', 'small', null, '[data-worker-building="quarry"][data-worker-delta="1"]'),
   balancedLesson('resources-dock', 8, 'Finish Town Hall level 2', 'Dokończ Ratusz na poziomie 2', 'Wait for actual delivery and construction. The reward supplies only the missing budget for the Quarry upgrade.', 'Poczekaj na rzeczywistą dostawę i budowę. Premia uzupełni tylko brakujący budżet rozbudowy Kamieniołomu.', 'condition', 'building-townhall-2', 'townhall', 'supply', 'quarry'),
   balancedLesson('transport-priority', 9, 'Upgrade the Quarry', 'Rozbuduj Kamieniołom', 'Spend the supplied Wood and Stone on a real Quarry upgrade. The following reward is Coins rather than another large material chest.', 'Wydaj dostarczone drewno i kamień na prawdziwą rozbudowę Kamieniołomu. Następna premia to monety zamiast kolejnej wielkiej skrzyni materiałów.', 'action', 'upgrade-quarry', 'quarry', 'coins', null, '[data-upgrade-building="quarry"]'),
@@ -118,6 +118,9 @@ function normalizedTrueMap(source, allowed = TUTORIAL_LESSONS.map(item => item.i
 }
 const ACTION_SUBJECTS = [...new Set([...TUTORIAL_LESSONS, ...LEGACY_TUTORIAL_LESSONS].filter(item => item.kind === 'action').map(item => item.subject))].filter(subject => subject !== 'finish-tutorial');
 const prioritySignature = state => JSON.stringify(state.warehousePriorities || []);
+// The balanced course teaches supplying construction specifically. The older
+// course teaches selecting any priority, so retain that original requirement.
+const tutorialPrioritySelected = state => state.tutorial?.curriculum === 3 ? (state.warehousePriorities || []).length > 0 : (state.warehousePriorities || []).includes('construction');
 const notificationSignature = state => JSON.stringify(Object.entries(state.settings?.notificationCategories || {}).sort(([a], [b]) => a.localeCompare(b)));
 function lessonResolved(tutorial, id) {
   const chest = tutorial.chests?.[id];
@@ -201,7 +204,7 @@ function migrateKnownTutorialActions(state) {
   if ((state.notifications || []).some(item => item.kind === 'house-happiness' && (/^\d+ happiness points were given to \d+ residents\.$/.test(item.message) || /^Resident \d+ received \d+ happiness points\.$/.test(item.message)))) { known('house-points'); known('increase-happiness'); }
   if (state.dailyBlessingDay || whole(state.blessingsUsed) > 0) { known('chapel-blessing'); known('increase-happiness'); }
   if (whole(state.paths) > 0 || (state.roads?.segments || []).some(level => whole(level) > 0)) known('upgrade-road');
-  if ((state.warehousePriorities || []).length) known('transport-priority');
+  if (tutorialPrioritySelected(state)) known('transport-priority');
   if (Object.keys(state.settings?.notificationCategories || {}).length) known('notification-filter');
   for (const item of lessons) {
     if (!item.subject.startsWith('upgrade-') || item.subject === 'upgrade-road') continue;
@@ -413,7 +416,7 @@ function recordTutorialEvidence(state, action, result) {
   if (['blessing', 'paidBlessing', 'adBlessing'].includes(action.type)) { add('chapel-blessing'); add('increase-happiness'); }
   if (action.type === 'buyAttraction') { add('buy-attraction'); add('increase-happiness'); }
   if (action.type === 'setting' && action.key === 'notificationCategories' && ledger.notificationCategories !== notificationSignature(state)) add('notification-filter');
-  if (action.type === 'warehousePriority' && ledger.priorities !== prioritySignature(state) && (state.warehousePriorities || []).length > 0) add('transport-priority');
+  if (action.type === 'warehousePriority' && ledger.priorities !== prioritySignature(state) && tutorialPrioritySelected(state)) add('transport-priority');
   if (action.type === 'upgradeRoad') add('upgrade-road');
   if (action.type === 'marketOrder' || action.type === 'tutorialPlayerTrade') add('market-order');
   if (action.type === 'confirmTaskAcceptance' || action.type === 'taskAccept' && (state.lighthouseTasks || []).some(task => task.id === state.activeTaskId && task.acceptedAt != null)) add('task-accept');

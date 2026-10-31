@@ -102,6 +102,14 @@ def persisted_tour_and_skip(browser):
     expect(guide).to_have_attribute('data-onboarding-step', first_step)
     page.locator('[data-onboarding-next]').click()
     expect(guide).to_have_attribute('data-onboarding-step', second_step)
+    # Follow the real tour arrows through the requested HUD order, then return
+    # to the same saved step before checking resume-after-reload behaviour.
+    for expected in ['happiness', 'coins', 'population']:
+        page.locator('[data-onboarding-next]').click()
+        expect(guide).to_have_attribute('data-onboarding-step', expected)
+    for expected in ['coins', 'happiness', 'level']:
+        page.locator('[data-onboarding-previous]').click()
+        expect(guide).to_have_attribute('data-onboarding-step', expected)
     page.clock.run_for(61000)
     frozen(saved(page), original)
     assert cloud.cloud_state(UID)['islandName'] == 'Port Żółtej Latarni'
@@ -165,6 +173,7 @@ def complete_mobile_tour(browser):
     else:
         raise AssertionError('The complete walkthrough did not finish in100 steps')
     assert len(ids) >= 25, ids
+    assert ids[:6] == ['home', 'level', 'happiness', 'coins', 'population', 'working'], ids[:6]
     for building in BUILDINGS:
         assert any(building in step_id for step_id in ids), (building, ids)
     for expected in ['home', 'level', 'happiness', 'coins', 'population', 'working', 'arrival', 'points', 'clock', 'administration', 'economy', 'resources', 'decorations', 'paths', 'settings', 'tutorial']:

@@ -2,16 +2,16 @@
 
 Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarni. Bazowe reguły **frontend-v18** zatwierdzono przez GO użytkownika 30 października 2026: [pełne wymagania](docs/FRONTEND-V18-REQUIREMENTS.md), [reguły gospodarki](docs/ECONOMY-RULES.md) i [budynki](docs/BUILDINGS.md). Bieżący zakres DEV to [v22](docs/FRONTEND-V22-REQUIREMENTS.md), uzupełniający [v21](docs/FRONTEND-V21-REQUIREMENTS.md).
 
-**[Stan środowisk i dowody wydań](docs/ENVIRONMENT-STATUS.md)** to główny rejestr wersji DEV, PRE-PROD i PROD. Rozdziela przygotowany kod, Git/CI, podgląd, publikację GCP, aktywację usług i reset danych.
+**[Stan środowisk i dowody wydań](docs/ENVIRONMENT-STATUS.md)** to główny rejestr wersji DEV, PRE-PROD i PROD. Rozdziela przygotowany kod, Git/CI, podgląd, publikację GCP, aktywację usług i reset danych. Po uwagach z podglądu powstaje **v22.1**: kolejność szczęście → monety → mieszkańcy, nagrody 3×2 i wskazanie szczegółów Magazynu przed priorytetem. Własne SHA, CI i Pages potwierdza adnotowany tag `dev-v22.1-20261031`, tworzony dopiero po sukcesie odbioru ([jak odczytać dowód](docs/RELEASE-PROCESS.md#niezmienny-dowód-odbioru-dev)).
 
 ## Wersja lokalna a opublikowana
 
 | Miejsce | Stan |
 |---|---|
-| DEV — ta przestrzeń robocza | [v22](docs/FRONTEND-V22-REQUIREMENTS.md) zaimplementowane: pomijanie samodzielnie wykonanych lekcji i narzędzie resetu kont dopiero po promocji. **911 testów lokalnych oraz 11 zestawów Chromium PASS**. Ostatnia zweryfikowana baza Git/CI v21: `1fcfc8ba897a495a3878f15ed67595fa89071656`, [CI 41218163406 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41218163406), 871 lokalnych testów i 10 zestawów Chromium PASS. Nowy SHA wymaga synchronizacji i własnego CI. |
+| DEV — ta przestrzeń robocza | [v22.1](docs/FRONTEND-V22-REQUIREMENTS.md): wcześniejsze lekcje bez premii, kolejność oprowadzania, nagrody 3×2 i pełna droga do priorytetu Budowy. **915 testów lokalnych i 12 zestawów Chromium PASS**. Dokładny SHA oraz wyniki CI/Pages są adnotacją tagu `dev-v22.1-20261031`, tworzonego dopiero po ich sukcesie. |
 | PRE-PROD — `harborlight-dev` | [Gra](https://harborlight-dev.web.app), opublikowane v18 / `6ec3c6d`; [sukces 41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285), testy hostingu i kont, oba artefakty v2. |
 | PROD — `harborlight-prod` / `harborlight.pl` | Brak potwierdzonej publikacji i powiązania domeny. |
-| GitHub Pages | [Link roboczy — v21](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v21), [Pages 41218163559 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41218163559). Nietrwały podgląd DEV; nie zapisuje wysp kont PRE-PROD. Publikacja v22 wymaga własnego potwierdzenia. |
+| GitHub Pages | [Link roboczy — v22.1](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v22-1). Publikację potwierdza przebieg wskazany w adnotacji tego samego tagu. Nietrwały podgląd DEV, bez zapisu kont PRE-PROD. Bezpośredni odczyt z tej sesji blokuje sieć HTTP 403; dowód publikacji pochodzi z GitHub Actions. |
 
 PRE-PROD ma trzy osobne konta `admin1`, `admin2`, `admin3`. Odczytowy odbiór wdrożenia blokuje zapisy gry i nie resetuje postępu. Najnowsze GO zleca osobny **reset wszystkich trzech kont, także `admin1`, dopiero po pomyślnej promocji i jej weryfikacji**; UID, loginy i hasła zostają zachowane. [Reset](docs/PREPROD-RESET.md) jest przygotowany i przetestowany na izolowanych danych, niewykonany w Google. Dowodem ostatniej publikacji v18 jest udany przebieg powyżej; sam push nie publikuje gry w GCP. Historia pozostaje w [dzienniku](docs/IMPLEMENTATION-LOG.md).
 

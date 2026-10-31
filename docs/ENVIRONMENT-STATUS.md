@@ -4,15 +4,19 @@ Aktualizacja: **31 października 2026**. Ten dokument jest głównym rejestrem t
 
 ## Stan potwierdzony
 
+Uzupełniony podgląd po uwagach ma nazwę **v22.1** (cache `frontend-v22-1`). Jego niezmiennym dowodem Git jest adnotowany tag [dev-v22.1-20261031](https://github.com/ksobczak321-oss/gra/tree/dev-v22.1-20261031): pełny commit, wynik i numery CI/Pages oraz hashe pakietu są w adnotacji. Tag powstaje dopiero po sukcesie obu przebiegów; jeżeli go jeszcze nie ma, odbiór nowego podglądu oczekuje na zakończenie. Odczyt dowodu opisuje [proces wydań](RELEASE-PROCESS.md#niezmienny-dowód-odbioru-dev).
+
 | Miejsce | Kod i dowód | Co pozostaje do wykonania lub potwierdzenia |
 |---|---|---|
-| **DEV — przestrzeń robocza** | Zaimplementowano [v22](FRONTEND-V22-REQUIREMENTS.md): pomijanie wcześniejszych działań bez nagrody, migracja wiarygodnych dawnych dowodów i zabezpieczony reset po promocji. **911 testów lokalnych PASS i 11 zestawów Chromium PASS**. | Synchronizacja nowego SHA i jego własne zielone CI. Testy lokalne nie potwierdzają publikacji GCP. |
-| **GitHub / CI — ostatnia zweryfikowana baza DEV** | **v21**, SHA `1fcfc8ba897a495a3878f15ed67595fa89071656`; [CI 41218163406 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41218163406). | Nowy SHA v22 wymaga własnego CI. Sukces v21 nie jest jego zastępstwem. |
-| **GitHub Pages — podgląd DEV** | Baza **v21**, [Pages 41218163559 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41218163559). [Link roboczy nowej wyspy](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v21). | Publikacja v22 pozostaje do potwierdzenia. Próba odczytu Pages z tej sesji została zablokowana przez bramę sieciową HTTP 403; nie jest to dowód błędu samej gry. Podgląd działa w pamięci; nie jest kontem chmurowym ani zapisem PRE-PROD. |
+| **DEV — przestrzeń robocza** | **v22.1**: wcześniejsze lekcje bez nagrody, kolejność oprowadzania szczęście → monety → mieszkańcy, nagrody 3×2 i wskazówka przez szczegóły Magazynu. **915 testów lokalnych PASS i 12 zestawów Chromium PASS**. | Pełny SHA i własny wynik CI/Pages wiąże opisany wyżej tag. Przygotowanie kodu nie jest publikacją GCP. |
+| **GitHub / CI — v22.1** | Dokładny commit aplikacji i numery CI/Pages zapisuje adnotacja nieprzesuwanego tagu **`dev-v22.1-20261031`**, utworzonego dopiero po sukcesie obu przebiegów. | Odczyt: `git show --no-patch dev-v22.1-20261031`; bez tagu nie potwierdzamy zakończenia nowego odbioru. Bazowy sukces v22 opisano poniżej jako historię. |
+| **GitHub Pages — podgląd DEV** | [Link roboczy v22.1](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v22-1). Przebieg publikacji i jego SHA potwierdza adnotacja powyższego tagu po sukcesie Pages. | Bezpośredni odczyt Pages z tej sesji blokuje brama sieciowa HTTP 403. Nie potwierdzono tu sieciowego odbioru serwowanych plików. Podgląd działa w pamięci; nie jest kontem chmurowym ani zapisem PRE-PROD. |
 | **PRE-PROD — GCP `harborlight-dev`** | Ostatnie potwierdzone wdrożenie: **v18**, SHA `6ec3c6d8625420fd96474a22a8b1d699672416cd`; [CI 41111528800 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41111528800), [wdrożenie 41112673285 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285). [Gra PRE-PROD](https://harborlight-dev.web.app). | Brak potwierdzonej nowszej promocji v19–v22. Po weryfikacji nowego wdrożenia zaplanowany osobny reset wszystkich trzech kont testowych. |
 | **PROD — GCP `harborlight-prod`** | Projekt i docelowa domena `harborlight.pl` są wskazane przez właściciela. | Brak potwierdzonej publikacji gry, powiązania domeny, propagacji DNS i certyfikatu. Nie promujemy kodu bez przejścia PRE-PROD. |
 
-Lokalny odbiór v22: **726 testów gry/synchronizacji/promocji, 62 backendu i 123 przygotowania/pakowania/konfiguracji — razem 911 PASS**, ponadto **11 zestawów Chromium PASS**. Pakiet przeglądarkowy ma 48 plików; wszystkie publiczne bajty porównano ze źródłami po testach. Odbiór jest izolowany: bez rzeczywistych zapisów lub resetów Google.
+Lokalny odbiór v22.1: **730 testów gry/synchronizacji/promocji, 62 backendu i 123 przygotowania/pakowania/konfiguracji — razem 915 PASS**, ponadto **12 zestawów Chromium PASS**. Pakiet przeglądarkowy ma 48 plików; wszystkie publiczne bajty porównano ze źródłami po testach. Odbiór jest izolowany: bez rzeczywistych zapisów lub resetów Google.
+
+Historyczny bazowy v22: `087000b2fe6faec97717f705f9fabcc0d3469803`, [CI 41220294183 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41220294183), [Pages 41220294194 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41220294194), 911 testów i 11 zestawów Chromium PASS. Poprawki po podglądzie mają odrębny powyższy odbiór v22.1.
 
 Historyczny lokalny odbiór bazy v21: **871 testów PASS i 10 zestawów Chromium PASS**. Jest dowodem testów tego zakresu, odrębnym od CI, podglądu Pages i publikacji w GCP. Lokalny kontener zbudowano i uruchomiono bez dostępu do chmury; nie jest to dowód aktualizacji Cloud Run.
 
@@ -52,4 +56,4 @@ Przy każdej zmianie statusu zapisujemy osobno:
 5. Osobny wynik aktywacji nowej konfiguracji/usług i osobny wynik resetu wraz z kontrolą wszystkich trzech kont. Nie wpisujemy „gotowe” na podstawie samego uruchomienia skryptu.
 6. Przy PROD: źródłowe udane PRE-PROD, identyczny pakiet/digest, własny odbiór oraz domenę/DNS/TLS potwierdzone rzeczywistym odczytem.
 
-Nie znamy jeszcze SHA ani numerów przyszłego CI/promocji v22; nie wpisujemy wymyślonych wartości. Aktualizację potwierdzamy dowodem, a nie samym zakończeniem pracy nad kodem.
+SHA i znane przebiegi GitHub v22 zapisano wyżej. Dowód uzupełnienia po podglądzie wiąże pełny commit z CI/Pages w opisanym tagu. Nie znamy numeru przyszłej promocji GCP/resetu; nie wpisujemy wymyślonych wartości. Aktualizację potwierdzamy dowodem, a nie samym zakończeniem pracy nad kodem.

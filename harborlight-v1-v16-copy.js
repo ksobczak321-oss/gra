@@ -1,5 +1,5 @@
-import { registerTranslations } from './harborlight-v1-i18n.js?v=frontend-v22';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v22';
+import { registerTranslations } from './harborlight-v1-i18n.js?v=frontend-v22-1';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v22-1';
 
 // Presentation copy for the current learning flow. Player-entered text never
 // passes through this catalogue.
@@ -38,7 +38,7 @@ const LESSON_COPY = {
   ],
   "transport-priority": [
     "Wybierz priorytet transportu",
-    "Ustaw w Magazynie numerowany priorytet materiału lub Budowy."
+    "Otwórz szczegóły budynku Magazynu, a następnie ustaw numerowany priorytet materiału lub Budowy."
   ],
   "first-delivery": [
     "Odbierz prawdziwą dostawę",
@@ -46,7 +46,7 @@ const LESSON_COPY = {
   ],
   "storage-limits": [
     "Dodaj kolejnego tragarza",
-    "Przydziel jeszcze jedną osobę do Magazynu. Ten krok wymaga nowego przydziału, wykonanego po jego rozpoczęciu."
+    "Przydziel jeszcze jedną osobę do Magazynu. To osobny przydział: jeśli zrobiłeś go wcześniej samodzielnie, lekcja zniknie bez nagrody."
   ],
   "food-chain": [
     "Ukończ przetworzony produkt",
