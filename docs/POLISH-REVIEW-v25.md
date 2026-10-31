@@ -2,13 +2,13 @@
 
 Użytkownik rozszerzył uwagę o naturalnym języku samouczka na **całą grę**. Dokument opisuje zakres przeglądu i konkretne dowody. Nie stwierdza, że każda możliwa treść jest językowo bezbłędna. Ręczną ocenę prowadzą [TC52 — 25 lekcji](testing/manual/HL-TC-0052.md) i [TC53 — cała gra](testing/manual/HL-TC-0053.md); oba wyniki nadal są **NOT RUN**.
 
-**Bieżący stan:** nowy pakiet po dalszej redakcji przyjaznego stylu i poprawce podpowiedzi przeszedł **898 testów Node, 141 testów Python i 18 zestawów Chromium**. Ponowny przegląd obejmuje **112 rzeczywistych widoków**, bez wykrytych angielskich elementów i błędu wykonania. Cache: `frontend-v25-2`. Końcowy commit, własne CI i promocja mają osobne, jeszcze niepotwierdzone wyniki. Pierwszy podgląd `b1cd650…` i jego nieudane CI zachowujemy poniżej jako historię.
+**Bieżący stan:** nowy pakiet po dalszej redakcji przyjaznego stylu i poprawce podpowiedzi przeszedł **898 testów Node, 141 testów Python i 18 zestawów Chromium**. Ponowny przegląd obejmuje **112 rzeczywistych widoków**, bez wykrytych angielskich elementów i błędu wykonania. Cache: `frontend-v25-2`. Końcowe źródło `353faad347262dce7c3632fdf7c71be124384ab1` ma własne **CI SUCCESS (3 min 54 s)**, **Pages SUCCESS (31 s)** oraz **promocję PRE-PROD SUCCESS (2 min 05 s)**. Pierwszy podgląd `b1cd650…` i jego nieudane CI zachowujemy poniżej jako historię.
 
 ## Dalsza redakcja po doprecyzowaniu użytkownika
 
 Przyjazny polski to również sposób wyjaśniania gry. Ponownie zredagowano 12 krótkich opisów celu, 12 pełnych opisów budynków oraz główne akapity o mieszkańcach, magazynie, produkcji, szczęściu, żywieniu i ochronie powitalnej. Opis mówi, co zrobić i jaki to daje rezultat, np. „Przydziel tu tragarzy…” albo „Rozbudowuj dom, gdy potrzebujesz więcej łóżek”, zamiast urzędowego „określa/umożliwia/przyznaje”.
 
-Zachowano liczby, warunki, angielskie źródła i nazwy przycisków. Kierunkowy zestaw po tej redakcji ma 25/25 PASS, a ponowny przegląd rzeczywistych ekranów nowego pakietu również zakończył się sukcesem lokalnym. Własne CI końcowego commitu nie jest jeszcze potwierdzone. To dalszy zakres [HL-CHG-0038](tracking/changes/HL-CHG-0038.md), nie nowa reguła gospodarki.
+Zachowano liczby, warunki, angielskie źródła i nazwy przycisków. Kierunkowy zestaw po tej redakcji ma 25/25 PASS, a ponowny przegląd rzeczywistych ekranów nowego pakietu również zakończył się sukcesem lokalnym. Własne CI końcowego commitu potwierdzono osobno jako SUCCESS. To dalszy zakres [HL-CHG-0038](tracking/changes/HL-CHG-0038.md), nie nowa reguła gospodarki.
 
 ## Zakres prac i lokalne kontrole
 
@@ -63,7 +63,15 @@ Wcześniejsze przebiegi diagnostyczne wykryły opisane wyżej problemy i nie by�
 
 Nowy zamrożony pakiet z cache `frontend-v25-2` ma **898 testów Node PASS / 0 FAIL**, **141 testów Python w 11 zestawach PASS** oraz **18 zestawów Chromium PASS**. Historyczny kurs v18 przeszedł cztery warianty, w tym test rzeczywistych wymiarów podpowiedzi z trzema przyciskami na ekranie 360×640, odpowiadający usterce wykrytej w CI pierwszego podglądu.
 
-To lokalny odbiór nowego kodu. Końcowy SHA, własne CI oraz wynik PRE-PROD wymagają odrębnych dowodów. Nie przesuwamy starych receipt ani nie zamieniamy nieudanego CI `b1cd650…` w sukces. [Potwierdzenie przygotowania reguł i kont przez właściciela](PREPROD-V25-PREPARATION.md) jest oddzielną czynnością, bez resetu wysp i bez publikacji gry.
+Lokalny odbiór nowego kodu uzupełniono odrębnymi wynikami końcowego źródła `353faad347262dce7c3632fdf7c71be124384ab1`: [CI 41246449612](https://github.com/ksobczak321-oss/gra/actions/runs/41246449612) ma **SUCCESS (3 min 54 s)**, a [Pages 41246449682](https://github.com/ksobczak321-oss/gra/actions/runs/41246449682) — **SUCCESS (31 s)**. DEV jest odebrany. Znacznik `[preprod:0.10.1.0]` upoważnia bridge do promocji po zielonym CI tego samego źródła; nie jest dowodem jej wykonania. Nie przesuwamy starych receipt ani nie zamieniamy nieudanego CI `b1cd650…` w sukces. [Potwierdzenie przygotowania reguł i kont przez właściciela](PREPROD-V25-PREPARATION.md) jest oddzielną czynnością, bez resetu wysp i bez publikacji gry.
+
+Pakiet końcowego źródła ma **54 pliki z manifestem, 10 991 135 bajtów**; wszystkie 53 pliki treści są zgodne ze sprawdzonym pakietem. SHA-256 archiwum: `6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744`. SHA-256 manifestu: `0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d`.
+
+## Potwierdzone wdrożenie PRE-PROD
+
+[Promocja 41246771480](https://github.com/ksobczak321-oss/gra/actions/runs/41246771480), workflow `google-cloud-dev.yml`, próba 1, zakończyła się **SUCCESS (2 min 05 s)** dla tego samego źródła `353faad347262dce7c3632fdf7c71be124384ab1`. Poprzedzający [bridge 41246756848](https://github.com/ksobczak321-oss/gra/actions/runs/41246756848) ma **SUCCESS (15 s)**. Gra PRE-PROD: https://harborlight-dev.web.app. Tag DEV `dev-0.10.1.0-20261031` został opublikowany.
+
+Potwierdzono przebieg i źródło publikacji. Wewnętrznego ZIP receipt ani wartości aktywacji API nie odczytano niezależnie; nie wywodzimy ich z samego sukcesu deployu. Odczytowy odbiór hostingu nie zastępuje osobnego potwierdzenia autosave po rzeczywistej grze. Wszystkie 53 przypadki ręczne pozostają **NOT RUN**. Nie resetowano kont ani historii i nie promowano PROD.
 
 ## Historyczny wspólny odbiór pierwszego podglądu
 
@@ -78,4 +86,4 @@ To odbiór lokalny kodu aplikacji `b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9`, wy
 - [Rejestracja i dostawcy](../tests/harborlight-v18-auth-smoke.py) oraz [wylogowanie](../tests/harborlight-settings-signout-smoke.py): formularze i sesja.
 - [Społeczność](../tests/harborlight-community-v24-smoke.py) i [Pomagam](../tests/harborlight-charity-v24-smoke.py): warunki widoczne w działających panelach. Realna dobroczynność pozostaje wyłączona.
 
-Odsyłacze określają zakres. Nowy odbiór lokalny po dalszej redakcji zakończył się sukcesem; CI i publikacja mają odrębne dowody w [rejestrze zmian](tracking/CHANGE-REGISTER.md) oraz [rejestrze środowisk](ENVIRONMENT-STATUS.md). Użytkownik upoważnił do PRE-PROD po testach i zielonym CI, ale samej zgody nie traktujemy jako dowodu wdrożenia. Kont nie resetowano.
+Odsyłacze określają zakres. Nowy odbiór lokalny po dalszej redakcji, własne CI, Pages i promocja PRE-PROD mają odrębne potwierdzone dowody. Bieżący stan podaje [rejestr zmian](tracking/CHANGE-REGISTER.md) oraz [rejestr środowisk](ENVIRONMENT-STATUS.md). Wynik wdrożenia nie zastępuje ręcznego odbioru gry. Kont nie resetowano.

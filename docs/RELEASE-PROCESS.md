@@ -108,7 +108,11 @@ OAuth Google/Facebook wymaga konfiguracji dostawcy i domen; prawdziwe Paynow/rek
 
 ## 5. Bieżące i historyczne potwierdzenia
 
-Bieżące PRE-PROD to **0.9.1.2 / `3be1f9d2094f1432acacbb782eed1665fd00e6e1`**: CI `41233382228`, Pages `41233382382`, bridge `41233723831` i promocja `41233737873`, próba 1 — **SUCCESS**. Tag `urgent-0.9.1.2-20261031` jest opublikowany. Gra: https://harborlight-dev.web.app. Oba artefakty v2, digests i granice odbioru podaje [rejestr środowisk](ENVIRONMENT-STATUS.md). Konta i postęp zachowane, PROD bez promocji. Pierwszy nieudany przebieg `41232457485` pozostaje historycznym FAILURE.
+Bieżące PRE-PROD to **0.10.1.0 /353faad347262dce7c3632fdf7c71be124384ab1**: CI41246449612SUCCESS3m54s, Pages41246449682SUCCESS31s, bridge41246756848SUCCESS15s oraz deploy41246771480/próba1SUCCESS2m05s. Nowe prywatne reguły potwierdził właściciel przed publikacją. Konta i postęp bez resetu, PROD bez promocji. Odczytowe kontrole hostingu nie zastępują osobnej kontroli automatycznego zapisu. Pełne dowody i hashe w [rejestrze](ENVIRONMENT-STATUS.md).
+
+### Poprzednie pilne PRE-PROD0.9.1.2
+
+Poprzednie PRE-PROD to **0.9.1.2 / `3be1f9d2094f1432acacbb782eed1665fd00e6e1`**: CI `41233382228`, Pages `41233382382`, bridge `41233723831` i promocja `41233737873`, próba 1 — **SUCCESS**. Tag `urgent-0.9.1.2-20261031` jest opublikowany. Gra: https://harborlight-dev.web.app. Oba artefakty v2, digests i granice odbioru podaje [rejestr środowisk](ENVIRONMENT-STATUS.md). Konta i postęp zachowane, PROD bez promocji. Pierwszy nieudany przebieg `41232457485` pozostaje historycznym FAILURE.
 
 ### Historia v22.1
 

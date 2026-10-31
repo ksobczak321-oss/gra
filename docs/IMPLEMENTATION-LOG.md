@@ -818,3 +818,15 @@ Następna dyspozycja autoryzuje PRE-PROD po zielonych testach, bez resetu kont. 
 
 
 Końcowy lokalny odbiór dalszej redakcji i naprawy:898Node/141Python/18ChromiumPASS. Nowy raport obejmuje112widoków PL; nie ma wykrytych reszt EN ani błędu wykonania. Właściciel dostarczył wynik skryptu f161e45→b1cd650: konta/hasła zachowane i prywatny zapis gotowy; minimalny [dowód](PREPROD-V25-PREPARATION.md) rozróżnia to od niezależnego odczytu GCP i publikacji aplikacji. Końcowe źródło, CI i autoryzowana promocja będą miały odrębne wpisy.
+
+
+Końcowe źródło `353faad347262dce7c3632fdf7c71be124384ab1` wysłano na main z autoryzowanym markeremPREPROD. Pages41246449682SUCCESS31s, CI41246449612 w toku. Archiwum `6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744`, manifest `0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d`,54pliki/10991135bajtów. Zweryfikowane archiwum i53identyczne pliki treści z pakietem Chromium. Main pozostaje nieruchomy do potwierdzenia SHA uruchomionej promocji.
+
+
+Własne CI41246449612 zakończyło się SUCCESS3m54s, Pages41246449682 SUCCESS31s dla353faad347262dce7c3632fdf7c71be124384ab1. Utworzono i opublikowano nieprzesuwany adnotowany tagdev-0.10.1.0-20261031. Automat promocji oczekuje na odrębny wynik bridge/deployu.
+
+
+Promocja końcowego353faad347262dce7c3632fdf7c71be124384ab1: bridge41246756848SUCCESS15s, standardowy deploy41246771480/próba1SUCCESS2m05s. Rzeczywisty sourceSHA potwierdzono przed dalszym przesunięciem main. Kontrole obrazu/sond/manifestu/publicznych plików oraz odczytowego logowania i izolacji kont przeszły. PRE-PROD ma0.10.1.0; nie resetowano kont/wysp/hasel i nie promowanoPROD. Właścicielskie przygotowanie prywatnych reguł poprzedziło frontend.
+
+
+Opublikowano nieprzesuwany tag `preprod-0.10.1.0-20261031` na353faad… . Publicznie potwierdzone artefakty próby1:frontend13058689131/ZIP6cf2c47780159bd03189ce22d76e695a13bfc3ee4888b090163655539aed1ee0 oraz release13058489698/ZIPfd9d122e0d3ddcf84650ff8b0ed9b388563f8d8fa0dd5e0a6922e04b3c77388d. Są to digests ZIPGitHub; nie pobrano zawartości potwierdzenia ani wewnętrznego digestu obrazu. Kolejny commit metadanych nie jest nowym wydaniem aplikacji lub promocją.

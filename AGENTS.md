@@ -60,3 +60,11 @@ Kontrakt promocji: [docs/RELEASE-PROCESS.md](docs/RELEASE-PROCESS.md).
 - Dalsza redakcja v25 dotyczy naturalnego polskiego sposobu wyjaśniania gry, a nie wyłącznie braku EN. Pierwszy podgląd `b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9` ma Pages41244467250 SUCCESS41s, ale CI41244467302 FAILURE: historyczny panel z trzema przyciskami wychodził poza ekran. Naprawa zawijania i regresja geometrii wymagają nowego odbioru. Marker `[preprod:0.10.1.0]` jest autoryzowany; bridge nadal wymaga dokładnego źródła, świeżego sukcesu CI i niezmienionego main. Nie umieszczaj markera przed potwierdzeniem zgodności zapisu (reguły/API) i nie przesuwaj main do potwierdzenia SHA rozpoczętej promocji.
 
 - Końcowa redakcja i naprawa v25: lokalnie898Node+141Python+18ChromiumPASS; ponowny odczyt112widoków, bez reszt EN. Panel trzech przycisków ma rzeczywisty test geometrii360×640 i negatywną kontrolę starego CSS. Właściciel potwierdził przygotowanie nowych prywatnych reguł — [dowód](docs/PREPROD-V25-PREPARATION.md). Nowe źródło i jego CI/PRE-PROD wymagają własnego potwierdzenia; bez resetu i PROD.
+
+- Końcowe źródło v25 `353faad347262dce7c3632fdf7c71be124384ab1` wysłano do main z autoryzowanym markerem. Własne Pages41246449682 SUCCESS31s, CI41246449612 w toku. Do potwierdzenia SHA rozpoczętego deployu nie przesuwaj main; nie traktuj wcześniejszego b1cd65 jako kandydata do promocji.
+
+- Odbiór finalnego353faad…: CI41246449612SUCCESS3m54s, Pages41246449682SUCCESS31s, tag `dev-0.10.1.0-20261031` opublikowany. PRE-PROD nadal wymaga własnego wyniku standardowego deployu; nie wnioskuj jego sukcesu z CI.
+
+- Aktualne potwierdzone PRE-PROD **0.10.1.0 /353faad347262dce7c3632fdf7c71be124384ab1**, bridge41246756848SUCCESS15s, deploy41246771480/próba1SUCCESS2m05s, źródłoweCI41246449612SUCCESS3m54s iPages41246449682SUCCESS31s. Właściciel potwierdził zgodne prywatne reguły przed publikacją; workflow odczytał istniejące konta/wyspy bez resetu. Starsze0.9.1.2 jest historią. NiepromowanoPROD, bez realnych operatorów i integracji fizycznej. Pełne statusy: docs/ENVIRONMENT-STATUS.md.
+
+- Tag `preprod-0.10.1.0-20261031` został opublikowany po sukcesie deployu i wskazuje353faad… . Wiąże własne CI/Pages/bridge/PRE-PROD i oba publiczne digestsZIP; to nie jest dowód pobrania wnętrza artefaktów ani wykonania resetu.

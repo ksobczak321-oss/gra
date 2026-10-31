@@ -1,6 +1,6 @@
 # Wersja gry HARBORLIGHT
 
-Numer nowego DEV wyświetlany w Ustawieniach: **0.10.1.0**. PRE-PROD pozostaje na **0.9.1.2**. Jedynym źródłem tej etykiety aplikacji jest `harborlight-version.js`. Wersja aplikacji jest odrębna od `state.version` (schemat świata), rewizji zapisu, generacji wyspy, wersji dokumentów prawnych i SHA wydania. Zmiana etykiety nie migruje ani nie zeruje świata.
+Numer nowego DEV wyświetlany w Ustawieniach: **0.10.1.0**. Ta sama wersja **0.10.1.0** została odebrana również na PRE-PROD. Jedynym źródłem tej etykiety aplikacji jest `harborlight-version.js`. Wersja aplikacji jest odrębna od `state.version` (schemat świata), rewizji zapisu, generacji wyspy, wersji dokumentów prawnych i SHA wydania. Zmiana etykiety nie migruje ani nie zeruje świata.
 
 Użytkownik wyznaczył pierwsze wydanie w Google Play jako **1.0.0.0**. Do tej promocji obecne zmiany są przedpremierowe. Nie nazywamy wysłania do GitHub/Pages publikacją sklepową.
 

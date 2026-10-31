@@ -12,11 +12,17 @@ Opisy wyjaśniają graczowi prostym językiem, co zrobić i po co. Przeredagowan
 | Importer kart w dry-run | 316 kart: 263 zmiany + 53 przypadki |
 | Ręczny odbiór właściciela | 53 NOT RUN; TC41 integracji fizycznej BLOCKED |
 
-Naprawę panelu potwierdza rzeczywista geometria przycisków przed kliknięciem z błędnego CI, także na360×640. Przywrócenie starego CSS ponownie daje błąd: panel1200px zamiast160px. Właściwy test używa zwykłych kliknięć, bez forceclick. Prowadzenie nie zmienia nagród, ID lub historii.
+Naprawę panelu potwierdza rzeczywista geometria przycisków przed kliknięciem z błędnego CI, także na 360×640. Przywrócenie starego CSS ponownie daje błąd: panel 1200 px zamiast 160 px. Właściwy test używa zwykłych kliknięć, bez forceclick. Prowadzenie nie zmienia nagród, ID lub historii.
 
 Po redakcji cały pakiet przetestowano ponownie. Starsze oczekiwania sformułowań w testach dopasowano do nowych komunikatów, zachowując sprawdzanie rzeczywistych działań, nagród i zapisów. Nie przenosimy wyników pierwszego pakietu na nowy.
 
-Końcowy commit oraz jego własne CI/Pages oczekują na potwierdzenie. Użytkownik zlecił następnie PRE-PROD. [Właściciel potwierdził przygotowanie zgodnych prywatnych reguł zapisu](PREPROD-V25-PREPARATION.md), bez resetu kont. Promocja ma użyć tego samego zielonego SHA standardowym workflow, bez PROD. Tag odbioru powstanie dopiero po własnych sukcesach.
+Końcowy kod `353faad347262dce7c3632fdf7c71be124384ab1` jest w `main`. [Pages41246449682](https://github.com/ksobczak321-oss/gra/actions/runs/41246449682) **SUCCESS, 31 s**; [CI41246449612](https://github.com/ksobczak321-oss/gra/actions/runs/41246449612) **SUCCESS, 3 min 54 s**. To własne przebiegi dalszej redakcji i naprawy, odrębne od nieudanego pierwszego kandydata.
+
+Pakiet: 54 pliki, 10 991 135 bajtów. SHA-256 archiwum `6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744`, manifestu `0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d`. Weryfikacja i ekstrakcja PASS; wszystkie 53 pliki treści identyczne z końcowym pakietem przeglądarkowym. Zerowy SHA preflight nie jest źródłem wydania.
+
+Użytkownik zlecił następnie PRE-PROD. [Właściciel potwierdził przygotowanie zgodnych prywatnych reguł zapisu](PREPROD-V25-PREPARATION.md), bez resetu kont. Promocja ma użyć tego samego zielonego SHA standardowym workflow, bez PROD. Nieprzesuwany adnotowany tag `dev-0.10.1.0-20261031` został opublikowany po obu sukcesach. [PRE-PROD41246771480/próba1](https://github.com/ksobczak321-oss/gra/actions/runs/41246771480) **SUCCESS, 2 min 05 s**, po [bridge41246756848 SUCCESS, 15 s](https://github.com/ksobczak321-oss/gra/actions/runs/41246756848). Źródło `353faad…` potwierdzono przed zmianą main. Kontrole hostingu i istniejących kont przeszły odczytowo; bez resetu lub PROD.
+
+Nieprzesuwany adnotowany tag `preprod-0.10.1.0-20261031` jest opublikowany i wskazuje sprawdzone źródło `353faad347262dce7c3632fdf7c71be124384ab1`.
 
 ## Historia pierwszego podglądu
 

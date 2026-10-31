@@ -2,15 +2,15 @@
 
 Aktualizacja: **31 października 2026**. Ten dokument jest głównym rejestrem tego, co rzeczywiście znajduje się na DEV, PRE-PROD i PROD. Historia czynności i wyników pozostaje w [dzienniku](IMPLEMENTATION-LOG.md), a warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-## DEV 0.10.1.0 / v25 — końcowa redakcja w przygotowaniu
+## DEV 0.10.1.0 / v25 — końcowa redakcja opublikowana w podglądzie
 
 Zakres: prowadzenie 25 lekcji przez rzeczywiste kliknięcia mapy, naturalny polski całej gry, wspólne okno ligi 19:00–21:00 i potwierdzone parametry archipelagu. Ostatnie doprecyzowanie dotyczy prostego, przyjaznego języka opisów: co gracz może zrobić i po co. Przeredagowano 12 krótkich i 12 pełnych opisów budynków oraz główne instrukcje. Cache końcowej poprawki: `frontend-v25-2`.
 
-Pierwszy podgląd: `b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9`; [Pages41244467250 SUCCESS, 41s](https://github.com/ksobczak321-oss/gra/actions/runs/41244467250), ale [CI41244467302 FAILURE, 2m48s](https://github.com/ksobczak321-oss/gra/actions/runs/41244467302). CI wykryło układ trzech przycisków historycznego samouczka wychodzący poza ekran. Nie tworzono tagu odbioru ani promocji tego kandydata. Naprawa zawijania i nowy test geometrii są gotowe. Końcowy pakiet przeszedł 898 Node + 141 Python + 18 zestawów Chromium, w tym ponowny odczyt112widoków. Wymaga nowego SHA i własnego CI. Wyników wcześniejszego pakietu nie przypisujemy nowej redakcji.
+Pierwszy podgląd: `b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9`; [Pages41244467250 SUCCESS, 41s](https://github.com/ksobczak321-oss/gra/actions/runs/41244467250), ale [CI41244467302 FAILURE, 2m48s](https://github.com/ksobczak321-oss/gra/actions/runs/41244467302). CI wykryło układ trzech przycisków historycznego samouczka wychodzący poza ekran. Nie tworzono tagu odbioru ani promocji tego kandydata. Naprawa zawijania i nowy test geometrii są gotowe. Końcowy pakiet przeszedł 898 Node + 141 Python + 18 zestawów Chromium, w tym ponowny odczyt 112 widoków. Końcowe źródło `353faad347262dce7c3632fdf7c71be124384ab1` jest w Git, z opublikowanym tagiem `dev-0.10.1.0-20261031`; [CI41246449612](https://github.com/ksobczak321-oss/gra/actions/runs/41246449612) SUCCESS, 3 min 54 s, [Pages41246449682](https://github.com/ksobczak321-oss/gra/actions/runs/41246449682) SUCCESS31s. Wyników wcześniejszego pakietu nie przypisujemy nowej redakcji.
 
-[Wymagania v25](FRONTEND-V25-REQUIREMENTS.md) · [Przegląd polszczyzny](POLISH-REVIEW-v25.md) · [Odbiór wydania](DEV-0.10.1.0-VALIDATION.md). Rejestr: 263 zmiany i 53 ręczne przypadki NOT RUN. Użytkownik autoryzował PRE-PROD po testach. Właściciel potwierdził już [przygotowanie zgodnych prywatnych reguł zapisu](PREPROD-V25-PREPARATION.md), zachowując konta i postęp. Flagi API nie odczytano niezależnie; promocja zachowuje dotychczasowy tryb. Bez resetu kont i PROD. Bieżące PRE-PROD nadal poniżej0.9.1.2.
+[Wymagania v25](FRONTEND-V25-REQUIREMENTS.md) · [Przegląd polszczyzny](POLISH-REVIEW-v25.md) · [Odbiór wydania](DEV-0.10.1.0-VALIDATION.md). Rejestr: 263 zmiany i 53 ręczne przypadki NOT RUN. Użytkownik autoryzował PRE-PROD po testach. Właściciel potwierdził już [przygotowanie zgodnych prywatnych reguł zapisu](PREPROD-V25-PREPARATION.md), zachowując konta i postęp. Flagi API nie odczytano niezależnie; promocja zachowuje dotychczasowy tryb. Bez resetu kont i PROD. Bieżące PRE-PROD ma już opisane niżej 0.10.1.0.
 
-## Ostatni odebrany DEV — 0.10.0.0 / v24, komplet PL
+## Poprzedni odebrany DEV — 0.10.0.0 / v24, komplet PL
 
 **Końcowe źródło: `1b3de32869c8164ed8d0b85df7ea743ca76a3719`.** [CI41238818669 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41238818669),5min15s; [Pages41238818743 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41238818743),24s. Nieprzesuwany adnotowany tag `dev-0.10.0.0-pl-20261031` wiąże źródło i dowody. [Podgląd DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v24-2) działa w pamięci, odrębnie od kont GCP. [Dokładny odbiór i hashe](DEV-0.10.0.0-VALIDATION.md).
 
@@ -24,7 +24,26 @@ Rejestr:256kart zmian,50ręcznych przypadków NOT RUN; [lista do odhaczania](tes
 
 Pierwszy odebrany kandydat tego zakresu:351baaf6b21386b2f2641875269e6f7d9c2d44fd, CI41237587670 SUCCESS (4m46s), Pages41237587641 SUCCESS (23s), niezmieniony tag dev-0.10.0.0-20261031. Zachowuje własne dowody; końcowe uzupełnienie PL powyżej ma odrębne źródło, CI i tag.
 
-## Aktualne PRE-PROD — 0.9.1.2, pilne
+## Aktualne PRE-PROD — 0.10.1.0 / v25
+
+Nieprzesuwany adnotowany tag `preprod-0.10.1.0-20261031` jest opublikowany i wskazuje sprawdzone źródło `353faad347262dce7c3632fdf7c71be124384ab1`.
+
+**Opublikowane i odebrane:** źródło **`353faad347262dce7c3632fdf7c71be124384ab1`**, [CI41246449612 SUCCESS, 3 min 54 s](https://github.com/ksobczak321-oss/gra/actions/runs/41246449612), [Pages41246449682 SUCCESS, 31 s](https://github.com/ksobczak321-oss/gra/actions/runs/41246449682), [bridge41246756848 SUCCESS, 15 s](https://github.com/ksobczak321-oss/gra/actions/runs/41246756848) i [promocja41246771480, próba1 — SUCCESS, 2 min 05 s](https://github.com/ksobczak321-oss/gra/actions/runs/41246771480). [Graj w PRE-PROD](https://harborlight-dev.web.app). Źródło rzeczywiście rozpoczętego deployu potwierdzono przed dalszą zmianą main.
+
+Wersja obejmuje wszystkie zmiany DEV do353faad, w tym archipelag, wspólne okno ligi, prowadzenie od mapy i przyjazną redakcję polskich opisów. Kontrole workflow przeszły: obraz API, sondy, dokładny manifest i publiczne pliki, rzeczywiste zalogowane renderowanie istniejącej wyspy oraz izolacja trzech kont. Były odczytowe, bez resetu, zastępowania wysp lub zmiany haseł. [Właściciel wcześniej potwierdził zgodne reguły zapisu](PREPROD-V25-PREPARATION.md).
+
+Lokalne archiwum tego samego SHA:54pliki /10 991 135bajtów, SHA-256 `6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744`, manifest `0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d`. Wszystkie53pliki treści zgodne z pakietem testowanym w Chromium. [Pełny odbiór](DEV-0.10.1.0-VALIDATION.md).
+
+| Artefakt próby 1 | ID GitHub | SHA-256 ZIP podany przez GitHub |
+|---|---|---|
+| `harborlight-dev-frontend-41246771480-1` | 13058689131 | `6cf2c47780159bd03189ce22d76e695a13bfc3ee4888b090163655539aed1ee0` |
+| `harborlight-dev-release-41246771480-1` | 13058489698 | `fd9d122e0d3ddcf84650ff8b0ed9b388563f8d8fa0dd5e0a6922e04b3c77388d` |
+
+Są to digests archiwów GitHub, odczytane z publicznej tabeli artefaktów, odrębne od hasha lokalnego TAR, manifestu aplikacji i obrazu backendu. Wewnętrznego ZIP nie pobrano.
+
+**Bez resetu kont i PROD.** Flagi API kont i wewnętrznego ZIP potwierdzenia nie odczytano niezależnie. Sukces publikacji kodu nie oznacza automatycznej aktywacji Google/Facebook, prawdziwego Paynow, reklam lub dobroczynności. Test hostingu blokuje zapisy, więc osobny TC31 zapis→ponowne wczytanie pozostaje ręczny NOT RUN.
+
+## Poprzednie PRE-PROD — 0.9.1.2, pilne
 
 **Opublikowane i odebrane:** źródło **`3be1f9d2094f1432acacbb782eed1665fd00e6e1`**, [CI 41233382228 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233382228), [Pages 41233382382 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233382382), [bridge 41233723831 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233723831), [PRE-PROD 41233737873, próba 1 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233737873), czas **2 min 10 s**. [Gra PRE-PROD](https://harborlight-dev.web.app). Tag priorytetu w rejestrze: **pilne**; nieprzesuwany [tag Git urgent-0.9.1.2-20261031](https://github.com/ksobczak321-oss/gra/tree/urgent-0.9.1.2-20261031) jest opublikowany i wskazuje ten sam kod.
 
@@ -117,7 +136,7 @@ Najnowsze GO użytkownika z 31 października 2026 upoważnia do rozpoczęcia od 
 
 Reset dotyczy stanu gry kont testowych, nie tożsamości Authentication: UID, loginy i hasła pozostają te same. Przygotowanie narzędzia lub jego test na fiksturze nie jest wykonaniem resetu w Google. Operacja nie obejmuje PROD ani innych użytkowników. Procedura i dowody odczytu po zapisie: [PREPROD-RESET.md](PREPROD-RESET.md).
 
-**Bieżący wynik operacji: promocja v22.1 ma SUCCESS; reset nadal niewykonany.** Kolejny etap wymaga oryginalnego ZIP potwierdzenia, odczytu konfiguracji/API oraz wykonania procedury w zalogowanej sesji właściciela GCP, z końcowym odczytem wszystkich trzech kont.
+**Bieżący wynik operacji: nowa promocja0.10.1.0 ma SUCCESS; reset nadal niewykonany i nie był częścią tej publikacji.** Kolejny etap wymaga oryginalnego ZIP potwierdzenia, odczytu konfiguracji/API oraz wykonania procedury w zalogowanej sesji właściciela GCP, z końcowym odczytem wszystkich trzech kont.
 
 ## Jak aktualizować rejestr
 

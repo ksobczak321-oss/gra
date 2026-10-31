@@ -78,7 +78,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0031 — Wybór języka PL/EN przy pierwszym wprowadzeniu i nazwie wyspy](changes/HL-CHG-0031.md) | Story | `accepted` | `verified` | `code_deployed_0_9_1_2` |
 | [HL-CHG-0032 — Pomoc: Wróć do tutoriala ponownie pokazuje objaśnienia gry](changes/HL-CHG-0032.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0034 — Nowe odmowy kolonizacji i rejsów są po polsku przy języku PL](changes/HL-CHG-0034.md) | Bug | `accepted_scope_bugfix` | `targeted_packaged_browser_pass` | `not_deployed` |
-| [HL-CHG-0038 — Naturalna i kompletna polszczyzna całej gry, także komunikatów dynamicznych](changes/HL-CHG-0038.md) | Story | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
+| [HL-CHG-0038 — Naturalna i kompletna polszczyzna całej gry, także komunikatów dynamicznych](changes/HL-CHG-0038.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_353faad` |
 
 <a id="hl-epic-tut"></a>
 
@@ -87,8 +87,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | Zmiana | Typ | Decyzja | DEV | PRE-PROD |
 |---|---|---|---|---|
 | [HL-CHG-0033 — Pomoc: Wróć do samouczka wznawia praktyczne lekcje](changes/HL-CHG-0033.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
-| [HL-CHG-0036 — Samouczek najpierw wskazuje budynek na mapie i czeka na kliknięcie gracza](changes/HL-CHG-0036.md) | Story | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
-| [HL-CHG-0037 — Naturalny i poprawny polski w tytułach i instrukcjach 25 lekcji](changes/HL-CHG-0037.md) | Story | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
+| [HL-CHG-0036 — Samouczek najpierw wskazuje budynek na mapie i czeka na kliknięcie gracza](changes/HL-CHG-0036.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_353faad` |
+| [HL-CHG-0037 — Naturalny i poprawny polski w tytułach i instrukcjach 25 lekcji](changes/HL-CHG-0037.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_353faad` |
 | [HL-CHG-0040 — 25 lekcji wymaga rzeczywistych działań zamiast odczytania opisu](changes/HL-CHG-0040.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0041 — Migracja zachowuje stare ukończenia i odebrane nagrody](changes/HL-CHG-0041.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0042 — Przepełnienie blokuje następne skrzynie, pozostawiając działania zużywające zasoby](changes/HL-CHG-0042.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
@@ -99,7 +99,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0047 — Odtwarzanie wcześniejszych czynności ze starych wiarygodnych dowodów](changes/HL-CHG-0047.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0048 — Trwająca minigra ma pierwszeństwo przed samouczkiem i skrzynią](changes/HL-CHG-0048.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0049 — Starszy program skrzyń i podwajania zachowuje rozliczone decyzje](changes/HL-CHG-0049.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
-| [HL-CHG-0933 — Podpowiedź z trzema przyciskami zachowuje czytelny opis i mieści się na ekranie](changes/HL-CHG-0933.md) | Bug | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
+| [HL-CHG-0933 — Podpowiedź z trzema przyciskami zachowuje czytelny opis i mieści się na ekranie](changes/HL-CHG-0933.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_353faad` |
 
 <a id="hl-epic-eco"></a>
 
@@ -173,7 +173,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 
 | Zmiana | Typ | Decyzja | DEV | PRE-PROD |
 |---|---|---|---|---|
-| [HL-CHG-0039 — Kupno czasu potwierdza dodane sekundy zamiast nadpisywać sukces opisem wyceny](changes/HL-CHG-0039.md) | Bug | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
+| [HL-CHG-0039 — Kupno czasu potwierdza dodane sekundy zamiast nadpisywać sukces opisem wyceny](changes/HL-CHG-0039.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_353faad` |
 | [HL-CHG-0301 — Wybór kulek lub trójek zamiast nieczytelnych serii losowania](changes/HL-CHG-0301.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0302 — Przycisk reklamy w obu minigrach](changes/HL-CHG-0302.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0303 — Dawny niezdefiniowany bonus przycisku reklamy zastąpiony konkretnym czasem](changes/HL-CHG-0303.md) | Decision | `superseded` | `not_applicable` | `not_applicable` |
@@ -282,7 +282,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0622 — Cloud Run: minimum 0, maksimum 2 instancje i współbieżność 20](changes/HL-CHG-0622.md) | Ops | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0623 — Automatyczna promocja wyłącznie autoryzowanej pilnej wersji 0.9.1.2 po CI](changes/HL-CHG-0623.md) | Ops | `accepted` | `verified` | `dispatch_and_deploy_success` |
 | [HL-CHG-0624 — Ścisła kontrola gotowości manifestu po publikacji Hostingu](changes/HL-CHG-0624.md) | Ops | `accepted` | `verified` | `code_deployed_0_9_1_2` |
-| [HL-CHG-0934 — Jawna promocja 0.10.1.0 po zielonym CI, bez resetu kont](changes/HL-CHG-0934.md) | Ops | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
+| [HL-CHG-0934 — Jawna promocja 0.10.1.0 po zielonym CI, bez resetu kont](changes/HL-CHG-0934.md) | Ops | `accepted` | `verified_own_ci_and_pages` | `deployed_source_353faad` |
 
 <a id="hl-epic-ops"></a>
 
@@ -377,7 +377,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0929 — Projekt planszy, kart i pionków do wydruku](changes/HL-CHG-0929.md) | Story | `accepted` | `print_artifacts_and_phone_verified` | `not_applicable_print_artifact` |
 | [HL-CHG-0930 — Pudełko, opakowanie, instrukcja i kody QR planszówki](changes/HL-CHG-0930.md) | Story | `accepted` | `print_artifacts_and_phone_verified` | `not_applicable_print_artifact` |
 | [HL-CHG-0931 — Osobny czat sojuszu i prywatne rozmowy jeden na jeden](changes/HL-CHG-0931.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
-| [HL-CHG-0932 — Oba zadania ligi mają wspólne okno 19:00–21:00 Warszawy](changes/HL-CHG-0932.md) | Story | `accepted` | `local_full_suite_and_packaged_browsers_pass` | `not_deployed` |
+| [HL-CHG-0932 — Oba zadania ligi mają wspólne okno 19:00–21:00 Warszawy](changes/HL-CHG-0932.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_353faad` |
 
 ## Utrzymanie
 

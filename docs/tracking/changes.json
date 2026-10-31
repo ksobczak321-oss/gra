@@ -1807,9 +1807,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_full_suite_and_packaged_browsers_pass",
-        "ci": "pending_new_source",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_353faad",
+        "preprod": "deployed_source_353faad",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -1843,13 +1843,13 @@
           "tests/harborlight-tutorial-v21-smoke.py",
           "tests/harborlight-tutorial-v18-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
-        "preprod_run_url": null,
+        "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246449612",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246771480",
         "manual_execution": "NOT_RUN",
-        "release_note": "Samouczek wskazuje rzeczywisty budynek na mapie, czeka na kliknięcie gracza i dopiero potem prowadzi do widocznej czynności. Nowy test mapy ma 5 wariantów PASS; regresje priorytetów 4, kursu zrównoważonego 3 i historycznego 3 również przeszły. Zachowano ID, warunki, nagrody i historię; samo oglądanie nie zalicza lekcji.\n\nHistoryczny podgląd b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9 miał lokalnie 897 Node, 141 Python i 18 zestawów Chromium PASS. Pages 41244467250 zakończyło się SUCCESS (41 s), natomiast własne CI 41244467302 zakończyło się FAIL: historyczna podpowiedź z trzema przyciskami miała niepoprawną geometrię. Te dowody nie potwierdzają późniejszej poprawki układu ani dalszej redakcji polskich opisów. Nowy lokalny odbiór po późniejszych poprawkach opisano poniżej; nowe źródło, CI i promocja oczekują na potwierdzenie. Nie wykonano resetu kont ani promocji PROD.\n\nPóźniejsze GO użytkownika upoważnia do PRE-PROD po zielonym CI dokładnego nowego SHA i odbiorze wdrożenia, z zachowaniem kont i historii. Samo upoważnienie nie jest dowodem publikacji.\n\nKońcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41244467250",
-        "pages_status": "success_previous_preview",
+        "release_note": "Samouczek wskazuje rzeczywisty budynek na mapie, czeka na kliknięcie gracza i dopiero potem prowadzi do widocznej czynności. Nowy test mapy ma 5 wariantów PASS; regresje priorytetów 4, kursu zrównoważonego 3 i historycznego 3 również przeszły. Zachowano ID, warunki, nagrody i historię; samo oglądanie nie zalicza lekcji.\n\nHistoryczny podgląd b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9 miał lokalnie 897 Node, 141 Python i 18 zestawów Chromium PASS. Pages 41244467250 zakończyło się SUCCESS (41 s), natomiast własne CI 41244467302 zakończyło się FAIL: historyczna podpowiedź z trzema przyciskami miała niepoprawną geometrię. Te dowody nie potwierdzają późniejszej poprawki układu ani dalszej redakcji polskich opisów. Nowy lokalny odbiór po późniejszych poprawkach opisano poniżej; nowe źródło, CI i promocja oczekują na potwierdzenie. Nie wykonano resetu kont ani promocji PROD.\n\nPóźniejsze GO użytkownika upoważnia do PRE-PROD po zielonym CI dokładnego nowego SHA i odbiorze wdrożenia, z zachowaniem kont i historii. Samo upoważnienie nie jest dowodem publikacji.\n\nKońcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.\n\nKońcowe źródło aplikacji 353faad347262dce7c3632fdf7c71be124384ab1 zostało wysłane do main. Własne CI 41246449612 zakończyło się SUCCESS (3 min 54 s), a Pages 41246449682 — SUCCESS (31 s) dla tego samego źródła. DEV jest odebrany; promocja PRE-PROD nadal oczekuje na osobne potwierdzenie. Znacznik [preprod:0.10.1.0] zleca bridge po zielonym CI tego samego źródła. Ostateczny pakiet ma 54 pliki z manifestem, 10 991 135 bajtów; 53 pliki treści są zgodne ze sprawdzonym pakietem. SHA-256 archiwum: 6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744; manifestu: 0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d. To dowód przygotowania i synchronizacji kodu, nie wykonania wdrożenia ani resetu.\n\nPotwierdzono osobno sukces CI i Pages końcowego źródła 353faad347262dce7c3632fdf7c71be124384ab1. Ten odbiór DEV nie jest potwierdzeniem konfiguracji API, wdrożenia GCP, autosave na prawdziwym koncie ani resetu. Wyniki ręczne pozostają NOT RUN.\n\nPRE-PROD potwierdzone: google-cloud-dev.yml 41246771480, próba 1, SUCCESS (2 min 05 s), źródło 353faad347262dce7c3632fdf7c71be124384ab1. Bridge 41246756848 zakończył się SUCCESS (15 s). Gra: https://harborlight-dev.web.app. DEV tag dev-0.10.1.0-20261031 jest opublikowany. To dowód wdrożenia kodu tego samego źródła; nie oznacza ręcznego PASS przypadków, niezależnego odczytu ZIP receipt, odczytu flagi API ani potwierdzenia autosave po grze. Nie resetowano kont i nie promowano PROD. Wszystkie 53 ręczne scenariusze nadal NOT RUN.",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246449682",
+        "pages_status": "success",
         "previous_preview": {
           "source_sha": "b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9",
           "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41244467302",
@@ -1869,8 +1869,37 @@
           "execution_error": null,
           "panel_report_mtime": 1793484066.0457401,
           "legacy_v18_variants": 4,
-          "source_commit_pending": true
-        }
+          "source_commit_pending": false,
+          "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1"
+        },
+        "bundle": {
+          "files_with_manifest": 54,
+          "content_files": 53,
+          "bytes_with_manifest": 10991135,
+          "archive_sha256": "6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744",
+          "manifest_sha256": "0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d",
+          "tested_content_identical": true
+        },
+        "ci_status": "success",
+        "ci_duration_seconds": 234,
+        "pages_duration_seconds": 31,
+        "preprod_deployment": {
+          "workflow": "google-cloud-dev.yml",
+          "run_id": 41246771480,
+          "attempt": 1,
+          "status": "success",
+          "duration_seconds": 125,
+          "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1",
+          "frontend_url": "https://harborlight-dev.web.app",
+          "bridge_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246756848",
+          "bridge_status": "success",
+          "bridge_duration_seconds": 15,
+          "receipt_zip_independently_read": false,
+          "account_api_activation_independently_confirmed": false,
+          "account_reset_performed": false
+        },
+        "dev_tag": "dev-0.10.1.0-20261031",
+        "dev_tag_push_confirmed": true
       },
       "notes": [
         "Statyczny wariant przy ograniczeniu ruchu jest sposobem zapewnienia dostępności, nie nową decyzją o mechanice."
@@ -1891,9 +1920,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_full_suite_and_packaged_browsers_pass",
-        "ci": "pending_new_source",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_353faad",
+        "preprod": "deployed_source_353faad",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -1921,13 +1950,13 @@
           "harborlight-v1-v16-copy.js"
         ],
         "automated_tests": [],
-        "source_sha": null,
-        "ci_run_url": null,
-        "preprod_run_url": null,
+        "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246449612",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246771480",
         "manual_execution": "NOT_RUN",
-        "release_note": "Poprawiono polskie tytuły i opisy 25 bieżących oraz 25 historycznych lekcji. Porównanie eksportowanych danych zachowuje ID, kolejność, warunki, nagrody, trasy i selektory. Nawigacja zaczyna się od mapy, nazwy odpowiadają rzeczywistym kontrolkom. Ręczna ocena wszystkich lekcji nadal oczekuje na wykonanie.\n\nHistoryczny podgląd b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9 miał lokalnie 897 Node, 141 Python i 18 zestawów Chromium PASS. Pages 41244467250 zakończyło się SUCCESS (41 s), natomiast własne CI 41244467302 zakończyło się FAIL: historyczna podpowiedź z trzema przyciskami miała niepoprawną geometrię. Te dowody nie potwierdzają późniejszej poprawki układu ani dalszej redakcji polskich opisów. Nowy lokalny odbiór po późniejszych poprawkach opisano poniżej; nowe źródło, CI i promocja oczekują na potwierdzenie. Nie wykonano resetu kont ani promocji PROD.\n\nPóźniejsze GO użytkownika upoważnia do PRE-PROD po zielonym CI dokładnego nowego SHA i odbiorze wdrożenia, z zachowaniem kont i historii. Samo upoważnienie nie jest dowodem publikacji.\n\nKońcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41244467250",
-        "pages_status": "success_previous_preview",
+        "release_note": "Poprawiono polskie tytuły i opisy 25 bieżących oraz 25 historycznych lekcji. Porównanie eksportowanych danych zachowuje ID, kolejność, warunki, nagrody, trasy i selektory. Nawigacja zaczyna się od mapy, nazwy odpowiadają rzeczywistym kontrolkom. Ręczna ocena wszystkich lekcji nadal oczekuje na wykonanie.\n\nHistoryczny podgląd b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9 miał lokalnie 897 Node, 141 Python i 18 zestawów Chromium PASS. Pages 41244467250 zakończyło się SUCCESS (41 s), natomiast własne CI 41244467302 zakończyło się FAIL: historyczna podpowiedź z trzema przyciskami miała niepoprawną geometrię. Te dowody nie potwierdzają późniejszej poprawki układu ani dalszej redakcji polskich opisów. Nowy lokalny odbiór po późniejszych poprawkach opisano poniżej; nowe źródło, CI i promocja oczekują na potwierdzenie. Nie wykonano resetu kont ani promocji PROD.\n\nPóźniejsze GO użytkownika upoważnia do PRE-PROD po zielonym CI dokładnego nowego SHA i odbiorze wdrożenia, z zachowaniem kont i historii. Samo upoważnienie nie jest dowodem publikacji.\n\nKońcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.\n\nKońcowe źródło aplikacji 353faad347262dce7c3632fdf7c71be124384ab1 zostało wysłane do main. Własne CI 41246449612 zakończyło się SUCCESS (3 min 54 s), a Pages 41246449682 — SUCCESS (31 s) dla tego samego źródła. DEV jest odebrany; promocja PRE-PROD nadal oczekuje na osobne potwierdzenie. Znacznik [preprod:0.10.1.0] zleca bridge po zielonym CI tego samego źródła. Ostateczny pakiet ma 54 pliki z manifestem, 10 991 135 bajtów; 53 pliki treści są zgodne ze sprawdzonym pakietem. SHA-256 archiwum: 6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744; manifestu: 0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d. To dowód przygotowania i synchronizacji kodu, nie wykonania wdrożenia ani resetu.\n\nPotwierdzono osobno sukces CI i Pages końcowego źródła 353faad347262dce7c3632fdf7c71be124384ab1. Ten odbiór DEV nie jest potwierdzeniem konfiguracji API, wdrożenia GCP, autosave na prawdziwym koncie ani resetu. Wyniki ręczne pozostają NOT RUN.\n\nPRE-PROD potwierdzone: google-cloud-dev.yml 41246771480, próba 1, SUCCESS (2 min 05 s), źródło 353faad347262dce7c3632fdf7c71be124384ab1. Bridge 41246756848 zakończył się SUCCESS (15 s). Gra: https://harborlight-dev.web.app. DEV tag dev-0.10.1.0-20261031 jest opublikowany. To dowód wdrożenia kodu tego samego źródła; nie oznacza ręcznego PASS przypadków, niezależnego odczytu ZIP receipt, odczytu flagi API ani potwierdzenia autosave po grze. Nie resetowano kont i nie promowano PROD. Wszystkie 53 ręczne scenariusze nadal NOT RUN.",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246449682",
+        "pages_status": "success",
         "previous_preview": {
           "source_sha": "b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9",
           "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41244467302",
@@ -1947,8 +1976,37 @@
           "execution_error": null,
           "panel_report_mtime": 1793484066.0457401,
           "legacy_v18_variants": 4,
-          "source_commit_pending": true
-        }
+          "source_commit_pending": false,
+          "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1"
+        },
+        "bundle": {
+          "files_with_manifest": 54,
+          "content_files": 53,
+          "bytes_with_manifest": 10991135,
+          "archive_sha256": "6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744",
+          "manifest_sha256": "0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d",
+          "tested_content_identical": true
+        },
+        "ci_status": "success",
+        "ci_duration_seconds": 234,
+        "pages_duration_seconds": 31,
+        "preprod_deployment": {
+          "workflow": "google-cloud-dev.yml",
+          "run_id": 41246771480,
+          "attempt": 1,
+          "status": "success",
+          "duration_seconds": 125,
+          "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1",
+          "frontend_url": "https://harborlight-dev.web.app",
+          "bridge_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246756848",
+          "bridge_status": "success",
+          "bridge_duration_seconds": 15,
+          "receipt_zip_independently_read": false,
+          "account_api_activation_independently_confirmed": false,
+          "account_reset_performed": false
+        },
+        "dev_tag": "dev-0.10.1.0-20261031",
+        "dev_tag_push_confirmed": true
       },
       "notes": []
     },
@@ -1967,9 +2025,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_full_suite_and_packaged_browsers_pass",
-        "ci": "pending_new_source",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_353faad",
+        "preprod": "deployed_source_353faad",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -2010,13 +2068,13 @@
           "tests/harborlight-world-events-v18.test.mjs",
           "tests/harborlight-effects-v8.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
-        "preprod_run_url": null,
+        "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246449612",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246771480",
         "manual_execution": "NOT_RUN",
-        "release_note": "Przejrzano całą grę: interfejs, budynki, modele rozgrywki, logowanie i chmurę, oprowadzanie, społeczność, ligę oraz Pomagam. Kierunkowy zestaw i18n/tekstów ma 25 PASS; skan 313 pełnych zdań z 9 modeli nie wykrył reszt w swoim zakresie. Końcowy rzeczywisty odczyt 112 widoków (56 komputer + 56 telefon), wraz z treścią i ARIA: PASS, 0 wykrytych angielskich elementów, execution_error:null. Nie zmieniono monet ani własnych nazw. Historia zapisanych powiadomień i treści użytkowników nie została przepisana; ręczny przegląd całej gry nadal NOT RUN.\n\nHistoryczny podgląd b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9 miał lokalnie 897 Node, 141 Python i 18 zestawów Chromium PASS. Pages 41244467250 zakończyło się SUCCESS (41 s), natomiast własne CI 41244467302 zakończyło się FAIL: historyczna podpowiedź z trzema przyciskami miała niepoprawną geometrię. Te dowody nie potwierdzają późniejszej poprawki układu ani dalszej redakcji polskich opisów. Nowy lokalny odbiór po późniejszych poprawkach opisano poniżej; nowe źródło, CI i promocja oczekują na potwierdzenie. Nie wykonano resetu kont ani promocji PROD.\n\nPóźniejsze GO użytkownika upoważnia do PRE-PROD po zielonym CI dokładnego nowego SHA i odbiorze wdrożenia, z zachowaniem kont i historii. Samo upoważnienie nie jest dowodem publikacji.\n\nPo doprecyzowaniu użytkownika wykonano dalszą redakcję stylu: 12 krótkich opisów i 12 pełnych opisów budynków oraz główne instrukcje opisują działanie i jego cel wprost. Zachowano liczby, warunki, źródła EN i etykiety przycisków. Kierunkowe testy po tej redakcji: 25/25 PASS; ponowny pełny odbiór nowego pakietu zakończył się sukcesem lokalnym, jak opisano poniżej.\n\nKońcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41244467250",
-        "pages_status": "success_previous_preview",
+        "release_note": "Przejrzano całą grę: interfejs, budynki, modele rozgrywki, logowanie i chmurę, oprowadzanie, społeczność, ligę oraz Pomagam. Kierunkowy zestaw i18n/tekstów ma 25 PASS; skan 313 pełnych zdań z 9 modeli nie wykrył reszt w swoim zakresie. Końcowy rzeczywisty odczyt 112 widoków (56 komputer + 56 telefon), wraz z treścią i ARIA: PASS, 0 wykrytych angielskich elementów, execution_error:null. Nie zmieniono monet ani własnych nazw. Historia zapisanych powiadomień i treści użytkowników nie została przepisana; ręczny przegląd całej gry nadal NOT RUN.\n\nHistoryczny podgląd b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9 miał lokalnie 897 Node, 141 Python i 18 zestawów Chromium PASS. Pages 41244467250 zakończyło się SUCCESS (41 s), natomiast własne CI 41244467302 zakończyło się FAIL: historyczna podpowiedź z trzema przyciskami miała niepoprawną geometrię. Te dowody nie potwierdzają późniejszej poprawki układu ani dalszej redakcji polskich opisów. Nowy lokalny odbiór po późniejszych poprawkach opisano poniżej; nowe źródło, CI i promocja oczekują na potwierdzenie. Nie wykonano resetu kont ani promocji PROD.\n\nPóźniejsze GO użytkownika upoważnia do PRE-PROD po zielonym CI dokładnego nowego SHA i odbiorze wdrożenia, z zachowaniem kont i historii. Samo upoważnienie nie jest dowodem publikacji.\n\nPo doprecyzowaniu użytkownika wykonano dalszą redakcję stylu: 12 krótkich opisów i 12 pełnych opisów budynków oraz główne instrukcje opisują działanie i jego cel wprost. Zachowano liczby, warunki, źródła EN i etykiety przycisków. Kierunkowe testy po tej redakcji: 25/25 PASS; ponowny pełny odbiór nowego pakietu zakończył się sukcesem lokalnym, jak opisano poniżej.\n\nKońcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.\n\nKońcowe źródło aplikacji 353faad347262dce7c3632fdf7c71be124384ab1 zostało wysłane do main. Własne CI 41246449612 zakończyło się SUCCESS (3 min 54 s), a Pages 41246449682 — SUCCESS (31 s) dla tego samego źródła. DEV jest odebrany; promocja PRE-PROD nadal oczekuje na osobne potwierdzenie. Znacznik [preprod:0.10.1.0] zleca bridge po zielonym CI tego samego źródła. Ostateczny pakiet ma 54 pliki z manifestem, 10 991 135 bajtów; 53 pliki treści są zgodne ze sprawdzonym pakietem. SHA-256 archiwum: 6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744; manifestu: 0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d. To dowód przygotowania i synchronizacji kodu, nie wykonania wdrożenia ani resetu.\n\nPotwierdzono osobno sukces CI i Pages końcowego źródła 353faad347262dce7c3632fdf7c71be124384ab1. Ten odbiór DEV nie jest potwierdzeniem konfiguracji API, wdrożenia GCP, autosave na prawdziwym koncie ani resetu. Wyniki ręczne pozostają NOT RUN.\n\nPRE-PROD potwierdzone: google-cloud-dev.yml 41246771480, próba 1, SUCCESS (2 min 05 s), źródło 353faad347262dce7c3632fdf7c71be124384ab1. Bridge 41246756848 zakończył się SUCCESS (15 s). Gra: https://harborlight-dev.web.app. DEV tag dev-0.10.1.0-20261031 jest opublikowany. To dowód wdrożenia kodu tego samego źródła; nie oznacza ręcznego PASS przypadków, niezależnego odczytu ZIP receipt, odczytu flagi API ani potwierdzenia autosave po grze. Nie resetowano kont i nie promowano PROD. Wszystkie 53 ręczne scenariusze nadal NOT RUN.",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246449682",
+        "pages_status": "success",
         "previous_preview": {
           "source_sha": "b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9",
           "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41244467302",
@@ -2036,8 +2094,37 @@
           "execution_error": null,
           "panel_report_mtime": 1793484066.0457401,
           "legacy_v18_variants": 4,
-          "source_commit_pending": true
-        }
+          "source_commit_pending": false,
+          "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1"
+        },
+        "bundle": {
+          "files_with_manifest": 54,
+          "content_files": 53,
+          "bytes_with_manifest": 10991135,
+          "archive_sha256": "6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744",
+          "manifest_sha256": "0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d",
+          "tested_content_identical": true
+        },
+        "ci_status": "success",
+        "ci_duration_seconds": 234,
+        "pages_duration_seconds": 31,
+        "preprod_deployment": {
+          "workflow": "google-cloud-dev.yml",
+          "run_id": 41246771480,
+          "attempt": 1,
+          "status": "success",
+          "duration_seconds": 125,
+          "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1",
+          "frontend_url": "https://harborlight-dev.web.app",
+          "bridge_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246756848",
+          "bridge_status": "success",
+          "bridge_duration_seconds": 15,
+          "receipt_zip_independently_read": false,
+          "account_api_activation_independently_confirmed": false,
+          "account_reset_performed": false
+        },
+        "dev_tag": "dev-0.10.1.0-20261031",
+        "dev_tag_push_confirmed": true
       },
       "notes": [
         "Wcześniejsze diagnostyczne ekrany wykryły mieszane zdania, liczbę z NBSP, nagłówek kolejki, rozwinięty opis tragarza/roster, wycenę, ARIA kwoty i tłumaczenie własnej nazwy opcji transportu. Poprawki sprawdzono ponownie na końcowym pakiecie; wcześniejszy sam odczyt ekranów nie był PASS języka.",
@@ -2060,9 +2147,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_full_suite_and_packaged_browsers_pass",
-        "ci": "pending_new_source",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_353faad",
+        "preprod": "deployed_source_353faad",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -2092,13 +2179,13 @@
           "tests/harborlight-polish-copy-v25.test.mjs",
           "tests/harborlight-v18-activities.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
-        "preprod_run_url": null,
+        "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246449612",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246771480",
         "manual_execution": "NOT_RUN",
-        "release_note": "Poprawiono kolejność składania wyniku kupna czasu: komunikat potwierdza faktycznie dodane sekundy i pobrane monety, zamiast opisu wyceny. Jednowierszowa poprawka nie zmienia kosztu, czasu, limitów ani rzeczywistego obciążenia. Testy akcji i języka oraz pełne regresje przeszły; ręczne TC16 i TC53 nadal NOT RUN.\n\nHistoryczny podgląd b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9 miał lokalnie 897 Node, 141 Python i 18 zestawów Chromium PASS. Pages 41244467250 zakończyło się SUCCESS (41 s), natomiast własne CI 41244467302 zakończyło się FAIL: historyczna podpowiedź z trzema przyciskami miała niepoprawną geometrię. Te dowody nie potwierdzają późniejszej poprawki układu ani dalszej redakcji polskich opisów. Nowy lokalny odbiór po późniejszych poprawkach opisano poniżej; nowe źródło, CI i promocja oczekują na potwierdzenie. Nie wykonano resetu kont ani promocji PROD.\n\nPóźniejsze GO użytkownika upoważnia do PRE-PROD po zielonym CI dokładnego nowego SHA i odbiorze wdrożenia, z zachowaniem kont i historii. Samo upoważnienie nie jest dowodem publikacji.\n\nKońcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41244467250",
-        "pages_status": "success_previous_preview",
+        "release_note": "Poprawiono kolejność składania wyniku kupna czasu: komunikat potwierdza faktycznie dodane sekundy i pobrane monety, zamiast opisu wyceny. Jednowierszowa poprawka nie zmienia kosztu, czasu, limitów ani rzeczywistego obciążenia. Testy akcji i języka oraz pełne regresje przeszły; ręczne TC16 i TC53 nadal NOT RUN.\n\nHistoryczny podgląd b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9 miał lokalnie 897 Node, 141 Python i 18 zestawów Chromium PASS. Pages 41244467250 zakończyło się SUCCESS (41 s), natomiast własne CI 41244467302 zakończyło się FAIL: historyczna podpowiedź z trzema przyciskami miała niepoprawną geometrię. Te dowody nie potwierdzają późniejszej poprawki układu ani dalszej redakcji polskich opisów. Nowy lokalny odbiór po późniejszych poprawkach opisano poniżej; nowe źródło, CI i promocja oczekują na potwierdzenie. Nie wykonano resetu kont ani promocji PROD.\n\nPóźniejsze GO użytkownika upoważnia do PRE-PROD po zielonym CI dokładnego nowego SHA i odbiorze wdrożenia, z zachowaniem kont i historii. Samo upoważnienie nie jest dowodem publikacji.\n\nKońcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.\n\nKońcowe źródło aplikacji 353faad347262dce7c3632fdf7c71be124384ab1 zostało wysłane do main. Własne CI 41246449612 zakończyło się SUCCESS (3 min 54 s), a Pages 41246449682 — SUCCESS (31 s) dla tego samego źródła. DEV jest odebrany; promocja PRE-PROD nadal oczekuje na osobne potwierdzenie. Znacznik [preprod:0.10.1.0] zleca bridge po zielonym CI tego samego źródła. Ostateczny pakiet ma 54 pliki z manifestem, 10 991 135 bajtów; 53 pliki treści są zgodne ze sprawdzonym pakietem. SHA-256 archiwum: 6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744; manifestu: 0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d. To dowód przygotowania i synchronizacji kodu, nie wykonania wdrożenia ani resetu.\n\nPotwierdzono osobno sukces CI i Pages końcowego źródła 353faad347262dce7c3632fdf7c71be124384ab1. Ten odbiór DEV nie jest potwierdzeniem konfiguracji API, wdrożenia GCP, autosave na prawdziwym koncie ani resetu. Wyniki ręczne pozostają NOT RUN.\n\nPRE-PROD potwierdzone: google-cloud-dev.yml 41246771480, próba 1, SUCCESS (2 min 05 s), źródło 353faad347262dce7c3632fdf7c71be124384ab1. Bridge 41246756848 zakończył się SUCCESS (15 s). Gra: https://harborlight-dev.web.app. DEV tag dev-0.10.1.0-20261031 jest opublikowany. To dowód wdrożenia kodu tego samego źródła; nie oznacza ręcznego PASS przypadków, niezależnego odczytu ZIP receipt, odczytu flagi API ani potwierdzenia autosave po grze. Nie resetowano kont i nie promowano PROD. Wszystkie 53 ręczne scenariusze nadal NOT RUN.",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246449682",
+        "pages_status": "success",
         "previous_preview": {
           "source_sha": "b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9",
           "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41244467302",
@@ -2118,8 +2205,37 @@
           "execution_error": null,
           "panel_report_mtime": 1793484066.0457401,
           "legacy_v18_variants": 4,
-          "source_commit_pending": true
-        }
+          "source_commit_pending": false,
+          "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1"
+        },
+        "bundle": {
+          "files_with_manifest": 54,
+          "content_files": 53,
+          "bytes_with_manifest": 10991135,
+          "archive_sha256": "6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744",
+          "manifest_sha256": "0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d",
+          "tested_content_identical": true
+        },
+        "ci_status": "success",
+        "ci_duration_seconds": 234,
+        "pages_duration_seconds": 31,
+        "preprod_deployment": {
+          "workflow": "google-cloud-dev.yml",
+          "run_id": 41246771480,
+          "attempt": 1,
+          "status": "success",
+          "duration_seconds": 125,
+          "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1",
+          "frontend_url": "https://harborlight-dev.web.app",
+          "bridge_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246756848",
+          "bridge_status": "success",
+          "bridge_duration_seconds": 15,
+          "receipt_zip_independently_read": false,
+          "account_api_activation_independently_confirmed": false,
+          "account_reset_performed": false
+        },
+        "dev_tag": "dev-0.10.1.0-20261031",
+        "dev_tag_push_confirmed": true
       },
       "notes": []
     },
@@ -13760,9 +13876,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_full_suite_and_packaged_browsers_pass",
-        "ci": "pending_new_source",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_353faad",
+        "preprod": "deployed_source_353faad",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -13812,13 +13928,13 @@
           "backend/test/legal-acceptance.test.mjs",
           "tests/harborlight-v18-auth-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
-        "preprod_run_url": null,
+        "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246449612",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246771480",
         "manual_execution": "NOT_RUN",
-        "release_note": "Oba rodzaje zadania ligi działają w tym samym oknie 19:00–21:00 Europe/Warsaw; gracz wybiera kolejność. Testy sprawdzają oba rodzaje o 19:00/20:00, odmowę poza oknem, czas letni/zimowy i granicę zamknięcia. Zachowano po dwie próby, średnią obu wyników i 0 za brak zadania. Dokumenty draft4, klient i serwer są zgodne; stare potwierdzenia draft2/draft3 nie omijają aktualnej wersji dla nowego świata, a ich historia pozostaje.\n\nHistoryczny podgląd b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9 miał lokalnie 897 Node, 141 Python i 18 zestawów Chromium PASS. Pages 41244467250 zakończyło się SUCCESS (41 s), natomiast własne CI 41244467302 zakończyło się FAIL: historyczna podpowiedź z trzema przyciskami miała niepoprawną geometrię. Te dowody nie potwierdzają późniejszej poprawki układu ani dalszej redakcji polskich opisów. Nowy lokalny odbiór po późniejszych poprawkach opisano poniżej; nowe źródło, CI i promocja oczekują na potwierdzenie. Nie wykonano resetu kont ani promocji PROD.\n\nPóźniejsze GO użytkownika upoważnia do PRE-PROD po zielonym CI dokładnego nowego SHA i odbiorze wdrożenia, z zachowaniem kont i historii. Samo upoważnienie nie jest dowodem publikacji.\n\nKońcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41244467250",
-        "pages_status": "success_previous_preview",
+        "release_note": "Oba rodzaje zadania ligi działają w tym samym oknie 19:00–21:00 Europe/Warsaw; gracz wybiera kolejność. Testy sprawdzają oba rodzaje o 19:00/20:00, odmowę poza oknem, czas letni/zimowy i granicę zamknięcia. Zachowano po dwie próby, średnią obu wyników i 0 za brak zadania. Dokumenty draft4, klient i serwer są zgodne; stare potwierdzenia draft2/draft3 nie omijają aktualnej wersji dla nowego świata, a ich historia pozostaje.\n\nHistoryczny podgląd b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9 miał lokalnie 897 Node, 141 Python i 18 zestawów Chromium PASS. Pages 41244467250 zakończyło się SUCCESS (41 s), natomiast własne CI 41244467302 zakończyło się FAIL: historyczna podpowiedź z trzema przyciskami miała niepoprawną geometrię. Te dowody nie potwierdzają późniejszej poprawki układu ani dalszej redakcji polskich opisów. Nowy lokalny odbiór po późniejszych poprawkach opisano poniżej; nowe źródło, CI i promocja oczekują na potwierdzenie. Nie wykonano resetu kont ani promocji PROD.\n\nPóźniejsze GO użytkownika upoważnia do PRE-PROD po zielonym CI dokładnego nowego SHA i odbiorze wdrożenia, z zachowaniem kont i historii. Samo upoważnienie nie jest dowodem publikacji.\n\nKońcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.\n\nKońcowe źródło aplikacji 353faad347262dce7c3632fdf7c71be124384ab1 zostało wysłane do main. Własne CI 41246449612 zakończyło się SUCCESS (3 min 54 s), a Pages 41246449682 — SUCCESS (31 s) dla tego samego źródła. DEV jest odebrany; promocja PRE-PROD nadal oczekuje na osobne potwierdzenie. Znacznik [preprod:0.10.1.0] zleca bridge po zielonym CI tego samego źródła. Ostateczny pakiet ma 54 pliki z manifestem, 10 991 135 bajtów; 53 pliki treści są zgodne ze sprawdzonym pakietem. SHA-256 archiwum: 6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744; manifestu: 0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d. To dowód przygotowania i synchronizacji kodu, nie wykonania wdrożenia ani resetu.\n\nPotwierdzono osobno sukces CI i Pages końcowego źródła 353faad347262dce7c3632fdf7c71be124384ab1. Ten odbiór DEV nie jest potwierdzeniem konfiguracji API, wdrożenia GCP, autosave na prawdziwym koncie ani resetu. Wyniki ręczne pozostają NOT RUN.\n\nPRE-PROD potwierdzone: google-cloud-dev.yml 41246771480, próba 1, SUCCESS (2 min 05 s), źródło 353faad347262dce7c3632fdf7c71be124384ab1. Bridge 41246756848 zakończył się SUCCESS (15 s). Gra: https://harborlight-dev.web.app. DEV tag dev-0.10.1.0-20261031 jest opublikowany. To dowód wdrożenia kodu tego samego źródła; nie oznacza ręcznego PASS przypadków, niezależnego odczytu ZIP receipt, odczytu flagi API ani potwierdzenia autosave po grze. Nie resetowano kont i nie promowano PROD. Wszystkie 53 ręczne scenariusze nadal NOT RUN.",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246449682",
+        "pages_status": "success",
         "previous_preview": {
           "source_sha": "b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9",
           "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41244467302",
@@ -13838,8 +13954,37 @@
           "execution_error": null,
           "panel_report_mtime": 1793484066.0457401,
           "legacy_v18_variants": 4,
-          "source_commit_pending": true
-        }
+          "source_commit_pending": false,
+          "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1"
+        },
+        "bundle": {
+          "files_with_manifest": 54,
+          "content_files": 53,
+          "bytes_with_manifest": 10991135,
+          "archive_sha256": "6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744",
+          "manifest_sha256": "0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d",
+          "tested_content_identical": true
+        },
+        "ci_status": "success",
+        "ci_duration_seconds": 234,
+        "pages_duration_seconds": 31,
+        "preprod_deployment": {
+          "workflow": "google-cloud-dev.yml",
+          "run_id": 41246771480,
+          "attempt": 1,
+          "status": "success",
+          "duration_seconds": 125,
+          "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1",
+          "frontend_url": "https://harborlight-dev.web.app",
+          "bridge_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246756848",
+          "bridge_status": "success",
+          "bridge_duration_seconds": 15,
+          "receipt_zip_independently_read": false,
+          "account_api_activation_independently_confirmed": false,
+          "account_reset_performed": false
+        },
+        "dev_tag": "dev-0.10.1.0-20261031",
+        "dev_tag_push_confirmed": true
       },
       "notes": [
         "Wcześniejsze karty zachowują dowody źródła 351baaf6b21386b2f2641875269e6f7d9c2d44fd. To potwierdzenie poprzedniego wariantu, nie nowego wspólnego okna."
@@ -13860,9 +14005,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_full_suite_and_packaged_browsers_pass",
-        "ci": "pending_new_source",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_353faad",
+        "preprod": "deployed_source_353faad",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -13891,11 +14036,11 @@
           "tests/harborlight-tutorial-v18-smoke.py",
           "tests/harborlight-tutorial-map-v25-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
-        "preprod_run_url": null,
+        "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246449612",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246771480",
         "manual_execution": "NOT_RUN",
-        "release_note": "Historyczny podgląd b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9 miał lokalnie 897 Node, 141 Python i 18 zestawów Chromium PASS. Pages 41244467250 zakończyło się SUCCESS (41 s), natomiast własne CI 41244467302 zakończyło się FAIL: historyczna podpowiedź z trzema przyciskami miała niepoprawną geometrię. Te dowody nie potwierdzają późniejszej poprawki układu ani dalszej redakcji polskich opisów. Nowy lokalny odbiór po późniejszych poprawkach opisano poniżej; nowe źródło, CI i promocja oczekują na potwierdzenie. Nie wykonano resetu kont ani promocji PROD. Poprawka zawijania i kierunkowe asercje geometrii są przygotowane; nowy pełny przebieg zakończył się sukcesem lokalnym, jak opisano poniżej.\n\nKońcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.",
+        "release_note": "Historyczny podgląd b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9 miał lokalnie 897 Node, 141 Python i 18 zestawów Chromium PASS. Pages 41244467250 zakończyło się SUCCESS (41 s), natomiast własne CI 41244467302 zakończyło się FAIL: historyczna podpowiedź z trzema przyciskami miała niepoprawną geometrię. Te dowody nie potwierdzają późniejszej poprawki układu ani dalszej redakcji polskich opisów. Nowy lokalny odbiór po późniejszych poprawkach opisano poniżej; nowe źródło, CI i promocja oczekują na potwierdzenie. Nie wykonano resetu kont ani promocji PROD. Poprawka zawijania i kierunkowe asercje geometrii są przygotowane; nowy pełny przebieg zakończył się sukcesem lokalnym, jak opisano poniżej.\n\nKońcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.\n\nKońcowe źródło aplikacji 353faad347262dce7c3632fdf7c71be124384ab1 zostało wysłane do main. Własne CI 41246449612 zakończyło się SUCCESS (3 min 54 s), a Pages 41246449682 — SUCCESS (31 s) dla tego samego źródła. DEV jest odebrany; promocja PRE-PROD nadal oczekuje na osobne potwierdzenie. Znacznik [preprod:0.10.1.0] zleca bridge po zielonym CI tego samego źródła. Ostateczny pakiet ma 54 pliki z manifestem, 10 991 135 bajtów; 53 pliki treści są zgodne ze sprawdzonym pakietem. SHA-256 archiwum: 6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744; manifestu: 0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d. To dowód przygotowania i synchronizacji kodu, nie wykonania wdrożenia ani resetu.\n\nPotwierdzono osobno sukces CI i Pages końcowego źródła 353faad347262dce7c3632fdf7c71be124384ab1. Ten odbiór DEV nie jest potwierdzeniem konfiguracji API, wdrożenia GCP, autosave na prawdziwym koncie ani resetu. Wyniki ręczne pozostają NOT RUN.\n\nPRE-PROD potwierdzone: google-cloud-dev.yml 41246771480, próba 1, SUCCESS (2 min 05 s), źródło 353faad347262dce7c3632fdf7c71be124384ab1. Bridge 41246756848 zakończył się SUCCESS (15 s). Gra: https://harborlight-dev.web.app. DEV tag dev-0.10.1.0-20261031 jest opublikowany. To dowód wdrożenia kodu tego samego źródła; nie oznacza ręcznego PASS przypadków, niezależnego odczytu ZIP receipt, odczytu flagi API ani potwierdzenia autosave po grze. Nie resetowano kont i nie promowano PROD. Wszystkie 53 ręczne scenariusze nadal NOT RUN.",
         "local_validation": {
           "cache": "frontend-v25-2",
           "node_pass": 898,
@@ -13908,8 +14053,39 @@
           "execution_error": null,
           "panel_report_mtime": 1793484066.0457401,
           "legacy_v18_variants": 4,
-          "source_commit_pending": true
-        }
+          "source_commit_pending": false,
+          "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1"
+        },
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246449682",
+        "pages_status": "success",
+        "bundle": {
+          "files_with_manifest": 54,
+          "content_files": 53,
+          "bytes_with_manifest": 10991135,
+          "archive_sha256": "6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744",
+          "manifest_sha256": "0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d",
+          "tested_content_identical": true
+        },
+        "ci_status": "success",
+        "ci_duration_seconds": 234,
+        "pages_duration_seconds": 31,
+        "preprod_deployment": {
+          "workflow": "google-cloud-dev.yml",
+          "run_id": 41246771480,
+          "attempt": 1,
+          "status": "success",
+          "duration_seconds": 125,
+          "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1",
+          "frontend_url": "https://harborlight-dev.web.app",
+          "bridge_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246756848",
+          "bridge_status": "success",
+          "bridge_duration_seconds": 15,
+          "receipt_zip_independently_read": false,
+          "account_api_activation_independently_confirmed": false,
+          "account_reset_performed": false
+        },
+        "dev_tag": "dev-0.10.1.0-20261031",
+        "dev_tag_push_confirmed": true
       },
       "notes": []
     },
@@ -13928,9 +14104,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_full_suite_and_packaged_browsers_pass",
-        "ci": "pending_new_source",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_353faad",
+        "preprod": "deployed_source_353faad",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -13966,11 +14142,11 @@
           "tests/harborlight-urgent-preprod-dispatch.test.mjs",
           "tests/harborlight-hosted-v18-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
-        "preprod_run_url": null,
+        "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246449612",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246771480",
         "manual_execution": "NOT_RUN",
-        "release_note": "Zgoda na PRE-PROD jest udzielona. Rozszerzenie allowlisty bridge przeszło 10 kierunkowych testów. Nowe pełne źródło, CI, rzeczywisty tryb API, reguły/IAM oraz wynik promocji pozostają do odczytania. Nie wykonano resetu ani promocji PROD. Read-only analiza wskazuje migrację zapisu przy pierwszym CAS, bez wymagania hurtowego przepisywania wysp.\n\nWłaściciel przekazał sukces prepare-dev-users.py po aktualizacji f161e45..b1cd650: projekt/Firebase i trzy istniejące UID potwierdzone, hasła pozostawione, prywatny zapis gotowy, bez publikacji gry i resetu. To dowód z sesji właściciela, nie niezależny odczyt GCP. Minimalny wyciąg i SHA-256 logu są w PREPROD-V25-PREPARATION.md; plik reguł b1cd650 jest zgodny z bieżącym. Przygotowanie reguł nie zastępuje własnego zielonego CI nowego źródła ani odbioru zapisu po wdrożeniu. Nowy pakiet frontend-v25-2 ma 898 Node, 141 Python i 18 zestawów Chromium PASS; to odbiór lokalny, nie wynik CI ani publikacji GCP.\n\nKońcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.",
+        "release_note": "Zgoda na PRE-PROD jest udzielona. Rozszerzenie allowlisty bridge przeszło 10 kierunkowych testów. Nowe pełne źródło, CI, rzeczywisty tryb API, reguły/IAM oraz wynik promocji pozostają do odczytania. Nie wykonano resetu ani promocji PROD. Read-only analiza wskazuje migrację zapisu przy pierwszym CAS, bez wymagania hurtowego przepisywania wysp.\n\nWłaściciel przekazał sukces prepare-dev-users.py po aktualizacji f161e45..b1cd650: projekt/Firebase i trzy istniejące UID potwierdzone, hasła pozostawione, prywatny zapis gotowy, bez publikacji gry i resetu. To dowód z sesji właściciela, nie niezależny odczyt GCP. Minimalny wyciąg i SHA-256 logu są w PREPROD-V25-PREPARATION.md; plik reguł b1cd650 jest zgodny z bieżącym. Przygotowanie reguł nie zastępuje własnego zielonego CI nowego źródła ani odbioru zapisu po wdrożeniu. Nowy pakiet frontend-v25-2 ma 898 Node, 141 Python i 18 zestawów Chromium PASS; to odbiór lokalny, nie wynik CI ani publikacji GCP.\n\nKońcowy lokalny odbiór NOWEGO pakietu po dalszej przyjaznej redakcji i poprawce geometrii: 898 testów Node PASS / 0 FAIL, 141 testów Python w 11 zestawach PASS i 18 zestawów Chromium PASS. Ponowny odczyt 112 widoków (56 komputer + 56 telefon) ma 0 wykrytych angielskich elementów i execution_error:null. Historyczny kurs v18 przeszedł 4 warianty, w tym rzeczywistą geometrię 360×640 odpowiadającą usterce z CI. Cache frontend-v25-2; źródło końcowego commitu, własne CI i publikacja pozostają odrębnie pending. Stary FAIL b1cd650 ani starsze receipt nie są zastępowane tym lokalnym wynikiem. Ręczne przypadki nadal NOT RUN; kont nie resetowano.\n\nKońcowe źródło aplikacji 353faad347262dce7c3632fdf7c71be124384ab1 zostało wysłane do main. Własne CI 41246449612 zakończyło się SUCCESS (3 min 54 s), a Pages 41246449682 — SUCCESS (31 s) dla tego samego źródła. DEV jest odebrany; promocja PRE-PROD nadal oczekuje na osobne potwierdzenie. Znacznik [preprod:0.10.1.0] zleca bridge po zielonym CI tego samego źródła. Ostateczny pakiet ma 54 pliki z manifestem, 10 991 135 bajtów; 53 pliki treści są zgodne ze sprawdzonym pakietem. SHA-256 archiwum: 6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744; manifestu: 0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d. To dowód przygotowania i synchronizacji kodu, nie wykonania wdrożenia ani resetu.\n\nPotwierdzono osobno sukces CI i Pages końcowego źródła 353faad347262dce7c3632fdf7c71be124384ab1. Ten odbiór DEV nie jest potwierdzeniem konfiguracji API, wdrożenia GCP, autosave na prawdziwym koncie ani resetu. Wyniki ręczne pozostają NOT RUN.\n\nPRE-PROD potwierdzone: google-cloud-dev.yml 41246771480, próba 1, SUCCESS (2 min 05 s), źródło 353faad347262dce7c3632fdf7c71be124384ab1. Bridge 41246756848 zakończył się SUCCESS (15 s). Gra: https://harborlight-dev.web.app. DEV tag dev-0.10.1.0-20261031 jest opublikowany. To dowód wdrożenia kodu tego samego źródła; nie oznacza ręcznego PASS przypadków, niezależnego odczytu ZIP receipt, odczytu flagi API ani potwierdzenia autosave po grze. Nie resetowano kont i nie promowano PROD. Wszystkie 53 ręczne scenariusze nadal NOT RUN.",
         "owner_preparation": {
           "source_sha": "b1cd650da1c9d669ebce4a77bee81ebfd87ccbc9",
           "reported_result": "success_existing_accounts_preserved_rules_ready",
@@ -13990,8 +14166,39 @@
           "execution_error": null,
           "panel_report_mtime": 1793484066.0457401,
           "legacy_v18_variants": 4,
-          "source_commit_pending": true
-        }
+          "source_commit_pending": false,
+          "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1"
+        },
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246449682",
+        "pages_status": "success",
+        "bundle": {
+          "files_with_manifest": 54,
+          "content_files": 53,
+          "bytes_with_manifest": 10991135,
+          "archive_sha256": "6c738006d57e115b3293a88460e9432ccb1fafb51e1eb9c08fdb116914e4c744",
+          "manifest_sha256": "0010c121de03c64e157596d014d80eb04970e7f5d03e81350374b9ce1a6abd0d",
+          "tested_content_identical": true
+        },
+        "ci_status": "success",
+        "ci_duration_seconds": 234,
+        "pages_duration_seconds": 31,
+        "preprod_deployment": {
+          "workflow": "google-cloud-dev.yml",
+          "run_id": 41246771480,
+          "attempt": 1,
+          "status": "success",
+          "duration_seconds": 125,
+          "source_sha": "353faad347262dce7c3632fdf7c71be124384ab1",
+          "frontend_url": "https://harborlight-dev.web.app",
+          "bridge_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41246756848",
+          "bridge_status": "success",
+          "bridge_duration_seconds": 15,
+          "receipt_zip_independently_read": false,
+          "account_api_activation_independently_confirmed": false,
+          "account_reset_performed": false
+        },
+        "dev_tag": "dev-0.10.1.0-20261031",
+        "dev_tag_push_confirmed": true
       },
       "notes": []
     }
