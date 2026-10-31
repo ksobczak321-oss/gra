@@ -2,7 +2,7 @@
 
 Obowiązuje **DEV tutaj → GitHub i CI → PRE-PROD → PROD**. PRE-PROD to istniejący projekt `harborlight-dev`, PROD to `harborlight-prod`. Nazwy workflow `google-cloud-dev.yml`, środowiska GitHub i artefaktów `harborlight-dev-*` pozostają technicznym kontraktem; w starszych dowodach słowo DEV oznacza dzisiejszy PRE-PROD.
 
-Push, kontrola konfiguracji, test lokalny i publikacja to odrębne operacje. Aktualny zakres: [v18](FRONTEND-V18-REQUIREMENTS.md), [v19](FRONTEND-V19-REQUIREMENTS.md) i [v20](FRONTEND-V20-REQUIREMENTS.md). Bieżące wyniki i faktyczne SHA zapisuje [dziennik](IMPLEMENTATION-LOG.md).
+Push, kontrola konfiguracji, test lokalny i publikacja to odrębne operacje. Aktualny zakres: [v18](FRONTEND-V18-REQUIREMENTS.md), [v19](FRONTEND-V19-REQUIREMENTS.md), [v20](FRONTEND-V20-REQUIREMENTS.md), [v21](FRONTEND-V21-REQUIREMENTS.md) i [v22](FRONTEND-V22-REQUIREMENTS.md). Kanoniczny [rejestr środowisk](ENVIRONMENT-STATUS.md) rozdziela aktualny DEV/Git/CI/Pages, faktyczne PRE-PROD/PROD, aktywację API i reset. Historyczne wyniki pozostają w [dzienniku](IMPLEMENTATION-LOG.md).
 
 ## 1. Kod, GitHub i CI
 
@@ -34,6 +34,27 @@ Dopiero sukces wymaganych kontroli tworzy parę artefaktów z tej samej próby:
 
 Retencja 90 dni. Sam obraz w rejestrze, pusty Hosting albo sondy API nie zastępują pełnego potwierdzenia v2.
 
+### Osobny reset kont po promocji v22
+
+GO z 31 października 2026 zleca rozpoczęcie od zera wszystkich trzech kont PRE-PROD: **`admin1`, `admin2`, `admin3`**, dopiero po sukcesie promocji i jej odbioru. To jawny wyjątek od wcześniejszego zachowania historii `admin1`, ograniczony do tej operacji. Nie uruchamiamy resetu jako skutku pushu, lokalnego testu ani przed weryfikacją opublikowanego wydania.
+
+Narzędzie właściciela i pełny kontrakt: [PREPROD-RESET.md](PREPROD-RESET.md). Domyślny odczyt planu:
+
+```sh
+python3 infra/google-cloud/reset-preprod-accounts.py \
+  --deployment-run-id RUN \
+  --commit PEŁNY_SHA \
+  --receipt-archive /prywatna/sciezka/harborlight-dev-release-RUN-ATTEMPT.zip
+```
+
+`RUN`, numer próby i pełny SHA pochodzą z udanej nowej promocji, nie z historycznego v18. Prywatny ZIP potwierdzenia wydania jest porównywany z digestem artefaktu GitHub. Mutację włącza osobne `--apply` po przejściu kontroli narzędzia: właściwy projekt, zielony workflow i CI tego samego SHA, aktualny manifest Hostingu, aktywne API kont oraz reguły Firestore blokujące stare bezpośrednie zapisy. Brak któregokolwiek dowodu blokuje reset. Jeżeli trzeba opublikować reguły API-only, jawne `--apply --lock-client-writes` najpierw zakłada blokadę i kopię; reset danych jest możliwy po co najmniej 10 minutach propagacji i ponownym uruchomieniu tej samej komendy. Szczegóły potwierdza instrukcja narzędzia.
+
+Authentication, UID, loginy, hasła i potwierdzenia dokumentów zostają zachowane. Postęp testowych wysp i rozliczenia objęte resetem rozpoczynają się od zera, a nowa generacja zapisu blokuje przywrócenie poprzedniego świata przez stary klient. Prywatna kopia przed resetem pozostaje poza repozytorium. Narzędzie musi potwierdzić wynik odczytem; samo powodzenie deployu nie potwierdza resetu.
+
+Po przejściu na API-only jawny tryb `check-dev-accounts.mjs --passwords-match-logins --account-api` sprawdza wyspy przez uwierzytelnione `/api/v1/island`, niezależnie kontrolując odmowę obcych i anonimowych bezpośrednich odczytów Firestore. Odczyt własnego dokumentu może być jeszcze dozwolony przed pierwszym resetem; po blokadzie ma zwracać 403. Workflow dobiera tryb z `HARBORLIGHT_ACCOUNT_API_ENABLED`. Nie wracamy do starych reguł wyłącznie po to, aby kontrola odczytowa przeszła.
+
+W [rejestrze](ENVIRONMENT-STATUS.md) zapisujemy osobno sukces promocji oraz wynik resetu wszystkich trzech kont. Do tego czasu status resetu pozostaje „zlecony, niewykonany”. Operacja nie obejmuje PROD ani innych kont; zwykłe odczytowe testy wdrożenia nadal nie nadpisują historii.
+
 ## 3. Promocja na PROD
 
 [Workflow PROD](../.github/workflows/google-cloud-prod.yml) otrzymuje `dev_run_id` udanego PRE-PROD. Nie zastępuje jego SHA najnowszym `main` i nie buduje gry ponownie.
@@ -50,7 +71,7 @@ Domena docelowa to **https://harborlight.pl**. Powiązanie, DNS nazwa.pl, własn
 
 ## 4. Konta, API i dostawcy
 
-PRE-PROD zachowuje istniejące Authentication/Firestore i UID `dev-admin1`–`dev-admin3`. Zwykła publikacja nie resetuje haseł, zapisów ani pakietów startowych. Kontrola przygotowania zasobów i rzeczywisty odbiór opublikowanej gry to osobne wyniki.
+PRE-PROD zachowuje istniejące Authentication/Firestore i UID `dev-admin1`–`dev-admin3`. Zwykła publikacja nie resetuje haseł, zapisów ani pakietów startowych. Osobno zlecony reset v22 po zweryfikowanej promocji ma procedurę opisaną wyżej i nie zmienia tożsamości ani haseł. Kontrola przygotowania zasobów i rzeczywisty odbiór opublikowanej gry to osobne wyniki.
 
 v18 zapisuje postęp wyłącznie w chmurze. Lokalny DEV może być nietrwałym podglądem, lecz nie daje lokalnego konta ani kopii odzyskiwania. Dane Firebase pochodzą z konfiguracji runtime; promocja nie podmienia bajtów archiwum na inne środowisko.
 
@@ -61,6 +82,8 @@ Kod API kont, limitów kodów i retencji wymaga właścicielskiej aktywacji: [RU
 OAuth Google/Facebook wymaga konfiguracji dostawcy i domen; prawdziwe Paynow/reklamy — usług operatora i zaufanych potwierdzeń. Symulacje dozwolone tylko poza PROD. Nie nadajemy szerokich ról ani nie zapisujemy sekretów w repozytorium w celu obejścia błędu. Retencja nie ma publicznego endpointu kasowania; narzędzie właściciela domyślnie działa w dry-run i wymaga osobnego jawnego włączenia mutacji.
 
 ## 5. Faktycznie potwierdzone wydanie
+
+Poniższy wpis opisuje ostatnie potwierdzone wydanie **GCP PRE-PROD**, nie najnowszy kod w Git. Zweryfikowana baza DEV v21 ma SHA `1fcfc8ba897a495a3878f15ed67595fa89071656` oraz [zielone CI 41218163406](https://github.com/ksobczak321-oss/gra/actions/runs/41218163406); to nie jest promocja GCP. Aktualny stan i brakujące dowody v22 podaje [rejestr](ENVIRONMENT-STATUS.md).
 
 30 października 2026 pełne [CI 41111528800](https://github.com/ksobczak321-oss/gra/actions/runs/41111528800) oraz [PRE-PROD 41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285) dla **v18 / `6ec3c6d8625420fd96474a22a8b1d699672416cd`** zakończyły się sukcesem. Gra jest opublikowana pod `https://harborlight-dev.web.app`; potwierdzono obie sondy API, wszystkie bajty pakietu względem manifestu, odczytowe renderowanie istniejącej wyspy oraz izolację trzech kont. Wysp, haseł i postępu nie resetowano.
 

@@ -1,26 +1,26 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v21';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v21';
-import * as State from './harborlight-v1-state.js?v=frontend-v21';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v21';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v21';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v21';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v21';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v21';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v21';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v21';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v21';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v21';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v21';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v21';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v21';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v21';
-import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v21';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v21';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v21';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v21-fit2';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v21';
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v21';
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v21';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v22';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v22';
+import * as State from './harborlight-v1-state.js?v=frontend-v22';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v22';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v22';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v22';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v22';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v22';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v22';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v22';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v22';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v22';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v22';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v22';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v22';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v22';
+import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v22';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v22';
+import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v22';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v22-fit2';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v22';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v22';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v22';
 
 I18n.registerTranslations({
   "Choose a minigame": "Wybierz minigrę",
@@ -2820,7 +2820,7 @@ function updateTutorialPointer(row) {
 function refreshTutorialExperience() {
   if (!tutorialReady) return;
   if (expeditionSession()) { document.querySelector('[data-active-tutorial-guide]')?.remove(); document.querySelector('[data-tutorial-pointer]')?.remove(); return; }
-  const status = Progression.tutorialStatus(state), rows = Progression.tutorialRows(state);
+  const status = Progression.tutorialStatus(state), rows = Progression.tutorialRows(state).filter(item => !item.autoSkipped);
   const row = rows.find(item => item.canClaim || item.pendingDecision) || rows.find(item => !item.completed);
   const host = dialog.open ? dialog.querySelector('.dialog-body') : document.body;
   const signature = JSON.stringify([language(), panel?.kind, panel?.id, status,
@@ -2853,8 +2853,9 @@ function openTutorialReward(achievement, rows) {
 }
 function progressionOverview() {
   const loyalty = Progression.loyaltyStatus?.(state), engagement = Progression.engagementStatus?.(state);
+  const tutorial = Progression.tutorialStatus(state), tutorialTotal = tutorial.visibleTotal ?? tutorial.total;
   return card(el('h3', {}, 'Your progress'),
-    el('div', { class: 'stat-grid' }, stat('Tutorial steps completed', `${Progression.tutorialStatus(state).completed} / 25`), stat('Tutorial rewards claimed', `${Object.keys(state.tutorial?.claimed || {}).length} / 25`)),
+    el('div', { class: 'stat-grid' }, stat('Tutorial steps completed', `${tutorial.visibleCompleted ?? tutorial.completed} / ${tutorialTotal}`), stat('Tutorial rewards claimed', `${tutorial.claimed} / ${tutorialTotal}`)),
     engagement?.active ? note(`Active play: production ×2 for ${durationText(engagement.remaining)}. Meaningful activity renews this five-minute bonus.`) : note('Meaningful activity activates a five-minute production ×2 bonus.'),
     loyalty ? el('details', { class: 'island-rules' }, el('summary', {}, 'Introductory loyalty calendar'),
       el('div', { class: 'loyalty-calendar' }, ...Array.from({length:10}, (_,index) => el('span', { class: `loyalty-day${loyalty.claimedDays.includes(index+1) ? ' is-claimed' : ''}${index+1 === loyalty.streak ? ' is-current' : ''}` }, index+1))), note(loyalty.message), loyalty.eligible ? note(costText(loyalty.reward)) : null, button('Claim daily reward', () => perform({ type: 'claimLoyalty' }), { disabled: !loyalty.eligible, 'data-claim-loyalty': '' })) : null,

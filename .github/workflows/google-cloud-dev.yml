@@ -404,7 +404,15 @@ jobs:
 
       - name: Verify permanent DEV accounts and cloud save isolation
         shell: bash
-        run: node infra/google-cloud/check-dev-accounts.mjs --passwords-match-logins
+        run: |
+          set -euo pipefail
+          account_check_flags=(--passwords-match-logins)
+          case "${HARBORLIGHT_ACCOUNT_API_ENABLED,,}" in
+            true|1) account_check_flags+=(--account-api) ;;
+            false|0) ;;
+            *) echo "Invalid PRE-PROD account API mode" >&2; exit 1 ;;
+          esac
+          node infra/google-cloud/check-dev-accounts.mjs "${account_check_flags[@]}"
 
       - name: Publish the exact successful DEV frontend bundle
         uses: actions/upload-artifact@v4

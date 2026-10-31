@@ -352,6 +352,17 @@ class DevUsersTests(unittest.TestCase):
             self.assertEqual(cloud.mutations(), [])
             self.assertEqual(before, cloud.database)
 
+    def test_api_only_reset_rules_cannot_be_reopened_by_account_setup(self):
+        cloud = FakeCloud(ready=True)
+        name = cloud.release["rulesetName"]
+        cloud.rulesets[name] = {"source": {"files": [{"name": "firestore.rules", "content":
+            "// HARBORLIGHT PRE-PROD API-only v1; never replace with legacy client grants.\nrules_version = '2'; service cloud.firestore { match /databases/{database}/documents { match /{document=**} { allow read, write: if false; } } }"}]}}
+        before = copy.deepcopy(cloud.rulesets)
+        with self.assertRaisesRegex(users.PreparationError, "API-only"):
+            self.run_prepare(cloud, apply=True, passwords_match_logins=True)
+        self.assertEqual(cloud.mutations(), [])
+        self.assertEqual(cloud.rulesets, before)
+
     def test_unknown_rules_are_preserved_and_managed_rules_can_be_upgraded(self):
         cloud = FakeCloud(ready=True)
         name = cloud.release["rulesetName"]

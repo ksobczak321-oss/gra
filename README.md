@@ -1,17 +1,21 @@
 # HARBORLIGHT
 
-Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarni. Bazowe reguły **frontend-v18** zatwierdzono przez GO użytkownika 30 października 2026: [pełne wymagania](docs/FRONTEND-V18-REQUIREMENTS.md), [reguły gospodarki](docs/ECONOMY-RULES.md) i [budynki](docs/BUILDINGS.md). Bieżące rozszerzenie DEV opisuje [v21](docs/FRONTEND-V21-REQUIREMENTS.md).
+Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarni. Bazowe reguły **frontend-v18** zatwierdzono przez GO użytkownika 30 października 2026: [pełne wymagania](docs/FRONTEND-V18-REQUIREMENTS.md), [reguły gospodarki](docs/ECONOMY-RULES.md) i [budynki](docs/BUILDINGS.md). Bieżący zakres DEV to [v22](docs/FRONTEND-V22-REQUIREMENTS.md), uzupełniający [v21](docs/FRONTEND-V21-REQUIREMENTS.md).
+
+**[Stan środowisk i dowody wydań](docs/ENVIRONMENT-STATUS.md)** to główny rejestr wersji DEV, PRE-PROD i PROD. Rozdziela przygotowany kod, Git/CI, podgląd, publikację GCP, aktywację usług i reset danych.
 
 ## Wersja lokalna a opublikowana
 
 | Miejsce | Stan |
 |---|---|
-| DEV — ta przestrzeń robocza | [v21](docs/FRONTEND-V21-REQUIREMENTS.md): równowaga samouczka, objaśnienia, handel graczy, próg ludności i druga wyspa. Lokalna regresja: 871 testów i 10 zestawów Chromium PASS; bez nowej publikacji GCP. Zawiera v19 i v20. |
+| DEV — ta przestrzeń robocza | [v22](docs/FRONTEND-V22-REQUIREMENTS.md) zaimplementowane: pomijanie samodzielnie wykonanych lekcji i narzędzie resetu kont dopiero po promocji. **911 testów lokalnych oraz 11 zestawów Chromium PASS**. Ostatnia zweryfikowana baza Git/CI v21: `1fcfc8ba897a495a3878f15ed67595fa89071656`, [CI 41218163406 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41218163406), 871 lokalnych testów i 10 zestawów Chromium PASS. Nowy SHA wymaga synchronizacji i własnego CI. |
 | PRE-PROD — `harborlight-dev` | [Gra](https://harborlight-dev.web.app), opublikowane v18 / `6ec3c6d`; [sukces 41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285), testy hostingu i kont, oba artefakty v2. |
 | PROD — `harborlight-prod` / `harborlight.pl` | Brak potwierdzonej publikacji i powiązania domeny. |
-| GitHub Pages | Podgląd deweloperski, nie PROD; nie dowodzi promocji PRE-PROD. |
+| GitHub Pages | [Link roboczy — v21](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v21), [Pages 41218163559 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41218163559). Nietrwały podgląd DEV; nie zapisuje wysp kont PRE-PROD. Publikacja v22 wymaga własnego potwierdzenia. |
 
-PRE-PROD zachowuje trzy osobne konta `admin1`, `admin2`, `admin3`, ich UID i wyspy. Odbiór wdrożenia blokuje zapisy gry i nie resetuje postępu. Dowodem publikacji v18 jest udany przebieg powyżej; sam push kolejnych zmian nie publikuje ich w chmurze. Historia poprzednich testów i wydań pozostaje w [dzienniku](docs/IMPLEMENTATION-LOG.md).
+PRE-PROD ma trzy osobne konta `admin1`, `admin2`, `admin3`. Odczytowy odbiór wdrożenia blokuje zapisy gry i nie resetuje postępu. Najnowsze GO zleca osobny **reset wszystkich trzech kont, także `admin1`, dopiero po pomyślnej promocji i jej weryfikacji**; UID, loginy i hasła zostają zachowane. [Reset](docs/PREPROD-RESET.md) jest przygotowany i przetestowany na izolowanych danych, niewykonany w Google. Dowodem ostatniej publikacji v18 jest udany przebieg powyżej; sam push nie publikuje gry w GCP. Historia pozostaje w [dzienniku](docs/IMPLEMENTATION-LOG.md).
+
+W [v22](docs/FRONTEND-V22-REQUIREMENTS.md) udane działanie wykonane przed swoją lekcją usuwa ją z dalszego samouczka bez skrzyni i nagrody. Kolejny krok nie czeka na powtórzenie czynności ani odbiór nieistniejącej premii; wcześniej przyznane nagrody zostają zachowane.
 
 ## Co zmienia v18
 
@@ -24,11 +28,11 @@ PRE-PROD zachowuje trzy osobne konta `admin1`, `admin2`, `admin3`, ich UID i wys
 - Codzienne darmowe błogosławieństwo, wydarzenia dobre/złe, regularność Kaplicy, lojalność 50–200 sześciu zasobów oraz czytelne powiadomienia.
 - Postęp konta wyłącznie w chmurze. Brak lokalnej wyspy i lokalnej kopii odzyskiwania; brak połączenia blokuje zatwierdzanie działań. Język i techniczna sesja logowania nie są zapisem postępu.
 
-Nowe parametry cen dodatkowego czasu i wag wydarzeń są jawnie opisane jako konfigurowalne wartości wdrożeniowe. Ostatni wygenerowany [Excel 11](docs/arkusze/HARBORLIGHT11-zasady.xlsx) jest migawką reguł v18/v19 i [scenariuszy testowych](docs/TEST-SCENARIOS-v18.md); nie obejmuje rozszerzeń v20/v21. Starsze arkusze pozostają archiwami i nie są nadpisywane.
+Nowe parametry cen dodatkowego czasu i wag wydarzeń są jawnie opisane jako konfigurowalne wartości wdrożeniowe. Ostatni wygenerowany [Excel 11](docs/arkusze/HARBORLIGHT11-zasady.xlsx) jest migawką reguł v18/v19 i [scenariuszy testowych](docs/TEST-SCENARIOS-v18.md); nie obejmuje rozszerzeń v20–v22. Starsze arkusze pozostają archiwami i nie są nadpisywane.
 
 Uzupełnienie v19 dodaje bezpośrednie wylogowanie i odnośniki do dokumentów w Ustawieniach. Rejestracja wymaga osobnej akceptacji [roboczego Regulaminu](docs/TERMS-DRAFT.pl.md) i potwierdzenia przeczytania [Polityki prywatności](docs/PRIVACY-DRAFT.pl.md); nowe konta otrzymują wersjonowane potwierdzenie serwera. Dane operatora „Lorem ipsum” wymagają uzupełnienia przed publicznym uruchomieniem. Stałe konta PRE-PROD zachowują dostęp i historię.
 
-Nowy zakres [v20](docs/FRONTEND-V20-REQUIREMENTS.md) zaczyna nową wyspę od opisu gry, jej nazwania i oprowadzania po interfejsie. Zegar rusza po ukończeniu lub zamknięciu oprowadzania, a następnie zaczyna się standardowy samouczek. Istniejące światy i postęp lekcji są zachowane. Postęp zapisuje się automatycznie co 30 sekund wyłącznie w chmurze; ręczny panel zapisu zastępuje bezpośrednie wylogowanie. Sesja po przekroczeniu bezczynności nie odnawia się samoczynnie po ponownym otwarciu przeglądarki. Lokalne 821 testów i osiem zestawów Chromium przeszło; zakres nadal wymaga własnego CI i osobnej promocji PRE-PROD.
+Zakres [v20](docs/FRONTEND-V20-REQUIREMENTS.md) zaczyna nową wyspę od opisu gry, jej nazwania i oprowadzania po interfejsie. Zegar rusza po ukończeniu lub zamknięciu oprowadzania, a następnie zaczyna się standardowy samouczek. Migracja zachowuje istniejące światy i postęp lekcji. Postęp zapisuje się automatycznie co 30 sekund wyłącznie w chmurze; ręczny panel zapisu zastępuje bezpośrednie wylogowanie. Sesja po przekroczeniu bezczynności nie odnawia się samoczynnie po ponownym otwarciu przeglądarki. Zmiany wchodzą w zweryfikowaną bazę v21; osobna promocja PRE-PROD pozostaje niepotwierdzona.
 
 ## Konta i integracje
 
@@ -67,6 +71,8 @@ Przeglądarka wymaga Python Playwright i Chromium; opcjonalna ścieżka wykonywa
 Obowiązuje **DEV tutaj → GitHub/CI → PRE-PROD → PROD**. PRE-PROD wymaga CI tego samego SHA. PROD promuje identyczne archiwum frontendu i obraz po digest z udanego PRE-PROD, bez ponownej budowy. Nazwy techniczne `google-cloud-dev.yml` i `harborlight-dev-*` pozostają niezmienione.
 
 - [Kontrakt promocji](docs/RELEASE-PROCESS.md)
+- [Bieżący stan DEV / PRE-PROD / PROD](docs/ENVIRONMENT-STATUS.md)
+- [Zlecony reset kont po promocji PRE-PROD](docs/PREPROD-RESET.md)
 - [Sterowanie, samouczek i zapis](docs/INTERACTIVE-ISLAND.md)
 - [Backlog i ograniczenia uruchomienia](docs/BACKLOG.md)
 - [Dziennik wyników i publikacji](docs/IMPLEMENTATION-LOG.md)

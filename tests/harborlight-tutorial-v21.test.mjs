@@ -55,7 +55,8 @@ test('rewards are received one at a time, survive reload and cannot be doubled o
   const state = createState(NOW);
   assert.equal(run(state, { type: 'assign', building: 'farm', delta: 1 }).ok, true);
   assert.equal(run(state, { type: 'assign', building: 'warehouse', delta: 1 }).ok, true);
-  assert.equal(state.tutorial.completed['island-map'], undefined, 'an unconfirmed previous reward cannot create a reward queue');
+  assert.equal(state.tutorial.skippedLessons['island-map'], true, 'an independent assignment while the earlier reward waits is skipped without another reward');
+  assert.equal(state.tutorial.chests['island-map'], undefined, 'an unconfirmed previous reward cannot create a reward queue');
   assert.equal(run(state, { type: 'claimTutorial', taskId: 'rules-read' }).ok, true);
   assert.equal(state.resources.coins, 200);
   assert.equal(MATERIALS.every(id => state.resources[id] === 125 && state.bonusMaterials[id] === 0), true);
@@ -69,6 +70,7 @@ test('rewards are received one at a time, survive reload and cannot be doubled o
   assert.equal(run(restored, { type: 'skipTutorialShare', taskId: 'rules-read' }).ok, true);
   assert.equal(run(restored, { type: 'assign', building: 'warehouse', delta: 1 }).ok, true);
   assert.equal(restored.tutorial.completed['island-map'], true);
+  assert.equal(restored.tutorial.skippedLessons['storage-limits'], true, 'the next distinct carrier assignment covers the second carrier lesson');
 });
 
 test('external bonus stock blocks final settlement without being deleted and can be spent on a real path upgrade', () => {

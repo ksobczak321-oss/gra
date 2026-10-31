@@ -1,8 +1,8 @@
-# Stałe konta DEV
+# Stałe konta PRE-PROD — techniczny projekt DEV
 
 Użytkownik ustalił trzy konta: **admin1, admin2, admin3**, logowanie nazwą i hasłem oraz postęp dostępny na różnych urządzeniach. Początkowe hasła mają odpowiadać nazwom kont. Dotyczy to wyłącznie projektu `harborlight-dev`.
 
-30 października 2026 właściciel potwierdził przygotowanie zasobów, a [wdrożenie DEV 41067599818](https://github.com/ksobczak321-oss/gra/actions/runs/41067599818) dla `f161e45` zakończyło się sukcesem. Gra działa pod adresem https://harborlight-dev.web.app.
+DEV oznacza bieżącą przestrzeń roboczą; istniejący projekt `harborlight-dev` jest obecnym PRE-PROD. Jego ostatnie potwierdzone wydanie to v18 / `6ec3c6d` / [41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285). Aktualne wersje i dowody podaje [rejestr środowisk](ENVIRONMENT-STATUS.md); samo pobranie nowszego kodu nie publikuje go w GCP. Gra PRE-PROD: https://harborlight-dev.web.app.
 
 ## Przygotowanie przez właściciela
 
@@ -25,36 +25,48 @@ UID kont to `dev-admin1`, `dev-admin2`, `dev-admin3`. Alias w formularzu jest ma
 
 Opcja `--passwords-match-logins` dotyczy tylko nowych kont. Ponowienie zachowuje istniejące tożsamości, hasła i dokumenty wysp; nie wykonuje resetów ani usuwania danych. Bez tej opcji nowe hasła są pobierane interaktywnie przez `getpass`. Hasła nie trafiają do plików, argumentów polecenia, logów ani frontendu. Rejestracja i usuwanie kont przez klienta są wyłączone.
 
-Domyślny `--check` odczytuje stan. Skrypt odmawia użycia innego projektu, zmiany typu/lokalizacji istniejącej bazy i zastąpienia nieznanej polityki Firestore. Kompiluje reguły przez oficjalne API Google przed ich publikacją. Konfiguracja i końcowy odczyt zasobów nie zastępują testu gry po wdrożeniu.
+Domyślny `--check` odczytuje stan. Skrypt odmawia użycia innego projektu, zmiany typu/lokalizacji istniejącej bazy i zastąpienia nieznanej polityki Firestore. Kompiluje reguły przez oficjalne API Google przed ich publikacją. Po zablokowaniu bezpośrednich zapisów na rzecz API rozpoznaje oznaczone reguły API-only i nie przywraca wcześniejszych uprawnień klienta. Konfiguracja i końcowy odczyt zasobów nie zastępują testu gry po wdrożeniu.
 
 Tworzenie aplikacji Web i bazy zwraca długotrwałe operacje Google. Ich identyfikatory są traktowane jako nieprzezroczyste: mogą zawierać hierarchię Firebase, dwukropki i padding `=`. Odczyt pozostaje na tej samej usłudze Google, a operacje Firestore dotyczą wyłącznie projektu DEV i bazy `(default)`. Ponowienie wyszukuje istniejącą aplikację i bazę zamiast je usuwać lub resetować.
 
 ## Logowanie i trwałość postępu
 
-Wejście przez główny adres `https://harborlight-dev.web.app` kieruje do formularza. Zachowana sesja pozwala wrócić do gry bez ponownego wpisywania hasła. Inne środowiska zachowują dotychczasowy lokalny podgląd; ten pakiet nie uruchamia kont testowych w PROD.
+Wejście przez główny adres `https://harborlight-dev.web.app` kieruje do formularza. Bieżący kod DEV pozwala wznowić sesję wyłącznie przed jej terminem bezczynności; 30 minut bez rzeczywistej aktywności i 30 sekund ostrzeżenia kończy sesję, także po zamknięciu przeglądarki. Podgląd DEV jest nietrwały; kont testowych nie przenosimy do PROD.
 
 Konfiguracja projektu jest pobierana w czasie działania z `/__/firebase/init.json`. Pozwala to promować identyczne archiwum frontendu, bez wbudowywania poświadczeń albo osobnej kompilacji DEV. Firebase Authentication zarządza hasłami i sesjami, a Firestore weryfikuje tokeny oraz uprawnienia.
 
-Każdy użytkownik ma dokument `islands/{uid}` i osobny lokalny cache. Parametry `profile` i `slot` nie zmieniają tożsamości zalogowanego konta. Zapis gościa lub starej domeny nie jest automatycznie kopiowany do konta.
+Każdy użytkownik ma własny dokument `islands/{uid}` w chmurze. Nie ma lokalnego cache wyspy, kopii odzyskiwania ani kolejki zapisu w pamięci przeglądarki; pamięć sesji i języka nie jest zapisem gry. Parametry `profile` i `slot` nie zmieniają tożsamości zalogowanego konta. Zapis gościa lub starej domeny nie jest automatycznie kopiowany do konta.
 
-Gra wczytuje zapis konta przed rozpoczęciem symulacji. Wysyłanie zmian jest ograniczone w czasie, a zapis zawiera numer rewizji i warunek zgodności wersji serwera. Konflikt dwóch urządzeń zatrzymuje automatyczne nadpisywanie i zachowuje lokalną kopię. Błąd sieci nie jest przedstawiany jako udany zapis w chmurze. Wylogowanie ani publikacja nowego pakietu nie usuwają wyspy.
+Gra wczytuje zapis konta przed rozpoczęciem symulacji. Bieżący kod zapisuje automatycznie co 30 sekund; zapis zawiera rewizję i warunek zgodności wersji serwera. Konflikt dwóch urządzeń zatrzymuje automatyczne nadpisywanie; nie powstaje trwała lokalna kopia. Błąd sieci nie jest przedstawiany jako udany zapis w chmurze. Wylogowanie ani zwykła publikacja nowego pakietu nie usuwają wyspy.
 
-Nowa wyspa powstaje przy pierwszym wejściu do gry po zalogowaniu: ratusz poziomu 1, 12 mieszkańców, po 100 monet i każdego z pięciu materiałów oraz brak przydzielonych pracowników. Od tego momentu naliczana jest symulacja, również za późniejszą nieobecność. Samo utworzenie konta i testy logowania nie uruchamiają wyspy. Pakiet startowy nie jest odnawiany przy kolejnych logowaniach.
+Nowa wyspa ma Ratusz 1, 12 mieszkańców, po 100 monet i każdego z pięciu materiałów oraz brak przydzielonych pracowników. W bieżącym kodzie DEV nowe konto przechodzi opis gry, nazwanie wyspy i oprowadzanie; czas świata startuje po ukończeniu albo zamknięciu oprowadzania. Samo utworzenie konta i odczytowy test logowania nie uruchamiają wyspy. Kolejne logowania nie odnawiają startera.
 
-Reguły pozwalają tylko trzem wskazanym UID odczytywać i zmieniać własny dokument. Nie pozwalają przeglądać wszystkich wysp, odczytywać cudzych zapisów ani usuwać dokumentów. Zapis jest ograniczony do 700 000 bajtów i wymaga kolejnej rewizji oraz czasu serwera.
+Historyczne reguły bezpośrednie pozwalają tylko trzem wskazanym UID odczytywać i zmieniać własny dokument. Po przejściu na API-only wszystkie bezpośrednie odczyty i zapisy Firestore przez klienta są zabronione; backend rozpoznaje właściciela z tokena Firebase. Obce i anonimowe odczyty są zawsze niedozwolone. Zapis jest ograniczony do 700 000 bajtów i wymaga kolejnej rewizji; API kontroluje również generację wyspy.
 
 To synchronizacja stanu przeglądarkowej gry DEV. Obliczenia gospodarki nadal wykonuje klient. Konta i gospodarka produkcyjna wymagają osobnego wdrożenia oraz reguł dla rzeczywistych graczy.
 
 ## Kontrola wydania
 
-Obowiązuje kolejność: praca tutaj → GitHub/CI → DEV → PROD. Źródłowe CI sprawdza protokół logowania, odświeżanie sesji, trwałość kont, izolację zapisów, konflikty i rzeczywisty interfejs z izolowanymi odpowiedziami usług Google.
+Obowiązuje kolejność: **DEV tutaj → GitHub/CI → PRE-PROD → PROD**. Źródłowe CI sprawdza protokół logowania, odświeżanie sesji, trwałość kont, izolację zapisów, konflikty i rzeczywisty interfejs z izolowanymi odpowiedziami usług Google.
 
-Po publikacji DEV workflow uruchamia:
+Po publikacji PRE-PROD z historycznym bezpośrednim dostępem workflow uruchamia:
 
 ```sh
 node infra/google-cloud/check-dev-accounts.mjs --passwords-match-logins
 ```
 
-Ta kontrola loguje się do rzeczywistego Firebase DEV, odczytuje własne dokumenty oraz wymaga odmowy dostępu dla pozostałych kont i anonimowego żądania. Nie zmienia dokumentów wysp. Udany przebieg jest warunkiem utworzenia potwierdzenia wydania DEV. Odtwarzanie sesji, zapis i konflikty mają dodatkowe testy lokalne; pełne potwierdzenie działania na Google Cloud wymaga przygotowania rzeczywistych zasobów i udanego wdrożenia.
+Przy `HARBORLIGHT_ACCOUNT_API_ENABLED=true` albo `1` workflow jawnie dodaje tryb API:
+
+```sh
+node infra/google-cloud/check-dev-accounts.mjs --passwords-match-logins --account-api
+```
+
+Kontrola loguje wszystkie trzy rzeczywiste tożsamości Firebase, sprawdza ich UID/audience/issuer/ważność tokena i odczytuje `/api/v1/island` na tym samym hostingu. API nie ma parametru wyboru cudzego UID: właściciela wyznacza token. Sprawdzane są generacja, rewizja, znacznik czasu i ograniczony payload, a anonimowe żądanie musi otrzymać 401. Dodatkowo wszystkie obce i anonimowe bezpośrednie odczyty Firestore muszą zwrócić 403. Po blokadzie API-only własny bezpośredni odczyt także zwraca 403; przed pierwszym resetem dopuszczony jest dotychczasowy odczyt własny 200/404. Liczniki wyniku rozdzielają te sytuacje.
+
+Narzędzie nie wysyła komend utworzenia, zapisu, resetu ani usunięcia wyspy. Logowanie aktualizuje metadane Auth; zwykły odczyt API może zainicjować serwerowe metadane starego konta bez nadpisywania wyspy. Udany przebieg jest warunkiem potwierdzenia wydania. Odtwarzanie sesji, zapis i konflikty mają dodatkowe testy lokalne; nie zastępują odbioru wdrożenia Google Cloud.
+
+## Osobny reset po promocji v22
+
+Najnowsze GO upoważnia do resetu stanu gry **admin1, admin2 i admin3 po udanej, zweryfikowanej promocji PRE-PROD**. W tej jednej operacji wcześniejsza ochrona postępu admin1 zostaje zastąpiona nową dyspozycją. Tożsamości Authentication, UID, loginy, hasła i zgody prawne pozostają zachowane. Procedura wymaga aktywnego API, blokady starych zapisów, kopii i odczytu wyniku: [PREPROD-RESET.md](PREPROD-RESET.md). Bieżący wynik resetu podaje [rejestr środowisk](ENVIRONMENT-STATUS.md); przygotowany skrypt nie oznacza wykonania resetu.
 
 Firestore i Authentication rozliczają wykorzystanie usług. Nie uruchamia się stale działającej bazy SQL. Częstotliwość wysyłania zapisów jest ograniczona; limity i ceny usług trzeba uwzględniać przy zwiększaniu liczby graczy.

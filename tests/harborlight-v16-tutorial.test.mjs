@@ -44,6 +44,7 @@ function finishLesson(state, item) {
       'expedition-play': { type: 'expeditionStart' }, 'release-worker': { type: 'assign', building: 'farm', delta: -1 },
       'task-deposit': { type: 'taskDeposit', resource: 'wood', amount: 1 } };
     assert.ok(commands[item.subject], item.subject);
+    if (item.subject === 'notification-filter') { state.settings ||= {}; state.settings.notificationCategories = { tasks: false }; }
     accepted(state, commands[item.subject]);
   }
   assert.equal(state.tutorial.completed[item.id], true, item.id);
@@ -62,18 +63,20 @@ test('all25 lessons require real commands or physical events and expose actionab
   assert.deepEqual(TUTORIAL_LESSONS.map(row => row.index), Array.from({ length: 25 }, (_, i) => i + 1));
 });
 
-test('reading, visiting locations, rejected commands and unrelated work cannot complete a lesson', () => {
+test('reading and rejected commands cannot complete a lesson; an independent future action is skipped without a chest', () => {
   const state = island();
   action(state, 'tutorialVisit', { subject: 'home' });
   action(state, 'tutorialVisit', { subject: 'rules' });
   assert.equal(action(state, 'tutorialObserve', { taskId: 'rules-read' }).ok, false);
   recordProgressionAction(state, { type: 'assign', building: 'farm', delta: 1 }, { ok: false });
   accepted(state, { type: 'assign', building: 'warehouse', delta: 1 });
-  assert.equal(tutorialStatus(state).completed, 0);
+  assert.equal(tutorialStatus(state).completed, 1);
+  assert.equal(state.tutorial.skippedLessons['island-map'], true);
+  assert.equal(state.tutorial.chests['island-map'], undefined);
   assert.equal(claim(state, 'rules-read').ok, false);
   accepted(state, { type: 'assign', building: 'farm', delta: 1 });
-  assert.equal(tutorialStatus(state).completed, 1);
-  assert.equal(state.tutorial.completed['island-map'], undefined);
+  assert.equal(tutorialStatus(state).completed, 2);
+  assert.equal(state.tutorial.completed['island-map'], true);
 });
 
 test('each later lesson needs its own successful action even if an earlier action was similar', () => {
@@ -240,12 +243,13 @@ test('all25 lessons can record real outcomes without a calendar-day gate', () =>
   const state = island();
   state.buildings.warehouse.level = 24;
   for (const item of TUTORIAL_LESSONS) {
+    if (state.tutorial.skippedLessons[item.id]) { assert.equal(claim(state, item.id).ok, false); continue; }
     finishLesson(state, item);
     assert.equal(claim(state, item.id).ok, true, item.id);
     assert.equal(action(state, 'skipTutorialShare', { taskId: item.id }).ok, true);
   }
   assert.equal(tutorialStatus(state).finished, true);
-  assert.equal(tutorialStatus(state).claimed, 25);
+  assert.equal(tutorialStatus(state).claimed + tutorialStatus(state).skipped, 25);
   assert.equal(state.worldTimeMs, NOW);
   const restored = reload(state);
   for (const item of TUTORIAL_LESSONS) assert.equal(claim(restored, item.id).ok, false);

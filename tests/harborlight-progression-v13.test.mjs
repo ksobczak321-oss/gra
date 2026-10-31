@@ -134,15 +134,17 @@ test('a real Warsaw midnight rather than a rolling 24-hour clock unlocks the nex
   assert.deepEqual(state.tutorial.activeDays, ['2026-03-28', '2026-03-29', '2026-03-30']);
 });
 
-test('missing prerequisite lessons cannot be observed or claimed even on later active days', () => {
+test('missing prerequisites cannot award rewards; independently performed future lessons are removed', () => {
   const state = island();
   assert.equal(claim(state, 'rules-read').ok, false);
-  assert.equal(observe(state, 'island-map').ok, false);
+  assert.equal(observe(state, 'island-map').ok, true);
+  assert.equal(state.tutorial.skippedLessons['island-map'], true);
+  assert.equal(claim(state, 'island-map').ok, false);
   activity(state); advance(state, 86400); activity(state);
   assert.equal(observe(state, 'food-check').ok, false);
   assert.equal(state.resources.coins, 100);
   assert.equal(observe(state, 'rules-read').ok, true);
-  assert.equal(observe(state, 'island-map').ok, true);
+  assert.equal(observe(state, 'island-map').ok, false);
 });
 
 

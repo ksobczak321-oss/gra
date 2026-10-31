@@ -6,7 +6,7 @@ import { TUTORIAL_LESSONS, tutorialRows, tutorialStatus } from '../../harborligh
 import { leisureOffers } from '../../harborlight-v1-leisure.js';
 import { ordinaryWarehouseUsed } from '../../harborlight-v1-inventory.js';
 
-export function runTutorialCourse({ now = Date.parse('2026-10-31T10:00:00Z'), through = 25, seed = 57 } = {}) {
+export function runTutorialCourse({ now = Date.parse('2026-10-31T10:00:00Z'), through = 25, seed = 57, beforeLesson = null } = {}) {
   const state = createState(now), trace = [];
   state.tutorial.seed = seed;
   const command = action => {
@@ -19,6 +19,7 @@ export function runTutorialCourse({ now = Date.parse('2026-10-31T10:00:00Z'), th
     command({ type: 'userActivity', visible: true, focused: true });
   };
   for (const lesson of TUTORIAL_LESSONS.slice(0, through)) {
+    beforeLesson?.(state, command, lesson);
     const before = structuredClone(state.resources);
     let supplies = null;
     command({ type: 'userActivity', visible: true, focused: true });
@@ -47,7 +48,7 @@ export function runTutorialCourse({ now = Date.parse('2026-10-31T10:00:00Z'), th
       else throw new Error('Unknown course action: ' + lesson.subject);
     }
     if (!state.tutorial.completed[lesson.id]) throw new Error('Action failed to complete its lesson: ' + lesson.id);
-    if (!state.tutorial.claimed[lesson.id]) command({ type: 'claimTutorial', taskId: lesson.id });
+    if (!state.tutorial.claimed[lesson.id] && !state.tutorial.skippedLessons[lesson.id]) command({ type: 'claimTutorial', taskId: lesson.id });
     const chest = state.tutorial.chests[lesson.id];
     if (chest && !chest.shared && !chest.skipped) command({ type: 'skipTutorialShare', taskId: lesson.id });
     trace.push({ index: lesson.index, lessonId: lesson.id, action: lesson.subject, elapsedSeconds: (state.worldTimeMs - now) / 1000,

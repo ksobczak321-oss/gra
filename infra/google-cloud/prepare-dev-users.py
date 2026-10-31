@@ -299,6 +299,8 @@ def read_rule_release(cloud, desired):
             "Nieoczekiwany identyfikator reguł.")
     ruleset = cloud.request("GET", f"{RULES}/{name}")
     source = ruleset.get("source", {})
+    require(not any("HARBORLIGHT PRE-PROD API-only v1" in file.get("content", "") for file in source.get("files", []) if isinstance(file, dict)),
+            "PRE-PROD używa API-only po migracji/resetowaniu kont. Nie wolno przywrócić legacy zapisów Firestore; ten skrypt konfiguracji kont nie ma już zastosowania.")
     require(replaceable_rules(source, desired),
             "Istnieją niezarządzane reguły Firestore. Nie zastąpiono ich ani nie zmieniono danych.")
     return release, same_rules(source, desired)

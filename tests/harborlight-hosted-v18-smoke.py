@@ -75,23 +75,25 @@ def existing_identity(http, base, project, config, api_enabled=False):
         assert isinstance(uid,str) and isinstance(token,str) and isinstance(body.get('refreshToken'),str), 'Authentication did not return a session'
         if project == 'harborlight-dev':
             assert uid == 'dev-' + login and body.get('email') == email, 'PRE-PROD identity does not match its permanent UID'
+        if api_enabled or project != 'harborlight-dev':
+            # After the guarded PRE-PROD reset, direct Firestore reads are
+            # deliberately denied even to the owner. Read the same API route
+            # the game uses; never recreate an empty smoke world automatically.
+            response = http.get(base + '/api/v1/island', headers={'Authorization': 'Bearer ' + token}, timeout=30000, max_redirects=0)
+            assert response.status == 200, 'The enabled account API did not return the smoke island'
+            payload = read_json(response, 'Existing island')
+            assert payload.get('account', {}).get('expired') is not True, 'The smoke island expired; its owner must start it again'
+            if payload.get('island') is None:
+                continue
+            assert isinstance(payload['island'], dict) and isinstance(payload['island'].get('payload'), str), 'Existing API smoke island has no payload'
+        else:
             response = http.get('https://firestore.googleapis.com/v1/projects/' + project + '/databases/(default)/documents/islands/' + uid,
-                                headers={'Authorization':'Bearer ' + token}, timeout=30000, max_redirects=0)
+                                headers={'Authorization': 'Bearer ' + token}, timeout=30000, max_redirects=0)
             if response.status == 404:
                 continue
             assert response.status == 200, 'Could not read the existing smoke island'
-            document = read_json(response,'Existing island')
-            assert isinstance(document.get('fields',{}).get('payload',{}).get('stringValue'),str), 'Existing smoke island has no payload'
-            if api_enabled:
-                api_read = http.get(base+'/api/v1/island',headers={'Authorization':'Bearer '+token},timeout=30000,max_redirects=0)
-                assert api_read.status == 200 and isinstance(read_json(api_read,'Authenticated PRE-PROD API').get('island'),dict), 'Enabled PRE-PROD API could not read its existing island'
-        else:
-            response = http.get(base + '/api/v1/island',headers={'Authorization':'Bearer ' + token},timeout=30000,max_redirects=0)
-            assert response.status == 200, 'The enabled PROD account API did not return the smoke island'
-            payload = read_json(response,'Existing island')
-            assert payload.get('account',{}).get('expired') is not True, 'The PROD smoke island expired; its owner must start it again'
-            if payload.get('island') is None:
-                continue
+            document = read_json(response, 'Existing island')
+            assert isinstance(document.get('fields', {}).get('payload', {}).get('stringValue'), str), 'Existing smoke island has no payload'
         duration = int(body.get('expiresIn',0))
         assert 0 < duration <= 86400, 'Authentication expiry is invalid'
         # Time spent checking the existing island must not make our stored

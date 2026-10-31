@@ -60,6 +60,9 @@ jobs:
       - name: Test permanent DEV account preparation safety
         run: python3 tests/harborlight-dev-users.test.py
 
+      - name: Test guarded post-promotion PRE-PROD account reset
+        run: python3 tests/harborlight-preprod-reset.test.py
+
       - name: Test production domain preparation safety
         run: python3 tests/harborlight-domain.test.py
 
@@ -110,7 +113,7 @@ jobs:
           import subprocess
           import sys
 
-          for test in ('tests/harborlight-frontend-v17-smoke.py', 'tests/harborlight-frontend-v18-smoke.py', 'tests/harborlight-tutorial-v18-smoke.py', 'tests/harborlight-tutorial-v21-smoke.py'):
+          for test in ('tests/harborlight-frontend-v17-smoke.py', 'tests/harborlight-frontend-v18-smoke.py', 'tests/harborlight-tutorial-v18-smoke.py', 'tests/harborlight-tutorial-v21-smoke.py', 'tests/harborlight-tutorial-v22-smoke.py'):
               print('Starting browser acceptance: ' + test, flush=True)
               status = subprocess.call([sys.executable, '-u', test])
               if status:
@@ -172,6 +175,7 @@ jobs:
             /tmp/harborlight-v18-*.png
             /tmp/harborlight-v17-*.png
             /tmp/harborlight-v21-*.png
+            /tmp/harborlight-v22-*.png
           if-no-files-found: error
           retention-days: 7
 
@@ -184,5 +188,6 @@ jobs:
             ${{ runner.temp }}/harborlight-dev-browser.log
             /tmp/harborlight-dev-*.png
             /tmp/harborlight-v21-*.png
+            /tmp/harborlight-v22-*.png
           if-no-files-found: error
           retention-days: 7

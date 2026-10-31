@@ -108,6 +108,50 @@ class ConfigurationTests(unittest.TestCase):
                 {'apiKey': 'fixture-public-api-key-123'})
         self.assertEqual(result['expiresAt'], claims['exp'] * 1000)
 
+    def test_hosted_api_only_preprod_reads_existing_world_without_direct_firestore_or_writes(self):
+        current = 1_793_361_600
+        calls = []
+        class Response:
+            status = 200
+            def __init__(self, body): self.body = body
+            def json(self): return self.body
+        class Http:
+            def post(self, url, **options):
+                self_uid = 'dev-' + options['data']['email'].split('@')[0]
+                claims = {'sub': self_uid, 'aud': 'harborlight-dev', 'exp': current + 900}
+                encoded = base64.urlsafe_b64encode(json.dumps(claims).encode()).decode().rstrip('=')
+                calls.append(('POST', url))
+                return Response({'localId': self_uid, 'email': options['data']['email'],
+                    'idToken': 'header.' + encoded + '.signature', 'refreshToken': 'fixture-refresh', 'expiresIn': '3600'})
+            def get(self, url, **options):
+                calls.append(('GET', url))
+                assert url == 'https://harborlight-dev.web.app/api/v1/island'
+                uid = json.loads(base64.urlsafe_b64decode(options['headers']['Authorization'].split('.')[1] + '=='))['sub']
+                return Response({'account': {'expired': False, 'generation': 2},
+                    'island': None if uid == 'dev-admin1' else {'generation': 2, 'payload': '{"coins":100}'}})
+        with patch.object(HOSTED.time, 'time', return_value=current):
+            result = HOSTED.existing_identity(Http(), 'https://harborlight-dev.web.app', 'harborlight-dev',
+                {'apiKey': 'fixture-public-api-key-123'}, api_enabled=True)
+        self.assertEqual(result['uid'], 'dev-admin2')
+        self.assertEqual(len(calls), 4)
+        self.assertTrue(all('signInWithPassword' in url if method == 'POST' else url.endswith('/api/v1/island') for method, url in calls))
+
+    def test_hosted_api_only_preprod_never_starts_empty_worlds_for_acceptance(self):
+        class Response:
+            status = 200
+            def __init__(self, body): self.body = body
+            def json(self): return self.body
+        class Http:
+            def post(self, url, **options):
+                uid = 'dev-' + options['data']['email'].split('@')[0]
+                return Response({'localId': uid, 'email': options['data']['email'], 'idToken': 'fixture-token', 'refreshToken': 'fixture-refresh'})
+            def get(self, url, **options):
+                assert url == 'https://harborlight-dev.web.app/api/v1/island'
+                return Response({'account': {'expired': False}, 'island': None})
+        with self.assertRaisesRegex(AssertionError, 'No existing smoke island'):
+            HOSTED.existing_identity(Http(), 'https://harborlight-dev.web.app', 'harborlight-dev',
+                {'apiKey': 'fixture-public-api-key-123'}, api_enabled=True)
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

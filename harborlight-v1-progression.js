@@ -1,7 +1,7 @@
 // Persistent learning, meaningful activity and future verified social hooks.
 // No DOM, network requests or account creation happen in this module.
-import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v21';
-import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v21';
+import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v22';
+import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v22';
 
 export const ACTIVE_PLAY_SECONDS = 300;
 export const ABANDONED_PLAY_SECONDS = 48 * 3600;
@@ -80,7 +80,7 @@ function balancedLesson(id, index, title, titlePl, description, descriptionPl, k
 export const TUTORIAL_LESSONS = Object.freeze([
   balancedLesson('rules-read', 1, 'Assign a farmer and read the resource cards', 'Przydziel rolnika i poznaj karty zasobów', 'Assign one farmer. A resource card such as Stone 0 / 537 (0), +0/h means 0 local, 537 central, 0 in transit and a current net balance of 0 per hour.', 'Przydziel rolnika. Karta „Kamień 0 / 537 (0), +0/h” oznacza: 0 w magazynie lokalnym, 537 w centralnym, 0 w transporcie i bieżący bilans 0 sztuk na godzinę.', 'action', 'assign-farm', 'farm', 'small', null, '[data-worker-building="farm"][data-worker-delta="1"]'),
   balancedLesson('island-map', 2, 'Assign a Warehouse carrier', 'Przydziel tragarza do Magazynu', 'Assign one carrier to collect production and deliver building supplies. Your previous reward is already in central storage.', 'Przydziel tragarza, który odbierze produkcję i zawiezie materiały na budowy. Poprzednia premia jest już w magazynie centralnym.', 'action', 'assign-warehouse', 'warehouse', 'small', null, '[data-worker-building="warehouse"][data-worker-delta="1"]'),
-  balancedLesson('first-job', 3, 'Assign a lumber worker', 'Przydziel drwala', 'Assign one Lumber Camp worker. Each completed lesson grants a small immediate reward or funds the next real upgrade.', 'Przydziel jednego drwala. Każdy ukończony krok daje małą premię od razu albo środki na następną rzeczywistą rozbudowę.', 'action', 'assign-lumber', 'lumber', 'small', null, '[data-worker-building="lumber"][data-worker-delta="1"]'),
+  balancedLesson('first-job', 3, 'Assign a lumber worker', 'Przydziel drwala', 'Assign one Lumber Camp worker. Actions performed when taught grant a small immediate reward or funds for the next real upgrade. Actions already performed independently remove their step without a reward.', 'Przydziel jednego drwala. Działania wykonane według bieżącej lekcji dają małą premię od razu albo środki na następną rozbudowę. Kroki wykonane wcześniej samodzielnie znikają bez premii.', 'action', 'assign-lumber', 'lumber', 'small', null, '[data-worker-building="lumber"][data-worker-delta="1"]'),
   balancedLesson('food-check', 4, 'Assign a Windmill worker', 'Przydziel pracownika Młyna', 'A Windmill worker turns two central Grain into one Food. Residents consume Food, so production and delivery both matter.', 'Pracownik Młyna zamienia dwie sztuki zboża z centrali w jedną żywność. Mieszkańcy jedzą, dlatego potrzebna jest i produkcja, i dostawa.', 'action', 'assign-windmill', 'windmill', 'small', null, '[data-worker-building="windmill"][data-worker-delta="1"]'),
   balancedLesson('townhall-upgrade', 5, 'Order Town Hall level 2', 'Zleć Ratusz na poziom 2', 'Collect the one-time building budget, then order the Town Hall upgrade. Resources are reserved now and physically leave storage when carriers pick them up.', 'Odbierz jednorazowy budżet budowy i zleć rozbudowę Ratusza. Zasoby zostaną zarezerwowane, a fizycznie opuszczą magazyn po odebraniu przez tragarzy.', 'action', 'upgrade-townhall', 'townhall', 'coins', null, '[data-upgrade-building="townhall"]'),
   balancedLesson('happiness-action', 6, 'Prioritize construction transport', 'Nadaj priorytet transportowi na budowę', 'Choose Construction as a Warehouse priority so carriers supply the Town Hall instead of continually collecting production.', 'Wybierz Budowę jako priorytet Magazynu, aby tragarze dostarczali materiały do Ratusza zamiast stale odbierać produkcję.', 'action', 'transport-priority', 'warehouse', 'small', null, '[data-warehouse-priority="construction"]'),
@@ -101,10 +101,12 @@ export const TUTORIAL_LESSONS = Object.freeze([
   balancedLesson('lighthouse-visits', 21, 'Order Town Hall level 3', 'Zleć Ratusz na poziom 3', 'Spend your stored materials, including blessing bonuses, on Town Hall level 3. The population prerequisite starts with the later upgrade from 3 to 4.', 'Wydaj zgromadzone zasoby, w tym premie błogosławieństwa, na Ratusz 3. Warunek populacji dotyczy dopiero następnej rozbudowy z 3 na 4.', 'action', 'upgrade-townhall', 'townhall', 'coins', null, '[data-upgrade-building="townhall"]'),
   balancedLesson('lighthouse-task', 22, 'Finish Town Hall level 3', 'Dokończ Ratusz na poziomie 3', 'Wait for the Town Hall upgrade. Its reward covers only missing Lighthouse construction supplies.', 'Poczekaj na zakończenie Ratusza. Premia pokryje tylko brakujące materiały do odbudowy Latarni.', 'condition', 'building-townhall-3', 'townhall', 'supply', 'lighthouse'),
   balancedLesson('expedition-rules', 23, 'Start rebuilding the Lighthouse', 'Rozpocznij odbudowę Latarni', 'Commit the supplied materials to Lighthouse level 1. This large construction spends the last building budget.', 'Przeznacz dostarczone materiały na Latarnię 1. Ta duża budowa zużyje ostatni budżet budowlany.', 'action', 'upgrade-lighthouse', 'lighthouse', 'coins', null, '[data-upgrade-building="lighthouse"]'),
-  balancedLesson('returning-workers', 24, 'Finish the Lighthouse', 'Dokończ Latarnię', 'Finish delivery and construction. Previous rewards must be received before the final storage settlement.', 'Zakończ dostawy i budowę. Poprzednie premie muszą być odebrane przed końcowym rozliczeniem magazynu.', 'condition', 'building-lighthouse-1', 'lighthouse', 'coins'),
+  balancedLesson('returning-workers', 24, 'Finish the Lighthouse', 'Dokończ Latarnię', 'Finish delivery and construction. Receive the remaining tutorial rewards before final storage settlement; independently completed steps need no reward.', 'Zakończ dostawy i budowę. Przed końcowym rozliczeniem magazynu odbierz pozostałe premie samouczka; kroki wykonane samodzielnie nie wymagają premii.', 'condition', 'building-lighthouse-1', 'lighthouse', 'coins'),
   balancedLesson('island-review', 25, 'Finish with a full Warehouse', 'Zakończ z pełnym Magazynem', 'Review the final reward, then finish the tutorial. Free ordinary capacity is filled immediately; external bonus stock must first be spent on real island actions.', 'Sprawdź nagrodę końcową i zakończ samouczek. Wolna zwykła pojemność zostanie uzupełniona od razu; dodatkowe premie spoza kursu najpierw wydaj na prawdziwe działania wyspy.', 'action', 'finish-tutorial', 'tutorial', 'final', null, '[data-finish-tutorial]')
 ]);
 const lessonsFor = state => state.tutorial?.curriculum === 3 ? LEGACY_TUTORIAL_LESSONS : TUTORIAL_LESSONS;
+const achievedUpgradeTarget = (state, item) => item.subject.startsWith('upgrade-') && item.subject !== 'upgrade-road' &&
+  whole(state.buildings?.[item.subject.slice(8)]?.level) >= (item.goalLevel || ({ townhall: 2, farm: 2, house: 2, lighthouse: 1 })[item.subject.slice(8)] || Infinity);
 const LEGACY_IDS = ['island-level', 'residents-home', 'first-job', 'workplace-journey', 'resources-dock', 'warehouse-job', 'first-delivery', 'transport-priority', 'food-chain', 'central-food', 'personal-happiness', 'house-points', 'upgrade-cost', 'construction-queue', 'storage-limits', 'market-rules', 'lighthouse-visits', 'lighthouse-task', 'path-levels', 'daily-attractions', 'chapel-blessing', 'expedition-rules', 'returning-workers', 'motion-setting', 'island-review'];
 const LEGACY_MAPPING = Object.fromEntries(TUTORIAL_LESSONS.filter(item => LEGACY_IDS.includes(item.id)).map(item => [item.id, item.id]));
 Object.assign(LEGACY_MAPPING, { 'island-level': 'rules-read', 'central-food': 'food-check' });
@@ -113,6 +115,23 @@ delete LEGACY_MAPPING['expedition-rules'];
 const TUTORIAL_EVENT_IDS = ['assign-producer', 'assign-warehouse', 'transport-priority', 'task-accept', 'release-worker', 'motion-setting', 'upgrade-townhall', 'increase-happiness', 'upgrade-road', 'expedition-play', 'assign-farm', 'assign-windmill', 'assign-lumber', 'assign-quarry', 'assign-sawmill', 'house-points', 'notification-filter', 'upgrade-farm', 'upgrade-house', 'buy-attraction', 'chapel-blessing', 'market-order', 'upgrade-lighthouse', 'task-deposit'];
 function normalizedTrueMap(source, allowed = TUTORIAL_LESSONS.map(item => item.id)) {
   return Object.fromEntries(allowed.filter(id => source?.[id] === true).map(id => [id, true]));
+}
+const ACTION_SUBJECTS = [...new Set([...TUTORIAL_LESSONS, ...LEGACY_TUTORIAL_LESSONS].filter(item => item.kind === 'action').map(item => item.subject))].filter(subject => subject !== 'finish-tutorial');
+const prioritySignature = state => JSON.stringify(state.warehousePriorities || []);
+const notificationSignature = state => JSON.stringify(Object.entries(state.settings?.notificationCategories || {}).sort(([a], [b]) => a.localeCompare(b)));
+function lessonResolved(tutorial, id) {
+  const chest = tutorial.chests?.[id];
+  return tutorial.skippedLessons?.[id] === true || tutorial.completed?.[id] === true && tutorial.claimed?.[id] === true && (chest?.skipped || chest?.shared);
+}
+function prerequisiteReady(state, item) {
+  return !item.prerequisite || state.tutorial.completed[item.prerequisite] === true && (state.tutorial.curriculum !== 4 || lessonResolved(state.tutorial, item.prerequisite));
+}
+function skipKnownLesson(state, item) {
+  // A rolled or paid reward is history. Independent later actions never remove it.
+  if (state.tutorial.completed[item.id] || state.tutorial.claimed[item.id] || state.tutorial.chests[item.id]) return false;
+  state.tutorial.skippedLessons[item.id] = true;
+  state.tutorial.completed[item.id] = true;
+  return true;
 }
 function tutorialRandom(state) {
   let value = state.tutorial.seed >>> 0;
@@ -143,7 +162,16 @@ function normalizeTutorial(state, tutorial, now) {
     conditionBaselines: Object.fromEntries(['collected','crafted'].filter(key => Object.hasOwn(tutorial.conditionBaselines || {}, key)).map(key => [key, whole(tutorial.conditionBaselines[key])])),
     chests: {}, legacy, settled: tutorial.settled === true, rewardDisabled: tutorial.rewardDisabled === true,
     buildingSuppliesClaimed: tutorial.buildingSuppliesClaimed === true, autoOpenDisabled: tutorial.autoOpenDisabled === true || tutorial.rewardDisabled === true };
+  state.tutorial.skippedLessons = normalizedTrueMap(tutorial.skippedLessons);
+  const ledger = plain(tutorial.actionLedger) ? tutorial.actionLedger : {};
+  state.tutorial.actionLedger = { version: 1,
+    counts: Object.fromEntries(ACTION_SUBJECTS.filter(subject => whole(ledger.counts?.[subject]) > 0).map(subject => [subject, whole(ledger.counts[subject])])),
+    tradeReceipts: [...new Set((Array.isArray(ledger.tradeReceipts) ? ledger.tradeReceipts : []).map(textId).filter(Boolean))].slice(-100),
+    priorities: typeof ledger.priorities === 'string' ? ledger.priorities : prioritySignature(state),
+    notificationCategories: typeof ledger.notificationCategories === 'string' ? ledger.notificationCategories : notificationSignature(state) };
   for (const item of lessonsFor(state)) {
+    if (state.tutorial.skippedLessons[item.id] && !claimed[item.id] && !tutorial.chests?.[item.id]) { completed[item.id] = true; continue; }
+    delete state.tutorial.skippedLessons[item.id];
     if (claimed[item.id]) completed[item.id] = true;
     const source = modern && plain(tutorial.chests?.[item.id]) ? tutorial.chests[item.id] : null;
     if (!source) continue;
@@ -153,10 +181,37 @@ function normalizeTutorial(state, tutorial, now) {
     state.tutorial.chests[item.id] = { reward, quotePending: curriculum === 4 && source.quotePending === true, claimed: claimed[item.id] === true, shared: source.shared === true && claimed[item.id] === true,
       skipped: source.skipped === true && source.shared !== true && claimed[item.id] === true, seen: source.seen === true };
   }
+  if (modern && tutorial.version && ledger.version !== 1 && !state.tutorial.rewardDisabled && !introductionPending(state)) migrateKnownTutorialActions(state);
+}
+
+function migrateKnownTutorialActions(state) {
+  const tutorial = state.tutorial, lessons = lessonsFor(state), counts = tutorial.actionLedger.counts;
+  const known = (subject, count = 1) => {
+    const spent = lessons.filter(item => item.subject === subject && tutorial.completed[item.id]).length;
+    counts[subject] = Math.max(whole(counts[subject]), count);
+    for (const item of lessons.filter(item => item.subject === subject && !tutorial.completed[item.id]).slice(0, Math.max(0, count - spent))) skipKnownLesson(state, item);
+  };
+  for (const building of [...PRODUCERS, 'warehouse']) {
+    const assigned = (state.residents || []).filter(person => person.workplace === building && !person.pendingRelease).length;
+    if (assigned > 0) known(`assign-${building}`, assigned);
+  }
+  // Manual and automatic House allocations share a notification kind, but the
+  // automatic message explicitly says "remaining". Pool depletion alone is
+  // not proof of a player's action and is deliberately not migrated.
+  if ((state.notifications || []).some(item => item.kind === 'house-happiness' && (/^\d+ happiness points were given to \d+ residents\.$/.test(item.message) || /^Resident \d+ received \d+ happiness points\.$/.test(item.message)))) { known('house-points'); known('increase-happiness'); }
+  if (state.dailyBlessingDay || whole(state.blessingsUsed) > 0) { known('chapel-blessing'); known('increase-happiness'); }
+  if (whole(state.paths) > 0 || (state.roads?.segments || []).some(level => whole(level) > 0)) known('upgrade-road');
+  if ((state.warehousePriorities || []).length) known('transport-priority');
+  if (Object.keys(state.settings?.notificationCategories || {}).length) known('notification-filter');
+  for (const item of lessons) {
+    if (!item.subject.startsWith('upgrade-') || item.subject === 'upgrade-road') continue;
+    const building = item.subject.slice(8), target = item.goalLevel || whole(state.buildings?.[building]?.level) + 1;
+    if ((state.constructionProjects || []).some(project => project.building === building && project.stage !== 'planned' && whole(project.targetLevel) === target)) skipKnownLesson(state, item);
+  }
 }
 
 function ensure(state) {
-  if (!plain(state.engagement) || !plain(state.tutorial) || state.tutorial.version !== TUTORIAL_VERSION || !plain(state.tutorial.conditionBaselines) || !plain(state.socialRewards) || !plain(state.referrals) || !plain(state.loyalty)) normalizeProgression(state, state);
+  if (!plain(state.engagement) || !plain(state.tutorial) || state.tutorial.version !== TUTORIAL_VERSION || !plain(state.tutorial.conditionBaselines) || !plain(state.tutorial.skippedLessons) || !plain(state.tutorial.actionLedger) || !plain(state.socialRewards) || !plain(state.referrals) || !plain(state.loyalty)) normalizeProgression(state, state);
 }
 
 function normalizeLoyaltyReward(value) {
@@ -278,8 +333,13 @@ function completeLessons(state) {
     changed = false;
     for (const item of lessonsFor(state)) {
       if (state.tutorial.completed[item.id]) continue;
-      if (item.prerequisite && !state.tutorial.completed[item.prerequisite]) continue;
-      if (state.tutorial.curriculum === 4 && item.prerequisite && (!state.tutorial.claimed[item.prerequisite] || !state.tutorial.chests[item.prerequisite]?.skipped && !state.tutorial.chests[item.prerequisite]?.shared)) continue;
+      // Building levels are durable evidence, unlike an unrecorded old click.
+      // Do not ask someone who already built a target to buy that level again.
+      if ((!state.tutorial.events[item.id] && achievedUpgradeTarget(state, item)) ||
+          (item.subject.startsWith('building-') && !prerequisiteReady(state, item) && lessonRequirement(state, item))) {
+        if (skipKnownLesson(state, item)) { changed = true; continue; }
+      }
+      if (!prerequisiteReady(state, item)) continue;
       if (item.kind === 'condition' && ['delivery','crafted'].includes(item.subject)) {
         const key = item.subject === 'delivery' ? 'collected' : 'crafted';
         if (!Object.hasOwn(state.tutorial.conditionBaselines, key)) state.tutorial.conditionBaselines[key] = whole(state.statistics?.[key]);
@@ -294,7 +354,7 @@ function completeLessons(state) {
   // A mapped old completion may still have an unclaimed old reward. Its new
   // chest is rolled once and remains stable, while an already-paid reward is
   // archived and is never paid again.
-  for (const item of lessonsFor(state)) if (state.tutorial.completed[item.id] && !state.tutorial.claimed[item.id] && !state.tutorial.chests[item.id]) {
+  for (const item of lessonsFor(state)) if (state.tutorial.completed[item.id] && !state.tutorial.skippedLessons[item.id] && !state.tutorial.claimed[item.id] && !state.tutorial.chests[item.id]) {
     state.tutorial.chests[item.id] = { reward: chestReward(state, item), quotePending: state.tutorial.curriculum === 4, claimed: false, shared: false, skipped: false, seen: false };
   }
 }
@@ -302,16 +362,16 @@ export function tutorialRows(state) {
   const tutorial = state.tutorial || { completed: {}, claimed: {}, events: {}, chests: {} };
   return lessonsFor(state).map(item => {
     const balanced = tutorial.curriculum === 4;
-    const previous = item.prerequisite && tutorial.chests?.[item.prerequisite];
-    const prerequisiteMet = !item.prerequisite || tutorial.completed[item.prerequisite] === true && (!balanced || tutorial.claimed[item.prerequisite] && (previous?.skipped || previous?.shared));
+    const prerequisiteMet = !item.prerequisite || tutorial.completed[item.prerequisite] === true && (!balanced || lessonResolved(tutorial, item.prerequisite));
     const completed = tutorial.completed[item.id] === true, claimed = tutorial.claimed[item.id] === true;
     const chest = tutorial.chests?.[item.id];
     const overfull = !balanced && tutorialWarehouseOverfull(state);
-    return { ...item, balanced, pendingDecision: balanced && claimed && !!chest && !chest.skipped && !chest.shared,
+    const autoSkipped = tutorial.skippedLessons?.[item.id] === true;
+    return { ...item, balanced, autoSkipped, pendingDecision: !autoSkipped && balanced && claimed && !!chest && !chest.skipped && !chest.shared,
       settlement: balanced && item.subject === 'finish-tutorial' ? tutorialSettlementStatus(state) : null,
       reward: chest ? { ...chest.reward } : {}, rewardRange: balanced ? null : { minimum: TUTORIAL_CHEST_MIN, maximum: TUTORIAL_CHEST_MAX, eachMaterial: true }, unlocked: prerequisiteMet || completed, prerequisiteMet, completed, claimed,
       visited: hasVisit(state, item), canObserve: false,
-      canClaim: !tutorial.rewardDisabled && prerequisiteMet && completed && !claimed && !!chest && !overfull,
+      canClaim: !autoSkipped && !tutorial.rewardDisabled && prerequisiteMet && completed && !claimed && !!chest && !overfull,
       rewardBlocked: completed && !claimed && !!chest && overfull,
       shared: chest?.shared === true, skipped: chest?.skipped === true,
       canShare: !balanced && claimed && !!chest && !chest.shared && !chest.skipped && !overfull,
@@ -326,6 +386,7 @@ export function tutorialPendingRewards(state) {
 export function tutorialStatus(state) {
   const rows = tutorialRows(state), completed = rows.filter(row => row.completed).length;
   return { completed, claimed: rows.filter(row => row.claimed).length, total: TUTORIAL_LESSONS.length, finished: completed === TUTORIAL_LESSONS.length,
+    skipped: rows.filter(row => row.autoSkipped).length, visibleTotal: rows.filter(row => !row.autoSkipped).length, visibleCompleted: rows.filter(row => !row.autoSkipped && row.completed).length,
     autoOpenDisabled: state.tutorial?.autoOpenDisabled === true, shouldAutoOpen: !state.tutorial?.rewardDisabled && !introductionPending(state) && completed < TUTORIAL_LESSONS.length && state.tutorial?.autoOpenDisabled !== true,
     nextLessonId: rows.find(row => !row.completed)?.id || null, buildingSuppliesClaimed: state.tutorial?.buildingSuppliesClaimed === true };
 }
@@ -333,29 +394,45 @@ export function recordProgressionAction(state, action, result) {
   if (introductionPending(state)) return;
   if (result?.ok !== true || !action || typeof action !== 'object' || action.meaningful === false || action.type === 'expeditionMiniGameInput') return;
   ensure(state);
-  const current = lessonsFor(state).find(item => !state.tutorial.completed[item.id]);
-  const currentRow = current && tutorialRows(state).find(row => row.id === current.id);
-  if (!state.tutorial.rewardDisabled && current && currentRow.prerequisiteMet) {
-    const assigned = building => action.type === 'assign' && action.delta > 0 && action.building === building;
-    const upgraded = building => ['upgrade', 'build', 'premiumBuyBuilding'].includes(action.type) && action.building === building;
-    const match = current.subject.startsWith('assign-') ? assigned(current.subject.slice(7)) :
-      current.subject.startsWith('upgrade-') && current.subject !== 'upgrade-road' ? upgraded(current.subject.slice(8)) :
-      current.subject === 'increase-happiness' ? ['houseHappiness', 'giveHouseHappiness', 'houseHappinessAll', 'blessing', 'paidBlessing', 'adBlessing', 'buyAttraction'].includes(action.type) :
-      current.subject === 'house-points' ? ['houseHappiness', 'giveHouseHappiness', 'houseHappinessAll'].includes(action.type) :
-      current.subject === 'notification-filter' ? action.type === 'setting' && action.key === 'notificationCategories' :
-      current.subject === 'transport-priority' ? action.type === 'warehousePriority' && (state.warehousePriorities || []).length > 0 :
-      current.subject === 'upgrade-road' ? action.type === 'upgradeRoad' :
-      current.subject === 'buy-attraction' ? action.type === 'buyAttraction' :
-      current.subject === 'chapel-blessing' ? ['blessing', 'paidBlessing', 'adBlessing'].includes(action.type) :
-      current.subject === 'market-order' ? action.type === 'marketOrder' :
-      current.subject === 'task-accept' ? action.type === 'confirmTaskAcceptance' || action.type === 'taskAccept' && (state.lighthouseTasks || []).some(task => task.id === state.activeTaskId && task.acceptedAt != null) :
-      current.subject === 'expedition-play' ? action.type === 'expeditionStart' :
-      current.subject === 'release-worker' ? action.type === 'assign' && action.delta < 0 :
-      current.subject === 'task-deposit' ? action.type === 'taskDeposit' && action.amount > 0 : false;
-    if (match) state.tutorial.events[current.id] = true;
-  }
+  if (!state.tutorial.rewardDisabled && result.tutorialEvidenceRecorded !== true) recordTutorialEvidence(state, action, result);
   completeLessons(state);
   settleLoyaltyClosure(state);
+}
+
+function recordTutorialEvidence(state, action, result) {
+  const tutorial = state.tutorial, ledger = tutorial.actionLedger, lessons = lessonsFor(state);
+  const current = lessons.find(item => !tutorial.completed[item.id]);
+  const evidence = [];
+  const add = (subject, units = 1, targetLevel = null) => evidence.push({ subject, units, targetLevel });
+  if (action.type === 'assign' && action.delta > 0) add(`assign-${action.building}`, whole(action.delta));
+  if (['upgrade', 'build', 'premiumBuyBuilding'].includes(action.type) && result.project?.stage !== 'planned') {
+    const target = whole(result.project?.targetLevel, whole(state.buildings?.[action.building]?.level) + 1);
+    add(`upgrade-${action.building}`, 1, target);
+  }
+  if (['houseHappiness', 'giveHouseHappiness', 'houseHappinessAll'].includes(action.type)) { add('house-points'); add('increase-happiness'); }
+  if (['blessing', 'paidBlessing', 'adBlessing'].includes(action.type)) { add('chapel-blessing'); add('increase-happiness'); }
+  if (action.type === 'buyAttraction') { add('buy-attraction'); add('increase-happiness'); }
+  if (action.type === 'setting' && action.key === 'notificationCategories' && ledger.notificationCategories !== notificationSignature(state)) add('notification-filter');
+  if (action.type === 'warehousePriority' && ledger.priorities !== prioritySignature(state) && (state.warehousePriorities || []).length > 0) add('transport-priority');
+  if (action.type === 'upgradeRoad') add('upgrade-road');
+  if (action.type === 'marketOrder' || action.type === 'tutorialPlayerTrade') add('market-order');
+  if (action.type === 'confirmTaskAcceptance' || action.type === 'taskAccept' && (state.lighthouseTasks || []).some(task => task.id === state.activeTaskId && task.acceptedAt != null)) add('task-accept');
+  if (action.type === 'expeditionStart') add('expedition-play');
+  if (action.type === 'assign' && action.delta < 0) add('release-worker', whole(-action.delta));
+  if (action.type === 'taskDeposit' && action.amount > 0) add('task-deposit');
+  ledger.priorities = prioritySignature(state);
+  ledger.notificationCategories = notificationSignature(state);
+  for (const proof of evidence) {
+    if (!ACTION_SUBJECTS.includes(proof.subject)) continue;
+    ledger.counts[proof.subject] = Math.min(Number.MAX_SAFE_INTEGER, whole(ledger.counts[proof.subject]) + proof.units);
+    // Each actual worker can satisfy only one repeated +1 lesson. An order for
+    // Town Hall 2 likewise cannot stand in for the later Town Hall 3 order.
+    const matching = lessons.filter(item => !tutorial.completed[item.id] && item.subject === proof.subject && (!item.goalLevel || item.goalLevel === proof.targetLevel));
+    for (const item of matching.slice(0, proof.units)) {
+      if (current?.id === item.id && prerequisiteReady(state, item)) tutorial.events[item.id] = true;
+      else skipKnownLesson(state, item);
+    }
+  }
 }
 
 export function tutorialWarehouseOverfull(state) {
@@ -409,7 +486,7 @@ export function tutorialSettlementStatus(state) {
   const blocked = (reasonCode, reason, reasonPl) => ({ ...result, reasonCode, reason, reasonPl });
   if (tutorial.curriculum !== 4 || tutorial.rewardDisabled) return blocked('disabled', 'This tutorial settlement is not available for this island.', 'To rozliczenie samouczka nie jest dostępne dla tej wyspy.');
   if (tutorial.settled) return blocked('settled', 'The tutorial has already been settled.', 'Samouczek został już rozliczony.');
-  if (TUTORIAL_LESSONS.slice(0, 24).some(row => !tutorial.completed?.[row.id] || !tutorial.claimed?.[row.id] || !tutorial.chests?.[row.id]?.skipped && !tutorial.chests?.[row.id]?.shared)) return blocked('previous-rewards', 'Finish the first 24 lessons and receive each reward.', 'Ukończ pierwsze 24 kroki i odbierz każdą premię.');
+  if (TUTORIAL_LESSONS.slice(0, 24).some(row => !lessonResolved(tutorial, row.id))) return blocked('previous-rewards', 'Finish the first 24 lessons and receive rewards for the steps taught by the tutorial. Independently completed steps need no reward.', 'Ukończ pierwsze 24 kroki i odbierz premie za kroki wykonane w samouczku. Kroki wykonane samodzielnie nie wymagają premii.');
   if (MATERIALS.some(id => nonnegative(state.bonusMaterials?.[id]) > EPS)) return blocked('bonus-stock', 'Spend additional bonus materials on real island actions before finishing. No stock will be removed or converted.', 'Wydaj dodatkowe materiały bonusowe na prawdziwe działania wyspy. Żadne zasoby nie zostaną usunięte ani zamienione.');
   if (MATERIALS.some(id => centralReserved(state, id) > EPS)) return blocked('reserved-stock', 'Let reserved building or trade goods leave storage before finishing.', 'Poczekaj, aż zarezerwowane towary budowy lub handlu opuszczą magazyn.');
   if (result.used > limits.total + EPS || MATERIALS.some(id => ordinaryStock(state, id) > limits.perResource + EPS)) return blocked('ordinary-stock', 'Spend ordinary stock exceeding the Warehouse limits before finishing.', 'Wydaj zwykły zapas przekraczający limity Magazynu.');
@@ -620,10 +697,12 @@ export function progressionAction(state, action, context = {}) {
   }
   if (action.type === 'tutorialPlayerTrade') {
     if (context.playerTradeVerified !== true) return bad('A confirmed player trade is required.');
-    const current = tutorialRows(state).find(row => !row.completed);
-    if (state.tutorial.curriculum !== 3 || current?.subject !== 'market-order' || !current.prerequisiteMet) return bad('This player trade does not match the current tutorial lesson.');
-    state.tutorial.events[current.id] = true; completeLessons(state);
-    return good('Your confirmed player trade completed the Market tutorial lesson.');
+    if (state.tutorial.curriculum !== 3 || !lessonsFor(state).some(item => item.subject === 'market-order' && !state.tutorial.completed[item.id])) return bad('This player trade does not match an unfinished tutorial lesson.');
+    const receiptId = textId(action.receiptId);
+    if (receiptId && state.tutorial.actionLedger.tradeReceipts.includes(receiptId)) return bad('This player trade was already recorded.');
+    if (receiptId) state.tutorial.actionLedger.tradeReceipts.push(receiptId);
+    recordTutorialEvidence(state, action, { ok: true }); completeLessons(state);
+    return good('Your confirmed player trade resolved the Market tutorial lesson.', { tutorialEvidenceRecorded: true });
   }
   if (action.type === 'userActivity' || action.type === 'heartbeat') {
     if (!registerMeaningfulActivity(state, action)) return bad('Activity must come from the visible, focused game.');
