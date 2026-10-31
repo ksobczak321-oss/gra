@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { createState, normalizeState, onboardingStatus, act, tick, advanceTo, recordVisit, islandCalendar, welcomeStatus, requestUpgrade } from '../harborlight-v1-state.js';
 import { tutorialStatus, registerMeaningfulActivity, recordProgressionLogin } from '../harborlight-v1-progression.js';
 import { advanceEngagementSchedule } from '../harborlight-v1-engagement.js';
+import { nextWarsawMidnightMs } from '../harborlight-v1-calendar.js';
 
 const NOW = Date.parse('2026-10-30T21:40:00Z');
 const HOUR = 3600000;
@@ -100,6 +101,27 @@ test('finishing or leaving the tour starts day one once at the real completion t
   assert.equal(advanceTo(state, start + 60 * 1000), 60);
   assert.equal(state.activityClock, 60);
   assert.ok(state.resources.food < goods.food, 'ordinary food consumption starts after the tour');
+});
+
+test('starting after a long introduction anchors daily House and attraction renewals without missed-day rewards', () => {
+  const state = starter();
+  const points = state.houseHappinessPool.points;
+  const generation = state.houseHappinessPool.generation;
+  const offers = structuredClone(state.leisure.offers);
+  nameIsland(state);
+  const at = NOW + 100 * HOUR;
+  assert.equal(act(state, { type: 'onboardingFinish' }, at).ok, true);
+  const midnight = nextWarsawMidnightMs(at);
+  assert.equal(state.houseHappinessPool.nextRefreshAt, midnight);
+  assert.equal(state.houseHappinessPool.refreshRemaining, (midnight - at) / 1000);
+  assert.equal(state.leisure.clockMs, at);
+  assert.equal(state.leisure.nextRotationAt, midnight);
+  assert.equal(state.leisure.rotationRemaining, (midnight - at) / 1000);
+  advanceTo(state, at + 1000);
+  assert.equal(state.houseHappinessPool.points, points);
+  assert.equal(state.houseHappinessPool.generation, generation);
+  assert.deepEqual(state.leisure.offers, offers);
+  assert.equal(state.leisure.clockMs, state.worldTimeMs);
 });
 
 test('legacy cloud islands retain their tutorial, resources and crew without introductory replay', () => {

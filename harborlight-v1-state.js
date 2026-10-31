@@ -166,6 +166,15 @@ function startOnboardedWorld(state, now) {
   shift(state.ranking, ['at']);
   state.nextRankingAt = (Math.floor(at / 3600000) + 1) * 3600000;
   state.calendar = { startDay: warsawDayKey(at), year: Number(warsawParts(at).year) };
+  // Daily offers and House points still renew at Warsaw midnight. Moving the
+  // world start must not leave their old absolute dates behind or grant missed
+  // days immediately when a player resumes an unfinished introduction.
+  if (state.leisure) {
+    state.leisure.clockMs = at;
+    state.leisure.nextRotationAt = nextWarsawMidnightMs(at);
+    state.leisure.rotationRemaining = (state.leisure.nextRotationAt - at) / 1000;
+  }
+  normalizeHouseHappiness(state, state);
   const calendar = islandCalendar(state);
   state.day = calendar.day;
   state.minutes = calendar.hour * 60 + calendar.minute + calendar.second / 60;
