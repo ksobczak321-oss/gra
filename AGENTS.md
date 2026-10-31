@@ -49,4 +49,6 @@ Kontrakt promocji: [docs/RELEASE-PROCESS.md](docs/RELEASE-PROCESS.md).
 
 - Pilna poprawka 0.9.1.2 ma tag rejestru `pilne`. Właściciel jawnie zlecił automatyczny PRE-PROD po sukcesie DEV/CI; wąski workflow_run bridge obsługuje tylko marker `[preprod:0.9.1.2]` i dispatch istniejącego google-cloud-dev.yml. Nie przesuwaj main do potwierdzenia źródła deployu. Brak OIDC w bridge, bez zmian blokad WIF/CI i bez PROD/resetu. Dowody własnych przebiegów i tag Git urgent-0.9.1.2-20261031 potwierdź odrębnie.
 
-- Odbiór DEV v24/0.10.0.0: kod `351baaf6b21386b2f2641875269e6f7d9c2d44fd`, CI41237587670 SUCCESS (4m46s), Pages41237587641 SUCCESS (23s), tag `dev-0.10.0.0-20261031`. Lokalnie878Node+141Python+16zestawówChromium PASS, 54pliki z manifestem. [Pełny dowód](docs/DEV-0.10.0.0-VALIDATION.md). PRE-PROD nadal0.9.1.2/3be1f9d…; bez migracji GCP, resetu i PROD.
+- Pierwszy odbiór DEV v24/0.10.0.0: kod `351baaf6b21386b2f2641875269e6f7d9c2d44fd`, CI41237587670 SUCCESS (4m46s), Pages41237587641 SUCCESS (23s), tag `dev-0.10.0.0-20261031`. Lokalnie878Node+141Python+16zestawówChromium PASS, 54pliki z manifestem. [Pełny dowód](docs/DEV-0.10.0.0-VALIDATION.md). PRE-PROD nadal0.9.1.2/3be1f9d…; bez migracji GCP, resetu i PROD.
+
+- Końcowy DEV v24/0.10.0.0 z pełnymi komunikatami PL: `1b3de32869c8164ed8d0b85df7ea743ca76a3719`, CI41238818669 SUCCESS(5m15s), Pages41238818743 SUCCESS(24s), tag `dev-0.10.0.0-pl-20261031`, cache frontend-v24-2. Wcześniejszego tagu nie przesuwano.256kart/50ręcznych NOT RUN; PRE-PROD nadal0.9.1.2, bez resetu i PROD.

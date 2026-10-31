@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `targeted_packaged_browser_pass` |
-| CI | `not_run_for_change` |
+| CI | `passed` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted_scope_bugfix` |
@@ -35,12 +35,15 @@ Data pierwotnej wiadomości: 2026-10-31. Przegląd końcowy wdrażanego DEV, bez
 
 ## Dowody
 
-- **Dokumenty:** [docs/DEV-0.10.0.0-VALIDATION.md](../../DEV-0.10.0.0-VALIDATION.md)
+- **Dokumenty:** [docs/DEV-0.10.0.0-VALIDATION.md](../../DEV-0.10.0.0-VALIDATION.md), [docs/testing/manual/HL-TC-0034.md](../../testing/manual/HL-TC-0034.md), [docs/testing/manual/HL-TC-0035.md](../../testing/manual/HL-TC-0035.md)
 - **Kod:** [harborlight-v1-i18n.js](../../../harborlight-v1-i18n.js), [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-layered.html](../../../harborlight-v1-layered.html)
 - **Scenariusze automatyczne:** [tests/harborlight-v15-i18n.test.mjs](../../../tests/harborlight-v15-i18n.test.mjs), [tests/harborlight-v21-features-smoke.py](../../../tests/harborlight-v21-features-smoke.py)
+- **Kod dowodowy:** `1b3de32869c8164ed8d0b85df7ea743ca76a3719`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41238818669.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Uzupełniono PL odmowy i dynamiczny próg Ratusza.12testów i18n,12pakowania i cały scenariusz archipelagu na nowym pakiecie PASS, w tym rzeczywiste odmowy przy12osobach i braku drewna. WłasneCI/Pages nowego źródła wymagają odrębnego potwierdzenia. Poprzedni tag DEV pozostaje historyczny i nie jest przesuwany.
+Uzupełniono PL odmowy i dynamiczny próg Ratusza.12testów i18n,12pakowania i cały scenariusz archipelagu na nowym pakiecie PASS, w tym rzeczywiste odmowy przy12osobach i braku drewna. Własne CI/Pages źródła potwierdzono poniżej. Poprzedni tag DEV pozostaje historyczny i nie jest przesuwany.
+Końcowe źródło:1b3de32869c8164ed8d0b85df7ea743ca76a3719; CI41238818669 i Pages41238818743 SUCCESS, tag dev-0.10.0.0-pl-20261031, cache frontend-v24-2. Powtórny pełny Node878/0FAIL i12pakowania PASS; własny CI zaliczył także16zestawów Chromium; wszystkie16ponowiono lokalnie z wynikiem PASS. Wcześniejsze tagi zachowano, bez GCP/resetu.
 
 ## Relacje
 

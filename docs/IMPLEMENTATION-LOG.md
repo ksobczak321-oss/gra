@@ -792,3 +792,7 @@ Wykryto brak polskich tłumaczeń nowych komunikatów odmowy kolonizacji i przew
 Uzupełnienie ma osobną kartę HL-CHG-0034. Bieżący rejestr:256zmian/50przypadków ręcznych,306kart importera; wcześniejsze liczby255/305 są historią pierwszego źródła.
 
 UzupełnieniePL obejmuje także etykiety kosztów i ładunków; nazwy nadane wyspom pozostają wyłączone z tłumaczenia. Końcowy cache tej korekty:frontend-v24-2.
+
+Końcowe źródło PL:`1b3de32869c8164ed8d0b85df7ea743ca76a3719`, CI41238818669 SUCCESS(5m15s), Pages41238818743 SUCCESS(24s). Tag `dev-0.10.0.0-pl-20261031` bez przesuwania pierwszego tagu. Archiwum78d62aee489b7f8ea529b4a7e7435a430f463dd5fa9b7201e5c2fbe55925d51b, manifest8c1a4fa8f4c20d94037f647e19009bbe2e8376b406f6e7fb7de1f193cab93174,54pliki/10 955 440bajtów. Ponownie878Node PASS oraz12pakowania;16zestawów Chromium i141Python są wymagane i zaliczone w nowym CI. Bez zmian GCP/historii kont.
+
+Końcowy lokalny odbiór pakietuPL:wszystkie16zestawówChromium PASS, bez wyjątków; pliki zawartości identyczne z archiwum rzeczywistegoSHA1b3de328…. Importer306kart nadal wyłącznie dry-run.

@@ -1,4 +1,16 @@
-# Odbiór DEV 0.10.0.0
+# Końcowy odbiór DEV 0.10.0.0, PL
+
+Źródło:`1b3de32869c8164ed8d0b85df7ea743ca76a3719`. [CI41238818669 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41238818669) (5min15s), [Pages41238818743 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41238818743) (24s). Adnotowany tag `dev-0.10.0.0-pl-20261031` wskazuje ten kod; wcześniejszego tagu nie przesuwano. Cache frontend-v24-2. Bez promocji GCP lub resetu.
+
+Po uzupełnieniu odmów i polskich etykiet ponownie878testów Node PASS,12pakowania PASS; pełne CI wykonuje141kontroliPython i16zestawówChromium. Rzeczywisty scenariusz archipelagu obejmuje odmowy przy12osobach, braku drewna i polskie etykiety kosztów.Wszystkie16końcowych zestawów Chromium ponowiono także lokalnie na identycznym pakiecie:PASS. Ten wynik jest odrębny od potwierdzonego CI.
+
+Pakiet dokładnego SHA:54pliki/10 955 440bajtów. SHA-256archiwum:`78d62aee489b7f8ea529b4a7e7435a430f463dd5fa9b7201e5c2fbe55925d51b`, manifestu:`8c1a4fa8f4c20d94037f647e19009bbe2e8376b406f6e7fb7de1f193cab93174`. Weryfikacja archiwum PASS;53pliki zawartości zgodne bajtowo z końcowym pakietem przeglądarkowym. Techniczny zerowy SHA preflight nie jest źródłem wydania.
+
+Rejestr256zmian/50ręcznych scenariuszy NOT RUN. Native Issues nie publikowano. Realne przelewy, integracja fizyczna online, migracja GCP i reset nie były wykonywane. Poniższy wcześniejszy odbiór351baaf… jest zachowaną historią.
+
+---
+
+# Pierwszy odebrany kandydat DEV 0.10.0.0
 
 Źródło aplikacji: `351baaf6b21386b2f2641875269e6f7d9c2d44fd`. [Commit w Git](https://github.com/ksobczak321-oss/gra/commit/351baaf6b21386b2f2641875269e6f7d9c2d44fd).
 
