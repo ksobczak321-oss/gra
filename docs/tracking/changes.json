@@ -1569,6 +1569,65 @@
       "notes": []
     },
     {
+      "id": "HL-CHG-0031",
+      "epic": "HL-EPIC-UI",
+      "area": "Interfejs i wprowadzenie",
+      "type": "Story",
+      "title": "Wybór języka PL/EN przy pierwszym wprowadzeniu i nazwie wyspy",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Wybór języka PL/EN przy pierwszym wprowadzeniu i nazwie wyspy",
+        "reference": "user_chat:urgent_language_2026_10_31"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_local",
+        "ci": "awaiting_current_release",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "W pierwszym wprowadzeniu po zalogowaniu oraz na etapie nadawania nazwy dostępny jest czytelny wybór polskiego i angielskiego.",
+        "Przełączenie od razu tłumaczy ekran, zachowuje wpisaną nazwę i etap, nie uruchamia czasu wyspy i nie resetuje historii.",
+        "Preferencja języka pozostaje zgodna z dalszym oprowadzaniem i zwykłymi ustawieniami, także po odświeżeniu; działanie jest odbierane na komputerze i telefonie."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0623",
+        "HL-CHG-0713"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+        ],
+        "code": [
+          "harborlight-v1-onboarding-ui.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-onboarding-v20-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Pilny zakres DEV → własne CI → PRE-PROD. Testy i rzeczywista promocja wymagają odrębnego potwierdzenia; nie resetujemy kont.",
+        "Użytkownik zlecił tag pilne i bezpośrednią promocję PRE-PROD po sukcesie DEV/CI. Weryfikacja i rzeczywista promocja są osobnymi stanami.",
+        "Lokalnie: 739 testów Node PASS (w tym 9 bridge), 13 scenariuszy onboarding Chromium PASS, Settings PL/EN komputer/telefon PASS, 12 testów pakowania i 18 importera PASS. Przerwany zapis zachowuje spójny język i draft, odzyskanie wykonuje jeden zapis bez resetu."
+      ],
+      "tags": [
+        "pilne"
+      ]
+    },
+    {
       "id": "HL-CHG-0040",
       "epic": "HL-EPIC-TUT",
       "area": "Samouczek i nagrody",
@@ -9058,6 +9117,60 @@
       ]
     },
     {
+      "id": "HL-CHG-0623",
+      "epic": "HL-EPIC-INF",
+      "area": "Infrastruktura i wydania",
+      "type": "Ops",
+      "title": "Automatyczna promocja wyłącznie autoryzowanej pilnej wersji 0.9.1.2 po CI",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Automatyczna promocja wyłącznie autoryzowanej pilnej wersji 0.9.1.2 po CI",
+        "reference": "user_chat:urgent_tag_and_dev_then_preprod_2026_10_31"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_local",
+        "ci": "awaiting_current_release",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Bridge workflow_run reaguje wyłącznie na udane CI push/main we właściwym repozytorium oraz marker [preprod:0.9.1.2] w sprawdzonym commicie.",
+        "Ponownie sprawdza CI, workflow i aktualny main; wykrywa istniejący deploy tego SHA i uruchamia wyłącznie istniejący google-cloud-dev.yml z ref main.",
+        "Bez nowych poświadczeń Google i bez omijania bramki CI/deploy. Nie ponawia niepewnego POST i nie uruchamia resetu kont."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0031"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md",
+          "docs/RELEASE-PROCESS.md"
+        ],
+        "code": [
+          ".github/workflows/promote-urgent-preprod.yml",
+          "infra/google-cloud/urgent-preprod-dispatch.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-urgent-preprod-dispatch.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Implementacja i lokalne kontrole są odrębne od uruchomienia bridge, publikacji tagu i faktycznej promocji PRE-PROD; wymagane osobne dowody."
+      ]
+    },
+    {
       "id": "HL-CHG-0701",
       "epic": "HL-EPIC-OPS",
       "area": "Dokumentacja i operacje",
@@ -9575,6 +9688,56 @@
       },
       "notes": [
         "Historia zawiera potwierdzenie przeczytania porównania i wyboru Paynow; nie odtworzono w repo pełnej dawnej odpowiedzi z bieżącymi źródłami cen, więc kwot prowizji nie traktujemy jako zweryfikowanych dzisiaj."
+      ]
+    },
+    {
+      "id": "HL-CHG-0713",
+      "epic": "HL-EPIC-OPS",
+      "area": "Dokumentacja i operacje",
+      "type": "Story",
+      "title": "Tag pilne w rejestrze oraz oznaczanie pilnych wydań Git",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Tag pilne w rejestrze oraz oznaczanie pilnych wydań Git",
+        "reference": "user_chat:urgent_tag_and_dev_then_preprod_2026_10_31"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_documentation",
+        "ci": "awaiting_current_release",
+        "preprod": "not_applicable",
+        "prod": "not_applicable",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Rejestr wspiera tagi kart i widoczne zestawienie pilne; poprawka HL-CHG-0031 jest tak oznaczona.",
+        "Pilne wydanie otrzymuje odrębny nieprzesuwany tag Git urgent-0.9.1.2-20261031 po odbiorze CI. Tag nie zastępuje dowodu promocji GCP."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0031"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md",
+          "docs/RELEASE-PROCESS.md"
+        ],
+        "code": [
+          "scripts/build_change_register.py"
+        ],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Implementacja i lokalne kontrole są odrębne od uruchomienia bridge, publikacji tagu i faktycznej promocji PRE-PROD; wymagane osobne dowody."
       ]
     },
     {
@@ -11448,7 +11611,7 @@
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
         "summary": "Punktacja ligi: średnia wyników i premia rosnąca ze współpracą",
-        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_1"
+        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_1; user_chat:deferred_slots_print_chat_2026_10_31/item_1"
       },
       "status": {
         "implementation": "not_implemented",
@@ -11456,11 +11619,12 @@
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted_parameters_with_open_details"
+        "decision": "accepted"
       },
       "acceptance": [
-        "Wynik jest średnią wyników, z premią rosnącą wraz z udziałem większej liczby członków sojuszu.",
-        "Suma trzech najlepszych wyników jest odrzucona; konkretna funkcja, limity i traktowanie nieobecnych pozostają propozycją."
+        "Przyjęto średnią całego zgłoszonego składu, 0 dla nieobecnych i +2 punkty za kolejnego aktywnego uczestnika, najwyżej +8 przy pięciu.",
+        "Skład punktujący jest ustalony na sezon, a odejście z sojuszu jest możliwe natychmiast bez usuwania słabszego wyniku.",
+        "Nowym odłożonym wymaganiem są jawne sloty czasowe ligi; szczegółowy harmonogram nie został jeszcze zatwierdzony."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -11471,7 +11635,8 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
         ],
         "code": [],
         "automated_tests": [],
@@ -11481,7 +11646,8 @@
         "manual_execution": "NOT_RUN"
       },
       "notes": [
-        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.",
+        "Użytkownik zaakceptował wskazane parametry, ale odłożył wdrożenie tych mechanik; pilne GO dotyczy wyłącznie języka."
       ]
     },
     {
@@ -11734,7 +11900,7 @@
         "date": "2026-10-31",
         "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
         "summary": "Dobroczynność daje rozświetlenie portu i rzeczywiste szczęście",
-        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_4"
+        "reference": "user_chat:social_boardgame_annotations_2026_10_31/item_4; user_chat:deferred_slots_print_chat_2026_10_31/item_2"
       },
       "status": {
         "implementation": "not_implemented",
@@ -11742,11 +11908,11 @@
         "ci": "not_run_for_change",
         "preprod": "not_deployed",
         "prod": "not_deployed",
-        "decision": "accepted_parameters_with_open_details"
+        "decision": "accepted"
       },
       "acceptance": [
-        "Oprócz rozświetlenia uczestnik otrzymuje rzeczywisty bonus szczęścia; wariant wyłącznie kosmetyczny jest zastąpiony.",
-        "Szczegółowe punkty procentowe, czas i moment odbioru są propozycją; nagroda nie odnawia limitów darowizn i nie tworzy punktów ligi."
+        "Przyjęto rozświetlenie Portu i rzeczywisty bonus +20 punktów procentowych szczęścia przez 6 godzin na jednej wyspie, do odebrania po potwierdzonym rzeczywistym przelewie.",
+        "Limity finansowania nadal obowiązują; dokładne okno odbioru 7 dni i dodatkowy cooldown odbioru są wcześniejszymi propozycjami, których ta odpowiedź nie rozstrzyga."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -11757,7 +11923,8 @@
       "published_to_github_issues": false,
       "evidence": {
         "documents": [
-          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md",
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
         ],
         "code": [],
         "automated_tests": [],
@@ -11767,7 +11934,8 @@
         "manual_execution": "NOT_RUN"
       },
       "notes": [
-        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+        "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.",
+        "Użytkownik zaakceptował wskazane parametry, ale odłożył wdrożenie tych mechanik; pilne GO dotyczy wyłącznie języka."
       ]
     },
     {
@@ -12010,6 +12178,276 @@
       },
       "notes": [
         "Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie."
+      ]
+    },
+    {
+      "id": "HL-CHG-0926",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Liga ma jawny harmonogram i sloty czasowe zadań",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Liga ma jawny harmonogram i sloty czasowe zadań",
+        "reference": "user_chat:deferred_slots_print_chat_2026_10_31/item_1"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "deferred",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "deferred_pending_followup"
+      },
+      "acceptance": [
+        "Zadania mają jasne okna wykonania. Godziny 19–20 lub 20–21 to przykłady użytkownika, a nie zatwierdzony harmonogram.",
+        "Dokładne terminy, strefa, liczba slotów i zasady nieobecności pozostają do dalszej rozmowy."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
+      ]
+    },
+    {
+      "id": "HL-CHG-0927",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Każdy dzień ligi ma zadanie podstawowe i zręcznościowe",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Każdy dzień ligi ma zadanie podstawowe i zręcznościowe",
+        "reference": "user_chat:deferred_slots_print_chat_2026_10_31/item_7"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "deferred",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "deferred_pending_followup"
+      },
+      "acceptance": [
+        "Obok dotychczasowego zadania dnia pojawia się zadanie zręcznościowe w godzinach ligi, np. łapanie losowo pojawiających się obiektów.",
+        "Próg minimum X, obiekty, pozostałe warianty i ich punktacja wymagają projektu po powrocie do otwartych punktów."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
+      ]
+    },
+    {
+      "id": "HL-CHG-0928",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Planszówka: nieme pokazywanie przedmiotów i słowa czytane wspak",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Planszówka: nieme pokazywanie przedmiotów i słowa czytane wspak",
+        "reference": "user_chat:deferred_slots_print_chat_2026_10_31/item_3"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "deferred",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "deferred_pending_followup"
+      },
+      "acceptance": [
+        "Bank ma uwzględniać pokazywanie przedmiotów wyspy, rozbitków i piratów bez mówienia i pisania oraz odgadywanie słów czytanych wspak.",
+        "Dalsze kreatywne warianty i poziom trudności są odłożone, bez deklaracji przetestowanej zabawy."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
+      ]
+    },
+    {
+      "id": "HL-CHG-0929",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Projekt planszy, kart i pionków do wydruku",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Projekt planszy, kart i pionków do wydruku",
+        "reference": "user_chat:deferred_slots_print_chat_2026_10_31/item_4"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "deferred",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "deferred_pending_followup"
+      },
+      "acceptance": [
+        "Przygotować później drukowalne projekty planszy, jednej talii kart i pionków zgodne z zatwierdzanym scenariuszem.",
+        "Formaty, skala, spady i pliki produkcyjne są do dalszych ustaleń; w pilnej zmianie nie wygenerowano assetów."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
+      ]
+    },
+    {
+      "id": "HL-CHG-0930",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Pudełko, opakowanie, instrukcja i kody QR planszówki",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Pudełko, opakowanie, instrukcja i kody QR planszówki",
+        "reference": "user_chat:deferred_slots_print_chat_2026_10_31/item_5"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "deferred",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "deferred_pending_followup"
+      },
+      "acceptance": [
+        "Do projektu drukowanego dołączyć pudełko/opakowanie, instrukcję oraz kody QR.",
+        "Wymiary, treści i docelowe adresy QR są odłożone; nie tworzymy teraz fikcyjnych aktywnych kodów lub plików do druku."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
+      ]
+    },
+    {
+      "id": "HL-CHG-0931",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga, dobroczynność i planszówka",
+      "type": "Story",
+      "title": "Osobny czat sojuszu i prywatne rozmowy jeden na jeden",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-10-31",
+        "date_note": "Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.",
+        "summary": "Osobny czat sojuszu i prywatne rozmowy jeden na jeden",
+        "reference": "user_chat:deferred_slots_print_chat_2026_10_31/item_6"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "deferred",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "deferred_pending_followup"
+      },
+      "acceptance": [
+        "Czat sojuszu pozostaje, a gracze mają móc osobno prowadzić prywatne rozmowy jeden na jeden.",
+        "Wybór odbiorcy, zgody, blokowanie i reguły danych zostaną doprecyzowane później; prywatne wiadomości nie są wdrożone."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V23-1-REQUIREMENTS.md"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN"
+      },
+      "notes": [
+        "Zapisano wymaganie bez opracowania, projektowania assetów ani wdrażania. Użytkownik odłożył pozostałe punkty do dalszej rozmowy; pilny zakres obejmuje wyłącznie wybór języka."
       ]
     }
   ]

@@ -13,26 +13,27 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `accepted_parameters_with_open_details` |
+| Decyzja | `accepted` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
 ## Zakres i odbiór
 
-- Wynik jest średnią wyników, z premią rosnącą wraz z udziałem większej liczby członków sojuszu.
-- Suma trzech najlepszych wyników jest odrzucona; konkretna funkcja, limity i traktowanie nieobecnych pozostają propozycją.
+- Przyjęto średnią całego zgłoszonego składu, 0 dla nieobecnych i +2 punkty za kolejnego aktywnego uczestnika, najwyżej +8 przy pięciu.
+- Skład punktujący jest ustalony na sezon, a odejście z sojuszu jest możliwe natychmiast bez usuwania słabszego wyniku.
+- Nowym odłożonym wymaganiem są jawne sloty czasowe ligi; szczegółowy harmonogram nie został jeszcze zatwierdzony.
 
 ## Źródło
 
 Punktacja ligi: średnia wyników i premia rosnąca ze współpracą
 
-Odniesienie: `user_chat:social_boardgame_annotations_2026_10_31/item_1`.
+Odniesienie: `user_chat:social_boardgame_annotations_2026_10_31/item_1; user_chat:deferred_slots_print_chat_2026_10_31/item_1`.
 
 Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.
 
 ## Dowody
 
-- **Dokumenty:** [docs/design/LEAGUE-COMMUNITY-CHARITY.md](../../design/LEAGUE-COMMUNITY-CHARITY.md)
+- **Dokumenty:** [docs/design/LEAGUE-COMMUNITY-CHARITY.md](../../design/LEAGUE-COMMUNITY-CHARITY.md), [docs/FRONTEND-V23-1-REQUIREMENTS.md](../../FRONTEND-V23-1-REQUIREMENTS.md)
 - **Kod:** nie przypisano.
 - **Scenariusze automatyczne:** nie przypisano.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
@@ -50,6 +51,7 @@ Powiązane przypadki do ręcznego przeklikania:
 ## Uwagi
 
 - Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.
+- Użytkownik zaakceptował wskazane parametry, ale odłożył wdrożenie tych mechanik; pilne GO dotyczy wyłącznie języka.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

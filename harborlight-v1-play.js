@@ -1,27 +1,27 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v23';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v23';
-import * as State from './harborlight-v1-state.js?v=frontend-v23';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v23';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v23';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v23';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v23';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v23';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v23';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v23';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v23';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v23';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v23';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v23';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v23';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v23';
-import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v23';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v23';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v23';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v23-fit2';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v23';
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v23';
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v23';
-import { GAME_VERSION } from './harborlight-version.js?v=frontend-v23';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v23-1';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v23-1';
+import * as State from './harborlight-v1-state.js?v=frontend-v23-1';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v23-1';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v23-1';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v23-1';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v23-1';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v23-1';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v23-1';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v23-1';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v23-1';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v23-1';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v23-1';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v23-1';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v23-1';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v23-1';
+import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v23-1';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v23-1';
+import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v23-1';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v23-1-fit2';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v23-1';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v23-1';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v23-1';
+import { GAME_VERSION } from './harborlight-version.js?v=frontend-v23-1';
 
 I18n.registerTranslations({
   "Choose a minigame": "Wybierz minigrę",
@@ -303,7 +303,7 @@ function restoreSyncedIsland(payload) {
     if (devSync && !devSync.writable) return;
     if (State.onboardingStatus(state).pending) {
       const status = State.onboardingStatus(state);
-      if (onboardingFlow?.active) void onboardingFlow.update({ ...status, islandName: state.islandName });
+      if (onboardingFlow?.active) void onboardingFlow.update({ ...status, islandName: state.islandName, language: language() });
       else {
         tutorialReady = false; worldExperienceReady = false;
         if (dialog.open) closePanel(true);
@@ -3049,7 +3049,14 @@ function onboardingSteps() {
 }
 async function beginOnboarding() {
   const status = State.onboardingStatus(state);
-  onboardingFlow = createIslandOnboarding({ ...status, islandName: state.islandName, language: language(), steps: onboardingSteps(),
+  onboardingFlow = createIslandOnboarding({ ...status, islandName: state.islandName, language: language(), getLanguage: language, steps: onboardingSteps(),
+    onLanguageChange: async next => {
+      if (devSync && !devSync.writable && !await devSync.recover()) return false;
+      if (!act(state, { type: 'setting', key: 'language', value: next }).ok) return false;
+      try { localStorage.setItem('harborlight-language', next); } catch {}
+      renderLeisureDock(true); renderMobileDock(true); renderHUD(); localize();
+      return save(true);
+    },
     onUpdate: async next => {
       if (devSync && !devSync.writable && !await devSync.recover()) return false;
       const action = { type: 'onboardingUpdate', stage: next.stage, index: next.index };

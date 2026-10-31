@@ -32,7 +32,8 @@
         "HL-CHG-0013",
         "HL-CHG-0014",
         "HL-CHG-0015",
-        "HL-CHG-0009"
+        "HL-CHG-0009",
+        "HL-CHG-0031"
       ],
       "file": "manual/HL-TC-0002.md"
     },
@@ -411,7 +412,7 @@
     },
     {
       "id": "HL-TC-0030",
-      "title": "Wersja gry 0.9.1.1 jest widoczna w Ustawieniach",
+      "title": "Wersja gry jest widoczna w Ustawieniach",
       "area": "Interfejs i wydanie",
       "priority": "P1",
       "definition_status": "READY",

@@ -1,6 +1,6 @@
 # HARBORLIGHT
 
-Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarni. Bazowe reguły **frontend-v18** zatwierdzono przez GO użytkownika 30 października 2026: [pełne wymagania](docs/FRONTEND-V18-REQUIREMENTS.md), [reguły gospodarki](docs/ECONOMY-RULES.md) i [budynki](docs/BUILDINGS.md). Bieżący zakres DEV to [0.9.1.1 / v23](docs/FRONTEND-V23-REQUIREMENTS.md); opublikowane PRE-PROD ma wcześniejsze v22.1, obejmujące [v22](docs/FRONTEND-V22-REQUIREMENTS.md) i [v21](docs/FRONTEND-V21-REQUIREMENTS.md).
+Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarni. Bazowe reguły **frontend-v18** zatwierdzono przez GO użytkownika 30 października 2026: [pełne wymagania](docs/FRONTEND-V18-REQUIREMENTS.md), [reguły gospodarki](docs/ECONOMY-RULES.md) i [budynki](docs/BUILDINGS.md). Bieżący przygotowywany zakres DEV to [0.9.1.2 / v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md); opublikowane PRE-PROD ma wcześniejsze v22.1, obejmujące [v22](docs/FRONTEND-V22-REQUIREMENTS.md) i [v21](docs/FRONTEND-V21-REQUIREMENTS.md).
 
 **[Stan środowisk i dowody wydań](docs/ENVIRONMENT-STATUS.md)** to główny rejestr wersji DEV, PRE-PROD i PROD. **v22.1 jest opublikowane na PRE-PROD**: kolejność szczęście → monety → mieszkańcy, nagrody 3×2 i wskazanie szczegółów Magazynu przed priorytetem. Adnotowany tag `dev-v22.1-20261031` jest opublikowanym dowodem DEV/CI/Pages ([odczyt](docs/RELEASE-PROCESS.md#niezmienny-dowód-odbioru-dev)); osobny sukces GCP opisano poniżej. Włączenie API kont i reset danych nadal wymagają odrębnego potwierdzenia.
 
@@ -8,7 +8,7 @@ Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarn
 
 | Miejsce | Stan |
 |---|---|
-| DEV — ta przestrzeń robocza | **0.9.1.1 / zakres v23**: widoczna wersja w Ustawieniach, rejestr zmian i ręcznych testów oraz projekty nowych zasad. Własne dowody Git/CI tego zakresu podaje [rejestr środowisk](docs/ENVIRONMENT-STATUS.md). Wcześniejszy tag v22.1 pozostaje historią, nie dowodem nowych zmian. |
+| DEV — ta przestrzeń robocza | **0.9.1.2 / pilny zakres v23.1 w przygotowaniu**: wybór PL/EN przy pierwszym wprowadzeniu i nazwie wyspy, z zachowaniem historii. Testy i publikacja PRE-PROD wymagają osobnego potwierdzenia. Własne dowody Git/CI tego zakresu podaje [rejestr środowisk](docs/ENVIRONMENT-STATUS.md). Wcześniejszy tag v22.1 pozostaje historią, nie dowodem nowych zmian. |
 | PRE-PROD — `harborlight-dev` | [Graj](https://harborlight-dev.web.app): **v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`**, [promocja 41222765705, próba 1 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705), 2 min 10 s; oba artefakty v2 opublikowane. |
 | PROD — `harborlight-prod` / `harborlight.pl` | Brak potwierdzonej publikacji i powiązania domeny. |
 | GitHub Pages | [Link roboczy — 0.9.1.1](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v23), [Pages 41226626838 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41226626838). Nietrwały podgląd DEV, bez zapisu kont PRE-PROD. Bezpośredni odczyt z tej sesji blokuje brama HTTP 403; dowód publikacji pochodzi z GitHub Actions. |
@@ -17,7 +17,11 @@ PRE-PROD ma trzy osobne konta `admin1`, `admin2`, `admin3`. Odczytowy odbiór wd
 
 W [v22](docs/FRONTEND-V22-REQUIREMENTS.md) udane działanie wykonane przed swoją lekcją usuwa ją z dalszego samouczka bez skrzyni i nagrody. Kolejny krok nie czeka na powtórzenie czynności ani odbiór nieistniejącej premii; wcześniej przyznane nagrody zostają zachowane.
 
-## Bieżący zakres DEV 0.9.1.1
+## Pilna poprawka DEV 0.9.1.2
+
+[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Testy są oczekujące; promocja PRE-PROD następuje dopiero po własnym zielonym CI. Nie resetujemy kont. Pozostałe uwagi odłożono do dalszej rozmowy. Rejestr ma 250 zmian i 46 przypadków ręcznych.
+
+## Poprzedni zakres DEV 0.9.1.1
 
 W Ustawieniach dodano widoczne **0.9.1.1**; schema świata i zapis pozostają odrębne. [Zakres v23](docs/FRONTEND-V23-REQUIREMENTS.md) obejmuje również przegląd historii czatu, [osobne karty zmian](docs/tracking/CHANGE-REGISTER.md) i [ręczne przypadki testowe](docs/testing/MANUAL-TEST-PLAN.md), z wynikami NOT RUN do rzeczywistego odbioru. Karty są w Git; natywnych GitHub Issues jeszcze nie utworzono z powodu braku poprawnej autoryzacji. [Importer](scripts/README-tracking-issues.md) domyślnie tylko pokazuje plan.
 

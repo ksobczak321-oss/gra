@@ -1,4 +1,4 @@
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v23';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v23-1';
 
 const pick = (language, pl, en) => language === 'pl' ? pl : en;
 const valueFor = (value, language) => typeof value === 'string' ? value : value?.[language] || value?.pl || value?.en || '';
@@ -20,7 +20,9 @@ function node(tag, attributes = {}, ...children) {
  * A rejected operation keeps this modal and the world's paused clock in place.
  */
 export function createIslandOnboarding(options = {}) {
-  const { steps = [], language = 'pl', onUpdate = () => true, onFinish = () => true, onError = () => {} } = options;
+  const { steps = [], onUpdate = () => true, onFinish = () => true, onLanguageChange = () => true, onError = () => {} } = options;
+  let language = options.language === 'en' ? 'en' : 'pl';
+  let nameDraft = options.islandName || '';
   let current = { stage: options.stage || 'intro', index: Math.max(0, Math.floor(options.index || 0)), islandName: options.islandName || '' };
   let active = false, busy = false, destroyed = false, target = null, generation = 0, frame = 0, resizeObserver = null;
   const previousFocus = document.activeElement;
@@ -40,7 +42,7 @@ export function createIslandOnboarding(options = {}) {
   }
   function setBusy(next) {
     busy = next; root.setAttribute('aria-busy', String(next));
-    card.querySelectorAll('button,input').forEach(control => { control.disabled = next || control.dataset.onboardingFirst === 'true'; });
+    card.querySelectorAll('button,input,select').forEach(control => { control.disabled = next || control.dataset.onboardingFirst === 'true'; });
   }
   async function commit(next) {
     if (busy || destroyed) return false;
@@ -48,7 +50,9 @@ export function createIslandOnboarding(options = {}) {
     try {
       if (await onUpdate({ ...next }) === false) throw new Error('onboarding-update-rejected');
       if (destroyed) return false;
-      current = { ...current, ...next }; await render(); return true;
+      current = { ...current, ...next };
+      if (next.islandName != null) nameDraft = next.islandName;
+      await render(); return true;
     } catch (error) {
       if (!destroyed) { onError(error); showError(pick(language, 'Nie udało się potwierdzić zmiany. Sprawdź połączenie i spróbuj ponownie.', 'The change could not be confirmed. Check your connection and try again.')); }
       return false;
@@ -69,7 +73,39 @@ export function createIslandOnboarding(options = {}) {
   const description = (...children) => node('div', { id: 'island-onboarding-description', class: 'island-onboarding-description' }, ...children);
   const nextLabel = () => pick(language, 'Dalej →', 'Next →');
 
-  async function render() {
+  async function changeLanguage(next) {
+    if (busy || destroyed || !['pl', 'en'].includes(next) || next === language) return;
+    setBusy(true);
+    try {
+      if (await onLanguageChange(next) === false) throw new Error('onboarding-language-rejected');
+      if (destroyed) return;
+      language = next;
+      await render('[data-onboarding-language]');
+    } catch (error) {
+      if (!destroyed) {
+        // A cloud write may fail after the language preference changed. Keep
+        // this modal consistent with the actual interface while recovery is
+        // pending, without pretending that the cloud confirmed the choice.
+        const actualLanguage = options.getLanguage?.();
+        if (['pl', 'en'].includes(actualLanguage) && actualLanguage !== language) {
+          language = actualLanguage;
+          await render('[data-onboarding-language]');
+        } else {
+          const select = card.querySelector('[data-onboarding-language]');
+          if (select) select.value = language;
+        }
+        onError(error);
+        showError(pick(language, 'Nie udało się potwierdzić języka. Sprawdź połączenie i spróbuj ponownie.', 'The language could not be confirmed. Check your connection and try again.'));
+      }
+    } finally { if (!destroyed) setBusy(false); }
+  }
+  const languagePicker = () => node('div', { class: 'island-onboarding-language' },
+    node('label', { for: 'island-onboarding-language' }, 'Język / Language'),
+    node('select', { id: 'island-onboarding-language', 'data-onboarding-language': '', name: 'language', onchange: event => { void changeLanguage(event.target.value); } },
+      node('option', { value: 'pl', selected: language === 'pl' }, 'Polski'),
+      node('option', { value: 'en', selected: language === 'en' }, 'English')));
+
+  async function render(focusSelector) {
     const thisGeneration = ++generation;
     target = null; resizeObserver?.disconnect(); highlight.hidden = true; cursor.hidden = true;
     root.dataset.onboardingStage = current.stage;
@@ -77,7 +113,7 @@ export function createIslandOnboarding(options = {}) {
     card.style.removeProperty('left'); card.style.removeProperty('top'); card.classList.toggle('is-tour', current.stage === 'tour');
     card.replaceChildren();
     if (current.stage === 'intro') {
-      card.append(node('small', { class: 'island-onboarding-eyebrow' }, 'HARBORLIGHT'), title(pick(language, 'Twoja wyspa, Twoje decyzje', 'Your island, your decisions')),
+      card.append(node('small', { class: 'island-onboarding-eyebrow' }, 'HARBORLIGHT'), languagePicker(), title(pick(language, 'Twoja wyspa, Twoje decyzje', 'Your island, your decisions')),
         description(node('p', {}, pick(language,
           'Obejmujesz opiekę nad małą osadą na wyspie. Zapewnij mieszkańcom domy, żywność i pracę, a z czasem rozbuduj ją w tętniący życiem port.',
           'You take care of a small island settlement. Give your residents homes, food and jobs, then grow it into a thriving harbour.')),
@@ -89,19 +125,19 @@ export function createIslandOnboarding(options = {}) {
           'Expeditions and tasks bring extra rewards. First you will name your island and get to know its main controls; the tutorial will then guide you through your first real actions.'))), paused(),
         node('div', { class: 'island-onboarding-actions' }, control(nextLabel(), () => commit({ ...current, stage: 'name' }), { 'data-onboarding-next': '' })));
     } else if (current.stage === 'name') {
-      const input = node('input', { id: 'island-onboarding-name', 'data-onboarding-name': '', name: 'islandName', type: 'text', autocomplete: 'off', required: true, value: current.islandName, 'aria-describedby': 'island-onboarding-name-hint', spellcheck: 'false' });
+      const input = node('input', { id: 'island-onboarding-name', 'data-onboarding-name': '', name: 'islandName', type: 'text', autocomplete: 'off', required: true, value: nameDraft, 'aria-describedby': 'island-onboarding-name-hint', spellcheck: 'false' });
       const form = node('form', { 'data-onboarding-name-form': '', onsubmit: event => {
         event.preventDefault();
         const result = validateIslandName(input.value);
         if (!result.ok) { input.setAttribute('aria-invalid', 'true'); showError(pick(language, 'Wybierz nazwę o długości 2–40 znaków, bez znaków sterujących i nawiasów < >.', 'Choose a name of 2–40 characters without control characters or < > brackets.')); input.focus(); return; }
         input.removeAttribute('aria-invalid'); void commit({ stage: 'tour', index: 0, islandName: result.name });
       } });
-      input.addEventListener('input', () => input.removeAttribute('aria-invalid'));
+      input.addEventListener('input', () => { nameDraft = input.value; input.removeAttribute('aria-invalid'); });
       form.append(node('label', { for: 'island-onboarding-name' }, pick(language, 'Nazwa Twojej wyspy', 'Your island’s name')), input,
         node('small', { id: 'island-onboarding-name-hint' }, pick(language, 'Od 2 do 40 znaków. Nazwa będzie widoczna w lewym górnym rogu gry.', 'Use 2–40 characters. The name appears in the top left corner of the game.')), paused(),
         node('div', { class: 'island-onboarding-actions' }, control(pick(language, '← Wstecz', '← Back'), () => commit({ ...current, stage: 'intro' }), { 'data-onboarding-previous': '', class: 'island-onboarding-action secondary' }),
           node('button', { type: 'submit', class: 'island-onboarding-action', 'data-onboarding-next': '' }, nextLabel())));
-      card.append(node('small', { class: 'island-onboarding-eyebrow' }, 'HARBORLIGHT'), title(pick(language, 'Nadaj nazwę swojej wyspie', 'Give your island a name')), description(node('p', {}, pick(language, 'To początek Twojej osady. Wybierz nazwę, z którą chcesz wyruszyć w tę przygodę.', 'This is the beginning of your settlement. Choose a name to start this adventure with.'))), form);
+      card.append(node('small', { class: 'island-onboarding-eyebrow' }, 'HARBORLIGHT'), title(pick(language, 'Nadaj nazwę swojej wyspie', 'Give your island a name')), description(node('p', {}, pick(language, 'To początek Twojej osady. Wybierz nazwę, z którą chcesz wyruszyć w tę przygodę.', 'This is the beginning of your settlement. Choose a name to start this adventure with.'))), languagePicker(), form);
     } else if (current.stage === 'tour') {
       current.index = clamp(current.index, 0, Math.max(0, steps.length - 1));
       const step = steps[current.index];
@@ -124,7 +160,7 @@ export function createIslandOnboarding(options = {}) {
     schedulePosition();
     if (active) requestAnimationFrame(() => {
       if (thisGeneration !== generation || destroyed) return;
-      (card.querySelector('[data-onboarding-name]') || card).focus({ preventScroll: true });
+      (focusSelector && card.querySelector(focusSelector) || card.querySelector('[data-onboarding-name]') || card).focus({ preventScroll: true });
     });
   }
 
@@ -191,7 +227,13 @@ export function createIslandOnboarding(options = {}) {
       active = true; await render();
       if (!destroyed) { root.showModal(); schedulePosition(); (card.querySelector('[data-onboarding-name]') || card).focus({ preventScroll: true }); }
     },
-    async update(next) { if (!destroyed && !busy) { current = { ...current, ...next }; await render(); } },
+    async update(next) {
+      if (!destroyed && !busy) {
+        if (next.islandName != null && next.islandName !== current.islandName) nameDraft = next.islandName;
+        if (['pl', 'en'].includes(next.language)) language = next.language;
+        current = { ...current, ...next }; await render();
+      }
+    },
     destroy,
     get active() { return active && !destroyed; }
   };

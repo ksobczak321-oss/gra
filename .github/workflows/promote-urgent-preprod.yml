@@ -1,0 +1,49 @@
+name: Promote authorized urgent 0.9.1.2 after CI
+
+# A narrow bridge for the owner's explicit DEV -> PRE-PROD instruction.
+# Deployment itself remains exclusively in the existing gated workflow.
+on:
+  workflow_run:
+    workflows: ["Validate HARBORLIGHT source"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: urgent-preprod-0.9.1.2
+  cancel-in-progress: false
+
+jobs:
+  dispatch:
+    if: >-
+      github.repository == 'ksobczak321-oss/gra' &&
+      github.repository_id == '1428128759' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.head_repository.id == 1428128759
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - name: Checkout trusted default-branch dispatcher
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Dispatch only the authorized unchanged source
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          HARBORLIGHT_REPOSITORY: ${{ github.repository }}
+          HARBORLIGHT_REPOSITORY_ID: ${{ github.repository_id }}
+        run: node infra/google-cloud/urgent-preprod-dispatch.mjs

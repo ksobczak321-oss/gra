@@ -25,6 +25,12 @@ Tag nie jest przesuwany i nie uruchamia publikacji GCP. Pozwala zapisać wynik j
 
 ## 2. Promocja na PRE-PROD
 
+### Autoryzowana pilna poprawka 0.9.1.2
+
+Użytkownik jawnie zlecił promocję natychmiast po sukcesie DEV/CI. Dla tej konkretnej wersji [bridge](../.github/workflows/promote-urgent-preprod.yml) reaguje na ukończenie właściwego CI i tylko marker `[preprod:0.9.1.2]` w źródłowym commicie. Ma `contents:read` i `actions:write`, bez OIDC. Uruchamia przez API istniejący ręczny workflow poniżej; nie wykonuje deployu sam i nie zmienia blokad WIF/CI. Ponownie sprawdza repozytorium, workflow, próbę CI, SHA, dotychczasowe deploye i bieżący main. Inne poprawki nie są automatycznie promowane tym mechanizmem.
+
+Do potwierdzenia źródła rozpoczętej promocji nie przesuwamy main: API `workflow_dispatch ref=main` nie obsługuje atomowego warunku oczekiwanego SHA. Nie ponawiamy niepewnego POST; najpierw odczytujemy faktyczny przebieg i jego SHA. Tag rejestru `pilne` oraz adnotowany tag Git `urgent-0.9.1.2-20261031` służą oznaczeniu poprawki i dowodom, a nie zastępują odbioru GCP. Ten wyjątek dotyczy zleconego PRE-PROD, nie PROD ani resetu danych.
+
 [Techniczny workflow DEV](../.github/workflows/google-cloud-dev.yml) uruchamia się ręcznie z `main` po zielonym CI **tego samego pełnego SHA**. Kontrola bez poświadczeń Google blokuje brak dowodu przed dostępem do WIF.
 
 Workflow buduje backend raz, uruchamia dokładnie ten obraz w lokalnym kontenerze z odłączoną siecią i wyłączonym API kont, a po sukcesie wdraża przez niezmienny `image@sha256` i publikuje deterministyczny frontend do `harborlight-dev`. Lokalny start odbywa się przed pobraniem poświadczeń Google i sprawdza `/health`, `/ready` oraz wyłączenie dostępu do kont. Publiczne `/health` i `/ready` muszą następnie potwierdzić właściwe środowisko techniczne i wydanie; aliasy `*z` nie są publicznym dowodem Cloud Run.

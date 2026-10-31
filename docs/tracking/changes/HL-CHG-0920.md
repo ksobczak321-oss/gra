@@ -13,26 +13,26 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | CI | `not_run_for_change` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `accepted_parameters_with_open_details` |
+| Decyzja | `accepted` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
 ## Zakres i odbiór
 
-- Oprócz rozświetlenia uczestnik otrzymuje rzeczywisty bonus szczęścia; wariant wyłącznie kosmetyczny jest zastąpiony.
-- Szczegółowe punkty procentowe, czas i moment odbioru są propozycją; nagroda nie odnawia limitów darowizn i nie tworzy punktów ligi.
+- Przyjęto rozświetlenie Portu i rzeczywisty bonus +20 punktów procentowych szczęścia przez 6 godzin na jednej wyspie, do odebrania po potwierdzonym rzeczywistym przelewie.
+- Limity finansowania nadal obowiązują; dokładne okno odbioru 7 dni i dodatkowy cooldown odbioru są wcześniejszymi propozycjami, których ta odpowiedź nie rozstrzyga.
 
 ## Źródło
 
 Dobroczynność daje rozświetlenie portu i rzeczywiste szczęście
 
-Odniesienie: `user_chat:social_boardgame_annotations_2026_10_31/item_4`.
+Odniesienie: `user_chat:social_boardgame_annotations_2026_10_31/item_4; user_chat:deferred_slots_print_chat_2026_10_31/item_2`.
 
 Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z tej sesji; nie jest datą wcześniejszych reguł.
 
 ## Dowody
 
-- **Dokumenty:** [docs/design/LEAGUE-COMMUNITY-CHARITY.md](../../design/LEAGUE-COMMUNITY-CHARITY.md)
+- **Dokumenty:** [docs/design/LEAGUE-COMMUNITY-CHARITY.md](../../design/LEAGUE-COMMUNITY-CHARITY.md), [docs/FRONTEND-V23-1-REQUIREMENTS.md](../../FRONTEND-V23-1-REQUIREMENTS.md)
 - **Kod:** nie przypisano.
 - **Scenariusze automatyczne:** nie przypisano.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
@@ -50,6 +50,7 @@ Powiązane przypadki do ręcznego przeklikania:
 ## Uwagi
 
 - Wymaganie/projekt przed GO: bez implementacji, promocji GCP i zmian kont; parametry liczbowe wymagające decyzji są oznaczone w dokumencie.
+- Użytkownik zaakceptował wskazane parametry, ale odłożył wdrożenie tych mechanik; pilne GO dotyczy wyłącznie języka.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

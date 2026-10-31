@@ -1,10 +1,10 @@
 // One cloud document owns both worlds. The root of its serialized payload is
 // always island-1, so legacy account APIs never mistake island-2 for the first.
 // Simulation is injected: this module does not import the state coordinator.
-import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v23';
-import { bonusStock, consumeMaterial, grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v23';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v23';
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v23';
+import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v23-1';
+import { bonusStock, consumeMaterial, grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v23-1';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v23-1';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v23-1';
 
 export const ISLAND_IDS = Object.freeze(['island-1', 'island-2']);
 export const ARCHIPELAGO_RULES = Object.freeze({ version: 1, secondIslandLevel: 10,

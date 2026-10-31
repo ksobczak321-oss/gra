@@ -45,6 +45,9 @@ def validate(data):
         assert item['epic'] in epics, item['id']
         assert item['type'] in ('Bug', 'Story', 'Decision', 'Ops'), item['id']
         assert set(item['status']) == set(STATUS_KEYS), item['id']
+        tags = item.get('tags', [])
+        assert isinstance(tags, list) and all(isinstance(tag, str) and re.fullmatch(r'[a-z][a-z0-9-]{0,30}', tag) for tag in tags), (item['id'], 'tags')
+        assert len(tags) == len(set(tags)), (item['id'], 'tags')
         assert item.get('issue_url') is None or item['issue_url'].startswith('https://github.com/'), item['id']
         assert item.get('published_to_github_issues') == bool(item.get('issue_url')), item['id']
         for key in ('supersedes', 'superseded_by', 'related_changes'):
@@ -82,6 +85,8 @@ def card(item, cases):
               '**Nie została opublikowana jako natywne GitHub Issue** (`issue_url: null`).'), '',
              '## Status', '', '| Warstwa | Stan |', '|---|---|']
     lines += ['| ' + LABELS[key] + ' | `' + item['status'][key] + '` |' for key in STATUS_KEYS]
+    if item.get('tags'):
+        lines += ['', '**Tagi:** ' + ', '.join('`' + tag + '`' for tag in item['tags']) + '.']
     lines += ['', 'Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.', '',
               '## Zakres i odbiór', '']
     lines += ['- ' + value for value in item['acceptance']]
@@ -155,6 +160,9 @@ def index(data, changes):
              'wyłączny PvP → nowa dyspozycja NPC+PvP. Ostatnia zmiana kierunku nie aktualizuje wstecz opublikowanego kodu. ' +
              'Zwykłe zachowanie historii admin1 nadal obowiązuje przy deployu; późniejszy pełny reset jest osobnym wyjątkiem.', '',
              '## Epiki i karty', '']
+    for tag in sorted({tag for item in changes for tag in item.get('tags', [])}):
+        tagged = [item for item in changes if tag in item.get('tags', [])]
+        lines += ['**Tag `' + tag + '`:** ' + ', '.join('[' + item['id'] + ' — ' + item['title'] + '](changes/' + item['id'] + '.md)' for item in tagged) + '.', '']
     for epic in data['epics']:
         selected = [item for item in changes if item['epic'] == epic['id']]
         lines += ['<a id="' + epic['id'].lower() + '"></a>', '',

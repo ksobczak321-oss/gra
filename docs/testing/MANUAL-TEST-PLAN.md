@@ -64,7 +64,7 @@ Przy powtarzaniu testów należy zapisać rzeczywisty SHA/build, nazwę fixture 
 | [HL-TC-0027 — Towary: 1000 sztuk, 10 minut i pojedynczy rozładunek](manual/HL-TC-0027.md) | Archipelag — obecny baseline | P0 | READY | NOT RUN |
 | [HL-TC-0028 — Rynek baseline: próg 6, prawdziwa oferta i brak podwójnego przyjęcia](manual/HL-TC-0028.md) | Handel — obecny baseline | P0 | READY | NOT RUN |
 | [HL-TC-0029 — „Zacznij od nowa” nie jest pełnym resetem trzech kont](manual/HL-TC-0029.md) | Reset | P0 | READY | NOT RUN |
-| [HL-TC-0030 — Wersja gry 0.9.1.1 jest widoczna w Ustawieniach](manual/HL-TC-0030.md) | Interfejs i wydanie | P1 | READY | NOT RUN |
+| [HL-TC-0030 — Wersja gry jest widoczna w Ustawieniach](manual/HL-TC-0030.md) | Interfejs i wydanie | P1 | READY | NOT RUN |
 | [HL-TC-0031 — Promocja zachowuje kolejność DEV → PRE-PROD → PROD](manual/HL-TC-0031.md) | Wydanie | P0 | READY | NOT RUN |
 | [HL-TC-0032 — Raport kosztów ostatnich 24 godzin ma rzeczywisty zakres i walutę](manual/HL-TC-0032.md) | Koszty | P1 | READY | NOT RUN |
 | [HL-TC-0033 — Nazwa wyspy córki zawsze ma wymuszony prefiks matki](manual/HL-TC-0033.md) | Projekt archipelagu | P1 | DRAFT / BLOCKED | NOT RUN |

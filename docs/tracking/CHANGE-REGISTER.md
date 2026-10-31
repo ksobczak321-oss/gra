@@ -1,6 +1,6 @@
 # HARBORLIGHT — rejestr zmian
 
-Stan ewidencji: **2026-10-31**. **241 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
+Stan ewidencji: **2026-10-31**. **250 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
 
 Źródło danych: [changes.json](changes.json). Karty odtwarza `python3 scripts/build_change_register.py`; `--check` sprawdza zgodność bez zapisów. Nie edytuj wygenerowanych kart zamiast źródła JSON.
 
@@ -36,6 +36,8 @@ Sukces wspólnego CI dowodzi testów wydania, a `code_deployed_v22_1` obecności
 Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; automatyczne refundacje → brak automatycznych zwrotów; wyłączny PvP → nowa dyspozycja NPC+PvP. Ostatnia zmiana kierunku nie aktualizuje wstecz opublikowanego kodu. Zwykłe zachowanie historii admin1 nadal obowiązuje przy deployu; późniejszy pełny reset jest osobnym wyjątkiem.
 
 ## Epiki i karty
+
+**Tag `pilne`:** [HL-CHG-0031 — Wybór języka PL/EN przy pierwszym wprowadzeniu i nazwie wyspy](changes/HL-CHG-0031.md).
 
 <a id="hl-epic-ui"></a>
 
@@ -73,6 +75,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0028 — Usunięcie słowa Wyrusz z wejścia do ekspedycji](changes/HL-CHG-0028.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0029 — Usunięcie przycisku Latarni spod ekspedycji](changes/HL-CHG-0029.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0030 — Wycofana uwaga o Porcie ze starego zrzutu ekranu](changes/HL-CHG-0030.md) | Decision | `withdrawn` | `not_applicable` | `not_applicable` |
+| [HL-CHG-0031 — Wybór języka PL/EN przy pierwszym wprowadzeniu i nazwie wyspy](changes/HL-CHG-0031.md) | Story | `accepted` | `verified_local` | `not_deployed` |
 
 <a id="hl-epic-tut"></a>
 
@@ -269,6 +272,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0620 — Aktywacja API kont i rynku wymaga osobnego potwierdzenia konfiguracji](changes/HL-CHG-0620.md) | Ops | `accepted` | `verified_with_isolated_services` | `activation_unconfirmed` |
 | [HL-CHG-0621 — Pomiar przepustowości i polityka skali dla kolejnych 100 graczy jednocześnie](changes/HL-CHG-0621.md) | Ops | `open` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0622 — Cloud Run: minimum 0, maksimum 2 instancje i współbieżność 20](changes/HL-CHG-0622.md) | Ops | `accepted` | `verified` | `code_deployed_v22_1` |
+| [HL-CHG-0623 — Automatyczna promocja wyłącznie autoryzowanej pilnej wersji 0.9.1.2 po CI](changes/HL-CHG-0623.md) | Ops | `accepted` | `verified_local` | `not_deployed` |
 
 <a id="hl-epic-ops"></a>
 
@@ -288,6 +292,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0710 — Uzupełnienie prawdziwych danych operatora przed uruchomieniem sprzedaży](changes/HL-CHG-0710.md) | Ops | `deferred` | `not_applicable` | `not_active` |
 | [HL-CHG-0711 — Przegląd prawny Regulaminu i Polityki prywatności](changes/HL-CHG-0711.md) | Ops | `deferred` | `not_applicable` | `not_active` |
 | [HL-CHG-0712 — Porównanie prowizji operatorów i przykładów płatności 1–500 zł](changes/HL-CHG-0712.md) | Story | `answered_or_documented` | `documentation_available` | `not_applicable` |
+| [HL-CHG-0713 — Tag pilne w rejestrze oraz oznaczanie pilnych wydań Git](changes/HL-CHG-0713.md) | Story | `accepted` | `verified_documentation` | `not_applicable` |
 
 <a id="hl-epic-arc"></a>
 
@@ -342,18 +347,24 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0911 — Historyczna odłożona planszówka/AR dla 2–4 osób](changes/HL-CHG-0911.md) | Decision | `superseded` | `not_applicable` | `not_applicable` |
 | [HL-CHG-0912 — Warstwa AR planszówki pozostawiona na później](changes/HL-CHG-0912.md) | Decision | `deferred` | `not_applicable` | `not_active` |
 | [HL-CHG-0913 — Pierwsza publikacja gry w Google Play otrzyma wersję 1.0.0.0](changes/HL-CHG-0913.md) | Decision | `accepted` | `documented` | `not_applicable` |
-| [HL-CHG-0914 — Punktacja ligi: średnia wyników i premia rosnąca ze współpracą](changes/HL-CHG-0914.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0914 — Punktacja ligi: średnia wyników i premia rosnąca ze współpracą](changes/HL-CHG-0914.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0915 — Zakładanie sojuszu, dołączanie i swobodne odchodzenie](changes/HL-CHG-0915.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0916 — Czat gry i uprawnienia członków sojuszu](changes/HL-CHG-0916.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0917 — Pole Sojusz obok Rankingu](changes/HL-CHG-0917.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0918 — Proponowane zadania ligowe, mierzalna punktacja i nagrody](changes/HL-CHG-0918.md) | Story | `open` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0919 — Widoczny przycisk udziału w dobroczynności](changes/HL-CHG-0919.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
-| [HL-CHG-0920 — Dobroczynność daje rozświetlenie portu i rzeczywiste szczęście](changes/HL-CHG-0920.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0920 — Dobroczynność daje rozświetlenie portu i rzeczywiste szczęście](changes/HL-CHG-0920.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0921 — Planszówka: jedna talia fizyczna i treści na telefonie](changes/HL-CHG-0921.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0922 — Własne pionki i ruch graczy po planszy](changes/HL-CHG-0922.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0923 — Trzy warstwy planszówki: ruch, kreatywne zadania i skutki online](changes/HL-CHG-0923.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0924 — Zaliczone zadania przy stole przynoszą punkty i korzyści online](changes/HL-CHG-0924.md) | Story | `accepted_parameters_with_open_details` | `analysis_only` | `not_deployed` |
 | [HL-CHG-0925 — Przycisk Gra fizyczna uruchamia sesję przy stole](changes/HL-CHG-0925.md) | Story | `accepted` | `analysis_only` | `not_deployed` |
+| [HL-CHG-0926 — Liga ma jawny harmonogram i sloty czasowe zadań](changes/HL-CHG-0926.md) | Story | `deferred_pending_followup` | `deferred` | `not_deployed` |
+| [HL-CHG-0927 — Każdy dzień ligi ma zadanie podstawowe i zręcznościowe](changes/HL-CHG-0927.md) | Story | `deferred_pending_followup` | `deferred` | `not_deployed` |
+| [HL-CHG-0928 — Planszówka: nieme pokazywanie przedmiotów i słowa czytane wspak](changes/HL-CHG-0928.md) | Story | `deferred_pending_followup` | `deferred` | `not_deployed` |
+| [HL-CHG-0929 — Projekt planszy, kart i pionków do wydruku](changes/HL-CHG-0929.md) | Story | `deferred_pending_followup` | `deferred` | `not_deployed` |
+| [HL-CHG-0930 — Pudełko, opakowanie, instrukcja i kody QR planszówki](changes/HL-CHG-0930.md) | Story | `deferred_pending_followup` | `deferred` | `not_deployed` |
+| [HL-CHG-0931 — Osobny czat sojuszu i prywatne rozmowy jeden na jeden](changes/HL-CHG-0931.md) | Story | `deferred_pending_followup` | `deferred` | `not_deployed` |
 
 ## Utrzymanie
 

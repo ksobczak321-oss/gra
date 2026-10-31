@@ -80,6 +80,200 @@ def name_island(page, name):
     return guide
 
 
+def onboarding_language_switch(browser, *, language, mobile):
+    original = starter()
+    seed(original)
+    context, page = enter(browser, language=language, mobile=mobile)
+    guide = page.locator('[data-island-onboarding]')
+    selector = page.locator('[data-onboarding-language]')
+    other = 'en' if language == 'pl' else 'pl'
+
+    def selected(expected, stage):
+        expect(guide).to_have_attribute('data-onboarding-stage', stage)
+        expect(selector).to_have_value(expected)
+        expect(page.locator('html')).to_have_attribute('lang', expected)
+        expect(page.locator('[data-onboarding-next]')).to_have_text('Dalej →' if expected == 'pl' else 'Next →')
+        assert page.evaluate("localStorage.getItem('harborlight-language')") == expected
+        value = saved(page)
+        assert value['settings']['language'] == expected
+        frozen(value, original)
+
+    expect(guide).to_have_attribute('data-onboarding-stage', 'intro')
+    expect(selector).to_have_value(language)
+    bounded(page, selector)
+    selector.select_option(other)
+    selected(other, 'intro')
+    expect(page.locator('[data-onboarding-title]')).to_have_text(
+        'Twoja wyspa, Twoje decyzje' if other == 'pl' else 'Your island, your decisions')
+
+    page.locator('[data-onboarding-next]').click()
+    expect(guide).to_have_attribute('data-onboarding-stage', 'name')
+    bounded(page, selector)
+    draft = 'Port przed zatwierdzeniem'
+    name = page.locator('[data-onboarding-name]')
+    name.fill(draft)
+    selector.select_option(language)
+    selected(language, 'name')
+    expect(name).to_have_value(draft)
+    expect(page.locator('[data-onboarding-title]')).to_have_text(
+        'Nadaj nazwę swojej wyspie' if language == 'pl' else 'Give your island a name')
+    assert cloud.cloud_state(UID)['islandName'] == original['islandName'], 'Switching language must not commit the unconfirmed name'
+
+    # Empty names are rejected by the form; too-short names use the selected
+    # language's validation copy. Neither action starts the paused world.
+    name.fill('')
+    page.locator('[data-onboarding-next]').click()
+    expect(guide).to_have_attribute('data-onboarding-stage', 'name')
+    assert not name.evaluate('(element)=>element.checkValidity()')
+    name.fill('x')
+    page.locator('[data-onboarding-next]').click()
+    expect(name).to_have_attribute('aria-invalid', 'true')
+    expect(page.locator('[data-onboarding-error]')).to_contain_text(
+        'Wybierz nazwę' if language == 'pl' else 'Choose a name')
+
+    name.fill(draft)
+    selector.select_option(other)
+    selected(other, 'name')
+    expect(name).to_have_value(draft)
+    assert cloud.cloud_state(UID)['islandName'] == original['islandName']
+    # An unsubmitted draft is intentionally not an island cache. The persisted
+    # language and name stage must survive reload without advancing time.
+    page.reload()
+    page.wait_for_function('document.getElementById("loading").hidden')
+    selected(other, 'name')
+    bounded(page, selector)
+    expect(page.locator('[data-onboarding-title]')).to_have_text(
+        'Nadaj nazwę swojej wyspie' if other == 'pl' else 'Give your island a name')
+    name.fill(draft)
+    page.locator('[data-onboarding-next]').click()
+    expect(guide).to_have_attribute('data-onboarding-stage', 'tour')
+    expect(page.locator('[data-onboarding-title]')).to_have_text('Twoja wyspa' if other == 'pl' else 'Your island')
+    expect(page.locator('[data-onboarding-counter]')).to_contain_text('Poznaj wyspę' if other == 'pl' else 'Explore your island')
+    frozen(saved(page), original)
+    assert cloud.cloud_state(UID)['islandName'] == draft
+    assert cloud.cloud_state(UID)['settings']['language'] == other
+    cloud.no_island_cache(page)
+    context.close()
+    print('PASS20 onboarding language %s↔%s %s: intro/name, draft/validation, cloud preference/reload and translated paused tour' % (
+        language, other, 'mobile' if mobile else 'desktop'), flush=True)
+
+
+def onboarding_language_waits_for_save(browser):
+    original = starter()
+    seed(original)
+    context, page = cloud.context(browser, UID, language='pl')
+    held = []
+    armed = {'value': False}
+
+    def firebase(route):
+        if armed['value'] and route.request.method == 'POST' and not held:
+            held.append(route)
+            return
+        cloud.firebase(route)
+
+    context.route('https://firestore.googleapis.com/**', firebase)
+    page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player')
+    page.wait_for_function('document.getElementById("loading").hidden')
+    guide = page.locator('[data-island-onboarding]')
+    expect(guide).to_have_attribute('data-onboarding-stage', 'intro')
+    page.locator('[data-onboarding-next]').click()
+    expect(guide).to_have_attribute('data-onboarding-stage', 'name')
+    saved(page)
+    before = cloud.DOCUMENTS[UID]['payload']
+    page.locator('[data-onboarding-name]').fill('Niepotwierdzony port')
+    armed['value'] = True
+    page.locator('[data-onboarding-language]').select_option('en')
+    expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saving')
+    expect(guide).to_have_attribute('aria-busy', 'true')
+    expect(page.locator('[data-onboarding-language]')).to_be_disabled()
+    expect(page.locator('[data-onboarding-next]')).to_be_disabled()
+    expect(page.locator('[data-onboarding-name]')).to_be_disabled()
+    assert held
+    assert cloud.DOCUMENTS[UID]['payload'] == before, 'The pending language change must wait for its own cloud acknowledgement'
+    frozen(cloud.cloud_state(UID), original)
+
+    cloud.firebase(held[0])
+    expect(page.locator('[data-onboarding-language]')).to_be_enabled()
+    expect(page.locator('[data-onboarding-language]')).to_have_value('en')
+    expect(page.locator('[data-onboarding-title]')).to_have_text('Give your island a name')
+    expect(page.locator('[data-onboarding-name]')).to_have_value('Niepotwierdzony port')
+    expect(guide).to_have_attribute('data-onboarding-stage', 'name')
+    value = saved(page)
+    assert value['settings']['language'] == 'en'
+    assert value['islandName'] == original['islandName']
+    frozen(value, original)
+    cloud.no_island_cache(page)
+    context.close()
+    print('PASS20 onboarding language selection waits for cloud acknowledgement with disabled form controls and preserved draft/paused history', flush=True)
+
+
+def onboarding_language_failed_save_recovers(browser):
+    original = starter()
+    original['settings']['language'] = 'pl'
+    seed(original)
+    context, page = cloud.context(browser, UID, language='pl')
+    interrupted = {'armed': False, 'done': False}
+
+    def firebase(route):
+        if interrupted['armed'] and not interrupted['done'] and route.request.method == 'POST':
+            interrupted['done'] = True
+            # The write never reaches storage. Recovery must first read the
+            # unchanged remote version before safely retrying this snapshot.
+            return route.abort('connectionreset')
+        return cloud.firebase(route)
+
+    context.route('https://firestore.googleapis.com/**', firebase)
+    page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player')
+    page.wait_for_function('document.getElementById("loading").hidden')
+    guide = page.locator('[data-island-onboarding]')
+    expect(guide).to_have_attribute('data-onboarding-stage', 'intro')
+    page.locator('[data-onboarding-next]').click()
+    expect(guide).to_have_attribute('data-onboarding-stage', 'name')
+    saved(page)
+    before = cloud.DOCUMENTS[UID]['payload']
+    revision = cloud.DOCUMENTS[UID]['revision']
+    writes = len(cloud.WRITES)
+    draft = 'Port po przerwanym zapisie'
+    page.locator('[data-onboarding-name]').fill(draft)
+    interrupted['armed'] = True
+    page.locator('[data-onboarding-language]').select_option('en')
+
+    expect(page.locator('body')).to_have_attribute('data-cloud-status', 'offline')
+    expect(guide).to_have_attribute('aria-busy', 'false')
+    expect(guide).to_have_attribute('data-onboarding-stage', 'name')
+    expect(page.locator('html')).to_have_attribute('lang', 'en')
+    expect(page.locator('[data-onboarding-language]')).to_have_value('en')
+    expect(page.locator('[data-onboarding-title]')).to_have_text('Give your island a name')
+    expect(page.locator('[data-onboarding-name]')).to_have_value(draft)
+    expect(page.locator('[data-onboarding-error]')).to_contain_text('The language could not be confirmed')
+    assert interrupted['done']
+    assert cloud.DOCUMENTS[UID]['payload'] == before, 'An unsuccessful write must not pretend that the cloud stored the new language'
+    assert cloud.cloud_state(UID)['settings']['language'] == 'pl'
+    assert len(cloud.WRITES) == writes
+    frozen(cloud.cloud_state(UID), original)
+
+    page.evaluate("window.dispatchEvent(new Event('online'))")
+    value = saved(page)
+    assert value['settings']['language'] == 'en'
+    assert value['islandName'] == original['islandName']
+    assert cloud.DOCUMENTS[UID]['revision'] == revision + 1
+    assert len(cloud.WRITES) == writes + 1, 'The failed language write must recover exactly once'
+    frozen(value, original)
+    expect(guide).to_have_attribute('data-onboarding-stage', 'name')
+    expect(page.locator('[data-onboarding-language]')).to_have_value('en')
+    expect(page.locator('[data-onboarding-name]')).to_have_value(draft)
+    cloud.no_island_cache(page)
+
+    # Recovery resumes a writable introduction, not a replacement island.
+    page.locator('[data-onboarding-next]').click()
+    expect(guide).to_have_attribute('data-onboarding-stage', 'tour')
+    expect(page.locator('[data-onboarding-title]')).to_have_text('Your island')
+    assert saved(page)['islandName'] == draft
+    frozen(cloud.cloud_state(UID), original)
+    context.close()
+    print('PASS20 failed language save keeps English UI/draft with unchanged Polish cloud state; online recovery confirms once and resumes the paused introduction', flush=True)
+
+
 def persisted_tour_and_skip(browser):
     original = starter()
     seed(original)
@@ -342,6 +536,11 @@ def run():
         browser = pw.chromium.launch(executable_path=os.environ.get('HARBORLIGHT_CHROMIUM', '/usr/bin/chromium'),
                                      headless=True, args=['--no-sandbox'])
         try:
+            for language in ('pl', 'en'):
+                for mobile in (False, True):
+                    onboarding_language_switch(browser, language=language, mobile=mobile)
+            onboarding_language_waits_for_save(browser)
+            onboarding_language_failed_save_recovers(browser)
             persisted_tour_and_skip(browser)
             complete_mobile_tour(browser)
             existing_history(browser)

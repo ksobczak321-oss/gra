@@ -15,7 +15,11 @@
 .island-onboarding-action.secondary{background:linear-gradient(#284e65,#17394e);border-color:#7295a9;color:#f1f7fa}
 .island-onboarding button:hover{filter:brightness(1.12)}
 .island-onboarding button:disabled{opacity:.5;cursor:default;filter:none}
-.island-onboarding button:focus-visible,.island-onboarding input:focus-visible{outline:3px solid #fff0be;outline-offset:3px}
+.island-onboarding button:focus-visible,.island-onboarding input:focus-visible,.island-onboarding select:focus-visible{outline:3px solid #fff0be;outline-offset:3px}
+.island-onboarding-language{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;margin:0 0 18px}
+.island-onboarding-language label{color:#ffe6af;font-size:14px;font-weight:700}
+.island-onboarding-language select{max-width:100%;min-height:44px;min-width:140px;padding:8px 12px;border:1px solid #819eac;border-radius:9px;background:#092432;color:#f4f8f8;font:16px/1.4 Inter,system-ui,sans-serif}
+.island-onboarding select:disabled{opacity:.5;cursor:default}
 .island-onboarding-exit{position:absolute;right:12px;top:12px;width:42px;height:42px;display:grid;place-items:center;padding:0;border:1px solid #7695a8;border-radius:10px;background:#0a2434;color:#ffe3a5;font:32px/1 system-ui,sans-serif;cursor:pointer;touch-action:manipulation}
 .island-onboarding-card.is-tour .island-onboarding-eyebrow{padding-right:36px}
 .island-onboarding form label{display:block;margin:20px 0 8px;color:#ffe6af;font-size:15px;font-weight:700}

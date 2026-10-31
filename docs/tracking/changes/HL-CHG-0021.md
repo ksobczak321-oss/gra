@@ -40,7 +40,7 @@ Data pierwotnej wiadomości: 2026-10-31. Bieżąca wiadomość użytkownika z te
 
 Powiązane przypadki do ręcznego przeklikania:
 
-- [HL-TC-0030 — Wersja gry 0.9.1.1 jest widoczna w Ustawieniach](../../testing/manual/HL-TC-0030.md) — `NOT RUN`.
+- [HL-TC-0030 — Wersja gry jest widoczna w Ustawieniach](../../testing/manual/HL-TC-0030.md) — `NOT RUN`.
 
 ## Relacje
 
