@@ -888,3 +888,38 @@ Pages źródła `6ff5ae976e31add7fb93e3872e0d9046a25edd37`: [Pages 41359303232](
 ## 1 listopada 2026 — późniejsze polecenie promocji 0.11.0.0
 
 Użytkownik jawnie zlecił „promuj na pre prod”. Przygotowano istniejący bridge dla markera `[preprod:0.11.0.0]`; 28 testów dispatchera i promocji PASS. Bezpośrednie API GitHub tej sesji zwraca Forbidden. Zmiana nie dotyka 59 publicznych plików aplikacji względem6ff5ae9, reguł Firestore ani danych kont. Osobny oznaczony SHA wymaga własnego CI i dopiero potem standardowego deployu. Do odczytu nowych przebiegów PRE-PROD pozostaje0.10.1.0/353faad; nie wykonano resetu ani PROD.
+
+### Dokładny kandydat autoryzowanej promocji PRE-PROD v27
+
+Użytkownik po lokalnym odbiorze wydał **„promuj na pre prod”**. To rozszerza wcześniejsze ograniczenie do DEV; reset i PROD pozostają poza zakresem. Kandydat [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) wysłany do main z markerem `[preprod:0.11.0.0]`. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): **IN PROGRESS**; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): **SUCCESS, 47 s**. Wcześniejsze [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): **CANCELLED** — nie jest zieloną bramką promocji. Bridge i wdrożenie GCP oczekują na wynik dokładnego CI; ich ID i wyniki nie są jeszcze potwierdzone. Tagów v27 nie utworzono.
+
+**61 plików z manifestem / 60 treści / 11 219 303 bajty**. TAR SHA-256 `d202c79783b1dc2787d3db2a859031a9dc03fb87a089b2e81a09c2d8d0253ff4`; manifest SHA-256 `0905956f17d0b249cf8faae7a3aed486e86e74d20b2a5145f72d6a9730792993`. Zachowano 59 publicznych plików aplikacji z 6ff5ae9; wszystkie 60 plików treści są identyczne bajtowo z testowanym final2. To dokładny lokalny pakiet kandydata, nie dowód publikacji GCP.
+
+Focused testy dispatchera/promocji28/28 PASS lokalnie. Marker używa istniejącego bridge; nie osłabiono blokad dokładnego SHA, aktywnego CI/próby, niezmienionego main lub WIF. Reguły Firestore zachowują zgodny wcześniej potwierdzony hash. Nie resetowano kont ani postępu;70 ręcznych przypadków nadal NOT RUN. Main pozostaje nieruchomy do potwierdzenia źródła rozpoczętego GCP. [Przygotowanie](PREPROD-V27-PREPARATION.md) oddziela autoryzację, lokalny pakiet, CI i przyszły odczyt rzeczywistego wdrożenia.
+
+## 2026-11-02 — własny odbiór DEV 0.11.0.0, promocja PRE-PROD jeszcze trwa
+
+**Odbiór operacyjny: 2 listopada 2026, Europe/Warsaw.** Źródło `7d45290b911e359a8940f28551df4692053cadb2` ma własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508) **SUCCESS, 10 min 31 s** oraz [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453) **SUCCESS, 47 s**. Obie grupy testów przeglądarkowych pakietu przeszły w CI tego źródła. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057) jest **IN PROGRESS**. Wdrożenie PRE-PROD nadal oczekuje na odrębny wynik GCP; tagów v27 nie utworzono.
+
+Daty akceptacji opisów i pierwotnego odbioru lokalnego pozostają 1 listopada. Kandydat7d45290 został zapisany 1 listopada o23:01:34Z, czyli2 listopada o00:01:34 Europe/Warsaw. Końcowy odczyt CI/Pages oraz przyszłe nieprzesuwane tagi należą do daty2 listopada (`20261102`), ale tagów jeszcze nie utworzono.
+
+Pakiet źródła7d45290 zachowuje61 plików/60 treści/11 219 303 bajty; TAR `d202c79783b1dc2787d3db2a859031a9dc03fb87a089b2e81a09c2d8d0253ff4`, manifest `0905956f17d0b249cf8faae7a3aed486e86e74d20b2a5145f72d6a9730792993`. Archiwum zweryfikowane i rozpakowane, wszystkie60 treści identyczne z testowanym final2. Bazowe CI6ff5ae9 pozostaje CANCELLED; nie jest źródłem sukcesu kandydata.
+
+Nowe17 kart ma verified_own_ci_and_pages / passed_source_7d45290, a PRE-PROD authorized_bridge_in_progress. Ostatnie odebrane GCP nadal0.10.1.0 /353faad…;70 ręcznych przypadków NOT RUN, bez resetu i PROD. Main nie jest przesuwany przed potwierdzeniem źródła rzeczywiście rozpoczętego deployu.
+
+### PRE-PROD v27 — rozpoczęte wdrożenie dokładnego źródła
+
+Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057) ma **SUCCESS, 18 s**. Uruchomiony [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) jest **IN PROGRESS**, z publicznie potwierdzonym źródłem `7d45290b911e359a8940f28551df4692053cadb2`. [gate 125011066732](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479/job/125011066732) ma **SUCCESS**, zadanie [deploy 125011120868](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479/job/125011120868) nadal działa. To potwierdzenie rozpoczęcia właściwego wdrożenia, nie jego zakończenia. Sukces GCP i tagi v27 nadal niepotwierdzone.
+
+Ostatnie odebrane PRE-PROD pozostaje0.10.1.0 /353faad… do potwierdzenia końcowego wyniku. Metadanych nie wysyłano podczas wdrożenia. Bez resetu kont, haseł, postępu i PROD;70 ręcznych przypadków nadal NOT RUN.
+
+### PRE-PROD v27 — niepowodzenie po publikacji Hostingu
+
+**PRE-PROD — niepełna promocja, 2 listopada 2026 (Europe/Warsaw).** [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479), źródło `7d45290b911e359a8940f28551df4692053cadb2`, ma **FAILURE** w kroku24 „Verify permanent DEV accounts and cloud save isolation”. Hosting został wcześniej opublikowany; kontrola dokładnego wydania i rzeczywisty test hostowanej gry przeszły. Frontend0.11.0.0 może więc już być serwowany, ale pełnego odbioru PRE-PROD nie zaliczono. Artefakty/receipt pominięto; tagów i resetu brak.
+
+[bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057) zachowuje SUCCESS18s, własne CI41360046508 SUCCESS10m31s i Pages41360046453 SUCCESS47s. Są to odrębne sukcesy; nie zastępują nieudanego końcowego odbioru kont. Rozpoznano w kodzie checker ograniczony do koperty Firestore1 przy obecnym kliencie obsługującym2; poprawka ścisłej zgodności i testy są przygotowywane. Dokładna liniaERROR z prywatnego logu pozostaje oczekiwana. Bez resetu i bez potwierdzonego wycieku lub utraty danych. [Incydent](PREPROD-V27-INCIDENT-20261102.md) zachowuje ten przebieg jako FAILURE; późniejsza poprawka wymaga własnego źródła i dowodów.
+
+
+## 2 listopada2026 — kontroler formatu zapisu przed kolejną promocją
+
+Po FAILURE41360977479 w kroku kont znaleziono rzeczywisty błąd: walidator przyjmował tylko kopertę1, a obecny klient i adapter zapisują2, także bez córek. Ścisła obsługa2, ograniczenia per świat/API, poprawne porównanie uwodnionego API i bezpieczna adnotacja błędu mają26/26 regresjiPASS. Cały lokalny Node1023/1023PASS. Publiczne pliki gry i dane kont niezmienione; dokładny prywatny ERROR nadal nieodczytany. Kolejny oznaczony SHA otrzyma własne CI i standardowy deploy, bez resetu i PROD.

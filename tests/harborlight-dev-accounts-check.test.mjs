@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { check, main } from '../infra/google-cloud/check-dev-accounts.mjs';
+import { check, main, githubErrorAnnotation } from '../infra/google-cloud/check-dev-accounts.mjs';
+import { createIslandDocumentStore } from '../backend/island-document-store.mjs';
+import { createState } from '../harborlight-v1-state.js';
 
 const PROJECT = 'harborlight-dev';
 const CONFIG = 'https://harborlight-dev.web.app/__/firebase/init.json';
@@ -31,6 +33,57 @@ const claims = token => JSON.parse(Buffer.from(token.split('.')[1], 'base64url')
 const apiDocument = (user, empty = false) => ({ account: { generation: 1, expired: false, lastPlayedAt: NOW },
   island: empty ? null : { generation: 1, version: { revision: 3, updateTime: '2026-10-30T12:00:00.123456Z' },
     payload: document(user).fields.payload.stringValue } });
+
+async function splitSave({ daughters = 0, padding = 0, generation = 7 } = {}) {
+  const records = new Map();
+  const memory = { runTransaction: work => work({
+    get: async key => structuredClone(records.get(key)),
+    set: async (key, value) => { records.set(key, structuredClone(value)); },
+    delete: async key => { records.delete(key); }
+  }) };
+  const store = createIslandDocumentStore(memory), world = createState(NOW);
+  world.islandGeneration = generation;
+  if (padding) world.notes = 'a'.repeat(padding);
+  const islands = Object.fromEntries(Array.from({ length: daughters }, (_, index) => {
+    const child = createState(NOW); delete child.archipelago;
+    child.islandId = `island-${index + 2}`;
+    if (padding) child.notes = 'b'.repeat(padding);
+    return [child.islandId, child];
+  }));
+  world.archipelago = { ...world.archipelago, version: 2, islands,
+    activeIslandId: daughters ? 'island-2' : 'island-1', shipCapacity: 1000,
+    transfers: [], capacityReceipts: [] };
+  await store.runTransaction(async tx => {
+    await tx.get('islands/checker-fixture');
+    await tx.set('islands/checker-fixture', { schemaVersion: 1, generation,
+      revision: 3, payload: JSON.stringify(world), updatedAt: NOW });
+  });
+  const stored = records.get('islands/checker-fixture');
+  assert.equal(stored.schemaVersion, 2, 'Exercise the real backend serializer, not a hand-built v2 payload');
+  const hydrated = await store.runTransaction(tx => tx.get('islands/checker-fixture'));
+  return { generation, payload: hydrated.payload, fields: {
+    schemaVersion: { integerValue: String(stored.schemaVersion) },
+    revision: { integerValue: String(stored.revision) },
+    generation: { integerValue: String(stored.generation) },
+    payload: { stringValue: stored.payload },
+    // Firestore's REST response omits values for an empty array.
+    worldIds: { arrayValue: stored.worldIds.length ? { values: stored.worldIds.map(stringValue => ({ stringValue })) } : {} }
+  } };
+}
+
+function splitResponse(call, saved, { root = true, api = true } = {}) {
+  const token = call.options.headers.Authorization?.replace(/^Bearer /, '');
+  if (!token) return;
+  const user = USERS.find(value => value.uid === claims(token).sub);
+  if (root && call.url === FIRESTORE + PREFIX + user.uid) return reply(document(user, { fields: saved.fields }));
+  if (api && call.url === API_ISLAND) {
+    const body = apiDocument(user);
+    body.account.generation = saved.generation;
+    body.island.generation = saved.generation;
+    body.island.payload = saved.payload;
+    return reply(body);
+  }
+}
 
 function harness({ override = () => undefined, empty = ['dev-admin3'], accountApi = false, denyOwn = accountApi } = {}) {
   const calls = [];
@@ -299,6 +352,113 @@ test('existing saves must belong to the owner and contain the current versioned 
     await assert.rejects(check(h.options), /existing DEV island has an invalid/);
     assert.equal(h.calls.length, 3);
   }
+});
+
+test('current backend split saves with zero or populated daughters pass direct and API checks without any game writes', async () => {
+  for (const daughters of [0, 1]) {
+    const saved = await splitSave({ daughters, padding: daughters ? 360_000 : 0 });
+    if (daughters) assert.ok(Buffer.byteLength(saved.payload, 'utf8') > 700_000, 'The hydrated API aggregate can legitimately exceed one world document');
+    for (const accountApi of [false, true]) {
+      const h = harness({ empty: [], accountApi, denyOwn: false,
+        override: call => splitResponse(call, saved) });
+      const result = await check(h.options);
+      assert.equal(result.accounts, 3);
+      assert.equal(result.existingSaves, 3);
+      assert.equal(result.foreignReadsDenied, 6);
+      assert.equal(result.anonymousReadsDenied, 3);
+      assert.ok(h.calls.every(call => call.options.method === (call.url === AUTH ? 'POST' : 'GET')));
+      assert.ok(h.calls.every(call => call.url === AUTH || call.options.body === undefined));
+      assert.ok(h.calls.every(call => !call.url.includes('/worlds/') && !call.url.includes(':commit')));
+    }
+  }
+});
+
+test('split roots reject malformed schema types, generations, world indexes and inline or oversized payloads', async () => {
+  const saved = await splitSave({ daughters: 1 });
+  const changes = [
+    fields => { fields.schemaVersion.integerValue = '3'; },
+    fields => { fields.schemaVersion.integerValue = '02'; },
+    fields => { fields.schemaVersion.integerValue = 2; },
+    fields => { delete fields.generation; },
+    ...['0', '-1', '01', '1.5', '9007199254740992', 7].map(value => fields => { fields.generation.integerValue = value; }),
+    fields => { fields.generation = { doubleValue: 7 }; },
+    fields => { fields.generation.extra = 'unexpected'; },
+    fields => { delete fields.worldIds; },
+    fields => { fields.worldIds = { stringValue: 'island-2' }; },
+    fields => { fields.worldIds.arrayValue = []; },
+    fields => { fields.worldIds.arrayValue.values = {}; },
+    fields => { fields.worldIds.arrayValue.values = null; },
+    ...[
+      [null], [{ integerValue: '2' }], [{ stringValue: 'island-2', integerValue: '2' }],
+      [{ stringValue: 'island-1' }], [{ stringValue: 'island-21' }], [{ stringValue: 'island-02' }],
+      [{ stringValue: '../island-2' }], [{ stringValue: 'island-3' }],
+      [{ stringValue: 'island-2' }, { stringValue: 'island-2' }],
+      Array.from({ length: 20 }, (_, index) => ({ stringValue: `island-${index + 2}` }))
+    ].map(values => fields => { fields.worldIds.arrayValue.values = values; }),
+    ...[
+      state => { state.islandGeneration = 8; },
+      state => { state.islandGeneration = '7'; },
+      state => { delete state.islandGeneration; },
+      state => { delete state.archipelago; },
+      state => { state.archipelago.version = 1; },
+      state => { state.archipelago.islands = []; },
+      state => { state.archipelago.islands = { 'island-2': {} }; },
+      state => { state.archipelago.activeIslandId = 'island-3'; },
+      state => { state.archipelago.shipCapacity = 999; },
+      state => { state.archipelago.transfers = {}; },
+      state => { state.notes = 'ą'.repeat(350_000); }
+    ].map(change => fields => { const state = JSON.parse(fields.payload.stringValue); change(state); fields.payload.stringValue = JSON.stringify(state); }),
+    ...['[]', 'null', 'not-json'].map(payload => fields => { fields.payload.stringValue = payload; })
+  ];
+  for (const [index, change] of changes.entries()) {
+    const fields = structuredClone(saved.fields); change(fields);
+    const h = harness({ override: call => call.url === FIRESTORE + PREFIX + USERS[0].uid &&
+      call.options.headers.Authorization ? reply(document(USERS[0], { fields })) : undefined });
+    await assert.rejects(check(h.options), /existing DEV island has an invalid/, `Malformed split root case ${index}`);
+    assert.equal(h.calls.length, 3);
+    assert.ok(h.calls.every(call => call.url === AUTH || call.options.method === 'GET'));
+  }
+});
+
+test('API split cross-check compares the root projection, daughter index and generation at the same revision', async () => {
+  const saved = await splitSave({ daughters: 1 });
+  for (const change of [
+    value => { value.fields.generation.integerValue = '8'; const state = JSON.parse(value.fields.payload.stringValue); state.islandGeneration = 8; value.fields.payload.stringValue = JSON.stringify(state); },
+    value => { value.fields.worldIds.arrayValue.values.push({ stringValue: 'island-3' }); },
+    value => { const state = JSON.parse(value.fields.payload.stringValue); state.resources.coins++; value.fields.payload.stringValue = JSON.stringify(state); }
+  ]) {
+    const wrong = structuredClone(saved); change(wrong);
+    const h = harness({ empty: [], accountApi: true, denyOwn: false,
+      override: call => splitResponse(call, call.url === API_ISLAND ? saved : wrong) });
+    await assert.rejects(check(h.options), /did not match the authenticated owner document/);
+  }
+});
+
+test('API aggregates retain the 700k root/world limits and the 14MB overall payload limit', async () => {
+  const saved = await splitSave({ daughters: 1 });
+  for (const change of [
+    state => { state.notes = 'ą'.repeat(350_000); },
+    state => { state.archipelago.islands['island-2'].notes = 'ą'.repeat(350_000); },
+    state => { state.archipelago.islands['island-2'].archipelago = {}; },
+    state => { state.archipelago.islands = { 'island-3': state.archipelago.islands['island-2'] }; },
+    state => { state.notes = 'a'.repeat(14_000_000); }
+  ]) {
+    const wrong = structuredClone(saved), state = JSON.parse(wrong.payload); change(state); wrong.payload = JSON.stringify(state);
+    const h = harness({ accountApi: true, override: call => splitResponse(call, wrong, { root: false }) });
+    await assert.rejects(check(h.options), /DEV account API returned an invalid/);
+    assert.equal(h.calls.some(call => call.url.startsWith(FIRESTORE)), false);
+  }
+});
+
+test('GitHub error annotations escape workflow delimiters and use only the CLI safe error text', async () => {
+  assert.equal(githubErrorAnnotation('ERROR: 50% complete\r\nNext line\n'), '::error::ERROR: 50%25 complete%0D%0ANext line\n');
+  const secret = 'NEVER-PRINT-PROVIDER-SECRET', errors = [];
+  assert.equal(await main(['--passwords-match-logins'], {
+    fetch: async () => { throw new Error(secret); },
+    writeError: value => errors.push(githubErrorAnnotation(value))
+  }), 1);
+  assert.deepEqual(errors, ['::error::ERROR: DEV account check could not reach the required service.\n']);
+  assert.equal(errors.join('').includes(secret), false);
 });
 
 test('an HTTP 404 is accepted as a new empty island only with a Firestore NOT_FOUND envelope', async () => {

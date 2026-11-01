@@ -19,9 +19,16 @@ const USERS = Object.freeze([1, 2, 3].map(number => Object.freeze({
   email: `admin${number}@dev.harborlight.pl`
 })));
 const MAX_PAYLOAD_BYTES = 700_000;
-const LIMITS = { config: 65_536, auth: 65_536, document: 2_000_000, denial: 65_536 };
+const MAX_ARCHIPELAGO_BYTES = 14_000_000;
+// JSON escapes the already serialized payload. Keep the API response bounded
+// while allowing the same twenty-world aggregate as the browser/backend.
+const LIMITS = { config: 65_536, auth: 65_536, document: 2_000_000,
+  apiDocument: 2 * MAX_ARCHIPELAGO_BYTES + 65_536, denial: 65_536 };
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const positive = value => Number.isSafeInteger(value) && value > 0;
+const positiveIntegerField = value => object(value) && Object.keys(value).length === 1 &&
+  typeof value.integerValue === 'string' && /^[1-9][0-9]*$/.test(value.integerValue) && positive(Number(value.integerValue));
+const daughterId = value => typeof value === 'string' && /^island-(?:[2-9]|1[0-9]|20)$/.test(value);
 const timestamp = value => typeof value === 'string' &&
   /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z$/.test(value) &&
   Number.isFinite(Date.parse(value));
@@ -93,10 +100,11 @@ function validateIdentity(reply, user, now) {
 
 function validateDocument(document, user) {
   const fields = document.fields;
+  const schemaVersion = fields?.schemaVersion?.integerValue;
   const revision = fields?.revision?.integerValue;
   const payload = fields?.payload?.stringValue;
   if (document.name !== `${DOCUMENT_PREFIX}${user.uid}` || !object(fields) ||
-      fields.schemaVersion?.integerValue !== '1' || typeof revision !== 'string' ||
+      !['1', '2'].includes(schemaVersion) || typeof revision !== 'string' ||
       !/^[1-9][0-9]*$/.test(revision) || !positive(Number(revision)) ||
       typeof payload !== 'string' || Buffer.byteLength(payload, 'utf8') > MAX_PAYLOAD_BYTES ||
       !timestamp(document.updateTime)) {
@@ -106,6 +114,37 @@ function validateDocument(document, user) {
   try { state = JSON.parse(payload); }
   catch { fail('An existing DEV island has an invalid state payload.'); }
   if (!object(state)) fail('An existing DEV island has an invalid state payload.');
+  if (schemaVersion === '1') return { schemaVersion, payload };
+  const worldIds = fields.worldIds;
+  const values = worldIds?.arrayValue?.values;
+  if (!positiveIntegerField(fields.generation) || !object(worldIds) || Object.keys(worldIds).length !== 1 ||
+      !object(worldIds.arrayValue) || Object.keys(worldIds.arrayValue).some(key => key !== 'values') ||
+      values !== undefined && !Array.isArray(values)) {
+    fail('An existing DEV island has an invalid split document envelope.');
+  }
+  const entries = values ?? [];
+  if (entries.some(entry => !object(entry) || Object.keys(entry).length !== 1 || typeof entry.stringValue !== 'string')) {
+    fail('An existing DEV island has an invalid split document envelope.');
+  }
+  const ids = entries.map(entry => entry.stringValue), generation = Number(fields.generation.integerValue);
+  if (!validWorldIds(ids) || !validArchipelagoMetadata(state, ids) ||
+      (state.islandGeneration ?? 1) !== generation || Object.keys(state.archipelago.islands).length) {
+    fail('An existing DEV island has an invalid split state payload.');
+  }
+  return { schemaVersion, payload, generation, worldIds: ids };
+}
+
+function validWorldIds(ids) {
+  if (!Array.isArray(ids) || ids.length > 19 || new Set(ids).size !== ids.length || ids.some(id => !daughterId(id))) return false;
+  return [...ids].sort((left, right) => Number(left.slice(7)) - Number(right.slice(7)))
+    .every((id, index) => id === `island-${index + 2}`);
+}
+
+function validArchipelagoMetadata(state, ids) {
+  const group = state.archipelago;
+  return object(group) && group.version === 2 && object(group.islands) &&
+    (group.activeIslandId === 'island-1' || ids.includes(group.activeIslandId)) &&
+    positive(group.shipCapacity) && group.shipCapacity >= 1000 && Array.isArray(group.transfers);
 }
 
 function validateApiIsland(body) {
@@ -119,7 +158,7 @@ function validateApiIsland(body) {
   const island = body.island;
   if (account.expired || island.generation !== account.generation || !positive(island.version?.revision) ||
       !timestamp(island.version?.updateTime) || typeof island.payload !== 'string' ||
-      Buffer.byteLength(island.payload, 'utf8') > MAX_PAYLOAD_BYTES) {
+      Buffer.byteLength(island.payload, 'utf8') > MAX_ARCHIPELAGO_BYTES) {
     fail('The DEV account API returned an invalid island envelope.');
   }
   let state;
@@ -128,7 +167,22 @@ function validateApiIsland(body) {
   if (!object(state) || (state.islandGeneration ?? 1) !== account.generation) {
     fail('The DEV account API returned an invalid state payload.');
   }
-  return true;
+  if (state.archipelago?.version !== 2) {
+    if (Buffer.byteLength(island.payload, 'utf8') > MAX_PAYLOAD_BYTES) fail('The DEV account API returned an invalid state payload.');
+    return { rootPayload: island.payload, worldIds: null };
+  }
+  const worlds = state.archipelago.islands;
+  const ids = object(worlds) ? Object.keys(worlds) : [];
+  if (!validWorldIds(ids) || !validArchipelagoMetadata(state, ids) ||
+      Object.values(worlds).some(world => !object(world) || world.archipelago !== undefined ||
+        Buffer.byteLength(JSON.stringify(world), 'utf8') > MAX_PAYLOAD_BYTES)) {
+    fail('The DEV account API returned an invalid archipelago payload.');
+  }
+  const rootPayload = JSON.stringify({ ...state, archipelago: { ...state.archipelago, islands: {} } });
+  if (Buffer.byteLength(rootPayload, 'utf8') > MAX_PAYLOAD_BYTES) {
+    fail('The DEV account API returned an invalid archipelago payload.');
+  }
+  return { rootPayload, worldIds: ids };
 }
 
 export async function check({ fetch: fetcher = globalThis.fetch, passwordForLogin,
@@ -184,13 +238,14 @@ export async function check({ fetch: fetcher = globalThis.fetch, passwordForLogi
     if (signedIn.status !== 200) fail(`DEV account sign-in failed (HTTP ${signedIn.status}).`);
     const token = validateIdentity(signedIn.body, user, now);
     const headers = { Authorization: `Bearer ${token}` };
-    let apiIsland;
+    let apiIsland, apiMetadata;
     if (accountApiEnabled) {
       // This route has no caller-controlled UID. The server derives ownership
       // exclusively from the validated Firebase token for this loop's user.
-      const ownApi = await request(API_ISLAND_URL, { headers }, LIMITS.document);
+      const ownApi = await request(API_ISLAND_URL, { headers }, LIMITS.apiDocument);
       if (ownApi.status !== 200) fail(`Reading an owned DEV API island failed (HTTP ${ownApi.status}).`);
       const exists = validateApiIsland(ownApi.body);
+      apiMetadata = exists;
       apiIsland = ownApi.body.island;
       totals[exists ? 'existingSaves' : 'emptyIslands']++;
       totals.apiReads++;
@@ -198,13 +253,17 @@ export async function check({ fetch: fetcher = globalThis.fetch, passwordForLogi
     const ownUrl = `${FIRESTORE_ORIGIN}/v1/${DOCUMENT_PREFIX}${user.uid}`;
     const own = await request(ownUrl, { headers }, LIMITS.document);
     if (own.status === 200) {
-      validateDocument(own.body, user);
+      const direct = validateDocument(own.body, user);
       if (accountApiEnabled) {
         // Before the first explicit reset the legacy owner-read rules may
         // still be active. They provide an additional identity cross-check.
         const directRevision = Number(own.body.fields.revision.integerValue);
-        if (!apiIsland || apiIsland.version.revision > directRevision ||
-            apiIsland.version.revision === directRevision && apiIsland.payload !== own.body.fields.payload.stringValue) {
+        const sameRevision = apiIsland?.version.revision === directRevision;
+        const samePayload = direct.schemaVersion === '1' ? apiIsland?.payload === direct.payload :
+          apiIsland?.generation === direct.generation && apiMetadata?.worldIds !== null &&
+          JSON.stringify([...(apiMetadata?.worldIds || [])].sort()) === JSON.stringify([...direct.worldIds].sort()) &&
+          apiMetadata?.rootPayload === direct.payload;
+        if (!apiIsland || apiIsland.version.revision > directRevision || sameRevision && !samePayload) {
           fail('The DEV account API did not match the authenticated owner document.');
         }
       } else totals.existingSaves++;
@@ -241,6 +300,9 @@ export async function check({ fetch: fetcher = globalThis.fetch, passwordForLogi
   return totals;
 }
 
+export const githubErrorAnnotation = message => `::error::${String(message).trimEnd()
+  .replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A')}\n`;
+
 export async function main(args = process.argv.slice(2), { fetch: fetcher = globalThis.fetch,
   write = text => process.stdout.write(text), writeError = text => process.stderr.write(text), now } = {}) {
   if (args.length === 1 && args[0] === '--help') {
@@ -274,5 +336,9 @@ export async function main(args = process.argv.slice(2), { fetch: fetcher = glob
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  process.exitCode = await main();
+  process.exitCode = await main(process.argv.slice(2), { writeError: message => {
+    // main emits only fixed, sanitized failures, never raw provider messages.
+    process.stderr.write(message);
+    process.stderr.write(githubErrorAnnotation(message));
+  } });
 }

@@ -111,3 +111,7 @@ Przypadki ręcznego odbioru tego zakresu: **HL-TC-0060–0070**, w [planie test�
 Końcowy przegląd wykonalności uwzględnia pełny czas kolejki (`completionTotal`). Brak skończonego harmonogramu dostaw blokuje przyjęcie celu budowy nawet przy gotowych materiałach. Przydział wymaga wystarczającej obsady lub wolnej osoby rzeczywiście w Domu; modlitwa i zwiedzanie Latarni nie tworzą dostępnego pracownika. Te osoby nie wchodzą też do planowanej załogi produkcji. Oferta czeka na przygotowanie obsady, a rozpoczęty termin pozostaje stały.
 
 Niepewne potwierdzenie zapisu wymaga odczytu chmury przed wznowieniem. Sukces jednego zapisu podczas równoległego błędu aktywności nie może pozostawić zatrzymanego koordynatora z mylącym stanem „zapisano”. Odzyskiwanie zachowuje potwierdzony stan i kontrolę wersji; nie tworzy nowej wyspy ani nie nadpisuje nowszej historii innej karty.
+
+## Późniejsze polecenie promocji
+
+Po lokalnym odbiorze użytkownik zlecił **„promuj na pre prod”**. To polecenie rozszerza wcześniejsze GO tylko DEV o standardową promocję wydania0.11.0.0, zachowując konta, hasła i postęp. Kandydat `7d45290b911e359a8940f28551df4692053cadb2` wymaga własnego pełnego CI i dotychczasowych bramek bridge/WIF. Nie jest zgodą na reset, PROD lub aktywację prawdziwych operatorów. Stan publikacji i dokładny pakiet: [przygotowanie PRE-PROD v27](PREPROD-V27-PREPARATION.md), [rejestr środowisk](ENVIRONMENT-STATUS.md). Dawne zdania o braku promocji opisują zakres pierwotnego GO, nie cofają późniejszej autoryzacji.

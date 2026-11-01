@@ -1,6 +1,12 @@
 # DEV 0.11.0.0 / v27 — lokalny odbiór zakończony
 
-Stan roboczy z **1 listopada 2026, Europe/Warsaw**. Nowe GO obejmuje DEV i normalne Git/CI/Pages, bez promocji GCP, resetu kont i integracji planszówki online. Numer aplikacji to **0.11.0.0**, cache **`frontend-v27`**, schemat świata pozostaje **9**. Lokalny odbiór zakończono: **1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS**, po poprawkach i kierunkowych ponowieniach. Źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłano do `main`; własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259) pozostaje **W TOKU**, a [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232) zakończyło się **SUCCESS, 30 s**, zgodnie z odczytem GitHub. Tag v27 nie został jeszcze utworzony.
+**PRE-PROD — niepełna promocja, 2 listopada 2026 (Europe/Warsaw).** [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479), źródło `7d45290b911e359a8940f28551df4692053cadb2`, ma **FAILURE** w kroku24 „Verify permanent DEV accounts and cloud save isolation”. Hosting został wcześniej opublikowany; kontrola dokładnego wydania i rzeczywisty test hostowanej gry przeszły. Frontend0.11.0.0 może więc już być serwowany, ale pełnego odbioru PRE-PROD nie zaliczono. Artefakty/receipt pominięto; tagów i resetu brak. [incydent promocji](PREPROD-V27-INCIDENT-20261102.md).
+
+Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057) ma **SUCCESS, 18 s**. Uruchomiony [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) ma **FAILURE po publikacji Hostingu**, z publicznie potwierdzonym źródłem `7d45290b911e359a8940f28551df4692053cadb2`. [gate 125011066732](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479/job/125011066732) ma **SUCCESS**, zadanie [deploy125011120868](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479/job/125011120868) zakończyło się błędem kroku24. Potwierdzono właściwe źródło, ale końcowy odbiór tego wdrożenia nie przeszedł. Pełne wdrożenie GCP zakończone błędem; brak receipt i tagów v27.
+
+**Odbiór operacyjny: 2 listopada 2026, Europe/Warsaw.** Źródło `7d45290b911e359a8940f28551df4692053cadb2` ma własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508) **SUCCESS, 10 min 31 s** oraz [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453) **SUCCESS, 47 s**. Obie grupy testów przeglądarkowych pakietu przeszły w CI tego źródła. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057) ma **SUCCESS, 18 s**. Wdrożenie PRE-PROD nadal oczekuje na odrębny wynik GCP; tagów v27 nie utworzono.
+
+Stan roboczy z **1 listopada 2026, Europe/Warsaw**. Pierwotne GO obejmowało DEV i normalne Git/CI/Pages, bez promocji GCP. Późniejsze polecenie „promuj na pre prod” autoryzuje standardową promocję kandydata opisaną niżej; reset, PROD i integracja planszówki online pozostają poza zakresem. Numer aplikacji to **0.11.0.0**, cache **`frontend-v27`**, schemat świata pozostaje **9**. Lokalny odbiór zakończono: **1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS**, po poprawkach i kierunkowych ponowieniach. Źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłano do `main`; własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259) ma **CANCELLED**, a [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232) zakończyło się **SUCCESS, 30 s**, zgodnie z odczytem GitHub. Tag v27 nie został jeszcze utworzony.
 
 [Wymagania v27](FRONTEND-V27-REQUIREMENTS.md) · [Rejestr środowisk](ENVIRONMENT-STATUS.md) · [Karty zmian](tracking/CHANGE-REGISTER.md) · [Ręczny odbiór](testing/START-HERE.md).
 
@@ -82,7 +88,7 @@ Pierwszy pełny przebieg zawierał 20 sukcesów i 7 niepowodzeń. Naprawiono sze
 
 ## Ręczne scenariusze i rejestr
 
-Nowy zakres ma osobne karty **HL-CHG-0951–0967**. Po zakończonym odbiorze lokalnym te 17 kart ma **implemented / verified_locally**, a własne CI **in_progress** dla wskazanego SHA. PRE-PROD i PROD pozostają not_deployed dla nowego zakresu. Nie zmieniamy statusów pozostałych historycznych kart ani wyników ręcznych.
+Nowy zakres ma osobne karty **HL-CHG-0951–0967**. Po zakończonym odbiorze lokalnym te 17 kart ma **implemented / verified_locally**, a własne CI **passed_source_7d45290**. DEV ma verified_own_ci_and_pages; PRE-PROD ma failed_after_hosting_source_7d45290, PROD pozostaje not_deployed. Nie zmieniamy statusów pozostałych historycznych kart ani wyników ręcznych.
 
 | Scenariusze | Przedmiot odbioru |
 |---|---|
@@ -94,16 +100,26 @@ Nowy zakres ma osobne karty **HL-CHG-0951–0967**. Po zakończonym odbiorze lok
 
 [Plan z odrębnymi kartami](testing/MANUAL-TEST-PLAN.md) i [interaktywna lista](testing/qa-checklist.html) zachowują wszystkie **70 wyników NOT RUN**.
 
-## Źródło, pakiet i publikacja — do zamknięcia
+## Bazowe źródło aplikacji 6ff5ae9 — odrębny dowód DEV
 
 | Dowód | Stan |
 |---|---|
-| Końcowy SHA aplikacji v27 | [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) — commit aplikacji wysłany do `main`. To własne źródło v27, odrębne od historycznego v26. |
+| Bazowy SHA aplikacji v27 | [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) — commit aplikacji wysłany do `main`. To własne źródło v27, odrębne od historycznego v26. |
 | Lokalny pakiet walidacyjny | **61 plików z manifestem / 60 plików treści, 11 219 303 bajtów**. Końcowy pakiet lokalnej walidacji `build/frontend-v27-final2`, z drzewa roboczego ze znacznikiem źródła `000…`. Służy testom lokalnym; nie jest finalnym pakietem własnego commitu ani opublikowanym artefaktem CI. |
 | Pakiet dokładnego źródła 6ff5ae9 | **61 plików z manifestem / 60 treści / 11 219 303 bajty**. TAR SHA-256 `af8a64508044d344b4e01122145d3b0b1653c6c4abfecfec5fc502e7b36e1e55`; manifest SHA-256 `84ac0f9528cadaab15c92d3f789abd041d45b9a4580051e638472879d0709d49`. Archiwum zweryfikowano i rozpakowano; wszystkie 60 plików treści jest identyczne bajtowo z lokalnie testowanym final2. To lokalny pakiet dokładnego SHA, odrębny od przyszłego artefaktu CI. |
-| Push / własne CI / Pages | Push 6ff5ae9 wykonany. [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): **IN PROGRESS**. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): **SUCCESS, 30 s**. Stan potwierdzony odczytem publicznego GitHub; nie deklarujemy sukcesu publikacji ani CI. |
+| Push / własne CI / Pages | Push 6ff5ae9 wykonany. [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): **CANCELLED**. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): **SUCCESS, 30 s**. Stan potwierdzony odczytem publicznego GitHub; nie deklarujemy sukcesu publikacji ani CI. |
 | Nieprzesuwany tag odbioru DEV | **Nieutworzony dla v27**; wymaga potwierdzenia własnego CI i Pages. |
 | PRE-PROD | **Bez nowej promocji** — pozostaje 0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`, przebieg 41246771480 / próba 1 SUCCESS. |
 | PROD, reset kont, prawdziwe płatności/reklamy/darowizny | **Bez zmian i aktywacji**. Testowe odpowiedzi Firebase nie dotykają prawdziwych wysp. |
 
 Nazwy, UID, hasła, postęp, rozpoczęte budowy i rejsy są danymi do zachowania. Własny zielony CI i Pages trzeba powiązać z końcowym SHA w tym dokumencie oraz w rejestrze środowisk; żaden lokalny test nie zastępuje takiego dowodu.
+
+## Kandydat autoryzowanej promocji PRE-PROD 7d45290
+
+Późniejsza dyspozycja użytkownika **„promuj na pre prod”** zastępuje wcześniejsze ograniczenie publikacji do DEV w zakresie tego wydania. Konta, hasła, historia i rozpoczęte działania pozostają do zachowania; brak zgody na reset lub PROD. [Przygotowanie PRE-PROD v27](PREPROD-V27-PREPARATION.md) zachowuje sprawdzenie niezmienionych reguł Firestore i zasad standardowej promocji.
+
+Kandydat [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) wysłany do main z markerem `[preprod:0.11.0.0]`. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): **SUCCESS, 10 min 31 s**; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): **SUCCESS, 47 s**. Wcześniejsze [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): **CANCELLED** — nie jest zieloną bramką promocji. Własne CI dokładnego kandydata przeszło. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057) ma **SUCCESS, 18 s**; [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) ma **FAILURE po publikacji Hostingu**, a jego źródło `7d45290b911e359a8940f28551df4692053cadb2` potwierdzone; końcowy wynik: FAILURE w kontroli kont po publikacji Hostingu. Tagów v27 nie utworzono.
+
+**61 plików z manifestem / 60 treści / 11 219 303 bajty**. TAR SHA-256 `d202c79783b1dc2787d3db2a859031a9dc03fb87a089b2e81a09c2d8d0253ff4`; manifest SHA-256 `0905956f17d0b249cf8faae7a3aed486e86e74d20b2a5145f72d6a9730792993`. Zachowano 59 publicznych plików aplikacji z 6ff5ae9; wszystkie 60 plików treści są identyczne bajtowo z testowanym final2. To dokładny lokalny pakiet kandydata, nie dowód publikacji GCP.
+
+Lokalne **1017 Node /141 Python /27 nazwanych zestawów Chromium PASS** dotyczą niezmienionej publicznej aplikacji; dodatkowo **28/28 testów dispatchera i promocji PASS** obejmuje marker oraz istniejące blokady. Nie zastępuje to własnego pełnego CI7d45290, odczytu bridge, wdrożenia ani artefaktów GCP. Wcześniejszego anulowanego CI6ff5ae9 nie przepisujemy na sukces. Wszystkie 70 ręcznych wyników nadal NOT RUN.
