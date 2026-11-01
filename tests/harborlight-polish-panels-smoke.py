@@ -217,15 +217,15 @@ def scenario(browser, mobile, records, failures):
         route(page, mobile, 'settings')
         source_button(page, 'Premium options')
         record(page, records, failures, 'premium', mobile)
-        route(page, mobile, 'settings')
+        home(page, mobile)
         page.locator('[data-open-community]').click()
         expect(page.locator('[data-community-demo-warning]')).to_be_visible()
-        for tab in ['alliance', 'league', 'chat']:
+        for tab in ['ranking', 'alliance', 'league', 'chat']:
             page.locator('[data-community-tab="%s"]' % tab).click()
             if tab == 'league':
                 expect(page.locator('[data-league-schedule]')).to_contain_text('19:00–21:00')
             record(page, records, failures, 'community:'+tab, mobile)
-        route(page, mobile, 'settings')
+        home(page, mobile)
         page.locator('[data-open-charity]').click()
         expect(page.locator('[data-charity-panel]')).to_contain_text('SYMULACJA DEV')
         record(page, records, failures, 'charity', mobile)

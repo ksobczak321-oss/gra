@@ -131,6 +131,25 @@ test('complete static results and explanations in ordinary gameplay models have 
   assert.deepEqual(missing, []);
 });
 
+test('new learning, introductory carrier and island-name results explain actual v26 actions in Polish', () => {
+  const state = createState(NOW);
+  for (const patch of [null, { tour: { index: -1 } }, { practical: { reviewIndex: 25 } }, { adsNotBeforeActiveSeconds: -1 }, { tour: { index: 1 } }]) {
+    const result = act(state, { type: 'learningUpdate', patch }, NOW);
+    assertPolish(result.message, 'learningUpdate');
+  }
+  let assignment;
+  for (let index = 0; index < 6; index++) assignment = act(state, { type: 'assign', building: 'warehouse', delta: 1 }, NOW);
+  assert.equal(assignment.ok, true);
+  const crew = assertPolish(assignment.message, 'six starter carriers');
+  assert.match(crew, /sześciu tragarzy.*20 sekund/);
+  for (const name of ['AB', '<Port>', 'Kurwa Bay', 'Sh1t Bay']) {
+    const result = act(state, { type: 'renameIsland', name }, NOW);
+    assert.equal(result.ok, false); assertPolish(result.message, 'island name');
+  }
+  assert.equal(translate('Player ranking', 'pl'), 'Ranking graczy');
+  assert.equal(translate('Chat with other players', 'pl'), 'Czat z innymi graczami');
+});
+
 
 test('actual Town Hall threshold reasons translate as complete sentences at the first gate and later levels', () => {
   for (const [level, population, nextLevel, required] of [[3, 44, 4, 54], [13, 44, 14, 234]]) {
@@ -202,15 +221,26 @@ test('compact, expanded and building Chapel descriptions describe a fixed blessi
 });
 
 
-test('the actual expanded carrier help explains one material type, round-trip timing and capped food reserve', () => {
+test('the carrier help under Warehouse information explains loads, normal/turbo timing and capped food reserve', () => {
   const sourceCode = readFileSync(new URL('../harborlight-v1-play.js', import.meta.url), 'utf8');
-  const source = sourceCode.match(/['"](A carrier takes one material per trip[^'"\n]+)['"]/)[1];
+  const start = sourceCode.indexOf("informationHeading('central-warehouse'");
+  const end = sourceCode.indexOf("el('div', { class: 'stat-grid logistics-stats'", start);
+  assert.ok(start >= 0 && end > start, 'carrier rules must remain available under the Warehouse information control');
+  const help = sourceCode.slice(start, end).match(/uiCopy\('(A carrier takes one material per trip[^'\n]+)', '([^'\n]+)'\)/);
+  assert.ok(help, 'the Warehouse information control must contain its carrier rules in both languages');
+  const source = help[1], livePolish = help[2];
   const polish = assertPolish(source, 'expanded carrier help');
   assert.match(polish, /jeden rodzaj materiału/);
   assert.match(polish, /niepełnym ładunkiem/);
   assert.match(polish, /w obie strony trwa 5 minut/);
   assert.match(polish, /120 sztuk/);
   assert.match(polish, /rezerwa żywności wynosi 50 × poziom magazynu.*najwyżej 24\. poziom/);
+  assert.match(livePolish, /jeden rodzaj materiału/);
+  assert.match(livePolish, /(?:niepełnym|częściowym) ładunku/);
+  assert.match(livePolish, /w obie strony trwa 5 minut/);
+  assert.match(livePolish, /120 sztuk/);
+  assert.match(livePolish, /[Rr]ezerwa żywności wynosi 50 × poziom [Mm]agazynu.*1200 na poziomie 24/);
+  assert.match(livePolish, /sześciu tragarzy.*Ratuszu 1.*30 sekund.*Ratuszu 2.*5 minut/);
   const state = createState(NOW);
   assert.equal(foodReserve(state), 50);
   state.buildings.warehouse.level = 24;

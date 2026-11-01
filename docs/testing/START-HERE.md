@@ -68,6 +68,12 @@ Pełna metodyka i zależności: [MANUAL-TEST-PLAN.md](MANUAL-TEST-PLAN.md). Bie�
 - [ ] [HL-TC-0051 — Samouczek wskazuje budynek na mapie i czeka na rzeczywiste kliknięcie](manual/HL-TC-0051.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0052 — Polszczyzna wszystkich 25 lekcji jest naturalna i zgodna z klikanymi elementami](manual/HL-TC-0052.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0053 — Polska wersja całej gry: panele, błędy, akcje i powiadomienia](manual/HL-TC-0053.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0054 — Nazwa 3–40 znaków i zaakceptowane opisy nie zmieniają starej wyspy](manual/HL-TC-0054.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0055 — Oba narzędzia nauki wznawiają miejsce i chronią od automatycznych reklam](manual/HL-TC-0055.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0056 — Nowy kurs 25 lekcji zaczyna się od 6 tragarzy i kończy na Ratuszu 2, finansując Latarnię](manual/HL-TC-0056.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0057 — Turbo poziomów 1–2 i blokady odblokowania obejmują wszystkie ścieżki budowy](manual/HL-TC-0057.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0058 — Magazyn i Dom są czytelne, a okno reklamy ma rozdzielone przyciski](manual/HL-TC-0058.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0059 — Ranking, czaty i Pomagam są osobne, a demonstracja nie udaje realnych operacji](manual/HL-TC-0059.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 
 ## Wynik pojedynczego przypadku
 

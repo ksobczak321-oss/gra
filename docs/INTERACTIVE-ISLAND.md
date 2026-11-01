@@ -1,6 +1,16 @@
-# Sterowanie i zapis HARBORLIGHT — frontend v21
+# Sterowanie i zapis HARBORLIGHT — bieżący DEV 0.10.2.0 / v26
 
-Instrukcja bieżącego kodu DEV: [reguły v18](FRONTEND-V18-REQUIREMENTS.md), [uzupełnienie v19](FRONTEND-V19-REQUIREMENTS.md) [pierwsze wejście oraz zapis v20](FRONTEND-V20-REQUIREMENTS.md) i [samouczek/rynek/archipelag v21](FRONTEND-V21-REQUIREMENTS.md). Nie stanowi potwierdzenia publikacji. Ostatni potwierdzony PRE-PROD to v18 / `6ec3c6d` / [41112673285](https://github.com/ksobczak321-oss/gra/actions/runs/41112673285) na `harborlight-dev.web.app`; wyniki późniejszych zmian i promocji rozdziela [dziennik](IMPLEMENTATION-LOG.md). Ostatni arkusz to Excel 11, migawka wcześniejszych reguł; nie obejmuje v21, a wcześniejsze wersje pozostają archiwami.
+Instrukcja opisuje bieżący kod DEV i wyjątki [v26](FRONTEND-V26-REQUIREMENTS.md), wraz z wcześniejszym [archipelagiem i społecznością v24](FRONTEND-V24-REQUIREMENTS.md). Nie jest dowodem publikacji. Potwierdzony PRE-PROD pozostaje **0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`**, [wdrożenie 41246771480 / próba 1 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41246771480). Nowy zakres jest tylko DEV; bez promocji GCP, resetu i PROD. [Rejestr środowisk](ENVIRONMENT-STATUS.md) podaje właściwe źródła i wyniki. Excel 11 jest migawką wcześniejszych reguł, bez aktualizacji do v26.
+
+## Nowy zakres v26 — prowadzenie i szybki początek
+
+- **Tutorial** to 33 opisy elementów ekranu, **samouczek** to 25 praktycznych lekcji. Pomoc rozdziela oba narzędzia. Każde można zamknąć, kontynuować od zapamiętanego miejsca albo przejrzeć od początku bez resetu wyspy i powtórnych nagród. Tylko pierwsze wprowadzenie przed pierwotnym startem zatrzymuje czas; powtórka rozpoczętego świata go nie cofa i nie zatrzymuje.
+- Nowa nazwa ma większą czcionkę, 3–40 znaków i walidację wulgaryzmów PL/EN. Wczytanie dawnej dwuznakowej nazwy zachowuje świat; reguła nowych nazw nie jest przymusowym resetem.
+- Nowy program 5 zaczyna się od sześciu tragarzy, potem priorytetu Budowa, rolnika, drwala i Ratusza 2. W dalszej części osobne zadanie Latarni i minigra zastępują dwie lekcje Ratusza 3. Nagrody wystarczają na Latarnię z rezerwą żywności, a koniec wyrównuje zwykły Magazyn bez zaległych skrzyń. Programy 3/4 zachowują historię.
+- Pierwsza nowo przydzielona szóstka tragarzy na macierzystej wyspie z Ratuszem 1 dostaje dojście najwyżej 20 sekund. Po uzyskaniu tego osiągnięcia zwykła cała dostawa na poziomie 1 trwa 30 sekund, a budowa Ratusza 1→2 minutę. Przy Ratuszu 2 transport Ratusza trwa 2 minuty, jego budowa 5 minut; inne budowy proporcjonalnie, transport najwyżej 5 minut. Nowe zlecenia od Ratusza 3 i zapisane starsze projekty zachowują zwykłe czasy. Zobacz [dokładne wyjątki gospodarki](ECONOMY-RULES.md#wyjątki-początku-gry-v26).
+- Automatyczne reklamy nie przykrywają tutoriala ani samouczka. Po wcześniejszym zamknięciu czekają **3600 aktywnych sekund / 60 aktywnych minut**, z zachowaniem terminu po odczycie; offline i bezczynność go nie skracają.
+- Główne wiersze Magazynu pokazują sumy; szczegóły zwykłego i bonusowego zapasu oraz zasady są pod ⓘ. Dom otwiera pełne przydziały dopiero przyciskiem „Zarządzaj pracownikami”. Ranking, Sojusz i liga oraz Pomagam są osobnymi wejściami, poza Ustawieniami. Chmurka czatu jest przed dzwonkiem; demonstracja usług jest oznaczona.
+- Smutna buźka nad producentem wskazuje pełny lokalny magazyn także bez aktywnej kary. Opisy pięciu producentów to objaśniają. Odrębne szczegóły nadal pokazują przestój z braku materiału i rzeczywiste kary pracowników.
 
 ## Wejście i zapis
 
@@ -14,7 +24,7 @@ Lokalny DEV może uruchomić nietrwały podgląd w pamięci. Nie jest kontem ani
 
 ## Wprowadzenie przed startem świata
 
-Okno otwierające wyjaśnia rozwój osady, potrzeby mieszkańców, pracę, transport i dodatkowe aktywności. „Dalej” prowadzi do nazwy wyspy: 2–40 znaków, bez znaków sterujących i nawiasów ostrokątnych. Oprowadzanie kolejno podświetla nazwę i przegląd wyspy, elementy nagłówka, budynki oraz dolne menu. Chmurki mają strzałki wstecz/dalej i wyjście w prawym górnym rogu. Wyjście jest dostępne po nazwaniu wyspy, na etapie oprowadzania.
+Okno otwierające wyjaśnia rozwój osady, potrzeby mieszkańców, pracę, transport i dodatkowe aktywności. „Dalej” prowadzi do nazwy wyspy: 3–40 znaków, bez znaków sterujących, nawiasów ostrokątnych i wulgaryzmów PL/EN. Pole nazwy ma większą czcionkę; wcześniejsze dwuznakowe nazwy pozostają czytelne po wczytaniu. Oprowadzanie kolejno podświetla nazwę i przegląd wyspy, elementy nagłówka, budynki oraz dolne menu. Chmurki mają strzałki wstecz/dalej i wyjście w prawym górnym rogu. Wyjście jest dostępne po nazwaniu wyspy, na etapie oprowadzania.
 
 Czytanie nie wykonuje komend i nie przyznaje skrzyń. Do zakończenia oprowadzania tło jest zablokowane, a czas świata, jego potrzeby, produkcja, ochrona powitalna i harmonogramy pozostają zatrzymane. Etap, krok i nazwa trafiają do zapisu chmurowego: przerwanie i powrót, także na innym urządzeniu, wznawia tę samą nierozpoczętą wyspę bez naliczania nieobecności.
 
@@ -30,7 +40,7 @@ Pomoc historycznego programu v3 pokrywa braki do 500 monet, po 500 drewna/kamien
 
 Skrzynia historycznego programu v3 losuje 100–300 każdego z pięciu materiałów, bez monet. Losowanie jest trwałe; jednorazowe Share daje identyczną zawartość, Skip pozostawia podstawową nagrodę. Odebrane starsze lekcje nie są wypłacane ponownie. Gdy dostępny zapas przekracza limit jednego materiału lub całkowity limit Magazynu, kolejne skrzynie i ich podwajanie czekają na wydanie materiałów; zarządzanie, rozbudowa, pomoc oraz nagrody reklamowe/zadań pozostają dostępne.
 
-**Nowy program v21:** 25 kroków przeplata przydziały tragarza, rolnika i drwala z rzeczywistym wydawaniem zasobów na Ratusz, Kamieniołom i inne działania. Dopasowane nagrody trafiają do zwykłego zapasu i są rozliczane przed kolejną lekcją. Końcowe jawne rozliczenie wymaga odebrania poprzednich nagród i wykorzystania nadwyżek; uzupełnia tylko wolne zwykłe miejsce, nie usuwa żadnych materiałów. Celem jest pełny Magazyn bez oczekujących skrzyń. Starszy program i jego odebrane premie są zachowane.
+**Wcześniejszy zapisany program v21 / program 4:** 25 kroków przeplata przydziały tragarza, rolnika i drwala z rzeczywistym wydawaniem zasobów na Ratusz, Kamieniołom i inne działania. Dopasowane nagrody trafiają do zwykłego zapasu i są rozliczane przed kolejną lekcją. Końcowe jawne rozliczenie wymaga odebrania poprzednich nagród i wykorzystania nadwyżek; uzupełnia tylko wolne zwykłe miejsce, nie usuwa żadnych materiałów. Celem jest pełny Magazyn bez oczekujących skrzyń. Starszy program i jego odebrane premie są zachowane.
 
 Samouczek otwiera się po uruchomieniu świata do ukończenia lub świadomej rezygnacji. Powrót na konto i ręczne wznowienie zachowują ukończone kroki oraz odebrane nagrody. Trwająca minigra ma pierwszeństwo — skrzynia i przewodnik czekają, zamiast zużywać limit rundy.
 
@@ -46,17 +56,22 @@ Pojemność zwykłych dostaw jest oddzielna od wydawalnych materiałów bonusowy
 
 Dolna karta zasobu ma postać `lokalny / centralny (w transporcie)` oraz osobny bilans godzinowy. Kamień `0 / 537 (0)` i `0 szt./h` to zero przy Kamieniołomie,537 w Magazynie centralnym,zero w drodze i zerowy bieżący bilans. Nie jest to ilość oczekującej nagrody.
 
-Smutna buźka nad producentem oznacza faktycznie aktywną karę przestoju. Szczegóły rozróżniają brak surowca od braku miejsca i uwzględniają indywidualne zegary pracowników. Premie/kary są dostępne w Ratuszu; menu Monet objaśnia podatników, aktywność, reklamy i minigry. Dom pokazuje przydziały, dzienną pulę szczęścia i wpływ średniego szczęścia na populację.
+Smutna buźka nad producentem oznacza pełny lokalny magazyn także bez obsady lub przy ochronie szczęścia. Może też wskazywać rzeczywisty przestój; szczegóły rozróżniają brak surowca od braku miejsca i uwzględniają indywidualne zegary pracowników. Sama ikona pełności nie nalicza nowej kary. Premie/kary są dostępne w Ratuszu; menu Monet objaśnia podatników, aktywność, reklamy i minigry. Dom pokazuje przycisk Zarządzaj pracownikami, dzienną pulę szczęścia i wpływ średniego szczęścia na populację. Pozostałe po Daj wszystkim punkty można wydać pojedynczo; przycisk przekazania jest niedostępny przy niewystarczającej puli, nieprawidłowej kwocie lub braku odbiorcy. To jawna interpretacja niejednoznacznej uwagi, otwarta na korektę użytkownika.
 
-## Ratusz, wymiany graczy i druga wyspa
+## Ratusz, sprzedaż graczom i archipelag
 
 Od awansu 3→4 Ratusz potrzebuje 75% limitu ludności poziomu poprzedzającego cel: 54 dla4,72 dla5,90 dla6. Inne budynki nie mają tego wymogu. Nowe plany premium/kolejki również go sprawdzają; dawnych zatwierdzonych projektów nie cofamy.
 
-Od Ratusza 6 rynek graczy zastępuje nowe transakcje NPC. Wskaż oddawany zasób i ilość oraz oczekiwany zasób i ilość; przelicznik ustalają gracze. Oferta jest rezerwowana na serwerze i realizowana w całości. Wymagana jest dostępna przestrzeń po obu stronach. Zwrot po anulowaniu lub wygaśnięciu czeka w trwałej skrzynce, jeśli magazyn jest pełny. Bez aktywnego API interfejs wyjaśnia brak połączenia, nie pokazuje pozornego rynku. Wcześniejsze zamówienia NPC mogą zakończyć podróż.
+Od Ratusza 6 obok handlu z NPC można sprzedawać materiały graczom za monety. Wybierz materiał, ilość i cenę nie wyższą niż bazowa cena sprzedaży przez NPC; można wystawić taniej. Oferta jest rezerwowana na serwerze i realizowana w całości, z kontrolą miejsca oraz środków. Zwrot po anulowaniu lub wygaśnięciu czeka w trwałej skrzynce, jeśli Magazyn jest pełny. Stare oferty barterowe zachowują literalne warunki; nowe korzystają ze sprzedaży za monety. Bez aktywnego API interfejs wyjaśnia brak połączenia lub oznacza demonstrację, nie udaje rynku.
 
-Od Ratusza 10 można założyć drugą wyspę. Zaczyna od poziomu 1 budynków, poza jednorazową kopią poziomu Ratusza i Magazynu pierwszej. Nazwa i odmienna kolorystyka wskazują bieżącą wyspę. Późniejszy rozwój jest niezależny, a oba światy i przewozy zachowuje wspólny zapis konta.
+Od Ratusza matki 10, potem 13, 16, 19 i dalej co trzy poziomy można zakładać kolejne córki, do 20 wysp łącznie. Opcja pojawia się w Ratuszu i powiadomieniu po spełnieniu wymagań. Pierwsza córka kosztuje sumę wszystkich rozbudów Ratusza i Domu 1→7 w sześciu zasobach; następne używają A=8, 9, 10 itd. Matka potrzebuje co najmniej 18 mieszkańców, z czego sześciu rzeczywiście w Domu. Przy założeniu te same osoby teleportują się natychmiast; nie płyną i nie tworzymy ich kopii. Matce zostaje co najmniej 12.
 
-Port przewozi między własnymi wyspami 1000 sztuk w 10 minut bez opłaty za rejs. Przy pełnym docelowym magazynie zwykły ładunek czeka na miejsce; materiał bonusowy zachowuje wcześniejsze zwolnienie z limitu. Można dokupić wielokrotności1000 pojemności po 4,99 zł; wDEV zakup jest jawnie symulowany, bez pobrania pieniędzy. Wyspy nie dublują wspólnych uprawnień ani już odebranych nagród konta.
+Córka zaczyna od poziomu 1 innych budynków i jednorazowej kopii poziomów Ratusza oraz Magazynu matki. Nie dostaje drugiego darmowego pakietu zasobów. Nazwa ma obowiązkowy prefiks matki, aktualizowany po zmianie jej nazwy; odmienna kolorystyka wyróżnia aktywną wyspę. Późniejszy rozwój jest niezależny, a archipelag i przewozy zachowuje wspólny zapis konta.
+
+Wspólny statek przewozi towary (1000 sztuk / 10 minut) albo pasażerów (100 osób / 30 minut), bez opłaty za rejs w monetach. Pasażerowie muszą być w Domu; przygotowujemy 0,5 żywności na osobę i rezerwujemy wolne łóżka oraz limit populacji u celu. U źródła musi zostać minimum 12 na matce lub 6 na córce. Trybu towarowego i pasażerskiego nie zmieniamy w trakcie podróży.
+
+Przy pełnym docelowym Magazynie zwykły towar czeka na miejsce; bonus zachowuje zwolnienie z limitu. Można dokupić wielokrotności 1000 pojemności towarowej po 4,99 zł, bez automatycznej zmiany limitu pasażerów. W DEV/PRE-PROD zakup jest jawnie symulowany, bez pobrania pieniędzy. Wyspy nie dublują wspólnych uprawnień ani odebranych nagród konta.
+
 
 ## Szczęście, czas i aktywność
 
@@ -72,7 +87,7 @@ Wybierasz kulki lub trójki, również przed następną rundą. Nominalne nagrod
 
 Przed końcem rundy można dobrowolnie dokupić czas. Jawne domyślne parametry wdrożeniowe:30 s za 10 monet, najwyżej dwa zakupy/rundę; potwierdzona reklama 60 s, najwyżej raz/rundę. Reklama wybrana dla czasu zatrzymuje zegar rundy, a nie gospodarkę świata. Nie wskrzesza przegranej. Wcześniejsze wezwanie do obecności po 5 minutach z60 sekundami na odpowiedź nadal chroni serię.
 
-Harmonogram aktywnego czasu jest zapisywany: pierwsza propozycja reklamy w4–8 minucie raz na konto; po jej końcu/pominięciu wybór minigra albo reklama po 5–15 minutach; po zakończeniu tej aktywności kolejny po 43–62; dalsze po 60–100. Ważne okno i trwająca minigra odkładają propozycję do bezpiecznego momentu. Nagroda materiałowa reklamy to10–30 każdego z pięciu materiałów, bez monet.
+Harmonogram aktywnego czasu jest zapisywany: pierwsza propozycja reklamy w4–8 minucie raz na konto; po jej końcu/pominięciu wybór minigra albo reklama po 5–15 minutach; po zakończeniu tej aktywności kolejny po 43–62; dalsze po 60–100. Ważne okno, trwająca minigra oraz aktywny tutorial/samouczek odkładają propozycję do bezpiecznego momentu. Wcześniejsze zamknięcie któregoś z narzędzi nauki uruchamia dodatkową ochronę 60 aktywnych minut, opisaną wyżej. Nagroda materiałowa reklamy to10–30 każdego z pięciu materiałów, bez monet.
 
 ## Premium, płatności i udostępnianie
 

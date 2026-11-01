@@ -1,5 +1,5 @@
-import { registerTranslations } from './harborlight-v1-i18n.js?v=frontend-v25-2';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v25-2';
+import { registerTranslations } from './harborlight-v1-i18n.js?v=frontend-v26';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v26';
 
 // Presentation copy for the current learning flow. Player-entered text never
 // passes through this catalogue.
@@ -219,7 +219,15 @@ export const V16_COPY = {
   "Receive 50–200 of each resource once per Warsaw day, including Coins. The stored draw does not change when you reload.": "Odbierz raz na dzień Warszawy po 50–200 każdego zasobu, także monet. Zapisane losowanie nie zmienia się po ponownym wczytaniu.",
   "Granted the saved daily draw: 50–200 of each resource, including Coins.": "Przyznano zapisaną dzienną nagrodę: po 50–200 każdego zasobu, także monet.",
 
-  'Automatic tutorial opening is disabled. You can resume it from Settings.': 'Samouczek nie będzie się już otwierał automatycznie. W każdej chwili możesz wrócić do niego w ustawieniach.',
+  'Automatic tutorial opening is disabled. You can resume it from Settings.': 'Samouczek nie będzie się już otwierał automatycznie. Wrócisz do niego z Pomocy.',
+  'Automatic tutorial opening is disabled. You can resume it from Help.': 'Samouczek nie będzie się już otwierał automatycznie. Wrócisz do niego z Pomocy.',
+  'Tutorial rewards belong to the first island and cannot be repeated here.': 'Nagrody samouczka dotyczą pierwszej wyspy. Na kolejnych wyspach nie można odbierać ich ponownie.',
+  'The final Warehouse reward could not be received.': 'Nie udało się odebrać końcowej nagrody do magazynu.',
+  'The final reward filled free ordinary Warehouse capacity. No material was removed, and no tutorial reward is waiting.': 'Nagroda końcowa uzupełniła wolne miejsce w magazynie. Żadne materiały nie przepadły i wszystkie nagrody samouczka zostały odebrane.',
+  'Tutorial complete. Your ordinary Warehouse is full and no tutorial rewards are waiting.': 'Samouczek ukończony. Magazyn jest pełny i wszystkie nagrody samouczka zostały odebrane.',
+  'One-time supplies fill the missing first Town Hall budget directly in ordinary storage, including food for construction and meals.': 'Jednorazowa pomoc uzupełnia brakujące materiały na pierwszą rozbudowę ratusza, z zapasem żywności na budowę i posiłki.',
+  'Reward confirmed. Continue to the next tutorial action.': 'Nagroda potwierdzona. Przejdź do kolejnego zadania samouczka.',
+  'Tutorial complete: Warehouse full': 'Samouczek ukończony: magazyn pełny',
   'Tutorial resumed. Your progress is preserved.': 'Wracamy do samouczka. Twój dotychczasowy postęp został zachowany.',
   'Choose a tutorial location.': 'Znajdź miejsce wskazane w tej lekcji.',
   'Tutorial location visited.': 'Odwiedzono miejsce wskazane w samouczku.',

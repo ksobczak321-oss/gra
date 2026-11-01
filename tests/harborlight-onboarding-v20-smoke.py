@@ -298,7 +298,7 @@ def persisted_tour_and_skip(browser):
     expect(guide).to_have_attribute('data-onboarding-step', second_step)
     # Follow the real tour arrows through the requested HUD order, then return
     # to the same saved step before checking resume-after-reload behaviour.
-    for expected in ['happiness', 'coins', 'population']:
+    for expected in ['happiness', 'coins', 'working']:
         page.locator('[data-onboarding-next]').click()
         expect(guide).to_have_attribute('data-onboarding-step', expected)
     for expected in ['coins', 'happiness', 'level']:
@@ -366,8 +366,8 @@ def complete_mobile_tour(browser):
         expect(guide).not_to_have_attribute('data-onboarding-step', step_id)
     else:
         raise AssertionError('The complete walkthrough did not finish in100 steps')
-    assert len(ids) >= 25, ids
-    assert ids[:6] == ['home', 'level', 'happiness', 'coins', 'population', 'working'], ids[:6]
+    assert len(ids) == 33, ids
+    assert ids[:9] == ['home', 'level', 'happiness', 'coins', 'working', 'arrival', 'points', 'population', 'clock'], ids[:9]
     for building in BUILDINGS:
         assert any(building in step_id for step_id in ids), (building, ids)
     for expected in ['home', 'level', 'happiness', 'coins', 'population', 'working', 'arrival', 'points', 'clock', 'administration', 'economy', 'resources', 'decorations', 'paths', 'settings', 'tutorial']:
@@ -382,6 +382,7 @@ def complete_mobile_tour(browser):
 def existing_history(browser):
     old = cloud.starter(777, 'Historia bez zmian')
     old.pop('onboarding', None)  # A real pre-v20 cloud save has no new marker.
+    old['tutorial']['curriculum'] = 4
     old['buildings']['townhall']['level'] = 4
     old['buildings']['farm']['ready'] = 17
     old['statistics']['expeditions'] = 7
@@ -402,6 +403,7 @@ def existing_history(browser):
     assert value['statistics']['expeditions'] == 7
     assert value['tutorial']['completed']['rules-read']
     assert value['tutorial']['claimed']['rules-read']
+    assert value['tutorial']['curriculum'] == 4
     assert value['onboarding']['stage'] == 'complete'
     cloud.no_island_cache(page)
     context.close()
@@ -409,7 +411,12 @@ def existing_history(browser):
 
 
 def lost_finish_acknowledgement(browser):
-    seed(starter())
+    # Preserve the original v20 practical course in this recovery regression.
+    # Newly created worlds now start curriculum 5 with the six-carrier lesson;
+    # the existing course must retain its rules-read opening across recovery.
+    original = starter()
+    original['tutorial']['curriculum'] = 4
+    seed(original)
     context, page = cloud.context(browser, UID)
     interrupted = {'done': False}
 
@@ -447,6 +454,7 @@ def lost_finish_acknowledgement(browser):
     assert cloud.DOCUMENTS[UID]['revision'] == revision, 'A confirmed ambiguous completion must not be sent twice'
     assert cloud.cloud_state(UID)['population'] == 12
     assert cloud.cloud_state(UID)['islandName'] == 'Port po utracie odpowiedzi'
+    assert cloud.cloud_state(UID)['tutorial']['curriculum'] == 4
 
     # Recovery must start the standard tutorial after the cloud coordinator
     # has become writable, so its first real worker assignment still works.

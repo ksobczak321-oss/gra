@@ -4,6 +4,7 @@
 // verification is deliberately outside this service and cannot be faked by it.
 import { createCharityLedgerStore } from './charity-ledger.mjs';
 import { createIslandDocumentStore, MAX_ARCHIPELAGO_BYTES } from './island-document-store.mjs';
+import { validateIslandName, validateStoredIslandName } from './island-name.mjs';
 const DAY = 86400000;
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const RESOURCES = ['coins', ...MATERIALS];
@@ -57,6 +58,32 @@ const generationValue = value => positive(value) ? value : fail('invalid-generat
 const accountPath = uid => `accounts/${uidValue(uid)}`;
 const islandPath = uid => `islands/${uidValue(uid)}`;
 const currentGeneration = account => positive(account?.islandGeneration) ? account.islandGeneration : 1;
+const daughterWorlds = state => state.archipelago?.version === 2 ? state.archipelago.islands : state.archipelago?.secondIsland ? { 'island-2': state.archipelago.secondIsland } : {};
+function changedIslandNames(state, previous) {
+  const assertName = (value, maximum = 40) => {
+    const result = validateIslandName(value, maximum);
+    if (!result.ok) fail(result.reason === 'profanity' ? 'inappropriate-island-name' : 'invalid-island-name', 400);
+    return result.name;
+  };
+  // Unnamed starters and unchanged historical names are legal on read/save.
+  // The stronger rule applies when a player first names or renames a world.
+  if (state.islandName !== previous.islandName && !(state.islandName === '' && previous.islandName === undefined)) state.islandName = assertName(state.islandName);
+  const suffix = (world, mother) => {
+    if (typeof world?.islandSuffix === 'string' && world.islandSuffix) return world.islandSuffix;
+    const prefix = `${mother || 'Your island'} - `;
+    return typeof world?.islandName === 'string' && world.islandName.startsWith(prefix) ? world.islandName.slice(prefix.length) : world?.islandName;
+  };
+  for (const [id, world] of Object.entries(daughterWorlds(state))) {
+    const before = daughterWorlds(previous)[id];
+    if (before && world.islandName === before.islandName && world.islandSuffix === before.islandSuffix) continue;
+    const nextSuffix = suffix(world, state.islandName), oldSuffix = suffix(before, previous.islandName);
+    const name = !before || nextSuffix !== oldSuffix ? assertName(nextSuffix) : nextSuffix;
+    // A grandfathered mother/suffix may remain in the dynamic prefix. Validate
+    // its structure without reclassifying it as a newly chosen vulgar name.
+    if (!validateStoredIslandName(world.islandName, 83).ok || world.islandName !== `${state.islandName || 'Your island'} - ${name}`) fail('invalid-island-name', 400);
+    if (world.islandSuffix !== undefined) world.islandSuffix = name;
+  }
+}
 function clockValue(value) {
   if (!Number.isSafeInteger(value) || value < 0 || value > 8640000000000000) fail('invalid-server-clock', 500);
   return value;
@@ -222,7 +249,8 @@ export function createAccountService({ store, now = () => Date.now(), environmen
         }
       }
       const previousState = islandPayload(island.payload);
-      const worlds = value => value.archipelago?.version === 2 ? value.archipelago.islands : value.archipelago?.secondIsland ? { 'island-2': value.archipelago.secondIsland } : {};
+      changedIslandNames(state, previousState);
+      const worlds = daughterWorlds;
       const beforeIds = Object.keys(worlds(previousState)), afterIds = Object.keys(worlds(state));
       if (beforeIds.some(id => !afterIds.includes(id))) fail('archipelago-island-loss', 409);
       for (const id of afterIds.filter(id => !beforeIds.includes(id))) {

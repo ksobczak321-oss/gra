@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   MAIN_SAVE_KEY, NEW_PLAYER_SAVE_KEY, profileContext, gameHref, authHref, authProfileSearch,
-  validateIslandName, normalizeIslandName, islandDisplayName, normalizeIslandProfile,
+  validateIslandName, validateStoredIslandName, normalizeIslandName, islandDisplayName, normalizeIslandProfile,
   islandNamePreferenceKey, saveIslandNamePreference, applyIslandNamePreference
 } from '../harborlight-v1-profile.js';
 import { createState, normalizeState, act } from '../harborlight-v1-state.js';
@@ -27,8 +27,27 @@ test('invalid names cannot enter island identity or a preference', () => {
     assert.equal(validateIslandName(value).ok, false, String(value));
     assert.equal(normalizeIslandName(value), '');
   }
-  assert.equal(validateIslandName('ab').ok, true);
+  assert.equal(validateIslandName('ab').ok, false);
   assert.equal(validateIslandName('a'.repeat(40)).ok, true);
+});
+
+test('new names use the stricter rule while existing two-character identities and history survive reload', () => {
+  const original = createState(NOW);
+  original.islandName = 'AB'; original.islandNameUpdatedAt = NOW - 100;
+  original.tutorial.completed = { 'rules-read': true };
+  original.statistics.traded = 17;
+  const loaded = normalizeState(JSON.parse(JSON.stringify(original)), NOW);
+  assert.equal(validateStoredIslandName('AB').ok, true);
+  assert.equal(loaded.islandName, 'AB');
+  assert.equal(loaded.islandNameUpdatedAt, original.islandNameUpdatedAt);
+  assert.equal(islandDisplayName(loaded, 'pl'), 'AB');
+  assert.deepEqual(loaded.tutorial.completed, original.tutorial.completed);
+  assert.equal(loaded.statistics.traded, 17);
+  const before = structuredClone(loaded);
+  assert.equal(act(loaded, { type: 'renameIsland', name: 'XY' }, NOW).ok, false);
+  assert.equal(act(loaded, { type: 'renameIsland', name: 'Kurwa Bay' }, NOW).ok, false);
+  assert.deepEqual(loaded, before);
+  assert.equal(act(loaded, { type: 'renameIsland', name: 'Nowa Przystań' }, NOW).ok, true);
 });
 
 test('unnamed islands use language-specific defaults and malformed saves are normalized', () => {

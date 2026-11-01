@@ -1,23 +1,16 @@
 // Shared local island identity. No account credentials or authentication live here.
+import { validateIslandName, validateStoredIslandName } from './backend/island-name.mjs?v=frontend-v26';
+export { validateIslandName, validateStoredIslandName };
 export const MAIN_SAVE_KEY = 'harborlight-v1-interactive-save';
 export const NEW_PLAYER_SAVE_KEY = 'harborlight-v1-new-player-save';
 export const ISLAND_NAME_PREFERENCE_PREFIX = 'harborlight-island-name:';
-
-export function validateIslandName(value, maximum = 40) {
-  const name = typeof value === 'string' ? value.normalize('NFC').trim().replace(/\s+/gu, ' ') : '';
-  const length = [...name].length;
-  if (length < 2 || length > maximum || /[<>\p{Cc}\p{Cf}]/u.test(name)) {
-    return { ok: false, name: '', message: 'Choose an island name with 2–40 characters, without control characters or angle brackets.' };
-  }
-  return { ok: true, name, message: 'Your island name has been saved.' };
-}
 
 export function normalizeIslandName(value) {
   return validateIslandName(value).name;
 }
 
 export function islandDisplayName(state, language = 'en') {
-  return validateIslandName(state?.islandName, state?.islandRole === 'daughter' ? 83 : 40).name || (language === 'pl' ? 'Twoja wyspa' : 'Your island');
+  return validateStoredIslandName(state?.islandName, state?.islandRole === 'daughter' ? 83 : 40).name || (language === 'pl' ? 'Twoja wyspa' : 'Your island');
 }
 
 export function profileContext(search = '') {
@@ -60,7 +53,7 @@ export const islandNamePreferenceKey = (search = '') => ISLAND_NAME_PREFERENCE_P
 const timestamp = value => Number.isFinite(value) && value >= 0 ? Math.min(Number.MAX_SAFE_INTEGER, Math.floor(value)) : 0;
 
 export function normalizeIslandProfile(state, raw = {}) {
-  state.islandName = validateIslandName(raw.islandName, raw.islandRole === 'daughter' ? 83 : 40).name;
+  state.islandName = validateStoredIslandName(raw.islandName, raw.islandRole === 'daughter' ? 83 : 40).name;
   state.islandNameUpdatedAt = state.islandName ? timestamp(raw.islandNameUpdatedAt) : 0;
   return state;
 }

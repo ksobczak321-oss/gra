@@ -1,10 +1,13 @@
 // Run the actual 25-lesson curriculum through model commands and elapsed time.
 // There are no injected completion flags, free resources, skipped construction
 // phases or direct building-level assignments in this scenario.
-import { createState, act, advanceTo } from '../../harborlight-v1-state.js';
-import { TUTORIAL_LESSONS, tutorialRows, tutorialStatus } from '../../harborlight-v1-progression.js';
+import { createState as freshState, act, advanceTo } from '../../harborlight-v1-state.js';
+import { V4_TUTORIAL_LESSONS as TUTORIAL_LESSONS, tutorialRows, tutorialStatus, normalizeProgression } from '../../harborlight-v1-progression.js';
 import { leisureOffers } from '../../harborlight-v1-leisure.js';
 import { ordinaryWarehouseUsed } from '../../harborlight-v1-inventory.js';
+
+// Preserve the historical curriculum exercised by these regression scenarios.
+const createState = now => { const state = freshState(now); normalizeProgression(state, { ...state, tutorial: { version: 4 } }); return state; };
 
 export function runTutorialCourse({ now = Date.parse('2026-10-31T10:00:00Z'), through = 25, seed = 57, beforeLesson = null } = {}) {
   const state = createState(now), trace = [];

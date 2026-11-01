@@ -54,22 +54,25 @@ def scenario(browser, language, mobile):
             raise AssertionError({'page_errors': errors, 'loading': page.locator('#loading').inner_text()}) from error
         if mobile:
             page.locator('.mobile-island-menu').click()
-            page.locator('#island-dialog').get_by_role('button', name='Ustawienia' if language == 'pl' else 'Settings', exact=True).click()
         else:
-            page.locator('[data-dock-category="administration"]').click()
-            page.locator('[data-dock-building="dock"]').click()
+            page.locator('#hit-menu').click()
         page.locator('[data-open-charity]').click()
         panel = page.locator('[data-charity-panel]')
         expect(panel).to_contain_text('SYMULACJA DEV' if language == 'pl' else 'DEV SIMULATION')
         expect(panel.locator('[data-charity-donate]')).to_be_disabled()
+        expect(panel.locator('[data-charity-beneficiary] option')).to_have_count(3)
+        panel.locator('[data-charity-beneficiary]').select_option('dev-animals')
+        expect(panel.locator('[data-charity-beneficiary-goal]')).to_contain_text('zwierzętami' if language == 'pl' else 'animals')
         panel.locator('[data-charity-test-credit]').click()
         expect(panel).not_to_have_attribute('aria-busy', 'true')
         expect(panel).to_contain_text('1000' if language == 'pl' else '1,000')
         assert page.evaluate('window.__HARBORLIGHT_DEV_STATE__.resources.coins') == 1100
+        panel.locator('[data-charity-beneficiary]').select_option('dev-animals')
         panel.locator('[data-charity-confirm]').check()
         panel.locator('[data-charity-donate]').click()
         expect(panel).not_to_have_attribute('aria-busy', 'true')
         expect(panel.locator('[data-charity-test-transfer]')).to_be_visible()
+        expect(panel.locator('[data-charity-donation]')).to_contain_text('Bezpieczna Łapa')
         assert page.evaluate('window.__HARBORLIGHT_DEV_STATE__.resources.coins') == 100
         assert page.locator('[data-charity-claim]').count() == 0
         assert page.evaluate('window.__HARBORLIGHT_DEV_STATE__.charityReward || null') is None

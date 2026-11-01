@@ -181,12 +181,12 @@ test('production capacity requires a trusted payment and ordinary saves cannot d
   alter(f,'one',s=>s.buildings.townhall.level=10);
   let state=data(f);state.archipelago={version:1,activeIslandId:'island-1',secondIsland:null,transfers:[],shipCapacity:2000,capacityReceipts:[{verified:true}]};
   await rejects(service.saveIsland({uid:'one',payload:JSON.stringify(state),generation:1,expectedRevision:4}),'unverified-ship-capacity');
-  state.archipelago.shipCapacity=1000;state.archipelago.secondIsland=world('Druga',10);
+  state.archipelago.shipCapacity=1000;state.archipelago.secondIsland=world(`${state.islandName} - Druga`,10);
   await service.saveIsland({uid:'one',payload:JSON.stringify(state),generation:1,expectedRevision:4});
   assert.deepEqual(data(f).archipelago.capacityReceipts,[],'untrusted receipts are discarded');
   state=data(f);delete state.archipelago;
   await rejects(service.saveIsland({uid:'one',payload:JSON.stringify(state),generation:1,expectedRevision:5}),'archipelago-island-loss');
-  const locked=fixture();state=data(locked);state.archipelago={version:1,activeIslandId:'island-1',secondIsland:world(),transfers:[],shipCapacity:1000,capacityReceipts:[]};
+  const locked=fixture();state=data(locked);state.archipelago={version:1,activeIslandId:'island-1',secondIsland:world(`${state.islandName} - Druga`),transfers:[],shipCapacity:1000,capacityReceipts:[]};
   await rejects(createAccountService({store:locked.store,now:()=>NOW}).saveIsland({uid:'one',payload:JSON.stringify(state),generation:1,expectedRevision:4}),'second-island-locked');
 });
 

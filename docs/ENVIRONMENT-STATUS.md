@@ -1,8 +1,27 @@
 # HARBORLIGHT — stan środowisk
 
-Aktualizacja: **31 października 2026**. Ten dokument jest głównym rejestrem tego, co rzeczywiście znajduje się na DEV, PRE-PROD i PROD. Historia czynności i wyników pozostaje w [dzienniku](IMPLEMENTATION-LOG.md), a warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
+Aktualizacja: **1 listopada 2026**. Ten dokument jest głównym rejestrem tego, co rzeczywiście znajduje się na DEV, PRE-PROD i PROD. Historia czynności i wyników pozostaje w [dzienniku](IMPLEMENTATION-LOG.md), a warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-## DEV 0.10.1.0 / v25 — końcowa redakcja opublikowana w podglądzie
+## DEV 0.10.2.0 / v26 — lokalna integracja, bez publikacji
+
+GO z 1 listopada obejmuje tylko DEV, Git/CI/Pages. Pakiet porządkuje Magazyn i Dom, oddziela Ranking, Sojusz i ligę oraz Pomagam, dodaje wejście czatu przed dzwonkiem, przyjmuje ręczną redakcję opisów oraz nazwę 3–40 znaków z walidacją PL/EN. Tutorial pozostaje oprowadzaniem po 33 elementach, samouczek ma 25 praktycznych lekcji; oba można zamknąć, wznowić lub przejrzeć od początku bez resetu i powtórnych nagród. Nowy kurs zaczyna się od 6 tragarzy oraz priorytetu Budowa, kończy nominalnie na Ratuszu 2, a pierwsze rozbudowy mają turbo dostaw i budowy. Cache: `frontend-v26`; widoczna wersja: **0.10.2.0**. Schemat świata pozostaje 9.
+
+| Warstwa | Stan nowego pakietu |
+|---|---|
+| Kod lokalny | Zintegrowany i odebrany lokalnie kandydat. [Wymagania v26](FRONTEND-V26-REQUIREMENTS.md). |
+| Node | **954 PASS**, lokalny wynik po integracji. Nie jest wynikiem własnego CI przyszłego SHA. |
+| Python | **141 PASS w 11 zestawach**; log lokalny potwierdza sumę 2+14+23+12+17+12+12+10+13+8+18. |
+| Chromium | **22 zestawy PASS** po poprawkach i odpowiednich ponowieniach;114 rzeczywistych widoków PL bez reszt EN. Własny CI ponowi cały pakiet tego samego SHA. |
+| Pakiet | 55 plików z manifestem, 54 pliki zawartości. Końcowy SHA, rozmiar i hashe wymagają ponownego zbudowania po zamrożeniu źródła. |
+| Git / CI / Pages / tag v26 | **Jeszcze nie wykonano** push ani publikacji tego zakresu; własne dowody pozostają oczekujące. Ostatni potwierdzony Pages nadal dotyczy 0.10.1.0. |
+| PRE-PROD | **Bez nowej promocji**; pozostaje 0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`, przebieg 41246771480 / próba 1 SUCCESS. |
+| PROD i dane graczy | Brak nowej publikacji, resetu kont, zmiany haseł lub realnych operacji finansowych. |
+
+[Odbiór v26](DEV-0.10.2.0-VALIDATION.md) zapisuje kolejne rzeczywiste wyniki. Rejestr ma **279 kart zmian i 59 ręcznych przypadków NOT RUN**; TC54–TC59 odbierają nowy zakres. Dwie niejednoznaczności mają jawne założenia otwarte na korektę: kolejność Monety → Pracujący → Następny mieszkaniec → Punkty → Mieszkańcy i miejsca oraz możliwość indywidualnego wydania reszty szczęścia po rozdaniu wszystkim. Brak odpowiedzi użytkownika nie jest dodatkową zgodą na te interpretacje.
+
+Dobroczynność i liga mają oznaczoną demonstrację; beneficjenci są fikcyjnymi przykładami. Nowy przycisk ani test z atrapą nie dowodzi aktywacji usługi, prawdziwego przelewu, OAuth lub reklamy. Stare programy lekcji, nagrody i rozpoczęte zlecenia zachowują historię. Integracja planszówki online i reset `admin1`–`admin3` pozostają poza tym GO.
+
+## Poprzedni odebrany DEV 0.10.1.0 / v25 — redakcja opublikowana w podglądzie
 
 Zakres: prowadzenie 25 lekcji przez rzeczywiste kliknięcia mapy, naturalny polski całej gry, wspólne okno ligi 19:00–21:00 i potwierdzone parametry archipelagu. Ostatnie doprecyzowanie dotyczy prostego, przyjaznego języka opisów: co gracz może zrobić i po co. Przeredagowano 12 krótkich i 12 pełnych opisów budynków oraz główne instrukcje. Cache końcowej poprawki: `frontend-v25-2`.
 
@@ -54,7 +73,7 @@ Poprawka dodaje Polski/English w opisie i przy nazwie wyspy, zachowuje roboczą 
 | `harborlight-dev-frontend-41233737873-1` | `0cb747023ad430c647c045913ef2712d8c475f9344fe3e14a4ddee3b713bde56` |
 | `harborlight-dev-release-41233737873-1` | `3da4a3be0466a81597eec76c130c69b2d0bcffbc3e6dd377fa2f33aac1aadae1` |
 
-Lokalny deterministyczny pakiet tego SHA: 49 plików z manifestem, 10 841 951 bajtów; archiwum SHA-256 `8fba6ec781e959d855273b333e1922ce3db113b058a51f2c8c92c3071435fd1f`, manifest `31185615e64a8dca97440799125a1e13bd160cf3dbc609991e0e05e9c3c3ce0e`. Publiczne bajty są identyczne z przeglądarkowo sprawdzoną poprawką: 13 scenariuszy wprowadzenia i Settings PL/EN desktop/mobile PASS. Pełny Node747PASS, pakowanie12PASS, importer18PASS; niezależny ręczny odbiór46przypadków nadal NOT RUN. Pierwsza próba11f6ff1/41232457485 była nieudana; nie uznajemy jej za odbiór ani nie przesuwamy jej statusu na sukces. Przyczyny ówczesnej niezgodności nie rozstrzygnięto; nowa kontrola zachowuje pełną zgodność i bounded retries.
+Lokalny deterministyczny pakiet tego SHA: 49 plików z manifestem, 10 841 954 bajtów; archiwum SHA-256 `8fba6ec781e959d855273b333e1922ce3db113b058a51f2c8c92c3071435fd1f`, manifest `31185615e64a8dca97440799125a1e13bd160cf3dbc609991e0e05e9c3c3ce0e`. Publiczne bajty są identyczne z przeglądarkowo sprawdzoną poprawką: 13 scenariuszy wprowadzenia i Settings PL/EN desktop/mobile PASS. Pełny Node747PASS, pakowanie12PASS, importer18PASS; niezależny ręczny odbiór46przypadków nadal NOT RUN. Pierwsza próba11f6ff1/41232457485 była nieudana; nie uznajemy jej za odbiór ani nie przesuwamy jej statusu na sukces. Przyczyny ówczesnej niezgodności nie rozstrzygnięto; nowa kontrola zachowuje pełną zgodność i bounded retries.
 
 ## Historia przygotowania pilnej poprawki 0.9.1.2
 

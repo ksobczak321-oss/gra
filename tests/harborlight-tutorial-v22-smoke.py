@@ -25,7 +25,10 @@ MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks']
 
 def fresh_world():
     script = """import {createState} from './harborlight-v1-state.js';
+      import {normalizeProgression} from './harborlight-v1-progression.js';
       const state=createState(%d);
+      // Exercise preserved v4 history independently of the fresh v5 curriculum.
+      normalizeProgression(state,{...state,tutorial:{version:4}});
       state.islandName='Samodzielny Dom';
       console.log(JSON.stringify(state));""" % int(cloud.NOW.timestamp() * 1000)
     return json.loads(subprocess.run(['node', '--input-type=module', '-e', script], cwd=SOURCE,
@@ -90,10 +93,19 @@ def early_house_then_reload(browser):
         assert not after_house['tutorial']['claimed'].get(EARLY_LESSON)
         assert EARLY_LESSON not in after_house['tutorial']['chests']
         expect(page.locator('[data-tutorial-achievement]')).to_have_count(0)
-        expect(page.locator('[data-tutorial-guide]')).to_have_attribute('data-tutorial-guide', 'rules-read')
+        # Closing the course really pauses it now. An independent House action
+        # keeps that pause and its saved history; it must not reopen a guide.
+        assert after_house['tutorial']['autoOpenDisabled']
+        assert not after_house['tutorial']['completed'].get('rules-read')
+        assert after_house['learning']['adsNotBeforeActiveSeconds'] - after_house['engagementSchedule']['activeSeconds'] >= 3599
+        expect(page.locator('[data-tutorial-guide]')).to_have_count(0)
         close_panel(page)
-        page.locator('[data-tutorial-return]').click()
+        cloud.settings(page)
+        page.locator('[data-open-help]').click()
+        page.locator('[data-help-return-lessons]').click()
         expect(page.locator('[data-tutorial-current]')).to_have_attribute('data-tutorial-current', 'rules-read')
+        expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
+        assert not cloud.cloud_state(UID)['tutorial']['autoOpenDisabled']
         expect(page.locator('[data-tutorial-list-item="%s"]' % EARLY_LESSON)).to_have_count(0)
         expect(page.locator('[data-tutorial-panel] progress')).to_have_attribute('max', '24')
         expect(page.locator('[data-tutorial-panel] progress')).to_have_attribute('value', '0')

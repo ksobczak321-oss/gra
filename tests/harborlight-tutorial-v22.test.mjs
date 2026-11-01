@@ -1,9 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createState, normalizeState, act } from '../harborlight-v1-state.js';
-import { TUTORIAL_LESSONS, LEGACY_TUTORIAL_LESSONS, normalizeProgression, recordProgressionAction, advanceProgression, progressionAction, tutorialRows, tutorialStatus, tutorialPendingRewards, tutorialSettlementStatus } from '../harborlight-v1-progression.js';
+import { createState as freshState, normalizeState, act } from '../harborlight-v1-state.js';
+import { V4_TUTORIAL_LESSONS as TUTORIAL_LESSONS, LEGACY_TUTORIAL_LESSONS, normalizeProgression, recordProgressionAction, advanceProgression, progressionAction, tutorialRows, tutorialStatus, tutorialPendingRewards, tutorialSettlementStatus } from '../harborlight-v1-progression.js';
 import { ordinaryWarehouseUsed } from '../harborlight-v1-inventory.js';
 import { runTutorialCourse } from './helpers/tutorial-v21-course.mjs';
+
+// Preserve the historical curriculum exercised by these regression scenarios.
+const createState = now => { const state = freshState(now); normalizeProgression(state, { ...state, tutorial: { version: 4 } }); return state; };
 
 const NOW = Date.parse('2026-10-31T10:00:00Z');
 const run = (state, action, context) => act(state, action, state.worldTimeMs, context);

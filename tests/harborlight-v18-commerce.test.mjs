@@ -4,9 +4,13 @@ import { createState,act,buildingCost } from '../harborlight-v1-state.js';
 import { quoteCheckout,commerceStatus,runtimeCapabilities,preserveAccountProgress,ACCOUNT_PROGRESS_FIELDS } from '../harborlight-v1-commerce.js';
 import { quotePremiumBuilding } from '../harborlight-v1-activities.js';
 import { advanceEngagementSchedule,engagementOfferStatus,startEngagementOffer } from '../harborlight-v1-engagement.js';
+import { tutorialRows } from '../harborlight-v1-progression.js';
 const NOW=Date.parse('2026-10-30T12:00:00Z'), DAY=86400000;
 const dev={devSimulation:true,environment:'development'}, verified={...dev,rewardedAdVerified:true};
 const run=(s,a,c=dev)=>act(s,a,s.worldTimeMs,c);
+// Reward transaction tests start after all practical lessons. The independent
+// learning/advertising tests verify that an unfinished course blocks offers.
+function advertisingIsland(){const state=createState(NOW);for(const row of tutorialRows(state)){state.tutorial.completed[row.id]=true;state.tutorial.claimed[row.id]=true;}return state;}
 test('simulated Paynow settlement grants a package once and creates rolling no-ad entitlement',()=>{
  const s=createState(NOW),start=run(s,{type:'startCheckout',kind:'coins',grossGrosz:2000});assert.equal(start.ok,true);
  assert.equal(s.resources.coins,100);assert.equal(run(s,{type:'completeCheckout',checkoutId:start.checkoutId}).ok,true);
@@ -40,8 +44,8 @@ test('rolling threshold is a sum of eligible payments, not thirty days after lat
  s.commerce.receipts[1].refunded=true;assert.equal(commerceStatus(s).paidLast30DaysGrosz,0);
 });
 test('material ad reward requires completion, never rerolls on completion and cannot be replayed',()=>{
- const s=createState(NOW),before={...s.resources};advanceEngagementSchedule(s,480,{visible:true,focused:true});
- const offer=engagementOfferStatus(s);startEngagementOffer(s,offer.id,'ad');
+ const s=advertisingIsland(),before={...s.resources};advanceEngagementSchedule(s,480,{visible:true,focused:true});
+ const offer=engagementOfferStatus(s);assert.equal(startEngagementOffer(s,offer.id,'ad'),true);
  const r=run(s,{type:'beginRewardedAd',purpose:'materials',offerId:offer.id});assert.equal(r.ok,true);
  assert.equal(run(s,{type:'completeRewardedAd',nonce:r.nonce,receiptId:'proof'},dev).ok,false);
  const reward={...s.commerce.ad.reward};assert.ok(Object.values(reward).every(x=>x>=10&&x<=30));
@@ -50,7 +54,7 @@ test('material ad reward requires completion, never rerolls on completion and ca
  const balance={...s.resources};assert.equal(run(s,{type:'completeRewardedAd',nonce:r.nonce,receiptId:'proof'},verified).ok,false);assert.deepEqual(s.resources,balance);
 });
 test('material rewards cannot be farmed without a scheduled invitation',()=>{
- const s=createState(NOW);assert.equal(run(s,{type:'beginRewardedAd',purpose:'materials'}).ok,false);
+ const s=advertisingIsland();assert.equal(run(s,{type:'beginRewardedAd',purpose:'materials'}).ok,false);
  s.commerce.receipts.push({id:'paid',at:NOW,grossGrosz:2000,verified:true});
  advanceEngagementSchedule(s,480,{visible:true,focused:true,premium:true});
  const first=run(s,{type:'beginRewardedAd',purpose:'materials',offerId:'initial-premium-bonus'});assert.equal(first.ok,true);

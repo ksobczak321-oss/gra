@@ -1,7 +1,7 @@
 // OAuth is delegated to Firebase's maintained browser SDK. Only public Firebase
 // configuration is used here; provider secrets belong in the Firebase console.
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v25-2';
-import { DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v25-2';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v26';
+import { DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v26';
 import { validLegalAcceptance } from './harborlight-legal.js?v=legal-v4';
 
 const fail = (code, message) => Object.assign(new Error(message), { code });
@@ -31,7 +31,7 @@ export async function signInWithProvider(cloud, providerName, { islandName = '',
   if (!['Google', 'Facebook'].includes(providerName)) throw fail('provider-configuration', 'Wybierz Google albo Facebook.');
   if (registration && !cloud.preprod && !validLegalAcceptance(legalAcceptance)) throw fail('legal-required', 'Potwierdź dokumenty przed ukończeniem rejestracji.');
   const chosenName = islandName ? validateIslandName(islandName) : null;
-  if (chosenName && !chosenName.ok) throw fail('invalid-island-name', chosenName.message);
+  if (chosenName && !chosenName.ok) throw fail(chosenName.reason === 'profanity' ? 'inappropriate-island-name' : 'invalid-island-name', chosenName.message);
   let sdk, auth;
   try {
     const config = await cloud.getPublicConfig();

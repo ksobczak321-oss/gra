@@ -24,6 +24,9 @@ function crew(state,id,count){
 function intrinsic(state,value){for(const resident of state.residents)resident.happiness=value;updateHappiness(state);}
 function intrinsicMean(state){return state.residents.reduce((sum,resident)=>sum+resident.happiness,0)/state.population;}
 function funded(level=4){const state=idle(level);state.buildings.warehouse.level=level;state.resources.coins=10000;for(const id of MATERIAL_IDS)state.resources[id]=500*level;state.resources.food=Math.min(warehouseLimits(state).perResource,500*level+2000);return state;}
+// Ordinary logistics regression: this crew already existed in a legacy world,
+// rather than being the new six-carrier assignment that earns starter turbo.
+function inheritedCrew(state,id,count){state.version=6;delete state.residents;state.buildings[id].workers=count;state.buildings[id].workProgress=Array(count).fill(0);return normalizeState(state,state.lastSimulatedAt);}
 function finish(state,id){
  const project=state.buildings[id].construction;assert.ok(project);
  let waves=0;
@@ -214,7 +217,7 @@ test('production upgrade costs use current level, overlap outputs and double fou
  for(const[id,each]of[['house',1500],['townhall',1500],['market',900],['warehouse',900],['dock',1200]]){s.buildings[id].level=3;assert.deepEqual(buildingCost(s,id),Object.fromEntries(Object.keys(RESOURCES).map(resource=>[resource,each])));}
 });
 test('production upgrade reserves full materials, transports discrete five-minute loads and builds for T',()=>{
- const s=funded(2);crew(s,'warehouse',6);const stock={...s.resources};assert.equal(act(s,{type:'upgrade',building:'farm'}).ok,true);assert.equal(s.resources.wood,stock.wood);assert.equal(s.resources.grain,stock.grain);assert.equal(centralAvailable(s,'wood'),stock.wood-72);assert.equal(centralAvailable(s,'grain'),stock.grain-120);assert.equal(s.buildings.farm.level,1);
+ const s=inheritedCrew(funded(2),'warehouse',6);const stock={...s.resources};assert.equal(act(s,{type:'upgrade',building:'farm'}).ok,true);assert.equal(s.resources.wood,stock.wood);assert.equal(s.resources.grain,stock.grain);assert.equal(centralAvailable(s,'wood'),stock.wood-72);assert.equal(centralAvailable(s,'grain'),stock.grain-120);assert.equal(s.buildings.farm.level,1);
  // 132-unit carriers need one load per material, all delivered in one wave.
  tick(s,299);assert.equal(s.buildings.farm.construction.goodsRemaining,264);tick(s,1);assert.equal(s.buildings.farm.construction.stage,'building');close(s.buildings.farm.construction.buildRemaining,300);tick(s,299);assert.equal(s.buildings.farm.level,1);tick(s,1);assert.equal(s.buildings.farm.level,2);assert.equal(s.statistics.upgrades,1);assert.equal(s.constructionProjects.length,0);
 });
@@ -222,7 +225,7 @@ test('construction waits without carriers and dispatched cargo finishes after th
  const s=funded(2);assert.equal(act(s,{type:'upgrade',building:'farm'}).ok,true);tick(s,600);assert.equal(s.buildings.farm.construction.transportSeconds,0);crew(s,'warehouse',1);tick(s,60);assert.equal(s.buildings.farm.construction.goodsRemaining,264);act(s,{type:'assign',building:'warehouse',delta:-1});tick(s,240);assert.equal(s.buildings.farm.construction.goodsRemaining,192);const delivered={...s.buildings.farm.construction.delivered};tick(s,300);assert.deepEqual(s.buildings.farm.construction.delivered,delivered);assert.equal(s.buildings.farm.level,1);
 });
 test('level two permits two active and two funded waiting projects, rejecting overflow without spending',()=>{
- const s=funded(2);crew(s,'warehouse',6);for(const id of ['farm','windmill','lumber','quarry'])assert.equal(act(s,{type:'upgrade',building:id}).ok,true,id);assert.deepEqual(constructionCounts(s),{active:2,queued:2,limit:2,queueLimit:2,premium:false});const before=JSON.stringify(s);assert.equal(act(s,{type:'upgrade',building:'sawmill'}).ok,false);assert.equal(JSON.stringify(s),before);const queued=s.constructionProjects.find(p=>p.building==='lumber');assert.equal(queued.stage,'queued');assert.deepEqual(queued.cost,{wood:423,stone:159});finish(s,'farm');assert.equal(s.buildings.farm.level,2);assert.equal(queued.stage,'transport');assert.equal(constructionCounts(s).active,2);assert.equal(constructionCounts(s).queued,1);
+ const s=inheritedCrew(funded(2),'warehouse',6);for(const id of ['farm','windmill','lumber','quarry'])assert.equal(act(s,{type:'upgrade',building:id}).ok,true,id);assert.deepEqual(constructionCounts(s),{active:2,queued:2,limit:2,queueLimit:2,premium:false});const before=JSON.stringify(s);assert.equal(act(s,{type:'upgrade',building:'sawmill'}).ok,false);assert.equal(JSON.stringify(s),before);const queued=s.constructionProjects.find(p=>p.building==='lumber');assert.equal(queued.stage,'queued');assert.deepEqual(queued.cost,{wood:423,stone:159});finish(s,'farm');assert.equal(s.buildings.farm.level,2);assert.equal(queued.stage,'transport');assert.equal(constructionCounts(s).active,2);assert.equal(constructionCounts(s).queued,1);
 });
 test('normal waiting projects require the full cost in the central warehouse',()=>{
  const s=idle(2);s.resources.grain=119;const before=JSON.stringify(s);assert.equal(act(s,{type:'upgrade',building:'farm'}).ok,false);assert.equal(JSON.stringify(s),before);assert.equal(s.constructionProjects.length,0);

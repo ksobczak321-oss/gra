@@ -3,6 +3,7 @@
 !package.json
 !server.mjs
 !account-service.mjs
+!island-name.mjs
 !firebase-auth.mjs
 !firestore-store.mjs
 !retention.mjs

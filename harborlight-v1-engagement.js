@@ -54,6 +54,18 @@ function pendingOffer(schedule, kind) {
   schedule.sequence++;
   schedule.pending = { id: `engagement-${schedule.sequence}`, kind, sequence: schedule.sequence, started: false, choice: null, runId: null };
 }
+// Learning remains part of the persisted island, so reconnecting or changing
+// devices cannot bypass its advertising pause. Explicit rewarded actions are
+// separate from these automatic invitations.
+export function learningBlocksInvitations(state) {
+  const firstTour = state?.onboarding?.version === 1 && state.onboarding.worldStartedAt === null && ['intro', 'name', 'tour'].includes(state.onboarding.stage);
+  const tutorial = state?.tutorial;
+  const practical = !!tutorial?.version && tutorial.rewardDisabled !== true && tutorial.autoOpenDisabled !== true && Object.values(tutorial.completed || {}).filter(value => value === true).length < 25;
+  return firstTour || state?.learning?.tour?.active === true || state?.learning?.practical?.reviewActive === true || practical;
+}
+export function invitationCooldownRemaining(state) {
+  return Math.max(0, positive(state?.learning?.adsNotBeforeActiveSeconds) - ensure(state).activeSeconds);
+}
 function settle(schedule, premium) {
   if (!schedule.initialCompleted && !schedule.pending && schedule.activeSeconds >= schedule.initialAt - EPS) {
     if (premium) {
@@ -77,23 +89,24 @@ export function advanceEngagementSchedule(state, seconds, { visible = false, foc
   if (state?.onboarding?.version === 1 && state.onboarding.worldStartedAt === null && ['intro', 'name', 'tour'].includes(state.onboarding.stage)) return engagementOfferStatus(state);
   if (!finite(seconds) || seconds < 0) return engagementOfferStatus(state);
   if (visible && focused) schedule.activeSeconds = Math.min(Number.MAX_SAFE_INTEGER, schedule.activeSeconds + seconds);
-  settle(schedule, premium === true);
+  if (!learningBlocksInvitations(state) && invitationCooldownRemaining(state) <= EPS) settle(schedule, premium === true);
   return engagementOfferStatus(state);
 }
 
 export function engagementOfferStatus(state) {
   const schedule = ensure(state), pending = schedule.pending;
   const deadline = schedule.initialCompleted ? schedule.nextAt : schedule.initialAt;
-  return { pending: !!pending, id: pending?.id || null, kind: pending?.kind || null,
+  const blocked = learningBlocksInvitations(state) || invitationCooldownRemaining(state) > EPS;
+  return { pending: !!pending, blocked, id: pending?.id || null, kind: pending?.kind || null,
     sequence: pending?.sequence || schedule.sequence, started: pending?.started === true, choice: pending?.choice || null, runId: pending?.runId || null,
     activeSeconds: schedule.activeSeconds, completedChoices: schedule.completedChoices,
     initialBonusAvailable: schedule.initialPremiumBonusAvailable && !schedule.initialBonusClaimed,
-    nextIn: pending ? 0 : deadline === null ? null : Math.max(0, deadline - schedule.activeSeconds) };
+    nextIn: Math.max(invitationCooldownRemaining(state), pending ? 0 : deadline === null ? 0 : Math.max(0, deadline - schedule.activeSeconds)) || (deadline === null && !pending ? null : 0) };
 }
 
 export function startEngagementOffer(state, id, choice) {
   const schedule = ensure(state), pending = schedule.pending;
-  if (!pending || pending.id !== id || pending.started || !['ad', 'minigame'].includes(choice) || pending.kind === 'initial-ad' && choice !== 'ad') return false;
+  if (learningBlocksInvitations(state) || invitationCooldownRemaining(state) > EPS || !pending || pending.id !== id || pending.started || !['ad', 'minigame'].includes(choice) || pending.kind === 'initial-ad' && choice !== 'ad') return false;
   pending.started = true; pending.choice = choice;
   return true;
 }

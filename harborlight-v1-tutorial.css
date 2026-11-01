@@ -34,3 +34,9 @@
 
 /* In dialogs, reserve real space instead of pinning an opaque card over actions. */
 .dialog-body>.tutorial-v16-guide{position:relative;top:auto;bottom:auto}
+
+.tutorial-v26-review-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;color:#ffe2a7}
+.tutorial-v26-review-exit{flex:0 0 40px;width:40px;min-height:40px;padding:0;font-size:24px;line-height:1}
+.tutorial-v26-review>.tutorial-v16-hint{margin:9px 0 17px;font-size:13px}
+.tutorial-v26-review-navigation{align-items:stretch}
+.tutorial-v26-review-navigation>.tutorial-action{flex:1 1 150px}

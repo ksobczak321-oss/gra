@@ -1,12 +1,12 @@
 # HARBORLIGHT — rejestr zmian
 
-Stan ewidencji: **2026-10-31**. **263 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
+Stan ewidencji: **2026-11-01**. **279 osobnych kart**, pogrupowanych w 11 epików. Każda karta ma stabilny identyfikator i odrębne statusy implementacji, DEV, CI, PRE-PROD, PROD oraz decyzji.
 
 Źródło danych: [changes.json](changes.json). Karty odtwarza `python3 scripts/build_change_register.py`; `--check` sprawdza zgodność bez zapisów. Nie edytuj wygenerowanych kart zamiast źródła JSON.
 
 ## Zakres i granice
 
-Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona.
+Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury.
 
 Rejestr nie publikuje prywatnych kwot Billing ani danych osobistych związanych z JDG.
 
@@ -79,6 +79,9 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0032 — Pomoc: Wróć do tutoriala ponownie pokazuje objaśnienia gry](changes/HL-CHG-0032.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0034 — Nowe odmowy kolonizacji i rejsów są po polsku przy języku PL](changes/HL-CHG-0034.md) | Bug | `accepted_scope_bugfix` | `targeted_packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0038 — Naturalna i kompletna polszczyzna całej gry, także komunikatów dynamicznych](changes/HL-CHG-0038.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_353faad` |
+| [HL-CHG-0935 — Magazyn pokazuje łączny zapas, a rozbicie i zasady pod ikoną informacji](changes/HL-CHG-0935.md) | Story | `accepted` | `local_validation_passed` | `not_deployed` |
+| [HL-CHG-0939 — Punkty otwierają Ranking; Sojusz i liga oraz Pomagam mają osobne wejścia](changes/HL-CHG-0939.md) | Bug | `accepted` | `local_validation_passed` | `not_deployed` |
+| [HL-CHG-0941 — Tutorial przyjmuje ręczną redakcję W1 i opisów mieszkańców, zasobów oraz budynków](changes/HL-CHG-0941.md) | Story | `accepted` | `local_validation_passed` | `not_deployed` |
 
 <a id="hl-epic-tut"></a>
 
@@ -100,6 +103,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0048 — Trwająca minigra ma pierwszeństwo przed samouczkiem i skrzynią](changes/HL-CHG-0048.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0049 — Starszy program skrzyń i podwajania zachowuje rozliczone decyzje](changes/HL-CHG-0049.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0933 — Podpowiedź z trzema przyciskami zachowuje czytelny opis i mieści się na ekranie](changes/HL-CHG-0933.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_353faad` |
+| [HL-CHG-0943 — Tutorial i samouczek mają zamknięcie, wznowienie oraz powtórkę od początku](changes/HL-CHG-0943.md) | Story | `accepted_with_documented_order_assumption` | `local_validation_passed` | `not_deployed` |
+| [HL-CHG-0946 — Kurs zaczyna się od 6 tragarzy i priorytetu Budowa; zadanie i minigra zastępują Ratusz 3](changes/HL-CHG-0946.md) | Story | `accepted` | `local_validation_passed` | `not_deployed` |
 
 <a id="hl-epic-eco"></a>
 
@@ -123,6 +128,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0114 — Serwerowa rezerwacja i atomowe przyjęcie jednej oferty](changes/HL-CHG-0114.md) | Bug | `accepted` | `verified_with_isolated_services` | `activation_unconfirmed` |
 | [HL-CHG-0115 — Zwroty anulowanych i wygasłych ofert nie znikają przy pełnym magazynie](changes/HL-CHG-0115.md) | Bug | `accepted` | `verified_with_isolated_services` | `activation_unconfirmed` |
 | [HL-CHG-0116 — Ścieżki jako rzeczywisty wydatek kamienia i premia przewozu](changes/HL-CHG-0116.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
+| [HL-CHG-0947 — Transport i budowa pierwszych dwóch poziomów przyspieszają bez zmiany poziomów 3+](changes/HL-CHG-0947.md) | Story | `accepted` | `local_validation_passed` | `not_deployed` |
+| [HL-CHG-0948 — Każda ścieżka rozbudowy respektuje dostępność budynku na danym poziomie](changes/HL-CHG-0948.md) | Bug | `accepted` | `local_validation_passed` | `not_deployed` |
 
 <a id="hl-epic-peo"></a>
 
@@ -166,6 +173,9 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0234 — Pomoc pokazuje karę przestoju konkretnego mieszkańca](changes/HL-CHG-0234.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0235 — Pasek szczęścia oznacza wymuszone 100% z Latarni](changes/HL-CHG-0235.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0236 — Długa nieobecność uruchamia najwyżej jedno zaległe złe wydarzenie](changes/HL-CHG-0236.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
+| [HL-CHG-0936 — Dom otwiera wszystkie przydziały dopiero przez Zarządzaj pracownikami](changes/HL-CHG-0936.md) | Story | `accepted` | `local_validation_passed` | `not_deployed` |
+| [HL-CHG-0937 — Pozostałe punkty szczęścia są wydawalne, a niedozwolone przekazanie zablokowane](changes/HL-CHG-0937.md) | Decision | `implementation_assumption_open_for_correction` | `local_validation_passed` | `not_deployed` |
+| [HL-CHG-0949 — Pięciu producentów opisuje smutną buźkę przy pełnym lokalnym magazynie](changes/HL-CHG-0949.md) | Story | `accepted` | `local_validation_passed` | `not_deployed` |
 
 <a id="hl-epic-min"></a>
 
@@ -194,6 +204,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0318 — Dawna nagroda reklamowa 50–150 każdego materiału](changes/HL-CHG-0318.md) | Decision | `superseded` | `not_applicable` | `not_applicable` |
 | [HL-CHG-0319 — Dobrowolne nagrody reklamowe mogą powiększać bonus mimo blokady kolejnych skrzyń](changes/HL-CHG-0319.md) | Decision | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0320 — Gracz bez standardowych reklam zachowuje punkt startu harmonogramu 4–8 minut](changes/HL-CHG-0320.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
+| [HL-CHG-0938 — Okno reklamy oddziela przyciski i objaśnia nagrodę przed wyborem](changes/HL-CHG-0938.md) | Story | `accepted` | `local_validation_passed` | `not_deployed` |
+| [HL-CHG-0944 — Automatyczne reklamy czekają na koniec nauki i 60 aktywnych minut po jej przerwaniu](changes/HL-CHG-0944.md) | Story | `accepted` | `local_validation_passed` | `not_deployed` |
 
 <a id="hl-epic-acc"></a>
 
@@ -225,6 +237,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0422 — Powrót do gry nie wymusza samouczka od początku ani nie kasuje historii](changes/HL-CHG-0422.md) | Bug | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0423 — Wcześniejsze zachowanie historii admin1 przy zwykłej promocji](changes/HL-CHG-0423.md) | Decision | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0424 — Pierwotne uruchamianie zegara wyspy przy pierwszym zalogowaniu](changes/HL-CHG-0424.md) | Decision | `superseded` | `not_applicable` | `not_applicable` |
+| [HL-CHG-0942 — Większe pole nazwy przyjmuje 3–40 znaków i odrzuca wulgaryzmy PL/EN](changes/HL-CHG-0942.md) | Story | `accepted` | `local_validation_passed` | `not_deployed` |
 
 <a id="hl-epic-com"></a>
 
@@ -251,6 +264,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0517 — Logo Paynow i jawna symulacja bez pobierania prawdziwych pieniędzy](changes/HL-CHG-0517.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0518 — Kanały rzeczywistych płatności w wydaniach Google Play i Apple](changes/HL-CHG-0518.md) | Decision | `deferred` | `not_applicable` | `not_active` |
 | [HL-CHG-0519 — Dawne bez reklam at all obejmujące także czas w ekspedycjach](changes/HL-CHG-0519.md) | Decision | `superseded` | `not_applicable` | `not_applicable` |
+| [HL-CHG-0945 — Chmurka czatu przed dzwonkiem prowadzi do rozmów sojuszu i 1:1](changes/HL-CHG-0945.md) | Story | `accepted` | `local_validation_passed` | `not_deployed` |
 
 <a id="hl-epic-inf"></a>
 
@@ -305,6 +319,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0713 — Tag pilne w rejestrze oraz oznaczanie pilnych wydań Git](changes/HL-CHG-0713.md) | Story | `accepted` | `verified` | `not_applicable` |
 | [HL-CHG-0714 — Osobna lista ręcznego odbioru z wynikami, notatkami i eksportem](changes/HL-CHG-0714.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0715 — Dokumenty draft3 opisują archipelag i społeczność oraz wymagają aktualnych potwierdzeń](changes/HL-CHG-0715.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
+| [HL-CHG-0950 — Zakres v26 ma nowe karty i testy, bez promocji GCP i resetu historii](changes/HL-CHG-0950.md) | Ops | `accepted` | `local_validation_passed` | `not_deployed` |
 
 <a id="hl-epic-arc"></a>
 
@@ -378,6 +393,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0930 — Pudełko, opakowanie, instrukcja i kody QR planszówki](changes/HL-CHG-0930.md) | Story | `accepted` | `print_artifacts_and_phone_verified` | `not_applicable_print_artifact` |
 | [HL-CHG-0931 — Osobny czat sojuszu i prywatne rozmowy jeden na jeden](changes/HL-CHG-0931.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0932 — Oba zadania ligi mają wspólne okno 19:00–21:00 Warszawy](changes/HL-CHG-0932.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_353faad` |
+| [HL-CHG-0940 — DEV prezentuje ligę i Pomagam z fikcyjnymi beneficjentami, bez realnych przelewów](changes/HL-CHG-0940.md) | Story | `accepted` | `local_validation_passed` | `not_deployed` |
 
 ## Utrzymanie
 

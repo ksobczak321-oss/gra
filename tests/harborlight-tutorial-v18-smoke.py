@@ -46,9 +46,10 @@ def open_fixture(browser, mode='tutorial', *, now=None, width=1366, height=768):
     })();''' % (json.dumps(RELAY), json.dumps(RELAY)))
     state = page.evaluate('''async mode=>{
       const {createState}=await import('./harborlight-v1-state.js?v=frontend-v18');
-      const {TUTORIAL_LESSONS}=await import('./harborlight-v1-progression.js?v=frontend-v18');
+      const {LEGACY_TUTORIAL_LESSONS:TUTORIAL_LESSONS,normalizeProgression}=await import('./harborlight-v1-progression.js?v=frontend-v18');
       const s=createState(Date.now());s.tutorial.seed=57;
-      s.tutorial.version=3; // Exercise preservation of the historical course.
+      // Preserve this historical curriculum as new islands get the turbo course.
+      normalizeProgression(s,{...s,tutorial:{version:3,seed:57}});
       s.engagementSchedule.initialCompleted=true;s.engagementSchedule.initialAnchored=true;s.engagementSchedule.nextAt=1000000000;
       if(mode==='loyalty')s.tutorial.autoOpenDisabled=true;
       if(mode==='expedition'){

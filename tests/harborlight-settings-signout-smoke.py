@@ -66,7 +66,7 @@ def delayed_signout(browser, language, mobile):
     version = page.locator('[data-settings-version]')
     expect(version).to_be_visible()
     expect(version).to_contain_text('Wersja gry' if language == 'pl' else 'Game version')
-    expect(version.locator('[data-game-version]')).to_have_text('0.10.1.0')
+    expect(version.locator('[data-game-version]')).to_have_text('0.10.2.0')
     version_box = version.bounding_box()
     assert version_box and version_box['y'] >= 0, 'Game version must be visible when Settings opens'
     assert version_box['y'] + version_box['height'] <= page.viewport_size['height'], version_box
@@ -131,7 +131,7 @@ def run():
             assert not fixture.ERRORS, fixture.ERRORS
         finally:
             browser.close()
-    print('PASS Settings version0.10.1.0 and logout in PL/EN on desktop/mobile: pending cloud acknowledgement, offline logout and existing world-schema/history preserved; no island cache')
+    print('PASS Settings version0.10.2.0 and logout in PL/EN on desktop/mobile: pending cloud acknowledgement, offline logout and existing world-schema/history preserved; no island cache')
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 # HARBORLIGHT — ręczny plan testów i osobne przypadki
 
-**Zacznij od [listy do odhaczania](START-HERE.md) albo [interaktywnego raportu QA](qa-checklist.html).** Zestaw obejmuje53 osobne przypadki. Wszystkie wyniki ręczne pozostają **NOT RUN**; dokument jest planem odbioru, nie potwierdzeniem wykonania. Można go rozpocząć od poniedziałku2 listopada2026 po wskazaniu testowanego buildu i przygotowaniu danych.
+**Zacznij od [listy do odhaczania](START-HERE.md) albo [interaktywnego raportu QA](qa-checklist.html).** Zestaw obejmuje **59 osobnych przypadków**, w tym **TC54–TC59 dla DEV 0.10.2.0**. Wszystkie wyniki ręczne pozostają **NOT RUN**; dokument jest planem odbioru, nie potwierdzeniem wykonania. Można go rozpocząć od poniedziałku 2 listopada 2026 po wskazaniu testowanego buildu i przygotowaniu danych.
 
 ## Jak odhaczać pojedyncze przypadki
 
@@ -21,9 +21,11 @@ W interaktywnej liście wynik, notatka, tester i opis buildu są zapisywane loka
 
 ## Środowiska i dane
 
-**DEV** to przestrzeń robocza i deweloperski podgląd Pages. **PRE-PROD** to `https://harborlight-dev.web.app` w projekcieGCP `harborlight-dev`. **PROD** nie jest objęty nowym GO. Bieżący [rejestr środowisk](../ENVIRONMENT-STATUS.md) rozstrzyga, które funkcje rzeczywiście są opublikowane. Push i Pages nie są promocją do GCP.
+**DEV** to przestrzeń robocza i deweloperski podgląd Pages. **PRE-PROD** to `https://harborlight-dev.web.app` w projekcie GCP `harborlight-dev`. **PROD** nie jest objęty nowym GO. Bieżący [rejestr środowisk](../ENVIRONMENT-STATUS.md) rozstrzyga, które funkcje rzeczywiście są opublikowane. Push i Pages nie są promocją do GCP.
 
-Historyczny baseline definicji to v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`; ostatnia potwierdzona pilna promocja przed nowym zakresem to0.9.1.2 / `3be1f9d2094f1432acacbb782eed1665fd00e6e1`, [przebieg41233737873](https://github.com/ksobczak321-oss/gra/actions/runs/41233737873). Żaden z tych sukcesów nie jest wykonaniem poniższych przypadków ani dowodem aktywacji nowych API. Nowy zakres archipelagu, ligi, czatów i dobroczynności odbieramy wyłącznie na DEV, zgodnie z rzeczywistą gotowością modułów.
+Historyczny baseline definicji to v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`. Ostatni potwierdzony PRE-PROD to **0.10.1.0**, źródło `353faad347262dce7c3632fdf7c71be124384ab1`, [wdrożenie 41246771480](https://github.com/ksobczak321-oss/gra/actions/runs/41246771480). Nowy pakiet **0.10.2.0 / v26** z GO 1 listopada obejmuje **tylko DEV**; TC54–TC59 odbieramy na tym buildzie. Żaden dawny sukces CI lub promocji nie jest ręcznym wykonaniem nowych przypadków ani dowodem aktywacji usług.
+
+Nowy program 25 lekcji ma odrębne kryteria pierwszych 6 tragarzy i nie wymaga Ratusza3. **TC56 jest odbiorem nowego programu**, a TC04 zachowuje regres dwóch odrębnych przydziałów w starszym zapisanym programie. Dawnych oczekiwań nie nakładamy bezwarunkowo na nowy fixture. TC55 rozszerza powroty z TC47 o wybór kontynuacji/od początku i ochronę od reklam; powtórka nie resetuje danych. Dwa szczegóły mają jawne założenia wykonawcze, otwarte na korektę po odpowiedzi użytkownika: reszta szczęścia po rozdaniu wszystkim pozostaje wydawalna indywidualnie (TC58), a kolejność HUD przyjmuje Monety → Pracujący → Następny mieszkaniec → Punkty → Mieszkańcy i miejsca (TC54). Sprawdzamy wdrożone zachowanie, ale nie opisujemy tych interpretacji jako dodatkowo potwierdzonych decyzji.
 
 Profile QA są specyfikacją danych do przygotowania w izolowanym harnessie, nie dodatkowymi kontami istniejącymi w GCP. Brak fixture, kontrolowanego zegara lub potrzebnej usługi oznacza BLOCKED z przyczyną. Nie zmieniaj czasu komputera i prawdziwej bazy, aby wymusić warunek testowy. Lokalny nietrwały podgląd nie zastępuje testu trwałości chmury.
 
@@ -31,15 +33,16 @@ Nie używaj `admin1`–`admin3` jako danych jednorazowych; nie resetuj i nie pod
 
 ## Proponowana kolejność odbioru
 
-1. Dostęp i integralność: TC19–23, TC29, TC31.
-2. Nowa gra i czytelność: TC01–05, TC30, TC43–45 oraz powroty w PomocyTC47, prowadzenie po mapieTC51 i przegląd polszczyznyTC52–53.
-3. Gospodarka i mieszkańcy: TC06–18, TC24–25.
-4. Archipelag i handel: migracjaTC26, transport towarówTC27, transakcjeTC28, nowe regułyTC33–37.
-5. Sojusze i liga: TC46, prywatne wiadomościTC48, ligaTC38 i sloty/dwa zadaniaTC49.
-6. Dobroczynność i pochodzenie monet: TC39–40; tylko izolowana symulacja.
-7. Odczyt operacyjny i retencja: TC32, TC42. Papierowa gra i druk: TC50. **TC41 pozostaje BLOCKED: integracja planszówki online jest wyłączona z GO.**
+1. Nowy zakres DEV 0.10.2.0: TC54–TC59; najpierw ustal właściwy build i izolowane fixture.
+2. Dostęp i integralność: TC19–23, TC29, TC31.
+3. Nowa gra i czytelność: TC01–05, TC30, TC43–45 oraz powroty w Pomocy TC47, prowadzenie po mapie TC51 i przegląd polszczyzny TC52–53.
+4. Gospodarka i mieszkańcy: TC06–18, TC24–25.
+5. Archipelag i handel: migracja TC26, transport towarów TC27, transakcje TC28, nowe reguły TC33–37.
+6. Sojusze i liga: TC46, prywatne wiadomości TC48, liga TC38 i sloty/dwa zadania TC49.
+7. Dobroczynność i pochodzenie monet: TC39–40; tylko izolowana symulacja.
+8. Odczyt operacyjny i retencja: TC32, TC42. Papierowa gra i druk: TC50. **TC41 pozostaje BLOCKED: integracja planszówki online jest wyłączona z GO.**
 
-TC26 jest obecnie testem zachowania wcześniejszych dwóch światów podczas migracji; nowa kolonizacja ma osobneTC34–36. TC28 sprawdza integralność sprzedaży materiałów za monety, aTC37 pułap ceny i równoległy handelNPC. Nie zaliczamy nowej logiki na podstawie dawnego darmowego założenia drugiej wyspy lub barteru.
+TC26 jest obecnie testem zachowania wcześniejszych dwóch światów podczas migracji; nowa kolonizacja ma osobne TC34–36. TC28 sprawdza integralność sprzedaży materiałów za monety, a TC37 pułap ceny i równoległy handel NPC. Nie zaliczamy nowej logiki na podstawie dawnego darmowego założenia drugiej wyspy lub barteru.
 
 ## Indeks
 
@@ -98,6 +101,12 @@ TC26 jest obecnie testem zachowania wcześniejszych dwóch światów podczas mig
 | [HL-TC-0051 — Samouczek wskazuje budynek na mapie i czeka na rzeczywiste kliknięcie](manual/HL-TC-0051.md) | Samouczek i mapa | P1 | READY | NOT RUN |
 | [HL-TC-0052 — Polszczyzna wszystkich 25 lekcji jest naturalna i zgodna z klikanymi elementami](manual/HL-TC-0052.md) | Polskie teksty samouczka | P1 | READY | NOT RUN |
 | [HL-TC-0053 — Polska wersja całej gry: panele, błędy, akcje i powiadomienia](manual/HL-TC-0053.md) | Pełny przegląd polszczyzny | P1 | READY | NOT RUN |
+| [HL-TC-0054 — Nazwa 3–40 znaków i zaakceptowane opisy nie zmieniają starej wyspy](manual/HL-TC-0054.md) | Nazwa i tutorial | P0 | READY | NOT RUN |
+| [HL-TC-0055 — Oba narzędzia nauki wznawiają miejsce i chronią od automatycznych reklam](manual/HL-TC-0055.md) | Tutorial, samouczek i aktywny czas | P0 | READY | NOT RUN |
+| [HL-TC-0056 — Nowy kurs 25 lekcji zaczyna się od 6 tragarzy i kończy na Ratuszu 2, finansując Latarnię](manual/HL-TC-0056.md) | Praktyczny kurs v26 | P0 | READY | NOT RUN |
+| [HL-TC-0057 — Turbo poziomów 1–2 i blokady odblokowania obejmują wszystkie ścieżki budowy](manual/HL-TC-0057.md) | Logistyka i rozwój | P0 | READY | NOT RUN |
+| [HL-TC-0058 — Magazyn i Dom są czytelne, a okno reklamy ma rozdzielone przyciski](manual/HL-TC-0058.md) | Panele gospodarki i reklamy | P1 | READY | NOT RUN |
+| [HL-TC-0059 — Ranking, czaty i Pomagam są osobne, a demonstracja nie udaje realnych operacji](manual/HL-TC-0059.md) | Społeczność i dobroczynność DEV | P0 | READY | NOT RUN |
 
 ## Raport i zgłoszenia
 

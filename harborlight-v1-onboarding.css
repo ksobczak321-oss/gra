@@ -25,6 +25,7 @@
 .island-onboarding form label{display:block;margin:20px 0 8px;color:#ffe6af;font-size:15px;font-weight:700}
 .island-onboarding input{display:block;width:100%;min-width:0;min-height:49px;padding:10px 13px;border:1px solid #819eac;border-radius:9px;background:#092432;color:#f4f8f8;font:18px/1.4 Inter,system-ui,sans-serif}
 .island-onboarding input[aria-invalid=true]{border-color:#ffb09c}
+.island-onboarding [data-onboarding-name]{min-height:60px;font-size:clamp(24px,5vw,32px);line-height:1.25;font-weight:700}
 .island-onboarding form small{display:block;margin-top:7px;color:#b6ced8;font-size:12px}
 .island-onboarding-error{margin:13px 0!important;padding:11px 12px;border:1px solid #d6917d;border-radius:8px;background:#663730;color:#ffe5dc;font-size:14px}
 .island-onboarding-highlight{position:fixed;z-index:0;pointer-events:none;border:3px solid #ffe39a;border-radius:10px;box-shadow:0 0 0 9999px #001522a8,0 0 18px 5px #ffdb8066;transition:left .15s,top .15s,width .15s,height .15s}

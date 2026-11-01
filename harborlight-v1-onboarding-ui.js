@@ -1,4 +1,4 @@
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v25-2';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v26';
 
 const pick = (language, pl, en) => language === 'pl' ? pl : en;
 const valueFor = (value, language) => typeof value === 'string' ? value : value?.[language] || value?.pl || value?.en || '';
@@ -16,7 +16,7 @@ function node(tag, attributes = {}, ...children) {
 }
 
 /** The introduction is an explanation, not a source of tutorial rewards.
- * onUpdate/onFinish acknowledge the model/cloud operation before navigation.
+ * onUpdate/onFinish/onPause acknowledge the model/cloud operation before navigation.
  * A rejected operation keeps this modal and the world's paused clock in place.
  */
 export function createIslandOnboarding(options = {}) {
@@ -65,7 +65,8 @@ export function createIslandOnboarding(options = {}) {
     if (busy || destroyed || current.stage !== 'tour') return;
     setBusy(true);
     try {
-      if (await onFinish({ skipped, islandName: current.islandName }) === false) throw new Error('onboarding-finish-rejected');
+      const callback = skipped && typeof options.onPause === 'function' ? options.onPause : onFinish;
+      if (await callback({ skipped, stage: current.stage, index: current.index, islandName: current.islandName, replay }) === false) throw new Error('onboarding-finish-rejected');
       destroy();
     } catch (error) {
       if (!destroyed) { onError(error); showError(pick(language, 'Nie udało się rozpocząć gry. Sprawdź połączenie i spróbuj ponownie.', 'The game could not be started. Check your connection and try again.')); setBusy(false); }
@@ -121,23 +122,24 @@ export function createIslandOnboarding(options = {}) {
           'Obejmujesz opiekę nad małą osadą na wyspie. Zapewnij mieszkańcom domy, żywność i pracę, a z czasem rozbuduj ją w tętniący życiem port.',
           'You take care of a small island settlement. Give your residents homes, food and jobs, then grow it into a thriving harbour.')),
         node('p', {}, pick(language,
-          'Daj mieszkańcom pracę i zadbaj o to, by wyprodukowane materiały trafiały do magazynu. Im szczęśliwsi są mieszkańcy, tym chętniej na wyspę przybywają nowe osoby. Na karcie zasobu widzisz kolejno zapas przy budynku, w magazynie centralnym i w transporcie. Niżej sprawdzisz, ile go przybywa lub ubywa na godzinę.',
-          'Assign workers, develop production and manage transport: materials need to reach the places that use them. Residents’ happiness controls population growth. Read resource cards as local / central stock (in transit); the lower line shows the hourly balance.')),
-        node('p', {}, pick(language,
-          'Ekspedycje i zadania przynoszą dodatkowe nagrody. Najpierw nazwiesz wyspę i poznasz jej najważniejsze miejsca; potem samouczek przeprowadzi Cię przez pierwsze prawdziwe działania.',
-          'Expeditions and tasks bring extra rewards. First you will name your island and get to know its main controls; the tutorial will then guide you through your first real actions.'))), paused(),
+          'Celem gry jest rozwój i dbanie o dobrostan mieszkańców. Daj mieszkańcom pracę i zadbaj o to, by wyprodukowane materiały trafiały do magazynu. Im szczęśliwsi są mieszkańcy, tym chętniej na wyspę przybywają nowe osoby.',
+          'Your goal is to develop the island and care for its residents. Give them jobs and make sure the materials they produce reach the warehouse. The happier your residents are, the more readily new settlers arrive.'))), paused(),
         node('div', { class: 'island-onboarding-actions' }, control(nextLabel(), () => commit({ ...current, stage: 'name' }), { 'data-onboarding-next': '' })));
     } else if (current.stage === 'name') {
-      const input = node('input', { id: 'island-onboarding-name', 'data-onboarding-name': '', name: 'islandName', type: 'text', autocomplete: 'off', required: true, value: nameDraft, 'aria-describedby': 'island-onboarding-name-hint', spellcheck: 'false' });
-      const form = node('form', { 'data-onboarding-name-form': '', onsubmit: event => {
+      const input = node('input', { id: 'island-onboarding-name', 'data-onboarding-name': '', name: 'islandName', type: 'text', autocomplete: 'off', minlength: 3, maxlength: 40, required: true, value: nameDraft, 'aria-describedby': 'island-onboarding-name-hint', spellcheck: 'false' });
+      const form = node('form', { 'data-onboarding-name-form': '', novalidate: true, onsubmit: event => {
         event.preventDefault();
         const result = validateIslandName(input.value);
-        if (!result.ok) { input.setAttribute('aria-invalid', 'true'); showError(pick(language, 'Wpisz nazwę mającą od 2 do 40 znaków w jednym wierszu. Pomiń nawiasy < > i niewidoczne znaki, np. tabulatory.', 'Choose a name of 2–40 characters without control characters or < > brackets.')); input.focus(); return; }
+        if (!result.ok) {
+          input.setAttribute('aria-invalid', 'true');
+          showError(result.reason === 'profanity' ? pick(language, 'Ta nazwa zawiera niedozwolone słowo. Wybierz nazwę bez wulgaryzmów w języku polskim i angielskim.', 'This name contains a prohibited word. Choose a name without Polish or English profanity.') : result.reason === 'characters' ? pick(language, 'Wpisz nazwę w jednym wierszu. Pomiń nawiasy < > i niewidoczne znaki, np. tabulatory.', 'Use a single line without control characters or < > brackets.') : pick(language, 'Wpisz nazwę mającą od 3 do 40 znaków.', 'Choose a name of 3–40 characters.'));
+          input.focus(); return;
+        }
         input.removeAttribute('aria-invalid'); void commit({ stage: 'tour', index: 0, islandName: result.name });
       } });
       input.addEventListener('input', () => { nameDraft = input.value; input.removeAttribute('aria-invalid'); });
       form.append(node('label', { for: 'island-onboarding-name' }, pick(language, 'Nazwa Twojej wyspy', 'Your island’s name')), input,
-        node('small', { id: 'island-onboarding-name-hint' }, pick(language, 'Od 2 do 40 znaków. Nazwa będzie widoczna w lewym górnym rogu gry.', 'Use 2–40 characters. The name appears in the top left corner of the game.')), paused(),
+        node('small', { id: 'island-onboarding-name-hint' }, pick(language, 'Od 3 do 40 znaków, bez polskich i angielskich wulgaryzmów. Nazwa będzie widoczna w lewym górnym rogu gry.', 'Use 3–40 characters without Polish or English profanity. The name appears in the top left corner of the game.')), paused(),
         node('div', { class: 'island-onboarding-actions' }, control(pick(language, '← Wstecz', '← Back'), () => commit({ ...current, stage: 'intro' }), { 'data-onboarding-previous': '', class: 'island-onboarding-action secondary' }),
           node('button', { type: 'submit', class: 'island-onboarding-action', 'data-onboarding-next': '' }, nextLabel())));
       card.append(node('small', { class: 'island-onboarding-eyebrow' }, 'HARBORLIGHT'), title(pick(language, 'Nadaj nazwę swojej wyspie', 'Give your island a name')), description(node('p', {}, pick(language, 'To początek Twojej osady. Wybierz nazwę, z którą chcesz wyruszyć w tę przygodę.', 'This is the beginning of your settlement. Choose a name to start this adventure with.'))), languagePicker(), form);

@@ -830,3 +830,15 @@ Promocja końcowego353faad347262dce7c3632fdf7c71be124384ab1: bridge41246756848SU
 
 
 Opublikowano nieprzesuwany tag `preprod-0.10.1.0-20261031` na353faad… . Publicznie potwierdzone artefakty próby1:frontend13058689131/ZIP6cf2c47780159bd03189ce22d76e695a13bfc3ee4888b090163655539aed1ee0 oraz release13058489698/ZIPfd9d122e0d3ddcf84650ff8b0ed9b388563f8d8fa0dd5e0a6922e04b3c77388d. Są to digests ZIPGitHub; nie pobrano zawartości potwierdzenia ani wewnętrznego digestu obrazu. Kolejny commit metadanych nie jest nowym wydaniem aplikacji lub promocją.
+
+
+## 2026-11-01 — DEV 0.10.2.0 / v26, integracja zebranego GO
+
+Zakres: [wymagania v26](FRONTEND-V26-REQUIREMENTS.md). GO dotyczy tylko DEV i Git/CI/Pages. PRE-PROD pozostaje 0.10.1.0/353faad…; brak resetów i promocji PROD.
+
+- Magazyn pokazuje dostępne ilości; pochodzenie i reguły są pod ⓘ. Dom prowadzi do osobnego zarządzania pracownikami. Poprawiono walidację puli szczęścia i odstępy reklam. Ranking, Sojusz i liga oraz Pomagam mają osobne wejścia i opisy; chmurka czatu poprzedza dzwonek. Symulacja zawiera trzy fikcyjne cele pomocy, bez rzeczywistych umów i przelewów.
+- Tutorial 33 opisów i samouczek 25 lekcji mają osobne kontynuowanie oraz start/przegląd od początku. Pozycje zapisują się w świecie chmurowym; przegląd nie wykonuje działań i nie przyznaje nagród. Automatyczne zaproszenia reklamowe są blokowane podczas nauki; przerwanie daje3600 sekund aktywnego odstępu, zachowanego po odświeżeniu.
+- Nowy curriculum 5 zaczyna się sześcioma tragarzami i priorytetem budowy, kończy na Ratuszu 2 oraz Latarni 1. Nagroda zadania pokrywa brakujące materiały, minigra wymaga rzeczywistej wygranej i wypłaty. Historyczne programy 3/4, nagrody i rozpoczęte projekty zachowano. Turbo ma własne nieprzyspieszane ponownie zegary; koszt pierwszego Ratusza to 100 każdego zasobu jest jawnym parametrem wykonawczym.
+- Przyjęto redakcję tekstów, pełne polskie komunikaty nagród oraz nazwy 3–40 znaków z filtremPL/EN i zachowaniem dawnych nazw przy odczycie. Pełny magazyn każdego z pięciu producentów pokazuje smutną buźkę także bez obsady i podczas wymuszonego 100% — znacznik pełności jest odrębny od faktycznej kary szczęścia.
+- Naprawiono rzeczywisty błąd mobilny: podgląd ⓘ po hover potrafił zakrywać odbiór nagrody. Hover działa tylko na urządzeniu z precyzyjnym wskaźnikiem; dotyk i klawiatura zachowują własne otwieranie informacji. Menu ma test geometrii nad dolną krawędzią oraz polski audyt 114 widoków.
+- Lokalnie954 Node i141 Python PASS; końcowy odbiór22 zestawów Chromium trwa, a Git/CI/Pages wymagają własnego SHA i wyników. Rejestr ma279 kart, lista 59 ręcznych przypadków nadal NOT RUN; importer 338 kart w dry-run, bez publikacji natywnych Issues. Wynik końcowy i hashe: [odbiór v26](DEV-0.10.2.0-VALIDATION.md).

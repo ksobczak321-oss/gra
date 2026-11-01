@@ -55,6 +55,24 @@ test('real registration creates an Auth account and its cloud profile without cr
   assert.equal(testProject.calls.length, 0);
 });
 
+test('new registration names reject short/vulgar input locally while legacy Auth display names remain readable', async () => {
+  for (const [islandName, code] of [['AB', 'invalid-island-name'], ['Kurwa Bay', 'inappropriate-island-name'], ['SH1T', 'inappropriate-island-name']]) {
+    const h = harness([]);
+    await assert.rejects(h.client.registerEmail(EMAIL, 'captain-password', { islandName, legalAcceptance: legalAcceptance(true, true) }), { code });
+    assert.equal(h.calls.length, 0);
+  }
+  const h = harness([reply(CONFIG), reply(auth({ displayName: 'HARBORLIGHT:AB' }))]);
+  assert.equal((await h.client.signIn(EMAIL, 'captain-password')).islandName, 'AB');
+});
+
+test('API island-name failures stay actionable instead of being reported as a network outage', async () => {
+  for (const code of ['invalid-island-name', 'inappropriate-island-name']) {
+    const h = harness([reply(CONFIG), reply(auth()), reply(islandReply()), reply({ error: code }, 400)]);
+    await h.client.signIn(EMAIL, 'captain-password'); await h.client.loadIsland();
+    await assert.rejects(h.client.saveIsland(islandPayload(110), version), { code });
+  }
+});
+
 test('PROD island writes use the generation-aware server API and never direct client Firestore', async () => {
   const h = harness([reply(CONFIG), reply(auth()), reply(islandReply()), reply({ revision: 2, updateTime: T2, generation: 2 }), reply({ recorded: true })]);
   await h.client.signIn(EMAIL, 'captain-password');

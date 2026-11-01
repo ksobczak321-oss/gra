@@ -1,4 +1,4 @@
-import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v25-2';
+import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v26';
 
 /** English is the source language. Polish strings are presentation only: saves,
  * identifiers, action payloads and user-entered values are never translated. */
@@ -1954,3 +1954,85 @@ priorityRule(/^\+([\d,.\s]+)% (speed|load)$/, (_, value, kind) => `+${value}% ${
 entries(`
 Construction package quote.|Wycena pakietu budowlanego.
 `);
+
+// DEV v26: learning state, starter crew and revised identity/social controls.
+entries(`
+Choose valid learning progress.|Nie można zapisać tego postępu nauki. Wybierz dostępny krok i spróbuj ponownie.
+Choose a valid tutorial step.|Wybierz dostępny krok tutoriala.
+Choose a valid practical lesson.|Wybierz dostępną lekcję samouczka.
+Choose a valid learning reminder time.|Nie można ustawić tego terminu przypomnienia. Wybierz prawidłowy czas.
+Learning progress saved.|Zapisano postęp tutoriala i samouczka.
+The first six carriers reach the Warehouse within 20 seconds.|Pierwszych sześciu tragarzy dotrze do magazynu w ciągu 20 sekund.
+Player ranking|Ranking graczy
+Chat with other players|Czat z innymi graczami
+Here you can chat online with other players.|Tu możesz rozmawiać online z innymi graczami.
+Choose an island name with 3–40 characters.|Wpisz nazwę wyspy mającą od 3 do 40 znaków.
+Island names cannot contain control characters or angle brackets.|Wpisz nazwę wyspy w jednym wierszu, bez nawiasów < > i niewidocznych znaków, np. tabulatorów.
+Choose an island name without vulgar Polish or English words.|Wybierz nazwę wyspy bez wulgarnych słów po polsku i angielsku.
+A carrier takes one material per trip, including a partial load. The base round trip is 5 minutes; completed path levels reduce it. Level 1 carries 120 units per trip. Hunger halves effective transport. Central replenishment comes before construction unless you change priorities. Food reserve: 50 × Warehouse level, capped at level 24. The tutorial starter turbo is an exception: after assigning six carriers, all construction deliveries at Town Hall 1 take 30 seconds; at Town Hall 2 they take at most 5 minutes.|Tragarz przewozi w jednym kursie jeden rodzaj materiału. Może wyruszyć także z niepełnym ładunkiem. Podstawowy kurs w obie strony trwa 5 minut; ukończone poziomy ścieżek skracają ten czas. Na 1. poziomie magazynu tragarz przewozi do 120 sztuk. Głód zmniejsza wydajność transportu o połowę. Uzupełnianie magazynu centralnego ma pierwszeństwo przed budową, chyba że zmienisz priorytety. Chroniona rezerwa żywności wynosi 50 × poziom magazynu, przy czym do obliczeń bierze się najwyżej 24. poziom. Wyjątkiem jest przyspieszenie na start: po przydzieleniu sześciu tragarzy wszystkie dostawy na budowę przy Ratuszu na poziomie 1 trwają łącznie 30 sekund, a przy Ratuszu na poziomie 2 najwyżej 5 minut.
+`);
+
+// Model command results and notification titles use the global translator too;
+// the dedicated lesson panel's titlePl/descriptionPl do not translate toasts.
+entries(`
+Complete and receive the previous lesson reward first.|Najpierw ukończ poprzednią lekcję i odbierz jej nagrodę.
+This tutorial settlement is not available for this island.|Na tej wyspie nie można ponownie odebrać końcowej nagrody samouczka.
+The tutorial has already been settled.|Końcowa nagroda samouczka została już odebrana.
+Finish the first 24 lessons and receive rewards for the steps taught by the tutorial. Independently completed steps need no reward.|Ukończ pierwsze 24 lekcje i odbierz nagrody za działania wykonane w samouczku. Za kroki wykonane wcześniej samodzielnie nie trzeba odbierać nagrody.
+Spend additional bonus materials on real island actions before finishing. No stock will be removed or converted.|Przed zakończeniem wykorzystaj dodatkowe materiały z premii na działania na wyspie. Żadne zapasy nie zostaną usunięte ani zamienione.
+Let reserved building or trade goods leave storage before finishing.|Przed zakończeniem poczekaj, aż zarezerwowane materiały na budowy lub handel opuszczą magazyn.
+Spend ordinary stock exceeding the Warehouse limits before finishing.|Przed zakończeniem wykorzystaj zwykły zapas przekraczający limity magazynu.
+Referral activity cannot precede the first login.|Aktywność poleconego gracza można zaliczać dopiero po jego pierwszym logowaniu.
+Tutorial rewards belong to the first island and cannot be repeated here.|Nagrody samouczka otrzymujesz na pierwszej wyspie. Tutaj nie można odebrać ich ponownie.
+The final Warehouse reward could not be received.|Nie udało się odebrać końcowej nagrody do magazynu.
+The final reward filled free ordinary Warehouse capacity. No material was removed, and no tutorial reward is waiting.|Końcowa nagroda wypełniła wolne miejsce na zwykłe dostawy w magazynie. Żadne materiały nie zostały usunięte i nie czekają już żadne nagrody samouczka.
+Tutorial complete. Your ordinary Warehouse is full and no tutorial rewards are waiting.|Samouczek ukończony. Zwykła pojemność magazynu jest zapełniona i nie czekają już żadne nagrody samouczka.
+This player trade does not match an unfinished tutorial lesson.|Ta wymiana z graczem nie odpowiada żadnej nieukończonej lekcji samouczka.
+This player trade was already recorded.|Ta wymiana z graczem została już zaliczona.
+Your confirmed player trade resolved the Market tutorial lesson.|Potwierdzona wymiana z graczem ukończyła lekcję samouczka dotyczącą targu.
+Automatic tutorial opening is disabled. You can resume it from Help.|Samouczek nie będzie otwierał się automatycznie. Możesz go wznowić w Pomocy.
+Choose a tutorial location.|Wybierz miejsce wskazane w samouczku.
+Building supplies are available only before your tutorial Town Hall upgrade.|Materiały na pierwszą rozbudowę ratusza możesz odebrać tylko przed zleceniem jej w samouczku.
+The tutorial building supplies were already received.|Materiały na rozbudowę w samouczku zostały już odebrane.
+One-time supplies fill the missing first Town Hall budget directly in ordinary storage, including food for construction and meals.|Jednorazowe zapasy uzupełniają brakujące zasoby na pierwszą rozbudowę ratusza bezpośrednio w zwykłym magazynie. Obejmują też żywność potrzebną na budowę i posiłki.
+One-time supplies bring your available building budget to 500 coins and each material, with 600 Food for construction and meals. Bonus materials are immediately available without taking ordinary delivery space.|Jednorazowe zapasy uzupełniają środki na budowę do 500 monet i po 500 każdego materiału oraz do 600 jednostek żywności na budowę i posiłki. Materiały z premii możesz od razu wydawać; nie zajmują miejsca na zwykłe dostawy.
+Tutorial building supplies received. You can now order the Town Hall upgrade.|Materiały odebrane. Możesz już zlecić rozbudowę ratusza.
+Complete this lesson before opening its reward chest.|Ukończ tę lekcję, zanim otworzysz jej nagrodę.
+Tutorial reward received immediately. Continue to the next real action.|Nagroda jest już dostępna. Przejdź do kolejnego zadania samouczka.
+Tutorial chest received. Share to receive the same resources once more.|Nagroda odebrana. Wybierz udostępnienie, aby otrzymać te same zasoby jeszcze raz.
+This tutorial sharing decision has already been resolved or its chest has not been opened.|Wybór dotyczący udostępnienia został już rozstrzygnięty albo ta nagroda nie została jeszcze otwarta.
+The same chest resources were granted once more for choosing to share. Facebook publishing is not connected yet.|Za wybranie udostępnienia otrzymujesz te same zasoby jeszcze raz. Publikowanie na Facebooku nie jest jeszcze podłączone.
+Reward confirmed. Continue to the next tutorial action.|Nagroda potwierdzona. Przejdź do kolejnego zadania samouczka.
+Sharing skipped. Your tutorial chest remains yours.|Udostępnienie pominięte. Otrzymana nagroda pozostaje Twoja.
+The daily loyalty reward is not available or has already been received.|Dzisiejsza nagroda lojalnościowa jest niedostępna albo została już odebrana.
+Granted the saved daily draw: 50–200 of each resource, including Coins.|Otrzymujesz zapisany wynik dziennego losowania: po 50–200 każdego zasobu, w tym monet.
+Tutorial reward received|Nagroda samouczka odebrana
+Tutorial complete: Warehouse full|Samouczek ukończony: magazyn zapełniony
+Tutorial building supplies|Materiały na rozbudowę w samouczku
+Find the Warehouse and assign six carriers|Znajdź magazyn i przydziel sześciu tragarzy
+Find the Warehouse and prioritize construction|Znajdź magazyn i ustaw priorytet budowy
+Find the Farm and assign a farmer|Znajdź gospodarstwo i przydziel rolnika
+Find the Lumber Camp and assign a worker|Znajdź budynek drwali i przydziel pracownika
+Find the Town Hall and order level 2|Znajdź ratusz i zleć rozbudowę do 2. poziomu
+Find the Windmill and assign a miller|Znajdź młyn i przydziel młynarza
+Find the Quarry and assign a worker|Znajdź kamieniołom i przydziel kamieniarza
+Wait for Town Hall level 2|Poczekaj na zakończenie rozbudowy ratusza
+Find the Quarry and order its upgrade|Znajdź kamieniołom i zleć jego rozbudowę
+Find the Sawmill and assign a worker|Znajdź tartak i przydziel pracownika
+Find the Warehouse and add another carrier|Znajdź magazyn i dodaj kolejnego tragarza
+Wait for the Quarry upgrade to finish|Poczekaj na zakończenie rozbudowy kamieniołomu
+Find the Warehouse and order level 2|Znajdź magazyn i zleć jego rozbudowę
+Find the House and give happiness points|Znajdź dom i rozdaj punkty szczęścia
+Wait for the Warehouse upgrade to finish|Poczekaj na zakończenie rozbudowy magazynu
+Find the Farm and order its upgrade|Znajdź gospodarstwo i zleć jego rozbudowę
+Find a path section and improve it|Znajdź odcinek ścieżki i ulepsz go
+Buy an attraction for your residents|Kup atrakcję dla mieszkańców
+Find the Chapel and receive a blessing|Znajdź kaplicę i poproś o błogosławieństwo
+Wait for the Farm upgrade to finish|Poczekaj na zakończenie rozbudowy gospodarstwa
+Complete a Lighthouse task|Wykonaj zadanie latarni
+Win a minigame round and collect the pot|Wygraj rundę minigry i odbierz monety
+Find the Lighthouse and start rebuilding it|Znajdź latarnię i rozpocznij odbudowę
+Wait for the Lighthouse to be rebuilt|Poczekaj na zakończenie odbudowy latarni
+Finish the tutorial and fill the Warehouse|Zakończ samouczek i uzupełnij magazyn
+`);
+priorityRule(/^(.+): the immediate reward is in your Warehouse and wallet\.$/, (_, lesson) => `${tr(lesson)}: materiały są już dostępne w magazynie, a monety w portfelu.`);

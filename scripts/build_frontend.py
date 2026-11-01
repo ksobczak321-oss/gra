@@ -43,6 +43,7 @@ PUBLIC_FILES = (
     "harborlight-v1-community-ui.js",
     "harborlight-v1-league.js",
     "backend/league-rules.mjs",
+    "backend/island-name.mjs",
     "harborlight-v1-calendar.js",
     "harborlight-v1-commerce.js",
     "harborlight-v1-copy.js",

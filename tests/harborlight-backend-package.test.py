@@ -48,7 +48,7 @@ class BackendPackageTests(unittest.TestCase):
     def test_context_excludes_tests_and_private_files(self):
         context = context_files()
         self.assertTrue(context <= {'Dockerfile', 'package.json', 'server.mjs',
-                                   'account-service.mjs', 'firebase-auth.mjs',
+                                   'account-service.mjs', 'island-name.mjs', 'firebase-auth.mjs',
                                    'firestore-store.mjs', 'retention.mjs', 'player-trade.mjs',
                                    'island-document-store.mjs', 'community-service.mjs', 'league-rules.mjs',
                                    'charity-ledger.mjs', 'charity-service.mjs'})
@@ -71,6 +71,9 @@ class BackendPackageTests(unittest.TestCase):
                   await import('./' + file);
                 }
                 const { createServer } = await import('./server.mjs');
+                const { validateIslandName } = await import('./island-name.mjs');
+                assert.equal(validateIslandName('Żółwia Zatoka').ok, true);
+                assert.equal(validateIslandName('Kurwa Bay').reason, 'profanity');
                 const server = createServer();
                 server.listen(0, '127.0.0.1');
                 await once(server, 'listening');

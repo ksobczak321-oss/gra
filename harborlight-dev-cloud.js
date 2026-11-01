@@ -1,6 +1,6 @@
 // Firebase owns credentials and verifies access to the UID-scoped documents.
 // Hosting selects the isolated project; runtime Firebase config never contains secrets.
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v25-2';
+import { validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v26';
 import { LEGAL_DOCUMENTS, validLegalAcceptance } from './harborlight-legal.js?v=legal-v4';
 export const DEV_PROJECT = 'harborlight-dev';
 export const PROD_PROJECT = 'harborlight-prod';
@@ -21,14 +21,15 @@ const MAX_WORLD_DOCUMENT_BYTES = 700_000;
 const MAX_TOKEN_LENGTH = 16_000;
 const safeUid = uid => typeof uid === 'string' && /^[A-Za-z0-9_-]{1,128}$/.test(uid);
 const validEmail = email => typeof email === 'string' && email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-const profileName = value => validateIslandName(typeof value === 'string' && value.startsWith('HARBORLIGHT:') ? value.slice(12) : '').name;
+const profileName = value => validateStoredIslandName(typeof value === 'string' && value.startsWith('HARBORLIGHT:') ? value.slice(12) : '').name;
 const MESSAGES = {
   disabled: 'Logowanie jest dostępne na hostingu PRE-PROD lub PROD.',
   'registration-disabled': 'Rejestracja jest wyłączona na PRE-PROD. Użyj stałego konta testowego.',
   'email-in-use': 'Z tym adresem e-mail jest już powiązane konto. Zaloguj się.',
   'weak-password': 'Hasło musi mieć co najmniej 8 znaków.',
   'invalid-email': 'Wpisz prawidłowy adres e-mail.',
-  'invalid-island-name': 'Nazwa wyspy musi mieć od 2 do 40 znaków.',
+  'invalid-island-name': 'Nazwa wyspy musi mieć od 3 do 40 znaków, bez znaków sterujących i nawiasów ostrych.',
+  'inappropriate-island-name': 'Wybierz nazwę wyspy bez wulgarnych słów po polsku i angielsku.',
   'legal-required': 'Przed ukończeniem rejestracji zaakceptuj Regulamin i potwierdź zapoznanie się z Polityką prywatności.',
   'legal-outdated': 'Wersja dokumentów zmieniła się. Odśwież stronę i przeczytaj aktualne dokumenty.',
   configuration: 'Logowanie nie zostało jeszcze uruchomione. Skontaktuj się z obsługą gry.',
@@ -351,7 +352,7 @@ export function createDevCloud({
     const normalized = String(email || '').trim().toLowerCase(), name = islandName === '' ? null : validateIslandName(islandName);
     if (!validEmail(normalized)) throw fail('invalid-email');
     if (typeof password !== 'string' || password.length < 8 || password.length > 128) throw fail('weak-password');
-    if (name && !name.ok) throw fail('invalid-island-name');
+    if (name && !name.ok) throw fail(name.reason === 'profanity' ? 'inappropriate-island-name' : 'invalid-island-name');
     if (!validLegalAcceptance(legalAcceptance)) throw fail('legal-required');
     const attempt = ++generation, settings = await config();
     const result = await request(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${encodeURIComponent(settings.apiKey)}`, {
@@ -446,7 +447,7 @@ export function createDevCloud({
     // concurrent-write conflict. Never expose arbitrary provider diagnostics.
     const apiError = typeof result.body.error === 'string' ? result.body.error : null;
     if (apiError && (/^(?:trade|community|charity)-[a-z-]{1,64}$/.test(apiError) || ['second-island-locked', 'archipelago-island-loss', 'unverified-ship-capacity'].includes(apiError))) throw fail(apiError);
-    if (apiError && ['island-expired', 'invalid-code', 'promotion-not-started', 'promotion-ended', 'promotion-exhausted', 'unsupported-promotion-verification', 'legal-required'].includes(apiError)) throw fail(apiError);
+    if (apiError && ['island-expired', 'invalid-island-name', 'inappropriate-island-name', 'invalid-code', 'promotion-not-started', 'promotion-ended', 'promotion-exhausted', 'unsupported-promotion-verification', 'legal-required'].includes(apiError)) throw fail(apiError);
     if (apiError && ['invalid-island', 'invalid-generation', 'invalid-revision', 'inventory-overflow'].includes(apiError)) throw fail('invalid-state');
     if ([409, 412].includes(result.status) || result.body.error?.status === 'FAILED_PRECONDITION' ||
         result.body.error?.status === 'ALREADY_EXISTS') throw fail('conflict');

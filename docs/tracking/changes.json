@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "as_of": "2026-10-31",
-  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona.",
+  "as_of": "2026-11-01",
+  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury.",
   "environment_baseline": {
     "application_source_sha": "092e75226fbb14cab09826f313e11d10891966d8",
     "ci_run_id": 41221965032,
@@ -14201,6 +14201,871 @@
         "dev_tag_push_confirmed": true
       },
       "notes": []
+    },
+    {
+      "id": "HL-CHG-0935",
+      "epic": "HL-EPIC-UI",
+      "area": "Magazyn centralny",
+      "type": "Story",
+      "title": "Magazyn pokazuje łączny zapas, a rozbicie i zasady pod ikoną informacji",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "Użytkownik zaakceptował pozostawienie w wierszu dostępnej ilości zasobu oraz przeniesienie podziału zwykłe/nagrody i instrukcji pod ⓘ.",
+        "reference": "chat:DEV-v26-935"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Wiersz zasobu pokazuje jedną łączną dostępną ilość; nie powtarza zwykłego zapasu i nagród w każdym wierszu.",
+        "Ikona informacji otwiera objaśnienie zwykłej pojemności oraz nagród wydawalnych poza tym limitem.",
+        "Brak zmiany sald, limitów, kolejności wydawania i dostaw; ukrycie rozbicia nie kasuje nagród."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0044",
+        "HL-CHG-0108"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-economy-review-v26-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0936",
+      "epic": "HL-EPIC-PEO",
+      "area": "Dom i zatrudnienie",
+      "type": "Story",
+      "title": "Dom otwiera wszystkie przydziały dopiero przez Zarządzaj pracownikami",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "Użytkownik chce zastąpić pełną siatkę obsady w pierwszym widoku Domu przyciskiem Zarządzaj pracownikami i osobnym widokiem całej gospodarki.",
+        "reference": "chat:DEV-v26-936"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Pierwszy widok Domu zawiera przycisk Zarządzaj pracownikami bez pełnej siatki wszystkich stanowisk.",
+        "Osobny widok pozwala przydzielać i odwoływać pracowników we wszystkich dotychczasowych gałęziach.",
+        "Prowadzenie praktycznej lekcji wskazuje rzeczywiste wejście i zachowuje reguły dojścia do pracy oraz autoskip."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0024",
+        "HL-CHG-0036",
+        "HL-CHG-0045"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-onboarding-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-economy-review-v26-smoke.py",
+          "tests/harborlight-learning-review-v26-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0937",
+      "epic": "HL-EPIC-PEO",
+      "area": "Szczęście Domu",
+      "type": "Decision",
+      "title": "Pozostałe punkty szczęścia są wydawalne, a niedozwolone przekazanie zablokowane",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "Użytkownik prosi o niedostępny przycisk Przekaż punkty po Daj wszystkim. Na zrzucie pozostają dwa punkty, więc nie jest jasne, czy blokada dotyczy tylko wyczerpanej puli, czy każdego rozdania wszystkim.",
+        "reference": "chat:DEV-v26-937"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "implementation_assumption_open_for_correction"
+      },
+      "acceptance": [
+        "Punkty pozostające po Daj wszystkim nie znikają i można je legalnie wydać pojedynczo.",
+        "Przekaż punkty jest niedostępne przy niewystarczającej puli, nieprawidłowej kwocie albo braku uprawnionego odbiorcy. Nie dodajemy nowej blokady do północy po samym rozdaniu wszystkim.",
+        "Niedostępna operacja nie przyznaje szczęścia i nie pobiera punktów; dzienne odnowienie zachowuje dotychczasowe reguły."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0212"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-economy-review-v26-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": [
+        "Użytkownik nie odpowiedział na opcjonalne doprecyzowanie. Zachowanie reszty puli to jawne założenie wykonawcze, otwarte na korektę; nie jest opisane jako potwierdzona dodatkowa decyzja użytkownika."
+      ]
+    },
+    {
+      "id": "HL-CHG-0938",
+      "epic": "HL-EPIC-MIN",
+      "area": "Reklama z nagrodą",
+      "type": "Story",
+      "title": "Okno reklamy oddziela przyciski i objaśnia nagrodę przed wyborem",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "Użytkownik prosi o rozsunięcie obejrzyj reklamę i pomiń oraz dodatkowe zdanie wyjaśniające, po co jest propozycja.",
+        "reference": "chat:DEV-v26-938"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Obejrzenie i pominięcie są osobnymi, czytelnymi celami dotykowymi także przy szerokości360 px.",
+        "Przed decyzją widać prosty opis dobrowolności i konkretnej nagrody.",
+        "DEV pozostaje oznaczoną symulacją; poprawka nie aktywuje operatora reklam ani nie zmienia nagród."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0307",
+        "HL-CHG-0312",
+        "HL-CHG-0313"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-play.css",
+          "harborlight-v1-i18n.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-economy-review-v26-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0939",
+      "epic": "HL-EPIC-UI",
+      "area": "Nawigacja społeczności",
+      "type": "Bug",
+      "title": "Punkty otwierają Ranking; Sojusz i liga oraz Pomagam mają osobne wejścia",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "Użytkownik zgłosił, że Punkty otwierają fragment Ustawień. Chce oddzielne opisane wejścia Ranking, Sojusz i liga, Pomagam, usunięte z treści Ustawień.",
+        "reference": "chat:DEV-v26-939"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Kliknięcie Punktów otwiera Ranking, a aktualna pozycja jest odróżniona od samego wyniku punktowego.",
+        "Ranking, Sojusz i liga oraz Pomagam mają osobne wejścia i zrozumiałe opisy.",
+        "Ustawienia nie pokazują pod sobą tych sekcji społeczności; brak rzeczywistych danych nie tworzy fikcyjnego rankingu realnego konta.",
+        "Opis T8 jest zgodny z rzeczywistym rankingiem i jego aktualizacją po pełnej godzinie."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0917",
+        "HL-CHG-0037"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-community-ui.js",
+          "harborlight-v1-community-client.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-social-v26.test.mjs",
+          "tests/harborlight-learning-review-v26-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0940",
+      "epic": "HL-EPIC-SOC",
+      "area": "Prezentacja ligi i Pomagam",
+      "type": "Story",
+      "title": "DEV prezentuje ligę i Pomagam z fikcyjnymi beneficjentami, bez realnych przelewów",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "Użytkownik chce symulację Sojuszu i ligi oraz Pomagam. Plan zakłada późniejsze umowy z 2–3 beneficjentami i przelewy zgodne z wytycznymi.",
+        "reference": "chat:DEV-v26-940"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "DEV ma jawnie oznaczoną prezentację ligi i dobroczynności oraz 2–3 przykładowych, fikcyjnych beneficjentów.",
+        "Opis Pomagam wyjaśnia cel, kwalifikowane monety, ograniczenia i obiecany efekt; nie twierdzi, że umowy lub przelewy już istnieją.",
+        "Pozostają limity1000 monet/1 PLN, raz na osobę w miesiącu i co najmniej30 dni przerwy, pula najwyżej 50 PLN oraz później≤5% rzeczywistej marży.",
+        "Monety kupione, wpływy handlowe i nieznane pochodzenie nie kwalifikują się. Pokaz nie pobiera realnych monet i nie potwierdza realnej darowizny.",
+        "Bonus +20 p.p./6h na jednej wyspie i rozświetlenie Portu wymagają potwierdzenia przelewu; symulacja nie uruchamia rzeczywistego finansowania."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0901",
+        "HL-CHG-0904",
+        "HL-CHG-0920",
+        "HL-CHG-0931"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md"
+        ],
+        "code": [
+          "harborlight-v1-charity.js",
+          "harborlight-v1-community-ui.js",
+          "harborlight-v1-community-client.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-social-v26.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": [
+        "Nie dodajemy nowego wymogu wieku konta30 dni;30 dni oznacza odstęp między operacjami."
+      ]
+    },
+    {
+      "id": "HL-CHG-0941",
+      "epic": "HL-EPIC-UI",
+      "area": "Teksty tutoriala",
+      "type": "Story",
+      "title": "Tutorial przyjmuje ręczną redakcję W1 i opisów mieszkańców, zasobów oraz budynków",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "Użytkownik ręcznie poprawił wybrane teksty i potwierdził, że brak nowego tekstu oznacza akceptację poprzedniego. Ostateczny T3 dodaje +2 p.p./h z pracy i jedzenia.",
+        "reference": "chat:DEV-v26-941"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "W1, T3,T4, T5, T8, T10, T11, T21, T22, T24, T27, T28 odpowiadają redakcji w FRONTEND-V26-REQUIREMENTS; T6, T20 i inne niezmienione teksty pozostają zaakceptowane.",
+        "T3 opisuje łącznie +2 p.p./h z jedzenia i pracy oraz odejścia nieszczęśliwych; nie zmienia mechaniki kar ani wyjątków.",
+        "T27 wyjaśnia producent/centralny/transport i rzeczywisty bilans godzinowy, także ujemny; nie myli bilansu z samą produkcją.",
+        "Polski tekst jest naturalny i zachowuje zgodność z licznikami, podatkami, odblokowaniami, terminami oraz wersją angielską."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0037",
+        "HL-CHG-0038",
+        "HL-CHG-0023"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md"
+        ],
+        "code": [
+          "harborlight-v1-onboarding-ui.js",
+          "harborlight-v1-i18n.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-review-v26-smoke.py",
+          "tests/harborlight-economy-review-v26-smoke.py",
+          "tests/harborlight-starter-course-v26-smoke.py",
+          "tests/harborlight-learning-flow-v26-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0942",
+      "epic": "HL-EPIC-ACC",
+      "area": "Nazwa wyspy",
+      "type": "Story",
+      "title": "Większe pole nazwy przyjmuje 3–40 znaków i odrzuca wulgaryzmy PL/EN",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "Użytkownik chce większą czcionkę nazwy, minimum 3znaki i blokadę słów uznanych za wulgarne po polsku lub angielsku.",
+        "reference": "chat:DEV-v26-942"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Tworzenie i zmiana nazwy wymagają3–40 znaków oraz walidacji PL/EN z czytelnym powodem odmowy.",
+        "Walidacja obowiązuje także zaufaną ścieżkę serwerową, nie tylko wygląd formularza.",
+        "Wczytanie wcześniejszej dwuznakowej nazwy nie kasuje nazwy, świata ani postępu; istniejące prefiksy córek pozostają zgodne.",
+        "Większa nazwa mieści się na komputerze i telefonie; odrzucenie nie rozpoczyna nowego świata."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0013",
+        "HL-CHG-0031",
+        "HL-CHG-0810",
+        "HL-CHG-0811"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md"
+        ],
+        "code": [
+          "harborlight-v1-profile.js",
+          "backend/island-name.mjs",
+          "backend/account-service.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-island-name-auth-v26.test.mjs",
+          "backend/test/island-name.test.mjs",
+          "tests/harborlight-starter-course-v26-smoke.py",
+          "tests/harborlight-learning-flow-v26-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0943",
+      "epic": "HL-EPIC-TUT",
+      "area": "Powrót do nauki",
+      "type": "Story",
+      "title": "Tutorial i samouczek mają zamknięcie, wznowienie oraz powtórkę od początku",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "Użytkownik rozdzielił tutorial33 opisów od praktycznego samouczka i chce zamknięcia, kontynuacji oraz rozpoczęcia każdego od początku bez utraty historii.",
+        "reference": "chat:DEV-v26-943"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted_with_documented_order_assumption"
+      },
+      "acceptance": [
+        "Tutorial to33 opisy ekranu, samouczek to25 praktycznych lekcji; nazwy i wejścia nie są zamieniane.",
+        "Po zamknięciu obu narzędzi można kontynuować od zapamiętanego miejsca lub przejrzeć od początku.",
+        "Powtórka nie resetuje świata, daty startu, wysp, przydziałów ani odebranych nagród; już rozpoczęty czas nie zostaje zatrzymany jako nowe pierwsze wejście.",
+        "Pominięte samodzielnie wykonane lekcje nie odżywają z nową skrzynią; przegląd starych lekcji jest odróżniony od nowych czynności.",
+        "Robocza kolejność to Szczęście → Monety → Pracujący → Następny mieszkaniec → Punkty → Mieszkańcy i miejsca; powtórzony w wiadomości symbol T4 odczytujemy jako T5. To jawne założenie, nie dodatkowe potwierdzenie użytkownika."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0032",
+        "HL-CHG-0033",
+        "HL-CHG-0045",
+        "HL-CHG-0422"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md",
+          "docs/INTERACTIVE-ISLAND.md"
+        ],
+        "code": [
+          "harborlight-v1-onboarding-ui.js",
+          "harborlight-v1-profile.js",
+          "harborlight-v1-progression.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-review-v26-smoke.py",
+          "tests/harborlight-tutorial-v26.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": [
+        "Brak odpowiedzi na opcjonalne pytanie. Założenie kolejności jest zgodne z poleceniem przeniesienia Pracujących po Monetach i Mieszkańców za Punkty; pozostaje otwarte na korektę."
+      ]
+    },
+    {
+      "id": "HL-CHG-0944",
+      "epic": "HL-EPIC-MIN",
+      "area": "Reklamy a nauka",
+      "type": "Story",
+      "title": "Automatyczne reklamy czekają na koniec nauki i 60 aktywnych minut po jej przerwaniu",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "Użytkownik blokuje wyskakujące reklamy podczas tutoriala lub samouczka; po wcześniejszym zamknięciu propozycja może pojawić się dopiero po godzinie.",
+        "reference": "chat:DEV-v26-944"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nie otwieraj automatycznej reklamy ani wyboru ekspedycja/reklama, gdy aktywne jest którekolwiek narzędzie nauki.",
+        "Po wcześniejszym zamknięciu utrzymuj zapisany cooldown60 aktywnych minut; wylogowanie i bezczynność nie naliczają go.",
+        "Wznowienie nauki ponownie chroni przed popupem; dotychczasowy harmonogram nie zostaje skasowany ani powielony.",
+        "Dobrowolne wejście do minigry i istniejące nagrody zachowują reguły; brak fałszywego zakończenia reklamy."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0313",
+        "HL-CHG-0314",
+        "HL-CHG-0032",
+        "HL-CHG-0033"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md"
+        ],
+        "code": [
+          "harborlight-v1-state.js",
+          "harborlight-v1-engagement.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-ads-v26.test.mjs",
+          "tests/harborlight-starter-course-v26-smoke.py",
+          "tests/harborlight-learning-flow-v26-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0945",
+      "epic": "HL-EPIC-COM",
+      "area": "Czat HUD",
+      "type": "Story",
+      "title": "Chmurka czatu przed dzwonkiem prowadzi do rozmów sojuszu i 1:1",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "Użytkownik dodał chmurkę czatu przed dzwonkiem z opisem możliwości rozmowy online z innymi graczami; dopracowanie później.",
+        "reference": "chat:DEV-v26-945"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Chmurka znajduje się przed dzwonkiem i ma opis: Tu możesz rozmawiać online z innymi graczami.",
+        "Kliknięcie prowadzi do dotychczasowych kanałów sojuszu oraz prywatnych 1:1, bez ujawniania cudzych wiadomości.",
+        "Bez dostępnej usługi interfejs mówi o braku połączenia lub symulacji; nie potwierdza realnej dostawy wiadomości.",
+        "Nowy opis przycisku nie dodaje34. kroku tutoriala; pozostają33 kroki."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0916",
+        "HL-CHG-0931"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-community-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-review-v26-smoke.py",
+          "tests/harborlight-social-v26.test.mjs",
+          "tests/harborlight-starter-course-v26-smoke.py",
+          "tests/harborlight-learning-flow-v26-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0946",
+      "epic": "HL-EPIC-TUT",
+      "area": "Nowy program25 lekcji",
+      "type": "Story",
+      "title": "Kurs zaczyna się od 6 tragarzy i priorytetu Budowa; zadanie i minigra zastępują Ratusz 3",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "Użytkownik ustalił kolejność6 tragarzy→priorytet Budowa→rolnik→drwal→Ratusz 2. Usunął Ratusz 3 z kursu, zastępując go osobnym zadaniem i minigrą z nagrodą finansującą Latarnię.",
+        "reference": "chat:DEV-v26-946"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Pierwsza lekcja wymaga 6 rzeczywistych przydziałów do Magazynu, pokazuje postęp i nagradza dopiero szósty. Wyjaśnia wpływ na sprawną budowę.",
+        "Druga prowadzi przez szczegóły do priorytetu Budowa, trzecia przydziela rolnika, czwarta drwala, piąta zleca Ratusz 1→2.",
+        "Kurs nadal ma25 lekcji. Dwie lekcje Ratusza 3 zastępują rzeczywiste ukończenie zadania Latarni i osobno rozegranie minigry; otwarcie okna nie zalicza.",
+        "Nagroda zadania zapewnia brakujące środki na pierwszą rozbudowę Latarni oraz rezerwę jedzenia. Nie zostawia oczekujących skrzyń.",
+        "Nowy kurs kończy się nominalnie z Ratuszem2 i wyrównanym Magazynem. Starsze programy zachowują historię, identyfikatory i odebrane nagrody."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0018",
+        "HL-CHG-0036",
+        "HL-CHG-0044",
+        "HL-CHG-0045",
+        "HL-CHG-0046"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md"
+        ],
+        "code": [
+          "harborlight-v1-progression.js",
+          "harborlight-v1-state.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-tutorial-v26.test.mjs",
+          "tests/harborlight-starter-task-v26.test.mjs",
+          "tests/helpers/tutorial-v26-course.mjs",
+          "tests/harborlight-starter-course-v26-smoke.py",
+          "tests/harborlight-learning-flow-v26-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0947",
+      "epic": "HL-EPIC-ECO",
+      "area": "Turbo początku gry",
+      "type": "Story",
+      "title": "Transport i budowa pierwszych dwóch poziomów przyspieszają bez zmiany poziomów 3+",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "Użytkownik wybrał turbo: z 6 tragarzami na Ratuszu 1 dostawa 30 s i budowa Ratusza60 s; na Ratuszu 2 dostawa Ratusza 120 s, najwyżej 300 s innych, budowa Ratusza 300 s, pozostałe proporcjonalnie.",
+        "reference": "chat:DEV-v26-947"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Na Ratuszu 1 po przydzieleniu 6 tragarzy cała dostawa trwa 30 s; Ratusz 1→2 buduje się60 s. To nie czas pojedynczego kursu.",
+        "Na Ratuszu 2 Ratusz 2→3 ma transport 120 s i budowę 300 s. Inne budynki skalują się proporcjonalnie, transport nie przekracza 300 s.",
+        "Nowe zlecenia przy Ratuszu 3+ używają wcześniejszych reguł; istniejące zlecenia zachowują migawki ceny i czasu.",
+        "Podpowiedź rozbudowy pokazuje aktualny transport i budowę oraz dobrowolne przyspieszenie za monety.",
+        "Materiały, zapłata, save/load, naliczanie offline i ukończenie są rzeczywiste i jednokrotne."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0044",
+        "HL-CHG-0046"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md",
+          "docs/ECONOMY-RULES.md"
+        ],
+        "code": [
+          "harborlight-v1-state.js",
+          "harborlight-v1-logistics.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-starter-turbo-v26.test.mjs",
+          "tests/harborlight-tutorial-v26.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": [
+        "20 s dojścia pierwszych 6 tragarzy i 100 każdego zasobu za Ratusz 1→2 to parametry wykonawcze wcześniejszej propozycji, nie dosłownie wskazane liczby ostatniego GO. Nie zmieniają automatycznie wyceny kolonii."
+      ]
+    },
+    {
+      "id": "HL-CHG-0948",
+      "epic": "HL-EPIC-ECO",
+      "area": "Odblokowanie budynków",
+      "type": "Bug",
+      "title": "Każda ścieżka rozbudowy respektuje dostępność budynku na danym poziomie",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "Użytkownik nakazał zablokować rozbudowę budynków nieaktywnych na niższych poziomach.",
+        "reference": "chat:DEV-v26-948"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Targ przed Ratuszem2 i Port przed Ratuszem4 nie przyjmują nowej rozbudowy; widoczny jest wymagany poziom.",
+        "Zwykły zakup, kolejka, premium i prognoza nie omijają blokady.",
+        "Odmowa nie pobiera monet i materiałów ani nie tworzy zlecenia; po legalnym odblokowaniu standardowa ścieżka działa.",
+        "Blokada nie odbiera zapisanych poziomów ani historii dawnych zleceń."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0036",
+        "HL-CHG-0046"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md"
+        ],
+        "code": [
+          "harborlight-v1-state.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-starter-turbo-v26.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0949",
+      "epic": "HL-EPIC-PEO",
+      "area": "Pełny magazyn producenta",
+      "type": "Story",
+      "title": "Pięciu producentów opisuje smutną buźkę przy pełnym lokalnym magazynie",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "W końcowej adnotacji użytkownik kazał dodać do wszystkich producentów zdanie o smutnej buźce nad budynkiem, gdy lokalny magazyn jest pełny; następnie udzielił GO na DEV.",
+        "reference": "chat:DEV-v26-949"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Gospodarstwo, Młyn, Kamieniołom, Drwale i Tartak otrzymują prosty opis: Jeśli magazyn przy budynku jest pełny, nad budynkiem pojawia się smutna buźka.",
+        "Ikona odzwierciedla rzeczywiste zapełnienie i znika po usunięciu przyczyny; nie jest dowolną dekoracją.",
+        "Opis nie usuwa osobnego ostrzeżenia o braku surowca do przerobu ani nie zmienia dotychczasowej kary przestoju.",
+        "Samo nieprzydzielenie pracownika nie zostaje błędnie przedstawione jako pełen magazyn."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0001",
+        "HL-CHG-0233",
+        "HL-CHG-0038"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-i18n.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-economy-review-v26-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0950",
+      "epic": "HL-EPIC-OPS",
+      "area": "Ewidencja DEV 0.10.2.0",
+      "type": "Ops",
+      "title": "Zakres v26 ma nowe karty i testy, bez promocji GCP i resetu historii",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "GO na DEV z 1 listopada 2026, Europe/Warsaw; doprecyzowania po wydaniu 0.10.1.0. Data nie zastępuje dat historycznych zleceń.",
+        "summary": "GO dotyczy DEV; dokumentacja ma skrupulatnie rozróżniać kod, testy i faktyczne wdrożenia. Manualne scenariusze są do odhaczania od poniedziałku.",
+        "reference": "chat:DEV-v26-950"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_validation_passed",
+        "ci": "awaiting_own_source_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Każda grupa zmian ma stabilną kartę i osobne statusy; nowe wpisy nie nadpisują dowodów0.10.1.0 ani historycznych decyzji.",
+        "Sześć nowych przypadków TC54–59 ma dane, kroki i oczekiwane wyniki. Ręczny wynik pozostajeNOT RUN do rzeczywistego wykonania.",
+        "Wymagania oddzielają potwierdzone decyzje, otwarte doprecyzowania i parametry wykonawcze.",
+        "PRE-PROD pozostaje 0.10.1.0 / 353faad; nowy zakres wymaga własnego CI i podglądu DEV. Nie uruchamia promocji GCP, resetu ani PROD."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0934"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V26-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/testing/START-HERE.md",
+          "docs/DEV-0.10.2.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/VERSIONING.md"
+        ],
+        "code": [],
+        "automated_tests": [
+          "tests/harborlight-manual-checklist-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN."
+      },
+      "notes": [
+        "Tag pilnej poprawki pozostaje na wcześniejszej zmianie; nowy pakiet nie staje się automatycznie pilny."
+      ]
     }
   ]
 }

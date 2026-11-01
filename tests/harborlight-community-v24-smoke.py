@@ -25,11 +25,36 @@ def seed():
 
 
 def open_community(page, language, mobile):
+    # Social features have their own menu destinations, outside Settings.
     if mobile:
-        page.locator('.mobile-island-menu').click()
-        page.locator('#island-dialog').get_by_role('button', name='Ustawienia' if language == 'pl' else 'Settings', exact=True).click()
+        page.locator('[data-mobile-control="settings"]').click()
     else:
         page.locator('#hit-settings').click()
+    expect(page.locator('#island-dialog [data-open-community]')).to_have_count(0)
+    expect(page.locator('#island-dialog [data-open-charity]')).to_have_count(0)
+    expect(page.locator('#island-dialog [data-open-ranking]')).to_have_count(0)
+    page.locator('#island-dialog .dialog-close').click()
+    if mobile:
+        assert page.locator('[data-mobile-control="chat"]').evaluate('(el)=>el.nextElementSibling.dataset.mobileControl') == 'notifications'
+        page.locator('[data-mobile-control="chat"]').click()
+    else:
+        assert page.locator('#hit-chat').evaluate('(el)=>el.nextElementSibling.id') == 'hit-notifications'
+        page.locator('#hit-chat').click()
+    expect(page.locator('[data-community-tab="chat"]')).to_have_attribute('aria-pressed', 'true')
+    expect(page.locator('[data-community-panel]')).to_contain_text('Tu możesz rozmawiać online' if language == 'pl' else 'Talk online')
+    page.locator('#island-dialog .dialog-close').click()
+    if mobile:
+        page.locator('[data-mobile-hud="points"]').click()
+    else:
+        page.locator('#hit-points').click()
+    expect(page.locator('[data-community-tab="ranking"]')).to_have_attribute('aria-pressed', 'true')
+    expect(page.locator('[data-community-ranking]')).to_be_visible()
+    expect(page.locator('[data-community-ranking-demo]')).to_be_visible()
+    page.locator('#island-dialog .dialog-close').click()
+    if mobile:
+        page.locator('.mobile-island-menu').click()
+    else:
+        page.locator('#hit-menu').click()
     page.locator('[data-open-community]').click()
     expect(page.locator('[data-community-panel]')).to_be_visible()
     expect(page.locator('[data-community-demo-warning]')).to_be_visible()
@@ -170,6 +195,7 @@ def run():
                     panel.get_by_role('button', name='Odblokuj gracza' if language == 'pl' else 'Unblock player', exact=True).click()
                     identity(page, 'demo_1')
                     panel.locator('[data-community-tab="league"]').click()
+                    expect(panel.locator('[data-league-demo-standings]')).to_be_visible()
                     expect(panel.locator('[data-league-schedule]')).to_contain_text('19:00–21:00')
                     expect(panel.locator('[data-league-schedule]')).to_contain_text('Wybierasz kolejność' if language == 'pl' else 'Choose either order')
                     assert '19:00–20:00' not in panel.inner_text()

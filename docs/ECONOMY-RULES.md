@@ -1,8 +1,24 @@
-# Reguły gospodarki HARBORLIGHT — frontend v21
+# Reguły gospodarki HARBORLIGHT — bieżący DEV 0.10.2.0 / v26
 
-Bieżące reguły DEV wynikają z [bazy v18](FRONTEND-V18-REQUIREMENTS.md), [wprowadzenia v20](FRONTEND-V20-REQUIREMENTS.md) i [rozszerzenia v21](FRONTEND-V21-REQUIREMENTS.md). Opis nie jest dowodem publikacji. Ostatnie potwierdzone wydanie PRE-PROD to v18 / `6ec3c6d` / workflow `41112673285`; uzupełnienie interfejsu i dokumentów [v19](FRONTEND-V19-REQUIREMENTS.md) jest osobnym zakresem DEV. Lokalną walidację i kolejne promocje opisuje [dziennik](IMPLEMENTATION-LOG.md).
+Reguły kandydata DEV wynikają z bazy [v18](FRONTEND-V18-REQUIREMENTS.md), wprowadzenia [v20](FRONTEND-V20-REQUIREMENTS.md), wcześniejszych programów lekcji [v21](FRONTEND-V21-REQUIREMENTS.md), archipelagu i społeczności [v24](FRONTEND-V24-REQUIREMENTS.md) oraz poniższych wyjątków [v26](FRONTEND-V26-REQUIREMENTS.md). Dokument opisuje zasady kodu, a nie wynik wdrożenia. Ostatni potwierdzony PRE-PROD to **0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`**, przebieg **41246771480 / próba 1 SUCCESS**. Nowe GO dotyczy tylko DEV, bez promocji GCP, resetu i PROD. [Rejestr środowisk](ENVIRONMENT-STATUS.md) rozstrzyga aktualny kod, CI, publikacje i aktywację usług.
 
-V18 zastępuje sprzeczne reguły v17 i wcześniejszych manifestów. Excel 10 pozostaje niezmienionym archiwum v16; ukryte dawne pytania nie otwierają ponownie później rozstrzygniętych zasad.
+V18 zastąpiło sprzeczne reguły v17 i wcześniejszych manifestów; późniejsze zatwierdzone zmiany poniżej mają pierwszeństwo. Starsze arkusze pozostają archiwami, a dawne pytania nie otwierają ponownie rozstrzygniętych zasad.
+
+## Wyjątki początku gry v26
+
+Po nowym, rzeczywistym przydzieleniu sześciu tragarzy na wyspie macierzystej zapisujemy osiągnięcie wprowadzające turbo. Nie wywodzimy go automatycznie z obsady starego zapisu, nie przenosimy na córki i nie przeliczamy wcześniej zleconych budów. Przy Ratuszu 1 pierwsza szóstka dostaje dojście najwyżej **20 s** zamiast zwykłych pięciu minut — to jawny parametr wykonawczy, nie globalna zmiana dojścia mieszkańców.
+
+| Nowe zwykłe zlecenie z aktywnym turbo | Cała dostawa materiałów | Faza budowania |
+|---|---|---|
+| Ratusz wyspy 1 | **30 s**, dla wszystkich kursów razem | Ratusz 1→2: **60 s**; inne proporcjonalnie do zakresu prac, z zachowaniem własnego mnożnika Latarni/Kaplicy |
+| Ratusz wyspy 2 | Ratusz 2→3: **120 s**; inne proporcjonalnie, najwyżej **300 s** | Ratusz 2→3: **300 s**; inne proporcjonalnie, z własnym mnożnikiem budynku |
+| Ratusz wyspy 3 i wyżej | Zwykłe wcześniejsze zasady | Zwykłe wcześniejsze zasady |
+
+Proporcja innych zleceń opiera się na liczbie rzeczywistych kursów materiałów względem zwykłej wyceny Ratusza na tym poziomie i pojemności. Monety nie są przewożone. Przed startem dostawy potrzeba sześciu przybyłych tragarzy; przy brakach obsady, materiałów albo kolejce czas oczekiwania jest pokazany osobno. To nie teleport towarów i nie 30 sekund na każdy kurs. Turbo zachowuje własny zapisany zegar; mnożniki aktywności nie skracają obiecanej fazy drugi raz. Istniejące rozpoczęte projekty zachowują migawkę ceny i czasów. Osobne usługi premium/natychmiastowego przewozu utrzymują swoje zatwierdzone zasady.
+
+Nowy program samouczka **5** ma 25 lekcji: 6 tragarzy → priorytet Budowa → rolnik → drwal → Ratusz 2, a zadanie Latarni i rozegrana minigra zastępują dwie lekcje Ratusza 3. Nagroda zadania pokrywa brakujące zasoby na Latarnię z rezerwą żywności. Kurs nominalnie kończy się z Ratuszem 2 i zwykłym Magazynem uzupełnionym bez zaległych skrzyń. Pierwsza rozbudowa Ratusza 1→2 kosztuje po 100 sześciu zasobów jako parametr wykonawczy wprowadzającej ścieżki; nie obniża automatycznie wyceny kolonii. Zapisane programy **3 i 4** zachowują swoje warunki, zaliczenia, odebrane nagrody i rozpoczęte budowy.
+
+Tutorial to **33 opisy ekranu**, samouczek to **25 praktycznych lekcji**. Podczas któregokolwiek automatyczne reklamy i wybór „ekspedycja albo reklama” czekają. Po wcześniejszym zamknięciu obowiązuje zapisane **3600 aktywnych sekund, czyli 60 aktywnych minut** ochrony; offline i bezczynność go nie skracają. Powtórka nie resetuje świata ani nie wypłaca ponownie nagród.
 
 ## Start, ludzie i zegary
 
@@ -12,12 +28,12 @@ V18 zastępuje sprzeczne reguły v17 i wcześniejszych manifestów. Excel 10 poz
 | Ochrona powitalna | Przez 72 h minimum 20% obejmuje wszystkich, również nowe osoby. Nie odkłada ukrytego długu kar; koniec nie odejmuje 20 pp. |
 | Pierwszeństwo H | Wymuszone 100% > minimum powitalne 20% > zwykłe zasady, w tym początkowe 24 h nowej osoby na 0%. Osoba przybyła podczas Latarnianej premii korzysta tylko do wspólnego końca efektu. |
 | Poziom i mieszkanie | Poziom Ratusza ogranicza rozbudowę innych budynków i daje 24 miejsca populacji/poziom; Dom osobno daje 24 łóżka/poziom. Brak łóżek daje −1 pp/h wszystkim za każdą osobę bez miejsca. |
-| Przydział | Osiem miejsc pracy: limit 12 × własny poziom i wspólna pula wolnych w domu. Dojście 5 min; w drodze kara bezrobocia jest wstrzymana, licznik zeruje dopiero dotarcie. Podatek zaczyna się po dojściu. |
+| Przydział | Osiem miejsc pracy: limit 12 × własny poziom i wspólna pula wolnych w domu. Zwykłe dojście 5 min, z wyjątkiem pierwszej szóstki w turbo v26 opisanym wyżej; w drodze kara bezrobocia jest wstrzymana, licznik zeruje dopiero dotarcie. Podatek zaczyna się po dojściu. |
 | Odwołanie | Osoba bez ładunku wraca 5 min; tragarz z ładunkiem kończy dostawę, nie bierze nowej i dopiero wraca. Wyraźny popup i licznik np.5(−2) pokazują oczekujące odejścia. |
 | Jedzenie | Każdy mieszkaniec zużywa 1 żywność/h z dostępnej centrali. Brak jedzenia od razu daje wydajność ×0,5, po 12 h karę−5 pp/h. Posiłek zatrzymuje karę od razu, ale licznik głodu zeruje dopiero pełna godzina nieprzerwanego karmienia. |
 | Szczęście | Indywidualne H jest ograniczone do−100…100%, wyspa pokazuje średnią. Jedzenie i rzeczywista praca dają osobno+1 pp/h, brak pracy po 12 h daje−5 pp/h. Wyświetlenie zaokrągla w górę; obliczenia zachowują ułamki. |
-| Przestój | Brak wejścia lub miejsca zatrzymuje produkcję i premię pracy. Indywidualna kara−10 pp od początku, kolejne−10 co 24 h, maks.−50 z tego składnika; bez dodatkowej kary bezrobocia za ten sam przestój. Przyczyna i indywidualne zegary są jawne, smutna ikona dotyczy aktywnej kary. |
-| Demografia | Dodatni przyrost jest ×2 wobec wcześniejszego wzoru; ujemne odejścia bez przyspieszenia. Minimum 6 osób, maksimum 24 × TH. Kolejność grup odejścia zachowana, potem najmniej szczęśliwy z losowaniem remisów; chronieni nie tworzą długu odejść. |
+| Przestój | Brak wejścia lub miejsca zatrzymuje produkcję i premię pracy. Indywidualna kara−10 pp od początku, kolejne−10 co 24 h, maks.−50 z tego składnika; bez dodatkowej kary bezrobocia za ten sam przestój. Przyczyna i indywidualne zegary są jawne. Smutna buźka pojawia się także przy pełnym lokalnym magazynie bez aktywnej kary, np. bez obsady lub przy ochronie Latarni. Sam wskaźnik pełności nie nalicza nowej kary. |
+| Demografia | Dodatni przyrost jest ×2 wobec wcześniejszego wzoru; ujemne odejścia bez przyspieszenia. Minimum 12 osób na wyspie macierzystej i 6 na córce, także przy odejściach i dżumie; maksimum 24 × TH. Kolejność grup odejścia zachowana, potem najmniej szczęśliwy z losowaniem remisów; chronieni nie tworzą długu odejść. |
 | Czas | Pierwsza wyspa zaczyna bieg czasu po zakończeniu wprowadzenia; pokazuje 1 stycznia i aktualną godzinę Warszawy. To fikcyjna data prezentacji; znaczniki kont, efekty i rozliczenia używają rzeczywistego czasu. Odnowienia dzienne o 00:00 Europe/Warsaw uwzględniają DST. |
 | Aktywność | Rzeczywiste sterowanie w widocznej aktywnej karcie daje produkcję/podatki/prędkość transportu ×2 przez 5 min; potem ×1, po 48 h bez rzeczywistej gry ×0,5. Nieobecność rozliczana przedziałami; jedzenie, efekty i kalendarz nie zwalniają. |
 | Sesja | Po30 min bez aktywności ostrzeżenie, po dalszych 30 s bez odpowiedzi wylogowanie. Animacja, autosave i odnowienie tokenu nie są aktywnością. Wylogowanie nie zatrzymuje rozpoczętego świata; niedokończone wprowadzenie zachowuje zatrzymany czas. |
@@ -35,9 +51,9 @@ V18 zastępuje sprzeczne reguły v17 i wcześniejszych manifestów. Excel 10 poz
 | Rezerwa jedzenia | Dla Magazynu obowiązuje 50 × min(L,24). Zastawione materiały nadal zajmują fizyczny skład, dopóki tragarz ich nie odbierze, i nie są wydawane drugi raz. |
 | Kurs | Bazowy pełny kurs 5 min, jeden rodzaj towaru, L1 do 120 sztuk. Drogi i wyżywienie wpływają na przewóz; aktywność zmienia prędkość, nie ładowność. Trwający kurs zachowuje postęp przy zmianie mnożnika. |
 | Priorytety | Do trzech trwałych priorytetów materiałów/budowy:8+2 losowe,5+3+2 losowe albo 5/3/2; ochrona ratunkowej żywności. Budowy obsługiwane od najstarszej aktywnej. |
-| Rozbudowa | RatuszL: L aktywnych i L miejsc kolejki. Następny poziom tego samego budynku zajmuje miejsce kolejki także przy wolnym slocie aktywnym. Kolejka kosztuje+10% każdego składnika. |
+| Rozbudowa | Niedostępny budynek nie przyjmuje rozbudowy żadną ścieżką: Targ przed Ratuszem 2, Port przed Ratuszem 4. Ratusz L: L aktywnych i L miejsc kolejki. Następny poziom tego samego budynku zajmuje miejsce kolejki także przy wolnym slocie aktywnym. Kolejka kosztuje+10% każdego składnika. |
 | Próg ludności Ratusza | Od3→4 min.75% limitu poziomu poprzedzającego cel:ceil(0,75×24×(cel−1)). Dotyczy tylko Ratusza i nowych projektów, także premium/kolejki; starych nie anuluje. |
-| Rzeczywiste T | T biegnie od pierwszego odbioru materiałów do ostatniej dostawy, również podczas przerw. Budowanie trwaT, Latarnia 4T, Kaplica 3T ×(N−1). Szybsze dostawy skracają również wynikową budowę. |
+| Rzeczywiste T poza turbo v26 | T biegnie od pierwszego odbioru materiałów do ostatniej dostawy, również podczas przerw. Budowanie trwaT, Latarnia 4T, Kaplica 3T ×(N−1). Szybsze dostawy skracają również wynikową budowę. |
 | Pakiet budowlany |1000 × TH monet/24 h, +4 aktywne budowy i dowolna kolejka; planowanie braków za 25% bazowej wartości portowej po dopłacie kolejki. Materiały przypisujemy FIFO, bez podwójnego zastawu. |
 | Anulowanie | Przed pierwszym przewozem/budową, ze zwrotem rzeczywistych rezerwacji bez zwrotu opłaty prognozy. Późniejszy zależny poziom anulujemy przed wcześniejszym, bez ukrytej kaskady. |
 | Skrócenie budowy |25/50/75/100% pozostałego czasu,1 moneta za pełną oszczędzoną minutę, min.5. Popup podaje faktycznie oszczędzony czas. |
@@ -48,9 +64,9 @@ V18 zastępuje sprzeczne reguły v17 i wcześniejszych manifestów. Excel 10 poz
 
 ## Targ, Port, zadania i atrakcje
 
-- Targ NPC od TH2 do TH5: pełne dziesiątki w grupie drewno/kamień/zboże albo deski/żywność;10 → 9. Dostawa zablokowana 1 h, partie ważne 24 h, wynik wymiany ma nowy termin. Własna obsada przenosi towary, wymiana działa bez obsady. Natychmiastowy odbiór niezarezerwowanej partii zachowuje wcześniejsze zwykłe zlecenia.
-- Port NPC od TH4 do TH5: paczki 100; bazowe sprzedaż/kupno 40/50 dla podstawowych,140/150 dla przetworzonych. Kolejna paczka kupna w ruchomych 3 h podnosi cenę o 10% bazowej osobno dla rodzaju. Cena zamrożona przy zamówieniu, sprzedaż opłacana przy wypłynięciu.
-- Od TH6 nowe transakcje z grą zastępują wymiany między graczami według własnej ceny zasób/ilość. Serwer rezerwuje ofertę i rozlicza przyjęcie; brak miejsca wstrzymuje wymianę, a zwroty oczekują w trwałej skrzynce. Uruchomienie wymaga konfiguracji API. Poprzednie zlecenia NPC nadal kończą się według swoich warunków.
+- Targ NPC od TH2: pełne dziesiątki w grupie drewno/kamień/zboże albo deski/żywność;10 → 9. Dostawa zablokowana 1 h, partie ważne 24 h, wynik wymiany ma nowy termin. Własna obsada przenosi towary, wymiana działa bez obsady. Natychmiastowy odbiór niezarezerwowanej partii zachowuje wcześniejsze zwykłe zlecenia.
+- Port NPC od TH4: paczki 100; bazowe sprzedaż/kupno 40/50 dla podstawowych,140/150 dla przetworzonych. Kolejna paczka kupna w ruchomych 3 h podnosi cenę o 10% bazowej osobno dla rodzaju. Cena zamrożona przy zamówieniu, sprzedaż opłacana przy wypłynięciu.
+- Od TH6 obok handlu NPC działa sprzedaż materiałów innym graczom za monety. Wystawiający może zejść poniżej ceny maksymalnej; pułap to bazowa cena sprzedaży tych samych materiałów przez NPC. Serwer rezerwuje ofertę i rozlicza przyjęcie; brak miejsca blokuje przyjęcie, a zwroty czekają w trwałej skrzynce. Stare oferty barterowe zachowują literalne warunki, nie tworzymy nowych według zastąpionej reguły. Aktywacja usługi API w GCP wymaga osobnego potwierdzenia; sam kod nie jest dowodem działającego rynku.
 - Partie mają 24 h od fizycznego przybycia; kupiona partia od przybycia statku. Faktycznie podjęty przed terminem ładunek kończy rozpoczęty kurs także statek → Port. Niepodjęty wygasa. Sprzedaż częściowo wygasła wypłaca faktycznie wysłaną część zamrożonej ceny, w dół do monet.
 - Zadania Latarni:3 oferty,1 aktywne, brak porzucenia. Potwierdzenie 60 s; mnożnik utrwala otwarcie okna:×3 przed 15 s,×2 przed 5 min, później ×1. Oferta musi być ważna przy potwierdzeniu; zamknięcie usuwa szkic.
 - Darowizny są nieodwracalne, z dostępnego zapasu z zachowaniem rezerwy jedzenia, bez tragarzy. Pierwsze zadania 6 h; po pierwszym sukcesie następcy mają termin o północy Warszawy. Nagroda materiałowa nigdy nie ginie przy ładunku w drodze i trafia do bonusu.
@@ -71,7 +87,7 @@ Wizyta w Latarni trwa 4 h bez dojścia/wycofania, miejsca 2 × poziom. Uczestnik
 
 Dobre wraki losujemy co 36–60 h. Pod globalną Latarnianą ochroną jedno dobre zdarzenie może czekać do końca; złe terminy anulujemy i losujemy po ochronie z zachowaniem okresu Kaplicy. Najwyżej jedno negatywne zdarzenie na nieaktywny okres. Latarnia podczas plagi daje 100%, nie oddaje utraconych dóbr/osób; pozostałe efekty mają własny termin.
 
-Jawne wartości konfiguracji wydarzeń: skarb 50–150 × TH monet, zwrot podatkowy 20–60 × TH, dostawa 50–150 pięciu materiałów, rozbitek+1, nawóz+25% Farmy/6 h. Gdy brak miejsca na człowieka:500 × TH monet. Negatywne mają jeden główny skutek oraz karę H/6 h: ludność do 20% z minimum 6, wolne monety/drewno do 20%, transport wolniejszy do 50%. Rezerwacje i niesione ładunki pozostają chronione. Wagi i kwoty są strojoną konfiguracją, nie odtworzonym dawnym ustaleniem o wraku.
+Jawne wartości konfiguracji wydarzeń: skarb 50–150 × TH monet, zwrot podatkowy 20–60 × TH, dostawa 50–150 pięciu materiałów, rozbitek+1, nawóz+25% Farmy/6 h. Gdy brak miejsca na człowieka:500 × TH monet. Negatywne mają jeden główny skutek oraz karę H/6 h: ludność do 20% z minimum 12 na matce i 6 na córce, wolne monety/drewno do 20%, transport wolniejszy do 50%. Rezerwacje i niesione ładunki pozostają chronione. Wagi i kwoty są strojoną konfiguracją, nie odtworzonym dawnym ustaleniem o wraku.
 
 ## Ekspedycje, reklamy i nagrody
 
@@ -82,23 +98,28 @@ Jawne wartości konfiguracji wydarzeń: skarb 50–150 × TH monet, zwrot podatk
 - Bez reklam standardowych po potwierdzonych zakupach brutto≥1999 gr w ostatnich 30 dniach; oddzielnie od pakietu budowlanego 24 h. Bonusy standardowe bez filmu, te same limity. Reklama za czas ekspedycji pozostaje także dla uprawnionego. Punkt 4–8 min automatycznie kotwiczy harmonogram raz.
 - Paynow i reklamy są oznaczoną symulacją wyłącznie poza PROD. Prawdziwa płatność/reklama wymaga integracji i zaufanego potwierdzenia. Kody mają nagrody i globalne limity rozliczane atomowo na serwerze; przeglądarka nie ustala globalnego licznika.
 - Lojalność:50–200 każdego z sześciu zasobów raz na dzień Warszawy, zapisany wynik i odbiór. Przerwa resetuje serię;10 odebranych nagród lub TH4 kończy program.
-- Nowy samouczek v21:25 rzeczywistych działań przeplata przydziały, produkcję i wydatki z dopasowanymi nagrodami mieszczącymi się w zwykłym Magazynie. Końcowe jawne rozliczenie uzupełnia wolne miejsce dopiero po wykorzystaniu nadwyżek i rozliczeniu poprzednich nagród/zleceń; nie usuwa zasobów. Cel:pełny zwykły magazyn bez zaległych skrzyń.
+- Zapisany wcześniejszy samouczek v21 / program 4: 25 rzeczywistych działań przeplata przydziały, produkcję i wydatki z dopasowanymi nagrodami mieszczącymi się w zwykłym Magazynie. Końcowe jawne rozliczenie uzupełnia wolne miejsce dopiero po wykorzystaniu nadwyżek i rozliczeniu poprzednich nagród/zleceń; nie usuwa zasobów. Cel:pełny zwykły magazyn bez zaległych skrzyń.
 - Starszy program v3 zachowuje wylosowane skrzynie100–300 pięciu materiałów i jednorazowe Share. Przepełnienie blokuje kolejne skrzynie, nie zarządzanie. Odebrane nagrody nie wracają, a minigra odkłada popup do końca.
 
 ## Wzory zachowane i aktualizowane
 
 - Produkcja/osobę: p(1)=20; dla L≥2 p(L)=2 ×(L+10), następnie mnożniki wyżywienia, aktywności, Latarni i właściwego wydarzenia.
 - Obsada 12 × własnyL; lokalny zapas 200 × własnyL. Bazowy ładunek=floor(120 ×1,1^(E−1)), E=min(L,24) tylko dla Magazynu; dalej niezależna premia dróg.
-- Kurs=300/(wyżywienie × drogi × aktywność × modyfikator wydarzenia) sekund; osobiste dojście/powrót 5 min nie jest kursem ładunkowym.
+- Zwykły kurs=300/(wyżywienie × drogi × aktywność × modyfikator wydarzenia) sekund, poza zapisanym wyjątkiem turbo v26. Osobiste dojście/powrót 5 min nie jest kursem ładunkowym; pierwsza wprowadzająca szóstka ma wyżej opisany wyjątek dojścia.
 - Podstawowe tempo demografii: |H|≤50 → |H|/300 osoby/h; powyżej 1/6+(|H|−50)/60. Dodatni wynik ×2, ujemny bez zmiany.
 - Norma zadań zachowuje historyczne q(1)=10, q(L≥2)=L+10:12 × poziom producenta × q(L) × godziny. Podwojona aktualna produkcja nie podwaja wymagań już ustalonej normy/oferty.
 - Punkty są migawką TH × monety o pełnej godzinie. Podatek 1moneta/h przybyłego przypisanego pracownika, także przy blokadzie; Kaplica i aktywność mają własne mnożniki. Menu Monet wyjaśnia podatników, mnożniki i dodatkowe nagrody reklam/minigier.
 
-## Druga wyspa i własne rejsy
+## Archipelag i własne rejsy
 
-Druga wyspa jest dostępna raz od Ratusza 10 pierwszej wyspy. Przy utworzeniu kopiuje jego poziom Ratusza i Magazynu; inne budynki zaczynają na 1. Oba światy mają niezależne zasoby i gospodarkę, wyróżnienie kolorystyczne oraz wspólny zapis konta. Uprawnienia, odebrane premie konta i historia zakupów nie są dublowane. Późniejsze poziomy nie synchronizują się samoczynnie.
+Kolejne wyspy odblokowują się na Ratuszu matki 10, 13, 16, 19 i dalej co trzy poziomy, do **20 wysp łącznie**. Koszt pierwszej córki to suma wszystkich rozbudów Ratusza i Domu 1→7 w każdym z sześciu zasobów; dla następnych A=8, 9, 10 itd. Cena kolonii korzysta ze swojej zwykłej wyceny, bez rabatu pierwszej lekcji v26. Wymagane co najmniej 18 osób na matce, w tym sześć faktycznie w Domu. Kolonizacja przenosi te same sześć osób natychmiast, bez rejsu; matce zostaje co najmniej 12.
 
-Własny Port przewozi do 1000 sztuk w 10 minut bez opłaty. Rezerwacja od razu zabiera towary źródłowe, zapisany rejs kończy się raz; brak zwykłego miejsca zachowuje zwykły ładunek do rozładunku, a materiały bonusowe zachowują odrębne pochodzenie. Dodatkowe 1000 pojemności kosztuje 4,99 zł, możliwe są wielokrotności pakietu. NaDEV to oznaczona symulacja Paynow, nie płatność; rzeczywiste zwiększenie wymaga zaufanego potwierdzenia operatora i serwera.
+Córka kopiuje poziom Ratusza i Magazynu matki jednorazowo; inne budynki zaczynają na 1. Nie dostaje nowego darmowego pakietu zasobów ani ponownie wspólnych nagród konta. Ma niezależny świat i odmienną paletę, a nazwa ma obowiązkowy prefiks „Nazwa matki - Nazwa córki”. Zmiana nazwy matki aktualizuje prefiksy. Późniejsze poziomy nie synchronizują się. Wejście do zakładania wyspy jest w Ratuszu i powiadomieniu po spełnieniu wymagań.
+
+Jeden statek przewozi **albo towary** (1000 sztuk, 10 minut), **albo pasażerów** (100 osób, 30 minut). Rejs nie ma opłaty w monetach; dla pasażerów przygotowujemy zwykłe jedzenie 0,5 na osobę na pół godziny, rezerwujemy wolne miejsca Ratusza i łóżka u celu. Wyjeżdżają osoby rzeczywiście w Domu z zachowaniem stanu. U źródła zostaje minimum 12 na matce lub 6 na córce. Nie można zmienić rodzaju ładunku podczas podróży.
+
+Rezerwacja towaru zabiera go źródłu od razu, a zapisany rejs rozlicza się raz. Brak zwykłego miejsca zachowuje ładunek do rozładunku; bonus zachowuje odrębne pochodzenie i zwolnienie z limitu. Dodatkowe 1000 pojemności towarowej kosztuje 4,99 zł w wielokrotnościach pakietu. To oznaczona symulacja Paynow w DEV/PRE-PROD, bez pobrania pieniędzy; rzeczywiste zwiększenie wymaga zaufanego potwierdzenia operatora i serwera. Nie zwiększa automatycznie limitu 100 pasażerów.
+
 
 ## Chmura, konto i zakres uruchomienia
 

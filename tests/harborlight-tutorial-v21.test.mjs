@@ -1,10 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createState, normalizeState, act, buildingCost } from '../harborlight-v1-state.js';
+import { createState as freshState, normalizeState, act, buildingCost } from '../harborlight-v1-state.js';
 import { grantBonusMaterials, ordinaryWarehouseUsed } from '../harborlight-v1-inventory.js';
 import { warehouseLimits } from '../harborlight-v1-logistics.js';
-import { TUTORIAL_LESSONS, LEGACY_TUTORIAL_LESSONS, tutorialRows, tutorialStatus, tutorialPendingRewards, tutorialSettlementStatus, normalizeProgression, progressionAction } from '../harborlight-v1-progression.js';
+import { V4_TUTORIAL_LESSONS as TUTORIAL_LESSONS, LEGACY_TUTORIAL_LESSONS, tutorialRows, tutorialStatus, tutorialPendingRewards, tutorialSettlementStatus, normalizeProgression, progressionAction } from '../harborlight-v1-progression.js';
 import { runTutorialCourse } from './helpers/tutorial-v21-course.mjs';
+
+// Preserve the historical curriculum exercised by these regression scenarios.
+const createState = now => { const state = freshState(now); normalizeProgression(state, { ...state, tutorial: { version: 4 } }); return state; };
 
 const NOW = Date.parse('2026-10-31T10:00:00Z');
 const MATERIALS = ['wood','stone','grain','food','planks'];

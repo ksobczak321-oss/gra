@@ -5,12 +5,13 @@ import {
   MATERIAL_IDS, stockRoom, receiveMaterials, notify,
   quoteInstantTransport, instantTransport, estimateMaterialsSeconds, availableGoods, haulCapacity,
   townhallPopulationRequirement
-} from './harborlight-v1-logistics.js?v=frontend-v25-2';
-import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v25-2';
+} from './harborlight-v1-logistics.js?v=frontend-v26';
+import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v26';
 import { secondsUntilWarsawMidnight } from './harborlight-v1-calendar.js';
+import { tutorialTaskStatus } from './harborlight-v1-progression.js?v=frontend-v26';
 import { MINI_GAME_RULES, miniGameRoundRules, createMiniGame, normalizeMiniGame,
-  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v25-2';
-export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v25-2';
+  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v26';
+export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v26';
 
 const HOUR = 3600;
 const QUEST_LIFE = 6 * HOUR;
@@ -221,8 +222,26 @@ function normalizeTask(raw, slot, clock) {
     rewardLevel: Math.max(1, integer(raw.rewardLevel, 1, 100)),
     chainId: typeof raw.chainId === 'string' ? raw.chainId.slice(0, 80) : 'chain-' + slot,
     anchorAt, createdAt, expiresAt, acceptedAt, bonusLockedAt,
-    multiplier: bonusLockedAt === null ? 1 : bonusLockedAt - createdAt < 15 ? 3 : bonusLockedAt - createdAt < 300 ? 2 : 1
+    multiplier: bonusLockedAt === null ? 1 : bonusLockedAt - createdAt < 15 ? 3 : bonusLockedAt - createdAt < 300 ? 2 : 1,
+    ...(raw.tutorialStarter === true ? { tutorialStarter: true } : {})
   };
+}
+
+function ensureTutorialTask(state, tutorial) {
+  const status = tutorialTaskStatus({ ...state, tutorial });
+  if (!status.eligible || state.lighthouseTasks?.some(task => task.tutorialStarter) || state.taskAchievements?.some(item => item.tutorialStarter)) return;
+  // Never replace an accepted/deposited task or a confirmation the player has
+  // already opened. This offer is available after the current task is settled.
+  if (state.lighthouseTasks?.some(task => task.acceptedAt !== null) || state.taskAcceptanceDraft) return;
+  const candidates = (state.lighthouseTasks || []).filter(task => !sum(task.deposited));
+  const task = candidates.find(item => item.size === 'small') || candidates[0];
+  if (!task) return;
+  const at = currentClock(state);
+  Object.assign(task, { size: 'small', title: TASK_NARRATIVES[0], requirements: { ...status.requirements },
+    deposited: Object.fromEntries(Object.keys(status.requirements).map(id => [id, 0])), reward: { ...status.reward },
+    hours: 0, levelSnapshot: Object.fromEntries(Object.keys(status.requirements).map(id => [id, Math.max(1, level(state, PRODUCER_FOR[id]))])),
+    rewardLevel: Math.max(1, level(state, 'townhall')), anchorAt: null, createdAt: at, expiresAt: at + QUEST_LIFE,
+    acceptedAt: null, bonusLockedAt: null, multiplier: 1, tutorialStarter: true });
 }
 
 export function normalizeActivities(state, raw = {}) {
@@ -241,7 +260,8 @@ export function normalizeActivities(state, raw = {}) {
     state.taskAchievements.push({ id: item.id, taskId: item.taskId,
       title: typeof item.title === 'string' ? item.title.slice(0, 300) : 'Lighthouse task complete',
       createdAt: nonnegative(item.createdAt), reward: Object.fromEntries(entries(item.reward).filter(([id]) => id === 'coins' || MATERIAL_IDS.includes(id)).map(([id, value]) => [id, integer(value)])),
-      shared, skipped: !shared && item.skipped === true, seen: shared || item.skipped === true || item.seen === true });
+      shared, skipped: !shared && item.skipped === true, seen: shared || item.skipped === true || item.seen === true,
+      ...(item.tutorialStarter === true ? { tutorialStarter: true } : {}) });
   }
   state.expeditionSequence = integer(raw.expeditionSequence);
   state.activitySettings = {
@@ -344,7 +364,9 @@ export function normalizeActivities(state, raw = {}) {
     run.status = 'lost'; run.pot = 0; run.presencePromptAt = null; run.lossReason = 'legacy-concurrent-series';
     signal(state, 'expedition-migration', 'One expedition series retained', 'A legacy concurrent expedition was ended. Only one series can run at a time.');
   }
-  advanceActivities(state, 0);
+  // Raw course identity matters here: normalizeProgression runs after this
+  // module and an older save must not temporarily acquire the new offer.
+  advanceActivities(state, 0, { tutorial: raw.tutorial });
   return state;
 }
 
@@ -517,7 +539,7 @@ export function nextActivitiesEvent(state) {
   }
   return remaining;
 }
-export function advanceActivities(state, seconds) {
+export function advanceActivities(state, seconds, options = {}) {
   if (!validNumber(seconds) || seconds < 0) return;
   const previousClock = currentClock(state), target = previousClock + seconds;
   for (const run of Object.values(state.expeditionRuns || {})) {
@@ -550,6 +572,7 @@ export function advanceActivities(state, seconds) {
       replaceTask(state, state.lighthouseTasks.indexOf(task), created);
     }
   }
+  ensureTutorialTask(state, Object.hasOwn(options, 'tutorial') ? options.tutorial : state.tutorial);
   for (const run of Object.values(state.expeditionRuns || {})) settleExpedition(state, run);
   refillRewardBuffer(state);
 }
@@ -814,7 +837,8 @@ export function activityAction(state, action, context = {}) {
       state.taskAchievements ||= [];
       if (!state.taskAchievements.some(item => item.id === achievementId)) state.taskAchievements.push({
         id: achievementId, taskId: task.id, title: task.title, createdAt: currentClock(state),
-        reward: taskReward(task), shared: false, skipped: false, seen: false
+        reward: taskReward(task), shared: false, skipped: false, seen: false,
+        ...(task.tutorialStarter === true ? { tutorialStarter: true } : {})
       });
       signal(state, 'task-share-pending', 'Share your completed task', 'Share for the prototype 500-coin bonus or choose Skip. This decision remains available in Notifications until resolved.');
       replaceTask(state, index, currentClock(state), true);

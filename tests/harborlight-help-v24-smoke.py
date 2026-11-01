@@ -21,14 +21,16 @@ def scenario(browser, language, mobile):
         fixture.visit(page)
         fixture.settings(page)
         page.locator('[data-open-help]').click()
-        expect(page.locator('[data-help-return-tour]')).to_have_text('Wróć do tutoriala' if language == 'pl' else 'Return to tutorial')
-        expect(page.locator('[data-help-return-lessons]')).to_have_text('Wróć do samouczka' if language == 'pl' else 'Return to practical tutorial')
+        expect(page.locator('[data-help-return-tour]')).to_have_text('Wznów tutorial' if language == 'pl' else 'Continue tutorial')
+        expect(page.locator('[data-help-restart-tour]')).to_have_text('Tutorial od początku' if language == 'pl' else 'Tutorial from the beginning')
+        expect(page.locator('[data-help-return-lessons]')).to_have_text('Wznów samouczek' if language == 'pl' else 'Continue practical tutorial')
+        expect(page.locator('[data-help-restart-lessons]')).to_have_text('Przejrzyj samouczek od początku' if language == 'pl' else 'Review lessons from the beginning')
         page.locator('[data-help-return-tour]').click()
         tour = page.locator('[data-onboarding-replay="true"]')
         expect(tour).to_be_visible()
         expect(tour).to_have_attribute('data-onboarding-step', 'home')
         expect(tour.locator('[data-onboarding-paused]')).to_contain_text('biegnie dalej' if language == 'pl' else 'keeps running')
-        for step in ['level', 'happiness', 'coins', 'population']:
+        for step in ['level', 'happiness', 'coins', 'working']:
             tour.locator('[data-onboarding-next]').click()
             expect(tour).to_have_attribute('data-onboarding-step', step)
         page.clock.run_for(31_000)
@@ -41,6 +43,8 @@ def scenario(browser, language, mobile):
         assert current['worldTimeMs'] > saved['worldTimeMs'], 'Help must not pause an already started world'
         tour.locator('[data-onboarding-exit]').click()
         expect(tour).to_have_count(0)
+        paused = fixture.cloud_state(UID)['learning']['tour']
+        assert paused['index'] == 4 and paused['paused'] and not paused['active'], paused
         fixture.settings(page)
         page.locator('[data-open-help]').click()
         page.locator('[data-help-return-lessons]').click()

@@ -1,4 +1,4 @@
-import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v25-2';
+import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v26';
 
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const MATERIAL_NAMES = { en: ['Wood', 'Stone', 'Grain', 'Food', 'Planks'], pl: ['Drewno', 'Kamień', 'Zboże', 'Żywność', 'Deski'] };
@@ -14,15 +14,68 @@ function node(tag, attributes = {}, ...children) {
   return element;
 }
 const action = (label, callback, attributes = {}) => node('button', { type: 'button', class: 'tutorial-action', onclick: callback, ...attributes }, label);
-const rowsFor = options => {
-  registerTutorialCopy(options.state.tutorial?.curriculum === 3 ? options.progression.LEGACY_TUTORIAL_LESSONS || [] : options.progression.TUTORIAL_LESSONS || []);
-  return options.progression.tutorialRows(options.state).filter(row => !row.autoSkipped).map((row, index) => ({ ...row, displayIndex: index + 1 }));
+const rowsFor = (options, includeSkipped = false) => {
+  const rows = options.progression.tutorialRows(options.state);
+  registerTutorialCopy(rows);
+  return rows.filter(row => includeSkipped || !row.autoSkipped).map((row, index) => ({ ...row, displayIndex: index + 1 }));
 };
 const lessonCopy = (row, language) => row?.balanced ? { title: pick(language, row.title, row.titlePl || row.title), description: pick(language, row.description, row.descriptionPl || row.description) } : tutorialLessonText(row, language);
 const nextRow = rows => rows.find(row => row.canClaim || row.pendingDecision) || rows.find(row => !row.completed);
 const fraction = (value, total, language) => pick(language, `Step ${value} of ${total}`, `Krok ${value} z ${total}`);
 
+/** Read-only lesson review. Its cursor is independent of earned rewards and
+ * the practical course's current action; opening or navigating never acts on
+ * the world. The caller persists the cursor after acknowledging onReviewUpdate.
+ */
+export function createTutorialReview(options) {
+  const { language = 'en', onReviewUpdate = () => true, onReviewExit = () => true, onClose } = options;
+  const rows = rowsFor(options, true);
+  let index = options.reviewFromStart === true ? 0 : Math.min(Math.max(0, options.reviewIndex || 0), Math.max(0, rows.length - 1));
+  let busy = false, error = '';
+  const root = node('div', { class: 'tutorial-v16 tutorial-v26-review', 'data-tutorial-panel': '', 'data-tutorial-instructions-review': '', 'data-i18n-ignore': '' });
+  async function navigate(next) {
+    if (busy || next < 0 || next >= rows.length || next === index) return;
+    busy = true; error = ''; render();
+    try {
+      if (await onReviewUpdate(next) === false) throw new Error('tutorial-review-update-rejected');
+      index = next;
+    } catch {
+      error = pick(language, 'The position could not be saved. Check your connection and try again.', 'Nie udało się zapisać miejsca w samouczku. Sprawdź połączenie i spróbuj ponownie.');
+    } finally { busy = false; render(); }
+  }
+  async function exit() {
+    if (busy) return;
+    busy = true; error = ''; render();
+    try {
+      if (await onReviewExit(index) === false) throw new Error('tutorial-review-exit-rejected');
+      onClose?.();
+    } catch {
+      error = pick(language, 'The position could not be saved. Check your connection and try again.', 'Nie udało się zapisać miejsca w samouczku. Sprawdź połączenie i spróbuj ponownie.');
+    } finally { busy = false; render(); }
+  }
+  function render() {
+    const row = rows[index], copy = row ? lessonCopy(row, language) : null;
+    root.dataset.tutorialReviewIndex = String(index);
+    root.setAttribute('aria-busy', String(busy));
+    root.replaceChildren(
+      node('div', { class: 'tutorial-v26-review-heading' }, node('strong', {}, pick(language, 'Practical lesson instructions', 'Instrukcje samouczka')), action('×', () => void exit(), { class: 'tutorial-action secondary tutorial-v26-review-exit', 'data-tutorial-review-exit': '', 'aria-label': pick(language, 'Close the practical lesson review', 'Zamknij przegląd samouczka'), disabled: busy })),
+      node('p', { class: 'tutorial-v16-hint' }, pick(language, 'This is a review of the instructions. Your island keeps running; your progress and rewards stay unchanged.', 'Przeglądasz instrukcje. Czas na wyspie biegnie dalej, a postęp i odebrane nagrody pozostają bez zmian.')),
+      copy ? node('section', { class: 'tutorial-v16-current', 'data-tutorial-review-lesson': row.id },
+        node('span', { class: 'tutorial-v16-eyebrow' }, fraction(index + 1, rows.length, language)),
+        node('h3', {}, copy.title), node('p', {}, copy.description),
+        node('small', { class: 'tutorial-v16-hint', 'data-tutorial-review-status': '' }, row.autoSkipped ? pick(language, 'Completed independently before this lesson; no extra reward.', 'To zadanie wykonano samodzielnie przed lekcją, bez dodatkowej nagrody.') : row.completed ? pick(language, 'This lesson is already complete.', 'Ta lekcja jest już ukończona.') : pick(language, 'Reading this instruction does not complete the practical task.', 'Przeczytanie instrukcji nie zalicza zadania praktycznego.'))) : node('p', {}, pick(language, 'No lesson instructions are available.', 'Nie ma jeszcze instrukcji do wyświetlenia.')),
+      error ? node('p', { class: 'tutorial-v18-storage-warning', role: 'alert', 'data-tutorial-review-error': '' }, error) : null,
+      node('div', { class: 'tutorial-v16-footer tutorial-v26-review-navigation' },
+        action(pick(language, '← Previous', '← Wstecz'), () => void navigate(index - 1), { class: 'tutorial-action secondary', 'data-tutorial-review-previous': '', disabled: busy || index === 0 }),
+        action(index >= rows.length - 1 ? pick(language, 'Back to island', 'Wróć na wyspę') : pick(language, 'Next →', 'Dalej →'), () => void (index >= rows.length - 1 ? exit() : navigate(index + 1)), { 'data-tutorial-review-next': '', disabled: busy }))
+    );
+  }
+  render();
+  return root;
+}
+
 export function createTutorialPanel(options) {
+  if (options.reviewFromStart === true || Number.isInteger(options.reviewIndex)) return createTutorialReview(options);
   const { state, progression, language = 'en', isBuildingRoute, onAction, onVisit, onClose } = options;
   const rows = rowsFor(options), status = progression.tutorialStatus(state), current = nextRow(rows);
   const root = node('div', { class: 'tutorial-v16', 'data-tutorial-panel': '', 'data-i18n-ignore': '' });
@@ -44,6 +97,7 @@ export function createTutorialPanel(options) {
     }
     root.append(node('section', { class: 'tutorial-v16-current', 'data-tutorial-current': current.id },
       node('span', { class: 'tutorial-v16-eyebrow' }, fraction(current.displayIndex, rows.length, language)), node('h3', {}, copy.title), node('p', {}, copy.description), node('p', { class: 'tutorial-v25-stage-hint', 'data-tutorial-stage-hint': '', hidden: true }),
+      Number.isFinite(current.progressRequired) ? node('p', { class: 'tutorial-v16-reward', 'data-tutorial-assignment-progress': '' }, pick(language, `Assigned carriers: ${current.progressCurrent || 0} / ${current.progressRequired}`, `Przydzieleni tragarze: ${current.progressCurrent || 0} / ${current.progressRequired}`)) : null,
       node('p', { class: 'tutorial-v16-reward' }, current.balanced ? pick(language, current.rewardKind === 'supply' ? 'Reward: missing upgrade materials and a Coin bonus, delivered immediately.' : current.rewardKind === 'final' ? 'Final reward: free ordinary Warehouse capacity is filled, plus 500 Coins.' : current.rewardKind === 'road' ? 'Reward: 200 Coins and the missing Stone for the next path section.' : current.rewardKind === 'coins' ? 'Reward: 200 Coins.' : 'Reward: 100 Coins and up to 25 of each material that fits ordinary storage.', current.rewardKind === 'supply' ? 'Nagroda: brakujące materiały do kolejnej rozbudowy oraz monety, dostępne od razu.' : current.rewardKind === 'final' ? 'Nagroda końcowa: 500 monet i uzupełnienie wolnego miejsca w magazynie.' : current.rewardKind === 'road' ? 'Nagroda: 200 monet i brakujący kamień na następny odcinek ścieżki.' : current.rewardKind === 'coins' ? 'Nagroda: 200 monet.' : 'Nagroda: 100 monet i do 25 sztuk każdego materiału, o ile jest miejsce w magazynie.') : pick(language, 'Reward: a chest with 100–300 of each of the five materials.', 'Nagroda: skrzynia z 100–300 sztuk każdego z pięciu materiałów.')),
       current.settlement && !current.settlement.eligible ? node('p', { class: 'tutorial-v18-storage-warning', 'data-tutorial-settlement-blocked': '' }, pick(language, current.settlement.reason, current.settlement.reasonPl)) : null,
       controls, node('small', { class: 'tutorial-v16-hint' }, pick(language, 'Follow the highlighted control and complete the actual action. Reading alone never grants a reward.', 'Wykonaj wskazane strzałką działanie. Samo przeczytanie instrukcji nie przyznaje nagrody.')),
@@ -55,7 +109,7 @@ export function createTutorialPanel(options) {
   root.append(node('div', { class: 'tutorial-v16-footer' },
     action(pick(language, 'Back to island', 'Wróć na wyspę'), onClose, { class: 'tutorial-action secondary', 'data-tutorial-later': '' }),
     status.autoOpenDisabled && !status.finished ? action(pick(language, 'Resume automatic tutorial', 'Wznów samouczek przy wejściu'), () => onAction({ type: 'resumeTutorial' }), { class: 'tutorial-action quiet', 'data-tutorial-resume': '' }) : !status.finished ? action(pick(language, 'Stop showing automatically', 'Nie pokazuj automatycznie'), () => { if (onAction({ type: 'dismissTutorial' }) !== false) onClose?.(); }, { class: 'tutorial-action quiet', 'data-tutorial-dismiss': '' }) : null));
-  root.append(node('small', { class: 'tutorial-v16-hint' }, pick(language, 'Actions completed independently before their lesson are removed without a reward. You can return from the island menu.', 'Jeśli wykonasz zadanie przed jego lekcją, pominiemy ten krok samouczka. Nie dostaniesz za niego dodatkowej nagrody. Do pozostałych lekcji wrócisz z menu wyspy.')));
+  root.append(node('small', { class: 'tutorial-v16-hint' }, pick(language, 'Actions completed independently before their lesson are removed without a reward. You can return from Help.', 'Jeśli wykonasz zadanie przed jego lekcją, pominiemy ten krok samouczka. Nie dostaniesz za niego dodatkowej nagrody. Do pozostałych lekcji wrócisz z Pomocy.')));
   return root;
 }
 
@@ -68,7 +122,7 @@ export function createTutorialGuide(options) {
   if (!current) return null;
   const copy = lessonCopy(current, language);
   return node('aside', { class: 'tutorial-v16-guide', 'data-tutorial-guide': current.id, 'data-tutorial-target': current.completed ? '' : current.guideSelector || '', 'data-i18n-ignore': '', 'aria-label': pick(language, 'Current tutorial step', 'Aktualny krok samouczka') },
-    node('div', { class: 'tutorial-v16-guide-copy' }, node('small', {}, fraction(current.displayIndex, rows.length, language)), node('strong', {}, copy.title), node('p', { class: 'tutorial-v25-stage-hint', 'data-tutorial-stage-hint': '', hidden: true })),
+    node('div', { class: 'tutorial-v16-guide-copy' }, node('small', {}, fraction(current.displayIndex, rows.length, language)), node('strong', {}, copy.title), Number.isFinite(current.progressRequired) ? node('small', { 'data-tutorial-assignment-progress': '' }, pick(language, `Assigned carriers: ${current.progressCurrent || 0} / ${current.progressRequired}`, `Przydzieleni tragarze: ${current.progressCurrent || 0} / ${current.progressRequired}`)) : null, node('p', { class: 'tutorial-v25-stage-hint', 'data-tutorial-stage-hint': '', hidden: true })),
     storageBlocked ? node('small', { class: 'tutorial-v18-storage-warning', 'data-tutorial-storage-blocked': '' }, pick(language, 'Chests are waiting: spend the excess materials. Island actions remain available.', 'Skrzynie czekają: wydaj nadmiar materiałów. Działania wyspy pozostają dostępne.')) : null,
     node('div', { class: 'tutorial-v16-guide-actions' },
       current.id === 'townhall-upgrade' && !status.buildingSuppliesClaimed && !current.completed ? action(pick(language, 'Collect building supplies', 'Odbierz materiały do budowy'), () => onAction({ type: 'prepareTutorialUpgrade' }), { 'data-tutorial-supplies': '' }) : null,

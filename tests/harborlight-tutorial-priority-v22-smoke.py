@@ -22,7 +22,9 @@ spec.loader.exec_module(qa)
 
 def model(curriculum):
     if curriculum == 4:
-        return qa.model(5)
+        value = qa.model(5)
+        assert value['tutorial']['curriculum'] == 4, 'Historical route must retain curriculum4'
+        return value
     script = """import {createState,act} from './harborlight-v1-state.js';
       import {normalizeProgression,tutorialStatus} from './harborlight-v1-progression.js';
       const state=createState(Date.parse('2026-10-31T10:00:00Z'));

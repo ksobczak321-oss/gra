@@ -1,9 +1,9 @@
 // PRE-PROD preserves its test accounts. PROD uses Firebase email and OAuth accounts.
 // Passwords are sent only by the Firebase client and never saved in browser storage.
-import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v25-2';
-import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v25-2';
-import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v25-2';
-import { signInWithProvider } from './harborlight-auth-providers.js?v=frontend-v25-2';
+import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v26';
+import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v26';
+import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v26';
+import { signInWithProvider } from './harborlight-auth-providers.js?v=frontend-v26';
 import { legalAcceptance, validLegalAcceptance } from './harborlight-legal.js?v=legal-v4';
 
 registerTranslations({
@@ -56,8 +56,10 @@ registerTranslations({
   'What should we call you?': 'Jak mamy się do Ciebie zwracać?',
   'Island name': 'Nazwa wyspy',
   'Name your island': 'Nadaj nazwę swojej wyspie',
-  'Use 2–40 characters. This name will appear on your island.': 'Użyj od 2 do 40 znaków. Ta nazwa będzie widoczna na Twojej wyspie.',
-  'Choose an island name with 2–40 characters, without control characters or angle brackets.': 'Wpisz nazwę mającą od 2 do 40 znaków w jednym wierszu. Pomiń nawiasy < > i niewidoczne znaki, np. tabulatory.',
+  'Use 3–40 characters without vulgar Polish or English words. This name will appear on your island.': 'Użyj od 3 do 40 znaków, bez wulgarnych słów po polsku i angielsku. Ta nazwa będzie widoczna na Twojej wyspie.',
+  'Choose an island name with 3–40 characters.': 'Wpisz nazwę wyspy mającą od 3 do 40 znaków.',
+  'Island names cannot contain control characters or angle brackets.': 'Wpisz nazwę wyspy w jednym wierszu, bez nawiasów < > i niewidocznych znaków, np. tabulatorów.',
+  'Choose an island name without vulgar Polish or English words.': 'Wybierz nazwę wyspy bez wulgarnych słów po polsku i angielsku.',
   'Your browser could not save the island name. Allow local storage and try again.': 'Przeglądarka nie mogła zapisać nazwy wyspy. Zezwól na zapisywanie danych i spróbuj ponownie.',
   'Your island name is saved on this device. Your account has not been created. Continue as a guest to explore your island.': 'Nazwa wyspy została zapisana na tym urządzeniu. Twoje konto nie zostało utworzone. Kontynuuj jako gość, aby odkrywać wyspę.',
   'Email address': 'Adres e-mail',
@@ -213,6 +215,8 @@ registerTranslations({
       'email-in-use': 'This email already has an account. Sign in instead.',
       'weak-password': 'Use at least 8 characters for your password.',
       'invalid-email': 'Enter a valid email address.',
+      'invalid-island-name': 'Choose an island name with 3–40 characters.',
+      'inappropriate-island-name': 'Choose an island name without vulgar Polish or English words.',
       'provider-configuration': 'This provider requires configuration by the game owner.',
       'provider-not-linked': 'This provider is not linked to the selected permanent PRE-PROD account. Use its password to link it.',
       'provider-cancelled': 'Sign-in cancelled.',

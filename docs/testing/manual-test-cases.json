@@ -747,6 +747,90 @@
         "HL-CHG-0039"
       ],
       "file": "manual/HL-TC-0053.md"
+    },
+    {
+      "id": "HL-TC-0054",
+      "title": "Nazwa 3–40 znaków i zaakceptowane opisy nie zmieniają starej wyspy",
+      "area": "Nazwa i tutorial",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0941",
+        "HL-CHG-0942",
+        "HL-CHG-0949"
+      ],
+      "file": "manual/HL-TC-0054.md"
+    },
+    {
+      "id": "HL-TC-0055",
+      "title": "Oba narzędzia nauki wznawiają miejsce i chronią od automatycznych reklam",
+      "area": "Tutorial, samouczek i aktywny czas",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0943",
+        "HL-CHG-0944"
+      ],
+      "file": "manual/HL-TC-0055.md"
+    },
+    {
+      "id": "HL-TC-0056",
+      "title": "Nowy kurs 25 lekcji zaczyna się od 6 tragarzy i kończy na Ratuszu 2, finansując Latarnię",
+      "area": "Praktyczny kurs v26",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0936",
+        "HL-CHG-0946",
+        "HL-CHG-0947"
+      ],
+      "file": "manual/HL-TC-0056.md"
+    },
+    {
+      "id": "HL-TC-0057",
+      "title": "Turbo poziomów 1–2 i blokady odblokowania obejmują wszystkie ścieżki budowy",
+      "area": "Logistyka i rozwój",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0947",
+        "HL-CHG-0948"
+      ],
+      "file": "manual/HL-TC-0057.md"
+    },
+    {
+      "id": "HL-TC-0058",
+      "title": "Magazyn i Dom są czytelne, a okno reklamy ma rozdzielone przyciski",
+      "area": "Panele gospodarki i reklamy",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0935",
+        "HL-CHG-0936",
+        "HL-CHG-0937",
+        "HL-CHG-0938"
+      ],
+      "file": "manual/HL-TC-0058.md"
+    },
+    {
+      "id": "HL-TC-0059",
+      "title": "Ranking, czaty i Pomagam są osobne, a demonstracja nie udaje realnych operacji",
+      "area": "Społeczność i dobroczynność DEV",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0939",
+        "HL-CHG-0940",
+        "HL-CHG-0945",
+        "HL-CHG-0950"
+      ],
+      "file": "manual/HL-TC-0059.md"
     }
   ],
   "current_scope": {

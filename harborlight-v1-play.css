@@ -686,6 +686,12 @@ body.portrait-world .dock-tabs{display:none!important}
  #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .stat strong{font-size:19px;line-height:1.25}
  #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .panel-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
  #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .panel-grid>.action{min-height:38px;padding:8px 12px;font-size:12px}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-body>div>.panel-grid{grid-column:1/span 2;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;align-self:start}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-body>div>.panel-grid>.action{min-height:32px;padding:6px 10px}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .social-menu-entries{grid-column:3;margin:0;gap:6px;align-self:start}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .social-menu-entries .info-card{padding:6px;margin:0}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .social-menu-entries .action{display:block;width:100%;min-height:32px;margin:0;padding:6px 10px;font-size:12px}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .social-menu-entries .notice{margin:3px 0 0;padding:6px;line-height:1.3}
 }
 
 /* Penalties remain visible above a building without becoming a click target. */
@@ -769,3 +775,8 @@ body[data-active-island="island-2"] .topbar-brand,body[data-active-island="islan
 @keyframes tutorial-map-glow{0%,100%{background:#ffdc7210;box-shadow:inset 0 0 12px #ffdf7055,0 0 0 5px #e5b94e30}50%{background:#ffdc7248;box-shadow:inset 0 0 40px #ffdf70aa,0 0 0 9px #ffe19a80}}
 @media(prefers-reduced-motion:reduce){.world-hotspot.tutorial-map-target{animation:none!important}}
 body.reduce-motion .world-hotspot.tutorial-map-target{animation:none!important}
+.rewarded-ad-actions { display:flex; flex-wrap:wrap; gap:16px; margin-top:20px; align-items:center; }
+.rewarded-ad-actions .action { margin:0; }
+.social-menu-entries { display:grid; gap:12px; margin:18px 0; }
+.social-menu-entries .info-card { margin:0; }
+.social-menu-entries .notice { margin-bottom:0; }

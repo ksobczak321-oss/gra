@@ -1,6 +1,6 @@
 # Wersja gry HARBORLIGHT
 
-Numer nowego DEV wyświetlany w Ustawieniach: **0.10.1.0**. Ta sama wersja **0.10.1.0** została odebrana również na PRE-PROD. Jedynym źródłem tej etykiety aplikacji jest `harborlight-version.js`. Wersja aplikacji jest odrębna od `state.version` (schemat świata), rewizji zapisu, generacji wyspy, wersji dokumentów prawnych i SHA wydania. Zmiana etykiety nie migruje ani nie zeruje świata.
+Numer bieżącego roboczego DEV wyświetlany w Ustawieniach: **0.10.2.0 / v26**. Opublikowane PRE-PROD pozostaje na **0.10.1.0**; nowy numer nie oznacza promocji do GCP. Jedynym źródłem etykiety aplikacji jest `harborlight-version.js`. Wersja aplikacji jest odrębna od `state.version` (schemat świata), rewizji zapisu, generacji wyspy, wersji dokumentów prawnych i SHA wydania. Zmiana etykiety nie migruje ani nie zeruje świata.
 
 Użytkownik wyznaczył pierwsze wydanie w Google Play jako **1.0.0.0**. Do tej promocji obecne zmiany są przedpremierowe. Nie nazywamy wysłania do GitHub/Pages publikacją sklepową.
 
@@ -16,6 +16,12 @@ Interpretacja „mniejsze zmiany podnoszą dalsze miejsce, większe wcześniejsz
 | A | Główne wydanie; pierwsze sklepowe ustalone przez użytkownika | 1.0.0.0 |
 
 To propozycja interpretacji kolejnych podbić; pierwotne **0.9.1.1** i docelowe **1.0.0.0** są wskazaniami użytkownika. Opracowanie dokumentów ligi lub planszówki nie oznacza wdrożenia tych funkcji ani osobnego podbijania wersji. Jeden zatwierdzony pakiet zmian ma jeden numer; kolejne poprawki w trakcie jego przygotowania nie zmieniają numeru same z siebie.
+
+## Bieżący pakiet 0.10.2.0
+
+Pakiet v26 podnosi segment **C** z 1 do 2, a **D** pozostaje 0: `0.10.1.0 → 0.10.2.0`. To jeden spójny pakiet funkcji i poprawek interfejsu oraz początku gry, zgodny z powyższą polityką; nie każda poprawka testu w trakcie przygotowania otrzymuje osobny numer. Wewnętrzna etykieta `v26` i cache `frontend-v26` nie zastępują numeru produktu ani pełnego SHA.
+
+GO z 1 listopada obejmuje DEV i przygotowanie Git/CI/Pages. Własne zielone CI, publikacja podglądu i nieprzesuwany tag wymagają odrębnego potwierdzenia; nie przypisujemy wersji 0.10.2.0 do PRE-PROD na podstawie samego pliku wersji. Pierwsze wydanie Google Play nadal ma być 1.0.0.0.
 
 ## Android, Apple i dowody wydania
 

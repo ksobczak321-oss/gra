@@ -46,7 +46,11 @@ def fixture(page, mode):
     return page.evaluate('''async mode=>{
       const {createState,act}=await import('./harborlight-v1-state.js?v=frontend-v17');
       const s=createState(Date.now());s.tutorial.autoOpenDisabled=true;
-      if(mode==='tutorial'){s.tutorial.autoOpenDisabled=false;return s;}
+      if(mode==='tutorial'){
+        const {normalizeProgression}=await import('./harborlight-v1-progression.js?v=frontend-v26');
+        normalizeProgression(s,{...s,tutorial:{version:3}});
+        s.tutorial.autoOpenDisabled=false;return s;
+      }
       s.buildings.townhall.level=s.buildings.house.level=s.buildings.warehouse.level=4;
       s.resources={coins:100000,wood:1800,stone:1800,grain:1800,food:2000,planks:1800};
       if(mode==='production')s.buildings.farm.level=2;

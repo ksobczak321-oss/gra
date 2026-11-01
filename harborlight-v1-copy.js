@@ -9,10 +9,15 @@ const purposes = {
   sawmill: ['Turns two wood from central storage into one plank for construction.', 'Przydziel pracowników i zapewnij im drewno w magazynie centralnym. Z dwóch jednostek drewna wyprodukują jedną deskę do budowy.'],
   warehouse: ['Stores the island’s materials and sends carriers to collect production and supply construction.', 'Przydziel tu tragarzy. Odbiorą towary od producentów i dowiozą materiały na budowę. Rozbudowuj magazyn, gdy brakuje miejsca na zasoby.'],
   market: ['Exchanges goods with the game within the same category with a 10% margin. From Town Hall 6 you can also sell materials to other players for coins, up to the base NPC sale price.', 'Wymieniaj towary z grą w obrębie tej samej kategorii. Prowizja wynosi 10%. Od 6. poziomu ratusza możesz też sprzedawać materiały innym graczom za monety. Możesz ustawić niższą cenę, ale nie wyższą niż podstawowa cena zakupu tych towarów od gry.'],
-  dock: ['Opens material trading with the game at Town Hall 4 and adds player offers from Town Hall 6. Town Hall levels 10, 13, 16 and so on on the mother island unlock more islands, up to 20 in total. The shared ship carries goods or passengers.', 'Od 4. poziomu ratusza kupujesz i sprzedajesz materiały za monety. Od 6. poziomu możesz też korzystać z ofert innych graczy. Rozbudowuj ratusz na wyspie macierzystej, by zakładać kolejne wyspy: na poziomach 10, 13, 16 i dalej co trzy poziomy, do 20 wysp łącznie. Wspólnym statkiem przewozisz towary albo pasażerów.'],
-  chapel: ['Grants blessings that provide materials and temporary happiness bonuses.', 'Poproś o błogosławieństwo. Dostaniesz materiały, a mieszkańcy przez pewien czas będą szczęśliwsi.'],
+  dock: ['Opens material trading with the game at Town Hall 4 and adds player offers from Town Hall 6. Town Hall levels 10, 13, 16 and so on on the mother island unlock more islands, up to 20 in total. The ship carries goods or passengers.', 'Od 4. poziomu ratusza kupujesz i sprzedajesz materiały za monety. Od 6. poziomu możesz też korzystać z ofert innych graczy. Rozbudowuj ratusz na wyspie macierzystej, by zakładać kolejne wyspy: na poziomach 10, 13, 16 i dalej co trzy poziomy, do 20 wysp łącznie. Statkiem przewozisz towary albo pasażerów.'],
+  chapel: ['Blessings at the Chapel make residents happier. How often you pray affects the Creator’s favour.', 'W kaplicy zdobywasz błogosławieństwa, które zapewniają szczęście mieszkańców. Częstotliwość modlitw wpływa na przychylność Stwórcy.'],
   lighthouse: ['Rewards restoration with temporary bonuses and offers visits that improve residents’ happiness.', 'Odbudowuj latarnię, by na pewien czas zwiększać szczęście i produkcję. Możesz też wysyłać mieszkańców na zwiedzanie, aby po powrocie byli szczęśliwsi.']
 };
+
+for (const id of ['farm', 'windmill', 'quarry', 'lumber', 'sawmill']) {
+  purposes[id][0] += ' If the building’s local store is full, a sad face appears above it.';
+  purposes[id][1] += ' Jeśli magazyn przy budynku jest pełny, nad budynkiem pojawia się smutna buźka.';
+}
 
 const goal = {
   title: ['Grow your island and care for its residents', 'Rozwijaj wyspę i dbaj o mieszkańców'],

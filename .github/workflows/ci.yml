@@ -125,7 +125,7 @@ jobs:
           import subprocess
           import sys
 
-          for test in ('tests/harborlight-frontend-v17-smoke.py', 'tests/harborlight-frontend-v18-smoke.py', 'tests/harborlight-tutorial-v18-smoke.py', 'tests/harborlight-tutorial-v21-smoke.py', 'tests/harborlight-tutorial-v22-smoke.py', 'tests/harborlight-tutorial-priority-v22-smoke.py', 'tests/harborlight-tutorial-map-v25-smoke.py'):
+          for test in ('tests/harborlight-frontend-v17-smoke.py', 'tests/harborlight-frontend-v18-smoke.py', 'tests/harborlight-tutorial-v18-smoke.py', 'tests/harborlight-tutorial-v21-smoke.py', 'tests/harborlight-tutorial-v22-smoke.py', 'tests/harborlight-tutorial-priority-v22-smoke.py', 'tests/harborlight-tutorial-map-v25-smoke.py', 'tests/harborlight-learning-review-v26-smoke.py', 'tests/harborlight-learning-flow-v26-smoke.py', 'tests/harborlight-starter-course-v26-smoke.py'):
               print('Starting browser acceptance: ' + test, flush=True)
               status = subprocess.call([sys.executable, '-u', test])
               if status:
@@ -160,7 +160,7 @@ jobs:
           import subprocess
           import sys
 
-          for test in ('tests/harborlight-dev-auth-smoke.py', 'tests/harborlight-dev-game-smoke.py', 'tests/harborlight-settings-signout-smoke.py', 'tests/harborlight-v18-auth-smoke.py', 'tests/harborlight-onboarding-v20-smoke.py', 'tests/harborlight-v21-features-smoke.py', 'tests/harborlight-help-v24-smoke.py', 'tests/harborlight-community-v24-smoke.py', 'tests/harborlight-charity-v24-smoke.py', 'tests/harborlight-manual-checklist-smoke.py', 'tests/harborlight-polish-panels-smoke.py'):
+          for test in ('tests/harborlight-dev-auth-smoke.py', 'tests/harborlight-dev-game-smoke.py', 'tests/harborlight-settings-signout-smoke.py', 'tests/harborlight-v18-auth-smoke.py', 'tests/harborlight-onboarding-v20-smoke.py', 'tests/harborlight-v21-features-smoke.py', 'tests/harborlight-help-v24-smoke.py', 'tests/harborlight-community-v24-smoke.py', 'tests/harborlight-charity-v24-smoke.py', 'tests/harborlight-manual-checklist-smoke.py', 'tests/harborlight-polish-panels-smoke.py', 'tests/harborlight-economy-review-v26-smoke.py'):
               status = subprocess.call([sys.executable, '-u', test])
               if status:
                   sys.exit(status)
