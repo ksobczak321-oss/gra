@@ -82,9 +82,9 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0935 — Magazyn pokazuje łączny zapas, a rozbicie i zasady pod ikoną informacji](changes/HL-CHG-0935.md) | Story | `accepted` | `verified_own_ci_and_pages` | `not_deployed` |
 | [HL-CHG-0939 — Punkty otwierają Ranking; Sojusz i liga oraz Pomagam mają osobne wejścia](changes/HL-CHG-0939.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `not_deployed` |
 | [HL-CHG-0941 — Tutorial przyjmuje ręczną redakcję W1 i opisów mieszkańców, zasobów oraz budynków](changes/HL-CHG-0941.md) | Story | `accepted` | `verified_own_ci_and_pages` | `not_deployed` |
-| [HL-CHG-0951 — Poprawiona wersja opisów ma archiwum źródeł i spójną redakcję PL/EN](changes/HL-CHG-0951.md) | Story | `accepted` | `verified_locally` | `not_deployed` |
-| [HL-CHG-0952 — Znak zapytania otwiera dwa powroty, a podsumowanie wyspy nie dubluje Pomocy i Samouczka](changes/HL-CHG-0952.md) | Story | `accepted` | `verified_locally` | `not_deployed` |
-| [HL-CHG-0953 — Tutorial ma 34 kroki, Czat przed dzwonkiem i rzeczywisty przykład zasobów](changes/HL-CHG-0953.md) | Story | `accepted` | `verified_locally` | `not_deployed` |
+| [HL-CHG-0951 — Poprawiona wersja opisów ma archiwum źródeł i spójną redakcję PL/EN](changes/HL-CHG-0951.md) | Story | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
+| [HL-CHG-0952 — Znak zapytania otwiera dwa powroty, a podsumowanie wyspy nie dubluje Pomocy i Samouczka](changes/HL-CHG-0952.md) | Story | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
+| [HL-CHG-0953 — Tutorial ma 34 kroki, Czat przed dzwonkiem i rzeczywisty przykład zasobów](changes/HL-CHG-0953.md) | Story | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
 
 <a id="hl-epic-tut"></a>
 
@@ -108,11 +108,11 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0933 — Podpowiedź z trzema przyciskami zachowuje czytelny opis i mieści się na ekranie](changes/HL-CHG-0933.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_353faad` |
 | [HL-CHG-0943 — Tutorial i samouczek mają zamknięcie, wznowienie oraz powtórkę od początku](changes/HL-CHG-0943.md) | Story | `accepted_with_documented_order_assumption` | `verified_own_ci_and_pages` | `not_deployed` |
 | [HL-CHG-0946 — Kurs zaczyna się od 6 tragarzy i priorytetu Budowa; zadanie i minigra zastępują Ratusz 3](changes/HL-CHG-0946.md) | Story | `accepted` | `verified_own_ci_and_pages` | `not_deployed` |
-| [HL-CHG-0954 — Zamknięcie tutoriala wyjaśnia powrót przez ? i zachowuje właściwy zegar](changes/HL-CHG-0954.md) | Story | `accepted` | `verified_locally` | `not_deployed` |
-| [HL-CHG-0961 — Samouczek wskazuje strzałką faktycznie zmieniony poziom i szczęście](changes/HL-CHG-0961.md) | Story | `accepted` | `verified_locally` | `not_deployed` |
-| [HL-CHG-0962 — Nagroda ma prosty opis bez dodatkowej skrzyni, a koniec kursu oddaje inicjatywę graczowi](changes/HL-CHG-0962.md) | Story | `accepted` | `verified_locally` | `not_deployed` |
-| [HL-CHG-0963 — Osiem zadań na poziom prowadzi do kolejnej rzeczywistej rozbudowy Latarni](changes/HL-CHG-0963.md) | Story | `accepted` | `verified_locally` | `not_deployed` |
-| [HL-CHG-0964 — Niepowodzenia otwierają pięć pomocniczych i trzy ratunkowe z prawidłowym powrotem](changes/HL-CHG-0964.md) | Story | `accepted` | `verified_locally` | `not_deployed` |
+| [HL-CHG-0954 — Zamknięcie tutoriala wyjaśnia powrót przez ? i zachowuje właściwy zegar](changes/HL-CHG-0954.md) | Story | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
+| [HL-CHG-0961 — Samouczek wskazuje strzałką faktycznie zmieniony poziom i szczęście](changes/HL-CHG-0961.md) | Story | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
+| [HL-CHG-0962 — Nagroda ma prosty opis bez dodatkowej skrzyni, a koniec kursu oddaje inicjatywę graczowi](changes/HL-CHG-0962.md) | Story | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
+| [HL-CHG-0963 — Osiem zadań na poziom prowadzi do kolejnej rzeczywistej rozbudowy Latarni](changes/HL-CHG-0963.md) | Story | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
+| [HL-CHG-0964 — Niepowodzenia otwierają pięć pomocniczych i trzy ratunkowe z prawidłowym powrotem](changes/HL-CHG-0964.md) | Story | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
 
 <a id="hl-epic-eco"></a>
 
@@ -138,10 +138,10 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0116 — Ścieżki jako rzeczywisty wydatek kamienia i premia przewozu](changes/HL-CHG-0116.md) | Story | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0947 — Transport i budowa pierwszych dwóch poziomów przyspieszają bez zmiany poziomów 3+](changes/HL-CHG-0947.md) | Story | `accepted` | `verified_own_ci_and_pages` | `not_deployed` |
 | [HL-CHG-0948 — Każda ścieżka rozbudowy respektuje dostępność budynku na danym poziomie](changes/HL-CHG-0948.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `not_deployed` |
-| [HL-CHG-0955 — Każdy pracownik idzie z Domu do pracy i wraca po 2 minuty](changes/HL-CHG-0955.md) | Story | `accepted` | `verified_locally` | `not_deployed` |
-| [HL-CHG-0958 — Osoba bez miejsca w Domu je dwa razy więcej i pracuje z połową wydajności](changes/HL-CHG-0958.md) | Story | `accepted` | `verified_locally` | `not_deployed` |
-| [HL-CHG-0960 — Chmurka budowy nie przełącza poprawnego ETA na Niedostępne co kilka sekund](changes/HL-CHG-0960.md) | Bug | `accepted` | `verified_locally` | `not_deployed` |
-| [HL-CHG-0965 — Każde nowe zadanie ma osiągalny koszt, ilość i termin w realnej gospodarce](changes/HL-CHG-0965.md) | Story | `accepted` | `verified_locally` | `not_deployed` |
+| [HL-CHG-0955 — Każdy pracownik idzie z Domu do pracy i wraca po 2 minuty](changes/HL-CHG-0955.md) | Story | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
+| [HL-CHG-0958 — Osoba bez miejsca w Domu je dwa razy więcej i pracuje z połową wydajności](changes/HL-CHG-0958.md) | Story | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
+| [HL-CHG-0960 — Chmurka budowy nie przełącza poprawnego ETA na Niedostępne co kilka sekund](changes/HL-CHG-0960.md) | Bug | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
+| [HL-CHG-0965 — Każde nowe zadanie ma osiągalny koszt, ilość i termin w realnej gospodarce](changes/HL-CHG-0965.md) | Story | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
 
 <a id="hl-epic-peo"></a>
 
@@ -188,9 +188,9 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0936 — Dom otwiera wszystkie przydziały dopiero przez Zarządzaj pracownikami](changes/HL-CHG-0936.md) | Story | `accepted` | `verified_own_ci_and_pages` | `not_deployed` |
 | [HL-CHG-0937 — Pozostałe punkty szczęścia są wydawalne, a niedozwolone przekazanie zablokowane](changes/HL-CHG-0937.md) | Decision | `implementation_assumption_open_for_correction` | `verified_own_ci_and_pages` | `not_deployed` |
 | [HL-CHG-0949 — Pięciu producentów opisuje smutną buźkę przy pełnym lokalnym magazynie](changes/HL-CHG-0949.md) | Story | `accepted` | `verified_own_ci_and_pages` | `not_deployed` |
-| [HL-CHG-0956 — Ratusz wyznacza limit ludności niezależnie od liczby łóżek](changes/HL-CHG-0956.md) | Story | `accepted` | `verified_locally` | `not_deployed` |
-| [HL-CHG-0957 — Pula szczęścia Domu i odbiorcy obejmują tylko zakwaterowanych mieszkańców](changes/HL-CHG-0957.md) | Story | `accepted` | `verified_locally` | `not_deployed` |
-| [HL-CHG-0959 — Nowe konsekwencje braku miejsca zastępują dotychczasową globalną karę szczęścia](changes/HL-CHG-0959.md) | Decision | `accepted` | `verified_locally` | `not_deployed` |
+| [HL-CHG-0956 — Ratusz wyznacza limit ludności niezależnie od liczby łóżek](changes/HL-CHG-0956.md) | Story | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
+| [HL-CHG-0957 — Pula szczęścia Domu i odbiorcy obejmują tylko zakwaterowanych mieszkańców](changes/HL-CHG-0957.md) | Story | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
+| [HL-CHG-0959 — Nowe konsekwencje braku miejsca zastępują dotychczasową globalną karę szczęścia](changes/HL-CHG-0959.md) | Decision | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
 
 <a id="hl-epic-min"></a>
 
@@ -253,7 +253,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0423 — Wcześniejsze zachowanie historii admin1 przy zwykłej promocji](changes/HL-CHG-0423.md) | Decision | `accepted` | `verified` | `code_deployed_v22_1` |
 | [HL-CHG-0424 — Pierwotne uruchamianie zegara wyspy przy pierwszym zalogowaniu](changes/HL-CHG-0424.md) | Decision | `superseded` | `not_applicable` | `not_applicable` |
 | [HL-CHG-0942 — Większe pole nazwy przyjmuje 3–40 znaków i odrzuca wulgaryzmy PL/EN](changes/HL-CHG-0942.md) | Story | `accepted` | `verified_own_ci_and_pages` | `not_deployed` |
-| [HL-CHG-0966 — Nowe reguły zachowują starsze wyspy, aktywne zadania i jednokrotne rozliczenie](changes/HL-CHG-0966.md) | Story | `accepted` | `verified_locally` | `not_deployed` |
+| [HL-CHG-0966 — Nowe reguły zachowują starsze wyspy, aktywne zadania i jednokrotne rozliczenie](changes/HL-CHG-0966.md) | Story | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
 
 <a id="hl-epic-com"></a>
 
@@ -336,7 +336,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0714 — Osobna lista ręcznego odbioru z wynikami, notatkami i eksportem](changes/HL-CHG-0714.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0715 — Dokumenty draft3 opisują archipelag i społeczność oraz wymagają aktualnych potwierdzeń](changes/HL-CHG-0715.md) | Story | `accepted` | `packaged_browser_pass` | `not_deployed` |
 | [HL-CHG-0950 — Zakres v26 ma nowe karty i testy, bez promocji GCP i resetu historii](changes/HL-CHG-0950.md) | Ops | `accepted` | `verified_own_ci_and_pages` | `not_deployed` |
-| [HL-CHG-0967 — Zakres v27 ma osobne źródła, karty i ręczne scenariusze bez promocji GCP](changes/HL-CHG-0967.md) | Ops | `accepted` | `verified_locally` | `not_deployed` |
+| [HL-CHG-0967 — Zakres v27 ma osobne źródła, karty i ręczne scenariusze bez promocji GCP](changes/HL-CHG-0967.md) | Ops | `accepted` | `verified_locally` | `authorized_waiting_exact_ci` |
 
 <a id="hl-epic-arc"></a>
 

@@ -875,3 +875,16 @@ GO użytkownika **„tu masz z drobnymi poprawkami; GO”** obejmuje [wymagania 
 - Dwie ostatnie regresje opisów sprawdzają oba zdania o **2 minutach** dojścia oraz pełne polskie wyceny transportu/przyspieszenia, bez fragmentów „quote”. Generator kart/listy ręcznej/dokumentów prawnych i kontrole zgodności przeszły. Archiwalne wejścia akceptacji zachowują wcześniejsze hashe.
 - **17 nowych kart HL-CHG-0951–0967** ma lokalnie implemented / verified_locally; własne CI awaiting_own_run. Rejestr nadal zawiera 296 kart, a **wszystkie 70 wyników ręcznych pozostają NOT RUN**. Historyczne wyniki i statusy nie zostały masowo zastąpione.
 - **Własny SHA, finalny pakiet tego SHA, push, CI, Pages i tag v27 oczekują**. PRE-PROD pozostaje 0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`, promocja 41246771480 / próba 1 SUCCESS. Bez GCP, resetu kont, PROD i rzeczywistych operatorów.
+
+### Źródło aplikacji v27 wysłane; własne workflow w toku
+
+- Wysłano do `main` źródło aplikacji [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37). Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259) oraz [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232) mają **IN PROGRESS**, potwierdzone publicznym odczytem GitHub. Nie deklarujemy ich sukcesu, opublikowanego podglądu v27 ani utworzenia tagu.
+- Pakiet dokładnego SHA ma **61 plików z manifestem / 60 treści / 11 219 303 bajty**. TAR SHA-256 `af8a64508044d344b4e01122145d3b0b1653c6c4abfecfec5fc502e7b36e1e55`, manifest SHA-256 `84ac0f9528cadaab15c92d3f789abd041d45b9a4580051e638472879d0709d49`. Archiwum sprawdzono i rozpakowano; wszystkie 60 plików treści jest identyczne bajtowo z lokalnie testowanym `frontend-v27-final2`. To własny lokalny pakiet źródła, nie jeszcze artefakt zakończonego CI.
+- Karty HL-CHG-0951–0967 zachowują implemented / verified_locally, a własne CI przechodzi na in_progress z tym źródłem. Wszystkie 70 ręcznych wyników nadal NOT RUN. PRE-PROD pozostaje 0.10.1.0 /353faad…; brak GCP, resetu, PROD i aktywacji prawdziwych operatorów. Końcowy wynik CI/Pages i tag wymagają kolejnego odczytu.
+
+Pages źródła `6ff5ae976e31add7fb93e3872e0d9046a25edd37`: [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232) **SUCCESS, 30 s**, potwierdzone odczytem GitHub. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259) nadal **IN PROGRESS**; zakończone kontrole reguł/API/Python/pakowania nie zastępują końcowego wyniku całego CI. Tag v27 nieutworzony. Sukces workflow publikacji nie jest niezależnym HTTP odczytem bajtów hosta. PRE-PROD i dane graczy bez zmian.
+
+
+## 1 listopada 2026 — późniejsze polecenie promocji 0.11.0.0
+
+Użytkownik jawnie zlecił „promuj na pre prod”. Przygotowano istniejący bridge dla markera `[preprod:0.11.0.0]`; 28 testów dispatchera i promocji PASS. Bezpośrednie API GitHub tej sesji zwraca Forbidden. Zmiana nie dotyka 59 publicznych plików aplikacji względem6ff5ae9, reguł Firestore ani danych kont. Osobny oznaczony SHA wymaga własnego CI i dopiero potem standardowego deployu. Do odczytu nowych przebiegów PRE-PROD pozostaje0.10.1.0/353faad; nie wykonano resetu ani PROD.

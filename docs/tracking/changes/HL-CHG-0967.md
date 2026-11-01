@@ -10,8 +10,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `verified_locally` |
-| CI | `awaiting_own_run` |
-| PRE-PROD | `not_deployed` |
+| CI | `awaiting_promotion_commit_ci` |
+| PRE-PROD | `authorized_waiting_exact_ci` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -33,7 +33,7 @@ Data pierwotnej wiadomości: 2026-11-01. Data klienta Europe/Warsaw. Zlecenie po
 
 ## Dowody
 
-- **Dokumenty:** [docs/FRONTEND-V27-REQUIREMENTS.md](../../FRONTEND-V27-REQUIREMENTS.md), [docs/approval/v27-approval-record.md](../../approval/v27-approval-record.md), [docs/DEV-0.11.0.0-VALIDATION.md](../../DEV-0.11.0.0-VALIDATION.md)
+- **Dokumenty:** [docs/FRONTEND-V27-REQUIREMENTS.md](../../FRONTEND-V27-REQUIREMENTS.md), [docs/approval/v27-approval-record.md](../../approval/v27-approval-record.md), [docs/DEV-0.11.0.0-VALIDATION.md](../../DEV-0.11.0.0-VALIDATION.md), [docs/PREPROD-V27-PREPARATION.md](../../PREPROD-V27-PREPARATION.md)
 - **Kod:** nie przypisano.
 - **Scenariusze automatyczne:** [tests/harborlight-manual-checklist-smoke.py](../../../tests/harborlight-manual-checklist-smoke.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
@@ -42,7 +42,7 @@ Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0070 — Migracja, nieobecność i powroty nie dublują mieszkań ani misji](../../testing/manual/HL-TC-0070.md) — `NOT RUN`.
 
-DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych.
+DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje.
 
 ## Relacje
 

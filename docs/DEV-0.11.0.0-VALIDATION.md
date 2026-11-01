@@ -1,6 +1,6 @@
 # DEV 0.11.0.0 / v27 — lokalny odbiór zakończony
 
-Stan roboczy z **1 listopada 2026, Europe/Warsaw**. Nowe GO obejmuje DEV i normalne Git/CI/Pages, bez promocji GCP, resetu kont i integracji planszówki online. Numer aplikacji to **0.11.0.0**, cache **`frontend-v27`**, schemat świata pozostaje **9**. Lokalny odbiór zakończono: **1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS**, po poprawkach i kierunkowych ponowieniach. Własne SHA, CI i publikacja Pages pozostają do potwierdzenia.
+Stan roboczy z **1 listopada 2026, Europe/Warsaw**. Nowe GO obejmuje DEV i normalne Git/CI/Pages, bez promocji GCP, resetu kont i integracji planszówki online. Numer aplikacji to **0.11.0.0**, cache **`frontend-v27`**, schemat świata pozostaje **9**. Lokalny odbiór zakończono: **1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS**, po poprawkach i kierunkowych ponowieniach. Źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłano do `main`; własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259) pozostaje **W TOKU**, a [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232) zakończyło się **SUCCESS, 30 s**, zgodnie z odczytem GitHub. Tag v27 nie został jeszcze utworzony.
 
 [Wymagania v27](FRONTEND-V27-REQUIREMENTS.md) · [Rejestr środowisk](ENVIRONMENT-STATUS.md) · [Karty zmian](tracking/CHANGE-REGISTER.md) · [Ręczny odbiór](testing/START-HERE.md).
 
@@ -82,7 +82,7 @@ Pierwszy pełny przebieg zawierał 20 sukcesów i 7 niepowodzeń. Naprawiono sze
 
 ## Ręczne scenariusze i rejestr
 
-Nowy zakres ma osobne karty **HL-CHG-0951–0967**. Po zakończonym odbiorze lokalnym te 17 kart ma **implemented / verified_locally**, a własne CI **awaiting_own_run**. PRE-PROD i PROD pozostają not_deployed dla nowego zakresu. Nie zmieniamy statusów pozostałych historycznych kart ani wyników ręcznych.
+Nowy zakres ma osobne karty **HL-CHG-0951–0967**. Po zakończonym odbiorze lokalnym te 17 kart ma **implemented / verified_locally**, a własne CI **in_progress** dla wskazanego SHA. PRE-PROD i PROD pozostają not_deployed dla nowego zakresu. Nie zmieniamy statusów pozostałych historycznych kart ani wyników ręcznych.
 
 | Scenariusze | Przedmiot odbioru |
 |---|---|
@@ -98,10 +98,10 @@ Nowy zakres ma osobne karty **HL-CHG-0951–0967**. Po zakończonym odbiorze lok
 
 | Dowód | Stan |
 |---|---|
-| Końcowy SHA aplikacji v27 | **Oczekuje**; nie utożsamiamy bieżących plików roboczych z historycznym SHA v26. |
+| Końcowy SHA aplikacji v27 | [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) — commit aplikacji wysłany do `main`. To własne źródło v27, odrębne od historycznego v26. |
 | Lokalny pakiet walidacyjny | **61 plików z manifestem / 60 plików treści, 11 219 303 bajtów**. Końcowy pakiet lokalnej walidacji `build/frontend-v27-final2`, z drzewa roboczego ze znacznikiem źródła `000…`. Służy testom lokalnym; nie jest finalnym pakietem własnego commitu ani opublikowanym artefaktem CI. |
-| Końcowy pakiet, manifest, rozmiary i hashe | **Oczekują** po końcowym odbiorze i wskazaniu SHA. |
-| Push / własne CI / Pages | **Oczekują** na własny commit i rzeczywiste wyniki. Stare sukcesy v26 nie dowodzą publikacji v27. |
+| Pakiet dokładnego źródła 6ff5ae9 | **61 plików z manifestem / 60 treści / 11 219 303 bajty**. TAR SHA-256 `af8a64508044d344b4e01122145d3b0b1653c6c4abfecfec5fc502e7b36e1e55`; manifest SHA-256 `84ac0f9528cadaab15c92d3f789abd041d45b9a4580051e638472879d0709d49`. Archiwum zweryfikowano i rozpakowano; wszystkie 60 plików treści jest identyczne bajtowo z lokalnie testowanym final2. To lokalny pakiet dokładnego SHA, odrębny od przyszłego artefaktu CI. |
+| Push / własne CI / Pages | Push 6ff5ae9 wykonany. [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): **IN PROGRESS**. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): **SUCCESS, 30 s**. Stan potwierdzony odczytem publicznego GitHub; nie deklarujemy sukcesu publikacji ani CI. |
 | Nieprzesuwany tag odbioru DEV | **Nieutworzony dla v27**; wymaga potwierdzenia własnego CI i Pages. |
 | PRE-PROD | **Bez nowej promocji** — pozostaje 0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`, przebieg 41246771480 / próba 1 SUCCESS. |
 | PROD, reset kont, prawdziwe płatności/reklamy/darowizny | **Bez zmian i aktywacji**. Testowe odpowiedzi Firebase nie dotykają prawdziwych wysp. |

@@ -52,7 +52,7 @@ test('fresh CI and workflow metadata must agree with the event and attempt', asy
 });
 
 test('only the exact allowlisted markers in the API-read source commit can request promotion', async () => {
-  assert.deepEqual(AUTHORIZED_MARKERS, ['[preprod:0.9.1.2]', '[preprod:0.10.1.0]']);
+  assert.deepEqual(AUTHORIZED_MARKERS, ['[preprod:0.9.1.2]', '[preprod:0.10.1.0]', '[preprod:0.11.0.0]']);
   assert.equal(Object.isFrozen(AUTHORIZED_MARKERS), true);
   for (const marker of AUTHORIZED_MARKERS) {
     const { api, calls } = fixture({}, marker);
@@ -60,7 +60,8 @@ test('only the exact allowlisted markers in the API-read source commit can reque
     assert.deepEqual(calls, [['run', 123], ['workflow', 456], ['commit', sourceSha], ['deployments', sourceSha], ['main'], ['dispatch']]);
   }
   for (const message of ['Ordinary update', '[preprod:0.9.1.3]', '[preprod:0.9.1.20]', '[preprod:0.10.1.1]',
-    '[preprod:0.10.1.00]', '[preprod:0.10.1.0-beta]', '[preprod:*]', '[preprod:0.10.1.0', '[PREPROD:0.10.1.0]']) {
+    '[preprod:0.10.1.00]', '[preprod:0.10.1.0-beta]', '[preprod:0.11.0.1]', '[preprod:0.11.0.00]',
+    '[preprod:0.11.0.0-beta]', '[preprod:*]', '[preprod:0.10.1.0', '[PREPROD:0.10.1.0]']) {
     const { api, calls } = fixture({ getCommit: async () => ({ sha: sourceSha, commit: { message } }) });
     assert.equal((await dispatchUrgent(api, event(), identity)).reason, 'no-urgent-marker');
     assert.ok(!calls.some(c => ['main', 'dispatch'].includes(c[0])));
@@ -69,8 +70,26 @@ test('only the exact allowlisted markers in the API-read source commit can reque
   await assert.rejects(dispatchUrgent(api, event(), identity), /source commit/);
 });
 
+test('authorized 0.11.0.0 promotion dispatches the exact successful source once through the existing workflow', async () => {
+  const marker = '[preprod:0.11.0.0]';
+  let previous = [];
+  const { api, calls } = fixture({
+    listDeploymentRuns: async sha => { calls.push(['deployments', sha]); return previous; },
+    dispatch: async () => { calls.push(['dispatch']); previous = [deployment()]; }
+  }, marker);
+  assert.deepEqual(await dispatchUrgent(api, event(), identity), {
+    dispatched: true, sourceSha, workflow: '.github/workflows/google-cloud-dev.yml'
+  });
+  assert.deepEqual(calls, [['run', 123], ['workflow', 456], ['commit', sourceSha],
+    ['deployments', sourceSha], ['main'], ['dispatch']]);
+  assert.deepEqual(await dispatchUrgent(api, event(), identity), {
+    dispatched: false, reason: 'deployment-already-exists', sourceSha, deploymentRunId: 789
+  });
+  assert.equal(calls.filter(([kind]) => kind === 'dispatch').length, 1);
+});
+
 test('the new release marker cannot bypass CI identity, freshness, main or duplicate gates', async () => {
-  const marker = '[preprod:0.10.1.0]';
+  const marker = '[preprod:0.11.0.0]';
   for (const change of [{ conclusion: 'failure' }, { event: 'workflow_dispatch' }, { head_branch: 'feature' },
     { repository: { ...repository, id: 1 } }, { head_repository: { ...repository, full_name: 'fork/gra' } }]) {
     const { api, calls } = fixture({}, marker);

@@ -2,17 +2,24 @@
 
 Aktualizacja: **1 listopada 2026**. Ten dokument jest głównym rejestrem tego, co rzeczywiście znajduje się na DEV, PRE-PROD i PROD. Historia czynności i wyników pozostaje w [dzienniku](IMPLEMENTATION-LOG.md), a warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-## DEV 0.11.0.0 / v27 — lokalny odbiór zakończony, publikacja oczekuje
+## PRE-PROD 0.11.0.0 — nowe polecenie promocji
+
+Po odbiorze DEV użytkownik zlecił **„promuj na pre prod”**. Przygotowano standardowy bridge z markerem `[preprod:0.11.0.0]`, bez zmiany plików aplikacji, bramek CI/WIF i danych graczy. Oznaczony commit wymaga własnego pełnego CI. Poprzedni przebieg źródła 6ff5ae9 zostanie zastąpiony odbiorem dokładnego kandydata promocji; nie jest sam w sobie jej zezwoleniem technicznym. Testy dispatchera/promocji 28/28 PASS. [Przygotowanie i zgodność zapisów](PREPROD-V27-PREPARATION.md).
+
+Stan: **oczekuje na CI kandydata i rzeczywistą publikację GCP**. Ostatnie odebrane PRE-PROD nadal 0.10.1.0 /353faad… . Bez resetu i PROD. Poniżej zachowano migawkę odbioru bazowego źródła aplikacji; nowe SHA i przebiegi zostaną uzupełnione po odczycie.
+
+## DEV 0.11.0.0 / v27 — lokalny odbiór zakończony, Pages opublikowane, własne CI w toku
 
 GO **„tu masz z drobnymi poprawkami; GO”** obejmuje zatwierdzone opisy oraz zebraną paczkę nauki, Latarni i warunków życia. [Wymagania v27](FRONTEND-V27-REQUIREMENTS.md) i [archiwum akceptacji](approval/v27-approval-record.md) zachowują źródła, hashe oraz odrębne interpretacje wdrożeniowe. Aplikacja ma **0.11.0.0**, cache **`frontend-v27`**; schemat świata pozostaje **9**.
 
 | Warstwa | Stan paczki v27 |
 |---|---|
 | Kod lokalny | Zintegrowany kandydat. Tutorial ma 34 kroki, samouczek 25 lekcji; oba wracają przez Pomoc pod ?. Dodano objaśnienia rzeczywistych skutków i stabilną prognozę budowy. Dojście/powrót trwa 120 sekund. Limit Ratusza jest niezależny od łóżek; brak łóżka oznacza indywidualne ×0,5 pracy, ×2 posiłków i brak punktów Domu, zastępując dawną globalną karę szczęścia. Misje Latarni mają ścieżki 8/5/3. |
-| Node i Python | Lokalnie **1017 Node PASS** po integracji oraz **141 Python PASS w 11 zestawach**. To nie jest własny wynik CI przyszłego końcowego SHA. |
+| Node i Python | Lokalnie **1017 Node PASS** po integracji oraz **141 Python PASS w 11 zestawach**. To wynik lokalny źródła 6ff5ae9, odrębny od jego bieżącego CI. |
 | Chromium | **27/27 nazwanych zestawów PASS** po poprawkach i kierunkowych ponowieniach. Ostatnie sondy final2: pełne v21-features, 114 widoków PL bez angielskich pozostałości i 8 prób nawigacji/restartu/utraconego ACK. To inwentarz lokalnych wyników, nie własne CI jednego SHA. [Dokładny zakres dowodu](DEV-0.11.0.0-VALIDATION.md). |
-| Ewidencja | **296 kart zmian, 70 ręcznych przypadków NOT RUN**. Nowe 17 kart: implemented / verified_locally, własne CI awaiting_own_run. Generatory i kontrole dokumentów prawnych PASS; ręcznych wyników nie zalicza automatyzacja. |
-| Git / pakiet / własne CI / Pages / tag v27 | **Lokalny odbiór zakończony; oczekują na własny commit i rzeczywiste wyniki CI/Pages**. Pakiet walidacyjny ze źródła roboczego nie jest finalnym wydaniem powiązanym z SHA. |
+| Ewidencja | **296 kart zmian, 70 ręcznych przypadków NOT RUN**. Nowe 17 kart: implemented / verified_locally, własne CI in_progress. Generatory i kontrole dokumentów prawnych PASS; ręcznych wyników nie zalicza automatyzacja. |
+| Git / własne CI / Pages / tag v27 | Źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259) **IN PROGRESS**; [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232) **SUCCESS, 30 s** — odczytane w GitHub. Tag v27 nieutworzony. |
+| Pakiet źródła 6ff5ae9 | **61 plików / 60 treści / 11 219 303 bajty**. TAR `af8a64508044d344b4e01122145d3b0b1653c6c4abfecfec5fc502e7b36e1e55`, manifest `84ac0f9528cadaab15c92d3f789abd041d45b9a4580051e638472879d0709d49`. Archiwum zweryfikowane i rozpakowane; wszystkie 60 plików treści identyczne z testowanym final2. [Pełna walidacja](DEV-0.11.0.0-VALIDATION.md). |
 | PRE-PROD | **Bez nowej promocji** — nadal 0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`, promocja 41246771480 / próba 1 SUCCESS. |
 | PROD, dane graczy i realne usługi | Bez nowej publikacji, resetów, zmiany haseł oraz aktywacji płatności, reklam, darowizn lub integracji planszówki online. |
 

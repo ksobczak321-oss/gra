@@ -15087,8 +15087,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15108,7 +15108,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-copy.js",
@@ -15119,7 +15120,7 @@
           "tests/harborlight-approved-copy-v27.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": []
     },
@@ -15139,8 +15140,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15160,7 +15161,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-play.js"
@@ -15170,7 +15172,7 @@
           "tests/harborlight-learning-flow-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": []
     },
@@ -15190,8 +15192,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15212,7 +15214,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-play.js",
@@ -15224,7 +15227,7 @@
           "tests/harborlight-learning-flow-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": []
     },
@@ -15244,8 +15247,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15266,7 +15269,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-onboarding-ui.js",
@@ -15278,7 +15282,7 @@
           "tests/harborlight-learning-flow-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": []
     },
@@ -15298,8 +15302,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15322,7 +15326,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-residents.js",
@@ -15333,7 +15338,7 @@
           "tests/harborlight-housing-v27.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": []
     },
@@ -15353,8 +15358,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15374,7 +15379,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-residents.js",
@@ -15390,7 +15396,7 @@
           "tests/harborlight-world-events-v18.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": [
         "W wymaganiach oddzielono dosłowną decyzję użytkownika od wybranego parametru integracyjnego; nie traktujemy wyboru implementacji jako dodatkowej odpowiedzi użytkownika."
@@ -15412,8 +15418,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15434,7 +15440,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-state.js",
@@ -15446,7 +15453,7 @@
           "tests/harborlight-housing-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": []
     },
@@ -15466,8 +15473,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15487,7 +15494,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-residents.js",
@@ -15501,7 +15509,7 @@
           "tests/harborlight-housing-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": []
     },
@@ -15521,8 +15529,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15543,7 +15551,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-residents.js",
@@ -15554,7 +15563,7 @@
           "tests/harborlight-housing-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": []
     },
@@ -15574,8 +15583,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15595,7 +15604,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-logistics.js",
@@ -15605,7 +15615,7 @@
           "tests/harborlight-logistics-v27.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": []
     },
@@ -15625,8 +15635,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15647,7 +15657,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-play.js",
@@ -15660,7 +15671,7 @@
           "tests/harborlight-learning-flow-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": []
     },
@@ -15680,8 +15691,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15702,7 +15713,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-tutorial-ui.js",
@@ -15714,7 +15726,7 @@
           "tests/harborlight-learning-flow-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": []
     },
@@ -15734,8 +15746,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15756,7 +15768,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-activities.js",
@@ -15771,7 +15784,7 @@
           "tests/harborlight-missions-game-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": [
         "W wymaganiach oddzielono dosłowną decyzję użytkownika od wybranego parametru integracyjnego; nie traktujemy wyboru implementacji jako dodatkowej odpowiedzi użytkownika."
@@ -15793,8 +15806,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15814,7 +15827,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-activities.js",
@@ -15827,7 +15841,7 @@
           "tests/harborlight-missions-game-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": [
         "W wymaganiach oddzielono dosłowną decyzję użytkownika od wybranego parametru integracyjnego; nie traktujemy wyboru implementacji jako dodatkowej odpowiedzi użytkownika."
@@ -15849,8 +15863,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15872,7 +15886,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-activities.js",
@@ -15885,7 +15900,7 @@
           "tests/harborlight-missions-game-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": []
     },
@@ -15905,8 +15920,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15928,7 +15943,8 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [
           "harborlight-v1-state.js",
@@ -15944,7 +15960,7 @@
           "tests/harborlight-missions-game-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": []
     },
@@ -15964,8 +15980,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally",
-        "ci": "awaiting_own_run",
-        "preprod": "not_deployed",
+        "ci": "awaiting_promotion_commit_ci",
+        "preprod": "authorized_waiting_exact_ci",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15985,14 +16001,15 @@
         "documents": [
           "docs/FRONTEND-V27-REQUIREMENTS.md",
           "docs/approval/v27-approval-record.md",
-          "docs/DEV-0.11.0.0-VALIDATION.md"
+          "docs/DEV-0.11.0.0-VALIDATION.md",
+          "docs/PREPROD-V27-PREPARATION.md"
         ],
         "code": [],
         "automated_tests": [
           "tests/harborlight-manual-checklist-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+        "release_note": "DEV 0.11.0.0 / v27: źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. Lokalnie 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): IN PROGRESS. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): SUCCESS, 30 s, potwierdzone odczytem GitHub; tag v27 nieutworzony. Pakiet dokładnego SHA zweryfikowany: 61 plików/60 treści, 11 219 303 bajty, wszystkie treści identyczne z testowanym final2; hashe TAR i manifestu w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Ręczny odbiór nadal NOT RUN; PRE-PROD 0.10.1.0/353faad bez nowej promocji, resetu lub PROD. Późniejsze polecenie użytkownika „promuj na pre prod” autoryzuje standardową promocję oznaczonego SHA po jego własnym CI, bez resetu. Kandydat zachowuje publiczne pliki aplikacji6ff5ae9; rzeczywisty wynik promocji oczekuje."
       },
       "notes": []
     }

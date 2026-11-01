@@ -5,7 +5,7 @@ import { validateCiRun } from './promotion.mjs';
 export const REPOSITORY = 'ksobczak321-oss/gra';
 export const REPOSITORY_ID = 1428128759;
 export const MARKER = '[preprod:0.9.1.2]';
-export const AUTHORIZED_MARKERS = Object.freeze([MARKER, '[preprod:0.10.1.0]']);
+export const AUTHORIZED_MARKERS = Object.freeze([MARKER, '[preprod:0.10.1.0]', '[preprod:0.11.0.0]']);
 const CI_PATH = '.github/workflows/ci.yml';
 const CI_NAME = 'Validate HARBORLIGHT source';
 const DEPLOY_PATH = '.github/workflows/google-cloud-dev.yml';
