@@ -2,7 +2,7 @@
 
 Aktualizacja: **1 listopada 2026**. Ten dokument jest głównym rejestrem tego, co rzeczywiście znajduje się na DEV, PRE-PROD i PROD. Historia czynności i wyników pozostaje w [dzienniku](IMPLEMENTATION-LOG.md), a warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-## DEV 0.10.2.0 / v26 — lokalna integracja, bez publikacji
+## DEV 0.10.2.0 / v26 — podgląd opublikowany, własne CI i Pages potwierdzone
 
 GO z 1 listopada obejmuje tylko DEV, Git/CI/Pages. Pakiet porządkuje Magazyn i Dom, oddziela Ranking, Sojusz i ligę oraz Pomagam, dodaje wejście czatu przed dzwonkiem, przyjmuje ręczną redakcję opisów oraz nazwę 3–40 znaków z walidacją PL/EN. Tutorial pozostaje oprowadzaniem po 33 elementach, samouczek ma 25 praktycznych lekcji; oba można zamknąć, wznowić lub przejrzeć od początku bez resetu i powtórnych nagród. Nowy kurs zaczyna się od 6 tragarzy oraz priorytetu Budowa, kończy nominalnie na Ratuszu 2, a pierwsze rozbudowy mają turbo dostaw i budowy. Cache: `frontend-v26`; widoczna wersja: **0.10.2.0**. Schemat świata pozostaje 9.
 
@@ -11,9 +11,9 @@ GO z 1 listopada obejmuje tylko DEV, Git/CI/Pages. Pakiet porządkuje Magazyn i 
 | Kod lokalny | Zintegrowany i odebrany lokalnie kandydat. [Wymagania v26](FRONTEND-V26-REQUIREMENTS.md). |
 | Node | **954 PASS**, lokalny wynik po integracji. Nie jest wynikiem własnego CI przyszłego SHA. |
 | Python | **141 PASS w 11 zestawach**; log lokalny potwierdza sumę 2+14+23+12+17+12+12+10+13+8+18. |
-| Chromium | **22 zestawy PASS** po poprawkach i odpowiednich ponowieniach;114 rzeczywistych widoków PL bez reszt EN. Własny CI ponowi cały pakiet tego samego SHA. |
-| Pakiet | 55 plików z manifestem, 54 pliki zawartości. Końcowy SHA, rozmiar i hashe wymagają ponownego zbudowania po zamrożeniu źródła. |
-| Git / CI / Pages / tag v26 | **Jeszcze nie wykonano** push ani publikacji tego zakresu; własne dowody pozostają oczekujące. Ostatni potwierdzony Pages nadal dotyczy 0.10.1.0. |
+| Chromium | **22 zestawy PASS** po poprawkach i odpowiednich ponowieniach; 114 rzeczywistych widoków PL bez reszt EN. Własny CI tego samego SHA ponowił cały pakiet 22 zestawów: SUCCESS. |
+| Pakiet | 55 plików z manifestem/54 treści,11 062 246 bajtów. Hashe i potwierdzenie pakietu tego SHA: [odbiór v26](DEV-0.10.2.0-VALIDATION.md). |
+| Git / CI / Pages / tag v26 | `170cd31f006c8d3a5765ecb78649c31731b0a7a7` wysłany do main; [Pages 41337284572 SUCCESS, 25 s](https://github.com/ksobczak321-oss/gra/actions/runs/41337284572); [CI 41337284731 SUCCESS, 5 min 22 s](https://github.com/ksobczak321-oss/gra/actions/runs/41337284731). Tag `dev-0.10.2.0-20261101` wiąże ten sam kod i własne wyniki. |
 | PRE-PROD | **Bez nowej promocji**; pozostaje 0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`, przebieg 41246771480 / próba 1 SUCCESS. |
 | PROD i dane graczy | Brak nowej publikacji, resetu kont, zmiany haseł lub realnych operacji finansowych. |
 

@@ -72,3 +72,7 @@ Kontrakt promocji: [docs/RELEASE-PROCESS.md](docs/RELEASE-PROCESS.md).
 - Tag `preprod-0.10.1.0-20261031` został opublikowany po sukcesie deployu i wskazuje353faad… . Wiąże własne CI/Pages/bridge/PRE-PROD i oba publiczne digestsZIP; to nie jest dowód pobrania wnętrza artefaktów ani wykonania resetu.
 
 - Lokalny odbiór v26:954Node+141Python+22zestawyChromium PASS po poprawkach. Nowy kurs i przegląd po odświeżeniu mają rzeczywiste testy PL/EN desktop/mobile;114widoków polskich bez reszt EN. To nie jest jeszcze własny CI ani publikacja Pages. PRE-PROD pozostaje0.10.1.0/353faad… .
+
+- Odbiór i publikacja DEV v26: źródło `170cd31f006c8d3a5765ecb78649c31731b0a7a7`, CI41337284731 SUCCESS5m22s i Pages41337284572 SUCCESS25s. Tag `dev-0.10.2.0-20261101` wiąże te dowody i końcowe hashe55plików. Nowy pełny kurs ponownie PASS z archiwum tego SHA.279kart/59manualnych NOT RUN. Bez promocji PRE-PROD/PROD i resetu.
+
+- Tag `dev-0.10.2.0-20261101` opublikowany i wskazuje170cd31… . Kolejny commit porządkuje wyłącznie dowody/rejestr, bez zmiany53wejściowych plików publicznych aplikacji. Jego własne automatyczne CI/Pages nie zastępują odbioru źródła170cd31… .

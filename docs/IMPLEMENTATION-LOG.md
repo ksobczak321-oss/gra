@@ -842,3 +842,12 @@ Zakres: [wymagania v26](FRONTEND-V26-REQUIREMENTS.md). GO dotyczy tylko DEV i Gi
 - Przyjęto redakcję tekstów, pełne polskie komunikaty nagród oraz nazwy 3–40 znaków z filtremPL/EN i zachowaniem dawnych nazw przy odczycie. Pełny magazyn każdego z pięciu producentów pokazuje smutną buźkę także bez obsady i podczas wymuszonego 100% — znacznik pełności jest odrębny od faktycznej kary szczęścia.
 - Naprawiono rzeczywisty błąd mobilny: podgląd ⓘ po hover potrafił zakrywać odbiór nagrody. Hover działa tylko na urządzeniu z precyzyjnym wskaźnikiem; dotyk i klawiatura zachowują własne otwieranie informacji. Menu ma test geometrii nad dolną krawędzią oraz polski audyt 114 widoków.
 - Lokalnie954 Node i141 Python PASS; końcowy odbiór22 zestawów Chromium trwa, a Git/CI/Pages wymagają własnego SHA i wyników. Rejestr ma279 kart, lista 59 ręcznych przypadków nadal NOT RUN; importer 338 kart w dry-run, bez publikacji natywnych Issues. Wynik końcowy i hashe: [odbiór v26](DEV-0.10.2.0-VALIDATION.md).
+
+
+### Końcowy odbiór i publikacja DEV 0.10.2.0
+
+- Źródło `170cd31f006c8d3a5765ecb78649c31731b0a7a7` wysłane do main. Własne [CI 41337284731](https://github.com/ksobczak321-oss/gra/actions/runs/41337284731) SUCCESS (5 min22 s), [Pages 41337284572](https://github.com/ksobczak321-oss/gra/actions/runs/41337284572) SUCCESS (25 s). Obie grupy22 zestawów Chromium przeszły w CI tego samego SHA.
+- Lokalnie954 Node +141 Python +22 Chromium PASS po poprawkach i właściwych ponowieniach; 114 polskich widoków bez reszt EN. Nowy kurs dodatkowo ponowiony z końcowego pakietu: PL/EN komputer/telefon, sześć osób, nagroda przed objaśnieniem30+60 sekund, zadanie i wypłata minigry PASS.
+- Zweryfikowane archiwum ma55 plików/54 treści/11 062 246 bajtów. TAR SHA-256 `669e64fb07feca3fe86441376843bf7e21aab288101cfaf0de0614e05d01cb5a`, manifest SHA-256 `258b651352cf876baed98c160dc7a45f7de822228a178ddfc23fa4ef5b0f883a`.53 wejściowe pliki publiczne zgodne bajtowo z kodem, generowany index i cała treść zweryfikowane po manifestach.
+- Tag `dev-0.10.2.0-20261101` opublikowany po obu sukcesach. Dokumentacja/rejestr mają279 kart i59 manualnych NOT RUN; importer338 kart w dry-run, bez publikowania natywnych Issues.
+- Bezpośredni HTTP odczyt hosta Pages z tej sesji zwrócił403. Dowodem publikacji jest sukces Pages, a nie niezależny odczyt serwowanych bajtów. PRE-PROD nadal 0.10.1.0/353faad…, bez resetu, PROD i realnych usług finansowych.

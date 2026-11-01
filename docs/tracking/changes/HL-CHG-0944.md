@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `local_validation_passed` |
-| CI | `awaiting_own_source_run` |
+| DEV | `verified_own_ci_and_pages` |
+| CI | `passed_source_170cd31` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -43,7 +43,7 @@ Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0055 — Oba narzędzia nauki wznawiają miejsce i chronią od automatycznych reklam](../../testing/manual/HL-TC-0055.md) — `NOT RUN`.
 
-DEV0.10.2.0/v26: lokalnie954Node,141Python i22zestawy Chromium PASS po odpowiednich poprawkach i ponowieniach. Nowy kurs sprawdzono rzeczywistymi kliknięciami PL/EN komputer/telefon;114zrzutów polskich paneli bez reszt EN. Własny SHA/CI/Pages wymagają odrębnego potwierdzenia w docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje0.10.1.0/353faad; bez resetów i PROD. Ręczny wynik pozostaje NOT_RUN.
+DEV0.10.2.0/v26: źródło 170cd31f006c8d3a5765ecb78649c31731b0a7a7, CI 41337284731 SUCCESS, 5 min 22 s, Pages 41337284572 SUCCESS, 25 s; tag dev-0.10.2.0-20261101. Lokalnie954 Node+141 Python+22 zestawy Chromium PASS; własny CI ponowił cały pakiet tego SHA. Nowy kurs także PASS z końcowego archiwum; 114widoków PL bez reszt EN. Pakiet55 plików/11 062 246 bajtów; hashe: docs/DEV-0.10.2.0-VALIDATION.md. PRE-PROD pozostaje 0.10.1.0/353faad; bez resetów i PROD. Ręczne scenariusze nadal NOT_RUN.
 
 ## Relacje
 

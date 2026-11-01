@@ -1,6 +1,6 @@
 # DEV 0.10.2.0 / v26 — bieżący odbiór lokalny
 
-Stan zapisu: **1 listopada 2026, Europe/Warsaw**. GO obejmuje DEV oraz Git/CI/Pages, bez nowej promocji PRE-PROD, PROD, resetu kont i integracji planszówki online. Kandydat ma wersję **0.10.2.0** i cache **`frontend-v26`**. Lokalny odbiór zakończony. Git/CI/Pages wymagają własnych wyników źródłowego SHA.
+Stan zapisu: **1 listopada 2026, Europe/Warsaw**. GO obejmuje DEV oraz Git/CI/Pages, bez nowej promocji PRE-PROD, PROD, resetu kont i integracji planszówki online. Kandydat ma wersję **0.10.2.0** i cache **`frontend-v26`**. Lokalny odbiór zakończony. Kod wysłany do Git, Pages zakończone sukcesem; własne CI tego samego SHA zakończone sukcesem.
 
 [Wymagania v26](FRONTEND-V26-REQUIREMENTS.md) · [Rejestr środowisk](ENVIRONMENT-STATUS.md) · [Zmiany](tracking/CHANGE-REGISTER.md) · [Ręczna lista QA](testing/START-HERE.md).
 
@@ -12,7 +12,7 @@ Stan zapisu: **1 listopada 2026, Europe/Warsaw**. GO obejmuje DEV oraz Git/CI/Pa
 | Python: konfiguracja, pakowanie, konta i importer | **141 PASS w 11 zestawach**. Zweryfikowana suma logu: 2+14+23+12+17+12+12+10+13+8+18 = 141. |
 | Generatory rejestru zmian i ręcznej listy QA | Oba `--check` **PASS** dla 279 zmian i 59 przypadków. |
 | Chromium: narzędzie ręcznego raportu | **PASS** dla 59 kart: własny build każdego wyniku, zapis po przeładowaniu, bezpieczny tekst, filtrowanie, eksport/import JSON, odrzucenie błędnego importu i układ 360 px. Bez gry, kont i GCP. |
-| Chromium: pełna aplikacja | **22 zestawy PASS** po poprawkach i kierunkowych ponowieniach. Nowy kurs sprawdzony rzeczywistymi kliknięciami PL/EN komputer/telefon: sześciu tragarzy, priorytet, mapa, nagroda przed objaśnieniem 30+60 sekund, dostawy zadania i wypłata minigry. Osobno: aktywne/odłożone kursory po odświeżeniu, zachowanie historii i dokładna granica godziny reklam. Cały zestaw tego samego SHA ponownie uruchomi CI. |
+| Chromium: pełna aplikacja | **22 zestawy PASS** po poprawkach i kierunkowych ponowieniach. Nowy kurs sprawdzony rzeczywistymi kliknięciami PL/EN komputer/telefon: sześciu tragarzy, priorytet, mapa, nagroda przed objaśnieniem 30+60 sekund, dostawy zadania i wypłata minigry. Osobno: aktywne/odłożone kursory po odświeżeniu, zachowanie historii i dokładna granica godziny reklam. Własny CI tego samego SHA ponowił wszystkie 22 zestawy z wynikiem SUCCESS. |
 | Ręczny odbiór właściciela | **59 NOT RUN**. TC41 integracji fizycznej ma definicję DRAFT / BLOCKED; sama integracja jest poza GO. |
 
 Lokalne logi robocze są w `/tmp/harborlight-v26-python.log` i `/tmp/harborlight-v26-browser.log`. Nie są trwałym artefaktem Git ani dowodem CI. Log pełnego przeglądu zawiera też nieudane próby; nie zastępujemy ich liczbą sukcesów z wcześniejszej wersji. Pierwsza próba testu narzędzia QA nie uruchomiła Chromium w sandboxie (`setsockopt: Operation not permitted`); powtórzenie z dozwolonym szerszym uprawnieniem wykonania przeszło. To problem uruchomienia izolowanego testu, a nie dowód usterki hostingu.
@@ -32,12 +32,12 @@ Kolejność HUD oraz pozostawienie możliwości indywidualnego wydania reszty sz
 
 | Dowód | Stan |
 |---|---|
-| Pełny końcowy SHA | **Oczekuje** zamrożenia kodu i utworzenia commitu. Nie używamy SHA 0.10.1.0 jako źródła nowej aplikacji. |
-| Pakiet | Kandydat zawiera **55 plików z manifestem / 54 pliki treści**. Końcowy rozmiar i hashe archiwum/manifestu pozostają oczekujące po zamrożeniu źródła. |
-| Porównanie treści pakietu po końcowym odbiorze | **Oczekuje** zakończenia wszystkich poprawek i powtórzenia odpowiednich kontroli. |
-| Push do Git / własne CI | **Jeszcze niewykonane** dla tego pakietu. Własny przebieg i wynik muszą wskazywać dokładny nowy SHA. |
-| Pages 0.10.2.0 | **Jeszcze nieopublikowane**; ostatni potwierdzony podgląd to 0.10.1.0 / `353faad…`, Pages 41246449682. |
-| Tag odbioru DEV 0.10.2.0 | **Nieutworzony**; wymaga własnego sukcesu CI i Pages oraz dowodów końcowego pakietu. |
+| Pełny końcowy SHA | `170cd31f006c8d3a5765ecb78649c31731b0a7a7` — własny commit aplikacji 0.10.2.0, wysłany do `main`. |
+| Pakiet | **55 plików z manifestem / 54 pliki treści, 11 062 246 bajtów.** TAR SHA-256 `669e64fb07feca3fe86441376843bf7e21aab288101cfaf0de0614e05d01cb5a`; manifest SHA-256 `258b651352cf876baed98c160dc7a45f7de822228a178ddfc23fa4ef5b0f883a`. Archiwum sprawdzone po hashu i bezpiecznie rozpakowane. |
+| Porównanie treści pakietu po końcowym odbiorze | **PASS:** wszystkie 53 wejściowe pliki publiczne zgodne bajtowo; 54 pliki treści wraz z generowanym `index.html` przeszły kontrolę manifestu. Nowy pełny kurs ponownie PASS w Chromium bezpośrednio z końcowego pakietu tego SHA. |
+| Push do Git / własne CI | Push wykonany; własne [CI 41337284731](https://github.com/ksobczak321-oss/gra/actions/runs/41337284731) **SUCCESS, 5 min 22 s** dla 170cd31… . |
+| Pages 0.10.2.0 | [Pages 41337284572](https://github.com/ksobczak321-oss/gra/actions/runs/41337284572) **SUCCESS, 25 s** dla 170cd31… . [Podgląd DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v26). Bezpośredni HTTP odczyt hosta z tej sesji zwraca 403; nie traktujemy go jako niezależnego odbioru serwowanej treści. |
+| Tag odbioru DEV 0.10.2.0 | `dev-0.10.2.0-20261101` wskazuje `170cd31f006c8d3a5765ecb78649c31731b0a7a7` i wiąże własne CI, Pages oraz powyższe hashe. Opublikowany po potwierdzeniu obu sukcesów. |
 | PRE-PROD | **Bez nowej promocji**; pozostaje 0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`, wdrożenie 41246771480 / próba 1 SUCCESS. |
 | PROD, reset, operatorzy płatności/reklam | **Bez nowej publikacji, resetu ani aktywacji**. |
 
