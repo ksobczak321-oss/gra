@@ -1,19 +1,19 @@
 # HARBORLIGHT
 
-Aktualny rozwój **DEV 0.10.2.0 / v26**: czytelne panele gospodarki, osobne wejścia społeczności, poprawione opisy tutoriala, wznawianie nauki, nowy początek 25 lekcji i szybsze pierwsze rozbudowy. Lokalnie przeszło **954 testów Node oraz 141 testów Python**; **22 zestawy Chromium przeszły lokalny odbiór**. Kod `170cd31…` wysłany do Git; Pages 41337284572 zakończone sukcesem, CI 41337284731 SUCCESS, 5 min 22 s. **PRE-PROD pozostaje na 0.10.1.0**, bez resetu kont. [Zakres DEV v26](docs/FRONTEND-V26-REQUIREMENTS.md) · [odbiór lokalny](docs/DEV-0.10.2.0-VALIDATION.md) · [stan środowisk](docs/ENVIRONMENT-STATUS.md).
+Aktualny rozwój **DEV 0.11.0.0 / v27**: zatwierdzone opisy, 34 kroki tutoriala i 25 lekcji samouczka wznawiane przez Pomoc, objaśnienia rzeczywistych skutków, dwuminutowe dojście pracowników, niezależny limit ludności i łóżek oraz misje Latarni 8/5/3 z oceną wykonalności. Lokalnie **1017 Node i 141 Python PASS**; **27 nazwanych zestawów Chromium PASS** po poprawkach i kierunkowych ponowieniach. Audyt obejmuje 114 widoków PL bez angielskich pozostałości oraz dodatkowe 8 prób odzyskiwania zapisu. Własny SHA, CI i Pages v27 oczekują. **PRE-PROD pozostaje na 0.10.1.0**, bez resetu kont. [Zakres DEV v27](docs/FRONTEND-V27-REQUIREMENTS.md) · [bieżąca walidacja](docs/DEV-0.11.0.0-VALIDATION.md) · [stan środowisk](docs/ENVIRONMENT-STATUS.md).
 
-**[Testy do odhaczania — zacznij tutaj](docs/testing/START-HERE.md)** · **[Interaktywna lista 59 scenariuszy](docs/testing/qa-checklist.html)** · **[Planszówka: kompletny ZIP, plansza, karty, pionki, pudełko i instrukcja](docs/boardgame/README.md)**. Wszystkie ręczne wyniki pozostają NOT RUN; integracja sesji fizycznej z kontami online jest odłożona.
+**[Testy do odhaczania — zacznij tutaj](docs/testing/START-HERE.md)** · **[Interaktywna lista 70 scenariuszy](docs/testing/qa-checklist.html)** · **[Planszówka: kompletny ZIP, plansza, karty, pionki, pudełko i instrukcja](docs/boardgame/README.md)**. Wszystkie ręczne wyniki pozostają NOT RUN; nowe HL-TC-0060–0070 odbierają zakres v27. Integracja sesji fizycznej z kontami online jest odłożona.
 
-Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarni. Bazowe reguły **frontend-v18** zatwierdzono przez GO użytkownika 30 października 2026: [pełne wymagania](docs/FRONTEND-V18-REQUIREMENTS.md), [reguły gospodarki](docs/ECONOMY-RULES.md) i [budynki](docs/BUILDINGS.md). Bieżący zakres roboczy DEV to [0.10.2.0 / v26](docs/FRONTEND-V26-REQUIREMENTS.md); opublikowane PRE-PROD ma [0.10.1.0 / v25](docs/FRONTEND-V25-REQUIREMENTS.md). To dwa różne etapy wydania.
+Gra przeglądarkowa o rozwoju wyspy, produkcji, mieszkańcach i odbudowie Latarni. Bazowe reguły **frontend-v18** zatwierdzono przez GO użytkownika 30 października 2026: [pełne wymagania](docs/FRONTEND-V18-REQUIREMENTS.md), [reguły gospodarki](docs/ECONOMY-RULES.md) i [budynki](docs/BUILDINGS.md). Bieżący zakres roboczy DEV to [0.11.0.0 / v27](docs/FRONTEND-V27-REQUIREMENTS.md); opublikowane PRE-PROD ma [0.10.1.0 / v25](docs/FRONTEND-V25-REQUIREMENTS.md). To dwa różne etapy wydania.
 
-**[Stan środowisk i dowody wydań](docs/ENVIRONMENT-STATUS.md)** rozdziela kod roboczy, własne CI, podgląd Pages i publikację GCP. Dla 0.10.2.0 źródło 170cd31… jest w Git, Pages 41337284572 SUCCESS; CI 41337284731 SUCCESS, 5 min 22 s, tag `dev-0.10.2.0-20261101` wiąże ten sam kod. Historyczny tag `dev-0.10.1.0-20261031` oraz udana promocja PRE-PROD 41246771480 odnoszą się do źródła `353faad347262dce7c3632fdf7c71be124384ab1`, nie do nowej paczki. Dane graczy pozostają zachowane.
+**[Stan środowisk i dowody wydań](docs/ENVIRONMENT-STATUS.md)** rozdziela kod roboczy, własne CI, podgląd Pages i publikację GCP. Ostatni potwierdzony podgląd DEV to historyczne 0.10.2.0 / 170cd31… z własnymi CI, Pages i tagiem. Nie jest dowodem publikacji roboczego v27. Historyczny tag `dev-0.10.1.0-20261031` oraz udana promocja PRE-PROD 41246771480 odnoszą się do źródła `353faad347262dce7c3632fdf7c71be124384ab1`. Dane graczy pozostają zachowane.
 
 ## Wersja lokalna a opublikowana
 
 | Miejsce | Stan |
 |---|---|
-| DEV — ta przestrzeń robocza | **0.10.2.0 / v26**, cache `frontend-v26`. 954 Node PASS i 141 Python PASS w 11 zestawach. 22 zestawy Chromium PASS po poprawkach; źródło 170cd31…, Pages 41337284572 SUCCESS, 25 s, CI 41337284731 SUCCESS, 5 min 22 s. Końcowy pakiet sprawdzony po hashu. Tylko DEV, bez GCP i resetu. [Szczegóły odbioru](docs/DEV-0.10.2.0-VALIDATION.md). |
-| PRE-PROD — `harborlight-dev` | [Graj](https://harborlight-dev.web.app): **0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`**, [promocja 41246771480 / próba 1 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41246771480), 2 min 05 s. Zachowane konta, hasła i postęp. Nowy zakres v26 nie jest tu opublikowany. |
+| DEV — ta przestrzeń robocza | **0.11.0.0 / v27**, cache `frontend-v27`. 1017 Node i 141 Python PASS lokalnie; 27 nazwanych zestawów Chromium PASS po odpowiednich ponowieniach; własny SHA/CI/Pages oczekują. Tylko DEV, bez GCP i resetu. [Bieżąca walidacja](docs/DEV-0.11.0.0-VALIDATION.md). |
+| PRE-PROD — `harborlight-dev` | [Graj](https://harborlight-dev.web.app): **0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`**, [promocja 41246771480 / próba 1 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41246771480), 2 min 05 s. Zachowane konta, hasła i postęp. Nowy zakres v27 nie jest tu opublikowany. |
 | PROD — `harborlight-prod` / `harborlight.pl` | Brak potwierdzonej publikacji i powiązania domeny. |
 | GitHub Pages | [Podgląd DEV 0.10.2.0](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v26). [Pages 41337284572 SUCCESS, 25 s](https://github.com/ksobczak321-oss/gra/actions/runs/41337284572) dla 170cd31… . Podgląd działa w pamięci, odrębnie od kont chmurowych. |
 
@@ -23,7 +23,7 @@ W [v22](docs/FRONTEND-V22-REQUIREMENTS.md) udane działanie wykonane przed swoj�
 
 ## Wcześniejsza pilna poprawka 0.9.1.2
 
-[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Poprawka przeszła własne CI i promocję PRE-PROD; dowody zapisano w rejestrze środowisk. Nie resetowano kont. Tamten zakres miał 251 zmian i 46 ręcznych przypadków; bieżąca ewidencja DEV ma **279 zmian i 59 przypadków**, w tym nowe TC54–TC59 dla v26.
+[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Poprawka przeszła własne CI i promocję PRE-PROD; dowody zapisano w rejestrze środowisk. Nie resetowano kont. Tamten zakres miał 251 zmian i 46 ręcznych przypadków; bieżąca ewidencja DEV ma **296 zmian i 70 przypadków**, w tym nowe HL-TC-0060–0070 dla v27.
 
 ## Poprzedni zakres DEV 0.9.1.1
 

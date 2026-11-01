@@ -121,15 +121,18 @@ def house_and_chapel(browser):
     expect(page.locator('[data-worker-building]')).to_have_count(0)
     page.locator('[data-manage-workers]').click()
     assignments = page.locator('[data-workers-panel]')
-    expect(assignments.locator('.workers-intro')).to_contain_text('pięć minut')
+    expect(assignments.locator('.workers-intro')).to_contain_text('2 minut, aby dojść z Domu do pracy')
+    expect(assignments.locator('.workers-intro')).to_contain_text('powrót do Domu również trwa 2 minuty')
     expect(assignments.locator('[data-worker-building="farm"][data-worker-delta="1"]')).to_be_visible()
     assignments.locator('[data-worker-building="farm"][data-worker-delta="1"]').click()
     expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
     assert cloud.cloud_state(UID)['buildings']['farm']['workers'] == 1
     assignments.get_by_role('button', name='Mieszkańcy i szczęście', exact=True).click()
     guide = page.locator('.residents-panel')
-    for text in ['Gdy średnie szczęście jest dodatnie', 'Gdy spada poniżej zera', 'Przy szczęściu 0%', 'co najmniej 12 osób', 'wyspie córce — 6', 'ratusz', 'łóżka']:
+    for text in ['Gdy średnie szczęście jest dodatnie', 'gdy spada poniżej zera', 'Przy szczęściu 0%', 'co najmniej 12 osób', 'wyspie córce — 6', 'ratusz', 'łóżka']:
         expect(guide).to_contain_text(text)
+    expect(guide).to_contain_text('Mieszkaniec zaczyna pracę po dwóch minutach drogi z Domu.')
+    expect(guide).not_to_contain_text(re.compile(r'(?:5|pięć|pięciu) minut(?:ach|y)? (?:drogi|z domu)', re.I))
     building(page, 'house')
     points = int(page.locator('[data-house-pool="points"]').inner_text().replace(' ', ''))
     page.locator('[data-house-allocate]').click()

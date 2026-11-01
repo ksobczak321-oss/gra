@@ -27,8 +27,16 @@ test('actual first-lesson claim and confirmation results use full Polish global 
 });
 
 test('full real course notifications translate lesson names, immediate rewards and final settlement globally', () => {
-  const { state } = runTutorialV26();
-  const notes = state.notifications.filter(item => item.kind.startsWith('tutorial-'));
+  // The live inbox keeps only its latest 100 entries. Two-minute walks create
+  // more delivery/status notices during this course, so inspect tutorial events
+  // as they appear rather than losing the early rewards to inbox truncation.
+  const captured = new Map();
+  const capture = state => { for (const item of state.notifications) if (item.kind.startsWith('tutorial-')) captured.set(item.id, item); };
+  const { state, trace } = runTutorialV26({ beforeLesson: capture });
+  capture(state);
+  assert.equal(trace.length, 25);
+  assert.ok(trace.every(row => state.tutorial.completed[row.lessonId] === true));
+  const notes = [...captured.values()];
   assert.ok(notes.length >= 25);
   assert.ok(notes.some(item => item.kind === 'tutorial-settled'));
   for (const item of notes) for (const field of ['title', 'message']) polish(item[field], `${item.kind}.${field}`);

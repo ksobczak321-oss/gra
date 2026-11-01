@@ -141,13 +141,51 @@ test('new learning, introductory carrier and island-name results explain actual 
   for (let index = 0; index < 6; index++) assignment = act(state, { type: 'assign', building: 'warehouse', delta: 1 }, NOW);
   assert.equal(assignment.ok, true);
   const crew = assertPolish(assignment.message, 'six starter carriers');
-  assert.match(crew, /sześciu tragarzy.*20 sekund/);
+  assert.match(crew, /2 minuty/);
+  assert.ok(state.residents.filter(person => person.workplace === 'warehouse').every(person => person.arrivalRemaining === 120));
+  const recall = act(state, { type: 'assign', building: 'warehouse', delta: -1 }, NOW);
+  assert.equal(recall.ok, true);
+  assert.match(assertPolish(recall.message, 'carrier recall'), /2 minuty.*kończą rozpoczętą dostawę/);
   for (const name of ['AB', '<Port>', 'Kurwa Bay', 'Sh1t Bay']) {
     const result = act(state, { type: 'renameIsland', name }, NOW);
     assert.equal(result.ok, false); assertPolish(result.message, 'island name');
   }
   assert.equal(translate('Player ranking', 'pl'), 'Ranking graczy');
   assert.equal(translate('Chat with other players', 'pl'), 'Czat z innymi graczami');
+});
+
+test('resident invitation results describe joining the island without promising a House bed', () => {
+  const state = createState(NOW);
+  for (const resource of Object.keys(state.resources)) state.resources[resource] = 10000;
+  const result = act(state, { type:'buyResident' }, NOW);
+  assert.equal(result.ok,true);
+  assert.equal(assertPolish(result.message,'resident invitation'),'Nowi mieszkańcy dołączyli do wyspy.');
+  const note = state.notifications.find(item => item.kind === 'resident-purchased');
+  assert.ok(note);
+  assert.match(assertPolish(note.message,'resident arrival'), /Nowi mieszkańcy na wyspie: 1.*24 godziny.*Latarni.*powitalna/);
+  assert.doesNotMatch(note.message, /moved into the House/);
+});
+
+test('both rendered Residents introductions explain the actual two-minute walk in Polish and English', () => {
+  const source = readFileSync(new URL('../harborlight-v1-play.js', import.meta.url), 'utf8');
+  const introductions = [...source.matchAll(/note\('(A resident starts working after [^']+)'\)/g)].map(match => match[1]);
+  assert.equal(introductions.length, 2, 'inspect both live Residents and worker-management introductions');
+  for (const introduction of introductions) {
+    assert.match(translate(introduction, 'en'), /after the 2-minute walk/);
+    assert.match(assertPolish(introduction, 'Residents introduction'), /po dwóch minutach drogi z Domu/);
+  }
+  assert.doesNotMatch(source, /(?:5-minute|five-minute|5 minutes|five minutes)[^.\n]*(?:walk|return home|reach work|reach the workplace)/i);
+});
+
+test('transport and acceleration quotes translate the whole message instead of leaving an English quote suffix', () => {
+  for (const [english, polish] of [
+    ['Instant transport quote.', 'Wycena natychmiastowego transportu.'],
+    ['Construction acceleration quote.', 'Wycena przyspieszenia budowy.']
+  ]) {
+    assert.equal(translate(english,'pl'),polish);
+    assert.equal(translate(english,'en'),english);
+    assert.doesNotMatch(translate(english,'pl'),/quote/i);
+  }
 });
 
 

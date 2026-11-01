@@ -1,11 +1,12 @@
 // Physical goods and event-based logistics. Durations are real elapsed seconds,
 // including catch-up after the browser is closed.
-import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v26';
-import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v26';
-import { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, normalizeBonusMaterials, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v26';
-import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v26';
-import { eventTransportMultiplier, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v26';
-export { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v26';
+import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v27';
+import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v27';
+import { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, normalizeBonusMaterials, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v27';
+import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v27';
+import { eventTransportMultiplier, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v27';
+import { residentWorkMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v27';
+export { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v27';
 export const workerEfficiency = productionMultiplier;
 // Paths improve cargo courses, independently of production and resident walks.
 export const transportEfficiency = (state, efficiency = workerEfficiency(state)) => efficiency * roadSpeedMultiplier(state) * activePlayMultiplier(state) * eventTransportMultiplier(state);
@@ -42,6 +43,36 @@ export function activeWorkerIndices(state, id) {
   const people = Array.isArray(state.residents) ? state.residents.filter(person => person.workplace === id) : [];
   if (!people.length && !Array.isArray(state.residents)) return Array.from({ length: state.buildings[id]?.workers || 0 }, (_, index) => index);
   return people.flatMap((person, index) => person.pendingRelease || (person.arrivalRemaining || 0) > EPS || person.visitGroup || person.visiting || (person.returnRemaining || 0) > EPS ? [] : [index]);
+}
+const residentAtWorkIndex = (state, id, index) => (state.residents || []).filter(person => person.workplace === id)[index];
+const residentLookups = new WeakMap();
+function residentById(state, id) {
+  if (id == null) return null;
+  const people = state.residents || [];
+  let cached = residentLookups.get(state);
+  if (cached?.people !== people || cached.length !== people.length) {
+    cached = { people, length: people.length, byId: new Map(people.map(person => [person.id, person])) };
+    residentLookups.set(state, cached);
+  }
+  return cached.byId.get(id) || null;
+}
+const workerMultiplier = (state, id, index) => {
+  const person = residentAtWorkIndex(state, id, index);
+  return person ? residentWorkMultiplier(state, person) : 1;
+};
+export function effectiveWorkerCount(state, id) {
+  const people = (state.residents || []).filter(person => person.workplace === id);
+  return activeWorkerIndices(state, id).reduce((sum, index) => sum + (people[index] ? residentWorkMultiplier(state, people[index]) : 1), 0);
+}
+const ledgerStock = values => Object.fromEntries(MATERIAL_IDS.map(id => [id, Math.floor(clamp(values?.[id], 0, Number.MAX_SAFE_INTEGER))]));
+function normalizeEconomyLedger(state, raw = state) {
+  const source = raw.economyLedger?.version === 1 ? raw.economyLedger : {};
+  state.economyLedger = { version: 1, produced: ledgerStock(source.produced), delivered: ledgerStock(source.delivered) };
+}
+function recordEconomyOutput(state, kind, resource, amount) {
+  if (!MATERIAL_IDS.includes(resource) || !(amount > 0)) return;
+  if (state.economyLedger?.version !== 1) normalizeEconomyLedger(state);
+  state.economyLedger[kind][resource] = Math.min(Number.MAX_SAFE_INTEGER, (state.economyLedger[kind][resource] || 0) + Math.floor(amount));
 }
 export function warehouseLimits(state) {
   const factor = state.buildings.warehouse.level ? 1.5 ** (state.buildings.warehouse.level - 1) : 0;
@@ -100,8 +131,6 @@ export function unlockStarterTurbo(state) {
   const carriers = (state.residents || []).filter(person => person.workplace === 'warehouse' && !person.pendingRelease);
   if (carriers.length < 6) return false;
   state.starterTurbo = { version: 1, unlocked: true, unlockedAt: state.worldTimeMs || 0 };
-  // Only the first six introductory carriers get the shorter initial walk.
-  if (state.buildings.townhall.level === 1) for (const person of carriers.slice(0, 6)) person.arrivalRemaining = Math.min(person.arrivalRemaining || 0, 20);
   return true;
 }
 export function starterConstructionTiming(state, project) {
@@ -119,7 +148,16 @@ export function starterConstructionTiming(state, project) {
   return { version: 1, level, carriers: 6, capacity, trips, waves, transportDuration, buildingDuration, courseSeconds: transportDuration / waves };
 }
 const constructionBuildingSeconds = (project, transport = project.transportSeconds || 0) => project.starterTurbo?.buildingDuration ?? Math.max(0, transport) * constructionBuildFactor(project);
-const tripEfficiency = (state, trip, efficiency = workerEfficiency(state)) => trip.starterTurboClock === true ? 1 : transportEfficiency(state, efficiency);
+function tripWorkerMultiplier(state, trip) {
+  const person = residentById(state, trip.residentId);
+  if (person) return residentWorkMultiplier(state, person);
+  // A departing resident cannot make loaded cargo disappear or change its
+  // speed to that of a different worker who later occupies the crew slot.
+  if (trip.residentId != null || trip.worker < 0) return trip.workMultiplier === .5 ? .5 : 1;
+  const workplace = ['warehouse', 'market', 'dock'].find(id => state.haulTrips?.[id]?.includes(trip));
+  return workplace ? workerMultiplier(state, workplace, trip.worker) : 1;
+}
+const tripEfficiency = (state, trip, efficiency = workerEfficiency(state)) => trip.starterTurboClock === true ? 1 : transportEfficiency(state, efficiency) * tripWorkerMultiplier(state, trip);
 function projectGoods(project) {
   if (!project.remainingMaterials) {
     project.remainingMaterials = Object.fromEntries(MATERIAL_IDS.map(id => [id, whole(project.cost?.[id])]));
@@ -159,12 +197,15 @@ export function constructionEstimate(state, projectOrCost, buildingId) {
   const trips = queuedTrips + inFlight.length;
   const waves = crew ? Math.ceil(trips / crew) : trips ? Infinity : 0;
   const efficiency = transportEfficiency(state);
-  const available = activeWorkerIndices(state, 'warehouse').map(index => ((state.haulTrips?.warehouse || []).find(t => t.worker === index)?.remaining || 0) / efficiency);
-  let transport = inFlight.reduce((end,t) => Math.max(end,t.remaining / efficiency),0);
+  const indices = activeWorkerIndices(state, 'warehouse');
+  const durations = indices.map(index => 300 / (efficiency * workerMultiplier(state, 'warehouse', index)));
+  const available = indices.map(index => { const trip = (state.haulTrips?.warehouse || []).find(t => t.worker === index); return trip ? trip.remaining / tripEfficiency(state, trip) : 0; });
+  let transport = inFlight.reduce((end,t) => Math.max(end,t.remaining / tripEfficiency(state, t)),0);
   for (let index=0; index<queuedTrips; index++) {
     if (!available.length) { transport=Infinity; break; }
-    const first=available.indexOf(Math.min(...available));
-    available[first]+=300 / efficiency;
+    const finishes = available.map((at, worker) => at + durations[worker]);
+    const first=finishes.indexOf(Math.min(...finishes));
+    available[first]=finishes[first];
     transport=Math.max(transport,available[first]);
   }
   const building = project.stage === 'building' ? project.buildRemaining : ((project.transportSeconds || 0) + transport) * constructionBuildFactor(project);
@@ -182,8 +223,6 @@ export function constructionScheduleEstimate(state, projectOrCost, buildingId) {
   const unavailable = reason => ({ ...baseline, transport: Infinity, building: Infinity, total: Infinity, scheduled: true, reason });
   const existing = spec && (state.constructionProjects || []).find(project => project === spec || spec.order && project.order === spec.order);
   if (existing?.stage === 'building') return { ...baseline, transport: 0, building: existing.buildRemaining, total: existing.buildRemaining, queueWait: 0, completionTotal: existing.buildRemaining, scheduled: true, reason: '' };
-  const clock = () => globalThis.performance?.now?.() ?? Date.now();
-  const started = clock();
   const snapshot = structuredClone(state);
   const efficiency = workerEfficiency(state);
   let target = existing ? snapshot.constructionProjects.find(project => project.order === existing.order) : null;
@@ -207,25 +246,31 @@ export function constructionScheduleEstimate(state, projectOrCost, buildingId) {
   const targetOrder = target.order;
   promoteConstructionQueue(snapshot);
   if (target.stage === 'planned') return unavailable('Waiting for the planned materials or an active construction package.');
-  let elapsed = 0, activeAt = null, transport = null, building = null;
+  let elapsed = 0, activeAt = null;
   for (let events = 0; events < 2048; events++) {
     promoteConstructionQueue(snapshot);
     target = snapshot.constructionProjects.find(project => project.order === targetOrder);
     if (!target) {
-      const phase = building ?? 0;
       const queueWait = activeAt ?? 0;
-      return { ...baseline, transport: (transport ?? Math.max(0, elapsed - phase)) - queueWait, building: phase, total: elapsed - queueWait, queueWait, completionTotal: elapsed, scheduled: true, reason: '' };
+      return { ...baseline, transport: Math.max(0, elapsed - queueWait), building: 0, total: elapsed - queueWait, queueWait, completionTotal: elapsed, scheduled: true, reason: '' };
     }
     if (['transport', 'building'].includes(target.stage) && activeAt === null) activeAt = elapsed;
-    if (target.stage === 'building' && transport === null) {
-      transport = elapsed; building = target.buildRemaining;
+    if (target.stage === 'building') {
+      // Building is a fixed real-time clock. Once the last cargo has arrived,
+      // unrelated future production cannot affect this completion time. Stop
+      // here instead of simulating hours of unrelated factory/port events.
+      const queueWait = activeAt ?? 0;
+      const transport = Math.max(0, elapsed - queueWait);
+      return { ...baseline, transport, building: target.buildRemaining,
+        total: transport + target.buildRemaining, queueWait,
+        completionTotal: elapsed + target.buildRemaining, scheduled: true, reason: '' };
     }
     const arrivals = (snapshot.residents || []).filter(person => person.workplace && person.arrivalRemaining > EPS).map(person => person.arrivalRemaining);
     const nextArrival = arrivals.length ? Math.min(...arrivals) : Infinity;
     const next = nextLogisticsEvent(snapshot, efficiency);
     const duration = Math.min(next, nextArrival);
     if (!Number.isFinite(duration)) return unavailable(target.stage === 'planned' ? 'Waiting for the planned materials or an active construction package.' : 'Waiting for available warehouse carriers or an earlier upgrade.');
-    if (!(duration > 0) || elapsed + duration > 90 * 86400 || events >= 32 && clock() - started > 35) return unavailable('The delivery schedule is too long to estimate from the current snapshot.');
+    if (!(duration > 0) || elapsed + duration > 90 * 86400) return unavailable('The delivery schedule is too long to estimate from the current snapshot.');
     advanceLogistics(snapshot, duration, efficiency);
     for (const person of snapshot.residents || []) person.arrivalRemaining = Math.max(0, (person.arrivalRemaining || 0) - duration);
     snapshot.worldTimeMs = (snapshot.worldTimeMs || 0) + duration * 1000;
@@ -318,7 +363,7 @@ export function estimateMaterialsSeconds(state,cost,ownerContext=null) {
   };
   const limits=warehouseLimits(state);
   if(MATERIAL_IDS.some(id=>(cost[id]||0)>limits.perResource)||MATERIAL_IDS.reduce((n,id)=>n+(cost[id]||0),0)>limits.total)return Infinity;
-  const crew=activeWorkerIndices(state,'warehouse').length, capacity=haulCapacity(state), efficiency=workerEfficiency(state);
+  const crew=effectiveWorkerCount(state,'warehouse'), capacity=haulCapacity(state), efficiency=workerEfficiency(state);
   let time=0,trips=0;
   for(const [id,value] of Object.entries(cost)) {
     const missing=Math.max(0,value-(id==='coins'?state.resources.coins:availableGoods(state,id))-owned(id));
@@ -330,12 +375,12 @@ export function estimateMaterialsSeconds(state,cost,ownerContext=null) {
     if(!crew)return Infinity;
     const producer=Object.keys(PRODUCTION_RECIPES).find(k=>PRODUCTION_RECIPES[k].output===id), b=state.buildings[producer], recipe=PRODUCTION_RECIPES[producer];
     const buffered=b.ready+(state.pendingDeliveries[id]||0), make=Math.max(0,missing-buffered);
-    const workers=activeWorkerIndices(state,producer).length, rate=workers*productionRate(state,producer)*efficiency*(state.lighthouseRemaining>0?2:1)-(id==='food'?state.population:0);
+    const workers=effectiveWorkerCount(state,producer), rate=workers*productionRate(state,producer)*efficiency*(state.lighthouseRemaining>0?2:1)*activePlayMultiplier(state)*eventProductionMultiplier(state,producer)-(id==='food'?foodDemandPerHour(state):0);
     if(make&&rate<=0)return Infinity;
     time=Math.max(time,make?make/rate*3600:0);trips+=Math.ceil(missing/capacity);
     if(make&&recipe.input) {
       const upstream=Object.keys(PRODUCTION_RECIPES).find(k=>PRODUCTION_RECIPES[k].output===recipe.input), need=Math.max(0,make*recipe.amount-centralAvailable(state,recipe.input)-state.buildings[upstream].ready);
-      const upstreamRate=activeWorkerIndices(state,upstream).length*productionRate(state,upstream)*efficiency;
+      const upstreamRate=effectiveWorkerCount(state,upstream)*productionRate(state,upstream)*efficiency*(state.lighthouseRemaining>0?2:1)*activePlayMultiplier(state)*eventProductionMultiplier(state,upstream);
       if(need&&!upstreamRate)return Infinity;
       time=Math.max(time,need/upstreamRate*3600||0);trips+=Math.ceil(need/capacity);
     }
@@ -371,7 +416,7 @@ export function receiveMaterials(state,values,{overflowToPending=true,bonus=true
 export function syncCrewProgress(state,id,oldCount,newCount) {
   const b=state.buildings[id],cycle=PRODUCTION_RECIPES[id]?3600/Math.max(1,productionRate(state,id)):300;
   b.workProgress=Array.from({length:newCount},(_,i)=>i<oldCount?clamp(b.workProgress?.[i],0,cycle):0);
-  for(let i=0;i<Math.max(0,oldCount-newCount);i++)state.returningWorkers.push(300);
+  for(let i=0;i<Math.max(0,oldCount-newCount);i++)state.returningWorkers.push(120);
 }
 export function notify(state,kind,title,message) {
   state.notifications ||= [];
@@ -482,6 +527,7 @@ function reservedPort(state,resource) {
   return reserved+inboundAmount(state,'dock',resource);
 }
 export function normalizeLogisticsState(state,raw) {
+  normalizeEconomyLedger(state, raw);
   state.starterTurbo = raw.starterTurbo?.version === 1 && raw.starterTurbo.unlocked === true ? { version: 1, unlocked: true, unlockedAt: clamp(raw.starterTurbo.unlockedAt, 0, Number.MAX_SAFE_INTEGER) } : null;
   const legacyBonusInventory = raw.bonusInventoryVersion !== 1;
   const savedBonus = { ...(raw.bonusMaterials || {}) };
@@ -495,7 +541,7 @@ export function normalizeLogisticsState(state,raw) {
   state.activeSeconds=clamp(raw.activeSeconds,0,Number.MAX_SAFE_INTEGER);
   state.constructionSequence=whole(raw.constructionSequence);
   state.pendingDeliveries=legacyBonusInventory?stock():savedPending;
-  state.returningWorkers=Array.isArray(raw.returningWorkers)?raw.returningWorkers.filter(x=>Number.isFinite(x)&&x>0).slice(0,state.population).map(x=>clamp(x,0,300)):[];
+  state.returningWorkers=Array.isArray(raw.returningWorkers)?raw.returningWorkers.filter(x=>Number.isFinite(x)&&x>0).slice(0,state.population).map(x=>clamp(x,0,120)):[];
   const order=Array.isArray(raw.transportPriority)?raw.transportPriority.filter(id=>MATERIAL_IDS.includes(id)):[];
   state.transportPriority=[...new Set([...order,...MATERIAL_IDS])];
   state.logisticsPriority=Array.isArray(raw.logisticsPriority)?[...new Set(raw.logisticsPriority.filter(x=>typeof x==='string').slice(0,100))]:[];
@@ -528,7 +574,7 @@ export function normalizeLogisticsState(state,raw) {
   const kinds=['producer','pending','construction','marketInbound','marketOutbound','dockInbound','dockLoad','dockUnload','dockOutbound'];
   for(const id of Object.keys(state.haulTrips))for(const t of Array.isArray(raw.haulTrips?.[id])?raw.haulTrips[id]:[]) {
     if(!t||!kinds.includes(t.kind)||!MATERIAL_IDS.includes(t.resource)||!whole(t.amount))continue;
-    state.haulTrips[id].push({worker:Number.isInteger(t.worker)&&t.worker>=-1?t.worker:0,remaining:clamp(t.remaining,0,300),resource:t.resource,amount:whole(t.amount),kind:t.kind,...(t.kind === 'construction' && t.starterTurboClock === true ? { starterTurboClock: true } : {}),...(Number.isSafeInteger(t.residentId)?{residentId:t.residentId}:{}),...(t.producer&&PRODUCTION_RECIPES[t.producer]?{producer:t.producer}:{}),...(t.projectOrder?{projectOrder:whole(t.projectOrder)}:{}),...(t.orderId?{orderId:whole(t.orderId)}:{})});
+    state.haulTrips[id].push({worker:Number.isInteger(t.worker)&&t.worker>=-1?t.worker:0,remaining:clamp(t.remaining,0,300),resource:t.resource,amount:whole(t.amount),kind:t.kind,...(t.kind === 'construction' && t.starterTurboClock === true ? { starterTurboClock: true } : {}),...(Number.isSafeInteger(t.residentId)?{residentId:t.residentId}:{}),...([.5,1].includes(t.workMultiplier) ? {workMultiplier:t.workMultiplier} : {}),...(t.producer&&PRODUCTION_RECIPES[t.producer]?{producer:t.producer}:{}),...(t.projectOrder?{projectOrder:whole(t.projectOrder)}:{}),...(t.orderId?{orderId:whole(t.orderId)}:{})});
   }
   state.notifications=(Array.isArray(raw.notifications)?raw.notifications:[]).slice(0,100).filter(n=>n&&typeof n.title==='string'&&typeof n.message==='string').map(n=>({id:whole(n.id),kind:String(n.kind||'info').slice(0,40),title:translateSavedNotificationText(n.title.slice(0,150)),message:translateSavedNotificationText(n.message.slice(0,800)),at:clamp(n.at,0,Number.MAX_SAFE_INTEGER),read:n.read===true,...(typeof n.titlePl==='string'?{titlePl:n.titlePl.slice(0,150)}:{}),...(typeof n.messagePl==='string'?{messagePl:n.messagePl.slice(0,800)}:{}),...(typeof n.worldEventId==='string'?{worldEventId:n.worldEventId.slice(0,80)}:{})}));
   state.notificationSequence=Math.max(whole(raw.notificationSequence),...state.notifications.map(n=>n.id),0);
@@ -663,7 +709,7 @@ function launchTrip(state,id,index,source) {
   if(source.kind==='dockUnload')order.remainingToUnload-=amount;
   if(['dockLoad','dockOutbound'].includes(source.kind)){state.dock.stock[source.resource]-=amount;removeLots(state.dock.lots,source.resource,amount,source.orderId);}
   const resident=(state.residents||[]).filter(person=>person.workplace===id)[index];
-  state.haulTrips[id].push({worker:index,...(resident?{residentId:resident.id}:{}),remaining:turbo?.courseSeconds || 300,...(turbo ? { starterTurboClock: true } : {}),kind:source.kind,resource:source.resource,amount,...(source.producer?{producer:source.producer}:{}),...(source.projectOrder?{projectOrder:source.projectOrder}:{}),...(source.orderId?{orderId:source.orderId}:{})});
+  state.haulTrips[id].push({worker:index,...(resident?{residentId:resident.id,workMultiplier:residentWorkMultiplier(state,resident)}:{}),remaining:turbo?.courseSeconds || 300,...(turbo ? { starterTurboClock: true } : {}),kind:source.kind,resource:source.resource,amount,...(source.producer?{producer:source.producer}:{}),...(source.projectOrder?{projectOrder:source.projectOrder}:{}),...(source.orderId?{orderId:source.orderId}:{})});
   if (id === 'warehouse') state.warehousePriorityCycle.position = (state.warehousePriorityCycle.position + 1) % 10;
   return true;
 }
@@ -724,7 +770,9 @@ function startBuilding(state,p) {
 }
 function completeTrip(state,t) {
   if(['producer','pending','marketOutbound','dockOutbound'].includes(t.kind)) {
+    const producedArrival = t.kind === 'producer' ? Math.min(t.amount, centralRoom(state, t.resource)) : 0;
     receiveMaterials(state,{[t.resource]:t.amount},{bonus:false});state.statistics.collected=Math.min(10000000,(state.statistics.collected||0)+t.amount);
+    if (producedArrival) recordEconomyOutput(state, 'delivered', t.resource, producedArrival);
     if(t.kind==='dockOutbound') {const o=state.dock.orders.find(x=>x.id===t.orderId);if(o){o.delivered+=t.amount;if(o.delivered>=o.amount)o.stage='complete';}}
   } else if(t.kind==='construction') {
     const p=state.constructionProjects.find(x=>x.order===t.projectOrder);if(!p)return;
@@ -752,7 +800,8 @@ function productionJobs(state,efficiency) {
     if(productionBlocked(state,id))continue;
     const cycle=3600/Math.max(1,productionRate(state,id));
     const engaged=activePlayMultiplier(state);
-    for(const index of activeWorkerIndices(state,id))jobs.push({id,index,cycle,speed:efficiency*(state.lighthouseRemaining>0?2:1)*engaged*eventProductionMultiplier(state,id)});
+    const people = (state.residents || []).filter(person => person.workplace === id);
+    for(const index of activeWorkerIndices(state,id))jobs.push({id,index,cycle,speed:efficiency*(state.lighthouseRemaining>0?2:1)*engaged*eventProductionMultiplier(state,id)*(people[index] ? residentWorkMultiplier(state,people[index]) : 1)});
   }
   return jobs;
 }
@@ -820,11 +869,15 @@ export function advanceLogistics(state,elapsed,efficiency=workerEfficiency(state
       }
     }
     state.dock.purchaseHistory=state.dock.purchaseHistory.map(h=>({...h,remaining:h.remaining-duration})).filter(h=>h.remaining>EPS);
-    for(const id of ['warehouse','market','dock'])for(const trip of state.haulTrips[id])trip.remaining=Math.max(0,trip.remaining-duration*tripEfficiency(state,trip,efficiency));
+    for(const id of ['warehouse','market','dock'])for(const trip of state.haulTrips[id]) {
+      const person = residentById(state, trip.residentId);
+      if (person) trip.workMultiplier = residentWorkMultiplier(state, person);
+      trip.remaining=Math.max(0,trip.remaining-duration*tripEfficiency(state,trip,efficiency));
+    }
     updateStorageStatus(state,duration);state.activeSeconds=Math.min(Number.MAX_SAFE_INTEGER,state.activeSeconds+duration);
     for(const j of jobs)if(state.buildings[j.id].workProgress[j.index]>=j.cycle-EPS) {
       const b=state.buildings[j.id],r=PRODUCTION_RECIPES[j.id];
-      if(!productionBlocked(state,j.id)){if(r.input)consumeMaterial(state,r.input,r.amount);b.ready++;b.workProgress[j.index]=0;if(r.input)state.statistics.crafted=Math.min(10000000,(state.statistics.crafted||0)+1);}
+      if(!productionBlocked(state,j.id)){if(r.input)consumeMaterial(state,r.input,r.amount);b.ready++;b.workProgress[j.index]=0;recordEconomyOutput(state,'produced',r.output,1);if(r.input)state.statistics.crafted=Math.min(10000000,(state.statistics.crafted||0)+1);}
     }
     for(const id of ['warehouse','market','dock']) {
       const done=state.haulTrips[id].filter(t=>t.remaining<=EPS);state.haulTrips[id]=state.haulTrips[id].filter(t=>t.remaining>EPS);

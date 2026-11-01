@@ -83,7 +83,7 @@ def install_save(page, state):
 def fixture(page, mode='starter'):
     return page.evaluate('''async mode=>{
       const {createState,act,tick}=await import('./harborlight-v1-state.js?v=frontend-v17');
-      const s=createState(Date.now()-(mode==='carrier'?301000:0));
+      const s=createState(Date.now()-(mode==='carrier'?121000:0));
       s.tutorial.autoOpenDisabled=true;
       s.engagementSchedule.initialCompleted=true;s.engagementSchedule.initialAnchored=true;s.engagementSchedule.nextAt=1000000000;
       if(mode==='rich') {
@@ -95,7 +95,7 @@ def fixture(page, mode='starter'):
         s.resources.food=1000;s.resources.wood=500;s.buildings.lumber.ready=200;
         const result=act(s,{type:'assign',building:'warehouse',delta:2});
         if(!result.ok)throw new Error(result.message);
-        tick(s,301);
+        tick(s,121);
       }
       if(mode==='blocked-input'||mode==='blocked-full') {
         s.resources.food=1000;
@@ -419,7 +419,8 @@ def recall_acceptance(browser):
     popup = page.locator('[data-carrier-recall-dialog]')
     expect(popup).to_be_visible()
     polish(page, '[data-carrier-recall-dialog]')
-    expect(popup).to_contain_text('kurs')
+    expect(popup).to_contain_text('Muszą zakończyć dostawę')
+    expect(popup).to_contain_text('Czas powrotu do domu to 2 min.')
     current = saved(page)
     recalled = [p for p in current['residents'] if p.get('pendingRelease')]
     assert len(recalled) == 1
@@ -441,9 +442,9 @@ def recall_acceptance(browser):
     person = next(p for p in delivered['residents'] if p['id'] == person_id)
     assert delivered['resources']['wood'] == before['resources']['wood'] + 200
     assert delivered['buildings']['warehouse']['workers'] == 1
-    assert person['workplace'] is None and abs(person['returnRemaining'] - 300) < .001
+    assert person['workplace'] is None and abs(person['returnRemaining'] - 120) < .001
     assert sum(not p['workplace'] and not p['returnRemaining'] for p in delivered['residents']) == 10
-    page.clock.fast_forward(299000)
+    page.clock.fast_forward(119000)
     current = saved(page)
     assert next(p for p in current['residents'] if p['id'] == person_id)['returnRemaining'] > 0
     page.clock.fast_forward(1000)
@@ -451,7 +452,7 @@ def recall_acceptance(browser):
     assert next(p for p in home['residents'] if p['id'] == person_id)['returnRemaining'] == 0
     assert sum(not p['workplace'] and not p['returnRemaining'] for p in home['residents']) == 11
     context.close()
-    print('PASS loaded carrier recall clearly announces departure/countdown; cargo arrives before the complete five-minute walk Home')
+    print('PASS loaded carrier recall clearly announces departure/countdown; cargo arrives before the complete two-minute walk Home')
 
 
 def penalty_acceptance(browser):
@@ -475,9 +476,9 @@ def penalty_acceptance(browser):
     building(page, 'warehouse')
     page.locator('[data-worker-building="warehouse"][data-worker-delta="1"]').click()
     close_panel(page)
-    # Arrival is the five-minute boundary; the next settled step dispatches
+    # Arrival is the two-minute boundary; the next settled step dispatches
     # the first actual pickup from the previously full producer buffer.
-    page.clock.fast_forward(301000)
+    page.clock.fast_forward(121000)
     recovered = saved(page)
     assert recovered['buildings']['farm']['ready'] < 200
     assert any(trip.get('producer') == 'farm' for trip in recovered['haulTrips']['warehouse'])

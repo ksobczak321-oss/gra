@@ -1,24 +1,27 @@
 // Economy and progression for the interactive approved-screen prototype.
 // Pure data module: browser UI and Node tests share the same rules.
-import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange, townhallPopulationRequirement, playerTradeUnlocked, starterTurboAvailable, unlockStarterTurbo, starterConstructionTiming } from './harborlight-v1-logistics.js?v=frontend-v26';
-export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty, townhallPopulationRequirement, playerTradeUnlocked } from './harborlight-v1-logistics.js?v=frontend-v26';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange, townhallPopulationRequirement, playerTradeUnlocked, starterTurboAvailable, unlockStarterTurbo, starterConstructionTiming } from './harborlight-v1-logistics.js?v=frontend-v27';
+export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty, townhallPopulationRequirement, playerTradeUnlocked } from './harborlight-v1-logistics.js?v=frontend-v27';
 
-import { normalizeResidents, residentPopulationMinimum, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds } from './harborlight-v1-residents.js?v=frontend-v26';
-export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v26';
+import { normalizeResidents, residentPopulationMinimum, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds, residentHasHousing, housingStatus, foodDemandPerHour as residentFoodDemandPerHour } from './harborlight-v1-residents.js?v=frontend-v27';
+export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v27';
 
-import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction } from './harborlight-v1-activities.js?v=frontend-v26';
-import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v26';
-import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v26';
-import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v26';
-import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v26';
-import { normalizeIslandProfile, validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v26';
-import { consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v26';
-import { warsawParts, warsawDayKey, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v26';
-import { welcomeStatus, WELCOME_SECONDS } from './harborlight-v1-residents.js?v=frontend-v26';
-export { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v26';
-import { normalizeWorldEvents, advanceWorldEvents, nextWorldEvent, recordChapelBlessing, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v26';
-import { normalizeCommerce, commerceAction, nextCommerceEvent, advanceCommerce } from './harborlight-v1-commerce.js?v=frontend-v26';
-import { normalizeEngagementSchedule } from './harborlight-v1-engagement.js?v=frontend-v26';
+import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction } from './harborlight-v1-activities.js?v=frontend-v27';
+import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v27';
+import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v27';
+import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v27';
+import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v27';
+import { normalizeIslandProfile, validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v27';
+import { consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v27';
+import { warsawParts, warsawDayKey, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v27';
+import { welcomeStatus, WELCOME_SECONDS } from './harborlight-v1-residents.js?v=frontend-v27';
+export { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v27';
+import { normalizeWorldEvents, advanceWorldEvents, nextWorldEvent, recordChapelBlessing, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v27';
+import { normalizeCommerce, commerceAction, nextCommerceEvent, advanceCommerce } from './harborlight-v1-commerce.js?v=frontend-v27';
+import { normalizeEngagementSchedule } from './harborlight-v1-engagement.js?v=frontend-v27';
+import { constructionScheduleEstimate } from './harborlight-v1-logistics.js?v=frontend-v27';
+import { normalizeMissions, advanceMissions, nextMissionEvent, missionAction, recordMissionAction } from './harborlight-v1-missions.js?v=frontend-v27';
+import { residentWorkMultiplier } from './harborlight-v1-housing.js?v=frontend-v27';
 
 export const RESOURCES = {
   coins: { name: 'Coins', short: 'coins', symbol: '◉', price: 1 },
@@ -34,7 +37,7 @@ export const WORKPLACE_IDS = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry',
 export const CONSTRUCTION_IDS = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'townhall', 'house', 'market', 'warehouse', 'dock', 'chapel', 'lighthouse'];
 
 export const BUILDINGS = {
-  house: { name: 'House', description: 'Each level provides housing for 24 residents. Every resident without a home reduces happiness by 1 percentage point per hour.', cost: { coins: 100, wood: 40, stone: 20, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
+  house: { name: 'House', description: 'Each level provides housing for 24 residents. Residents without a bed work at half speed and eat twice as much. Daily House happiness points are available only to housed residents.', cost: { coins: 100, wood: 40, stone: 20, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
   farm: { name: 'Farm', description: 'Each farmer produces 20 grain per hour at level 1, 24 at level 2, and two more per level thereafter. Harvests wait locally for warehouse workers.', cost: { coins: 80, wood: 30, stone: 10 }, resource: 'grain', rate: 20, maxLevel: MAX_BUILDING_LEVEL },
   sawmill: { name: 'Sawmill', description: 'Each worker produces 20 planks per hour at level 1, 24 at level 2, and two more per level thereafter. Each plank requires 2 wood from central storage.', cost: { coins: 120, wood: 45, stone: 25 }, resource: 'planks', rate: 20, input: 'wood', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
   quarry: { name: 'Quarry', description: 'Each quarry worker produces 20 stone per hour at level 1, 24 at level 2, and two more per level thereafter. Stone waits locally for transport.', cost: { coins: 150, wood: 35, stone: 20 }, resource: 'stone', rate: 20, maxLevel: MAX_BUILDING_LEVEL },
@@ -73,6 +76,7 @@ const amount = (value, fallback = 0, max = 10000000) => typeof value === 'number
 const countdown = (remaining, elapsed) => remaining - elapsed > 1e-9 ? remaining - elapsed : 0;
 const good = message => ({ ok: true, message });
 const bad = message => ({ ok: false, message });
+const missionContext = () => ({ buildingCost, constructionEstimate: constructionScheduleEstimate });
 export function createState(now = Date.now(), options = {}) {
   const buildings = {};
   for (const id of Object.keys(BUILDINGS)) {
@@ -115,6 +119,7 @@ export function createState(now = Date.now(), options = {}) {
   normalizeHouseHappiness(state, {});
   normalizeLeisure(state, state);
   normalizeProgression(state, {});
+  normalizeMissions(state, {});
   normalizeEngagementSchedule(state, {});
   normalizeWorldEvents(state, {});
   normalizeCommerce(state, {});
@@ -293,7 +298,7 @@ export function taxRate(state) {
   return WORKPLACE_IDS.reduce((sum, id) => sum + activeWorkerCount(state, id), 0) * (state.chapelRemaining > 0 ? 2 : 1) * activePlayMultiplier(state);
 }
 
-export const foodDemandPerHour = state => state.population;
+export const foodDemandPerHour = residentFoodDemandPerHour;
 
 function reserveResidentFood(state) {
   if (state.foodCredit > 1e-12) return;
@@ -420,7 +425,7 @@ function resetPopulationProgress(state, direction = 0) {
 }
 
 function populationAtLimit(state, direction) {
-  const capacity = state.incomingPassengers > 0 ? Math.min(state.capacity, state.buildings.house.level * 24) - state.incomingPassengers : state.capacity;
+  const capacity = state.capacity - (state.incomingPassengers || 0);
   return direction > 0 ? state.population >= capacity : direction < 0 && state.population <= residentPopulationMinimum(state);
 }
 
@@ -484,7 +489,7 @@ function advancePopulation(state, elapsedSeconds) {
     const serviceTime = Math.min(Infinity, ...(state.premiumServices || []).map(service => service.buildRemaining > 1e-9 ? service.buildRemaining : 1e-8));
     // residentSegments already includes nextResidentEvent and narrows it with
     // happiness boundaries; no resident clock changes during these quotes.
-    let duration = Math.min(remaining, boundaryTime, segment.nextEvent, logisticsEvent, nextActivitiesEvent(state), nextLeisureEvent(state), nextProgressionEvent(state), nextWorldEvent(state), nextCommerceEvent(state), serviceTime, foodTime, taxFundingTime, rankingTime, premiumTime, houseTime,
+    let duration = Math.min(remaining, boundaryTime, segment.nextEvent, logisticsEvent, nextActivitiesEvent(state), nextMissionEvent(state), nextLeisureEvent(state), nextProgressionEvent(state), nextWorldEvent(state), nextCommerceEvent(state), serviceTime, foodTime, taxFundingTime, rankingTime, premiumTime, houseTime,
       state.chapelRemaining > 0 ? state.chapelRemaining : Infinity,
       state.blessingRemaining > 0 ? state.blessingRemaining : Infinity,
       state.paidBlessingCooldownRemaining > 0 ? state.paidBlessingCooldownRemaining : Infinity,
@@ -539,6 +544,7 @@ function advancePopulation(state, elapsedSeconds) {
       }
     }
     advanceProgression(state, 0);
+    advanceMissions(state, duration, missionContext());
     promoteConstructionQueue(state);
     if (!blocked) state.populationProgress = Math.max(0, state.populationProgress + (rate + rateSlope * duration / 2) * duration);
     if (changesPopulation) {
@@ -677,6 +683,7 @@ export function normalizeState(raw, now = Date.now()) {
   state.ranking = raw.ranking && typeof raw.ranking === 'object' ? { score: integer(raw.ranking.score, 0, 0, Number.MAX_SAFE_INTEGER), level: integer(raw.ranking.level, state.buildings.townhall.level, 1, MAX_BUILDING_LEVEL), coins: integer(raw.ranking.coins, state.resources.coins, 0, Number.MAX_SAFE_INTEGER), at: amount(raw.ranking.at, state.worldTimeMs, Number.MAX_SAFE_INTEGER) } : { score: Math.min(Number.MAX_SAFE_INTEGER, state.buildings.townhall.level * state.resources.coins), level: state.buildings.townhall.level, coins: state.resources.coins, at: state.worldTimeMs };
   normalizeActivities(state, raw);
   normalizeProgression(state, raw);
+  normalizeMissions(state, raw);
   normalizeEngagementSchedule(state, raw);
   normalizeWorldEvents(state, raw);
   normalizeCommerce(state, raw);
@@ -703,6 +710,7 @@ export function normalizeState(raw, now = Date.now()) {
   normalizeEffectNotifications(state);
   normalizeOnboarding(state, raw);
   normalizeLearning(state, raw);
+  advanceMissions(state, 0, missionContext());
   return state;
 }
 
@@ -746,12 +754,15 @@ function reward(state, values) {
 
 function normalizeHouseHappiness(state, raw) {
   const source = raw.houseHappinessPool || {};
-  const grantPopulation = integer(source.grantPopulation, state.population, 0, 2400);
+  const housed = housingStatus(state).housed;
+  const previousGrant = integer(source.grantPopulation, housed, 0, 2400);
+  const grantPopulation = Math.min(previousGrant, housed);
+  const alreadyUsed = previousGrant - integer(source.points, previousGrant, 0, previousGrant);
   const nextMidnight = nextWarsawMidnightMs(state.worldTimeMs);
   const nextRefreshAt = Number.isFinite(source.nextRefreshAt) && source.nextRefreshAt > state.worldTimeMs && source.nextRefreshAt <= nextMidnight + 1 ? source.nextRefreshAt : nextMidnight;
   const refreshRemaining = Math.max(0, (nextRefreshAt - state.worldTimeMs) / 1000);
   state.houseHappinessPool = {
-    points: integer(source.points, grantPopulation, 0, grantPopulation), grantPopulation,
+    points: Math.max(0, grantPopulation - alreadyUsed), grantPopulation,
     nextRefreshAt, refreshRemaining,
     autoRemaining: Math.max(0, refreshRemaining - 120), autoDone: source.nextRefreshAt === nextRefreshAt && source.autoDone === true,
     generation: integer(source.generation, 1, 1, Number.MAX_SAFE_INTEGER),
@@ -765,7 +776,7 @@ function houseRandom(state, length) {
   return Math.floor(state.houseHappinessPool.randomSeed / 0x100000000 * length);
 }
 function canGainHouseHappiness(state, person) {
-  return !(person.newbornRemaining > 1e-9) && residentHappiness(state, person) < 100 - 1e-9;
+  return residentHasHousing(state, person) && !(person.newbornRemaining > 1e-9) && residentHappiness(state, person) < 100 - 1e-9;
 }
 function automaticHouseHappiness(state) {
   const pool = state.houseHappinessPool;
@@ -788,11 +799,11 @@ function settleHouseHappiness(state) {
   pool.refreshRemaining = Math.max(0, (pool.nextRefreshAt - state.worldTimeMs) / 1000);
   pool.autoRemaining = Math.max(0, pool.refreshRemaining - 120);
   if (pool.refreshRemaining <= 1e-8) {
-    pool.points = state.population; pool.grantPopulation = state.population;
+    pool.points = housingStatus(state).housed; pool.grantPopulation = pool.points;
     pool.nextRefreshAt = nextWarsawMidnightMs(state.worldTimeMs);
     pool.refreshRemaining = (pool.nextRefreshAt - state.worldTimeMs) / 1000;
     pool.autoRemaining = Math.max(0, pool.refreshRemaining - 120); pool.autoDone = false; pool.generation++;
-    notify(state, 'house-happiness-refresh', 'House happiness pool refreshed', `${state.population} happiness points are available until the next Warsaw midnight.`);
+    notify(state, 'house-happiness-refresh', 'House happiness pool refreshed', `${pool.points} happiness points are available until the next Warsaw midnight.`);
   }
   if (!pool.autoDone && pool.autoRemaining <= 1e-8) automaticHouseHappiness(state);
 }
@@ -824,6 +835,7 @@ function manualHouseHappiness(state, action) {
   }
   const person = state.residents.find(person => person.id === action.residentId);
   if (!person) return bad('This resident does not exist.');
+  if (!residentHasHousing(state, person)) return bad('Only residents with a bed can receive House happiness points.');
   if (person.newbornRemaining > 1e-9) return bad('New residents cannot receive House happiness points during their first 24 hours.');
   if (!canGainHouseHappiness(state, person)) return bad('This resident already has the highest happiness this pool can provide.');
   const used = Math.min(amountRequested, Math.ceil(100 - residentHappiness(state, person)));
@@ -918,11 +930,11 @@ export function requestUpgrade(state, request) {
 
 export function residentPurchaseQuote(state, quantity = 1) {
   if (!Number.isSafeInteger(quantity) || quantity < 1) return bad('Choose a positive whole number of residents.');
-  const spaces = Math.max(0, Math.min(housingCapacity(state), state.buildings.townhall.level * 24) - state.population - (state.incomingPassengers || 0));
+  const spaces = Math.max(0, state.buildings.townhall.level * 24 - state.population - (state.incomingPassengers || 0));
   const unitCost = Object.fromEntries(Object.keys(RESOURCES).map(id => [id, 500 * state.buildings.townhall.level]));
   const cost = Object.fromEntries(Object.entries(unitCost).map(([id, value]) => [id, value * quantity]));
   return { ok: spaces >= quantity && canAfford(state, cost), spaces, max: spaces, quantity, unitCost, cost,
-    message: spaces < quantity ? 'Upgrade the House to provide enough empty beds.' : !canAfford(state, cost) ? 'Not enough available resources for a resident. The protected Food reserve must remain.' : 'A new resident can move into the House.' };
+    message: spaces < quantity ? 'Upgrade the Town Hall to provide enough population places.' : !canAfford(state, cost) ? 'Not enough available resources for a resident. The protected Food reserve must remain.' : 'A new resident can join the island. Residents without a bed work at half speed and eat twice as much.' };
 }
 export const quoteResidentPurchase = residentPurchaseQuote;
 
@@ -930,12 +942,12 @@ export function resourceRates(state) {
   const rates = Object.fromEntries(MATERIAL_IDS.map(id => [id, { production: 0, consumption: 0, net: 0 }]));
   const multiplier = productionMultiplier(state) * activePlayMultiplier(state) * (state.lighthouseRemaining > 0 ? 2 : 1);
   for (const [id, recipe] of Object.entries(PRODUCTION_RECIPES)) {
-    const workers = (state.residents || []).filter(person => person.workplace === id && residentIsWorking(state, person)).length;
+    const workers = (state.residents || []).filter(person => person.workplace === id && residentIsWorking(state, person)).reduce((sum, person) => sum + residentWorkMultiplier(state, person), 0);
     const output = workers * productionRate(state, id) * multiplier * eventProductionMultiplier(state, id);
     rates[recipe.output].production += output;
     if (recipe.input) rates[recipe.input].consumption += output * 2;
   }
-  rates.food.consumption += state.population;
+  rates.food.consumption += foodDemandPerHour(state);
   for (const rate of Object.values(rates)) rate.net = rate.production - rate.consumption;
   return rates;
 }
@@ -958,11 +970,13 @@ export function act(state, action, now = Date.now(), context = {}) {
   if (result === null) result = residentVisitAction(state, action);
   if (result === null) result = leisureAction(state, action);
   if (result === null) result = logisticsAction(state, action, state.worldTimeMs);
+  if (result === null) result = missionAction(state, action, missionContext());
   if (result === null) result = activityAction(state, action, { ...context, buildingCost, requestUpgrade: request => requestUpgrade(state, request), expeditions: EXPEDITIONS });
   if (result !== null) {
     if (result.ok) {
       if (action.type === 'premiumAccelerate') for (const project of [...state.constructionProjects]) if (project.stage === 'building' && project.buildRemaining <= 1e-8) finishConstruction(state, project);
       recordProgressionAction(state, action, result);
+      recordMissionAction(state, action, result, missionContext());
       updateStorageStatus(state); updateHappiness(state); syncPopulationProgress(state); syncEffectNotifications(state); state.lastActionAt = integer(now, state.lastActionAt, 0, Number.MAX_SAFE_INTEGER); }
     return result;
   }
@@ -1000,7 +1014,7 @@ export function act(state, action, now = Date.now(), context = {}) {
       building.workers = state.residents.filter(person => person.workplace === id).length;
       const starterTurboUnlocked = id === 'warehouse' && action.delta > 0 && unlockStarterTurbo(state);
       if (id === 'warehouse') notifyConstructionEtaChange(state);
-      result = { ...good(`Workers: ${building.workers}.${action.delta < 0 ? ' Dismissed workers take 5 minutes to return home.' : starterTurboUnlocked && state.buildings.townhall.level === 1 ? ' The first six carriers reach the Warehouse within 20 seconds.' : ' New workers take 5 minutes to reach the workplace.'}`), starterTurboUnlocked };
+      result = { ...good(`Workers: ${building.workers}.${action.delta < 0 ? ' Recalled workers take 2 minutes to return home after finishing any loaded delivery.' : ' New workers take 2 minutes to reach the workplace.'}`), starterTurboUnlocked };
       break;
     }
     case 'buyResident': {
@@ -1010,8 +1024,8 @@ export function act(state, action, now = Date.now(), context = {}) {
       spend(state, quote.cost);
       state.population += quantity;
       synchronizeResidents(state);
-      notify(state, 'resident-purchased', 'New residents arrived', `${quantity} residents moved into the House. Their initial 24-hour settling period remains protected by active Lighthouse or Welcome bonuses.`);
-      result = { ...good('New residents moved into the House.'), quantity, cost: quote.cost };
+      notify(state, 'resident-purchased', 'New residents arrived', `${quantity} residents joined the island. Their initial 24-hour settling period remains protected by active Lighthouse or Welcome bonuses.`);
+      result = { ...good('New residents joined the island.'), quantity, cost: quote.cost };
       break;
     }
     case 'blessing':
@@ -1153,7 +1167,10 @@ export function act(state, action, now = Date.now(), context = {}) {
   updateStorageStatus(state);
   updateHappiness(state);
   syncPopulationProgress(state);
-  if (!onboardingStatus(state).pending) recordProgressionAction(state, action, result);
+  if (!onboardingStatus(state).pending) {
+    recordProgressionAction(state, action, result);
+    recordMissionAction(state, action, result, missionContext());
+  }
   syncEffectNotifications(state);
   state.lastActionAt = integer(now, state.lastActionAt, 0, Number.MAX_SAFE_INTEGER);
   return result;

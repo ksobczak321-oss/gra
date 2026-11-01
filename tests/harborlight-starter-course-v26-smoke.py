@@ -118,7 +118,9 @@ def fresh_starter(browser, language, mobile):
         assert sixth['buildings']['warehouse']['workers'] == 6
         assert sixth['tutorial']['claimed']['island-map']
         assert sixth['tutorial']['chests']['island-map']['reward']['coins'] == 100
-        assert all(person.get('arrivalRemaining', 0) == 0 for person in sixth['residents'] if person.get('workplace') == 'warehouse')
+        # All workers, including the first six, now walk for120s. The real
+        # reward acknowledgment above advanced30s, leaving90s to reach work.
+        assert all(person.get('arrivalRemaining', 0) == 90 for person in sixth['residents'] if person.get('workplace') == 'warehouse')
 
         find_building(page, 'happiness-action', 'warehouse')
         details = page.locator('[data-building-more="warehouse"]')

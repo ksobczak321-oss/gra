@@ -78,8 +78,9 @@ test('all 12 buildings have a concise bilingual purpose and whole-island goal', 
     assert.ok(source.length > 20, id);
     assert.equal(translate(source, 'pl'), buildingPurpose(id, 'pl'));
   }
-  assert.equal(gameGoal('pl').title, 'Rozwijaj wyspę i dbaj o mieszkańców');
-  assert.match(gameGoal('pl').description, /wszystkie budynki/);
+  assert.equal(gameGoal('pl').title, 'Rozwijaj wyspę. Przywróć Latarni blask.');
+  assert.match(gameGoal('pl').description, /większą osadę.*lepsze warunki życia/);
+  assert.match(gameGoal('pl').description, /Latarni.*nowe cele/);
   assert.equal(translate(gameGoal().description, 'pl'), gameGoal('pl').description);
 });
 

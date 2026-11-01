@@ -125,11 +125,12 @@ def first_four_actions(browser, *, width=1366, height=768):
 def assert_supplies_guide_geometry(page):
     # This exact legacy state failed in CI: the fourth chest has been
     # acknowledged and the new supplies action joins the map/course buttons.
-    # All three must fit before Playwright or the player tries to scroll them.
+    # The v27 in-flow review entry adds a fourth control. All must fit before
+    # Playwright or the player tries to scroll them.
     guide = page.locator('[data-active-tutorial-guide].tutorial-guide-floating')
     expect(guide).to_be_visible()
     expect(guide).to_be_in_viewport(ratio=0.99)
-    expect(guide.locator('button')).to_have_count(3)
+    expect(guide.locator('button')).to_have_count(4)
     bounds = guide.bounding_box()
     copy = guide.locator('.tutorial-v16-guide-copy').bounding_box()
     assert bounds and copy and copy['width'] >= 160, 'The lesson explanation must remain readable'

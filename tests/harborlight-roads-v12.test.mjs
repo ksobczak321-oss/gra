@@ -79,10 +79,10 @@ test('upgrading the final path speeds up an already loaded trip without changing
   assert.equal(state.statistics.collected, cargo);
 });
 
-test('road speed does not shorten the five-minute walk or accelerate production', () => {
+test('road speed does not shorten the two-minute walk or accelerate production', () => {
   const state = island(5);
   assert.equal(act(state, { type: 'assign', building: 'farm', delta: 1 }, NOW).ok, true);
-  tick(state, 299);
+  tick(state, 119);
   near(state.residents.find(person => person.workplace === 'farm').arrivalRemaining, 1);
   assert.equal(state.buildings.farm.ready, 0);
   tick(state, 1);

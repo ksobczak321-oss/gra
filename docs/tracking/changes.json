@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "as_of": "2026-11-01",
-  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury.",
+  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont.",
   "environment_baseline": {
     "application_source_sha": "092e75226fbb14cab09826f313e11d10891966d8",
     "ci_run_id": 41221965032,
@@ -4245,13 +4245,15 @@
         "ci": "passed_v22_1",
         "preprod": "code_deployed_v22_1",
         "prod": "not_deployed",
-        "decision": "accepted"
+        "decision": "superseded"
       },
       "acceptance": [
         "Popup i licznik oczekujących zwolnień nie udostępniają człowieka przed powrotem."
       ],
       "supersedes": [],
-      "superseded_by": [],
+      "superseded_by": [
+        "HL-CHG-0955"
+      ],
       "related_changes": [],
       "issue_url": null,
       "published_to_github_issues": false,
@@ -4274,7 +4276,9 @@
         "manual_execution": "NOT_RUN",
         "release_note": "CI potwierdza zestaw dla wskazanego SHA. Status code_deployed potwierdza obecność kodu w wydaniu, nie ręczne wykonanie tego przypadku ani aktywację zewnętrznej usługi."
       },
-      "notes": []
+      "notes": [
+        "W v27 użytkownik zmienia przejście Dom–praca i powrót na120sekund. Historyczna zasada pięciu minut jest zastąpiona; dokończenie niesionego ładunku pozostaje obowiązujące."
+      ]
     },
     {
       "id": "HL-CHG-0215",
@@ -15066,6 +15070,931 @@
       "notes": [
         "Tag pilnej poprawki pozostaje na wcześniejszej zmianie; nowy pakiet nie staje się automatycznie pilny."
       ]
+    },
+    {
+      "id": "HL-CHG-0951",
+      "epic": "HL-EPIC-UI",
+      "area": "Teksty i akceptacja",
+      "type": "Story",
+      "title": "Poprawiona wersja opisów ma archiwum źródeł i spójną redakcję PL/EN",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-951"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Poprawiona wklejka nadpisuje właściwe części pełnego projektu; źródła pozostają zapisane bez zmiany bajtów wraz z hashami.",
+        "Powtórzony fragment zegara nie tworzy drugiego T10, a pusty T34 zachowuje opis Menu wyspy; komentarze techniczne nie trafiają do tekstu gracza.",
+        "Wstęp, cel i opis Latarni pozytywnie motywują do rozwoju całej osady. Wartości i skutki opisane w PL/EN są zgodne z rzeczywistym modelem."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0941"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-copy.js",
+          "harborlight-v1-i18n.js",
+          "harborlight-v1-approved-copy.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-approved-copy-v27.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0952",
+      "epic": "HL-EPIC-UI",
+      "area": "Pomoc i nawigacja",
+      "type": "Story",
+      "title": "Znak zapytania otwiera dwa powroty, a podsumowanie wyspy nie dubluje Pomocy i Samouczka",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-952"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Pod ? widoczne są dwa główne przyciski: Wznów samouczek i Wznów tutorial; prowadzą do dwóch różnych zapamiętanych miejsc.",
+        "Z pokazanego ekranu podsumowania usunięte są Pomoc i Samouczek. Pozostałe pozycje menu zachowują swoje funkcje.",
+        "Przegląd od początku pozostaje wewnątrz właściwego trybu i nie resetuje świata ani nie powtarza nagród."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0943"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-feedback-v27-smoke.py",
+          "tests/harborlight-learning-flow-v27-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0953",
+      "epic": "HL-EPIC-UI",
+      "area": "Tutorial i zasoby",
+      "type": "Story",
+      "title": "Tutorial ma 34 kroki, Czat przed dzwonkiem i rzeczywisty przykład zasobów",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-953"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Czat jest osobnym krokiem przed Powiadomieniami; opis wyjaśnia rozmowy prywatne i sojuszu bez udawania aktywnej usługi.",
+        "Krok zasobów podstawia bieżący zapas producenta, centralny, w transporcie i rzeczywisty bilans godzinowy; nie pokazuje statycznego0 / 537 (0) jako danych gracza.",
+        "Kolejność HUD jest zachowana, a wszystkie 34 kroki oraz dynamiczne liczby mieszczą się na komputerze i telefonie w PL/EN."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0941",
+        "HL-CHG-0939"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-onboarding-ui.js",
+          "harborlight-v1-approved-copy.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-approved-copy-v27.test.mjs",
+          "tests/harborlight-learning-flow-v27-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0954",
+      "epic": "HL-EPIC-TUT",
+      "area": "Wznowienie nauki",
+      "type": "Story",
+      "title": "Zamknięcie tutoriala wyjaśnia powrót przez ? i zachowuje właściwy zegar",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-954"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Po × tutoriala komunikat wskazuje ? → Wznów tutorial i zapamiętane miejsce. Pierwsze zamknięcie uruchamia czas, powtórne nie zatrzymuje świata.",
+        "Zapis i ponowne wejście zachowują pozycję oraz historię; ekran wyjaśnienia nie wykonuje działań gospodarczych.",
+        "Popup nie zastępuje poprawnej obsługi utraty potwierdzenia chmurowego i nie uruchamia drugiej ochrony powitalnej."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0943",
+        "HL-CHG-0944"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-onboarding-ui.js",
+          "harborlight-v1-play.js",
+          "harborlight-v1-learning-feedback.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-feedback-v27-smoke.py",
+          "tests/harborlight-learning-flow-v27-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0955",
+      "epic": "HL-EPIC-ECO",
+      "area": "Dojście i powrót",
+      "type": "Story",
+      "title": "Każdy pracownik idzie z Domu do pracy i wraca po 2 minuty",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-955"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nowe dojście i powrót trwają120 sekund również dla pierwszych sześciu tragarzy; wcześniejsze20 sekund oraz zwykłe 5 minut dojścia są zastąpione.",
+        "Odwołany tragarz kończy faktycznie niesiony ładunek, następnie wraca120 sekund. Nie rozpoczyna dodatkowego kursu po odwołaniu.",
+        "Czas spaceru nie zmienia automatycznie zwykłego kursu towarowego ani zapisanych zegarów turbo budowy; opisy, liczniki i rzeczywiste czasy są zgodne."
+      ],
+      "supersedes": [
+        "HL-CHG-0214"
+      ],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0214",
+        "HL-CHG-0947"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-residents.js",
+          "harborlight-v1-logistics.js",
+          "harborlight-v1-housing.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-housing-v27.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0956",
+      "epic": "HL-EPIC-PEO",
+      "area": "Mieszkania i populacja",
+      "type": "Story",
+      "title": "Ratusz wyznacza limit ludności niezależnie od liczby łóżek",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-956"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Ratusz 2/Dom 1 pozwala utrzymać48 mieszkańców przy 24 łóżkach, bez usuwania osób do poziomu liczby łóżek.",
+        "Przydział24miejsc jest stabilny przy pracy, nawigacji, zapisie i wczytaniu; ta sama osoba nie traci mieszkania przez zmianę kolejności załogi.",
+        "Interpretacja wdrożeniowa obejmuje naturalne przybycia, zaproszenie i pasażerów z zachowaniem limitu Ratusza/rezerwacji; cena zaproszenia nie zostaje samoczynnie zmieniona."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0024"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-residents.js",
+          "harborlight-v1-state.js",
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-housing.js",
+          "harborlight-v1-events.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-housing-v27.test.mjs",
+          "tests/harborlight-housing-archipelago-v27.test.mjs",
+          "tests/harborlight-housing-v27-smoke.py",
+          "tests/harborlight-world-events-v18.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": [
+        "W wymaganiach oddzielono dosłowną decyzję użytkownika od wybranego parametru integracyjnego; nie traktujemy wyboru implementacji jako dodatkowej odpowiedzi użytkownika."
+      ]
+    },
+    {
+      "id": "HL-CHG-0957",
+      "epic": "HL-EPIC-PEO",
+      "area": "Dom i dzienne szczęście",
+      "type": "Story",
+      "title": "Pula szczęścia Domu i odbiorcy obejmują tylko zakwaterowanych mieszkańców",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-957"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przy48 mieszkańcach i 24 łóżkach dzienna pula odnosi się do 24 zakwaterowanych, a nie 48 osób.",
+        "Pojedyncze przyznanie, Daj wszystkim i automatyczne rozdanie przed odnowieniem używają tego samego zbioru uprawnionych; dotychczasowe ograniczenia100% i nowych mieszkańców pozostają.",
+        "Północ Warszawy, zapis, odczyt i rozbudowa Domu nie przyznają ponownie już wydanej dziennej puli."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0024",
+        "HL-CHG-0942"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-state.js",
+          "harborlight-v1-play.js",
+          "harborlight-v1-housing.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-housing-v27.test.mjs",
+          "tests/harborlight-housing-v27-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0958",
+      "epic": "HL-EPIC-ECO",
+      "area": "Praca i posiłki",
+      "type": "Story",
+      "title": "Osoba bez miejsca w Domu je dwa razy więcej i pracuje z połową wydajności",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-958"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przy48osobach/24 łóżkach bazowy popyt wynosi 72 żywności/h; każda niezakwaterowana osoba zużywa2 zamiast1.",
+        "Współczynnik pracy0,5 dotyczy danego niezakwaterowanego pracownika produkcji/przewozu, bez spowolnienia zakwaterowanych.",
+        "Jednostka produktu zachowuje normalny koszt wsadu; nie ma podwójnego pobrania materiału. Naliczanie online/offline oraz trwające ładunki zachowują zgodność."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0956"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-residents.js",
+          "harborlight-v1-logistics.js",
+          "harborlight-v1-state.js",
+          "harborlight-v1-housing.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-housing-v27.test.mjs",
+          "tests/harborlight-logistics-v27.test.mjs",
+          "tests/harborlight-housing-v27-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0959",
+      "epic": "HL-EPIC-PEO",
+      "area": "Decyzja mieszkaniowa",
+      "type": "Decision",
+      "title": "Nowe konsekwencje braku miejsca zastępują dotychczasową globalną karę szczęścia",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "Użytkownik odpowiedział, że nowe konsekwencje braku miejsca zastępują dawną globalną karę szczęścia; jest to wyraźne doprecyzowanie, nie założenie bez odpowiedzi.",
+        "reference": "chat:DEV-v27-959"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Odpowiedź użytkownika potwierdza zastąpienie dawnego−1 p.p./h dla wszystkich za każdą osobę bez łóżka nową połową wydajności i podwójnym jedzeniem.",
+        "Nie naliczamy obu reguł mieszkaniowych jednocześnie; nie dodajemy nowej nieuzgodnionej indywidualnej kary szczęścia.",
+        "Głód, bezrobocie, rzeczywisty przestój, powitalne minimum i wymuszone 100% pozostają odrębnymi efektami."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0956",
+        "HL-CHG-0958"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-residents.js",
+          "harborlight-v1-housing.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-housing-v27.test.mjs",
+          "tests/harborlight-housing-v27-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0960",
+      "epic": "HL-EPIC-ECO",
+      "area": "Prognoza rozbudowy",
+      "type": "Bug",
+      "title": "Chmurka budowy nie przełącza poprawnego ETA na Niedostępne co kilka sekund",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-960"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Powtarzane prognozy niezmienionego świata dają spójny czas i nie zależą losowo od obciążenia procesora.",
+        "ETA uwzględnia rzeczywiste pozostałe etapy, obsadę i tempo pracy. Przy prawdziwej przeszkodzie pojawia się czytelna przyczyna zamiast fałszywego czasu.",
+        "Prognozowanie nie mutuje zasobów, projektów, zegarów, załogi ani nagród. Istniejące migawki budów i kursów pozostają zachowane."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0947"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-logistics.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-logistics-v27.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0961",
+      "epic": "HL-EPIC-TUT",
+      "area": "Skutki działań",
+      "type": "Story",
+      "title": "Samouczek wskazuje strzałką faktycznie zmieniony poziom i szczęście",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-961"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Po zakończeniu Ratusza strzałka wskazuje nowy poziom; po Latarni wskazuje rzeczywiste 100% i pozostały czas jej premii.",
+        "Po Domu, Kaplicy i atrakcji wskazujemy rzeczywistą zmianę lub aktywny efekt, także gdy zaokrąglona średnia lub istniejące100% nie wzrosły.",
+        "Przy kliknięciu trwającej rozbudowy pojawia się popup nazwy i rzeczywistego czasu; odbiór nagrody, minigra i tutorial zachowują pierwszeństwo."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0945",
+        "HL-CHG-0947"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-tutorial-ui.js",
+          "harborlight-v1-learning-feedback.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-feedback-v27.test.mjs",
+          "tests/harborlight-learning-feedback-v27-smoke.py",
+          "tests/harborlight-learning-flow-v27-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0962",
+      "epic": "HL-EPIC-TUT",
+      "area": "Nagrody i zakończenie",
+      "type": "Story",
+      "title": "Nagroda ma prosty opis bez dodatkowej skrzyni, a koniec kursu oddaje inicjatywę graczowi",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-962"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Popup lekcji wyjaśnia, że nagroda została dodana do zasobów; nie wprowadza nieistniejącej dodatkowej skrzyni.",
+        "Po25lekcjach pojawia się Samouczek ukończony i opis samodzielnego kierowania rozwojem osady oraz misji Latarni.",
+        "Wcześniejsze działania, zamknięcie, przegląd i ponowne wejście nie dublują nagród ani nie resetują zaliczeń."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0945",
+        "HL-CHG-0946"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-tutorial-ui.js",
+          "harborlight-v1-progression.js",
+          "harborlight-v1-learning-feedback.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-feedback-v27-smoke.py",
+          "tests/harborlight-learning-flow-v27-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0963",
+      "epic": "HL-EPIC-TUT",
+      "area": "Misje główne Latarni",
+      "type": "Story",
+      "title": "Osiem zadań na poziom prowadzi do kolejnej rzeczywistej rozbudowy Latarni",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-963"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Misja ma 8 głównych etapów i pozytywny cel rozwoju całej osady, z małymi nagrodami etapowymi oraz widocznym postępem.",
+        "Integracja: pierwszy rozdział Ratusza≥2 po ukończeniu lub świadomym zamknięciu kursu zapamiętuje następny cel Latarni; nie wymaga powtórnej odbudowy tego samego poziomu i nie blokuje klasycznych rozbudów.",
+        "Awans Ratusza nie przeskakuje rozpoczętej misji. Wcześniej spełnione warunki budynków i rzeczywista budowa są rozpoznawane; koniec nie tworzy9/8."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0946",
+        "HL-CHG-0951"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-activities.js",
+          "harborlight-v1-state.js",
+          "harborlight-v1-play.js",
+          "harborlight-v1-missions.js",
+          "harborlight-v1-missions-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-missions-v27.test.mjs",
+          "tests/harborlight-missions-ui-v27-smoke.py",
+          "tests/harborlight-missions-game-v27-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": [
+        "W wymaganiach oddzielono dosłowną decyzję użytkownika od wybranego parametru integracyjnego; nie traktujemy wyboru implementacji jako dodatkowej odpowiedzi użytkownika."
+      ]
+    },
+    {
+      "id": "HL-CHG-0964",
+      "epic": "HL-EPIC-TUT",
+      "area": "Pomoc i ratunek",
+      "type": "Story",
+      "title": "Niepowodzenia otwierają pięć pomocniczych i trzy ratunkowe z prawidłowym powrotem",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-964"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nieudane4/8 →5 pomocniczych →5/8; nieudane2/5 pomocniczych →3 ratunkowe →3/5 pomocniczych. Wcześniejsze zaliczenia zostają.",
+        "Ostatni etap pomocy/ratunku naprawdę realizuje naprawiany cel. Zakończenie 8/8 lub5/5 kończy właściwy zakres zamiast tworzyć 9/8 lub6/5.",
+        "Parametry wykonawcze: termin aktywnego zadania, ponowienie nieudanego ratunkowego i jednokrotne nagrody. Narracja wsparcia nie udaje wykonanej budowy ani ogólnej odporności na plagi."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0963"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-activities.js",
+          "harborlight-v1-state.js",
+          "harborlight-v1-missions.js",
+          "harborlight-v1-missions-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-missions-v27.test.mjs",
+          "tests/harborlight-missions-game-v27-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": [
+        "W wymaganiach oddzielono dosłowną decyzję użytkownika od wybranego parametru integracyjnego; nie traktujemy wyboru implementacji jako dodatkowej odpowiedzi użytkownika."
+      ]
+    },
+    {
+      "id": "HL-CHG-0965",
+      "epic": "HL-EPIC-ECO",
+      "area": "Wykonalność zadań",
+      "type": "Story",
+      "title": "Każde nowe zadanie ma osiągalny koszt, ilość i termin w realnej gospodarce",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-965"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "100 zapas+10/h × 2 h nie uprawnia do wymagania300w 2 h. System ogranicza cel, wydłuża termin lub wybiera wykonalny wariant.",
+        "Ocena bierze łącznie rezerwacje, zużycie, wsady, obsadę,2-minutowe dojście/powrót, produkcję, przewóz, limity i koszty/odblokowanie rozbudowy.",
+        "Obejmuje8/5/3 i nowe zwykłe zadania. Nie wymaga zakupu za realne pieniądze ani nie przelicza wstecz warunków już przyjętego zadania."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0958",
+        "HL-CHG-0963",
+        "HL-CHG-0964"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-activities.js",
+          "harborlight-v1-logistics.js",
+          "harborlight-v1-missions.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-missions-v27.test.mjs",
+          "tests/harborlight-missions-ui-v27-smoke.py",
+          "tests/harborlight-missions-game-v27-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0966",
+      "epic": "HL-EPIC-ACC",
+      "area": "Zapis misji i mieszkań",
+      "type": "Story",
+      "title": "Nowe reguły zachowują starsze wyspy, aktywne zadania i jednokrotne rozliczenie",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-966"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Normalizacja nowych opcjonalnych pól w schemacie świata 9 zachowuje konto, UID, nazwę, aktywną wyspę, historię kursu i nagród.",
+        "Zapis/odczyt, naliczanie offline i powrót do rodzica nie wypłacają nagrody drugi raz, nie zmieniają przyjętej ceny i nie kasują ładunków.",
+        "Stabilne mieszkania i efekty tej samej osoby nie zależą od kolejności załogi ani ponownego wejścia. Utrata potwierdzenia nie tworzy świeżego świata."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0956",
+        "HL-CHG-0964",
+        "HL-CHG-0943"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-state.js",
+          "harborlight-v1-archipelago.js",
+          "harborlight-dev-sync.js",
+          "harborlight-v1-missions.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-missions-v27.test.mjs",
+          "tests/harborlight-dev-sync.test.mjs",
+          "tests/harborlight-housing-archipelago-v27.test.mjs",
+          "tests/harborlight-learning-flow-v27-smoke.py",
+          "tests/harborlight-missions-game-v27-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": []
+    },
+    {
+      "id": "HL-CHG-0967",
+      "epic": "HL-EPIC-OPS",
+      "area": "Odbiór DEV 0.11.0.0",
+      "type": "Ops",
+      "title": "Zakres v27 ma osobne źródła, karty i ręczne scenariusze bez promocji GCP",
+      "source": {
+        "kind": "user_chat_and_approved_requirement",
+        "date": "2026-11-01",
+        "date_note": "Data klienta Europe/Warsaw. Zlecenie po wydaniu0.10.2.0; nie zmienia dat historycznych wpisów.",
+        "summary": "GO użytkownika „tu masz z drobnymi poprawkami; GO” zatwierdza pakiet opisów i wcześniej zebrane zmiany. Nowa wklejka zawiera także regułę mieszkań i rzeczywistego przykładu zasobów.",
+        "reference": "chat:DEV-v27-967"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally",
+        "ci": "awaiting_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Zaakceptowane wejścia są archiwizowane z hashami; każda grupa zmian ma osobną kartę ze stanem implementacji, testów i środowisk.",
+        "Nowe przypadki TC60–70 mają izolowane dane, kroki i oczekiwania; ręczne wyniki pozostają NOT RUN do wykonania.",
+        "Nowy kod wymaga własnego SHA/CI/Pages. PRE-PROD pozostaje 0.10.1.0 / 353faad; bez resetu kont, nowej promocji i PROD."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0950"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V27-REQUIREMENTS.md",
+          "docs/approval/v27-approval-record.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
+        ],
+        "code": [],
+        "automated_tests": [
+          "tests/harborlight-manual-checklist-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "DEV 0.11.0.0 / v27 zaimplementowane i zweryfikowane lokalnie: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po poprawkach i kierunkowych ponowieniach. Własne SHA/CI/Pages oczekują; nie jest to dowód publikacji. PRE-PROD pozostaje 0.10.1.0 / 353faad. Ręczny odbiór nadal NOT RUN. Bez resetu, PROD i realnych usług finansowych."
+      },
+      "notes": []
     }
   ]
 }

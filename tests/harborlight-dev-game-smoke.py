@@ -246,6 +246,8 @@ def finish_onboarding(page, name='Nowa wyspa'):
         expect(guide).to_have_attribute('data-onboarding-stage', 'tour')
     page.locator('[data-onboarding-exit]').click()
     expect(guide).not_to_be_visible()
+    expect(page.locator('[data-tutorial-exit-reminder]')).to_be_visible()
+    page.locator('[data-close-tutorial-exit-reminder]').click()
     if page.locator('[data-tutorial-dismiss]').is_visible():
         page.locator('[data-tutorial-dismiss]').click()
     elif page.locator('#island-dialog').is_visible():

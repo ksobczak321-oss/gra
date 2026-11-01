@@ -7,6 +7,7 @@ import {
 } from '../harborlight-v1-events.js';
 import { ordinaryStock, bonusStock, centralAvailable, consumeMaterial } from '../harborlight-v1-inventory.js';
 import { removeResidentForDeparture, synchronizeResidents, residentHappiness } from '../harborlight-v1-residents.js';
+import { residentHasHousing, residentWorkMultiplier, residentFoodMultiplier, foodDemandPerHour } from '../harborlight-v1-housing.js';
 
 const HOUR = 3600, DAY = 86400, NOW = Date.parse('2026-10-30T12:00:00Z');
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
@@ -105,15 +106,49 @@ test('rescued supplies are spendable bonus goods and do not consume ordinary pro
   const once = structuredClone(state.resources); advance(reload(state), 0); assert.deepEqual(state.resources, once);
 });
 
-test('a castaway joins only with a bed and population place; a full House pays only the coin component', () => {
-  const seed = seedFor('castaway', 'positive'), free = island(), full = island({ population: 24 });
+test('a castaway joins with a Town Hall population place; a full Town Hall pays only the coin component', () => {
+  const seed = seedFor('castaway', 'positive'), free = island(), full = island({ population: 72 });
   dueGood(free, seed); advance(free, 1);
   assert.equal(free.population, 13); assert.equal(free.residents.length, 13);
   assert.equal(free.worldEvents.history[0].details.people, 1);
   const coins = full.resources.coins; dueGood(full, seed); advance(full, 1);
-  assert.equal(full.population, 24);
+  assert.equal(full.population, 72);
   assert.equal(full.resources.coins - coins, 500 * 3);
   assert.equal(full.worldEvents.history[0].details.substituted, true);
+});
+
+test('a rescued castaway can be the twenty-fifth resident with 24 beds without resetting existing people or replaying its receipt', () => {
+  const state = island({ population: 24 }); state.buildings.townhall.level = 2;
+  Object.assign(state.residents[0], { happiness: 17, hungerSeconds: 1500, unemployedSeconds: 40000 });
+  synchronizeResidents(state);
+  const before = structuredClone(state.residents), coins = state.resources.coins;
+  dueGood(state, seedFor('castaway', 'positive')); advance(state, 1);
+  assert.equal(state.population, 25); assert.equal(state.residents.length, 25);
+  assert.deepEqual(state.residents.slice(0, 24), before);
+  assert.equal(state.resources.coins, coins);
+  const newcomer = state.residents.find(person => person.id === 25);
+  assert.ok(newcomer);
+  assert.equal(residentHasHousing(state, newcomer), false);
+  assert.equal(residentWorkMultiplier(state, newcomer), .5);
+  assert.equal(residentFoodMultiplier(state, newcomer), 2);
+  assert.equal(foodDemandPerHour(state), 26);
+  const receipt = structuredClone(state.worldEvents.history[0]);
+  assert.equal(receipt.details.people, 1);
+  assert.match(receipt.messagePl, /Jeśli nie ma dla niego wolnego łóżka/);
+  const restored = reload(state); advance(restored, 0);
+  assert.equal(restored.population, 25);
+  assert.deepEqual(restored.residents, state.residents);
+  assert.deepEqual(restored.worldEvents.history[0], receipt);
+});
+
+test('incoming passengers reserve the final Town Hall place before a castaway is admitted', () => {
+  const state = island({ population: 47 }); state.buildings.townhall.level = 2; state.incomingPassengers = 1;
+  const coins = state.resources.coins;
+  dueGood(state, seedFor('castaway', 'positive')); advance(state, 1);
+  assert.equal(state.population, 47);
+  assert.equal(state.incomingPassengers, 1);
+  assert.equal(state.resources.coins, coins + 1000);
+  assert.equal(state.worldEvents.history[0].details.substituted, true);
 });
 
 test('beetles remove only free wood and keep construction reservations and carried cargo intact', () => {

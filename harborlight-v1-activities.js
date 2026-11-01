@@ -5,13 +5,14 @@ import {
   MATERIAL_IDS, stockRoom, receiveMaterials, notify,
   quoteInstantTransport, instantTransport, estimateMaterialsSeconds, availableGoods, haulCapacity,
   townhallPopulationRequirement
-} from './harborlight-v1-logistics.js?v=frontend-v26';
-import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v26';
+} from './harborlight-v1-logistics.js?v=frontend-v27';
+import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v27';
 import { secondsUntilWarsawMidnight } from './harborlight-v1-calendar.js';
-import { tutorialTaskStatus } from './harborlight-v1-progression.js?v=frontend-v26';
+import { tutorialTaskStatus } from './harborlight-v1-progression.js?v=frontend-v27';
+import { affordableTaskRequirements, missionFeasibility } from './harborlight-v1-missions.js?v=frontend-v27';
 import { MINI_GAME_RULES, miniGameRoundRules, createMiniGame, normalizeMiniGame,
-  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v26';
-export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v26';
+  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v27';
+export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v27';
 
 const HOUR = 3600;
 const QUEST_LIFE = 6 * HOUR;
@@ -183,6 +184,9 @@ function generateTask(state, size, slot, at = currentClock(state)) {
     levelSnapshot[resource] = l;
     requirements[resource] = 12 * l * producerRate(l) * hours;
   }
+  const affordable = affordableTaskRequirements(state, requirements, { duration: QUEST_LIFE });
+  for (const id of Object.keys(requirements)) delete requirements[id];
+  Object.assign(requirements, affordable.requirements);
   const reward = { coins: randomInt(state, ...shape.gold) };
   for (const resource of shuffled(state, MATERIAL_IDS).slice(0, SIZES.indexOf(size) + 1)) {
     reward[resource] = Math.max(1, Math.floor(randomInt(state, 50, 1000) * taskRewardScale(state)));
@@ -193,7 +197,8 @@ function generateTask(state, size, slot, at = currentClock(state)) {
     requirements, deposited: Object.fromEntries(Object.keys(requirements).map(id => [id, 0])),
     reward, hours, levelSnapshot, rewardLevel: Math.max(1, level(state, 'townhall')),
     chainId: 'chain-' + slot, anchorAt: null, createdAt: at, expiresAt: at + QUEST_LIFE,
-    acceptedAt: null, bonusLockedAt: null, multiplier: 1
+    acceptedAt: null, bonusLockedAt: null, multiplier: 1,
+    feasibilityVersion: 1, feasibleAtOffer: affordable.feasible
   };
 }
 function normalizeTask(raw, slot, clock) {
@@ -223,7 +228,8 @@ function normalizeTask(raw, slot, clock) {
     chainId: typeof raw.chainId === 'string' ? raw.chainId.slice(0, 80) : 'chain-' + slot,
     anchorAt, createdAt, expiresAt, acceptedAt, bonusLockedAt,
     multiplier: bonusLockedAt === null ? 1 : bonusLockedAt - createdAt < 15 ? 3 : bonusLockedAt - createdAt < 300 ? 2 : 1,
-    ...(raw.tutorialStarter === true ? { tutorialStarter: true } : {})
+    ...(raw.tutorialStarter === true ? { tutorialStarter: true } : {}),
+    ...(raw.feasibilityVersion === 1 ? { feasibilityVersion: 1, feasibleAtOffer: raw.feasibleAtOffer !== false } : {})
   };
 }
 
@@ -395,12 +401,15 @@ export function taskStatus(state, taskOrId) {
   const age = Math.max(0, currentClock(state) - task.createdAt);
   const activeTask = activeLighthouseTask(state);
   const remaining = Math.max(0, task.expiresAt - currentClock(state));
+  const pendingRequirements = Object.fromEntries(entries(task.requirements).map(([id,n]) => [id, Math.max(0, n - integer(task.deposited?.[id]))]));
+  const feasibility = task.acceptedAt === null ? missionFeasibility(state, pendingRequirements, { duration: remaining || 1, mode: 'contribute' }) : null;
   return {
     age, remaining,
     multiplier: task.acceptedAt !== null ? task.multiplier : age < 15 ? 3 : age < 300 ? 2 : 1,
     complete: entries(task.requirements).every(([id, value]) => integer(task.deposited?.[id]) >= value),
     active: activeTask?.id === task.id,
-    canActivate: remaining > 0 && activeTask === null
+    canActivate: remaining > 0 && activeTask === null && feasibility?.feasible !== false,
+    feasible: feasibility?.feasible !== false, feasibilityReason: feasibility?.reason || null, feasibilityReasonPl: feasibility?.reasonPl || null
   };
 }
 function refillRewardBuffer(state) {
@@ -800,6 +809,7 @@ export function activityAction(state, action, context = {}) {
       const activeTask = activeLighthouseTask(state);
       if (activeTask?.id === task.id) return bad('This task is already active.');
       if (activeTask) return bad('Finish the active task or wait for it to expire before starting another.');
+      if (!status.feasible) return bad('Prepare the required stock, production and transport before starting this task.');
       if (type !== 'confirmTaskAcceptance') {
         if (state.taskAcceptanceDraft?.taskId !== task.id) state.taskAcceptanceDraft = {
           taskId: task.id, startedAt: currentClock(state), expiresAt: currentClock(state) + ACTIVITY_RULES.taskConfirmationSeconds,

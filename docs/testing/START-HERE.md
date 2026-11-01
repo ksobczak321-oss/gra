@@ -74,6 +74,17 @@ Pełna metodyka i zależności: [MANUAL-TEST-PLAN.md](MANUAL-TEST-PLAN.md). Bie�
 - [ ] [HL-TC-0057 — Turbo poziomów 1–2 i blokady odblokowania obejmują wszystkie ścieżki budowy](manual/HL-TC-0057.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0058 — Magazyn i Dom są czytelne, a okno reklamy ma rozdzielone przyciski](manual/HL-TC-0058.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0059 — Ranking, czaty i Pomagam są osobne, a demonstracja nie udaje realnych operacji](manual/HL-TC-0059.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0060 — Zatwierdzone opisy i 34 kroki pokazują rzeczywiste dane gracza](manual/HL-TC-0060.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0061 — Pomoc pod ? wznawia oba tryby i wyjaśnia wyjście z tutoriala](manual/HL-TC-0061.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0062 — Samouczek pokazuje czas trwającej budowy i prawdziwy efekt strzałką](manual/HL-TC-0062.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0063 — Dojście i powrót trwają 2 minuty, a załadowany tragarz kończy dostawę](manual/HL-TC-0063.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0064 — 48 mieszkańców może mieć 24 łóżka, a punkty Domu dostają zakwaterowani](manual/HL-TC-0064.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0065 — Brak miejsca dotyczy wydajności i jedzenia konkretnej osoby](manual/HL-TC-0065.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0066 — Chmurka postępu daje stabilne i prawdziwe ETA](manual/HL-TC-0066.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0067 — Główna ścieżka Latarni ma 8 etapów i pamięta rzeczywisty cel](manual/HL-TC-0067.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0068 — Pomoc i ratunek wracają do kolejnego etapu bez kasowania postępu](manual/HL-TC-0068.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0069 — Zadania są wykonalne przy realnych zasobach, produkcji i dostawach](manual/HL-TC-0069.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0070 — Migracja, nieobecność i powroty nie dublują mieszkań ani misji](manual/HL-TC-0070.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 
 ## Wynik pojedynczego przypadku
 

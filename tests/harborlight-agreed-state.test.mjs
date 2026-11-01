@@ -37,11 +37,11 @@ test('new islands start at Home with no preassigned economy crew', () => {
   assert.equal(state.houseHappinessPool.points, 12);
 });
 
-test('workers arrive after five minutes without retroactive production or taxes', () => {
+test('workers arrive after two minutes without retroactive production or taxes', () => {
   const state = island();
   assign(state, 'farm', 1);
   assert.equal(taxRate(state), 0);
-  tick(state, 299);
+  tick(state, 119);
   assert.equal(state.buildings.farm.ready, 0);
   assert.equal(state.statistics.taxCollected, 0);
   tick(state, 1);
@@ -151,14 +151,14 @@ test('real-time catch-up is idempotent and legacy pause/speed do not alter econo
   state.paused = true; state.speed = 4;
   const food = state.resources.food;
   assert.equal(advanceTo(state, NOW + 3600000), 3600);
-  assert.equal(state.buildings.farm.ready, 18); // First five minutes are travel.
+  assert.equal(state.buildings.farm.ready, 19); // First two minutes are travel.
   assert.equal(food - state.resources.food, 6);
   const stored = JSON.stringify(state);
   assert.equal(advanceTo(state, NOW + 3600000), 0);
   assert.equal(JSON.stringify(state), stored);
   const saved = reload(state);
   assert.equal(advanceTo(saved, NOW + 7200000), 3600);
-  assert.equal(saved.buildings.farm.ready, 38);
+  assert.equal(saved.buildings.farm.ready, 39);
 });
 
 test('old saves are not retroactively simulated using an unreliable lastActionAt', () => {
@@ -379,11 +379,11 @@ test('House points are never spent on a newborn whose happiness must stay at zer
 
 test('the smallest logistics boundary advances both blocked clocks and pending production', () => {
   const state = island({ population: 6 });
-  assign(state, 'lumber', 1); assign(state, 'farm', 1); tick(state, 300);
+  assign(state, 'lumber', 1); assign(state, 'farm', 1); tick(state, 120);
   state.buildings.lumber.ready = state.buildings.lumber.level * 200;
   updateStorageStatus(state);
   state.buildings.lumber.fullSeconds = 86400 - 5e-8;
-  state.buildings.farm.workProgress[0] = 360 - 5e-8;
+  state.buildings.farm.workProgress[0] = 180 - 5e-8;
   advanceLogistics(state, 1e-7);
   assert.ok(state.buildings.lumber.fullSeconds >= 86400);
   assert.equal(storagePenalty(state, 'lumber'), 20);

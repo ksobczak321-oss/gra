@@ -2,7 +2,7 @@
 // reading a panel never rerolls an offer or applies an event a second time.
 // This module imports inventory only: residents/logistics can safely read its
 // modifiers, and the state coordinator supplies population-changing callbacks.
-import { centralAvailable, grantBonusMaterials, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v26';
+import { centralAvailable, grantBonusMaterials, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v27';
 
 const HOUR = 3600, DAY = 86400, EPS = 1e-7, SAFE = Number.MAX_SAFE_INTEGER;
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
@@ -145,17 +145,18 @@ function goodEvent(state, events, at, context) {
     title = 'Supplies rescued from the wreck'; titlePl = 'Ładunek ocalony z wraku';
     message = 'Rescued materials are available in your bonus stock.'; messagePl = 'Ocalone materiały trafiły do zapasu z nagród. Możesz je wydać; nie zajmują zwykłej pojemności magazynu.';
   } else if (kind === 'castaway') {
-    const capacity = Math.min(level(state, 'house') * 24, town * 24) - Math.max(0, state.incomingPassengers || 0);
+    const capacity = town * 24 - Math.max(0, state.incomingPassengers || 0);
     if (integer(state.population) < capacity && typeof context.synchronizeResidents === 'function') {
       state.population = integer(state.population) + 1; context.synchronizeResidents(state); details = { people: 1 };
       title = 'A castaway joins the island'; titlePl = 'Rozbitek zamieszkał na wyspie';
-      message = 'One rescued resident moved into the House.'; messagePl = 'Uratowany rozbitek dołączył do mieszkańców i zajął wolne łóżko.';
+      message = 'One rescued resident joined the island. Without a free bed, the resident works at half speed and consumes twice as much Food.';
+      messagePl = 'Uratowany rozbitek dołączył do mieszkańców. Jeśli nie ma dla niego wolnego łóżka, pracuje o połowę wolniej i zużywa dwa razy więcej żywności.';
     } else {
       const coins = grantCoins(state, events, WORLD_EVENT_RULES.fullHouseCompensationPerTownHall * town);
       details = { people: 0, coins, substituted: true };
       title = 'Castaway compensation'; titlePl = 'Rekompensata za brak miejsca';
-      message = `No resident place was available. You received ${coins} coins instead.`;
-      messagePl = `Nie było miejsca dla nowego mieszkańca. Rekompensata wynosi ${coins} ${polishAmountWord(coins, 'moneta', 'monety', 'monet')}.`;
+      message = `No Town Hall population place was available. You received ${coins} coins instead.`;
+      messagePl = `Ratusz nie zapewniał wolnego miejsca dla nowego mieszkańca. Rekompensata wynosi ${coins} ${polishAmountWord(coins, 'moneta', 'monety', 'monet')}.`;
     }
   } else {
     events.effects.push({ id: `wreck-effect-${events.sequence + 1}`, kind, untilMs: at + WORLD_EVENT_RULES.effectSeconds * 1000,

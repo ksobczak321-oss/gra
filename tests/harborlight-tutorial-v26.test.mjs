@@ -158,6 +158,8 @@ test('late starts and the Warsaw midnight boundary finish the same course withou
     assert.equal(ordinaryWarehouseUsed(state), warehouseLimits(state).total);
     assert.equal(state.buildings.townhall.level, 2);
     assert.deepEqual(tutorialPendingRewards(state), []);
-    assert.equal(trace.at(-1).elapsedSeconds <= 20 * 60, true, start);
+    // The global two-minute worker walk now also applies to the first six
+    // carriers; the same fully executed course still fits within half an hour.
+    assert.equal(trace.at(-1).elapsedSeconds <= 30 * 60, true, start);
   }
 });

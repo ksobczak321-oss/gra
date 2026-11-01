@@ -77,9 +77,13 @@ test('unemployment, missing beds and stepped production penalties remain separat
   state.residents[1].workplace = 'windmill'; state.residents[1].blockedSeconds = 86400;
   state.resources.grain = 0;
   state.residents[2].workplace = 'windmill'; state.residents[2].blockedSeconds = 12 * 86400;
+  for (let id = 4; id <= 26; id++) state.residents.push({ ...state.residents[0], id, unemployedSeconds: 0 });
   state.population = 26;
   assert.deepEqual(byId(state, 'unemployment').residentIds, [1]);
-  assert.equal(byId(state, 'overcrowding').amount, -2);
+  assert.equal(byId(state, 'overcrowding'), undefined);
+  assert.deepEqual(byId(state, 'unhoused-residents').residentIds, [25, 26]);
+  assert.equal(byId(state, 'unhoused-residents').amount, null);
+  assert.match(byId(state, 'unhoused-residents').effect, /Work speed ×0\.5.*Food consumption ×2/);
   assert.equal(byId(state, 'production-blockage-windmill').amount, -50);
   assert.equal(byId(state, 'production-blockage-windmill').effect, '−20 to −50 pp happiness');
   state.resources.grain = 2;

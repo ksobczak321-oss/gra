@@ -1,6 +1,6 @@
 # HARBORLIGHT — ręczny plan testów i osobne przypadki
 
-**Zacznij od [listy do odhaczania](START-HERE.md) albo [interaktywnego raportu QA](qa-checklist.html).** Zestaw obejmuje **59 osobnych przypadków**, w tym **TC54–TC59 dla DEV 0.10.2.0**. Wszystkie wyniki ręczne pozostają **NOT RUN**; dokument jest planem odbioru, nie potwierdzeniem wykonania. Można go rozpocząć od poniedziałku 2 listopada 2026 po wskazaniu testowanego buildu i przygotowaniu danych.
+**Zacznij od [listy do odhaczania](START-HERE.md) albo [interaktywnego raportu QA](qa-checklist.html).** Zestaw obejmuje **70 osobnych przypadków**, w tym **TC60–TC70 dla DEV 0.11.0.0 / v27** oraz zachowane TC54–TC59 dla wcześniejszego zakresu. Wszystkie wyniki ręczne pozostają **NOT RUN**; dokument jest planem odbioru, nie potwierdzeniem wykonania. Można go rozpocząć od poniedziałku 2 listopada 2026 po wskazaniu testowanego buildu i przygotowaniu danych.
 
 ## Jak odhaczać pojedyncze przypadki
 
@@ -23,7 +23,9 @@ W interaktywnej liście wynik, notatka, tester i opis buildu są zapisywane loka
 
 **DEV** to przestrzeń robocza i deweloperski podgląd Pages. **PRE-PROD** to `https://harborlight-dev.web.app` w projekcie GCP `harborlight-dev`. **PROD** nie jest objęty nowym GO. Bieżący [rejestr środowisk](../ENVIRONMENT-STATUS.md) rozstrzyga, które funkcje rzeczywiście są opublikowane. Push i Pages nie są promocją do GCP.
 
-Historyczny baseline definicji to v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`. Ostatni potwierdzony PRE-PROD to **0.10.1.0**, źródło `353faad347262dce7c3632fdf7c71be124384ab1`, [wdrożenie 41246771480](https://github.com/ksobczak321-oss/gra/actions/runs/41246771480). Nowy pakiet **0.10.2.0 / v26** z GO 1 listopada obejmuje **tylko DEV**; TC54–TC59 odbieramy na tym buildzie. Żaden dawny sukces CI lub promocji nie jest ręcznym wykonaniem nowych przypadków ani dowodem aktywacji usług.
+Historyczny baseline definicji to v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`. Ostatni potwierdzony PRE-PROD to **0.10.1.0**, źródło `353faad347262dce7c3632fdf7c71be124384ab1`, [wdrożenie 41246771480](https://github.com/ksobczak321-oss/gra/actions/runs/41246771480). Poprzedni pakiet 0.10.2.0 / v26 ma własny odbiór. Nowy pakiet **0.11.0.0 / v27** z kolejnego GO 1 listopada obejmuje **tylko DEV**; TC60–TC70 odbieramy na jego rzeczywistym buildzie. Żaden dawny sukces CI lub promocji nie jest ręcznym wykonaniem nowych przypadków ani dowodem aktywacji usług.
+
+W v27 nauka ma 34 opisy tutoriala i zachowane 25 lekcji samouczka; powroty są pod ?, dojście/powrót wynosi 120 sekund, a 48 osób może mieć 24 miejsca w Domu. Punkty Domu obejmują tylko zakwaterowanych; bez miejsca jedzenie jest podwójne, wydajność pracy połowiczna, a dawna globalna kara szczęścia jest zastąpiona. Misje 8/5/3 i ich wykonalność odbieramy oddzielnie (TC67–TC70). Ręczny wynik pozostaje NOT RUN także po sukcesie automatyzacji.
 
 Nowy program 25 lekcji ma odrębne kryteria pierwszych 6 tragarzy i nie wymaga Ratusza3. **TC56 jest odbiorem nowego programu**, a TC04 zachowuje regres dwóch odrębnych przydziałów w starszym zapisanym programie. Dawnych oczekiwań nie nakładamy bezwarunkowo na nowy fixture. TC55 rozszerza powroty z TC47 o wybór kontynuacji/od początku i ochronę od reklam; powtórka nie resetuje danych. Dwa szczegóły mają jawne założenia wykonawcze, otwarte na korektę po odpowiedzi użytkownika: reszta szczęścia po rozdaniu wszystkim pozostaje wydawalna indywidualnie (TC58), a kolejność HUD przyjmuje Monety → Pracujący → Następny mieszkaniec → Punkty → Mieszkańcy i miejsca (TC54). Sprawdzamy wdrożone zachowanie, ale nie opisujemy tych interpretacji jako dodatkowo potwierdzonych decyzji.
 
@@ -33,7 +35,7 @@ Nie używaj `admin1`–`admin3` jako danych jednorazowych; nie resetuj i nie pod
 
 ## Proponowana kolejność odbioru
 
-1. Nowy zakres DEV 0.10.2.0: TC54–TC59; najpierw ustal właściwy build i izolowane fixture.
+1. Nowy zakres DEV 0.11.0.0 / v27: TC60–TC70; najpierw ustal właściwy build i izolowane fixture, następnie regresję TC54–TC59.
 2. Dostęp i integralność: TC19–23, TC29, TC31.
 3. Nowa gra i czytelność: TC01–05, TC30, TC43–45 oraz powroty w Pomocy TC47, prowadzenie po mapie TC51 i przegląd polszczyzny TC52–53.
 4. Gospodarka i mieszkańcy: TC06–18, TC24–25.
@@ -107,6 +109,17 @@ TC26 jest obecnie testem zachowania wcześniejszych dwóch światów podczas mig
 | [HL-TC-0057 — Turbo poziomów 1–2 i blokady odblokowania obejmują wszystkie ścieżki budowy](manual/HL-TC-0057.md) | Logistyka i rozwój | P0 | READY | NOT RUN |
 | [HL-TC-0058 — Magazyn i Dom są czytelne, a okno reklamy ma rozdzielone przyciski](manual/HL-TC-0058.md) | Panele gospodarki i reklamy | P1 | READY | NOT RUN |
 | [HL-TC-0059 — Ranking, czaty i Pomagam są osobne, a demonstracja nie udaje realnych operacji](manual/HL-TC-0059.md) | Społeczność i dobroczynność DEV | P0 | READY | NOT RUN |
+| [HL-TC-0060 — Zatwierdzone opisy i 34 kroki pokazują rzeczywiste dane gracza](manual/HL-TC-0060.md) | Opisy i tutorial | P1 | READY | NOT RUN |
+| [HL-TC-0061 — Pomoc pod ? wznawia oba tryby i wyjaśnia wyjście z tutoriala](manual/HL-TC-0061.md) | Nawigacja i zapis nauki | P0 | READY | NOT RUN |
+| [HL-TC-0062 — Samouczek pokazuje czas trwającej budowy i prawdziwy efekt strzałką](manual/HL-TC-0062.md) | Efekty, nagrody i zakończenie | P0 | READY | NOT RUN |
+| [HL-TC-0063 — Dojście i powrót trwają 2 minuty, a załadowany tragarz kończy dostawę](manual/HL-TC-0063.md) | Pracownicy i transport | P0 | READY | NOT RUN |
+| [HL-TC-0064 — 48 mieszkańców może mieć 24 łóżka, a punkty Domu dostają zakwaterowani](manual/HL-TC-0064.md) | Mieszkania i szczęście Domu | P0 | READY | NOT RUN |
+| [HL-TC-0065 — Brak miejsca dotyczy wydajności i jedzenia konkretnej osoby](manual/HL-TC-0065.md) | Gospodarka mieszkańców | P0 | READY | NOT RUN |
+| [HL-TC-0066 — Chmurka postępu daje stabilne i prawdziwe ETA](manual/HL-TC-0066.md) | Prognozy i interfejs budowy | P0 | READY | NOT RUN |
+| [HL-TC-0067 — Główna ścieżka Latarni ma 8 etapów i pamięta rzeczywisty cel](manual/HL-TC-0067.md) | Misje Latarni | P0 | READY | NOT RUN |
+| [HL-TC-0068 — Pomoc i ratunek wracają do kolejnego etapu bez kasowania postępu](manual/HL-TC-0068.md) | Misje5/3 i terminy | P0 | READY | NOT RUN |
+| [HL-TC-0069 — Zadania są wykonalne przy realnych zasobach, produkcji i dostawach](manual/HL-TC-0069.md) | Wykonalność gospodarcza | P0 | READY | NOT RUN |
+| [HL-TC-0070 — Migracja, nieobecność i powroty nie dublują mieszkań ani misji](manual/HL-TC-0070.md) | Trwałość i integralność | P0 | READY | NOT RUN |
 
 ## Raport i zgłoszenia
 

@@ -139,17 +139,17 @@ test('assigning and cancelling before arrival preserves unemployment; an actual 
   assert.equal(person.unemployedSeconds, 13 * HOUR);
   assert.equal(person.returnFrom, 'quarry');
   assert.equal(residentHappinessRate(state, person), -4);
-  advancePeople(state, 300);
+  advancePeople(state, 120);
   assert.equal(person.returnFrom, null);
   assignResidents(state, 'quarry', 1);
   const actualArrival = state.residents.find(resident => resident.workplace === 'quarry');
-  advancePeople(state, 299);
+  advancePeople(state, 119);
   assert.ok(actualArrival.unemployedSeconds > 13 * HOUR);
   advancePeople(state, 1);
   assert.equal(actualArrival.unemployedSeconds, 0);
 });
 
-test('a recalled loaded carrier finishes as an employee, then gets the entire five-minute walk home', () => {
+test('a recalled loaded carrier finishes as an employee, then gets the entire two-minute walk home', () => {
   const state = island(), [person] = arrived(state, 'warehouse');
   state.haulTrips.warehouse = [{ worker: 0, residentId: person.id, remaining: 200, resource: 'wood', amount: 60, kind: 'producer', producer: 'lumber' }];
   assignResidents(state, 'warehouse', -1);
@@ -164,10 +164,10 @@ test('a recalled loaded carrier finishes as an employee, then gets the entire fi
   assert.equal(person.workplace, null);
   assert.equal(person.pendingRelease, false);
   assert.equal(person.returnFrom, 'warehouse');
-  assert.equal(person.returnRemaining, 300);
+  assert.equal(person.returnRemaining, 120);
   assert.equal(state.buildings.warehouse.workers, 0);
   assert.equal(activeWorkerCount(state, 'warehouse'), 0);
-  advancePeople(state, 299);
+  advancePeople(state, 119);
   assert.equal(availableResidentCount(state), 11);
   advancePeople(state, 1);
   assert.equal(availableResidentCount(state), 12);

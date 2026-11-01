@@ -1,12 +1,12 @@
-# Reguły gospodarki HARBORLIGHT — bieżący DEV 0.10.2.0 / v26
+# Reguły gospodarki HARBORLIGHT — kandydat DEV 0.11.0.0 / v27
 
-Reguły kandydata DEV wynikają z bazy [v18](FRONTEND-V18-REQUIREMENTS.md), wprowadzenia [v20](FRONTEND-V20-REQUIREMENTS.md), wcześniejszych programów lekcji [v21](FRONTEND-V21-REQUIREMENTS.md), archipelagu i społeczności [v24](FRONTEND-V24-REQUIREMENTS.md) oraz poniższych wyjątków [v26](FRONTEND-V26-REQUIREMENTS.md). Dokument opisuje zasady kodu, a nie wynik wdrożenia. Ostatni potwierdzony PRE-PROD to **0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`**, przebieg **41246771480 / próba 1 SUCCESS**. Nowe GO dotyczy tylko DEV, bez promocji GCP, resetu i PROD. [Rejestr środowisk](ENVIRONMENT-STATUS.md) rozstrzyga aktualny kod, CI, publikacje i aktywację usług.
+Reguły kandydata DEV wynikają z bazy [v18](FRONTEND-V18-REQUIREMENTS.md), wprowadzenia [v20](FRONTEND-V20-REQUIREMENTS.md), wcześniejszych programów lekcji [v21](FRONTEND-V21-REQUIREMENTS.md), archipelagu i społeczności [v24](FRONTEND-V24-REQUIREMENTS.md), wyjątków początku gry [v26](FRONTEND-V26-REQUIREMENTS.md) oraz zatwierdzonych zmian [v27](FRONTEND-V27-REQUIREMENTS.md). Dokument opisuje zasady kodu, a nie wynik wdrożenia. Ostatni potwierdzony PRE-PROD to **0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`**, przebieg **41246771480 / próba 1 SUCCESS**. Nowe GO dotyczy tylko DEV, bez promocji GCP, resetu i PROD. [Rejestr środowisk](ENVIRONMENT-STATUS.md) rozstrzyga aktualny kod, CI, publikacje i aktywację usług.
 
 V18 zastąpiło sprzeczne reguły v17 i wcześniejszych manifestów; późniejsze zatwierdzone zmiany poniżej mają pierwszeństwo. Starsze arkusze pozostają archiwami, a dawne pytania nie otwierają ponownie rozstrzygniętych zasad.
 
 ## Wyjątki początku gry v26
 
-Po nowym, rzeczywistym przydzieleniu sześciu tragarzy na wyspie macierzystej zapisujemy osiągnięcie wprowadzające turbo. Nie wywodzimy go automatycznie z obsady starego zapisu, nie przenosimy na córki i nie przeliczamy wcześniej zleconych budów. Przy Ratuszu 1 pierwsza szóstka dostaje dojście najwyżej **20 s** zamiast zwykłych pięciu minut — to jawny parametr wykonawczy, nie globalna zmiana dojścia mieszkańców.
+Po nowym, rzeczywistym przydzieleniu sześciu tragarzy na wyspie macierzystej zapisujemy osiągnięcie wprowadzające turbo. Nie wywodzimy go automatycznie z obsady starego zapisu, nie przenosimy na córki i nie przeliczamy wcześniej zleconych budów. Od v27 **każdy pracownik, także pierwszych sześciu tragarzy, idzie do pracy i wraca do Domu przez 120 sekund**. Zastępuje to dawne dojście pierwszej szóstki w 20 sekund i pozostałe pięciominutowe dojścia. Turbo dotyczy dostaw na budowę i budowania, a nie drogi pracowników.
 
 | Nowe zwykłe zlecenie z aktywnym turbo | Cała dostawa materiałów | Faza budowania |
 |---|---|---|
@@ -18,7 +18,7 @@ Proporcja innych zleceń opiera się na liczbie rzeczywistych kursów materiał�
 
 Nowy program samouczka **5** ma 25 lekcji: 6 tragarzy → priorytet Budowa → rolnik → drwal → Ratusz 2, a zadanie Latarni i rozegrana minigra zastępują dwie lekcje Ratusza 3. Nagroda zadania pokrywa brakujące zasoby na Latarnię z rezerwą żywności. Kurs nominalnie kończy się z Ratuszem 2 i zwykłym Magazynem uzupełnionym bez zaległych skrzyń. Pierwsza rozbudowa Ratusza 1→2 kosztuje po 100 sześciu zasobów jako parametr wykonawczy wprowadzającej ścieżki; nie obniża automatycznie wyceny kolonii. Zapisane programy **3 i 4** zachowują swoje warunki, zaliczenia, odebrane nagrody i rozpoczęte budowy.
 
-Tutorial to **33 opisy ekranu**, samouczek to **25 praktycznych lekcji**. Podczas któregokolwiek automatyczne reklamy i wybór „ekspedycja albo reklama” czekają. Po wcześniejszym zamknięciu obowiązuje zapisane **3600 aktywnych sekund, czyli 60 aktywnych minut** ochrony; offline i bezczynność go nie skracają. Powtórka nie resetuje świata ani nie wypłaca ponownie nagród.
+Tutorial to **34 opisy ekranu**, w tym opis czatu przed dzwonkiem, a samouczek to **25 praktycznych lekcji**. Oba można wznowić w Pomocy pod znakiem **?**, od zapisanego miejsca albo od początku; powtórka nie resetuje świata ani nie wypłaca ponownie nagród. Podczas któregokolwiek automatyczne reklamy i wybór „ekspedycja albo reklama” czekają. Po wcześniejszym zamknięciu obowiązuje zapisane **3600 aktywnych sekund, czyli 60 aktywnych minut** ochrony; offline i bezczynność go nie skracają.
 
 ## Start, ludzie i zegary
 
@@ -27,10 +27,10 @@ Tutorial to **33 opisy ekranu**, samouczek to **25 praktycznych lekcji**. Podcza
 | Start | Raz przy pierwszym wejściu do nowej wyspy: Ratusz 1, 12 osób w domu, brak przydziałów, po 100 monet i każdego z pięciu materiałów, bazowe H20%. Kolejne wejścia wznawiają zapis, nie przyznają startu ponownie. |
 | Ochrona powitalna | Przez 72 h minimum 20% obejmuje wszystkich, również nowe osoby. Nie odkłada ukrytego długu kar; koniec nie odejmuje 20 pp. |
 | Pierwszeństwo H | Wymuszone 100% > minimum powitalne 20% > zwykłe zasady, w tym początkowe 24 h nowej osoby na 0%. Osoba przybyła podczas Latarnianej premii korzysta tylko do wspólnego końca efektu. |
-| Poziom i mieszkanie | Poziom Ratusza ogranicza rozbudowę innych budynków i daje 24 miejsca populacji/poziom; Dom osobno daje 24 łóżka/poziom. Brak łóżek daje −1 pp/h wszystkim za każdą osobę bez miejsca. |
-| Przydział | Osiem miejsc pracy: limit 12 × własny poziom i wspólna pula wolnych w domu. Zwykłe dojście 5 min, z wyjątkiem pierwszej szóstki w turbo v26 opisanym wyżej; w drodze kara bezrobocia jest wstrzymana, licznik zeruje dopiero dotarcie. Podatek zaczyna się po dojściu. |
-| Odwołanie | Osoba bez ładunku wraca 5 min; tragarz z ładunkiem kończy dostawę, nie bierze nowej i dopiero wraca. Wyraźny popup i licznik np.5(−2) pokazują oczekujące odejścia. |
-| Jedzenie | Każdy mieszkaniec zużywa 1 żywność/h z dostępnej centrali. Brak jedzenia od razu daje wydajność ×0,5, po 12 h karę−5 pp/h. Posiłek zatrzymuje karę od razu, ale licznik głodu zeruje dopiero pełna godzina nieprzerwanego karmienia. |
+| Poziom i mieszkanie | Poziom Ratusza ogranicza rozbudowę innych budynków i daje 24 miejsca populacji na poziom; Dom osobno daje 24 łóżka na poziom. Osoba bez łóżka pracuje z połową wydajności, zużywa dwa razy więcej żywności i nie otrzymuje punktów szczęścia z Domu. Brak łóżek nie obniża szczęścia całej wyspy; nowa reguła zastępuje dawną wspólną karę. |
+| Przydział | Osiem miejsc pracy: limit 12 × własny poziom i wspólna pula wolnych w Domu. Dojście trwa 120 sekund dla wszystkich, także pierwszej szóstki tragarzy. W drodze kara bezrobocia jest wstrzymana, licznik zeruje dopiero dotarcie. Podatek zaczyna się po dojściu. |
+| Odwołanie | Osoba bez ładunku wraca przez 120 sekund. Tragarz z ładunkiem kończy rozpoczętą dostawę, nie bierze nowej i dopiero rozpoczyna dwuminutowy powrót. Popup i licznik, np. 5 (−2), pokazują oczekujące odejścia. |
+| Jedzenie | Mieszkaniec mający łóżko zużywa 1 jednostkę żywności na godzinę z dostępnej centrali, a osoba bez łóżka — 2 jednostki. Dotyczy to także czasu offline. Głód od razu mnoży wydajność przez 0,5; po 12 zgromadzonych godzinach uruchamia karę −5 p.p./h. Posiłek zatrzymuje karę od razu, ale licznik głodu zeruje dopiero pełna godzina nieprzerwanego karmienia. |
 | Szczęście | Indywidualne H jest ograniczone do−100…100%, wyspa pokazuje średnią. Jedzenie i rzeczywista praca dają osobno+1 pp/h, brak pracy po 12 h daje−5 pp/h. Wyświetlenie zaokrągla w górę; obliczenia zachowują ułamki. |
 | Przestój | Brak wejścia lub miejsca zatrzymuje produkcję i premię pracy. Indywidualna kara−10 pp od początku, kolejne−10 co 24 h, maks.−50 z tego składnika; bez dodatkowej kary bezrobocia za ten sam przestój. Przyczyna i indywidualne zegary są jawne. Smutna buźka pojawia się także przy pełnym lokalnym magazynie bez aktywnej kary, np. bez obsady lub przy ochronie Latarni. Sam wskaźnik pełności nie nalicza nowej kary. |
 | Demografia | Dodatni przyrost jest ×2 wobec wcześniejszego wzoru; ujemne odejścia bez przyspieszenia. Minimum 12 osób na wyspie macierzystej i 6 na córce, także przy odejściach i dżumie; maksimum 24 × TH. Kolejność grup odejścia zachowana, potem najmniej szczęśliwy z losowaniem remisów; chronieni nie tworzą długu odejść. |
@@ -42,7 +42,7 @@ Tutorial to **33 opisy ekranu**, samouczek to **25 praktycznych lekcji**. Podcza
 
 | Mechanika | Obowiązująca zasada |
 |---|---|
-| Produkcja | Bazowa wydajność/osobę:20,24,26,28… szt./h; oddzielny postęp produktu każdej osoby. Głód, aktywność, Latarnia i odpowiedni efekt wydarzenia składają się z bazą. Zwolnienie usuwa niedokończoną sztukę. |
+| Produkcja | Bazowa wydajność na osobę: 20, 24, 26, 28… szt./h; każda osoba ma oddzielny postęp produktu. Głód, brak łóżka, aktywność, Latarnia i właściwy efekt wydarzenia składają się z bazą. Głód i brak łóżka to osobne mnożniki ×0,5. Odwołanie usuwa niedokończoną sztukę. |
 | Przetwórstwo | Młyn:2 zboża → 1 żywność; Tartak:2 drewna → 1 deska. Pobranie dostępnego wejścia przy ukończeniu produktu. Brak wejścia lub miejsca wstrzymuje postęp bez jego utraty. |
 | Lokalny skład | Gotowe produkty czekają lokalnie do 200 × własny poziom producenta. Tragarze przewożą je do centrali; monety są osobno w skarbcu. |
 | Zapas bonusowy | `resources` jest sumą zwykłego i bonusowego zapasu. Nagrody są od razu wydawalne, nie zajmują limitu zwykłych dostaw; wydajemy najpierw bonus. Rezerwacje i ochrona jedzenia nadal obowiązują. |
@@ -74,10 +74,16 @@ Tutorial to **33 opisy ekranu**, samouczek to **25 praktycznych lekcji**. Podcza
 - Polecenie ma stałego polecającego:1000 monet po pierwszym logowaniu i500 pięciu materiałów po trzech aktywnych dniach w30 dniach rejestracji. Aktywność nie może poprzedzać pierwszego logowania. Weryfikacja rzeczywistych poleceń nie jest jeszcze podłączona.
 - O północy 5 ofert z katalogu 20 atrakcji; losowe 5–100 pp i1–50% populacji. Bonus 6 h dla uprawnionych najmniej szczęśliwych, cena pp po przyzwyczajeniu × faktyczna liczba odbiorców w górę do monet. Jedna nowa atrakcja naraz.
 - Przyzwyczajenie osobne dla rodzaju:100/75/50/25/0%; po 24 h bez zakupu pełna skuteczność. Przy 0% nie pobieramy opłaty. Oferta zachowuje udział procentowy; odbiorcy=min(uprawnieni,max(1,floor(populacja × procent/100))).
-- Dom o północy dostaje punkty równe populacji, bez starej reszty; o 23:58 rozdaje niewykorzystane uprawnionym o najniższymH. Punkty nie kasują liczników kar.
+- Dom o północy dostaje po jednym punkcie za mieszkańca mającego łóżko, bez kumulowania starej reszty. Punkty można przyznawać tylko osobom z miejscem w Domu, poza pierwszymi 24 godzinami osiedlania i bez wymuszonego 100% szczęścia. O 23:58 niewykorzystana pula trafia do uprawnionych osób o najniższym szczęściu. Punkty nie kasują liczników kar.
 - Ścieżki:100 odcinków 0–5,100 kamienia/krok; wszystkie kończą poziom przed następnym. Pełne poziomy+10…50% szybkości tragarzy; poziomy 3/4/5 także+10/20/30% ładunku.
 
 ## Kaplica, Latarnia i wraki
+
+Latarnia jest sercem wyspy i jednym z głównych celów rozwoju. Od Ratusza 2, po ukończeniu lub zamknięciu samouczka, dostępna jest dodatkowa ścieżka **8 etapów głównych → w razie przekroczenia terminu 5 pomocniczych → w razie kolejnego niepowodzenia 3 ratunkowe**. Rozbudowa Latarni i pozostałe cele wymagają rzeczywistych działań; pomoc nie dopisuje fikcyjnego poziomu budynku. Po dokończeniu przerwanego celu gracz przechodzi do kolejnego etapu właściwej ścieżki: z pomocniczej do głównej, z ratunkowej do pomocniczej. Nieudany etap ratunkowy można powtórzyć bez kasowania wcześniejszego postępu.
+
+Przed przyjęciem etap musi przejść konserwatywną ocenę wykonalności: wolny zapas, rzeczywista obsada, produkcja i jej składniki, pojemność składu, żywność oraz transport są rozpatrywane wspólnie. Ocena nie zakłada płatności, losowej nagrody, handlu ani przyszłego przybycia mieszkańców. Jeżeli nie można wykazać wykonalności, gra pokazuje potrzebne przygotowania zamiast uruchamiać termin. Czas zostaje utrwalony przy przyjęciu i biegnie razem ze światem, także offline. Analogiczna kontrola ogranicza wymagania nowych zwykłych ofert Latarni; zaakceptowane historyczne oferty zachowują zapisane warunki. Szczegóły oraz granice tej oceny opisuje [v27](FRONTEND-V27-REQUIREMENTS.md).
+
+Statek z plagą w ścieżce pomocy jest zdarzeniem narracyjnym, a nie dodatkową ukrytą stratą ludzi lub materiałów. Niezależny mechanizm wydarzeń świata i opieki Kaplicy opisany poniżej zachowuje własne zasady.
 
 Jedno darmowe błogosławieństwo na dzień Warszawy, reset o północy bez kumulowania; daje+50 sześciu zasobów i+20 pp na godzinę. Płatne kosztuje 100 × poziom Kaplicy monet. Płatne i reklamowe współdzielą 4 h blokady od końca godzinnego efektu; darmowe nie przesuwa blokady. Ręczne efekty nie nakładają się. Ulepszenie Kaplicy daje+10 × nowy poziom pp/10 h oraz mechaniczne podatki ×2.
 
@@ -105,7 +111,7 @@ Jawne wartości konfiguracji wydarzeń: skarb 50–150 × TH monet, zwrot podatk
 
 - Produkcja/osobę: p(1)=20; dla L≥2 p(L)=2 ×(L+10), następnie mnożniki wyżywienia, aktywności, Latarni i właściwego wydarzenia.
 - Obsada 12 × własnyL; lokalny zapas 200 × własnyL. Bazowy ładunek=floor(120 ×1,1^(E−1)), E=min(L,24) tylko dla Magazynu; dalej niezależna premia dróg.
-- Zwykły kurs=300/(wyżywienie × drogi × aktywność × modyfikator wydarzenia) sekund, poza zapisanym wyjątkiem turbo v26. Osobiste dojście/powrót 5 min nie jest kursem ładunkowym; pierwsza wprowadzająca szóstka ma wyżej opisany wyjątek dojścia.
+- Zwykły kurs = 300 / (wyżywienie × osobisty modyfikator mieszkania × drogi × aktywność × modyfikator wydarzenia) sekund, poza zapisanym wyjątkiem turbo v26. Osobiste dojście i powrót trwają po 120 sekund i nie są kursem ładunkowym. Głód oraz brak łóżka to oddzielne mnożniki ×0,5 wydajności przewozu danego tragarza; nie spowalniają pozostałych osób.
 - Podstawowe tempo demografii: |H|≤50 → |H|/300 osoby/h; powyżej 1/6+(|H|−50)/60. Dodatni wynik ×2, ujemny bez zmiany.
 - Norma zadań zachowuje historyczne q(1)=10, q(L≥2)=L+10:12 × poziom producenta × q(L) × godziny. Podwojona aktualna produkcja nie podwaja wymagań już ustalonej normy/oferty.
 - Punkty są migawką TH × monety o pełnej godzinie. Podatek 1moneta/h przybyłego przypisanego pracownika, także przy blokadzie; Kaplica i aktywność mają własne mnożniki. Menu Monet wyjaśnia podatników, mnożniki i dodatkowe nagrody reklam/minigier.
@@ -116,7 +122,9 @@ Kolejne wyspy odblokowują się na Ratuszu matki 10, 13, 16, 19 i dalej co trzy 
 
 Córka kopiuje poziom Ratusza i Magazynu matki jednorazowo; inne budynki zaczynają na 1. Nie dostaje nowego darmowego pakietu zasobów ani ponownie wspólnych nagród konta. Ma niezależny świat i odmienną paletę, a nazwa ma obowiązkowy prefiks „Nazwa matki - Nazwa córki”. Zmiana nazwy matki aktualizuje prefiksy. Późniejsze poziomy nie synchronizują się. Wejście do zakładania wyspy jest w Ratuszu i powiadomieniu po spełnieniu wymagań.
 
-Jeden statek przewozi **albo towary** (1000 sztuk, 10 minut), **albo pasażerów** (100 osób, 30 minut). Rejs nie ma opłaty w monetach; dla pasażerów przygotowujemy zwykłe jedzenie 0,5 na osobę na pół godziny, rezerwujemy wolne miejsca Ratusza i łóżka u celu. Wyjeżdżają osoby rzeczywiście w Domu z zachowaniem stanu. U źródła zostaje minimum 12 na matce lub 6 na córce. Nie można zmienić rodzaju ładunku podczas podróży.
+Jeden statek przewozi **albo towary** (1000 sztuk, 10 minut), **albo pasażerów** (100 osób, 30 minut). Rejs nie ma opłaty w monetach. Na półgodzinną podróż przygotowujemy zwykłe jedzenie: **0,5 jednostki za pasażera mającego łóżko i 1 jednostkę za pasażera bez łóżka**. U celu rezerwujemy wolne miejsca w limicie Ratusza; brak łóżka nie blokuje przyjazdu, ale po nim obowiązują indywidualne skutki braku mieszkania. Historyczne rozpoczęte rejsy zachowują wcześniej opłacone posiłki i nie są obciążane drugi raz. Wyjeżdżają osoby rzeczywiście w Domu z zachowaniem stanu. U źródła zostaje minimum 12 na matce lub 6 na córce. Nie można zmienić rodzaju ładunku podczas podróży.
+
+Zaproszenie mieszkańca kosztuje pełną cenę kolejnej rozbudowy Ratusza we wszystkich sześciu zasobach. Wymaga wolnego miejsca w limicie Ratusza; wolne łóżko nie jest warunkiem zaproszenia. Przed zakupem gra wyjaśnia zwiększone zużycie jedzenia, połowę wydajności pracy i brak punktów z Domu dla osoby bez łóżka.
 
 Rezerwacja towaru zabiera go źródłu od razu, a zapisany rejs rozlicza się raz. Brak zwykłego miejsca zachowuje ładunek do rozładunku; bonus zachowuje odrębne pochodzenie i zwolnienie z limitu. Dodatkowe 1000 pojemności towarowej kosztuje 4,99 zł w wielokrotnościach pakietu. To oznaczona symulacja Paynow w DEV/PRE-PROD, bez pobrania pieniędzy; rzeczywiste zwiększenie wymaga zaufanego potwierdzenia operatora i serwera. Nie zwiększa automatycznie limitu 100 pasażerów.
 

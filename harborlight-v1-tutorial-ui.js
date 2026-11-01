@@ -1,4 +1,4 @@
-import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v26';
+import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v27';
 
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const MATERIAL_NAMES = { en: ['Wood', 'Stone', 'Grain', 'Food', 'Planks'], pl: ['Drewno', 'Kamień', 'Zboże', 'Żywność', 'Deski'] };
@@ -22,13 +22,14 @@ const rowsFor = (options, includeSkipped = false) => {
 const lessonCopy = (row, language) => row?.balanced ? { title: pick(language, row.title, row.titlePl || row.title), description: pick(language, row.description, row.descriptionPl || row.description) } : tutorialLessonText(row, language);
 const nextRow = rows => rows.find(row => row.canClaim || row.pendingDecision) || rows.find(row => !row.completed);
 const fraction = (value, total, language) => pick(language, `Step ${value} of ${total}`, `Krok ${value} z ${total}`);
+const pendingConstruction = (state, row) => row?.kind === 'condition' && row.route && (state.buildings?.[row.route]?.construction || state.buildings?.[row.route]?.premiumService);
 
 /** Read-only lesson review. Its cursor is independent of earned rewards and
  * the practical course's current action; opening or navigating never acts on
  * the world. The caller persists the cursor after acknowledging onReviewUpdate.
  */
 export function createTutorialReview(options) {
-  const { language = 'en', onReviewUpdate = () => true, onReviewExit = () => true, onClose } = options;
+  const { language = 'en', onReviewUpdate = () => true, onReviewExit = () => true, onResumePractical, onClose } = options;
   const rows = rowsFor(options, true);
   let index = options.reviewFromStart === true ? 0 : Math.min(Math.max(0, options.reviewIndex || 0), Math.max(0, rows.length - 1));
   let busy = false, error = '';
@@ -53,6 +54,15 @@ export function createTutorialReview(options) {
       error = pick(language, 'The position could not be saved. Check your connection and try again.', 'Nie udało się zapisać miejsca w samouczku. Sprawdź połączenie i spróbuj ponownie.');
     } finally { busy = false; render(); }
   }
+  async function resumePractical() {
+    if (busy || typeof onResumePractical !== 'function') return;
+    busy = true; error = ''; render();
+    try {
+      if (await onResumePractical(index) === false) throw new Error('tutorial-practical-resume-rejected');
+    } catch {
+      error = pick(language, 'Practical lessons could not be resumed. Check your connection and try again.', 'Nie udało się wznowić praktycznych lekcji. Sprawdź połączenie i spróbuj ponownie.');
+    } finally { busy = false; render(); }
+  }
   function render() {
     const row = rows[index], copy = row ? lessonCopy(row, language) : null;
     root.dataset.tutorialReviewIndex = String(index);
@@ -67,7 +77,10 @@ export function createTutorialReview(options) {
       error ? node('p', { class: 'tutorial-v18-storage-warning', role: 'alert', 'data-tutorial-review-error': '' }, error) : null,
       node('div', { class: 'tutorial-v16-footer tutorial-v26-review-navigation' },
         action(pick(language, '← Previous', '← Wstecz'), () => void navigate(index - 1), { class: 'tutorial-action secondary', 'data-tutorial-review-previous': '', disabled: busy || index === 0 }),
-        action(index >= rows.length - 1 ? pick(language, 'Back to island', 'Wróć na wyspę') : pick(language, 'Next →', 'Dalej →'), () => void (index >= rows.length - 1 ? exit() : navigate(index + 1)), { 'data-tutorial-review-next': '', disabled: busy }))
+        action(index >= rows.length - 1 ? pick(language, 'Back to island', 'Wróć na wyspę') : pick(language, 'Next →', 'Dalej →'), () => void (index >= rows.length - 1 ? exit() : navigate(index + 1)), { 'data-tutorial-review-next': '', disabled: busy })),
+      node('div', { class: 'tutorial-v16-footer' },
+        action(pick(language, 'From the beginning', 'Od początku'), () => void navigate(0), { class: 'tutorial-action quiet', 'data-tutorial-review-restart': '', disabled: busy || index === 0 }),
+        typeof onResumePractical === 'function' ? action(pick(language, 'Return to practical lessons', 'Wróć do praktycznych lekcji'), () => void resumePractical(), { class: 'tutorial-action secondary', 'data-tutorial-review-to-practical': '', disabled: busy }) : null)
     );
   }
   render();
@@ -76,7 +89,7 @@ export function createTutorialReview(options) {
 
 export function createTutorialPanel(options) {
   if (options.reviewFromStart === true || Number.isInteger(options.reviewIndex)) return createTutorialReview(options);
-  const { state, progression, language = 'en', isBuildingRoute, onAction, onVisit, onClose } = options;
+  const { state, progression, language = 'en', isBuildingRoute, onAction, onVisit, onClose, onPendingConstruction, onReviewFromStart } = options;
   const rows = rowsFor(options), status = progression.tutorialStatus(state), current = nextRow(rows);
   const root = node('div', { class: 'tutorial-v16', 'data-tutorial-panel': '', 'data-i18n-ignore': '' });
   const completed = status.visibleCompleted ?? rows.filter(row => row.completed).length;
@@ -93,7 +106,8 @@ export function createTutorialPanel(options) {
     else if (current.pendingDecision) controls.append(action(pick(language, 'Confirm received reward', 'Potwierdź odebraną nagrodę'), () => onAction({ type: 'seeTutorialReward', taskId: current.id }), { 'data-tutorial-review': current.id }));
     else if (current.subject === 'finish-tutorial') controls.append(action(pick(language, 'Finish and fill the Warehouse', 'Zakończ i uzupełnij Magazyn'), () => onAction({ type: 'finishTutorial' }), { 'data-finish-tutorial': '', disabled: !current.settlement?.eligible }));
     else {
-      controls.append(action(isBuildingRoute?.(current.route) ? pick(language, 'Show the building on the map', 'Pokaż budynek na mapie') : pick(language, 'Show the next step', 'Pokaż następny krok'), () => onVisit(current.route), { 'data-tutorial-visit': current.id }));
+      const waiting = pendingConstruction(state, current) && onPendingConstruction;
+      controls.append(action(waiting ? pick(language, 'Check upgrade progress', 'Sprawdź postęp rozbudowy') : isBuildingRoute?.(current.route) ? pick(language, 'Show the building on the map', 'Pokaż budynek na mapie') : pick(language, 'Show the next step', 'Pokaż następny krok'), () => waiting ? onPendingConstruction(current) : onVisit(current.route), { 'data-tutorial-visit': current.id, ...(waiting ? { 'data-tutorial-construction-status': current.route } : {}) }));
     }
     root.append(node('section', { class: 'tutorial-v16-current', 'data-tutorial-current': current.id },
       node('span', { class: 'tutorial-v16-eyebrow' }, fraction(current.displayIndex, rows.length, language)), node('h3', {}, copy.title), node('p', {}, copy.description), node('p', { class: 'tutorial-v25-stage-hint', 'data-tutorial-stage-hint': '', hidden: true }),
@@ -102,19 +116,20 @@ export function createTutorialPanel(options) {
       current.settlement && !current.settlement.eligible ? node('p', { class: 'tutorial-v18-storage-warning', 'data-tutorial-settlement-blocked': '' }, pick(language, current.settlement.reason, current.settlement.reasonPl)) : null,
       controls, node('small', { class: 'tutorial-v16-hint' }, pick(language, 'Follow the highlighted control and complete the actual action. Reading alone never grants a reward.', 'Wykonaj wskazane strzałką działanie. Samo przeczytanie instrukcji nie przyznaje nagrody.')),
       current.kind === 'condition' ? node('small', { class: 'tutorial-v16-hint' }, pick(language, 'This step completes after the actual construction, delivery or production event. Your island keeps working.', 'Lekcja zakończy się automatycznie, gdy wskazana budowa, dostawa lub produkcja zostanie ukończona. W tym czasie możesz dalej zajmować się wyspą.')) : null));
-  } else root.append(node('section', { class: 'tutorial-v16-current is-finished', 'data-tutorial-finished': '' }, node('span', { class: 'tutorial-v16-finished-mark', 'aria-hidden': 'true' }, '✓'), node('h3', {}, pick(language, 'Your island is in good hands', 'Twoja wyspa jest w dobrych rękach')), node('p', {}, pick(language, `All ${rows.length} lessons are complete. You can revisit the guide here whenever you need it.`, `Ukończono wszystkie lekcje (${rows.length}). Możesz wrócić do tego przewodnika, kiedy tylko zechcesz.`))));
+  } else root.append(node('section', { class: 'tutorial-v16-current is-finished', 'data-tutorial-finished': '' }, node('span', { class: 'tutorial-v16-finished-mark', 'aria-hidden': 'true' }, '✓'), node('h3', {}, pick(language, 'Practical tutorial complete!', 'Samouczek ukończony!')), node('p', {}, pick(language, 'You know the basics. Now you decide how your island develops: expand the settlement, care for your residents and take on the next Lighthouse missions.', 'Znasz już podstawy. Teraz Ty wyznaczasz kierunek rozwoju wyspy — rozbudowuj osadę, dbaj o mieszkańców i realizuj kolejne misje Latarni.'))));
   const rewards = rows.filter(row => row.claimed && !!state.tutorial?.chests?.[row.id] && !row.shared && !row.skipped);
   if (rewards.length) root.append(node('section', { class: 'tutorial-v16-pending' }, node('h4', {}, pick(language, 'Received rewards to confirm', 'Odebrane nagrody do potwierdzenia')), ...rewards.map(row => action(pick(language, `Review: ${lessonCopy(row, language).title}`, `Sprawdź: ${lessonCopy(row, language).title}`), () => onAction({ type: 'seeTutorialReward', taskId: row.id }), { class: 'tutorial-action secondary', 'data-tutorial-review': row.id }))));
   root.append(node('details', { class: 'tutorial-v16-list' }, node('summary', {}, pick(language, `All ${rows.length} lessons`, `Wszystkie lekcje (${rows.length})`)), node('ol', {}, ...rows.map(row => node('li', { class: row.completed ? 'is-complete' : '', 'data-tutorial-list-item': row.id }, node('span', { 'aria-hidden': 'true' }, row.completed ? '✓' : String(row.displayIndex)), node('span', {}, lessonCopy(row, language).title))))));
   root.append(node('div', { class: 'tutorial-v16-footer' },
     action(pick(language, 'Back to island', 'Wróć na wyspę'), onClose, { class: 'tutorial-action secondary', 'data-tutorial-later': '' }),
+    typeof onReviewFromStart === 'function' ? action(pick(language, 'Review from the beginning', 'Przejrzyj od początku'), () => onReviewFromStart(), { class: 'tutorial-action quiet', 'data-tutorial-review-from-start': '' }) : null,
     status.autoOpenDisabled && !status.finished ? action(pick(language, 'Resume automatic tutorial', 'Wznów samouczek przy wejściu'), () => onAction({ type: 'resumeTutorial' }), { class: 'tutorial-action quiet', 'data-tutorial-resume': '' }) : !status.finished ? action(pick(language, 'Stop showing automatically', 'Nie pokazuj automatycznie'), () => { if (onAction({ type: 'dismissTutorial' }) !== false) onClose?.(); }, { class: 'tutorial-action quiet', 'data-tutorial-dismiss': '' }) : null));
-  root.append(node('small', { class: 'tutorial-v16-hint' }, pick(language, 'Actions completed independently before their lesson are removed without a reward. You can return from Help.', 'Jeśli wykonasz zadanie przed jego lekcją, pominiemy ten krok samouczka. Nie dostaniesz za niego dodatkowej nagrody. Do pozostałych lekcji wrócisz z Pomocy.')));
+  root.append(node('small', { class: 'tutorial-v16-hint' }, pick(language, 'Actions completed independently before their lesson are removed without a reward. Return using ? → Resume practical tutorial.', 'Jeśli wykonasz zadanie przed jego lekcją, pominiemy ten krok samouczka. Nie dostaniesz za niego dodatkowej nagrody. Do pozostałych lekcji wrócisz przez ? → Wznów samouczek.')));
   return root;
 }
 
 export function createTutorialGuide(options) {
-  const { state, progression, language = 'en', isBuildingRoute, onAction, onVisit } = options;
+  const { state, progression, language = 'en', isBuildingRoute, onAction, onVisit, onPendingConstruction, onReviewFromStart } = options;
   const status = progression.tutorialStatus(state);
   const rows = rowsFor(options), storageBlocked = rows.some(row => row.rewardBlocked);
   if (status.autoOpenDisabled || status.finished && !storageBlocked) return null;
@@ -126,8 +141,9 @@ export function createTutorialGuide(options) {
     storageBlocked ? node('small', { class: 'tutorial-v18-storage-warning', 'data-tutorial-storage-blocked': '' }, pick(language, 'Chests are waiting: spend the excess materials. Island actions remain available.', 'Skrzynie czekają: wydaj nadmiar materiałów. Działania wyspy pozostają dostępne.')) : null,
     node('div', { class: 'tutorial-v16-guide-actions' },
       current.id === 'townhall-upgrade' && !status.buildingSuppliesClaimed && !current.completed ? action(pick(language, 'Collect building supplies', 'Odbierz materiały do budowy'), () => onAction({ type: 'prepareTutorialUpgrade' }), { 'data-tutorial-supplies': '' }) : null,
-      current.canClaim ? action(pick(language, current.balanced ? 'Receive reward' : 'Open chest', current.balanced ? 'Odbierz nagrodę' : 'Otwórz skrzynię'), () => onAction({ type: 'claimTutorial', taskId: current.id }), { 'data-tutorial-claim': current.id }) : current.pendingDecision ? action(pick(language, 'Confirm reward', 'Potwierdź nagrodę'), () => onAction({ type: 'seeTutorialReward', taskId: current.id }), { 'data-tutorial-review': current.id }) : current.subject === 'finish-tutorial' ? action(pick(language, 'Finish tutorial', 'Zakończ samouczek'), () => onVisit('tutorial'), { 'data-tutorial-go': current.id }) : action(isBuildingRoute?.(current.route) ? pick(language, 'Find the building', 'Znajdź budynek') : pick(language, 'Show the next step', 'Pokaż następny krok'), () => onVisit(current.route), { 'data-tutorial-go': current.id }),
-      action(pick(language, 'Tutorial', 'Samouczek'), () => onVisit('tutorial'), { class: 'tutorial-action secondary', 'data-tutorial-return': '' })));
+      current.canClaim ? action(pick(language, current.balanced ? 'Receive reward' : 'Open chest', current.balanced ? 'Odbierz nagrodę' : 'Otwórz skrzynię'), () => onAction({ type: 'claimTutorial', taskId: current.id }), { 'data-tutorial-claim': current.id }) : current.pendingDecision ? action(pick(language, 'Confirm reward', 'Potwierdź nagrodę'), () => onAction({ type: 'seeTutorialReward', taskId: current.id }), { 'data-tutorial-review': current.id }) : current.subject === 'finish-tutorial' ? action(pick(language, 'Finish tutorial', 'Zakończ samouczek'), () => onVisit('tutorial'), { 'data-tutorial-go': current.id }) : action(pendingConstruction(state, current) && onPendingConstruction ? pick(language, 'Check upgrade progress', 'Sprawdź postęp rozbudowy') : isBuildingRoute?.(current.route) ? pick(language, 'Find the building', 'Znajdź budynek') : pick(language, 'Show the next step', 'Pokaż następny krok'), () => pendingConstruction(state, current) && onPendingConstruction ? onPendingConstruction(current) : onVisit(current.route), { 'data-tutorial-go': current.id, ...(pendingConstruction(state, current) && onPendingConstruction ? { 'data-tutorial-construction-status': current.route } : {}) }),
+      action(pick(language, 'Tutorial', 'Samouczek'), () => onVisit('tutorial'), { class: 'tutorial-action secondary', 'data-tutorial-return': '' }),
+      typeof onReviewFromStart === 'function' ? action(pick(language, 'Review from the beginning', 'Przejrzyj od początku'), () => onReviewFromStart(), { class: 'tutorial-action quiet', 'data-tutorial-review-from-start': '' }) : null));
 }
 
 function chestPicture() {
@@ -169,6 +185,7 @@ export function showTutorialAchievement({ achievement, row, language = 'en', onS
   const previousFocus = document.activeElement;
   const copy = row ? lessonCopy(row, language) : { title: achievement.title };
   const balanced = row?.balanced === true;
+  const finalLesson = row?.subject === 'finish-tutorial';
   const popup = node('dialog', { class: 'tutorial-v16-celebration', 'data-tutorial-achievement': id, 'data-i18n-ignore': '', 'aria-labelledby': 'tutorial-success-title' });
   const animated = animations && !globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   if (animated) {
@@ -177,10 +194,11 @@ export function showTutorialAchievement({ achievement, row, language = 'en', onS
     popup.append(confetti);
   }
   const content = node('div', { class: 'tutorial-v16-celebration-content' },
-    node('p', { class: 'tutorial-v16-eyebrow' }, pick(language, 'Lesson complete', 'Lekcja ukończona')), node('h2', { id: 'tutorial-success-title' }, pick(language, 'Well done!', 'Brawo!')), node('p', { class: 'tutorial-success-lesson' }, copy.title), balanced ? node('span', { class: 'tutorial-v16-finished-mark', 'aria-hidden': 'true' }, '✓') : chestPicture(),
+    node('p', { class: 'tutorial-v16-eyebrow' }, pick(language, 'Lesson complete', 'Lekcja ukończona')), node('h2', { id: 'tutorial-success-title' }, finalLesson ? pick(language, 'Practical tutorial complete!', 'Samouczek ukończony!') : pick(language, 'Well done!', 'Brawo!')), node('p', { class: 'tutorial-success-lesson' }, copy.title), balanced ? node('span', { class: 'tutorial-v16-finished-mark', 'aria-hidden': 'true' }, '✓') : chestPicture(),
     node('strong', { class: 'tutorial-success-received' }, pick(language, 'Your reward is already yours', 'Nagroda jest już Twoja')),
     node('div', { class: 'tutorial-chest-materials' }, ...(balanced ? ['coins', ...MATERIALS].filter(id => (achievement.reward?.[id] || row?.reward?.[id] || 0) > 0) : MATERIALS).map(material => node('div', { 'data-tutorial-reward-material': material }, node('span', {}, material === 'coins' ? pick(language, 'Coins', 'Monety') : MATERIAL_NAMES[language === 'pl' ? 'pl' : 'en'][MATERIALS.indexOf(material)]), node('strong', { 'data-tutorial-reward-quantity': material }, achievement.reward?.[material] || row?.reward?.[material] || 0)))),
-    node('p', { class: 'tutorial-double-description' }, balanced ? pick(language, 'The reward is already available. Confirm it to continue: no extra chest is waiting for later delivery.', 'Nagroda została dodana do zasobów. Kliknij „Dalej”, aby przejść do kolejnej lekcji. Nie czeka na Ciebie dodatkowa skrzynia.') : pick(language, 'Share your success to receive exactly the same resources once more.', 'Pochwal się sukcesem i odbierz dokładnie te same zasoby jeszcze raz.')));
+    node('p', { class: 'tutorial-double-description' }, balanced ? pick(language, 'The reward has been added to your resources. Select “Continue” to move to the next lesson.', 'Nagroda została dodana do Twoich zasobów. Kliknij „Dalej”, aby przejść do kolejnej lekcji.') : pick(language, 'Share your success to receive exactly the same resources once more.', 'Pochwal się sukcesem i odbierz dokładnie te same zasoby jeszcze raz.')),
+    finalLesson ? node('p', { class: 'tutorial-complete-description', 'data-tutorial-completion-message': '' }, pick(language, 'You know the basics. Now you decide how your island develops: expand the settlement, care for your residents and take on the next Lighthouse missions.', 'Znasz już podstawy. Teraz Ty wyznaczasz kierunek rozwoju wyspy — rozbudowuj osadę, dbaj o mieszkańców i realizuj kolejne misje Latarni.')) : null);
   let disposed = false, busy = false;
   function dispose() {
     if (disposed) return;

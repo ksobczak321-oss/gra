@@ -831,12 +831,158 @@
         "HL-CHG-0950"
       ],
       "file": "manual/HL-TC-0059.md"
+    },
+    {
+      "id": "HL-TC-0060",
+      "title": "Zatwierdzone opisy i 34 kroki pokazują rzeczywiste dane gracza",
+      "area": "Opisy i tutorial",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0951",
+        "HL-CHG-0953"
+      ],
+      "file": "manual/HL-TC-0060.md"
+    },
+    {
+      "id": "HL-TC-0061",
+      "title": "Pomoc pod ? wznawia oba tryby i wyjaśnia wyjście z tutoriala",
+      "area": "Nawigacja i zapis nauki",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0952",
+        "HL-CHG-0954",
+        "HL-CHG-0966"
+      ],
+      "file": "manual/HL-TC-0061.md"
+    },
+    {
+      "id": "HL-TC-0062",
+      "title": "Samouczek pokazuje czas trwającej budowy i prawdziwy efekt strzałką",
+      "area": "Efekty, nagrody i zakończenie",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0961",
+        "HL-CHG-0962"
+      ],
+      "file": "manual/HL-TC-0062.md"
+    },
+    {
+      "id": "HL-TC-0063",
+      "title": "Dojście i powrót trwają 2 minuty, a załadowany tragarz kończy dostawę",
+      "area": "Pracownicy i transport",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0955"
+      ],
+      "file": "manual/HL-TC-0063.md"
+    },
+    {
+      "id": "HL-TC-0064",
+      "title": "48 mieszkańców może mieć 24 łóżka, a punkty Domu dostają zakwaterowani",
+      "area": "Mieszkania i szczęście Domu",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0956",
+        "HL-CHG-0957",
+        "HL-CHG-0959"
+      ],
+      "file": "manual/HL-TC-0064.md"
+    },
+    {
+      "id": "HL-TC-0065",
+      "title": "Brak miejsca dotyczy wydajności i jedzenia konkretnej osoby",
+      "area": "Gospodarka mieszkańców",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0958",
+        "HL-CHG-0959"
+      ],
+      "file": "manual/HL-TC-0065.md"
+    },
+    {
+      "id": "HL-TC-0066",
+      "title": "Chmurka postępu daje stabilne i prawdziwe ETA",
+      "area": "Prognozy i interfejs budowy",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0960"
+      ],
+      "file": "manual/HL-TC-0066.md"
+    },
+    {
+      "id": "HL-TC-0067",
+      "title": "Główna ścieżka Latarni ma 8 etapów i pamięta rzeczywisty cel",
+      "area": "Misje Latarni",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0963",
+        "HL-CHG-0966"
+      ],
+      "file": "manual/HL-TC-0067.md"
+    },
+    {
+      "id": "HL-TC-0068",
+      "title": "Pomoc i ratunek wracają do kolejnego etapu bez kasowania postępu",
+      "area": "Misje5/3 i terminy",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0964",
+        "HL-CHG-0966"
+      ],
+      "file": "manual/HL-TC-0068.md"
+    },
+    {
+      "id": "HL-TC-0069",
+      "title": "Zadania są wykonalne przy realnych zasobach, produkcji i dostawach",
+      "area": "Wykonalność gospodarcza",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0965",
+        "HL-CHG-0958"
+      ],
+      "file": "manual/HL-TC-0069.md"
+    },
+    {
+      "id": "HL-TC-0070",
+      "title": "Migracja, nieobecność i powroty nie dublują mieszkań ani misji",
+      "area": "Trwałość i integralność",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0966",
+        "HL-CHG-0956",
+        "HL-CHG-0964",
+        "HL-CHG-0967"
+      ],
+      "file": "manual/HL-TC-0070.md"
     }
   ],
   "current_scope": {
-    "date": "2026-10-31",
+    "date": "2026-11-01",
     "environment": "DEV only",
     "physical_online_integration": "excluded_by_user",
-    "note": "Historyczny baseline poniżej nie dowodzi wykonania tych przypadków na bieżącym wydaniu."
+    "note": "Historyczny baseline definicji nie jest bieżącym wydaniem. TC60–70 obejmują nowe GO v27; ręczny wynik pozostaje NOT RUN. PRE-PROD pozostaje 0.10.1.0 / 353faad bez resetu.",
+    "application_version": "0.11.0.0"
   }
 }

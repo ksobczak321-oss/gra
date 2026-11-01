@@ -322,6 +322,8 @@ def persisted_tour_and_skip(browser):
     now = page.evaluate('Date.now()')
     page.locator('[data-onboarding-exit]').click()
     expect(guide).not_to_be_visible()
+    expect(page.locator('[data-tutorial-exit-reminder]')).to_be_visible()
+    page.locator('[data-close-tutorial-exit-reminder]').click()
     started = cloud.cloud_state(UID)
     assert started['onboarding']['stage'] == 'complete'
     assert started['onboarding']['worldStartedAt'] == now
@@ -366,8 +368,9 @@ def complete_mobile_tour(browser):
         expect(guide).not_to_have_attribute('data-onboarding-step', step_id)
     else:
         raise AssertionError('The complete walkthrough did not finish in100 steps')
-    assert len(ids) == 33, ids
+    assert len(ids) == 34, ids
     assert ids[:9] == ['home', 'level', 'happiness', 'coins', 'working', 'arrival', 'points', 'population', 'clock'], ids[:9]
+    assert ids.index('chat') + 1 == ids.index('notifications'), ids
     for building in BUILDINGS:
         assert any(building in step_id for step_id in ids), (building, ids)
     for expected in ['home', 'level', 'happiness', 'coins', 'population', 'working', 'arrival', 'points', 'clock', 'administration', 'economy', 'resources', 'decorations', 'paths', 'settings', 'tutorial']:
@@ -450,6 +453,8 @@ def lost_finish_acknowledgement(browser):
     revision = cloud.DOCUMENTS[UID]['revision']
     page.evaluate("window.dispatchEvent(new Event('online'))")
     expect(guide).not_to_be_visible()
+    expect(page.locator('[data-tutorial-exit-reminder]')).to_be_visible()
+    page.locator('[data-close-tutorial-exit-reminder]').click()
     expect(page.locator('[data-tutorial-current]')).to_be_visible()
     assert cloud.DOCUMENTS[UID]['revision'] == revision, 'A confirmed ambiguous completion must not be sent twice'
     assert cloud.cloud_state(UID)['population'] == 12

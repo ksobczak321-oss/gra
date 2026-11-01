@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { centralAvailable, centralReserved } from '../harborlight-v1-inventory.js';
 import { createState, normalizeState, act, tick, totalWorkers, workerLimit, freeWorkers, taxRate, housingCapacity, unhousedResidents, populationRate, updateHappiness, happinessGroups, recordVisit, WORKPLACE_IDS, RESOURCES, EXPEDITIONS, MAX_BUILDING_LEVEL, buildingCost, upgradeEligibility, synchronizeResidents, advanceTo } from '../harborlight-v1-state.js';
 import { producerCapacity, warehouseLimits, warehouseUsed, stockRoom, storagePenalty, updateStorageStatus, marketCapacity, marketUsed, MATERIAL_IDS, constructionCounts, premiumActive, promoteConstructionQueue, estimateMaterialsSeconds } from '../harborlight-v1-logistics.js';
+import { residentHasHousing, residentWorkMultiplier, residentFoodMultiplier, foodDemandPerHour } from '../harborlight-v1-housing.js';
 
 const close = (a,b,tolerance=1e-7) => assert.ok(Math.abs(a-b)<tolerance, `${a} != ${b}`);
 function idle(level=1,population=12,happiness=0) {
@@ -60,12 +61,12 @@ test('only the eight workplaces accept assignments; market and dock unlock at tw
  s.buildings.townhall.level=2;assert.equal(act(s,{type:'assign',building:'market',delta:1}).ok,true);assert.equal(act(s,{type:'assign',building:'dock',delta:1}).ok,false);
  s.buildings.townhall.level=4;assert.equal(act(s,{type:'assign',building:'dock',delta:1}).ok,true);
 });
-test('bulk assignment shares a single pool and dismissal always means five minutes home',()=>{
+test('bulk assignment shares a single pool and dismissal always means two minutes home',()=>{
  const s=idle(6,144);for(const id of ['farm','quarry','warehouse'])s.buildings[id].level=6;
  assert.equal(act(s,{type:'assign',building:'farm',delta:72}).ok,true);assert.equal(act(s,{type:'assign',building:'quarry',delta:72}).ok,true);
  assert.equal(freeWorkers(s),0);const before=JSON.stringify(s);assert.equal(act(s,{type:'assign',building:'warehouse',delta:1}).ok,false);assert.equal(JSON.stringify(s),before);
  act(s,{type:'assign',building:'farm',delta:-72});assert.equal(totalWorkers(s),72);assert.equal(s.returningWorkers.length,72);assert.equal(freeWorkers(s),0);
- tick(s,299);assert.equal(freeWorkers(s),0);tick(s,1);assert.equal(freeWorkers(s),72);assert.equal(act(s,{type:'assign',building:'warehouse',delta:72}).ok,true);
+ tick(s,119);assert.equal(freeWorkers(s),0);tick(s,1);assert.equal(freeWorkers(s),72);assert.equal(act(s,{type:'assign',building:'warehouse',delta:72}).ok,true);
 });
 test('bad assignment deltas never mutate state',()=>{
  const s=idle();for(const delta of [0,.5,NaN,Infinity,'1',1000,-1]){const before=JSON.stringify(s);assert.equal(act(s,{type:'assign',building:'farm',delta}).ok,false);assert.equal(JSON.stringify(s),before);}
@@ -78,7 +79,7 @@ test('workers do not pool unfinished units and recalled fractions are lost',()=>
  act(s,{type:'assign',building:'farm',delta:-2});assert.deepEqual(s.buildings.farm.workProgress,[]);tick(s,300);crew(s,'farm',1);tick(s,179);assert.equal(s.buildings.farm.ready,0);tick(s,1);assert.equal(s.buildings.farm.ready,1);
 });
 test('individual work phases and home-return clocks survive reload',()=>{
- let s=idle();crew(s,'farm',1);tick(s,420);s=saved(s);close(s.buildings.farm.workProgress[0],60);act(s,{type:'assign',building:'farm',delta:-1});tick(s,240);s=saved(s);close(s.returningWorkers[0],60);tick(s,60);assert.equal(s.returningWorkers.length,0);
+ let s=idle();crew(s,'farm',1);tick(s,420);s=saved(s);close(s.buildings.farm.workProgress[0],60);act(s,{type:'assign',building:'farm',delta:-1});tick(s,60);s=saved(s);close(s.returningWorkers[0],60);tick(s,60);assert.equal(s.returningWorkers.length,0);
 });
 test('processors consume two central inputs for one local product',()=>{
  const s=idle();crew(s,'sawmill',1);crew(s,'windmill',1);tick(s,360);assert.equal(s.resources.wood,96);assert.equal(s.resources.grain,96);assert.equal(s.resources.planks,100);close(s.resources.food+s.foodCredit,100-12*360/3600);assert.equal(s.buildings.sawmill.ready,2);assert.equal(s.buildings.windmill.ready,2);assert.equal(s.statistics.crafted,4);
@@ -135,11 +136,16 @@ test('population keeps the minimum six and townhall capacity',()=>{
  const low=idle(4,6,-100);low.resources.food=0;for(const resident of low.residents){resident.hungerSeconds=43200;resident.unemployedSeconds=43200;}tick(low,3600);assert.equal(low.population,6);
  const high=idle(1,23,100);high.resources.food=1000;high.lighthouseRemaining=86400;tick(high,3600);assert.equal(high.population,24);tick(high,3600);assert.equal(high.population,24);assert.equal(high.populationProgress,0);
 });
-test('housing shortage continues during construction and ends when the new house opens',()=>{
+test('housing shortage changes individual work and meals until the new house opens without a global happiness penalty',()=>{
  const s=funded(4);s.population=78;s.buildings.house.level=3;synchronizeResidents(s);
  // This fixture models 78 established adults, rather than 66 newborn arrivals.
  for(const resident of s.residents)resident.newbornRemaining=0;
- crew(s,'warehouse',39);const workBonus=39/78;assert.equal(unhousedResidents(s),6);tick(s,3600);close(s.happiness,1+workBonus-6);assert.equal(act(s,{type:'upgrade',building:'house'}).ok,true);assert.equal(housingCapacity(s),72);finish(s,'house');assert.equal(housingCapacity(s),96);const happiness=s.happiness;assert.ok(happiness<1+workBonus-6);tick(s,3600);close(s.happiness,happiness+1+workBonus);
+ crew(s,'warehouse',39);const workBonus=39/78;assert.equal(unhousedResidents(s),6);
+ const unhoused=s.residents.filter(person=>!residentHasHousing(s,person));assert.equal(unhoused.length,6);
+ assert.ok(unhoused.every(person=>residentWorkMultiplier(s,person)===.5&&residentFoodMultiplier(s,person)===2));assert.equal(foodDemandPerHour(s),84);
+ tick(s,3600);close(s.happiness,1+workBonus);
+ assert.equal(act(s,{type:'upgrade',building:'house'}).ok,true);assert.equal(housingCapacity(s),72);assert.ok(unhoused.every(person=>!residentHasHousing(s,person)));
+ finish(s,'house');assert.equal(housingCapacity(s),96);assert.equal(unhousedResidents(s),0);assert.ok(unhoused.every(person=>residentHasHousing(s,person)&&residentWorkMultiplier(s,person)===1&&residentFoodMultiplier(s,person)===1));assert.equal(foodDemandPerHour(s),s.population);
 });
 test('mean happiness weights affected workers rather than applying their penalty to everyone',()=>{
  const s=idle(1,12);crew(s,'lumber',6);s.buildings.lumber.ready=200;updateStorageStatus(s);updateHappiness(s);assert.equal(storagePenalty(s,'lumber'),10);assert.equal(s.happiness,-5);assert.equal(happinessGroups(s).find(g=>g.building==='lumber').happiness,-10);

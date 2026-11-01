@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createState, normalizeState, act, tick, resourceRates, taxRate } from '../harborlight-v1-state.js';
-import { productionRate, haulCapacity, nextLogisticsEvent, advanceLogistics, constructionEstimate } from '../harborlight-v1-logistics.js';
-import { quoteTransport } from '../harborlight-v1-activities.js';
+import { productionRate, haulCapacity, nextLogisticsEvent, advanceLogistics, constructionEstimate, availableGoods } from '../harborlight-v1-logistics.js';
+import { quoteTransport, taskStatus } from '../harborlight-v1-activities.js';
 
 const NOW = Date.parse('2026-10-29T12:00:00Z');
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
@@ -208,9 +208,17 @@ test('whole, split and reloaded offline intervals preserve goods and recipe acco
   }
 });
 
-test('existing task requirements stay frozen and new offers retain the separately agreed task formula', () => {
+test('new task requirements are feasible and existing legacy requirements stay frozen on reload', () => {
   const state = createState(NOW);
-  for (const task of state.lighthouseTasks) for (const amount of Object.values(task.requirements)) assert.equal(amount, 12 * 10 * task.hours);
+  for (const task of state.lighthouseTasks) {
+    assert.equal(taskStatus(state, task).feasible, true);
+    for (const [resource, amount] of Object.entries(task.requirements)) {
+      assert.ok(amount > 0 && amount <= availableGoods(state, resource));
+    }
+  }
+  // A legacy offer may exceed today's feasible budget. Normalization preserves
+  // its snapshot; only a new acceptance must pass the current feasibility gate.
+  state.lighthouseTasks[0].requirements = { wood: 4000, stone: 3000 };
   const expected = JSON.stringify(state.lighthouseTasks.map(task => task.requirements));
   assert.equal(JSON.stringify(reload(state).lighthouseTasks.map(task => task.requirements)), expected);
 });

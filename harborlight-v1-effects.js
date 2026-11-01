@@ -1,10 +1,11 @@
 // One read-only view of active benefits and penalties, shared by Town Hall and
 // transition notifications. Countdown changes alone never create a new notice.
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v26';
-import { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v26';
-import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v26';
-import { worldEventRows } from './harborlight-v1-events.js?v=frontend-v26';
-import { ATTRACTIONS } from './harborlight-v1-leisure.js?v=frontend-v26';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v27';
+import { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v27';
+import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v27';
+import { worldEventRows } from './harborlight-v1-events.js?v=frontend-v27';
+import { ATTRACTIONS } from './harborlight-v1-leisure.js?v=frontend-v27';
+import { residentHasHousing } from './harborlight-v1-housing.js?v=frontend-v27';
 const EPS = 1e-7;
 const GRACE = 12 * 3600;
 const workplaceNames = { farm: 'Farm', windmill: 'Windmill', lumber: 'Lumber Camp', sawmill: 'Sawmill', quarry: 'Quarry', warehouse: 'Warehouse', market: 'Market', dock: 'Harbor' };
@@ -82,7 +83,7 @@ export function activeEffects(state = {}) {
   const fed = finite(state.foodCredit) > 1e-12 || centralAvailable(state, 'food') >= 1;
   if (fed && eligible.length) effects.push(effectRow('regular-meals', 'Regular meals', 'positive', '+1 pp happiness / h', allScope, {
     amount: 1, residentIds: allIds, endCondition: 'While Food is available in central storage',
-    explain: 'Food is shared equally and assigned automatically. Each resident consumes one Food per hour; a full uninterrupted hour of feeding resets the hunger counter.'
+    explain: 'Food is assigned automatically. A housed resident consumes one Food per hour; a resident without a bed consumes two. A full uninterrupted hour of feeding resets the hunger counter.'
   }));
   const recovering = fed ? eligible.filter(person => finite(person.hungerSeconds) > EPS && finite(person.fedRecoverySeconds) < 3600 - EPS) : [];
   if (recovering.length) effects.push(effectRow('hunger-recovery', 'Recovering from hunger', 'neutral', 'Hunger penalty paused · timer recovering', scopeOf(recovering, people), {
@@ -110,10 +111,10 @@ export function activeEffects(state = {}) {
     amount: -5, residentIds: idsOf(unemployed), endCondition: 'Until these residents are assigned to work',
     explain: 'The penalty is paused on assignment and while walking to work. Only arriving resets the remembered timer; recalling a resident early does not grant a new grace period. Returning home counts as unemployment.'
   }));
-  const unhoused = Math.max(0, finite(state.population, people.length) - 24 * finite(state.buildings?.house?.level));
-  if (unhoused > 0 && eligible.length) effects.push(effectRow('overcrowding', 'Not enough beds', 'negative', `−${unhoused} pp happiness / h`, allScope, {
-    amount: -unhoused, residentIds: allIds, endCondition: 'Until the House has enough beds for everyone',
-    explain: `${unhoused} residents have no bed. Each missing bed adds a one-point hourly happiness penalty to eligible residents.`
+  const unhoused = people.filter(person => !residentHasHousing(state, person));
+  if (unhoused.length) effects.push(effectRow('unhoused-residents', 'Residents without beds', 'negative', 'Work speed ×0.5 · Food consumption ×2 · no House points', scopeOf(unhoused, people), {
+    residentIds: idsOf(unhoused), endCondition: 'Until these residents have beds in the House',
+    explain: 'Only residents without beds work at half speed, consume twice as much Food and cannot receive House happiness points. Other residents keep their usual work speed and meal demand. Missing beds no longer reduce happiness for the whole island.'
   }));
   for (const [workplace, name] of Object.entries(workplaceNames)) {
     const affected = eligible.filter(person => person.workplace === workplace && blocked(state, person));

@@ -277,21 +277,23 @@ test('birth and departure events change meal demand at their exact time', () => 
   close(growing.resources.food + growing.foodCredit, 65);
   assert.ok(growing.residents.filter(resident => resident.newbornRemaining > 0).every(resident => resident.happiness === 0));
   const shrinking = island({ happiness: -100 }); shrinking.islandRole = 'daughter';
-  // Overcrowding offsets feeding recovery, keeping the loss rate at its clamp.
-  shrinking.buildings.house.level = 0;
+  // Mature unemployment offsets feeding recovery, keeping the loss rate at its
+  // clamp without relying on the removed global missing-beds penalty.
+  for (const resident of shrinking.residents) resident.unemployedSeconds = GRACE;
   tick(shrinking, 2 * HOUR);
   assert.equal(shrinking.population, 10);
   assert.equal(shrinking.resources.food, 100 - 12 - 11);
   close(shrinking.foodCredit, 0);
 });
 
-test('housing and mature hunger penalties add for each individual, then the mean is computed', () => {
+test('missing beds no longer add a global happiness penalty to mature individual hunger', () => {
   const state = island({ population: 78, food: 0 });
   state.buildings.house.level = 3;
   matureHunger(state);
   tick(state, HOUR);
-  close(state.happiness, -11);
-  assert.ok(state.residents.every(resident => Math.abs(resident.happiness + 11) < 1e-7));
+  assert.equal(foodDemandPerHour(state), 84);
+  close(state.happiness, -5);
+  assert.ok(state.residents.every(resident => Math.abs(resident.happiness + 5) < 1e-7));
   tick(state, 100 * HOUR);
   assert.equal(state.population, 12);
   assert.equal(state.happiness, -100);
@@ -411,7 +413,7 @@ test('the same resident earns twenty points in ten fed working hours then loses 
   close(person(state, id).happiness, 20);
   assert.equal(act(state, { type: 'assign', building: 'quarry', delta: -1 }).ok, true);
   assert.equal(person(state, id).workplace, null);
-  assert.equal(person(state, id).returnRemaining, 300);
+  assert.equal(person(state, id).returnRemaining, 120);
   tick(state, 12 * HOUR);
   close(person(state, id).happiness, 32);
   tick(state, HOUR);
@@ -583,17 +585,17 @@ test('a returning worker keeps personal hunger and starts unemployment immediate
   assert.equal(act(state, { type: 'assign', building: 'quarry', delta: -1 }).ok, true);
   const before = person(state, id).happiness;
   const coins = state.resources.coins;
-  tick(state, 299);
+  tick(state, 119);
   close(person(state, id).happiness, before);
-  close(person(state, id).hungerSeconds, HOUR + 299);
-  close(person(state, id).unemployedSeconds, 299);
+  close(person(state, id).hungerSeconds, HOUR + 119);
+  close(person(state, id).unemployedSeconds, 119);
   close(person(state, id).returnRemaining, 1);
   assert.equal(state.resources.coins, coins);
   const saved = reload(state);
   assert.deepEqual(person(saved, id), person(state, id));
   tick(saved, 1);
   assert.equal(person(saved, id).returnRemaining, 0);
-  close(person(saved, id).unemployedSeconds, 300);
+  close(person(saved, id).unemployedSeconds, 120);
 });
 
 test('legacy and individual saves normalize malformed residents without illegal pools or duplicate IDs', () => {
@@ -607,7 +609,7 @@ test('legacy and individual saves normalize malformed residents without illegal 
     assert.ok(Number.isFinite(resident.happiness) && resident.happiness >= -100 && resident.happiness <= 100);
     assert.ok(Number.isFinite(resident.hungerSeconds) && resident.hungerSeconds >= 0);
     assert.ok(Number.isFinite(resident.unemployedSeconds) && resident.unemployedSeconds >= 0);
-    assert.ok(Number.isFinite(resident.returnRemaining) && resident.returnRemaining >= 0 && resident.returnRemaining <= 300);
+    assert.ok(Number.isFinite(resident.returnRemaining) && resident.returnRemaining >= 0 && resident.returnRemaining <= 120);
     assert.notEqual(resident.workplace, 'townhall');
   }
 });
@@ -625,12 +627,12 @@ test('staggered dismissals preserve each person\'s home-return clock across save
     assert.equal(act(state, { type: 'assign', building: higherBuilding, delta: -1 }).ok, true);
     tick(state, 60);
     assert.equal(act(state, { type: 'assign', building: lowerBuilding, delta: -1 }).ok, true);
-    close(person(state, higherId).returnRemaining, 240);
-    close(person(state, lowerId).returnRemaining, 300);
+    close(person(state, higherId).returnRemaining, 60);
+    close(person(state, lowerId).returnRemaining, 120);
     const saved = reload(state);
-    close(person(saved, higherId).returnRemaining, 240);
-    close(person(saved, lowerId).returnRemaining, 300);
-    tick(saved, 240);
+    close(person(saved, higherId).returnRemaining, 60);
+    close(person(saved, lowerId).returnRemaining, 120);
+    tick(saved, 60);
     assert.equal(person(saved, higherId).returnRemaining, 0);
     close(person(saved, lowerId).returnRemaining, 60);
     assert.equal(saved.returningWorkers.length, 1);

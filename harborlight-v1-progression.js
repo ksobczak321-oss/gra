@@ -1,7 +1,8 @@
+import { lessonCopy as approvedLessonCopy } from './harborlight-v1-approved-copy.js?v=frontend-v27';
 // Persistent learning, meaningful activity and future verified social hooks.
 // No DOM, network requests or account creation happen in this module.
-import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v26';
-import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v26';
+import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v27';
+import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v27';
 
 export const ACTIVE_PLAY_SECONDS = 300;
 export const ABANDONED_PLAY_SECONDS = 48 * 3600;
@@ -140,9 +141,11 @@ const newCourse = [
     descriptionPl: 'Otwórz „Ekspedycje”, wybierz minigrę i wygraj jedną rundę. Następnie odbierz zgromadzone monety, aby ukończyć tę lekcję. Samo otwarcie lub rozpoczęcie minigry nie wystarczy.' }),
   newLesson('expedition-rules'), newLesson('returning-workers'), newLesson('island-review')
 ];
-export const TUTORIAL_LESSONS = Object.freeze(newCourse.map((item, offset) => Object.freeze({
-  ...item, index: offset + 1, prerequisite: offset ? newCourse[offset - 1].id : null
-})));
+export const TUTORIAL_LESSONS = Object.freeze(newCourse.map((item, offset) => {
+  const english = approvedLessonCopy(item.id, 'en'), polish = approvedLessonCopy(item.id, 'pl');
+  return Object.freeze({ ...item, ...(english || {}), ...(polish ? { titlePl: polish.title, descriptionPl: polish.description } : {}),
+    index: offset + 1, prerequisite: offset ? newCourse[offset - 1].id : null });
+}));
 export const TUTORIAL_STARTER_TASK = Object.freeze({ requirements: Object.freeze({ wood: 50, stone: 50 }), reward: Object.freeze({ coins: 100 }) });
 export const tutorialLessons = state => state?.tutorial?.curriculum === 3 ? LEGACY_TUTORIAL_LESSONS : state?.tutorial?.curriculum === 4 ? V4_TUTORIAL_LESSONS : TUTORIAL_LESSONS;
 const lessonsFor = tutorialLessons;

@@ -1,3 +1,5 @@
+import { getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v27';
+
 // Presentation only: descriptions and level names never affect saved mechanics.
 const purposes = {
   townhall: ['Sets the island level, population limit and highest available upgrade level.', 'Rozbudowuj ratusz, aby pomieścić więcej mieszkańców i podnosić poziomy pozostałych budynków. Jego poziom jest też poziomem twojej wyspy.'],
@@ -14,16 +16,22 @@ const purposes = {
   lighthouse: ['Rewards restoration with temporary bonuses and offers visits that improve residents’ happiness.', 'Odbudowuj latarnię, by na pewien czas zwiększać szczęście i produkcję. Możesz też wysyłać mieszkańców na zwiedzanie, aby po powrocie byli szczęśliwsi.']
 };
 
-for (const id of ['farm', 'windmill', 'quarry', 'lumber', 'sawmill']) {
-  purposes[id][0] += ' If the building’s local store is full, a sad face appears above it.';
-  purposes[id][1] += ' Jeśli magazyn przy budynku jest pełny, nad budynkiem pojawia się smutna buźka.';
+const previousPurposeAliases = Object.entries(purposes).map(([id, pair]) => [pair[0], id]);
+for (const id of Object.keys(purposes)) {
+  const english = getTourCopy(`building-${id}`, 'en'), polish = getTourCopy(`building-${id}`, 'pl');
+  if (english.text && polish.text) purposes[id] = [english.text, polish.text];
 }
+purposes.house = [approvedCopy('houseDescription', 'en'), approvedCopy('houseDescription', 'pl')];
+purposes.lighthouse = [approvedCopy('lighthouseDescription', 'en'), approvedCopy('lighthouseDescription', 'pl')];
 
 const goal = {
-  title: ['Grow your island and care for its residents', 'Rozwijaj wyspę i dbaj o mieszkańców'],
-  description: ['Build up your settlement, provide food, homes and work, and keep residents happy. Develop production, trade, transport and every building so the island becomes an ever better place to live.', 'Rozbudowuj osadę, zapewniaj mieszkańcom żywność, domy i pracę oraz dbaj o ich szczęście. Rozwijaj produkcję, handel, transport i wszystkie budynki, aby wyspa stawała się coraz lepszym miejscem do życia.']
+  title: [approvedCopy('goalTitle', 'en'), approvedCopy('goalTitle', 'pl')],
+  description: [approvedCopy('goalDescription', 'en'), approvedCopy('goalDescription', 'pl')]
 };
-const residents = ['Residents produce materials, process goods and transport deliveries; they need food, housing and work. Positive average happiness attracts new people, while negative happiness causes departures, with at least twelve remaining on the mother island and six on a daughter. The Town Hall limits the population, and the House provides beds; at 0% happiness the population stays the same. At a constant 100% happiness one person arrives every 30 minutes while population space remains. All residents have a welcome minimum of 20% during the island’s first 72 hours; Lighthouse effects take precedence at 100%.', 'Dbaj o jedzenie, łóżka i pracę mieszkańców — to oni produkują zasoby i wożą towary. Gdy średnie szczęście jest dodatnie, na wyspę przybywają nowe osoby. Gdy spada poniżej zera, mieszkańcy odchodzą. Na wyspie macierzystej pozostaje co najmniej 12 osób, a na wyspie córce — 6. Rozbuduj ratusz, aby zwiększyć limit ludności, a dom, aby dodać łóżka. Przy szczęściu 0% liczba mieszkańców się nie zmienia. Przy stałym szczęściu 100% nowa osoba przybywa co 30 minut, jeśli pozwala na to limit ludności. Przez pierwsze 72 godziny wyspy każdy mieszkaniec ma co najmniej 20% szczęścia. Premia latarni, która ustawia szczęście na 100%, ma pierwszeństwo.'];
+const residents = [
+  'Provide food, housing and work: residents produce goods and transport them. Positive average happiness attracts settlers; negative happiness causes departures. At least twelve residents remain on the mother island and six on a daughter. The Town Hall sets the population limit independently of the House’s beds. At 0% happiness the population is stable. At a constant 100%, one person arrives every 30 minutes while the Town Hall has room. Residents without housing work at half speed, eat twice as much and do not receive daily House happiness points. Missing beds do not lower happiness for the whole island. All residents have a welcome minimum of 20% during the island’s first 72 hours; the Lighthouse’s forced 100% takes precedence.',
+  'Dbaj o jedzenie, mieszkanie i pracę mieszkańców — to oni produkują zasoby i wożą towary. Gdy średnie szczęście jest dodatnie, przybywają nowe osoby; gdy spada poniżej zera, mieszkańcy odchodzą. Na wyspie macierzystej pozostaje co najmniej 12 osób, a na wyspie córce — 6. Ratusz wyznacza limit ludności niezależnie od liczby łóżek w Domu. Przy szczęściu 0% populacja jest stała, a przy stałym 100% nowa osoba przybywa co 30 minut, jeśli Ratusz pozwala przyjąć kolejną. Mieszkańcy bez miejsca w Domu pracują dwa razy wolniej, jedzą dwa razy więcej i nie otrzymują codziennych punktów szczęścia z Domu. Brak łóżek nie obniża szczęścia całej wyspy. Przez pierwsze 72 godziny wszyscy mieszkańcy mają minimum 20% szczęścia; wymuszone 100% Latarni ma pierwszeństwo.'
+];
 const warehouse = ['The central warehouse stores materials used for meals, construction, trade and tasks, with both a total limit and a separate limit for each material. Warehouse carriers collect goods from producers and supply construction; a level-one carrier carries up to 120 items on a five-minute round trip. Storage and Warehouse-level carrying capacity grow up to level 24; later levels only add crew places. Reward materials remain spendable outside ordinary capacity. Active play doubles carrying speed; after 48 hours without play it halves. Paths independently improve transport.', 'Zbieraj w magazynie centralnym zapasy na jedzenie, budowę, handel i zadania. Pilnuj zarówno łącznego miejsca, jak i limitu dla każdego materiału. Przydziel tragarzy, aby odbierali gotowe towary i dowozili materiały na budowę. Na 1. poziomie każdy z nich przewozi do 120 sztuk w pięciominutowym kursie w obie strony. Rozbudowuj magazyn, by zwiększać jego pojemność i ładowność tragarzy do poziomu 24. Dalsza rozbudowa dodaje już tylko miejsca pracy. Materiały z nagród możesz wydawać także ponad zwykłym limitem miejsca. Gdy aktywnie grasz, towary są przewożone dwa razy szybciej. Po 48 godzinach bez gry przewóz spowalnia o połowę. Ulepszaj też ścieżki, aby dodatkowo usprawnić transport.'];
 
 // Every achieved level has a distinct restoration title; these are narrative
@@ -141,7 +149,7 @@ export function lighthouseLevelName(level, language = 'en') {
   return achieved ? localized(lighthouseStages[achieved - 1], language) : language === 'pl' ? 'Ruiny' : 'Ruins';
 }
 export const COPY_TRANSLATIONS = Object.freeze(Object.fromEntries([
-  ...Object.values(purposes), goal.title, goal.description, residents, warehouse,
+  ...Object.values(purposes), ...previousPurposeAliases.map(([source, id]) => [source, purposes[id][1]]), goal.title, goal.description, residents, warehouse,
   // Keep earlier presentation strings translatable in an already open panel.
   ['Provides beds, free residents for work and daily happiness points.', purposes.house[1]],
   ['Buys and sells materials for coins alongside player offers from Town Hall 6. Town Hall levels 10, 13, 16 and so on on the mother island unlock more islands, up to 20 in total. The shared ship carries goods or passengers.', purposes.dock[1]],

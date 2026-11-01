@@ -1,12 +1,13 @@
 // Persistent residents and visits. Every duration is a real elapsed second.
-import { residentLeisureBonus } from './harborlight-v1-leisure.js?v=frontend-v26';
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v26';
-import { worldEventHappinessPenalty } from './harborlight-v1-events.js?v=frontend-v26';
+import { residentLeisureBonus } from './harborlight-v1-leisure.js?v=frontend-v27';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v27';
+import { worldEventHappinessPenalty } from './harborlight-v1-events.js?v=frontend-v27';
+export { housingStatus, residentHasHousing, residentWorkMultiplier, residentFoodMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v27';
 export const RESIDENT_WORKPLACES = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'warehouse', 'dock', 'market'];
 export const NEED_GRACE_SECONDS = 12 * 3600;
 export const NEED_PENALTY = 5;
 export const FED_RECOVERY_SECONDS = 3600;
-export const WALK_SECONDS = 300;
+export const WALK_SECONDS = 120;
 export const LIGHTHOUSE_VISIT_SECONDS = 4 * 3600;
 export const LIGHTHOUSE_PERSONAL_SECONDS = 24 * 3600;
 // The population bonus lasts six hours; each dispatch group has its own clock.
@@ -105,7 +106,7 @@ function releaseResident(state, person) {
   releaseResidentNow(state, person);
 }
 // Call after the interval's resident clocks have advanced. A carrier finishes
-// the already loaded trip before beginning a fresh five-minute walk home.
+// the already loaded trip before beginning a fresh two-minute walk home.
 export function settleRecalledCarriers(state) {
   for (const person of state.residents || []) if (person.pendingRelease && !loadedTrip(state, person)) releaseResidentNow(state, person);
 }
@@ -335,10 +336,11 @@ export function residentHappinessRate(state, person) {
   if (state.lighthouseRemaining > EPS || person.visitHappinessRemaining > EPS) return 0;
   if (residentHappinessFrozen(person)) return 0;
   const fed = hasFoodForResidents(state);
-  const housingPenalty = Math.max(0, state.population - state.buildings.house.level * 24);
   const employed = !!person.workplace && person.arrivalRemaining <= EPS;
   const work = employed ? residentProductionBlocked(state, person) ? 0 : 1 : person.workplace ? 0 : reachedGrace(person.unemployedSeconds) ? -NEED_PENALTY : 0;
-  const rate = (fed ? 1 : reachedGrace(person.hungerSeconds) ? -NEED_PENALTY : 0) + work - housingPenalty;
+  // Missing beds affect that resident's output, meals and House-point access.
+  // They no longer subtract happiness from every person on the island.
+  const rate = (fed ? 1 : reachedGrace(person.hungerSeconds) ? -NEED_PENALTY : 0) + work;
   return welcomeStatus(state).active && residentHappiness(state, person) <= 20 + EPS && rate < 0 ? 0 : rate;
 }
 export const hungerPenaltyPerHour = state => !hasFoodForResidents(state) && state.population ?

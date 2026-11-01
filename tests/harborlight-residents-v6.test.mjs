@@ -37,27 +37,27 @@ function visit(state, residentIds) {
 }
 const close = (a, b) => assert.ok(Math.abs(a - b) < 1e-7, `${a} != ${b}`);
 
-test('walking to a workplace takes five minutes and starts work only on arrival', () => {
+test('walking to a workplace takes two minutes and starts work only on arrival', () => {
   const s = fixture(); const id = s.residents[0].id;
   hire(s, 'lumber', 1);
   const p = s.residents.find(p => p.id === id);
-  assert.equal(p.arrivalRemaining, 300);
+  assert.equal(p.arrivalRemaining, 120);
   assert.equal(activeWorkerCount(s, 'lumber'), 0);
   assert.equal(availableResidentCount(s), 11);
-  assert.equal(nextResidentEvent(s), 300);
+  assert.equal(nextResidentEvent(s), 120);
   assert.equal(residentHappinessRate(s, p), 1);
-  advance(s, 299); assert.equal(activeWorkerCount(s, 'lumber'), 0);
+  advance(s, 119); assert.equal(activeWorkerCount(s, 'lumber'), 0);
   advance(s, 1); assert.equal(activeWorkerCount(s, 'lumber'), 1);
   assert.equal(p.unemployedSeconds, 0); assert.equal(residentHappinessRate(s, p), 2);
 });
 
-test('dismissal preserves identity and happiness, resets blockage, and reserves the five-minute return', () => {
+test('dismissal preserves identity and happiness, resets blockage, and reserves the two-minute return', () => {
   const s = fixture(); hire(s, 'lumber', 1, true);
   const p = s.residents.find(p => p.workplace === 'lumber'); p.happiness = -17; p.blockedSeconds = 2 * 86400;
   assignResidents(s, 'lumber', -1);
-  assert.equal(p.workplace, null); assert.equal(p.returnRemaining, 300);
+  assert.equal(p.workplace, null); assert.equal(p.returnRemaining, 120);
   assert.equal(p.happiness, -17); assert.equal(p.blockedSeconds, 0); assert.equal(availableResidentCount(s), 11);
-  advance(s, 300); assert.equal(availableResidentCount(s), 12); assert.ok(s.residents.includes(p));
+  advance(s, 120); assert.equal(availableResidentCount(s), 12); assert.ok(s.residents.includes(p));
 });
 
 test('blocked producers still count for tax and have no work bonus or duplicate unemployment penalty', () => {
@@ -140,13 +140,13 @@ test('visitors eat through the common food model and never count as active worke
 
 test('reload preserves journeys, visitors, independent bonus clocks and person identities', () => {
   const s = fixture(); const home = s.residents[0]; visit(s, [home.id]); hire(s, 'lumber', 1);
-  advance(s, 137);
+  advance(s, 37);
   const saved = JSON.parse(JSON.stringify(s)); const restored = { ...saved, buildings: structuredClone(saved.buildings) };
   normalizeResidents(restored, { ...saved, version: 8 });
   assert.deepEqual(restored.residents.map(p => p.id), s.residents.map(p => p.id));
-  assert.equal(restored.lighthouseVisits[0].remaining, 4 * HOUR - 137);
-  assert.equal(restored.residents.find(p => p.workplace === 'lumber').arrivalRemaining, 163);
-  advance(restored, 163); assert.equal(activeWorkerCount(restored, 'lumber'), 1);
+  assert.equal(restored.lighthouseVisits[0].remaining, 4 * HOUR - 37);
+  assert.equal(restored.residents.find(p => p.workplace === 'lumber').arrivalRemaining, 83);
+  advance(restored, 83); assert.equal(activeWorkerCount(restored, 'lumber'), 1);
 });
 
 test('Lighthouse construction forces 100% even from negative happiness and restores its snapshot', () => {

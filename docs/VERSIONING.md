@@ -1,6 +1,6 @@
 # Wersja gry HARBORLIGHT
 
-Numer bieżącego roboczego DEV wyświetlany w Ustawieniach: **0.10.2.0 / v26**. Opublikowane PRE-PROD pozostaje na **0.10.1.0**; nowy numer nie oznacza promocji do GCP. Jedynym źródłem etykiety aplikacji jest `harborlight-version.js`. Wersja aplikacji jest odrębna od `state.version` (schemat świata), rewizji zapisu, generacji wyspy, wersji dokumentów prawnych i SHA wydania. Zmiana etykiety nie migruje ani nie zeruje świata.
+Numer bieżącego roboczego DEV wyświetlany w Ustawieniach: **0.11.0.0 / v27**. Opublikowane PRE-PROD pozostaje na **0.10.1.0**; nowy numer nie oznacza promocji do GCP. Jedynym źródłem etykiety aplikacji jest `harborlight-version.js`. Wersja aplikacji jest odrębna od `state.version` (schemat świata), rewizji zapisu, generacji wyspy, wersji dokumentów prawnych i SHA wydania. Zmiana etykiety nie migruje ani nie zeruje świata.
 
 Użytkownik wyznaczył pierwsze wydanie w Google Play jako **1.0.0.0**. Do tej promocji obecne zmiany są przedpremierowe. Nie nazywamy wysłania do GitHub/Pages publikacją sklepową.
 
@@ -17,7 +17,13 @@ Interpretacja „mniejsze zmiany podnoszą dalsze miejsce, większe wcześniejsz
 
 To propozycja interpretacji kolejnych podbić; pierwotne **0.9.1.1** i docelowe **1.0.0.0** są wskazaniami użytkownika. Opracowanie dokumentów ligi lub planszówki nie oznacza wdrożenia tych funkcji ani osobnego podbijania wersji. Jeden zatwierdzony pakiet zmian ma jeden numer; kolejne poprawki w trakcie jego przygotowania nie zmieniają numeru same z siebie.
 
-## Bieżący pakiet 0.10.2.0
+## Bieżący pakiet 0.11.0.0
+
+Pakiet v27 podnosi segment **B**: `0.10.2.0 → 0.11.0.0`, a **C** i **D** wracają do 0. Powodem jest większe rozszerzenie zasad: niezależna pojemność ludności i łóżek z nowymi skutkami braku mieszkania oraz wieloetapowa ścieżka misji Latarni 8/5/3. Opisy, wznowienie nauki, objaśnienia skutków, dwuminutowe dojście i stabilna prognoza są częścią tego samego GO. Wewnętrzne `v27` i cache `frontend-v27` nie zastępują numeru produktu ani SHA.
+
+Schemat świata pozostaje **9**; nowe opcjonalne pola i normalizacja zachowują tożsamości, postęp, wydane nagrody, rozpoczęte budowy i rejsy. [Zakres v27](FRONTEND-V27-REQUIREMENTS.md) rozdziela decyzje użytkownika od parametrów integracyjnych. [Walidacja](DEV-0.11.0.0-VALIDATION.md) potwierdza lokalny odbiór: 1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS po odpowiednich ponowieniach. Własny commit, CI, Pages i tag nadal wymagają osobnych dowodów. Nie nadajemy numeru 0.11.0.0 PRE-PROD ani PROD przez samą zmianę pliku wersji. Pierwsze wydanie Google Play nadal ma mieć **1.0.0.0**.
+
+## Poprzedni pakiet 0.10.2.0
 
 Pakiet v26 podnosi segment **C** z 1 do 2, a **D** pozostaje 0: `0.10.1.0 → 0.10.2.0`. To jeden spójny pakiet funkcji i poprawek interfejsu oraz początku gry, zgodny z powyższą polityką; nie każda poprawka testu w trakcie przygotowania otrzymuje osobny numer. Wewnętrzna etykieta `v26` i cache `frontend-v26` nie zastępują numeru produktu ani pełnego SHA.
 

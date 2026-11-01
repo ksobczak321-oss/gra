@@ -13,7 +13,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | CI | `passed_v22_1` |
 | PRE-PROD | `code_deployed_v22_1` |
 | PROD | `not_deployed` |
-| Decyzja | `accepted` |
+| Decyzja | `superseded` |
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
@@ -44,8 +44,12 @@ CI potwierdza zestaw dla wskazanego SHA. Status code_deployed potwierdza obecno�
 ## Relacje
 
 - **Zastępuje:** Brak.
-- **Zastąpione lub ograniczone przez:** Brak.
+- **Zastąpione lub ograniczone przez:** [HL-CHG-0955](HL-CHG-0955.md)
 - **Powiązane:** Brak.
+
+## Uwagi
+
+- W v27 użytkownik zmienia przejście Dom–praca i powrót na120sekund. Historyczna zasada pięciu minut jest zastąpiona; dokończenie niesionego ładunku pozostaje obowiązujące.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

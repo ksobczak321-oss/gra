@@ -66,9 +66,14 @@ def flush_pagehide(page):
 
 
 def help_panel(page):
-    cloud.settings(page)
-    page.locator('[data-open-help]').click()
+    page.locator('[data-mobile-control="tutorial"]' if page.viewport_size['width'] < 901 else '#hit-tutorial').click()
     expect(page.locator('[data-help-panel]')).to_be_visible()
+    expect(page.locator('[data-help-panel] button')).to_have_count(2)
+
+
+def dismiss_tour_reminder(page):
+    expect(page.locator('[data-tutorial-exit-reminder]')).to_be_visible()
+    page.locator('[data-close-tutorial-exit-reminder]').click()
 
 
 def history(state):
@@ -101,6 +106,7 @@ def replay_roundtrip(browser, mobile):
         expect(tour).to_have_attribute('data-onboarding-step', 'working')
         tour.locator('[data-onboarding-exit]').click()
         expect(tour).to_have_count(0)
+        dismiss_tour_reminder(page)
         paused = saved(page)
         assert paused['learning']['tour']['index'] == 4 and paused['learning']['tour']['paused']
         assert not paused['learning']['tour']['active']
@@ -111,8 +117,11 @@ def replay_roundtrip(browser, mobile):
         page.locator('[data-help-return-tour]').click()
         expect(tour).to_have_attribute('data-onboarding-step', 'working')
         tour.locator('[data-onboarding-exit]').click()
+        dismiss_tour_reminder(page)
         help_panel(page)
-        page.locator('[data-help-restart-tour]').click()
+        page.locator('[data-help-return-tour]').click()
+        expect(tour).to_have_attribute('data-onboarding-step', 'working')
+        tour.locator('[data-onboarding-restart]').click()
         expect(tour).to_have_attribute('data-onboarding-step', 'home')
         page.clock.run_for(31_000)
         running = saved(page)
@@ -121,6 +130,7 @@ def replay_roundtrip(browser, mobile):
         assert running['islandGeneration'] == initial['islandGeneration']
         assert history(running) == before, 'Tour replay reset or awarded practical lessons'
         tour.locator('[data-onboarding-exit]').click()
+        dismiss_tour_reminder(page)
         cloud.no_island_cache(page)
     finally:
         context.close()
@@ -137,7 +147,8 @@ def review_roundtrip(browser, mobile):
         seed(initial)
         visit(page)
         help_panel(page)
-        page.locator('[data-help-restart-lessons]').click()
+        page.locator('[data-help-return-lessons]').click()
+        page.locator('[data-tutorial-review-from-start]').first.click()
         review = page.locator('[data-tutorial-instructions-review]')
         expect(review).to_have_attribute('data-tutorial-review-index', '0')
         for index in range(1, 4):
@@ -161,7 +172,7 @@ def review_roundtrip(browser, mobile):
         assert not paused['learning']['practical']['reviewActive']
         assert paused['learning']['adsNotBeforeActiveSeconds'] - paused['engagementSchedule']['activeSeconds'] >= 3599
         help_panel(page)
-        page.locator('[data-help-continue-review]').click()
+        page.locator('[data-help-return-lessons]').click()
         expect(review).to_have_attribute('data-tutorial-review-index', '3')
         review.locator('[data-tutorial-review-next]').click()
         expect(review).to_have_attribute('data-tutorial-review-index', '4')
@@ -172,6 +183,8 @@ def review_roundtrip(browser, mobile):
         assert history(paused_outer) == before, 'Instruction review changed earned lesson history'
         help_panel(page)
         page.locator('[data-help-return-lessons]').click()
+        expect(review).to_have_attribute('data-tutorial-review-index', '4')
+        review.locator('[data-tutorial-review-to-practical]').click()
         expect(page.locator('[data-tutorial-current]')).to_have_attribute('data-tutorial-current', 'happiness-action')
         expect(page.locator('[data-tutorial-instructions-review]')).to_have_count(0)
         no_offer(page)
@@ -200,6 +213,7 @@ def initial_pause_and_ads(browser):
             expect(tour).to_have_attribute('data-onboarding-step', step)
         tour.locator('[data-onboarding-exit]').click()
         expect(tour).to_have_count(0)
+        dismiss_tour_reminder(page)
         expect(page.locator('[data-tutorial-current]')).to_have_attribute('data-tutorial-current', 'island-map')
         started = flush_pagehide(page)
         assert started['onboarding']['worldStartedAt'] is not None

@@ -1,6 +1,6 @@
 // Firebase owns credentials and verifies access to the UID-scoped documents.
 // Hosting selects the isolated project; runtime Firebase config never contains secrets.
-import { validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v26';
+import { validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v27';
 import { LEGAL_DOCUMENTS, validLegalAcceptance } from './harborlight-legal.js?v=legal-v4';
 export const DEV_PROJECT = 'harborlight-dev';
 export const PROD_PROJECT = 'harborlight-prod';

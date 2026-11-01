@@ -80,15 +80,15 @@ test('assignment pauses unemployment immediately but recall before arrival does 
   assert.equal(residentHappinessRate(state, person), 0);
   assert.equal(taxRate(state), 0);
   assert.equal(activeEffects(state).some(effect => effect.id === 'unemployment' && effect.residentIds.includes(person.id)), false);
-  tick(state, 120);
+  tick(state, 60);
   assert.equal(person.unemployedSeconds, 13 * 3600);
   assert.equal(act(state, { type: 'assign', building: 'quarry', delta: -1 }, state.worldTimeMs).ok, true);
   assert.equal(residentHappinessRate(state, person), -5);
   assert.ok(person.unemployedSeconds >= 13 * 3600);
-  tick(state, 300);
+  tick(state, 120);
   state.residents = [person, ...state.residents.filter(other => other !== person)];
   assert.equal(act(state, { type: 'assign', building: 'quarry', delta: 1 }, state.worldTimeMs).ok, true);
-  tick(state, 300);
+  tick(state, 120);
   assert.equal(person.unemployedSeconds, 0);
   assert.equal(taxRate(state), 1);
 });

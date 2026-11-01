@@ -1,4 +1,5 @@
-import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v26';
+import { APPROVED_TRANSLATIONS } from './harborlight-v1-approved-copy.js?v=frontend-v27';
+import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v27';
 
 /** English is the source language. Polish strings are presentation only: saves,
  * identifiers, action payloads and user-entered values are never translated. */
@@ -2036,3 +2037,78 @@ Wait for the Lighthouse to be rebuilt|Poczekaj na zakończenie odbudowy latarni
 Finish the tutorial and fill the Warehouse|Zakończ samouczek i uzupełnij magazyn
 `);
 priorityRule(/^(.+): the immediate reward is in your Warehouse and wallet\.$/, (_, lesson) => `${tr(lesson)}: materiały są już dostępne w magazynie, a monety w portfelu.`);
+
+// Approved v27 wording takes precedence over retained source aliases.
+registerTranslations(APPROVED_TRANSLATIONS);
+
+// Housing and worker journeys: old presentation aliases remain readable while
+// current mechanics use two-minute resident walks and independent cargo clocks.
+registerTranslations({
+  'Each level provides housing for 24 residents. Residents without a bed work at half speed and eat twice as much. Daily House happiness points are available only to housed residents.': 'Każdy poziom Domu zapewnia miejsce 24 mieszkańcom. Osoby bez łóżka pracują z połową wydajności i jedzą dwa razy więcej. Codzienne punkty szczęścia z Domu otrzymują tylko mieszkańcy mający w nim miejsce.',
+  'Residents without beds': 'Mieszkańcy bez łóżek',
+  'Work speed ×0.5 · Food consumption ×2 · no House points': 'Wydajność pracy ×0,5 · zużycie żywności ×2 · bez punktów z Domu',
+  'Until these residents have beds in the House': 'Do zapewnienia tym mieszkańcom miejsc w Domu',
+  'Only residents without beds work at half speed, consume twice as much Food and cannot receive House happiness points. Other residents keep their usual work speed and meal demand. Missing beds no longer reduce happiness for the whole island.': 'Tylko mieszkańcy bez łóżek pracują z połową wydajności, jedzą dwa razy więcej i nie otrzymują punktów szczęścia z Domu. Pozostali zachowują zwykłą wydajność pracy i zużycie żywności. Brak łóżek nie obniża już szczęścia całej wyspy.',
+  'Food is assigned automatically. A housed resident consumes one Food per hour; a resident without a bed consumes two. A full uninterrupted hour of feeding resets the hunger counter.': 'Żywność jest przydzielana automatycznie. Mieszkaniec mający miejsce w Domu zużywa jedną jednostkę żywności na godzinę, a osoba bez łóżka — dwie jednostki. Pełna godzina nieprzerwanego karmienia zeruje licznik głodu.',
+  'Only residents with a bed can receive House happiness points.': 'Punkty szczęścia z Domu mogą otrzymywać tylko mieszkańcy mający w nim miejsce.',
+  'No resident can currently receive House happiness points.': 'Żaden uprawniony mieszkaniec nie może teraz otrzymać punktów szczęścia z Domu.',
+  'A new resident can join the island. Residents without a bed work at half speed and eat twice as much.': 'Nowy mieszkaniec może dołączyć do wyspy. Osoby bez łóżka pracują z połową wydajności i jedzą dwa razy więcej.',
+  'Upgrade the Town Hall to provide enough population places.': 'Rozbuduj Ratusz, aby zwiększyć limit mieszkańców.',
+  'Each level provides housing for 24 residents. Every resident without a home reduces happiness by 1 percentage point per hour.': 'Każdy poziom Domu zapewnia miejsce 24 mieszkańcom. Osoby bez łóżka pracują z połową wydajności, jedzą dwa razy więcej i nie otrzymują codziennych punktów szczęścia z Domu.',
+  'Each House level provides 24 beds. Upgrading does not add residents immediately; it increases housing. Every resident without a bed lowers happiness by 1 percentage point per hour. Population can grow up to the Town Hall limit.': 'Każdy poziom Domu zapewnia 24 łóżka. Rozbudowa zwiększa liczbę miejsc, a ludność może rosnąć do osobnego limitu Ratusza. Mieszkańcy bez łóżek pracują z połową wydajności, jedzą dwa razy więcej i nie otrzymują codziennych punktów szczęścia z Domu.',
+  'The House receives a daily pool of one point per resident. You can allocate whole points to an individual or give everyone one point. These are normal happiness additions; hunger, unemployment and other penalties still apply. Newborn residents and residents currently fixed at 100% cannot receive points.': 'Dom otrzymuje dzienną pulę po jednym punkcie na mieszkańca mającego w nim miejsce. Możesz przekazać pełne punkty wybranej uprawnionej osobie albo rozdać po jednym wszystkim uprawnionym. Punkty dodają zwykłe szczęście; głód, bezrobocie i pozostałe efekty nadal działają. Nowi mieszkańcy w okresie osiedlania i osoby z wymuszonym 100% nie otrzymują punktów.',
+  'A new worker takes five minutes to reach work. Production begins after arrival.': 'Nowy pracownik dociera do pracy w 2 minuty. Produkcja zaczyna się po przybyciu.',
+  'A new worker takes two minutes to reach work. Production begins after arrival.': 'Nowy pracownik dociera do pracy w 2 minuty. Produkcja zaczyna się po przybyciu.',
+  'Release one assigned resident. Returning Home takes five minutes; already loaded cargo still arrives.': 'Odwołaj jednego pracownika. Powrót do Domu trwa 2 minuty; tragarz najpierw dokończy rozpoczętą dostawę.',
+  'Release one assigned resident. Returning Home takes two minutes; already loaded cargo still arrives.': 'Odwołaj jednego pracownika. Powrót do Domu trwa 2 minuty; tragarz najpierw dokończy rozpoczętą dostawę.',
+  'Choose a workplace, then use + or − to change its team. New workers need five minutes to arrive.': 'Wybierz miejsce pracy i zmieniaj obsadę przyciskami + i −. Pracownicy docierają do pracy w 2 minuty.',
+  'Choose a workplace, then use + or − to change its team. New workers need two minutes to arrive.': 'Wybierz miejsce pracy i zmieniaj obsadę przyciskami + i −. Pracownicy docierają do pracy w 2 minuty.',
+  'A recalled carrier finishes the delivery already in progress, then walks home for five minutes. Other released workers start their five-minute walk immediately. They become available again on arrival.': 'Odwołany tragarz kończy rozpoczętą dostawę, a następnie przez 2 minuty wraca do Domu. Pozostali odwołani pracownicy wyruszają od razu. Po powrocie można przydzielić ich ponownie.',
+  'A recalled carrier finishes the delivery already in progress, then walks home for two minutes. Other released workers start their two-minute walk immediately. They become available again on arrival.': 'Odwołany tragarz kończy rozpoczętą dostawę, a następnie przez 2 minuty wraca do Domu. Pozostali odwołani pracownicy wyruszają od razu. Po powrocie można przydzielić ich ponownie.',
+  'New workers take 5 minutes to reach the workplace.': 'Pracownicy docierają do miejsca pracy w 2 minuty.',
+  'New workers take 2 minutes to reach the workplace.': 'Pracownicy docierają do miejsca pracy w 2 minuty.',
+  'The first six carriers reach the Warehouse within 20 seconds.': 'Pracownicy docierają do Magazynu w 2 minuty.',
+  'The first six carriers reach the Warehouse within 2 minutes.': 'Pracownicy docierają do Magazynu w 2 minuty.',
+  'The first six carriers reach the Warehouse within 120 seconds.': 'Pracownicy docierają do Magazynu w 2 minuty.',
+  'Carriers with a load finish their current delivery, then take five minutes to walk Home. They will not start another trip.': 'Tragarze są w trakcie transportu towarów. Muszą zakończyć dostawę, która już jest rozpoczęta. Następnie wrócą do Domu. Czas powrotu do domu to 2 min.'
+});
+priorityRule(/^([\d,\s]+) residents have no bed\. Each missing bed adds a one-point hourly happiness penalty to eligible residents\.$/, (_, n) => `Mieszkańcy bez łóżka: ${n}. Pracują z połową wydajności, jedzą dwa razy więcej i nie otrzymują punktów szczęścia z Domu.`);
+
+registerTranslations({
+  'The destination needs free Town Hall population places for all passengers.': 'Na wyspie docelowej potrzeba wolnych miejsc w limicie Ratusza dla wszystkich pasażerów.',
+  'Prepare meals for the thirty-minute voyage: half a Food for a housed passenger and one Food for a passenger without a bed. These are ordinary meals, without a transport fee.': 'Przygotuj posiłki na 30-minutowy rejs: po pół jednostki żywności dla pasażera mającego miejsce w Domu i po jednej dla pasażera bez łóżka. To zwykłe zużycie jedzenia; nie płacisz za sam przewóz.'
+});
+
+// Lighthouse mission commands share the ordinary action-result toast. Their
+// dedicated cards and notifications carry their own native PL/EN copy.
+registerTranslations({
+  'Lighthouse missions refreshed.': 'Lista misji Latarni została odświeżona.',
+  'This Lighthouse mission step is no longer available.': 'Ten etap misji Latarni jest już niedostępny.',
+  'This Lighthouse mission step is already active.': 'Ten etap misji Latarni już trwa.',
+  'Prepare the required stock, production and transport before starting.': 'Przed rozpoczęciem przygotuj wymagane zapasy, produkcję i transport.',
+  'Prepare the required stock, production and transport before starting this task.': 'Przed rozpoczęciem zadania przygotuj wymagane zapasy, produkcję i transport.',
+  'Lighthouse mission step started.': 'Etap misji Latarni rozpoczęty.',
+  'Start the material contribution step first.': 'Najpierw rozpocznij etap dostarczania materiałów.',
+  'Choose a whole amount within the remaining mission requirement.': 'Wpisz pełną liczbę jednostek, nie większą niż ilość brakująca w tym zadaniu.',
+  'Use unreserved central stock and preserve the food reserve.': 'Możesz przekazać tylko niezarezerwowane zasoby z magazynu centralnego, z zachowaniem rezerwy żywności.',
+  'Mission contribution delivered.': 'Materiały na misję zostały przekazane.'
+});
+
+registerTranslations({
+  'Instant transport quote.': 'Wycena natychmiastowego transportu.',
+  'Construction acceleration quote.': 'Wycena przyspieszenia budowy.',
+  'A resident starts working after the 2-minute walk to work. The Town Hall, House, Chapel and Lighthouse have no employees.': 'Mieszkaniec zaczyna pracę po dwóch minutach drogi z Domu. Ratusz, Dom, Kaplica i Latarnia nie zatrudniają pracowników.',
+  'A resident starts working after the 5-minute walk to work. The Town Hall, House, Chapel and Lighthouse have no employees.': 'Mieszkaniec zaczyna pracę po dwóch minutach drogi z Domu. Ratusz, Dom, Kaplica i Latarnia nie zatrudniają pracowników.',
+  'Each row shows the current carrier, cargo, route and remaining delivery time. A new worker first walks five minutes from Home. An idle worker will take the next available job; an already loaded shipment keeps its cargo.': 'Każdy wiersz pokazuje tragarza, ładunek, trasę i pozostały czas dostawy. Nowy pracownik najpierw idzie z Domu przez dwie minuty. Wolny tragarz podejmuje kolejne dostępne zlecenie, a rozpoczęta dostawa zachowuje swój ładunek.',
+  'A released worker takes 5 minutes to return home. During that time they are unavailable and do not work. You can assign them again after they return.': 'Odwołany pracownik wraca do Domu przez dwie minuty. W tym czasie jest niedostępny i nie pracuje. Możesz przydzielić go ponownie po powrocie.',
+  'Releasing a worker discards their unfinished unit. They take 5 minutes to return home and cannot work or be reassigned during that journey.': 'Odwołanie pracownika przerywa wytwarzanie rozpoczętej sztuki. Powrót do Domu trwa dwie minuty; dopiero po dotarciu możesz przydzielić go ponownie.',
+  'Releasing a worker discards their unfinished unit. They take 2 minutes to return home and cannot work or be reassigned during that journey.': 'Odwołanie pracownika przerywa wytwarzanie rozpoczętej sztuki. Powrót do Domu trwa 2 minuty; dopiero po dotarciu możesz przydzielić go ponownie.',
+  'A resident with a bed consumes 1 Food per real hour from central storage; a resident without a bed consumes 2. Meals continue while offline. Eating adds 1 happiness point per hour. Without food, work efficiency is immediately halved; after 12 accumulated hungry hours the resident also loses 5 points per hour. Feeding stops the penalty immediately; one full uninterrupted hour of feeding resets the hunger clock. Food reserved for meals cannot be spent twice.': 'Mieszkaniec mający łóżko zużywa jedną jednostkę żywności z magazynu centralnego na godzinę, a osoba bez łóżka — dwie jednostki. Posiłki są naliczane także wtedy, gdy nie grasz, i dodają 1 p.p. szczęścia na godzinę. Gdy zabraknie jedzenia, wydajność pracy od razu maleje o połowę. Po 12 zgromadzonych godzinach głodu mieszkaniec traci też 5 p.p. szczęścia na godzinę. Dostarczenie jedzenia od razu zatrzymuje tę karę, a pełna godzina nieprzerwanych posiłków zeruje licznik głodu. Zapasu chronionego na posiłki nie możesz wydać drugi raz.',
+  'Food, employment and active effects change individual happiness over time. Missing beds affect only the unhoused residents: they work at half speed, eat twice as much and cannot receive House points. The next population change is estimated using the current population average.': 'Jedzenie, praca i aktywne efekty wpływają z czasem na szczęście poszczególnych mieszkańców. Brak łóżka dotyczy tylko osoby, która go nie ma: pracuje z połową wydajności, je dwa razy więcej i nie otrzymuje punktów z Domu. Gra szacuje czas kolejnego przybycia lub odejścia na podstawie obecnej średniej szczęścia wyspy.',
+  'The House receives a daily pool of one point per resident with a bed. You can allocate whole points to one eligible resident or give every eligible resident one point. Hunger, unemployment and other effects still apply. Residents without beds, residents in their first 24 hours and residents currently fixed at 100% cannot receive House points.': 'Dom otrzymuje dzienną pulę po jednym punkcie na mieszkańca mającego łóżko. Możesz przekazać pełne punkty jednej uprawnionej osobie albo rozdać po jednym wszystkim uprawnionym. Głód, bezrobocie i pozostałe efekty nadal działają. Punktów z Domu nie otrzymują osoby bez łóżek, nowi mieszkańcy przez pierwsze 24 godziny ani osoby z wymuszonym 100% szczęścia.',
+  'A resident costs the full next Town Hall upgrade price in all six resources. A free Town Hall population place is required. Residents without beds work at half speed, eat twice as much and cannot receive House points. New residents settle in for 24 hours: Lighthouse protection gives 100%, Welcome protection gives a minimum of 20%, otherwise happiness stays at 0%.': 'Zaproszenie mieszkańca kosztuje tyle, co pełna kolejna rozbudowa Ratusza, we wszystkich sześciu zasobach. Potrzebujesz wolnego miejsca w limicie Ratusza. Osoby bez łóżka pracują z połową wydajności, jedzą dwa razy więcej i nie otrzymują punktów z Domu. Przez pierwsze 24 godziny osiedlania ochrona Latarni daje 100% szczęścia, premia powitalna zapewnia co najmniej 20%, a poza tym szczęście pozostaje na 0%.',
+  'Recalled workers take 2 minutes to return home after finishing any loaded delivery.': 'Odwołani pracownicy wracają do Domu przez 2 minuty. Tragarze najpierw kończą rozpoczętą dostawę.',
+  'New residents joined the island.': 'Nowi mieszkańcy dołączyli do wyspy.',
+  'One rescued resident joined the island. Without a free bed, the resident works at half speed and consumes twice as much Food.': 'Uratowany rozbitek dołączył do mieszkańców. Jeśli nie ma dla niego wolnego łóżka, pracuje o połowę wolniej i zużywa dwa razy więcej żywności.'
+});
+priorityRule(/^([\d,.\s]+) residents joined the island\. Their initial 24-hour settling period remains protected by active Lighthouse or Welcome bonuses\.$/, (_, n) => `Nowi mieszkańcy na wyspie: ${n}. Przez pierwsze 24 godziny osiedlania nadal chronią ich aktywna premia Latarni lub premia powitalna.`);

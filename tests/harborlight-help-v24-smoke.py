@@ -21,10 +21,9 @@ def scenario(browser, language, mobile):
         fixture.visit(page)
         fixture.settings(page)
         page.locator('[data-open-help]').click()
+        expect(page.locator('[data-help-panel] button')).to_have_count(2)
         expect(page.locator('[data-help-return-tour]')).to_have_text('Wznów tutorial' if language == 'pl' else 'Continue tutorial')
-        expect(page.locator('[data-help-restart-tour]')).to_have_text('Tutorial od początku' if language == 'pl' else 'Tutorial from the beginning')
         expect(page.locator('[data-help-return-lessons]')).to_have_text('Wznów samouczek' if language == 'pl' else 'Continue practical tutorial')
-        expect(page.locator('[data-help-restart-lessons]')).to_have_text('Przejrzyj samouczek od początku' if language == 'pl' else 'Review lessons from the beginning')
         page.locator('[data-help-return-tour]').click()
         tour = page.locator('[data-onboarding-replay="true"]')
         expect(tour).to_be_visible()
@@ -43,6 +42,8 @@ def scenario(browser, language, mobile):
         assert current['worldTimeMs'] > saved['worldTimeMs'], 'Help must not pause an already started world'
         tour.locator('[data-onboarding-exit]').click()
         expect(tour).to_have_count(0)
+        expect(page.locator('[data-tutorial-exit-reminder]')).to_be_visible()
+        page.locator('[data-close-tutorial-exit-reminder]').click()
         paused = fixture.cloud_state(UID)['learning']['tour']
         assert paused['index'] == 4 and paused['paused'] and not paused['active'], paused
         fixture.settings(page)

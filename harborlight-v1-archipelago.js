@@ -1,11 +1,12 @@
 // The client snapshot keeps a mother-root account revision with up to twenty
 // worlds. Cloud adapters persist bounded per-world documents atomically.
 // Simulation is injected: this module does not import the state coordinator.
-import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v26';
-import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v26';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v26';
-import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v26';
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v26';
+import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v27';
+import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v27';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v27';
+import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v27';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v27';
+import { residentFoodMultiplier } from './harborlight-v1-housing.js?v=frontend-v27';
 
 export const ISLAND_IDS = Object.freeze(Array.from({ length: 20 }, (_, index) => `island-${index + 1}`));
 export const ARCHIPELAGO_RULES = Object.freeze({ version: 2, secondIslandLevel: 10, maximumIslands: 20, islandLevelStep: 3, colonists: 6,
@@ -85,7 +86,15 @@ function transferRecord(value, bundle) {
     value.arrivesAt !== value.departedAt + (value.mode === 'passengers' ? ARCHIPELAGO_RULES.passengerVoyageSeconds : ARCHIPELAGO_RULES.voyageSeconds) * 1000 ||
     !integer(value.capacityAtDeparture) || (value.mode === 'passengers' ? value.capacityAtDeparture !== 100 : value.capacityAtDeparture < ARCHIPELAGO_RULES.baseShipCapacity || value.capacityAtDeparture > bundle.shipCapacity)) throw invalid('Invalid island voyage.');
   if (value.mode === 'passengers') {
-    if (!integer(value.passengerCount) || value.passengerCount < 1 || value.passengerCount > 100 || !Array.isArray(value.passengers) || !Array.isArray(value.passengerIds) || value.passengerIds.length !== value.passengerCount || new Set(value.passengerIds).size !== value.passengerCount || value.mealFood !== value.passengerCount / 2 || !['sailing','complete'].includes(value.status) ||
+    const personalMeals = value.mealPolicy === 'housing-v1';
+    const housingHistory = personalMeals && Array.isArray(value.unhousedPassengerIds) &&
+      new Set(value.unhousedPassengerIds).size === value.unhousedPassengerIds.length &&
+      Array.isArray(value.passengerIds) && value.unhousedPassengerIds.every(id => typeof id === 'string' && value.passengerIds.includes(id));
+    // A legacy sailing group has already paid its old normal meals. Never
+    // reprice it against today's House level or charge that food a second time.
+    const mealFood = personalMeals && housingHistory ? (value.passengerCount + value.unhousedPassengerIds.length) / 2 : value.passengerCount / 2;
+    if (value.mealPolicy !== undefined && !personalMeals || personalMeals && !housingHistory ||
+      !integer(value.passengerCount) || value.passengerCount < 1 || value.passengerCount > 100 || !Array.isArray(value.passengers) || !Array.isArray(value.passengerIds) || value.passengerIds.length !== value.passengerCount || new Set(value.passengerIds).size !== value.passengerCount || value.mealFood !== mealFood || !['sailing','complete'].includes(value.status) ||
       value.status === 'sailing' && (value.passengers.length !== value.passengerCount || value.deliveredAt !== null) ||
       value.status === 'complete' && (value.passengers.length || !integer(value.deliveredAt) || value.deliveredAt < value.arrivesAt) ||
       value.passengers.some(person => !object(person) || !Number.isSafeInteger(person.id) || person.id < 1 || typeof person.personUid !== 'string' || !/^[A-Za-z0-9:_-]{1,100}$/.test(person.personUid) || !value.passengerIds.includes(person.personUid) || !Number.isFinite(person.happiness) || !residentAtHome(person) || ['newbornRemaining','hungerSeconds','fedRecoverySeconds','unemployedSeconds','arrivalRemaining','returnRemaining','prayerRemaining','blockedSeconds','visitHappinessRemaining','visitCooldownRemaining'].some(field => !Number.isFinite(person[field]) || person[field] < 0)) ||
@@ -350,13 +359,14 @@ export function quotePassengerTransfer(bundle, { fromIslandId = bundle.activeIsl
   const chosen=passengerIds === undefined ? home.slice(0,count) : home.filter(person=>passengerIds.includes(person.id));
   if (chosen.length!==count || passengerIds && new Set(passengerIds).size!==count) return bad('All selected passengers must actually be at Home.');
   if (from.population-count < residentPopulationMinimum(from)) return bad(from.islandRole === 'daughter' ? 'At least six residents must remain on a daughter island.' : 'At least twelve residents must remain on the mother island.');
-  const destinationLimit=Math.min(to.buildings.townhall.level*24,to.buildings.house.level*24);
-  if (to.population+(to.incomingPassengers || 0)+count>destinationLimit) return bad('The destination needs free Town Hall population places and House beds for all passengers.');
-  const mealFood=count/2;
-  if ((from.foodCredit || 0)+Math.floor(centralAvailable(from,'food'))+1e-9 < mealFood) return bad('Prepare normal meals for the thirty-minute voyage: half a Food per passenger. This is their ordinary meal, without a transport fee.');
+  const destinationLimit=to.buildings.townhall.level*24;
+  if (to.population+(to.incomingPassengers || 0)+count>destinationLimit) return bad('The destination needs free Town Hall population places for all passengers.');
+  const unhousedPassengerIds=chosen.filter(person=>residentFoodMultiplier(from,person)===2).map(person=>person.personUid);
+  const mealFood=chosen.reduce((sum,person)=>sum+residentFoodMultiplier(from,person)/2,0);
+  if ((from.foodCredit || 0)+Math.floor(centralAvailable(from,'food'))+1e-9 < mealFood) return bad('Prepare meals for the thirty-minute voyage: half a Food for a housed passenger and one Food for a passenger without a bed. These are ordinary meals, without a transport fee.');
   const at=clock(bundle,now);
   if (!Number.isSafeInteger(bundle.sequence+1) || !Number.isSafeInteger(at+1800000)) return bad('The voyage exceeds the supported clock or history.');
-  return good('Passengers travel for thirty real minutes, using ordinary meals and no coin fee.', { fromIslandId,toIslandId,passengerIds:chosen.map(person=>person.id),personUids:chosen.map(person=>person.personUid),amount:count,capacity:100,seconds:1800,coins:0,mealFood,departedAt:at,arrivesAt:at+1800000 });
+  return good('Passengers travel for thirty real minutes, using ordinary meals and no coin fee.', { fromIslandId,toIslandId,passengerIds:chosen.map(person=>person.id),personUids:chosen.map(person=>person.personUid),amount:count,capacity:100,seconds:1800,coins:0,mealFood,mealPolicy:'housing-v1',unhousedPassengerIds,departedAt:at,arrivesAt:at+1800000 });
 }
 export function sendPassengerTransfer(bundle, action = {}, now = Date.now()) {
   advanceArchipelago(bundle,now);
@@ -369,7 +379,7 @@ export function sendPassengerTransfer(bundle, action = {}, now = Date.now()) {
   to.incomingPassengers=(to.incomingPassengers || 0)+quote.amount;
   const transfer={ id:`voyage-${++bundle.sequence}`,mode:'passengers',status:'sailing',fromIslandId:quote.fromIslandId,toIslandId:quote.toIslandId,
     departedAt:quote.departedAt,arrivesAt:quote.arrivesAt,deliveredAt:null,capacityAtDeparture:100,
-    passengers,passengerIds:quote.personUids,passengerCount:quote.amount,mealFood:quote.mealFood,passengerWelcome:clone(from.welcome),
+    passengers,passengerIds:quote.personUids,passengerCount:quote.amount,mealFood:quote.mealFood,mealPolicy:quote.mealPolicy,unhousedPassengerIds:[...quote.unhousedPassengerIds],passengerWelcome:clone(from.welcome),
     cargo:{},bonusCargo:{},remainingCargo:{},remainingBonusCargo:{} };
   bundle.transfers.push(transfer);bundle.transfers=retainedVoyages(bundle);
   return good('Passengers departed. Their ordinary meals are packed; no transport fee was charged.',{transfer,quote});

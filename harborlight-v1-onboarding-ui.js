@@ -1,7 +1,12 @@
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v26';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v27';
+import { introCopy } from './harborlight-v1-approved-copy.js?v=frontend-v27';
 
 const pick = (language, pl, en) => language === 'pl' ? pl : en;
-const valueFor = (value, language) => typeof value === 'string' ? value : value?.[language] || value?.pl || value?.en || '';
+const valueFor = (value, language) => {
+  const source = typeof value === 'function' ? value(language) : value;
+  const selected = typeof source === 'string' ? source : source?.[language] ?? source?.pl ?? source?.en ?? '';
+  return String(typeof selected === 'function' ? selected(language) : selected);
+};
 const clamp = (value, minimum, maximum) => Math.min(maximum, Math.max(minimum, value));
 
 function node(tag, attributes = {}, ...children) {
@@ -68,6 +73,12 @@ export function createIslandOnboarding(options = {}) {
       const callback = skipped && typeof options.onPause === 'function' ? options.onPause : onFinish;
       if (await callback({ skipped, stage: current.stage, index: current.index, islandName: current.islandName, replay }) === false) throw new Error('onboarding-finish-rejected');
       destroy();
+      if (skipped) {
+        // The reminder belongs after the acknowledged pause and after this
+        // top-layer tour is removed. It never changes the saved position.
+        try { await options.onAfterPause?.({ skipped, stage: current.stage, index: current.index, islandName: current.islandName, replay }); }
+        catch (error) { onError(error); }
+      }
     } catch (error) {
       if (!destroyed) { onError(error); showError(pick(language, 'Nie udało się rozpocząć gry. Sprawdź połączenie i spróbuj ponownie.', 'The game could not be started. Check your connection and try again.')); setBusy(false); }
     }
@@ -104,10 +115,11 @@ export function createIslandOnboarding(options = {}) {
     } finally { if (!destroyed) setBusy(false); }
   }
   const languagePicker = () => node('div', { class: 'island-onboarding-language' },
-    node('label', { for: 'island-onboarding-language' }, 'Język / Language'),
+    node('label', { for: 'island-onboarding-language' }, pick(language, 'Język gry', 'Game language')),
     node('select', { id: 'island-onboarding-language', 'data-onboarding-language': '', name: 'language', onchange: event => { void changeLanguage(event.target.value); } },
       node('option', { value: 'pl', selected: language === 'pl' }, 'Polski'),
-      node('option', { value: 'en', selected: language === 'en' }, 'English')));
+      node('option', { value: 'en', selected: language === 'en' }, 'English')),
+    node('small', { 'data-onboarding-language-hint': '' }, pick(language, 'Wybrany język obowiązuje także w dalszym tutorialu i samouczku. Możesz go później zmienić w Ustawieniach.', 'The selected language also applies to the tutorial and practical lessons. You can change it later in Settings.')));
 
   async function render(focusSelector) {
     const thisGeneration = ++generation;
@@ -117,13 +129,9 @@ export function createIslandOnboarding(options = {}) {
     card.style.removeProperty('left'); card.style.removeProperty('top'); card.classList.toggle('is-tour', current.stage === 'tour');
     card.replaceChildren();
     if (current.stage === 'intro') {
-      card.append(node('small', { class: 'island-onboarding-eyebrow' }, 'HARBORLIGHT'), languagePicker(), title(pick(language, 'Twoja wyspa, Twoje decyzje', 'Your island, your decisions')),
-        description(node('p', {}, pick(language,
-          'Obejmujesz opiekę nad małą osadą na wyspie. Zapewnij mieszkańcom domy, żywność i pracę, a z czasem rozbuduj ją w tętniący życiem port.',
-          'You take care of a small island settlement. Give your residents homes, food and jobs, then grow it into a thriving harbour.')),
-        node('p', {}, pick(language,
-          'Celem gry jest rozwój i dbanie o dobrostan mieszkańców. Daj mieszkańcom pracę i zadbaj o to, by wyprodukowane materiały trafiały do magazynu. Im szczęśliwsi są mieszkańcy, tym chętniej na wyspę przybywają nowe osoby.',
-          'Your goal is to develop the island and care for its residents. Give them jobs and make sure the materials they produce reach the warehouse. The happier your residents are, the more readily new settlers arrive.'))), paused(),
+      const welcome = introCopy(language);
+      card.append(node('small', { class: 'island-onboarding-eyebrow' }, 'HARBORLIGHT'), languagePicker(), title(welcome.title),
+        description(...welcome.paragraphs.map(paragraph => node('p', {}, paragraph))), paused(),
         node('div', { class: 'island-onboarding-actions' }, control(nextLabel(), () => commit({ ...current, stage: 'name' }), { 'data-onboarding-next': '' })));
     } else if (current.stage === 'name') {
       const input = node('input', { id: 'island-onboarding-name', 'data-onboarding-name': '', name: 'islandName', type: 'text', autocomplete: 'off', minlength: 3, maxlength: 40, required: true, value: nameDraft, 'aria-describedby': 'island-onboarding-name-hint', spellcheck: 'false' });
@@ -152,6 +160,7 @@ export function createIslandOnboarding(options = {}) {
         title(valueFor(step?.title, language)), description(node('p', {}, valueFor(step?.text, language))), paused(),
         node('div', { class: 'island-onboarding-actions' }, control(pick(language, '← Wstecz', '← Back'), () => commit({ ...current, index: current.index - 1 }), { 'data-onboarding-previous': '', 'data-onboarding-first': String(current.index === 0), disabled: current.index === 0, class: 'island-onboarding-action secondary' }),
           control(last ? replay ? pick(language, 'Wróć do gry →', 'Return to game →') : pick(language, 'Rozpocznij grę →', 'Start playing →') : nextLabel(), () => last ? finish(false) : commit({ ...current, index: current.index + 1 }), { 'data-onboarding-next': '' })));
+      if ((replay || options.allowRestart === true) && current.index > 0) card.append(control(pick(language, 'Od początku', 'From the beginning'), () => commit({ ...current, index: 0 }), { class: 'island-onboarding-action island-onboarding-restart', 'data-onboarding-restart': '' }));
       root.dataset.onboardingStep = step?.id || '';
       try {
         await step?.prepare?.();

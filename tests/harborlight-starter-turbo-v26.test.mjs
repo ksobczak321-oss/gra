@@ -15,15 +15,15 @@ function starter({ level = 1, ready = true, fund = true } = {}) {
   return state;
 }
 
-test('six actual introductory assignments unlock once; the seventh keeps its ordinary walk', () => {
+test('six actual introductory assignments unlock once without bypassing the global two-minute walk', () => {
   const state = createState(NOW);
   assert.equal(act(state, { type: 'assign', building: 'warehouse', delta: 5 }, NOW).ok, true);
   assert.equal(state.starterTurbo, null);
   assert.equal(buildingCost(state, 'townhall').wood, 500);
   assert.equal(act(state, { type: 'assign', building: 'warehouse', delta: 1 }, NOW).starterTurboUnlocked, true);
-  assert.equal(state.residents.filter(person => person.workplace === 'warehouse').every(person => person.arrivalRemaining === 20), true);
+  assert.equal(state.residents.filter(person => person.workplace === 'warehouse').every(person => person.arrivalRemaining === 120), true);
   act(state, { type: 'assign', building: 'warehouse', delta: 1 }, NOW);
-  assert.equal(state.residents.filter(person => person.workplace === 'warehouse').at(-1).arrivalRemaining, 300);
+  assert.equal(state.residents.filter(person => person.workplace === 'warehouse').at(-1).arrivalRemaining, 120);
   const daughter = createState(NOW); daughter.islandRole = 'daughter'; daughter.islandId = 'island-2';
   act(daughter, { type: 'assign', building: 'warehouse', delta: 6 }, NOW);
   assert.equal(daughter.starterTurbo, null);
@@ -122,11 +122,11 @@ test('offline catch-up includes the initial carrier walk without starting the is
   const state = starter({ ready: false });
   const order = requestUpgrade(state, { building: 'townhall' });
   assert.equal(constructionEstimate(state, order.project).waitingForCarriers, true);
-  close(constructionScheduleEstimate(state, order.project).total, 110);
-  advanceTo(state, NOW + 49000);
+  close(constructionScheduleEstimate(state, order.project).total, 210);
+  advanceTo(state, NOW + 149000);
   assert.equal(state.buildings.townhall.level, 1);
   assert.equal(order.project.stage, 'transport');
-  advanceTo(state, NOW + 110000);
+  advanceTo(state, NOW + 210000);
   assert.equal(state.buildings.townhall.level, 2);
 });
 

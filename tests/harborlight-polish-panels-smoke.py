@@ -92,10 +92,21 @@ def home(page, mobile):
 
 
 def route(page, mobile, kind):
+    if kind in ['help', 'tutorial']:
+        # Both learning entries moved from the overview to the actual ? Help
+        # control. Keep auditing their real rendered views through that route.
+        close_panel(page)
+        page.locator('[data-mobile-control="tutorial"]' if mobile else '#hit-tutorial').click()
+        expect(page.locator('[data-help-panel]')).to_be_visible()
+        if kind == 'tutorial':
+            page.locator('[data-help-return-lessons]').click()
+        expect(page.locator('#island-dialog')).to_have_attribute('data-panel-kind', kind)
+        return
     home(page, mobile)
     grid = page.locator('#island-dialog .panel-grid').filter(
         has=page.locator('[data-archipelago-open]')).first
-    grid.locator(':scope > button').nth(HOME_ROUTES.index(kind)).click()
+    overview_routes = [route for route in HOME_ROUTES if route not in ['help', 'tutorial']]
+    grid.locator(':scope > button').nth(overview_routes.index(kind)).click()
     expect(page.locator('#island-dialog')).to_have_attribute('data-panel-kind', kind)
 
 

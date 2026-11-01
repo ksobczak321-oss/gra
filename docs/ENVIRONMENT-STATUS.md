@@ -2,6 +2,24 @@
 
 Aktualizacja: **1 listopada 2026**. Ten dokument jest głównym rejestrem tego, co rzeczywiście znajduje się na DEV, PRE-PROD i PROD. Historia czynności i wyników pozostaje w [dzienniku](IMPLEMENTATION-LOG.md), a warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
+## DEV 0.11.0.0 / v27 — lokalny odbiór zakończony, publikacja oczekuje
+
+GO **„tu masz z drobnymi poprawkami; GO”** obejmuje zatwierdzone opisy oraz zebraną paczkę nauki, Latarni i warunków życia. [Wymagania v27](FRONTEND-V27-REQUIREMENTS.md) i [archiwum akceptacji](approval/v27-approval-record.md) zachowują źródła, hashe oraz odrębne interpretacje wdrożeniowe. Aplikacja ma **0.11.0.0**, cache **`frontend-v27`**; schemat świata pozostaje **9**.
+
+| Warstwa | Stan paczki v27 |
+|---|---|
+| Kod lokalny | Zintegrowany kandydat. Tutorial ma 34 kroki, samouczek 25 lekcji; oba wracają przez Pomoc pod ?. Dodano objaśnienia rzeczywistych skutków i stabilną prognozę budowy. Dojście/powrót trwa 120 sekund. Limit Ratusza jest niezależny od łóżek; brak łóżka oznacza indywidualne ×0,5 pracy, ×2 posiłków i brak punktów Domu, zastępując dawną globalną karę szczęścia. Misje Latarni mają ścieżki 8/5/3. |
+| Node i Python | Lokalnie **1017 Node PASS** po integracji oraz **141 Python PASS w 11 zestawach**. To nie jest własny wynik CI przyszłego końcowego SHA. |
+| Chromium | **27/27 nazwanych zestawów PASS** po poprawkach i kierunkowych ponowieniach. Ostatnie sondy final2: pełne v21-features, 114 widoków PL bez angielskich pozostałości i 8 prób nawigacji/restartu/utraconego ACK. To inwentarz lokalnych wyników, nie własne CI jednego SHA. [Dokładny zakres dowodu](DEV-0.11.0.0-VALIDATION.md). |
+| Ewidencja | **296 kart zmian, 70 ręcznych przypadków NOT RUN**. Nowe 17 kart: implemented / verified_locally, własne CI awaiting_own_run. Generatory i kontrole dokumentów prawnych PASS; ręcznych wyników nie zalicza automatyzacja. |
+| Git / pakiet / własne CI / Pages / tag v27 | **Lokalny odbiór zakończony; oczekują na własny commit i rzeczywiste wyniki CI/Pages**. Pakiet walidacyjny ze źródła roboczego nie jest finalnym wydaniem powiązanym z SHA. |
+| PRE-PROD | **Bez nowej promocji** — nadal 0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`, promocja 41246771480 / próba 1 SUCCESS. |
+| PROD, dane graczy i realne usługi | Bez nowej publikacji, resetów, zmiany haseł oraz aktywacji płatności, reklam, darowizn lub integracji planszówki online. |
+
+Misje oceniają zachowawczy plan, nie pełne rozwiązanie każdej strategii: termin aktywnego etapu wynosi 600 sekund–7 dni, a plan nowej produkcji/dostaw zaczyna od 6 godzin. Przyjęte warunki pozostają stałe. Rozdział zapamiętuje poziom Ratusza i następny poziom Latarni przy aktywacji po ukończeniu lub świadomym zamknięciu samouczka; nie blokuje klasycznej rozbudowy. Statek z plagą w misjach jest narracją pomocy, bez nowej epidemii; wcześniejsza plaga Kaplicy pozostaje osobna.
+
+Nowe rejsy pasażerskie sprawdzają limit Ratusza i rezerwacje, a posiłki wynoszą 0,5/1 żywności na osobę z łóżkiem/bez łóżka za 30 minut. Stare zapisane rejsy zachowują wcześniejsze rozliczenie i nie pobierają posiłków drugi raz. Dotychczas opublikowany podgląd DEV v26 ma własne historyczne dowody poniżej; nie przypisujemy ich nowej paczce v27.
+
 ## DEV 0.10.2.0 / v26 — podgląd opublikowany, własne CI i Pages potwierdzone
 
 GO z 1 listopada obejmuje tylko DEV, Git/CI/Pages. Pakiet porządkuje Magazyn i Dom, oddziela Ranking, Sojusz i ligę oraz Pomagam, dodaje wejście czatu przed dzwonkiem, przyjmuje ręczną redakcję opisów oraz nazwę 3–40 znaków z walidacją PL/EN. Tutorial pozostaje oprowadzaniem po 33 elementach, samouczek ma 25 praktycznych lekcji; oba można zamknąć, wznowić lub przejrzeć od początku bez resetu i powtórnych nagród. Nowy kurs zaczyna się od 6 tragarzy oraz priorytetu Budowa, kończy nominalnie na Ratuszu 2, a pierwsze rozbudowy mają turbo dostaw i budowy. Cache: `frontend-v26`; widoczna wersja: **0.10.2.0**. Schemat świata pozostaje 9.

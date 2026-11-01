@@ -47,7 +47,7 @@ def fixture(page, mode):
       const {createState,act}=await import('./harborlight-v1-state.js?v=frontend-v17');
       const s=createState(Date.now());s.tutorial.autoOpenDisabled=true;
       if(mode==='tutorial'){
-        const {normalizeProgression}=await import('./harborlight-v1-progression.js?v=frontend-v26');
+        const {normalizeProgression}=await import('./harborlight-v1-progression.js?v=frontend-v27');
         normalizeProgression(s,{...s,tutorial:{version:3}});
         s.tutorial.autoOpenDisabled=false;return s;
       }

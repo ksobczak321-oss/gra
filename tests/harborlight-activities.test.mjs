@@ -6,7 +6,7 @@ import {
   quoteConstructionPackage, taskReward, taskStatus, taskRewardScale,
   TASK_NARRATIVES, verifyExpeditionPath, expeditionPot, nextDailyTaskDeadline, expeditionRoundStatus
 } from '../harborlight-v1-activities.js';
-import { normalizeLogisticsState, MATERIAL_IDS } from '../harborlight-v1-logistics.js';
+import { normalizeLogisticsState, MATERIAL_IDS, availableGoods } from '../harborlight-v1-logistics.js';
 import { consumeMaterial } from '../harborlight-v1-inventory.js';
 
 const HOUR = 3600, DAY = 24 * HOUR;
@@ -81,7 +81,7 @@ function assertRewardRange(state, task) {
   assert.ok(task.reward.coins <= Math.floor(max * scale));
 }
 
-test('one hundred distinct narrative tasks and initial small/medium/large offers', () => {
+test('one hundred distinct narrative tasks and initial feasible small/medium/large offers', () => {
   assert.equal(TASK_NARRATIVES.length, 100);
   assert.equal(new Set(TASK_NARRATIVES).size, 100);
   const s = island(3);
@@ -91,8 +91,10 @@ test('one hundred distinct narrative tasks and initial small/medium/large offers
   assert.ok(s.lighthouseTasks[2].hours >= s.lighthouseTasks[1].hours);
   for (const task of s.lighthouseTasks) {
     assert.equal(task.expiresAt, 6 * HOUR);
+    assert.equal(taskStatus(s, task).feasible, true);
     for (const [resource, quantity] of Object.entries(task.requirements)) {
-      assert.equal(quantity, 12 * 1 * 10 * task.hours);
+      assert.ok(Number.isSafeInteger(quantity) && quantity > 0);
+      assert.ok(quantity <= availableGoods(s, resource), `${resource}: ${quantity} exceeds the usable stock`);
       assert.ok(MATERIAL_IDS.includes(resource));
     }
   }
@@ -149,13 +151,16 @@ test('a player level increase selects a feasible new size without changing old l
   assertRewardRange(s, s.lighthouseTasks[2]);
   assertGoldOrder(s.lighthouseTasks);
 });
-test('cost snapshots use each actual producer level and ignore transient production multipliers', () => {
+test('new costs fit usable stock rather than theoretical empty workplaces, and shown costs stay frozen', () => {
   const s = island(4);
   for (const id of ['farm','windmill','lumber','sawmill','quarry']) s.buildings[id].level = 2;
   s.lighthouseRemaining = DAY; s.resources.food = 0; s.foodCredit = 0;
   normalizeActivities(s, { activitySeed: 555, activityClock: 0 });
   for (const task of s.lighthouseTasks) {
-    for (const q of Object.values(task.requirements)) assert.equal(q, 24 * 12 * task.hours);
+    assert.equal(taskStatus(s, task).feasible, true);
+    for (const [resource, quantity] of Object.entries(task.requirements)) {
+      assert.ok(quantity > 0 && quantity <= availableGoods(s, resource));
+    }
   }
   const saved = JSON.stringify(s.lighthouseTasks);
   s.buildings.farm.level = 4;
@@ -193,7 +198,11 @@ test('acceptance locks exact reaction windows and survives reload', () => {
 test('contributions are whole, irreversible and draw only unprotected central goods', () => {
   const s = island(), task = smallTask(s, { food: 60, stone: 10 });
   assert.equal(activityAction(s, { type: 'taskDeposit', task: task.id, resource: 'food', amount: 1 }).ok, false);
+  // Acceptance proves the whole task is feasible. A later meal/other use can
+  // reduce its spendable stock, but must not authorize spending the reserve.
+  s.resources.food = 110;
   accept(s, task);
+  consumeMaterial(s, 'food', 10);
   const before = JSON.stringify(s);
   assert.equal(activityAction(s, { type: 'taskDeposit', task: task.id, resource: 'food', amount: 51 }).ok, false);
   assert.equal(JSON.stringify(s), before);

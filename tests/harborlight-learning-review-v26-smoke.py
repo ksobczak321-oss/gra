@@ -84,6 +84,12 @@ def review(page, language):
     panel.locator('[data-tutorial-review-exit]').click()
     expect(panel).to_have_count(0)
     assert page.evaluate('fixture.exits') == [24, 12]
+    page.evaluate('openReview({reviewIndex:12,onResumePractical:async()=>false})')
+    panel.locator('[data-tutorial-review-to-practical]').click()
+    expect(panel).to_have_attribute('data-tutorial-review-index', '12')
+    expect(panel.locator('[data-tutorial-review-error]')).to_contain_text(
+        'Nie udało się wznowić' if language == 'pl' else 'could not be resumed')
+    panel.locator('[data-tutorial-review-exit]').click()
     page.evaluate('openReview({reviewFromStart:true,reviewIndex:12})')
     expect(panel).to_have_attribute('data-tutorial-review-index', '0')
     box = panel.bounding_box()
@@ -132,7 +138,8 @@ def introduction(page, language):
     modal = page.locator('[data-island-onboarding]')
     expect(modal.locator('#island-onboarding-description > p')).to_have_count(2)
     if language == 'pl':
-        expect(modal.locator('#island-onboarding-description')).to_contain_text('Celem gry jest rozwój i dbanie o dobrostan mieszkańców.')
+        expect(modal.locator('#island-onboarding-description')).to_contain_text('Rozwijaj osadę i dbaj o dobrostan mieszkańców.')
+        expect(modal.locator('#island-onboarding-description')).to_contain_text('Jednym z Twoich głównych celów jest odbudowa i rozbudowa Latarni.')
     modal.locator('[data-onboarding-next]').click()
     field = modal.locator('[data-onboarding-name]')
     expect(field).to_have_attribute('minlength', '3')

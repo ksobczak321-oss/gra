@@ -417,14 +417,17 @@ test('passenger meals consume the same food as staying Home, including odd group
   assert.equal(traveling.primary.resources.coins,sourceCoins);
 });
 
-test('passenger departures require actual Home residents, population floors and available destination beds', () => {
+test('passenger departures require actual Home residents, population floors and available Town Hall places', () => {
   const account=passengerAccount();
   assert.equal(Arch.quotePassengerTransfer(account,{toIslandId:'island-2',amount:7},NOW).ok,false,'mother keeps12');
   assert.equal(Arch.quotePassengerTransfer(account,{fromIslandId:'island-2',toIslandId:'island-1',amount:1},NOW).ok,false,'daughter keeps6');
   const person=account.primary.residents[0];person.returnRemaining=10;
   assert.equal(Arch.quotePassengerTransfer(account,{toIslandId:'island-2',passengerIds:[person.id]},NOW).ok,false,'walking home is not yet Home');
   person.returnRemaining=0;account.secondary.population=24;account.secondary=normalizeState(account.secondary,NOW);
-  assert.equal(Arch.quotePassengerTransfer(account,{toIslandId:'island-2',amount:1},NOW).ok,false,'beds are mandatory');
+  assert.equal(Arch.quotePassengerTransfer(account,{toIslandId:'island-2',amount:1},NOW).ok,true,'missing beds allow arrival with personal housing consequences');
+  account.secondary.population=account.secondary.buildings.townhall.level*24;
+  account.secondary=normalizeState(account.secondary,NOW);
+  assert.equal(Arch.quotePassengerTransfer(account,{toIslandId:'island-2',amount:1},NOW).ok,false,'Town Hall capacity remains mandatory');
   assert.equal(Arch.quotePassengerTransfer(passengerAccount(),{toIslandId:'island-2',passengerIds:{length:2}},NOW).ok,false,'malformed selection is rejected instead of throwing');
 });
 
