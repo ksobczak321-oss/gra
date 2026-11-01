@@ -1,47 +1,44 @@
 # HARBORLIGHT — stan środowisk
 
-**PRE-PROD — niepełna promocja, 2 listopada 2026 (Europe/Warsaw).** [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479), źródło `7d45290b911e359a8940f28551df4692053cadb2`, ma **FAILURE** w kroku24 „Verify permanent DEV accounts and cloud save isolation”. Hosting został wcześniej opublikowany; kontrola dokładnego wydania i rzeczywisty test hostowanej gry przeszły. Frontend0.11.0.0 może więc już być serwowany, ale pełnego odbioru PRE-PROD nie zaliczono. Artefakty/receipt pominięto; tagów i resetu brak. [incydent promocji](PREPROD-V27-INCIDENT-20261102.md).
+Aktualizacja operacyjna: **2 listopada 2026, Europe/Warsaw**. Akceptacja opisów i pierwotny odbiór lokalny pozostają z 1 listopada. Historia wyników jest w [dzienniku](IMPLEMENTATION-LOG.md); warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057) ma **SUCCESS, 18 s**. Uruchomiony [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) ma **FAILURE po publikacji Hostingu**, z publicznie potwierdzonym źródłem `7d45290b911e359a8940f28551df4692053cadb2`. [gate 125011066732](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479/job/125011066732) ma **SUCCESS**, zadanie [deploy125011120868](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479/job/125011120868) zakończyło się błędem kroku24. Potwierdzono właściwe źródło, ale końcowy odbiór tego wdrożenia nie przeszedł. Pełne wdrożenie GCP zakończone błędem; brak receipt i tagów v27.
+## Aktualne DEV i PRE-PROD — 0.11.0.0 / v27
 
-**Odbiór operacyjny: 2 listopada 2026, Europe/Warsaw.** Źródło `7d45290b911e359a8940f28551df4692053cadb2` ma własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508) **SUCCESS, 10 min 31 s** oraz [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453) **SUCCESS, 47 s**. Obie grupy testów przeglądarkowych pakietu przeszły w CI tego źródła. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057) ma **SUCCESS, 18 s**. Wdrożenie PRE-PROD nadal oczekuje na odrębny wynik GCP; tagów v27 nie utworzono.
+**DEV i PRE-PROD 0.11.0.0 odebrane — 2 listopada 2026, Europe/Warsaw.** Źródło [`c7c39742594599c54ee8b074b5c313efd88af4cb`](https://github.com/ksobczak321-oss/gra/commit/c7c39742594599c54ee8b074b5c313efd88af4cb): [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) **SUCCESS, 10 min 9 s**, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) **SUCCESS, 21 s**, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) **SUCCESS, 16 s**, [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) **SUCCESS, 2 min 17 s**. Pełne źródło wdrożenia potwierdzono.
 
-Aktualizacja operacyjna: **2 listopada 2026, Europe/Warsaw**. Ten dokument jest głównym rejestrem tego, co rzeczywiście znajduje się na DEV, PRE-PROD i PROD. Historia czynności i wyników pozostaje w [dzienniku](IMPLEMENTATION-LOG.md), a warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
-
-## Naprawa końcowej kontroli kont — kolejny kandydat PRE-PROD
-
-Po błędzie promocji41360977479 przygotowano zgodny z obecnym klientem kontroler kopert Firestore1/2 i wielowyspowego API. Dane kont, reguły Firestore i wszystkie59 publicznych plików gry są niezmienione. Kontroler26/26 oraz pełny lokalny Node1023/1023PASS; 141Python i27 zestawów przeglądarkowych dotyczą odebranej, niezmienionej aplikacji. [Incydent i poprawka](PREPROD-V27-INCIDENT-20261102.md).
-
-Nowy commit z markerem `[preprod:0.11.0.0]` przejdzie własne pełne CI i standardową promocję. Ostatni deploy pozostaje FAILURE po publikacji Hostingu; nowej promocji, receipt ani tagów jeszcze nie potwierdzono. Bez resetu i PROD. Starsze warstwy dowodu zachowano poniżej.
-
-## PRE-PROD 0.11.0.0 — kandydat autoryzowanej promocji
-
-Po odbiorze DEV użytkownik zlecił **„promuj na pre prod”**. To późniejsze polecenie rozszerza pierwotny zakres tylko DEV. Promocja używa standardowego istniejącego bridge i markeru `[preprod:0.11.0.0]`, bez osłabienia bramek CI/WIF, zmiany danych lub resetu. Testy dispatchera/promocji: **28/28 PASS lokalnie**. [Przygotowanie i zgodność zapisów](PREPROD-V27-PREPARATION.md).
-
-Kandydat [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) wysłany do main z markerem `[preprod:0.11.0.0]`. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): **SUCCESS, 10 min 31 s**; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): **SUCCESS, 47 s**. Wcześniejsze [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): **CANCELLED** — nie jest zieloną bramką promocji. Własne CI dokładnego kandydata przeszło. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057) ma **SUCCESS, 18 s**; [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) ma **FAILURE po publikacji Hostingu**, a jego źródło `7d45290b911e359a8940f28551df4692053cadb2` potwierdzone; końcowy wynik: FAILURE w kontroli kont po publikacji Hostingu. Tagów v27 nie utworzono.
-
-**61 plików z manifestem / 60 treści / 11 219 303 bajty**. TAR SHA-256 `d202c79783b1dc2787d3db2a859031a9dc03fb87a089b2e81a09c2d8d0253ff4`; manifest SHA-256 `0905956f17d0b249cf8faae7a3aed486e86e74d20b2a5145f72d6a9730792993`. Zachowano 59 publicznych plików aplikacji z 6ff5ae9; wszystkie 60 plików treści są identyczne bajtowo z testowanym final2. To dokładny lokalny pakiet kandydata, nie dowód publikacji GCP.
-
-**Stan GCP: promocja FAILED po publikacji Hostingu, końcowa kontrola kont nie przeszła.** Ostatni pełny odbiór PRE-PROD ma0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`, promocja 41246771480 / próba 1 SUCCESS. Main pozostaje nieruchomy do potwierdzenia źródła rozpoczętego wdrożenia. Poniższy bazowy DEV 6ff5ae9 ma osobne, historyczne dowody; nie jest zastępczym CI kandydata.
-
-## Bazowy DEV 0.11.0.0 / v27 — lokalny odbiór i osobne dowody źródła 6ff5ae9
-
-GO **„tu masz z drobnymi poprawkami; GO”** obejmuje zatwierdzone opisy oraz zebraną paczkę nauki, Latarni i warunków życia. [Wymagania v27](FRONTEND-V27-REQUIREMENTS.md) i [archiwum akceptacji](approval/v27-approval-record.md) zachowują źródła, hashe oraz odrębne interpretacje wdrożeniowe. Aplikacja ma **0.11.0.0**, cache **`frontend-v27`**; schemat świata pozostaje **9**.
-
-| Warstwa | Stan paczki v27 |
+| Warstwa | Rzeczywisty stan |
 |---|---|
-| Kod lokalny | Zintegrowany kandydat. Tutorial ma 34 kroki, samouczek 25 lekcji; oba wracają przez Pomoc pod ?. Dodano objaśnienia rzeczywistych skutków i stabilną prognozę budowy. Dojście/powrót trwa 120 sekund. Limit Ratusza jest niezależny od łóżek; brak łóżka oznacza indywidualne ×0,5 pracy, ×2 posiłków i brak punktów Domu, zastępując dawną globalną karę szczęścia. Misje Latarni mają ścieżki 8/5/3. |
-| Node i Python | Lokalnie **1017 Node PASS** po integracji oraz **141 Python PASS w 11 zestawach**. To lokalny wynik aplikacji bazowej 6ff5ae9; jej CI anulowano. Kandydat promocji wymaga własnego CI. |
-| Chromium | **27/27 nazwanych zestawów PASS** po poprawkach i kierunkowych ponowieniach. Ostatnie sondy final2: pełne v21-features, 114 widoków PL bez angielskich pozostałości i 8 prób nawigacji/restartu/utraconego ACK. To inwentarz lokalnych wyników, nie własne CI jednego SHA. [Dokładny zakres dowodu](DEV-0.11.0.0-VALIDATION.md). |
-| Ewidencja | **296 kart zmian, 70 ręcznych przypadków NOT RUN**. Nowe 17 kart: implemented / verified_locally, własne CI kandydata 7d45290 passed_source_7d45290; PRE-PROD failed_after_hosting_source_7d45290. Generatory i kontrole dokumentów prawnych PASS; ręcznych wyników nie zalicza automatyzacja. |
-| Git / własne CI / Pages / tag v27 | Źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłane do main. [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259) **CANCELLED**; [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232) **SUCCESS, 30 s** — odczytane w GitHub. Tag v27 nieutworzony. |
-| Pakiet źródła 6ff5ae9 | **61 plików / 60 treści / 11 219 303 bajty**. TAR `af8a64508044d344b4e01122145d3b0b1653c6c4abfecfec5fc502e7b36e1e55`, manifest `84ac0f9528cadaab15c92d3f789abd041d45b9a4580051e638472879d0709d49`. Archiwum zweryfikowane i rozpakowane; wszystkie 60 plików treści identyczne z testowanym final2. [Pełna walidacja](DEV-0.11.0.0-VALIDATION.md). |
-| PRE-PROD | **Bez nowej promocji** — nadal 0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`, promocja 41246771480 / próba 1 SUCCESS. |
-| PROD, dane graczy i realne usługi | Bez nowej publikacji, resetów, zmiany haseł oraz aktywacji płatności, reklam, darowizn lub integracji planszówki online. |
+| DEV /Pages | Źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne CI i Pages SUCCESS. Wersja 0.11.0.0, cache `frontend-v27`, schemat świata 9. |
+| PRE-PROD | [Graj](https://harborlight-dev.web.app): 0.11.0.0 /`c7c39742594599c54ee8b074b5c313efd88af4cb`, deploy 41362782175 próba 1 SUCCESS, 2m17s. |
+| Kontrole hostingu i kont | Dokładne wydanie, publiczne pliki, rzeczywisty hostowany Chromium i stałe konta/izolacja zapisu PASS. Kontrole odczytowe, bez resetu. |
+| Lokalna walidacja | 1023 Node PASS, 19,92 s po poprawce checkera; checker 26/26 PASS. 141 Python i 27 nazwanych zestawów Chromium dla niezmienionej aplikacji PASS po kierunkowych ponowieniach. Własny CI tego SHA zaliczył obie grupy Chromium. |
+| Ewidencja | 297 kart; nowe 18: implemented /verified_own_ci_and_pages /passed_source_c7c3974 /deployed_source_c7c3974. 70 ręcznych NOT RUN. |
+| PROD i dane | Bez nowej promocji PROD, resetu kont, zmiany haseł lub aktywacji prawdziwych operatorów płatności/reklam/darowizn. |
 
-Misje oceniają zachowawczy plan, nie pełne rozwiązanie każdej strategii: termin aktywnego etapu wynosi 600 sekund–7 dni, a plan nowej produkcji/dostaw zaczyna od 6 godzin. Przyjęte warunki pozostają stałe. Rozdział zapamiętuje poziom Ratusza i następny poziom Latarni przy aktywacji po ukończeniu lub świadomym zamknięciu samouczka; nie blokuje klasycznej rozbudowy. Statek z plagą w misjach jest narracją pomocy, bez nowej epidemii; wcześniejsza plaga Kaplicy pozostaje osobna.
+Nieprzesuwane tagi [`dev-0.11.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.11.0.0-20261102) i [`preprod-0.11.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/preprod-0.11.0.0-20261102) są **opublikowane i potwierdzone zdalnie**; oba wskazują dokładnie `c7c39742594599c54ee8b074b5c313efd88af4cb`.
 
-Nowe rejsy pasażerskie sprawdzają limit Ratusza i rezerwacje, a posiłki wynoszą 0,5/1 żywności na osobę z łóżkiem/bez łóżka za 30 minut. Stare zapisane rejsy zachowują wcześniejsze rozliczenie i nie pobierają posiłków drugi raz. Dotychczas opublikowany podgląd DEV v26 ma własne historyczne dowody poniżej; nie przypisujemy ich nowej paczce v27.
+**61 plików z manifestem / 60 plików treści / 11 219 303 bajty**. Lokalny TAR SHA-256 `794d1e30f9af8d21d64caac2b073fbee17d4127566333de73f93393beb4d260b`; manifest SHA-256 `f83609519dd2becb96ea3532b1b746d63128f8631311720090c5c88e4e45c62e`. Archiwum zweryfikowano i rozpakowano; wszystkie 60 plików treści są identyczne bajtowo z testowanym final2, a 59 publicznych źródeł gry nie zmieniło się w poprawce checkera.
+
+Kontrola stałych kont i izolacji zapisu **przeszła** w tym wdrożeniu, podobnie jak dokładny manifest/publiczne pliki oraz rzeczywisty hostowany Chromium. Odbiór kont zakończył się 1 listopada o23:36:47Z, czyli 2 listopada o00:36:47 w Warszawie; publikacja receipt i artefaktów zakończyła się sukcesem do23:36:50Z. Są to kontrole odczytowe, bez zapisu gry lub resetu. Ręczny test zapis→ponowne wczytanie nadal NOT RUN.
+
+### Publiczne artefakty udanej próby1
+
+| Artefakt próby 1 | Publiczne ID GitHub | SHA-256 archiwum ZIP podany przez GitHub |
+|---|---:|---|
+| `harborlight-dev-frontend-41362782175-1` | 13106171196 | `308d5b66fab731689b7d2f67343936d3b1141ca9e986d300d5a25393daeb1840` |
+| `harborlight-dev-release-41362782175-1` | 13105684537 | `546c85f8005efa6a9c6daf2dbc5394b54e214ec26e7ce2a59eb0ff2f3ed19252` |
+
+Są to publiczne digests ZIP GitHub, odrębne od lokalnego TAR i manifestu aplikacji. Wewnętrznego ZIP receipt ani digestu obrazu backendu nie pobrano i nie odczytano niezależnie. Rzeczywista flaga API kont także pozostaje nieodczytana niezależnie.
+
+[Walidacja v27](DEV-0.11.0.0-VALIDATION.md) · [Przygotowanie i zgodność zapisów](PREPROD-V27-PREPARATION.md) · [Wymagania](FRONTEND-V27-REQUIREMENTS.md).
+
+## Historia prób v27 — wyników nie przenosimy między źródłami
+
+Poprzednie źródło `7d45290b911e359a8940f28551df4692053cadb2` zachowuje [nieudany deploy 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): **FAILURE** w kroku24 kontroli stałych kont po udanej publikacji Hostingu, kontroli dokładnego wydania i hostowanym Chromium. Jego CI41360046508 SUCCESS10m31s, Pages41360046453 SUCCESS47s i bridge41360957057 SUCCESS18s są odrębnymi dowodami. Nie utworzono receipt ani tagu tej nieudanej próby. Bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37` ma CI41359303259 **CANCELLED** i Pages41359303232 SUCCESS30s. Nie przepisujemy żadnego z tych wyników na sukces c7c3974.
+
+Poprawka c7c3974 ściśle obsługuje koperty Firestore1/2 oraz równoważny korzeń API, zachowując limity, odczyty obcych/anonimowych i zakaz zapisów testu. Znany błąd kontraktu2 odtworzono i lokalnie naprawiono, a końcowa kontrola kont w GCP przeszła. Oryginalny prywatny wierszERROR z nieudanego kroku nie został przekazany; nie przedstawiamy go jako odczytanego. [Incydent](PREPROD-V27-INCIDENT-20261102.md) zachowuje szczegóły awarii i osobne późniejsze rozwiązanie.
+
+Bazowy pakiet6ff5ae9: TAR `af8a64508044d344b4e01122145d3b0b1653c6c4abfecfec5fc502e7b36e1e55`, manifest `84ac0f9528cadaab15c92d3f789abd041d45b9a4580051e638472879d0709d49`. Nieudany kandydat7d45290: TAR `d202c79783b1dc2787d3db2a859031a9dc03fb87a089b2e81a09c2d8d0253ff4`, manifest `0905956f17d0b249cf8faae7a3aed486e86e74d20b2a5145f72d6a9730792993`. To lokalne hashe pakietów poszczególnych SHA; nie są publicznymi digestami ZIP udanej promocji.
 
 ## DEV 0.10.2.0 / v26 — podgląd opublikowany, własne CI i Pages potwierdzone
 
@@ -84,11 +81,11 @@ Rejestr:256kart zmian,50ręcznych przypadków NOT RUN; [lista do odhaczania](tes
 
 Pierwszy odebrany kandydat tego zakresu:351baaf6b21386b2f2641875269e6f7d9c2d44fd, CI41237587670 SUCCESS (4m46s), Pages41237587641 SUCCESS (23s), niezmieniony tag dev-0.10.0.0-20261031. Zachowuje własne dowody; końcowe uzupełnienie PL powyżej ma odrębne źródło, CI i tag.
 
-## Aktualne PRE-PROD — 0.10.1.0 / v25
+## Poprzednie PRE-PROD — 0.10.1.0 / v25
 
 Nieprzesuwany adnotowany tag `preprod-0.10.1.0-20261031` jest opublikowany i wskazuje sprawdzone źródło `353faad347262dce7c3632fdf7c71be124384ab1`.
 
-**Opublikowane i odebrane:** źródło **`353faad347262dce7c3632fdf7c71be124384ab1`**, [CI41246449612 SUCCESS, 3 min 54 s](https://github.com/ksobczak321-oss/gra/actions/runs/41246449612), [Pages41246449682 SUCCESS, 31 s](https://github.com/ksobczak321-oss/gra/actions/runs/41246449682), [bridge41246756848 SUCCESS, 15 s](https://github.com/ksobczak321-oss/gra/actions/runs/41246756848) i [promocja41246771480, próba1 — SUCCESS, 2 min 05 s](https://github.com/ksobczak321-oss/gra/actions/runs/41246771480). [Graj w PRE-PROD](https://harborlight-dev.web.app). Źródło rzeczywiście rozpoczętego deployu potwierdzono przed dalszą zmianą main.
+**Opublikowane i odebrane:** źródło **`353faad347262dce7c3632fdf7c71be124384ab1`**, [CI41246449612 SUCCESS, 3 min 54 s](https://github.com/ksobczak321-oss/gra/actions/runs/41246449612), [Pages41246449682 SUCCESS, 31 s](https://github.com/ksobczak321-oss/gra/actions/runs/41246449682), [bridge41246756848 SUCCESS, 15 s](https://github.com/ksobczak321-oss/gra/actions/runs/41246756848) i [promocja41246771480, próba 1 — SUCCESS, 2 min 05 s](https://github.com/ksobczak321-oss/gra/actions/runs/41246771480). [Graj w PRE-PROD](https://harborlight-dev.web.app). Źródło rzeczywiście rozpoczętego deployu potwierdzono przed dalszą zmianą main.
 
 Wersja obejmuje wszystkie zmiany DEV do353faad, w tym archipelag, wspólne okno ligi, prowadzenie od mapy i przyjazną redakcję polskich opisów. Kontrole workflow przeszły: obraz API, sondy, dokładny manifest i publiczne pliki, rzeczywiste zalogowane renderowanie istniejącej wyspy oraz izolacja trzech kont. Były odczytowe, bez resetu, zastępowania wysp lub zmiany haseł. [Właściciel wcześniej potwierdził zgodne reguły zapisu](PREPROD-V25-PREPARATION.md).
 
@@ -114,7 +111,7 @@ Poprawka dodaje Polski/English w opisie i przy nazwie wyspy, zachowuje roboczą 
 | `harborlight-dev-frontend-41233737873-1` | `0cb747023ad430c647c045913ef2712d8c475f9344fe3e14a4ddee3b713bde56` |
 | `harborlight-dev-release-41233737873-1` | `3da4a3be0466a81597eec76c130c69b2d0bcffbc3e6dd377fa2f33aac1aadae1` |
 
-Lokalny deterministyczny pakiet tego SHA: 49 plików z manifestem, 10 841 954 bajtów; archiwum SHA-256 `8fba6ec781e959d855273b333e1922ce3db113b058a51f2c8c92c3071435fd1f`, manifest `31185615e64a8dca97440799125a1e13bd160cf3dbc609991e0e05e9c3c3ce0e`. Publiczne bajty są identyczne z przeglądarkowo sprawdzoną poprawką: 13 scenariuszy wprowadzenia i Settings PL/EN desktop/mobile PASS. Pełny Node747PASS, pakowanie12PASS, importer18PASS; niezależny ręczny odbiór46przypadków nadal NOT RUN. Pierwsza próba11f6ff1/41232457485 była nieudana; nie uznajemy jej za odbiór ani nie przesuwamy jej statusu na sukces. Przyczyny ówczesnej niezgodności nie rozstrzygnięto; nowa kontrola zachowuje pełną zgodność i bounded retries.
+Lokalny deterministyczny pakiet tego SHA: 49 plików z manifestem, 10 841 954 bajtów; archiwum SHA-256 `8fba6ec781e959d855273b333e1922ce3db113b058a51f2c8c92c3071435fd1f`, manifest `31185615e64a8dca97440799125a1e13bd160cf3dbc609991e0e05e9c3c3ce0e`. Publiczne bajty są identyczne z przeglądarkowo sprawdzoną poprawką: 13 scenariuszy wprowadzenia i Settings PL/EN desktop/mobile PASS. Pełny Node747PASS, pakowanie12PASS, importer18PASS; niezależny ręczny odbiór46przypadków nadal NOT RUN. Pierwsza próba 11f6ff1/41232457485 była nieudana; nie uznajemy jej za odbiór ani nie przesuwamy jej statusu na sukces. Przyczyny ówczesnej niezgodności nie rozstrzygnięto; nowa kontrola zachowuje pełną zgodność i bounded retries.
 
 ## Historia przygotowania pilnej poprawki 0.9.1.2
 
@@ -149,7 +146,7 @@ Uzupełnienie po uwagach ma nazwę **v22.1** (cache `frontend-v22-1`), pełny SH
 | **DEV — przestrzeń robocza** | **0.9.1.2**, źródło `3be1f9d2094f1432acacbb782eed1665fd00e6e1`, lokalne kontrole i własne CI/Pages SUCCESS. | Tag `pilne`; kod odebrany także na PRE-PROD. Projekty społeczne/planszowe odłożone. |
 | **GitHub / CI — v22.1** | SHA `092e75226fbb14cab09826f313e11d10891966d8`; [CI 41221965032 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41221965032). Adnotowany tag **`dev-v22.1-20261031`** opublikowany. | Odczyt: `git show --no-patch dev-v22.1-20261031`. Nowe zmiany aplikacji wymagają własnego SHA i CI. |
 | **GitHub Pages — podgląd DEV** | [Podgląd 0.9.1.2](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v23-1); Pages41233382382 SUCCESS dla3be1f9d. | Podgląd w pamięci, odrębny od kont PRE-PROD; bezpośredni odczyt tej sesji ogranicza brama sieciowa. |
-| **PRE-PROD — GCP `harborlight-dev`** | **0.9.1.2 / `3be1f9d2094f1432acacbb782eed1665fd00e6e1`**, [41233737873 próba1 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233737873); 2m10s, oba artefakty opublikowane. | Konta nie były resetowane. ZIP potwierdzenia nie został odczytany niezależnie; nie wnioskuj o włączeniu API z samego sukcesu. |
+| **PRE-PROD — GCP `harborlight-dev`** | **0.9.1.2 / `3be1f9d2094f1432acacbb782eed1665fd00e6e1`**, [41233737873 próba 1 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41233737873); 2m10s, oba artefakty opublikowane. | Konta nie były resetowane. ZIP potwierdzenia nie został odczytany niezależnie; nie wnioskuj o włączeniu API z samego sukcesu. |
 | **PROD — GCP `harborlight-prod`** | Projekt i docelowa domena `harborlight.pl` są wskazane przez właściciela. | Brak potwierdzonej publikacji gry, powiązania domeny, propagacji DNS i certyfikatu. Nie promujemy kodu bez przejścia PRE-PROD. |
 
 Lokalny odbiór v22.1: **730 testów gry/synchronizacji/promocji, 62 backendu i 123 przygotowania/pakowania/konfiguracji — razem 915 PASS**, ponadto **12 zestawów Chromium PASS**. Pakiet przeglądarkowy ma 48 plików; wszystkie publiczne bajty porównano ze źródłami po testach. Odbiór jest izolowany: bez rzeczywistych zapisów lub resetów Google.

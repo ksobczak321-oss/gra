@@ -923,3 +923,38 @@ Ostatnie odebrane PRE-PROD pozostaje0.10.1.0 /353faad… do potwierdzenia końco
 ## 2 listopada2026 — kontroler formatu zapisu przed kolejną promocją
 
 Po FAILURE41360977479 w kroku kont znaleziono rzeczywisty błąd: walidator przyjmował tylko kopertę1, a obecny klient i adapter zapisują2, także bez córek. Ścisła obsługa2, ograniczenia per świat/API, poprawne porównanie uwodnionego API i bezpieczna adnotacja błędu mają26/26 regresjiPASS. Cały lokalny Node1023/1023PASS. Publiczne pliki gry i dane kont niezmienione; dokładny prywatny ERROR nadal nieodczytany. Kolejny oznaczony SHA otrzyma własne CI i standardowy deploy, bez resetu i PROD.
+
+### 2026-11-02 — wysłany kandydat c7c3974 z naprawą kontrolera
+
+**Kolejny kandydat PRE-PROD — 2 listopada 2026, Europe/Warsaw:** [`c7c39742594599c54ee8b074b5c313efd88af4cb`](https://github.com/ksobczak321-oss/gra/commit/c7c39742594599c54ee8b074b5c313efd88af4cb) wysłany z markerem `[preprod:0.11.0.0]`. Własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) i [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) są **IN PROGRESS**. Poprawka ścisłego kontrolera kopert Firestore1/2/API i bezpiecznych adnotacji błędów ma **26/26 testów PASS**; pełny lokalny Node **1023/1023 PASS, 19,92 s**. Wszystkie59 źródeł gry i60 plików treści pozostają zgodne z testowanym final2. Nowy bridge, deploy, receipt i tagi jeszcze niepotwierdzone.
+
+**61 plików z manifestem /60 treści /11 219 303 bajty**. TAR SHA-256 `794d1e30f9af8d21d64caac2b073fbee17d4127566333de73f93393beb4d260b`; manifest SHA-256 `f83609519dd2becb96ea3532b1b746d63128f8631311720090c5c88e4e45c62e`. Archiwum zweryfikowano i rozpakowano; wszystkie60 treści są identyczne z lokalnie testowanym final2. Pakiet tego SHA nie jest dowodem wdrożenia GCP.
+
+Poprzednia promocja7d45290 /41360977479 pozostaje **FAILURE** po publikacji Hostingu w kroku24 kontroli kont. Własne CI41360046508 SUCCESS10m31s, Pages41360046453 SUCCESS47s i bridge41360957057 SUCCESS18s nie zmieniają jej wyniku. Frontend0.11.0.0 może być już serwowany, ale ostatni pełny odbiór PRE-PROD nadal ma **0.10.1.0 /353faad347262dce7c3632fdf7c71be124384ab1**. Nie powstał receipt ani tag tej próby; bez resetu i PROD. Poprawka została odtworzona w testach26/26; pełny lokalny zestaw1023/1023 PASS19,92s. Nie zmieniono gry, kont, reguł Firestore ani uprawnień workflow. Oryginalny prywatny ERROR nadal nieprzekazany. Nowy BugHL-CHG-0968 ma własną kartę;297 kart i70 ręcznych NOT RUN. Main nieruchomy do potwierdzenia źródła rzeczywiście uruchomionej nowej promocji; bez Git operacji w tej aktualizacji dokumentów.
+
+### 2026-11-02 — własne CI i Pages poprawki checkera przeszły
+
+**Odbiór DEV źródła c7c3974 — 2 listopada2026 Europe/Warsaw:** własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) **SUCCESS, 10 min9 s** i [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) **SUCCESS, 21 s**, obie pełne grupy testów przeglądarkowych przeszły. Automatyczny [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) **IN PROGRESS**; nowy deploy GCP jeszcze niezidentyfikowany. Nie jest to końcowy odbiór PRE-PROD. Receipt i tagi nowej promocji niepotwierdzone; poprzedni deploy41360977479 zachowuje FAILURE.
+
+Dokładny pakiet c7c3974 i jego hashe pozostają bez zmiany:61 plików/60 treści/11 219 303bajty; wszystkie treści zgodne z testowanym final2. Lokalny Node1023/1023, checker26/26,141 Python i27 zestawów aplikacji pozostają odrębnymi dowodami. Własny sukces CI nie zamienia starej awarii kont w sukces i nie tworzy receipt GCP. Karty0951–0968 mają dev verified_own_ci_and_pages /ci passed_source_c7c3974 /preprod authorized_bridge_in_progress. Wszystkie70 ręcznych wyników NOT RUN; bez resetu i PROD.
+
+## 2026-11-02 — DEV i PRE-PROD0.11.0.0 odebrane, tagi opublikowane
+
+**DEV i PRE-PROD 0.11.0.0 odebrane — 2 listopada 2026, Europe/Warsaw.** Źródło [`c7c39742594599c54ee8b074b5c313efd88af4cb`](https://github.com/ksobczak321-oss/gra/commit/c7c39742594599c54ee8b074b5c313efd88af4cb): [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) **SUCCESS, 10 min 9 s**, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) **SUCCESS, 21 s**, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) **SUCCESS, 16 s**, [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) **SUCCESS, 2 min 17 s**. Pełne źródło wdrożenia potwierdzono.
+
+Nieprzesuwane tagi [`dev-0.11.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.11.0.0-20261102) i [`preprod-0.11.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/preprod-0.11.0.0-20261102) są **opublikowane i potwierdzone zdalnie**; oba wskazują dokładnie `c7c39742594599c54ee8b074b5c313efd88af4cb`.
+
+Kontrola stałych kont i izolacji zapisu **przeszła** w tym wdrożeniu, podobnie jak dokładny manifest/publiczne pliki oraz rzeczywisty hostowany Chromium. Odbiór kont zakończył się 1 listopada o23:36:47Z, czyli 2 listopada o00:36:47 w Warszawie; publikacja receipt i artefaktów zakończyła się sukcesem do23:36:50Z. Są to kontrole odczytowe, bez zapisu gry lub resetu. Ręczny test zapis→ponowne wczytanie nadal NOT RUN.
+
+**61 plików z manifestem / 60 plików treści / 11 219 303 bajty**. Lokalny TAR SHA-256 `794d1e30f9af8d21d64caac2b073fbee17d4127566333de73f93393beb4d260b`; manifest SHA-256 `f83609519dd2becb96ea3532b1b746d63128f8631311720090c5c88e4e45c62e`. Archiwum zweryfikowano i rozpakowano; wszystkie 60 plików treści są identyczne bajtowo z testowanym final2, a 59 publicznych źródeł gry nie zmieniło się w poprawce checkera.
+
+| Artefakt próby 1 | Publiczne ID GitHub | SHA-256 archiwum ZIP podany przez GitHub |
+|---|---:|---|
+| `harborlight-dev-frontend-41362782175-1` | 13106171196 | `308d5b66fab731689b7d2f67343936d3b1141ca9e986d300d5a25393daeb1840` |
+| `harborlight-dev-release-41362782175-1` | 13105684537 | `546c85f8005efa6a9c6daf2dbc5394b54e214ec26e7ce2a59eb0ff2f3ed19252` |
+
+Są to publiczne digests ZIP GitHub, odrębne od lokalnego TAR i manifestu aplikacji. Wewnętrznego ZIP receipt ani digestu obrazu backendu nie pobrano i nie odczytano niezależnie. Rzeczywista flaga API kont także pozostaje nieodczytana niezależnie.
+
+Poprzednie źródło `7d45290b911e359a8940f28551df4692053cadb2` zachowuje [nieudany deploy 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): **FAILURE** w kroku24 kontroli stałych kont po udanej publikacji Hostingu, kontroli dokładnego wydania i hostowanym Chromium. Jego CI41360046508 SUCCESS10m31s, Pages41360046453 SUCCESS47s i bridge41360957057 SUCCESS18s są odrębnymi dowodami. Nie utworzono receipt ani tagu tej nieudanej próby. Bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37` ma CI41359303259 **CANCELLED** i Pages41359303232 SUCCESS30s. Nie przepisujemy żadnego z tych wyników na sukces c7c3974.
+
+Rejestr zawiera **297 kart zmian**, w tym HL-CHG-0951–0968 dla tego zakresu i poprawki checkera. Wszystkie **70 ręcznych wyników pozostają NOT RUN**. Nie resetowano kont, wysp, haseł ani historii; PROD bez zmian. Karty0951–0968 mają dev verified_own_ci_and_pages /ci passed_source_c7c3974 /preprod deployed_source_c7c3974. Ręczny zapis→ponowne wczytanie nadal nie wykonany; własne metadane i tagi nie są operacją resetu. Dalszy commit dokumentacji nie jest nową wersją aplikacji ani nową promocją.

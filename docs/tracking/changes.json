@@ -15087,8 +15087,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15121,7 +15121,7 @@
           "tests/harborlight-approved-copy-v27.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": []
     },
@@ -15141,8 +15141,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15174,7 +15174,7 @@
           "tests/harborlight-learning-flow-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": []
     },
@@ -15194,8 +15194,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15230,7 +15230,7 @@
           "tests/harborlight-learning-flow-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": []
     },
@@ -15250,8 +15250,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15286,7 +15286,7 @@
           "tests/harborlight-learning-flow-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": []
     },
@@ -15306,8 +15306,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15343,7 +15343,7 @@
           "tests/harborlight-housing-v27.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": []
     },
@@ -15363,8 +15363,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15402,7 +15402,7 @@
           "tests/harborlight-world-events-v18.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": [
         "W wymaganiach oddzielono dosłowną decyzję użytkownika od wybranego parametru integracyjnego; nie traktujemy wyboru implementacji jako dodatkowej odpowiedzi użytkownika."
@@ -15424,8 +15424,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15460,7 +15460,7 @@
           "tests/harborlight-housing-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": []
     },
@@ -15480,8 +15480,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15517,7 +15517,7 @@
           "tests/harborlight-housing-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": []
     },
@@ -15537,8 +15537,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15572,7 +15572,7 @@
           "tests/harborlight-housing-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": []
     },
@@ -15592,8 +15592,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15625,7 +15625,7 @@
           "tests/harborlight-logistics-v27.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": []
     },
@@ -15645,8 +15645,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15682,7 +15682,7 @@
           "tests/harborlight-learning-flow-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": []
     },
@@ -15702,8 +15702,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15738,7 +15738,7 @@
           "tests/harborlight-learning-flow-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": []
     },
@@ -15758,8 +15758,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15797,7 +15797,7 @@
           "tests/harborlight-missions-game-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": [
         "W wymaganiach oddzielono dosłowną decyzję użytkownika od wybranego parametru integracyjnego; nie traktujemy wyboru implementacji jako dodatkowej odpowiedzi użytkownika."
@@ -15819,8 +15819,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15855,7 +15855,7 @@
           "tests/harborlight-missions-game-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": [
         "W wymaganiach oddzielono dosłowną decyzję użytkownika od wybranego parametru integracyjnego; nie traktujemy wyboru implementacji jako dodatkowej odpowiedzi użytkownika."
@@ -15877,8 +15877,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15915,7 +15915,7 @@
           "tests/harborlight-missions-game-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": []
     },
@@ -15935,8 +15935,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -15976,7 +15976,7 @@
           "tests/harborlight-missions-game-v27-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": []
     },
@@ -15996,8 +15996,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_own_ci_and_pages",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -16026,7 +16026,7 @@
           "tests/harborlight-manual-checklist-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV 0.11.0.0/v27: bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37`, lokalnie1017 Node,141 Python i27 nazwanych zestawów Chromium PASS; bazowe CI41359303259 CANCELLED, Pages41359303232 SUCCESS30s. Późniejsze polecenie „promuj na pre prod” autoryzuje kandydata [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) z markerem [preprod:0.11.0.0], bez resetu. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): SUCCESS, 10 min31 s; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): SUCCESS47s. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057): SUCCESS,18s. [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): FAILURE w kroku24 po publikacji Hostingu; pełne źródło `7d45290b911e359a8940f28551df4692053cadb2` i wcześniejszy gate SUCCESS potwierdzone. Receipt i tagów brak. Publiczne59 plików i wszystkie60 treści zgodne z testowanym final2; pakiet61/60/11 219 303bajty i hashe w [przygotowaniu](../../PREPROD-V27-PREPARATION.md). Focused dispatcher/promocja28/28 PASS nie zastępuje pełnego CI. PRE-PROD pozostaje ostatnio odebrane0.10.1.0/353faad do potwierdzenia wdrożenia;70 ręcznych NOT RUN, PROD bez zmian. Odbiór operacyjny CI/Pages: 2 listopada2026 Europe/Warsaw; akceptacja i bazowy lokalny DEV z1 listopada zachowują wcześniejszą datę. Promocja [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) zakończyła się FAILURE w kroku24 kontroli stałych kont po publikacji Hostingu; dokładny manifest i hostowany Chromium przeszły, więc nowy frontend może być już serwowany. Artefakty/receipt pominięte, tagów/resetu brak. Ostatni pełny odbiór pozostaje0.10.1.0. Szczegóły i przygotowanie ścisłej poprawki schematu1/2: [incydent](../../PREPROD-V27-INCIDENT-20261102.md). Po awarii kont przygotowano odrębny kandydat z kontrolerem obsługującym legalne koperty1/2;26 testów kontrolera i1023 pełnej regresji PASS lokalnie. Publiczna aplikacja niezmieniona. Nowy SHA wymaga własnego CI i deployu."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": []
     },
@@ -16045,9 +16045,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally",
-        "ci": "awaiting_checker_fix_ci",
-        "preprod": "awaiting_checker_fix_candidate",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_c7c3974",
+        "preprod": "deployed_source_c7c3974",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -16070,7 +16070,8 @@
         "documents": [
           "docs/PREPROD-V27-INCIDENT-20261102.md",
           "docs/PREPROD-V27-PREPARATION.md",
-          "docs/ENVIRONMENT-STATUS.md"
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/DEV-0.11.0.0-VALIDATION.md"
         ],
         "code": [
           "infra/google-cloud/check-dev-accounts.mjs"
@@ -16079,7 +16080,7 @@
           "tests/harborlight-dev-accounts-check.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kontroler26/26PASS; pełny lokalny Node1023/1023PASS19,92s. Naprawa nie zmienia publicznych plików aplikacji ani danych. Własny CI i wynik kolejnej promocji oczekują."
+        "release_note": "Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD."
       },
       "notes": [
         "Dokładnego prywatnego ERROR pierwotnej awarii nie odczytano. Niezgodność kontrolera z legalnym formatem2 jest jednak odtworzonym błędem kodu."

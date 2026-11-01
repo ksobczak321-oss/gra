@@ -1,12 +1,10 @@
-# DEV 0.11.0.0 / v27 — lokalny odbiór zakończony
+# DEV i PRE-PROD 0.11.0.0 /v27 — odbiór zakończony
 
-**PRE-PROD — niepełna promocja, 2 listopada 2026 (Europe/Warsaw).** [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479), źródło `7d45290b911e359a8940f28551df4692053cadb2`, ma **FAILURE** w kroku24 „Verify permanent DEV accounts and cloud save isolation”. Hosting został wcześniej opublikowany; kontrola dokładnego wydania i rzeczywisty test hostowanej gry przeszły. Frontend0.11.0.0 może więc już być serwowany, ale pełnego odbioru PRE-PROD nie zaliczono. Artefakty/receipt pominięto; tagów i resetu brak. [incydent promocji](PREPROD-V27-INCIDENT-20261102.md).
+**DEV i PRE-PROD 0.11.0.0 odebrane — 2 listopada 2026, Europe/Warsaw.** Źródło [`c7c39742594599c54ee8b074b5c313efd88af4cb`](https://github.com/ksobczak321-oss/gra/commit/c7c39742594599c54ee8b074b5c313efd88af4cb): [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) **SUCCESS, 10 min 9 s**, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) **SUCCESS, 21 s**, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) **SUCCESS, 16 s**, [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) **SUCCESS, 2 min 17 s**. Pełne źródło wdrożenia potwierdzono.
 
-Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057) ma **SUCCESS, 18 s**. Uruchomiony [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) ma **FAILURE po publikacji Hostingu**, z publicznie potwierdzonym źródłem `7d45290b911e359a8940f28551df4692053cadb2`. [gate 125011066732](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479/job/125011066732) ma **SUCCESS**, zadanie [deploy125011120868](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479/job/125011120868) zakończyło się błędem kroku24. Potwierdzono właściwe źródło, ale końcowy odbiór tego wdrożenia nie przeszedł. Pełne wdrożenie GCP zakończone błędem; brak receipt i tagów v27.
+Nieprzesuwane tagi [`dev-0.11.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.11.0.0-20261102) i [`preprod-0.11.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/preprod-0.11.0.0-20261102) są **opublikowane i potwierdzone zdalnie**; oba wskazują dokładnie `c7c39742594599c54ee8b074b5c313efd88af4cb`.
 
-**Odbiór operacyjny: 2 listopada 2026, Europe/Warsaw.** Źródło `7d45290b911e359a8940f28551df4692053cadb2` ma własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508) **SUCCESS, 10 min 31 s** oraz [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453) **SUCCESS, 47 s**. Obie grupy testów przeglądarkowych pakietu przeszły w CI tego źródła. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057) ma **SUCCESS, 18 s**. Wdrożenie PRE-PROD nadal oczekuje na odrębny wynik GCP; tagów v27 nie utworzono.
-
-Stan roboczy z **1 listopada 2026, Europe/Warsaw**. Pierwotne GO obejmowało DEV i normalne Git/CI/Pages, bez promocji GCP. Późniejsze polecenie „promuj na pre prod” autoryzuje standardową promocję kandydata opisaną niżej; reset, PROD i integracja planszówki online pozostają poza zakresem. Numer aplikacji to **0.11.0.0**, cache **`frontend-v27`**, schemat świata pozostaje **9**. Lokalny odbiór zakończono: **1017 Node, 141 Python i 27 nazwanych zestawów Chromium PASS**, po poprawkach i kierunkowych ponowieniach. Źródło [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) wysłano do `main`; własne [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259) ma **CANCELLED**, a [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232) zakończyło się **SUCCESS, 30 s**, zgodnie z odczytem GitHub. Tag v27 nie został jeszcze utworzony.
+Pierwotne GO opisów z1 listopada obejmowało DEV. Późniejsze **„promuj na pre prod”** autoryzowało standardową promocję bez resetu i PROD. Poprawka checkera nie zmienia publicznej gry, kont, reguł Firestore ani bramek CI/WIF.
 
 [Wymagania v27](FRONTEND-V27-REQUIREMENTS.md) · [Rejestr środowisk](ENVIRONMENT-STATUS.md) · [Karty zmian](tracking/CHANGE-REGISTER.md) · [Ręczny odbiór](testing/START-HERE.md).
 
@@ -21,20 +19,22 @@ GO użytkownika brzmi **„tu masz z drobnymi poprawkami; GO”**. Pełny wcześ
 
 Oba rozmiary i hashe sprawdzono lokalnie z plikami wejściowymi. Archiwum akceptacji dowodzi źródła wymagań, nie publikacji aplikacji ani sukcesu testu gry.
 
-## Potwierdzone kontrole lokalne i granice dowodu
 
-| Kontrola | Bieżący wynik |
+## Potwierdzone wyniki i granice dowodu
+
+| Kontrola | Wynik |
 |---|---|
-| Pełna regresja Node i backendu po integracji | **1017 PASS** — końcowy lokalny przebieg po integracji, 20,46 s. Wynik 954 z v26 pozostaje historyczny. Nowa zmiana kodu wymaga właściwego ponowienia. |
-| Python: konfiguracja, pakowanie, konta i importer | **141 PASS w 11 zestawach**. Suma z logu: 2+14+23+12+17+12+12+10+13+8+18. To kontrole lokalne, bez nowej aktywacji GCP. |
-| Chromium: [housing v27](../tests/harborlight-housing-v27-smoke.py) | **PASS** — rzeczywista aplikacja, PL/EN na komputerze i telefonie, dwa stany Domu: 48 osób/24 łóżka/24 punkty/72 żywności na godzinę oraz ukończony Dom 2 po północy Warszawy: 48 łóżek/48 punktów/48 żywności. Rzeczywiste kliknięcie przydziału zmienia tylko uprawnioną osobę, zachowuje 48 tożsamości i zapisuje wynik w izolowanym Firebase. |
-| Chromium: [learning feedback v27](../tests/harborlight-learning-feedback-v27-smoke.py) | **PASS** — skutki Ratusza, Latarni, Domu i Kaplicy, kolejka objaśnień, strzałki w granicach ekranu, brak mutacji świata przez opis, wznowienie i przypomnienie po wyjściu; PL/EN na komputerze i telefonie. To test komponentów z rzeczywistym modelem. |
-| Chromium: [learning flow v27](../tests/harborlight-learning-flow-v27-smoke.py) | **PASS** — zintegrowana aplikacja: dwa wejścia w Pomocy, 34 kroki z Czat i dynamicznymi zasobami, zachowany kursor i historia, przegląd praktyczny, faktyczny czas budowy oraz nagroda przed objaśnieniem efektu; PL/EN na komputerze i telefonie. Firebase jest izolowany. |
-| Wymagany inwentarz Chromium po poprawkach | **27/27 nazwanych zestawów PASS** — bazowe wyniki oraz właściwe ponowienia krytycznych i zmienionych obszarów. Szczegóły i granice dowodu podaje inwentarz niżej; konfiguracje ekranowe nie są osobnymi zestawami. |
-| Generatory rejestru zmian, listy ręcznej i dokumentów prawnych | `--check` **PASS**. Rejestr ma **296 kart**, lista ma **70 przypadków**; dokumenty prawne pozostają szkicami, nie odbiorem prawnym. |
-| Ręczny odbiór właściciela | **70 NOT RUN**. Automaty nie zmieniają wyników ręcznego przeklikania. Integracja planszówki online nadal poza GO. |
+| Końcowy lokalny Node po naprawie checkera | **1023/1023 PASS,19,92s**. Wcześniejszy lokalny odbiór aplikacji miał1017; późniejszy wynik obejmuje poprawkę kontrolera. |
+| Skupione regresje kontrolera kont | **26/26 PASS**: legalne koperty1/2, wielowyspowe API, ścisłe odrzucanie uszkodzeń i bezpieczne adnotacje bez surowych odpowiedzi. |
+| Python | **141 PASS w11 zestawach**; suma2+14+23+12+17+12+12+10+13+8+18. |
+| Lokalny inwentarz Chromium | **27/27 nazwanych zestawów PASS** po poprawkach i kierunkowych ponowieniach. Inwentarz niżej wskazuje rzeczywiste pochodzenie każdego wyniku; warianty ekranowe nie są osobnymi zestawami. Publiczna aplikacja nie zmieniła się przy poprawce checkera. |
+| Własny CI c7c3974 | **SUCCESS10m9s**, w tym obie pełne grupy przeglądarkowego odbioru pakietu. To własny wynik końcowego źródła. |
+| Rzeczywisty PRE-PROD | **SUCCESS2m17s**: dokładny manifest/publiczne pliki, hostowany Chromium oraz stałe konta i izolacja zapisu przeszły. |
+| Polska wersja i odzyskiwanie |114 rzeczywistych widoków PL, zero wykrytych angielskich pozostałości;8 sond nawigacji/restartu/utratyACK PASS. |
+| Generatory | Rejestr297 kart,70 przypadków ręcznych i dokumenty prawne zgodne z generatorami; dokumenty prawne nadal są szkicami. |
+| Ręczny odbiór | **70 NOT RUN**. Odczytowe kontrole wdrożenia nie zastępują ręcznego testu zapis→ponowne wczytanie ani odbioru fizycznej planszówki. |
 
-Lokalne logi robocze m.in. `/tmp/harborlight-v27-node-release.log`, `/tmp/harborlight-v27-python-final.log`, `/tmp/harborlight-learning-feedback-v27.log` i `/tmp/harborlight-learning-flow-v27.log` nie są trwałymi artefaktami Git ani dowodem CI. Pierwsza próba housing smoke zatrzymała się na ukrytym desktopowym przycisku użytym przez test mobilny. Po zmianie testu na rzeczywistą ścieżkę Menu wyspy → Mieszkańcy wszystkie warianty przeszły. Nie była to zmiana kodu gry.
+Kontrola stałych kont i izolacji zapisu **przeszła** w tym wdrożeniu, podobnie jak dokładny manifest/publiczne pliki oraz rzeczywisty hostowany Chromium. Odbiór kont zakończył się 1 listopada o23:36:47Z, czyli 2 listopada o00:36:47 w Warszawie; publikacja receipt i artefaktów zakończyła się sukcesem do23:36:50Z. Są to kontrole odczytowe, bez zapisu gry lub resetu. Ręczny test zapis→ponowne wczytanie nadal NOT RUN.
 
 ## Inwentarz 27 nazwanych zestawów Chromium
 
@@ -74,6 +74,7 @@ Dodatkowo `learning-flow-v27` otrzymał na final2 **8 sond nawigacji, restartu i
 
 Pierwszy pełny przebieg zawierał 20 sukcesów i 7 niepowodzeń. Naprawiono sześć nieaktualnych założeń/fixture testów oraz rzeczywisty błąd odzyskiwania zapisu; następnie ponowiono obszary zmienione i krytyczne. Nie usuwamy nieudanych prób z historii ani nie przypisujemy ich sukcesu wcześniejszemu wydaniu. Roboczy inwentarz `/tmp/harborlight-v27-browser-inventory.json` i logi `/tmp/harborlight-v27-browser-final.log`, `/tmp/harborlight-v27-browser-last-probes.log` nie są dowodem CI.
 
+
 ## Rzeczywiste reguły sprawdzanej implementacji
 
 - Ratusz wyznacza limit ludności niezależnie od łóżek. Dotyczy to naturalnych przybyć, zaproszeń, uratowanych rozbitków i pasażerów z rezerwacją miejsc. Pełny Dom sam nie zmienia rozbitka w rekompensatę; decyduje wolny limit Ratusza po rezerwacjach. Stabilne identyfikatory wyznaczają zakwaterowanie; zmiana pracy nie losuje nowych łóżek. Bez łóżka własna praca i zwykły przewóz mają wydajność ×0,5, a posiłki ×2. Dawna globalna kara szczęścia za każdą osobę bez łóżka została zastąpiona zgodnie z odpowiedzią użytkownika.
@@ -86,40 +87,30 @@ Pierwszy pełny przebieg zawierał 20 sukcesów i 7 niepowodzeń. Naprawiono sze
 - Odzyskiwanie zapisu po niepewnym ACK odczytuje stan przed ponowieniem. Równoległy błąd aktywności nie jest kasowany samym sukcesem zapisu, a poprawne odzyskiwanie przywraca potwierdzony stan bez blokady UI, resetu i nadpisania nowszego zapisu innej karty.
 - Statek z plagą w misjach jest na tym etapie narracją prowadzącą do pomocy. Nie dodaje odrębnej epidemii ani strat. Istniejąca plaga związana z Kaplicą działa bez zmiany reguły.
 
+
 ## Ręczne scenariusze i rejestr
 
-Nowy zakres ma osobne karty **HL-CHG-0951–0967**. Po zakończonym odbiorze lokalnym te 17 kart ma **implemented / verified_locally**, a własne CI **passed_source_7d45290**. DEV ma verified_own_ci_and_pages; PRE-PROD ma failed_after_hosting_source_7d45290, PROD pozostaje not_deployed. Nie zmieniamy statusów pozostałych historycznych kart ani wyników ręcznych.
+Zakres gry ma karty HL-CHG-0951–0967, a poprawka checkera osobny BugHL-CHG-0968. Te18 kart ma implemented /verified_own_ci_and_pages /passed_source_c7c3974 /deployed_source_c7c3974; PROD not_deployed. Historia wcześniejszych źródeł i nieudanej promocji pozostaje osobna.
 
-| Scenariusze | Przedmiot odbioru |
-|---|---|
-| HL-TC-0060–0062 | Zatwierdzone opisy, 34 kroki, dynamiczne dane, Pomoc, wznowienie i skutki działań. |
-| HL-TC-0063–0065 | Dwie minuty dojścia/powrotu, łóżka, punkty Domu, indywidualna praca i posiłki. |
-| HL-TC-0066 | Stabilne i prawdziwe prognozy dostaw oraz budowy. |
-| HL-TC-0067–0069 | Zapamiętany cel Latarni, ścieżki 8/5/3, terminy i wykonalność zadań. |
-| HL-TC-0070 | Migracja, nieobecność, trwałość tożsamości i brak ponownego rozliczenia. |
+HL-TC-0060–0062 obejmują opisy, Pomoc i skutki;0063–0065 dojście, łóżka, pracę i posiłki;0066 ETA;0067–0069 misje8/5/3 i wykonalność;0070 migrację i trwałość. [Plan](testing/MANUAL-TEST-PLAN.md) i [interaktywna lista](testing/qa-checklist.html) nadal mają **70 wyników NOT RUN** dla konkretnego buildu do samodzielnego wykonania.
 
-[Plan z odrębnymi kartami](testing/MANUAL-TEST-PLAN.md) i [interaktywna lista](testing/qa-checklist.html) zachowują wszystkie **70 wyników NOT RUN**.
+## Dokładny pakiet i artefakty wydania
 
-## Bazowe źródło aplikacji 6ff5ae9 — odrębny dowód DEV
+**61 plików z manifestem / 60 plików treści / 11 219 303 bajty**. Lokalny TAR SHA-256 `794d1e30f9af8d21d64caac2b073fbee17d4127566333de73f93393beb4d260b`; manifest SHA-256 `f83609519dd2becb96ea3532b1b746d63128f8631311720090c5c88e4e45c62e`. Archiwum zweryfikowano i rozpakowano; wszystkie 60 plików treści są identyczne bajtowo z testowanym final2, a 59 publicznych źródeł gry nie zmieniło się w poprawce checkera.
 
-| Dowód | Stan |
-|---|---|
-| Bazowy SHA aplikacji v27 | [`6ff5ae976e31add7fb93e3872e0d9046a25edd37`](https://github.com/ksobczak321-oss/gra/commit/6ff5ae976e31add7fb93e3872e0d9046a25edd37) — commit aplikacji wysłany do `main`. To własne źródło v27, odrębne od historycznego v26. |
-| Lokalny pakiet walidacyjny | **61 plików z manifestem / 60 plików treści, 11 219 303 bajtów**. Końcowy pakiet lokalnej walidacji `build/frontend-v27-final2`, z drzewa roboczego ze znacznikiem źródła `000…`. Służy testom lokalnym; nie jest finalnym pakietem własnego commitu ani opublikowanym artefaktem CI. |
-| Pakiet dokładnego źródła 6ff5ae9 | **61 plików z manifestem / 60 treści / 11 219 303 bajty**. TAR SHA-256 `af8a64508044d344b4e01122145d3b0b1653c6c4abfecfec5fc502e7b36e1e55`; manifest SHA-256 `84ac0f9528cadaab15c92d3f789abd041d45b9a4580051e638472879d0709d49`. Archiwum zweryfikowano i rozpakowano; wszystkie 60 plików treści jest identyczne bajtowo z lokalnie testowanym final2. To lokalny pakiet dokładnego SHA, odrębny od przyszłego artefaktu CI. |
-| Push / własne CI / Pages | Push 6ff5ae9 wykonany. [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): **CANCELLED**. [Pages 41359303232](https://github.com/ksobczak321-oss/gra/actions/runs/41359303232): **SUCCESS, 30 s**. Stan potwierdzony odczytem publicznego GitHub; nie deklarujemy sukcesu publikacji ani CI. |
-| Nieprzesuwany tag odbioru DEV | **Nieutworzony dla v27**; wymaga potwierdzenia własnego CI i Pages. |
-| PRE-PROD | **Bez nowej promocji** — pozostaje 0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`, przebieg 41246771480 / próba 1 SUCCESS. |
-| PROD, reset kont, prawdziwe płatności/reklamy/darowizny | **Bez zmian i aktywacji**. Testowe odpowiedzi Firebase nie dotykają prawdziwych wysp. |
+| Artefakt próby 1 | Publiczne ID GitHub | SHA-256 archiwum ZIP podany przez GitHub |
+|---|---:|---|
+| `harborlight-dev-frontend-41362782175-1` | 13106171196 | `308d5b66fab731689b7d2f67343936d3b1141ca9e986d300d5a25393daeb1840` |
+| `harborlight-dev-release-41362782175-1` | 13105684537 | `546c85f8005efa6a9c6daf2dbc5394b54e214ec26e7ce2a59eb0ff2f3ed19252` |
 
-Nazwy, UID, hasła, postęp, rozpoczęte budowy i rejsy są danymi do zachowania. Własny zielony CI i Pages trzeba powiązać z końcowym SHA w tym dokumencie oraz w rejestrze środowisk; żaden lokalny test nie zastępuje takiego dowodu.
+Są to publiczne digests ZIP GitHub, odrębne od lokalnego TAR i manifestu aplikacji. Wewnętrznego ZIP receipt ani digestu obrazu backendu nie pobrano i nie odczytano niezależnie. Rzeczywista flaga API kont także pozostaje nieodczytana niezależnie.
 
-## Kandydat autoryzowanej promocji PRE-PROD 7d45290
+## Historia awarii i osobne źródła
 
-Późniejsza dyspozycja użytkownika **„promuj na pre prod”** zastępuje wcześniejsze ograniczenie publikacji do DEV w zakresie tego wydania. Konta, hasła, historia i rozpoczęte działania pozostają do zachowania; brak zgody na reset lub PROD. [Przygotowanie PRE-PROD v27](PREPROD-V27-PREPARATION.md) zachowuje sprawdzenie niezmienionych reguł Firestore i zasad standardowej promocji.
+Poprzednie źródło `7d45290b911e359a8940f28551df4692053cadb2` zachowuje [nieudany deploy 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479): **FAILURE** w kroku24 kontroli stałych kont po udanej publikacji Hostingu, kontroli dokładnego wydania i hostowanym Chromium. Jego CI41360046508 SUCCESS10m31s, Pages41360046453 SUCCESS47s i bridge41360957057 SUCCESS18s są odrębnymi dowodami. Nie utworzono receipt ani tagu tej nieudanej próby. Bazowe źródło `6ff5ae976e31add7fb93e3872e0d9046a25edd37` ma CI41359303259 **CANCELLED** i Pages41359303232 SUCCESS30s. Nie przepisujemy żadnego z tych wyników na sukces c7c3974.
 
-Kandydat [`7d45290b911e359a8940f28551df4692053cadb2`](https://github.com/ksobczak321-oss/gra/commit/7d45290b911e359a8940f28551df4692053cadb2) wysłany do main z markerem `[preprod:0.11.0.0]`. Własne [CI 41360046508](https://github.com/ksobczak321-oss/gra/actions/runs/41360046508): **SUCCESS, 10 min 31 s**; [Pages 41360046453](https://github.com/ksobczak321-oss/gra/actions/runs/41360046453): **SUCCESS, 47 s**. Wcześniejsze [CI 41359303259](https://github.com/ksobczak321-oss/gra/actions/runs/41359303259): **CANCELLED** — nie jest zieloną bramką promocji. Własne CI dokładnego kandydata przeszło. Automatyczny [bridge 41360957057](https://github.com/ksobczak321-oss/gra/actions/runs/41360957057) ma **SUCCESS, 18 s**; [deploy PRE-PROD 41360977479](https://github.com/ksobczak321-oss/gra/actions/runs/41360977479) ma **FAILURE po publikacji Hostingu**, a jego źródło `7d45290b911e359a8940f28551df4692053cadb2` potwierdzone; końcowy wynik: FAILURE w kontroli kont po publikacji Hostingu. Tagów v27 nie utworzono.
+Nieudany checker ograniczał kopertę do1 przy obecnym kliencie2. Znany problem odtworzono i naprawiono bez osłabienia kontroli izolacji. Pierwotny prywatny wierszERROR nie został przekazany; nie przedstawiamy go jako niezależnie odczytanego. W kolejnej standardowej promocji kontrola kont faktycznie przeszła. [Pełny incydent i rozwiązanie](PREPROD-V27-INCIDENT-20261102.md).
 
-**61 plików z manifestem / 60 treści / 11 219 303 bajty**. TAR SHA-256 `d202c79783b1dc2787d3db2a859031a9dc03fb87a089b2e81a09c2d8d0253ff4`; manifest SHA-256 `0905956f17d0b249cf8faae7a3aed486e86e74d20b2a5145f72d6a9730792993`. Zachowano 59 publicznych plików aplikacji z 6ff5ae9; wszystkie 60 plików treści są identyczne bajtowo z testowanym final2. To dokładny lokalny pakiet kandydata, nie dowód publikacji GCP.
+Bazowe lokalne logi i inwentarz `/tmp/harborlight-v27-browser-inventory.json` nie są trwałym artefaktem Git ani dowodem CI. Pierwszy pełny lokalny przebieg miał20 sukcesów i7 niepowodzeń; naprawiono sześć nieaktualnych fixture i rzeczywiste odzyskiwanie zapisu, a zmienione obszary ponowiono. Pierwsza próba housing smoke miała błędną nawigację mobilną testu, poprawioną bez zmiany gry. Własne końcowe CI i odczytowe wdrożenie powyżej są odrębnymi, rzeczywistymi dowodami.
 
-Lokalne **1017 Node /141 Python /27 nazwanych zestawów Chromium PASS** dotyczą niezmienionej publicznej aplikacji; dodatkowo **28/28 testów dispatchera i promocji PASS** obejmuje marker oraz istniejące blokady. Nie zastępuje to własnego pełnego CI7d45290, odczytu bridge, wdrożenia ani artefaktów GCP. Wcześniejszego anulowanego CI6ff5ae9 nie przepisujemy na sukces. Wszystkie 70 ręcznych wyników nadal NOT RUN.
+Rejestr zawiera **297 kart zmian**, w tym HL-CHG-0951–0968 dla tego zakresu i poprawki checkera. Wszystkie **70 ręcznych wyników pozostają NOT RUN**. Nie resetowano kont, wysp, haseł ani historii; PROD bez zmian.

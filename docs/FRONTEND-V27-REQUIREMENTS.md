@@ -2,7 +2,7 @@
 
 GO użytkownika z **1 listopada 2026, Europe/Warsaw** obejmuje zatwierdzone opisy oraz uzgodnioną wcześniej paczkę zmian. Poprawiona wklejka wnosi także nową regułę mieszkań i rzeczywiste dane w przykładzie zasobów. [Archiwum akceptacji i hashe](approval/v27-approval-record.md) zachowuje pełny projekt oraz poprawki użytkownika bez zmiany bajtów.
 
-Ten dokument opisuje zakres, nie wynik testów ani wdrożenia. Status kodu roboczego, własnego SHA/CI/Pages i chmury rozstrzyga [rejestr środowisk](ENVIRONMENT-STATUS.md). **PRE-PROD pozostaje 0.10.1.0 / `353faad347262dce7c3632fdf7c71be124384ab1`**, wdrożenie 41246771480/próba1 SUCCESS. Nowe GO obejmuje **DEV oraz Git/CI/Pages**, bez nowej promocji GCP, PROD, resetu kont, prawdziwych operatorów finansowych ani integracji planszówki online.
+Ten dokument opisuje zakres, nie wynik testów ani wdrożenia. Status kodu roboczego, własnego SHA/CI/Pages i chmury rozstrzyga [rejestr środowisk](ENVIRONMENT-STATUS.md). **Historyczny punkt początkowy PRE-PROD:0.10.1.0 /`353faad347262dce7c3632fdf7c71be124384ab1`**, wdrożenie41246771480/próba1 SUCCESS. Późniejsze polecenie promocji zostało wykonane: aktualny PRE-PROD0.11.0.0/c7c3974 ma pełny odbiór opisany w walidacji. Nowe GO obejmuje **DEV oraz Git/CI/Pages**, bez nowej promocji GCP, PROD, resetu kont, prawdziwych operatorów finansowych ani integracji planszówki online.
 
 ## Źródło i reguła łączenia opisów
 
@@ -115,3 +115,13 @@ Niepewne potwierdzenie zapisu wymaga odczytu chmury przed wznowieniem. Sukces je
 ## Późniejsze polecenie promocji
 
 Po lokalnym odbiorze użytkownik zlecił **„promuj na pre prod”**. To polecenie rozszerza wcześniejsze GO tylko DEV o standardową promocję wydania0.11.0.0, zachowując konta, hasła i postęp. Kandydat `7d45290b911e359a8940f28551df4692053cadb2` wymaga własnego pełnego CI i dotychczasowych bramek bridge/WIF. Nie jest zgodą na reset, PROD lub aktywację prawdziwych operatorów. Stan publikacji i dokładny pakiet: [przygotowanie PRE-PROD v27](PREPROD-V27-PREPARATION.md), [rejestr środowisk](ENVIRONMENT-STATUS.md). Dawne zdania o braku promocji opisują zakres pierwotnego GO, nie cofają późniejszej autoryzacji.
+
+## Wykonana późniejsza promocja — 2 listopada2026 Europe/Warsaw
+
+**DEV i PRE-PROD 0.11.0.0 odebrane — 2 listopada 2026, Europe/Warsaw.** Źródło [`c7c39742594599c54ee8b074b5c313efd88af4cb`](https://github.com/ksobczak321-oss/gra/commit/c7c39742594599c54ee8b074b5c313efd88af4cb): [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) **SUCCESS, 10 min 9 s**, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) **SUCCESS, 21 s**, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) **SUCCESS, 16 s**, [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) **SUCCESS, 2 min 17 s**. Pełne źródło wdrożenia potwierdzono.
+
+Nieprzesuwane tagi [`dev-0.11.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.11.0.0-20261102) i [`preprod-0.11.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/preprod-0.11.0.0-20261102) są **opublikowane i potwierdzone zdalnie**; oba wskazują dokładnie `c7c39742594599c54ee8b074b5c313efd88af4cb`.
+
+Kontrola stałych kont i izolacji zapisu **przeszła** w tym wdrożeniu, podobnie jak dokładny manifest/publiczne pliki oraz rzeczywisty hostowany Chromium. Odbiór kont zakończył się 1 listopada o23:36:47Z, czyli 2 listopada o00:36:47 w Warszawie; publikacja receipt i artefaktów zakończyła się sukcesem do23:36:50Z. Są to kontrole odczytowe, bez zapisu gry lub resetu. Ręczny test zapis→ponowne wczytanie nadal NOT RUN.
+
+Rejestr zawiera **297 kart zmian**, w tym HL-CHG-0951–0968 dla tego zakresu i poprawki checkera. Wszystkie **70 ręcznych wyników pozostają NOT RUN**. Nie resetowano kont, wysp, haseł ani historii; PROD bez zmian. Pierwotne ograniczenie GO do DEV pozostaje historią zakresu przed późniejszym „promuj na pre prod”. [Dokładny pakiet i artefakty](DEV-0.11.0.0-VALIDATION.md) zachowują hashe i rozdzielają udane źródło c7c3974 od nieudanej próby7d45290.

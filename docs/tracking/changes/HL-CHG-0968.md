@@ -9,9 +9,9 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `verified_locally` |
-| CI | `awaiting_checker_fix_ci` |
-| PRE-PROD | `awaiting_checker_fix_candidate` |
+| DEV | `verified_own_ci_and_pages` |
+| CI | `passed_source_c7c3974` |
+| PRE-PROD | `deployed_source_c7c3974` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -35,12 +35,12 @@ Data pierwotnej wiadomości: 2026-11-02. Data operacyjna Europe/Warsaw; poleceni
 
 ## Dowody
 
-- **Dokumenty:** [docs/PREPROD-V27-INCIDENT-20261102.md](../../PREPROD-V27-INCIDENT-20261102.md), [docs/PREPROD-V27-PREPARATION.md](../../PREPROD-V27-PREPARATION.md), [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md)
+- **Dokumenty:** [docs/PREPROD-V27-INCIDENT-20261102.md](../../PREPROD-V27-INCIDENT-20261102.md), [docs/PREPROD-V27-PREPARATION.md](../../PREPROD-V27-PREPARATION.md), [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md), [docs/DEV-0.11.0.0-VALIDATION.md](../../DEV-0.11.0.0-VALIDATION.md)
 - **Kod:** [infra/google-cloud/check-dev-accounts.mjs](../../../infra/google-cloud/check-dev-accounts.mjs)
 - **Scenariusze automatyczne:** [tests/harborlight-dev-accounts-check.test.mjs](../../../tests/harborlight-dev-accounts-check.test.mjs)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Kontroler26/26PASS; pełny lokalny Node1023/1023PASS19,92s. Naprawa nie zmienia publicznych plików aplikacji ani danych. Własny CI i wynik kolejnej promocji oczekują.
+Odebrane DEV/PRE-PROD0.11.0.0: źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, własne [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS10m9s, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS21s, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s i [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS2m17s. Dokładne wydanie, hostowany Chromium i odczytowa kontrola stałych kont/izolacji PASS. Oba nieprzesuwane tagi dev-0.11.0.0-20261102 /preprod-0.11.0.0-20261102 opublikowane i zdalnie potwierdzone na tym SHA. Pakiet61/60/11 219 303bajty, dokładne TAR/manifest i publiczne digests ZIP w [walidacji](../../DEV-0.11.0.0-VALIDATION.md). Lokalnie1023 Node,141 Python,27 zestawów aplikacji i checker26 PASS; własne CI zaliczyło obie grupy Chromium. Poprzedni deploy7d45290 /41360977479 pozostaje FAILURE po Hostingu, bazowe CI6ff5ae9 CANCELLED — osobna historia w [incydencie](../../PREPROD-V27-INCIDENT-20261102.md).297 kart/70 ręcznych NOT RUN; zapis→ponowne wczytanie nieprzeklikany. APIflag i wewnętrzny ZIP receipt nieodczytane niezależnie. Bez resetu i PROD.
 
 ## Relacje
 
