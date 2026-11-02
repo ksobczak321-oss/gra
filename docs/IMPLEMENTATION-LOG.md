@@ -1037,3 +1037,24 @@ Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.
 ## 2listopada2026 — zlecona promocja0.12.0.0 doPRE-PROD
 
 „Promuj na pre prod” autoryzuje standardową publikację odebranego DEV, zachowując konta i historię. Przygotowywana jest dokładna allowlista0.12 w istniejącym bridge, bez zmiany bramek/WIF/PROD/resetu. Nowy commit otrzyma własneCI. Odczyt GHAPIForbidden nie jest wynikiem deployu; [rejestr etapów](PREPROD-V28-PROMOTION.md) pozostawia CI/dispatch/odbiór/artefakty pending do rzeczywistych dowodów.
+
+
+## 2026-11-02 — własne CI i rzeczywisty dispatch promocji PRE-PROD 0.12
+
+Źródło `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`: [CI 41480146644](https://github.com/ksobczak321-oss/gra/actions/runs/41480146644) **SUCCESS, 13 min 46 s**, [Pages 41480146737](https://github.com/ksobczak321-oss/gra/actions/runs/41480146737) **SUCCESS, 41 s**. Po 30 lokalnych testach bramek istniejący [bridge 41482423516](https://github.com/ksobczak321-oss/gra/actions/runs/41482423516) **SUCCESS, 21 s** uruchomił [standardowy deploy 41482455135](https://github.com/ksobczak321-oss/gra/actions/runs/41482455135) z dokładnie tym SHA. Main pozostał niezmieniony do potwierdzenia źródła uruchomionego deployu. Wcześniejszy pominięty bridge41480227597 obsługiwał anulowane CI metadanych1e8b67c i nie jest rzeczywistym dispatchiem promocji0.12.
+
+Końcowy wynik wdrożenia, obowiązkowe kontrole kont i dwa artefakty pozostają do osobnego odczytu. 60 publicznych wejść aplikacji jest zgodnych z odebranym DEV0ca7715. Nie resetowano kont ani historii, nie promowano PROD i nie aktywowano realnych operatorów. [Rejestr etapów](PREPROD-V28-PROMOTION.md).
+
+
+## 2026-11-02 — PRE-PROD0.12.0.0 odebrany po pełnej promocji
+
+Źródło `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`: własne [CI41480146644](https://github.com/ksobczak321-oss/gra/actions/runs/41480146644) **SUCCESS13min46s**, [Pages41480146737](https://github.com/ksobczak321-oss/gra/actions/runs/41480146737) **SUCCESS41s**, rzeczywisty [bridge41482423516](https://github.com/ksobczak321-oss/gra/actions/runs/41482423516) **SUCCESS21s** oraz [deploy41482455135, próba1](https://github.com/ksobczak321-oss/gra/actions/runs/41482455135) **SUCCESS2min20s**. Oba joby gate125404047839/deploy125404217870 zakończyły się sukcesem dla tego samego SHA. Przeszły wdrożenie API i sondy, publikacja Hostingu i porównanie dokładnego pakietu, rzeczywisty hostowany Chromium zalogowanej gry oraz odczyt i izolacja trzech stałych kont.
+
+Oba artefakty udanej próby opublikowano. Publicznie odczytane metadane ZIP-ów: frontend13160936132/`bc476446a80cc5db333819aecb8d9eda8a433f95d2c401ede26e91681d503769`, receipt13159179197/`1c961039fc2372283fe17c2f898b8db347553c9487e873ccd3d1bc9c73802c80`. Wnętrza ZIPów, digestu obrazu backendu i flagi API w receipt nie odczytano niezależnie; nie utożsamiamy publicznych digestów ZIP z hashami TAR/manifestu. [Pełna metryka](PREPROD-V28-PROMOTION.md).
+
+Wszystkie60publicznych wejść odpowiadają odebranemu DEV0ca7715; schemat9/archipelag2 bez zmiany. Zachowano konta, UID, hasła i historię, bez resetu i PROD oraz realnych operatorów.52implementacje v28 oraz karta operacji1022 otrzymują `deployed_source_d9e2940`; odrzucona1013 nie jest wdrożona. 351kart/96ręcznych NOT RUN. Pominięty bridge41480227597 pozostaje historią anulowanego CI metadanych; rzeczywisty bridge to41482423516. Potwierdzenie tagu PRE-PROD jest osobnym ostatnim etapem i wymaga odczytu zdalnego.
+
+
+## 2026-11-02 — tag PRE-PROD0.12 opublikowany i potwierdzony
+
+Tag [`preprod-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/preprod-0.12.0.0-20261102) jest **opublikowany i potwierdzony zdalnie**: obiekt `d66b25ba216e5b686e6a92b9b8558d35eda9fd2d` rozwiązuje się do `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`. Nie przesuwamy go na późniejsze commity metadanych. Potwierdzenie `git ls-remote` nastąpiło po sukcesie deployu41482455135/próba1 i odczycie publicznych metadanych obu artefaktów udanej próby. Poprzedni akapit o odrębnym potwierdzeniu tagu opisuje wcześniejszy etap; bieżący tag jest już opublikowany. Późniejszy commit dowodów nie zmienia60publicznych wejść aplikacji. Bez resetu kont, PROD i rzeczywistych operatorów.

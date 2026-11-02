@@ -25,9 +25,13 @@ Tag nie jest przesuwany i nie uruchamia publikacji GCP. Pozwala zapisać wynik j
 
 ## 2. Promocja na PRE-PROD
 
-### Autoryzowana promocja 0.12.0.0
+### Odebrana promocja 0.12.0.0
 
-Nowe „Promuj na pre prod” z2listopada2026 autoryzuje standardową promocję0.12.0.0, zachowując konta, hasła i postęp, bez resetu oraz PROD. [Bieżące przygotowanie i odbiór](PREPROD-V28-PROMOTION.md) wiąże nowy commit z odebranym DEV0ca7715. Bridge ma dodatkowy dokładny marker `[preprod:0.12.0.0]`; poprzednie trzy markery pozostają historycznymi autoryzacjami. Wszystkie kontrole świeżego CI, SHA, deduplikacji i main pozostają. Nowy commit musi mieć własne pełne zielone CI. Nie przesuwamy main do potwierdzenia SHA rozpoczętej promocji. Ta autoryzacja zastępuje ograniczenie samego GO DEV dla0.12 i nie uruchamia historycznego resetu kont.
+Zlecenie „Promuj na pre prod” z2listopada2026 zrealizowano standardowym workflow, bez resetu i PROD. Źródło `d9e2940b9a00755d979c159ec0fb62e290dd7ff1` ma własne [CI41480146644](https://github.com/ksobczak321-oss/gra/actions/runs/41480146644) **SUCCESS13min46s**, Pages41480146737 **SUCCESS41s**, rzeczywisty bridge41482423516 **SUCCESS21s** i [deploy41482455135, próba1](https://github.com/ksobczak321-oss/gra/actions/runs/41482455135) **SUCCESS2min20s**. Wymagane kontrole Hostingu, hostowanej zalogowanej gry i izolacji kont przeszły; oba artefakty udanej próby opublikowano.
+
+Bridge przyjmuje dokładny marker `[preprod:0.12.0.0]`, zachowując trzy wcześniejsze autoryzacje i wszystkie bramki repozytorium, CI, SHA, niezmienionego main oraz deduplikacji. Wszystkie60publicznych wejść aplikacji odpowiadają odebranemu DEV0ca7715. Pominięty bridge41480227597 dotyczył anulowanego CI metadanych i nie był dispatchiem tego wydania. [Rejestr promocji](PREPROD-V28-PROMOTION.md) zawiera konkretne dowody i granice odczytu artefaktów; nie uruchamiano historycznego resetu kont.
+
+Tag [`preprod-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/preprod-0.12.0.0-20261102) jest **opublikowany i potwierdzony zdalnie**: obiekt `d66b25ba216e5b686e6a92b9b8558d35eda9fd2d` rozwiązuje się do `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`. Nie przesuwamy go na późniejsze commity metadanych.
 
 ### Autoryzowana promocja 0.10.1.0
 
@@ -112,7 +116,12 @@ OAuth Google/Facebook wymaga konfiguracji dostawcy i domen; prawdziwe Paynow/rek
 
 ## 5. Bieżące i historyczne potwierdzenia
 
-Bieżące PRE-PROD to **0.10.1.0 /353faad347262dce7c3632fdf7c71be124384ab1**: CI41246449612SUCCESS3m54s, Pages41246449682SUCCESS31s, bridge41246756848SUCCESS15s oraz deploy41246771480/próba1SUCCESS2m05s. Nowe prywatne reguły potwierdził właściciel przed publikacją. Konta i postęp bez resetu, PROD bez promocji. Odczytowe kontrole hostingu nie zastępują osobnej kontroli automatycznego zapisu. Pełne dowody i hashe w [rejestrze](ENVIRONMENT-STATUS.md).
+Bieżący PRE-PROD to **0.12.0.0 / `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`**: własne CI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, bridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Rzeczywisty Hosting, zalogowana gra, konta i izolacja przeszły; oba artefakty udanej próby są opublikowane. Kont i historii nie resetowano, PROD bez nowej promocji. [Dowody i rozdzielenie digestów](PREPROD-V28-PROMOTION.md).
+
+### Historyczne PRE-PROD0.10.1.0
+
+Historyczne PRE-PROD to **0.10.1.0 /353faad347262dce7c3632fdf7c71be124384ab1**: CI41246449612SUCCESS3m54s, Pages41246449682SUCCESS31s, bridge41246756848SUCCESS15s oraz deploy41246771480/próba1SUCCESS2m05s. Nowe prywatne reguły potwierdził właściciel przed publikacją. Konta i postęp bez resetu, PROD bez promocji. Odczytowe kontrole hostingu nie zastępują osobnej kontroli automatycznego zapisu. Pełne dowody i hashe w [rejestrze](ENVIRONMENT-STATUS.md).
+
 
 ### Poprzednie pilne PRE-PROD0.9.1.2
 

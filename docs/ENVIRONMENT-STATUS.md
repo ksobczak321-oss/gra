@@ -2,9 +2,32 @@
 
 Aktualizacja operacyjna: **2 listopada 2026, Europe/Warsaw**. Akceptacja opisów i pierwotny odbiór lokalny pozostają z 1 listopada. Historia wyników jest w [dzienniku](IMPLEMENTATION-LOG.md); warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-## Zlecona promocja PRE-PROD0.12.0.0 — przygotowanie
+## Aktualny PRE-PROD 0.12.0.0 — pełny odbiór SUCCESS
 
-Użytkownik wydał nowe **„Promuj na pre prod”**. Przygotowywany commit promocji zachowuje60publicznych wejść odebranego DEV0ca7715 i dodaje wyłącznie autoryzację0.12 do istniejącego wyzwalacza oraz dowody. WłasneCI, dispatch, rzeczywiste wdrożenie i jego artefakty są jeszcze **PENDING**. [Oddzielny rejestr etapów](PREPROD-V28-PROMOTION.md). Ostatni potwierdzony PRE-PROD nadal0.11/c7c3974; zwykła promocja nie resetuje kont ani historii.
+**PRE-PROD 0.12.0.0 jest odebrany.** Źródło `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`, [CI 41480146644](https://github.com/ksobczak321-oss/gra/actions/runs/41480146644) **SUCCESS, 13 min 46 s**, [Pages 41480146737](https://github.com/ksobczak321-oss/gra/actions/runs/41480146737) **SUCCESS, 41 s**, [bridge 41482423516](https://github.com/ksobczak321-oss/gra/actions/runs/41482423516) **SUCCESS, 21 s** oraz [deploy 41482455135, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41482455135) **SUCCESS, 2 min 20 s**. Przeszły kontrole dokładnego Hostingu, zalogowanej gry i izolacji trzech kont. Oba artefakty opublikowano. Kont, haseł i historii gry nie resetowano; PROD i rzeczywiści operatorzy bez nowej aktywacji.
+
+| Warstwa | Potwierdzony stan |
+|---|---|
+| Źródło | `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`, ten sam pełny SHA własnego CI i rozpoczętego deployu. Aplikacja0.12.0.0/cachefrontend-v28-2, schemat9/archipelag2. |
+| CI i podgląd | [CI41480146644](https://github.com/ksobczak321-oss/gra/actions/runs/41480146644) SUCCESS13min46s; [Pages41480146737](https://github.com/ksobczak321-oss/gra/actions/runs/41480146737) SUCCESS41s. |
+| Dispatch | Rzeczywisty [bridge41482423516](https://github.com/ksobczak321-oss/gra/actions/runs/41482423516) SUCCESS21s; source-main pozostał niezmieniony do potwierdzenia uruchomionego deployu. |
+| PRE-PROD | [Deploy41482455135, próba1](https://github.com/ksobczak321-oss/gra/actions/runs/41482455135) SUCCESS2min20s. Job gate125404047839 i deploy125404217870 zakończone sukcesem dla dokładnie źródła d9e2940. |
+| Rzeczywiste kontrole | API/health/ready, Hosting, dokładny pakiet plików, zalogowana gra i izolacja trzech stałych kont PASS. Testy odczytowe nie zastępują ręcznego testu zapisu. |
+| Dane i PROD | Konta, UID, hasła i historia zachowane bez resetu. Brak nowej promocji PROD oraz aktywacji rzeczywistych płatności, reklam i przelewów. |
+| Ewidencja |351 kart;52implementacje v28 oraz karta operacji1022 mają `deployed_source_d9e2940`. Karta1013 odrzucona i niewdrożona. Wszystkie96ręcznych przypadków pozostają NOT RUN. |
+
+Tag [`preprod-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/preprod-0.12.0.0-20261102) jest **opublikowany i potwierdzony zdalnie**: obiekt `d66b25ba216e5b686e6a92b9b8558d35eda9fd2d` rozwiązuje się do `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`. Nie przesuwamy go na późniejsze commity metadanych.
+
+### Artefakty udanej próby1
+
+| Nazwa | Publiczne ID GitHub | Publiczny SHA-256 ZIP GitHub |
+|---|---:|---|
+| `harborlight-dev-frontend-41482455135-1` |13160936132|`bc476446a80cc5db333819aecb8d9eda8a433f95d2c401ede26e91681d503769`|
+| `harborlight-dev-release-41482455135-1` |13159179197|`1c961039fc2372283fe17c2f898b8db347553c9487e873ccd3d1bc9c73802c80`|
+
+Nazwy, identyfikatory i digests odczytano z publicznego HTML przebiegu, a publikacja obu artefaktów przeszła w standardowym workflow. Nie pobrano ich ZIP-ów; nie odczytano niezależnie zawartości receipt, digestu backendu ani flagi API w receipt. Publiczne digests ZIP nie są hashami wewnętrznego TAR lub manifestu. Nie weryfikowano niezależnie pola API `expired:false`.
+
+[Rejestr promocji](PREPROD-V28-PROMOTION.md) rozdziela te dowody i potwierdzenie tagu. Pominięty bridge41480227597 obsługiwał anulowane CI metadanych1e8b67c; rzeczywisty dispatch tego wydania to41482423516.
 
 ## Aktualny DEV 0.12.0.0 — własne CI i Pages SUCCESS
 
@@ -19,15 +42,15 @@ Użytkownik wydał nowe **„Promuj na pre prod”**. Przygotowywany commit prom
 | QA | Browser aktualnej listy 96 PASS; wszystkie 96 ręcznych NOT RUN. |
 | Pakiet |62 pliki /11 332 589 bajtów, weryfikacja i rozpakowanie PASS. TAR `3bbadb1f4f0a2f552a465ba6a3730d499598e9430ae0c0396fe559939a3cb80a`, manifest `787e1c1fabe8f338e586a2606b6f1ce4ab33248955f5ba7a0885e9dcd2fc4dd3`. |
 | Tag | [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. |
-| Ewidencja |350 kart; 52 implementacje v28 mają implemented/validated_pages_published/passed_current_source. Karta 1013 zachowuje not_implemented/rejected. |
-| PRE-PROD |0.11.0.0 /`c7c39742594599c54ee8b074b5c313efd88af4cb`, deploy41362782175/próba 1 SUCCESS. Bez nowej promocji. |
+| Ewidencja |351 kart; 52 implementacje v28 mają implemented/validated_pages_published/passed_current_source. Karta 1013 zachowuje not_implemented/rejected. |
+| PRE-PROD | **0.12.0.0**, `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`; deploy41482455135/próba1 SUCCESS, 2 min 20 s. Szczegóły aktualnego odbioru powyżej. |
 | PROD/dane/operatorzy | Bez promocji, resetu kont/wysp/haseł i aktywacji realnych płatności/reklam/darowizn. |
 
 Pierwszy kandydat `0d17b7aa91fef72f0fb36d28451d711daeaee909` zachowuje CI 41471972606 **FAILURE, 9 min 48 s**: mobilny przycisk wyjścia tutoriala miał y=-21. Osobny audyt wykrył zawyżoną prognozę czasowej premii. Poprawione źródło0ca7715 ma własny późniejszy sukces; nie przepisujemy wcześniejszej awarii na sukces lub anulowanie.
 
 [Walidacja](DEV-0.12.0.0-VALIDATION.md) zachowuje osobne źródła, pakiety i wyniki obu kandydatów. Dalszy commit metadanych nie zmienia 60 publicznych wejść gry i nie zastępuje źródła `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`.
 
-## Ostatni odebrany DEV i aktualny PRE-PROD — 0.11.0.0 / v27
+## Historyczne wydanie DEV i PRE-PROD — 0.11.0.0 / v27
 
 **DEV i PRE-PROD 0.11.0.0 odebrane — 2 listopada 2026, Europe/Warsaw.** Źródło [`c7c39742594599c54ee8b074b5c313efd88af4cb`](https://github.com/ksobczak321-oss/gra/commit/c7c39742594599c54ee8b074b5c313efd88af4cb): [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) **SUCCESS, 10 min 9 s**, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) **SUCCESS, 21 s**, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) **SUCCESS, 16 s**, [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) **SUCCESS, 2 min 17 s**. Pełne źródło wdrożenia potwierdzono.
 

@@ -1,12 +1,14 @@
 # HARBORLIGHT
 
-**Zlecono promocję PRE-PROD0.12.0.0.** Przygotowanie, własneCI i wynik wdrożenia są rozdzielone w [rejestrze promocji](docs/PREPROD-V28-PROMOTION.md). Ostatni potwierdzony PRE-PROD pozostaje poniżej do zakończenia odbioru; bez resetu kont.
+**PRE-PROD 0.12.0.0 jest odebrany.** Źródło `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`, [CI 41480146644](https://github.com/ksobczak321-oss/gra/actions/runs/41480146644) **SUCCESS, 13 min 46 s**, [Pages 41480146737](https://github.com/ksobczak321-oss/gra/actions/runs/41480146737) **SUCCESS, 41 s**, [bridge 41482423516](https://github.com/ksobczak321-oss/gra/actions/runs/41482423516) **SUCCESS, 21 s** oraz [deploy 41482455135, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41482455135) **SUCCESS, 2 min 20 s**. Przeszły kontrole dokładnego Hostingu, zalogowanej gry i izolacji trzech kont. Oba artefakty opublikowano. Kont, haseł i historii gry nie resetowano; PROD i rzeczywiści operatorzy bez nowej aktywacji. [Pełne dowody promocji](docs/PREPROD-V28-PROMOTION.md).
 
-**[Podgląd DEV 0.12.0.0](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v28-2)** · **[Graj w PRE-PROD 0.11.0.0](https://harborlight-dev.web.app)**. Nowe wydanie dotyczy DEV; PRE-PROD pozostaje przy źródle `c7c39742594599c54ee8b074b5c313efd88af4cb` i deployu41362782175/próba 1. Bez nowej promocji GCP i resetu kont.
+Tag [`preprod-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/preprod-0.12.0.0-20261102) jest **opublikowany i potwierdzony zdalnie**: obiekt `d66b25ba216e5b686e6a92b9b8558d35eda9fd2d` rozwiązuje się do `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`. Nie przesuwamy go na późniejsze commity metadanych.
+
+**[Graj w PRE-PROD 0.12.0.0](https://harborlight-dev.web.app)** · **[Podgląd DEV 0.12.0.0](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v28-2)**. Aplikacja zachowuje schemat świata9 i archipelag2; 60 publicznych wejść jest identycznych z odebranym DEV0ca7715.
 
 **DEV 0.12.0.0 odebrany dla źródła `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`**, cache `frontend-v28-2`. Własne [CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) zakończyło się **SUCCESS, 12 min 33 s**; obie grupy Chromium przeszły dla tego samego SHA. [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) ma **SUCCESS, 31 s**. Push na `main` potwierdzono. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) jest **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie ten SHA.
 
-**[96 scenariuszy ręcznych](docs/testing/qa-checklist.html)** · **[Lista do odhaczania](docs/testing/START-HERE.md)** · **[350 kart zmian](docs/tracking/CHANGE-REGISTER.md)** · **[Planszówka do wydruku](docs/boardgame/README.md)**. Browser aktualnej listy QA 96 PASS; wszystkie ręczne wyniki nadal **NOT RUN**. Integracja planszówki online pozostaje odłożona.
+**[96 scenariuszy ręcznych](docs/testing/qa-checklist.html)** · **[Lista do odhaczania](docs/testing/START-HERE.md)** · **[351 kart zmian](docs/tracking/CHANGE-REGISTER.md)** · **[Planszówka do wydruku](docs/boardgame/README.md)**. Browser aktualnej listy QA 96 PASS; wszystkie ręczne wyniki nadal **NOT RUN**. Integracja planszówki online pozostaje odłożona.
 
 Nowe reguły obejmują 33 opisy tutoriala, 25 lekcji programu 6 od 3 tragarzy, rzeczywiste przyspieszenia, bank 7 porcji, modlitwę, narracyjne misje Latarni, usługi monetami TH1/doładowania TH3, ligę z playoffami i oznaczony mock Pomagam. [Zakres](docs/FRONTEND-V28-REQUIREMENTS.md) · [Pełny odbiór i artefakty](docs/DEV-0.12.0.0-VALIDATION.md) · [Środowiska](docs/ENVIRONMENT-STATUS.md).
 
@@ -15,7 +17,7 @@ Nowe reguły obejmują 33 opisy tutoriala, 25 lekcji programu 6 od 3 tragarzy, r
 | Miejsce | Potwierdzony stan |
 |---|---|
 | DEV | `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache `frontend-v28-2`; własne CI SUCCESS, 12 min 33 s, Pages SUCCESS, 31 s. Tag `dev-0.12.0.0-20261102` opublikowany i potwierdzony zdalnie. |
-| PRE-PROD `harborlight-dev` |0.11.0.0 /`c7c39742594599c54ee8b074b5c313efd88af4cb`, deploy41362782175/próba 1 SUCCESS. Bez nowej promocji. |
+| PRE-PROD `harborlight-dev` | **0.12.0.0**, `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`; [deploy41482455135, próba1](https://github.com/ksobczak321-oss/gra/actions/runs/41482455135) SUCCESS, 2 min 20 s. Hosting, zalogowana gra i konta/izolacja PASS; bez resetu. |
 | PROD `harborlight-prod` | Bez nowej promocji i potwierdzenia uruchomienia domeny. |
 
 **1128 testów Node PASS** (991 frontend +130 backend +7 planszówki), **141 Python PASS** oraz **32 zestawy Chromium PASS**. Własny CI poprawionego źródła zaliczył obie grupy przeglądarkowe, więc dawny wynik pierwszego pakietu nie zastępuje już bieżącego odbioru. Kierunkowe regresje obejmują dodatkowo 132 wymuszone próby przewijania PL/EN na telefonie, 4 warianty UI, 7 nowych testów prognozy i zestaw 144 testów powiązanych.
@@ -26,7 +28,7 @@ Nie porównano niezależnie hostowanych bajtów Pages w tej sesji; wcześniejszy
 
 ## Wcześniejsza pilna poprawka 0.9.1.2
 
-[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Poprawka przeszła własne CI i promocję PRE-PROD; dowody zapisano w rejestrze środowisk. Nie resetowano kont. Tamten zakres miał 251 zmian i 46 ręcznych przypadków; bieżąca ewidencja DEV ma **350 zmian i 96 przypadków**, w tym nowe HL-TC-0071–0096 dla v28.
+[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Poprawka przeszła własne CI i promocję PRE-PROD; dowody zapisano w rejestrze środowisk. Nie resetowano kont. Tamten zakres miał 251 zmian i 46 ręcznych przypadków; bieżąca ewidencja DEV ma **351 zmian i 96 przypadków**, w tym nowe HL-TC-0071–0096 dla v28.
 
 ## Poprzedni zakres DEV 0.9.1.1
 

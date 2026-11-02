@@ -10,8 +10,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `validated_dispatcher_and_unchanged_app` |
-| CI | `pending_new_source` |
-| PRE-PROD | `promotion_authorized_not_started` |
+| CI | `passed_source_d9e2940` |
+| PRE-PROD | `deployed_source_d9e2940` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -39,9 +39,12 @@ Data pierwotnej wiadomości: 2026-11-02. Nowe jawne zlecenie po odebranym DEV0.1
 - **Dokumenty:** [docs/PREPROD-V28-PROMOTION.md](../../PREPROD-V28-PROMOTION.md), [docs/RELEASE-PROCESS.md](../../RELEASE-PROCESS.md), [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md)
 - **Kod:** [infra/google-cloud/urgent-preprod-dispatch.mjs](../../../infra/google-cloud/urgent-preprod-dispatch.mjs), [.github/workflows/promote-urgent-preprod.yml](../../../.github/workflows/promote-urgent-preprod.yml), [.github/workflows/google-cloud-dev.yml](../../../.github/workflows/google-cloud-dev.yml)
 - **Scenariusze automatyczne:** [tests/harborlight-urgent-preprod-dispatch.test.mjs](../../../tests/harborlight-urgent-preprod-dispatch.test.mjs), [tests/harborlight-promotion.test.mjs](../../../tests/harborlight-promotion.test.mjs)
+- **Kod dowodowy:** `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41480146644.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/41482455135.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Lokalnie30/30 testów dispatchera/promocji PASS. Wszystkie60publicznych wejść są identyczne z odebranymDEV0ca7715. Nowy commit z markerem0.12 wymaga własnegoCI; dopiero potem istniejącybridge uruchomi standardowy deploy. Ostatni potwierdzony PRE-PROD0.11/c7c3974, bez resetu iPROD.
+Promocja źródła `d9e2940b9a00755d979c159ec0fb62e290dd7ff1` zakończona: CI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole Hostingu, rzeczywistej zalogowanej gry i izolacji kont przeszły. Opublikowano frontend41482455135-1/id13160936132 oraz release41482455135-1/id13159179197; publiczneZIPdigests i granice nieodczytanego wnętrza są w raporcie promocji.53karty implementacji/operacji mają wdrożenie, karta1013 pozostaje odrzucona. 351kart/96ręcznychNOT RUN. Konta, hasła i historia zachowane, bez resetu i PROD. Bridge41480227597 był pominiętą obsługą anulowanego CI metadanych, nie dispatchiem0.12.  Tag `preprod-0.12.0.0-20261102` jest opublikowany i potwierdzony zdalnie: `d66b25ba216e5b686e6a92b9b8558d35eda9fd2d`→`d9e2940b9a00755d979c159ec0fb62e290dd7ff1`; nie przesuwamy go na późniejsze metadane.
 
 ## Relacje
 
