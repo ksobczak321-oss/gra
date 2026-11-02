@@ -2,20 +2,23 @@
 
 Aktualizacja operacyjna: **2 listopada 2026, Europe/Warsaw**. Akceptacja opisów i pierwotny odbiór lokalny pozostają z 1 listopada. Historia wyników jest w [dzienniku](IMPLEMENTATION-LOG.md); warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-## Aktualny zakres DEV — 0.12.0.0 / v28, odbiór w toku
+## Aktualny DEV 0.12.0.0 — poprawki gotowe, nowy odbiór oczekuje
 
-**GO z 2 listopada 2026, Europe/Warsaw obejmuje tylko DEV, Git/CI/Pages.** [Zakres v28](FRONTEND-V28-REQUIREMENTS.md) jest implementowany i sprawdzany lokalnie. Końcowy SHA oraz własne pełne CI/Pages tej paczki są **PENDING**; sukces poprzedniej wersji nie jest odbiorem nowych zmian.
+**Bieżący DEV 0.12.0.0 / cache `frontend-v28-2`: dwie poprawki są gotowe w katalogu roboczym, a końcowy SHA, pełna rewalidacja i własne CI nowego kandydata oczekują.** Prognoza wykonalności uwzględnia wygaśnięcie czasowej premii; krzyżyk tutoriala pozostaje dostępny przy przewijaniu długiej karty telefonu.
 
-| Warstwa | Rzeczywisty bieżący stan |
+Pierwszy kandydat `0d17b7aa91fef72f0fb36d28451d711daeaee909` ma [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) **SUCCESS, 29 s**, lecz jego [CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) zakończyło się **FAILURE, 9 min 48 s**. Publiczna adnotacja onboarding-v20 wskazała przycisk X poza ekranem telefonu (y=-21); grupa 1 Chromium przeszła. To historia nieudanego kandydata, bez tagu i promocji. Dodatkowy audyt wykrył zawyżoną prognozę premii (400 zamiast 240 w przykładowym oknie 10 h); obie regresje muszą przejść własny odbiór poprawionego źródła.
+
+| Warstwa | Stan poprawionego kandydata |
 |---|---|
-| DEV / v28 | Zmieniony katalog roboczy 0.12.0.0: nowe lekcje i rzeczywiste przyspieszenia, 33 opisy, bank Domu, modlitwa, narracyjne nagrody, portfel monet, D12 i społeczność. Pełna integracja i walidacja w toku. |
-| Testy | Potwierdzone próby cząstkowe i niezależne oczekujące bramki w [walidacji 0.12](DEV-0.12.0.0-VALIDATION.md). Nie przenosimy dawnych sum na nowy kod. |
-| Git / CI / Pages v28 | Brak potwierdzonego końcowego SHA, przebiegów i tagu tej paczki. Lokalny kod nie oznacza publikacji. |
-| PRE-PROD | **Bez zmiany: 0.11.0.0 / `c7c39742594599c54ee8b074b5c313efd88af4cb`**, [deploy 41362782175, próba 1 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175). Nowe GO nie autoryzuje kolejnej promocji. |
-| Ewidencja | **348 karty zmian; 94 ręcznych przypadków NOT RUN**. Nowe karty HL-CHG-0969–1019 i TC0071–0094 mają osobne kryteria. |
-| PROD / dane / operatorzy | Bez nowej promocji, resetu kont i historii, zmiany haseł lub aktywacji realnych płatności, reklam i darowizn. |
+| Kod | Dwie poprawki gotowe; cache `frontend-v28-2`, schemat świata 9. Końcowy nowy SHA jeszcze nieprzekazany. |
+| Prognoza | logistics.js: koniec premii dzieli okno planowania na odcinek premii i zwykłej produkcji.7 nowych/144 kierunkowych testów PASS. |
+| Tutorial | Krzyżyk na przewijanej karcie poprawiony; nowa wymuszona regresja przewijania i pełny odbiór oczekują wpisu wyników. |
+| Nowe CI/Pages/tag | PENDING nowego źródła; tag nieutworzony. Nie uznajemy pierwszego CI za sukces lub anulowanie. |
+| Ewidencja | **350 kart /96 ręcznych NOT RUN**, HL-CHG-0969–1021, TC0071–0096. Odrzucona krzywa 1013 pozostaje not_implemented/rejected. |
+| PRE-PROD |0.11.0.0 /`c7c39742594599c54ee8b074b5c313efd88af4cb`, deploy41362782175/próba 1 SUCCESS. Bez nowej promocji. |
+| PROD / dane / operatorzy | Bez promocji, resetu kont/wysp/haseł i aktywacji realnych płatności/reklam/darowizn. |
 
-Zwykłe szczęście pozostaje +2 punkty/h za pracę i jedzenie oraz −1 o północy Warszawy. Odrzucona krzywa przy 30 punktach nie jest częścią v28. Mock przelewu przygotowany dla PRE-PROD jest jawnie symulowany i **nie został tam opublikowany w ramach tego GO**. Poniższy potwierdzony odbiór 0.11 pozostaje historią ostatniego wdrożenia, nie stanem kodu lokalnego v28.
+Pierwszy kandydat0d17b7a zachowuje własne wyniki lokalne 1121 Node/141 Python/32 Chromium +2 ponowienia rejestracji oraz browser QA 94 PASS, lokalny pakiet 62 pliki/11 330 478 bajtów i Pages SUCCESS29 s. CI zakończyło się FAILURE9 min 48 s. Szczegóły i hashe w [walidacji 0.12](DEV-0.12.0.0-VALIDATION.md). Proxy HTTP403 uniemożliwiło niezależne porównanie hostowanych bajtów. Nowa poprawka kodu oznacza konieczność osobnego źródła/pakietu/CI; dawne hashe nie są bieżącymi hashami poprawki.
 
 ## Ostatni odebrany DEV i aktualny PRE-PROD — 0.11.0.0 / v27
 

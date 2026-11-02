@@ -1,28 +1,28 @@
 # HARBORLIGHT
 
-**[Graj w PRE-PROD 0.11.0.0](https://harborlight-dev.web.app)** — wdrożenie [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) zakończyło się **SUCCESS** dla źródła `c7c39742594599c54ee8b074b5c313efd88af4cb`. Konta i postęp zachowano; bez resetu i publikacji PROD.
+**[Graj w PRE-PROD 0.11.0.0](https://harborlight-dev.web.app)** — ostatni odebrany deploy41362782175/próba 1, źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`. Konta i postęp zachowano; brak nowej promocji PRE-PROD/PROD i resetu.
 
-**DEV 0.12.0.0 / v28 jest w trakcie własnego odbioru.** Nowy kod ma 33 opisy tutoriala, 25 lekcji programu 6 od trzech tragarzy, rzeczywiste prowadzenie przez przyspieszenia, bank szczęścia Domu, modlitwę i narracyjne misje Latarni. Usługi używają monet od Ratusza 1, doładowanie PLN od Ratusza 3. Liga obejmuje wszystkie 7 dni i playoffy, a Pomagam jest jawnie symulowane. Nowe GO nie obejmuje promocji PRE-PROD/PROD ani resetu.
+**Bieżący DEV 0.12.0.0 / cache `frontend-v28-2`: dwie poprawki są gotowe w katalogu roboczym, a końcowy SHA, pełna rewalidacja i własne CI nowego kandydata oczekują.** Prognoza wykonalności uwzględnia wygaśnięcie czasowej premii; krzyżyk tutoriala pozostaje dostępny przy przewijaniu długiej karty telefonu.
 
-**[Testy do odhaczania — zacznij tutaj](docs/testing/START-HERE.md)** · **[94 scenariusze ręcznych](docs/testing/qa-checklist.html)** · **[348 karty zmian](docs/tracking/CHANGE-REGISTER.md)** · **[Planszówka do wydruku](docs/boardgame/README.md)**. Wszystkie ręczne wyniki nadal NOT RUN. Integracja planszówki online pozostaje odłożona.
+Pierwszy kandydat `0d17b7aa91fef72f0fb36d28451d711daeaee909` ma [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) **SUCCESS, 29 s**, lecz jego [CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) zakończyło się **FAILURE, 9 min 48 s**. Publiczna adnotacja onboarding-v20 wskazała przycisk X poza ekranem telefonu (y=-21); grupa 1 Chromium przeszła. To historia nieudanego kandydata, bez tagu i promocji. Dodatkowy audyt wykrył zawyżoną prognozę premii (400 zamiast 240 w przykładowym oknie 10 h); obie regresje muszą przejść własny odbiór poprawionego źródła.
 
-[Zakres v28](docs/FRONTEND-V28-REQUIREMENTS.md) · [Bieżąca walidacja 0.12](docs/DEV-0.12.0.0-VALIDATION.md) · [Stan środowisk](docs/ENVIRONMENT-STATUS.md) · [Historyczny odbiór PRE-PROD 0.11](docs/DEV-0.11.0.0-VALIDATION.md).
+**[Testy do odhaczania](docs/testing/START-HERE.md)** · **[96 scenariuszy ręcznych](docs/testing/qa-checklist.html)** · **[350 kart zmian](docs/tracking/CHANGE-REGISTER.md)** · **[Planszówka do wydruku](docs/boardgame/README.md)**. Wszystkie ręczne wyniki **NOT RUN**; integracja planszówki online pozostaje odłożona.
+
+Nowe reguły obejmują 33 opisy tutoriala, 25 lekcji programu 6 od 3 tragarzy, rzeczywiste przyspieszenia, bank 7 porcji, modlitwę, narracyjne misje Latarni, usługi monetami TH1/doładowania TH3, ligę z playoffami i oznaczony mock Pomagam. [Zakres](docs/FRONTEND-V28-REQUIREMENTS.md) · [Bieżący odbiór](docs/DEV-0.12.0.0-VALIDATION.md) · [Środowiska](docs/ENVIRONMENT-STATUS.md).
 
 ## Środowiska i wydanie
 
-| Miejsce | Potwierdzony stan |
+| Miejsce | Bieżący stan |
 |---|---|
-| DEV | **0.12.0.0/v28**, lokalny kod w trakcie pełnego odbioru. Końcowy SHA, własne CI/Pages oraz tag wymagają potwierdzenia; nie przenosimy sukcesów 0.11 na tę paczkę. [Wyniki i oczekujące bramki](docs/DEV-0.12.0.0-VALIDATION.md). Ostatni potwierdzony podgląd Pages jest historycznym 0.11/c 7 c 3974. |
-| PRE-PROD — `harborlight-dev` | **0.11.0.0**, źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`; [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16 s, [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS, 2 m 17 s. Dokładne wydanie, hostowana gra oraz izolacja stałych kont przeszły. |
-| PROD — `harborlight-prod` /`harborlight.pl` | Bez nowej promocji; publikacja i domena nadal bez potwierdzonego uruchomienia. |
+| DEV | Poprawiony kandydat 0.12.0.0/cache `frontend-v28-2`; końcowy SHA/pełne testy/własne CI PENDING. Pierwszy kandydat0d17b7a ma historyczne CI FAILURE. |
+| PRE-PROD `harborlight-dev` |0.11.0.0 /`c7c39742594599c54ee8b074b5c313efd88af4cb`, deploy41362782175/próba 1 SUCCESS. Bez nowej promocji. |
+| PROD `harborlight-prod` | Bez nowej promocji i potwierdzenia uruchomienia domeny. |
 
-Nieprzesuwane tagi [`dev-0.11.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.11.0.0-20261102) i [`preprod-0.11.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/preprod-0.11.0.0-20261102) są **opublikowane i potwierdzone zdalnie**; oba wskazują dokładnie `c7c39742594599c54ee8b074b5c313efd88af4cb`.
-
-Przy pierwszej próbie promocji 7 d 45290 Hosting opublikowano, ale stary checker nie obsłużył aktualnej koperty zapisu. Przebieg 41360977479 pozostaje FAILURE w historii. Poprawka c 7 c 3974 obsługuje ściśle legalne kontrakty 1/2/API i zachowuje kontrole izolacji; kolejny pełny odbiór przeszedł. Szczegóły, hashe i ograniczenia dowodów są w dokumentacji wydania. PRE-PROD zachowuje osobne konta `admin1`, `admin2`, `admin3`.
+Lokalny odbiór **pierwszego kandydata**:1121 Node (984 frontend +130 backend +7 planszówki),141 Python, 32 zestawy Chromium oraz 2 ponowienia rejestracji PASS. Browserów lista QA 94 PASS dotyczyła narzędzia raportowego, nie ręcznego wykonania 94 zadań. Aktualny rejestr 96 i poprawiony kod wymagają odpowiedniego ponowienia. Te wyniki nie obejmują nowo wykrytych regresji. Proxy 403 blokuje wtej sesji niezależny odczyt bajtów hostowanego Pages.
 
 ## Wcześniejsza pilna poprawka 0.9.1.2
 
-[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Poprawka przeszła własne CI i promocję PRE-PROD; dowody zapisano w rejestrze środowisk. Nie resetowano kont. Tamten zakres miał 251 zmian i 46 ręcznych przypadków; bieżąca ewidencja DEV ma **348 zmiany i 94 przypadków**, w tym nowe HL-TC-0071–0094 dla v28.
+[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Poprawka przeszła własne CI i promocję PRE-PROD; dowody zapisano w rejestrze środowisk. Nie resetowano kont. Tamten zakres miał 251 zmian i 46 ręcznych przypadków; bieżąca ewidencja DEV ma **350 zmian i 96 przypadków**, w tym nowe HL-TC-0071–0096 dla v28.
 
 ## Poprzedni zakres DEV 0.9.1.1
 
@@ -38,7 +38,7 @@ Rzeczywisty koszt ostatnich 24 h jest nieustalony z powodu braku dostępu do Bil
 
 - Materiały bonusowe są od razu wydawalne i nie zajmują pojemności zwykłych dostaw. Wydajemy bonus przed zwykłym zapasem. Przepełnienie blokuje dalsze skrzynie samouczka, nie rozbudowę i zarządzanie wyspą.
 - Poprawione przyjęcie nagród, limity kolejki, natychmiastowy transport, zachowanie wcześniejszych zleceń Targu i ochrona podjętego na czas ładunku Portu.
-- Bazowe 20% szczęścia nowej wyspy, minimum 20% przez 72 h dla wszystkich, pierwszeństwo wymuszonego 100% i dwukrotnie szybszy dodatni przyrost ludności. Aktywność daje produkcję/podatki/transport ×2; po pięciu minutach ×1, po 48 h bez grania ×0, 5.
+- Bazowe 20% szczęścia nowej wyspy, minimum 20% przez 72 h dla wszystkich, pierwszeństwo wymuszonego 100% i dwukrotnie szybszy dodatni przyrost ludności. Aktywność daje produkcję/podatki/transport ×2; po pięciu minutach ×1, po 48 h bez grania ×0,5.
 - 25 prawdziwych działań samouczka ze wskazaniem właściwego przycisku, skrzynie 100–300 pięciu materiałów, zachowane odebrane nagrody i brak zasłaniania trwającej minigry.
 - Nagrody rund 50, 100, 200, 400… i pula 50, 150, 350, 750…; dobrowolne przedłużenie przed terminem, ryzyko niewypłaconej serii i zachowany wybór kulek/trójek.
 - Zapisywany harmonogram propozycji minigry/reklamy, nagrody materiałowe 10–30, osobne uprawnienie bez reklam w standardowej grze po zakupach 1999 gr/30 dni. Reklamy za czas ekspedycji pozostają także dla uprawnionych.

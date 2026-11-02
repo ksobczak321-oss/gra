@@ -109,6 +109,8 @@ Pełna metodyka i zależności: [MANUAL-TEST-PLAN.md](MANUAL-TEST-PLAN.md). Bie�
 - [ ] [HL-TC-0092 — Zakup statku po utracie odpowiedzi nie zmienia płatnika i nie obciąża drugi raz](manual/HL-TC-0092.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0093 — Pomagam po odczycie lub resecie nie odtwarza starej ewidencji, a błąd chmury nie daje premii](manual/HL-TC-0093.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0094 — Nowa rejestracja zapisuje Regulamin draft5 i niezmienioną Politykę prywatności draft4](manual/HL-TC-0094.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0095 — Wykonalność nie przedłuża czasowej premii na całe okno zadania](manual/HL-TC-0095.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0096 — Przewinięty długi tutorial telefonu zachowuje widoczny przycisk wyjścia](manual/HL-TC-0096.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 
 ## Wynik pojedynczego przypadku
 

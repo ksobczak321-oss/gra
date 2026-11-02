@@ -1,5 +1,5 @@
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v28';
-import { introCopy, APPROVED_TOUR_VERSION, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v28';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v28-2';
+import { introCopy, APPROVED_TOUR_VERSION, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v28-2';
 
 const pick = (language, pl, en) => language === 'pl' ? pl : en;
 const valueFor = (value, language) => {
@@ -207,7 +207,7 @@ export function createIslandOnboarding(options = {}) {
       rect = right > left && bottom > top ? { left, right, top, bottom, width: right - left, height: bottom - top } : null;
     }
     highlight.hidden = !rect; cursor.hidden = !rect; root.classList.toggle('has-target', !!rect);
-    if (!rect) { card.style.left = `${Math.max(safe, (viewportWidth - card.offsetWidth) / 2)}px`; card.style.top = `${Math.max(safe, (viewportHeight - card.offsetHeight) / 2)}px`; return; }
+    if (!rect) { positionCard(Math.max(safe, (viewportWidth - card.offsetWidth) / 2), Math.max(safe, (viewportHeight - card.offsetHeight) / 2)); return; }
     highlight.dataset.target = steps[current.index]?.id || '';
     Object.assign(highlight.style, { left: `${rect.left - 4}px`, top: `${rect.top - 4}px`, width: `${rect.width + 8}px`, height: `${rect.height + 8}px` });
     Object.assign(cursor.style, { left: `${clamp(rect.right - 12, safe, viewportWidth - 38)}px`, top: `${clamp(rect.bottom - 12, safe, viewportHeight - 38)}px` });
@@ -220,7 +220,19 @@ export function createIslandOnboarding(options = {}) {
     ].map(point => ({ x: clamp(point.x, safe, Math.max(safe, viewportWidth - width - safe)), y: clamp(point.y, safe, Math.max(safe, viewportHeight - height - safe)) }));
     const overlap = point => Math.max(0, Math.min(point.x + width, rect.right + 8) - Math.max(point.x, rect.left - 8)) * Math.max(0, Math.min(point.y + height, rect.bottom + 8) - Math.max(point.y, rect.top - 8));
     const placement = positions.reduce((best, point) => overlap(point) < overlap(best) ? point : best);
-    card.style.left = `${placement.x}px`; card.style.top = `${placement.y}px`;
+    positionCard(placement.x, placement.y);
+  }
+  function positionCard(x, y) {
+    card.style.left = `${x}px`; card.style.top = `${y}px`;
+    const exit = card.querySelector('[data-onboarding-exit]');
+    if (exit) {
+      // Tour cards can scroll when a description is long or the next button
+      // receives focus. Keep Close anchored to the visible card, not its
+      // scrolled contents. The tour card has no transform, so fixed uses the
+      // viewport while the control remains in the dialog's focus order.
+      exit.style.left = `${x + card.offsetWidth - exit.offsetWidth - 12}px`;
+      exit.style.top = `${y + 12}px`;
+    }
   }
   function schedulePosition() { if (!frame && active && !destroyed) frame = requestAnimationFrame(position); }
   function keyboard(event) {

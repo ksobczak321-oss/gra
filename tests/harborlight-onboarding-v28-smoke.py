@@ -98,6 +98,53 @@ def scenario(page, language):
     assert page.evaluate('JSON.stringify(fixture.world)===fixture.before')
 
 
+def long_scrolling_tour(page, language):
+    """Every close control survives actual focus/scroll on a long mobile card."""
+    page.evaluate('''async () => {
+      const f=fixture;
+      f.steps=f.copy.APPROVED_TOUR_IDS.map(id=>({id,target:'#target',
+        title:()=>f.copy.getTourCopy(id,f.language).title,
+        text:()=>Array(32).fill(f.copy.getTourCopy(id,f.language).text).join(' ')}));
+      await openTour({routeVersion:2,index:0});
+    }''')
+    tour = page.locator('[data-island-onboarding]')
+    visited = []
+    for index in range(33):
+        identity = tour.get_attribute('data-onboarding-step')
+        assert identity not in visited, visited
+        visited.append(identity)
+        card = page.locator('[data-onboarding-card]')
+        # Keyboard focus and a user scroll both move the scroll container.
+        # Do not scroll Close into view before inspecting it: it must already
+        # be usable while the reader is at the end of the description.
+        tour.locator('[data-onboarding-next]').focus()
+        card.evaluate('node=>{node.scrollTop=node.scrollHeight}')
+        page.evaluate('()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))')
+        assert card.evaluate('node=>node.scrollTop>0 && node.scrollHeight>node.clientHeight'), (language, identity, card.evaluate('node=>({top:node.scrollTop,height:node.clientHeight,scroll:node.scrollHeight})'))
+        card_box = card.bounding_box()
+        viewport = page.viewport_size
+        for selector in ['[data-onboarding-card]', '[data-onboarding-exit]', '[data-onboarding-previous]', '[data-onboarding-next]']:
+            control = page.locator(selector)
+            expect(control).to_be_visible()
+            box = control.bounding_box()
+            assert box and box['x'] >= -1 and box['y'] >= -1, (language, identity, selector, box)
+            assert box['x'] + box['width'] <= viewport['width'] + 1, (language, identity, selector, box)
+            assert box['y'] + box['height'] <= viewport['height'] + 1, (language, identity, selector, box)
+        close = tour.locator('[data-onboarding-exit]')
+        close_box = close.bounding_box()
+        assert abs(close_box['y'] - card_box['y'] - 12) <= 1, (card_box, close_box)
+        assert close.evaluate('node=>{const r=node.getBoundingClientRect();return document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)===node}'), identity
+        if index < 32:
+            tour.locator('[data-onboarding-next]').click()
+            expect(tour).not_to_have_attribute('data-onboarding-step', identity)
+        else:
+            close.click()
+            expect(tour).to_have_count(0)
+    assert len(visited) == 33
+    assert page.evaluate('fixture.pauses.at(-1).index') == 32
+    assert page.evaluate('JSON.stringify(fixture.world)===fixture.before')
+
+
 def run():
     with sync_playwright() as pw:
         browser = pw.chromium.launch(executable_path=os.environ.get('HARBORLIGHT_CHROMIUM', '/usr/bin/chromium'), headless=True, args=['--no-sandbox'])
@@ -114,9 +161,22 @@ def run():
                         assert not errors, errors
                     finally:
                         context.close()
+            for language in ['pl', 'en']:
+                for width, height in [(320, 568), (390, 480)]:
+                    context = browser.new_context(viewport={'width':width,'height':height}, is_mobile=True, has_touch=True, reduced_motion='reduce')
+                    errors = []
+                    context.route(ORIGIN + '/**', assets)
+                    page = context.new_page()
+                    page.on('pageerror', lambda error: errors.append(str(error)))
+                    try:
+                        scenario(page, language)
+                        long_scrolling_tour(page, language)
+                        assert not errors, errors
+                    finally:
+                        context.close()
         finally:
             browser.close()
-    print('PASS v28 onboarding: 33 native steps, old/current resume, rejected navigation, acknowledged pause, full-store help, ship copy and bounded controls; PL/EN desktop/mobile')
+    print('PASS v28 onboarding: 33 native steps, old/current resume, rejected navigation, acknowledged pause, full-store help, ship copy and bounded controls; 132 forced-scroll long mobile steps with visible usable Close; PL/EN desktop/mobile')
 
 
 if __name__ == '__main__':

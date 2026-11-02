@@ -1,20 +1,19 @@
-# DEV 0.12.0.0 / v28 — bieżący odbiór
+# DEV 0.12.0.0/v28 — odbiór poprawionego kandydata
 
-**Stan: implementacja i pełna walidacja DEV w toku, 2 listopada 2026, Europe/Warsaw.** Zakres wynika z [GO v28](FRONTEND-V28-REQUIREMENTS.md). Ten dokument nie jest odbiorem nowej publikacji. Wyników 0.11.0.0 nie przenosimy na zmieniony kod.
+**Bieżący DEV 0.12.0.0 / cache `frontend-v28-2`: dwie poprawki są gotowe w katalogu roboczym, a końcowy SHA, pełna rewalidacja i własne CI nowego kandydata oczekują.** Prognoza wykonalności uwzględnia wygaśnięcie czasowej premii; krzyżyk tutoriala pozostaje dostępny przy przewijaniu długiej karty telefonu.
 
-## Źródło i granice
+Pierwszy kandydat `0d17b7aa91fef72f0fb36d28451d711daeaee909` ma [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) **SUCCESS, 29 s**, lecz jego [CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) zakończyło się **FAILURE, 9 min 48 s**. Publiczna adnotacja onboarding-v20 wskazała przycisk X poza ekranem telefonu (y=-21); grupa 1 Chromium przeszła. To historia nieudanego kandydata, bez tagu i promocji. Dodatkowy audyt wykrył zawyżoną prognozę premii (400 zamiast 240 w przykładowym oknie 10 h); obie regresje muszą przejść własny odbiór poprawionego źródła.
 
-| Warstwa | Stan tej paczki |
+## Bieżąca bramka po poprawkach
+
+| Kontrola | Stan |
 |---|---|
-| Aplikacja bazowa | 0.11.0.0 / `c7c39742594599c54ee8b074b5c313efd88af4cb` |
-| Bazowy commit metadanych | `aae61ec38b61b0e4f96f4fb0378dacd88a37d836` |
-| Zmieniony kod DEV 0.12.0.0 | Lokalny katalog roboczy; końcowy pełny SHA i odbiór wymagają uzupełnienia |
-| Własne CI / Pages / tag | **PENDING** — brak potwierdzonego przebiegu końcowego źródła v28 |
-| PRE-PROD | Bez nowej promocji: 0.11.0.0 / `c7c39742594599c54ee8b074b5c313efd88af4cb`; [41362782175, próba 1, SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) to odbiór poprzedniego wydania |
-| PROD i dane graczy | Bez promocji, resetu kont/wysp, zmiany haseł oraz aktywacji prawdziwych płatności, reklam lub darowizn |
-| Ewidencja | **348 atomowych kart zmian, 94 ręczne przypadki NOT RUN**; nowe karty HL-CHG-0969–1019 i przypadki HL-TC-0071–0094 |
-
-Konta i postęp `admin1`–`admin3` pozostają chronione. Zmiany zapisów zachowują starsze programy lekcji, aktywne projekty, historyczne kwoty i jednokrotność nagród. Kontrole lokalne oraz symulowane API nie potwierdzają aktywacji usług GCP.
+| Kod/cache | Poprawka prognozy oraz przewijania tutoriala gotowe; `frontend-v28-2`. Nowy pełny SHA PENDING. |
+| Prognoza | Nowy `harborlight-forecast-mission-bonus-v28.test.mjs`:7/7 PASS, zestaw kierunkowy 144/144 PASS. |
+| Pełny Node/Python/Chromium po poprawkach | PENDING końcowych wyników nowego źródła; nie przenosimy sum pierwszego kandydata na zmieniony kod. |
+| Ręczna lista i generatory | **350 kart /96 ręcznych NOT RUN**. Generatory rejestru/listy/legal --check PASS; browser aktualnej listy 96 PENDING. |
+| Nowy pakiet/Git/CI/Pages/tag | PENDING nowego źródła, bez tagu do własnego zielonego CI. |
+| PRE-PROD/PROD/dane | Bez nowej promocji, resetu, zmiany haseł lub aktywacji realnych dostawców. PRE-PROD 0.11/c7c3974 pozostaje. |
 
 ## Co zmienia v28
 
@@ -42,7 +41,7 @@ Liczby poniżej są konfiguracją implementacji do przetestowania, nie wcześnie
 | Nagrody ligi | 25 udział +75 komplet 14 konkurencji +150 top 4 +500 mistrz, do 750 monet łącznie oraz puchar |
 | Nierozstrzygnięcie | Po wyczerpaniu dogrywek w rezerwie wynik oczekuje; nie przyznajemy arbitralnie zwycięstwa |
 
-## Potwierdzone próby cząstkowe w lokalnym katalogu roboczym
+## Historia prób pierwszego kandydata — nie zastępuje odbioru poprawek
 
 To rzeczywiście wykonane próby zgłoszone przez właścicieli modułów podczas integracji. **Nie sumujemy ich jako pełnego odbioru**: mogą obejmować te same testy, a późniejsze zmiany wymagają ponowienia właściwego zakresu.
 
@@ -52,31 +51,57 @@ To rzeczywiście wykonane próby zgłoszone przez właścicieli modułów podcza
 | Zwykłe zadania | 38/38 Node w dwóch zestawach activities |
 | Dom | 10/10 nowych testów banku; 15/15 housing-v27 i 17/17 v9-integration |
 | Modlitwa | 11/11 nowych testów prayer-v28 |
-| Jednostki i komunikaty szczęścia | 8/8 nowych happiness-copy-v28; effects 13, i18n 12, polish-copy 17, progression-copy 3 |
+| Jednostki i komunikaty szczęścia | 8/8 nowych happiness-copy-v28; effects 13, i 18 n 12, polish-copy 17, progression-copy 3 |
 | Handel i archipelag | 116 kierunkowych testów po integracji; nowe commerce-v28 12, ship-capacity-cloud-v28 3 |
 | Backend | 130 testów w lokalnym pełnym zestawie modułów backendu; nowe ship-capacity-v28 11, social-v28 8 |
 | Społeczność i Pomagam | community 18, charity 12, preview 6; nowe charity-v28 3 |
 | Społeczność w Chromium | Nowy social-v28: 4 warianty PL/EN × komputer/telefon; istniejące charity/community smoke po dostosowaniu fixture |
 | Python | Pełne 11 plików `*.test.py`: 141/141 lokalnie po poprawce pakowania backendu; rozgrywka planszówki 7/7, bez zmiany integracji online |
 
-Pełny lokalny Node frontendu przeszedł **984/984** po aktualizacji cache, backend **130/130**. Końcowy wspólny przebieg modeli i generatorów: `/tmp/harborlight-v28-final-validation.log`; wcześniejszy pełny frontend: `/tmp/harborlight-v28-node-final2.log`. Generatory rejestru i listy przechodzą dla 348 kart/94 przypadków. Wszystkie **32 zestawy Chromium PASS** na lokalnie zbudowanym pakiecie: 13 w `/tmp/v28-packaged-group1.log`, 12 w `/tmp/v28-packaged-group2.log`, 4 zestawy społeczności i kursu, 1 zestaw zakupu statku oraz 2 w `/tmp/v28-packaged-root.log`. Zmiana wyłącznie dokumentów prawnych ma osobny ponowny odbiór rejestracji: `/tmp/v28-packaged-legal.log`, 2/2 PASS. Testy nie oznaczają wykonania przypadków ręcznych.
+Pełny lokalny Node frontendu przeszedł **984/984** po aktualizacji cache, backend **130/130**. Końcowy wspólny przebieg modeli i generatorów: `/tmp/harborlight-v28-final-validation.log`; wcześniejszy pełny frontend: `/tmp/harborlight-v28-node-final2.log`. Generatory rejestru i listy przechodzą dla 350 kart/96 przypadków. Wszystkie **32 zestawy Chromium PASS** na lokalnie zbudowanym pakiecie: 13 w `/tmp/v28-packaged-group1.log`, 12 w `/tmp/v28-packaged-group2.log`, 4 zestawy społeczności i kursu, 1 zestaw zakupu statku oraz 2 w `/tmp/v28-packaged-root.log`. Zmiana wyłącznie dokumentów prawnych ma osobny ponowny odbiór rejestracji: `/tmp/v28-packaged-legal.log`, 2/2 PASS. Testy nie oznaczają wykonania przypadków ręcznych.
 
-## Bramka końcowego odbioru
+## Historyczna bramka pierwszego kandydata
 
 | Kontrola | Stan końcowego źródła v28 |
 |---|---|
-| Pełny Node: frontend i backend | Lokalnie 984/984 frontend i 130/130 backend PASS; przypisać końcowy SHA po zakończeniu prac |
-| Python i import gotowego obrazu backendu | Próba lokalna 141 PASS; potwierdzić zgodność z końcowym źródłem |
+| Pełny Node | **1121/1121 PASS**:984 frontend +130 backend +7 planszówki; końcowy wspólny przebieg modeli/generatorów i zgodność pakietu potwierdzone |
+| Python i import backendu z kontekstu pakowania | **141/141 PASS** na końcowym źródle; obejmuje reguły pakowania i dostępność modułu league-season w obrazie |
 | Cały pakiet Chromium PL/EN, desktop/mobile | PASS — 32 zestawy na pakiecie; dodatkowo dwa ponowione zestawy rejestracji po zmianie Regulaminu |
-| Generatory rejestru i ręcznej listy | PASS lokalnie: `build_change_register.py --check`, `build_manual_checklist.py --check`; 348 kart/94 przypadków |
-| Importer/QA dokumentacji | Importer `harborlight-tracking-issues.test.py`: 18/18 PASS; browser listy PASS przed dodaniem czterech ostatnich przypadków; ich indeks i HTML potwierdzają generatory, aktualny browser zostanie ponowiony |
-| Deterministyczny pakiet, rozpakowanie i publiczne pliki | PENDING — liczba plików/bajtów, SHA-256 archiwum i manifestu |
-| Git/CI/Pages/tag dokładnego źródła | PENDING — oddzielne SHA i linki po faktycznym sukcesie |
+| Generatory rejestru i ręcznej listy | PASS lokalnie: `build_change_register.py --check`, `build_manual_checklist.py --check`; 350 kart/96 przypadków |
+| Importer/QA dokumentacji | Importer 18/18 PASS; aktualny browser wcześniejszej listy **94 przypadków PASS**, aktualna lista 96 PENDING. To test narzędzia raportowego, nie ręczne wykonanie 94 scenariuszy |
+| Deterministyczny pakiet | **PASS**, 62 pliki/11 330 478 bajtów, archiwum `acaa6991ad61b4f84fb0f9cc32fd2411d21f5ed7ef7d183f01c84fda6fb399fd`, manifest `b505368ece93bb32bc4b34e67c3ee31adba37d8c920028bd9a3a581b675ae321`; weryfikacja i rozpakowanie PASS |
+| Git/CI/Pages/tag dokładnego źródła | `0d17b7aa91fef72f0fb36d28451d711daeaee909` push potwierdzony; Pages SUCCESS, 29 s; CI FAILURE9 min 48 s; tag nieutworzony |
 | Nowa promocja PRE-PROD/PROD | NOT AUTHORIZED w tym GO, nie uruchomiono |
-| Ręczne przeklikanie TC0071–0094 | NOT RUN; żaden automat nie zmienia tego wyniku |
+| Ręczne przeklikanie TC0071–0096 | NOT RUN; żaden automat nie zmienia tego wyniku |
+
+## Historyczny pakiet i publikacja pierwszego kandydata
+
+Źródło aplikacji **`0d17b7aa91fef72f0fb36d28451d711daeaee909`** wysłano do `main` i potwierdzono zdalnie. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) zakończone **SUCCESS, 29 s**. Własne [CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) jest **FAILURE9 min 48 s**; mobilny błąd wyjścia onboarding-v20. **Tagu v28 jeszcze nie utworzono** — nowe poprawione źródło wymaga własnego zielonego CI. Bezpośredni odczyt hostowanego Pages w tej sesji blokuje proxy HTTP 403; nie potwierdzono niezależnie bajtów serwowanych przez host. Sukces workflow Pages nie jest taką kontrolą.
+
+| Właściwość | Wartość |
+|---|---|
+| Źródło aplikacji | `0d17b7aa91fef72f0fb36d28451d711daeaee909` |
+| Pliki i bajty lokalnego archiwum |62 pliki /11 330 478 bajtów |
+| Wejścia publiczne |60 wejść identycznych z odebranym pakietem po zmianie Regulaminu |
+| SHA-256 archiwum |`acaa6991ad61b4f84fb0f9cc32fd2411d21f5ed7ef7d183f01c84fda6fb399fd` |
+| SHA-256 manifestu |`b505368ece93bb32bc4b34e67c3ee31adba37d8c920028bd9a3a581b675ae321` |
+| Weryfikacja i rozpakowanie |PASS |
+| Odbiór hostowanych bajtów Pages |BLOCKED: proxy HTTP 403 w tej sesji; nie uznano ich za niezależnie porównane |
+| Nowy tag |Nieutworzony; czeka na własne CI |
+
+Końcowe lokalne wyniki: **1121 Node, 141 Python i 32 zestawy Chromium PASS**, dwa ponowienia po zmianie dokumentów prawnych PASS oraz browser aktualnej listy QA 94 PASS. Ręczne przypadki mają nadal **NOT RUN**. Dowód 32 zestawów dotyczy lokalnego serwowania zbudowanego pakietu; dodatkowe 2 ponowienia obejmują zmianę dokumentów/wersji rejestracji. Pakiet tego źródła ma te same 60 wejść publicznych. Ta migawka dotyczy pierwszego kandydata. Późniejsze poprawki prognozy i wyjścia zmieniają kod oraz wymagają nowego źródła, pakietu i własnego CI; nie używamy tych hashy jako odbioru poprawek.
 
 ## Ręczne scenariusze i ograniczenia
 
 [Lista do odhaczania](testing/START-HERE.md) · [interaktywny raport](testing/qa-checklist.html) · [plan i stosowanie historycznych przypadków](testing/MANUAL-TEST-PLAN.md) · [rejestr zmian](tracking/CHANGE-REGISTER.md).
 
 Nowe przypadki wymagają izolowanych danych QA oraz rzeczywistego buildu. Brak usługi, zegara testowego lub fixture oznacza BLOCKED. Kod trwałego mocka i test z atrapą nie dowodzą uruchomienia go w chmurze. Gospodarka klienta nie staje się autorytatywną symulacją serwerową wskutek tej paczki. Rzeczywiści beneficjenci, dostawcy płatności/reklam/OAuth, publikacja społecznościowa i integracja planszówki online pozostają osobnymi pracami.
+
+## Poprawki po pierwszym kandydacie
+
+- HL-CHG-1020: logistics.js, nowa regresja prognozy 7/7 PASS, kierunkowy zestaw 144/144 PASS. Pełne nowe źródło i CI oczekuje.
+- HL-CHG-1021: pierwszy CI 41471972606 FAILURE9 m 48 s, onboarding-v20 mobile Xy=-21. Poprawka przewijanego nagłówka/przycisku i wymuszona regresja są gotowe; pełny wynik nowego źródła oczekuje. Wynik nie jest CANCELLED.
+- Ręczne TC0095–0096 NOT RUN. Browser QA 94 był zaliczony przed ich dodaniem; aktualny indeks 96 i generator to odrębna kontrola.
+
+
+Końcowa próba kandydata 2 przed wysłaniem: **991/991 testów modeli PASS**, `/tmp/harborlight-v28-2-final-node.log`, bez równoległego Chromium. Wcześniejsze przekroczenie limitu 10 sekund w teście96 h przy obciążeniu przeglądarką pozostaje nieudaną próbą; test izolowany przeszedł w8 s, a pełny ponowny przebieg przeszedł z niezmienionym limitem. Dla zamykania tutoriala przeszły: pierwotny onboarding20, **132 wymuszone długie i przewijane kroki** na małych ekranach PL/EN oraz cztery warianty UI release28. Nowe CI dokładnego kandydata nadal wymaga osobnego wyniku.

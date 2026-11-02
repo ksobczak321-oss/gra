@@ -8,9 +8,9 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `implemented_pending_validation` |
-| DEV | `pending_integrated_validation` |
-| CI | `not_run_current_source` |
+| Implementacja | `implemented` |
+| DEV | `pending_revalidation_after_forecast_fix` |
+| CI | `awaiting_fixed_source` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -38,13 +38,15 @@ Data pierwotnej wiadomości: 2026-11-02. Data zbiorczego GO i doprecyzowań, Eur
 - **Dokumenty:** [docs/FRONTEND-V28-REQUIREMENTS.md](../../FRONTEND-V28-REQUIREMENTS.md), [docs/DEV-0.12.0.0-VALIDATION.md](../../DEV-0.12.0.0-VALIDATION.md), [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md), [docs/ECONOMY-RULES.md](../../ECONOMY-RULES.md), [docs/BUILDINGS.md](../../BUILDINGS.md), [docs/TERMS-DRAFT.pl.md](../../TERMS-DRAFT.pl.md), [docs/PRIVACY-DRAFT.pl.md](../../PRIVACY-DRAFT.pl.md)
 - **Kod:** [harborlight-legal.js](../../../harborlight-legal.js), [harborlight-auth.js](../../../harborlight-auth.js), [harborlight-auth-providers.js](../../../harborlight-auth-providers.js), [backend/account-service.mjs](../../../backend/account-service.mjs), [scripts/build_legal_pages.py](../../../scripts/build_legal_pages.py), [harborlight-terms.html](../../../harborlight-terms.html)
 - **Scenariusze automatyczne:** [tests/harborlight-legal.test.mjs](../../../tests/harborlight-legal.test.mjs), [backend/test/legal-acceptance.test.mjs](../../../backend/test/legal-acceptance.test.mjs), [tests/harborlight-v18-auth-smoke.py](../../../tests/harborlight-v18-auth-smoke.py)
+- **Kod dowodowy:** `0d17b7aa91fef72f0fb36d28451d711daeaee909`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41471972606.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0094 — Nowa rejestracja zapisuje Regulamin draft5 i niezmienioną Politykę prywatności draft4](../../testing/manual/HL-TC-0094.md) — `NOT RUN`.
 
-Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji.
+Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki.
 
 ## Relacje
 

@@ -1,12 +1,12 @@
 // Physical goods and event-based logistics. Durations are real elapsed seconds,
 // including catch-up after the browser is closed.
-import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v28';
-import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v28';
-import { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, normalizeBonusMaterials, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v28';
-import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v28';
-import { eventTransportMultiplier, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v28';
-import { residentWorkMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v28';
-export { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v28';
+import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v28-2';
+import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v28-2';
+import { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, normalizeBonusMaterials, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v28-2';
+import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v28-2';
+import { eventTransportMultiplier, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v28-2';
+import { residentWorkMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v28-2';
+export { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v28-2';
 export const workerEfficiency = productionMultiplier;
 // Paths improve cargo courses, independently of production and resident walks.
 export const transportEfficiency = (state, efficiency = workerEfficiency(state)) => efficiency * roadSpeedMultiplier(state) * activePlayMultiplier(state) * eventTransportMultiplier(state);
@@ -344,6 +344,23 @@ export function finishConstruction(state, project) {
   notify(state,'construction-finished',`${buildingNames[id]}: level ${building.level}`,'Upgrade complete. The new level is now active.');
   syncConstructionPointers(state);
 }
+// Keep the forecast's existing assumptions for other multipliers, but do not
+// extend a finite mission reward across the whole material-production plan.
+// Food consumption remains a separate constant cost in both time segments.
+function missionProductionSeconds(state, building, quantity, baseOutput, consumption = 0) {
+  if (!(quantity > 0)) return 0;
+  const now = state.worldTimeMs || 0;
+  const boostedSeconds = Math.max(0, ...(state.missionProductionBonuses || [])
+    .filter(effect => effect.building === building && effect.multiplier === 2 && Number.isFinite(effect.until) && effect.until > now)
+    .map(effect => (effect.until - now) / 1000));
+  const ordinaryRate = baseOutput - consumption;
+  if (!boostedSeconds) return ordinaryRate > 0 ? quantity / ordinaryRate * 3600 : Infinity;
+  const boostedRate = baseOutput * 2 - consumption;
+  if (!(boostedRate > 0)) return Infinity;
+  const boostedQuantity = boostedRate * boostedSeconds / 3600;
+  if (quantity <= boostedQuantity) return quantity / boostedRate * 3600;
+  return ordinaryRate > 0 ? boostedSeconds + (quantity - boostedQuantity) / ordinaryRate * 3600 : Infinity;
+}
 export function estimateMaterialsSeconds(state,cost,ownerContext=null) {
   // A plan has already pledged part of its cost. Credit only that plan's own
   // assets; a fresh quote must never count another project's reservations.
@@ -371,14 +388,16 @@ export function estimateMaterialsSeconds(state,cost,ownerContext=null) {
     if(!crew)return Infinity;
     const producer=Object.keys(PRODUCTION_RECIPES).find(k=>PRODUCTION_RECIPES[k].output===id), b=state.buildings[producer], recipe=PRODUCTION_RECIPES[producer];
     const buffered=b.ready+(state.pendingDeliveries[id]||0), make=Math.max(0,missing-buffered);
-    const workers=effectiveWorkerCount(state,producer), rate=workers*productionRate(state,producer)*efficiency*(state.lighthouseRemaining>0?2:1)*activePlayMultiplier(state)*eventProductionMultiplier(state,producer)*missionProductionMultiplier(state,producer)-(id==='food'?foodDemandPerHour(state):0);
-    if(make&&rate<=0)return Infinity;
-    time=Math.max(time,make?make/rate*3600:0);trips+=Math.ceil(missing/capacity);
+    const workers=effectiveWorkerCount(state,producer), rate=workers*productionRate(state,producer)*efficiency*(state.lighthouseRemaining>0?2:1)*activePlayMultiplier(state)*eventProductionMultiplier(state,producer);
+    const productionSeconds=missionProductionSeconds(state,producer,make,rate,id==='food'?foodDemandPerHour(state):0);
+    if(!Number.isFinite(productionSeconds))return Infinity;
+    time=Math.max(time,productionSeconds);trips+=Math.ceil(missing/capacity);
     if(make&&recipe.input) {
       const upstream=Object.keys(PRODUCTION_RECIPES).find(k=>PRODUCTION_RECIPES[k].output===recipe.input), need=Math.max(0,make*recipe.amount-centralAvailable(state,recipe.input)-state.buildings[upstream].ready);
-      const upstreamRate=effectiveWorkerCount(state,upstream)*productionRate(state,upstream)*efficiency*(state.lighthouseRemaining>0?2:1)*activePlayMultiplier(state)*eventProductionMultiplier(state,upstream)*missionProductionMultiplier(state,upstream);
-      if(need&&!upstreamRate)return Infinity;
-      time=Math.max(time,need/upstreamRate*3600||0);trips+=Math.ceil(need/capacity);
+      const upstreamRate=effectiveWorkerCount(state,upstream)*productionRate(state,upstream)*efficiency*(state.lighthouseRemaining>0?2:1)*activePlayMultiplier(state)*eventProductionMultiplier(state,upstream);
+      const upstreamSeconds=missionProductionSeconds(state,upstream,need,upstreamRate);
+      if(!Number.isFinite(upstreamSeconds))return Infinity;
+      time=Math.max(time,upstreamSeconds);trips+=Math.ceil(need/capacity);
     }
   }
   return Math.max(time,crew?Math.ceil(trips/crew)*300/transportEfficiency(state,efficiency):0);

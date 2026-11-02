@@ -37,13 +37,15 @@ Data pierwotnej wiadomości: 2026-11-02. Data zbiorczego GO i doprecyzowań, Eur
 - **Dokumenty:** [docs/FRONTEND-V28-REQUIREMENTS.md](../../FRONTEND-V28-REQUIREMENTS.md), [docs/DEV-0.12.0.0-VALIDATION.md](../../DEV-0.12.0.0-VALIDATION.md), [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md), [docs/ECONOMY-RULES.md](../../ECONOMY-RULES.md), [docs/BUILDINGS.md](../../BUILDINGS.md)
 - **Kod:** [harborlight-v1-residents.js](../../../harborlight-v1-residents.js)
 - **Scenariusze automatyczne:** [tests/harborlight-happiness-bank-v28.test.mjs](../../../tests/harborlight-happiness-bank-v28.test.mjs)
+- **Kod dowodowy:** `0d17b7aa91fef72f0fb36d28451d711daeaee909`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41471972606.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0080 — Północ odbiera jeden punkt także offline, bez nowej krzywej szczęścia](../../testing/manual/HL-TC-0080.md) — `NOT RUN`.
 
-Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji.
+Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki.
 
 ## Relacje
 

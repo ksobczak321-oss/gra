@@ -1305,6 +1305,32 @@
         "HL-CHG-1012"
       ],
       "file": "manual/HL-TC-0094.md"
+    },
+    {
+      "id": "HL-TC-0095",
+      "title": "Wykonalność nie przedłuża czasowej premii na całe okno zadania",
+      "area": "Misje i prognoza produkcji",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1020",
+        "HL-CHG-1000"
+      ],
+      "file": "manual/HL-TC-0095.md"
+    },
+    {
+      "id": "HL-TC-0096",
+      "title": "Przewinięty długi tutorial telefonu zachowuje widoczny przycisk wyjścia",
+      "area": "Tutorial i przewijanie",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1021",
+        "HL-CHG-0985"
+      ],
+      "file": "manual/HL-TC-0096.md"
     }
   ],
   "current_scope": {
@@ -1312,6 +1338,6 @@
     "environment": "DEV only",
     "physical_online_integration": "excluded_by_user",
     "application_version": "0.12.0.0",
-    "note": "TC0071–0094 obejmują GOv28 i wymagają własnego aktualnego buildu. Wszystkie ręczne wynikiNOT RUN. Historyczny baseline definicji oraz wcześniejsze scenariusze zachowują historię; nowe zasady supersedują sprzeczne oczekiwania dawnych fixture. PRE-PROD pozostaje0.11/c7c3974, bez nowej promocji i resetu."
+    "note": "TC0071–0096 obejmują GOv28 i wymagają własnego aktualnego buildu. Wszystkie ręczne wynikiNOT RUN. Historyczny baseline definicji oraz wcześniejsze scenariusze zachowują historię; nowe zasady supersedują sprzeczne oczekiwania dawnych fixture. PRE-PROD pozostaje0.11/c7c3974, bez nowej promocji i resetu. Regresję wykonalności czasowej premii odbiera TC0095 na poprawionym źródle. TC0096 odbiera mobilny błąd pierwszegoCI41471972606."
   }
 }

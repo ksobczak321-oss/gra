@@ -1,6 +1,6 @@
 # HARBORLIGHT — ręczny plan testów i osobne przypadki
 
-**Zacznij od [listy do odhaczania](START-HERE.md) albo [interaktywnego raportu QA](qa-checklist.html).** Zestaw obejmuje **94 osobne przypadków**, w tym **TC0071–0094 dla DEV 0.12.0.0/v28**, zachowane TC0060–0070 dla v27 i wcześniejsze regresje. Wszystkie wyniki ręczne pozostają **NOT RUN**. Definicja scenariusza oraz sukces automatyzacji nie oznaczają jego wykonania.
+**Zacznij od [listy do odhaczania](START-HERE.md) albo [interaktywnego raportu QA](qa-checklist.html).** Zestaw obejmuje **96 osobnych przypadków**, w tym **TC0071–0096 dla DEV 0.12.0.0/v28**, zachowane TC0060–0070 dla v27 i wcześniejsze regresje. Wszystkie wyniki ręczne pozostają **NOT RUN**. Definicja scenariusza oraz sukces automatyzacji nie oznaczają jego wykonania.
 
 ## Jak odhaczać pojedyncze przypadki
 
@@ -23,7 +23,7 @@ W interaktywnej liście wynik, notatka, tester i opis buildu są zapisywane loka
 
 **DEV** to przestrzeń robocza i deweloperski podgląd Pages. **PRE-PROD** to `https://harborlight-dev.web.app` w projekcie GCP `harborlight-dev`. **PROD** nie jest objęty nowym GO. Bieżący [rejestr środowisk](../ENVIRONMENT-STATUS.md) rozstrzyga, które funkcje rzeczywiście są opublikowane. Push i Pages nie są promocją do GCP.
 
-Historyczny baseline definicji to v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`. Aktualny PRE-PROD to **0.11.0.0**, źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, [wdrożenie 41362782175](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175). Nowy pakiet **0.12.0.0/v28** obejmuje tylko DEV; TC0071–0094 odbieramy na jego rzeczywistym buildzie. Dawne CI i promocje nie są ręcznym wynikiem v28 ani aktywacją usług.
+Historyczny baseline definicji to v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`. Aktualny PRE-PROD to **0.11.0.0**, źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, [wdrożenie 41362782175](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175). Nowy pakiet **0.12.0.0/v28** obejmuje tylko DEV; TC0071–0096 odbieramy na jego rzeczywistym buildzie. Dawne CI i promocje nie są ręcznym wynikiem v28 ani aktywacją usług.
 
 W v28 tutorial ma **33 opisy** bez ikony czasu, a nowy program 6 samouczka ma **25 lekcji i pierwszych 3 tragarzy**. Nowe budowy mają zwykłe czasy, a kurs prowadzi przez rzeczywiste przyspieszenia za monety. Starsze programy 3/4/5 i rozpoczęte projekty zachowują zapisane warunki. Punkty Domu są wyłącznie zbiorowe i gromadzą się do 7 niewydanych porcji. O północy każdy mieszkaniec traci 1 punkt, przy zachowaniu zwykłego+2/h oraz ochron. Modlitwa to osobny przydział z Domu.
 
@@ -35,7 +35,7 @@ Nie używaj `admin1`–`admin3` jako danych jednorazowych; nie resetuj i nie pod
 
 ## Proponowana kolejność odbioru
 
-1. Nowy zakres DEV 0.12.0.0/v28: TC0071–0094, najpierw dane i płatności, potem kurs/opisy/misje/społeczność. Następnie niezmienione oczekiwania TC0060–0070 i starsza regresja na opisanym wariancie fixture.
+1. Nowy zakres DEV 0.12.0.0/v28: TC0071–0096, najpierw dane i płatności, potem kurs/opisy/misje/społeczność. Następnie niezmienione oczekiwania TC0060–0070 i starsza regresja na opisanym wariancie fixture.
 2. Dostęp i integralność: TC19–23, TC29, TC31.
 3. Nowa gra i czytelność: TC01–05, TC30, TC43–45 oraz powroty w Pomocy TC47, prowadzenie po mapie TC51 i przegląd polszczyzny TC52–53.
 4. Gospodarka i mieszkańcy: TC06–18, TC24–25.
@@ -144,6 +144,8 @@ TC26 jest obecnie testem zachowania wcześniejszych dwóch światów podczas mig
 | [HL-TC-0092 — Zakup statku po utracie odpowiedzi nie zmienia płatnika i nie obciąża drugi raz](manual/HL-TC-0092.md) | Chmura i statek | P0 | READY | NOT RUN |
 | [HL-TC-0093 — Pomagam po odczycie lub resecie nie odtwarza starej ewidencji, a błąd chmury nie daje premii](manual/HL-TC-0093.md) | Trwały mock dobroczynności | P0 | READY | NOT RUN |
 | [HL-TC-0094 — Nowa rejestracja zapisuje Regulamin draft5 i niezmienioną Politykę prywatności draft4](manual/HL-TC-0094.md) | Dokumenty i konto | P0 | READY | NOT RUN |
+| [HL-TC-0095 — Wykonalność nie przedłuża czasowej premii na całe okno zadania](manual/HL-TC-0095.md) | Misje i prognoza produkcji | P0 | READY | NOT RUN |
+| [HL-TC-0096 — Przewinięty długi tutorial telefonu zachowuje widoczny przycisk wyjścia](manual/HL-TC-0096.md) | Tutorial i przewijanie | P0 | READY | NOT RUN |
 
 ## Raport i zgłoszenia
 

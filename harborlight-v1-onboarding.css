@@ -23,6 +23,7 @@
 .island-onboarding-language select{max-width:100%;min-height:44px;min-width:140px;padding:8px 12px;border:1px solid #819eac;border-radius:9px;background:#092432;color:#f4f8f8;font:16px/1.4 Inter,system-ui,sans-serif}
 .island-onboarding select:disabled{opacity:.5;cursor:default}
 .island-onboarding-exit{position:absolute;right:12px;top:12px;width:42px;height:42px;display:grid;place-items:center;padding:0;border:1px solid #7695a8;border-radius:10px;background:#0a2434;color:#ffe3a5;font:32px/1 system-ui,sans-serif;cursor:pointer;touch-action:manipulation}
+.island-onboarding-card.is-tour .island-onboarding-exit{position:fixed;right:auto;z-index:3}
 .island-onboarding-card.is-tour .island-onboarding-eyebrow{padding-right:36px}
 .island-onboarding form label{display:block;margin:20px 0 8px;color:#ffe6af;font-size:15px;font-weight:700}
 .island-onboarding input{display:block;width:100%;min-width:0;min-height:49px;padding:10px 13px;border:1px solid #819eac;border-radius:9px;background:#092432;color:#f4f8f8;font:18px/1.4 Inter,system-ui,sans-serif}

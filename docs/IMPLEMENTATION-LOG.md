@@ -976,3 +976,27 @@ PRE-PROD pozostaje **0.11.0.0/c 7 c 39742594599 c 54 ee 8 b 074 b 5 c 313 efd 88
 Test przechodzący kurs z normalnymi odstępami30/120s wykrył zużycie wejścia przezMłyn/Tartak przed lekcją13. Bufor nagród nowego programu6 uwzględnia tę pracującą gospodarkę. Osobne regresje chronią zakup statku po utracieACK (jedno ciało/requestId, płatnik i opłata) oraz mockPomagam po zmianie epoki lub błędzie zapisu (bez odtworzenia historii i fanfar). Karty1016–1018 iTC0091–0093 zapisują przyczynę i odbiór.
 
 Przegląd dokumentów wykrył stare opisy wRegulaminie. Nowy **Regulamin2026-11-02-draft5** odpowiada usługom za monety, statkowi50monet, lidze iPomagam. **Polityka prywatności pozostaje2026-10-31-draft4**, bez niepotrzebnej zmiany wersji. Frontend/backend i generator obsługują oddzielne wersje; stare potwierdzenia są zachowane. Nadal szkicLoremipsum, bez uruchomienia sprzedaży. Legal frontend+backend+account **28/28PASS** po ponowieniu poza sandbox; pierwsza próba miała27PASSiEPERMprzy uruchomieniu Pythona, mimo udanego samodzielnego generatora. Generatorlegal--checkPASS. Nowa karta1019iTC0094; pełna lista ma **348kart i94ręczneNOT RUN**. Końcowy pakiet i odpowiedni test logowania wymagają ponowienia po tej zmianie publicznych plików.
+
+## 2026-11-02 — źródło v28 w main, Pages SUCCESS, własne CI IN_PROGRESS
+
+Źródło aplikacji **`0d17b7aa91fef72f0fb36d28451d711daeaee909`** wysłano do `main` i potwierdzono zdalnie. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) zakończone **SUCCESS, 29 s**. Własne [CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) jest **IN_PROGRESS**; trwa zadanie testów Chromium 125367621326. **Tagu v28 jeszcze nie utworzono** — wymaga zielonego CI tego źródła. Bezpośredni odczyt hostowanego Pages w tej sesji blokuje proxy HTTP 403; nie potwierdzono niezależnie bajtów serwowanych przez host. Sukces workflow Pages nie jest taką kontrolą.
+
+**1121 testów Node PASS** (984 frontend +130 backend +7 samodzielnej planszówki), **141 Python PASS**, **32 zestawy Chromium PASS** na pakiecie oraz **2 ponowione zestawy rejestracji PASS** po zmianie Regulaminu. Browser listy QA dla 94 przypadków PASS; ręczne wykonanie wszystkich 94 pozostaje NOT RUN.
+
+Dokładny lokalny pakiet `0d17b7aa91fef72f0fb36d28451d711daeaee909`:62 pliki, 11 330 478 bajtów; SHA-256 archiwum `acaa6991ad61b4f84fb0f9cc32fd2411d21f5ed7ef7d183f01c84fda6fb399fd`, manifestu `b505368ece93bb32bc4b34e67c3ee31adba37d8c920028bd9a3a581b675ae321`. Weryfikacja i rozpakowanie PASS. Wszystkie 60 wejść publicznych odpowiada odebranemu pakietowi po zmianie Regulaminu. Ograniczenie proxy 403 dotyczy odczytu serwowanych bajtów Pages, nie jest testem zakończonym PASS.
+
+Rejestr 348 kart/94 ręczne NOT RUN. Z 51 kart v28,50 implementacji ma implemented/locally_validated/CI in_progress; odrzucona krzywa 1013 zachowuje rejected/not_implemented/not_applicable. Każda karta ma pełny SHA oraz odnośnik do własnego CI i walidacji. Tag czeka na zielone CI. Następny commit samych metadanych nie zmienia 60 publicznych wejść i nie zastępuje źródła aplikacji 0d17b7a.
+
+PRE-PROD pozostaje 0.11/c 7 c 39742594599 c 54 ee 8 b 074 b 5 c 313 efd 88 af 4 cb/deploy 41362782175/próba 1 SUCCESS. Bez nowej promocji PROD, resetu kont/wysp/haseł i realnych operatorów płatności/reklam/darowizn.
+
+## 2026-11-02 — audyt ujawnił regresję prognozy, kandydat0d17 nie jest odebranym wydaniem
+
+Po publikacji pierwszego kandydata znaleziono błąd prognozy: czasowa premia producenta×2 była stosowana do całego dłuższego okna zadania. Przykład20/h przez10h, premia tylko2h daje240, nie400. Rzeczywista produkcja wygasała poprawnie, lecz ocena wykonalności mogła przyjąć zadanie ponad możliwości. Naprawa dzieli okno na odcinki z odpowiednimi mnożnikami i wymaga własnego testu regresji. To naprawa zaakceptowanej reguły, bez nowej funkcji.
+
+KartaHL-CHG-1020 iTC0095 podnoszą ewidencję do349kart/95ręcznych NOT RUN. Cache poprawki frontend-v28-2, nowySHA/CI i kierunkowa rewalidacja oczekują. Poprzednie1121Node/141Python/32Chromium/Pages sukcesy pozostają autentyczną historią pierwszego kandydata, ale nie dowodem pokrycia tego błędu. Nie tworzymy tagu ani promocji; ostatni potwierdzony PRE-PROD0.11 pozostaje bez zmian i resetu.
+
+## 2026-11-02 — pierwszy CI FAILURE, mobilny X poza ekranem
+
+WłasnyCI41471972606 kandydata0d17b7a zakończył się **FAILURE,9min48s**. Publiczna adnotacja onboarding-v20: mobilny przyciskX miał y=-21 na długiej/przewiniętej karcie. Grupa1Chromium PASS pozostaje oddzielnym wynikiem. To nieCANCELLED; Pages41471972395 SUCCESS29s nie zastępuje interakcji.
+
+HL-CHG-1021/TC0096 dokumentują stałą dostępnośćX i wymuszoną regresję przewijania. PrognozaHL-CHG-1020 jest lokalnie poprawiona wlogistics.js:7nowych i144kierunkowe testyPASS. Obie poprawki wymagają nowego źródła/cachefrontend-v28-2 iCI. Ewidencja350kart/96ręcznych NOT RUN. Browser listyQA94 był wykonany wcześniej; lista96wymaga ponowienia. Bez tagu, promocjiGCP i resetu.
