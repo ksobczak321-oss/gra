@@ -1032,3 +1032,8 @@ Tag `dev-0.12.0.0-20261102` jest PLANNED do osobnego potwierdzenia publikacji i 
 Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) utworzono po sukcesie własnego CI 41475214118 (12 min 33 s) i Pages 41475213874 (31 s), opublikowano i potwierdzono `git ls-remote`. Obiekt adnotowanego tagu `22677b82849a3d9b20e2256f344f241e30c47020` rozwiązuje się do `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. To dokładnie odebrane źródło 2, cachefrontend-v28-2. Wpis planned powyżej pozostaje wcześniejszym punktem chronologii, nie bieżącym statusem.
 
 52 karty implementacji v28 mają implemented/validated_pages_published/passed_current_source; odrzucona krzywa 1013 nie jest wdrożona. Łącznie 350 kart i 96 ręcznych NOT RUN. Kolejny commit dowodów zachowuje 60 publicznych wejść i nie przesuwa tagu. PRE-PROD 0.11 pozostaje bez nowej promocji/resetu; PROD i prawdziwi operatorzy bez aktywacji.
+
+
+## 2listopada2026 — zlecona promocja0.12.0.0 doPRE-PROD
+
+„Promuj na pre prod” autoryzuje standardową publikację odebranego DEV, zachowując konta i historię. Przygotowywana jest dokładna allowlista0.12 w istniejącym bridge, bez zmiany bramek/WIF/PROD/resetu. Nowy commit otrzyma własneCI. Odczyt GHAPIForbidden nie jest wynikiem deployu; [rejestr etapów](PREPROD-V28-PROMOTION.md) pozostawia CI/dispatch/odbiór/artefakty pending do rzeczywistych dowodów.

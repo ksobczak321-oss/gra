@@ -25,6 +25,10 @@ Tag nie jest przesuwany i nie uruchamia publikacji GCP. Pozwala zapisać wynik j
 
 ## 2. Promocja na PRE-PROD
 
+### Autoryzowana promocja 0.12.0.0
+
+Nowe „Promuj na pre prod” z2listopada2026 autoryzuje standardową promocję0.12.0.0, zachowując konta, hasła i postęp, bez resetu oraz PROD. [Bieżące przygotowanie i odbiór](PREPROD-V28-PROMOTION.md) wiąże nowy commit z odebranym DEV0ca7715. Bridge ma dodatkowy dokładny marker `[preprod:0.12.0.0]`; poprzednie trzy markery pozostają historycznymi autoryzacjami. Wszystkie kontrole świeżego CI, SHA, deduplikacji i main pozostają. Nowy commit musi mieć własne pełne zielone CI. Nie przesuwamy main do potwierdzenia SHA rozpoczętej promocji. Ta autoryzacja zastępuje ograniczenie samego GO DEV dla0.12 i nie uruchamia historycznego resetu kont.
+
 ### Autoryzowana promocja 0.10.1.0
 
 Użytkownik zlecił promocję końcowej wersji po zielonych testach. Zamknięta allowlista bridge obejmuje `[preprod:0.10.1.0]` i historyczne `[preprod:0.9.1.2]`. Ten sam sprawdzony dispatcher nadal wymaga właściwego repozytorium, push na main, świeżego sukcesu CI dokładnego SHA, deduplikacji i niezmienionego main. Nie zmienia WIF ani istniejącego workflow wdrażania; nie uruchamia PROD lub resetu.

@@ -19253,6 +19253,65 @@
         "v28",
         "dev-only"
       ]
+    },
+    {
+      "id": "HL-CHG-1022",
+      "epic": "HL-EPIC-OPS",
+      "area": "Promocja PRE-PROD0.12.0.0",
+      "type": "Ops",
+      "title": "Autoryzowana promocja0.12 ma własneCI, dokładny marker i odczytowy odbiór bez resetu",
+      "source": {
+        "kind": "user_chat",
+        "date": "2026-11-02",
+        "date_note": "Nowe jawne zlecenie po odebranym DEV0.12;Europe/Warsaw.",
+        "summary": "Użytkownik: Promuj na pre prod. Zwykłe wdrożenie aktualnego DEV, zachowując konta i postęp.",
+        "reference": "chat:preprod:0.12.0.0:GO"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "validated_dispatcher_and_unchanged_app",
+        "ci": "pending_new_source",
+        "preprod": "promotion_authorized_not_started",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Zamknięta allowlista przyjmuje dokładnie[preprod:0.12.0.0], bez szerszego wildcardu lub zmiany poprzednich blokad.",
+        "Nowy commit ma własne zieloneCI tego samegoSHA i zachowuje60publicznych wejść odebranegoDEV. Main nie przesuwa się do potwierdzenia źródła rozpoczętego deployu.",
+        "Standardowy workflow wykonuje odczytowy odbiór Hostingu, zalogowanej gry i izolacji kont; oba artefakty powstają dopiero po pełnym sukcesie.",
+        "Brak resetu, zmian haseł, PROD i aktywacji realnych operatorów. Statusy rozdzielają przygotowanie, CI, dispatch i rzeczywisty wynik."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0967"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/PREPROD-V28-PROMOTION.md",
+          "docs/RELEASE-PROCESS.md",
+          "docs/ENVIRONMENT-STATUS.md"
+        ],
+        "code": [
+          "infra/google-cloud/urgent-preprod-dispatch.mjs",
+          ".github/workflows/promote-urgent-preprod.yml",
+          ".github/workflows/google-cloud-dev.yml"
+        ],
+        "automated_tests": [
+          "tests/harborlight-urgent-preprod-dispatch.test.mjs",
+          "tests/harborlight-promotion.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalnie30/30 testów dispatchera/promocji PASS. Wszystkie60publicznych wejść są identyczne z odebranymDEV0ca7715. Nowy commit z markerem0.12 wymaga własnegoCI; dopiero potem istniejącybridge uruchomi standardowy deploy. Ostatni potwierdzony PRE-PROD0.11/c7c3974, bez resetu iPROD."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "preprod",
+        "release"
+      ]
     }
   ]
 }

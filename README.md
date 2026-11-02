@@ -1,5 +1,7 @@
 # HARBORLIGHT
 
+**Zlecono promocję PRE-PROD0.12.0.0.** Przygotowanie, własneCI i wynik wdrożenia są rozdzielone w [rejestrze promocji](docs/PREPROD-V28-PROMOTION.md). Ostatni potwierdzony PRE-PROD pozostaje poniżej do zakończenia odbioru; bez resetu kont.
+
 **[Podgląd DEV 0.12.0.0](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v28-2)** · **[Graj w PRE-PROD 0.11.0.0](https://harborlight-dev.web.app)**. Nowe wydanie dotyczy DEV; PRE-PROD pozostaje przy źródle `c7c39742594599c54ee8b074b5c313efd88af4cb` i deployu41362782175/próba 1. Bez nowej promocji GCP i resetu kont.
 
 **DEV 0.12.0.0 odebrany dla źródła `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`**, cache `frontend-v28-2`. Własne [CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) zakończyło się **SUCCESS, 12 min 33 s**; obie grupy Chromium przeszły dla tego samego SHA. [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) ma **SUCCESS, 31 s**. Push na `main` potwierdzono. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) jest **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie ten SHA.

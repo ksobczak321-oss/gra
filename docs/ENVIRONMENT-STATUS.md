@@ -2,6 +2,10 @@
 
 Aktualizacja operacyjna: **2 listopada 2026, Europe/Warsaw**. Akceptacja opisów i pierwotny odbiór lokalny pozostają z 1 listopada. Historia wyników jest w [dzienniku](IMPLEMENTATION-LOG.md); warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
+## Zlecona promocja PRE-PROD0.12.0.0 — przygotowanie
+
+Użytkownik wydał nowe **„Promuj na pre prod”**. Przygotowywany commit promocji zachowuje60publicznych wejść odebranego DEV0ca7715 i dodaje wyłącznie autoryzację0.12 do istniejącego wyzwalacza oraz dowody. WłasneCI, dispatch, rzeczywiste wdrożenie i jego artefakty są jeszcze **PENDING**. [Oddzielny rejestr etapów](PREPROD-V28-PROMOTION.md). Ostatni potwierdzony PRE-PROD nadal0.11/c7c3974; zwykła promocja nie resetuje kont ani historii.
+
 ## Aktualny DEV 0.12.0.0 — własne CI i Pages SUCCESS
 
 **DEV 0.12.0.0 odebrany dla źródła `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`**, cache `frontend-v28-2`. Własne [CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) zakończyło się **SUCCESS, 12 min 33 s**; obie grupy Chromium przeszły dla tego samego SHA. [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) ma **SUCCESS, 31 s**. Push na `main` potwierdzono. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) jest **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie ten SHA.
