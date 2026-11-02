@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `scoped_validated_full_revalidation_pending` |
-| CI | `awaiting_fixed_source` |
+| DEV | `validated_pages_published` |
+| CI | `passed_current_source` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -38,13 +38,15 @@ Data pierwotnej wiadomości: 2026-11-02. Data zbiorczego GO i doprecyzowań, Eur
 - **Dokumenty:** [docs/FRONTEND-V28-REQUIREMENTS.md](../../FRONTEND-V28-REQUIREMENTS.md), [docs/DEV-0.12.0.0-VALIDATION.md](../../DEV-0.12.0.0-VALIDATION.md), [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md), [docs/ECONOMY-RULES.md](../../ECONOMY-RULES.md), [docs/BUILDINGS.md](../../BUILDINGS.md)
 - **Kod:** [harborlight-v1-logistics.js](../../../harborlight-v1-logistics.js)
 - **Scenariusze automatyczne:** [tests/harborlight-forecast-mission-bonus-v28.test.mjs](../../../tests/harborlight-forecast-mission-bonus-v28.test.mjs), [tests/harborlight-missions-v28.test.mjs](../../../tests/harborlight-missions-v28.test.mjs), [tests/harborlight-transport-v10.test.mjs](../../../tests/harborlight-transport-v10.test.mjs)
+- **Kod dowodowy:** `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41475214118.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0095 — Wykonalność nie przedłuża czasowej premii na całe okno zadania](../../testing/manual/HL-TC-0095.md) — `NOT RUN`.
 
-Lokalna poprawka logistics.js zakończona: nowa regresja prognozy 7/7 PASS, kierunkowy zestaw 144/144 PASS. Okno produkcji ma oddzielny odcinek premii i zwykłej pracy. Pełny nowy SHA/CI po poprawkach oczekuje; pierwszy kandydat0d17b7a nie jest odbiorem tej zmiany. PRE-PROD bez nowej promocji/resetu.
+Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian.
 
 ## Relacje
 

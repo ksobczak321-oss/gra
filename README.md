@@ -1,24 +1,26 @@
 # HARBORLIGHT
 
-**[Graj w PRE-PROD 0.11.0.0](https://harborlight-dev.web.app)** — ostatni odebrany deploy41362782175/próba 1, źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`. Konta i postęp zachowano; brak nowej promocji PRE-PROD/PROD i resetu.
+**[Podgląd DEV 0.12.0.0](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v28-2)** · **[Graj w PRE-PROD 0.11.0.0](https://harborlight-dev.web.app)**. Nowe wydanie dotyczy DEV; PRE-PROD pozostaje przy źródle `c7c39742594599c54ee8b074b5c313efd88af4cb` i deployu41362782175/próba 1. Bez nowej promocji GCP i resetu kont.
 
-**Bieżący DEV 0.12.0.0 / cache `frontend-v28-2`: dwie poprawki są gotowe w katalogu roboczym, a końcowy SHA, pełna rewalidacja i własne CI nowego kandydata oczekują.** Prognoza wykonalności uwzględnia wygaśnięcie czasowej premii; krzyżyk tutoriala pozostaje dostępny przy przewijaniu długiej karty telefonu.
+**DEV 0.12.0.0 odebrany dla źródła `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`**, cache `frontend-v28-2`. Własne [CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) zakończyło się **SUCCESS, 12 min 33 s**; obie grupy Chromium przeszły dla tego samego SHA. [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) ma **SUCCESS, 31 s**. Push na `main` potwierdzono. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) jest **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie ten SHA.
 
-Pierwszy kandydat `0d17b7aa91fef72f0fb36d28451d711daeaee909` ma [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) **SUCCESS, 29 s**, lecz jego [CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) zakończyło się **FAILURE, 9 min 48 s**. Publiczna adnotacja onboarding-v20 wskazała przycisk X poza ekranem telefonu (y=-21); grupa 1 Chromium przeszła. To historia nieudanego kandydata, bez tagu i promocji. Dodatkowy audyt wykrył zawyżoną prognozę premii (400 zamiast 240 w przykładowym oknie 10 h); obie regresje muszą przejść własny odbiór poprawionego źródła.
+**[96 scenariuszy ręcznych](docs/testing/qa-checklist.html)** · **[Lista do odhaczania](docs/testing/START-HERE.md)** · **[350 kart zmian](docs/tracking/CHANGE-REGISTER.md)** · **[Planszówka do wydruku](docs/boardgame/README.md)**. Browser aktualnej listy QA 96 PASS; wszystkie ręczne wyniki nadal **NOT RUN**. Integracja planszówki online pozostaje odłożona.
 
-**[Testy do odhaczania](docs/testing/START-HERE.md)** · **[96 scenariuszy ręcznych](docs/testing/qa-checklist.html)** · **[350 kart zmian](docs/tracking/CHANGE-REGISTER.md)** · **[Planszówka do wydruku](docs/boardgame/README.md)**. Wszystkie ręczne wyniki **NOT RUN**; integracja planszówki online pozostaje odłożona.
-
-Nowe reguły obejmują 33 opisy tutoriala, 25 lekcji programu 6 od 3 tragarzy, rzeczywiste przyspieszenia, bank 7 porcji, modlitwę, narracyjne misje Latarni, usługi monetami TH1/doładowania TH3, ligę z playoffami i oznaczony mock Pomagam. [Zakres](docs/FRONTEND-V28-REQUIREMENTS.md) · [Bieżący odbiór](docs/DEV-0.12.0.0-VALIDATION.md) · [Środowiska](docs/ENVIRONMENT-STATUS.md).
+Nowe reguły obejmują 33 opisy tutoriala, 25 lekcji programu 6 od 3 tragarzy, rzeczywiste przyspieszenia, bank 7 porcji, modlitwę, narracyjne misje Latarni, usługi monetami TH1/doładowania TH3, ligę z playoffami i oznaczony mock Pomagam. [Zakres](docs/FRONTEND-V28-REQUIREMENTS.md) · [Pełny odbiór i artefakty](docs/DEV-0.12.0.0-VALIDATION.md) · [Środowiska](docs/ENVIRONMENT-STATUS.md).
 
 ## Środowiska i wydanie
 
-| Miejsce | Bieżący stan |
+| Miejsce | Potwierdzony stan |
 |---|---|
-| DEV | Poprawiony kandydat 0.12.0.0/cache `frontend-v28-2`; końcowy SHA/pełne testy/własne CI PENDING. Pierwszy kandydat0d17b7a ma historyczne CI FAILURE. |
+| DEV | `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache `frontend-v28-2`; własne CI SUCCESS, 12 min 33 s, Pages SUCCESS, 31 s. Tag `dev-0.12.0.0-20261102` opublikowany i potwierdzony zdalnie. |
 | PRE-PROD `harborlight-dev` |0.11.0.0 /`c7c39742594599c54ee8b074b5c313efd88af4cb`, deploy41362782175/próba 1 SUCCESS. Bez nowej promocji. |
 | PROD `harborlight-prod` | Bez nowej promocji i potwierdzenia uruchomienia domeny. |
 
-Lokalny odbiór **pierwszego kandydata**:1121 Node (984 frontend +130 backend +7 planszówki),141 Python, 32 zestawy Chromium oraz 2 ponowienia rejestracji PASS. Browserów lista QA 94 PASS dotyczyła narzędzia raportowego, nie ręcznego wykonania 94 zadań. Aktualny rejestr 96 i poprawiony kod wymagają odpowiedniego ponowienia. Te wyniki nie obejmują nowo wykrytych regresji. Proxy 403 blokuje wtej sesji niezależny odczyt bajtów hostowanego Pages.
+**1128 testów Node PASS** (991 frontend +130 backend +7 planszówki), **141 Python PASS** oraz **32 zestawy Chromium PASS**. Własny CI poprawionego źródła zaliczył obie grupy przeglądarkowe, więc dawny wynik pierwszego pakietu nie zastępuje już bieżącego odbioru. Kierunkowe regresje obejmują dodatkowo 132 wymuszone próby przewijania PL/EN na telefonie, 4 warianty UI, 7 nowych testów prognozy i zestaw 144 testów powiązanych.
+
+Pierwszy kandydat `0d17b7aa91fef72f0fb36d28451d711daeaee909` zachowuje CI 41471972606 **FAILURE, 9 min 48 s**: mobilny przycisk wyjścia tutoriala miał y=-21. Osobny audyt wykrył zawyżoną prognozę czasowej premii. Poprawione źródło0ca7715 ma własny późniejszy sukces; nie przepisujemy wcześniejszej awarii na sukces lub anulowanie.
+
+Nie porównano niezależnie hostowanych bajtów Pages w tej sesji; wcześniejszy odczyt blokował proxy HTTP403. To ograniczenie osobnego odczytu hosta, nie wynik własnego CI lub pakowania.
 
 ## Wcześniejsza pilna poprawka 0.9.1.2
 

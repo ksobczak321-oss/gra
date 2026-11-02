@@ -2,23 +2,26 @@
 
 Aktualizacja operacyjna: **2 listopada 2026, Europe/Warsaw**. Akceptacja opisów i pierwotny odbiór lokalny pozostają z 1 listopada. Historia wyników jest w [dzienniku](IMPLEMENTATION-LOG.md); warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-## Aktualny DEV 0.12.0.0 — poprawki gotowe, nowy odbiór oczekuje
+## Aktualny DEV 0.12.0.0 — własne CI i Pages SUCCESS
 
-**Bieżący DEV 0.12.0.0 / cache `frontend-v28-2`: dwie poprawki są gotowe w katalogu roboczym, a końcowy SHA, pełna rewalidacja i własne CI nowego kandydata oczekują.** Prognoza wykonalności uwzględnia wygaśnięcie czasowej premii; krzyżyk tutoriala pozostaje dostępny przy przewijaniu długiej karty telefonu.
+**DEV 0.12.0.0 odebrany dla źródła `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`**, cache `frontend-v28-2`. Własne [CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) zakończyło się **SUCCESS, 12 min 33 s**; obie grupy Chromium przeszły dla tego samego SHA. [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) ma **SUCCESS, 31 s**. Push na `main` potwierdzono. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) jest **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie ten SHA.
 
-Pierwszy kandydat `0d17b7aa91fef72f0fb36d28451d711daeaee909` ma [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) **SUCCESS, 29 s**, lecz jego [CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) zakończyło się **FAILURE, 9 min 48 s**. Publiczna adnotacja onboarding-v20 wskazała przycisk X poza ekranem telefonu (y=-21); grupa 1 Chromium przeszła. To historia nieudanego kandydata, bez tagu i promocji. Dodatkowy audyt wykrył zawyżoną prognozę premii (400 zamiast 240 w przykładowym oknie 10 h); obie regresje muszą przejść własny odbiór poprawionego źródła.
-
-| Warstwa | Stan poprawionego kandydata |
+| Warstwa | Potwierdzony stan |
 |---|---|
-| Kod | Dwie poprawki gotowe; cache `frontend-v28-2`, schemat świata 9. Końcowy nowy SHA jeszcze nieprzekazany. |
-| Prognoza | logistics.js: koniec premii dzieli okno planowania na odcinek premii i zwykłej produkcji.7 nowych/144 kierunkowych testów PASS. |
-| Tutorial | Krzyżyk na przewijanej karcie poprawiony; nowa wymuszona regresja przewijania i pełny odbiór oczekują wpisu wyników. |
-| Nowe CI/Pages/tag | PENDING nowego źródła; tag nieutworzony. Nie uznajemy pierwszego CI za sukces lub anulowanie. |
-| Ewidencja | **350 kart /96 ręcznych NOT RUN**, HL-CHG-0969–1021, TC0071–0096. Odrzucona krzywa 1013 pozostaje not_implemented/rejected. |
+| Git/źródło | `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, push `main` potwierdzony, cache `frontend-v28-2`, schemat świata 9. |
+| Własne CI | [41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**; obie grupy Chromium dla tego SHA przeszły. |
+| Pages | [41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**. [Podgląd](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v28-2). Niezależne porównanie hostowanych bajtów niepotwierdzone; wcześniejszy proxy HTTP403. |
+| Lokalny odbiór |1128 Node /141 Python /32 zestawy Chromium PASS oraz kierunkowe 132 próby przewijania, release UI4 i prognoza 7/144 PASS. |
+| QA | Browser aktualnej listy 96 PASS; wszystkie 96 ręcznych NOT RUN. |
+| Pakiet |62 pliki /11 332 589 bajtów, weryfikacja i rozpakowanie PASS. TAR `3bbadb1f4f0a2f552a465ba6a3730d499598e9430ae0c0396fe559939a3cb80a`, manifest `787e1c1fabe8f338e586a2606b6f1ce4ab33248955f5ba7a0885e9dcd2fc4dd3`. |
+| Tag | [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. |
+| Ewidencja |350 kart; 52 implementacje v28 mają implemented/validated_pages_published/passed_current_source. Karta 1013 zachowuje not_implemented/rejected. |
 | PRE-PROD |0.11.0.0 /`c7c39742594599c54ee8b074b5c313efd88af4cb`, deploy41362782175/próba 1 SUCCESS. Bez nowej promocji. |
-| PROD / dane / operatorzy | Bez promocji, resetu kont/wysp/haseł i aktywacji realnych płatności/reklam/darowizn. |
+| PROD/dane/operatorzy | Bez promocji, resetu kont/wysp/haseł i aktywacji realnych płatności/reklam/darowizn. |
 
-Pierwszy kandydat0d17b7a zachowuje własne wyniki lokalne 1121 Node/141 Python/32 Chromium +2 ponowienia rejestracji oraz browser QA 94 PASS, lokalny pakiet 62 pliki/11 330 478 bajtów i Pages SUCCESS29 s. CI zakończyło się FAILURE9 min 48 s. Szczegóły i hashe w [walidacji 0.12](DEV-0.12.0.0-VALIDATION.md). Proxy HTTP403 uniemożliwiło niezależne porównanie hostowanych bajtów. Nowa poprawka kodu oznacza konieczność osobnego źródła/pakietu/CI; dawne hashe nie są bieżącymi hashami poprawki.
+Pierwszy kandydat `0d17b7aa91fef72f0fb36d28451d711daeaee909` zachowuje CI 41471972606 **FAILURE, 9 min 48 s**: mobilny przycisk wyjścia tutoriala miał y=-21. Osobny audyt wykrył zawyżoną prognozę czasowej premii. Poprawione źródło0ca7715 ma własny późniejszy sukces; nie przepisujemy wcześniejszej awarii na sukces lub anulowanie.
+
+[Walidacja](DEV-0.12.0.0-VALIDATION.md) zachowuje osobne źródła, pakiety i wyniki obu kandydatów. Dalszy commit metadanych nie zmienia 60 publicznych wejść gry i nie zastępuje źródła `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`.
 
 ## Ostatni odebrany DEV i aktualny PRE-PROD — 0.11.0.0 / v27
 

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "as_of": "2026-11-02",
-  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje.",
+  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane.",
   "environment_baseline": {
     "application_source_sha": "092e75226fbb14cab09826f313e11d10891966d8",
     "ci_run_id": 41221965032,
@@ -16101,8 +16101,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -16133,11 +16133,11 @@
         "automated_tests": [
           "tests/harborlight-happiness-bank-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -16160,8 +16160,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -16192,11 +16192,11 @@
           "tests/harborlight-happiness-bank-v28.test.mjs",
           "tests/harborlight-agreed-state.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -16219,8 +16219,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_scope_with_documented_dev_parameters"
@@ -16252,11 +16252,11 @@
         "automated_tests": [
           "tests/harborlight-prayer-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [
         "Cennik i pojemność są parametrami integracji DEV; czas, poziom Ratusza, +50 i 6 h wynikają z odpowiedzi użytkownika."
@@ -16281,8 +16281,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -16313,11 +16313,11 @@
         "automated_tests": [
           "tests/harborlight-commerce-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -16340,8 +16340,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -16375,11 +16375,11 @@
           "backend/test/ship-capacity-v28.test.mjs",
           "tests/harborlight-ship-capacity-cloud-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -16402,8 +16402,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -16432,11 +16432,11 @@
           "tests/harborlight-commerce-v28.test.mjs",
           "tests/harborlight-archipelago.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -16459,8 +16459,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -16490,11 +16490,11 @@
         "automated_tests": [
           "tests/harborlight-commerce-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -16517,8 +16517,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -16547,11 +16547,11 @@
         "automated_tests": [
           "tests/harborlight-release-v28-smoke.py"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -16574,8 +16574,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -16606,11 +16606,11 @@
           "tests/harborlight-release-v28-smoke.py",
           "tests/harborlight-v18-activities.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -16633,8 +16633,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -16663,11 +16663,11 @@
         "automated_tests": [
           "tests/harborlight-tutorial-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -16690,8 +16690,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -16723,11 +16723,11 @@
           "tests/harborlight-logistics-v28.test.mjs",
           "tests/harborlight-tutorial-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -16750,8 +16750,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -16784,11 +16784,11 @@
           "tests/harborlight-tutorial-v28.test.mjs",
           "tests/harborlight-release-v28-smoke.py"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -16811,8 +16811,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -16843,11 +16843,11 @@
           "tests/harborlight-tutorial-v28.test.mjs",
           "tests/harborlight-release-v28-smoke.py"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -16870,8 +16870,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -16900,11 +16900,11 @@
         "automated_tests": [
           "tests/harborlight-tutorial-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -16927,8 +16927,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -16957,11 +16957,11 @@
         "automated_tests": [
           "tests/harborlight-tutorial-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -16984,8 +16984,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17016,11 +17016,11 @@
           "tests/harborlight-onboarding-v28-smoke.py",
           "tests/harborlight-approved-copy-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17043,8 +17043,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17076,11 +17076,11 @@
           "tests/harborlight-onboarding-v28-smoke.py",
           "tests/harborlight-release-v28-smoke.py"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17103,8 +17103,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17132,11 +17132,11 @@
         "automated_tests": [
           "tests/harborlight-release-v28-smoke.py"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17159,8 +17159,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17191,11 +17191,11 @@
           "tests/harborlight-approved-copy-v28.test.mjs",
           "tests/harborlight-onboarding-v28-smoke.py"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17218,8 +17218,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17249,11 +17249,11 @@
         "automated_tests": [
           "tests/harborlight-approved-copy-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17276,8 +17276,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17310,11 +17310,11 @@
           "tests/harborlight-release-v28-smoke.py",
           "tests/harborlight-happiness-copy-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17337,8 +17337,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17371,11 +17371,11 @@
           "tests/harborlight-release-v28-smoke.py",
           "tests/harborlight-happiness-copy-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17398,8 +17398,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17430,11 +17430,11 @@
           "tests/harborlight-agreed-state.test.mjs",
           "tests/harborlight-approved-copy-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17457,8 +17457,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17488,11 +17488,11 @@
           "tests/harborlight-prayer-v28.test.mjs",
           "tests/harborlight-effects-v8.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17515,8 +17515,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17546,11 +17546,11 @@
           "tests/harborlight-commerce-v28.test.mjs",
           "tests/harborlight-v18-activities.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17573,8 +17573,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17604,11 +17604,11 @@
           "tests/harborlight-missions-v28.test.mjs",
           "tests/harborlight-commerce-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17631,8 +17631,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17662,11 +17662,11 @@
           "tests/harborlight-prayer-v28.test.mjs",
           "tests/harborlight-missions-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17689,8 +17689,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17718,11 +17718,11 @@
         "automated_tests": [
           "tests/harborlight-missions-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17745,8 +17745,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17778,11 +17778,11 @@
           "tests/harborlight-missions-v28.test.mjs",
           "tests/harborlight-release-v28-smoke.py"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17805,8 +17805,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_scope_with_documented_dev_parameters"
@@ -17836,11 +17836,11 @@
         "automated_tests": [
           "tests/harborlight-missions-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17863,8 +17863,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17893,11 +17893,11 @@
         "automated_tests": [
           "tests/harborlight-missions-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17920,8 +17920,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -17954,11 +17954,11 @@
           "tests/harborlight-missions-v28.test.mjs",
           "tests/harborlight-logistics-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -17981,8 +17981,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -18014,11 +18014,11 @@
         "automated_tests": [
           "backend/test/social-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -18041,8 +18041,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -18072,11 +18072,11 @@
         "automated_tests": [
           "backend/test/social-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -18099,8 +18099,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_scope_with_documented_dev_parameters"
@@ -18132,11 +18132,11 @@
           "backend/test/social-v28.test.mjs",
           "tests/harborlight-social-v28-smoke.py"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [
         "Szczegółowy kalendarz, małe drabinki i limit rund dogrywki są jawnymi parametrami DEV do odbioru."
@@ -18161,8 +18161,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted_scope_with_documented_dev_parameters"
@@ -18195,11 +18195,11 @@
           "backend/test/social-v28.test.mjs",
           "tests/harborlight-social-v28-smoke.py"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [
         "Kwoty są konfiguracją DEV, nie dawnym ustaleniem cenowym użytkownika."
@@ -18224,8 +18224,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -18257,11 +18257,11 @@
           "backend/test/social-v28.test.mjs",
           "backend/test/community-service.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -18284,8 +18284,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -18318,11 +18318,11 @@
           "backend/test/social-v28.test.mjs",
           "tests/harborlight-charity-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -18345,8 +18345,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -18379,11 +18379,11 @@
           "backend/test/social-v28.test.mjs",
           "tests/harborlight-charity-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -18406,8 +18406,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -18439,11 +18439,11 @@
           "backend/test/social-v28.test.mjs",
           "tests/harborlight-charity-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -18466,8 +18466,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -18498,11 +18498,11 @@
           "backend/test/social-v28.test.mjs",
           "tests/harborlight-charity-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -18525,8 +18525,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -18561,11 +18561,11 @@
           "backend/test/social-v28.test.mjs",
           "tests/harborlight-social-v28-smoke.py"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -18588,8 +18588,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -18618,11 +18618,11 @@
         "automated_tests": [
           "tests/harborlight-release-v28-smoke.py"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -18645,8 +18645,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -18680,11 +18680,11 @@
           "tests/harborlight-missions-v28.test.mjs",
           "tests/harborlight-prayer-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -18736,11 +18736,11 @@
         "automated_tests": [
           "tests/harborlight-happiness-bank-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -18763,8 +18763,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -18795,11 +18795,11 @@
           "tests/harborlight-commerce-v28.test.mjs",
           "tests/harborlight-v16-minigames.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -18822,8 +18822,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -18858,11 +18858,11 @@
           "tests/harborlight-tracking-issues.test.py",
           "tests/harborlight-manual-checklist-smoke.py"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -18885,8 +18885,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -18919,11 +18919,11 @@
           "tests/harborlight-tutorial-v28.test.mjs",
           "tests/harborlight-starter-course-v28-smoke.py"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -18946,8 +18946,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -18982,11 +18982,11 @@
           "tests/harborlight-ship-capacity-v28-smoke.py",
           "backend/test/ship-capacity-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -19009,8 +19009,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19047,11 +19047,11 @@
           "tests/harborlight-social-v28-smoke.py",
           "backend/test/social-v28.test.mjs"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -19074,8 +19074,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_revalidation_after_forecast_fix",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19118,11 +19118,11 @@
           "backend/test/legal-acceptance.test.mjs",
           "tests/harborlight-v18-auth-smoke.py"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -19145,8 +19145,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "scoped_validated_full_revalidation_pending",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19180,11 +19180,11 @@
           "tests/harborlight-missions-v28.test.mjs",
           "tests/harborlight-transport-v10.test.mjs"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalna poprawka logistics.js zakończona: nowa regresja prognozy 7/7 PASS, kierunkowy zestaw 144/144 PASS. Okno produkcji ma oddzielny odcinek premii i zwykłej pracy. Pełny nowy SHA/CI po poprawkach oczekuje; pierwszy kandydat0d17b7a nie jest odbiorem tej zmiany. PRE-PROD bez nowej promocji/resetu."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [
@@ -19207,8 +19207,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "pending_full_revalidation",
-        "ci": "awaiting_fixed_source",
+        "dev": "validated_pages_published",
+        "ci": "passed_current_source",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19242,11 +19242,11 @@
           "tests/harborlight-onboarding-v20-smoke.py",
           "tests/harborlight-onboarding-v28-smoke.py"
         ],
-        "source_sha": "0d17b7aa91fef72f0fb36d28451d711daeaee909",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41471972606",
+        "source_sha": "0ca7715b6e9282b31ca7941c89c3c742ac0df9e6",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41475214118",
         "preprod_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Pierwszy kandydat0d17b7a:CI 41471972606FAILURE9 m 48 s, mobile Xy=-21. Pages 41471972395pozostaje SUCCESS29 s. Poprawka przycisku na przewijanej karcie w toku; nowy cachefrontend-v28-2/SHA/CI oczekuje. Bez tagu, PRE-PROD i resetu. Poprawka źródeł jest gotowa; pełny wynik poprawionego kandydata i własne CI oczekują."
+        "release_note": "Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian."
       },
       "notes": [],
       "tags": [

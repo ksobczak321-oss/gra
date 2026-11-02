@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `pending_revalidation_after_forecast_fix` |
-| CI | `awaiting_fixed_source` |
+| DEV | `validated_pages_published` |
+| CI | `passed_current_source` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -37,15 +37,15 @@ Data pierwotnej wiadomości: 2026-11-02. Data zbiorczego GO i doprecyzowań, Eur
 - **Dokumenty:** [docs/FRONTEND-V28-REQUIREMENTS.md](../../FRONTEND-V28-REQUIREMENTS.md), [docs/DEV-0.12.0.0-VALIDATION.md](../../DEV-0.12.0.0-VALIDATION.md), [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md), [docs/ECONOMY-RULES.md](../../ECONOMY-RULES.md), [docs/BUILDINGS.md](../../BUILDINGS.md)
 - **Kod:** [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-effects.js](../../../harborlight-v1-effects.js), [harborlight-v1-approved-copy.js](../../../harborlight-v1-approved-copy.js), [harborlight-v1-i18n.js](../../../harborlight-v1-i18n.js)
 - **Scenariusze automatyczne:** [tests/harborlight-approved-copy-v28.test.mjs](../../../tests/harborlight-approved-copy-v28.test.mjs), [tests/harborlight-release-v28-smoke.py](../../../tests/harborlight-release-v28-smoke.py), [tests/harborlight-happiness-copy-v28.test.mjs](../../../tests/harborlight-happiness-copy-v28.test.mjs)
-- **Kod dowodowy:** `0d17b7aa91fef72f0fb36d28451d711daeaee909`.
-- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41471972606.
+- **Kod dowodowy:** `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41475214118.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0076 — Cały polski interfejs szczęścia używa punktów, a inne procenty pozostają poprawne](../../testing/manual/HL-TC-0076.md) — `NOT RUN`.
 
-Lokalny odbiór źródła `0d17b7aa91fef72f0fb36d28451d711daeaee909`:1121 Node/141 Python/32 zestawy Chromium PASS, 2 ponowione zestawy rejestracji PASS, browser QA 94 PASS. Push `main` potwierdzony. [Pages 41471972395](https://github.com/ksobczak321-oss/gra/actions/runs/41471972395) SUCCESS, 29 s; [własne CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) FAILURE, 9 min 48 s. Bez tagu do sukcesu CI. Proxy 403 blokuje niezależny odczyt bajtów hostowanego Pages. Pakiet 62 pliki/11 330 478 bajtów, 60 wejść zgodnych z odebranym pakietem; hashe i dowody w walidacji 0.12. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu, PROD bez zmian. Ręczne 94 NOT RUN. Audyt po tych próbach wykrył regresję prognozy czasowej premii (HL-CHG-1020). Źródło0d17b7a pozostaje pierwszym kandydatem, nie odebranym wydaniem; poprawiony kod wymaga własnego nowego SHA i CI, cache frontend-v28-2. Pierwszy własny CI zakończył się FAILURE w mobilnym wyjściu tutoriala (HL-CHG-1021,y=-21). To nie CANCELLED i nie SUCCESS; nowe źródło musi objąć obie poprawki.
+Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian.
 
 ## Relacje
 

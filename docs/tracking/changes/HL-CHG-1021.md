@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `pending_full_revalidation` |
-| CI | `awaiting_fixed_source` |
+| DEV | `validated_pages_published` |
+| CI | `passed_current_source` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -38,15 +38,15 @@ Data pierwotnej wiadomości: 2026-11-02. Data zbiorczego GO i doprecyzowań, Eur
 - **Dokumenty:** [docs/FRONTEND-V28-REQUIREMENTS.md](../../FRONTEND-V28-REQUIREMENTS.md), [docs/DEV-0.12.0.0-VALIDATION.md](../../DEV-0.12.0.0-VALIDATION.md), [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md), [docs/ECONOMY-RULES.md](../../ECONOMY-RULES.md), [docs/BUILDINGS.md](../../BUILDINGS.md)
 - **Kod:** [harborlight-v1-onboarding-ui.js](../../../harborlight-v1-onboarding-ui.js), [harborlight-v1-onboarding.css](../../../harborlight-v1-onboarding.css)
 - **Scenariusze automatyczne:** [tests/harborlight-onboarding-v20-smoke.py](../../../tests/harborlight-onboarding-v20-smoke.py), [tests/harborlight-onboarding-v28-smoke.py](../../../tests/harborlight-onboarding-v28-smoke.py)
-- **Kod dowodowy:** `0d17b7aa91fef72f0fb36d28451d711daeaee909`.
-- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41471972606.
+- **Kod dowodowy:** `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41475214118.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0096 — Przewinięty długi tutorial telefonu zachowuje widoczny przycisk wyjścia](../../testing/manual/HL-TC-0096.md) — `NOT RUN`.
 
-Pierwszy kandydat0d17b7a:CI 41471972606FAILURE9 m 48 s, mobile Xy=-21. Pages 41471972395pozostaje SUCCESS29 s. Poprawka przycisku na przewijanej karcie w toku; nowy cachefrontend-v28-2/SHA/CI oczekuje. Bez tagu, PRE-PROD i resetu. Poprawka źródeł jest gotowa; pełny wynik poprawionego kandydata i własne CI oczekują.
+Odebrany DEV 0.12.0.0: źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache frontend-v28-2, push main potwierdzony. [Własne CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) **SUCCESS, 12 min 33 s**, obie grupy Chromium tego SHA SUCCESS; [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) **SUCCESS, 31 s**.1128 Node/141 Python/32 Chromium PASS, kierunkowe 132 próby przewijania PLEN/release UI4/forecast 7 +144 PASS. Browser QA 96 PASS, ręczne 96 NOT RUN. Pakiet 62 pliki/11 332 589 bajtów, verify/extract PASS, hashe w walidacji 0.12. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. Pierwszy0d17/CI 41471972606 zachowuje FAILURE, 9 min 48 s; nie CANCELLED. Niezależne porównanie bajtów Pages niepotwierdzone, wcześniejszy proxy 403. PRE-PROD 0.11/c7c3974 bez nowej promocji/resetu; PROD bez zmian.
 
 ## Relacje
 

@@ -1000,3 +1000,35 @@ KartaHL-CHG-1020 iTC0095 podnoszą ewidencję do349kart/95ręcznych NOT RUN. Cac
 WłasnyCI41471972606 kandydata0d17b7a zakończył się **FAILURE,9min48s**. Publiczna adnotacja onboarding-v20: mobilny przyciskX miał y=-21 na długiej/przewiniętej karcie. Grupa1Chromium PASS pozostaje oddzielnym wynikiem. To nieCANCELLED; Pages41471972395 SUCCESS29s nie zastępuje interakcji.
 
 HL-CHG-1021/TC0096 dokumentują stałą dostępnośćX i wymuszoną regresję przewijania. PrognozaHL-CHG-1020 jest lokalnie poprawiona wlogistics.js:7nowych i144kierunkowe testyPASS. Obie poprawki wymagają nowego źródła/cachefrontend-v28-2 iCI. Ewidencja350kart/96ręcznych NOT RUN. Browser listyQA94 był wykonany wcześniej; lista96wymaga ponowienia. Bez tagu, promocjiGCP i resetu.
+
+## 2026-11-02 — poprawione źródło 2 w main, Pages SUCCESS, własne CI IN_PROGRESS
+
+**DEV 0.12.0.0 / cache `frontend-v28-2`: poprawione źródło `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6` wysłano do `main` i potwierdzono zdalnie.** [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) zakończone **SUCCESS, 31 s**. Własne [CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) jest **IN_PROGRESS**. Tag czeka na sukces CI; bez nowej promocji PRE-PROD/PROD i resetu.
+
+Lokalnie: **991 testów frontendu PASS**, a niezmieniony backend i planszówka zachowują **130 +7 PASS**, razem **1128 Node**. **141 Python PASS** pochodzi z odbioru poprzedniego kandydata; wejścia backendu, konfiguracji i dokumentów prawnych drugiego źródła są identyczne. Pełne **32 zestawy Chromium** zaliczono dla pierwszego pakietu; poprawki przeszły osobno nowy test prognozy 7/7, zestaw 144, pierwotny onboarding-v20, **132 wymuszone próby przewijania PL/EN na telefonie** i 4 warianty interfejsu wydania. Własne pełne CI bieżącego SHA pozostaje oczekujące.
+
+Browser aktualnej listy **96 przypadków PASS** sprawdza narzędzie raportowe. Wszystkie **96 wyników ręcznych pozostaje NOT RUN**.
+
+Pakiet źródła `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`:62 pliki /11 332 589 bajtów, SHA-256 archiwum `3bbadb1f4f0a2f552a465ba6a3730d499598e9430ae0c0396fe559939a3cb80a`, manifestu `787e1c1fabe8f338e586a2606b6f1ce4ab33248955f5ba7a0885e9dcd2fc4dd3`. Weryfikacja i rozpakowanie PASS. Browser aktualnej listy 96 PASS nie jest ręcznym zaliczeniem 96 przypadków.350 kart, w tym 53 v28:52 implementacje i 1 odrzucona krzywa 1013. Generatory mają własny odbiór; dalszy commit metadanych nie zmienia 60 publicznych wejść gry.
+
+Pierwszy kandydat `0d17b7aa91fef72f0fb36d28451d711daeaee909` zachowuje [CI 41471972606](https://github.com/ksobczak321-oss/gra/actions/runs/41471972606) **FAILURE, 9 min 48 s**: mobilny krzyżyk tutoriala wysunął się poza ekran (y=-21). Pages 41471972395 SUCCESS, 29 s oraz grupa 1 Chromium PASS nie zmieniają tego wyniku. Audyt ujawnił też zawyżanie prognozy czasowej premii. Oba błędy mają poprawki i regresje w nowym źródle; awaria nie jest anulowana ani przepisywana na sukces.
+
+Nie potwierdzono niezależnie bajtów hostowanego Pages; wcześniejszy odczyt blokował proxy HTTP403. PRE-PROD 0.11/c7c3974/deploy41362782175 bez nowej promocji i resetu; PROD oraz prawdziwi operatorzy bez aktywacji. Tag dopiero po własnym zielonym CI nowego źródła.
+
+## 2026-11-02 — własne CI poprawionego źródła SUCCESS, tag planowany
+
+**DEV 0.12.0.0 odebrany dla źródła `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`**, cache `frontend-v28-2`. Własne [CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) zakończyło się **SUCCESS, 12 min 33 s**; obie grupy Chromium przeszły dla tego samego SHA. [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) ma **SUCCESS, 31 s**. Push na `main` potwierdzono. Tag `dev-0.12.0.0-20261102` jest **PLANNED** — publikacja i zdalne potwierdzenie oczekują osobnego odczytu.
+
+**1128 testów Node PASS** (991 frontend +130 backend +7 planszówki), **141 Python PASS** oraz **32 zestawy Chromium PASS**. Własny CI poprawionego źródła zaliczył obie grupy przeglądarkowe, więc dawny wynik pierwszego pakietu nie zastępuje już bieżącego odbioru. Kierunkowe regresje obejmują dodatkowo 132 wymuszone próby przewijania PL/EN na telefonie, 4 warianty UI, 7 nowych testów prognozy i zestaw 144 testów powiązanych.
+
+Pakiet źródła `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`:62 pliki /11 332 589 bajtów, TAR SHA-256 `3bbadb1f4f0a2f552a465ba6a3730d499598e9430ae0c0396fe559939a3cb80a`, manifest `787e1c1fabe8f338e586a2606b6f1ce4ab33248955f5ba7a0885e9dcd2fc4dd3`; verify/extract PASS. Browser QA 96 PASS, wszystkie 96 ręcznych NOT RUN.350 kart, 53 v28:52 implemented/validated_pages_published/passed_current_source oraz 1 odrzucona krzywa 1013. Własny pełny CI usuwa wcześniejsze ograniczenie odbioru tylko kierunkowych modułów poprawki; oba pakietowe zestawy Chromium są teraz potwierdzone dla źródła 2.
+
+Pierwszy kandydat `0d17b7aa91fef72f0fb36d28451d711daeaee909` zachowuje CI 41471972606 **FAILURE, 9 min 48 s**: mobilny przycisk wyjścia tutoriala miał y=-21. Osobny audyt wykrył zawyżoną prognozę czasowej premii. Poprawione źródło0ca7715 ma własny późniejszy sukces; nie przepisujemy wcześniejszej awarii na sukces lub anulowanie.
+
+Tag `dev-0.12.0.0-20261102` jest PLANNED do osobnego potwierdzenia publikacji i zdalnego odczytu. Nie porównano niezależnie hostowanych bajtów Pages; wcześniejszy proxy HTTP403. PRE-PROD 0.11/c7c3974/deploy41362782175 pozostaje bez nowej promocji/resetu. PROD i prawdziwi operatorzy bez aktywacji. Dalszy commit metadanych nie zmienia 60 publicznych wejść gry.
+
+## 2026-11-02 — tag DEV 0.12.0.0 opublikowany i potwierdzony zdalnie
+
+Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) utworzono po sukcesie własnego CI 41475214118 (12 min 33 s) i Pages 41475213874 (31 s), opublikowano i potwierdzono `git ls-remote`. Obiekt adnotowanego tagu `22677b82849a3d9b20e2256f344f241e30c47020` rozwiązuje się do `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`. To dokładnie odebrane źródło 2, cachefrontend-v28-2. Wpis planned powyżej pozostaje wcześniejszym punktem chronologii, nie bieżącym statusem.
+
+52 karty implementacji v28 mają implemented/validated_pages_published/passed_current_source; odrzucona krzywa 1013 nie jest wdrożona. Łącznie 350 kart i 96 ręcznych NOT RUN. Kolejny commit dowodów zachowuje 60 publicznych wejść i nie przesuwa tagu. PRE-PROD 0.11 pozostaje bez nowej promocji/resetu; PROD i prawdziwi operatorzy bez aktywacji.
