@@ -198,7 +198,7 @@ test('House points can improve effective happiness when intrinsic happiness is a
   person.blockedSeconds = 86400;
   updateHappiness(state);
   assert.equal(residentHappiness(state, person), 80);
-  assert.equal(act(state, { type: 'houseHappiness', residentId: person.id, amount: 1 }).ok, true);
+  assert.equal(act(state, { type: 'houseHappinessAll', amount: 1 }).ok, true);
   assert.equal(residentHappiness(state, person), 81);
   assert.equal(person.happiness, 101);
   assert.equal(state.buildings.quarry.fullSeconds, 86400);
@@ -206,16 +206,16 @@ test('House points can improve effective happiness when intrinsic happiness is a
   assert.equal(residentHappiness(saved, saved.residents.find(p => p.id === person.id)), 81);
 });
 
-test('daily House pool expires at Warsaw midnight without accumulating blocked points', () => {
+test('daily House bank saves blocked points and adds one Warsaw midnight portion', () => {
   const state = createState(Date.parse('2026-10-23T21:59:00Z'));
   for (const person of state.residents) person.happiness = 100;
   updateHappiness(state);
-  state.houseHappinessPool.points = 4;
+  state.houseHappinessPool.points = 4; state.houseHappinessPool.portions = [{ points: 4, population: 12, day: '2026-10-23' }];
   tick(state, 60);
   assert.equal(warsawDayKey(state.worldTimeMs), '2026-10-24');
-  assert.equal(state.houseHappinessPool.points, state.population);
+  assert.equal(state.houseHappinessPool.points, state.population + 4);
   assert.equal(state.houseHappinessPool.generation, 2);
-  assert.equal(state.houseHappinessPool.autoDone, false);
+  assert.equal(state.houseHappinessPool.autoDone, true);
 });
 
 test('calendar midnight keeps a 25-hour autumn day while effect durations remain real seconds', () => {

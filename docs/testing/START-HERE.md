@@ -85,6 +85,30 @@ Pełna metodyka i zależności: [MANUAL-TEST-PLAN.md](MANUAL-TEST-PLAN.md). Bie�
 - [ ] [HL-TC-0068 — Pomoc i ratunek wracają do kolejnego etapu bez kasowania postępu](manual/HL-TC-0068.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0069 — Zadania są wykonalne przy realnych zasobach, produkcji i dostawach](manual/HL-TC-0069.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0070 — Migracja, nieobecność i powroty nie dublują mieszkań ani misji](manual/HL-TC-0070.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0071 — Nowy kurs wymaga trzech tragarzy, starszy zachowuje szóstkę i swoje zaliczenia](manual/HL-TC-0071.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0072 — Lekcja Ratusza uczy rzeczywistej dostawy i skrócenia budowy](manual/HL-TC-0072.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0073 — Gospodarstwo kupione w lekcji nie pobiera równocześnie własnych materiałów](manual/HL-TC-0073.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0074 — Lekcja jedenasta uczy priorytetu odbioru, a pełny magazyn ma zrozumiałą instrukcję](manual/HL-TC-0074.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0075 — Tutorial trzydziestu trzech opisów wraca przez Pomoc i wskazuje znak zapytania](manual/HL-TC-0075.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0076 — Cały polski interfejs szczęścia używa punktów, a inne procenty pozostają poprawne](manual/HL-TC-0076.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0077 — Wiadomość końca przestoju opisuje wznowienie albo odwołanie z pozostawionym towarem](manual/HL-TC-0077.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0078 — Pierwsze wejście nowego dnia pokazuje tylko dostępną premię lojalności](manual/HL-TC-0078.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0079 — Bank Domu kumuluje siedem porcji według zakwaterowanych i nie odtwarza ich przy wczytaniu](manual/HL-TC-0079.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0080 — Północ odbiera jeden punkt także offline, bez nowej krzywej szczęścia](manual/HL-TC-0080.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0081 — Modlitwa zachowuje czas całkowity, koszt, brak podatku i sześciogodzinny efekt](manual/HL-TC-0081.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0082 — Usługi od Ratusza jeden używają monet; Paynow kupuje tylko monety od trzeciego poziomu](manual/HL-TC-0082.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0083 — Statek zwiększa towar za pięćdziesiąt monet, a przemianowanie córki nie dubluje nazwy](manual/HL-TC-0083.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0084 — Zwykłe zadania mają realne pół godziny, dopasowaną nagrodę i wspólną cenę mieszkańca](manual/HL-TC-0084.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0085 — Po ostatniej nagrodzie kursu pojawia się fabuła ośmiu zadań i zachowana kolejka rozdziałów](manual/HL-TC-0085.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0086 — Narracyjne nagrody pokazują faktycznie przyjętych ludzi i czas produkcji razy cztery](manual/HL-TC-0086.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0087 — Siedem dni ligi punktuje także małe składy, a odejście nie usuwa wyniku sezonowego](manual/HL-TC-0087.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0088 — Playoffy rozstrzygają remisy i wypłacają cztery warstwy nagród jednokrotnie](manual/HL-TC-0088.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0089 — Czat egzekwuje tysiąc znaków i wspólny limit konta między pokojami](manual/HL-TC-0089.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0090 — Pomagam kwalifikuje tylko właściwe monety i jasno symuluje przelew z premią](manual/HL-TC-0090.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0091 — Kurs przechodzony w normalnym tempie nie blokuje się na materiałach lekcji trzynastej](manual/HL-TC-0091.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0092 — Zakup statku po utracie odpowiedzi nie zmienia płatnika i nie obciąża drugi raz](manual/HL-TC-0092.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0093 — Pomagam po odczycie lub resecie nie odtwarza starej ewidencji, a błąd chmury nie daje premii](manual/HL-TC-0093.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0094 — Nowa rejestracja zapisuje Regulamin draft5 i niezmienioną Politykę prywatności draft4](manual/HL-TC-0094.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 
 ## Wynik pojedynczego przypadku
 

@@ -368,12 +368,12 @@ def complete_mobile_tour(browser):
         expect(guide).not_to_have_attribute('data-onboarding-step', step_id)
     else:
         raise AssertionError('The complete walkthrough did not finish in100 steps')
-    assert len(ids) == 34, ids
-    assert ids[:9] == ['home', 'level', 'happiness', 'coins', 'working', 'arrival', 'points', 'population', 'clock'], ids[:9]
+    assert len(ids) == 33, ids
+    assert ids[:8] == ['home', 'level', 'happiness', 'coins', 'working', 'arrival', 'points', 'population'], ids[:8]
     assert ids.index('chat') + 1 == ids.index('notifications'), ids
     for building in BUILDINGS:
         assert any(building in step_id for step_id in ids), (building, ids)
-    for expected in ['home', 'level', 'happiness', 'coins', 'population', 'working', 'arrival', 'points', 'clock', 'administration', 'economy', 'resources', 'decorations', 'paths', 'settings', 'tutorial']:
+    for expected in ['home', 'level', 'happiness', 'coins', 'population', 'working', 'arrival', 'points', 'administration', 'economy', 'resources', 'decorations', 'paths', 'settings', 'tutorial']:
         assert any(expected in step_id for step_id in ids), (expected, ids)
     assert cloud.cloud_state(UID)['onboarding']['stage'] == 'complete'
     expect(page.locator('[data-tutorial-current]')).to_be_visible()
@@ -415,7 +415,7 @@ def existing_history(browser):
 
 def lost_finish_acknowledgement(browser):
     # Preserve the original v20 practical course in this recovery regression.
-    # Newly created worlds now start curriculum 5 with the six-carrier lesson;
+    # Newly created worlds now start curriculum 6 with the three-carrier lesson;
     # the existing course must retain its rules-read opening across recovery.
     original = starter()
     original['tutorial']['curriculum'] = 4

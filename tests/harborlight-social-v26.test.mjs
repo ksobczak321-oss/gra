@@ -52,7 +52,7 @@ test('local league standings are explicitly examples and cannot grant real seaso
   const league = await client.request('leagueRead');
   assert.equal(league.mode, 'simulation'); assert.equal(league.groups[0].length, 4);
   assert.equal(league.registered, false);
-  assert.deepEqual(league.rewards, { playedDays: 0, goals: 0 });
+  assert.deepEqual(league.rewards, { playedDays: 0, goals: 0, completedTasks: 0, coins: 0 });
   await assert.rejects(client.request('leagueEnroll'), error => error.code === 'league-demo-practice-only');
   await assert.rejects(client.request('leagueClaimRewards'), error => error.code === 'community-unknown-command');
 });

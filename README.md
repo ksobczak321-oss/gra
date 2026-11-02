@@ -2,27 +2,27 @@
 
 **[Graj w PRE-PROD 0.11.0.0](https://harborlight-dev.web.app)** — wdrożenie [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) zakończyło się **SUCCESS** dla źródła `c7c39742594599c54ee8b074b5c313efd88af4cb`. Konta i postęp zachowano; bez resetu i publikacji PROD.
 
-Gra ma 34 kroki tutoriala, 25 praktycznych lekcji, Pomoc z dwoma wznowieniami, dwuminutowe dojście pracowników, niezależny limit mieszkańców i łóżek oraz misje Latarni 8/5/3. Lokalnie **1023 Node i 141 Python PASS**; **27 nazwanych zestawów Chromium PASS** dla niezmienionej publicznej aplikacji, w tym 114 widoków PL bez angielskich pozostałości i 8 sond odzyskiwania zapisu. Poprawka checkera ma 26 regresji PASS, a własne CI tego źródła zaliczyło obie grupy testów przeglądarkowych.
+**DEV 0.12.0.0 / v28 jest w trakcie własnego odbioru.** Nowy kod ma 33 opisy tutoriala, 25 lekcji programu 6 od trzech tragarzy, rzeczywiste prowadzenie przez przyspieszenia, bank szczęścia Domu, modlitwę i narracyjne misje Latarni. Usługi używają monet od Ratusza 1, doładowanie PLN od Ratusza 3. Liga obejmuje wszystkie 7 dni i playoffy, a Pomagam jest jawnie symulowane. Nowe GO nie obejmuje promocji PRE-PROD/PROD ani resetu.
 
-**[Testy do odhaczania — zacznij tutaj](docs/testing/START-HERE.md)** · **[70 scenariuszy ręcznych](docs/testing/qa-checklist.html)** · **[Planszówka do wydruku](docs/boardgame/README.md)**. Wszystkie wyniki ręczne nadal NOT RUN; odczytowe kontrole wdrożenia nie zastępują ręcznego zapisu i ponownego wczytania. Integracja planszówki online pozostaje odłożona.
+**[Testy do odhaczania — zacznij tutaj](docs/testing/START-HERE.md)** · **[94 scenariusze ręcznych](docs/testing/qa-checklist.html)** · **[348 karty zmian](docs/tracking/CHANGE-REGISTER.md)** · **[Planszówka do wydruku](docs/boardgame/README.md)**. Wszystkie ręczne wyniki nadal NOT RUN. Integracja planszówki online pozostaje odłożona.
 
-[Zakres v27](docs/FRONTEND-V27-REQUIREMENTS.md) · [Walidacja i artefakty](docs/DEV-0.11.0.0-VALIDATION.md) · [Stan środowisk](docs/ENVIRONMENT-STATUS.md) · [Wyjaśnienie poprzedniej awarii](docs/PREPROD-V27-INCIDENT-20261102.md).
+[Zakres v28](docs/FRONTEND-V28-REQUIREMENTS.md) · [Bieżąca walidacja 0.12](docs/DEV-0.12.0.0-VALIDATION.md) · [Stan środowisk](docs/ENVIRONMENT-STATUS.md) · [Historyczny odbiór PRE-PROD 0.11](docs/DEV-0.11.0.0-VALIDATION.md).
 
 ## Środowiska i wydanie
 
 | Miejsce | Potwierdzony stan |
 |---|---|
-| DEV | **0.11.0.0 / v27**, źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, cache `frontend-v27`. [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) SUCCESS, 10m9s; [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) SUCCESS, 21s. [Podgląd DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v27). |
-| PRE-PROD — `harborlight-dev` | **0.11.0.0**, to samo źródło; [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16s, [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS, 2m17s. Dokładne wydanie, hostowana gra oraz izolacja stałych kont przeszły. |
+| DEV | **0.12.0.0/v28**, lokalny kod w trakcie pełnego odbioru. Końcowy SHA, własne CI/Pages oraz tag wymagają potwierdzenia; nie przenosimy sukcesów 0.11 na tę paczkę. [Wyniki i oczekujące bramki](docs/DEV-0.12.0.0-VALIDATION.md). Ostatni potwierdzony podgląd Pages jest historycznym 0.11/c 7 c 3974. |
+| PRE-PROD — `harborlight-dev` | **0.11.0.0**, źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`; [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) SUCCESS16 s, [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) SUCCESS, 2 m 17 s. Dokładne wydanie, hostowana gra oraz izolacja stałych kont przeszły. |
 | PROD — `harborlight-prod` /`harborlight.pl` | Bez nowej promocji; publikacja i domena nadal bez potwierdzonego uruchomienia. |
 
 Nieprzesuwane tagi [`dev-0.11.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.11.0.0-20261102) i [`preprod-0.11.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/preprod-0.11.0.0-20261102) są **opublikowane i potwierdzone zdalnie**; oba wskazują dokładnie `c7c39742594599c54ee8b074b5c313efd88af4cb`.
 
-Przy pierwszej próbie promocji7d45290 Hosting opublikowano, ale stary checker nie obsłużył aktualnej koperty zapisu. Przebieg41360977479 pozostaje FAILURE w historii. Poprawka c7c3974 obsługuje ściśle legalne kontrakty1/2/API i zachowuje kontrole izolacji; kolejny pełny odbiór przeszedł. Szczegóły, hashe i ograniczenia dowodów są w dokumentacji wydania. PRE-PROD zachowuje osobne konta `admin1`, `admin2`, `admin3`.
+Przy pierwszej próbie promocji 7 d 45290 Hosting opublikowano, ale stary checker nie obsłużył aktualnej koperty zapisu. Przebieg 41360977479 pozostaje FAILURE w historii. Poprawka c 7 c 3974 obsługuje ściśle legalne kontrakty 1/2/API i zachowuje kontrole izolacji; kolejny pełny odbiór przeszedł. Szczegóły, hashe i ograniczenia dowodów są w dokumentacji wydania. PRE-PROD zachowuje osobne konta `admin1`, `admin2`, `admin3`.
 
 ## Wcześniejsza pilna poprawka 0.9.1.2
 
-[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Poprawka przeszła własne CI i promocję PRE-PROD; dowody zapisano w rejestrze środowisk. Nie resetowano kont. Tamten zakres miał 251 zmian i 46 ręcznych przypadków; bieżąca ewidencja DEV ma **297 zmian i 70 przypadków**, w tym nowe HL-TC-0060–0070 dla v27.
+[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Poprawka przeszła własne CI i promocję PRE-PROD; dowody zapisano w rejestrze środowisk. Nie resetowano kont. Tamten zakres miał 251 zmian i 46 ręcznych przypadków; bieżąca ewidencja DEV ma **348 zmiany i 94 przypadków**, w tym nowe HL-TC-0071–0094 dla v28.
 
 ## Poprzedni zakres DEV 0.9.1.1
 
@@ -38,9 +38,9 @@ Rzeczywisty koszt ostatnich 24 h jest nieustalony z powodu braku dostępu do Bil
 
 - Materiały bonusowe są od razu wydawalne i nie zajmują pojemności zwykłych dostaw. Wydajemy bonus przed zwykłym zapasem. Przepełnienie blokuje dalsze skrzynie samouczka, nie rozbudowę i zarządzanie wyspą.
 - Poprawione przyjęcie nagród, limity kolejki, natychmiastowy transport, zachowanie wcześniejszych zleceń Targu i ochrona podjętego na czas ładunku Portu.
-- Bazowe 20% szczęścia nowej wyspy, minimum 20% przez 72 h dla wszystkich, pierwszeństwo wymuszonego 100% i dwukrotnie szybszy dodatni przyrost ludności. Aktywność daje produkcję/podatki/transport ×2; po pięciu minutach ×1, po 48 h bez grania ×0,5.
+- Bazowe 20% szczęścia nowej wyspy, minimum 20% przez 72 h dla wszystkich, pierwszeństwo wymuszonego 100% i dwukrotnie szybszy dodatni przyrost ludności. Aktywność daje produkcję/podatki/transport ×2; po pięciu minutach ×1, po 48 h bez grania ×0, 5.
 - 25 prawdziwych działań samouczka ze wskazaniem właściwego przycisku, skrzynie 100–300 pięciu materiałów, zachowane odebrane nagrody i brak zasłaniania trwającej minigry.
-- Nagrody rund 50,100,200,400… i pula 50,150,350,750…; dobrowolne przedłużenie przed terminem, ryzyko niewypłaconej serii i zachowany wybór kulek/trójek.
+- Nagrody rund 50, 100, 200, 400… i pula 50, 150, 350, 750…; dobrowolne przedłużenie przed terminem, ryzyko niewypłaconej serii i zachowany wybór kulek/trójek.
 - Zapisywany harmonogram propozycji minigry/reklamy, nagrody materiałowe 10–30, osobne uprawnienie bez reklam w standardowej grze po zakupach 1999 gr/30 dni. Reklamy za czas ekspedycji pozostają także dla uprawnionych.
 - Codzienne darmowe błogosławieństwo, wydarzenia dobre/złe, regularność Kaplicy, lojalność 50–200 sześciu zasobów oraz czytelne powiadomienia.
 - Postęp konta wyłącznie w chmurze. Brak lokalnej wyspy i lokalnej kopii odzyskiwania; brak połączenia blokuje zatwierdzanie działań. Język i techniczna sesja logowania nie są zapisem postępu.
@@ -53,7 +53,7 @@ Zakres [v20](docs/FRONTEND-V20-REQUIREMENTS.md), zawarty w opublikowanym v22.1, 
 
 ## Konta i integracje
 
-Zakres [v21](docs/FRONTEND-V21-REQUIREMENTS.md), zawarty w opublikowanym v22.1, przeplata nagrody nowego 25-krokowego samouczka z wydawaniem zasobów i dąży do zakończenia z pełnym magazynem bez zaległych skrzyń. Zachowuje stare postępy i nagrody. Rozbudowa Ratusza od 3→4 wymaga 75% ludności poprzedzającego poziomu; od Ratusza 6 handel graczy zastępuje nowe zlecenia NPC. Ratusz 10 pozwala utworzyć drugą wyspę, z jednorazowym skopiowaniem poziomów Ratusza i Magazynu. Własny statek przewozi 1000 sztuk w 10 minut bez opłaty za rejs; płatne zwiększenie pojemności jest symulacją DEV/PRE-PROD. Aktywacja serwerowego API i nowego rynku pozostaje do odrębnego potwierdzenia.
+Zakres [v21](docs/FRONTEND-V21-REQUIREMENTS.md), zawarty w opublikowanym v22.1, przeplata nagrody nowego 25-krokowego samouczka z wydawaniem zasobów i dąży do zakończenia z pełnym magazynem bez zaległych skrzyń. Zachowuje stare postępy i nagrody. Rozbudowa Ratusza od 3→4 wymaga 75% ludności poprzedzającego poziomu; historyczne v21 zastępowało NPC handlem graczy od Ratusza 6; późniejsza przyjęta zasada przywraca obie ścieżki równolegle. Ratusz 10 pozwala utworzyć drugą wyspę, z jednorazowym skopiowaniem poziomów Ratusza i Magazynu. Własny statek przewozi 1000 sztuk w 10 minut bez opłaty za rejs; aktualnie zwiększenie pojemności towarowej kosztuje 50 monet za 1000 sztuk, zamiast osobnego zakupu PLN. Aktywacja serwerowego API i nowego rynku pozostaje do odrębnego potwierdzenia.
 
 PRE-PROD ma rzeczywiste Firebase Authentication/Firestore dla stałych kont testowych. Kod produkcyjnych kont obsługuje e-mail oraz ścieżki Google/Facebook, lecz aktywacja dostawców, domen i aplikacji wymaga właścicielskiej konfiguracji. Brak konfiguracji nie jest zastępowany pozorowanym logowaniem. Gracz sam inicjuje i zatwierdza udostępnienie osiągnięcia; automatyczne posty strony i osobisty facebookowy push są odłożone.
 
@@ -100,4 +100,4 @@ Obowiązuje **DEV tutaj → GitHub/CI → PRE-PROD → PROD**. PRE-PROD wymaga C
 
 BLACKOUT, PANIC PETS i wcześniejsze makiety pozostają historią repozytorium. Aktywny projekt to HARBORLIGHT.
 
-Pilna poprawka0.9.1.2 jest odebrana na DEV i PRE-PROD; [tag urgent-0.9.1.2-20261031](https://github.com/ksobczak321-oss/gra/tree/urgent-0.9.1.2-20261031) wiąże źródło i wyniki. Wszystkie wcześniejsze wskazania v22.1 pozostają opisem historii zawartych reguł; aktualne dowody podaje rejestr środowisk.
+Pilna poprawka 0.9.1.2 jest odebrana na DEV i PRE-PROD; [tag urgent-0.9.1.2-20261031](https://github.com/ksobczak321-oss/gra/tree/urgent-0.9.1.2-20261031) wiąże źródło i wyniki. Wszystkie wcześniejsze wskazania v22.1 pozostają opisem historii zawartych reguł; aktualne dowody podaje rejestr środowisk.

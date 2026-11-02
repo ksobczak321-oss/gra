@@ -14,6 +14,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import acknowledge_daily_offer
 
 SOURCE = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location(
@@ -42,9 +43,9 @@ def model(completed_house=False):
         if(!result.ok)throw Error(JSON.stringify({action,result}));return result;};
       run({type:'assign',building:'warehouse',delta:6});tick(state,120);
       if(%s){
-        run({type:'upgrade',building:'house'});
-        let elapsed=0;
-        while(state.buildings.house.level<2&&elapsed<3600){tick(state,1);elapsed++;}
+        const project=run({type:'upgrade',building:'house'}).project;
+        run({type:'premiumTransport',route:'construction',project:project.order});
+        run({type:'premiumAccelerate',project:project.order,percent:100});tick(state,1);
         if(state.buildings.house.level!==2||state.buildings.house.construction)
           throw Error('The real House construction did not finish');
         const midnight=Date.parse('2026-11-01T23:00:00Z');
@@ -53,12 +54,12 @@ def model(completed_house=False):
       }
       const housing=housingStatus(state),expected=%d;
       if(state.population!==48||state.capacity!==48||housing.beds!==expected||
-        housing.foodDemandPerHour!==96-expected||state.houseHappinessPool.points!==expected)
+        housing.foodDemandPerHour!==96-expected||state.houseHappinessPool.points!==24+(expected===48?48:0))
         throw Error(JSON.stringify({housing,pool:state.houseHappinessPool,population:state.population}));
       console.log(JSON.stringify(state));''' % (json.dumps(completed_house), 48 if completed_house else 24)
-    return json.loads(subprocess.run(
+    return acknowledge_daily_offer(json.loads(subprocess.run(
         ['node', '--input-type=module', '-e', code], cwd=SOURCE,
-        capture_output=True, text=True, check=True).stdout)
+        capture_output=True, text=True, check=True).stdout))
 
 
 def saved(page):
@@ -136,21 +137,14 @@ def scenario(browser, language, mobile, completed_house):
         close_panel(page)
 
         house(page, mobile)
-        expect(page.locator('[data-house-pool="points"]')).to_have_text(str(housed))
+        bank_points = 24 + (48 if completed_house else 0)
+        expect(page.locator('[data-house-pool="points"]')).to_have_text(str(bank_points))
         expect(page.locator('[data-house-everyone]')).to_be_enabled()
-        allocation = page.locator('[data-building-panel="house"] .pool-actions')
-        people = allocation.locator('select')
-        targets = sorted(int(value) for value in people.locator('option').evaluate_all(
-            '(options)=>options.map(option=>option.value)'))
-        assert targets == list(range(1, housed + 1)), targets
-        if not completed_house:
-            expect(people.locator('option[value="25"],option[value="48"]')).to_have_count(0)
-        people.select_option('1')
-        allocation.locator('input[type="number"]').fill('1')
+        expect(page.locator('[data-house-allocate]')).to_have_count(0)
         before = saved(page)
-        page.locator('[data-house-allocate]').click()
+        page.locator('[data-house-everyone]').click()
         after = saved(page)
-        assert after['houseHappinessPool']['points'] == housed - 1
+        assert after['houseHappinessPool']['points'] == bank_points - housed
         before_people = {person['id']: person for person in before['residents']}
         after_people = {person['id']: person for person in after['residents']}
         assert set(after_people) == set(before_people) == set(range(1, 49))
@@ -158,9 +152,9 @@ def scenario(browser, language, mobile, completed_house):
             before_people[key]['personUid'] for key in sorted(before_people)]
         for resident_id in range(1, 49):
             delta = after_people[resident_id]['happiness'] - before_people[resident_id]['happiness']
-            assert abs(delta - (1 if resident_id == 1 else 0)) < 1e-7, (resident_id, delta)
+            assert abs(delta - (1 if resident_id <= housed else 0)) < 1e-7, (resident_id, delta)
         assert after['population'] == 48 and after['buildings']['house']['level'] == (2 if completed_house else 1)
-        expect(page.locator('[data-house-pool="points"]')).to_have_text(str(housed - 1))
+        expect(page.locator('[data-house-pool="points"]')).to_have_text(str(bank_points - housed))
         expect(page.locator('[data-house-everyone]')).to_be_disabled()
         cloud.no_island_cache(page)
         assert not cloud.ERRORS[error_start:], cloud.ERRORS[error_start:]

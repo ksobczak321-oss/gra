@@ -1,12 +1,12 @@
 // Physical goods and event-based logistics. Durations are real elapsed seconds,
 // including catch-up after the browser is closed.
-import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v27';
-import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v27';
-import { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, normalizeBonusMaterials, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v27';
-import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v27';
-import { eventTransportMultiplier, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v27';
-import { residentWorkMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v27';
-export { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v27';
+import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v28';
+import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v28';
+import { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, normalizeBonusMaterials, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v28';
+import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v28';
+import { eventTransportMultiplier, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v28';
+import { residentWorkMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v28';
+export { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, grantBonusMaterials, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v28';
 export const workerEfficiency = productionMultiplier;
 // Paths improve cargo courses, independently of production and resident walks.
 export const transportEfficiency = (state, efficiency = workerEfficiency(state)) => efficiency * roadSpeedMultiplier(state) * activePlayMultiplier(state) * eventTransportMultiplier(state);
@@ -129,23 +129,19 @@ export const starterTurboAvailable = state => state.starterTurbo?.version === 1 
 export function unlockStarterTurbo(state) {
   if (starterTurboAvailable(state) || state.starterTurbo?.unlocked || state.islandRole === 'daughter' || state.islandId && state.islandId !== 'island-1' || state.buildings.townhall.level > 2) return false;
   const carriers = (state.residents || []).filter(person => person.workplace === 'warehouse' && !person.pendingRelease);
-  if (carriers.length < 6) return false;
+  if (carriers.length < (state.tutorial?.curriculum === 6 ? 3 : 6)) return false;
   state.starterTurbo = { version: 1, unlocked: true, unlockedAt: state.worldTimeMs || 0 };
   return true;
 }
 export function starterConstructionTiming(state, project) {
-  if (!starterTurboAvailable(state) || project.premiumService || project.instantTransport) return null;
-  const level = state.buildings.townhall.level, capacity = haulCapacity(state);
-  const trips = MATERIAL_IDS.reduce((sum, id) => sum + Math.ceil((project.cost?.[id] || 0) / capacity), 0);
-  if (!trips) return null;
-  // Compare actual cargo courses with the ordinary Town Hall quote at the
-  // same level/capacity. Coins do not travel; a carrier takes one material.
-  const referenceTrips = 5 * Math.ceil(500 * level / capacity);
-  const proportion = project.building === 'townhall' ? 1 : trips / referenceTrips;
-  const transportDuration = level === 1 ? 30 : Math.min(300, Math.ceil(120 * proportion));
-  const buildingDuration = Math.ceil((level === 1 ? 60 : 300) * proportion * constructionBuildFactor(project));
-  const waves = Math.ceil(trips / 6);
-  return { version: 1, level, carriers: 6, capacity, trips, waves, transportDuration, buildingDuration, courseSeconds: transportDuration / waves };
+  // The former introductory clocks are only historical project snapshots.
+  // New projects use ordinary transport/building and the real coin services;
+  // the persisted starter milestone still grants its separate material price.
+  return null;
+}
+
+export function missionProductionMultiplier(state, building) {
+  return (state.missionProductionBonuses || []).some(effect => effect.building === building && effect.multiplier === 2 && Number.isFinite(effect.until) && effect.until > (state.worldTimeMs || 0)) ? 2 : 1;
 }
 const constructionBuildingSeconds = (project, transport = project.transportSeconds || 0) => project.starterTurbo?.buildingDuration ?? Math.max(0, transport) * constructionBuildFactor(project);
 function tripWorkerMultiplier(state, trip) {
@@ -375,12 +371,12 @@ export function estimateMaterialsSeconds(state,cost,ownerContext=null) {
     if(!crew)return Infinity;
     const producer=Object.keys(PRODUCTION_RECIPES).find(k=>PRODUCTION_RECIPES[k].output===id), b=state.buildings[producer], recipe=PRODUCTION_RECIPES[producer];
     const buffered=b.ready+(state.pendingDeliveries[id]||0), make=Math.max(0,missing-buffered);
-    const workers=effectiveWorkerCount(state,producer), rate=workers*productionRate(state,producer)*efficiency*(state.lighthouseRemaining>0?2:1)*activePlayMultiplier(state)*eventProductionMultiplier(state,producer)-(id==='food'?foodDemandPerHour(state):0);
+    const workers=effectiveWorkerCount(state,producer), rate=workers*productionRate(state,producer)*efficiency*(state.lighthouseRemaining>0?2:1)*activePlayMultiplier(state)*eventProductionMultiplier(state,producer)*missionProductionMultiplier(state,producer)-(id==='food'?foodDemandPerHour(state):0);
     if(make&&rate<=0)return Infinity;
     time=Math.max(time,make?make/rate*3600:0);trips+=Math.ceil(missing/capacity);
     if(make&&recipe.input) {
       const upstream=Object.keys(PRODUCTION_RECIPES).find(k=>PRODUCTION_RECIPES[k].output===recipe.input), need=Math.max(0,make*recipe.amount-centralAvailable(state,recipe.input)-state.buildings[upstream].ready);
-      const upstreamRate=effectiveWorkerCount(state,upstream)*productionRate(state,upstream)*efficiency*(state.lighthouseRemaining>0?2:1)*activePlayMultiplier(state)*eventProductionMultiplier(state,upstream);
+      const upstreamRate=effectiveWorkerCount(state,upstream)*productionRate(state,upstream)*efficiency*(state.lighthouseRemaining>0?2:1)*activePlayMultiplier(state)*eventProductionMultiplier(state,upstream)*missionProductionMultiplier(state,upstream);
       if(need&&!upstreamRate)return Infinity;
       time=Math.max(time,need/upstreamRate*3600||0);trips+=Math.ceil(need/capacity);
     }
@@ -526,6 +522,15 @@ function reservedPort(state,resource) {
   }
   return reserved+inboundAmount(state,'dock',resource);
 }
+function savedEffectTransition(value) {
+  if (!value || typeof value !== 'object' || !['started', 'changed', 'ended'].includes(value.transition) || typeof value.effectId !== 'string') return null;
+  const detail = { transition: value.transition, effectId: value.effectId.slice(0, 120),
+    residentIds: [...new Set((Array.isArray(value.residentIds) ? value.residentIds : []).filter(id => Number.isSafeInteger(id) && id >= 1))].slice(0, 2400),
+    affectedCount: Math.min(2400, whole(value.affectedCount)) };
+  for (const key of ['building','resource','blockageReason','reason']) if (typeof value[key] === 'string') detail[key] = value[key].slice(0, 80);
+  for (const key of ['resumedCount','recalledCount','remainingLocal','amount']) if (Number.isFinite(value[key])) detail[key] = clamp(value[key], 0, Number.MAX_SAFE_INTEGER);
+  return detail;
+}
 export function normalizeLogisticsState(state,raw) {
   normalizeEconomyLedger(state, raw);
   state.starterTurbo = raw.starterTurbo?.version === 1 && raw.starterTurbo.unlocked === true ? { version: 1, unlocked: true, unlockedAt: clamp(raw.starterTurbo.unlockedAt, 0, Number.MAX_SAFE_INTEGER) } : null;
@@ -576,7 +581,7 @@ export function normalizeLogisticsState(state,raw) {
     if(!t||!kinds.includes(t.kind)||!MATERIAL_IDS.includes(t.resource)||!whole(t.amount))continue;
     state.haulTrips[id].push({worker:Number.isInteger(t.worker)&&t.worker>=-1?t.worker:0,remaining:clamp(t.remaining,0,300),resource:t.resource,amount:whole(t.amount),kind:t.kind,...(t.kind === 'construction' && t.starterTurboClock === true ? { starterTurboClock: true } : {}),...(Number.isSafeInteger(t.residentId)?{residentId:t.residentId}:{}),...([.5,1].includes(t.workMultiplier) ? {workMultiplier:t.workMultiplier} : {}),...(t.producer&&PRODUCTION_RECIPES[t.producer]?{producer:t.producer}:{}),...(t.projectOrder?{projectOrder:whole(t.projectOrder)}:{}),...(t.orderId?{orderId:whole(t.orderId)}:{})});
   }
-  state.notifications=(Array.isArray(raw.notifications)?raw.notifications:[]).slice(0,100).filter(n=>n&&typeof n.title==='string'&&typeof n.message==='string').map(n=>({id:whole(n.id),kind:String(n.kind||'info').slice(0,40),title:translateSavedNotificationText(n.title.slice(0,150)),message:translateSavedNotificationText(n.message.slice(0,800)),at:clamp(n.at,0,Number.MAX_SAFE_INTEGER),read:n.read===true,...(typeof n.titlePl==='string'?{titlePl:n.titlePl.slice(0,150)}:{}),...(typeof n.messagePl==='string'?{messagePl:n.messagePl.slice(0,800)}:{}),...(typeof n.worldEventId==='string'?{worldEventId:n.worldEventId.slice(0,80)}:{})}));
+  state.notifications=(Array.isArray(raw.notifications)?raw.notifications:[]).slice(0,100).filter(n=>n&&typeof n.title==='string'&&typeof n.message==='string').map(n=>({id:whole(n.id),kind:String(n.kind||'info').slice(0,40),title:translateSavedNotificationText(n.title.slice(0,150)),message:translateSavedNotificationText(n.message.slice(0,800)),at:clamp(n.at,0,Number.MAX_SAFE_INTEGER),read:n.read===true,...(typeof n.titlePl==='string'?{titlePl:n.titlePl.slice(0,150)}:{}),...(typeof n.messagePl==='string'?{messagePl:n.messagePl.slice(0,800)}:{}),...(typeof n.worldEventId==='string'?{worldEventId:n.worldEventId.slice(0,80)}:{}),...(typeof n.effectId==='string'?{effectId:n.effectId.slice(0,120)}:{}),...(savedEffectTransition(n.effectTransition)?{effectTransition:savedEffectTransition(n.effectTransition)}:{})}));
   state.notificationSequence=Math.max(whole(raw.notificationSequence),...state.notifications.map(n=>n.id),0);
   state.fullResources=Object.fromEntries(MATERIAL_IDS.map(id=>[id,raw.fullResources?.[id]===true]));
   for(const [id,b] of Object.entries(state.buildings)) {
@@ -801,7 +806,7 @@ function productionJobs(state,efficiency) {
     const cycle=3600/Math.max(1,productionRate(state,id));
     const engaged=activePlayMultiplier(state);
     const people = (state.residents || []).filter(person => person.workplace === id);
-    for(const index of activeWorkerIndices(state,id))jobs.push({id,index,cycle,speed:efficiency*(state.lighthouseRemaining>0?2:1)*engaged*eventProductionMultiplier(state,id)*(people[index] ? residentWorkMultiplier(state,people[index]) : 1)});
+    for(const index of activeWorkerIndices(state,id))jobs.push({id,index,cycle,speed:efficiency*(state.lighthouseRemaining>0?2:1)*engaged*eventProductionMultiplier(state,id)*missionProductionMultiplier(state,id)*(people[index] ? residentWorkMultiplier(state,people[index]) : 1)});
   }
   return jobs;
 }
@@ -809,6 +814,7 @@ export function nextLogisticsEvent(state,efficiency=workerEfficiency(state)) {
   promoteConstructionQueue(state);
   dispatchTrips(state);
   let next=Infinity;
+  for (const effect of state.missionProductionBonuses || []) if (Number.isFinite(effect.until) && effect.until > (state.worldTimeMs || 0)) next = Math.min(next, (effect.until - (state.worldTimeMs || 0)) / 1000);
   for(const j of productionJobs(state,efficiency))next=Math.min(next,Math.max(0,j.cycle-(state.buildings[j.id].workProgress[j.index]||0))/j.speed);
   for(const t of Object.values(state.haulTrips).flat())next=Math.min(next,t.remaining/tripEfficiency(state,t,efficiency));
   for(const t of state.returningWorkers)next=Math.min(next,t);

@@ -18,12 +18,23 @@ export function charityMonth(at) {
 const campaignPath = month => /^\d{4}-(?:0[1-9]|1[0-2])$/.test(month) ? `charityCampaigns/${month}` : fail('charity-invalid-campaign', 400);
 const donationPath = id => /^charity_[a-f0-9]{40}$/.test(id) ? `charityDonations/${id}` : fail('charity-invalid-donation', 400);
 const available = campaign => campaign?.active === true ? Math.max(0, campaign.budgetCents - campaign.reservedCents - campaign.transferredCents) : 0;
-const publicDonation = value => value ? { id: value.id, month: value.month, status: value.status, mode: value.mode, reservedAt: value.reservedAt,
+const publicDonation = value => value ? { id: value.id, month: value.month, status: value.status, mode: value.mode, reservedAt: value.reservedAt, coins: value.coins, operatorCents: value.operatorCents,
   transferredAt: value.transferredAt ?? null, transferReference: value.transferReference ?? null, reward: value.reward ?? null, islandId: value.islandId } : null;
-const qualifiedSources = new Set(['tax-base', 'free-task']);
+export const CHARITY_RULES = Object.freeze({ minimumCoins: 100, stepCoins: 100, coinsPerGrosz: 10, maximumMonthlyFundCents: 5000, minimumAccountDays: 14, minimumActiveDays: 5, minimumTownHall: 4 });
+const qualifiedSources = new Set(['tax-base', 'free-task', 'expedition']);
+export function charityEligibility(account, state, at) {
+  const createdAt = account?.createdAt ?? account?.registeredAt;
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Warsaw', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date(at)).filter(part => part.type !== 'literal').map(part => [part.type, part.value]));
+  const today = `${parts.year}-${parts.month}-${parts.day}`;
+  const activeDays = [...new Set(Array.isArray(account?.activePlayDays) ? account.activePlayDays.filter(day => typeof day === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(day) && day <= today) : [])];
+  const ageEligible = Number.isSafeInteger(createdAt) && createdAt >= 0 && at - createdAt > CHARITY_RULES.minimumAccountDays * DAY;
+  const activeEligible = activeDays.length >= CHARITY_RULES.minimumActiveDays;
+  const townHallEligible = Number(state?.buildings?.townhall?.level) >= CHARITY_RULES.minimumTownHall;
+  return { eligible: ageEligible && activeEligible && townHallEligible, ageEligible, activeEligible, townHallEligible, activeDays: activeDays.length };
+}
 
 export function createCharityService({ store: baseStore, environment = 'production', simulation = false, now = () => Date.now(), verifyCredit = null, verifyFunding = null, verifyTransfer = null } = {}) {
-  if (simulation && environment !== 'development') throw new TypeError('Charity simulation is restricted to local development.');
+  if (simulation && !['development', 'preprod'].includes(environment)) throw new TypeError('Charity simulation is restricted to DEV and PRE-PROD.');
   const store = createCharityLedgerStore(createIslandDocumentStore(baseStore), { now });
   const mode = simulation ? 'simulation' : 'real';
   const time = () => { const at = now(); if (!Number.isSafeInteger(at) || at < 0) fail('invalid-server-clock', 500); return at; };
@@ -32,7 +43,8 @@ export function createCharityService({ store: baseStore, environment = 'producti
     const island = await tx.get(`islands/${uid}`);
     if (!island || !Number.isSafeInteger(island.revision) || island.revision < 1) fail('charity-island-unavailable');
     const state = JSON.parse(island.payload), wallet = normalizedWallet(await tx.get(walletPath(uid)), coinTotalFromIslandDocument(island), at);
-    return { island, state, wallet };
+    const account = await tx.get(`accounts/${uid}`);
+    return { island, state, wallet, account, eligibility: charityEligibility(account, state, at) };
   }
   const islandChanged = (island, state, at) => ({ ...island, payload: JSON.stringify(state), revision: island.revision + 1, updatedAt: at });
   async function writeWalletAndIsland(tx, uid, wallet, island, state, at) {
@@ -49,16 +61,16 @@ export function createCharityService({ store: baseStore, environment = 'producti
   async function status({ uid }) {
     requireUid(uid); const at = time(), month = charityMonth(at);
     return store.runTransaction(async tx => {
-      const { wallet } = await readWallet(tx, uid, at), campaign = await tx.get(campaignPath(month));
+      const { wallet, eligibility } = await readWallet(tx, uid, at), campaign = await tx.get(campaignPath(month));
       const ids = Array.isArray(wallet.charityDonationIds) ? wallet.charityDonationIds : [];
       const donations = await Promise.all(ids.map(id => tx.get(donationPath(id))));
       const last = wallet.lastDonation;
       return { mode, month, qualifiedCoins: wallet.qualified, unqualifiedCoins: wallet.unqualified,
         campaign: campaign ? { organization: campaign.organization, goal: campaign.goal, mode: campaign.mode, active: campaign.active,
           budgetCents: campaign.budgetCents, availableCents: available(campaign), transferredCents: campaign.transferredCents } : null,
-        eligible: !!campaign && campaign.mode === mode && available(campaign) >= 100 && wallet.qualified >= 1000 && (!last || last.month !== month && at - last.at >= 30 * DAY),
+        eligibility, eligible: eligibility.eligible && !!campaign && campaign.mode === mode && available(campaign) >= 10 && wallet.qualified >= 100 && (!last || last.month !== month && at - last.at >= 30 * DAY),
         nextDonationAt: last ? last.at + 30 * DAY : null, monthUsed: last?.month === month, donations: donations.filter(Boolean).map(publicDonation),
-        rules: { coins: 1000, operatorCents: 100, maximumMonthlyFundCents: 5000, happinessPoints: 20, happinessHours: 6, spendOrder: 'qualified-first' } };
+        rules: { coins: 1000, operatorCents: 100, minimumCoins: 100, stepCoins: 100, coinsPerGrosz: 10, maximumMonthlyFundCents: 5000, happinessPoints: 20, happinessHours: 6, spendOrder: 'unqualified-first', minimumAccountDays: 14, minimumActiveDays: 5, minimumTownHall: 4 } };
     });
   }
 
@@ -108,25 +120,28 @@ export function createCharityService({ store: baseStore, environment = 'producti
     });
   }
 
-  async function donate({ uid, requestId, islandId = 'island-1' }) {
+  async function donate({ uid, requestId, islandId = 'island-1', amount = 1000 }) {
+    if (!Number.isSafeInteger(amount) || amount < 100 || amount % 100 !== 0) fail('charity-invalid-amount', 400);
+    const operatorCents = amount / 10;
     requireUid(uid); validId(requestId); const at = time(), month = charityMonth(at), id = `charity_${digest({ uid, requestId }).slice(0, 40)}`;
     return store.runTransaction(async tx => {
-      const previous = await tx.get(donationPath(id)), { island, state, wallet } = await readWallet(tx, uid, at), campaign = await tx.get(campaignPath(month));
+      const previous = await tx.get(donationPath(id)), { island, state, wallet, eligibility } = await readWallet(tx, uid, at), campaign = await tx.get(campaignPath(month));
       if (previous) {
-        if (previous.islandId !== islandId || previous.mode !== mode) fail('charity-request-reused');
+        if (previous.islandId !== islandId || previous.mode !== mode || previous.coins !== amount) fail('charity-request-reused');
         return { donation: publicDonation(previous), alreadyApplied: true };
       }
       const world = chooseWorld(state, islandId), last = wallet.lastDonation;
       if (!campaign || campaign.mode !== mode || !campaign.active) fail('charity-campaign-unavailable');
-      if (available(campaign) < 100) fail('charity-fund-exhausted');
+      if (!eligibility.eligible) fail('charity-account-ineligible');
+      if (available(campaign) < operatorCents) fail('charity-fund-exhausted');
       if (last && (last.month === month || at - last.at < 30 * DAY)) fail('charity-account-limit');
-      if (wallet.qualified < 1000) fail('charity-insufficient-qualified-coins');
-      if (world.resources.coins < 1000) fail('charity-insufficient-island-coins');
+      if (wallet.qualified < amount) fail('charity-insufficient-qualified-coins');
+      if (world.resources.coins < amount) fail('charity-insufficient-island-coins');
       if ((wallet.charityDonationIds?.length ?? 0) >= 1200) fail('charity-history-limit');
-      wallet.qualified = coinRound(wallet.qualified - 1000);
-      world.resources.coins = coinRound(world.resources.coins - 1000);
-      campaign.reservedCents += 100;
-      const donation = { id, uid, month, islandId, mode, status: 'reserved', coins: 1000, operatorCents: 100,
+      wallet.qualified = coinRound(wallet.qualified - amount);
+      world.resources.coins = coinRound(world.resources.coins - amount);
+      campaign.reservedCents += operatorCents;
+      const donation = { id, uid, month, islandId, mode, status: 'reserved', coins: amount, operatorCents,
         reservedAt: at, generation: island.generation ?? 1, transferredAt: null, reward: null };
       wallet.lastDonation = { id, month, at }; wallet.charityDonationIds = [...(wallet.charityDonationIds || []), id];
       await tx.set(campaignPath(month), campaign); await tx.set(donationPath(id), donation);
@@ -140,15 +155,16 @@ export function createCharityService({ store: baseStore, environment = 'producti
     donationPath(donationId); validId(transferEventId);
     if (typeof verifyTransfer !== 'function') fail('charity-transfer-unverified', 503);
     const proof = await verifyTransfer({ donationId, transferEventId, mode });
-    if (!proof || proof.donationId !== donationId || proof.amountCents !== 100 || proof.mode !== mode || typeof proof.reference !== 'string' || !/^[A-Za-z0-9_-]{3,100}$/.test(proof.reference)) fail('charity-transfer-unverified', 403);
+    if (!proof || proof.donationId !== donationId || !Number.isSafeInteger(proof.amountCents) || proof.amountCents < 10 || proof.mode !== mode || typeof proof.reference !== 'string' || !/^[A-Za-z0-9_-]{3,100}$/.test(proof.reference)) fail('charity-transfer-unverified', 403);
     const at = time();
     return store.runTransaction(async tx => {
       const donation = await tx.get(donationPath(donationId));
       if (!donation || donation.mode !== mode) fail('charity-donation-not-found', 404);
+      if (proof.amountCents !== donation.operatorCents) fail('charity-transfer-unverified', 403);
       const campaign = await tx.get(campaignPath(donation.month));
       if (donation.status === 'transferred' || donation.status === 'claimed') return { donation: publicDonation(donation), alreadyApplied: true };
-      if (donation.status !== 'reserved' || !campaign || campaign.reservedCents < 100) fail('charity-donation-closed');
-      campaign.reservedCents -= 100; campaign.transferredCents += 100;
+      if (donation.status !== 'reserved' || !campaign || campaign.reservedCents < donation.operatorCents) fail('charity-donation-closed');
+      campaign.reservedCents -= donation.operatorCents; campaign.transferredCents += donation.operatorCents;
       donation.status = 'transferred'; donation.transferredAt = at; donation.transferReference = proof.reference;
       await tx.set(campaignPath(donation.month), campaign); await tx.set(donationPath(donationId), donation);
       return { donation: publicDonation(donation), alreadyApplied: false };
@@ -183,11 +199,11 @@ export function createCharityService({ store: baseStore, environment = 'producti
       if (!donation || donation.mode !== mode) fail('charity-donation-not-found', 404);
       const { island, state, wallet } = await readWallet(tx, donation.uid, at), campaign = await tx.get(campaignPath(donation.month));
       if (donation.status === 'cancelled') return { donation: publicDonation(donation), alreadyApplied: true };
-      if (donation.status !== 'reserved' || !campaign || campaign.reservedCents < 100) fail('charity-donation-closed');
+      if (donation.status !== 'reserved' || !campaign || campaign.reservedCents < donation.operatorCents) fail('charity-donation-closed');
       if (donation.generation !== (island.generation ?? 1)) fail('charity-world-changed');
       const world = chooseWorld(state, donation.islandId);
-      world.resources.coins = coinRound(world.resources.coins + 1000); wallet.qualified = coinRound(wallet.qualified + 1000);
-      campaign.reservedCents -= 100; donation.status = 'cancelled'; donation.cancelledAt = at;
+      world.resources.coins = coinRound(world.resources.coins + donation.coins); wallet.qualified = coinRound(wallet.qualified + donation.coins);
+      campaign.reservedCents -= donation.operatorCents; donation.status = 'cancelled'; donation.cancelledAt = at;
       await tx.set(campaignPath(donation.month), campaign); await tx.set(donationPath(donationId), donation);
       await writeWalletAndIsland(tx, donation.uid, wallet, island, state, at);
       return { donation: publicDonation(donation), alreadyApplied: false };

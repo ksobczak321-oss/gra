@@ -50,7 +50,7 @@ class BackendPackageTests(unittest.TestCase):
         self.assertTrue(context <= {'Dockerfile', 'package.json', 'server.mjs',
                                    'account-service.mjs', 'island-name.mjs', 'firebase-auth.mjs',
                                    'firestore-store.mjs', 'retention.mjs', 'player-trade.mjs',
-                                   'island-document-store.mjs', 'community-service.mjs', 'league-rules.mjs',
+                                   'island-document-store.mjs', 'community-service.mjs', 'league-rules.mjs', 'league-season.mjs',
                                    'charity-ledger.mjs', 'charity-service.mjs'})
         for private in ['test/server.test.mjs', '.env', 'gha-creds-example.json',
                         'private.mjs', 'node_modules/dependency/index.mjs']:

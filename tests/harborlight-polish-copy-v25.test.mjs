@@ -30,7 +30,7 @@ test('current building descriptions explain concrete recipes and preserve actual
   assert.equal(BUILDINGS.sawmill.inputRate, 2);
   assert.match(translate(BUILDINGS.warehouse.description, 'pl'), /1000.*4000.*120.*pięciominutowym.*50%.*10 mln.*40 mln.*24/);
   assert.match(buildingPurpose('dock', 'pl'), /Od 4\. poziomu.*Od 6\..*10, 13, 16.*20 wysp/);
-  assert.match(residentsPurpose('pl'), /macierzystej.*12.*córce.*6.*0%.*100%.*30 minut.*72 godziny.*20%/);
+  assert.match(residentsPurpose('pl'), /macierzystej.*12.*córce.*6.*0 punktów.*100 punktów.*30 minut.*72 godziny.*20 punktów/);
   assert.match(warehousePurpose('pl'), /nagród.*ponad zwykłym limitem/);
 });
 
@@ -49,13 +49,13 @@ test('coin and plank quantities follow Polish nominative and accusative rules in
   assert.equal(translate('Exchanged 1 planks for 9 food. Market fee: 10%.', 'pl'), 'Wymieniono 1 deskę na 9 jedn. żywności. Prowizja targu wynosi 10%.');
 });
 
-test('happiness and purchased seconds use natural Polish singular, plural and percentage-point units', () => {
+test('happiness uses points and purchased seconds retain natural Polish inflection', () => {
   for (const [count, noun, seconds] of [[1, 'punkt', 'sekundę'], [2, 'punkty', 'sekundy'], [5, 'punktów', 'sekund']]) {
     assert.equal(translate(`Distributed ${count} House happiness points.`, 'pl'), `Rozdzielono ${count} ${noun} szczęścia z domu.`);
     assert.equal(translate(`Resident 4 received ${count} happiness points.`, 'pl'), `Mieszkaniec 4 otrzymał ${count} ${noun} szczęścia.`);
     assert.equal(translate(`Added ${count} seconds for 1 coins.`, 'pl'), `Dodano ${count} ${seconds} za 1 monetę.`);
   }
-  assert.equal(translate('Happiness −10 pp', 'pl'), 'Szczęście −10 p.p.');
+  assert.equal(translate('Happiness −10 pp', 'pl'), 'Szczęście −10 punktów');
 });
 
 test('real expedition action results explain the ad pause and additional-time controls entirely in Polish', () => {
@@ -246,8 +246,8 @@ test('compact, expanded and building Chapel descriptions describe a fixed blessi
   assert.ok(paragraphs.length >= 2, 'retain the actual compact and expanded Chapel descriptions');
   for (const source of [...new Set(paragraphs), BUILDINGS.chapel.description]) {
     const polish = assertPolish(source, 'manual blessing duration');
-    assert.match(polish, /\+20 p\.p\. szczęścia przez godzinę/);
-    assert.doesNotMatch(polish, /\+20 p\.p\. szczęścia na godzinę/);
+    assert.match(polish, /(?:\+)?20 punktów szczęścia przez godzinę/);
+    assert.doesNotMatch(polish, /(?:\+)?20 punktów szczęścia na godzinę/);
   }
   const state = createState(NOW);
   const result = act(state, { type: 'blessing' }, NOW);
@@ -259,7 +259,7 @@ test('compact, expanded and building Chapel descriptions describe a fixed blessi
 });
 
 
-test('the carrier help under Warehouse information explains loads, normal/turbo timing and capped food reserve', () => {
+test('the carrier help explains normal timing, paid tutorial acceleration and the capped food reserve', () => {
   const sourceCode = readFileSync(new URL('../harborlight-v1-play.js', import.meta.url), 'utf8');
   const start = sourceCode.indexOf("informationHeading('central-warehouse'");
   const end = sourceCode.indexOf("el('div', { class: 'stat-grid logistics-stats'", start);
@@ -278,7 +278,8 @@ test('the carrier help under Warehouse information explains loads, normal/turbo 
   assert.match(livePolish, /w obie strony trwa 5 minut/);
   assert.match(livePolish, /120 sztuk/);
   assert.match(livePolish, /[Rr]ezerwa żywności wynosi 50 × poziom [Mm]agazynu.*1200 na poziomie 24/);
-  assert.match(livePolish, /sześciu tragarzy.*Ratuszu 1.*30 sekund.*Ratuszu 2.*5 minut/);
+  assert.match(livePolish, /[Ss]amoucz(?:ku|ek).*przyspiesz(?:anie|enia).*monety/);
+  assert.doesNotMatch(livePolish, /sześciu tragarzy|30 sekund|Ratuszu 2/);
   const state = createState(NOW);
   assert.equal(foodReserve(state), 50);
   state.buildings.warehouse.level = 24;

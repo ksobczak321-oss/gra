@@ -4,15 +4,15 @@
 import {
   MATERIAL_IDS, stockRoom, receiveMaterials, notify,
   quoteInstantTransport, instantTransport, estimateMaterialsSeconds, availableGoods, haulCapacity,
-  townhallPopulationRequirement
-} from './harborlight-v1-logistics.js?v=frontend-v27';
-import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v27';
+  townhallPopulationRequirement, plannedLevel
+} from './harborlight-v1-logistics.js?v=frontend-v28';
+import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v28';
 import { secondsUntilWarsawMidnight } from './harborlight-v1-calendar.js';
-import { tutorialTaskStatus } from './harborlight-v1-progression.js?v=frontend-v27';
-import { affordableTaskRequirements, missionFeasibility } from './harborlight-v1-missions.js?v=frontend-v27';
+import { tutorialTaskStatus } from './harborlight-v1-progression.js?v=frontend-v28';
+import { affordableTaskRequirements, missionFeasibility, fitTaskRewardToRequirements } from './harborlight-v1-missions.js?v=frontend-v28';
 import { MINI_GAME_RULES, miniGameRoundRules, createMiniGame, normalizeMiniGame,
-  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v27';
-export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v27';
+  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v28';
+export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v28';
 
 const HOUR = 3600;
 const QUEST_LIFE = 6 * HOUR;
@@ -44,7 +44,7 @@ const availableMaterial = (state, resource) => availableGoods(state, resource);
 export const ACTIVITY_RULES = Object.freeze({
   coinsPerPLN: 10, accelerationPercentages: [25, 50, 75, 100],
   coinsPerFullMinute: 1, minimumAccelerationPrice: 5, transportCoinsPerTrip: 10,
-  premiumUnlockLevel: 4, materialMarkup: 1.25,
+  premiumUnlockLevel: 1, materialMarkup: 1.25,
   purchasedBuildSeconds: 10,
   packagePricePerLevel: 1000, packageDuration: DAY,
   taskConfirmationSeconds: 60,
@@ -125,7 +125,11 @@ export function taskRewardScale(state) {
 export function nextDailyTaskDeadline(state, anchorClock, afterClock = currentClock(state)) {
   const absolute = state.activityEpochMs + afterClock * 1000;
   if (!Number.isFinite(new Date(absolute).getTime())) return afterClock + DAY;
-  return afterClock + secondsUntilWarsawMidnight(absolute);
+  const untilMidnight = secondsUntilWarsawMidnight(absolute);
+  // A stocked warehouse must not make a half-second offer "feasible" for a
+  // person. Keep at least thirty minutes, using Warsaw calendar boundaries
+  // rather than adding a fixed24h across daylight-saving transitions.
+  return afterClock + untilMidnight + (untilMidnight < 1800 ? secondsUntilWarsawMidnight(absolute + untilMidnight * 1000) : 0);
 }
 function randomInt(state, min, max) {
   const lo = Math.ceil(min), hi = Math.floor(Math.max(min, max));
@@ -145,7 +149,9 @@ function taskGoldBounds(state, size) {
   min += SIZES.indexOf(size);
   const tasks = state.lighthouseTasks || [];
   for (const task of tasks) {
-    const reward = task.reward?.coins;
+    // Reduced offers must not shrink the nominal generation domain of future
+    // sizes. Their actual payouts remain fitted to their own final difficulty.
+    const reward = task.nominalRewardCoins ?? task.reward?.coins;
     if (!validNumber(reward)) continue;
     if (size === 'small' && task.size === 'medium') max = Math.min(max, reward - 1);
     if (size === 'small' && task.size === 'large') max = Math.min(max, reward - 2);
@@ -167,7 +173,7 @@ function taskShape(state, requestedSize) {
   signal(state, 'task-reward-recovery', 'Legacy task reward recovered', 'Existing task rewards could not fit the current reward ranges. The new large reward preserves their ordering.');
   return { size: 'large', gold: [minimum, minimum] };
 }
-function generateTask(state, size, slot, at = currentClock(state)) {
+function generateTask(state, size, slot, at = currentClock(state), duration = QUEST_LIFE) {
   const shape = taskShape(state, size);
   size = shape.size;
   const spec = CONFIG[size];
@@ -184,21 +190,23 @@ function generateTask(state, size, slot, at = currentClock(state)) {
     levelSnapshot[resource] = l;
     requirements[resource] = 12 * l * producerRate(l) * hours;
   }
-  const affordable = affordableTaskRequirements(state, requirements, { duration: QUEST_LIFE });
+  const requestedRequirements = { ...requirements };
+  const affordable = affordableTaskRequirements(state, requirements, { duration });
   for (const id of Object.keys(requirements)) delete requirements[id];
   Object.assign(requirements, affordable.requirements);
-  const reward = { coins: randomInt(state, ...shape.gold) };
+  const nominalReward = { coins: randomInt(state, ...shape.gold) };
   for (const resource of shuffled(state, MATERIAL_IDS).slice(0, SIZES.indexOf(size) + 1)) {
-    reward[resource] = Math.max(1, Math.floor(randomInt(state, 50, 1000) * taskRewardScale(state)));
+    nominalReward[resource] = Math.max(1, Math.floor(randomInt(state, 50, 1000) * taskRewardScale(state)));
   }
+  const reward = fitTaskRewardToRequirements(nominalReward, requestedRequirements, requirements);
   return {
     id: 'lighthouse-' + (++state.taskSequence), slot, size,
     title: TASK_NARRATIVES[randomInt(state, 0, TASK_NARRATIVES.length - 1)],
     requirements, deposited: Object.fromEntries(Object.keys(requirements).map(id => [id, 0])),
-    reward, hours, levelSnapshot, rewardLevel: Math.max(1, level(state, 'townhall')),
-    chainId: 'chain-' + slot, anchorAt: null, createdAt: at, expiresAt: at + QUEST_LIFE,
+    reward, nominalRewardCoins: nominalReward.coins, hours, levelSnapshot, rewardLevel: Math.max(1, level(state, 'townhall')),
+    chainId: 'chain-' + slot, anchorAt: null, createdAt: at, expiresAt: at + duration,
     acceptedAt: null, bonusLockedAt: null, multiplier: 1,
-    feasibilityVersion: 1, feasibleAtOffer: affordable.feasible
+    feasibilityVersion: 2, feasibleAtOffer: affordable.feasible
   };
 }
 function normalizeTask(raw, slot, clock) {
@@ -229,7 +237,8 @@ function normalizeTask(raw, slot, clock) {
     anchorAt, createdAt, expiresAt, acceptedAt, bonusLockedAt,
     multiplier: bonusLockedAt === null ? 1 : bonusLockedAt - createdAt < 15 ? 3 : bonusLockedAt - createdAt < 300 ? 2 : 1,
     ...(raw.tutorialStarter === true ? { tutorialStarter: true } : {}),
-    ...(raw.feasibilityVersion === 1 ? { feasibilityVersion: 1, feasibleAtOffer: raw.feasibleAtOffer !== false } : {})
+    ...(Number.isSafeInteger(raw.nominalRewardCoins) && raw.nominalRewardCoins > 0 ? { nominalRewardCoins: raw.nominalRewardCoins } : {}),
+    ...([1, 2].includes(raw.feasibilityVersion) ? { feasibilityVersion: raw.feasibilityVersion, feasibleAtOffer: raw.feasibleAtOffer !== false } : {})
   };
 }
 
@@ -434,10 +443,12 @@ function replaceTask(state, index, at = currentClock(state), completed = false) 
   if (state.taskAcceptanceDraft?.taskId === previous.id) state.taskAcceptanceDraft = null;
   // Exclude the task being replaced from reward-order constraints.
   state.lighthouseTasks.splice(index, 1);
-  const next = generateTask(state, null, previous.slot, at);
+  const anchorAt = previous.anchorAt === null && completed ? at : previous.anchorAt;
+  const expiresAt = anchorAt === null ? at + QUEST_LIFE : nextDailyTaskDeadline(state, anchorAt, at);
+  const next = generateTask(state, null, previous.slot, at, expiresAt - at);
   next.chainId = previous.chainId;
-  next.anchorAt = previous.anchorAt === null && completed ? at : previous.anchorAt;
-  if (next.anchorAt !== null) next.expiresAt = nextDailyTaskDeadline(state, next.anchorAt, at);
+  next.anchorAt = anchorAt;
+  next.expiresAt = expiresAt;
   state.lighthouseTasks.push(next);
   return next;
 }
@@ -599,8 +610,20 @@ export function quoteAcceleration(state, projectOrOrder, percent) {
   const coins = Math.max(ACTIVITY_RULES.minimumAccelerationPrice, fullMinutes);
   return good('Construction acceleration quote.', { coins, savedSeconds, remaining: project.buildRemaining - savedSeconds, percent, project: project.order });
 }
+// Show the greatest saving for each price. The minimum charge makes smaller
+// percentages strictly worse for short builds, but saved legacy actions remain
+// valid and are still quoted by quoteAcceleration.
+export function quoteAccelerationOptions(state, projectOrOrder) {
+  const byPrice = new Map();
+  for (const percent of ACTIVITY_RULES.accelerationPercentages) {
+    const quote = quoteAcceleration(state, projectOrOrder, percent);
+    if (!quote.ok) continue;
+    if (!byPrice.has(quote.coins) || byPrice.get(quote.coins).savedSeconds < quote.savedSeconds) byPrice.set(quote.coins, quote);
+  }
+  return [...byPrice.values()].sort((a, b) => a.savedSeconds - b.savedSeconds);
+}
 export function quoteTransport(state, action, context = {}) {
-  if (!context.cashPurchase && level(state, 'townhall') < ACTIVITY_RULES.premiumUnlockLevel) return bad('Instant transport unlocks at Town Hall level 4.');
+  if (level(state, 'townhall') < ACTIVITY_RULES.premiumUnlockLevel) return bad('Instant transport unlocks at Town Hall level 1.');
   const quote = quoteInstantTransport(state, action);
   if (!quote?.ok) return quote || bad('This transport route is unavailable.');
   return { ...quote, coins: integer(quote.trips) * ACTIVITY_RULES.transportCoinsPerTrip };
@@ -612,7 +635,12 @@ function warehouseCarryCapacity(state) {
   return haulCapacity(state, 'warehouse');
 }
 export function quotePremiumBuilding(state, building, context = {}) {
-  if (!context.cashPurchase && level(state, 'townhall') < ACTIVITY_RULES.premiumUnlockLevel) return bad('Buying a building without materials unlocks at Town Hall level 4.');
+  if (level(state, 'townhall') < ACTIVITY_RULES.premiumUnlockLevel) return bad('Buying a building without materials unlocks at Town Hall level 1.');
+  if (!state.buildings?.[building]) return bad('This building does not exist.');
+  const nextLevel = plannedLevel(state, building) + 1;
+  if (nextLevel > (building === 'townhall' ? 100 : level(state, 'townhall'))) return bad('Upgrade the Town Hall before buying this building level.');
+  if ((building === 'market' && level(state, 'townhall') < 2) || (building === 'dock' && level(state, 'townhall') < 4)) return bad('This building has not unlocked yet.');
+  if (state.constructionProjects?.some(project => project.building === building) || state.premiumServices?.some(project => project.building === building)) return bad('Finish the preceding upgrade of this building before buying its next level.');
   if (building === 'townhall') {
     const population = townhallPopulationRequirement(state);
     if (!population.ok) return { ...population, code: 'townhall-population', message: `The Town Hall upgrade to level ${population.targetLevel} requires at least ${population.populationRequired} residents (75% of level ${population.populationLevel} capacity). Current population: ${population.populationCurrent}.` };

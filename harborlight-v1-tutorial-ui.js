@@ -1,4 +1,4 @@
-import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v27';
+import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v28';
 
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const MATERIAL_NAMES = { en: ['Wood', 'Stone', 'Grain', 'Food', 'Planks'], pl: ['Drewno', 'Kamień', 'Zboże', 'Żywność', 'Deski'] };
@@ -20,6 +20,11 @@ const rowsFor = (options, includeSkipped = false) => {
   return rows.filter(row => includeSkipped || !row.autoSkipped).map((row, index) => ({ ...row, displayIndex: index + 1 }));
 };
 const lessonCopy = (row, language) => row?.balanced ? { title: pick(language, row.title, row.titlePl || row.title), description: pick(language, row.description, row.descriptionPl || row.description) } : tutorialLessonText(row, language);
+const substepCopy = (step, language) => ({ title: pick(language, step.title, step.titlePl || step.title), description: pick(language, step.description, step.descriptionPl || step.description) });
+const substeps = (row, language) => row.substeps?.length ? node('ol', { class: 'tutorial-service-substeps', 'data-tutorial-service-substeps': row.id }, ...row.substeps.map(step => {
+  const copy = substepCopy(step, language);
+  return node('li', { 'data-tutorial-substep': step.id, 'data-completed': step.done ? 'true' : 'false', ...(row.currentSubstep?.id === step.id ? { 'aria-current': 'step' } : {}) }, `${step.done ? '✓ ' : ''}${copy.title}`);
+})) : null;
 const nextRow = rows => rows.find(row => row.canClaim || row.pendingDecision) || rows.find(row => !row.completed);
 const fraction = (value, total, language) => pick(language, `Step ${value} of ${total}`, `Krok ${value} z ${total}`);
 const pendingConstruction = (state, row) => row?.kind === 'condition' && row.route && (state.buildings?.[row.route]?.construction || state.buildings?.[row.route]?.premiumService);
@@ -110,7 +115,9 @@ export function createTutorialPanel(options) {
       controls.append(action(waiting ? pick(language, 'Check upgrade progress', 'Sprawdź postęp rozbudowy') : isBuildingRoute?.(current.route) ? pick(language, 'Show the building on the map', 'Pokaż budynek na mapie') : pick(language, 'Show the next step', 'Pokaż następny krok'), () => waiting ? onPendingConstruction(current) : onVisit(current.route), { 'data-tutorial-visit': current.id, ...(waiting ? { 'data-tutorial-construction-status': current.route } : {}) }));
     }
     root.append(node('section', { class: 'tutorial-v16-current', 'data-tutorial-current': current.id },
-      node('span', { class: 'tutorial-v16-eyebrow' }, fraction(current.displayIndex, rows.length, language)), node('h3', {}, copy.title), node('p', {}, copy.description), node('p', { class: 'tutorial-v25-stage-hint', 'data-tutorial-stage-hint': '', hidden: true }),
+      node('span', { class: 'tutorial-v16-eyebrow' }, fraction(current.displayIndex, rows.length, language)), node('h3', {}, copy.title), node('p', {}, copy.description), substeps(current, language),
+      current.currentSubstep ? node('p', { 'data-tutorial-current-substep': current.currentSubstep.id }, substepCopy(current.currentSubstep, language).description) : null,
+      node('p', { class: 'tutorial-v25-stage-hint', 'data-tutorial-stage-hint': '', hidden: true }),
       Number.isFinite(current.progressRequired) ? node('p', { class: 'tutorial-v16-reward', 'data-tutorial-assignment-progress': '' }, pick(language, `Assigned carriers: ${current.progressCurrent || 0} / ${current.progressRequired}`, `Przydzieleni tragarze: ${current.progressCurrent || 0} / ${current.progressRequired}`)) : null,
       node('p', { class: 'tutorial-v16-reward' }, current.balanced ? pick(language, current.rewardKind === 'supply' ? 'Reward: missing upgrade materials and a Coin bonus, delivered immediately.' : current.rewardKind === 'final' ? 'Final reward: free ordinary Warehouse capacity is filled, plus 500 Coins.' : current.rewardKind === 'road' ? 'Reward: 200 Coins and the missing Stone for the next path section.' : current.rewardKind === 'coins' ? 'Reward: 200 Coins.' : 'Reward: 100 Coins and up to 25 of each material that fits ordinary storage.', current.rewardKind === 'supply' ? 'Nagroda: brakujące materiały do kolejnej rozbudowy oraz monety, dostępne od razu.' : current.rewardKind === 'final' ? 'Nagroda końcowa: 500 monet i uzupełnienie wolnego miejsca w magazynie.' : current.rewardKind === 'road' ? 'Nagroda: 200 monet i brakujący kamień na następny odcinek ścieżki.' : current.rewardKind === 'coins' ? 'Nagroda: 200 monet.' : 'Nagroda: 100 monet i do 25 sztuk każdego materiału, o ile jest miejsce w magazynie.') : pick(language, 'Reward: a chest with 100–300 of each of the five materials.', 'Nagroda: skrzynia z 100–300 sztuk każdego z pięciu materiałów.')),
       current.settlement && !current.settlement.eligible ? node('p', { class: 'tutorial-v18-storage-warning', 'data-tutorial-settlement-blocked': '' }, pick(language, current.settlement.reason, current.settlement.reasonPl)) : null,
@@ -137,7 +144,9 @@ export function createTutorialGuide(options) {
   if (!current) return null;
   const copy = lessonCopy(current, language);
   return node('aside', { class: 'tutorial-v16-guide', 'data-tutorial-guide': current.id, 'data-tutorial-target': current.completed ? '' : current.guideSelector || '', 'data-i18n-ignore': '', 'aria-label': pick(language, 'Current tutorial step', 'Aktualny krok samouczka') },
-    node('div', { class: 'tutorial-v16-guide-copy' }, node('small', {}, fraction(current.displayIndex, rows.length, language)), node('strong', {}, copy.title), Number.isFinite(current.progressRequired) ? node('small', { 'data-tutorial-assignment-progress': '' }, pick(language, `Assigned carriers: ${current.progressCurrent || 0} / ${current.progressRequired}`, `Przydzieleni tragarze: ${current.progressCurrent || 0} / ${current.progressRequired}`)) : null, node('p', { class: 'tutorial-v25-stage-hint', 'data-tutorial-stage-hint': '', hidden: true })),
+    node('div', { class: 'tutorial-v16-guide-copy' }, node('small', {}, fraction(current.displayIndex, rows.length, language)), node('strong', {}, current.currentSubstep ? substepCopy(current.currentSubstep, language).title : copy.title),
+      current.currentSubstep ? node('small', { 'data-tutorial-current-substep': current.currentSubstep.id }, substepCopy(current.currentSubstep, language).description) : null,
+      Number.isFinite(current.progressRequired) ? node('small', { 'data-tutorial-assignment-progress': '' }, pick(language, `Assigned carriers: ${current.progressCurrent || 0} / ${current.progressRequired}`, `Przydzieleni tragarze: ${current.progressCurrent || 0} / ${current.progressRequired}`)) : null, node('p', { class: 'tutorial-v25-stage-hint', 'data-tutorial-stage-hint': '', hidden: true })),
     storageBlocked ? node('small', { class: 'tutorial-v18-storage-warning', 'data-tutorial-storage-blocked': '' }, pick(language, 'Chests are waiting: spend the excess materials. Island actions remain available.', 'Skrzynie czekają: wydaj nadmiar materiałów. Działania wyspy pozostają dostępne.')) : null,
     node('div', { class: 'tutorial-v16-guide-actions' },
       current.id === 'townhall-upgrade' && !status.buildingSuppliesClaimed && !current.completed ? action(pick(language, 'Collect building supplies', 'Odbierz materiały do budowy'), () => onAction({ type: 'prepareTutorialUpgrade' }), { 'data-tutorial-supplies': '' }) : null,

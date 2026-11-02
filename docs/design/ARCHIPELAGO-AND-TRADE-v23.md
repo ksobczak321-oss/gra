@@ -1,5 +1,7 @@
 # Archipelag i handel — decyzje oraz wdrożenie DEV0.10.0.0
 
+> Aktualizacja 2 listopada 2026: poniższy dokument zachowuje opis swojej historycznej wersji. Aktualne zasady DEV0.12/v28: [gospodarka](../ECONOMY-RULES.md), [wymagania](../FRONTEND-V28-REQUIREMENTS.md), [stan środowisk](../ENVIRONMENT-STATUS.md). Pojemność statku kosztuje obecnie 50 monet/+1000, zwykłe budowy nie mają nowego turbo, a Dom stosuje zbiorowy bank 7 porcji. Dawny opis nie zastępuje tych reguł. PRE-PRODpozostaje 0.11/c 7 c 3974; brak nowego deployu/resetu.
+
 Stan:31 października2026, po nowym **GO wyłącznie DEV**. Historyczny punkt odniesienia analizy to `34f2eb3128fde2ce2d03429f5b0b180c66525412`; poniższa tabela „Obecny kod” dokumentuje ten wcześniejszy model, nie gotowość nowego wydania. Nowe GO zastępuje dawną fazę „najpierw analiza”; nie obejmuje PRE-PROD/PROD ani resetu historii.
 
 ## Bieżący zakres implementacji i potwierdzone parametry

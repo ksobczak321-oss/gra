@@ -1,5 +1,7 @@
 # Arkusz zasad HARBORLIGHT
 
+> Aktualizacja 2 listopada 2026: poniższy dokument zachowuje opis swojej historycznej wersji. Aktualne zasady DEV0.12/v28: [gospodarka](../ECONOMY-RULES.md), [wymagania](../FRONTEND-V28-REQUIREMENTS.md), [stan środowisk](../ENVIRONMENT-STATUS.md). Pojemność statku kosztuje obecnie 50 monet/+1000, zwykłe budowy nie mają nowego turbo, a Dom stosuje zbiorowy bank 7 porcji. Dawny opis nie zastępuje tych reguł. PRE-PRODpozostaje 0.11/c 7 c 3974; brak nowego deployu/resetu.
+
 Bieżący plik: **[HARBORLIGHT11-zasady.xlsx](HARBORLIGHT11-zasady.xlsx)**. Obejmuje zatwierdzone reguły **v18**, stan potwierdzonego PRE-PROD oraz osobno oznaczony nowy zakres DEV: bezpośrednie wylogowanie i robocze dokumenty rejestracji.
 
 [Pobierz Excel 11 z repozytorium](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT11-zasady.xlsx) — po synchronizacji zmian z Gitem. Jeżeli GitHub pokazuje stronę pliku, wybierz **Download raw file**. Plik można otworzyć w Excelu lub LibreOffice Calc i zaimportować do Arkuszy Google.

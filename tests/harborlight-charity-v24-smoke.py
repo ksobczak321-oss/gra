@@ -3,7 +3,7 @@
 All files are fulfilled locally at loopback; no Firebase account or real money
 is used. The in-memory preview and its explicit test operations are deliberate.
 """
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 import json
@@ -25,7 +25,7 @@ def seed():
       state.engagementSchedule.initialCompleted=true;
       state.engagementSchedule.initialAnchored=true;
       state.engagementSchedule.nextAt=1000000000;
-      state.resources.coins=100;console.log(JSON.stringify(state));""" % int(NOW.timestamp() * 1000)
+      state.loyalty.lastOfferDay='2026-10-31';state.resources.coins=100;console.log(JSON.stringify(state));""" % int(NOW.timestamp() * 1000)
     return json.loads(subprocess.run(['node', '--input-type=module', '-e', source], cwd=SOURCE, capture_output=True, text=True, check=True).stdout)
 
 
@@ -44,7 +44,7 @@ def scenario(browser, language, mobile):
     context.add_init_script('window.__HARBORLIGHT_DEV_FIXTURE__=%s;localStorage.setItem("harborlight-language",%s);' % (json.dumps(seed()), json.dumps(language)))
     page = context.new_page()
     page.on('pageerror', lambda error: errors.append(str(error)))
-    page.clock.install(time=NOW)
+    page.clock.install(time=NOW-timedelta(seconds=1))
     page.clock.pause_at(NOW)
     try:
         assert page.goto(ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
@@ -58,7 +58,7 @@ def scenario(browser, language, mobile):
             page.locator('#hit-menu').click()
         page.locator('[data-open-charity]').click()
         panel = page.locator('[data-charity-panel]')
-        expect(panel).to_contain_text('SYMULACJA DEV' if language == 'pl' else 'DEV SIMULATION')
+        expect(panel).to_contain_text('SYMULACJA —' if language == 'pl' else 'SIMULATION —')
         expect(panel.locator('[data-charity-donate]')).to_be_disabled()
         expect(panel.locator('[data-charity-beneficiary] option')).to_have_count(3)
         panel.locator('[data-charity-beneficiary]').select_option('dev-animals')
@@ -78,8 +78,8 @@ def scenario(browser, language, mobile):
         assert page.evaluate('window.__HARBORLIGHT_DEV_STATE__.charityReward || null') is None
         panel.locator('[data-charity-test-transfer]').click()
         expect(panel).not_to_have_attribute('aria-busy', 'true')
-        panel.locator('[data-charity-claim]').click()
-        expect(panel).not_to_have_attribute('aria-busy', 'true')
+        expect(panel.locator('.charity-celebration')).to_contain_text('20')
+        assert panel.locator('[data-charity-claim]').count() == 0
         page.clock.run_for(1250)
         state = page.evaluate('window.__HARBORLIGHT_DEV_STATE__')
         assert state['charityReward']['mode'] == 'simulation'

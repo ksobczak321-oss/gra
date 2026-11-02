@@ -15,6 +15,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import acknowledge_daily_offer, dismiss_player_offers
 
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
@@ -36,8 +37,8 @@ def starter(coins, name):
       state.tutorial.autoOpenDisabled=true;
       state.resources.coins=%d;state.islandName=%s;
       console.log(JSON.stringify(state));""" % (int(NOW.timestamp()*1000), coins, json.dumps(name))
-    return json.loads(subprocess.run(['node', '--input-type=module', '-e', code], cwd=SOURCE,
-                                    text=True, capture_output=True, check=True).stdout)
+    return acknowledge_daily_offer(json.loads(subprocess.run(['node', '--input-type=module', '-e', code], cwd=SOURCE,
+                                    text=True, capture_output=True, check=True).stdout))
 
 
 def timestamp():
@@ -201,6 +202,7 @@ def visit(page):
         expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
     elif page.locator('#island-dialog').is_visible():
         page.locator('#island-dialog .dialog-close').click()
+    dismiss_player_offers(page)
 
 
 def cloud_state(uid):

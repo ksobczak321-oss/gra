@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "as_of": "2026-11-02",
-  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont.",
+  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów.",
   "environment_baseline": {
     "application_source_sha": "092e75226fbb14cab09826f313e11d10891966d8",
     "ci_run_id": 41221965032,
@@ -16084,6 +16084,3050 @@
       },
       "notes": [
         "Dokładnego prywatnego ERROR pierwotnej awarii nie odczytano. Niezgodność kontrolera z legalnym formatem2 jest jednak odtworzonym błędem kodu."
+      ]
+    },
+    {
+      "id": "HL-CHG-0969",
+      "epic": "HL-EPIC-PEO",
+      "area": "Dom i szczęście",
+      "type": "Story",
+      "title": "Dom przechowuje siedem niewydanych porcji dobowych i rozdziela szczęście tylko zbiorowo",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0969"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nie ma indywidualnego wyboru mieszkańca ani automatu 23:58. Dostępna jest zbiorowa dystrybucja dla uprawnionych osób.",
+        "Porcja powstaje na koniec dnia Warszawy według rzeczywistej liczby osób mających łóżko; bank przechowuje najwyżej siedem niewydanych porcji.",
+        "Wczytanie nie odbiera historycznie przyznanej puli i nie tworzy jej ponownie. Pełny bank nie rośnie o ósmą porcję."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-housing.js",
+          "harborlight-v1-state.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-happiness-bank-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0970",
+      "epic": "HL-EPIC-PEO",
+      "area": "Szczęście i kalendarz",
+      "type": "Story",
+      "title": "O północy Warszawy każdy mieszkaniec traci jeden punkt; praca i jedzenie nadal dają dwa na godzinę",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0970"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Odejmujemy jeden punkt na każdej rzeczywiście przekroczonej północy Warszawy, także offline i przy zmianie czasu.",
+        "Zwykła praca +1/h i jedzenie +1/h pozostają płynne. Nie wprowadzamy progu ani krzywej przy 30 punktach.",
+        "Wymuszone szczęście Latarni oraz ochrona powitalna zachowują pierwszeństwo i nie tworzą ukrytego długu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-state.js",
+          "harborlight-v1-residents.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-happiness-bank-v28.test.mjs",
+          "tests/harborlight-agreed-state.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0971",
+      "epic": "HL-EPIC-PEO",
+      "area": "Modlitwa",
+      "type": "Story",
+      "title": "Indywidualna modlitwa w Domu trwa 10 minut razy ukończony Ratusz i daje 50 punktów na sześć godzin",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0971"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted_scope_with_documented_dev_parameters"
+      },
+      "acceptance": [
+        "Przydział odbywa się z Domu. Łączny czas 10 min × ukończony TH zawiera dwie minuty dojścia i dwie powrotu.",
+        "Po powrocie uczestnik otrzymuje +50 punktów na 6 h. W czasie modlitwy normalnie je, nie pracuje i nie płaci podatków, bez kary bezrobocia.",
+        "Jawne parametry DEV: 10 × TH monet za osobę, jednoczesna liczba uczestników ograniczona ukończonym poziomem Kaplicy. Zapisy zachowują rozpoczęte modlitwy."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-leisure.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-housing.js",
+          "harborlight-v1-state.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-prayer-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [
+        "Cennik i pojemność są parametrami integracji DEV; czas, poziom Ratusza, +50 i 6 h wynikają z odpowiedzi użytkownika."
+      ],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0972",
+      "epic": "HL-EPIC-COM",
+      "area": "Portfel i płatności",
+      "type": "Story",
+      "title": "Wszystkie usługi są za monety od Ratusza 1; za PLN kupuje się wyłącznie monety od Ratusza 3",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0972"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Pełna rozbudowa, natychmiastowy transport i pozostałe usługi premium używają jednego salda monet od TH1, niezależnie od pochodzenia monet.",
+        "Zakupy PLN dotyczą tylko doładowania monet, są dostępne od TH3 i stosują przelicznik 10 monet za 1 zł.",
+        "Zwykła rozbudowa, ścieżki i zakładanie wysp nadal zużywają materiały. Paynow pozostaje jawnie oznaczoną symulacją poza PROD."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-commerce.js",
+          "harborlight-v1-play.js",
+          "backend/server.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-commerce-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0973",
+      "epic": "HL-EPIC-ARC",
+      "area": "Statek i zakupy",
+      "type": "Story",
+      "title": "Pojemność towarowa wspólnego statku rośnie o 1000 za 50 monet",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0973"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Każde dodatkowe 1000 sztuk pojemności towarowej kosztuje 50 monet. Nie ma bezpośredniej oferty PLN za pojemność.",
+        "Operacja wymaga sprawdzenia i jednokrotnego rozliczenia po stronie API; ponowienie nie zwiększa pojemności drugi raz.",
+        "Nie zmienia się limit 100 pasażerów ani czas rejsu. Istniejące pojemności i uprawnienia pozostają zachowane."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-community-client.js",
+          "backend/server.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-commerce-v28.test.mjs",
+          "tests/harborlight-archipelago.test.mjs",
+          "backend/test/ship-capacity-v28.test.mjs",
+          "tests/harborlight-ship-capacity-cloud-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0974",
+      "epic": "HL-EPIC-ARC",
+      "area": "Nazwy wysp",
+      "type": "Bug",
+      "title": "Zmiana nazwy córki kontroluje unikalność tak samo jak kolonizacja",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0974"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Zakładanie i przemianowanie stosują tę samą kontrolę unikalności nazw w archipelagu.",
+        "Wymuszony prefiks matki jest zachowany i aktualizowany po zmianie nazwy matki. Odrzucenie nie pobiera środków ani nie zmienia innej wyspy."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-archipelago.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-commerce-v28.test.mjs",
+          "tests/harborlight-archipelago.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0975",
+      "epic": "HL-EPIC-ECO",
+      "area": "Przyspieszenia",
+      "type": "Bug",
+      "title": "Przy jednakowej cenie przyspieszenia widoczna jest tylko największa oszczędność czasu",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0975"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Taryfa nie zmienia się; z kilku wariantów o identycznej cenie zostaje wariant skracający najwięcej czasu.",
+        "Potwierdzenie podaje rzeczywiście zaoszczędzony czas i jednorazowo pobrane monety."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-state.js",
+          "harborlight-v1-commerce.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-commerce-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0976",
+      "epic": "HL-EPIC-UI",
+      "area": "Dialog płatności",
+      "type": "Bug",
+      "title": "Potwierdzenie i anulowanie płatności mają odstęp 24 pikseli i osobne wiersze na telefonie",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0976"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przyciski potwierdzenia i rezygnacji nie stykają się: odstęp wynosi co najmniej 24 px.",
+        "Na wąskim ekranie są w oddzielnych wierszach; obsługa klawiaturą, nazwy PL/EN i oznaczenie symulacji pozostają czytelne."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.css",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-release-v28-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0977",
+      "epic": "HL-EPIC-TUT",
+      "area": "Lojalność",
+      "type": "Story",
+      "title": "Dostępna nagroda codzienna jest wiadomością i popupem pierwszego wejścia w danym dniu",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0977"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Dzień wyznacza kalendarz Warszawy. Przy dostępnej lojalności pierwsze wejście pokazuje popup oraz wiadomość.",
+        "Odebrana nagroda nie pojawia się ponownie po odświeżeniu ani ponownym logowaniu; zapisany wynik losowania i warunki końca programu pozostają zachowane.",
+        "Popup nie przerywa obowiązkowej nauki i nie wypłaca nagrody bez świadomego odbioru."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-activities.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-release-v28-smoke.py",
+          "tests/harborlight-v18-activities.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0978",
+      "epic": "HL-EPIC-TUT",
+      "area": "Samouczek praktyczny",
+      "type": "Story",
+      "title": "Nowy program sześć zaczyna 25 lekcji od trzech tragarzy i zachowuje starsze programy",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0978"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Pierwsza lekcja nowego kursu wymaga rzeczywistego przydziału trzech tragarzy, następnie priorytetu Budowa, rolnika i drwala.",
+        "Pozostaje 25 lekcji, z mapą wskazującą budynki i miejsca kliknięć; starsze programy 3/4/5 zachowują zapisane kryteria, nagrody i zaliczenia."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-progression.js",
+          "harborlight-v1-tutorial-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-tutorial-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0979",
+      "epic": "HL-EPIC-ECO",
+      "area": "Budowy i migracja",
+      "type": "Story",
+      "title": "Nowe budowy mają zwykłe czasy; startowy rabat Ratusza i stare migawki projektów pozostają",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0979"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nowo zlecane budowy nie używają specjalnych zegarów turbo poziomów 1–2, także gdy zapis ma dawne osiągnięcie turbo.",
+        "Ratusz 1→2 zachowuje startowy koszt po 100 każdego z sześciu zasobów.",
+        "Rozpoczęte wcześniej projekty zachowują migawki czasów, kosztów, dostaw i zaliczeń; nie ma resetu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-state.js",
+          "harborlight-v1-logistics.js",
+          "harborlight-v1-progression.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-logistics-v28.test.mjs",
+          "tests/harborlight-tutorial-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0980",
+      "epic": "HL-EPIC-TUT",
+      "area": "Nauka przyspieszania",
+      "type": "Story",
+      "title": "Lekcja Ratusza prowadzi przez prawdziwy transport natychmiastowy i skrócenie budowy",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0980"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Po zwykłym zleceniu gracz poznaje osobno aktualny czas dostawy i budowy.",
+        "Wskazówki prowadzą do zakupu dostawy, potem przyspieszenia budowy o 100%, według rzeczywistych wycen i salda.",
+        "Po ukończeniu strzałka wskazuje zmieniony poziom; nie ma ukrytego skrócenia zegara ani zakupów PLN w lekcji."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-progression.js",
+          "harborlight-v1-tutorial-ui.js",
+          "harborlight-v1-learning-feedback.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-tutorial-v28.test.mjs",
+          "tests/harborlight-release-v28-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0981",
+      "epic": "HL-EPIC-TUT",
+      "area": "Pełne kupno budynku",
+      "type": "Story",
+      "title": "Lekcja Gospodarstwa uczy pełnego zakupu rozbudowy bez podwójnego kosztu",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0981"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Gracz znajduje Gospodarstwo i wybiera pełny zakup za monety, bez wcześniejszego płacenia zwykłego zlecenia.",
+        "Nie pobieramy równocześnie własnych materiałów i pełnej ceny zakupu; ukończenie oraz nagroda pozostają jednokrotne."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-progression.js",
+          "harborlight-v1-tutorial-ui.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-tutorial-v28.test.mjs",
+          "tests/harborlight-release-v28-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0982",
+      "epic": "HL-EPIC-TUT",
+      "area": "Bilans nagród",
+      "type": "Story",
+      "title": "Nagrody wcześniejszych lekcji zapewniają faktyczne ceny nauki przyspieszeń i niewielki bufor",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0982"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Fundusze poprzedzające lekcje pokrywają aktualne wyceny dostawy, 100% budowy i pełnego Gospodarstwa.",
+        "Przejście nie wymaga kupowania monet za PLN, czekania na przypadkową reklamę lub ukrytej darmowej operacji.",
+        "Zakończenie rozlicza kurs do zwykłego pełnego magazynu bez zaległych skrzyń i bez odbierania istniejącego majątku."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-progression.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-tutorial-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0983",
+      "epic": "HL-EPIC-TUT",
+      "area": "Nauka transportu",
+      "type": "Story",
+      "title": "Lekcja jedenasta prowadzi do tragarza i priorytetu odbioru produktów",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0983"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Lekcja obejmuje rzeczywistego dodatkowego tragarza oraz ustawienie priorytetu odbioru gotowych produktów.",
+        "Wskazówki prowadzą od mapy i szczegółów właściwego budynku do ustawienia; producentowe opisy odsyłają do tej lekcji."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-progression.js",
+          "harborlight-v1-tutorial-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-tutorial-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0984",
+      "epic": "HL-EPIC-UI",
+      "area": "Oprowadzanie po ekranie",
+      "type": "Story",
+      "title": "Tutorial ma 33 opisy po usunięciu ikony czasu świata",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0984"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Znikają ikona czasu świata i jej opis; nie zmienia to działania zegara, terminów ani przyrostu wyspy.",
+        "Wznowienie zapisanych tutoriali rozpoznaje kroki po ich tożsamości, nie przesuwa gracza do innego miejsca wskutek zmiany numeracji.",
+        "Tutorial nadal można zamknąć, wznowić i obejrzeć od początku bez ponownych nagród."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-onboarding-ui.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-onboarding-v28-smoke.py",
+          "tests/harborlight-approved-copy-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0985",
+      "epic": "HL-EPIC-UI",
+      "area": "Pomoc i powroty",
+      "type": "Story",
+      "title": "Pomoc ma dwie ramki wznowienia; zamknięcie tutoriala wskazuje znak zapytania",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0985"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Na górze Pomocy są osobne ramki: tutorial to przewodnik po ekranie, samouczek to 25 praktycznych lekcji.",
+        "Zamknięcie oprowadzania pokazuje popup opisujący wznowienie oraz podświetla właściwy przycisk ?.",
+        "Powroty nie dublują się w podsumowaniu wyspy i zachowują przerwany etap; opcja od początku nie resetuje świata."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-onboarding-ui.js",
+          "harborlight-v1-play.js",
+          "harborlight-v1-play.css"
+        ],
+        "automated_tests": [
+          "tests/harborlight-onboarding-v28-smoke.py",
+          "tests/harborlight-release-v28-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0986",
+      "epic": "HL-EPIC-UI",
+      "area": "Nagłówek wyspy",
+      "type": "Story",
+      "title": "Nazwa wyspy ma rozmiar pisma odpowiadający napisowi HARBORLIGHT",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0986"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nazwa wyspy jest wyświetlana taką wielkością czcionki jak napis HARBORLIGHT.",
+        "Dłuższa nazwa i przełączenie PL/EN nie rozbijają nagłówka ani przycisków na telefonie."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.css"
+        ],
+        "automated_tests": [
+          "tests/harborlight-release-v28-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0987",
+      "epic": "HL-EPIC-UI",
+      "area": "Instrukcje gospodarki",
+      "type": "Story",
+      "title": "Opisy producentów wyjaśniają pełny magazyn, tragarzy, priorytet i szybki transport",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0987"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Każdy producent wyjaśnia smutną buźkę przy pełnym lokalnym magazynie i brak możliwości dalszej produkcji.",
+        "Opis prowadzi do przydziału tragarzy i priorytetu odbioru w lekcji 11; zaznacza potrzebę wolnego miejsca w centrali.",
+        "Nie twierdzi, że to jedyny sposób: istnieje też natychmiastowy transport za monety."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-approved-copy.js",
+          "harborlight-v1-onboarding-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-approved-copy-v28.test.mjs",
+          "tests/harborlight-onboarding-v28-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0988",
+      "epic": "HL-EPIC-UI",
+      "area": "Redakcja PL",
+      "type": "Story",
+      "title": "Polskie opisy szczęścia, demografii, statku, gospodarki, atrakcji i ścieżek odpowiadają zasadom",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0988"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Szczęście wyjaśnia pracę i pożywienie +2 punkty/h oraz odejścia; następny mieszkaniec uwzględnia limit Ratusza i łóżka.",
+        "Statek wyjaśnia, że transakcja nie zastępuje dostawy; Gospodarka mówi „możesz zobaczyć”, atrakcje „możesz kupić za monety”.",
+        "Ścieżki wymagają kamienia i usprawniają transport. Angielski wariant pozostaje zgodny z tą samą mechaniką."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-approved-copy.js",
+          "harborlight-v1-onboarding-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-approved-copy-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0989",
+      "epic": "HL-EPIC-UI",
+      "area": "Jednostki szczęścia",
+      "type": "Story",
+      "title": "Interfejs szczęścia używa punktów zamiast procentów i skrótu p.p.",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0989"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Polskie HUD, efekty, wiadomości, Dom, tutorial, misje i dialogi podają punkty szczęścia, bez % i p.p.",
+        "Nie zmieniamy wartości modelu ani prawidłowych procentów innych mechanik, takich jak przyspieszenie budowy i próg ludności."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-effects.js",
+          "harborlight-v1-approved-copy.js",
+          "harborlight-v1-i18n.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-approved-copy-v28.test.mjs",
+          "tests/harborlight-release-v28-smoke.py",
+          "tests/harborlight-happiness-copy-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0990",
+      "epic": "HL-EPIC-PEO",
+      "area": "Wiadomości o pracy",
+      "type": "Bug",
+      "title": "Wiadomości przestoju rozróżniają karę, wznowienie produkcji i powrót pracowników",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0990"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Aktywna kara wyjaśnia pełny lokalny magazyn, rodzaj towaru, rzeczywistą liczbę pracowników i 10 punktów kary na osobę.",
+        "Koniec po rozładowaniu mówi o wznowieniu produkcji; koniec po odwołaniu o poleceniu powrotu oraz faktycznie zalegającym towarze.",
+        "Zakończona kara nie wygląda jak ponownie nałożona strata, a stare wiadomości nie są błędnie opisywane aktualnym stanem."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-effects.js",
+          "harborlight-v1-notification-copy.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-approved-copy-v28.test.mjs",
+          "tests/harborlight-release-v28-smoke.py",
+          "tests/harborlight-happiness-copy-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0991",
+      "epic": "HL-EPIC-PEO",
+      "area": "Gotowość i produkcja",
+      "type": "Story",
+      "title": "Gotowość transportu i handlu jest pracą, a zablokowany producent nie dostaje premii za pracę",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0991"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przybyli pracownicy transportu i handlu utrzymują status pracy podczas gotowości; opisy wyjaśniają tę różnicę.",
+        "Przestój zablokowanego producenta nie generuje zwykłej premii pracy. Dotychczasowa zasada podatku dla przybyłych przypisanych pracowników pozostaje."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-residents.js",
+          "harborlight-v1-effects.js",
+          "harborlight-v1-approved-copy.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-agreed-state.test.mjs",
+          "tests/harborlight-approved-copy-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0992",
+      "epic": "HL-EPIC-PEO",
+      "area": "Efekty Kaplicy",
+      "type": "Bug",
+      "title": "Premia rozbudowy Kaplicy pokazuje szczęście i podwojony podatek przez dziesięć godzin",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0992"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Opis podaje +X punktów szczęścia i podatki ×2 przez 10 h, zgodnie z rzeczywistym efektem rozbudowy.",
+        "Lista aktywnych efektów oraz koniec premii nie ukrywają mnożnika podatku."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-effects.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-prayer-v28.test.mjs",
+          "tests/harborlight-effects-v8.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0993",
+      "epic": "HL-EPIC-ECO",
+      "area": "Terminy zadań",
+      "type": "Bug",
+      "title": "Nowa zwykła oferta Latarni daje minimum trzydzieści minut także przed północą",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0993"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Gdy do północy Warszawy zostało mniej niż 30 min, nowe zadanie kończy się dopiero o północy następnego dnia.",
+        "Dokładnie 30 min jest wystarczające. Wyliczenie respektuje strefę Warszawy i zmianę czasu.",
+        "Ocena wykonalności korzysta z rzeczywistego okna; aktywne historyczne zadanie zachowuje zapisany termin."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-activities.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-commerce-v28.test.mjs",
+          "tests/harborlight-v18-activities.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0994",
+      "epic": "HL-EPIC-ECO",
+      "area": "Wykonalność i nagrody",
+      "type": "Bug",
+      "title": "Nagroda zadania skaluje się z wartością rzeczywiście możliwych wymagań",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0994"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Po obniżeniu wymagań do osiągalnego poziomu spada również nagroda według końcowej wartości i trudności.",
+        "Drobny koszt nie pozostawia dawnej pełnej nagrody. Nie przeliczamy zapisanych nagród już przyjętych zadań."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js",
+          "harborlight-v1-activities.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-missions-v28.test.mjs",
+          "tests/harborlight-commerce-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0995",
+      "epic": "HL-EPIC-PEO",
+      "area": "Zakup mieszkańca",
+      "type": "Bug",
+      "title": "Zaproszenie mieszkańca i wymagania misji kosztują 500 razy ukończony Ratusz każdego zasobu",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0995"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Jeden mieszkaniec kosztuje 500 × aktualny ukończony TH każdego z sześciu zasobów, bez rabatu pierwszej rozbudowy.",
+        "Zakup, wykonalność misji i opis wskazują tę samą cenę, niezależnie od poziomu w kolejce. Wymagane jest wolne miejsce Ratusza."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-state.js",
+          "harborlight-v1-missions.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-prayer-v28.test.mjs",
+          "tests/harborlight-missions-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0996",
+      "epic": "HL-EPIC-TUT",
+      "area": "Kolejka Latarni",
+      "type": "Bug",
+      "title": "Szybka rozbudowa Ratusza nie pomija zaległych ośmioetapowych rozdziałów",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0996"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Po rozdziale poziomu 2 następuje 3, potem 4, także gdy ukończony Ratusz jest już wyższy.",
+        "Nie blokujemy samodzielnej rozbudowy wyspy. Aktywny etap, gałąź pomocnicza lub ratunkowa nie są zastępowane nowym rozdziałem."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-missions-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0997",
+      "epic": "HL-EPIC-TUT",
+      "area": "Wprowadzenie fabuły",
+      "type": "Story",
+      "title": "Koniec 25 lekcji zaprasza do ośmiu narracyjnych zadań Latarni",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0997"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Po potwierdzeniu końcowej nagrody kursu pojawia się jednorazowy popup opowieści, przed nową ofertą reklamy.",
+        "Historie sztormu lub turystów oglądających meteory uzasadniają osiem działań i rozwój Latarni jako serca wyspy.",
+        "Otwarcie lub zamknięcie opisu nie przyjmuje zadania i nie uruchamia terminu. Zachowane są ścieżki 5 pomocniczych / 3 ratunkowych."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js",
+          "harborlight-v1-missions-ui.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-missions-v28.test.mjs",
+          "tests/harborlight-release-v28-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0998",
+      "epic": "HL-EPIC-TUT",
+      "area": "Nagrody narracyjne",
+      "type": "Story",
+      "title": "Nagrody misji obejmują materiały, monety, mieszkańców i premie producentów zgodnie z historią",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0998"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted_scope_with_documented_dev_parameters"
+      },
+      "acceptance": [
+        "Małe etapy mają małe nagrody, a kolejne cele rozdziału uzasadniają przybycie ludzi lub czasowy wzrost produkcji.",
+        "Nagrody nie są zawsze grupą pięciu osób. Każda wypłata ma trwałą tożsamość i jest jednokrotna.",
+        "Jawne parametry DEV: jeden osadnik w wybranym etapie, finałowa grupa 1–3 zależna od rozdziału, reprezentatywna premia producenta 2 h."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js",
+          "harborlight-v1-missions-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-missions-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-0999",
+      "epic": "HL-EPIC-PEO",
+      "area": "Rozbitkowie i limit",
+      "type": "Story",
+      "title": "Nagroda mieszkańców przyjmuje tylko osoby mieszczące się w limicie i nie tworzy kolejki",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-0999"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nagroda przyjmuje najwyżej wolne miejsca Ratusza z uwzględnieniem rezerwacji przybywających ludzi.",
+        "Nadmiar nie jest odraczany i nie pojawia się po późniejszej rozbudowie. Zadanie jest zaliczone, a UI pokazuje faktycznie przyjętą liczbę."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js",
+          "harborlight-v1-missions-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-missions-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1000",
+      "epic": "HL-EPIC-ECO",
+      "area": "Czasowa produkcja",
+      "type": "Story",
+      "title": "Premia producenta razy dwa łączy się z Latarnianą do razy cztery i wydłuża identyczną premię",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1000"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Premia zadania ×2 i Latarni ×2 dają ×4 z zachowaniem pozostałych rzeczywistych mnożników pracy.",
+        "Kolejna premia tego samego producenta wydłuża czas zamiast tworzyć następny mnożnik ×2.",
+        "Produkcja i estymaty dzielą czas dokładnie na granicy wygaśnięcia, także offline i po wczytaniu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js",
+          "harborlight-v1-logistics.js",
+          "harborlight-v1-state.js",
+          "harborlight-v1-effects.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-missions-v28.test.mjs",
+          "tests/harborlight-logistics-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1001",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga zasadnicza",
+      "type": "Bug",
+      "title": "Każdy z siedmiu dni ligi punktuje również przy małej liczbie zespołów",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1001"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "15–21 dnia miesiąca oba zadania są w tym samym oknie 19–21 Warszawy.",
+        "Wszystkie siedem dni wpływa na wynik, również przy jednym lub dwóch zespołach. Nie ma zerowania części dni jako wolnych kolejek.",
+        "Średnia zgłoszonego składu i premia współpracy pozostają podstawą punktacji."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md",
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [
+          "backend/league-rules.mjs",
+          "backend/league-season.mjs",
+          "backend/community-service.mjs"
+        ],
+        "automated_tests": [
+          "backend/test/social-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1002",
+      "epic": "HL-EPIC-SOC",
+      "area": "Liga i członkostwo",
+      "type": "Bug",
+      "title": "Zamrożony skład kończy sezon po wyjściu z sojuszu, a czat reaguje od razu",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1002"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Gracz po odejściu lub usunięciu może dokończyć zgłoszony sezon dla poprzedniego składu, bez punktowania dla drugiego.",
+        "Bieżące członkostwo natychmiast rozstrzyga dostęp do czatu. Zmiana składu nie usuwa słabszego wyniku z mianownika sezonu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md",
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [
+          "backend/community-service.mjs",
+          "backend/league-season.mjs"
+        ],
+        "automated_tests": [
+          "backend/test/social-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1003",
+      "epic": "HL-EPIC-SOC",
+      "area": "Playoffy",
+      "type": "Story",
+      "title": "Najlepsza czwórka rozgrywa playoffy, a nierozstrzygnięty remis wymaga dogrywki",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1003"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted_scope_with_documented_dev_parameters"
+      },
+      "acceptance": [
+        "Najlepsze cztery zespoły przechodzą do playoffów; bez spadku i kar dla wyspy. Remisu nie rozstrzygamy arbitralnym ID.",
+        "Parametry DEV: 22 dzień rozstrzyganie rozstawienia, 23 półfinały 1–4 i 2–3, 24 finał, 25 rezerwa; wszystkie okna 19–21 Warszawy.",
+        "Przy dwóch zespołach bezpośredni finał, przy trzech wolny los; jeden zespół ma pełną ligę zasadniczą, bez pucharu. Nierozstrzygnięty po rezerwie remis pozostaje oczekujący."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md",
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [
+          "backend/league-season.mjs",
+          "harborlight-v1-community-ui.js"
+        ],
+        "automated_tests": [
+          "backend/test/social-v28.test.mjs",
+          "tests/harborlight-social-v28-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [
+        "Szczegółowy kalendarz, małe drabinki i limit rund dogrywki są jawnymi parametrami DEV do odbioru."
+      ],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1004",
+      "epic": "HL-EPIC-SOC",
+      "area": "Nagrody ligi",
+      "type": "Story",
+      "title": "Liga nagradza udział, komplet konkurencji, top cztery oraz mistrza z pucharem",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1004"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted_scope_with_documented_dev_parameters"
+      },
+      "acceptance": [
+        "Udział daje małą nagrodę, wykonanie wszystkich 14 konkurencji większą, top 4 kolejną, a zwycięzca puchar i największą.",
+        "Parametry DEV: 25 +75 +150 +500 monet, warstwy sumują się do 750 u kwalifikowanego mistrza; wypłata raz na osobę i sezon.",
+        "Brak przegranej nie odbiera zasobów ani miejsca w lidze. Samo opublikowanie kodu nie jest uruchomieniem turnieju w GCP."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md",
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [
+          "backend/league-season.mjs",
+          "backend/community-service.mjs",
+          "harborlight-v1-community-ui.js"
+        ],
+        "automated_tests": [
+          "backend/test/social-v28.test.mjs",
+          "tests/harborlight-social-v28-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [
+        "Kwoty są konfiguracją DEV, nie dawnym ustaleniem cenowym użytkownika."
+      ],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1005",
+      "epic": "HL-EPIC-SOC",
+      "area": "Czat sojuszu i prywatny",
+      "type": "Story",
+      "title": "Czat dopuszcza tysiąc znaków i dwadzieścia wiadomości na dwadzieścia sekund",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1005"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Wiadomość ma do 1000 znaków; konto może wysłać maksymalnie 20 wiadomości w ruchomym oknie 20 sekund łącznie między pokojami.",
+        "Czat sojuszu i rozmowy prywatne sprawdzają uprawnienia. Zwykła historia ma retencję 30 dni.",
+        "Nie uznajemy klientowego licznika ani ukrycia przycisku za wystarczającą serwerową kontrolę."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md",
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [
+          "backend/community-service.mjs",
+          "harborlight-v1-community-ui.js"
+        ],
+        "automated_tests": [
+          "backend/test/social-v28.test.mjs",
+          "backend/test/community-service.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1006",
+      "epic": "HL-EPIC-SOC",
+      "area": "Pochodzenie monet",
+      "type": "Story",
+      "title": "Pomagam kwalifikuje tylko podatki, darmowe zadania i zweryfikowane wygrane ekspedycji",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1006"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Serwer ewidencjonuje tylko zaufane przychody podatków, darmowych zadań i zweryfikowanych ekspedycji jako kwalifikowane.",
+        "Monety kupione, handlowe, lojalnościowe, reklamowe, z błogosławieństw, poleceń i o nieznanym pochodzeniu są wyłączone.",
+        "Kupno materiału i odsprzedaż nie zmienia pochodzenia monet na dobroczynne."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md",
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [
+          "backend/charity-ledger.mjs",
+          "backend/charity-service.mjs",
+          "harborlight-v1-charity.js"
+        ],
+        "automated_tests": [
+          "backend/test/social-v28.test.mjs",
+          "tests/harborlight-charity-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1007",
+      "epic": "HL-EPIC-SOC",
+      "area": "Jeden portfel",
+      "type": "Story",
+      "title": "Zwykłe zakupy zużywają najpierw niekwalifikowane monety z jednego portfela",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1007"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "W gospodarce wszystkie monety mają tę samą siłę nabywczą; rozdział pochodzenia służy wyłącznie Pomagam.",
+        "Zwykły wydatek zużywa najpierw saldo niekwalifikowane, potem kwalifikowane. 300 podatków +1000 zakupionych po wydaniu 1200 pozostawia 100 kwalifikowanych.",
+        "Nie wolno przekazać więcej niż pozostałe saldo ani podwójnie rozliczyć tej samej darowizny."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md",
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [
+          "backend/charity-ledger.mjs",
+          "backend/charity-service.mjs",
+          "harborlight-v1-charity.js"
+        ],
+        "automated_tests": [
+          "backend/test/social-v28.test.mjs",
+          "tests/harborlight-charity-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1008",
+      "epic": "HL-EPIC-SOC",
+      "area": "Warunki dobroczynności",
+      "type": "Story",
+      "title": "Pomagam wymaga wieku konta powyżej czternastu dni, pięciu aktywnych dni i Ratusza matki cztery",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1008"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Warunki to wiek konta >14 dni, co najmniej pięć aktywnych dni Warszawy i ukończony Ratusz wyspy macierzystej co najmniej 4.",
+        "Pozostają jednocześnie ograniczenie raz na miesiąc kalendarzowy oraz co najmniej 30 dni między wpłatami.",
+        "Pula maksymalnie 50 zł, a później dodatkowo do 5% rzeczywistej marży poprzedniego miesiąca; brak konfiguracji nie symuluje realnego funduszu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md",
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [
+          "backend/charity-service.mjs",
+          "harborlight-v1-charity.js"
+        ],
+        "automated_tests": [
+          "backend/test/social-v28.test.mjs",
+          "tests/harborlight-charity-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1009",
+      "epic": "HL-EPIC-SOC",
+      "area": "Przelicznik Pomagam",
+      "type": "Story",
+      "title": "Darowizna zaczyna się od stu monet i rośnie w wielokrotnościach stu",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1009"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Minimum 100 monet odpowiada 10 groszom; wielokrotności 100 monet. 1000 monet =1 zł jest przelicznikiem, nie minimum operacji.",
+        "Obliczenia PLN są całkowitoliczbowe w groszach i sprawdzają pozostałą pulę oraz kwalifikowane saldo."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md",
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [
+          "backend/charity-service.mjs",
+          "harborlight-v1-charity.js"
+        ],
+        "automated_tests": [
+          "backend/test/social-v28.test.mjs",
+          "tests/harborlight-charity-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1010",
+      "epic": "HL-EPIC-SOC",
+      "area": "Symulacja Pomagam",
+      "type": "Story",
+      "title": "Oznaczony mock Pomagam potwierdza testowy przelew, fanfary i dwadzieścia punktów na sześć godzin",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1010"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Tryb PRE-PROD jest jawnie oznaczoną symulacją bez rzeczywistych beneficjentów, zobowiązań i przelewu.",
+        "Testowe potwierdzenie jest trwałe i oddzielone od rzeczywistego programu; premia +20 punktów/6 h, rozświetlenie portu i fanfary są odbierane raz.",
+        "Wdrożenie w PRE-PROD wymaga osobnej autoryzacji i własnego odbioru. Lokalny test mocka nie oznacza aktywacji dobroczynności w chmurze."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md",
+          "docs/design/LEAGUE-COMMUNITY-CHARITY.md"
+        ],
+        "code": [
+          "backend/charity-service.mjs",
+          "backend/server.mjs",
+          "harborlight-v1-charity.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-charity-v28.test.mjs",
+          "backend/test/social-v28.test.mjs",
+          "tests/harborlight-social-v28-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1011",
+      "epic": "HL-EPIC-UI",
+      "area": "Udostępnianie i język",
+      "type": "Bug",
+      "title": "Udostępnianie wraca przyciskiem Wróć na wyspę; rzeczywista publikacja jest odłożona",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1011"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Polski wariant nie zawiera mieszanego „Wstecz to island”; przycisk brzmi „Wróć na wyspę”.",
+        "Otwarcie dialogu lub skopiowanie treści nie potwierdza publikacji i nie wypłaca niezweryfikowanej nagrody. Automatyczna publikacja FB pozostaje poza GO."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-i18n.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-release-v28-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1012",
+      "epic": "HL-EPIC-ACC",
+      "area": "Zapis i zgodność",
+      "type": "Story",
+      "title": "Migracja v28 zachowuje konta, stare kursy, aktywne projekty i jednokrotne nagrody",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1012"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Normalizacja nowych pól banku, modlitwy, premii produkcji i narracji zachowuje tożsamości, starsze programy oraz aktywne etapy.",
+        "Nie resetujemyadmin1–admin3, ich haseł, danych ani historii. Zapis i ponowienie operacji nie tworzą dodatkowej wypłaty.",
+        "Nowe metadane pozostają zgodne z limitem zapisu 700 k B na świat i istniejącym formatem archipelagu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-state.js",
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-missions.js",
+          "harborlight-dev-cloud.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-tutorial-v28.test.mjs",
+          "tests/harborlight-missions-v28.test.mjs",
+          "tests/harborlight-prayer-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1013",
+      "epic": "HL-EPIC-PEO",
+      "area": "Decyzja o szczęściu",
+      "type": "Decision",
+      "title": "Krzywa ograniczająca przyrost przy trzydziestu punktach została odrzucona",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1013"
+      },
+      "status": {
+        "implementation": "not_implemented",
+        "dev": "not_applicable",
+        "ci": "not_applicable",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "rejected"
+      },
+      "acceptance": [
+        "Nie implementujemy proponowanej krzywej stabilizującej zwykłe szczęście w zakresie 20–40.",
+        "Ostateczne doprecyzowanie pozostawia +1/h za pracę oraz +1/h za jedzenie i−1 na północy Warszawy. Nie opisujemy tego jako utrudnienia dojścia do 100."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-residents.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-happiness-bank-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1014",
+      "epic": "HL-EPIC-MIN",
+      "area": "Czas rundy",
+      "type": "Story",
+      "title": "Dodatkowy czas minigry można kupić monetami albo uzyskać za reklamę",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1014"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przed końcem rundy można świadomie kupić +30 s za 10 monet, najwyżej dwa razy, lub reklamę +60 s najwyżej raz.",
+        "Nie wskrzeszamy zakończonej rundy, nie pobieramy opłaty automatycznie. Symulacja reklamy jest oznaczona i nie udaje potwierdzenia dostawcy."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-minigames.js",
+          "harborlight-v1-commerce.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-commerce-v28.test.mjs",
+          "tests/harborlight-v16-minigames.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1015",
+      "epic": "HL-EPIC-OPS",
+      "area": "Dokumentacja i odbiór",
+      "type": "Ops",
+      "title": "Pakiet v28 ma osobne atomowe karty, ręczne scenariusze i dowody DEV bez nowej promocji",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Zbiorcze GO po redakcji samouczka, opisów i logiki gry, z późniejszym doprecyzowaniem zwykłego szczęścia, modlitwy i minimum darowizny. Zakres tej karty jest opisany w kryteriach odbioru.",
+        "reference": "chat:GO:dev-v28:HL-CHG-1015"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Każdy przyjęty obszar zmiany jest wersjonowaną kartą ze statusem implementacji, DEV, CI, PRE-PROD i PROD.",
+        "Ręczne przypadki mają niezależny wynik NOT RUN i wymagają buildu, fixture, wykonania i dowodu; nie tworzymy fikcyjnych GitHub Issues.",
+        "Odbiór 0.11 pozostaje historyczny. Bieżący zakres wymaga własnych pełnych testów i CI; PRE-PROD0.11 pozostaje bez zmian, bez resetu i PROD."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md",
+          "README.md",
+          "docs/INTERACTIVE-ISLAND.md",
+          "docs/BACKLOG.md",
+          "docs/DEV-ACCOUNTS.md"
+        ],
+        "code": [
+          "scripts/build_change_register.py",
+          "scripts/build_manual_checklist.py"
+        ],
+        "automated_tests": [
+          "tests/harborlight-tracking-issues.test.py",
+          "tests/harborlight-manual-checklist-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1016",
+      "epic": "HL-EPIC-TUT",
+      "area": "Bilans kursu przy rzeczywistym czasie",
+      "type": "Bug",
+      "title": "Lekcja trzynasta zachowuje materiały mimo normalnego czasu przejść i produkcji",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Niezgodność wykryta w rzeczywistych testach zbiorczego GOv28 i poprawiona w lokalnym kodzie przed odbiorem końcowym. Kryteria opisują końcowe zachowanie, nie dodatkową aktywację usług.",
+        "reference": "chat:GO:dev-v28:validation-regression:HL-CHG-1016"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przy przejściach pomiędzy lekcjami po 30/120 s Młyn i Tartak mogą zużyć składniki; kurs nadal musi pozwalać opłacić cel lekcji 13.",
+        "Nowy kurs 6 otrzymuje wcześniejszy bufor 100 każdego materiału oraz dodatkowe 100 żywności i 100 monet, zgodny z rzeczywistymi kosztami; starsze wypłaty nie są powielane.",
+        "Test przechodzi cały 25 lekcyjny kurs z odmierzonym czasem i rzeczywistą produkcją, bez ręcznego dosypywania w miejscu blokady."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0978",
+        "HL-CHG-0982"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-progression.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-tutorial-v28.test.mjs",
+          "tests/harborlight-starter-course-v28-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1017",
+      "epic": "HL-EPIC-ARC",
+      "area": "Idempotencja zakupu statku",
+      "type": "Bug",
+      "title": "Utrata odpowiedzi zakupu statku zachowuje ten sam zamiar i nie pobiera drugi raz",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Niezgodność wykryta w rzeczywistych testach zbiorczego GOv28 i poprawiona w lokalnym kodzie przed odbiorem końcowym. Kryteria opisują końcowe zachowanie, nie dodatkową aktywację usług.",
+        "reference": "chat:GO:dev-v28:validation-regression:HL-CHG-1017"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Żądanie ma niezmienne ciało i ten sam requestId podczas ponowienia; wyspa płacąca jest zamrożona na czas flush/zapisu.",
+        "Równoległe działania i zmiana płatnika są blokowane do uzgodnienia wyniku. Brak ACK nie zamienia udanej operacji w nowy zakup.",
+        "Rzeczywisty backend i Chromium odtwarzają utratę odpowiedzi oraz błąd odczytu:50 monet, jeden receipt i+1000 pojemności łącznie."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0973",
+        "HL-CHG-1012"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-dev-cloud.js",
+          "backend/account-service.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-ship-capacity-v28-smoke.py",
+          "backend/test/ship-capacity-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1018",
+      "epic": "HL-EPIC-SOC",
+      "area": "Trwałość symulacji Pomagam",
+      "type": "Bug",
+      "title": "Mock Pomagam nie odtwarza starego adaptera po wczytaniu ani nie daje fanfar po błędzie zapisu",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Niezgodność wykryta w rzeczywistych testach zbiorczego GOv28 i poprawiona w lokalnym kodzie przed odbiorem końcowym. Kryteria opisują końcowe zachowanie, nie dodatkową aktywację usług.",
+        "reference": "chat:GO:dev-v28:validation-regression:HL-CHG-1018"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Zmiana epoki zapisu/resetu unieważnia cache adaptera; stara referencja nie może odtworzyć dawnych monet lub historii.",
+        "Przed mutacją oczekiwane jest potwierdzenie zapisu. Błąd chmury nie daje premii, światła ani fanfar i nie udaje przelewu.",
+        "Mock działa wyłącznie przy jawnie dozwolonej symulacji PRE-PROD; PROD domyślnie zamknięty. Rzeczywista księga i testowa ewidencja pozostają rozdzielone."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1010",
+        "HL-CHG-1012"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-charity.js",
+          "backend/account-service.mjs",
+          "backend/charity-ledger.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-charity-guards-v28.test.mjs",
+          "tests/harborlight-social-v28-smoke.py",
+          "backend/test/social-v28.test.mjs"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1019",
+      "epic": "HL-EPIC-ACC",
+      "area": "Wersjonowane dokumenty rejestracji",
+      "type": "Bug",
+      "title": "Regulamin draft5 odpowiada usługom monetowym, lidze i Pomagam; prywatność pozostaje draft4",
+      "source": {
+        "kind": "user_chat_approved_batch_v28",
+        "date": "2026-11-02",
+        "date_note": "Data zbiorczego GO i doprecyzowań, Europe/Warsaw; wcześniejsze decyzje zachowują własną historię.",
+        "summary": "Niezgodność wykryta w rzeczywistych testach zbiorczego GOv28 i poprawiona w lokalnym kodzie przed odbiorem końcowym. Kryteria opisują końcowe zachowanie, nie dodatkową aktywację usług.",
+        "reference": "chat:GO:dev-v28:validation-regression:HL-CHG-1019"
+      },
+      "status": {
+        "implementation": "implemented_pending_validation",
+        "dev": "pending_integrated_validation",
+        "ci": "not_run_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Regulamin 2026-11-02-draft 5 opisuje statek 50 monet, usługi TH1/doładowanie TH3, limit Ratusza bez warunku łóżek dla pasażerów, nowe nagrody ligi i właściwe źródła/minimum Pomagam.",
+        "Frontend i backend wymagają tej samej wersji Regulaminu; niezmieniona Polityka prywatności zachowuje 2026-10-31-draft 4. Generator obsługuje osobne wersje.",
+        "Stare potwierdzenia pozostają audytem, istniejące światy i konta PRE-PROD nie są resetowane lub zmuszane do ponownej rejestracji. Dokument nadal jest szkicem Lorem ipsum, bez realnych płatności."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0972",
+        "HL-CHG-1004",
+        "HL-CHG-1010",
+        "HL-CHG-1015"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V28-REQUIREMENTS.md",
+          "docs/DEV-0.12.0.0-VALIDATION.md",
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/ECONOMY-RULES.md",
+          "docs/BUILDINGS.md",
+          "docs/TERMS-DRAFT.pl.md",
+          "docs/PRIVACY-DRAFT.pl.md"
+        ],
+        "code": [
+          "harborlight-legal.js",
+          "harborlight-auth.js",
+          "harborlight-auth-providers.js",
+          "backend/account-service.mjs",
+          "scripts/build_legal_pages.py",
+          "harborlight-terms.html"
+        ],
+        "automated_tests": [
+          "tests/harborlight-legal.test.mjs",
+          "backend/test/legal-acceptance.test.mjs",
+          "tests/harborlight-v18-auth-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "preprod_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalny zakres DEV 0.12.0.0 w trakcie integracji i pełnego odbioru. Brak własnego końcowego SHA/CI/Pages tej paczki; wyniki 0.11 nie są jej walidacją. PRE-PROD pozostaje 0.11/c 7 c 3974, bez nowej promocji i resetu. Szczegółowe próby cząstkowe oraz wyniki końcowe są rozdzielone w dokumencie walidacji."
+      },
+      "notes": [],
+      "tags": [
+        "v28",
+        "dev-only"
       ]
     }
   ]

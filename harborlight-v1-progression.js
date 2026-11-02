@@ -1,8 +1,8 @@
-import { lessonCopy as approvedLessonCopy } from './harborlight-v1-approved-copy.js?v=frontend-v27';
+import { lessonCopy as approvedLessonCopy } from './harborlight-v1-approved-copy.js?v=frontend-v28';
 // Persistent learning, meaningful activity and future verified social hooks.
 // No DOM, network requests or account creation happen in this module.
-import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v27';
-import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v27';
+import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v28';
+import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v28';
 
 export const ACTIVE_PLAY_SECONDS = 300;
 export const ABANDONED_PLAY_SECONDS = 48 * 3600;
@@ -34,7 +34,7 @@ function emit(state, kind, title, message) {
   state.notifications.length = Math.min(100, state.notifications.length);
 }
 
-export const TUTORIAL_VERSION = 5;
+export const TUTORIAL_VERSION = 6;
 export const TUTORIAL_CHEST_MIN = 100;
 export const TUTORIAL_CHEST_MAX = 300;
 export const TUTORIAL_BUILDING_SUPPLIES = Object.freeze({ coins: 500, wood: 500, stone: 500, grain: 500, food: 600, planks: 500 });
@@ -106,7 +106,7 @@ export const V4_TUTORIAL_LESSONS = Object.freeze([
   balancedLesson('island-review', 25, "Finish the tutorial and fill the Warehouse", "Zakończ samouczek i uzupełnij magazyn", "Review the final reward and finish the tutorial. Free ordinary storage is filled immediately. Spend material bonuses from outside the course first; no resources are discarded.", "Sprawdź nagrodę końcową i zakończ samouczek. Gra od razu uzupełni wolne miejsce w magazynie. Jeśli masz materiały z premii spoza samouczka, najpierw je wykorzystaj — żadne zasoby nie przepadną.", 'action', 'finish-tutorial', 'tutorial', 'final', null, '[data-finish-tutorial]')
 ]);
 // Existing islands keep their exact lesson order, goals and paid rewards.
-// Curriculum 5 is selected only for an island without an earlier course.
+// Curriculum 5 remains available for saved islands; fresh islands use 6.
 const v4Lesson = id => V4_TUTORIAL_LESSONS.find(item => item.id === id);
 const newLesson = (id, patch = {}) => ({ ...v4Lesson(id), ...patch });
 const newCourse = [
@@ -141,20 +141,62 @@ const newCourse = [
     descriptionPl: 'Otwórz „Ekspedycje”, wybierz minigrę i wygraj jedną rundę. Następnie odbierz zgromadzone monety, aby ukończyć tę lekcję. Samo otwarcie lub rozpoczęcie minigry nie wystarczy.' }),
   newLesson('expedition-rules'), newLesson('returning-workers'), newLesson('island-review')
 ];
-export const TUTORIAL_LESSONS = Object.freeze(newCourse.map((item, offset) => {
-  const english = approvedLessonCopy(item.id, 'en'), polish = approvedLessonCopy(item.id, 'pl');
+export const V5_TUTORIAL_LESSONS = Object.freeze(newCourse.map((item, offset) => {
+  const english = approvedLessonCopy(item.id, 'en', { curriculum: 5 }), polish = approvedLessonCopy(item.id, 'pl', { curriculum: 5 });
   return Object.freeze({ ...item, ...(english || {}), ...(polish ? { titlePl: polish.title, descriptionPl: polish.description } : {}),
     index: offset + 1, prerequisite: offset ? newCourse[offset - 1].id : null });
 }));
+// New courses teach the same real services available outside learning. Older
+// curricula retain their recorded goals and already-paid rewards.
+export const TUTORIAL_LESSONS = Object.freeze(V5_TUTORIAL_LESSONS.map(item => {
+  const english = approvedLessonCopy(item.id, 'en', { curriculum: 6 }), polish = approvedLessonCopy(item.id, 'pl', { curriculum: 6 });
+  return Object.freeze({ ...item, ...(english || {}), ...(polish ? { titlePl: polish.title, descriptionPl: polish.description } : {}),
+    ...(item.id === 'island-map' ? { assignmentCount: 3 } : {}),
+    ...(['townhall-upgrade','transport-priority','house-points','expedition-rules'].includes(item.id) ? { guidedService: 'construction' } : {}),
+    ...(item.id === 'first-job' ? { rewardKind: 'service-supply', fundBuilding: 'townhall' } : {}),
+    ...(item.id === 'storage-limits' ? { guidedService: 'pickup' } : {}),
+    ...(item.id === 'construction-queue' ? { guidedService: 'full-purchase', guideSelector: '[data-premium-buy="farm"]' } : {}) });
+}));
 export const TUTORIAL_STARTER_TASK = Object.freeze({ requirements: Object.freeze({ wood: 50, stone: 50 }), reward: Object.freeze({ coins: 100 }) });
-export const tutorialLessons = state => state?.tutorial?.curriculum === 3 ? LEGACY_TUTORIAL_LESSONS : state?.tutorial?.curriculum === 4 ? V4_TUTORIAL_LESSONS : TUTORIAL_LESSONS;
+export const tutorialLessons = state => state?.tutorial?.curriculum === 3 ? LEGACY_TUTORIAL_LESSONS : state?.tutorial?.curriculum === 4 ? V4_TUTORIAL_LESSONS : state?.tutorial?.curriculum === 5 ? V5_TUTORIAL_LESSONS : TUTORIAL_LESSONS;
 const lessonsFor = tutorialLessons;
-const balancedCourse = state => [4, 5].includes(state.tutorial?.curriculum);
+const balancedCourse = state => [4, 5, 6].includes(state.tutorial?.curriculum);
 const protectedFood = state => 50 * Math.max(1, Math.min(24, whole(state.buildings?.warehouse?.level, 1)));
 export function tutorialTaskStatus(state) {
-  const needed = state?.tutorial?.curriculum === 5 && !state.tutorial.rewardDisabled && !state.tutorial.completed?.['lighthouse-visits'];
+  const needed = [5, 6].includes(state?.tutorial?.curriculum) && !state.tutorial.rewardDisabled && !state.tutorial.completed?.['lighthouse-visits'];
   return { needed, eligible: needed && townLevel(state) >= 2, lessonId: 'lighthouse-visits',
     requirements: { ...TUTORIAL_STARTER_TASK.requirements }, reward: { ...TUTORIAL_STARTER_TASK.reward }, foodReserve: protectedFood(state) };
+}
+export function tutorialGuidanceStatus(state, item) {
+  if (state.tutorial?.curriculum !== 6 || !item?.guidedService) return null;
+  const guided = state.tutorial.guided || {};
+  const step = (id, title, titlePl, description, descriptionPl, selector, done) => ({ id, title, titlePl, description, descriptionPl, selector, done: done === true });
+  let steps;
+  if (item.guidedService === 'construction') {
+    const proof = guided[item.route] || {};
+    const project = (state.constructionProjects || []).find(project => project.order === proof.projectOrder);
+    // Returning after an ordinary delivery must not point at an unavailable
+    // instant-delivery button. A real building-stage acceleration also proves
+    // that its materials arrived, even after the completed project is removed.
+    const transportDone = proof.transported || project?.stage === 'building' || proof.accelerated;
+    const names = { townhall: ['Town Hall','Ratusza'], quarry: ['Quarry','Kamieniołomu'], warehouse: ['Warehouse','Magazynu'], lighthouse: ['Lighthouse','Latarni'] };
+    const name = names[item.route] || [item.route,item.route];
+    steps = [
+      step('order', `Order the ${name[0]} upgrade`, `Zleć rozbudowę ${name[1]}`, 'Start the ordinary upgrade. The next steps show its real transport and building services.', 'Zleć zwykłą rozbudowę. W kolejnych krokach poznasz przyspieszanie dostawy i budowania.', `[data-upgrade-building="${item.route}"]`, proof.projectOrder > 0),
+      step('transport', 'Deliver the construction materials now', 'Przyspiesz transport materiałów', 'Check the coin price and confirm instant delivery to this construction.', 'Sprawdź cenę w monetach i potwierdź natychmiastową dostawę na tę budowę.', '[data-premium-route="construction"]', transportDone),
+      step('building', 'Finish construction now', 'Zakończ budowę za monety', 'Check the price of the full remaining-time reduction, then confirm.', 'Sprawdź cenę skrócenia pozostałego czasu o 100% i potwierdź zakup.', '[data-premium-percent="100"]', proof.accelerated)
+    ];
+  } else if (item.guidedService === 'pickup') {
+    const proof = guided.pickup || {};
+    steps = [
+      step('carrier', 'Assign another carrier', 'Przydziel kolejnego tragarza', 'Assign one more resident to the Warehouse.', 'Przyciskiem „+” przydziel jeszcze jednego mieszkańca do Magazynu.', '[data-worker-building="warehouse"][data-worker-delta="1"]', proof.assigned),
+      step('priority', 'Prioritize collecting Grain', 'Ustaw priorytet odbioru zboża', 'Open More building details and add Grain to the transport priorities. Keep Construction selected.', 'Otwórz szczegóły Magazynu i dodaj „Zboże” do priorytetów transportu. Pozostaw również priorytet „Budowa”.', '[data-warehouse-priority="grain"]', proof.prioritized)
+    ];
+  } else {
+    steps = [step('purchase', 'Buy the complete Farm upgrade', 'Kup pełną rozbudowę Gospodarstwa', 'Choose the full coin purchase directly. Its price covers materials and delivery; do not pay for an ordinary order first.', 'Wybierz pełny zakup za monety. Cena obejmuje materiały i dostawę — nie opłacaj wcześniej zwykłego zlecenia.', '[data-premium-buy="farm"]', guided.farm?.purchased)];
+  }
+  const current = steps.find(item => !item.done) || null;
+  return { steps, current, completed: !current };
 }
 const achievedUpgradeTarget = (state, item) => item.subject.startsWith('upgrade-') && item.subject !== 'upgrade-road' &&
   whole(state.buildings?.[item.subject.slice(8)]?.level) >= (item.goalLevel || ({ townhall: 2, farm: 2, house: 2, lighthouse: 1 })[item.subject.slice(8)] || Infinity);
@@ -198,9 +240,9 @@ function chestReward(state, item = null) {
   return Object.fromEntries(MATERIALS.map(id => [id, TUTORIAL_CHEST_MIN + Math.floor(tutorialRandom(state) * (TUTORIAL_CHEST_MAX - TUTORIAL_CHEST_MIN + 1))]));
 }
 function normalizeTutorial(state, tutorial, now) {
-  const modern = [TUTORIAL_VERSION, 4, 3, 2].includes(tutorial.version);
+  const modern = [TUTORIAL_VERSION, 5, 4, 3, 2].includes(tutorial.version);
   const unversionedHistory = !tutorial.version && [tutorial.completed, tutorial.claimed, tutorial.chests, tutorial.legacy].some(value => plain(value) && Object.keys(value).length > 0);
-  const curriculum = tutorial.curriculum === 3 || tutorial.version === 3 || tutorial.version === 2 || tutorial.version && !modern || unversionedHistory ? 3 : tutorial.curriculum === 4 || tutorial.version === 4 ? 4 : 5;
+  const curriculum = tutorial.curriculum === 3 || tutorial.version === 3 || tutorial.version === 2 || tutorial.version && !modern || unversionedHistory ? 3 : tutorial.curriculum === 4 || tutorial.version === 4 ? 4 : tutorial.curriculum === 5 || tutorial.version === 5 ? 5 : 6;
   const archived = modern && plain(tutorial.legacy) ? tutorial.legacy : tutorial;
   const legacy = { completed: normalizedTrueMap(archived.completed, LEGACY_IDS), claimed: normalizedTrueMap(archived.claimed, LEGACY_IDS), events: normalizedTrueMap(archived.events, [...LEGACY_IDS, ...TUTORIAL_EVENT_IDS]) };
   const completed = modern ? normalizedTrueMap(tutorial.completed) : {};
@@ -210,13 +252,19 @@ function normalizeTutorial(state, tutorial, now) {
     if (legacy.claimed[oldId]) { claimed[id] = true; completed[id] = true; }
   }
   const allowedEvents = [...TUTORIAL_EVENT_IDS, ...TUTORIAL_LESSONS.map(item => item.id), ...TUTORIAL_LESSONS.flatMap(item => ['home', 'rules', 'map', 'residents', 'workers', 'resources', 'warehouse', 'windmill', 'house', 'house-happiness', 'building', 'farm', 'construction', 'paths', 'decorations', 'chapel', 'market', 'lighthouse'].map(subject => `visit:${item.id}:${subject}`))];
-  const events = [TUTORIAL_VERSION, 4, 3].includes(tutorial.version) ? normalizedTrueMap(tutorial.events, allowedEvents) : {};
+  const events = [TUTORIAL_VERSION, 5, 4, 3].includes(tutorial.version) ? normalizedTrueMap(tutorial.events, allowedEvents) : {};
   const seed = whole(tutorial.seed) >>> 0 || ((Math.floor(now) ^ 0x6b92d34f) >>> 0) || 1;
   state.tutorial = { version: TUTORIAL_VERSION, curriculum, activeDays: dayList(tutorial.activeDays).filter(day => day <= warsawDayKey(now)).slice(0, 5), completed, claimed, events, seed,
     conditionBaselines: Object.fromEntries(['collected','crafted'].filter(key => Object.hasOwn(tutorial.conditionBaselines || {}, key)).map(key => [key, whole(tutorial.conditionBaselines[key])])),
     chests: {}, legacy, settled: tutorial.settled === true, rewardDisabled: tutorial.rewardDisabled === true,
     buildingSuppliesClaimed: tutorial.buildingSuppliesClaimed === true, autoOpenDisabled: tutorial.autoOpenDisabled === true || tutorial.rewardDisabled === true };
   state.tutorial.skippedLessons = normalizedTrueMap(tutorial.skippedLessons);
+  const guided = plain(tutorial.guided) ? tutorial.guided : {};
+  state.tutorial.guided = {
+    ...Object.fromEntries(['townhall','quarry','warehouse','lighthouse'].map(id => [id, { projectOrder: whole(guided[id]?.projectOrder), transported: guided[id]?.transported === true, accelerated: guided[id]?.accelerated === true }])),
+    pickup: { assigned: guided.pickup?.assigned === true, prioritized: guided.pickup?.prioritized === true },
+    farm: { purchased: guided.farm?.purchased === true, projectOrder: whole(guided.farm?.projectOrder) }
+  };
   const ledger = plain(tutorial.actionLedger) ? tutorial.actionLedger : {};
   state.tutorial.actionLedger = { version: 1,
     counts: Object.fromEntries(ACTION_SUBJECTS.filter(subject => whole(ledger.counts?.[subject]) > 0).map(subject => [subject, whole(ledger.counts[subject])])),
@@ -272,7 +320,7 @@ function migrateKnownTutorialActions(state) {
 }
 
 function ensure(state) {
-  if (!plain(state.engagement) || !plain(state.tutorial) || state.tutorial.version !== TUTORIAL_VERSION || !plain(state.tutorial.conditionBaselines) || !plain(state.tutorial.skippedLessons) || !plain(state.tutorial.actionLedger) || !plain(state.socialRewards) || !plain(state.referrals) || !plain(state.loyalty)) normalizeProgression(state, state);
+  if (!plain(state.engagement) || !plain(state.tutorial) || state.tutorial.version !== TUTORIAL_VERSION || !plain(state.tutorial.conditionBaselines) || !plain(state.tutorial.skippedLessons) || !plain(state.tutorial.actionLedger) || !plain(state.tutorial.guided) || !plain(state.socialRewards) || !plain(state.referrals) || !plain(state.loyalty)) normalizeProgression(state, state);
 }
 
 function normalizeLoyaltyReward(value) {
@@ -329,6 +377,8 @@ export function normalizeProgression(state, raw = {}) {
     closedReason: loyalty.closed === true && ['townhall-level-4', 'ten-rewards'].includes(loyalty.closedReason) ? loyalty.closedReason : reachedLevel ? 'townhall-level-4' : claimedDays.length >= 10 ? 'ten-rewards' : null,
     rewardConfigured: true, seed: whole(loyalty.seed, (now ^ 0x20c6ba91) >>> 0) >>> 0 || 1,
     lastClaimedDay: validDay(loyalty.lastClaimedDay) ? loyalty.lastClaimedDay : null,
+    lastOfferDay: validDay(loyalty.lastOfferDay) ? loyalty.lastOfferDay : null,
+    notificationDay: validDay(loyalty.notificationDay) ? loyalty.notificationDay : null,
     pendingDay: validDay(loyalty.pendingDay) ? loyalty.pendingDay : null,
     pendingReward: normalizeLoyaltyReward(loyalty.pendingReward),
     receivedRewards: plain(loyalty.receivedRewards) ? Object.fromEntries(Object.entries(loyalty.receivedRewards).filter(([day, reward]) => validDay(day) && normalizeLoyaltyReward(reward)).slice(-10).map(([day, reward]) => [day, normalizeLoyaltyReward(reward)])) : {} };
@@ -363,12 +413,14 @@ export function registerMeaningfulActivity(state, activity = {}) {
   // A continuously open session can enter a new Warsaw day without a fresh
   // authentication event. Only actual input records that day's visit.
   if (state.loyalty.lastDay !== day) recordProgressionLogin(state, now);
+  announceLoyaltyOffer(state);
   completeLessons(state);
   return true;
 }
 
 function lessonRequirement(state, item) {
   const events = state.tutorial.events;
+  if (state.tutorial.curriculum === 6 && item.guidedService) return tutorialGuidanceStatus(state, item)?.completed === true;
   if (balancedCourse(state) && item.goalLevel && whole(state.buildings?.[item.subject.slice(8)]?.level) >= item.goalLevel) return true;
   if (item.subject.startsWith('building-')) {
     const [, building, level] = item.subject.split('-');
@@ -394,10 +446,16 @@ function completeLessons(state) {
     changed = false;
     for (const item of lessonsFor(state)) {
       if (state.tutorial.completed[item.id]) continue;
+      if (state.tutorial.curriculum === 6 && item.guidedService && achievedUpgradeTarget(state, item) && !tutorialGuidanceStatus(state, item)?.completed) {
+        // Someone who completed the building independently must not buy the
+        // same level again just to learn a service. No extra lesson reward.
+        if (skipKnownLesson(state, item)) { changed = true; continue; }
+      }
       // Building levels are durable evidence, unlike an unrecorded old click.
       // Do not ask someone who already built a target to buy that level again.
+      const guidedConstruction = state.tutorial.curriculum === 6 && item.subject.startsWith('building-') && state.tutorial.guided?.[item.route]?.projectOrder > 0;
       if ((!state.tutorial.events[item.id] && achievedUpgradeTarget(state, item)) ||
-          (item.subject.startsWith('building-') && !prerequisiteReady(state, item) && lessonRequirement(state, item))) {
+          (item.subject.startsWith('building-') && !guidedConstruction && !prerequisiteReady(state, item) && lessonRequirement(state, item))) {
         if (skipKnownLesson(state, item)) { changed = true; continue; }
       }
       if (!prerequisiteReady(state, item)) continue;
@@ -430,7 +488,9 @@ export function tutorialRows(state) {
     const autoSkipped = tutorial.skippedLessons?.[item.id] === true;
     const progressRequired = item.assignmentCount || null;
     const progressCurrent = progressRequired ? Math.min(progressRequired, (state.residents || []).filter(person => person.workplace === item.subject.slice(7) && !person.pendingRelease).length) : null;
-    return { ...item, balanced, progressCurrent, progressRequired, autoSkipped, pendingDecision: !autoSkipped && balanced && claimed && !!chest && !chest.skipped && !chest.shared,
+    const guidance = tutorialGuidanceStatus(state, item);
+    return { ...item, balanced, progressCurrent, progressRequired, autoSkipped, currentSubstep: guidance?.current || null, substeps: guidance?.steps || [],
+      ...(guidance?.current ? { guideSelector: guidance.current.selector } : {}), pendingDecision: !autoSkipped && balanced && claimed && !!chest && !chest.skipped && !chest.shared,
       settlement: balanced && item.subject === 'finish-tutorial' ? tutorialSettlementStatus(state) : null,
       reward: chest ? { ...chest.reward } : {}, rewardRange: balanced ? null : { minimum: TUTORIAL_CHEST_MIN, maximum: TUTORIAL_CHEST_MAX, eachMaterial: true }, unlocked: prerequisiteMet || completed, prerequisiteMet, completed, claimed,
       visited: hasVisit(state, item), canObserve: false,
@@ -467,6 +527,21 @@ function recordTutorialEvidence(state, action, result) {
   const current = lessons.find(item => !tutorial.completed[item.id]);
   const evidence = [];
   const add = (subject, units = 1, targetLevel = null) => evidence.push({ subject, units, targetLevel });
+  if (tutorial.curriculum === 6) {
+    const guided = tutorial.guided;
+    const constructionLesson = lessons.find(item => item.guidedService === 'construction' && item.route === action.building);
+    if (['upgrade', 'build'].includes(action.type) && constructionLesson && result.project?.targetLevel === constructionLesson.goalLevel && result.project.stage !== 'planned') guided[action.building] = { projectOrder: whole(result.project.order), transported: false, accelerated: false };
+    const service = Object.keys(guided).find(id => guided[id]?.projectOrder > 0 && guided[id].projectOrder === action.project);
+    if (action.type === 'premiumTransport' && action.route === 'construction' && service) guided[service].transported = true;
+    if (action.type === 'premiumAccelerate' && action.percent === 100 && service) guided[service].accelerated = true;
+    if (action.type === 'premiumBuyBuilding' && action.building === 'farm' && result.project?.targetLevel === 2) guided.farm = { purchased: true, projectOrder: whole(result.project.order) };
+    if (action.type === 'warehousePriority' && guided.pickup.assigned && (state.warehousePriorities || []).includes('grain') && (state.warehousePriorities || []).includes('construction')) {
+      guided.pickup.prioritized = true;
+      const item = lessons.find(row => row.guidedService === 'pickup');
+      if (current?.id === item.id && prerequisiteReady(state, item)) tutorial.events[item.id] = true;
+      else skipKnownLesson(state, item);
+    }
+  }
   if (action.type === 'assign' && action.delta > 0) add(`assign-${action.building}`, whole(action.delta));
   if (['upgrade', 'build', 'premiumBuyBuilding'].includes(action.type) && result.project?.stage !== 'planned') {
     const target = whole(result.project?.targetLevel, whole(state.buildings?.[action.building]?.level) + 1);
@@ -483,10 +558,10 @@ function recordTutorialEvidence(state, action, result) {
   if (action.type === 'expeditionStart') add('expedition-play');
   if (action.type === 'assign' && action.delta < 0) add('release-worker', whole(-action.delta));
   if (action.type === 'taskDeposit' && action.amount > 0) add('task-deposit');
-  if (tutorial.curriculum === 5 && action.type === 'taskDeposit' && result.completed === true && textId(result.achievementId) && !ledger.taskReceipts.includes(result.achievementId)) {
+  if ([5, 6].includes(tutorial.curriculum) && action.type === 'taskDeposit' && result.completed === true && textId(result.achievementId) && !ledger.taskReceipts.includes(result.achievementId)) {
     ledger.taskReceipts.push(result.achievementId); add('task-complete');
   }
-  if (tutorial.curriculum === 5 && action.type === 'expeditionCashout' && result.coins > 0) {
+  if ([5, 6].includes(tutorial.curriculum) && action.type === 'expeditionCashout' && result.coins > 0) {
     const run = Object.values(state.expeditionRuns || {}).find(entry => entry.id === action.runId);
     if (run?.status === 'closed' && run.finishedAt !== null && !ledger.expeditionReceipts.includes(run.id)) {
       ledger.expeditionReceipts.push(run.id); add('expedition-complete');
@@ -497,17 +572,22 @@ function recordTutorialEvidence(state, action, result) {
   for (const proof of evidence) {
     if (!ACTION_SUBJECTS.includes(proof.subject)) continue;
     ledger.counts[proof.subject] = Math.min(Number.MAX_SAFE_INTEGER, whole(ledger.counts[proof.subject]) + proof.units);
-    if (tutorial.curriculum === 5 && proof.subject === 'assign-warehouse') {
-      const first = lessons.find(item => item.assignmentCount === 6);
+    if ([5, 6].includes(tutorial.curriculum) && proof.subject === 'assign-warehouse') {
+      const first = lessons.find(item => item.assignmentCount > 1);
       const assigned = (state.residents || []).filter(person => person.workplace === 'warehouse' && !person.pendingRelease).length;
       if (!tutorial.completed[first.id] && assigned >= first.assignmentCount) {
         if (current?.id === first.id && prerequisiteReady(state, first)) tutorial.events[first.id] = true;
         else skipKnownLesson(state, first);
       }
-      // The six initial assignments belong to the first lesson. Only a new
+      // The initial crew assignments belong to the first lesson. Only a new
       // assignment beyond them can resolve the later additional-carrier step.
       const extra = Math.min(proof.units, Math.max(0, ledger.counts[proof.subject] - first.assignmentCount));
       for (const item of lessons.filter(row => !row.assignmentCount && row.subject === proof.subject && !tutorial.completed[row.id]).slice(0, extra)) {
+        if (tutorial.curriculum === 6 && item.guidedService === 'pickup') {
+          tutorial.guided.pickup.assigned = true;
+          tutorial.guided.pickup.prioritized = (state.warehousePriorities || []).includes('grain') && (state.warehousePriorities || []).includes('construction');
+          if (!tutorial.guided.pickup.prioritized) continue;
+        }
         if (current?.id === item.id && prerequisiteReady(state, item)) tutorial.events[item.id] = true;
         else skipKnownLesson(state, item);
       }
@@ -547,7 +627,40 @@ function fitOrdinaryReward(state, requested) {
   if (requested.coins > 0) reward.coins = whole(requested.coins);
   return reward;
 }
+function serviceBudget(state, building, context) {
+  if (typeof context.buildingCost !== 'function') return null;
+  const cost = context.buildingCost(state, building);
+  if (!plain(cost)) return null;
+  const capacity = Math.max(1, Math.floor(120 * 1.1 ** (Math.min(24, Math.max(1, whole(state.buildings?.warehouse?.level, 1))) - 1)));
+  const trips = MATERIALS.reduce((total, id) => total + Math.ceil(nonnegative(cost[id]) / capacity), 0);
+  // A one-carrier, ordinary five-minute-course upper budget also covers the
+  // real quotation's virtual carrier before the assigned crew reaches work.
+  let transportCoins = trips * 10, buildingSeconds = trips * 300 * (building === 'lighthouse' ? 4 : 1);
+  if (typeof context.quoteTransport === 'function') {
+    const clone = structuredClone(state);
+    const project = { building, order: whole(clone.constructionSequence) + 1, targetLevel: whole(clone.buildings?.[building]?.level) + 1,
+      cost: { ...cost }, stage: 'transport', goodsTotal: MATERIALS.reduce((n, id) => n + nonnegative(cost[id]), 0),
+      remainingMaterials: Object.fromEntries(MATERIALS.map(id => [id, nonnegative(cost[id])])),
+      reservedMaterials: Object.fromEntries(MATERIALS.map(id => [id, nonnegative(cost[id])])),
+      delivered: Object.fromEntries(MATERIALS.map(id => [id, 0])), goodsRemaining: MATERIALS.reduce((n, id) => n + nonnegative(cost[id]), 0),
+      transportStarted: false, transportSeconds: 0, buildRemaining: 0, reservationVersion: 9 };
+    clone.constructionProjects = [...(clone.constructionProjects || []), project];
+    for (const id of MATERIALS) clone.resources[id] = Math.max(nonnegative(clone.resources?.[id]), centralReserved(clone, id) + nonnegative(cost[id]) + (id === 'food' ? protectedFood(clone) + 100 : 0));
+    const quote = context.quoteTransport(clone, { route: 'construction', project: project.order });
+    if (quote?.ok) { transportCoins = quote.coins; if (finite(quote.normalBuilding)) buildingSeconds = quote.normalBuilding; }
+  }
+  const estimate = typeof context.quoteAcceleration === 'function' ? context.quoteAcceleration(state, { stage: 'building', buildRemaining: buildingSeconds }, 100) : null;
+  const accelerationCoins = estimate?.ok ? estimate.coins : Math.max(5, Math.floor(buildingSeconds / 60));
+  return { cost, coins: nonnegative(cost.coins) + transportCoins + accelerationCoins + 100 };
+}
 function balancedReward(state, item, context) {
+  if (state.tutorial.curriculum === 6 && item.rewardKind === 'service-supply') {
+    const budget = serviceBudget(state, 'townhall', context);
+    if (!budget) return null;
+    const requested = Object.fromEntries(MATERIALS.map(id => [id, Math.max(0, Math.ceil(nonnegative(budget.cost[id]) + 100 + (id === 'food' ? protectedFood(state) : 0) - centralAvailable(state, id)))]));
+    requested.coins = Math.max(100, Math.ceil(budget.coins - nonnegative(state.resources.coins)));
+    return fitOrdinaryReward(state, requested);
+  }
   if (item.rewardKind === 'small') return fitOrdinaryReward(state, { coins: 100, ...Object.fromEntries(MATERIALS.map(id => [id, 25])) });
   if (item.rewardKind === 'road') return fitOrdinaryReward(state, { coins: 200, stone: Math.max(0, Math.ceil(100 - centralAvailable(state, 'stone'))) });
   if (item.rewardKind === 'task-supply') return fitOrdinaryReward(state, { coins: 100, ...Object.fromEntries(Object.entries(TUTORIAL_STARTER_TASK.requirements).map(([id, amount]) => [id, Math.max(0, Math.ceil(amount - centralAvailable(state, id)))])) });
@@ -555,11 +668,22 @@ function balancedReward(state, item, context) {
   if (typeof context.buildingCost !== 'function') return null;
   const next = lessonsFor(state).find(row => row.index > item.index && row.subject === `upgrade-${item.fundBuilding}`);
   if (next?.goalLevel && whole(state.buildings?.[item.fundBuilding]?.level) >= next.goalLevel) return { coins: 100 };
+  if (state.tutorial.curriculum === 6 && item.fundBuilding === 'farm') {
+    const quote = context.quotePremiumBuilding?.(state, 'farm');
+    if (!quote?.ok) return null;
+    return { coins: Math.max(100, Math.ceil(quote.coins + 100 - nonnegative(state.resources.coins))) };
+  }
   const cost = context.buildingCost(state, item.fundBuilding);
   if (!plain(cost)) return null;
-  const target = { ...cost, food: nonnegative(cost.food) + (state.tutorial.curriculum === 5 ? protectedFood(state) + 100 : 100) };
+  const budget = state.tutorial.curriculum === 6 ? serviceBudget(state, item.fundBuilding, context) : null;
+  // Production keeps running while the player reads a reward and finds the
+  // next building. Protect input materials too: the Mill consumes Grain and
+  // the Sawmill consumes Wood between funding and the actual upgrade click.
+  const target = state.tutorial.curriculum === 6
+    ? Object.fromEntries(MATERIALS.map(id => [id, nonnegative(cost[id]) + 100 + (id === 'food' ? protectedFood(state) : 0)]))
+    : { ...cost, food: nonnegative(cost.food) + (state.tutorial.curriculum === 5 ? protectedFood(state) + 100 : 100) };
   const requested = Object.fromEntries(MATERIALS.map(id => [id, Math.max(0, Math.ceil(nonnegative(target[id]) - centralAvailable(state, id)))]));
-  requested.coins = Math.max(100, Math.ceil(nonnegative(cost.coins) + 100 - nonnegative(state.resources.coins)));
+  requested.coins = Math.max(100, Math.ceil((budget ? budget.coins : nonnegative(cost.coins) + 100) - nonnegative(state.resources.coins)));
   return fitOrdinaryReward(state, requested);
 }
 function awardOrdinary(state, reward) {
@@ -614,6 +738,13 @@ function settleLoyaltyClosure(state) {
   if (townLevel(state) >= 4) { state.loyalty.closed = true; state.loyalty.closedReason = 'townhall-level-4'; }
   else if ((state.loyalty.claimedDays || []).length >= 10) { state.loyalty.closed = true; state.loyalty.closedReason = 'ten-rewards'; }
 }
+function announceLoyaltyOffer(state) {
+  const offer = loyaltyStatus(state);
+  if (!offer.eligible || state.loyalty.notificationDay === offer.rewardDay) return false;
+  state.loyalty.notificationDay = offer.rewardDay;
+  emit(state, 'loyalty-available', 'Daily login reward available', 'Your daily login reward is ready. Open the daily reward and collect Coins and materials.');
+  return true;
+}
 
 export function recordProgressionLogin(state, now = nowOf(state)) {
   if (introductionPending(state)) return false;
@@ -627,6 +758,7 @@ export function recordProgressionLogin(state, now = nowOf(state)) {
       state.loyalty.pendingDay = day;
       state.loyalty.pendingReward = loyaltyReward(state);
     }
+    announceLoyaltyOffer(state);
     return false;
   }
   const consecutive = state.loyalty.lastDay && calendarDayDistance(state.loyalty.lastDay, day) === 1;
@@ -634,6 +766,7 @@ export function recordProgressionLogin(state, now = nowOf(state)) {
   state.loyalty.streak = consecutive ? Math.min(10, state.loyalty.streak + 1) : 1;
   state.loyalty.pendingDay = day;
   state.loyalty.pendingReward = loyaltyReward(state);
+  announceLoyaltyOffer(state);
   return true;
 }
 
@@ -645,6 +778,11 @@ export function loyaltyStatus(state) {
     eligible: !closed && whole(loyalty.streak) > 0 && loyalty.pendingDay === warsawDayKey(nowOf(state)) && loyalty.lastClaimedDay !== loyalty.pendingDay && !!loyalty.pendingReward,
     reward: loyalty.pendingReward ? { ...loyalty.pendingReward } : {}, rewardDay: loyalty.pendingDay,
     message: closed ? 'The introductory loyalty programme has ended.' : 'Receive 50–200 of each resource once per Warsaw day, including Coins. The stored draw does not change when you reload.' };
+}
+export function loyaltyOfferStatus(state) {
+  const reward = loyaltyStatus(state);
+  return { available: reward.eligible && state.loyalty?.lastOfferDay !== reward.rewardDay,
+    day: reward.rewardDay, reward: { ...reward.reward }, streak: reward.streak, eligible: reward.eligible };
 }
 
 export function socialSummary(state) {
@@ -769,9 +907,15 @@ function referralAction(state, action, context) {
 }
 
 export function progressionAction(state, action, context = {}) {
-  const types = ['userActivity', 'heartbeat', 'tutorialVisit', 'tutorialObserve', 'claimTutorial', 'seeTutorialReward', 'shareTutorialReward', 'skipTutorialShare', 'prepareTutorialUpgrade', 'finishTutorial', 'tutorialPlayerTrade', 'dismissTutorial', 'resumeTutorial', 'socialPublication', 'referralRegistration', 'referralLogin', 'referralActiveDay', 'claimLoyalty'];
+  const types = ['userActivity', 'heartbeat', 'tutorialVisit', 'tutorialObserve', 'claimTutorial', 'seeTutorialReward', 'shareTutorialReward', 'skipTutorialShare', 'prepareTutorialUpgrade', 'finishTutorial', 'tutorialPlayerTrade', 'dismissTutorial', 'resumeTutorial', 'socialPublication', 'referralRegistration', 'referralLogin', 'referralActiveDay', 'claimLoyalty', 'seeLoyaltyOffer'];
   if (!action || !types.includes(action.type)) return null;
   ensure(state);
+  if (action.type === 'seeLoyaltyOffer') {
+    const offer = loyaltyOfferStatus(state);
+    if (!offer.available) return bad('This daily reward reminder was already shown or the reward is unavailable.');
+    state.loyalty.lastOfferDay = offer.day;
+    return good('Daily reward reminder acknowledged.', { day: offer.day });
+  }
   if (state.tutorial.rewardDisabled && ['tutorialObserve','claimTutorial','seeTutorialReward','shareTutorialReward','skipTutorialShare','prepareTutorialUpgrade','finishTutorial'].includes(action.type)) return bad('Tutorial rewards belong to the first island and cannot be repeated here.');
   if (action.type === 'finishTutorial') {
     const quote = tutorialSettlementStatus(state);
@@ -814,8 +958,9 @@ export function progressionAction(state, action, context = {}) {
     const row = tutorialRows(state).find(item => item.id === 'townhall-upgrade');
     if (!row.prerequisiteMet || row.completed || townLevel(state) > 1) return bad('Building supplies are available only before your tutorial Town Hall upgrade.');
     if (state.tutorial.buildingSuppliesClaimed) return bad('The tutorial building supplies were already received.');
-    const cost = state.tutorial.curriculum === 5 && typeof context.buildingCost === 'function' ? context.buildingCost(state, 'townhall') : null;
-    const targets = cost ? { ...cost, food: nonnegative(cost.food) + protectedFood(state) + 50 } : TUTORIAL_BUILDING_SUPPLIES;
+    const cost = [5, 6].includes(state.tutorial.curriculum) && typeof context.buildingCost === 'function' ? context.buildingCost(state, 'townhall') : null;
+    const budget = state.tutorial.curriculum === 6 ? serviceBudget(state, 'townhall', context) : null;
+    const targets = cost ? { ...(budget ? Object.fromEntries(MATERIALS.map(id => [id, nonnegative(cost[id]) + 100])) : cost), ...(budget ? { coins: budget.coins } : {}), food: nonnegative(cost.food) + protectedFood(state) + (state.tutorial.curriculum === 6 ? 100 : 50) } : TUTORIAL_BUILDING_SUPPLIES;
     const requested = Object.fromEntries(Object.entries(targets).map(([id, target]) => [id, Math.max(0, Math.ceil(target - (id === 'coins' ? nonnegative(state.resources?.coins) : centralAvailable(state, id))))]));
     const reward = balancedCourse(state) ? fitOrdinaryReward(state, requested) : requested;
     if (balancedCourse(state) ? !awardOrdinary(state, reward) : !award(state, reward, context)) return bad('Material reward delivery is not available.');

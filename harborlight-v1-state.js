@@ -1,27 +1,29 @@
 // Economy and progression for the interactive approved-screen prototype.
 // Pure data module: browser UI and Node tests share the same rules.
-import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange, townhallPopulationRequirement, playerTradeUnlocked, starterTurboAvailable, unlockStarterTurbo, starterConstructionTiming } from './harborlight-v1-logistics.js?v=frontend-v27';
-export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty, townhallPopulationRequirement, playerTradeUnlocked } from './harborlight-v1-logistics.js?v=frontend-v27';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange, townhallPopulationRequirement, playerTradeUnlocked, starterTurboAvailable, unlockStarterTurbo, starterConstructionTiming, missionProductionMultiplier } from './harborlight-v1-logistics.js?v=frontend-v28';
+export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty, townhallPopulationRequirement, playerTradeUnlocked } from './harborlight-v1-logistics.js?v=frontend-v28';
 
-import { normalizeResidents, residentPopulationMinimum, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds, residentHasHousing, housingStatus, foodDemandPerHour as residentFoodDemandPerHour } from './harborlight-v1-residents.js?v=frontend-v27';
-export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v27';
+import { normalizeResidents, applyDailyHappinessDecay, residentPrayerAction, residentPopulationMinimum, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds, residentHasHousing, housingStatus, foodDemandPerHour as residentFoodDemandPerHour } from './harborlight-v1-residents.js?v=frontend-v28';
+export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v28';
+export { residentPrayerQuote, residentPrayerStatus, PRAYER_RULES } from './harborlight-v1-residents.js?v=frontend-v28';
 
-import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction } from './harborlight-v1-activities.js?v=frontend-v27';
-import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v27';
-import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v27';
-import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v27';
-import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v27';
-import { normalizeIslandProfile, validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v27';
-import { consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v27';
-import { warsawParts, warsawDayKey, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v27';
-import { welcomeStatus, WELCOME_SECONDS } from './harborlight-v1-residents.js?v=frontend-v27';
-export { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v27';
-import { normalizeWorldEvents, advanceWorldEvents, nextWorldEvent, recordChapelBlessing, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v27';
-import { normalizeCommerce, commerceAction, nextCommerceEvent, advanceCommerce } from './harborlight-v1-commerce.js?v=frontend-v27';
-import { normalizeEngagementSchedule } from './harborlight-v1-engagement.js?v=frontend-v27';
-import { constructionScheduleEstimate } from './harborlight-v1-logistics.js?v=frontend-v27';
-import { normalizeMissions, advanceMissions, nextMissionEvent, missionAction, recordMissionAction } from './harborlight-v1-missions.js?v=frontend-v27';
-import { residentWorkMultiplier } from './harborlight-v1-housing.js?v=frontend-v27';
+import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction, quotePremiumBuilding, quoteTransport, quoteAcceleration } from './harborlight-v1-activities.js?v=frontend-v28';
+import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v28';
+import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v28';
+import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v28';
+import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v28';
+import { normalizeIslandProfile, validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v28';
+import { consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v28';
+import { warsawParts, warsawDayKey, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v28';
+import { welcomeStatus, WELCOME_SECONDS } from './harborlight-v1-residents.js?v=frontend-v28';
+export { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v28';
+import { normalizeWorldEvents, advanceWorldEvents, nextWorldEvent, recordChapelBlessing, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v28';
+import { normalizeCommerce, commerceAction, nextCommerceEvent, advanceCommerce } from './harborlight-v1-commerce.js?v=frontend-v28';
+import { normalizeEngagementSchedule } from './harborlight-v1-engagement.js?v=frontend-v28';
+import { constructionScheduleEstimate } from './harborlight-v1-logistics.js?v=frontend-v28';
+import { normalizeMissions, advanceMissions, nextMissionEvent, missionAction, recordMissionAction } from './harborlight-v1-missions.js?v=frontend-v28';
+import { residentWorkMultiplier } from './harborlight-v1-housing.js?v=frontend-v28';
+import { APPROVED_TOUR_VERSION, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v28';
 
 export const RESOURCES = {
   coins: { name: 'Coins', short: 'coins', symbol: '◉', price: 1 },
@@ -47,7 +49,7 @@ export const BUILDINGS = {
   lumber: { name: 'Lumber Camp', description: 'Each lumberjack produces 20 wood per hour at level 1, 24 at level 2, and two more per level thereafter. Wood waits locally for transport.', cost: { coins: 90, wood: 25, stone: 15 }, resource: 'wood', rate: 20, maxLevel: MAX_BUILDING_LEVEL },
   windmill: { name: 'Windmill', description: 'Each miller produces 20 food per hour at level 1, 24 at level 2, and two more per level thereafter. Each Food requires 2 grain from central storage.', cost: { coins: 140, wood: 40, stone: 20, planks: 15 }, resource: 'food', rate: 20, input: 'grain', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
   townhall: { name: 'Town Hall', description: 'The Town Hall determines the island level and the upgrade limit for other buildings. Each level allows 24 residents; the House provides their housing.', cost: { coins: 240, wood: 50, stone: 50, planks: 20 }, maxLevel: MAX_BUILDING_LEVEL },
-  chapel: { name: 'Chapel', description: 'Completing an upgrade grants +10 happiness × the new level for 10 hours. One free blessing renews at Warsaw midnight without accumulation. Every manual blessing gives +50 of every resource and +20 happiness for one hour. Paid and ad blessings share a four-hour wait after their effect ends.', cost: { coins: 180, wood: 20, stone: 60, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
+  chapel: { name: 'Chapel', description: 'Completing an upgrade grants +10 happiness × the new level and taxes ×2 for 10 hours. One free blessing renews at Warsaw midnight without accumulation. Every manual blessing gives +50 of every resource and +20 happiness for one hour. Paid and ad blessings share a four-hour wait after their effect ends.', cost: { coins: 180, wood: 20, stone: 60, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
   market: { name: 'Market', description: 'Merchants exchange goods without coins.', cost: { coins: 130, wood: 35, stone: 15 }, maxLevel: MAX_BUILDING_LEVEL }
 };
 
@@ -88,9 +90,9 @@ export function createState(now = Date.now(), options = {}) {
     islandGeneration: 1,
     islandName: '', islandNameUpdatedAt: 0, islandId: 'island-1', islandRole: 'mother', islandSuffix: '',
     islandStartedAt: options.onboarding === true ? null : now,
-    onboarding: { version: 1, stage: options.onboarding === true ? 'intro' : 'complete', index: 0,
+    onboarding: { version: 1, routeVersion: APPROVED_TOUR_VERSION, stage: options.onboarding === true ? 'intro' : 'complete', index: 0,
       worldStartedAt: options.onboarding === true ? null : now, completedAt: options.onboarding === true ? null : now },
-    learning: { version: 1, tour: { index: 0, active: false, paused: false, completed: false }, practical: { reviewIndex: 0, reviewActive: false, reviewPaused: false }, adsNotBeforeActiveSeconds: 0 },
+    learning: { version: 1, tour: { routeVersion: APPROVED_TOUR_VERSION, index: 0, active: false, paused: false, completed: false }, practical: { reviewIndex: 0, reviewActive: false, reviewPaused: false }, adsNotBeforeActiveSeconds: 0 },
     resources: Object.fromEntries(Object.keys(RESOURCES).map(id => [id, 100])),
     population: 12, capacity: 24, happiness: 20, baseHappiness: 20, chapelRemaining: 0, lighthouseRemaining: 0,
     welcome: { startedAt: now, until: now + WELCOME_SECONDS * 1000 },
@@ -135,14 +137,14 @@ export function createState(now = Date.now(), options = {}) {
 export function onboardingStatus(state) {
   const source = state?.onboarding;
   const pending = source?.version === 1 && ['intro', 'name', 'tour'].includes(source.stage) && source.worldStartedAt === null;
-  return { pending, stage: pending ? source.stage : 'complete', index: integer(source?.index, 0, 0, 255),
+  return { pending, stage: pending ? source.stage : 'complete', routeVersion: APPROVED_TOUR_VERSION, index: normalizeTourProgressIndex(integer(source?.index, 0, 0, 255), source?.routeVersion),
     worldStartedAt: pending ? null : amount(source?.worldStartedAt, amount(state?.islandStartedAt, amount(state?.worldTimeMs)), Number.MAX_SAFE_INTEGER),
     completedAt: pending ? null : amount(source?.completedAt, amount(state?.islandStartedAt, amount(state?.worldTimeMs)), Number.MAX_SAFE_INTEGER) };
 }
 
 function normalizeOnboarding(state, raw) {
   const status = onboardingStatus({ ...raw, worldTimeMs: state.worldTimeMs });
-  state.onboarding = { version: 1, stage: status.stage, index: status.index,
+  state.onboarding = { version: 1, routeVersion: APPROVED_TOUR_VERSION, stage: status.stage, index: status.index,
     worldStartedAt: status.worldStartedAt, completedAt: status.completedAt };
   state.islandStartedAt = status.worldStartedAt;
   state.paused = status.pending;
@@ -151,7 +153,7 @@ function normalizeOnboarding(state, raw) {
 function normalizeLearning(state, raw) {
   const learning = raw.learning?.version === 1 ? raw.learning : {};
   state.learning = { version: 1,
-    tour: { index: integer(learning.tour?.index, 0, 0, 255), active: learning.tour?.active === true, paused: learning.tour?.paused === true, completed: learning.tour?.completed === true },
+    tour: { routeVersion: APPROVED_TOUR_VERSION, index: normalizeTourProgressIndex(integer(learning.tour?.index, 0, 0, 255), learning.tour?.routeVersion), active: learning.tour?.active === true, paused: learning.tour?.paused === true, completed: learning.tour?.completed === true },
     practical: { reviewIndex: integer(learning.practical?.reviewIndex, 0, 0, 24), reviewActive: learning.practical?.reviewActive === true, reviewPaused: learning.practical?.reviewPaused === true },
     adsNotBeforeActiveSeconds: amount(learning.adsNotBeforeActiveSeconds, 0, Number.MAX_SAFE_INTEGER) };
 }
@@ -159,11 +161,11 @@ function normalizeLearning(state, raw) {
 function learningAction(state, action) {
   const patch = action.patch;
   if (!patch || typeof patch !== 'object' || Array.isArray(patch)) return bad('Choose valid learning progress.');
-  if (patch.tour !== undefined && (!patch.tour || typeof patch.tour !== 'object' || Array.isArray(patch.tour) || Object.entries(patch.tour).some(([key, value]) => key === 'index' ? !Number.isSafeInteger(value) || value < 0 || value > 255 : !['active', 'paused', 'completed'].includes(key) || typeof value !== 'boolean'))) return bad('Choose a valid tutorial step.');
+  if (patch.tour !== undefined && (!patch.tour || typeof patch.tour !== 'object' || Array.isArray(patch.tour) || Object.entries(patch.tour).some(([key, value]) => key === 'routeVersion' ? value !== APPROVED_TOUR_VERSION : key === 'index' ? !Number.isSafeInteger(value) || value < 0 || value > 255 : !['active', 'paused', 'completed'].includes(key) || typeof value !== 'boolean'))) return bad('Choose a valid tutorial step.');
   if (patch.practical !== undefined && (!patch.practical || typeof patch.practical !== 'object' || Array.isArray(patch.practical) || Object.entries(patch.practical).some(([key, value]) => key === 'reviewIndex' ? !Number.isSafeInteger(value) || value < 0 || value > 24 : !['reviewActive', 'reviewPaused'].includes(key) || typeof value !== 'boolean'))) return bad('Choose a valid practical lesson.');
   if (patch.adsNotBeforeActiveSeconds !== undefined && (!Number.isFinite(patch.adsNotBeforeActiveSeconds) || patch.adsNotBeforeActiveSeconds < 0 || patch.adsNotBeforeActiveSeconds > Number.MAX_SAFE_INTEGER)) return bad('Choose a valid learning reminder time.');
   normalizeLearning(state, state);
-  state.learning = { version: 1, tour: { ...state.learning.tour, ...patch.tour }, practical: { ...state.learning.practical, ...patch.practical }, adsNotBeforeActiveSeconds: patch.adsNotBeforeActiveSeconds ?? state.learning.adsNotBeforeActiveSeconds };
+  state.learning = { version: 1, tour: { ...state.learning.tour, ...patch.tour, routeVersion: APPROVED_TOUR_VERSION }, practical: { ...state.learning.practical, ...patch.practical }, adsNotBeforeActiveSeconds: patch.adsNotBeforeActiveSeconds ?? state.learning.adsNotBeforeActiveSeconds };
   return good('Learning progress saved.');
 }
 
@@ -231,7 +233,7 @@ function onboardingAction(state, action, now) {
     state.islandName = name.name;
     state.islandNameUpdatedAt = integer(now, state.worldTimeMs, 0, Number.MAX_SAFE_INTEGER);
   }
-  state.onboarding = { ...state.onboarding, stage, index };
+  state.onboarding = { ...state.onboarding, stage, index, routeVersion: APPROVED_TOUR_VERSION };
   return good('Introduction progress saved.');
 }
 
@@ -566,6 +568,39 @@ function advancePopulation(state, elapsedSeconds) {
   }
 }
 
+// PRE-PROD's mock history is explicitly separate from the real server ledger.
+// Persist only a bounded, simulation-only data shape; this field never proves
+// that a player earned qualified coins or that a real transfer was made.
+function normalizeCharitySimulation(raw) {
+  const saved = raw?.charitySimulation;
+  if (!saved || saved.version !== 1 || typeof saved !== 'object') return null;
+  const text = (value, max) => typeof value === 'string' ? value.slice(0, max) : '';
+  const month = value => typeof value === 'string' && /^\d{4}-(?:0[1-9]|1[0-2])$/.test(value);
+  const timestamp = value => Number.isSafeInteger(value) && value >= 0 ? value : null;
+  const donations = (Array.isArray(saved.donations) ? saved.donations : []).slice(-1200).filter(item => item && item.mode === 'simulation' &&
+    /^dev-charity-[1-9]\d*$/.test(item.id || '') && /^island-(?:[1-9]|1[0-9]|20)$/.test(item.islandId || '') &&
+    ['reserved', 'transferred', 'claimed'].includes(item.status) && month(item.month) && timestamp(item.reservedAt) !== null)
+    .map(item => {
+      const coins = Number.isSafeInteger(item.coins) && item.coins >= 100 && item.coins % 100 === 0 ? item.coins : 1000;
+      const reward = item.reward?.mode === 'simulation' && item.reward.happinessPoints === 20 && timestamp(item.reward.claimedAt) !== null && timestamp(item.reward.expiresAt) !== null ? {
+        id: text(item.reward.id, 120), islandId: item.islandId, claimedAt: item.reward.claimedAt, expiresAt: item.reward.expiresAt,
+        happinessPoints: 20, portIlluminated: item.reward.portIlluminated === true, mode: 'simulation' } : null;
+      return { id: item.id, requestId: text(item.requestId, 100), islandId: item.islandId, beneficiaryId: text(item.beneficiaryId, 100),
+        organization: text(item.organization, 180), goal: text(item.goal, 500), month: item.month, mode: 'simulation', status: item.status,
+        coins, operatorCents: coins / 10,
+        reservedAt: item.reservedAt, ...(timestamp(item.transferredAt) !== null ? { transferredAt: item.transferredAt } : {}),
+        ...(item.transferReference === 'DEV-SYMULACJA' ? { transferReference: item.transferReference } : {}), reward };
+    });
+  const funds = (Array.isArray(saved.funds) ? saved.funds : []).slice(-120).filter(entry => Array.isArray(entry) && month(entry[0]) && entry[1] && typeof entry[1] === 'object')
+    .map(([key, fund]) => {
+      const budgetCents = integer(fund.budgetCents, 0, 0, 5000), usedCents = integer(fund.usedCents, 0, 0, budgetCents);
+      return [key, { budgetCents, usedCents, transferredCents: integer(fund.transferredCents, 0, 0, usedCents) }];
+    });
+  return { version: 1, qualified: amount(saved.qualified, 0, Number.MAX_SAFE_INTEGER),
+    last: month(saved.last?.month) && timestamp(saved.last?.at) !== null ? { month: saved.last.month, at: saved.last.at } : null,
+    lastRewardAt: timestamp(saved.lastRewardAt), serial: integer(saved.serial, 0, 0, Number.MAX_SAFE_INTEGER), donations, funds };
+}
+
 export function normalizeState(raw, now = Date.now()) {
   const state = createState(now);
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return state;
@@ -610,6 +645,7 @@ export function normalizeState(raw, now = Date.now()) {
   state.islandRole = raw.islandRole === 'daughter' ? 'daughter' : 'mother';
   state.islandSuffix = validateStoredIslandName(raw.islandSuffix).name;
   state.incomingPassengers = integer(raw.incomingPassengers, 0, 0, 100);
+  state.charitySimulation = normalizeCharitySimulation(raw);
   state.charityReward = raw.charityReward?.happinessPoints === 20 && Number.isSafeInteger(raw.charityReward.expiresAt) ? { ...raw.charityReward } : null;
   // Historical mothers below twelve retain their actual people; migration never invents residents.
   state.population = integer(raw.population, state.population, 6, state.capacity);
@@ -752,97 +788,102 @@ function reward(state, values) {
   receiveMaterials(state, values);
 }
 
+// The bank keeps seven unspent daily portions, without expiry. Population
+// changes and reloads never rewrite the amount in an already earned portion.
+export const HOUSE_HAPPINESS_RULES = Object.freeze({ version: 2, maximumPortions: 7 });
 function normalizeHouseHappiness(state, raw) {
-  const source = raw.houseHappinessPool || {};
-  const housed = housingStatus(state).housed;
-  const previousGrant = integer(source.grantPopulation, housed, 0, 2400);
-  const grantPopulation = Math.min(previousGrant, housed);
-  const alreadyUsed = previousGrant - integer(source.points, previousGrant, 0, previousGrant);
+  const source = raw.houseHappinessPool || {}, housed = housingStatus(state).housed;
+  let portions;
+  if (source.version === HOUSE_HAPPINESS_RULES.version && Array.isArray(source.portions)) {
+    portions = source.portions.slice(0, HOUSE_HAPPINESS_RULES.maximumPortions)
+      .filter(portion => portion && Number.isSafeInteger(portion.points) && portion.points > 0 && portion.points <= 16800)
+      .map(portion => ({ points: portion.points, population: integer(portion.population, Math.min(2400, portion.points), 0, 2400),
+        day: typeof portion.day === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(portion.day) ? portion.day : warsawDayKey(state.worldTimeMs), legacy: portion.legacy === true }));
+  } else {
+    const population = integer(source.grantPopulation, housed, 0, 2400);
+    const points = integer(source.points, population, 0, 16800);
+    portions = points ? [{ points, population, day: warsawDayKey(state.worldTimeMs), legacy: true }] : [];
+  }
   const nextMidnight = nextWarsawMidnightMs(state.worldTimeMs);
   const nextRefreshAt = Number.isFinite(source.nextRefreshAt) && source.nextRefreshAt > state.worldTimeMs && source.nextRefreshAt <= nextMidnight + 1 ? source.nextRefreshAt : nextMidnight;
-  const refreshRemaining = Math.max(0, (nextRefreshAt - state.worldTimeMs) / 1000);
-  state.houseHappinessPool = {
-    points: Math.max(0, grantPopulation - alreadyUsed), grantPopulation,
-    nextRefreshAt, refreshRemaining,
-    autoRemaining: Math.max(0, refreshRemaining - 120), autoDone: source.nextRefreshAt === nextRefreshAt && source.autoDone === true,
+  state.houseHappinessPool = { version: 2, portions, points: portions.reduce((sum, portion) => sum + portion.points, 0),
+    grantPopulation: integer(source.grantPopulation, housed, 0, 2400), nextRefreshAt,
+    refreshRemaining: Math.max(0, (nextRefreshAt - state.worldTimeMs) / 1000), autoRemaining: 0, autoDone: true,
     generation: integer(source.generation, 1, 1, Number.MAX_SAFE_INTEGER),
-    randomSeed: integer(source.randomSeed, (state.worldTimeMs >>> 0) || 0x6d2b79f5, 1, 0xffffffff)
-  };
-}
-function houseRandom(state, length) {
-  let seed = state.houseHappinessPool.randomSeed >>> 0;
-  seed ^= seed << 13; seed ^= seed >>> 17; seed ^= seed << 5;
-  state.houseHappinessPool.randomSeed = seed >>> 0 || 0x6d2b79f5;
-  return Math.floor(state.houseHappinessPool.randomSeed / 0x100000000 * length);
+    randomSeed: integer(source.randomSeed, (state.worldTimeMs >>> 0) || 0x6d2b79f5, 1, 0xffffffff) };
 }
 function canGainHouseHappiness(state, person) {
   return residentHasHousing(state, person) && !(person.newbornRemaining > 1e-9) && residentHappiness(state, person) < 100 - 1e-9;
-}
-function automaticHouseHappiness(state) {
-  const pool = state.houseHappinessPool;
-  let spent = 0;
-  while (pool.points > 0) {
-    const eligible = state.residents.filter(person => canGainHouseHappiness(state, person));
-    if (!eligible.length) break;
-    const lowest = Math.min(...eligible.map(person => residentHappiness(state, person)));
-    const tied = eligible.filter(person => Math.abs(residentHappiness(state, person) - lowest) < 1e-9);
-    const person = tied[houseRandom(state, tied.length)];
-    person.happiness = Math.min(residentHappinessBounds(state, person).max, person.happiness + 1);
-    pool.points--; spent++;
-  }
-  pool.autoDone = true;
-  if (spent) notify(state, 'house-happiness', 'House happiness distributed', `${spent} remaining happiness points were given to the least happy residents.`);
 }
 function settleHouseHappiness(state) {
   const pool = state.houseHappinessPool;
   if (!pool) return;
   pool.refreshRemaining = Math.max(0, (pool.nextRefreshAt - state.worldTimeMs) / 1000);
-  pool.autoRemaining = Math.max(0, pool.refreshRemaining - 120);
   if (pool.refreshRemaining <= 1e-8) {
-    pool.points = housingStatus(state).housed; pool.grantPopulation = pool.points;
-    pool.nextRefreshAt = nextWarsawMidnightMs(state.worldTimeMs);
-    pool.refreshRemaining = (pool.nextRefreshAt - state.worldTimeMs) / 1000;
-    pool.autoRemaining = Math.max(0, pool.refreshRemaining - 120); pool.autoDone = false; pool.generation++;
-    notify(state, 'house-happiness-refresh', 'House happiness pool refreshed', `${pool.points} happiness points are available until the next Warsaw midnight.`);
+    const population = housingStatus(state).housed, closingAt = pool.nextRefreshAt;
+    applyDailyHappinessDecay(state);
+    pool.portions = pool.portions.filter(portion => portion.points > 0);
+    if (pool.portions.length < HOUSE_HAPPINESS_RULES.maximumPortions && population > 0)
+      pool.portions.push({ points: population, population, day: warsawDayKey(closingAt - 1), legacy: false });
+    pool.points = pool.portions.reduce((sum, portion) => sum + portion.points, 0); pool.grantPopulation = population;
+    pool.nextRefreshAt = nextWarsawMidnightMs(state.worldTimeMs); pool.refreshRemaining = (pool.nextRefreshAt - state.worldTimeMs) / 1000;
+    pool.autoRemaining = 0; pool.autoDone = true; pool.generation++;
+    notify(state, 'house-happiness-refresh', 'House happiness bank updated', `${pool.points} happiness points are stored in ${pool.portions.length} of 7 daily portions.`);
   }
-  if (!pool.autoDone && pool.autoRemaining <= 1e-8) automaticHouseHappiness(state);
 }
 function nextHouseHappinessEvent(state) {
   const pool = state.houseHappinessPool;
-  return pool ? Math.min(pool.refreshRemaining > 1e-8 ? pool.refreshRemaining : Infinity,
-    !pool.autoDone && pool.autoRemaining > 1e-8 ? pool.autoRemaining : Infinity) : Infinity;
+  return pool && pool.refreshRemaining > 1e-8 ? pool.refreshRemaining : Infinity;
 }
-function advanceHouseHappiness(state, seconds) {
+function advanceHouseHappiness(state, seconds) { settleHouseHappiness(state); }
+function consumeHousePoints(pool, amount) {
+  let remaining = amount;
+  for (const portion of pool.portions) {
+    const used = Math.min(remaining, portion.points); portion.points -= used; remaining -= used;
+    if (!remaining) break;
+  }
+  pool.portions = pool.portions.filter(portion => portion.points > 0);
+  pool.points = pool.portions.reduce((sum, portion) => sum + portion.points, 0);
+}
+function houseAllocations(state, requested = Infinity) {
+  const eligible = state.residents.filter(person => canGainHouseHappiness(state, person));
+  const allocations = new Map(eligible.map(person => [person.id, 0]));
+  let remaining = integer(state.houseHappinessPool?.points, 0, 0, 16800), total = 0;
+  // Incomplete rounds stay saved. There is no individual allocation fallback.
+  for (let round = 0; round < requested && round < 200; round++) {
+    const recipients = eligible.filter(person => allocations.get(person.id) < Math.ceil(100 - residentHappiness(state, person) - 1e-9));
+    if (!recipients.length || remaining < recipients.length) break;
+    for (const person of recipients) allocations.set(person.id, allocations.get(person.id) + 1);
+    remaining -= recipients.length; total += recipients.length;
+  }
+  return { total, remaining, eligible: eligible.length,
+    allocations: eligible.map(person => ({ residentId: person.id, points: allocations.get(person.id) })).filter(item => item.points > 0) };
+}
+export function houseHappinessStatus(state) {
   const pool = state.houseHappinessPool;
-  if (!pool) return;
-  settleHouseHappiness(state);
+  const preview = pool ? houseAllocations(state) : { total: 0, eligible: 0, allocations: [] };
+  return { points: pool?.points || 0, storedDays: pool?.portions?.length || 0, maximumDays: HOUSE_HAPPINESS_RULES.maximumPortions,
+    nextRefreshAt: pool?.nextRefreshAt || null, refreshRemaining: pool?.refreshRemaining || 0,
+    eligible: preview.eligible, canDistribute: preview.total > 0, totalToDistribute: preview.total,
+    perResident: preview.allocations.length ? Math.min(...preview.allocations.map(item => item.points)) : 0,
+    allocations: preview.allocations };
 }
 function manualHouseHappiness(state, action) {
+  if (action.type !== 'houseHappinessAll') return bad('House happiness points can only be distributed collectively.');
   const pool = state.houseHappinessPool;
-  const amountRequested = action.amount === undefined ? 1 : action.amount;
-  if (!Number.isSafeInteger(amountRequested) || amountRequested < 1) return bad('Choose a positive whole number of happiness points.');
-  if (!pool || pool.points <= 0) return bad('No happiness points remain in the House pool.');
-  if (action.type === 'houseHappinessAll') {
-    const eligible = state.residents.filter(person => canGainHouseHappiness(state, person));
-    if (!eligible.length) return bad('No resident can currently receive House happiness points.');
-    const allocations = eligible.map(person => ({ person, points: Math.min(amountRequested, Math.ceil(100 - residentHappiness(state, person))) }));
-    const total = allocations.reduce((sum, entry) => sum + entry.points, 0);
-    if (total > pool.points) return bad('Not enough House points to give this amount to everyone.');
-    for (const { person, points } of allocations) person.happiness = Math.min(residentHappinessBounds(state, person).max, person.happiness + points);
-    pool.points -= total;
-    notify(state, 'house-happiness', 'House happiness distributed', `${total} happiness points were given to ${eligible.length} residents.`);
-    return good(`Distributed ${total} House happiness points.`);
+  if (!pool || pool.points <= 0) return bad('No happiness points remain in the House bank.');
+  const amount = action.amount === undefined ? Infinity : action.amount;
+  if (amount !== Infinity && (!Number.isSafeInteger(amount) || amount < 1)) return bad('Choose a positive whole number of happiness points.');
+  const preview = houseAllocations(state, amount);
+  if (!preview.eligible) return bad('No resident can currently receive House happiness points.');
+  if (!preview.total) return bad('Not enough House points to complete a collective round.');
+  for (const allocation of preview.allocations) {
+    const person = state.residents.find(person => person.id === allocation.residentId);
+    person.happiness = Math.min(residentHappinessBounds(state, person).max, person.happiness + allocation.points);
   }
-  const person = state.residents.find(person => person.id === action.residentId);
-  if (!person) return bad('This resident does not exist.');
-  if (!residentHasHousing(state, person)) return bad('Only residents with a bed can receive House happiness points.');
-  if (person.newbornRemaining > 1e-9) return bad('New residents cannot receive House happiness points during their first 24 hours.');
-  if (!canGainHouseHappiness(state, person)) return bad('This resident already has the highest happiness this pool can provide.');
-  const used = Math.min(amountRequested, Math.ceil(100 - residentHappiness(state, person)));
-  if (used > pool.points) return bad('Not enough happiness points remain in the House pool.');
-  person.happiness = Math.min(residentHappinessBounds(state, person).max, person.happiness + used); pool.points -= used;
-  notify(state, 'house-happiness', 'House happiness distributed', `Resident ${person.id} received ${used} happiness points.`);
-  return good(`Resident ${person.id} received ${used} happiness points.`);
+  consumeHousePoints(pool, preview.total);
+  notify(state, 'house-happiness', 'House happiness distributed', `${preview.total} happiness points were given collectively to ${preview.allocations.length} residents.`);
+  return { ...good(`Distributed ${preview.total} House happiness points.`), distributed: preview.total, residentCount: preview.allocations.length, allocations: preview.allocations };
 }
 
 export function taskReady(state, id) {
@@ -943,7 +984,7 @@ export function resourceRates(state) {
   const multiplier = productionMultiplier(state) * activePlayMultiplier(state) * (state.lighthouseRemaining > 0 ? 2 : 1);
   for (const [id, recipe] of Object.entries(PRODUCTION_RECIPES)) {
     const workers = (state.residents || []).filter(person => person.workplace === id && residentIsWorking(state, person)).reduce((sum, person) => sum + residentWorkMultiplier(state, person), 0);
-    const output = workers * productionRate(state, id) * multiplier * eventProductionMultiplier(state, id);
+    const output = workers * productionRate(state, id) * multiplier * eventProductionMultiplier(state, id) * missionProductionMultiplier(state, id);
     rates[recipe.output].production += output;
     if (recipe.input) rates[recipe.input].consumption += output * 2;
   }
@@ -966,7 +1007,12 @@ export function act(state, action, now = Date.now(), context = {}) {
   let result = commerceAction(state, action, { ...context, receiveMaterials, buildingCost,
     requestUpgrade: request => requestUpgrade(state, request),
     activateBlessing: receiptId => act(state, { type: 'adBlessing', receiptId }, now, { ...context, rewardedAdVerified: true }) });
-  if (result === null) result = progressionAction(state, action, { ...context, receiveMaterials, buildingCost });
+  if (result === null) result = progressionAction(state, action, { ...context, receiveMaterials, buildingCost,
+    quotePremiumBuilding: (world, building) => quotePremiumBuilding(world, building, { buildingCost }),
+    quoteTransport: (world, request) => quoteTransport(world, request),
+    quoteAcceleration: (world, project, percent) => quoteAcceleration(world, project, percent),
+    constructionEstimate: constructionScheduleEstimate });
+  if (result === null) result = residentPrayerAction(state, action);
   if (result === null) result = residentVisitAction(state, action);
   if (result === null) result = leisureAction(state, action);
   if (result === null) result = logisticsAction(state, action, state.worldTimeMs);

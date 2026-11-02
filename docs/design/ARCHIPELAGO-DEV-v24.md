@@ -1,5 +1,7 @@
 # Archipelag DEV — kontrakt0.10.0.0 potwierdzony w aktualizacji0.10.1.0
 
+> Aktualizacja 2 listopada 2026: poniższy dokument zachowuje opis swojej historycznej wersji. Aktualne zasady DEV0.12/v28: [gospodarka](../ECONOMY-RULES.md), [wymagania](../FRONTEND-V28-REQUIREMENTS.md), [stan środowisk](../ENVIRONMENT-STATUS.md). Pojemność statku kosztuje obecnie 50 monet/+1000, zwykłe budowy nie mają nowego turbo, a Dom stosuje zbiorowy bank 7 porcji. Dawny opis nie zastępuje tych reguł. PRE-PRODpozostaje 0.11/c 7 c 3974; brak nowego deployu/resetu.
+
 Stan: kod w DEV; wdrożenie GCP i reset kont nie są częścią tej zmiany. Projekt analityczny [v23](ARCHIPELAGO-AND-TRADE-v23.md) zachowuje historię decyzji. Poniższe parametry uzupełniające były najpierw jawnymi założeniami prototypu. **Użytkownik następnie je potwierdził:** kontynuacjęA10/11…, skopiowanieRatusza/Magazynu, pozostałe budynki1, dokładnie6 przesiedleńców, startowe zasoby0, minimum6 na córce, wolne miejsca u celu i zwykłe posiłki0,5 żywności na osobę na30min. Jest to późniejsze potwierdzenie wcześniejszego wariantuDEV, bez nowej migracji danych chmurowych.
 
 ## Wyspy i migracja

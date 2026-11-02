@@ -69,16 +69,22 @@ function assertGoldOrder(tasks) {
   const rank = { small: 0, medium: 1, large: 2 };
   for (const lower of tasks) for (const higher of tasks) {
     if (rank[lower.size] < rank[higher.size]) {
-      assert.ok(higher.reward.coins - lower.reward.coins >= rank[higher.size] - rank[lower.size],
-        JSON.stringify(tasks.map(task => [task.size, task.reward.coins])));
+      assert.ok((higher.nominalRewardCoins ?? higher.reward.coins) - (lower.nominalRewardCoins ?? lower.reward.coins) >= rank[higher.size] - rank[lower.size],
+        JSON.stringify(tasks.map(task => [task.size, task.nominalRewardCoins ?? task.reward.coins])));
     }
   }
 }
 function assertRewardRange(state, task) {
   const rank = { small: 0, medium: 1, large: 2 };
   const scale = taskRewardScale(state), max = { small: 200, medium: 400, large: 600 }[task.size];
-  assert.ok(task.reward.coins >= Math.floor(100 * scale) + rank[task.size]);
-  assert.ok(task.reward.coins <= Math.floor(max * scale));
+  const nominal=task.nominalRewardCoins ?? task.reward.coins;
+  assert.ok(nominal >= Math.floor(100 * scale) + rank[task.size]);
+  assert.ok(nominal <= Math.floor(max * scale));
+  assert.ok(task.reward.coins>=1 && task.reward.coins<=nominal);
+  if(task.feasibilityVersion===2){
+    const value=goods=>Object.entries(goods).reduce((sum,[id,n])=>sum+n*(id==='coins'?1:['food','planks'].includes(id)?1.5:.5),0);
+    assert.ok(value(task.reward)<=value(task.requirements),'actual payout is bounded by final requirement value');
+  }
 }
 
 test('one hundred distinct narrative tasks and initial feasible small/medium/large offers', () => {
@@ -117,7 +123,7 @@ test('random FIFO replacements retain the largest current smaller-task hourly fl
   }
   assert.deepEqual([...seen].sort(), ['large', 'medium', 'small']);
 });
-test('initial gold rewards are strictly ordered within their scaled ranges for100seeds', () => {
+test('nominal gold difficulty ranges remain ordered and actual rewards fit final requirements for100seeds', () => {
   for (const townLevel of [1, 3, 4, 10]) for (let seed = 1; seed <= 100; seed++) {
     const s = island(townLevel);
     normalizeActivities(s, { activitySeed: seed, activityClock: 0 });
@@ -126,7 +132,7 @@ test('initial gold rewards are strictly ordered within their scaled ranges for10
     for (const task of s.lighthouseTasks) assertRewardRange(s, task);
   }
 });
-test('FIFO gold generation compares every current size and retains frozen shown rewards', () => {
+test('FIFO nominal generation compares every current size and retains frozen actual rewards', () => {
   const s = island(3), seen = new Set();
   for (let count = 0; count < 100; count++) {
     const retained = s.lighthouseTasks.slice(1), frozen = JSON.stringify(retained);
@@ -141,7 +147,7 @@ test('FIFO gold generation compares every current size and retains frozen shown 
 });
 test('a player level increase selects a feasible new size without changing old low rewards', () => {
   const s = island(3);
-  s.lighthouseTasks.forEach((task, index) => { task.reward.coins = 100 + index; task.expiresAt = DAY; });
+  s.lighthouseTasks.forEach((task, index) => { task.reward.coins = 100 + index; task.expiresAt = DAY; delete task.nominalRewardCoins; delete task.feasibilityVersion; });
   const frozen = JSON.stringify(s.lighthouseTasks.slice(1));
   s.buildings.townhall.level = 4;
   s.lighthouseTasks[0].expiresAt = 0;
@@ -173,10 +179,11 @@ test('reward ranges are based on level3 and scale by theoretical townhall produc
     const s = island(l), factor = taskRewardScale(s);
     for (const task of s.lighthouseTasks) {
       const max = { small: 200, medium: 400, large: 600 }[task.size];
-      assert.ok(task.reward.coins >= Math.floor(100 * factor));
-      assert.ok(task.reward.coins <= Math.floor(max * factor));
+      assert.ok(task.nominalRewardCoins >= Math.floor(100 * factor));
+      assert.ok(task.nominalRewardCoins <= Math.floor(max * factor));
+      assert.ok(task.reward.coins>=1 && task.reward.coins<=task.nominalRewardCoins);
       for (const [id, q] of Object.entries(task.reward)) if (id !== 'coins') {
-        assert.ok(q >= Math.floor(50 * factor) && q <= Math.floor(1000 * factor));
+        assert.ok(Number.isSafeInteger(q) && q>0 && q <= Math.floor(1000 * factor));
       }
     }
   }
@@ -307,7 +314,7 @@ test('acceleration uses remaining phase, rounds full saved minutes down and alwa
   assert.equal(quoteAcceleration(s, 1, 75).coins, 6);
   assert.equal(quoteAcceleration(s, 1, 33).ok, false);
 });
-test('premium transport counts the final partial load and is gated at townhall4', () => {
+test('premium transport counts the final partial load and is available from townhall1', () => {
   const s = island(); s.buildings.lumber.ready = 200;
   const quote = quoteTransport(s, { route: 'producer', building: 'lumber' });
   assert.equal(quote.ok, true, quote.message); assert.equal(quote.trips, 2); assert.equal(quote.coins, 20);
@@ -315,7 +322,9 @@ test('premium transport counts the final partial load and is gated at townhall4'
   assert.equal(activityAction(s, { type: 'premiumTransport', route: 'producer', building: 'lumber' }).ok, true);
   assert.equal(s.resources.coins, coins - 20); assert.equal(s.resources.wood, 300);
   assert.equal(s.buildings.lumber.ready, 0);
-  s.buildings.townhall.level = 3;
+  s.buildings.lumber.ready=200;s.buildings.townhall.level = 1;
+  assert.equal(quoteTransport(s, { route: 'producer', building: 'lumber' }).ok, true);
+  s.buildings.townhall.level = 0;
   assert.equal(quoteTransport(s, { route: 'producer', building: 'lumber' }).ok, false);
 });
 test('premium building price includes allmaterials+25%, nativecoins and each haul course', () => {

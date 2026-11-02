@@ -16,10 +16,10 @@ DOCUMENT = '''<!doctype html><html><head><meta charset="utf-8"><style>
 body{margin:0;padding:12px;background:#092331;color:#e5f0f4;font:16px Arial,sans-serif}
 main{max-width:760px;margin:auto}button{touch-action:manipulation}
 </style></head><body><main></main><script type="module">
-import {createState} from './harborlight-v1-state.js?v=frontend-v27';
-import * as Missions from './harborlight-v1-missions.js?v=frontend-v27';
+import {createState} from './harborlight-v1-state.js?v=frontend-v28';
+import * as Missions from './harborlight-v1-missions.js?v=frontend-v28';
 import {createLighthouseMissionsPanel} from './harborlight-v1-missions-ui.js?v=contract';
-import {grantBonusMaterials} from './harborlight-v1-inventory.js?v=frontend-v27';
+import {grantBonusMaterials} from './harborlight-v1-inventory.js?v=frontend-v28';
 const language=new URLSearchParams(location.search).get('language')||'pl';
 const state=createState(Date.parse('2026-11-01T12:00:00Z'));
 state.settings.language=language;state.tutorial.autoOpenDisabled=true;
@@ -40,6 +40,7 @@ window.mount=(scenario='actual')=>{
    if(scenario==='retry'){fixture.kind='rescue';fixture.index=2;fixture.total=3;fixture.task.status='retry';fixture.parents=[{kind:'main',index:4,total:8},{kind:'support',index:3,total:5}];}
    if(scenario==='stock'){fixture.task.objective={type:'stock',requirements:{wood:120,stone:40}};fixture.task.requirements={wood:120,stone:40};}
    if(scenario==='production'){fixture.active=true;fixture.task.status='active';fixture.task.objective={type:'production',resource:'planks',count:20};fixture.task.deadline=state.worldTimeMs+600000;fixture.remaining=600;fixture.progress=3;}
+   if(scenario==='diverse'){fixture.task.reward={coins:14,stone:10,residents:3,production:{building:'quarry',multiplier:2,seconds:7200}};}
    if(scenario==='finished'){fixture.available=false;fixture.finished=true;}
  }
  panel=createLighthouseMissionsPanel({state,missionStatus:read,perform:action=>{
@@ -79,6 +80,7 @@ def exercise(browser, language, mobile):
     expect(panel).to_contain_text('Latarnia — wspólny cel wyspy' if language == 'pl' else 'Lighthouse — the island’s shared goal')
     expect(panel.locator('[data-mission-path]')).to_have_count(3)
     expect(panel.locator('[data-mission-path="main"]')).to_contain_text('1 / 8')
+    expect(panel.locator('[data-mission-story="meteor-tourists"]')).to_contain_text('Spadające gwiazdy' if language == 'pl' else 'Falling stars')
     # The model, rather than the UI, starts the immutable accepted deadline.
     page.locator('[data-mission-start]').click()
     expect(page.locator('[data-mission-active]')).to_be_visible()
@@ -126,6 +128,15 @@ def exercise(browser, language, mobile):
     page.evaluate('window.refreshProgress()')
     expect(page.locator('[data-mission-objective-progress]')).to_contain_text('8 / 20')
     expect(page.locator('progress')).to_have_attribute('value', '8')
+    # The reward describes actual people and a timed producer bonus, not coins
+    # alone. The Town Hall cap is visible before the player accepts the task.
+    page.evaluate('window.mount("diverse")')
+    reward = page.locator('[data-mission-reward]')
+    expect(reward).to_contain_text('14')
+    expect(reward).to_contain_text('nowi mieszkańcy: 3' if language == 'pl' else 'new residents: 3')
+    expect(reward).to_contain_text('do limitu Ratusza' if language == 'pl' else 'within the Town Hall limit')
+    expect(reward).to_contain_text('Kamieniołom' if language == 'pl' else 'Quarry')
+    expect(reward).to_contain_text('×2 / 2')
     # Completion only offers a check for the next chapter, never a fake level.
     page.evaluate('window.mount("finished")')
     expect(page.locator('[data-mission-unavailable]')).to_contain_text('Rozdział ukończony!' if language == 'pl' else 'Chapter complete!')

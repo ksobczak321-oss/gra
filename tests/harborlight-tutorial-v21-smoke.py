@@ -11,6 +11,7 @@ from pathlib import Path
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import acknowledge_daily_offer
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('balanced_tutorial_browser_helpers', ROOT / 'tests/harborlight-frontend-v18-smoke.py')
@@ -30,6 +31,7 @@ def model(through=0, extra=False):
 
 
 def enter(browser, value, *, language='pl', mobile=False, motion='reduce'):
+    acknowledge_daily_offer(value)
     context = browser.new_context(viewport={'width': 390 if mobile else 1366, 'height': 844 if mobile else 768}, reduced_motion=motion, is_mobile=mobile, has_touch=mobile)
     context.add_init_script('localStorage.setItem("harborlight-language",' + json.dumps(language) + ');window.__HARBORLIGHT_DEV_FIXTURE__=' + json.dumps(value, ensure_ascii=False))
     page = context.new_page()

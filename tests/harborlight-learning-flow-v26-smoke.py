@@ -13,6 +13,7 @@ from pathlib import Path
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import acknowledge_daily_offer
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('learning_v26_cloud', ROOT / 'tests/harborlight-dev-game-smoke.py')
@@ -45,6 +46,7 @@ def world(*, introduction=False, earned=False, due=False):
 
 
 def seed(state):
+    acknowledge_daily_offer(state)
     cloud.DOCUMENTS[UID] = {'payload': json.dumps(state), 'revision': 7, 'updateTime': cloud.timestamp()}
 
 
@@ -68,7 +70,7 @@ def flush_pagehide(page):
 def help_panel(page):
     page.locator('[data-mobile-control="tutorial"]' if page.viewport_size['width'] < 901 else '#hit-tutorial').click()
     expect(page.locator('[data-help-panel]')).to_be_visible()
-    expect(page.locator('[data-help-panel] button')).to_have_count(2)
+    expect(page.locator('[data-help-panel] button')).to_have_count(4)
 
 
 def dismiss_tour_reminder(page):

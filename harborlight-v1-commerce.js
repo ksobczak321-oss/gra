@@ -1,8 +1,7 @@
 // Optional storefront and rewarded-ad commands. Real money/provider receipts
 // must be verified by a server. The browser can simulate only outside PROD.
-import { MATERIAL_IDS, receiveMaterials, quoteInstantTransport, instantTransport, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v27';
-import { quotePremiumBuilding } from './harborlight-v1-activities.js?v=frontend-v27';
-import { engagementOfferStatus, completeEngagementOffer, claimInitialPremiumBonus } from './harborlight-v1-engagement.js?v=frontend-v27';
+import { MATERIAL_IDS, receiveMaterials } from './harborlight-v1-logistics.js?v=frontend-v28';
+import { engagementOfferStatus, completeEngagementOffer, claimInitialPremiumBonus } from './harborlight-v1-engagement.js?v=frontend-v28';
 
 const DAY = 86400000;
 const clock = state => Number.isFinite(state.worldTimeMs) ? state.worldTimeMs : Date.now();
@@ -11,7 +10,7 @@ const bad = message => ({ ok: false, message });
 const integer = n => Number.isSafeInteger(n) && n >= 0;
 const object = n => n && typeof n === 'object' && !Array.isArray(n);
 export const COIN_PACKAGES = Object.freeze([100,500,1000,2000,5000,10000,50000].map(grossGrosz => Object.freeze({ grossGrosz, coins: grossGrosz / 10 })));
-export const COMMERCE_RULES = Object.freeze({ provider: 'Paynow', noAdsThresholdGrosz: 1999, noAdsWindowDays: 30, materialAdMinimum: 10, materialAdMaximum: 30, simulatedAdSeconds: 10 });
+export const COMMERCE_RULES = Object.freeze({ provider: 'Paynow', topupUnlockLevel: 3, noAdsThresholdGrosz: 1999, noAdsWindowDays: 30, materialAdMinimum: 10, materialAdMaximum: 30, simulatedAdSeconds: 10 });
 export const ACCOUNT_PROGRESS_FIELDS = Object.freeze(['commerce','loyalty','socialRewards','referrals','engagementSchedule','welcome']);
 export function preserveAccountProgress(previous, next) {
   for(const field of ACCOUNT_PROGRESS_FIELDS) if(previous[field]!==undefined) next[field]=structuredClone(previous[field]);
@@ -36,10 +35,20 @@ function simulationAllowed(context = {}) {
 }
 export function normalizeCommerce(state, raw = state) {
   const saved = object(raw.commerce) ? raw.commerce : {};
+  const capacityIds = new Set();
   state.commerce = { version: 1, sequence: integer(saved.sequence) ? saved.sequence : 0,
     seed: (saved.seed >>> 0) || ((clock(state) >>> 0) ^ 0x7b193a21) || 1,
     receipts: (Array.isArray(saved.receipts) ? saved.receipts : []).filter(r => object(r) && typeof r.id === 'string' && integer(r.grossGrosz) && Number.isFinite(r.at)).map(r => ({ ...r })),
-    checkouts: (Array.isArray(saved.checkouts) ? saved.checkouts : []).filter(c => object(c) && typeof c.id === 'string' && ['pending','complete','cancelled'].includes(c.status)).map(c => ({ ...c })),
+    checkouts: (Array.isArray(saved.checkouts) ? saved.checkouts : []).filter(c => object(c) && typeof c.id === 'string' && ['pending','complete','cancelled'].includes(c.status)).map(c => ({ ...c,
+      ...(c.status === 'pending' && (c.action?.kind || c.quote?.kind || 'coins') !== 'coins' ? { status: 'cancelled', cancellationReason: 'coin-only-storefront' } : {}) })),
+    // Coin-funded permanent services are account history, not Paynow receipts.
+    // Keeping them separately prevents a game-coin spend granting no-ad rights.
+    capacityPurchases: (Array.isArray(saved.capacityPurchases) ? saved.capacityPurchases : []).filter(receipt => {
+      if (!object(receipt) || receipt.kind !== 'ship-capacity-coins' || typeof receipt.id !== 'string' || !receipt.id || receipt.id.length > 160 || capacityIds.has(receipt.id) ||
+          !integer(receipt.units) || receipt.units < 1 || receipt.units > 100 || receipt.coins !== receipt.units * 50 ||
+          !integer(receipt.at) || !/^island-(?:[1-9]|1[0-9]|20)$/.test(receipt.payerIslandId || '')) return false;
+      capacityIds.add(receipt.id); return true;
+    }).map(receipt => ({ ...receipt })),
     ad: object(saved.ad) && typeof saved.ad.nonce === 'string' ? { ...saved.ad } : null,
     adReceipts: [...new Set((Array.isArray(saved.adReceipts) ? saved.adReceipts : []).filter(x => typeof x === 'string'))],
     promoClaims: object(saved.promoClaims) ? { ...saved.promoClaims } : {} };
@@ -60,7 +69,8 @@ export function commerceStatus(state) {
     remaining -= receipt.grossGrosz;
     if (remaining < 1999) { noAdsUntil = receipt.at + 30 * DAY; break; }
   }
-  return { provider: 'Paynow', noAds: paidLast30DaysGrosz >= 1999, paidLast30DaysGrosz, noAdsUntil,
+  return { provider: 'Paynow', canBuyCoins: integer(state.buildings?.townhall?.level) && state.buildings.townhall.level >= COMMERCE_RULES.topupUnlockLevel,
+    topupUnlockLevel: COMMERCE_RULES.topupUnlockLevel, noAds: paidLast30DaysGrosz >= 1999, paidLast30DaysGrosz, noAdsUntil,
     pendingCheckouts: c.checkouts.filter(x => x.status === 'pending'), simulationAvailable: simulated,
     ...runtimeCapabilities() };
 }
@@ -79,26 +89,10 @@ export function advanceCommerce(state, _seconds) {
 
 export function quoteCheckout(state, action = {}, context = {}) {
   const kind = action.kind || 'coins';
-  if (kind === 'coins') {
-    const pack = COIN_PACKAGES.find(p => p.grossGrosz === (action.grossGrosz ?? 2000));
-    return pack ? good('Coin package quote.', { kind, ...pack }) : bad('Choose an available coin package.');
-  }
-  if (kind === 'building') {
-    const next = plannedLevel(state, action.building) + 1;
-    if (!state.buildings?.[action.building] || next > (action.building === 'townhall' ? 100 : state.buildings.townhall.level)) return bad('Upgrade the Town Hall before buying this building level.');
-    const quote = quotePremiumBuilding(state, action.building, { ...context, cashPurchase: true });
-    return quote.ok ? { ...quote, kind, building: action.building, grossGrosz: Math.max(100, quote.coins * 10) } : quote;
-  }
-  if (kind === 'transport') {
-    const quote = quoteInstantTransport(state, action);
-    return quote.ok ? { ...quote, kind, grossGrosz: Math.max(100, quote.trips * 100), coins: quote.trips * 10 } : quote;
-  }
-  if (kind === 'blessing') {
-    if (state.blessingRemaining > 0 || (state.paidBlessingCooldownRemaining || 0) > 0) return bad('Wait for the blessing and its paid cooldown to end.');
-    const coins = 100 * (state.buildings?.chapel?.level || 0);
-    return coins > 0 ? good('Blessing purchase quote.', { kind, coins, grossGrosz: coins * 10 }) : bad('Build the Chapel first.');
-  }
-  return bad('Choose a supported purchase.');
+  if (kind !== 'coins') return bad('Real money can only buy coins. Purchase services with game coins.');
+  if (!integer(state.buildings?.townhall?.level) || state.buildings.townhall.level < COMMERCE_RULES.topupUnlockLevel) return bad('Buying coins unlocks at Town Hall level 3.');
+  const pack = COIN_PACKAGES.find(p => p.grossGrosz === (action.grossGrosz ?? 2000));
+  return pack ? good('Coin package quote.', { kind, ...pack }) : bad('Choose an available coin package.');
 }
 
 export function commerceAction(state, action, context = {}) {
@@ -127,15 +121,9 @@ export function commerceAction(state, action, context = {}) {
     // Revalidate availability at settlement; no success receipt for an invalid purchase.
     const quote = quoteCheckout(state, entry.action, context);
     if (!quote.ok || quote.grossGrosz !== entry.quote.grossGrosz) return bad('The purchase changed. Start a new checkout.');
-    let result;
-    if (quote.kind === 'coins') {
-      if (!Number.isSafeInteger(state.resources.coins + quote.coins)) return bad('The balance cannot hold this package.');
-      state.resources.coins += quote.coins; result = good('Coin package granted.');
-    } else if (quote.kind === 'building') {
-      result = context.requestUpgrade?.({ building: entry.action.building, cost: quote.cost, paidMaterials: true, paidCoins: true, skipTransport: true, premiumService: true });
-    } else if (quote.kind === 'transport') result = instantTransport(state, entry.action);
-    else result = context.activateBlessing?.(`payment-${entry.id}`);
-    if (!result?.ok) return result || bad('The purchase cannot be delivered.');
+    if (!Number.isSafeInteger(state.resources.coins + quote.coins)) return bad('The balance cannot hold this package.');
+    state.resources.coins += quote.coins;
+    const result = good('Coin package granted.');
     entry.status = 'complete'; entry.completedAt = clock(state);
     c.receipts.push({ id: entry.id, at: clock(state), grossGrosz: quote.grossGrosz, provider: 'Paynow', simulated: true, verified: false, kind: quote.kind });
     return good('DEV payment completed. No money was charged.', { checkoutId: entry.id, simulated: true, delivered: result });

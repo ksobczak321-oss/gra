@@ -487,7 +487,7 @@ body.reduce-motion .firework-burst i{animation:none;opacity:.55;transform:rotate
 .island-flow-dialog .flow-body{padding:21px 24px}.island-flow-dialog h3{margin:0 0 12px;color:#f5daa6;font-size:17px}
 .island-flow-dialog .notice{padding:12px 14px;border:1px solid #9b8e5e66;border-radius:9px;background:#dcb9680d;color:#d8d5c3;font-size:13px}
 .island-flow-dialog .resource-list{display:flex;gap:8px;flex-wrap:wrap;padding:0}.island-flow-dialog .row{display:flex;gap:9px;padding:6px 9px;border:1px solid #688b9766;border-radius:6px;font-size:12px}
-.flow-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:20px}
+.flow-actions{display:flex;justify-content:flex-end;gap:24px;flex-wrap:wrap;margin-top:20px}
 .island-flow-dialog .action{min-height:44px;padding:10px 16px;border:1px solid #e1be76;border-radius:9px;background:linear-gradient(#e7c77f,#c49749);color:#173344;font:750 14px/1.35 Inter,system-ui,sans-serif;cursor:pointer}
 .island-flow-dialog .action.secondary{background:#153a50;border-color:#7193a3;color:#e2edf0}.island-flow-dialog .action:disabled{opacity:.4;cursor:not-allowed}.island-flow-dialog .action:focus-visible{outline:3px solid #fff0c3;outline-offset:3px}
 .acceptance-countdown{font-variant-numeric:tabular-nums;color:#ffe1a5;font-weight:750}.island-flow-dialog .task-reward{color:#c3ddad;font-size:14px}
@@ -712,7 +712,7 @@ body.portrait-world .dock-tabs{display:none!important}
 .tutorial-action-target{outline:3px solid #ffe3a0!important;outline-offset:4px;box-shadow:0 0 0 6px #edbd5a40!important}
 .tutorial-action-pointer{position:fixed;z-index:200;width:220px;box-sizing:border-box;padding:7px 9px;border:1px solid #ffe3a0;border-radius:10px;background:#0c2a3df5;color:#ffe8af;font:700 12px/1.3 Inter,system-ui,sans-serif;text-align:center;pointer-events:none;box-shadow:0 5px 18px #0006}
 .simulation-label{padding:10px 12px;border:1px solid #e5b96b;border-radius:9px;background:#5d492d55;color:#ffe2a3!important;font-weight:800;letter-spacing:.02em}
-.paynow-payment-options,.transport-payment-options{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.paynow-payment-options,.transport-payment-options{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
 .paynow-payment-options>.action,.transport-payment-options>.action{flex:1 1 160px}
 .paynow-payment-link{border-color:#76c340!important;background:linear-gradient(120deg,#c7e9a3,#81b749)!important;color:#142e18!important;text-decoration:none;text-align:center}
 .paynow-logo{display:block;width:155px;max-width:70%;height:48px;object-fit:contain;margin:0 auto 12px}
@@ -775,8 +775,24 @@ body[data-active-island="island-2"] .topbar-brand,body[data-active-island="islan
 @keyframes tutorial-map-glow{0%,100%{background:#ffdc7210;box-shadow:inset 0 0 12px #ffdf7055,0 0 0 5px #e5b94e30}50%{background:#ffdc7248;box-shadow:inset 0 0 40px #ffdf70aa,0 0 0 9px #ffe19a80}}
 @media(prefers-reduced-motion:reduce){.world-hotspot.tutorial-map-target{animation:none!important}}
 body.reduce-motion .world-hotspot.tutorial-map-target{animation:none!important}
-.rewarded-ad-actions { display:flex; flex-wrap:wrap; gap:16px; margin-top:20px; align-items:center; }
+.rewarded-ad-actions { display:flex; flex-wrap:wrap; gap:24px; margin-top:20px; align-items:center; }
 .rewarded-ad-actions .action { margin:0; }
 .social-menu-entries { display:grid; gap:12px; margin:18px 0; }
 .social-menu-entries .info-card { margin:0; }
 .social-menu-entries .notice { margin-bottom:0; }
+
+/* v28: equally readable island name and deliberate separation of decisions. */
+.topbar-brand small[data-island-name]{font-size:19px;line-height:1.15;letter-spacing:.2px;margin-top:2px;font-weight:750}
+.island-topbar .topbar-brand{padding-block:3px}
+.mobile-hud-heading .mobile-hud-brand{font-size:19px}
+.help-learning-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-bottom:20px}
+.help-learning-grid .info-card{margin:0;min-width:0}
+.help-learning-grid .action{margin:8px 0 0;display:block;width:100%}
+.flow-actions>.action{margin:0!important}
+@media(max-width:600px){.help-learning-grid{grid-template-columns:minmax(0,1fr)}.rewarded-ad-actions{flex-direction:column;align-items:stretch}.rewarded-ad-actions .action{width:100%}}
+
+.island-topbar .topbar-brand{font-size:19px}
+
+/* Happiness is expressed in points; longer Polish units remain readable. */
+.topbar-happiness .topbar-copy strong{font-size:12px;line-height:1.2;white-space:normal;overflow:visible;text-overflow:clip;max-width:82px}
+[data-mobile-hud="happiness"]{white-space:normal;font-size:12px;line-height:1.2}

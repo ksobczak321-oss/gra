@@ -5,10 +5,10 @@ import { TUTORIAL_LESSONS, V4_TUTORIAL_LESSONS } from '../harborlight-v1-progres
 import { buildingPurpose, gameGoal, residentsPurpose } from '../harborlight-v1-copy.js';
 import { translate } from '../harborlight-v1-i18n.js';
 
-test('approved 34-step route preserves HUD order and places Chat before the bell', () => {
-  assert.equal(APPROVED_TOUR_IDS.length, 34);
-  assert.equal(new Set(APPROVED_TOUR_IDS).size, 34);
-  assert.deepEqual(APPROVED_TOUR_IDS.slice(0, 9), ['home','level','happiness','coins','working','arrival','points','population','clock']);
+test('approved 33-step route preserves HUD order and places Chat before the bell', () => {
+  assert.equal(APPROVED_TOUR_IDS.length, 33);
+  assert.equal(new Set(APPROVED_TOUR_IDS).size, 33);
+  assert.deepEqual(APPROVED_TOUR_IDS.slice(0, 8), ['home','level','happiness','coins','working','arrival','points','population']);
   assert.deepEqual(APPROVED_TOUR_IDS.slice(-5), ['tutorial','chat','notifications','settings','menu']);
   for (const id of APPROVED_TOUR_IDS) for (const language of ['pl','en']) {
     const copy = getTourCopy(id, language, { cloudAccount:true, firstIntroduction:true });
@@ -38,7 +38,7 @@ test('new lesson presentation updates all 25 native descriptions without changin
   assert.equal(APPROVED_LESSON_IDS.length, 25);
   assert.deepEqual(TUTORIAL_LESSONS.map(row=>row.id), APPROVED_LESSON_IDS);
   assert.equal(TUTORIAL_LESSONS[0].subject, 'assign-warehouse');
-  assert.equal(TUTORIAL_LESSONS[0].assignmentCount, 6);
+  assert.equal(TUTORIAL_LESSONS[0].assignmentCount, 3);
   for (const row of TUTORIAL_LESSONS) {
     const pl = lessonCopy(row.id,'pl'), en = lessonCopy(row.id,'en');
     assert.equal(row.title, en.title); assert.equal(row.description,en.description);

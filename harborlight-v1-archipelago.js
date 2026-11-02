@@ -1,19 +1,19 @@
 // The client snapshot keeps a mother-root account revision with up to twenty
 // worlds. Cloud adapters persist bounded per-world documents atomically.
 // Simulation is injected: this module does not import the state coordinator.
-import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v27';
-import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v27';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v27';
-import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v27';
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v27';
-import { residentFoodMultiplier } from './harborlight-v1-housing.js?v=frontend-v27';
+import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v28';
+import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v28';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v28';
+import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v28';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v28';
+import { residentFoodMultiplier } from './harborlight-v1-housing.js?v=frontend-v28';
 
 export const ISLAND_IDS = Object.freeze(Array.from({ length: 20 }, (_, index) => `island-${index + 1}`));
 export const ARCHIPELAGO_RULES = Object.freeze({ version: 2, secondIslandLevel: 10, maximumIslands: 20, islandLevelStep: 3, colonists: 6,
   passengerCapacity: 100, passengerVoyageSeconds: 1800,
   baseShipCapacity: 1000, voyageSeconds: 600, capacityUnit: 1000,
-  capacityUnitGrosz: 499, maximumUnitsPerCheckout: 100, completedVoyageHistory: 50 });
-export const SHARED_ACCOUNT_FIELDS = Object.freeze(['commerce', 'loyalty', 'socialRewards', 'referrals', 'engagementSchedule', 'welcome', 'premium', 'settings']);
+  capacityUnitCoins: 50, capacityUnitGrosz: 499, maximumUnitsPerCheckout: 100, completedVoyageHistory: 50 });
+export const SHARED_ACCOUNT_FIELDS = Object.freeze(['commerce', 'loyalty', 'socialRewards', 'referrals', 'engagementSchedule', 'welcome', 'premium', 'settings', 'charitySimulation']);
 const adaptersFor = new WeakMap();
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const integer = value => Number.isSafeInteger(value) && value >= 0;
@@ -68,12 +68,13 @@ function closeSecondaryTutorial(state) {
     claimed: Object.fromEntries(TUTORIAL_LESSONS.map(lesson => [lesson.id, true])), chests: {} };
 }
 function capacityReceipts(value = []) {
-  if (!Array.isArray(value)) throw invalid('Invalid ship-capacity receipt ledger.');
+  if (!Array.isArray(value) || value.length > 10000) throw invalid('Invalid ship-capacity receipt ledger.');
   const seen = new Set();
   return value.map(receipt => {
-    if (!object(receipt) || typeof receipt.id !== 'string' || receipt.id.length < 1 || receipt.id.length > 160 ||
-      seen.has(receipt.id) || !integer(receipt.units) || receipt.units < 1 || receipt.units > ARCHIPELAGO_RULES.maximumUnitsPerCheckout ||
-      receipt.grossGrosz !== receipt.units * ARCHIPELAGO_RULES.capacityUnitGrosz || receipt.simulated !== true || !integer(receipt.at)) {
+    if (!object(receipt) || ![undefined, 'ship-capacity', 'ship-capacity-coins'].includes(receipt.kind) || typeof receipt.id !== 'string' || receipt.id.length < 1 || receipt.id.length > 160 ||
+      seen.has(receipt.id) || !integer(receipt.units) || receipt.units < 1 || receipt.units > ARCHIPELAGO_RULES.maximumUnitsPerCheckout || !integer(receipt.at) ||
+      (receipt.kind === 'ship-capacity-coins' ? receipt.coins !== receipt.units * ARCHIPELAGO_RULES.capacityUnitCoins ||
+        !ISLAND_IDS.includes(receipt.payerIslandId) : receipt.grossGrosz !== receipt.units * ARCHIPELAGO_RULES.capacityUnitGrosz || receipt.simulated !== true)) {
       throw invalid('Invalid ship-capacity receipt.');
     }
     seen.add(receipt.id); return clone(receipt);
@@ -150,15 +151,18 @@ export function restoreArchipelago(raw, adapters, now = Date.now()) {
   // World recreation retains account commerce even if both world snapshots
   // expired. Permanent paid ship capacity can be reconstructed from that
   // canonical payment history, without retaining an expired second island.
-  const retainedReceipts = metadata === undefined ? (primary.commerce?.receipts || []).filter(payment => payment.kind === 'ship-capacity').map(payment => ({
+  const legacyCapacityReceipts = (primary.commerce?.receipts || []).filter(payment => payment.kind === 'ship-capacity').map(payment => ({
     id: payment.id, units: payment.grossGrosz / ARCHIPELAGO_RULES.capacityUnitGrosz,
     grossGrosz: payment.grossGrosz, simulated: payment.simulated, at: payment.at
-  })) : metadata.capacityReceipts;
+  }));
+  const accountCapacityReceipts = [...legacyCapacityReceipts, ...(primary.commerce?.capacityPurchases || [])];
+  const retainedReceipts = metadata === undefined ? accountCapacityReceipts : metadata.capacityReceipts;
   const receipts = capacityReceipts(retainedReceipts);
-  if (receipts.length && productionRuntime(adapters)) throw invalid('Simulated ship-capacity purchases cannot be restored as production entitlements.');
-  if (receipts.some(receipt => !primary.commerce?.receipts?.some(payment => payment.id === receipt.id &&
-    payment.kind === 'ship-capacity' && payment.grossGrosz === receipt.grossGrosz && payment.simulated === true))) {
-    throw invalid('Ship capacity is missing its matching account payment receipt.');
+  if (receipts.some(receipt => receipt.kind !== 'ship-capacity-coins') && productionRuntime(adapters)) throw invalid('Simulated ship-capacity purchases cannot be restored as production entitlements.');
+  if (receipts.length !== accountCapacityReceipts.length || receipts.some(receipt => receipt.kind === 'ship-capacity-coins' ?
+      !primary.commerce?.capacityPurchases?.some(purchase => purchase.id === receipt.id && purchase.units === receipt.units && purchase.coins === receipt.coins && purchase.at === receipt.at && purchase.payerIslandId === receipt.payerIslandId) :
+      !primary.commerce?.receipts?.some(payment => payment.id === receipt.id && payment.kind === 'ship-capacity' && payment.grossGrosz === receipt.grossGrosz && payment.simulated === true))) {
+    throw invalid('Ship capacity is missing its matching account purchase receipt.');
   }
   const shipCapacity = ARCHIPELAGO_RULES.baseShipCapacity + receipts.reduce((sum, item) => sum + item.units * ARCHIPELAGO_RULES.capacityUnit, 0);
   if (!Number.isSafeInteger(shipCapacity) || metadata && metadata.shipCapacity !== shipCapacity ||
@@ -178,11 +182,12 @@ export function restoreArchipelago(raw, adapters, now = Date.now()) {
 
 // These fields have an exact zero/null/false default in normalizeResidents.
 // Happiness and numeric snapshots deliberately remain, including meaningful 0.
-const ZERO_RESIDENT_FIELDS = new Set(['newbornRemaining', 'hungerSeconds', 'fedRecoverySeconds', 'unemployedSeconds', 'arrivalRemaining', 'returnRemaining', 'prayerRemaining', 'blockedSeconds', 'visitHappinessRemaining', 'visitCooldownRemaining']);
+const ZERO_RESIDENT_FIELDS = new Set(['newbornRemaining', 'hungerSeconds', 'fedRecoverySeconds', 'unemployedSeconds', 'arrivalRemaining', 'returnRemaining', 'prayerRemaining', 'prayerDuration', 'prayerBonusRemaining', 'blockedSeconds', 'visitHappinessRemaining', 'visitCooldownRemaining']);
 const NULL_RESIDENT_FIELDS = new Set(['workplace', 'returnFrom', 'visitGroup', 'forcedHappinessSnapshot', 'preVisitHappiness', 'globalLighthouseSnapshot']);
 export function compactResidentSnapshot(person) {
   return Object.fromEntries(Object.entries(person).filter(([key, value]) =>
-    !(value === 0 && ZERO_RESIDENT_FIELDS.has(key)) && !(value === null && NULL_RESIDENT_FIELDS.has(key)) && !(key === 'pendingRelease' && value === false)));
+    !(value === 0 && ZERO_RESIDENT_FIELDS.has(key) && (key !== 'prayerDuration' || !(person.prayerRemaining > 0))) &&
+    !(value === null && NULL_RESIDENT_FIELDS.has(key)) && !(['pendingRelease', 'prayerRewardPending'].includes(key) && value === false)));
 }
 function compactWorld(state) {
   const world = clone(state); delete world.archipelago;
@@ -273,7 +278,8 @@ export function createNextIsland(bundle, { name = '' } = {}, now = Date.now()) {
   // Founding is funded by the mother, never a repeatable new-player reward.
   fresh.resources = Object.fromEntries(['coins', ...MATERIAL_IDS].map(id => [id, 0]));
   for (const field of SHARED_ACCOUNT_FIELDS) if (bundle.primary[field] !== undefined) fresh[field] = clone(bundle.primary[field]);
-  fresh.houseHappinessPool = { ...fresh.houseHappinessPool, points: 6, grantPopulation: 6 };
+  fresh.houseHappinessPool = { ...fresh.houseHappinessPool, points: 6, grantPopulation: 6,
+    ...(Array.isArray(fresh.houseHappinessPool?.portions) ? { portions: [{ ...fresh.houseHappinessPool.portions[0], points: 6, population: 6 }] } : {}) };
   const state = adapters.normalizeState(fresh, at); state.islandSuffix = chosen.name;
   bundle.worlds[quote.islandId] = state; closeSecondaryTutorial(state);
   bindAccount(bundle);
@@ -284,6 +290,8 @@ export const createSecondIsland = createNextIsland;
 export function renameArchipelagoIsland(bundle, islandId, name, now = Date.now()) {
   const state = worldFor(bundle,islandId), chosen = validateIslandName(name);
   if (!state || !chosen.ok) return bad(chosen.message || 'Choose an existing island.');
+  if (islandId !== 'island-1' && worlds(bundle).some(([id, island]) => id !== islandId && id !== 'island-1' &&
+      island.islandSuffix?.normalize('NFKC').toLocaleLowerCase() === chosen.name.normalize('NFKC').toLocaleLowerCase())) return bad('Choose a different daughter-island suffix.');
   if (islandId === 'island-1') state.islandName = chosen.name;
   else state.islandSuffix = chosen.name;
   state.islandNameUpdatedAt = clock(bundle,now); bindAccount(bundle);
@@ -415,26 +423,41 @@ function unloadPassengers(bundle,transfer,now){
 
 export function quoteShipCapacity(bundle, { units = 1 } = {}) {
   if (!bundle.secondary) return bad('Found a second island before expanding the transport ship.');
+  if (bundle.capacityReceipts.length >= 10000) return bad('The supported ship-capacity limit has been reached.');
   if (!integer(units) || units < 1 || units > ARCHIPELAGO_RULES.maximumUnitsPerCheckout) return bad('Choose between 1 and 100 capacity increments per purchase.');
   const additionalCapacity = units * ARCHIPELAGO_RULES.capacityUnit;
   if (!Number.isSafeInteger(bundle.shipCapacity + additionalCapacity)) return bad('The supported ship-capacity limit has been reached.');
   return good('Permanent ship capacity quote.', { units, additionalCapacity,
-    grossGrosz: units * ARCHIPELAGO_RULES.capacityUnitGrosz, resultingCapacity: bundle.shipCapacity + additionalCapacity,
-    provider: 'Paynow' });
+    coins: units * ARCHIPELAGO_RULES.capacityUnitCoins, resultingCapacity: bundle.shipCapacity + additionalCapacity,
+    currency: 'coins', payerIslandId: bundle.activeIslandId });
 }
-export function completeShipCapacityPurchase(bundle, { units = 1, receiptId } = {}, context = {}, now = Date.now()) {
-  if (productionRuntime(adaptersFor.get(bundle)) || !['development', 'preprod'].includes(context.environment) || context.devSimulation !== true) return bad('Real ship-capacity payments are not enabled. No money was charged.');
-  if (typeof receiptId !== 'string' || !receiptId || receiptId.length > 160) return bad('A valid simulated payment receipt is required.');
-  const previous = bundle.capacityReceipts.find(receipt => receipt.id === receiptId);
+export function purchaseShipCapacity(bundle, { units = 1, requestId } = {}, context = {}, now = Date.now()) {
+  // Coin services do not use a browser payment receipt. Production capacity
+  // mutations still require the account service's trusted, atomic command.
+  if (productionRuntime(adaptersFor.get(bundle)) || ['production', 'prod'].includes(context.environment)) return bad('Ship-capacity purchases require the account service in production.');
+  if (typeof requestId !== 'string' || !requestId || requestId.length > 160) return bad('A valid capacity purchase request is required.');
+  const previous = bundle.capacityReceipts.find(receipt => receipt.id === requestId);
   if (previous) return previous.units === units ? good('This capacity purchase was already applied.', { duplicate: true, capacity: bundle.shipCapacity }) : bad('This receipt belongs to a different capacity purchase.');
-  if (bundle.primary.commerce?.receipts?.some(receipt => receipt.id === receiptId)) return bad('This payment receipt has already been used for a different purchase.');
+  if (bundle.primary.commerce?.receipts?.some(receipt => receipt.id === requestId)) return bad('This request has already been used for a different purchase.');
   const quote = quoteShipCapacity(bundle, { units });
   if (!quote.ok) return quote;
-  bundle.capacityReceipts.push({ id: receiptId, units, grossGrosz: quote.grossGrosz, simulated: true, at: clock(bundle, now) });
-  bundle.primary.commerce.receipts.push({ id: receiptId, at: clock(bundle, now), grossGrosz: quote.grossGrosz,
-    provider: 'Paynow', simulated: true, verified: false, kind: 'ship-capacity' });
+  const payer = activeIsland(bundle);
+  if (!Number.isFinite(payer?.resources?.coins) || payer.resources.coins < quote.coins) return bad('Not enough coins to increase ship capacity.');
+  const receipt = { id: requestId, kind: 'ship-capacity-coins', units, coins: quote.coins, payerIslandId: bundle.activeIslandId, at: clock(bundle, now) };
+  consumeMaterial(payer, 'coins', quote.coins);
+  bundle.capacityReceipts.push(receipt);
+  bundle.primary.commerce.capacityPurchases ||= [];
+  bundle.primary.commerce.capacityPurchases.push(clone(receipt));
   bundle.shipCapacity = quote.resultingCapacity;
-  return good('DEV payment simulation completed. No real money was charged.', { capacity: bundle.shipCapacity, quote, simulated: true });
+  bindAccount(bundle);
+  return good('Ship capacity increased with game coins.', { capacity: bundle.shipCapacity, coins: quote.coins, quote, receipt });
+}
+// Old payment completions may be replayed for historical receipts, but cannot
+// create a new direct-money capacity purchase after the coin-only migration.
+export function completeShipCapacityPurchase(bundle, { units = 1, receiptId } = {}, context = {}, now = Date.now()) {
+  const previous = bundle.capacityReceipts.find(receipt => receipt.id === receiptId);
+  if (previous) return previous.units === units ? good('This capacity purchase was already applied.', { duplicate: true, capacity: bundle.shipCapacity }) : bad('This receipt belongs to a different capacity purchase.');
+  return bad('Direct payments for ship capacity are unavailable. Buy capacity with game coins.');
 }
 export function archipelagoStatus(bundle, now = Date.now()) {
   const at = clock(bundle, now), busy = busyVoyage(bundle);
@@ -444,5 +467,5 @@ export function archipelagoStatus(bundle, now = Date.now()) {
       theme: id === 'island-1' ? 'harbor' : 'sunset', townhallLevel: worldFor(bundle, id).buildings.townhall.level,
       warehouseLevel: worldFor(bundle, id).buildings.warehouse.level })), shipCapacity: bundle.shipCapacity,
     passengerCapacity: 100, passengerVoyageSeconds: 1800, busy: !!busy, activeTransfer: busy ? { ...clone(busy), remainingSeconds: Math.max(0, (busy.arrivesAt - at) / 1000), amountRemaining: busy.mode === 'passengers' ? busy.passengerCount : total(busy.remainingCargo) } : null,
-    transfers: clone(bundle.transfers), capacityUnit: ARCHIPELAGO_RULES.capacityUnit, capacityUnitGrosz: ARCHIPELAGO_RULES.capacityUnitGrosz };
+    transfers: clone(bundle.transfers), capacityUnit: ARCHIPELAGO_RULES.capacityUnit, capacityUnitCoins: ARCHIPELAGO_RULES.capacityUnitCoins };
 }

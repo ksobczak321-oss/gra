@@ -1,10 +1,14 @@
 # Backlog HARBORLIGHT — historia planowania i bieżący rejestr
 
-Od 31 października 2026 bieżące atomowe zmiany, decyzje i statusy są w [rejestrze 251 kart](tracking/CHANGE-REGISTER.md), a osobne przypadki ręczne w [planie 46 testów](testing/MANUAL-TEST-PLAN.md). Aktualny kod DEV i rzeczywiste publikacje potwierdza [stan środowisk](ENVIRONMENT-STATUS.md). Poniższe sekcje zachowują historyczny plan v18 i wcześniejsze zgłoszenia; ich dawne wskazania wydania nie opisują obecnego PRE-PROD.
+Od 31 października 2026 bieżące atomowe zmiany, decyzje i statusy są w [rejestrze 348 kart](tracking/CHANGE-REGISTER.md), a osobne przypadki ręczne w [planie 94 testów](testing/MANUAL-TEST-PLAN.md). Aktualny kod DEV i rzeczywiste publikacje potwierdza [stan środowisk](ENVIRONMENT-STATUS.md). Poniższe sekcje zachowują historyczny plan v18 i wcześniejsze zgłoszenia; ich dawne wskazania wydania nie opisują obecnego PRE-PROD.
+
+## Aktualne GOv28 — osobne karty i odbiór
+
+Zakres DEV0.12.0.0 opisują [wymagania](FRONTEND-V28-REQUIREMENTS.md) i [walidacja](DEV-0.12.0.0-VALIDATION.md). Implementacja obejmuje program 6/3 tragarzy/realne przyspieszenia, tutorial 33/Pomoc, bank 7 dni/−1 o północy/modlitwę, monety TH1/doładowania TH3, opowieści i nagrody Latarni, D12, ligę/czat/Pomagam. Karty 0969–1019 i TC0071–0094 mają własne statusy; ręczne nadal NOT RUN. PRE-PROD pozostaje 0.11/c 7 c 3974 bez nowej promocji lub resetu. Szczegółowe daty playoffów, kwoty nagród i cena/pojemność modlitwy są parametrami DEV do oceny, nie otwartym pytaniem o samą implementację.
 
 ## Historyczny zakres v18
 
-Bieżący zakres wyznaczają [zatwierdzone wymagania v18](FRONTEND-V18-REQUIREMENTS.md), [reguły](ECONOMY-RULES.md) i [kontrakt promocji](RELEASE-PROCESS.md). GO z30 października 2026 uruchomiło lokalną implementację. Poniższa lista nie oznacza publikacji: PRE-PROD nadal ma ostatnie potwierdzone `f161e45`, workflow `41067599818`; nowe wyniki zapisuje [dziennik](IMPLEMENTATION-LOG.md).
+Bieżący zakres wyznaczają [zatwierdzone wymagania v18](FRONTEND-V18-REQUIREMENTS.md), [reguły](ECONOMY-RULES.md) i [kontrakt promocji](RELEASE-PROCESS.md). GO z 30 października 2026 uruchomiło lokalną implementację. Poniższa lista nie oznacza publikacji: PRE-PROD nadal ma ostatnie potwierdzone `f161e45`, workflow `41067599818`; nowe wyniki zapisuje [dziennik](IMPLEMENTATION-LOG.md).
 
 ## Aktualna iteracja v18
 
@@ -31,19 +35,19 @@ Status poszczególnych poprawek i ich testów jest potwierdzany przez faktyczne 
 | BE-04 zaufane reguły — [#14](https://github.com/ksobczak321-oss/gra/issues/14) | Gospodarka i wyniki nadal są liczone w przeglądarce. Istnieją serwerowe granice kodów i retencji. | Autorytatywne komendy, czas, losowanie i walidacja wyników; nie przedstawiać obecnego JSON zapisu jako tego wdrożenia. |
 | BE-05 płatności — [#20](https://github.com/ksobczak321-oss/gra/issues/20) | Paynow wybrany; checkout i oznaczona symulacja poza PROD, produkcyjna symulacja odrzucana. | Konto operatora, weryfikowane potwierdzenia i księga rzeczywistych transakcji; kanały mobilne i sprawdzony regulamin. |
 | Kody promocyjne | Serwerowy transakcyjny licznik, jedna realizacja/konto, zakres dat, nagroda i globalny limit. | Konfiguracja API/uprawnień i utworzenie rzeczywistych ofert przez właściciela; nie udajemy potwierdzenia polubienia FB. |
-| Retencja | Trzy miesiące kalendarzowe, zachowanie konta/historii, generacje blokujące stare karty, wyłączenie admin1–3. Osobne narzędzie dry-run/apply. | Aktywacja zadania/skanowania i IAM; nie uruchamiać kasowania przypadkowo podczas testów ani tworzyć publicznej trasy purge. |
+| Retencja | Trzy miesiące kalendarzowe, zachowanie konta/historii, generacje blokujące stare karty, wyłączenie admin 1–3. Osobne narzędzie dry-run/apply. | Aktywacja zadania/skanowania i IAM; nie uruchamiać kasowania przypadkowo podczas testów ani tworzyć publicznej trasy purge. |
 
 [RUNTIME-ACCOUNTS.md](RUNTIME-ACCOUNTS.md) opisuje wymagania właścicielskie. Przygotowanie kodu, test z atrapą, aktywacja zasobu oraz faktyczny odbiór usługi są osobnymi etapami.
 
 ## Publikacja i otwarte kierunki
 
-Obowiązuje DEV tutaj → GitHub/CI → PRE-PROD (`harborlight-dev`) → PROD (`harborlight-prod`). Istniejące nazwy workflow/artefaktów pozostają techniczne. Nowa wersja wymaga własnego CI, przebiegu PRE-PROD i identycznego pakietu/digestu do promocji. PROD `harborlight.pl` i DNS nie zostały jeszcze potwierdzone.
+Obowiązuje DEV tutaj → Git Hub/CI → PRE-PROD (`harborlight-dev`) → PROD (`harborlight-prod`). Istniejące nazwy workflow/artefaktów pozostają techniczne. Nowa wersja wymaga własnego CI, przebiegu PRE-PROD i identycznego pakietu/digestu do promocji. PROD `harborlight.pl` i DNS nie zostały jeszcze potwierdzone.
 
-Otwarte pozostają: rzeczywiste reklamy/płatności, konfiguracja OAuth, weryfikacja zewnętrznych publikacji/poleceń, autorytatywna gospodarka, ranking wielu graczy z serwerową agregacją i ex aequo, dalsze pomiary balansu, osobna modlitwa, błogosławieństwa za challenge/social, automatyzacja strony FB, planszówka/AR i dźwięk. Wysokości lojalności i podstawowe harmonogramy reklam są już ustalone.
+Otwarte pozostają: rzeczywiste reklamy/płatności, konfiguracja OAuth, weryfikacja zewnętrznych publikacji/poleceń, autorytatywna gospodarka, ranking wielu graczy z serwerową agregacją i ex aequo, dalsze pomiary balansu i parametrów modlitwy, błogosławieństwa za challenge/social, automatyzacja strony FB, planszówka/AR i dźwięk. Wysokości lojalności i podstawowe harmonogramy reklam są już ustalone.
 
 [Regulamin](TERMS-DRAFT.pl.md) jest szkicem; automatyczne zwroty po trzech miesiącach wycofano. Legalna gotowość płatnej sprzedaży nie wynika z GO ani ze szkicu dokumentu.
 
-Nie tworzymy fikcyjnych numerów GitHub ani nie zamykamy zgłoszeń na podstawie samego planu. Istniejące milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4).
+Nie tworzymy fikcyjnych numerów Git Hub ani nie zamykamy zgłoszeń na podstawie samego planu. Istniejące milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4).
 
 ## Archiwum wcześniejszych wydań
 
@@ -55,7 +59,7 @@ Wydanie v16 zachowało 25 kolejnych lekcji bez pięciodniowej blokady, automatyc
 
 ## Historia: wydanie V9 / frontend v13
 
-Historyczny zakres: **58 decyzji V9, 19 uwag frontendu oraz uproszczony Excel 9**, wydanie frontend-v13. Implementacja i odbiór lokalny zakończone: 388/388 testów modelu PASS, pięć zestawów przeglądarkowych i przegląd wizualny zaliczone. Commit 8025f3d i udane Pages 40012462614 potwierdzają publikację; publiczne sumy kontrolne gry i Excela są zgodne. Końcowy odbiór rzeczywistego Pages: trzy zestawy PASS; dowody zapisuje dziennik. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4).
+Historyczny zakres:**58 decyzji V9, 19 uwag frontendu oraz uproszczony Excel 9**, wydanie frontend-v13. Implementacja i odbiór lokalny zakończone: 388/388 testów modelu PASS, pięć zestawów przeglądarkowych i przegląd wizualny zaliczone. Commit 8025 f 3 d i udane Pages 40012462614 potwierdzają publikację; publiczne sumy kontrolne gry i Excela są zgodne. Końcowy odbiór rzeczywistego Pages: trzy zestawy PASS; dowody zapisuje dziennik. Milestone’y: [frontend #3](https://github.com/ksobczak321-oss/gra/milestone/3), [backend #4](https://github.com/ksobczak321-oss/gra/milestone/4).
 
 ### Historyczny zakres iteracji V9
 
@@ -65,7 +69,7 @@ Historyczny zakres: **58 decyzji V9, 19 uwag frontendu oraz uproszczony Excel 9*
 - Arkusz: cztery widoczne zakładki, każda mechanika do trzech zdań, tylko pięć prawdziwych tematów przyszłych. Całe 45 zakładek źródła i 48 komentarzy pozostaje ukrytym archiwum; pliki 7 i 8 bez zmian.
 - Kwoty samouczka oraz krzywa czasu minigier są jawnie projektowe. Kwoty lojalnościowe nadal nieustalone; brak rzeczywistych integracji kont, płatności, reklam, publikacji i kont poleconych.
 
-Nowy numer zadania GitHub dopisujemy dopiero po faktycznym utworzeniu. Historyczne zgłoszenia poniżej zachowują własny zakres i dowody, a backend pozostaje odrębny.
+Nowy numer zadania Git Hub dopisujemy dopiero po faktycznym utworzeniu. Historyczne zgłoszenia poniżej zachowują własny zakres i dowody, a backend pozostaje odrębny.
 
 ## Historyczne wydania v12 i wcześniejsze
 
@@ -106,7 +110,7 @@ FE-16 powyżej jest historycznym zakresem v11: najnowszy FE-17 usuwa podatki z U
 
 ### Formularze konta — [#5](https://github.com/ksobczak321-oss/gra/issues/5)
 
-Tytuł GitHub: **[FE-14] Ekrany logowania/rejestracji bez OAuth**. Milestone frontend. Status: completed — implementacja, testy lokalne, publikacja i publiczny test formularzy zaliczone. Rzeczywiste konta pozostają w BE-02.
+Tytuł Git Hub:**[FE-14] Ekrany logowania/rejestracji bez OAuth**. Milestone frontend. Status: completed — implementacja, testy lokalne, publikacja i publiczny test formularzy zaliczone. Rzeczywiste konta pozostają w BE-02.
 
 - Oddzielna strona Sign in / Create account w stylu wyspy, przełączanie formularza i widoczności hasła, walidacja, komunikaty, klawiatura i układ mobilny.
 - Ikony Google i Facebook z uczciwym Coming soon; bez OAuth, żądań do dostawców i pozorowanego konta.
@@ -116,7 +120,7 @@ Tytuł GitHub: **[FE-14] Ekrany logowania/rejestracji bez OAuth**. Milestone fro
 
 ### Reguły arkusza 6 + D01–D17 — [#25](https://github.com/ksobczak321-oss/gra/issues/25)
 
-Tytuł GitHub: **[FE-15] reguły arkusza 6 + D01–D17**. Milestone frontend. Status: completed — 189 testów modelu, 10 lokalnych zestawów przeglądarkowych, publikacja i 3 zestawy publicznej wersji zaliczone. Excel 7 dostępny na `main`.
+Tytuł Git Hub:**[FE-15] reguły arkusza 6 + D01–D17**. Milestone frontend. Status: completed — 189 testów modelu, 10 lokalnych zestawów przeglądarkowych, publikacja i 3 zestawy publicznej wersji zaliczone. Excel 7 dostępny na `main`.
 
 - Schemat 8: realny czas także offline, bez kontroli stop/play/speed; zapis kotwicy rozliczenia i idempotentny powrót.
 - Start 12 osób w domu i zero pracowników; limit `12 × własny poziom`, dojście 5 min i podatek od przybycia, pięciominutowy powrót.
@@ -152,7 +156,7 @@ W powyższym zakresie nie ma prawdziwych płatności, OAuth, reklam, automatyczn
 | [#23](https://github.com/ksobczak321-oss/gra/issues/23) | Kompaktowe panele producentów | Wcześniej completed; zachowane małe −/+ i pomoc. |
 | [#24](https://github.com/ksobczak321-oss/gra/issues/24) | Indywidualne szczęście i pełne procenty | Wcześniej completed; #25 dodaje nowe stany i pulę domu. |
 
-Numer i URL GitHub są jednoznacznym identyfikatorem zadania. Kolejne iteracje zachowują osobny zakres i dowody w dzienniku.
+Numer i URL Git Hub są jednoznacznym identyfikatorem zadania. Kolejne iteracje zachowują osobny zakres i dowody w dzienniku.
 
 Odbiór grafiki nadal wymaga czytelnego ruchu wszystkich postaci, dymu unoszącego się z kominów i zanikającego, obracającego wiatraka, mew, chmur, wodospadów, wszystkich widocznych brzegów, zwierząt i pracującej budowy. Efekty mają zachować styl i nie zasłaniać interfejsu. Testy animacji sprawdzają przesunięcia aktorów i nazwane strefy brzegu, a nie samą zmianę dowolnego piksela. Rendering respektuje ograniczenie ruchu i widoczność karty; gospodarka działa offline niezależnie.
 
@@ -166,7 +170,7 @@ Poniższe opisy zgłoszeń i dawnych zależności zachowano jako historię. Aktu
 
 Status: zaplanowane, backend nie jest wdrożony. Kliencki schemat 8 jest materiałem wejściowym, nie modelem zaufanego serwera.
 
-- Jedno API dla web, Android i iPhone: odczyt wyspy, komendy, potwierdzone wyniki, błędy i migracje.
+- Jedno API dla web, Android i i Phone: odczyt wyspy, komendy, potwierdzone wyniki, błędy i migracje.
 - Pełny stan mieszkańców, zegara, porcji Food, ładunków i rezerwacji, partii targu/portu, wizyt, puli domu, budów, zadań, przebiegów ekspedycji i uprawnień; również ofert atrakcji, przyzwyczajenia, osobistych efektów, 100 odcinków dróg oraz jednorazowych bonusów ukończenia.
 - Idempotency keys, kontrola wersji stanu i konfliktów równoległych sesji; przykłady przyjętych i odrzuconych komend.
 
@@ -206,7 +210,7 @@ Status: zaplanowane; zgłoszenie uaktualnione o bieżące reguły. Backend pozos
 
 Status: zaplanowane, zgłoszenie uaktualnione; żadnej prawdziwej sprzedaży nie uruchomiono.
 
-- Serwer przyznaje zakup po zweryfikowanym, podpisanym potwierdzeniu operatora/sklepu; kliencki przycisk i lokalny zapis nie są dowodem płatności. Uwzględnić kanały web, Android i iPhone.
+- Serwer przyznaje zakup po zweryfikowanym, podpisanym potwierdzeniu operatora/sklepu; kliencki przycisk i lokalny zapis nie są dowodem płatności. Uwzględnić kanały web, Android i i Phone.
 - Jedna waluta, przyjęty przelicznik 1 PLN =10 monet; księga transakcji, idempotencja, reklamacje i zwroty wymagają projektu.
 - Pakiet kosztuje 1000 × ratusz/24 h, przedłuża ważność i daje L+4/unlimited queue. Serwer sprawdza dopłatę kolejki +10% i planowanie za 25% wartości braków po dopłacie.
 - Weryfikacja wycen i pobrania monet: przyspieszenie min. 5, natychmiastowe kursy po 10, komplet budynku za materiały ×1,25 plus natywne monety/transport, gotowość 10 s bez tragarzy.
@@ -214,9 +218,9 @@ Status: zaplanowane, zgłoszenie uaktualnione; żadnej prawdziwej sprzedaży nie
 
 ## Dalsze zadania bez utworzonego zgłoszenia
 
-- Ustalono i zapisano [obowiązkową kolejność promocji](RELEASE-PROCESS.md): praca tutaj → GitHub/CI → GCP DEV → PROD. Przygotowane workflow blokują pominięcie CI/DEV i kopiują dokładnie obraz sprawdzony na DEV. Pierwsze rzeczywiste przebiegi i odbiór GCP wymagają podłączenia środowisk GitHub; serwer pozostaje początkową usługą sond. Frontend produkcyjny i migracje bazy mają dołączyć do tego samego łańcucha przed ich publikacją.
+- Ustalono i zapisano [obowiązkową kolejność promocji](RELEASE-PROCESS.md): praca tutaj → Git Hub/CI → GCP DEV → PROD. Przygotowane workflow blokują pominięcie CI/DEV i kopiują dokładnie obraz sprawdzony na DEV. Pierwsze rzeczywiste przebiegi i odbiór GCP wymagają podłączenia środowisk Git Hub; serwer pozostaje początkową usługą sond. Frontend produkcyjny i migracje bazy mają dołączyć do tego samego łańcucha przed ich publikacją.
 
-- Google Cloud wybrane przez użytkownika z oddzielnymi projektami DEV i PROD. Przygotowano [pierwszy etap infrastruktury](GOOGLE-CLOUD.md): sondy HTTP, kontener Node.js, dwa ręczne workflow Cloud Run i bootstrap WIF/IAM. Konto rozliczeniowe jest aktywne według ekranu użytkownika; podłączenie projektów, rzeczywisty bootstrap i wdrożenie pozostają do wykonania po udostępnieniu dostępu. Cloud SQL, Firebase Auth i autorytatywna gospodarka pozostają odrębnymi etapami BE-01–04. Nie utworzono nowego zgłoszenia GitHub.
+- Google Cloud wybrane przez użytkownika z oddzielnymi projektami DEV i PROD. Przygotowano [pierwszy etap infrastruktury](GOOGLE-CLOUD.md): sondy HTTP, kontener Node.js, dwa ręczne workflow Cloud Run i bootstrap WIF/IAM. Konto rozliczeniowe jest aktywne według ekranu użytkownika; podłączenie projektów, rzeczywisty bootstrap i wdrożenie pozostają do wykonania po udostępnieniu dostępu. Cloud SQL, Firebase Auth i autorytatywna gospodarka pozostają odrębnymi etapami BE-01–04. Nie utworzono nowego zgłoszenia Git Hub.
 
 - Ustalić i zintegrować nagrody lojalnościowe, weryfikację poleceń i udostępnień oraz zasady reklam. Przechowywać uzgodnione wartości przyszłych nagród. Oddzielny, zatwierdzony bonus prototypu 500 za Share po ukończeniu zadania działa raz za kliknięcie; pozostałe nagrody społecznościowe nadal wymagają zdefiniowanej weryfikacji.
 - Doprecyzować dodatkowy czas/ruchy ekspedycji, weryfikację obejrzanej reklamy, kod i ewentualne challenge. Nie ma obecnie integracji reklamowej ani automatycznej publikacji postów.

@@ -1,5 +1,5 @@
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v27';
-import { introCopy } from './harborlight-v1-approved-copy.js?v=frontend-v27';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v28';
+import { introCopy, APPROVED_TOUR_VERSION, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v28';
 
 const pick = (language, pl, en) => language === 'pl' ? pl : en;
 const valueFor = (value, language) => {
@@ -28,7 +28,12 @@ export function createIslandOnboarding(options = {}) {
   const { steps = [], onUpdate = () => true, onFinish = () => true, onLanguageChange = () => true, onError = () => {} } = options;
   let language = options.language === 'en' ? 'en' : 'pl';
   let nameDraft = options.islandName || '';
-  let current = { stage: options.stage || 'intro', index: Math.max(0, Math.floor(options.index || 0)), islandName: options.islandName || '' };
+  // Persisted state normally arrives already migrated. An explicitly supplied
+  // old version is also supported by isolated/embedded hosts; omission means
+  // the caller is using the current route, avoiding a second numeric shift.
+  let current = { stage: options.stage || 'intro',
+    index: normalizeTourProgressIndex(options.index, options.routeVersion ?? APPROVED_TOUR_VERSION),
+    routeVersion: APPROVED_TOUR_VERSION, islandName: options.islandName || '' };
   let active = false, busy = false, destroyed = false, target = null, generation = 0, frame = 0, resizeObserver = null;
   const previousFocus = document.activeElement;
   const root = node('dialog', { class: 'island-onboarding', 'data-island-onboarding': '', 'data-i18n-ignore': '', 'aria-modal': 'true', 'aria-labelledby': 'island-onboarding-title', 'aria-describedby': 'island-onboarding-description' });
@@ -71,12 +76,14 @@ export function createIslandOnboarding(options = {}) {
     setBusy(true);
     try {
       const callback = skipped && typeof options.onPause === 'function' ? options.onPause : onFinish;
-      if (await callback({ skipped, stage: current.stage, index: current.index, islandName: current.islandName, replay }) === false) throw new Error('onboarding-finish-rejected');
+      const detail = { skipped, stage: current.stage, index: current.index, routeVersion: APPROVED_TOUR_VERSION,
+        stepId: steps[current.index]?.id || '', islandName: current.islandName, replay };
+      if (await callback(detail) === false) throw new Error('onboarding-finish-rejected');
       destroy();
       if (skipped) {
         // The reminder belongs after the acknowledged pause and after this
         // top-layer tour is removed. It never changes the saved position.
-        try { await options.onAfterPause?.({ skipped, stage: current.stage, index: current.index, islandName: current.islandName, replay }); }
+        try { await options.onAfterPause?.(detail); }
         catch (error) { onError(error); }
       }
     } catch (error) {
@@ -245,7 +252,9 @@ export function createIslandOnboarding(options = {}) {
       if (!destroyed && !busy) {
         if (next.islandName != null && next.islandName !== current.islandName) nameDraft = next.islandName;
         if (['pl', 'en'].includes(next.language)) language = next.language;
-        current = { ...current, ...next }; await render();
+        current = { ...current, ...next,
+          index: next.index === undefined ? current.index : normalizeTourProgressIndex(next.index, next.routeVersion ?? APPROVED_TOUR_VERSION),
+          routeVersion: APPROVED_TOUR_VERSION }; await render();
       }
     },
     destroy,

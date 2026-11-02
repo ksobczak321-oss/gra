@@ -1,6 +1,6 @@
 # HARBORLIGHT — ręczny plan testów i osobne przypadki
 
-**Zacznij od [listy do odhaczania](START-HERE.md) albo [interaktywnego raportu QA](qa-checklist.html).** Zestaw obejmuje **70 osobnych przypadków**, w tym **TC60–TC70 dla DEV 0.11.0.0 / v27** oraz zachowane TC54–TC59 dla wcześniejszego zakresu. Wszystkie wyniki ręczne pozostają **NOT RUN**; dokument jest planem odbioru, nie potwierdzeniem wykonania. Można go rozpocząć od poniedziałku 2 listopada 2026 po wskazaniu testowanego buildu i przygotowaniu danych.
+**Zacznij od [listy do odhaczania](START-HERE.md) albo [interaktywnego raportu QA](qa-checklist.html).** Zestaw obejmuje **94 osobne przypadków**, w tym **TC0071–0094 dla DEV 0.12.0.0/v28**, zachowane TC0060–0070 dla v27 i wcześniejsze regresje. Wszystkie wyniki ręczne pozostają **NOT RUN**. Definicja scenariusza oraz sukces automatyzacji nie oznaczają jego wykonania.
 
 ## Jak odhaczać pojedyncze przypadki
 
@@ -13,9 +13,9 @@ W interaktywnej liście wynik, notatka, tester i opis buildu są zapisywane loka
 
 ## Metodyka
 
-- **Epik / zmiana:** stabilne wymaganie i decyzje w [rejestrze zmian](../tracking/CHANGE-REGISTER.md).
-- **Test Case:** osobny plik poniżej z danymi, krokami i oczekiwaniami. Pliki w Git nie są automatycznie natywnymi GitHub Issues.
-- **Bug / incydent:** dopiero po rzeczywistym FAIL: build, kroki, oczekiwany i uzyskany wynik oraz dowód.
+- **Epik / zmiana: ** stabilne wymaganie i decyzje w [rejestrze zmian](../tracking/CHANGE-REGISTER.md).
+- **Test Case: ** osobny plik poniżej z danymi, krokami i oczekiwaniami. Pliki w Git nie są automatycznie natywnymi GitHub Issues.
+- **Bug / incydent: ** dopiero po rzeczywistym FAIL: build, kroki, oczekiwany i uzyskany wynik oraz dowód.
 - **Definicja READY** oznacza kompletny scenariusz, nie dostępność usługi ani wykonanie testu. **DRAFT / BLOCKED** wymaga doprecyzowania lub przygotowania funkcji. Wynik wykonania to niezależne NOT RUN/PASS/FAIL/BLOCKED.
 - P0: dane, dostęp, środki i atomowość; P1: ważna reguła lub obsługa. Wynik wcześniejszej automatyzacji nigdy nie ustawia ręcznego PASS.
 
@@ -23,11 +23,11 @@ W interaktywnej liście wynik, notatka, tester i opis buildu są zapisywane loka
 
 **DEV** to przestrzeń robocza i deweloperski podgląd Pages. **PRE-PROD** to `https://harborlight-dev.web.app` w projekcie GCP `harborlight-dev`. **PROD** nie jest objęty nowym GO. Bieżący [rejestr środowisk](../ENVIRONMENT-STATUS.md) rozstrzyga, które funkcje rzeczywiście są opublikowane. Push i Pages nie są promocją do GCP.
 
-Historyczny baseline definicji to v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`. Ostatni potwierdzony PRE-PROD to **0.10.1.0**, źródło `353faad347262dce7c3632fdf7c71be124384ab1`, [wdrożenie 41246771480](https://github.com/ksobczak321-oss/gra/actions/runs/41246771480). Poprzedni pakiet 0.10.2.0 / v26 ma własny odbiór. Nowy pakiet **0.11.0.0 / v27** z kolejnego GO 1 listopada obejmuje **tylko DEV**; TC60–TC70 odbieramy na jego rzeczywistym buildzie. Żaden dawny sukces CI lub promocji nie jest ręcznym wykonaniem nowych przypadków ani dowodem aktywacji usług.
+Historyczny baseline definicji to v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`. Aktualny PRE-PROD to **0.11.0.0**, źródło `c7c39742594599c54ee8b074b5c313efd88af4cb`, [wdrożenie 41362782175](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175). Nowy pakiet **0.12.0.0/v28** obejmuje tylko DEV; TC0071–0094 odbieramy na jego rzeczywistym buildzie. Dawne CI i promocje nie są ręcznym wynikiem v28 ani aktywacją usług.
 
-W v27 nauka ma 34 opisy tutoriala i zachowane 25 lekcji samouczka; powroty są pod ?, dojście/powrót wynosi 120 sekund, a 48 osób może mieć 24 miejsca w Domu. Punkty Domu obejmują tylko zakwaterowanych; bez miejsca jedzenie jest podwójne, wydajność pracy połowiczna, a dawna globalna kara szczęścia jest zastąpiona. Misje 8/5/3 i ich wykonalność odbieramy oddzielnie (TC67–TC70). Ręczny wynik pozostaje NOT RUN także po sukcesie automatyzacji.
+W v28 tutorial ma **33 opisy** bez ikony czasu, a nowy program 6 samouczka ma **25 lekcji i pierwszych 3 tragarzy**. Nowe budowy mają zwykłe czasy, a kurs prowadzi przez rzeczywiste przyspieszenia za monety. Starsze programy 3/4/5 i rozpoczęte projekty zachowują zapisane warunki. Punkty Domu są wyłącznie zbiorowe i gromadzą się do 7 niewydanych porcji. O północy każdy mieszkaniec traci 1 punkt, przy zachowaniu zwykłego+2/h oraz ochron. Modlitwa to osobny przydział z Domu.
 
-Nowy program 25 lekcji ma odrębne kryteria pierwszych 6 tragarzy i nie wymaga Ratusza3. **TC56 jest odbiorem nowego programu**, a TC04 zachowuje regres dwóch odrębnych przydziałów w starszym zapisanym programie. Dawnych oczekiwań nie nakładamy bezwarunkowo na nowy fixture. TC55 rozszerza powroty z TC47 o wybór kontynuacji/od początku i ochronę od reklam; powtórka nie resetuje danych. Dwa szczegóły mają jawne założenia wykonawcze, otwarte na korektę po odpowiedzi użytkownika: reszta szczęścia po rozdaniu wszystkim pozostaje wydawalna indywidualnie (TC58), a kolejność HUD przyjmuje Monety → Pracujący → Następny mieszkaniec → Punkty → Mieszkańcy i miejsca (TC54). Sprawdzamy wdrożone zachowanie, ale nie opisujemy tych interpretacji jako dodatkowo potwierdzonych decyzji.
+**Stosowanie wcześniejszych kart: ** TC0056 i starsze karty dotyczące sześciu tragarzy/turbo odbierają zapisane starsze programy; nie są oczekiwaniem dla nowego kursu 6. Indywidualne rozdawanie i automat 23:58 opisane w TC0010/0058/0065 pozostają historią dawnych fixture — bieżący bank zbiorowy odbiera TC0079. Dawne zakresy 33/34 kroków rozróżnia TC0075. Cennik premium TH4/PLN TH1 zastępuje TC0082. Nie zaliczamy sprzecznego historycznego kroku na nowym buildzie; zapisz wariant fixture i odsyłacz do aktualnego przypadku. Niezmienione oczekiwania (tożsamość, chmura, limity, jednokrotność) nadal stanowią regresję.
 
 Profile QA są specyfikacją danych do przygotowania w izolowanym harnessie, nie dodatkowymi kontami istniejącymi w GCP. Brak fixture, kontrolowanego zegara lub potrzebnej usługi oznacza BLOCKED z przyczyną. Nie zmieniaj czasu komputera i prawdziwej bazy, aby wymusić warunek testowy. Lokalny nietrwały podgląd nie zastępuje testu trwałości chmury.
 
@@ -35,7 +35,7 @@ Nie używaj `admin1`–`admin3` jako danych jednorazowych; nie resetuj i nie pod
 
 ## Proponowana kolejność odbioru
 
-1. Nowy zakres DEV 0.11.0.0 / v27: TC60–TC70; najpierw ustal właściwy build i izolowane fixture, następnie regresję TC54–TC59.
+1. Nowy zakres DEV 0.12.0.0/v28: TC0071–0094, najpierw dane i płatności, potem kurs/opisy/misje/społeczność. Następnie niezmienione oczekiwania TC0060–0070 i starsza regresja na opisanym wariancie fixture.
 2. Dostęp i integralność: TC19–23, TC29, TC31.
 3. Nowa gra i czytelność: TC01–05, TC30, TC43–45 oraz powroty w Pomocy TC47, prowadzenie po mapie TC51 i przegląd polszczyzny TC52–53.
 4. Gospodarka i mieszkańcy: TC06–18, TC24–25.
@@ -120,11 +120,35 @@ TC26 jest obecnie testem zachowania wcześniejszych dwóch światów podczas mig
 | [HL-TC-0068 — Pomoc i ratunek wracają do kolejnego etapu bez kasowania postępu](manual/HL-TC-0068.md) | Misje5/3 i terminy | P0 | READY | NOT RUN |
 | [HL-TC-0069 — Zadania są wykonalne przy realnych zasobach, produkcji i dostawach](manual/HL-TC-0069.md) | Wykonalność gospodarcza | P0 | READY | NOT RUN |
 | [HL-TC-0070 — Migracja, nieobecność i powroty nie dublują mieszkań ani misji](manual/HL-TC-0070.md) | Trwałość i integralność | P0 | READY | NOT RUN |
+| [HL-TC-0071 — Nowy kurs wymaga trzech tragarzy, starszy zachowuje szóstkę i swoje zaliczenia](manual/HL-TC-0071.md) | Samouczek i migracja | P0 | READY | NOT RUN |
+| [HL-TC-0072 — Lekcja Ratusza uczy rzeczywistej dostawy i skrócenia budowy](manual/HL-TC-0072.md) | Prowadzenie i monety | P0 | READY | NOT RUN |
+| [HL-TC-0073 — Gospodarstwo kupione w lekcji nie pobiera równocześnie własnych materiałów](manual/HL-TC-0073.md) | Pełne kupno | P0 | READY | NOT RUN |
+| [HL-TC-0074 — Lekcja jedenasta uczy priorytetu odbioru, a pełny magazyn ma zrozumiałą instrukcję](manual/HL-TC-0074.md) | Transport produktów | P1 | READY | NOT RUN |
+| [HL-TC-0075 — Tutorial trzydziestu trzech opisów wraca przez Pomoc i wskazuje znak zapytania](manual/HL-TC-0075.md) | Oprowadzanie i Pomoc | P1 | READY | NOT RUN |
+| [HL-TC-0076 — Cały polski interfejs szczęścia używa punktów, a inne procenty pozostają poprawne](manual/HL-TC-0076.md) | Polskie teksty | P1 | READY | NOT RUN |
+| [HL-TC-0077 — Wiadomość końca przestoju opisuje wznowienie albo odwołanie z pozostawionym towarem](manual/HL-TC-0077.md) | Powiadomienia pracy | P1 | READY | NOT RUN |
+| [HL-TC-0078 — Pierwsze wejście nowego dnia pokazuje tylko dostępną premię lojalności](manual/HL-TC-0078.md) | Lojalność i kalendarz | P1 | READY | NOT RUN |
+| [HL-TC-0079 — Bank Domu kumuluje siedem porcji według zakwaterowanych i nie odtwarza ich przy wczytaniu](manual/HL-TC-0079.md) | Dom i trwałość | P0 | READY | NOT RUN |
+| [HL-TC-0080 — Północ odbiera jeden punkt także offline, bez nowej krzywej szczęścia](manual/HL-TC-0080.md) | Szczęście i czas | P0 | READY | NOT RUN |
+| [HL-TC-0081 — Modlitwa zachowuje czas całkowity, koszt, brak podatku i sześciogodzinny efekt](manual/HL-TC-0081.md) | Modlitwa | P0 | READY | NOT RUN |
+| [HL-TC-0082 — Usługi od Ratusza jeden używają monet; Paynow kupuje tylko monety od trzeciego poziomu](manual/HL-TC-0082.md) | Płatności i dodatkowy czas | P0 | READY | NOT RUN |
+| [HL-TC-0083 — Statek zwiększa towar za pięćdziesiąt monet, a przemianowanie córki nie dubluje nazwy](manual/HL-TC-0083.md) | Archipelag | P0 | READY | NOT RUN |
+| [HL-TC-0084 — Zwykłe zadania mają realne pół godziny, dopasowaną nagrodę i wspólną cenę mieszkańca](manual/HL-TC-0084.md) | Wykonalność zadań | P0 | READY | NOT RUN |
+| [HL-TC-0085 — Po ostatniej nagrodzie kursu pojawia się fabuła ośmiu zadań i zachowana kolejka rozdziałów](manual/HL-TC-0085.md) | Fabuła Latarni | P0 | READY | NOT RUN |
+| [HL-TC-0086 — Narracyjne nagrody pokazują faktycznie przyjętych ludzi i czas produkcji razy cztery](manual/HL-TC-0086.md) | Nagrody i produkcja | P0 | READY | NOT RUN |
+| [HL-TC-0087 — Siedem dni ligi punktuje także małe składy, a odejście nie usuwa wyniku sezonowego](manual/HL-TC-0087.md) | Liga i sojusze | P0 | READY | NOT RUN |
+| [HL-TC-0088 — Playoffy rozstrzygają remisy i wypłacają cztery warstwy nagród jednokrotnie](manual/HL-TC-0088.md) | Liga i puchar | P0 | READY | NOT RUN |
+| [HL-TC-0089 — Czat egzekwuje tysiąc znaków i wspólny limit konta między pokojami](manual/HL-TC-0089.md) | Czat | P0 | READY | NOT RUN |
+| [HL-TC-0090 — Pomagam kwalifikuje tylko właściwe monety i jasno symuluje przelew z premią](manual/HL-TC-0090.md) | Dobroczynność | P0 | READY | NOT RUN |
+| [HL-TC-0091 — Kurs przechodzony w normalnym tempie nie blokuje się na materiałach lekcji trzynastej](manual/HL-TC-0091.md) | Samouczek i bilans | P0 | READY | NOT RUN |
+| [HL-TC-0092 — Zakup statku po utracie odpowiedzi nie zmienia płatnika i nie obciąża drugi raz](manual/HL-TC-0092.md) | Chmura i statek | P0 | READY | NOT RUN |
+| [HL-TC-0093 — Pomagam po odczycie lub resecie nie odtwarza starej ewidencji, a błąd chmury nie daje premii](manual/HL-TC-0093.md) | Trwały mock dobroczynności | P0 | READY | NOT RUN |
+| [HL-TC-0094 — Nowa rejestracja zapisuje Regulamin draft5 i niezmienioną Politykę prywatności draft4](manual/HL-TC-0094.md) | Dokumenty i konto | P0 | READY | NOT RUN |
 
 ## Raport i zgłoszenia
 
-[ListaSTART-HERE](START-HERE.md) zawiera szablon pojedynczego wyniku. Interaktywny raport pozwala filtrować przypadki, zapisywać notatki i pobraćJSON. Zrzuty oraz logi nie mogą zawierać tokenów ani prywatnych danych. Po FAIL zgłoszenie błędu odnosi się do stabilnegoID testu iSHA buildu.
+[Lista START-HERE](START-HERE.md) zawiera szablon pojedynczego wyniku. Interaktywny raport pozwala filtrować przypadki, zapisywać notatki i pobrać JSON. Zrzuty oraz logi nie mogą zawierać tokenów ani prywatnych danych. Po FAIL zgłoszenie błędu odnosi się do stabilnego ID testu i SHA buildu.
 
-Kanoniczna lista: [manual-test-cases.json](manual-test-cases.json). Interaktywną listę iMarkdown odtwarza `python3 scripts/build_manual_checklist.py`; `--check` sprawdza zgodność. Indywidualne karty są wersjonowanymi dokumentami. Importer [publish_tracking_issues.py](../../scripts/publish_tracking_issues.py) może później opublikować je jako osobneIssues dopiero w uwierzytelnionej sesji właściciela. W tym zestawie nie utworzono fikcyjnych numerówIssues.
+Kanoniczna lista: [manual-test-cases.json](manual-test-cases.json). Interaktywną listę i Markdown odtwarza `python3 scripts/build_manual_checklist.py`; `--check` sprawdza zgodność. Indywidualne karty są wersjonowanymi dokumentami. Importer [publish_tracking_issues.py](../../scripts/publish_tracking_issues.py) może później opublikować je jako osobne Issues dopiero w uwierzytelnionej sesji właściciela. W tym zestawie nie utworzono fikcyjnych numerów Issues.
 
-Starszy [zestaw155 scenariuszyv18](../TEST-SCENARIOS-v18.md), [jegoJSON](../test-scenarios-v18.json) iExcel11 są archiwalnymi migawkami. Nie są bieżącym wynikiem ręcznego odbioru nowegoDEV. Rzeczywiste wyniki automatyzacji i promocji zapisuje [dziennik](../IMPLEMENTATION-LOG.md).
+Starszy [zestaw 155 scenariuszyv18](../TEST-SCENARIOS-v18.md), [jego JSON](../test-scenarios-v18.json) i Excel 11 są archiwalnymi migawkami. Nie są bieżącym wynikiem ręcznego odbioru nowego DEV. Rzeczywiste wyniki automatyzacji i promocji zapisuje [dziennik](../IMPLEMENTATION-LOG.md).

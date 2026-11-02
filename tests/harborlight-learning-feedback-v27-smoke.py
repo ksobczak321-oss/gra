@@ -5,6 +5,7 @@ account, browser island cache, advertising service or real payment is accessed.
 """
 import mimetypes
 import os
+import re
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
@@ -47,13 +48,15 @@ def setup(page, language):
       f.feedback=F.createLearningFeedback({getState:()=>state,getLanguage:()=>language,canShow:()=>!f.blocked,
         getTarget:id=>document.getElementById(id),onReveal:()=>{f.reveals++;return true}});
       f.feedback.observe();
-      f.completeTownhall=async()=>{for(let i=0;i<6;i++)run({type:'assign',building:'warehouse',delta:1});M.tick(state,120);
-        run({type:'upgrade',building:'townhall'});M.tick(state,90);document.querySelector('#level').textContent='Poziom'+state.buildings.townhall.level;
+      f.completeTownhall=async()=>{for(let i=0;i<3;i++)run({type:'assign',building:'warehouse',delta:1});M.tick(state,120);
+        const project=run({type:'upgrade',building:'townhall'}).project;
+        run({type:'premiumTransport',route:'construction',project:project.order});run({type:'premiumAccelerate',project:project.order,percent:100});document.querySelector('#level').textContent='Poziom'+state.buildings.townhall.level;
         f.feedback.observe();return f.feedback.refresh()};
-      f.completeLighthouse=async()=>{run({type:'build',building:'lighthouse'});M.tick(state,1000);
+      f.completeLighthouse=async()=>{const project=run({type:'build',building:'lighthouse'}).project;
+        run({type:'premiumTransport',route:'construction',project:project.order});run({type:'premiumAccelerate',project:project.order,percent:100});
         document.querySelector('#happiness').textContent=state.happiness+'%';f.feedback.observe();return f.feedback.refresh()};
-      f.house=async()=>{const before=F.captureLearningFeedback(state);const result=run({type:'houseHappiness',residentId:state.residents[0].id,amount:1});
-        f.feedback.recordAction({type:'houseHappiness'},before,state,result);return f.feedback.refresh()};
+      f.house=async()=>{const before=F.captureLearningFeedback(state);const result=run({type:'houseHappinessAll',amount:1});
+        f.feedback.recordAction({type:'houseHappinessAll'},before,state,result);return f.feedback.refresh()};
       f.bless=async()=>{const before=F.captureLearningFeedback(state);const result=run({type:'blessing'});
         f.feedback.recordAction({type:'blessing'},before,state,result);return f.feedback.refresh()};
       f.openTour=async()=>{const first={id:'level',title:()=>language==='pl'?'Poziom wyspy':'Island level',
@@ -91,14 +94,14 @@ def feedback_scenario(browser, language, mobile):
         assert page.evaluate('JSON.stringify(fixture.state)') == before, 'Explaining a change mutated game state'
         assert page.evaluate('fixture.completeLighthouse()') is True
         expect(page.locator('[data-learning-feedback]')).to_have_attribute('data-learning-feedback', 'lighthouse')
-        expect(page.locator('[data-learning-feedback-description]')).to_contain_text('100%')
+        expect(page.locator('[data-learning-feedback-description]')).to_contain_text(re.compile('100 punktów' if language == 'pl' else r'100 (?:happiness )?points'))
         assert page.evaluate('fixture.state.buildings.lighthouse.level') == 1
         assert page.evaluate('fixture.state.happiness') == 100
         page.locator('[data-learning-feedback-close]').click()
         page.evaluate('fixture.bless()')
         expect(page.locator('[data-learning-feedback]')).to_have_attribute('data-learning-feedback', 'blessing')
-        expect(page.locator('[data-learning-feedback-description]')).to_contain_text('100%')
-        expect(page.locator('[data-learning-feedback-description]')).not_to_contain_text('120%')
+        expect(page.locator('[data-learning-feedback-description]')).to_contain_text(re.compile('100 punktów' if language == 'pl' else r'100 (?:happiness )?points'))
+        expect(page.locator('[data-learning-feedback-description]')).not_to_contain_text('120 punktów' if language == 'pl' else '120 happiness')
         page.locator('[data-learning-feedback-close]').click()
         assert not errors, errors
     finally:

@@ -2,7 +2,7 @@
 
 No Firebase account, GCP document, real player message or ranked result changes.
 """
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from urllib.parse import urlsplit, unquote
 import mimetypes
 from pathlib import Path
@@ -19,7 +19,7 @@ NOW = 1793448000000
 def seed():
     script = """import {createState} from './harborlight-v1-state.js';
     const s=createState(%d);s.islandName='Port społeczności';s.tutorial.autoOpenDisabled=true;
-    s.engagementSchedule.initialCompleted=true;s.engagementSchedule.initialAnchored=true;s.engagementSchedule.nextAt=1e12;
+    s.loyalty.lastOfferDay='2026-10-31';s.engagementSchedule.initialCompleted=true;s.engagementSchedule.initialAnchored=true;s.engagementSchedule.nextAt=1e12;
     console.log(JSON.stringify(s));""" % NOW
     return json.loads(subprocess.run(['node', '--input-type=module', '-e', script], cwd=ROOT, capture_output=True, text=True, check=True).stdout)
 
@@ -113,7 +113,7 @@ def shared_window_contract(browser, base):
             context = browser.new_context(viewport={'width': 1100, 'height': 900})
             context.route(base + '/**', asset)
             page = context.new_page()
-            page.clock.install(time=current)
+            page.clock.install(time=current-timedelta(seconds=1))
             page.clock.pause_at(current)
             page.goto(base+'/community-contract.html?at=%d&hour=%d&language=%s' % (current.timestamp()*1000, hour, language))
             panel = page.locator('[data-community-panel]')
@@ -135,7 +135,7 @@ def shared_window_contract(browser, base):
     context = browser.new_context()
     context.route(base+'/**', asset)
     page = context.new_page()
-    page.clock.install(time=current)
+    page.clock.install(time=current-timedelta(seconds=1))
     page.clock.pause_at(current)
     page.goto(base+'/community-contract.html?at=%d&hour=20&language=pl' % (current.timestamp()*1000))
     expect(page.locator('[data-league-start-kind]')).to_have_count(2)
@@ -165,7 +165,7 @@ def run():
                     page.on('response', lambda response: print('BAD_RESPONSE', response.status, response.url, flush=True) if response.status >= 400 else None)
                     page.on('console', lambda message: print('BROWSER_CONSOLE', message.text, flush=True) if message.type == 'error' else None)
                     page.on('pageerror', lambda error: (errors.append(getattr(error, 'stack', None) or str(error)), print('PAGEERROR', getattr(error, 'stack', None) or str(error), flush=True)))
-                    page.clock.install(time=datetime.fromtimestamp(NOW/1000, tz=timezone.utc))
+                    page.clock.install(time=datetime.fromtimestamp(NOW/1000, tz=timezone.utc)-timedelta(seconds=1))
                     page.clock.pause_at(datetime.fromtimestamp(NOW/1000, tz=timezone.utc))
                     page.set_default_timeout(30000)
                     page.goto(base + '/harborlight-v1-layered.html?profile=new-player', wait_until='domcontentloaded')

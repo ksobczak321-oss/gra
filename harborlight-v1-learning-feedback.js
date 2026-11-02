@@ -7,7 +7,7 @@ const displayHappiness = value => {
   const rounded = Math.round(value);
   return Math.ceil(Math.abs(value - rounded) <= 1e-9 ? rounded : value);
 };
-const percentage = (value, language) => `${new Intl.NumberFormat(language === 'pl' ? 'pl-PL' : 'en-US', { maximumFractionDigits: 2 }).format(value)}%`;
+const points = (value, language) => `${new Intl.NumberFormat(language === 'pl' ? 'pl-PL' : 'en-US', { maximumFractionDigits: 2 }).format(value)} ${language === 'pl' ? 'punktów szczęścia' : 'happiness points'}`;
 const positive = value => Math.max(0, number(value));
 
 export function captureLearningFeedback(state = {}) {
@@ -55,13 +55,13 @@ export function learningFeedbackCopy(event, state = {}, language = 'en') {
   if (event.kind === 'lighthouse') {
     const remaining = positive(state.lighthouseRemaining);
     return { title: pick(language, 'Latarnia znów świeci!', 'The Lighthouse shines again!'),
-      description: remaining > 0 ? pick(language, `Szczęście wszystkich mieszkańców wynosi teraz 100% przez ${duration(remaining, language)}, a produkcja materiałów jest dwukrotnie większa.`, `Every resident now has 100% happiness for ${duration(remaining, language)}, and material production is doubled.`)
+      description: remaining > 0 ? pick(language, `Szczęście wszystkich mieszkańców wynosi teraz 100 punktów przez ${duration(remaining, language)}, a produkcja materiałów jest dwukrotnie większa.`, `Every resident now has 100 happiness points for ${duration(remaining, language)}, and material production is doubled.`)
         : pick(language, `Latarnia osiągnęła poziom ${event.level}. Sprawdź jej nowy etap odbudowy.`, `The Lighthouse has reached level ${event.level}. See its new restoration stage.`), target: remaining > 0 ? 'happiness' : 'lighthouse' };
   }
   if (event.kind === 'house') {
     const before = displayHappiness(event.before), after = displayHappiness(event.after);
     return { title: pick(language, 'Punkty szczęścia przekazane.', 'Happiness points have been given.'),
-      description: after > before ? pick(language, `Szczęście mieszkańców po tej akcji: ${percentage(before, language)} → ${percentage(after, language)}.`, `Residents’ happiness after this action: ${percentage(before, language)} → ${percentage(after, language)}.`)
+      description: after > before ? pick(language, `Szczęście mieszkańców po tej akcji: ${points(before, language)} → ${points(after, language)}.`, `Residents’ happiness after this action: ${points(before, language)} → ${points(after, language)}.`)
         : pick(language, 'Wybrani mieszkańcy otrzymali punkty szczęścia. Szczegóły znajdziesz w Domu.', 'The selected residents received happiness points. See the House for details.'), target: 'happiness' };
   }
   const effect = event.kind === 'attraction' ? (state.leisure?.effects || []).find(effect => effect.id === event.effectId) : null;
@@ -69,7 +69,7 @@ export function learningFeedbackCopy(event, state = {}, language = 'en') {
   const amount = event.kind === 'blessing' ? 20 : number(effect?.amount ?? event.amount);
   const forced = positive(state.lighthouseRemaining) > 0;
   return { title: event.kind === 'blessing' ? pick(language, 'Błogosławieństwo działa.', 'The blessing is active.') : pick(language, 'Atrakcja działa.', 'The attraction is active.'),
-    description: remaining > 0 ? pick(language, `Premia: +${amount} p.p. szczęścia. Pozostały czas: ${duration(remaining, language)}.${forced ? ' Mieszkańcy korzystają już ze szczęścia 100%. Nową premię zobaczysz na liście aktywnych efektów.' : ''}`, `Bonus: +${amount} pp happiness. Time remaining: ${duration(remaining, language)}.${forced ? ' Residents already have 100% happiness. See the new bonus in active effects.' : ''}`)
+    description: remaining > 0 ? pick(language, `Premia: ${amount} punktów szczęścia. Pozostały czas: ${duration(remaining, language)}.${forced ? ' Szczęście mieszkańców wynosi już 100 punktów. Nową premię zobaczysz na liście aktywnych efektów.' : ''}`, `Bonus: ${amount} happiness points. Time remaining: ${duration(remaining, language)}.${forced ? ' Residents already have 100 happiness points. See the new bonus in active effects.' : ''}`)
       : pick(language, 'Mieszkańcy otrzymali premię. Jej czas działania już minął.', 'Residents received the bonus. Its duration has now ended.'), target: 'happiness' };
 }
 
@@ -87,11 +87,16 @@ export function showTutorialExitReminder({ language = 'en', firstIntroduction = 
     element('h2', { id: 'tutorial-exit-reminder-title' }, pick(language, 'Tutorial został zamknięty', 'The tutorial has been closed')),
     element('p', {}, pick(language, 'Aby wrócić do przerwanego miejsca, kliknij ? → Wznów tutorial.', 'To return to your saved place, select ? → Resume tutorial.')),
     element('p', { class: 'learning-feedback-reminder-clock' }, firstIntroduction ? pick(language, 'Czas na wyspie zaczyna teraz biec.', 'Island time now starts running.') : pick(language, 'Twoja wyspa działa dalej.', 'Your island keeps running.')));
-  const close = () => { if (popup.open) popup.close(); popup.remove(); };
+  const helpTargets = [...document.querySelectorAll('#hit-tutorial, [data-mobile-control=\"tutorial\"], [data-mobile-hud=\"tutorial\"]')].filter(target => target.getClientRects().length);
+  for (const target of helpTargets) target.classList.add('learning-help-highlight');
+  let timeout;
+  const clearHighlight = () => { clearTimeout(timeout); for (const target of helpTargets) { target.classList.remove('learning-help-highlight'); target.removeEventListener('click', clearHighlight); } };
+  for (const target of helpTargets) target.addEventListener('click', clearHighlight);
+  const close = () => { if (popup.open) popup.close(); popup.remove(); clearTimeout(timeout); timeout = setTimeout(clearHighlight, 30000); };
   const button = element('button', { type: 'button', 'data-close-tutorial-exit-reminder': '' }, pick(language, 'Rozumiem', 'Understood'));
   button.addEventListener('click', close); popup.addEventListener('cancel', event => { event.preventDefault(); close(); });
   popup.append(button); document.body.append(popup); popup.showModal(); button.focus();
-  return { element: popup, dispose: close };
+  return { element: popup, dispose: () => { close(); clearHighlight(); } };
 }
 
 /** The host decides when explanations may be shown. A modal reward, a running

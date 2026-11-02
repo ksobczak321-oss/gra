@@ -76,7 +76,7 @@ test('a waiting reward does not form another chest queue when the player perform
 
 test('failed actions, visits, heartbeat, mouse movement and background production do not count as independent tutorial actions', () => {
   const state = createState(NOW), before = structuredClone(state.tutorial);
-  assert.equal(run(state, { type: 'houseHappinessAll', amount: 10000 }).ok, false);
+  assert.equal(run(state, { type: 'houseHappiness', residentId: state.residents[0].id, amount: 1 }).ok, false);
   for (const action of [{ type: 'tutorialVisit', subject: 'house' }, { type: 'userActivity', visible: true, focused: true }, { type: 'heartbeat', visible: true, focused: true }]) run(state, action);
   recordProgressionAction(state, { type: 'houseHappinessAll', meaningful: false }, { ok: true });
   recordProgressionAction(state, { type: 'houseHappinessAll' }, { ok: false });
@@ -240,7 +240,10 @@ test('legacy confirmed player trade before its lesson skips it without rewarding
 
 test('a real v21 House action migrates from its manual notification without replaying its missing event or awarding a chest', () => {
   const old = createState(NOW);
-  assert.equal(run(old, { type: 'houseHappinessAll', amount: 1 }).ok, true);
+  // Literal v21 receipt: the modern collective-bank command deliberately uses
+  // different copy and must not replace the historical migration evidence.
+  old.notifications.push({ id:99, kind:'house-happiness', title:'House happiness distributed',
+    message:'12 happiness points were given to 12 residents.' });
   delete old.tutorial.actionLedger; delete old.tutorial.skippedLessons;
   delete old.tutorial.completed['personal-happiness'];
   const before = structuredClone(old.resources), migrated = reload(old);

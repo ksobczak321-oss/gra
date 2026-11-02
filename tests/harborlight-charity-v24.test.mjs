@@ -15,7 +15,7 @@ test('preview requires explicitDEV and classifies historical and ordinary income
   const f = fixture(); assert.equal((await f.adapter.status()).qualifiedCoins, 0);
   f.state.resources.coins += 1000; assert.equal((await f.adapter.status()).qualifiedCoins, 0);
   await f.adapter.creditTestCoins(); assert.equal((await f.adapter.status()).qualifiedCoins, 1000);
-  f.state.resources.coins -= 200; const status = await f.adapter.status(); assert.equal(status.qualifiedCoins, 800); assert.equal(status.unqualifiedCoins, 1100);
+  f.state.resources.coins -= 200; const status = await f.adapter.status(); assert.equal(status.qualifiedCoins, 1000); assert.equal(status.unqualifiedCoins, 900);
 });
 
 test('DEV donation cannot grant an effect before explicitsimulated transfer confirmation, and replay never duplicates', async () => {

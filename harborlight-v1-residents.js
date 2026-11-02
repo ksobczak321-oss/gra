@@ -1,8 +1,9 @@
 // Persistent residents and visits. Every duration is a real elapsed second.
-import { residentLeisureBonus } from './harborlight-v1-leisure.js?v=frontend-v27';
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v27';
-import { worldEventHappinessPenalty } from './harborlight-v1-events.js?v=frontend-v27';
-export { housingStatus, residentHasHousing, residentWorkMultiplier, residentFoodMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v27';
+import { residentLeisureBonus } from './harborlight-v1-leisure.js?v=frontend-v28';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v28';
+import { residentHasHousing } from './harborlight-v1-housing.js?v=frontend-v28';
+import { worldEventHappinessPenalty } from './harborlight-v1-events.js?v=frontend-v28';
+export { housingStatus, residentHasHousing, residentWorkMultiplier, residentFoodMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v28';
 export const RESIDENT_WORKPLACES = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'warehouse', 'dock', 'market'];
 export const NEED_GRACE_SECONDS = 12 * 3600;
 export const NEED_PENALTY = 5;
@@ -77,7 +78,7 @@ function newResident(state, happiness = 0, newborn = false) {
   return { id, personUid: `${state.islandId || 'island-1'}:resident-${id}`, happiness, hungerSeconds: 0, fedRecoverySeconds: 0, unemployedSeconds: 0,
     newbornRemaining: newborn ? NEWBORN_HAPPINESS_SECONDS : 0,
     workplace: null, arrivalRemaining: 0, returnRemaining: 0, returnFrom: null, blockedSeconds: 0,
-    visitGroup: null, prayerRemaining: 0, visitHappinessRemaining: 0, visitCooldownRemaining: 0,
+    visitGroup: null, prayerRemaining: 0, prayerVersion: 1, prayerDuration: 0, prayerRewardPending: false, prayerBonusRemaining: 0, visitHappinessRemaining: 0, visitCooldownRemaining: 0,
     pendingRelease: false, forcedHappinessSnapshot: state.lighthouseRemaining > EPS ? happiness : null,
     preVisitHappiness: null, globalLighthouseSnapshot: state.lighthouseRemaining > EPS ? happiness : null };
 }
@@ -166,6 +167,10 @@ export function settleResidentEvents(state) {
   settleLighthouseSnapshot(state);
   settleRecalledCarriers(state);
   for (const person of state.residents || []) {
+    if (person.prayerVersion === PRAYER_RULES.version && person.prayerRewardPending === true && !(person.prayerRemaining > EPS)) {
+      person.prayerRewardPending = false; person.prayerBonusRemaining = PRAYER_RULES.happinessSeconds;
+      emit(state, 'prayer-completed', 'Prayer completed', `Resident #${person.id} returned Home and receives 50 happiness points for six hours.`);
+    }
     if (residentHappinessFrozen(person)) person.happiness = welcomeStatus(state).active ? Math.max(20, person.happiness) : 0;
     else if (welcomeStatus(state).active) person.happiness = clampResidentBalance(state, person, person.happiness);
     if (person.returnRemaining <= EPS) person.returnFrom = null;
@@ -241,7 +246,10 @@ export function normalizeResidents(state, raw = {}) {
       workplace: RESIDENT_WORKPLACES.includes(saved.workplace) && unlocked(state, saved.workplace) ? saved.workplace : null,
       arrivalRemaining: bounded(saved.arrivalRemaining, 0, 0, WALK_SECONDS), returnRemaining: bounded(saved.returnRemaining, 0, 0, WALK_SECONDS),
       returnFrom: saved.returnRemaining > EPS && RESIDENT_WORKPLACES.includes(saved.returnFrom) ? saved.returnFrom : null,
-      prayerRemaining: bounded(saved.prayerRemaining),
+      prayerRemaining: bounded(saved.prayerRemaining, 0, 0, 60000), prayerVersion: saved.prayerVersion === 1 ? 1 : 0,
+      prayerDuration: bounded(saved.prayerDuration, bounded(saved.prayerRemaining), 0, 60000),
+      prayerRewardPending: saved.prayerVersion === 1 && saved.prayerRewardPending === true,
+      prayerBonusRemaining: saved.prayerVersion === 1 ? bounded(saved.prayerBonusRemaining, 0, 0, PRAYER_RULES.happinessSeconds) : 0,
       blockedSeconds: bounded(saved.blockedSeconds, 0, 0, 432000), visitGroup: Number.isSafeInteger(saved.visitGroup) && saved.visitGroup > 0 ? saved.visitGroup : null,
       visitHappinessRemaining: bounded(saved.visitHappinessRemaining, 0, 0, LIGHTHOUSE_PERSONAL_SECONDS),
       visitCooldownRemaining: bounded(saved.visitCooldownRemaining, 0, 0, LIGHTHOUSE_PERSONAL_SECONDS),
@@ -304,6 +312,7 @@ export function residentOffset(state, person) {
   let offset = (state.chapelRemaining > EPS ? state.buildings.chapel.level * 10 : 0) + (state.blessingRemaining > EPS ? 20 : 0);
   offset += (state.lighthouseVisitBonuses || []).reduce((sum, bonus) => sum + (bonus.remaining > EPS ? 10 : 0), 0);
   offset += residentLeisureBonus(state, person);
+  if (person.prayerBonusRemaining > EPS) offset += PRAYER_RULES.happinessPoints;
   if (state.charityReward?.happinessPoints === 20 && state.charityReward.expiresAt > (state.worldTimeMs || state.lastSimulatedAt || 0)) offset += 20;
   offset -= worldEventHappinessPenalty(state);
   if (residentProductionBlocked(state, person)) offset -= Math.min(50, 10 * (1 + Math.floor((person.blockedSeconds + EPS) / 86400)));
@@ -337,7 +346,7 @@ export function residentHappinessRate(state, person) {
   if (residentHappinessFrozen(person)) return 0;
   const fed = hasFoodForResidents(state);
   const employed = !!person.workplace && person.arrivalRemaining <= EPS;
-  const work = employed ? residentProductionBlocked(state, person) ? 0 : 1 : person.workplace ? 0 : reachedGrace(person.unemployedSeconds) ? -NEED_PENALTY : 0;
+  const work = employed ? residentProductionBlocked(state, person) ? 0 : 1 : person.workplace || person.prayerRemaining > EPS ? 0 : reachedGrace(person.unemployedSeconds) ? -NEED_PENALTY : 0;
   // Missing beds affect that resident's output, meals and House-point access.
   // They no longer subtract happiness from every person on the island.
   const rate = (fed ? 1 : reachedGrace(person.hungerSeconds) ? -NEED_PENALTY : 0) + work;
@@ -346,7 +355,7 @@ export function residentHappinessRate(state, person) {
 export const hungerPenaltyPerHour = state => !hasFoodForResidents(state) && state.population ?
   NEED_PENALTY * (state.residents || []).filter(person => !residentHappinessFrozen(person) && reachedGrace(person.hungerSeconds)).length / state.population : 0;
 export const unemploymentPenaltyPerHour = state => state.population ?
-  NEED_PENALTY * (state.residents || []).filter(person => !residentHappinessFrozen(person) && !person.workplace && reachedGrace(person.unemployedSeconds)).length / state.population : 0;
+  NEED_PENALTY * (state.residents || []).filter(person => !residentHappinessFrozen(person) && !person.workplace && !(person.prayerRemaining > EPS) && reachedGrace(person.unemployedSeconds)).length / state.population : 0;
 
 export function nextResidentEvent(state) {
   let next = Infinity;
@@ -356,7 +365,7 @@ export function nextResidentEvent(state) {
   if (state.charityReward?.happinessPoints === 20) consider((state.charityReward.expiresAt - (state.worldTimeMs || state.lastSimulatedAt || 0)) / 1000);
   for (const person of state.residents || []) {
     consider(person.newbornRemaining);
-    consider(person.arrivalRemaining); consider(person.returnRemaining); consider(person.prayerRemaining); consider(person.visitHappinessRemaining); consider(person.visitCooldownRemaining);
+    consider(person.arrivalRemaining); consider(person.returnRemaining); consider(person.prayerRemaining); consider(person.prayerBonusRemaining); consider(person.visitHappinessRemaining); consider(person.visitCooldownRemaining);
     if (residentProductionBlocked(state, person) && person.blockedSeconds < 4 * 86400 - EPS) consider(86400 - person.blockedSeconds % 86400);
     if (!residentHappinessFrozen(person) && fed && person.hungerSeconds > EPS && (person.fedRecoverySeconds || 0) < FED_RECOVERY_SECONDS - EPS)
       consider(FED_RECOVERY_SECONDS - (person.fedRecoverySeconds || 0));
@@ -389,14 +398,14 @@ export function residentSegments(state) {
       if (!forced) for (const limit of [minimum, 100]) { const time = (limit - raw) / slope; if (time > EPS) nextEvent = Math.min(nextEvent, time); }
     }
     if (!frozen && !fed && !reachedGrace(person.hungerSeconds)) nextEvent = Math.min(nextEvent, NEED_GRACE_SECONDS - person.hungerSeconds);
-    if (!frozen && !person.workplace && !reachedGrace(person.unemployedSeconds)) nextEvent = Math.min(nextEvent, NEED_GRACE_SECONDS - person.unemployedSeconds);
-    return { person, slope, frozen, blocked: residentProductionBlocked(state, person), employed: !!person.workplace && person.arrivalRemaining <= EPS };
+    if (!frozen && !person.workplace && !(person.prayerRemaining > EPS) && !reachedGrace(person.unemployedSeconds)) nextEvent = Math.min(nextEvent, NEED_GRACE_SECONDS - person.unemployedSeconds);
+    return { person, slope, frozen, blocked: residentProductionBlocked(state, person), employed: !!person.workplace && person.arrivalRemaining <= EPS, praying: person.prayerRemaining > EPS };
   });
   return { people, nextEvent, meanSlope, fed, state };
 }
 export function advanceResidents(segment, seconds) {
   const state = segment.state;
-  for (const { person, slope, frozen = residentHappinessFrozen(person), blocked, employed } of segment.people) {
+  for (const { person, slope, frozen = residentHappinessFrozen(person), blocked, employed, praying = false } of segment.people) {
     person.happiness = frozen ? welcomeStatus(state).active ? 20 : 0 : clampResidentBalance(state, person, person.happiness + slope * seconds);
     person.newbornRemaining = elapsed(person.newbornRemaining || 0, seconds);
     if (frozen) { person.hungerSeconds = 0; person.unemployedSeconds = 0; person.fedRecoverySeconds = 0; }
@@ -404,10 +413,11 @@ export function advanceResidents(segment, seconds) {
       person.fedRecoverySeconds = segment.fed ? Math.min(FED_RECOVERY_SECONDS, (person.fedRecoverySeconds || 0) + seconds) : 0;
       if (!segment.fed) person.hungerSeconds = Math.min(Number.MAX_SAFE_INTEGER, person.hungerSeconds + seconds);
       else if (person.fedRecoverySeconds >= FED_RECOVERY_SECONDS - EPS) person.hungerSeconds = 0;
-      person.unemployedSeconds = employed ? 0 : person.workplace ? person.unemployedSeconds : Math.min(Number.MAX_SAFE_INTEGER, person.unemployedSeconds + seconds);
+      person.unemployedSeconds = employed ? 0 : praying ? person.unemployedSeconds : person.workplace ? person.unemployedSeconds : Math.min(Number.MAX_SAFE_INTEGER, person.unemployedSeconds + seconds);
     }
     person.blockedSeconds = blocked ? Math.min(432000, person.blockedSeconds + seconds) : 0;
     person.prayerRemaining = elapsed(person.prayerRemaining || 0, seconds);
+    person.prayerBonusRemaining = elapsed(person.prayerBonusRemaining || 0, seconds);
     person.arrivalRemaining = elapsed(person.arrivalRemaining, seconds); person.returnRemaining = elapsed(person.returnRemaining, seconds);
     person.visitHappinessRemaining = elapsed(person.visitHappinessRemaining, seconds); person.visitCooldownRemaining = elapsed(person.visitCooldownRemaining, seconds);
   }
@@ -417,6 +427,70 @@ export function advanceResidents(segment, seconds) {
   for (const item of state.visitPackages || []) item.remaining = elapsed(item.remaining, seconds);
   settleResidentEvents(state);
 }
+// Daily maintenance is settled by the Warsaw midnight boundary in the world
+// simulator. Forced Lighthouse happiness and the welcome floor retain their
+// promised protection; no hidden loss is charged when those effects expire.
+export function applyDailyHappinessDecay(state) {
+  let affected = 0;
+  for (const person of state.residents || []) {
+    if (residentHappinessFrozen(person) || state.lighthouseRemaining > EPS || person.visitHappinessRemaining > EPS) continue;
+    const before = person.happiness;
+    person.happiness = clampResidentBalance(state, person, person.happiness - 1);
+    if (person.happiness < before) affected++;
+  }
+  return affected;
+}
+// The prayer action is handled independently of Lighthouse visitor groups.
+export const PRAYER_RULES = Object.freeze({ version: 1, secondsPerTownHallLevel: 600, coinsPerTownHallLevel: 10, happinessPoints: 50, happinessSeconds: 21600 });
+const prayerCapacity = state => Math.max(0, Math.floor(state.buildings?.chapel?.level || 0));
+const prayerDuration = state => PRAYER_RULES.secondsPerTownHallLevel * Math.max(1, Math.floor(state.buildings?.townhall?.level || 1));
+const prayerUnitCoins = state => PRAYER_RULES.coinsPerTownHallLevel * Math.max(1, Math.floor(state.buildings?.townhall?.level || 1));
+const prayerAvailable = person => residentAtHome(person) && !residentHappinessFrozen(person) && !(person.prayerBonusRemaining > EPS);
+export function residentPrayerStatus(state) {
+  const duration = prayerDuration(state), capacity = prayerCapacity(state);
+  const active = (state.residents || []).filter(person => person.prayerRemaining > EPS).map(person => {
+    const total = person.prayerDuration || duration, elapsedSeconds = total - person.prayerRemaining;
+    return { id: person.id, residentId: person.id, remaining: person.prayerRemaining, duration: total,
+      phase: elapsedSeconds < WALK_SECONDS - EPS ? 'walking-there' : person.prayerRemaining <= WALK_SECONDS + EPS ? 'walking-home' : 'praying' };
+  });
+  return { capacity, occupancy: active.length, free: Math.max(0, capacity - active.length), duration, seconds: duration,
+    unitCoins: prayerUnitCoins(state), happinessPoints: PRAYER_RULES.happinessPoints, happinessSeconds: PRAYER_RULES.happinessSeconds,
+    availableResidents: (state.residents || []).filter(prayerAvailable).map(person => ({ id: person.id, personUid: person.personUid, happiness: residentHappiness(state, person), hasHousing: residentHasHousing(state, person) })), active };
+}
+export function residentPrayerQuote(state, residentIds = null) {
+  const duration = prayerDuration(state), unitCoins = prayerUnitCoins(state);
+  const result = { coins: 0, unitCoins, duration, seconds: duration, happinessPoints: PRAYER_RULES.happinessPoints, happinessSeconds: PRAYER_RULES.happinessSeconds, residentIds: [] };
+  const bad = message => ({ ...result, ok: false, message });
+  if (!prayerCapacity(state)) return bad('Build the Chapel before sending a resident to prayer.');
+  const all = state.residents || [], available = all.filter(prayerAvailable);
+  const ids = residentIds === null ? available.slice(0, 1).map(person => person.id) : residentIds;
+  if (!Array.isArray(ids) || !ids.length || ids.some(id => !Number.isSafeInteger(id)) || new Set(ids).size !== ids.length) return bad('Choose distinct residents for prayer.');
+  if (ids.some(id => !available.some(person => person.id === id))) return bad('Residents must be at Home, have finished settling in and have no active prayer bonus.');
+  const occupancy = all.filter(person => person.prayerRemaining > EPS).length;
+  if (ids.length > Math.max(0, prayerCapacity(state) - occupancy)) return bad('The Chapel has no free prayer places for this group.');
+  result.coins = unitCoins * ids.length; result.residentIds = [...ids];
+  if (!Number.isFinite(state.resources?.coins) || state.resources.coins < result.coins) return bad('Not enough coins for prayer.');
+  return { ...result, ok: true, message: 'The price includes prayer and both two-minute walks. The happiness bonus begins after returning Home.' };
+}
+export function residentPrayerAction(state, action) {
+  if (!['pray', 'prayResident', 'sendToPrayer', 'cancelPrayer'].includes(action.type)) return null;
+  if (action.type === 'cancelPrayer') return { ok: false, message: 'An ongoing prayer includes the journey Home and cannot be cancelled.' };
+  settleResidentEvents(state);
+  const ids = Array.isArray(action.residentIds) ? action.residentIds : action.residentId !== undefined ? [action.residentId] : null;
+  const quote = residentPrayerQuote(state, ids);
+  if (!quote.ok) return quote;
+  state.resources.coins -= quote.coins;
+  for (const id of quote.residentIds) {
+    const person = state.residents.find(item => item.id === id);
+    person.prayerVersion = PRAYER_RULES.version; person.prayerRemaining = quote.duration;
+    person.prayerDuration = quote.duration; person.prayerRewardPending = true;
+    person.arrivalRemaining = 0; person.returnRemaining = 0; person.returnFrom = null;
+  }
+  emit(state, 'prayer-started', 'Prayer started', `${quote.residentIds.length} residents are on their way to the Chapel. The duration includes both journeys; after returning they receive 50 happiness points for six hours.`);
+  return { ...quote, message: 'Residents sent to prayer.', count: quote.residentIds.length };
+}
+
+
 export function adjustResidentHappiness(state, amount, residentIds = null) {
   const selected = residentIds ? new Set(residentIds) : null;
   for (const person of state.residents) {

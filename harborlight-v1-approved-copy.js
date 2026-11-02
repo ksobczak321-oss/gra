@@ -1,6 +1,9 @@
 // Approved presentation copy only. No world state, timers or rewards are mutated.
-// User revision: 2026-11-01. Native PL/EN share stable game IDs.
-export const APPROVED_TOUR_IDS = Object.freeze(["home", "level", "happiness", "coins", "working", "arrival", "points", "population", "clock", "tasks", "expeditions", "building-townhall", "building-house", "building-farm", "building-windmill", "building-quarry", "building-lumber", "building-sawmill", "building-warehouse", "building-market", "building-dock", "building-chapel", "building-lighthouse", "ship", "category-administration", "category-economy", "category-resources", "category-decorations", "category-paths", "tutorial", "chat", "notifications", "settings", "menu"]);
+// User revision: 2026-11-02. Native PL/EN share stable game IDs.
+// Numeric legacy tour positions migrate once through the retained stable IDs.
+export const APPROVED_TOUR_VERSION = 2;
+export const LEGACY_TOUR_IDS = Object.freeze(["home", "level", "happiness", "coins", "working", "arrival", "points", "population", "clock", "tasks", "expeditions", "building-townhall", "building-house", "building-farm", "building-windmill", "building-quarry", "building-lumber", "building-sawmill", "building-warehouse", "building-market", "building-dock", "building-chapel", "building-lighthouse", "ship", "category-administration", "category-economy", "category-resources", "category-decorations", "category-paths", "tutorial", "chat", "notifications", "settings", "menu"]);
+export const APPROVED_TOUR_IDS = Object.freeze(["home", "level", "happiness", "coins", "working", "arrival", "points", "population", "tasks", "expeditions", "building-townhall", "building-house", "building-farm", "building-windmill", "building-quarry", "building-lumber", "building-sawmill", "building-warehouse", "building-market", "building-dock", "building-chapel", "building-lighthouse", "ship", "category-administration", "category-economy", "category-resources", "category-decorations", "category-paths", "tutorial", "chat", "notifications", "settings", "menu"]);
 export const TOUR_COPY = Object.freeze({
   "home": {
     "pl": {
@@ -25,11 +28,11 @@ export const TOUR_COPY = Object.freeze({
   "happiness": {
     "pl": {
       "title": "Szczęście mieszkańców",
-      "text": "Dbaj o pracę i jedzenie mieszkańców. Atrakcje i błogosławieństwa dodatkowo zwiększają ich szczęście. Od szczęścia populacji zależy tempo przybywania nowych osadników. Nieszczęśliwi mieszkańcy opuszczają wyspę.\n\nPraca i jedzenie dają mieszkańcowi łącznie +2 punkty procentowe szczęścia na godzinę. Brak pracy i jedzenia z czasem obniża jego szczęście."
+      "text": "Zadbaj o szczęście swoich mieszkańców, zapewniając im pożywienie, miejsca pracy, dodatkowe atrakcje i błogosławieństwa. Od poziomu szczęścia populacji zależy tempo przybywania nowych osadników. Praca i pożywienie dają mieszkańcowi łącznie 2 punkty szczęścia na godzinę. Brak pracy lub pożywienia z czasem obniża szczęście, a nieszczęśliwi mieszkańcy opuszczają wyspę. O północy czasu Warszawy każdy mieszkaniec traci 1 punkt szczęścia."
     },
     "en": {
       "title": "Residents’ happiness",
-      "text": "Provide work and food. Attractions and blessings add happiness. Population happiness controls how quickly settlers arrive; unhappy residents leave. Work and food together add 2 percentage points of happiness per resident per hour. Unemployment and hunger lower happiness over time."
+      "text": "Care for your residents’ happiness by providing food, jobs, attractions and blessings. Population happiness controls how quickly new settlers arrive. Work and food together give each resident 2 happiness points per hour. Unemployment or hunger lowers happiness over time, and unhappy residents leave the island. Each resident loses 1 happiness point at Warsaw midnight."
     }
   },
   "coins": {
@@ -55,11 +58,11 @@ export const TOUR_COPY = Object.freeze({
   "arrival": {
     "pl": {
       "title": "Następny mieszkaniec",
-      "text": "Tu zobaczysz przewidywany czas przybycia lub odejścia mieszkańca przy obecnym szczęściu. Dla nowych osób potrzebujesz wolnych miejsc w limicie Ratusza. Zadbaj także o łóżka w Domu. Zmiana szczęścia wpływa na tempo przyrostu populacji."
+      "text": "Tu zobaczysz przewidywany czas przybycia lub odejścia mieszkańca przy obecnym poziomie szczęścia. Dla nowych osób potrzebujesz wolnych miejsc w limicie wyznaczonym przez poziom Ratusza. Zadbaj także o wolne łóżka w Domu, bo wypoczęty pracownik jest szczęśliwszy. Zmiana poziomu szczęścia wpływa na tempo przyrostu populacji."
     },
     "en": {
       "title": "Next resident",
-      "text": "This estimates the next arrival or departure at the current happiness. New residents need space within the Town Hall population limit. Provide beds in the House too. Happiness changes the rate of population growth."
+      "text": "This estimates the next resident’s arrival or departure at the current happiness level. New residents need free places within the population limit set by the Town Hall level. Provide free beds in the House too: rested workers are happier. Changes in happiness affect population growth."
     }
   },
   "points": {
@@ -125,61 +128,61 @@ export const TOUR_COPY = Object.freeze({
   "building-house": {
     "pl": {
       "title": "Dom",
-      "text": "Dom zapewnia mieszkańcom własny kąt i miejsce odpoczynku po pracy. Ratusz wyznacza maksymalną liczbę mieszkańców wyspy, a Dom liczbę miejsc do zamieszkania. Codzienne punkty szczęścia otrzymują mieszkańcy mający miejsce w Domu. Osoby bez swojego kąta pracują dwa razy wolniej i jedzą dwa razy więcej. Przyciskiem „Zarządzaj pracownikami” otworzysz przydziały do wszystkich miejsc pracy."
+      "text": "Dom zapewnia mieszkańcom własny kąt i miejsce odpoczynku po pracy. Ratusz wyznacza maksymalną liczbę mieszkańców wyspy, a Dom liczbę miejsc do zamieszkania. Punkty szczęścia z Domu możesz zachować z maksymalnie siedmiu dób i rozdać zbiorowo uprawnionym mieszkańcom mającym łóżko. Osoby bez swojego kąta pracują dwa razy wolniej i jedzą dwa razy więcej. Przyciskiem „Zarządzaj pracownikami” otworzysz przydziały do wszystkich miejsc pracy."
     },
     "en": {
       "title": "House",
-      "text": "The House gives residents a place of their own and somewhere to rest after work. The Town Hall sets the island’s population limit; the House determines how many residents have housing. Daily House happiness points are available to housed residents. Residents without housing work at half speed and eat twice as much. Select Manage workers to see assignments for every workplace."
+      "text": "The House gives residents a place of their own and somewhere to rest after work. The Town Hall sets the population limit, while the House provides housing. Save up to seven daily portions of House happiness points and share them with all eligible housed residents. Residents without housing work at half speed and eat twice as much. Manage workers opens assignments for every workplace."
     }
   },
   "building-farm": {
     "pl": {
       "title": "Gospodarstwo",
-      "text": "Zatrudnij rolników, by zbierali zboże. Młyn przerobi je później na jedzenie dla mieszkańców. Jeśli magazyn przy budynku jest pełny, nad budynkiem pojawia się smutna buźka."
+      "text": "Zatrudnij rolników, by zbierali zboże. Młyn przerobi je później na jedzenie dla mieszkańców. Jeśli magazyn przy budynku jest pełny, nad budynkiem pojawia się smutna buźka. Aby zwolnić miejsce, zapewnij odbiór towarów przez tragarzy. Otwórz Magazyn i przydziel mieszkańców do pracy. Możesz również zwiększyć priorytet przewozu danego towaru w szczegółach Magazynu. Upewnij się, że magazyn centralny ma miejsce na dostawę. Zobacz lekcję 11 samouczka: przydzielanie tragarzy i ustawianie priorytetu odbioru towarów. Możesz też skorzystać z natychmiastowego transportu za monety."
     },
     "en": {
       "title": "Farm",
-      "text": "Assign farmers to grow Grain. The Windmill can turn it into Food for residents. A sad face appears above the building when its local store is full."
+      "text": "Assign farmers to grow Grain. The Windmill can turn it into Food for residents. A sad face appears above the building when its local store is full. To free space, assign Warehouse carriers to collect the goods. You can also give that material a higher transport priority in the Warehouse details. Make sure central storage has room for the delivery. See practical lesson 11 for assigning carriers and prioritizing product collection. Instant transport for coins is also available."
     }
   },
   "building-windmill": {
     "pl": {
       "title": "Młyn",
-      "text": "Przydziel młynarzy i zadbaj o zapas zboża w magazynie centralnym. Z dwóch jednostek zboża powstaje jedna jednostka żywności. Jeśli magazyn przy budynku jest pełny, nad budynkiem pojawia się smutna buźka."
+      "text": "Przydziel młynarzy i zadbaj o zapas zboża w magazynie centralnym. Z dwóch jednostek zboża powstaje jedna jednostka żywności. Jeśli magazyn przy budynku jest pełny, nad budynkiem pojawia się smutna buźka. Aby zwolnić miejsce, zapewnij odbiór towarów przez tragarzy. Otwórz Magazyn i przydziel mieszkańców do pracy. Możesz również zwiększyć priorytet przewozu danego towaru w szczegółach Magazynu. Upewnij się, że magazyn centralny ma miejsce na dostawę. Zobacz lekcję 11 samouczka: przydzielanie tragarzy i ustawianie priorytetu odbioru towarów. Możesz też skorzystać z natychmiastowego transportu za monety."
     },
     "en": {
       "title": "Windmill",
-      "text": "Assign millers and keep Grain in the central warehouse. Two units of Grain make one unit of Food. A sad face appears above the building when its local store is full."
+      "text": "Assign millers and keep Grain in the central warehouse. Two units of Grain make one unit of Food. A sad face appears above the building when its local store is full. To free space, assign Warehouse carriers to collect the goods. You can also give that material a higher transport priority in the Warehouse details. Make sure central storage has room for the delivery. See practical lesson 11 for assigning carriers and prioritizing product collection. Instant transport for coins is also available."
     }
   },
   "building-quarry": {
     "pl": {
       "title": "Kamieniołom",
-      "text": "Przydziel tu mieszkańców, aby wydobywali kamień. Przyda Ci się do rozbudowy budynków i ulepszania ścieżek. Jeśli magazyn przy budynku jest pełny, nad budynkiem pojawia się smutna buźka."
+      "text": "Przydziel tu mieszkańców, aby wydobywali kamień. Przyda Ci się do rozbudowy budynków i ulepszania ścieżek. Jeśli magazyn przy budynku jest pełny, nad budynkiem pojawia się smutna buźka. Aby zwolnić miejsce, zapewnij odbiór towarów przez tragarzy. Otwórz Magazyn i przydziel mieszkańców do pracy. Możesz również zwiększyć priorytet przewozu danego towaru w szczegółach Magazynu. Upewnij się, że magazyn centralny ma miejsce na dostawę. Zobacz lekcję 11 samouczka: przydzielanie tragarzy i ustawianie priorytetu odbioru towarów. Możesz też skorzystać z natychmiastowego transportu za monety."
     },
     "en": {
       "title": "Quarry",
-      "text": "Assign workers to extract Stone for building upgrades and paths. A sad face appears above the building when its local store is full."
+      "text": "Assign workers to extract Stone for building upgrades and paths. A sad face appears above the building when its local store is full. To free space, assign Warehouse carriers to collect the goods. You can also give that material a higher transport priority in the Warehouse details. Make sure central storage has room for the delivery. See practical lesson 11 for assigning carriers and prioritizing product collection. Instant transport for coins is also available."
     }
   },
   "building-lumber": {
     "pl": {
       "title": "Drwale",
-      "text": "Zatrudnij drwali, by zbierali drewno. Wykorzystasz je do budowy albo przerobisz w Tartaku. Jeśli magazyn przy budynku jest pełny, nad budynkiem pojawia się smutna buźka."
+      "text": "Zatrudnij drwali, by zbierali drewno. Wykorzystasz je do budowy albo przerobisz w Tartaku. Jeśli magazyn przy budynku jest pełny, nad budynkiem pojawia się smutna buźka. Aby zwolnić miejsce, zapewnij odbiór towarów przez tragarzy. Otwórz Magazyn i przydziel mieszkańców do pracy. Możesz również zwiększyć priorytet przewozu danego towaru w szczegółach Magazynu. Upewnij się, że magazyn centralny ma miejsce na dostawę. Zobacz lekcję 11 samouczka: przydzielanie tragarzy i ustawianie priorytetu odbioru towarów. Możesz też skorzystać z natychmiastowego transportu za monety."
     },
     "en": {
       "title": "Lumber Camp",
-      "text": "Assign lumberjacks to gather Wood for construction and processing at the Sawmill. A sad face appears above the building when its local store is full."
+      "text": "Assign lumberjacks to gather Wood for construction and processing at the Sawmill. A sad face appears above the building when its local store is full. To free space, assign Warehouse carriers to collect the goods. You can also give that material a higher transport priority in the Warehouse details. Make sure central storage has room for the delivery. See practical lesson 11 for assigning carriers and prioritizing product collection. Instant transport for coins is also available."
     }
   },
   "building-sawmill": {
     "pl": {
       "title": "Tartak",
-      "text": "Przydziel pracowników i zapewnij im drewno w magazynie centralnym. Z dwóch jednostek drewna wyprodukują jedną deskę do budowy. Jeśli magazyn przy budynku jest pełny, nad budynkiem pojawia się smutna buźka."
+      "text": "Przydziel pracowników i zapewnij im drewno w magazynie centralnym. Z dwóch jednostek drewna wyprodukują jedną deskę do budowy. Jeśli magazyn przy budynku jest pełny, nad budynkiem pojawia się smutna buźka. Aby zwolnić miejsce, zapewnij odbiór towarów przez tragarzy. Otwórz Magazyn i przydziel mieszkańców do pracy. Możesz również zwiększyć priorytet przewozu danego towaru w szczegółach Magazynu. Upewnij się, że magazyn centralny ma miejsce na dostawę. Zobacz lekcję 11 samouczka: przydzielanie tragarzy i ustawianie priorytetu odbioru towarów. Możesz też skorzystać z natychmiastowego transportu za monety."
     },
     "en": {
       "title": "Sawmill",
-      "text": "Assign workers and keep Wood in the central warehouse. Two units of Wood make one Plank for construction. A sad face appears above the building when its local store is full."
+      "text": "Assign workers and keep Wood in the central warehouse. Two units of Wood make one Plank for construction. A sad face appears above the building when its local store is full. To free space, assign Warehouse carriers to collect the goods. You can also give that material a higher transport priority in the Warehouse details. Make sure central storage has room for the delivery. See practical lesson 11 for assigning carriers and prioritizing product collection. Instant transport for coins is also available."
     }
   },
   "building-warehouse": {
@@ -235,11 +238,11 @@ export const TOUR_COPY = Object.freeze({
   "ship": {
     "pl": {
       "title": "Statek i handel",
-      "text": "Kliknij statek, aby otworzyć handel w Porcie."
+      "text": "Statek prowadzi do handlu w Porcie. Kupowane i sprzedawane materiały potrzebują transportu — sama transakcja nie zastępuje dostawy."
     },
     "en": {
       "title": "Ship and trade",
-      "text": "Select the ship to open Harbor trade."
+      "text": "The ship opens Harbor trade. Bought and sold materials need transport: completing a transaction does not deliver the goods."
     }
   },
   "category-administration": {
@@ -255,7 +258,7 @@ export const TOUR_COPY = Object.freeze({
   "category-economy": {
     "pl": {
       "title": "Gospodarka",
-      "text": "Tutaj wybierasz budynki produkujące i przetwarzające zasoby. Przydzieleni mieszkańcy wytwarzają towary, a tragarze Magazynu odbierają gotowe zapasy i dostarczają je do centrali."
+      "text": "Tutaj możesz zobaczyć budynki produkujące i przetwarzające zasoby. Przydzieleni mieszkańcy wytwarzają towary, a tragarze Magazynu odbierają gotowe zapasy i dostarczają je do centrali."
     },
     "en": {
       "title": "Economy",
@@ -275,31 +278,31 @@ export const TOUR_COPY = Object.freeze({
   "category-decorations": {
     "pl": {
       "title": "Dekoracje i atrakcje",
-      "text": "To pojedyncze zdarzenia — dają czasowe premie do szczęścia za monety. Przed zakupem sprawdź cenę, objętych premią mieszkańców i czas trwania efektu."
+      "text": "To pojedyncze zdarzenia — dają czasowe premie do szczęścia. Możesz je kupić za monety. Przed zakupem sprawdź cenę, objętych premią mieszkańców i czas trwania efektu."
     },
     "en": {
       "title": "Decorations and attractions",
-      "text": "These individual events grant temporary happiness benefits for coins. Check the price, affected residents and effect duration before buying."
+      "text": "These individual events grant temporary happiness benefits. You can buy them with coins. Check the price, affected residents and effect duration before buying."
     }
   },
   "category-paths": {
     "pl": {
       "title": "Ścieżki",
-      "text": "Ulepszanie ścieżek kosztuje kamień i usprawnia przewóz towarów. Ukończ wszystkie odcinki bieżącego poziomu, aby otrzymać premię i przejść do następnego poziomu ścieżek."
+      "text": "Do ulepszania ścieżek potrzebujesz kamienia. Lepsze ścieżki to sprawniejszy przewóz towarów."
     },
     "en": {
       "title": "Paths",
-      "text": "Path upgrades cost Stone and improve goods transport. Complete every section of the current level to receive its benefit and unlock the next path level."
+      "text": "You need Stone to upgrade paths. Better paths make goods transport more efficient."
     }
   },
   "tutorial": {
     "pl": {
       "title": "Pomoc",
-      "text": "Pod znakiem zapytania znajdziesz dwie opcje: „Wznów samouczek” i „Wznów tutorial”. Samouczek prowadzi przez 25 praktycznych lekcji, a tutorial objaśnia ekran gry. Po przerwaniu wrócisz do zapamiętanego miejsca; Twój postęp i odebrane nagrody pozostają zachowane."
+      "text": "Pod znakiem zapytania znajdziesz dwie ramki. „Wznów tutorial” otwiera przewodnik po interfejsie i zasadach gry. „Wznów samouczek” prowadzi przez pierwsze 25 praktycznych lekcji. Możesz wrócić do przerwanego miejsca albo zacząć od początku, zachowując postęp i odebrane nagrody."
     },
     "en": {
       "title": "Help",
-      "text": "The question mark contains two options: Resume practical tutorial and Resume tutorial. The practical tutorial teaches 25 lessons through real actions; the tutorial explains the game screen. Resume either from where you stopped, keeping your progress and collected rewards."
+      "text": "The question mark contains two cards. Resume tutorial opens the guide to the interface and game rules. Resume practical tutorial teaches the first 25 lessons through real actions. Resume where you stopped or start from the beginning, keeping your progress and collected rewards."
     }
   },
   "chat": {
@@ -468,7 +471,7 @@ export const LESSON_COPY = Object.freeze({
   "house-points": {
     "pl": {
       "title": "Powiększ Magazyn",
-      "description": "Znajdź Dom i przekaż dostępne punkty szczęścia mieszkańcom mającym w nim miejsce. Możesz wybrać konkretną osobę albo skorzystać z rozdania wszystkim uprawnionym. Pula odnawia się o północy czasu warszawskiego, a po wykonaniu działania pokażemy jego wpływ na szczęście."
+      "description": "Znajdź Magazyn i zleć rozbudowę do poziomu 2. Łączna pojemność zwykłych dostaw wzrośnie z 4000 do 6000 jednostek. Każdy materiał ma osobny limit; szczegóły znajdziesz pod symbolem „i”."
     },
     "en": {
       "title": "Expand the Warehouse",
@@ -478,11 +481,11 @@ export const LESSON_COPY = Object.freeze({
   "personal-happiness": {
     "pl": {
       "title": "Znajdź Dom i rozdaj punkty szczęścia",
-      "description": "Znajdź Dom i przekaż mieszkańcom dostępne punkty szczęścia. Możesz wybrać konkretną osobę albo skorzystać z rozdania wszystkim. Pula odnawia się o północy czasu warszawskiego, a po wykonaniu działania pokażemy jego wpływ na szczęście."
+      "description": "Znajdź Dom i przekaż zgromadzone punkty szczęścia wszystkim uprawnionym mieszkańcom. Zachowujesz maksymalnie siedem porcji dobowych, naliczanych na koniec dnia Warszawy według liczby mieszkańców mających łóżko. Po rozdaniu pokażemy wpływ punktów na szczęście."
     },
     "en": {
       "title": "Find the House and share happiness points",
-      "description": "Find the House and allocate its available happiness points. Choose an eligible housed resident or share with everyone eligible. The pool renews at Warsaw midnight. After the action, we will show its effect on happiness."
+      "description": "Find the House and share its saved happiness points with all eligible residents. Save up to seven daily portions, credited at the end of each Warsaw day according to the number of housed residents. After sharing, we will show the effect on happiness."
     }
   },
   "upgrade-cost": {
@@ -578,11 +581,11 @@ export const LESSON_COPY = Object.freeze({
   "returning-workers": {
     "pl": {
       "title": "Zobacz, jak Latarnia znów rozświetla wyspę",
-      "description": "Poczekaj na zakończenie dostaw i odbudowy Latarni. Po ukończeniu prac wskażemy jej nowy poziom oraz premię: szczęście wszystkich mieszkańców wyniesie 100% przez pokazany czas. Sprawdź, jak wspólny wysiłek zmienił Twoją wyspę."
+      "description": "Poczekaj na zakończenie dostaw i odbudowy Latarni. Po ukończeniu prac wskażemy jej nowy poziom oraz premię: szczęście wszystkich mieszkańców wyniesie 100 punktów przez pokazany czas. Sprawdź, jak wspólny wysiłek zmienił Twoją wyspę."
     },
     "en": {
       "title": "See the Lighthouse illuminate the island again",
-      "description": "Wait for Lighthouse deliveries and restoration to finish. We will point to its new level and benefit: every resident has 100% happiness for the displayed duration. See how your joint effort has changed the island."
+      "description": "Wait for Lighthouse deliveries and restoration to finish. We will point to its new level and benefit: every resident has 100 happiness points for the displayed duration. See how your joint effort has changed the island."
     }
   },
   "island-review": {
@@ -596,6 +599,51 @@ export const LESSON_COPY = Object.freeze({
     }
   }
 });
+// New practical curriculum uses the same stable lesson IDs; v5 keeps its goals.
+export const LESSON_COPY_V6 = Object.freeze({
+  ...LESSON_COPY,
+  "island-map": {
+    "pl": {
+      "title": "Znajdź Magazyn i przydziel trzech tragarzy",
+      "description": "Znajdź Magazyn na mapie i przyciskiem „+” przydziel trzech tragarzy. Otrzymasz nagrodę po przydzieleniu trzeciej osoby. Tragarze dotrą do pracy w ciągu 2 minut i zadbają o sprawne dostawy materiałów. Pozostałych mieszkańców możesz przydzielić do innych prac."
+    },
+    "en": {
+      "title": "Find the Warehouse and assign three carriers",
+      "description": "Find the Warehouse on the map and use + to assign three carriers. You receive the reward after assigning the third resident. Carriers reach work within 2 minutes and help materials flow smoothly. The remaining residents are available for other jobs."
+    }
+  },
+  "townhall-upgrade": {
+    "pl": {
+      "title": "Rozbuduj Ratusz i poznaj przyspieszenia",
+      "description": "Znajdź Ratusz i zleć rozbudowę do poziomu 2. Sprawdzisz osobno czas dostawy i czas budowania. Najpierw skorzystaj z natychmiastowego transportu za monety, a po dostarczeniu materiałów skróć budowę o 100%. Strzałki wskażą właściwe przyciski i potwierdzenie ceny. Potrzebne materiały i monety przygotowują nagrody wcześniejszych lekcji."
+    },
+    "en": {
+      "title": "Upgrade the Town Hall and learn speed-ups",
+      "description": "Find the Town Hall and order level 2. Check delivery and building times separately. First use instant transport for coins; once the materials arrive, shorten construction by 100%. Arrows show each control and price confirmation. Earlier lesson rewards prepare the required materials and coins."
+    }
+  },
+  "storage-limits": {
+    "pl": {
+      "title": "Usprawnij odbiór towarów",
+      "description": "Wróć do Magazynu i przydziel kolejnego tragarza. Następnie otwórz „Więcej o budynku” i w priorytetach transportu zaznacz „Zboże”, zachowując wcześniej ustawioną „Budowę”. Tragarze będą częściej odbierać ten towar z Gospodarstwa. Pamiętaj, że magazyn centralny musi mieć miejsce na dostawę."
+    },
+    "en": {
+      "title": "Improve product collection",
+      "description": "Return to the Warehouse and assign another carrier. Open More about this building and add Grain to transport priorities, keeping Construction selected. Carriers will collect Grain from the Farm more often. Central storage must have room for the delivery."
+    }
+  },
+  "construction-queue": {
+    "pl": {
+      "title": "Kup rozbudowę Gospodarstwa za monety",
+      "description": "Znajdź Gospodarstwo i otwórz opcje ulepszenia. Wybierz „Kup rozbudowę”, sprawdź cenę i potwierdź zakup za monety. Pełny zakup obejmuje materiały i transport, a budynek będzie gotowy po 10 sekundach. Korzystasz z jednej metody rozbudowy, bez wcześniejszego opłacania zwykłego zlecenia."
+    },
+    "en": {
+      "title": "Buy the Farm upgrade with coins",
+      "description": "Find the Farm and open its upgrade options. Choose Buy upgrade, check the price and confirm the coin purchase. The full purchase includes materials and transport, and finishes after 10 seconds. Use this single upgrade method without paying for an ordinary order first."
+    }
+  }
+});
+
 const INTRO_COPY = {
   "pl": {
     "title": "Twoja wyspa, Twoje decyzje",
@@ -626,8 +674,8 @@ export const UI_COPY = Object.freeze({
     "en": "The Lighthouse is the heart of the island and one of its main development goals. Grow production, prepare supplies and involve residents in new missions to restore its light. A completed upgrade improves every resident’s happiness for a while and doubles material production. Residents also enjoy visiting it and return with a happiness benefit."
   },
   "houseDescription": {
-    "pl": "Dom zapewnia mieszkańcom własny kąt i miejsce odpoczynku po pracy. Wypoczęci pracownicy są szczęśliwsi. Rozbudowuj go, gdy osada potrzebuje więcej miejsc do zamieszkania. Przyciskiem „Zarządzaj pracownikami” sprawdzisz przydziały do wszystkich miejsc pracy. Mieszkańcy bez miejsca w Domu pracują dwa razy wolniej i jedzą dwa razy więcej. Codzienna pula szczęścia z Domu obejmuje tylko mieszkańców mających w nim miejsce.",
-    "en": "The House gives residents a place of their own and somewhere to rest after work. Rested workers are happier. Expand it when the settlement needs more housing. Manage workers opens assignments for every workplace. Residents without housing work at half speed and eat twice as much. The House’s daily happiness pool is available only to housed residents."
+    "pl": "Dom zapewnia mieszkańcom własny kąt i miejsce odpoczynku po pracy. Rozbudowuj go, gdy osada potrzebuje więcej miejsc do zamieszkania. Przyciskiem „Zarządzaj pracownikami” sprawdzisz przydziały do wszystkich miejsc pracy. Mieszkańcy bez miejsca w Domu pracują dwa razy wolniej i jedzą dwa razy więcej. Dobowe porcje szczęścia obejmują tylko mieszkańców mających łóżko; możesz zachować maksymalnie siedem porcji i rozdawać punkty zbiorowo.",
+    "en": "The House gives residents housing and somewhere to rest after work. Expand it when the settlement needs more homes. Manage workers opens assignments for every workplace. Residents without housing work at half speed and eat twice as much. Daily happiness portions count only housed residents; save up to seven portions and share the points collectively."
   },
   "workersDescription": {
     "pl": "Wybierz miejsce pracy i zmieniaj obsadę przyciskami „+” i „−”. Mieszkaniec potrzebuje 2 minut, aby dojść z Domu do pracy. Po odwołaniu powrót do Domu również trwa 2 minuty. Do kolejnego zadania możesz go przydzielić, gdy wróci na miejsce.\n\nTragarz z ładunkiem najpierw kończy rozpoczętą dostawę. Dopiero potem rozpoczyna powrót do Domu.",
@@ -642,8 +690,8 @@ export const UI_COPY = Object.freeze({
     "en": "Help"
   },
   "helpDescription": {
-    "pl": "Samouczek prowadzi przez praktyczne działania, a tutorial objaśnia ekran gry. Wybierz, do czego chcesz wrócić.",
-    "en": "The practical tutorial teaches you through actions; the tutorial explains the game screen. Choose which one to resume."
+    "pl": "Wybierz jedną z dwóch ramek: tutorial objaśnia interfejs i zasady gry, a samouczek prowadzi przez pierwsze 25 praktycznych lekcji.",
+    "en": "Choose one of the two cards: the tutorial explains the interface and rules, while the practical tutorial teaches the first 25 lessons through real actions."
   },
   "resumePractical": {
     "pl": "Wznów samouczek",
@@ -758,24 +806,24 @@ export const UI_COPY = Object.freeze({
     "en": "The Town Hall has reached level {level}, increasing the island’s population limit. Its new level is shown here."
   },
   "lighthouseChanged": {
-    "pl": "Latarnia znów świeci! Szczęście wszystkich mieszkańców wynosi teraz 100% przez {time}, a produkcja materiałów jest dwukrotnie większa.",
-    "en": "The Lighthouse shines again! Every resident has 100% happiness for {time}, and material production is doubled."
+    "pl": "Latarnia znów świeci! Szczęście wszystkich mieszkańców wynosi teraz 100 punktów przez {time}, a produkcja materiałów jest dwukrotnie większa.",
+    "en": "The Lighthouse shines again! Every resident has 100 happiness points for {time}, and material production is doubled."
   },
   "happinessChanged": {
-    "pl": "Punkty szczęścia przekazane. Szczęście mieszkańców: {before}% → {after}%.",
-    "en": "Happiness points allocated. Residents’ happiness: {before}% → {after}%."
+    "pl": "Punkty szczęścia przekazane. Szczęście mieszkańców: {before} → {after} punktów.",
+    "en": "Happiness points shared. Residents’ happiness: {before} → {after} points."
   },
   "happinessAllocated": {
-    "pl": "Wybrani mieszkańcy otrzymali punkty szczęścia. Szczegóły znajdziesz w Domu.",
-    "en": "The selected residents received happiness points. Check the House for details."
+    "pl": "Uprawnieni mieszkańcy otrzymali punkty szczęścia. Szczegóły znajdziesz w Domu.",
+    "en": "Eligible residents received happiness points. Check the House for details."
   },
   "effectActive": {
     "pl": "{effect} działa. Premia: {value}. Pozostały czas: {time}.",
     "en": "{effect} is active. Benefit: {value}. Time remaining: {time}."
   },
   "happinessAlreadyMaximum": {
-    "pl": "Mieszkańcy korzystają już ze szczęścia 100%. Nową premię zobaczysz na liście aktywnych efektów.",
-    "en": "Residents already have 100% happiness. The new benefit is shown in active effects."
+    "pl": "Mieszkańcy mają już 100 punktów szczęścia. Nową premię zobaczysz na liście aktywnych efektów.",
+    "en": "Residents already have 100 happiness points. The new benefit is shown in active effects."
   },
   "constructionShortened": {
     "pl": "Budowa została skrócona o {minutes} min {seconds} s. Do ukończenia pozostało {time}.",
@@ -836,8 +884,30 @@ export const UI_COPY = Object.freeze({
   "chatUnavailable": {
     "pl": "Czat jest jeszcze niedostępny w tym środowisku. Gdy usługa zostanie uruchomiona, porozmawiasz tutaj prywatnie lub na czacie sojuszu.",
     "en": "Chat is not available in this environment yet. Once the service is enabled, you can talk privately or with your alliance here."
+  },
+  "resumeTourDescription": {
+    "pl": "Przewodnik po interfejsie i zasadach gry. Wróć do przerwanego miejsca albo obejrzyj od początku.",
+    "en": "A guide to the interface and game rules. Resume where you stopped or explore from the beginning."
+  },
+  "resumePracticalDescription": {
+    "pl": "Pierwsze 25 praktycznych lekcji gry. Wróć do działania, na którym skończyłeś, albo przejrzyj lekcje od początku.",
+    "en": "The first 25 practical game lessons. Resume the action you stopped at or review the lessons from the beginning."
   }
 });
+/** Migrate v1 numeric positions once, using IDs rather than a blind shift.
+ * A pause at the removed clock continues at Tasks; a later pause keeps the
+ * same visible step. Persist APPROVED_TOUR_VERSION with the returned index.
+ */
+export function normalizeTourProgressIndex(index = 0, routeVersion = 1) {
+  const safeIndex = Number.isSafeInteger(index) && index >= 0 ? index : 0;
+  if (routeVersion >= APPROVED_TOUR_VERSION) return Math.min(safeIndex, APPROVED_TOUR_IDS.length - 1);
+  const sourceIndex = Math.min(safeIndex, LEGACY_TOUR_IDS.length - 1);
+  for (let i = sourceIndex; i < LEGACY_TOUR_IDS.length; i++) {
+    const currentIndex = APPROVED_TOUR_IDS.indexOf(LEGACY_TOUR_IDS[i]);
+    if (currentIndex >= 0) return currentIndex;
+  }
+  return APPROVED_TOUR_IDS.length - 1;
+}
 
 const lang = value => value === 'pl' ? 'pl' : 'en';
 export function introCopy(language = 'pl') {
@@ -845,9 +915,10 @@ export function introCopy(language = 'pl') {
   return { title: copy.title, paragraphs: [...copy.paragraphs] };
 }
 export const approvedIntroText = introCopy;
-export function lessonCopy(id, language = 'pl', { curriculum = 5 } = {}) {
-  if (curriculum !== 5 || !Object.hasOwn(LESSON_COPY, id)) return null;
-  return { ...LESSON_COPY[id][lang(language)] };
+export function lessonCopy(id, language = 'pl', { curriculum = 6 } = {}) {
+  const source = curriculum === 6 ? LESSON_COPY_V6 : curriculum === 5 ? LESSON_COPY : null;
+  if (!source || !Object.hasOwn(source, id)) return null;
+  return { ...source[id][lang(language)] };
 }
 export function uiCopy(key, language = 'pl', variables = {}) {
   const copy = UI_COPY[key]?.[lang(language)] || '';
@@ -893,5 +964,6 @@ export function getTourCopy(id, language = 'pl', options = {}) {
 export const APPROVED_TRANSLATIONS = Object.freeze(Object.fromEntries([
   ...Object.entries(TOUR_COPY).flatMap(([id, copy]) => [...(id === 'building-lighthouse' ? [] : [[copy.en.title, copy.pl.title]]), ...(copy.en.text ? [[copy.en.text, copy.pl.text]] : [])]),
   ...Object.values(LESSON_COPY).flatMap(copy => [[copy.en.title, copy.pl.title], [copy.en.description, copy.pl.description]]),
+  ...Object.values(LESSON_COPY_V6).flatMap(copy => [[copy.en.title, copy.pl.title], [copy.en.description, copy.pl.description]]),
   ...Object.values(UI_COPY).map(copy => [copy.en, copy.pl])
 ]));

@@ -11,6 +11,7 @@ import os
 from pathlib import Path
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import acknowledge_daily_offer
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -27,6 +28,7 @@ def snapshot(page):
 
 
 def install(page, value):
+    acknowledge_daily_offer(value)
     page.evaluate('(value)=>sessionStorage.setItem(%s,JSON.stringify(value))' % json.dumps(RELAY), value)
     page.reload()
     page.wait_for_function('document.getElementById("loading").hidden && !!window.__HARBORLIGHT_DEV_STATE__')

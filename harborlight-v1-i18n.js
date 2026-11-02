@@ -1,11 +1,34 @@
-import { APPROVED_TRANSLATIONS } from './harborlight-v1-approved-copy.js?v=frontend-v27';
-import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v27';
+import { APPROVED_TRANSLATIONS } from './harborlight-v1-approved-copy.js?v=frontend-v28';
+import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v28';
 
 /** English is the source language. Polish strings are presentation only: saves,
  * identifiers, action payloads and user-entered values are never translated. */
 export const SUPPORTED_LANGUAGES = Object.freeze(['en', 'pl']);
 export const locale = language => language === 'pl' ? 'pl-PL' : 'en-US';
 export const formatNumber = (value, language = 'en', options = {}) => new Intl.NumberFormat(locale(language), options).format(Number.isFinite(Number(value)) ? Number(value) : 0);
+export function formatHappinessPoints(value, language = 'en', { signed = false } = {}) {
+  const n = Number.isFinite(Number(value)) ? Number(value) : 0;
+  const absolute = Math.round(Math.abs(n) * 100) / 100, integer = Math.round(absolute);
+  const word = language === 'pl' ? !Number.isInteger(absolute) ? 'punktu' : absolute === 1 ? 'punkt' : integer % 10 >= 2 && integer % 10 <= 4 && !(integer % 100 >= 12 && integer % 100 <= 14) ? 'punkty' : 'punktów' : absolute === 1 ? 'point' : 'points';
+  const sign = absolute && n < 0 ? '−' : absolute && signed && n > 0 ? '+' : '';
+  return `${sign}${formatNumber(absolute, language, { maximumFractionDigits: 2 })} ${word}`;
+}
+const happinessNumber = value => Number(String(value).replace(/[\s\u00a0\u202f]/g, '').replace('−', '-').replace(',', '.'));
+const happinessPoints = value => formatHappinessPoints(happinessNumber(value), 'pl', { signed: value.startsWith('+') });
+/** Presentation migration only: percentages for prices, output and capacity are
+ * intentionally untouched. Historical happiness aliases remain readable. */
+export function polishHappinessUnits(value) {
+  return String(value)
+    // pp is a historical alias used only for happiness. It may also occur in
+    // value-only controls or before a recipient count, without the noun nearby.
+    .replace(/([+−-]?\d+(?:[\u00a0\u202f ]\d{3})*(?:[.,]\d+)?)\s*(?:p\.\s*p\.|pp)(?![\p{L}])/giu, (_, number) => happinessPoints(number))
+    .replace(/([+−-]?\d+(?:[.,]\d+)?)\s+punkt(?:y|ów)?\s+procentow(?:y|e|ych)(?=\s*szczęści)/gi, (_, number) => happinessPoints(number))
+    .replace(/([+−-]?\d+(?:[.,]\d+)?)%\s*(szczęści(?:a|u|e))/gi, (_, number, subject) => `${happinessPoints(number)} ${subject}`)
+    .replace(/(szczęści(?:e|a|u)(?:\s+mieszkańców)?\s*(?::\s*)?(?:(?:wynosi|pozostaje|ustawione|wymuszone|równe|minimum|na|poziomie|poniżej|powyżej|do|co|najmniej)\s+)*)([+−-]?\d+(?:[.,]\d+)?)%/gi, (_, before, number) => `${before}${happinessPoints(number)}`)
+    .replace(/((?:wymuszon(?:e|ym|y)|stał(?:e|ym)|powitalne minimum)\s+)([+−-]?\d+(?:[.,]\d+)?)%/gi, (_, before, number) => `${before}${happinessPoints(number)}`)
+    .replace(/((?:premia|premii|ochrona|ochrony)\s+[Ll]atarni\s*\()([+−-]?\d+(?:[.,]\d+)?)%(\))/g, (_, before, number, after) => `${before}${happinessPoints(number)}${after}`)
+    .replace(/Wstecz to island/g, 'Wróć na wyspę');
+}
 export function formatDuration(seconds, language = 'en') {
   if (!Number.isFinite(seconds)) return language === 'pl' ? 'Oczekiwanie na tragarzy' : 'Waiting for carriers';
   const value = Math.max(0, Math.ceil(seconds)), hours = Math.floor(value / 3600), minutes = Math.floor(value % 3600 / 60), remainder = value % 60;
@@ -1246,7 +1269,7 @@ export function translate(value, language = 'en') {
   // Report partial translations too. The old equality-only diagnostic missed
   // precisely the mixed Polish/English paragraphs this audit is meant to find.
   if (englishResidue.test(result)) untranslatedTexts.add(core);
-  return prefix + polishNumbers(result) + suffix;
+  return prefix + polishHappinessUnits(polishNumbers(result)) + suffix;
 }
 
 const textSources = new WeakMap(), attributeSources = new WeakMap();
@@ -2112,3 +2135,86 @@ registerTranslations({
   'One rescued resident joined the island. Without a free bed, the resident works at half speed and consumes twice as much Food.': 'Uratowany rozbitek dołączył do mieszkańców. Jeśli nie ma dla niego wolnego łóżka, pracuje o połowę wolniej i zużywa dwa razy więcej żywności.'
 });
 priorityRule(/^([\d,.\s]+) residents joined the island\. Their initial 24-hour settling period remains protected by active Lighthouse or Welcome bonuses\.$/, (_, n) => `Nowi mieszkańcy na wyspie: ${n}. Przez pierwsze 24 godziny osiedlania nadal chronią ich aktywna premia Latarni lub premia powitalna.`);
+
+// v28 approved presentation: points, collective House bank, real acceleration
+// lessons and explicitly simulated commerce. Source keys and saved IDs stay EN.
+entries(`
+This daily reward reminder was already shown or the reward is unavailable.|Przypomnienie o dziennej nagrodzie zostało już pokazane albo nagroda nie jest dostępna.
+Daily reward reminder acknowledged.|Potwierdzono przypomnienie o dziennej nagrodzie.
+Daily login reward available|Czeka na Ciebie nagroda za dzisiejsze logowanie
+Your daily login reward is ready. Open the daily reward and collect Coins and materials.|Twoja nagroda za dzisiejsze logowanie jest gotowa. Otwórz ją, aby odebrać monety i materiały.
+Production, taxes and transport speed ×2|Produkcja, podatki i szybkość transportu ×2
+Island economy|Gospodarka wyspy
+Buying coins unlocks at Town Hall level 3.|Monety za pieniądze możesz dokupić od 3. poziomu Ratusza.
+Real money can only buy coins. Purchase services with game coins.|Za pieniądze możesz dokupić monety. Usługi w grze kupujesz za monety.
+Not enough coins to increase ship capacity.|Brakuje monet na zwiększenie pojemności statku.
+Direct payments for ship capacity are unavailable. Buy capacity with game coins.|Pojemność statku zwiększasz za monety z gry. Nie można za nią zapłacić bezpośrednio pieniędzmi.
+Ship-capacity purchases require the account service in production.|Na produkcji zwiększenie pojemności statku wymaga połączenia z usługą konta.
+Finish the preceding upgrade of this building before buying its next level.|Zaczekaj na zakończenie trwającej rozbudowy tego budynku, zanim kupisz jego kolejny poziom.
+Ship capacity increased with game coins.|Zwiększono pojemność statku za monety z gry.
+Permanent ship capacity quote.|Wycena trwałego zwiększenia pojemności statku.
+Buying a building without materials unlocks at Town Hall level 1.|Rozbudowę bez własnych materiałów możesz kupić od 1. poziomu Ratusza.
+This building has not unlocked yet.|Ten budynek nie jest jeszcze dostępny na obecnym poziomie Ratusza.
+House happiness bank updated|Zaktualizowano zapas punktów szczęścia z Domu
+House happiness points can only be distributed collectively.|Punkty szczęścia z Domu możesz przekazywać wyłącznie zbiorowo.
+No happiness points remain in the House bank.|W Domu nie ma teraz zgromadzonych punktów szczęścia.
+There are not enough points for one full collective round.|Brakuje punktów, aby przekazać po jednym wszystkim uprawnionym mieszkańcom.
+Prayer started|Mieszkaniec wyruszył na modlitwę
+Prayer completed|Zakończono modlitwę
+Prayer in the Chapel|Modlitwa w Kaplicy
+Prayer happiness reward|Szczęście po modlitwie
+Prayer and both journeys are in progress|Trwa modlitwa wraz z dojściem i powrotem
+Build the Chapel before sending a resident to prayer.|Zbuduj Kaplicę, zanim wyślesz mieszkańca na modlitwę.
+Choose distinct residents for prayer.|Wybierz mieszkańców na modlitwę. Każdą osobę możesz wskazać tylko raz.
+Residents must be at Home, have finished settling in and have no active prayer bonus.|Na modlitwę możesz wysłać osobę obecną w Domu, która zakończyła okres osiedlania i nie korzysta jeszcze z premii za modlitwę.
+The Chapel has no free prayer places for this group.|W Kaplicy brakuje wolnych miejsc dla tej grupy.
+Not enough coins for prayer.|Brakuje monet na modlitwę.
+The price includes prayer and both two-minute walks. The happiness bonus begins after returning Home.|Cena obejmuje modlitwę oraz dwuminutowe dojście i dwuminutowy powrót. Premia do szczęścia zaczyna działać po powrocie do Domu.
+An ongoing prayer includes the journey Home and cannot be cancelled.|Modlitwa obejmuje powrót do Domu i nie można jej przerwać.
+Residents sent to prayer.|Wysłano mieszkańców na modlitwę.
+The happiness bonus and doubled taxes last ten hours after a Chapel upgrade.|Premia do szczęścia i podwojone podatki działają przez 10 godzin od zakończenia rozbudowy Kaplicy.
+The mission reward doubles this building’s material production while active. Lighthouse production remains a separate multiplier.|Przez czas działania nagrody ten budynek produkuje dwa razy więcej materiałów. Jeśli działa też premia Latarni ×2, łączna produkcja wynosi ×4.
+Prayer is a legitimate activity, not unemployment. The resident eats normally and earns no workplace production or tax during the activity.|Podczas modlitwy mieszkaniec nie jest uznawany za bezrobotnego. Je normalnie, ale nie produkuje towarów ani nie płaci podatków za pracę.
+The personal happiness bonus begins on return Home and lasts six hours. The same resident cannot stack multiple prayer bonuses.|Premia do szczęścia zaczyna działać po powrocie do Domu i trwa 6 godzin. Ta sama osoba może korzystać tylko z jednej premii za modlitwę naraz.
+A carrier takes one material per trip, including a partial load. The base round trip is 5 minutes; completed path levels reduce it. Level 1 carries 120 units per trip. Hunger halves effective transport. Central replenishment comes before construction unless you change priorities. Food reserve: 50 × Warehouse level, capped at level 24. The practical guide teaches paid acceleration using game coins; it does not secretly shorten ordinary delivery times.|Tragarz przewozi jeden rodzaj materiału na kurs, także z niepełnym ładunkiem. Podstawowy kurs w obie strony trwa 5 minut, a ulepszone ścieżki go skracają. Na 1. poziomie zabiera do 120 sztuk. Głód zmniejsza wydajność transportu o połowę. Domyślnie uzupełnianie magazynu centralnego ma pierwszeństwo przed budową; możesz zmienić priorytety. Chroniona rezerwa żywności wynosi 50 × poziom magazynu; uwzględniamy najwyżej 24. poziom. W samouczku poznasz przyspieszanie transportu i budowy za monety, przy zwykłych czasach dostaw.
+`);
+priorityRule(/^([\d,.\s]+) happiness points are stored in ([\d,.\s]+) of 7 daily portions\.$/, (_, points, days) => `W Domu zgromadzono ${formatHappinessPoints(happinessNumber(points), 'pl')} szczęścia w ${days} z 7 dziennych porcji.`);
+priorityRule(/^([\d,.\s]+) happiness points were given collectively to ([\d,.\s]+) residents\.$/, (_, points, count) => `Przekazano zbiorowo ${formatHappinessPoints(happinessNumber(points), 'pl')} szczęścia. Liczba odbiorców: ${count}.`);
+priorityRule(/^Resident #(\d+) returned Home and receives 50 happiness points for six hours\.$/, (_, id) => `Mieszkaniec #${id} wrócił do Domu. Przez 6 godzin otrzymuje premię 50 punktów szczęścia.`);
+priorityRule(/^(\d+) residents are on their way to the Chapel\. The duration includes both journeys; after returning they receive 50 happiness points for six hours\.$/, (_, count) => `Mieszkańcy w drodze do Kaplicy: ${count}. Podany czas obejmuje dojście i powrót. Po powrocie każdy otrzyma premię 50 punktów szczęścia na 6 godzin.`);
+priorityRule(/^(.+): mission production reward$/, (_, building) => `${tr(building)}: premia produkcyjna za misję`);
+priorityRule(/^For 10 hours: \+([\d,.\s]+) happiness(?: for every resident)?(?: and taxes ×2)?\.$/, (_, amount) => `Przez 10 godzin: +${formatHappinessPoints(happinessNumber(amount), 'pl')} szczęścia dla każdego mieszkańca i podatki ×2.`);
+priorityRule(/^([+−-]?[\d,.\s]+) pp happiness · taxes ×2$/, (_, points) => `${happinessPoints(points)} szczęścia · podatki ×2`);
+entries(`
+Production, taxes and transport speed ×0.5|Produkcja, podatki i szybkość transportu ×0,5
+Happiness set to 100% by Lighthouse protection|Szczęście ustawione na 100 punktów dzięki ochronie Latarni
+Happiness protected at 20% by Welcome bonus|Powitalna ochrona szczęścia do minimum 20 punktów
+Newborn: 0% for|Nowy mieszkaniec: 0 punktów przez
+100% bonus:|Premia 100 punktów:
+percentage points/h|punktów/godz.
+pp happiness / h|punktów szczęścia/godz.
+pp happiness|punktów szczęścia
+pp/h|punktów/godz.
+pp|punktów
+Completing an upgrade grants +10 happiness × the new level and taxes ×2 for 10 hours. One free blessing renews at Warsaw midnight without accumulation. Every manual blessing gives +50 of every resource and +20 happiness for one hour. Paid and ad blessings share a four-hour wait after their effect ends.|Rozbudowa Kaplicy daje mieszkańcom 10 punktów szczęścia × nowy poziom i podwaja podatki na 10 godzin. Raz dziennie możesz odebrać darmowe błogosławieństwo. Odnawia się o północy czasu Warszawy; niewykorzystane nie przechodzi na kolejny dzień. Każde ręczne błogosławieństwo daje po 50 każdego zasobu i 20 punktów szczęścia przez godzinę. Po zakończeniu płatnego lub reklamowego błogosławieństwa odczekaj 4 godziny przed kolejnym skorzystaniem z jednej z tych opcji.
+`);
+priorityRule(/^([+−-]?[\d,.\s]+) pp happiness(?:\s*\/\s*h)?$/, (source, number) => `${happinessPoints(number)} szczęścia${/\/\s*h$/.test(source) ? '/godz.' : ''}`);
+priorityRule(/^−([\d,.\s]+) to −([\d,.\s]+) pp happiness$/, (_, minimum, maximum) => `Od −${formatNumber(happinessNumber(minimum), 'pl')} do −${formatHappinessPoints(happinessNumber(maximum), 'pl')} szczęścia`);
+entries(`
+Food, work, housing and temporary attractions influence happiness. Develop all buildings, improve paths and complete tasks while keeping residents happy.|Zapewnij mieszkańcom jedzenie, pracę i łóżka. Atrakcje mogą dodatkowo podnieść ich szczęście na pewien czas. Rozwijaj budynki, ulepszaj ścieżki i wykonuj zadania, dbając o dobro mieszkańców.
+Prayer completed; the happiness bonus is active.|Modlitwa zakończona. Premia do szczęścia już działa.
+Complete a Lighthouse level to give everyone 100 happiness points and material production ×2 for 24 hours × that level.|Ukończ rozbudowę Latarni, aby wszyscy mieszkańcy mieli 100 punktów szczęścia, a produkcja materiałów wzrosła dwukrotnie. Obie premie działają przez 24 godziny × osiągnięty poziom Latarni.
+Every resident has their own happiness, from −100 to +100 points. The island shows their average, rounded up. Partial hours are counted precisely. Each resident loses one point at Warsaw midnight, also while you are away.|Każdy mieszkaniec ma własne szczęście, od −100 do +100 punktów. Na wyspie widzisz ich średnią zaokrągloną w górę. Gra dokładnie rozlicza również niepełne godziny. O północy czasu Warszawy każdy mieszkaniec traci 1 punkt, także podczas Twojej nieobecności. Ochrona powitalna i premia Latarni zachowują pierwszeństwo.
+At 0 happiness points, population stays the same. Positive happiness attracts new residents; negative happiness causes departures. At least 12 residents remain on the mother island and 6 on a daughter.|Przy 0 punktów szczęścia liczba mieszkańców się nie zmienia. Dodatnie szczęście przyciąga nowe osoby, a ujemne powoduje odejścia. Na wyspie macierzystej zostaje co najmniej 12 mieszkańców, a na wyspie córce — 6.
+0 happiness points · no population growth or decline.|0 punktów szczęścia · liczba mieszkańców się nie zmienia.
+This event keeps its own timer. Lighthouse protection maintains 100 happiness points but does not return lost people or materials.|To zdarzenie ma własny czas działania. Ochrona Latarni utrzymuje 100 punktów szczęścia, ale nie przywraca utraconych mieszkańców ani materiałów.
+Grace appears as favourable wreck events: treasure, supplies, a castaway or a temporary Farm bonus. They are random events, not a guaranteed extra reward for each blessing. A manual blessing gives its stated material and happiness reward immediately.|Przychylność objawia się pomyślnymi znaleziskami we wrakach: skarbem, zapasami, rozbitkiem albo czasową premią Gospodarstwa. To zdarzenia losowe, a nie gwarantowana nagroda za każde błogosławieństwo. Ręczne błogosławieństwo od razu przyznaje wskazane materiały i premię do szczęścia.
+Give happiness to all eligible residents together. Points are not automatically spent or removed at the end of the day. Residents without beds, settling newcomers and residents fixed at 100 cannot receive them.|Punkty szczęścia przekazujesz zbiorowo wszystkim uprawnionym mieszkańcom. Gra nie wydaje ich automatycznie ani nie usuwa na koniec dnia. Nie otrzymują ich osoby bez łóżek, nowi mieszkańcy w okresie osiedlania ani osoby mające wymuszone 100 punktów szczęścia.
+Choose a resident who is at Home. The total time is ten minutes per Town Hall level. The resident keeps eating, and prayer does not count as unemployment. On returning Home, they receive 50 happiness points for six hours. The Chapel level sets the number of simultaneous places.|Wybierz mieszkańca obecnego w Domu. Modlitwa wraz z dojściem i powrotem trwa 10 minut × poziom Ratusza. Mieszkaniec nadal je i nie jest uznawany za bezrobotnego. Po powrocie do Domu zyskuje 50 punktów szczęścia na 6 godzin. Poziom Kaplicy określa liczbę dostępnych jednocześnie miejsc.
+Visits last 4 hours, with no travel time and no early return. Rewards start when the group returns home: each visitor has 100 happiness points for 24 hours and must wait those 24 hours before another visit. Each returning group adds +10 happiness points to everyone for 6 hours; separate groups stack.|Zwiedzanie trwa 4 godziny i nie doliczamy czasu dojścia. Nie można przerwać wizyty. Po powrocie każdy uczestnik ma 100 punktów szczęścia przez 24 godziny i przez ten czas nie może ponownie zwiedzać Latarni. Każda powracająca grupa daje też wszystkim mieszkańcom 10 punktów szczęścia na 6 godzin. Premie różnych grup sumują się.
+The transfer has been simulated. Your island receives 20 happiness points and an illuminated Harbor for six hours. No real money has been transferred.|Przelew został zasymulowany. Twoja wyspa otrzymuje 20 punktów szczęścia i rozświetlenie Portu na 6 godzin. Nie przekazano prawdziwych pieniędzy.
+Every resident keeps their own happiness, from −100% to +100%. The island value is the average of individual values. Percentages are displayed rounded up to whole numbers; partial hours are still counted precisely.|Każdy mieszkaniec ma własne szczęście, od −100 do +100 punktów. Na wyspie widzisz średnią dla wszystkich mieszkańców zaokrągloną w górę do pełnych punktów. Gra dokładnie rozlicza także niepełne godziny.
+Each eligible resident receives the temporary happiness bonus. New residents keep their initial 0% freeze.|Uprawnieni mieszkańcy otrzymują czasową premię do szczęścia. Nowe osoby pozostają w początkowym okresie osiedlania: chronią je aktywne premie Latarni i powitalna, a poza nimi ich szczęście wynosi 0 punktów.
+`);
+priorityRule(/^([+−-]?[\d,.\s]+) points\/h$/, (_, number) => `${happinessPoints(number)}/godz.`);
+priorityRule(/^([+−-]?[\d,.\s]+) happiness points$/, (_, number) => `${happinessPoints(number)} szczęścia`);

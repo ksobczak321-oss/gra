@@ -12,3 +12,10 @@
 .learning-feedback-reminder::backdrop{background:#001522a8}
 .learning-feedback-reminder p{margin:0 0 17px}.learning-feedback-reminder-clock{color:#bbd0d9;font-size:13px}
 @media(max-width:520px){.learning-feedback-card,.learning-feedback-reminder{padding:18px;font-size:14px}.learning-feedback-card h2,.learning-feedback-reminder h2{font-size:21px}}
+.learning-help-highlight{outline:4px solid #ffe39a!important;outline-offset:5px;filter:drop-shadow(0 0 8px #ffe39a);animation:learning-help-pulse 1s ease-in-out infinite}
+@keyframes learning-help-pulse{50%{outline-color:#fff6d2;filter:drop-shadow(0 0 15px #ffe39a)}}
+@media(prefers-reduced-motion:reduce){.learning-help-highlight{animation:none}}
+.tutorial-service-substeps{display:grid;gap:7px;margin:14px 0;padding-left:25px;color:#b9cdd5}
+.tutorial-service-substeps li{padding:7px 10px;border:1px solid #6c8d9c55;border-radius:8px;overflow-wrap:anywhere}
+.tutorial-service-substeps li[aria-current=step]{border-color:#f1ce86;background:#ecc77b12;color:#ffe2a2;font-weight:700}
+.tutorial-service-substeps li[data-completed=true]{color:#acd6a9}

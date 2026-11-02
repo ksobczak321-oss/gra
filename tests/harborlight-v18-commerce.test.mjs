@@ -12,28 +12,29 @@ const run=(s,a,c=dev)=>act(s,a,s.worldTimeMs,c);
 // learning/advertising tests verify that an unfinished course blocks offers.
 function advertisingIsland(){const state=createState(NOW);for(const row of tutorialRows(state)){state.tutorial.completed[row.id]=true;state.tutorial.claimed[row.id]=true;}return state;}
 test('simulated Paynow settlement grants a package once and creates rolling no-ad entitlement',()=>{
- const s=createState(NOW),start=run(s,{type:'startCheckout',kind:'coins',grossGrosz:2000});assert.equal(start.ok,true);
+ const s=createState(NOW);s.buildings.townhall.level=3;const start=run(s,{type:'startCheckout',kind:'coins',grossGrosz:2000});assert.equal(start.ok,true);
  assert.equal(s.resources.coins,100);assert.equal(run(s,{type:'completeCheckout',checkoutId:start.checkoutId}).ok,true);
  assert.equal(s.resources.coins,300);assert.equal(commerceStatus(s).noAds,true);
  assert.equal(run(s,{type:'completeCheckout',checkoutId:start.checkoutId}).ok,false);assert.equal(s.resources.coins,300);
  s.worldTimeMs+=30*DAY;assert.equal(commerceStatus(s).noAds,false);
 });
 test('production never accepts browser simulated payments',()=>{
- const s=createState(NOW);assert.equal(run(s,{type:'startCheckout',kind:'coins',grossGrosz:2000},{devSimulation:true,environment:'production'}).ok,false);
+ const s=createState(NOW);s.buildings.townhall.level=3;assert.equal(run(s,{type:'startCheckout',kind:'coins',grossGrosz:2000},{devSimulation:true,environment:'production'}).ok,false);
  assert.equal(s.resources.coins,100);assert.equal(runtimeCapabilities('harborlight.pl').simulatedPayments,false);
  assert.equal(runtimeCapabilities('harborlight-prod.web.app').simulatedAds,false);
 });
-test('separate cash building checkout is available at TH1 but earned coin services stay locked',()=>{
- const s=createState(NOW);assert.equal(quotePremiumBuilding(s,'farm',{buildingCost}).ok,false);
- assert.equal(quoteCheckout(s,{kind:'building',building:'townhall'},{buildingCost}).ok,true);
- assert.equal(quoteCheckout(s,{kind:'building',building:'farm'},{buildingCost}).ok,false);
- const before={...s.resources},r=run(s,{type:'startCheckout',kind:'building',building:'townhall'});
- assert.equal(r.ok,true);assert.equal(run(s,{type:'completeCheckout',checkoutId:r.checkoutId}).ok,true);
- assert.deepEqual(s.resources,before);assert.equal(s.premiumServices[0].buildRemaining,10);
+test('game-coin building services unlock at TH1 and direct cash services are rejected',()=>{
+ const s=createState(NOW);assert.equal(quotePremiumBuilding(s,'farm',{buildingCost}).ok,false,'the next building level still needs Town Hall2');
+ const quote=quotePremiumBuilding(s,'townhall',{buildingCost});assert.equal(quote.ok,true);
+ for(const kind of ['building','transport','blessing','ship-capacity'])assert.equal(quoteCheckout(s,{kind,building:'townhall'},{buildingCost}).ok,false);
+ s.resources.coins=quote.coins;const before={...s.resources};
+ const r=run(s,{type:'premiumBuyBuilding',building:'townhall'});assert.equal(r.ok,true);
+ assert.equal(s.resources.coins,0);for(const id of ['wood','stone','grain','food','planks'])assert.equal(s.resources[id],before[id]);
+ assert.equal(s.premiumServices[0].buildRemaining,10);assert.equal(s.commerce.receipts.length,0);
  assert.equal(run(s,{type:'premiumBuyBuilding',building:'windmill',cashPurchase:true}).ok,false);
 });
 test('cancelling checkout cannot grant money or paid entitlement',()=>{
- const s=createState(NOW),r=run(s,{type:'startCheckout',kind:'coins',grossGrosz:2000});
+ const s=createState(NOW);s.buildings.townhall.level=3;const r=run(s,{type:'startCheckout',kind:'coins',grossGrosz:2000});
  assert.equal(run(s,{type:'cancelCheckout',checkoutId:r.checkoutId}).ok,true);
  assert.equal(run(s,{type:'completeCheckout',checkoutId:r.checkoutId}).ok,false);assert.equal(commerceStatus(s).noAds,false);
 });

@@ -14,6 +14,9 @@ function client(responses){const calls=[],values=new Map();return{calls,cloud:cr
 test('both explicit current confirmations are required and versions match the server',()=>{
   assert.deepEqual({termsVersion:LEGAL_DOCUMENTS.terms.version,privacyVersion:LEGAL_DOCUMENTS.privacy.version},LEGAL_DOCUMENT_VERSIONS);
   assert.equal(validLegalAcceptance(legalAcceptance(true,true)),true);
+  assert.equal(LEGAL_DOCUMENTS.terms.version,'2026-11-02-draft5');
+  assert.equal(LEGAL_DOCUMENTS.privacy.version,'2026-10-31-draft4');
+  assert.equal(validLegalAcceptance({...legalAcceptance(true,true),termsVersion:'2026-10-31-draft4'}),false);
   for(const x of [legalAcceptance(false,true),legalAcceptance(true,false),{...legalAcceptance(true,true),termsVersion:'old'},{...legalAcceptance(true,true),privacyAcknowledged:'true'}])assert.equal(validLegalAcceptance(x),false);
 });
 test('unchecked registration cannot send credentials or open a provider popup',async()=>{

@@ -976,13 +976,342 @@
         "HL-CHG-0967"
       ],
       "file": "manual/HL-TC-0070.md"
+    },
+    {
+      "id": "HL-TC-0071",
+      "title": "Nowy kurs wymaga trzech tragarzy, starszy zachowuje szóstkę i swoje zaliczenia",
+      "area": "Samouczek i migracja",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0978",
+        "HL-CHG-0979",
+        "HL-CHG-1012"
+      ],
+      "file": "manual/HL-TC-0071.md"
+    },
+    {
+      "id": "HL-TC-0072",
+      "title": "Lekcja Ratusza uczy rzeczywistej dostawy i skrócenia budowy",
+      "area": "Prowadzenie i monety",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0980",
+        "HL-CHG-0982",
+        "HL-CHG-0975"
+      ],
+      "file": "manual/HL-TC-0072.md"
+    },
+    {
+      "id": "HL-TC-0073",
+      "title": "Gospodarstwo kupione w lekcji nie pobiera równocześnie własnych materiałów",
+      "area": "Pełne kupno",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0981",
+        "HL-CHG-0982",
+        "HL-CHG-0972"
+      ],
+      "file": "manual/HL-TC-0073.md"
+    },
+    {
+      "id": "HL-TC-0074",
+      "title": "Lekcja jedenasta uczy priorytetu odbioru, a pełny magazyn ma zrozumiałą instrukcję",
+      "area": "Transport produktów",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0983",
+        "HL-CHG-0987"
+      ],
+      "file": "manual/HL-TC-0074.md"
+    },
+    {
+      "id": "HL-TC-0075",
+      "title": "Tutorial trzydziestu trzech opisów wraca przez Pomoc i wskazuje znak zapytania",
+      "area": "Oprowadzanie i Pomoc",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0984",
+        "HL-CHG-0985",
+        "HL-CHG-0986",
+        "HL-CHG-0988"
+      ],
+      "file": "manual/HL-TC-0075.md"
+    },
+    {
+      "id": "HL-TC-0076",
+      "title": "Cały polski interfejs szczęścia używa punktów, a inne procenty pozostają poprawne",
+      "area": "Polskie teksty",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0988",
+        "HL-CHG-0989",
+        "HL-CHG-1011",
+        "HL-CHG-0991",
+        "HL-CHG-0992"
+      ],
+      "file": "manual/HL-TC-0076.md"
+    },
+    {
+      "id": "HL-TC-0077",
+      "title": "Wiadomość końca przestoju opisuje wznowienie albo odwołanie z pozostawionym towarem",
+      "area": "Powiadomienia pracy",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0990",
+        "HL-CHG-0991"
+      ],
+      "file": "manual/HL-TC-0077.md"
+    },
+    {
+      "id": "HL-TC-0078",
+      "title": "Pierwsze wejście nowego dnia pokazuje tylko dostępną premię lojalności",
+      "area": "Lojalność i kalendarz",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0977"
+      ],
+      "file": "manual/HL-TC-0078.md"
+    },
+    {
+      "id": "HL-TC-0079",
+      "title": "Bank Domu kumuluje siedem porcji według zakwaterowanych i nie odtwarza ich przy wczytaniu",
+      "area": "Dom i trwałość",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0969",
+        "HL-CHG-1012"
+      ],
+      "file": "manual/HL-TC-0079.md"
+    },
+    {
+      "id": "HL-TC-0080",
+      "title": "Północ odbiera jeden punkt także offline, bez nowej krzywej szczęścia",
+      "area": "Szczęście i czas",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0970",
+        "HL-CHG-1013"
+      ],
+      "file": "manual/HL-TC-0080.md"
+    },
+    {
+      "id": "HL-TC-0081",
+      "title": "Modlitwa zachowuje czas całkowity, koszt, brak podatku i sześciogodzinny efekt",
+      "area": "Modlitwa",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0971",
+        "HL-CHG-0992",
+        "HL-CHG-1012"
+      ],
+      "file": "manual/HL-TC-0081.md"
+    },
+    {
+      "id": "HL-TC-0082",
+      "title": "Usługi od Ratusza jeden używają monet; Paynow kupuje tylko monety od trzeciego poziomu",
+      "area": "Płatności i dodatkowy czas",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0972",
+        "HL-CHG-0976",
+        "HL-CHG-1014"
+      ],
+      "file": "manual/HL-TC-0082.md"
+    },
+    {
+      "id": "HL-TC-0083",
+      "title": "Statek zwiększa towar za pięćdziesiąt monet, a przemianowanie córki nie dubluje nazwy",
+      "area": "Archipelag",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0973",
+        "HL-CHG-0974",
+        "HL-CHG-1012"
+      ],
+      "file": "manual/HL-TC-0083.md"
+    },
+    {
+      "id": "HL-TC-0084",
+      "title": "Zwykłe zadania mają realne pół godziny, dopasowaną nagrodę i wspólną cenę mieszkańca",
+      "area": "Wykonalność zadań",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0993",
+        "HL-CHG-0994",
+        "HL-CHG-0995"
+      ],
+      "file": "manual/HL-TC-0084.md"
+    },
+    {
+      "id": "HL-TC-0085",
+      "title": "Po ostatniej nagrodzie kursu pojawia się fabuła ośmiu zadań i zachowana kolejka rozdziałów",
+      "area": "Fabuła Latarni",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0996",
+        "HL-CHG-0997"
+      ],
+      "file": "manual/HL-TC-0085.md"
+    },
+    {
+      "id": "HL-TC-0086",
+      "title": "Narracyjne nagrody pokazują faktycznie przyjętych ludzi i czas produkcji razy cztery",
+      "area": "Nagrody i produkcja",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-0998",
+        "HL-CHG-0999",
+        "HL-CHG-1000",
+        "HL-CHG-1012"
+      ],
+      "file": "manual/HL-TC-0086.md"
+    },
+    {
+      "id": "HL-TC-0087",
+      "title": "Siedem dni ligi punktuje także małe składy, a odejście nie usuwa wyniku sezonowego",
+      "area": "Liga i sojusze",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1001",
+        "HL-CHG-1002"
+      ],
+      "file": "manual/HL-TC-0087.md"
+    },
+    {
+      "id": "HL-TC-0088",
+      "title": "Playoffy rozstrzygają remisy i wypłacają cztery warstwy nagród jednokrotnie",
+      "area": "Liga i puchar",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1003",
+        "HL-CHG-1004"
+      ],
+      "file": "manual/HL-TC-0088.md"
+    },
+    {
+      "id": "HL-TC-0089",
+      "title": "Czat egzekwuje tysiąc znaków i wspólny limit konta między pokojami",
+      "area": "Czat",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1005"
+      ],
+      "file": "manual/HL-TC-0089.md"
+    },
+    {
+      "id": "HL-TC-0090",
+      "title": "Pomagam kwalifikuje tylko właściwe monety i jasno symuluje przelew z premią",
+      "area": "Dobroczynność",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1006",
+        "HL-CHG-1007",
+        "HL-CHG-1008",
+        "HL-CHG-1009",
+        "HL-CHG-1010"
+      ],
+      "file": "manual/HL-TC-0090.md"
+    },
+    {
+      "id": "HL-TC-0091",
+      "title": "Kurs przechodzony w normalnym tempie nie blokuje się na materiałach lekcji trzynastej",
+      "area": "Samouczek i bilans",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1016",
+        "HL-CHG-0978",
+        "HL-CHG-0982"
+      ],
+      "file": "manual/HL-TC-0091.md"
+    },
+    {
+      "id": "HL-TC-0092",
+      "title": "Zakup statku po utracie odpowiedzi nie zmienia płatnika i nie obciąża drugi raz",
+      "area": "Chmura i statek",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1017",
+        "HL-CHG-0973",
+        "HL-CHG-1012"
+      ],
+      "file": "manual/HL-TC-0092.md"
+    },
+    {
+      "id": "HL-TC-0093",
+      "title": "Pomagam po odczycie lub resecie nie odtwarza starej ewidencji, a błąd chmury nie daje premii",
+      "area": "Trwały mock dobroczynności",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1018",
+        "HL-CHG-1010"
+      ],
+      "file": "manual/HL-TC-0093.md"
+    },
+    {
+      "id": "HL-TC-0094",
+      "title": "Nowa rejestracja zapisuje Regulamin draft5 i niezmienioną Politykę prywatności draft4",
+      "area": "Dokumenty i konto",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1019",
+        "HL-CHG-1012"
+      ],
+      "file": "manual/HL-TC-0094.md"
     }
   ],
   "current_scope": {
-    "date": "2026-11-01",
+    "date": "2026-11-02",
     "environment": "DEV only",
     "physical_online_integration": "excluded_by_user",
-    "note": "Historyczny baseline definicji nie jest bieżącym wydaniem. TC60–70 obejmują nowe GO v27; ręczny wynik pozostaje NOT RUN. PRE-PROD pozostaje 0.10.1.0 / 353faad bez resetu.",
-    "application_version": "0.11.0.0"
+    "application_version": "0.12.0.0",
+    "note": "TC0071–0094 obejmują GOv28 i wymagają własnego aktualnego buildu. Wszystkie ręczne wynikiNOT RUN. Historyczny baseline definicji oraz wcześniejsze scenariusze zachowują historię; nowe zasady supersedują sprzeczne oczekiwania dawnych fixture. PRE-PROD pozostaje0.11/c7c3974, bez nowej promocji i resetu."
   }
 }

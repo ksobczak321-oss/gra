@@ -206,26 +206,27 @@ test('fresh daily House pool is 24, rejects an unhoused recipient and gives ever
   assert.ok(state.residents.filter(person => person.id > 24).every(person => person.happiness === before[person.id - 1]));
 });
 
-test('housing migration retains points already spent instead of refunding a larger old population grant', () => {
+test('housing migration preserves an already earned legacy balance after a population change', () => {
   const state = crowded();
+  delete state.houseHappinessPool.version; delete state.houseHappinessPool.portions;
   state.houseHappinessPool.grantPopulation = 48;
   state.houseHappinessPool.points = 30; // Eighteen points already spent today.
   const restored = normalizeState(JSON.parse(JSON.stringify(state)), NOW);
-  assert.equal(restored.houseHappinessPool.grantPopulation, 24);
-  assert.equal(restored.houseHappinessPool.points, 6);
+  assert.equal(restored.houseHappinessPool.grantPopulation, 48);
+  assert.equal(restored.houseHappinessPool.points, 30);
   const again = normalizeState(JSON.parse(JSON.stringify(restored)), NOW);
-  assert.equal(again.houseHappinessPool.points, 6);
+  assert.equal(again.houseHappinessPool.points, 30);
 });
 
-test('automatic distribution affects only the same housed residents and Warsaw midnight refreshes 24 points', () => {
+test('House bank does not auto-spend and midnight adds only the housed population', () => {
   const withPoints = freshCrowdedPool();
   const withoutPoints = normalizeState(JSON.parse(JSON.stringify(withPoints)), NOW);
-  withoutPoints.houseHappinessPool.points = 0;
+  withoutPoints.houseHappinessPool.points = 0; withoutPoints.houseHappinessPool.portions = [];
   const untilAutomatic = (withPoints.houseHappinessPool.nextRefreshAt - NOW) / 1000 - 120;
   tick(withPoints, untilAutomatic);
   tick(withoutPoints, untilAutomatic);
   assert.equal(withPoints.houseHappinessPool.autoDone, true);
-  assert.equal(withPoints.houseHappinessPool.points, 0);
+  assert.equal(withPoints.houseHappinessPool.points, 24);
   let distributed = 0;
   for (const person of withPoints.residents) {
     const other = withoutPoints.residents.find(value => value.id === person.id);
@@ -233,9 +234,9 @@ test('automatic distribution affects only the same housed residents and Warsaw m
     if (person.id > 24) assert.ok(Math.abs(delta) < 1e-7, 'An unhoused resident received automatic House points');
     else distributed += delta;
   }
-  assert.ok(Math.abs(distributed - 24) < 1e-7);
+  assert.ok(Math.abs(distributed) < 1e-7);
   tick(withPoints, 120);
   assert.equal(withPoints.houseHappinessPool.grantPopulation, 24);
-  assert.equal(withPoints.houseHappinessPool.points, 24);
-  assert.equal(withPoints.houseHappinessPool.autoDone, false);
+  assert.equal(withPoints.houseHappinessPool.points, 48);
+  assert.equal(withPoints.houseHappinessPool.autoDone, true);
 });

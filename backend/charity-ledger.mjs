@@ -41,7 +41,7 @@ export function normalizedWallet(previous, balance, at = 0) {
 export function spendWallet(wallet, amount) {
   const balance = coinRound(wallet.qualified + wallet.unqualified);
   if (!Number.isFinite(amount) || amount <= 0 || coinRound(amount) > balance) fail('charity-insufficient-coins');
-  const qualified = coinRound(Math.min(wallet.qualified, amount)), unqualified = coinRound(amount - qualified);
+  const unqualified = coinRound(Math.min(wallet.unqualified, amount)), qualified = coinRound(amount - unqualified);
   wallet.qualified = coinRound(wallet.qualified - qualified);
   wallet.unqualified = coinRound(wallet.unqualified - unqualified);
   return { qualified, unqualified };
@@ -50,7 +50,7 @@ export function spendWallet(wallet, amount) {
 // Wrap AFTER hydration of sharded worlds. Writes are staged until all required
 // island/ledger reads have completed, respecting Firestore's read-before-write
 // rule even when another service updates more than one account atomically.
-export function createCharityLedgerStore(store, { now = () => Date.now() } = {}) {
+export function createCharityLedgerStore(store, { now = () => Date.now(), allowSimulation = false } = {}) {
   if (!store || typeof store.runTransaction !== 'function') throw new TypeError('A transactional store is required.');
   if (store[WRAPPED]) return store;
   const runTransaction = work => store.runTransaction(async transaction => {
@@ -77,7 +77,18 @@ export function createCharityLedgerStore(store, { now = () => Date.now() } = {})
           const oldWorld = previousWorlds.get(islandId);
           const oldReward = previousDocument?.generation === operation.value.generation && worldAnchor(oldWorld) === worldAnchor(world) ? oldWorld?.charityReward : undefined;
           const receipt = world.charityReward && writes.get(`charityDonations/${world.charityReward.id}`)?.value;
-          const authorized = receipt?.uid === match[1] && receipt.status === 'claimed' && receipt.reward?.islandId === islandId && JSON.stringify(receipt.reward) === JSON.stringify(world.charityReward);
+          const authorizedReal = receipt?.uid === match[1] && receipt.status === 'claimed' && receipt.reward?.islandId === islandId && JSON.stringify(receipt.reward) === JSON.stringify(world.charityReward);
+          // PRE-PROD's explicitly separate mock can persist its visual bonus,
+          // never a real transfer or qualified server balance. The outer
+          // account store opts in; PROD remains closed by default. A world
+          // reset/new generation cannot replay a previous world's mock.
+          const mockReward = world.charityReward;
+          const mock = proposedState.charitySimulation?.version === 1 && Array.isArray(proposedState.charitySimulation.donations)
+            ? proposedState.charitySimulation.donations.find(donation => donation?.id === mockReward?.id && donation.mode === 'simulation' && donation.status === 'claimed' && donation.islandId === islandId && JSON.stringify(donation.reward) === JSON.stringify(mockReward)) : null;
+          const authorizedSimulation = allowSimulation === true && oldWorld && previousDocument?.generation === operation.value.generation && worldAnchor(oldWorld) === worldAnchor(world) && mock &&
+            mockReward.mode === 'simulation' && mockReward.islandId === islandId && mockReward.happinessPoints === 20 && mockReward.portIlluminated === true &&
+            Number.isSafeInteger(mockReward.claimedAt) && mockReward.claimedAt >= 0 && mockReward.expiresAt === mockReward.claimedAt + 6 * 3600000;
+          const authorized = authorizedReal || authorizedSimulation;
           if (!authorized) {
             if (oldReward) world.charityReward = copy(oldReward);
             else delete world.charityReward;

@@ -2,7 +2,22 @@
 
 Aktualizacja operacyjna: **2 listopada 2026, Europe/Warsaw**. Akceptacja opisów i pierwotny odbiór lokalny pozostają z 1 listopada. Historia wyników jest w [dzienniku](IMPLEMENTATION-LOG.md); warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-## Aktualne DEV i PRE-PROD — 0.11.0.0 / v27
+## Aktualny zakres DEV — 0.12.0.0 / v28, odbiór w toku
+
+**GO z 2 listopada 2026, Europe/Warsaw obejmuje tylko DEV, Git/CI/Pages.** [Zakres v28](FRONTEND-V28-REQUIREMENTS.md) jest implementowany i sprawdzany lokalnie. Końcowy SHA oraz własne pełne CI/Pages tej paczki są **PENDING**; sukces poprzedniej wersji nie jest odbiorem nowych zmian.
+
+| Warstwa | Rzeczywisty bieżący stan |
+|---|---|
+| DEV / v28 | Zmieniony katalog roboczy 0.12.0.0: nowe lekcje i rzeczywiste przyspieszenia, 33 opisy, bank Domu, modlitwa, narracyjne nagrody, portfel monet, D12 i społeczność. Pełna integracja i walidacja w toku. |
+| Testy | Potwierdzone próby cząstkowe i niezależne oczekujące bramki w [walidacji 0.12](DEV-0.12.0.0-VALIDATION.md). Nie przenosimy dawnych sum na nowy kod. |
+| Git / CI / Pages v28 | Brak potwierdzonego końcowego SHA, przebiegów i tagu tej paczki. Lokalny kod nie oznacza publikacji. |
+| PRE-PROD | **Bez zmiany: 0.11.0.0 / `c7c39742594599c54ee8b074b5c313efd88af4cb`**, [deploy 41362782175, próba 1 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175). Nowe GO nie autoryzuje kolejnej promocji. |
+| Ewidencja | **348 karty zmian; 94 ręcznych przypadków NOT RUN**. Nowe karty HL-CHG-0969–1019 i TC0071–0094 mają osobne kryteria. |
+| PROD / dane / operatorzy | Bez nowej promocji, resetu kont i historii, zmiany haseł lub aktywacji realnych płatności, reklam i darowizn. |
+
+Zwykłe szczęście pozostaje +2 punkty/h za pracę i jedzenie oraz −1 o północy Warszawy. Odrzucona krzywa przy 30 punktach nie jest częścią v28. Mock przelewu przygotowany dla PRE-PROD jest jawnie symulowany i **nie został tam opublikowany w ramach tego GO**. Poniższy potwierdzony odbiór 0.11 pozostaje historią ostatniego wdrożenia, nie stanem kodu lokalnego v28.
+
+## Ostatni odebrany DEV i aktualny PRE-PROD — 0.11.0.0 / v27
 
 **DEV i PRE-PROD 0.11.0.0 odebrane — 2 listopada 2026, Europe/Warsaw.** Źródło [`c7c39742594599c54ee8b074b5c313efd88af4cb`](https://github.com/ksobczak321-oss/gra/commit/c7c39742594599c54ee8b074b5c313efd88af4cb): [CI 41361938909](https://github.com/ksobczak321-oss/gra/actions/runs/41361938909) **SUCCESS, 10 min 9 s**, [Pages 41361938868](https://github.com/ksobczak321-oss/gra/actions/runs/41361938868) **SUCCESS, 21 s**, [bridge 41362763426](https://github.com/ksobczak321-oss/gra/actions/runs/41362763426) **SUCCESS, 16 s**, [PRE-PROD 41362782175, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175) **SUCCESS, 2 min 17 s**. Pełne źródło wdrożenia potwierdzono.
 
@@ -38,7 +53,7 @@ Poprzednie źródło `7d45290b911e359a8940f28551df4692053cadb2` zachowuje [nieud
 
 Poprawka c7c3974 ściśle obsługuje koperty Firestore1/2 oraz równoważny korzeń API, zachowując limity, odczyty obcych/anonimowych i zakaz zapisów testu. Znany błąd kontraktu2 odtworzono i lokalnie naprawiono, a końcowa kontrola kont w GCP przeszła. Oryginalny prywatny wierszERROR z nieudanego kroku nie został przekazany; nie przedstawiamy go jako odczytanego. [Incydent](PREPROD-V27-INCIDENT-20261102.md) zachowuje szczegóły awarii i osobne późniejsze rozwiązanie.
 
-Bazowy pakiet6ff5ae9: TAR `af8a64508044d344b4e01122145d3b0b1653c6c4abfecfec5fc502e7b36e1e55`, manifest `84ac0f9528cadaab15c92d3f789abd041d45b9a4580051e638472879d0709d49`. Nieudany kandydat7d45290: TAR `d202c79783b1dc2787d3db2a859031a9dc03fb87a089b2e81a09c2d8d0253ff4`, manifest `0905956f17d0b249cf8faae7a3aed486e86e74d20b2a5145f72d6a9730792993`. To lokalne hashe pakietów poszczególnych SHA; nie są publicznymi digestami ZIP udanej promocji.
+Bazowy pakiet6ff5ae9: TAR `af8a64508044d348b4e01122145d3b0b1653c6c4abfecfec5fc502e7b36e1e55`, manifest `84ac0f9528cadaab15c92d3f789abd041d45b9a4580051e638472879d0709d49`. Nieudany kandydat7d45290: TAR `d202c79783b1dc2787d3db2a859031a9dc03fb87a089b2e81a09c2d8d0253ff4`, manifest `0905956f17d0b249cf8faae7a3aed486e86e74d20b2a5145f72d6a9730792993`. To lokalne hashe pakietów poszczególnych SHA; nie są publicznymi digestami ZIP udanej promocji.
 
 ## DEV 0.10.2.0 / v26 — podgląd opublikowany, własne CI i Pages potwierdzone
 
@@ -108,7 +123,7 @@ Poprawka dodaje Polski/English w opisie i przy nazwie wyspy, zachowuje roboczą 
 
 | Artefakt próby 1 | Publiczny SHA-256 ZIP GitHub |
 |---|---|
-| `harborlight-dev-frontend-41233737873-1` | `0cb747023ad430c647c045913ef2712d8c475f9344fe3e14a4ddee3b713bde56` |
+| `harborlight-dev-frontend-41233737873-1` | `0cb747023ad430c647c045913ef2712d8c475f9348fe3e14a4ddee3b713bde56` |
 | `harborlight-dev-release-41233737873-1` | `3da4a3be0466a81597eec76c130c69b2d0bcffbc3e6dd377fa2f33aac1aadae1` |
 
 Lokalny deterministyczny pakiet tego SHA: 49 plików z manifestem, 10 841 954 bajtów; archiwum SHA-256 `8fba6ec781e959d855273b333e1922ce3db113b058a51f2c8c92c3071435fd1f`, manifest `31185615e64a8dca97440799125a1e13bd160cf3dbc609991e0e05e9c3c3ce0e`. Publiczne bajty są identyczne z przeglądarkowo sprawdzoną poprawką: 13 scenariuszy wprowadzenia i Settings PL/EN desktop/mobile PASS. Pełny Node747PASS, pakowanie12PASS, importer18PASS; niezależny ręczny odbiór46przypadków nadal NOT RUN. Pierwsza próba 11f6ff1/41232457485 była nieudana; nie uznajemy jej za odbiór ani nie przesuwamy jej statusu na sukces. Przyczyny ówczesnej niezgodności nie rozstrzygnięto; nowa kontrola zachowuje pełną zgodność i bounded retries.

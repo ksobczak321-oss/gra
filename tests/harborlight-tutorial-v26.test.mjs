@@ -1,19 +1,20 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createState, normalizeState, act, buildingCost } from '../harborlight-v1-state.js';
-import { TUTORIAL_VERSION, TUTORIAL_LESSONS, V4_TUTORIAL_LESSONS, LEGACY_TUTORIAL_LESSONS, tutorialRows, tutorialStatus, tutorialPendingRewards, tutorialTaskStatus, normalizeProgression } from '../harborlight-v1-progression.js';
+import { createState as createRawState, normalizeState, act, buildingCost } from '../harborlight-v1-state.js';
+import { TUTORIAL_VERSION, V5_TUTORIAL_LESSONS as TUTORIAL_LESSONS, V4_TUTORIAL_LESSONS, LEGACY_TUTORIAL_LESSONS, tutorialRows, tutorialStatus, tutorialPendingRewards, tutorialTaskStatus, normalizeProgression } from '../harborlight-v1-progression.js';
 import { ordinaryWarehouseUsed, centralAvailable } from '../harborlight-v1-inventory.js';
 import { foodReserve, warehouseLimits } from '../harborlight-v1-logistics.js';
 import { runTutorialV26 } from './helpers/tutorial-v26-course.mjs';
 const NOW = Date.parse('2026-11-01T10:00:00Z');
 const MATERIALS = ['wood','stone','grain','food','planks'];
+const createState = now => { const state = createRawState(now); normalizeProgression(state, { ...state, tutorial: { version: 5 } }); return state; };
 const command = (state, action) => { const result = act(state, action, state.worldTimeMs); assert.equal(result.ok, true, result.message); return result; };
 const reward = (state, id) => { command(state, { type: 'claimTutorial', taskId: id }); command(state, { type: 'skipTutorialShare', taskId: id }); };
 const reload = state => normalizeState(JSON.parse(JSON.stringify(state)), state.worldTimeMs);
 
-test('fresh practical course orders six carriers, construction priority, farmer, lumberjack, Town Hall and mill', () => {
+test('saved curriculum5 orders six carriers, construction priority, farmer, lumberjack, Town Hall and mill', () => {
   const state = createState(NOW), rows = tutorialRows(state);
-  assert.equal(TUTORIAL_VERSION, 5); assert.equal(state.tutorial.curriculum, 5);
+  assert.equal(TUTORIAL_VERSION, 6); assert.equal(state.tutorial.curriculum, 5);
   assert.equal(rows.length, 25);
   assert.deepEqual(rows.slice(0, 7).map(row => row.subject), ['assign-warehouse','transport-priority','assign-farm','assign-lumber','upgrade-townhall','assign-windmill','assign-quarry']);
   assert.equal(rows[0].assignmentCount, 6);
@@ -69,7 +70,7 @@ test('older curricula keep lesson order, conditions and rolled/paid rewards afte
     command(state, { type: 'claimTutorial', taskId: 'rules-read' });
     const before = structuredClone(state.tutorial.chests['rules-read']), resources = structuredClone(state.resources);
     const restored = reload(state);
-    assert.equal(restored.tutorial.version, 5); assert.equal(restored.tutorial.curriculum, curriculum);
+    assert.equal(restored.tutorial.version, 6); assert.equal(restored.tutorial.curriculum, curriculum);
     assert.deepEqual(tutorialRows(restored).map(row => [row.id,row.subject,row.goalLevel]), (curriculum === 3 ? LEGACY_TUTORIAL_LESSONS : V4_TUTORIAL_LESSONS).map(row => [row.id,row.subject,row.goalLevel]));
     assert.deepEqual(restored.tutorial.chests['rules-read'], before); assert.deepEqual(restored.resources, resources);
     assert.equal(act(restored, { type: 'claimTutorial', taskId: 'rules-read' }, restored.worldTimeMs).ok, false);
@@ -158,8 +159,8 @@ test('late starts and the Warsaw midnight boundary finish the same course withou
     assert.equal(ordinaryWarehouseUsed(state), warehouseLimits(state).total);
     assert.equal(state.buildings.townhall.level, 2);
     assert.deepEqual(tutorialPendingRewards(state), []);
-    // The global two-minute worker walk now also applies to the first six
-    // carriers; the same fully executed course still fits within half an hour.
-    assert.equal(trace.at(-1).elapsedSeconds <= 30 * 60, true, start);
+    // Legacy project goals remain playable using ordinary transport after the
+    // retirement of new turbo clocks; old recorded projects keep snapshots.
+    assert.equal(trace.at(-1).elapsedSeconds <= 24 * 3600, true, start);
   }
 });

@@ -1,8 +1,8 @@
 # Stałe konta PRE-PROD — techniczny projekt DEV
 
-Użytkownik ustalił trzy konta: **admin1, admin2, admin3**, logowanie nazwą i hasłem oraz postęp dostępny na różnych urządzeniach. Początkowe hasła mają odpowiadać nazwom kont. Dotyczy to wyłącznie projektu `harborlight-dev`.
+Użytkownik ustalił trzy konta:**admin1, admin2, admin3**, logowanie nazwą i hasłem oraz postęp dostępny na różnych urządzeniach. Początkowe hasła mają odpowiadać nazwom kont. Dotyczy to wyłącznie projektu `harborlight-dev`.
 
-DEV oznacza bieżącą przestrzeń roboczą; istniejący projekt `harborlight-dev` jest obecnym PRE-PROD. Jego ostatnie potwierdzone wydanie to **v22.1 / `092e75226fbb14cab09826f313e11d10891966d8`**, [promocja 41222765705, próba 1 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705). Osobny reset trzech kont pozostaje niewykonany; nie odczytano jeszcze wartości aktywacji API kont. Aktualne wersje i dowody podaje [rejestr środowisk](ENVIRONMENT-STATUS.md); samo pobranie nowszego kodu nie publikuje go w GCP. Gra PRE-PROD: https://harborlight-dev.web.app.
+DEV oznacza bieżącą przestrzeń roboczą; projekt `harborlight-dev` jest PRE-PROD. **Ostatnie odebrane PRE-PROD to 0.11.0.0 / `c7c39742594599c54ee8b074b5c313efd88af4cb`**, [promocja 41362782175, próba 1 SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41362782175). Nowy lokalny zakres 0.12.0.0/v28 jest w trakcie odbioru i nie ma wtym GO nowej promocji ani resetu. Osobne historyczne zlecenie resetu nie zostało wykonane. Bieżące wersje i dowody: [rejestr środowisk](ENVIRONMENT-STATUS.md). Gra PRE-PROD: https://harborlight-dev.web.app.
 
 ## Przygotowanie przez właściciela
 
@@ -47,7 +47,7 @@ To synchronizacja stanu przeglądarkowej gry DEV. Obliczenia gospodarki nadal wy
 
 ## Kontrola wydania
 
-Obowiązuje kolejność: **DEV tutaj → GitHub/CI → PRE-PROD → PROD**. Źródłowe CI sprawdza protokół logowania, odświeżanie sesji, trwałość kont, izolację zapisów, konflikty i rzeczywisty interfejs z izolowanymi odpowiedziami usług Google.
+Obowiązuje kolejność:**DEV tutaj → GitHub/CI → PRE-PROD → PROD**. Źródłowe CI sprawdza protokół logowania, odświeżanie sesji, trwałość kont, izolację zapisów, konflikty i rzeczywisty interfejs z izolowanymi odpowiedziami usług Google.
 
 Po publikacji PRE-PROD z historycznym bezpośrednim dostępem workflow uruchamia:
 
@@ -67,6 +67,10 @@ Narzędzie nie wysyła komend utworzenia, zapisu, resetu ani usunięcia wyspy. L
 
 ## Osobny reset po promocji v22
 
-Najnowsze GO upoważnia do resetu stanu gry **admin1, admin2 i admin3 po udanej, zweryfikowanej promocji PRE-PROD**. W tej jednej operacji wcześniejsza ochrona postępu admin1 zostaje zastąpiona nową dyspozycją. Tożsamości Authentication, UID, loginy, hasła i zgody prawne pozostają zachowane. Procedura wymaga aktywnego API, blokady starych zapisów, kopii i odczytu wyniku: [PREPROD-RESET.md](PREPROD-RESET.md). Bieżący wynik resetu podaje [rejestr środowisk](ENVIRONMENT-STATUS.md); przygotowany skrypt nie oznacza wykonania resetu.
+Historyczne zlecenie v22 upoważniało do resetu stanu gry **admin1, admin2 i admin3 po udanej, zweryfikowanej promocji PRE-PROD**. W tej jednej operacji wcześniejsza ochrona postępu admin1 zostaje zastąpiona nową dyspozycją. Tożsamości Authentication, UID, loginy, hasła i zgody prawne pozostają zachowane. Procedura wymaga aktywnego API, blokady starych zapisów, kopii i odczytu wyniku: [PREPROD-RESET.md](PREPROD-RESET.md). Bieżący wynik resetu podaje [rejestr środowisk](ENVIRONMENT-STATUS.md); przygotowany skrypt nie oznacza wykonania resetu.
 
 Firestore i Authentication rozliczają wykorzystanie usług. Nie uruchamia się stale działającej bazy SQL. Częstotliwość wysyłania zapisów jest ograniczona; limity i ceny usług trzeba uwzględniać przy zwiększaniu liczby graczy.
+
+## Zgodność zapisów v28
+
+Nowy kurs 6 ma 25 lekcji i zaczyna się od 3 tragarzy; programy 3/4/5 zachowują stan, kryteria i historię nagród. Usunięcie turbo nowych budów nie przelicza rozpoczętych projektów. Bank Domu, modlitwy, premie misji i obejrzana narracja są normalizowane bez odtwarzania nagród. Nowe przypadki TC0071–0090 w [ręcznym planie](testing/START-HERE.md) wymagają izolowanychfixture; nie służą do zerowaniaadmin1–admin3. Przygotowane endpointy statku i mocka Pomagamnie dowodzą ich nowego wdrożenia w GCP.

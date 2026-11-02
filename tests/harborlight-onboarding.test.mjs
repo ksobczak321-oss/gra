@@ -16,7 +16,7 @@ function nameIsland(state, at = NOW) {
 
 test('first-time introduction keeps the starter world and all clocks frozen', () => {
   const state = starter(), before = json(state);
-  assert.deepEqual(onboardingStatus(state), { pending: true, stage: 'intro', index: 0, worldStartedAt: null, completedAt: null });
+  assert.deepEqual(onboardingStatus(state), { pending: true, stage: 'intro', index: 0, routeVersion: 2, worldStartedAt: null, completedAt: null });
   tick(state, 100 * HOUR / 1000);
   assert.equal(advanceTo(state, NOW + 100 * HOUR), 0);
   assert.equal(recordVisit(state, NOW + 100 * HOUR), false);
@@ -77,7 +77,7 @@ test('finishing or leaving the tour starts day one once at the real completion t
   assert.equal(advanceTo(state, NOW + 100 * HOUR), 0);
   assert.equal(act(state, { type: 'onboardingFinish' }, NOW + 100 * HOUR).ok, true);
   const start = NOW + 100 * HOUR;
-  assert.deepEqual(onboardingStatus(state), { pending: false, stage: 'complete', index: 0, worldStartedAt: start, completedAt: start });
+  assert.deepEqual(onboardingStatus(state), { pending: false, stage: 'complete', index: 0, routeVersion: 2, worldStartedAt: start, completedAt: start });
   assert.equal(state.islandStartedAt, start);
   assert.equal(state.worldTimeMs, start);
   assert.equal(state.lastSimulatedAt, start);

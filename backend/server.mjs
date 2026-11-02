@@ -31,8 +31,9 @@ function configuredAccountApi(environment) {
   if (process.env.HARBORLIGHT_ACCOUNT_API !== '1') return null;
   const projectId = process.env.HARBORLIGHT_PROJECT_ID || (['prod','production'].includes(environment) ? 'harborlight-prod' : ['dev','preprod'].includes(environment) ? 'harborlight-dev' : null);
   if (!projectId) return null;
-  const store = createCharityLedgerStore(createIslandDocumentStore(createFirestoreStore({ projectId, databaseId: process.env.HARBORLIGHT_DATABASE_ID || '(default)' })));
   const serviceEnvironment = projectId === 'harborlight-dev' ? 'preprod' : projectId === 'harborlight-prod' || ['prod','production'].includes(environment) ? 'production' : 'preprod';
+  const store = createCharityLedgerStore(createIslandDocumentStore(createFirestoreStore({ projectId, databaseId: process.env.HARBORLIGHT_DATABASE_ID || '(default)' })),
+    { allowSimulation: serviceEnvironment === 'preprod' });
   return { service: createAccountService({ store, environment: serviceEnvironment }), trade: createPlayerTradeService({ store, environment: serviceEnvironment }), community: createCommunityService({ store, environment: serviceEnvironment }), charity: createCharityService({ store, environment: serviceEnvironment }), verify: createFirebaseIdentityVerifier({ projectId }), projectId };
 }
 function requestJson(request, maximumBytes = 1_500_000) {
@@ -90,7 +91,7 @@ export function createServer({
         ...(isReadiness ? { scope: 'infrastructure', features: { accounts: accountApi, persistence: accountApi, gameApi: false } } : {}) });
       return;
     }
-    const routes = { '/api/v1/config': ['GET'], '/api/v1/island': ['GET','POST','PUT'], '/api/v1/activity': ['POST'], '/api/v1/promotions/redeem': ['POST'], '/api/v1/legal': ['GET','POST'], '/api/v1/trade/offers': ['GET','POST'], '/api/v1/trade/inbox': ['GET'], '/api/v1/community': ['GET','POST'], '/api/v1/charity': ['GET','POST'] };
+    const routes = { '/api/v1/config': ['GET'], '/api/v1/island': ['GET','POST','PUT'], '/api/v1/activity': ['POST'], '/api/v1/ship-capacity': ['POST'], '/api/v1/promotions/redeem': ['POST'], '/api/v1/legal': ['GET','POST'], '/api/v1/trade/offers': ['GET','POST'], '/api/v1/trade/inbox': ['GET'], '/api/v1/community': ['GET','POST'], '/api/v1/charity': ['GET','POST'] };
     const offerCommand = /^\/api\/v1\/trade\/offers\/(trade_[a-f0-9]{40})\/(accept|cancel)$/.exec(path || '');
     const inboxCommand = /^\/api\/v1\/trade\/inbox\/(trade_[a-f0-9]{40})\/claim$/.exec(path || '');
     if (offerCommand || inboxCommand) routes[path] = ['POST'];
@@ -116,7 +117,8 @@ export function createServer({
         if (!charityService) throw new AccountServiceError('charity-api-unavailable', 503);
         if (request.method === 'GET') { send(200, await charityService.status({ uid })); return; }
         const body = await requestJson(request);
-        if (body.command === 'donate') { send(200, await charityService.donate({ uid, requestId: body.requestId, islandId: body.islandId })); return; }
+        if (body.command === 'donate') { send(200, await charityService.donate({ uid, requestId: body.requestId, islandId: body.islandId,
+          ...(body.amount !== undefined ? { amount: body.amount } : {}) })); return; }
         if (body.command === 'claim') { send(200, await charityService.claimReward({ uid, donationId: body.donationId, islandId: body.islandId })); return; }
         throw new AccountServiceError('charity-command-forbidden', 403);
       }
@@ -149,6 +151,10 @@ export function createServer({
         send(200, { ...saved, updateTime: new Date(saved.updatedAt).toISOString() }); return;
       }
       if (path === '/api/v1/activity') { send(200, await accountService.recordActivity({ uid, generation: body.generation })); return; }
+      if (path === '/api/v1/ship-capacity') {
+        send(200, await accountService.purchaseShipCapacity({ uid, requestId: body.requestId, units: body.units,
+          islandId: body.islandId, generation: body.generation, expectedRevision: body.expectedRevision })); return;
+      }
       send(200, await accountService.redeemCode({ uid, code: body.code, generation: body.generation }));
     } catch (error) {
       const status = Number.isInteger(error?.status) && error.status >= 400 && error.status <= 599 ? error.status : 503;

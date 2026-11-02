@@ -56,7 +56,7 @@ test('House feedback reports actual rounded change and never invents an increase
   state.residents[0].happiness += 1; state.happiness = 20.5;
   let events = learningFeedbackChanges(before, captureLearningFeedback(state), { type: 'houseHappiness' });
   assert.equal(events.length, 1); assert.equal(events[0].changedResidents, 1);
-  assert.match(learningFeedbackCopy(events[0], state, 'pl').description, /20% → 21%/);
+  assert.match(learningFeedbackCopy(events[0], state, 'pl').description, /20 punktów szczęścia → 21 punktów szczęścia/);
   const smallBefore = { ...before, happiness: 20.01 }, smallAfter = captureLearningFeedback(state); smallAfter.happiness = 20.02;
   events = learningFeedbackChanges(smallBefore, smallAfter, { type: 'houseHappinessAll' });
   const text = learningFeedbackCopy(events[0], state, 'pl').description;
@@ -82,8 +82,8 @@ test('blessing at forced 100% explains the actual effect instead of promising 12
   assert.equal(event.kind, 'blessing');
   state.blessingRemaining = 600;
   const copy = learningFeedbackCopy(event, state, 'pl');
-  assert.match(copy.description, /\+20 p\.p\./); assert.match(copy.description, /10 min/);
-  assert.match(copy.description, /korzystają już ze szczęścia 100%/); assert.doesNotMatch(copy.description, /120%/);
+  assert.match(copy.description, /20 punktów szczęścia/); assert.match(copy.description, /10 min/);
+  assert.match(copy.description, /Szczęście mieszkańców wynosi już 100 punktów/); assert.doesNotMatch(copy.description, /120 punktów/);
 });
 
 test('Lighthouse callout derives time from the live effect and remains truthful if a delayed effect has ended', () => {
@@ -92,10 +92,10 @@ test('Lighthouse callout derives time from the live effect and remains truthful 
   const [event] = learningFeedbackChanges(before, captureLearningFeedback(state));
   state.lighthouseRemaining = 120;
   const active = learningFeedbackCopy(event, state, 'pl');
-  assert.equal(active.target, 'happiness'); assert.match(active.description, /100% przez 2 min 0 s/);
+  assert.equal(active.target, 'happiness'); assert.match(active.description, /100 punktów przez 2 min 0 s/);
   state.lighthouseRemaining = 0; state.happiness = 70;
   const ended = learningFeedbackCopy(event, state, 'pl');
-  assert.equal(ended.target, 'lighthouse'); assert.doesNotMatch(ended.description, /100%/);
+  assert.equal(ended.target, 'lighthouse'); assert.doesNotMatch(ended.description, /100 punktów/);
 });
 
 test('attraction feedback is based on the newly created effect, not an existing or failed purchase', () => {
@@ -105,7 +105,7 @@ test('attraction feedback is based on the newly created effect, not an existing 
   state.leisure.effects.push({ id: 2, title: 'New', amount: 8, remaining: 21600 });
   const [event] = learningFeedbackChanges(before, captureLearningFeedback(state), { type: 'buyAttraction' });
   assert.equal(event.effectId, 2);
-  assert.match(learningFeedbackCopy(event, state, 'pl').description, /\+8 p\.p\./);
+  assert.match(learningFeedbackCopy(event, state, 'pl').description, /8 punktów szczęścia/);
   assert.match(learningFeedbackCopy(event, state, 'en').description, /6 h/);
 });
 

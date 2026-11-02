@@ -1,12 +1,13 @@
-// Execute fresh curriculum 5 through real commands, material deliveries,
+// Execute preserved curriculum 5 through real commands, material deliveries,
 // construction, a completed Lighthouse task and a won/cashed-out minigame.
 import { createState, act, advanceTo } from '../../harborlight-v1-state.js';
-import { TUTORIAL_LESSONS, tutorialRows, tutorialStatus } from '../../harborlight-v1-progression.js';
+import { V5_TUTORIAL_LESSONS as TUTORIAL_LESSONS, tutorialRows, tutorialStatus, normalizeProgression } from '../../harborlight-v1-progression.js';
 import { leisureOffers } from '../../harborlight-v1-leisure.js';
 import { ordinaryWarehouseUsed } from '../../harborlight-v1-inventory.js';
 
 export function runTutorialV26({ now = Date.parse('2026-11-01T10:00:00Z'), through = 25, beforeLesson = null } = {}) {
   const state = createState(now), trace = [];
+  normalizeProgression(state, { ...state, tutorial: { version: 5 } });
   const command = action => {
     const result = act(state, action, state.worldTimeMs);
     if (!result.ok) throw new Error(JSON.stringify({ action, result, tutorial: tutorialStatus(state), resources: state.resources, bonus: state.bonusMaterials }));

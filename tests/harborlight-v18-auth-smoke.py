@@ -18,7 +18,8 @@ spec.loader.exec_module(base)
 PROD = 'https://harborlight.pl'
 SESSION_KEY = 'harborlight-prod-auth-v1'
 EMAIL, PASSWORD, UID = 'captain@example.invalid', 'captain-password', 'real-player-123'
-LEGAL_VERSION = '2026-10-31-draft4'
+TERMS_VERSION = '2026-11-02-draft5'
+PRIVACY_VERSION = '2026-10-31-draft4'
 
 
 def token():
@@ -44,17 +45,17 @@ class ProdSite(base.Site):
         if parsed.netloc == urlsplit(PROD).netloc and parsed.path == '/api/v1/legal':
             assert request.headers.get('authorization','').startswith('Bearer ')
             if request.method == 'GET':
-                route.fulfill(content_type='application/json',body=json.dumps({'required':self.legal_required,'termsVersion':LEGAL_VERSION,'privacyVersion':LEGAL_VERSION}))
+                route.fulfill(content_type='application/json',body=json.dumps({'required':self.legal_required,'termsVersion':TERMS_VERSION,'privacyVersion':PRIVACY_VERSION}))
             else:
                 body=request.post_data_json
-                assert body == {'termsAccepted':True,'privacyAcknowledged':True,'termsVersion':LEGAL_VERSION,'privacyVersion':LEGAL_VERSION}
+                assert body == {'termsAccepted':True,'privacyAcknowledged':True,'termsVersion':TERMS_VERSION,'privacyVersion':PRIVACY_VERSION}
                 self.legal_calls.append(body)
                 if self.legal_failures:
                     self.legal_failures-=1
                     route.fulfill(status=503,content_type='application/json',body=json.dumps({'error':'account-service-unavailable'}))
                 else:
                     self.legal_required=False
-                    route.fulfill(content_type='application/json',body=json.dumps({'uid':UID,'termsVersion':LEGAL_VERSION,'privacyVersion':LEGAL_VERSION,'acceptedAt':int(time.time()*1000)}))
+                    route.fulfill(content_type='application/json',body=json.dumps({'uid':UID,'termsVersion':TERMS_VERSION,'privacyVersion':PRIVACY_VERSION,'acceptedAt':int(time.time()*1000)}))
             return
         if parsed.netloc == 'identitytoolkit.googleapis.com':
             body = json.loads(request.post_data)

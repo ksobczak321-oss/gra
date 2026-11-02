@@ -20,7 +20,7 @@ function deepFreeze(value) {
   return value;
 }
 
-test('effects are read-only, complete and never expose removed income details', () => {
+test('effects are read-only and show doubled taxes only for the Chapel upgrade', () => {
   const state = island();
   Object.assign(state, { blessingRemaining: 3600, chapelRemaining: 18000, lighthouseRemaining: 86400 });
   state.residents[0].visitHappinessRemaining = 400;
@@ -40,7 +40,8 @@ test('effects are read-only, complete and never expose removed income details', 
   assert.equal(rows.filter(row => row.id.startsWith('lighthouse-group-')).length, 2);
   assert.equal(rows.find(row => row.id === 'lighthouse-group-7').remaining, 600);
   assert.equal(rows.find(row => row.id === 'lighthouse-group-8').remaining, 900);
-  assert.doesNotMatch(JSON.stringify(rows), /tax|income/i);
+  assert.match(rows.find(row => row.id === 'chapel-upgrade').effect, /taxes ×2/);
+  assert.doesNotMatch(JSON.stringify(rows.filter(row => row.id !== 'chapel-upgrade')), /tax|income/i);
 });
 
 test('ongoing meals and real work have the same recipients as resident conditions', () => {

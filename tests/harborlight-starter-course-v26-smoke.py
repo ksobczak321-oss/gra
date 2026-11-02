@@ -1,4 +1,4 @@
-"""Fresh v5 practical course through actual map clicks and cloud saves.
+"""Fresh v6 practical course through actual map clicks and cloud saves.
 
 The later task/expedition fixtures are outputs of successful course commands.
 No completion flags, free stock, project phases or winning outcomes are injected.
@@ -13,6 +13,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import acknowledge_daily_offer
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('starter_v26_cloud', ROOT / 'tests/harborlight-dev-game-smoke.py')
@@ -23,8 +24,8 @@ UID = 'dev-admin3'
 
 
 def model(through=0, decision=False):
-    script = '''import {runTutorialV26} from './tests/helpers/tutorial-v26-course.mjs';
-      const {state,command}=runTutorialV26({now:%d,through:%d});
+    script = '''import {runTutorialV28} from './tests/helpers/tutorial-v28-course.mjs';
+      const {state,command}=runTutorialV28({now:%d,through:%d});
       state.islandName='Start nowej przygody';
       if(%s){
         command({type:'expeditionStart',expedition:'misty',gameKind:'triples'});
@@ -40,6 +41,7 @@ def model(through=0, decision=False):
 
 
 def enter(browser, state, *, language='pl', mobile=False):
+    acknowledge_daily_offer(state)
     cloud.NOW = datetime.fromtimestamp(state['worldTimeMs'] / 1000, tz=timezone.utc)
     cloud.DOCUMENTS[UID] = {'payload': json.dumps(state), 'revision': 7, 'updateTime': cloud.timestamp()}
     context, page = cloud.context(browser, UID, language=language, mobile=mobile)
@@ -94,15 +96,15 @@ def find_building(page, lesson, building):
 
 def fresh_starter(browser, language, mobile):
     initial = model()
-    assert initial['tutorial']['curriculum'] == 5
+    assert initial['tutorial']['curriculum'] == 6
     context, page = enter(browser, initial, language=language, mobile=mobile)
     try:
         expect(page.locator('[data-tutorial-current]')).to_have_attribute('data-tutorial-current', 'island-map')
-        expect(page.locator('[data-tutorial-assignment-progress]')).to_contain_text('0 / 6')
+        expect(page.locator('[data-tutorial-assignment-progress]')).to_contain_text('0 / 3')
         page.locator('[data-tutorial-visit="island-map"]').click()
         find_building(page, 'island-map', 'warehouse')
         plus = page.locator('[data-worker-building="warehouse"][data-worker-delta="1"]')
-        for count in range(1, 6):
+        for count in range(1, 3):
             expect(plus).to_have_class(re.compile('tutorial-action-target'))
             plus.click()
             current = saved(page)
@@ -111,16 +113,16 @@ def fresh_starter(browser, language, mobile):
             assert not current['tutorial']['completed'].get('island-map')
             assert not current['tutorial']['claimed'].get('island-map')
             expect(page.locator('[data-tutorial-achievement]')).to_have_count(0)
-            expect(page.locator('[data-tutorial-assignment-progress]')).to_contain_text('%d / 6' % count)
+            expect(page.locator('[data-tutorial-assignment-progress]')).to_contain_text('%d / 3' % count)
         plus.click()
         reward(page, 'island-map')
-        sixth = saved(page)
-        assert sixth['buildings']['warehouse']['workers'] == 6
-        assert sixth['tutorial']['claimed']['island-map']
-        assert sixth['tutorial']['chests']['island-map']['reward']['coins'] == 100
-        # All workers, including the first six, now walk for120s. The real
+        third = saved(page)
+        assert third['buildings']['warehouse']['workers'] == 3
+        assert third['tutorial']['claimed']['island-map']
+        assert third['tutorial']['chests']['island-map']['reward']['coins'] == 100
+        # All workers, including the first three, now walk for120s. The real
         # reward acknowledgment above advanced30s, leaving90s to reach work.
-        assert all(person.get('arrivalRemaining', 0) == 90 for person in sixth['residents'] if person.get('workplace') == 'warehouse')
+        assert all(person.get('arrivalRemaining', 0) == 90 for person in third['residents'] if person.get('workplace') == 'warehouse')
 
         find_building(page, 'happiness-action', 'warehouse')
         details = page.locator('[data-building-more="warehouse"]')
@@ -154,25 +156,35 @@ def fresh_starter(browser, language, mobile):
         before = saved(page)
         assert before['resources']['coins'] < 2000 and not before['commerce']['receipts'], 'Starter must be funded by course rewards'
         upgrade.click()
-        pending_reward(page, 'townhall-upgrade')
-        expect(page.locator('#starter-construction-guide')).to_have_count(0)
-        reward(page, 'townhall-upgrade', flush=False)
         explanation = page.locator('[data-starter-construction-guide]')
         expect(explanation).to_be_visible()
-        expect(explanation).to_contain_text('30')
-        expect(explanation).to_contain_text('1 min')
-        expect(explanation).to_contain_text('monetach' if language == 'pl' else 'coin price')
-        page.locator('#starter-construction-guide').get_by_role('button').click()
-        page.clock.run_for(30_000)
-        delivery_done = saved(page)
-        project = next(item for item in delivery_done['constructionProjects'] if item['building'] == 'townhall')
-        assert project['starterTurbo']['transportDuration'] == 30
-        assert project['starterTurbo']['buildingDuration'] == 60
+        expect(explanation).to_contain_text('monety z gry' if language == 'pl' else 'game coins')
+        project = next(item for item in saved(page)['constructionProjects'] if item['building'] == 'townhall')
+        assert not project.get('starterTurbo'), 'A new order must keep ordinary clocks'
+        assert not saved(page)['tutorial']['completed'].get('townhall-upgrade')
+        page.locator('[data-start-acceleration-guide]').click()
+        transport = page.locator('[data-premium-route="construction"]')
+        expect(transport).to_be_enabled()
+        expect(transport).to_have_class(re.compile('tutorial-action-target'))
+        transport.click()
+        delivered = saved(page)
+        project = next(item for item in delivered['constructionProjects'] if item['building'] == 'townhall')
         assert project['stage'] == 'building'
-        page.clock.run_for(60_000)
+        assert project['instantTransport']
+        assert not delivered['tutorial']['completed'].get('townhall-upgrade')
+        accelerate = page.locator('[data-premium-percent="100"]')
+        expect(accelerate).to_be_enabled()
+        expect(accelerate).to_have_class(re.compile('tutorial-action-target'))
+        accelerate.click()
+        reduction = page.locator('[data-construction-reduction]')
+        if reduction.is_visible():
+            page.locator('[data-close-construction-reduction]').click()
+        reward(page, 'townhall-upgrade')
         finished = saved(page)
         assert finished['buildings']['townhall']['level'] == 2
-        assert not finished['commerce']['receipts']
+        assert finished['tutorial']['guided']['townhall']['transported']
+        assert finished['tutorial']['guided']['townhall']['accelerated']
+        assert not finished['commerce']['receipts'], 'Actual game-coin services need no cash purchase'
         cloud.no_island_cache(page)
     finally:
         context.close()
@@ -234,7 +246,7 @@ def run():
             assert not cloud.ERRORS, cloud.ERRORS
         finally:
             browser.close()
-    print('PASS starter v5 UI: rewardonlysixcarriers, prioritydetails, farmer/lumbermap, funded30+60sTownHall2, taskaccept→deposit and wonround→cashout targets; PL/ENdesktop/mobile')
+    print('PASS starter v6 UI: reward on three carriers, priority details, farmer/lumber map, funded real delivery and construction services, taskaccept→deposit and wonround→cashout targets; PL/ENdesktop/mobile')
 
 
 if __name__ == '__main__':

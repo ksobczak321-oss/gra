@@ -1,15 +1,16 @@
 // One read-only view of active benefits and penalties, shared by Town Hall and
 // transition notifications. Countdown changes alone never create a new notice.
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v27';
-import { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v27';
-import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v27';
-import { worldEventRows } from './harborlight-v1-events.js?v=frontend-v27';
-import { ATTRACTIONS } from './harborlight-v1-leisure.js?v=frontend-v27';
-import { residentHasHousing } from './harborlight-v1-housing.js?v=frontend-v27';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v28';
+import { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v28';
+import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v28';
+import { worldEventRows } from './harborlight-v1-events.js?v=frontend-v28';
+import { ATTRACTIONS } from './harborlight-v1-leisure.js?v=frontend-v28';
+import { residentHasHousing } from './harborlight-v1-housing.js?v=frontend-v28';
 const EPS = 1e-7;
 const GRACE = 12 * 3600;
 const workplaceNames = { farm: 'Farm', windmill: 'Windmill', lumber: 'Lumber Camp', sawmill: 'Sawmill', quarry: 'Quarry', warehouse: 'Warehouse', market: 'Market', dock: 'Harbor' };
 const recipes = { farm: null, lumber: null, quarry: null, windmill: 'grain', sawmill: 'wood' };
+const outputs = { farm: 'grain', lumber: 'wood', quarry: 'stone', windmill: 'food', sawmill: 'planks' };
 const finite = (value, fallback = 0) => Number.isFinite(value) ? value : fallback;
 const peopleOf = state => Array.isArray(state.residents) ? state.residents : [];
 const frozen = person => finite(person.newbornRemaining) > EPS;
@@ -53,9 +54,9 @@ export function activeEffects(state = {}) {
   }));
   if (finite(state.chapelRemaining) > EPS) {
     const amount = 10 * finite(state.buildings?.chapel?.level);
-    effects.push(effectRow('chapel-upgrade', 'Chapel upgrade bonus', 'positive', `+${amount} pp happiness`, allScope, {
+    effects.push(effectRow('chapel-upgrade', 'Chapel upgrade bonus', 'positive', `+${amount} pp happiness · taxes ×2`, allScope, {
       amount, residentIds: allIds, remaining: state.chapelRemaining,
-      explain: 'The happiness bonus lasts ten hours after a Chapel upgrade.'
+      explain: 'The happiness bonus and doubled taxes last ten hours after a Chapel upgrade.'
     }));
   }
   if (finite(state.lighthouseRemaining) > EPS) effects.push(effectRow('lighthouse-upgrade', 'Lighthouse upgrade bonus', 'positive', 'Happiness set to 100% · material production ×2', scopeOf(people, people), {
@@ -106,7 +107,7 @@ export function activeEffects(state = {}) {
       explain: 'Unfed time accumulates until a full uninterrupted hour of feeding clears it. After twelve hours the penalty applies only while food is unavailable, without backcharging the first twelve hours.'
     }));
   }
-  const unemployed = eligible.filter(person => !person.workplace && finite(person.unemployedSeconds) >= GRACE - EPS);
+  const unemployed = eligible.filter(person => !person.workplace && !(finite(person.prayerRemaining) > EPS) && finite(person.unemployedSeconds) >= GRACE - EPS);
   if (unemployed.length) effects.push(effectRow('unemployment', 'Unemployment penalty', 'negative', '−5 pp happiness / h', scopeOf(unemployed, people), {
     amount: -5, residentIds: idsOf(unemployed), endCondition: 'Until these residents are assigned to work',
     explain: 'The penalty is paused on assignment and while walking to work. Only arriving resets the remembered timer; recalling a resident early does not grant a new grace period. Returning home counts as unemployment.'
@@ -122,9 +123,32 @@ export function activeEffects(state = {}) {
     const penalties = affected.map(person => Math.min(50, 10 * (1 + Math.floor((finite(person.blockedSeconds) + EPS) / 86400))));
     const lowest = Math.min(...penalties), highest = Math.max(...penalties);
     effects.push(effectRow(`production-blockage-${workplace}`, `${name}: production blockage`, 'negative', lowest === highest ? `−${lowest} pp happiness` : `−${lowest} to −${highest} pp happiness`, scopeOf(affected, people), {
-      amount: -highest, residentIds: idsOf(affected), endCondition: 'Until production can resume or the worker is released',
+      amount: -highest, residentIds: idsOf(affected), building: workplace, resource: outputs[workplace],
+      blockageReason: finite(state.buildings?.[workplace]?.ready) >= 200 * finite(state.buildings?.[workplace]?.level) ? 'local-full' : 'missing-input', endCondition: 'Until production can resume or the worker is released',
       details: affected.map((person, index) => ({ residentId: person.id, amount: -penalties[index] })).sort((a, b) => a.residentId - b.residentId),
       explain: 'A full local store or missing input starts a −10 pp penalty. Each additional 24 hours adds −10, up to −50 from this cause.'
+    }));
+  }
+
+  for (const bonus of Array.isArray(state.missionProductionBonuses) ? state.missionProductionBonuses : []) {
+    const remaining = (finite(bonus.until) - finite(state.worldTimeMs, finite(state.lastSimulatedAt))) / 1000;
+    if (!(remaining > EPS) || bonus.multiplier !== 2 || !outputs[bonus.building]) continue;
+    const name = workplaceNames[bonus.building] || titleFromId(bonus.building);
+    effects.push(effectRow(`mission-production-${bonus.building}`, `${name}: mission production reward`, 'positive', 'Material production ×2', scopeOf(people.filter(person => person.workplace === bonus.building), people), {
+      amount: 2, building: bonus.building, resource: outputs[bonus.building], remaining,
+      residentIds: idsOf(people.filter(person => person.workplace === bonus.building)),
+      explain: 'The mission reward doubles this building’s material production while active. Lighthouse production remains a separate multiplier.'
+    }));
+  }
+
+  for (const person of people) {
+    if (finite(person.prayerRemaining) > EPS) effects.push(effectRow(`prayer-active-${person.id}`, 'Prayer in the Chapel', 'neutral', 'Prayer and both journeys are in progress', `Resident #${person.id}`, {
+      residentIds: [person.id], remaining: person.prayerRemaining,
+      explain: 'Prayer is a legitimate activity, not unemployment. The resident eats normally and earns no workplace production or tax during the activity.'
+    }));
+    if (!frozen(person) && finite(person.prayerBonusRemaining) > EPS) effects.push(effectRow(`prayer-bonus-${person.id}`, 'Prayer happiness reward', 'positive', '+50 pp happiness', `Resident #${person.id}`, {
+      amount: 50, residentIds: [person.id], remaining: person.prayerBonusRemaining,
+      explain: 'The personal happiness bonus begins on return Home and lasts six hours. The same resident cannot stack multiple prayer bonuses.'
     }));
   }
 
@@ -180,7 +204,7 @@ export function activeEffects(state = {}) {
 }
 
 function semanticSignature(effect) {
-  return JSON.stringify([effect.title, effect.polarity, effect.effect, effect.scope, effect.amount, effect.residentIds, effect.endCondition, effect.details || null]);
+  return JSON.stringify([effect.title, effect.polarity, effect.effect, effect.scope, effect.amount, effect.residentIds, effect.endCondition, effect.details || null, effect.blockageReason || null]);
 }
 function trackedEffects(effects) {
   return Object.fromEntries(effects.map(effect => [effect.id, { signature: semanticSignature(effect), effect: { ...effect, residentIds: [...effect.residentIds] } }]));
@@ -202,7 +226,18 @@ function notify(state, effect, transition) {
   state.notificationSequence = Math.max(finite(state.notificationSequence), ...state.notifications.map(item => finite(item.id))) + 1;
   const prefix = transition === 'ended' ? 'Ended' : transition === 'changed' ? 'Updated' : effect.polarity === 'negative' ? 'Penalty' : effect.polarity === 'neutral' ? 'Status' : 'Bonus';
   const timing = transition === 'ended' ? '' : Number.isFinite(effect.remaining) ? ` · ${durationText(effect.remaining)} remaining` : effect.endCondition ? ` · ${effect.endCondition}` : '';
-  state.notifications.unshift({ id: state.notificationSequence, kind: `effect-${transition}`, effectId: effect.id, title: `${prefix}: ${effect.title}`, message: `${effect.effect} · ${effect.scope}${timing}.`, at: finite(state.activeSeconds), read: false });
+  const detail = { transition, effectId: effect.id, residentIds: [...effect.residentIds], affectedCount: effect.residentIds.length };
+  if (effect.id.startsWith('production-blockage-') && effect.building) {
+    const workplace = effect.building, residents = peopleOf(state);
+    const selected = residents.filter(person => effect.residentIds.includes(person.id));
+    const resumed = selected.filter(person => person.workplace === workplace && arrived(person) && !blocked(state, person)).length;
+    const recalled = selected.filter(person => person.workplace !== workplace).length;
+    Object.assign(detail, { building: workplace, resource: effect.resource || outputs[workplace], blockageReason: effect.blockageReason,
+      reason: transition !== 'ended' ? effect.blockageReason : resumed && recalled ? 'mixed' : resumed ? 'production-resumed' : recalled ? 'workers-recalled' : 'conditions-changed',
+      resumedCount: resumed, recalledCount: recalled, remainingLocal: finite(state.buildings?.[workplace]?.ready), amount: Math.abs(finite(effect.amount)) });
+  }
+  state.notifications.unshift({ id: state.notificationSequence, kind: `effect-${transition}`, effectId: effect.id, effectTransition: detail,
+    title: `${prefix}: ${effect.title}`, message: `${effect.effect} · ${effect.scope}${timing}.`, at: finite(state.activeSeconds), read: false });
   state.notifications.length = Math.min(100, state.notifications.length);
 }
 

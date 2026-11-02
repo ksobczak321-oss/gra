@@ -44,9 +44,9 @@ test('chat uses plain text, opaque handles, idempotency and a server enforced se
   const again=await f.call('one','chatSend',{requestId:'same_request_123',channel:'direct',targetId:f.ids.two,text:'<img src=x onerror=alert(1)>'});
   assert.equal(again.alreadyApplied,true); assert.equal(again.message.id,first.message.id);
   assert.equal((await f.call('two','chatRead',{channel:'direct',targetId:f.ids.one})).messages.length,1);
-  for(let i=0;i<4;i++) await f.call('one','chatSend',{channel:'direct',targetId:f.ids.two,text:'wiadomość '+i});
-  await rejects(f.call('one','chatSend',{channel:'direct',targetId:f.ids.two,text:'szósta'}),'community-chat-rate-limited');
-  f.advance(10001); await f.call('one','chatSend',{channel:'direct',targetId:f.ids.two,text:'po przerwie'});
+  for(let i=0;i<19;i++) await f.call('one','chatSend',{channel:'direct',targetId:f.ids.two,text:'wiadomość '+i});
+  await rejects(f.call('one','chatSend',{channel:'direct',targetId:f.ids.two,text:'dwudziesta pierwsza'}),'community-chat-rate-limited');
+  f.advance(20001); await f.call('one','chatSend',{channel:'direct',targetId:f.ids.two,text:'po przerwie'});
   assert.equal(JSON.stringify(await f.service.snapshot({uid:'one'})).includes('"uid"'),false);
 });
 
@@ -110,11 +110,12 @@ test('crossing 20:00 does not cut either task short',async()=>{
   }
 });
 
-test('frozen roster keeps the denominator after a member leaves and invalidates an in-flight attempt',async()=>{
+test('frozen roster keeps the denominator and lets a departed member finish for the registered team',async()=>{
   const f=await fixture(),a=await ally(f); await join(f,a.id); await f.call('one','leagueEnroll');
   f.time(Date.parse('2026-11-15T19:00:00Z')); const attempt=await f.call('two','attemptStart',{kind:'logic'});
   await f.call('two','allianceLeave');
-  await rejects(f.call('two','attemptAction',{attemptId:attempt.attemptId,sequence:0,action:{type:'load',batch:0}}),'league-membership-changed');
+  const accepted=await f.call('two','attemptAction',{attemptId:attempt.attemptId,sequence:0,action:{type:'load',batch:0}});assert.equal(accepted.sequence,1);
+  await rejects(f.call('two','chatRead',{channel:'alliance',targetId:a.id}),'community-chat-forbidden');
   const table=await f.call('one','leagueRead'); assert.equal(table.groups[0][0].roster.length,2);
 });
 

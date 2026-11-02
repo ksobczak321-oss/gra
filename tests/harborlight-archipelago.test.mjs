@@ -183,22 +183,23 @@ test('ordinary cargo used after arrival has the same whole/split offline result'
   assert.deepEqual(whole.transfers, split.transfers);
 });
 
-test('capacity purchases are explicit Paynow DEV simulations, persistent and idempotent', () => {
+test('capacity purchases use game coins and persist idempotently without Paynow receipts', () => {
   const account = two(), context = { environment: 'preprod', devSimulation: true };
-  assert.equal(Arch.quoteShipCapacity(account, { units: 2 }).grossGrosz, 998);
-  assert.equal(Arch.completeShipCapacityPurchase(account, { units: 2, receiptId: 'capacity-1' }, { environment: 'production', devSimulation: true, verified: true }, NOW).ok, false);
+  assert.equal(Arch.quoteShipCapacity(account, { units: 2 }).coins, 100);
+  assert.equal(Arch.purchaseShipCapacity(account, { units: 2, requestId: 'capacity-1' }, { environment: 'production', devSimulation: true, verified: true }, NOW).ok, false);
   assert.equal(account.shipCapacity, 1000);
-  assert.equal(Arch.completeShipCapacityPurchase(account, { units: 2, receiptId: 'capacity-1' }, context, NOW).ok, true);
+  assert.equal(Arch.purchaseShipCapacity(account, { units: 2, requestId: 'capacity-1' }, context, NOW).ok, true);
   assert.equal(account.shipCapacity, 3000);
-  assert.equal(account.primary.commerce.receipts.length, 1);
-  assert.equal(account.primary.commerce.receipts[0].grossGrosz, 998);
-  assert.equal(Arch.completeShipCapacityPurchase(account, { units: 2, receiptId: 'capacity-1' }, context, NOW).duplicate, true);
-  assert.equal(account.primary.commerce.receipts.length, 1);
-  assert.equal(Arch.completeShipCapacityPurchase(account, { units: 3, receiptId: 'capacity-1' }, context, NOW).ok, false);
+  assert.equal(account.primary.commerce.receipts.length, 0);
+  assert.equal(account.primary.commerce.capacityPurchases[0].coins, 100);
+  assert.equal(Arch.purchaseShipCapacity(account, { units: 2, requestId: 'capacity-1' }, context, NOW).duplicate, true);
+  assert.equal(account.primary.commerce.capacityPurchases.length, 1);
+  assert.equal(Arch.purchaseShipCapacity(account, { units: 3, requestId: 'capacity-1' }, context, NOW).ok, false);
   const reopened = restore(account);
   assert.equal(reopened.shipCapacity, 3000);
-  assert.throws(() => Arch.restoreArchipelago(Arch.serializeArchipelago(account), { ...adapters, environment: 'production' }, NOW), error => error.code === 'invalid-cloud-data');
-  assert.equal(Arch.completeShipCapacityPurchase(reopened, { units: 2, receiptId: 'capacity-1' }, context, NOW).duplicate, true);
+  const production=Arch.restoreArchipelago(Arch.serializeArchipelago(account), { ...adapters, environment: 'production' }, NOW);
+  assert.equal(Arch.purchaseShipCapacity(production,{requestId:'untrusted-production'},context,NOW).ok,false);
+  assert.equal(Arch.purchaseShipCapacity(reopened, { units: 2, requestId: 'capacity-1' }, context, NOW).duplicate, true);
   assert.equal(Arch.quoteShipCapacity(account, { units: 101 }).ok, false);
 });
 
@@ -215,30 +216,31 @@ test('corrupt world, cargo or capacity metadata fails closed rather than recreat
   }
 });
 
-test('capacity spending counts once toward the shared30-day no-ad threshold without granting coins', () => {
+test('capacity spending uses coins once, never creates no-ad entitlement, and survives world recreation', () => {
   const account = two(), context = { environment: 'development', devSimulation: true };
   const firstCoins = account.primary.resources.coins, secondCoins = account.secondary.resources.coins;
-  assert.equal(Arch.completeShipCapacityPurchase(account, { units: 5, receiptId: 'capacity-noads' }, context, NOW).ok, true);
+  assert.equal(Arch.purchaseShipCapacity(account, { units: 5, requestId: 'capacity-noads' }, context, NOW).ok, true);
   assert.equal(account.shipCapacity, 6000);
-  assert.equal(commerceStatus(account.primary).paidLast30DaysGrosz, 2495);
-  assert.equal(commerceStatus(account.secondary).noAds, true);
+  assert.equal(commerceStatus(account.primary).paidLast30DaysGrosz, 0);
+  assert.equal(commerceStatus(account.secondary).noAds, false);
   Arch.switchIsland(account, 'island-2', NOW);
   const reopened = restore(account);
-  assert.equal(Arch.completeShipCapacityPurchase(reopened, { units: 5, receiptId: 'capacity-noads' }, context, NOW).duplicate, true);
-  assert.equal(reopened.primary.commerce.receipts.length, 1);
-  assert.equal(reopened.primary.resources.coins, firstCoins);
+  assert.equal(Arch.purchaseShipCapacity(reopened, { units: 5, requestId: 'capacity-noads' }, context, NOW).duplicate, true);
+  assert.equal(reopened.primary.commerce.capacityPurchases.length, 1);
+  assert.equal(reopened.primary.commerce.receipts.length,0);
+  assert.equal(reopened.primary.resources.coins, firstCoins-250);
   assert.equal(reopened.secondary.resources.coins, secondCoins);
   const recreatedWorld = createState(NOW + 1000);
   recreatedWorld.commerce = structuredClone(account.primary.commerce);
   const recreatedAccount = Arch.restoreArchipelago(recreatedWorld, adapters, NOW + 1000);
-  assert.equal(recreatedAccount.shipCapacity, 6000, 'permanent capacity survives world recreation through retained account payments');
+  assert.equal(recreatedAccount.shipCapacity, 6000, 'permanent capacity survives world recreation through retained account coin purchases');
   assert.equal(recreatedAccount.capacityReceipts.length, 1);
   assert.equal(recreatedAccount.secondary, null, 'paid capacity does not resurrect an expired world');
 });
 
 test('only the latest50 completed free voyages are retained, with active cargo and paid receipts intact', () => {
   const account = two(), context = { environment: 'preprod', devSimulation: true };
-  assert.equal(Arch.completeShipCapacityPurchase(account, { receiptId: 'capacity-history' }, context, NOW).ok, true);
+  assert.equal(Arch.purchaseShipCapacity(account, { requestId: 'capacity-history' }, context, NOW).ok, true);
   assert.equal(Arch.sendIslandTransfer(account, { toIslandId: 'island-2', cargo: { wood: 1 } }, NOW).ok, true);
   Arch.advanceArchipelago(account, NOW + 600000);
   const template = structuredClone(account.transfers[0]);
@@ -253,7 +255,8 @@ test('only the latest50 completed free voyages are retained, with active cargo a
   const reopened = Arch.restoreArchipelago(snapshot, adapters, NOW + 600000);
   assert.equal(reopened.sequence, 56);
   assert.equal(reopened.capacityReceipts.length, 1);
-  assert.equal(reopened.primary.commerce.receipts.length, 1);
+  assert.equal(reopened.primary.commerce.capacityPurchases.length, 1);
+  assert.equal(reopened.primary.commerce.receipts.length,0);
   assert.deepEqual(reopened.transfers.at(-1).remainingCargo, { stone: 1 });
 });
 

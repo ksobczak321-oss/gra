@@ -17,6 +17,7 @@ function island({ level = 4, population = 12 } = {}) {
   raw.buildings.warehouse.level = level;
   raw.buildings.lighthouse.level = 1;
   raw.population = population;
+  delete raw.houseHappinessPool.version; delete raw.houseHappinessPool.portions;
   raw.houseHappinessPool.points = population; raw.houseHappinessPool.grantPopulation = population;
   raw.resources = { coins: 1000000, wood: 1000, stone: 1000, grain: 1000, food: 1000, planks: 1000 };
   return normalizeState(raw, NOW);
@@ -175,21 +176,21 @@ test('old saves are not retroactively simulated using an unreliable lastActionAt
   assert.equal(advanceTo(migrated, migrated.lastSimulatedAt), 0);
 });
 
-test('manual House points are consumed once without clearing unemployment penalties', () => {
+test('collective House points are consumed once without clearing unemployment penalties', () => {
   const state = island({ population: 6 });
   const person = state.residents[0];
   person.unemployedSeconds = 43200;
-  const result = act(state, { type: 'houseHappiness', residentId: person.id, amount: 4 });
+  const result = act(state, { type: 'houseHappinessAll', amount: 1 });
   assert.equal(result.ok, true, result.message);
-  assert.equal(person.happiness, 4);
+  assert.equal(person.happiness, 1);
   assert.equal(person.unemployedSeconds, 43200);
-  assert.equal(state.houseHappinessPool.points, 2);
+  assert.equal(state.houseHappinessPool.points, 0);
   assert.equal(act(state, { type: 'houseHappiness', residentId: person.id, amount: 3 }).ok, false);
 });
 
-test('House auto distribution spends only its remaining pool and refreshes once', () => {
+test('House bank saves the remaining pool and adds one midnight portion', () => {
   const state = island({ population: 6 });
-  state.houseHappinessPool.points = 3;
+  state.houseHappinessPool.points = 3; state.houseHappinessPool.portions = [{ points: 3, population: 6, day: '2026-10-23' }];
   const midnight = nextWarsawMidnightMs(NOW);
   state.worldTimeMs = state.lastSimulatedAt = midnight - 121000;
   state.houseHappinessPool.nextRefreshAt = midnight;
@@ -197,20 +198,20 @@ test('House auto distribution spends only its remaining pool and refreshes once'
   state.houseHappinessPool.refreshRemaining = 121;
   const initial = state.residents.reduce((sum, p) => sum + p.happiness, 0);
   tick(state, 1);
-  assert.equal(state.houseHappinessPool.points, 0);
+  assert.equal(state.houseHappinessPool.points, 3);
   assert.equal(state.houseHappinessPool.autoDone, true);
-  close(state.residents.reduce((sum, p) => sum + p.happiness, 0) - initial, 3 + 6 / 3600);
+  close(state.residents.reduce((sum, p) => sum + p.happiness, 0) - initial, 6 / 3600);
   tick(state, 120);
   assert.equal(state.houseHappinessPool.generation, 2);
-  assert.equal(state.houseHappinessPool.points, 6);
+  assert.equal(state.houseHappinessPool.points, 9);
   assert.equal(state.houseHappinessPool.grantPopulation, 6);
-  assert.equal(state.houseHappinessPool.autoDone, false);
+  assert.equal(state.houseHappinessPool.autoDone, true);
   close(state.houseHappinessPool.refreshRemaining, 86400);
 });
 
-test('House random ties are reproducible through save/reload', () => {
+test('House bank keeps an indivisible remainder through save/reload', () => {
   const state = island({ population: 6 });
-  state.houseHappinessPool.points = 1;
+  state.houseHappinessPool.points = 1; state.houseHappinessPool.portions = [{ points: 1, population: 6, day: '2026-10-23' }];
   state.houseHappinessPool.randomSeed = 13579;
   const midnight = nextWarsawMidnightMs(NOW);
   state.worldTimeMs = state.lastSimulatedAt = midnight - 121000;

@@ -32,7 +32,7 @@ test('full expedition completion wins over a generic Level prefix and uses Polis
 
 test('full resident notification wins over the generic Resident prefix', () => {
   assert.equal(translate('Resident 12 received 3 happiness points.', 'pl'), 'Mieszkaniec 12 otrzymał 3 punkty szczęścia.');
-  assert.equal(translate('4 residents moved into the House. Their happiness remains at 0% for their first 24 hours.', 'pl'), 'Nowi mieszkańcy w Domu: 4. Przez pierwsze 24 godziny ich szczęście pozostaje na 0%.');
+  assert.equal(translate('4 residents moved into the House. Their happiness remains at 0% for their first 24 hours.', 'pl'), 'Nowi mieszkańcy w Domu: 4. Przez pierwsze 24 godziny ich szczęście pozostaje na 0 punktów.');
 });
 
 test('waiting ETA, active attraction lock and warehouse arrival notifications have no English clauses', () => {
@@ -46,8 +46,8 @@ test('waiting ETA, active attraction lock and warehouse arrival notifications ha
 });
 
 test('attraction dynamic descriptions translate complete messages and singular recipients', () => {
-  assert.equal(translate('+10 pp happiness for 1 resident for 6 hours. Cost: 10 coins.', 'pl'), '+10 p.p. szczęścia dla 1 osoby przez 6 godzin. Koszt: 10 monet.');
-  assert.equal(translate('Path lamps: +5 pp happiness for 6 residents for 6 hours.', 'pl'), 'Lampy przy ścieżkach: +5 p.p. szczęścia dla 6 osób przez 6 godzin.');
+  assert.equal(translate('+10 pp happiness for 1 resident for 6 hours. Cost: 10 coins.', 'pl'), '+10 punktów szczęścia dla 1 osoby przez 6 godzin. Koszt: 10 monet.');
+  assert.equal(translate('Path lamps: +5 pp happiness for 6 residents for 6 hours.', 'pl'), 'Lampy przy ścieżkach: +5 punktów szczęścia dla 6 osób przez 6 godzin.');
 });
 
 test('time unit conversion does not duplicate punctuation', () => {
@@ -56,7 +56,7 @@ test('time unit conversion does not duplicate punctuation', () => {
 });
 
 test('multi-sentence population status preserves the complete zero-happiness clause before splitting separators', () => {
-  assert.equal(translate('0% happiness · no population growth or decline. Overcrowding lowers happiness and may cause population decline.', 'pl'), '0% szczęścia · populacja nie rośnie ani nie maleje. Przeludnienie obniża szczęście i może powodować spadek populacji.');
+  assert.equal(translate('0% happiness · no population growth or decline. Overcrowding lowers happiness and may cause population decline.', 'pl'), '0 punktów szczęścia · populacja nie rośnie ani nie maleje. Przeludnienie obniża szczęście i może powodować spadek populacji.');
   assert.equal(translate('8 Food · 2 random per 10 trips · next allocation 4 / 10', 'pl'), '8 jedn. żywności · 2 losowe na 10 kursów · kolejny przydział 4 / 10');
 });
 
@@ -87,7 +87,7 @@ test('all 12 buildings have a concise bilingual purpose and whole-island goal', 
 test('resident and warehouse introductions retain constraints and use new carrier base', () => {
   assert.match(residentsPurpose('pl'), /macierzystej pozostaje co najmniej 12 osób/);
   assert.match(residentsPurpose('pl'), /córce — 6/);
-  assert.match(residentsPurpose('pl'), /Przy szczęściu 0%/);
+  assert.match(residentsPurpose('pl'), /Przy szczęściu 0 punktów/);
   assert.match(warehousePurpose('pl'), /120 sztuk/);
   assert.match(warehousePurpose('pl'), /pięciominutowym/);
   assert.equal(translate(residentsPurpose(), 'pl'), residentsPurpose('pl'));

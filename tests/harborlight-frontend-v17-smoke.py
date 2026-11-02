@@ -16,6 +16,7 @@ import re
 import threading
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import acknowledge_daily_offer
 
 ROOT = Path(__file__).resolve().parent.parent
 FRONTEND_ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', ROOT)).resolve()
@@ -74,6 +75,9 @@ def saved(page):
 def install_save(page, state):
     # This relay belongs exclusively to the acceptance harness. The app sees
     # one injected fixture at localhost bootstrap and never reads the relay.
+    # These historical layout/economy fixtures have already acknowledged the
+    # independent daily-login reminder; no reward is claimed or injected.
+    acknowledge_daily_offer(state)
     page.evaluate('(value)=>sessionStorage.setItem(%s,JSON.stringify(value))' % json.dumps(FIXTURE_RELAY), state)
     page.reload()
     page.wait_for_function('document.getElementById("loading").hidden')

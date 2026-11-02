@@ -2,7 +2,7 @@
 // reading a panel never rerolls an offer or applies an event a second time.
 // This module imports inventory only: residents/logistics can safely read its
 // modifiers, and the state coordinator supplies population-changing callbacks.
-import { centralAvailable, grantBonusMaterials, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v27';
+import { centralAvailable, grantBonusMaterials, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v28';
 
 const HOUR = 3600, DAY = 86400, EPS = 1e-7, SAFE = Number.MAX_SAFE_INTEGER;
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
@@ -179,25 +179,25 @@ function badEvent(state, events, at, context) {
     details = { peopleLost: people, requestedPeople: requested };
     title = 'Plague from the wreck'; titlePl = 'Dżuma na wyspie';
     message = `${people} residents were lost. Happiness −10 pp for six hours.`;
-    messagePl = people ? `Dżuma zabrała ${people} ${people === 1 ? 'mieszkańca' : 'mieszkańców'}. Przez sześć godzin szczęście jest niższe o 10 p.p.` :
-      'Nikt nie zginął: minimalna liczba mieszkańców jest chroniona. Przez sześć godzin szczęście jest niższe o 10 p.p.';
+    messagePl = people ? `Dżuma zabrała ${people} ${people === 1 ? 'mieszkańca' : 'mieszkańców'}. Przez sześć godzin szczęście jest niższe o 10 punktów` :
+      'Nikt nie zginął: minimalna liczba mieszkańców jest chroniona. Przez sześć godzin szczęście jest niższe o 10 punktów';
   } else if (kind === 'royal-tax') {
     const percentage = randomInt(events, 0, 20), coins = consumeMaterial(state, 'coins', Math.floor(integer(state.resources?.coins) * percentage / 100));
     details = { percentage, coinsLost: coins };
     title = 'An unexpected royal tax'; titlePl = 'Niespodziewany podatek królewski';
     message = `${coins} available coins were collected. Happiness −5 pp for six hours.`;
-    messagePl = `Pobrano ${coins} ${coinObject(coins)} z wolnego salda. Przez sześć godzin szczęście jest niższe o 5 p.p.`;
+    messagePl = `Pobrano ${coins} ${coinObject(coins)} z wolnego salda. Przez sześć godzin szczęście jest niższe o 5 punktów`;
   } else if (kind === 'beetles') {
     const percentage = randomInt(events, 0, 20), wood = consumeMaterial(state, 'wood', Math.floor(centralAvailable(state, 'wood') * percentage / 100));
     details = { percentage, woodLost: wood };
     title = 'Wood-boring beetles'; titlePl = 'Plaga korników';
     message = `${wood} unreserved wood was lost. Happiness −5 pp for six hours.`;
-    messagePl = `Korniki zniszczyły ${wood} ${materialUnits(wood)} drewna z dostępnego zapasu. Przez sześć godzin szczęście jest niższe o 5 p.p.`;
+    messagePl = `Korniki zniszczyły ${wood} ${materialUnits(wood)} drewna z dostępnego zapasu. Przez sześć godzin szczęście jest niższe o 5 punktów`;
   } else {
     transportSlowPercent = randomInt(events, 0, 50); details = { transportSlowPercent };
     title = 'Roads damaged by the wreck'; titlePl = 'Drogi uszkodzone po katastrofie';
     message = `Carrying speed −${transportSlowPercent}% and happiness −5 pp for six hours.`;
-    messagePl = `Przez sześć godzin szczęście jest niższe o 5 p.p.${transportSlowPercent ? ` Transport jest wolniejszy o ${transportSlowPercent}%.` : ''}`;
+    messagePl = `Przez sześć godzin szczęście jest niższe o 5 punktów${transportSlowPercent ? ` Transport jest wolniejszy o ${transportSlowPercent}%.` : ''}`;
   }
   events.effects.push({ id: `wreck-effect-${events.sequence + 1}`, kind, untilMs: at + WORLD_EVENT_RULES.effectSeconds * 1000,
     happinessPenalty, transportSlowPercent, farmBonusPercent: 0 });
@@ -292,7 +292,7 @@ export function worldEventRows(state, language = 'pl') {
     const parts = [];
     if (effect.farmBonusPercent) parts.push(polish ? `Produkcja zboża +${effect.farmBonusPercent}%` : `Farm production +${effect.farmBonusPercent}%`);
     if (effect.transportSlowPercent) parts.push(polish ? `Prędkość transportu −${effect.transportSlowPercent}%` : `Carrying speed −${effect.transportSlowPercent}%`);
-    if (effect.happinessPenalty) parts.push(polish ? `Szczęście −${effect.happinessPenalty} p.p.` : `Happiness −${effect.happinessPenalty} pp`);
+    if (effect.happinessPenalty) parts.push(polish ? `Szczęście −${effect.happinessPenalty} ${polishAmountWord(effect.happinessPenalty, 'punkt', 'punkty', 'punktów')}` : `Happiness −${effect.happinessPenalty} pp`);
     return { id: effect.id, title: (names[effect.kind] || ['World event', 'Wydarzenie na wyspie'])[polish ? 1 : 0], description: parts.join(' · '),
       remaining: Math.max(0, (effect.untilMs - events.clockMs) / 1000), polarity: effect.happinessPenalty ? 'negative' : 'positive' };
   });

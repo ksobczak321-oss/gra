@@ -11,6 +11,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import acknowledge_daily_offer, dismiss_player_offers
 
 SOURCE = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('v21_cloud_fixture', SOURCE / 'tests/harborlight-dev-game-smoke.py')
@@ -24,6 +25,8 @@ def world(mode='copy', population=12):
     script = '''
       import {createState,normalizeState} from './harborlight-v1-state.js';
       import * as Progression from './harborlight-v1-progression.js';
+      import {act} from './harborlight-v1-state.js';
+      import {missionStoryIntro} from './harborlight-v1-missions.js';
       let s=createState(%d);
       s.islandName='Port Zachowanego Postępu';
       s.tutorial={...s.tutorial,version:3,autoOpenDisabled:true,completed:{},claimed:{},chests:{}};
@@ -41,11 +44,13 @@ def world(mode='copy', population=12):
       }
       s.statistics.expeditions=7;s.statistics.traded=3;
       s=normalizeState(s,%d);
+      const intro=missionStoryIntro(s);
+      if(intro.available){const seen=act(s,{type:'missionIntroSeen',chapterId:intro.chapterId},s.worldTimeMs);if(!seen.ok)throw Error(seen.message);}
       console.log(JSON.stringify(s));
     ''' % (START, 6 if mode == 'peer' else 10 if mode == 'archipelago' else 3,
            24 if mode == 'archipelago' and population == 12 else population, json.dumps(mode), START)
-    return json.loads(subprocess.run(['node', '--input-type=module', '-e', script], cwd=SOURCE,
-                                     capture_output=True, text=True, check=True).stdout)
+    return acknowledge_daily_offer(json.loads(subprocess.run(['node', '--input-type=module', '-e', script], cwd=SOURCE,
+                                     capture_output=True, text=True, check=True).stdout))
 
 
 def enter(browser, state, *, mobile=False):
@@ -105,12 +110,11 @@ def resource_notation_and_payment(browser):
         expect(taxes).to_contain_text(text)
     building(page, 'sawmill')
     premium = page.locator('.compact-building-premium')
-    expect(premium.locator('[data-paynow-kind]')).to_have_count(1)
-    expect(premium.locator('[data-paynow-kind="building"]')).to_be_visible()
-    assert not premium.locator('[data-paynow-kind="transport"]').count()
+    expect(premium.locator('[data-paynow-kind]')).to_have_count(0)
+    expect(premium.locator('[data-premium-buy="sawmill"]')).to_be_visible()
     cloud.no_island_cache(page)
     context.close()
-    print('PASS21 resource notation, hourly balance, tax/ad/minigame explanation and exactly one building Paynow payment', flush=True)
+    print('PASS21 resource notation, hourly balance, tax/ad/minigame explanation and coin-only building purchase', flush=True)
 
 
 def house_and_chapel(browser):
@@ -129,15 +133,17 @@ def house_and_chapel(browser):
     assert cloud.cloud_state(UID)['buildings']['farm']['workers'] == 1
     assignments.get_by_role('button', name='Mieszkańcy i szczęście', exact=True).click()
     guide = page.locator('.residents-panel')
-    for text in ['Gdy średnie szczęście jest dodatnie', 'gdy spada poniżej zera', 'Przy szczęściu 0%', 'co najmniej 12 osób', 'wyspie córce — 6', 'ratusz', 'łóżka']:
+    for text in ['Gdy średnie szczęście jest dodatnie', 'gdy spada poniżej zera', 'Przy szczęściu 0 punktów', 'co najmniej 12 osób', 'wyspie córce — 6', 'ratusz', 'łóżka']:
         expect(guide).to_contain_text(text)
     expect(guide).to_contain_text('Mieszkaniec zaczyna pracę po dwóch minutach drogi z Domu.')
     expect(guide).not_to_contain_text(re.compile(r'(?:5|pięć|pięciu) minut(?:ach|y)? (?:drogi|z domu)', re.I))
     building(page, 'house')
     points = int(page.locator('[data-house-pool="points"]').inner_text().replace(' ', ''))
-    page.locator('[data-house-allocate]').click()
+    expect(page.locator('[data-house-allocate]')).to_have_count(0)
+    eligible = 12  # Every original resident has a bed and has finished settling.
+    page.locator('[data-house-everyone]').click()
     expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
-    assert cloud.cloud_state(UID)['houseHappinessPool']['points'] == points - 1
+    assert cloud.cloud_state(UID)['houseHappinessPool']['points'] == points - eligible
     building(page, 'chapel')
     chapel = page.locator('[data-chapel-grace-wrath]')
     for text in ['Łaska i gniew', 'losowe', '6 dni', '6–15', 'dżuma', 'Latarnia']:
@@ -203,6 +209,7 @@ def peer_market_gate(browser):
 
 def open_archipelago(page):
     close_panel(page)
+    dismiss_player_offers(page)
     page.locator('#hit-home').click()
     page.locator('[data-archipelago-open]').click()
     expect(page.locator('[data-archipelago-panel]')).to_be_visible()
@@ -299,10 +306,12 @@ def archipelago_cloud_and_shipping(browser):
     open_archipelago(page)
     assert cloud.cloud_state(UID)['archipelago']['islands']['island-2']['resources']['wood'] == 100
     expect(page.locator('[data-ship-capacity]')).to_have_text('1000')
+    # Coin services are paid by the active island; buy on the funded mother.
+    page.locator('[data-switch-island="island-1"]').click()
+    confirmed_island(page, 'island-1')
     page.locator('[data-ship-capacity-units]').fill('1000')
     page.locator('[data-ship-capacity-payment]').click()
-    expect(page.locator('#ship-capacity-checkout')).to_contain_text('SYMULACJA')
-    expect(page.locator('[data-ship-capacity-price]')).to_contain_text('4,99')
+    expect(page.locator('[data-ship-capacity-price]')).to_contain_text('50 monet z gry')
     page.locator('[data-confirm-ship-capacity-payment]').click()
     expect(page.locator('#ship-capacity-checkout')).not_to_be_visible()
     expect(page.locator('[data-ship-capacity]')).to_have_text('2000')
@@ -310,10 +319,12 @@ def archipelago_cloud_and_shipping(browser):
     paid = cloud.cloud_state(UID)
     assert paid['archipelago']['shipCapacity'] == 2000
     assert len(paid['archipelago']['capacityReceipts']) == 1
-    assert paid['archipelago']['capacityReceipts'][0]['grossGrosz'] == 499
-    assert paid['commerce']['receipts'][-1]['kind'] == 'ship-capacity'
-    assert paid['resources']['coins'] == original['resources']['coins'] - 21000
+    assert paid['archipelago']['capacityReceipts'][0]['coins'] == 50
+    assert paid['commerce']['capacityPurchases'][-1]['kind'] == 'ship-capacity-coins'
+    assert paid['resources']['coins'] == original['resources']['coins'] - 21000 - 50
     assert paid['archipelago']['islands']['island-2']['resources']['coins'] == 0
+    page.locator('[data-switch-island="island-2"]').click()
+    confirmed_island(page, 'island-2')
     page.reload()
     page.wait_for_function("document.body.dataset.activeIsland==='island-2'")
     open_archipelago(page)
@@ -342,11 +353,11 @@ def archipelago_cloud_and_shipping(browser):
     assert arrived['archipelago']['islands']['island-2']['population'] == 8
     identities = [person['personUid'] for person in arrived['residents']] + [person['personUid'] for person in arrived['archipelago']['islands']['island-2']['residents']]
     assert len(identities) == len(set(identities)) == 24
-    assert arrived['resources']['coins'] == original['resources']['coins'] - 21000
+    assert arrived['resources']['coins'] == original['resources']['coins'] - 21000 - 50
     exact_history()
     cloud.no_island_cache(page)
     context.close()
-    print('PASS24 funded TownHall10 founding, six actual colonists, prefix, copied levels, bounded cloud docs, free10-minute cargo and499gr simulated capacity exactly once', flush=True)
+    print('PASS24 funded TownHall10 founding, six actual colonists, prefix, copied levels, bounded cloud docs, free10-minute cargo and50-coin capacity exactly once', flush=True)
 
 
 def run():

@@ -13,6 +13,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import acknowledge_daily_offer
 
 SOURCE = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('v22_tutorial_cloud_fixture', SOURCE / 'tests/harborlight-dev-game-smoke.py')
@@ -67,7 +68,7 @@ def reward_grid(page, popup):
 
 
 def early_house_then_reload(browser):
-    initial = fresh_world()
+    initial = acknowledge_daily_offer(fresh_world())
     assert not initial['tutorial']['completed'] and not initial['tutorial']['claimed']
     cloud.DOCUMENTS[UID] = {'payload': json.dumps(initial), 'revision': 5, 'updateTime': cloud.timestamp()}
     context, page = cloud.context(browser, UID)

@@ -14,6 +14,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import acknowledge_daily_offer, dismiss_player_offers
 
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
@@ -50,6 +51,7 @@ def seed():
     script = """import * as S from './harborlight-v1-state.js';
       import * as A from './harborlight-v1-archipelago.js';
       import * as P from './harborlight-v1-progression.js';
+      import {missionStoryIntro} from './harborlight-v1-missions.js';
       import {grantBonusMaterials} from './harborlight-v1-inventory.js';
       const now=%d, start=now-6*60000;
       let s=S.createState(start);s.islandName='Old Harbor';s.population=50;
@@ -73,10 +75,12 @@ def seed():
       const founded=A.createNextIsland(worlds,{name:'QA Island'},now);if(!founded.ok)throw new Error(founded.message);
       const work=S.act(worlds.primary,{type:'upgrade',building:'quarry'},now);if(!work.ok)throw new Error(work.message);
       const trade=S.act(worlds.primary,{type:'trade',resource:'wood',amount:100,direction:'buy'},now);if(!trade.ok)throw new Error(trade.message);
+      const intro=missionStoryIntro(worlds.primary);
+      if(intro.available){const seen=S.act(worlds.primary,{type:'missionIntroSeen',chapterId:intro.chapterId},now);if(!seen.ok)throw Error(seen.message);}
       console.log(JSON.stringify(A.serializeArchipelago(worlds)));""" % int(NOW.timestamp()*1000)
-    return json.loads(subprocess.run(['node', '--input-type=module', '-e', script],
+    return acknowledge_daily_offer(json.loads(subprocess.run(['node', '--input-type=module', '-e', script],
                                     cwd=SOURCE, capture_output=True, text=True,
-                                    check=True).stdout)
+                                    check=True).stdout))
 
 
 def close_panel(page):
@@ -177,6 +181,7 @@ def scenario(browser, mobile, records, failures):
     try:
         page.goto(ORIGIN+'/harborlight-v1-layered.html?profile=new-player', wait_until='domcontentloaded')
         page.wait_for_function('window.__HARBORLIGHT_DEV_STATE__&&document.getElementById("loading").hidden')
+        dismiss_player_offers(page)
         initial_coins = page.evaluate('window.__HARBORLIGHT_DEV_STATE__.resources.coins')
         home(page, mobile)
         record(page, records, failures, 'home', mobile)
@@ -204,7 +209,7 @@ def scenario(browser, mobile, records, failures):
         worker = page.locator('[data-resident-id="2"]')
         expect(worker.locator('[data-resident-timers]')).to_contain_text('Najedzony')
         expect(worker.locator('[data-resident-timers]')).to_contain_text('Przydzielony')
-        expect(worker.locator('[data-resident-rate]')).to_have_text('+2 p.p./godz.')
+        expect(worker.locator('[data-resident-rate]')).to_have_text('+2 punkty/godz.')
         record(page, records, failures, 'resident-roster', mobile)
         for building, label in BUILDINGS.items():
             route(page, mobile, 'buildings')
@@ -238,7 +243,7 @@ def scenario(browser, mobile, records, failures):
             record(page, records, failures, 'community:'+tab, mobile)
         home(page, mobile)
         page.locator('[data-open-charity]').click()
-        expect(page.locator('[data-charity-panel]')).to_contain_text('SYMULACJA DEV')
+        expect(page.locator('[data-charity-panel]')).to_contain_text('SYMULACJA — bez przekazywania prawdziwych pieniędzy')
         record(page, records, failures, 'charity', mobile)
         home(page, mobile)
         source_button(page, 'Notifications')
@@ -255,8 +260,7 @@ def scenario(browser, mobile, records, failures):
         expect(page.locator('[data-reset-island]')).to_be_disabled()
         record(page, records, failures, 'reset-explanation', mobile)
         close_panel(page)
-        page.locator('[data-mobile-control="clock"]' if mobile else '#hit-clock').click()
-        record(page, records, failures, 'island-time', mobile)
+        expect(page.locator('#hit-clock,[data-mobile-control="clock"],[data-mobile-hud="clock"]')).to_have_count(0)
         close_panel(page)
         for category in ['administration', 'economy', 'resources', 'decorations', 'paths']:
             page.locator('[data-mobile-category="%s"]' % category if mobile else '#hit-category-'+category).click()

@@ -14,6 +14,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import acknowledge_daily_offer
 
 SOURCE = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('learning_v27_cloud', SOURCE / 'tests/harborlight-dev-game-smoke.py')
@@ -34,7 +35,7 @@ def world(*, through=0, resource_tour=False):
         run({type:'assign',building:'quarry',delta:1});
         advanceTo(state,state.worldTimeMs+120000);
         run({type:'dismissTutorial'});
-        run({type:'learningUpdate',patch:{tour:{index:25,active:false,paused:true},adsNotBeforeActiveSeconds:100000}});
+        run({type:'learningUpdate',patch:{tour:{index:24,active:false,paused:true},adsNotBeforeActiveSeconds:100000}});
       }else{
         run({type:'learningUpdate',patch:{adsNotBeforeActiveSeconds:100000}});
       }
@@ -44,6 +45,7 @@ def world(*, through=0, resource_tour=False):
 
 
 def seed(state):
+    acknowledge_daily_offer(state)
     cloud.NOW = datetime.fromtimestamp(state['worldTimeMs'] / 1000, tz=timezone.utc)
     cloud.DOCUMENTS[UID] = {'payload': json.dumps(state), 'revision': 7, 'updateTime': cloud.timestamp()}
 
@@ -63,7 +65,7 @@ def help_panel(page, mobile):
     page.locator('[data-mobile-control="tutorial"]' if mobile else '#hit-tutorial').click()
     panel = page.locator('[data-help-panel]')
     expect(panel).to_be_visible()
-    expect(panel.locator('button')).to_have_count(2)
+    expect(panel.locator('button')).to_have_count(4)
     expect(panel.locator('[data-help-return-lessons]')).to_be_visible()
     expect(panel.locator('[data-help-return-tour]')).to_be_visible()
     return panel
@@ -103,7 +105,7 @@ def tour_and_help(browser, language, mobile):
         help_panel(page, mobile).locator('[data-help-return-tour]').click()
         tour = page.locator('[data-island-onboarding]')
         expect(tour).to_have_attribute('data-onboarding-step', 'category-economy')
-        expect(tour.locator('[data-onboarding-counter]')).to_contain_text('34')
+        expect(tour.locator('[data-onboarding-counter]')).to_contain_text('33')
         # The tour was created before production below. T27 must resolve live
         # numbers when entered, while this already-started world keeps running.
         page.clock.run_for(240_000)
@@ -127,7 +129,7 @@ def tour_and_help(browser, language, mobile):
                     'rozmawiać online z innymi graczami' if language == 'pl' else 'chat online with other players')
         close_tour(page, language)
         paused = saved(page)
-        assert paused['learning']['tour']['paused'] and paused['learning']['tour']['index'] == 33
+        assert paused['learning']['tour']['paused'] and paused['learning']['tour']['index'] == 32
         assert lesson_history(paused) == before, 'Screen explanations changed practical lesson rewards'
         page.reload()
         page.wait_for_function('document.getElementById("loading").hidden')
@@ -319,6 +321,19 @@ def recovered_replay_navigation(browser, language, mobile, *, restart=False):
 def construction_receipt_then_feedback(browser, kind, language, mobile):
     is_townhall = kind == 'townhall'
     initial = world(through=7 if is_townhall else 23)
+    # This v27 regression resumes an old in-flight course5 order. Keep its
+    # literal saved clocks: fresh course6 uses real services and has its own
+    # browser acceptance. No building completion or lesson reward is injected.
+    project = next(row for row in initial['constructionProjects'] if row['building'] == kind)
+    timing = {'version':1,'level':1 if is_townhall else 2,'carriers':6,'capacity':120 if is_townhall else 132,
+              'trips':5 if is_townhall else 20,'waves':1 if is_townhall else 4,
+              'transportDuration':30 if is_townhall else 60,'buildingDuration':60 if is_townhall else 600,
+              'courseSeconds':30 if is_townhall else 15}
+    project['starterTurbo'] = timing
+    for trip in initial['haulTrips']['warehouse']:
+        if trip.get('projectOrder') == project['order']:
+            trip['starterTurboClock'] = True
+            trip['remaining'] = timing['courseSeconds']
     lesson = 'resources-dock' if is_townhall else 'returning-workers'
     seed(initial)
     context, page = cloud.context(browser, UID, language=language, mobile=mobile)
@@ -369,8 +384,8 @@ def construction_receipt_then_feedback(browser, kind, language, mobile):
         else:
             assert current['buildings']['lighthouse']['level'] == 1
             assert current['happiness'] == 100 and current['lighthouseRemaining'] > 0
-            expect(feedback.locator('[data-learning-feedback-description]')).to_contain_text('100%')
-            expect(feedback.locator('[data-learning-feedback-description]')).not_to_contain_text('120%')
+            expect(feedback.locator('[data-learning-feedback-description]')).to_contain_text(re.compile('100 punktów' if language == 'pl' else r'100 (?:happiness )?points'))
+            expect(feedback.locator('[data-learning-feedback-description]')).not_to_contain_text('120 punktów' if language == 'pl' else '120 happiness')
             expect(feedback.locator('[data-learning-feedback-description]')).to_contain_text('przez' if language == 'pl' else 'for')
         timeline = page.evaluate('window.__qaLearningTimeline')
         assert timeline.index('receipt:' + lesson) < timeline.index('effect:' + kind), timeline
@@ -415,7 +430,7 @@ def run():
     if recovery_only:
         print('PASS8 replay navigation/restart lost-ACK scenarios: confirmed cloud cursor adopted without duplicate writes or changed practical history; PL/EN desktop/mobile')
     else:
-        print('PASS integrated v27 learning: Help has two entries, overview excludes them,34 tour steps with live T27 and chat, saved resume/restart and lost-ACK readback, read-only practical review, actual construction countdown, receipt-before-effect arrows; PL/EN desktop/mobile')
+        print('PASS integrated v27 learning: Help has two entries, overview excludes them,33 tour steps with live resources and chat, saved resume/restart and lost-ACK readback, read-only practical review, actual construction countdown, receipt-before-effect arrows; PL/EN desktop/mobile')
 
 
 if __name__ == '__main__':

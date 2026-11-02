@@ -12,6 +12,7 @@ import os
 import threading
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import acknowledge_daily_offer
 
 ROOT = Path(__file__).resolve().parent.parent
 FRONTEND_ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', ROOT))
@@ -47,7 +48,7 @@ def fixture(page, mode):
       const {createState,act}=await import('./harborlight-v1-state.js?v=frontend-v17');
       const s=createState(Date.now());s.tutorial.autoOpenDisabled=true;
       if(mode==='tutorial'){
-        const {normalizeProgression}=await import('./harborlight-v1-progression.js?v=frontend-v27');
+        const {normalizeProgression}=await import('./harborlight-v1-progression.js?v=frontend-v28');
         normalizeProgression(s,{...s,tutorial:{version:3}});
         s.tutorial.autoOpenDisabled=false;return s;
       }
@@ -69,7 +70,7 @@ def fixture(page, mode):
         act(s,{type:'upgrade',building:'farm'});
         const project=s.constructionProjects[0];
         act(s,{type:'premiumTransport',route:'construction',project:project.order});
-        project.stage='building';project.buildRemaining=125;
+        project.stage='building';project.buildRemaining=1250;
       }
       if(mode==='notifications'){
         s.notifications=[{id:900,kind:'system',title:'Read',message:'Read',read:true,at:0},{id:901,kind:'system',title:'New',message:'New',read:false,at:0}];
@@ -84,6 +85,7 @@ def fixture(page, mode):
 
 
 def install(page, state):
+    acknowledge_daily_offer(state)
     page.add_init_script('window.__HARBORLIGHT_DEV_FIXTURE__=' + json.dumps(state, ensure_ascii=False))
     page.reload()
     page.wait_for_function('document.getElementById("loading").hidden && !!window.__HARBORLIGHT_DEV_STATE__')
@@ -108,9 +110,9 @@ def production_and_penalty(browser):
     install(page, fixture(page, 'blocked'))
     page.locator('#hit-world-windmill').click()
     page.locator('[data-production-info="windmill"]').click()
-    expect(page.locator('[data-full-penalty="windmill"]').first).to_contain_text('Brakuje surowca')
-    expect(page.locator('[data-full-penalty="windmill"]').first).to_contain_text('−10')
-    expect(page.locator('[data-full-penalty="windmill"]').first).not_to_contain_text('−30')
+    expect(page.locator('[data-full-penalty="windmill"]').first).to_contain_text('brakuje surowca')
+    expect(page.locator('[data-full-penalty="windmill"]').first).to_contain_text('10 punktów szczęścia na pracownika')
+    expect(page.locator('[data-full-penalty="windmill"]').first).not_to_contain_text('30 punktów')
     assert not page.locator('.activity-lighthouse').count()
     context.close()
     print('PASS18 dynamic production, personal blockage penalties and expedition navigation', flush=True)
@@ -142,8 +144,8 @@ def reduction_notifications_and_memory(browser):
     install(page, fixture(page, 'construction'))
     page.locator('#hit-world-farm').click()
     page.locator('[data-premium-percent="25"]').click()
-    expect(page.locator('[data-construction-reduction]')).to_contain_text('0 min 31 s')
-    assert abs(state(page)['constructionProjects'][0]['buildRemaining'] - 93.75) < .1
+    expect(page.locator('[data-construction-reduction]')).to_contain_text('5 min 13 s')
+    assert abs(state(page)['constructionProjects'][0]['buildRemaining'] - 937.5) < .1
     install(page, fixture(page, 'notifications'))
     page.locator('#hit-notifications').click()
     page.locator('[data-delete-read-notifications]').click()

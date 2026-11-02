@@ -1,6 +1,6 @@
 // Firebase owns credentials and verifies access to the UID-scoped documents.
 // Hosting selects the isolated project; runtime Firebase config never contains secrets.
-import { validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v27';
+import { validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v28';
 import { LEGAL_DOCUMENTS, validLegalAcceptance } from './harborlight-legal.js?v=legal-v4';
 export const DEV_PROJECT = 'harborlight-dev';
 export const PROD_PROJECT = 'harborlight-prod';
@@ -74,7 +74,18 @@ const MESSAGES = {
   'trade-return-exists': 'Zwrot tej oferty jest już zapisany. Sprawdź towary oczekujące na odbiór.',
   'second-island-locked': 'Założenie kolejnej wyspy wymaga potwierdzonego odpowiedniego poziomu Ratusza na wyspie macierzystej.',
   'archipelago-island-loss': 'Zapis nie może usunąć żadnej istniejącej wyspy archipelagu.',
-  'unverified-ship-capacity': 'Zwiększenie pojemności wymaga potwierdzenia operatora płatności. Prawdziwe płatności nie są jeszcze włączone.'
+  'unverified-ship-capacity': 'Zwiększenie pojemności statku musi zostać potwierdzone przez usługę konta gry.',
+  'ship-capacity-invalid-request': 'Nieprawidłowe potwierdzenie zakupu pojemności statku.',
+  'ship-capacity-invalid-units': 'Wybierz od 1 do 100 powiększeń pojemności statku.',
+  'ship-capacity-invalid-island': 'Wybierz dostępną wyspę.',
+  'ship-capacity-island-unavailable': 'Wyspa jest niedostępna. Wczytaj konto ponownie.',
+  'ship-capacity-second-island-required': 'Najpierw załóż drugą wyspę, aby zwiększyć pojemność statku.',
+  'ship-capacity-invalid-ledger': 'Historia pojemności statku jest niespójna. Wczytaj konto ponownie.',
+  'ship-capacity-request-reused': 'To potwierdzenie dotyczy innego zakupu pojemności statku.',
+  'ship-capacity-active-island-changed': 'Zmieniono aktywną wyspę. Odśwież widok przed zakupem.',
+  'ship-capacity-limit': 'Osiągnięto maksymalną obsługiwaną pojemność statku.',
+  'ship-capacity-insufficient-coins': 'Brakuje monet na zwiększenie pojemności statku.',
+  'ship-capacity-api-unavailable': 'Zakup pojemności statku wymaga aktywnej usługi konta gry.'
 };
 const fail = code => Object.assign(new Error(MESSAGES[code]), { code });
 const userByUid = uid => DEV_USERS.find(user => user.uid === uid);
@@ -446,7 +457,7 @@ export function createDevCloud({
     // meaningful promotion/retention failures before treating generic 409 as a
     // concurrent-write conflict. Never expose arbitrary provider diagnostics.
     const apiError = typeof result.body.error === 'string' ? result.body.error : null;
-    if (apiError && (/^(?:trade|community|charity)-[a-z-]{1,64}$/.test(apiError) || ['second-island-locked', 'archipelago-island-loss', 'unverified-ship-capacity'].includes(apiError))) throw fail(apiError);
+    if (apiError && (/^(?:trade|community|charity|ship-capacity)-[a-z-]{1,64}$/.test(apiError) || ['second-island-locked', 'archipelago-island-loss', 'unverified-ship-capacity'].includes(apiError))) throw fail(apiError);
     if (apiError && ['island-expired', 'invalid-island-name', 'inappropriate-island-name', 'invalid-code', 'promotion-not-started', 'promotion-ended', 'promotion-exhausted', 'unsupported-promotion-verification', 'legal-required'].includes(apiError)) throw fail(apiError);
     if (apiError && ['invalid-island', 'invalid-generation', 'invalid-revision', 'inventory-overflow'].includes(apiError)) throw fail('invalid-state');
     if ([409, 412].includes(result.status) || result.body.error?.status === 'FAILED_PRECONDITION' ||
@@ -524,22 +535,22 @@ export function createDevCloud({
     return { ...result.body, island: await loadIsland() };
   }
 
-  async function tradeRequest(path, body = null) {
+  async function tradeRequest(path, body = null, unavailable = 'trade-api-unavailable') {
     requireEnabled();
     if (!session) throw fail('auth-required');
     await config();
     // A private Firestore island is not an auction server. Never replace a
     // missing cross-account service with local/fictitious counterparties.
-    if (!accountApiEnabled) throw fail('trade-api-unavailable');
+    if (!accountApiEnabled) throw fail(unavailable);
     const result = await firestoreRequest(path, body === null ? {} : {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
     });
-    if (!result.ok || !isObject(result.body)) throw fail('trade-api-unavailable');
+    if (!result.ok || !isObject(result.body)) throw fail(unavailable);
     return result.body;
   }
   async function requestGameService(path, body = null) {
-    if (typeof path !== 'string' || !/^\/api\/v1\/(?:community|charity)(?:\/[A-Za-z0-9_-]+)*(?:\?[A-Za-z0-9_=&%.-]*)?$/.test(path)) throw fail('invalid-state');
-    return tradeRequest(path, body);
+    if (typeof path !== 'string' || !/^\/api\/v1\/(?:(?:community|charity)(?:\/[A-Za-z0-9_-]+)*(?:\?[A-Za-z0-9_=&%.-]*)?|ship-capacity)$/.test(path)) throw fail('invalid-state');
+    return tradeRequest(path, body, path === '/api/v1/ship-capacity' ? 'ship-capacity-api-unavailable' : 'trade-api-unavailable');
   }
   function tradeId(value) {
     if (typeof value !== 'string' || !/^[A-Za-z0-9_-]{1,100}$/.test(value)) throw fail('trade-invalid-offer');

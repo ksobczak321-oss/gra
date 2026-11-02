@@ -1,6 +1,6 @@
 // Shared, deterministic challenge rules. Scores are recomputed by the API from
 // accepted actions and its own clock; a caller-supplied score is never used.
-export const LEAGUE_RULES = Object.freeze({ zone: 'Europe/Warsaw', firstDay: 15, lastDay: 21, windowStartHour: 19, windowEndHour: 21, attempts: 2, allianceLimit: 5, maxDuration: 180000, chatLimit: 500 });
+export const LEAGUE_RULES = Object.freeze({ zone: 'Europe/Warsaw', firstDay: 15, lastDay: 21, windowStartHour: 19, windowEndHour: 21, attempts: 2, allianceLimit: 5, maxDuration: 180000, chatLimit: 1000, chatMessages: 20, chatWindowMs: 20000, playoffQualificationDay: 22, playoffSemifinalDay: 23, playoffFinalDay: 24, playoffReserveDay: 25, rewardsDay: 25 });
 const warsaw = new Intl.DateTimeFormat('en-CA', { timeZone: LEAGUE_RULES.zone, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
 export function leagueCalendar(at = Date.now()) {
   const p = Object.fromEntries(warsaw.formatToParts(new Date(at)).filter(x => x.type !== 'literal').map(x => [x.type, Number(x.value)]));

@@ -1,5 +1,8 @@
 import { createHash } from 'node:crypto';
 import { AccountServiceError } from './account-service.mjs';
+import { createIslandDocumentStore } from './island-document-store.mjs';
+import { createCharityLedgerStore, normalizedWallet, coinTotalFromIslandDocument, walletPath } from './charity-ledger.mjs';
+import { leaguePostseason, seasonParticipation, SEASON_REWARD_COINS } from './league-season.mjs';
 import { LEAGUE_RULES, leagueCalendar, createLeagueChallenge, emptyLeagueProgress, applyLeagueAction, leagueAttemptScore, leagueTeamScore } from './league-rules.mjs';
 
 const DAY = 86400000, CHAT_TTL = 30 * DAY, REPORT_TTL = 90 * DAY;
@@ -28,6 +31,7 @@ const seasonValue = value => typeof value === 'string' && /^\d{4}-(?:0[1-9]|1[0-
  */
 export function createCommunityService({ store, now = () => Date.now(), environment = 'production' } = {}) {
   if (!store || typeof store.runTransaction !== 'function') throw new TypeError('A transactional community store is required.');
+  store = createCharityLedgerStore(createIslandDocumentStore(store), { now });
   const clock = () => { const value = now(); if (!Number.isSafeInteger(value) || value < 0) fail('invalid-server-clock', 500); return value; };
   async function transaction(work) {
     return store.runTransaction(async tx => {
@@ -106,7 +110,7 @@ export function createCommunityService({ store, now = () => Date.now(), environm
     for (const group of groups) {
       const byId = Object.fromEntries(group.map(t => [t.id, Object.assign(t, { tablePoints: 0, scored: 0, conceded: 0, wins: 0, draws: 0, games: 0, headToHead: {} })]));
       const ring = group.map(t => t.id).sort(); if (ring.length % 2) ring.push(null);
-      for (let round = 0; round < Math.min(7, Math.max(0, ring.length - 1) * (group.length === 4 ? 2 : 1)); round++) {
+      for (let round = 0; round < 7; round++) {
         for (let i = 0; i < ring.length / 2; i++) { const a = byId[ring[i]], b = byId[ring[ring.length - 1 - i]]; if (!a || !b || season === cal.season && cal.day <= 15 + round) continue;
           const x = a.rounds[round], y = b.rounds[round]; a.games++; b.games++; a.scored += x; b.scored += y; a.conceded += y; b.conceded += x;
           if (x === y) { a.draws++; b.draws++; a.tablePoints++; b.tablePoints++; } else { const winner = x > y ? a : b; winner.wins++; winner.tablePoints += 3; }
@@ -115,14 +119,24 @@ export function createCommunityService({ store, now = () => Date.now(), environm
         }
         if (ring.length > 2) ring.splice(1, 0, ring.pop());
       }
+      const closedDays = season < cal.season ? 7 : Math.max(0, Math.min(7, cal.day - 15 + (cal.hour >= 21 ? 1 : 0)));
+      for (const team of group) { team.matchScored = team.scored; team.scored = team.rounds.slice(0, closedDays).reduce((sum, value) => sum + value, 0); team.seasonScore = team.scored; }
       group.sort((a, b) => compareTeams(a, b));
       group.forEach((team, i) => { team.rank = i > 0 && compareTeams(group[i - 1], team) === 0 ? group[i - 1].rank : i + 1; });
     }
     const participation = await tx.get(participantPath(season, p.uid));
     const ownGroup = groups.find(group => group.some(t => t.id === participation?.teamId)), ownStanding = ownGroup?.find(t => t.id === participation?.teamId);
-    const rewards = leagueRewards(teams.find(t => t.id === participation?.teamId), p.uid);
+    const ownTeam = teams.find(t => t.id === participation?.teamId);
+    const rewards = leagueRewards(ownTeam, p.uid);
+    const playoffs = catalog.rulesVersion === 2 ? leaguePostseason(teams, standings, cal, season) : null;
+    if (playoffs) {
+      const participation = seasonParticipation(ownTeam, p.uid);
+      Object.assign(rewards, participation, { participationReward: participation.playedDays > 0, allTasksReward: participation.completedTasks === 14, topFourReward: participation.playedDays > 0 && playoffs.qualified.includes(ownTeam?.id), championReward: participation.playedDays > 0 && playoffs.champion === ownTeam?.id, economicBonus: true });
+      rewards.coins = (rewards.participationReward ? SEASON_REWARD_COINS.participation : 0) + (rewards.allTasksReward ? SEASON_REWARD_COINS.allTasks : 0) + (rewards.topFourReward ? SEASON_REWARD_COINS.topFour : 0) + (rewards.championReward ? SEASON_REWARD_COINS.champion : 0);
+      rewards.rewardCoins = SEASON_REWARD_COINS; rewards.cup = rewards.championReward;
+    }
     rewards.teamDecoration = rewards.playedDays > 0 && ownGroup?.length >= 4 && ownStanding?.rank <= 3 ? ['gold', 'silver', 'bronze'][ownStanding.rank - 1] : null;
-    return { season, calendar: cal, serverTime: at, groups, friendly: standings.length < 4, ownTeamId: participation?.teamId || null, registered: !!participation?.teamId, rewards, schedule: { days: [15, 21], arcade: '19:00–21:00', logic: '19:00–21:00', zone: LEAGUE_RULES.zone, perTaskAttempts: 2, dailyScore: 'average-of-two-tasks' } };
+    return { season, calendar: cal, serverTime: at, groups, playoffs, claimDay: playoffs ? 25 : 23, friendly: playoffs ? playoffs.friendly : standings.length < 4, ownTeamId: participation?.teamId || null, registered: !!participation?.teamId, rewards, schedule: { days: [15, 21], arcade: '19:00–21:00', logic: '19:00–21:00', zone: LEAGUE_RULES.zone, perTaskAttempts: 2, dailyScore: 'average-of-two-tasks' } };
   }
   function leagueRewards(team, uid) {
     const days = Object.values(team?.scores?.[uid] || {}), played = days.filter(d => (d.logic?.goals || 0) + (d.arcade?.goals || 0) > 0).length;
@@ -203,8 +217,8 @@ export function createCommunityService({ store, now = () => Date.now(), environm
           tx.put(key, { reporterUid: uid, channelId: r.channelId, message, reason: clean(data.reason || 'Zgłoszenie gracza', 2, 240), createdAt: at, expiresAt: at + REPORT_TTL });
           return finish({ reported: true });
         }
-        const text = clean(data.text, 1, LEAGUE_RULES.chatLimit), recent = (p.sentAt || []).filter(t => t > at - 10000);
-        if (recent.length >= 5) fail('community-chat-rate-limited', 429);
+        const text = clean(data.text, 1, LEAGUE_RULES.chatLimit), recent = (p.sentAt || []).filter(t => t > at - LEAGUE_RULES.chatWindowMs);
+        if (recent.length >= LEAGUE_RULES.chatMessages) fail('community-chat-rate-limited', 429);
         const message = { id: 'm_' + hash(uid + '\0' + requestId).slice(0, 40), authorId: p.id, authorName: p.name, text, createdAt: at };
         const archived = `${r.key}/messages/${message.id}`; await tx.get(archived);
         tx.put(archived, { ...message, expiresAt: at + CHAT_TTL }); tx.put(r.key, { ...r.room, messages: [...messages, message].slice(-100), updatedAt: at });
@@ -218,7 +232,8 @@ export function createCommunityService({ store, now = () => Date.now(), environm
       if (command === 'leagueEnroll') {
         const cal = leagueCalendar(at); if (!cal.registration) fail('league-registration-closed');
         if (!p.allianceId) fail('community-alliance-required'); const a = await tx.get(apath(p.allianceId)); if (a.captainUid !== uid) fail('community-captain-required', 403);
-        const key = seasonPath(cal.season), catalog = await tx.get(key) || { season: cal.season, teams: [] };
+        const key = seasonPath(cal.season), catalog = await tx.get(key) || { season: cal.season, teams: [], rulesVersion: 2 };
+        catalog.rulesVersion ||= 2;
         const existing = await tx.get(teamPath(cal.season, a.id)), roster = a.members.map(m => ({ uid: m.uid, id: publicId(m.uid), name: m.name }));
         for (const m of roster) { const prior = await tx.get(participantPath(cal.season, m.uid)); if (prior?.teamId && prior.teamId !== a.id) fail('league-already-registered'); }
         if (!catalog.teams.includes(a.id)) { if (catalog.teams.length >= 256) fail('league-capacity'); catalog.teams.push(a.id); catalog.teams.sort(); }
@@ -227,19 +242,29 @@ export function createCommunityService({ store, now = () => Date.now(), environm
       }
       if (command === 'attemptStart') {
         const practice = data.practice === true, cal = leagueCalendar(at), kind = data.kind === 'arcade' ? 'arcade' : data.kind === 'logic' ? 'logic' : fail('league-invalid-kind', 400);
-        const day = practice ? Math.max(1, Math.min(7, Math.floor(data.day || 1))) : cal.round;
-        let teamId = null, roster = null;
+        const playoff = !practice && data.playoff === true;
+        let day = practice ? Math.max(1, Math.min(7, Math.floor(data.day || 1))) : cal.round;
+        let teamId = null, roster = null, playoffStage = null;
         if (!practice) {
-          if (!cal.availableKinds.includes(kind)) fail('league-slot-closed');
-          const participant = await tx.get(participantPath(cal.season, uid)); if (!participant || p.allianceId !== participant.teamId) fail('league-roster-required');
+          if (!playoff && !cal.availableKinds.includes(kind)) fail('league-slot-closed');
+          const participant = await tx.get(participantPath(cal.season, uid)); if (!participant?.teamId) fail('league-roster-required');
           roster = await tx.get(teamPath(cal.season, participant.teamId)); if (!roster?.roster.some(r => r.uid === uid)) fail('league-roster-required'); teamId = participant.teamId;
+          if (playoff) {
+            const result = await leagueSnapshot(tx, p, cal.season, at);
+            playoffStage = result.playoffs?.active?.[teamId];
+            if (!playoffStage?.open) fail('league-playoff-closed');
+            day = parseInt(hash(playoffStage.key + '_' + playoffStage.round).slice(0, 4),16) % 7 + 1;
+          }
         }
-        const counterPath = `${ppath(uid)}/leagueCounters/${cal.season}_${day}_${kind}_${practice ? 'practice' : 'ranked'}`;
+        const phaseKey = playoffStage ? `${playoffStage.key}_${playoffStage.round}` : day;
+        const counterPath = `${ppath(uid)}/leagueCounters/${cal.season}_${phaseKey}_${kind}_${practice ? 'practice' : 'ranked'}`;
         const counter = await tx.get(counterPath) || { count: 0 };
         if (!practice && counter.count >= LEAGUE_RULES.attempts) fail('league-attempt-limit');
-        const id = 'try_' + hash(uid + '\0' + requestId).slice(0, 40), challenge = createLeagueChallenge({ day, kind, seed: parseInt(hash(cal.season + '\0' + day).slice(0, 6), 16) });
-        const deadlineAt = Math.min(at + challenge.duration, practice ? at + challenge.duration : cal.windowEndsAt);
-        const attempt = { id, uid, season: cal.season, day, kind, teamId, epoch: p.epoch, practice, startedAt: at, deadlineAt, challenge, progress: emptyLeagueProgress(), status: 'playing', sequence: 0 };
+        const id = 'try_' + hash(uid + '\0' + requestId).slice(0, 40), challenge = createLeagueChallenge({ day, kind, seed: parseInt(hash(cal.season + '\0' + phaseKey).slice(0, 6), 16) });
+        const playoffWindowEnd = playoff ? at + ((21 - cal.hour) * 60 - cal.minute) * 60000 - at % 60000 : null;
+        const deadlineAt = Math.min(at + challenge.duration, practice ? at + challenge.duration : playoff ? playoffWindowEnd : cal.windowEndsAt);
+        if (playoffStage) { roster.playoffRounds ||= {}; roster.playoffRounds[playoffStage.key] ||= {}; roster.playoffRounds[playoffStage.key][playoffStage.round] ||= { day: cal.day }; tx.put(teamPath(cal.season, teamId), roster); }
+        const attempt = { id, uid, season: cal.season, day, kind, teamId, ...(playoffStage ? { playoff: { key: playoffStage.key, round: playoffStage.round } } : {}), epoch: p.epoch, practice, startedAt: at, deadlineAt, challenge, progress: emptyLeagueProgress(), status: 'playing', sequence: 0 };
         tx.put(counterPath, { count: counter.count + 1 }); tx.put(attemptPath(uid, id), attempt); tx.put(ppath(uid), { ...p, activeAttemptId: id }); return finish(publicAttempt(attempt, at));
       }
       if (command === 'attemptAction' || command === 'attemptFinish') {
@@ -249,9 +274,15 @@ export function createCommunityService({ store, now = () => Date.now(), environm
         let team = null;
         if (!attempt.practice) {
           const cal = leagueCalendar(at);
-          if (command === 'attemptAction' && (cal.season !== attempt.season || cal.round !== attempt.day || !cal.availableKinds.includes(attempt.kind))) fail('league-slot-closed');
-          if (command === 'attemptFinish' && (cal.season > attempt.season || cal.season === attempt.season && cal.day >= 23)) fail('league-results-final');
-          if (p.allianceId !== attempt.teamId || p.epoch !== attempt.epoch) fail('league-membership-changed');
+          if (attempt.playoff) {
+            const result = await leagueSnapshot(tx, p, attempt.season, at), stage = result.playoffs?.active?.[attempt.teamId];
+            if (cal.season !== attempt.season || !stage || stage.key !== attempt.playoff.key || stage.round !== attempt.playoff.round || command === 'attemptAction' && !stage.open) fail('league-playoff-closed');
+          } else {
+            if (command === 'attemptAction' && (cal.season !== attempt.season || cal.round !== attempt.day || !cal.availableKinds.includes(attempt.kind))) fail('league-slot-closed');
+            if (command === 'attemptFinish' && (cal.season > attempt.season || cal.season === attempt.season && (cal.day > 22 || cal.day === 22 && cal.hour >= 19))) fail('league-results-final');
+          }
+          const participant = await tx.get(participantPath(attempt.season, uid));
+          if (participant?.teamId !== attempt.teamId) fail('league-roster-required');
           team = await tx.get(teamPath(attempt.season, attempt.teamId)); if (!team?.roster.some(r => r.uid === uid)) fail('league-roster-required');
         }
         const elapsed = at - attempt.startedAt;
@@ -265,8 +296,14 @@ export function createCommunityService({ store, now = () => Date.now(), environm
         if (elapsed < 1000) fail('league-attempt-too-short');
         const scoringElapsed = (attempt.completedAt || Math.min(at, attempt.deadlineAt || attempt.startedAt + attempt.challenge.duration)) - attempt.startedAt;
         const score = leagueAttemptScore(attempt.challenge, attempt.progress, scoringElapsed); attempt.status = 'finished'; attempt.finishedAt = at; attempt.score = score; tx.put(key, attempt); if (p.activeAttemptId === id) tx.put(ppath(uid), { ...p, activeAttemptId: null });
-        if (team) { team.scores ||= {}; team.scores[uid] ||= {}; team.scores[uid][attempt.day] ||= {}; const old = team.scores[uid][attempt.day][attempt.kind];
-          if (!old || old.score < score) team.scores[uid][attempt.day][attempt.kind] = { score, goals: attempt.progress.goals.length, attemptId: attempt.id };
+        if (team) {
+          if (attempt.playoff) {
+            const { key: phase, round } = attempt.playoff; team.playoffScores ||= {}; team.playoffScores[phase] ||= {}; team.playoffScores[phase][round] ||= {}; team.playoffScores[phase][round][uid] ||= {};
+            const old = team.playoffScores[phase][round][uid][attempt.kind];
+            team.playoffScores[phase][round][uid][attempt.kind] = { score: Math.max(old?.score || 0, score), goals: Math.max(old?.goals || 0, attempt.progress.goals.length), finished: (old?.finished || 0) + 1 };
+          } else { team.scores ||= {}; team.scores[uid] ||= {}; team.scores[uid][attempt.day] ||= {}; const old = team.scores[uid][attempt.day][attempt.kind];
+            if (!old || old.score < score) team.scores[uid][attempt.day][attempt.kind] = { score, goals: attempt.progress.goals.length, attemptId: attempt.id };
+          }
           tx.put(teamPath(attempt.season, attempt.teamId), team);
         }
         return finish(publicAttempt(attempt, at));
@@ -277,13 +314,23 @@ export function createCommunityService({ store, now = () => Date.now(), environm
         const part = await tx.get(participantPath(season, uid)); if (!part) fail('league-roster-required'); const team = await tx.get(teamPath(season, part.teamId));
         const result = await leagueSnapshot(tx, p, season, at), awards = result.rewards, key = `${ppath(uid)}/leagueAwards/${season}`, prior = await tx.get(key);
         if (prior) return finish({ awards: prior, alreadyClaimed: true });
-        const recorded = { season, crewBadge: awards.crewBadge, courierFrame: awards.courierFrame, fullCrewBadge: awards.fullCrewBadge, teamDecoration: awards.teamDecoration, grantedAt: at, economicBonus: false };
-        tx.put(key, recorded); return finish({ awards: recorded });
+        if (result.playoffs && (season === cal.season && cal.day < 25 || !result.playoffs.finished && !result.playoffs.friendly)) fail('league-results-pending');
+        const recorded = { season, crewBadge: awards.crewBadge, courierFrame: awards.courierFrame, fullCrewBadge: awards.fullCrewBadge, teamDecoration: awards.teamDecoration, grantedAt: at, economicBonus: !!result.playoffs, coins: awards.coins || 0, participationReward: !!awards.participationReward, allTasksReward: !!awards.allTasksReward, topFourReward: !!awards.topFourReward, cup: !!awards.cup };
+        let islandUpdate = null;
+        if (recorded.coins > 0) {
+          const island = await tx.get(`islands/${uid}`); if (!island?.payload) fail('league-island-required');
+          const state = JSON.parse(island.payload), ledgerKey = walletPath(uid), wallet = normalizedWallet(await tx.get(ledgerKey), coinTotalFromIslandDocument(island), at);
+          if (!Number.isFinite(state.resources?.coins) || state.resources.coins + recorded.coins > Number.MAX_SAFE_INTEGER) fail('league-invalid-balance');
+          state.resources.coins += recorded.coins; wallet.unqualified += recorded.coins; wallet.revision++; wallet.updatedAt = at;
+          islandUpdate = { ...island, payload: JSON.stringify(state), revision: island.revision + 1, updatedAt: at };
+          tx.put(ledgerKey, wallet); tx.put(`islands/${uid}`, islandUpdate);
+        }
+        tx.put(key, recorded); return finish({ awards: recorded, ...(islandUpdate ? { islandUpdate } : {}) });
       }
       fail('community-unknown-command', 400);
     });
   }
   return { snapshot, dispatch };
 }
-function compareTeams(a, b) { return b.tablePoints - a.tablePoints || (b.headToHead[a.id] || 0) - (a.headToHead[b.id] || 0) || (b.scored - b.conceded) - (a.scored - a.conceded) || b.scored - a.scored; }
-function publicAttempt(attempt, at) { return { attemptId: attempt.id, challenge: attempt.challenge, progress: attempt.progress, sequence: attempt.sequence, practice: attempt.practice, startedAt: attempt.startedAt, deadlineAt: attempt.deadlineAt || attempt.startedAt + attempt.challenge.duration, serverTime: at, status: attempt.status, ...(attempt.status === 'finished' ? { score: attempt.score } : {}) }; }
+function compareTeams(a, b) { return (b.seasonScore ?? b.scored) - (a.seasonScore ?? a.scored); }
+function publicAttempt(attempt, at) { return { attemptId: attempt.id, challenge: attempt.challenge, progress: attempt.progress, sequence: attempt.sequence, practice: attempt.practice, startedAt: attempt.startedAt, deadlineAt: attempt.deadlineAt || attempt.startedAt + attempt.challenge.duration, serverTime: at, status: attempt.status, ...(attempt.playoff ? { playoff: attempt.playoff } : {}), ...(attempt.status === 'finished' ? { score: attempt.score } : {}) }; }

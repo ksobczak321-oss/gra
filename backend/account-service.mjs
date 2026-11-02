@@ -2,7 +2,7 @@
 // No default in-memory production store and no external calls are made here.
 // Payload economy remains the current client-calculated model; provider payment
 // verification is deliberately outside this service and cannot be faked by it.
-import { createCharityLedgerStore } from './charity-ledger.mjs';
+import { createCharityLedgerStore, coinTotalFromIslandDocument, normalizedWallet, spendWallet, walletPath } from './charity-ledger.mjs';
 import { createIslandDocumentStore, MAX_ARCHIPELAGO_BYTES } from './island-document-store.mjs';
 import { validateIslandName, validateStoredIslandName } from './island-name.mjs';
 const DAY = 86400000;
@@ -12,11 +12,16 @@ const MAX_PAYLOAD_BYTES = MAX_ARCHIPELAGO_BYTES;
 const PREPROD_USERS = ['dev-admin1', 'dev-admin2', 'dev-admin3'];
 const warsaw = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Warsaw', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' });
 const parts = time => Object.fromEntries(warsaw.formatToParts(new Date(time)).filter(p => p.type !== 'literal').map(p => [p.type, Number(p.value)]));
+const warsawDay = time => { const p = parts(time); return `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`; };
+function activityDays(previous, at) {
+  const today = warsawDay(at);
+  return [...new Set([...(Array.isArray(previous) ? previous.filter(day => typeof day === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(day) && day <= today) : []), today])].sort().slice(-365);
+}
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const positive = value => Number.isSafeInteger(value) && value > 0;
 const nonnegative = value => Number.isSafeInteger(value) && value >= 0;
-const ACCOUNT_PROGRESS_FIELDS = ['commerce', 'loyalty', 'socialRewards', 'referrals', 'engagementSchedule', 'welcome'];
-export const LEGAL_DOCUMENT_VERSIONS = Object.freeze({ termsVersion: '2026-10-31-draft4', privacyVersion: '2026-10-31-draft4' });
+const ACCOUNT_PROGRESS_FIELDS = ['commerce', 'loyalty', 'socialRewards', 'referrals', 'engagementSchedule', 'welcome', 'charitySimulation'];
+export const LEGAL_DOCUMENT_VERSIONS = Object.freeze({ termsVersion: '2026-11-02-draft5', privacyVersion: '2026-10-31-draft4' });
 const acceptedLegal = account => account?.legalAcceptance?.termsVersion === LEGAL_DOCUMENT_VERSIONS.termsVersion &&
   account?.legalAcceptance?.privacyVersion === LEGAL_DOCUMENT_VERSIONS.privacyVersion && Number.isSafeInteger(account?.legalAcceptance?.acceptedAt);
 
@@ -140,7 +145,8 @@ export function threeMonthDeadline(lastPlayedAt) {
 
 export function createAccountService({ store, now = () => Date.now(), environment = 'production', exemptUids = environment === 'production' ? [] : PREPROD_USERS } = {}) {
   if (!store || typeof store.runTransaction !== 'function') throw new TypeError('A durable transactional account store is required.');
-  store = createCharityLedgerStore(createIslandDocumentStore(store));
+  store = createCharityLedgerStore(createIslandDocumentStore(store), { now,
+    allowSimulation: environment === 'development' || environment === 'preprod' });
   const exempt = new Set(exemptUids);
   const expiredMutation = Symbol('expired-mutation');
   // Expiry must commit before the caller receives 410. Throwing from the
@@ -169,7 +175,7 @@ export function createAccountService({ store, now = () => Date.now(), environmen
       const account = await tx.get(key);
       if (acceptedLegal(account)) return { ...account.legalAcceptance, alreadyAccepted: true };
       const receipt = { ...LEGAL_DOCUMENT_VERSIONS, uid, acceptedAt: at, privacyAcknowledgedAt: at, draft: true };
-      await tx.set(key, { ...(account || {}), legalAcceptance: receipt });
+      await tx.set(key, { ...(account || {}), createdAt: nonnegative(account?.createdAt) ? account.createdAt : at, legalAcceptance: receipt });
       await tx.set(key + '/legalAcceptances/' + termsVersion + '_' + privacyVersion, receipt);
       return { ...receipt, alreadyAccepted: false };
     });
@@ -193,7 +199,7 @@ export function createAccountService({ store, now = () => Date.now(), environmen
         // Existing PRE-PROD saves predate account metadata. Introduce only the
         // server-owned generation/activity record; preserve the island bytes,
         // its revision and existing one-time rewards without replaying them.
-        account = { islandGeneration: island.generation ?? 1, lastPlayedAt: at, islandExpiredAt: null, legacyMigratedAt: at };
+        account = { createdAt: at, islandGeneration: island.generation ?? 1, lastPlayedAt: at, islandExpiredAt: null, legacyMigratedAt: at };
         await tx.set(accountPath(uid), account);
       }
       if (canExpire(uid, account, island, at)) {
@@ -214,7 +220,9 @@ export function createAccountService({ store, now = () => Date.now(), environmen
       const account = await tx.get(key), island = await tx.get(islandPath(uid));
       assertGeneration(account, island, generation);
       if (canExpire(uid, account, island, at)) { await expireStored(tx, uid, account, island, at); return expiredMutation; }
-      const next = { ...(account || {}), islandGeneration: currentGeneration(account), lastPlayedAt: at };
+      if (!island) fail('island-not-initialized', 409);
+      const next = { ...(account || {}), createdAt: nonnegative(account?.createdAt) ? account.createdAt : at,
+        activePlayDays: activityDays(account?.activePlayDays, at), islandGeneration: currentGeneration(account), lastPlayedAt: at };
       await tx.set(key, next);
       return { lastPlayedAt: at, expiresAt: threeMonthDeadline(at), generation: next.islandGeneration };
     });
@@ -240,7 +248,8 @@ export function createAccountService({ store, now = () => Date.now(), environmen
       if (environment === 'production') {
         const trustedState = islandPayload(island.payload), trustedCommerce = trustedState.commerce;
         state.commerce = { ...(object(state.commerce) ? state.commerce : {}), receipts: trustedCommerce?.receipts || [],
-          promoClaims: trustedCommerce?.promoClaims || {}, adReceipts: trustedCommerce?.adReceipts || [], ad: null };
+          promoClaims: trustedCommerce?.promoClaims || {}, adReceipts: trustedCommerce?.adReceipts || [],
+          capacityPurchases: structuredClone(trustedCommerce?.capacityPurchases || []), ad: null };
         const trustedCapacity = positive(trustedState.archipelago?.shipCapacity) ? trustedState.archipelago.shipCapacity : 1000;
         if (state.archipelago?.shipCapacity > trustedCapacity) fail('unverified-ship-capacity', 409);
         if (state.archipelago) {
@@ -280,10 +289,79 @@ export function createAccountService({ store, now = () => Date.now(), environmen
       state.islandGeneration = generation;
       const nextPayload = JSON.stringify(state);
       if (Buffer.byteLength(nextPayload, 'utf8') > MAX_PAYLOAD_BYTES) fail('invalid-island', 409);
-      const nextAccount = { ...(account || {}), islandGeneration: generation, islandExpiredAt: null, lastPlayedAt: at };
+      const nextAccount = { ...(account || {}), createdAt: nonnegative(account?.createdAt) ? account.createdAt : at,
+        activePlayDays: activityDays(account?.activePlayDays, at), islandGeneration: generation, islandExpiredAt: null, lastPlayedAt: at };
       await tx.set(accountPath(uid), nextAccount);
       await tx.set(key, { schemaVersion: 1, revision: 1, generation, payload: nextPayload, updatedAt: at });
       return { generation, revision: 1 };
+    });
+  }
+
+  // Capacity is an account entitlement bought with existing game coins. The
+  // server derives its price and receipt; no provider receipt or client price
+  // is accepted. Its transaction shares the island's ordinary revision/CAS.
+  async function purchaseShipCapacity({ uid, requestId, units = 1, islandId, generation, expectedRevision }) {
+    uidValue(uid);
+    if (typeof requestId !== 'string' || !/^[A-Za-z0-9:_-]{1,160}$/.test(requestId)) fail('ship-capacity-invalid-request', 400);
+    if (!Number.isSafeInteger(units) || units < 1 || units > 100) fail('ship-capacity-invalid-units', 400);
+    if (typeof islandId !== 'string' || !/^island-(?:[1-9]|1[0-9]|20)$/.test(islandId)) fail('ship-capacity-invalid-island', 400);
+    if (!positive(expectedRevision)) fail('invalid-revision', 400);
+    const at = serverTime(), key = islandPath(uid), requestKey = `${accountPath(uid)}/shipCapacityPurchases/${requestId}`;
+    return mutation(async tx => {
+      const account = await tx.get(accountPath(uid)), island = await tx.get(key), recorded = await tx.get(requestKey);
+      assertGeneration(account, island, generation);
+      if (canExpire(uid, account, island, at)) { await expireStored(tx, uid, account, island, at); return expiredMutation; }
+      if (!account || !island) fail('ship-capacity-island-unavailable', 409);
+      const state = islandPayload(island.payload), group = state.archipelago, children = daughterWorlds(state);
+      if (!group || !children?.['island-2']) fail('ship-capacity-second-island-required', 409);
+      const receipts = group.capacityReceipts, purchases = state.commerce?.capacityPurchases || [], seen = new Set();
+      const validCoin = receipt => object(receipt) && receipt.kind === 'ship-capacity-coins' &&
+        typeof receipt.id === 'string' && receipt.id.length > 0 && receipt.id.length <= 160 &&
+        positive(receipt.units) && receipt.units <= 100 && receipt.coins === receipt.units * 50 &&
+        /^island-(?:[1-9]|1[0-9]|20)$/.test(receipt.payerIslandId) && nonnegative(receipt.at);
+      const equalCoin = (a, b) => validCoin(a) && validCoin(b) && ['id','kind','units','coins','payerIslandId','at'].every(field => a[field] === b[field]);
+      if (!Array.isArray(purchases) || purchases.length > 10000 || purchases.some(receipt => !validCoin(receipt)) || new Set(purchases.map(receipt => receipt.id)).size !== purchases.length) fail('ship-capacity-invalid-ledger', 409);
+      let ledgerCapacity = 1000;
+      for (const receipt of receipts) {
+        if (!object(receipt) || typeof receipt.id !== 'string' || !receipt.id || receipt.id.length > 160 || seen.has(receipt.id) || !positive(receipt.units) || receipt.units > 100 || !nonnegative(receipt.at)) fail('ship-capacity-invalid-ledger', 409);
+        seen.add(receipt.id);
+        if (receipt.kind === 'ship-capacity-coins') {
+          if (!purchases.some(entry => equalCoin(entry, receipt))) fail('ship-capacity-invalid-ledger', 409);
+        } else if (![undefined, 'ship-capacity'].includes(receipt.kind) || receipt.grossGrosz !== receipt.units * 499 || receipt.simulated !== true ||
+          !state.commerce?.receipts?.some(entry => entry.id === receipt.id && entry.kind === 'ship-capacity' && entry.grossGrosz === receipt.grossGrosz && entry.at === receipt.at && entry.simulated === true)) fail('ship-capacity-invalid-ledger', 409);
+        ledgerCapacity += receipt.units * 1000;
+      }
+      if (group.shipCapacity !== ledgerCapacity || purchases.some(receipt => !receipts.some(entry => equalCoin(entry, receipt)))) fail('ship-capacity-invalid-ledger', 409);
+      const previous = receipts.find(receipt => receipt.id === requestId);
+      const envelope = document => ({ payload: document.payload, generation, version: { revision: document.revision,
+        updateTime: typeof document.updatedAt === 'string' ? document.updatedAt : new Date(document.updatedAt).toISOString() } });
+      if (recorded || previous) {
+        const receipt = recorded?.receipt || previous;
+        if (!equalCoin(receipt, previous) || receipt.units !== units || receipt.payerIslandId !== islandId) fail('ship-capacity-request-reused', 409);
+        return { ok: true, duplicate: true, receipt, capacity: group.shipCapacity, coins: receipt.coins, islandUpdate: envelope(island) };
+      }
+      if (state.commerce?.receipts?.some(receipt => receipt.id === requestId)) fail('ship-capacity-request-reused', 409);
+      if (island.revision !== expectedRevision) fail('island-conflict', 409);
+      if (!positive(island.revision) || island.revision >= Number.MAX_SAFE_INTEGER) fail('invalid-revision', 409);
+      if (islandId !== group.activeIslandId) fail('ship-capacity-active-island-changed', 409);
+      const payer = islandId === 'island-1' ? state : children[islandId];
+      if (!payer) fail('ship-capacity-invalid-island', 400);
+      const coins = units * 50, additionalCapacity = units * 1000;
+      if (receipts.length >= 10000 || !Number.isSafeInteger(group.shipCapacity + additionalCapacity)) fail('ship-capacity-limit', 409);
+      if (payer.resources.coins < coins) fail('ship-capacity-insufficient-coins', 409);
+      const wallet = normalizedWallet(await tx.get(walletPath(uid)), coinTotalFromIslandDocument(island), at);
+      spendWallet(wallet, coins); wallet.revision += 1; wallet.updatedAt = at;
+      payer.resources.coins -= coins;
+      const receipt = { id: requestId, kind: 'ship-capacity-coins', units, coins, payerIslandId: islandId, at };
+      group.capacityReceipts.push(receipt); group.shipCapacity += additionalCapacity;
+      state.commerce = { ...(object(state.commerce) ? state.commerce : {}), capacityPurchases: [...purchases, receipt] };
+      const nextPayload = JSON.stringify(state);
+      if (Buffer.byteLength(nextPayload, 'utf8') > MAX_PAYLOAD_BYTES) fail('invalid-island', 409);
+      const next = { ...island, payload: nextPayload, revision: island.revision + 1, updatedAt: at };
+      await tx.set(walletPath(uid), wallet);
+      await tx.set(requestKey, { receipt, generation });
+      await tx.set(key, next);
+      return { ok: true, duplicate: false, receipt, capacity: group.shipCapacity, coins, additionalCapacity, islandUpdate: envelope(next) };
     });
   }
 
@@ -354,5 +432,5 @@ export function createAccountService({ store, now = () => Date.now(), environmen
     return { results, cursor: page.cursor ?? null };
   }
 
-  return { readIsland, recordActivity, saveIsland, startIsland, redeemCode, expireIsland, sweepExpired, readLegalStatus, acceptLegal };
+  return { readIsland, recordActivity, saveIsland, startIsland, purchaseShipCapacity, redeemCode, expireIsland, sweepExpired, readLegalStatus, acceptLegal };
 }

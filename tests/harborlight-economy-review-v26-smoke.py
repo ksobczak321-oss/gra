@@ -13,6 +13,7 @@ import subprocess
 from urllib.parse import unquote, urlsplit
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import acknowledge_daily_offer
 
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
@@ -41,7 +42,7 @@ def seed(forced):
       }
       for(const id of ['farm','windmill','lumber','sawmill','quarry'])state.buildings[id].ready=producerCapacity(state,id);
       console.log(JSON.stringify(state));''' % (int(NOW.timestamp() * 1000), 'true' if forced else 'false')
-    return json.loads(subprocess.run(['node', '--input-type=module', '-e', script], cwd=SOURCE, capture_output=True, text=True, check=True).stdout)
+    return acknowledge_daily_offer(json.loads(subprocess.run(['node', '--input-type=module', '-e', script], cwd=SOURCE, capture_output=True, text=True, check=True).stdout))
 
 
 def open_building(page, building, mobile):
@@ -111,7 +112,8 @@ def scenario(browser, language, mobile, forced):
         house = page.locator('[data-building-panel="house"]')
         expect(house.locator('[data-manage-workers]')).to_be_visible()
         expect(house.locator('[data-worker-building]')).to_have_count(0)
-        expect(house.locator('[data-house-allocate]')).to_be_visible()
+        expect(house.locator('[data-house-allocate]')).to_have_count(0)
+        expect(house.locator('[data-house-everyone]')).to_be_visible()
         house.locator('[data-manage-workers]').click()
         expect(page.locator('#island-dialog')).to_have_attribute('data-panel-kind', 'workers')
         for building in PRODUCERS + ['warehouse', 'dock', 'market']:

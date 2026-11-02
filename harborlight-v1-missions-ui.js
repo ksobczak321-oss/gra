@@ -1,4 +1,5 @@
-import { availableGoods } from './harborlight-v1-logistics.js?v=frontend-v27';
+import { availableGoods } from './harborlight-v1-logistics.js?v=frontend-v28';
+import { missionRewardText } from './harborlight-v1-missions.js?v=frontend-v28';
 
 const NAMES = {
   coins: ['Monety', 'Coins'], wood: ['Drewno', 'Wood'], stone: ['Kamień', 'Stone'],
@@ -131,6 +132,9 @@ export function createLighthouseMissionsPanel({ state, missionStatus, perform = 
     renderKey = keyOf(status);
     root.append(node('h3', {}, t('Latarnia — wspólny cel wyspy', 'Lighthouse — the island’s shared goal')),
       node('p', {}, t('Przywracając Latarni blask, rozwijasz całą osadę. Kolejne etapy pomagają zaplanować produkcję, przygotować zapasy i zapewnić mieszkańcom lepsze warunki życia.', 'Restoring the Lighthouse helps the whole settlement grow. Each step guides you through production, supplies and better living conditions for your residents.')));
+    if (status.story) root.append(node('section', { class:'lighthouse-mission-box', 'data-mission-story':status.story.id },
+      node('h4', {}, localized(status.story,'title')), node('p', {}, localized(status.story,'description')),
+      node('p', { class:'lighthouse-mission-muted' }, t('Ta historia poprowadzi Cię przez 8 zadań rozwijających wyspę i Latarnię. Możesz też swobodnie rozwijać osadę poza misją.', 'This story guides you through eight tasks developing the island and the Lighthouse. You remain free to develop the settlement outside the mission.'))));
     const path = node('div', { class: 'lighthouse-mission-path', 'aria-label': t('Ścieżki misji Latarni', 'Lighthouse mission paths') });
     for (const [kind, total] of [['main', 8], ['support', 5], ['rescue', 3]]) {
       const frame = status.kind === kind ? status : status.parents?.find(parent => parent.kind === kind);
@@ -146,7 +150,7 @@ export function createLighthouseMissionsPanel({ state, missionStatus, perform = 
     const task = status.task, box = node('section', { class: 'lighthouse-mission-box', 'data-mission-task': task.id });
     box.append(node('p', { class: 'lighthouse-mission-muted' }, `${t('Rozdział', 'Chapter')} ${count(status.chapter?.level)} · ${kindName(status.kind)} · ${count(status.index)} / ${count(status.total)}`),
       node('h4', {}, localized(task, 'title')), node('p', {}, localized(task, 'description')),
-      node('p', {}, `${t('Nagroda za ten etap', 'Reward for this step')}: ${count(task.reward?.coins)} ${t('monet', 'coins')}`));
+      node('p', { 'data-mission-reward':'' }, `${t('Nagroda za ten etap', 'Reward for this step')}: ${missionRewardText(task.reward,language)}`));
     if (status.kind !== 'main') box.append(node('p', { class: 'lighthouse-mission-notice' }, t('Mieszkańcy pomagają dokończyć przygotowania. Wykonaj tę ścieżkę, a wrócisz do dalszego rozwoju wyspy.', 'The residents are helping you finish preparations. Complete this path to return to the island’s next goal.')));
     box.append(node('p', { 'data-mission-timing': '' }, status.active ? t('Pozostały czas: ', 'Time remaining: ') : t('Czas na etap po rozpoczęciu: ', 'Time allowed after starting: '),
       node('strong', { 'data-mission-countdown': task.id, 'data-mission-deadline': task.deadline ?? '', 'data-mission-language': language }, formatMissionDuration(status.active ? status.remaining : status.plan?.duration || task.duration, language))));

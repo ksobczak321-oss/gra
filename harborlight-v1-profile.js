@@ -1,5 +1,5 @@
 // Shared local island identity. No account credentials or authentication live here.
-import { validateIslandName, validateStoredIslandName } from './backend/island-name.mjs?v=frontend-v27';
+import { validateIslandName, validateStoredIslandName } from './backend/island-name.mjs?v=frontend-v28';
 export { validateIslandName, validateStoredIslandName };
 export const MAIN_SAVE_KEY = 'harborlight-v1-interactive-save';
 export const NEW_PLAYER_SAVE_KEY = 'harborlight-v1-new-player-save';

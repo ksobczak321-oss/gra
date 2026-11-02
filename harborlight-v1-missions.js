@@ -1,10 +1,10 @@
 // Lighthouse chapters are optional world objectives, independent of the
 // practical course. Accepted clocks and receipts are persisted with the island.
 import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, availableGoods,
-  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve } from './harborlight-v1-logistics.js?v=frontend-v27';
-import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v27';
-import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v27';
-import { residentAtHome } from './harborlight-v1-residents.js?v=frontend-v27';
+  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve } from './harborlight-v1-logistics.js?v=frontend-v28';
+import { consumeMaterial, grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v28';
+import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v28';
+import { residentAtHome, synchronizeResidents } from './harborlight-v1-residents.js?v=frontend-v28';
 
 const HOUR = 3600, DAY = 24 * HOUR, EPS = 1e-7, SAFE = Number.MAX_SAFE_INTEGER;
 const RESOURCES = ['coins', ...MATERIAL_IDS];
@@ -25,7 +25,77 @@ const metric = (state, kind, resource) => whole(state.economyLedger?.[kind]?.[re
 
 export const MISSION_RULES = Object.freeze({ version: 1, firstTownHallLevel: 2,
   mainSteps: 8, supportSteps: 5, rescueSteps: 3, minimumSeconds: 600,
+  ordinaryMinimumSeconds: 1800, productionBonusSeconds: 2 * HOUR,
   maximumSeconds: 7 * DAY, maximumReceipts: 256, workerWalkSeconds: 120 });
+
+// Ordinary offers use their final affordable requirements, not their original
+// much larger request, to value a reward. Different goods have different values.
+export function fitTaskRewardToRequirements(reward, requested, requirements) {
+  const value = goods => RESOURCES.reduce((sum, id) => sum + whole(goods?.[id]) *
+    (id === 'coins' ? 1 : ['food', 'planks'].includes(id) ? 1.5 : .5), 0);
+  const actualValue = value(requirements), originalValue = value(requested), rewardValue = value(reward);
+  const factor = Math.min(1, originalValue > 0 ? actualValue / originalValue : 0,
+    rewardValue > 0 ? actualValue / rewardValue : 0);
+  const fitted = Object.fromEntries(RESOURCES.map(id => [id, Math.floor(whole(reward?.[id]) * factor)])
+    .filter(([, amount]) => amount > 0));
+  // A feasible two-raw-material offer has value at least one coin. Preserve a
+  // useful minimum without bringing back a large fixed reward for one item.
+  if (!fitted.coins && actualValue >= 1 && whole(reward?.coins) > 0) {
+    fitted.coins = 1;
+    let remaining = actualValue - 1;
+    for (const id of MATERIAL_IDS) {
+      const unit = ['food','planks'].includes(id) ? 1.5 : .5;
+      const quantity = Math.min(whole(fitted[id]), Math.floor((remaining + EPS) / unit));
+      if (quantity) fitted[id] = quantity; else delete fitted[id];
+      remaining -= quantity * unit;
+    }
+  }
+  return fitted;
+}
+
+const STORIES = Object.freeze([
+  { id: 'meteor-tourists', title: 'Falling stars will bring visitors!', titlePl: 'Spadające gwiazdy przyciągną turystów!',
+    description: 'Our island will have the best view of the approaching meteor shower. Word has spread: prepare supplies, housing and the Lighthouse to guide visitors safely to shore.',
+    descriptionPl: 'Z naszej wyspy będzie najlepiej na świecie widać nadchodzący deszcz meteorów. Wieść już się rozeszła — przygotujmy zapasy, miejsca odpoczynku i Latarnię, która bezpiecznie doprowadzi gości do brzegu.' },
+  { id: 'century-storm', title: 'The storm of the century is approaching!', titlePl: 'Uwaga! Nadciąga sztorm stulecia!',
+    description: 'Prepare the settlement together: secure supplies, improve production and restore the Lighthouse so ships can find a safe way to shore.',
+    descriptionPl: 'Przygotujmy osadę do nadchodzącego sztormu. Zabezpieczmy zapasy, usprawnijmy produkcję i przywróćmy blask Latarni, aby statki mogły bezpiecznie dotrzeć do brzegu.' },
+  { id: 'meteor-watch', title: 'The island beneath a sky of meteors', titlePl: 'Wyspa pod niebem pełnym meteorów',
+    description: 'A spectacular meteor shower is approaching. Prepare the island for a shared celebration, reliable supplies and safe arrivals by sea.',
+    descriptionPl: 'Nadchodzi niezwykły deszcz meteorów. Przygotujmy wyspę na wspólne świętowanie, zadbajmy o zapasy i bezpieczne przybycie gości drogą morską.' }
+]);
+export function missionStory(level = 2) {
+  return { ...STORIES[Math.max(0, whole(level, 2) - 2) % STORIES.length], steps: 8 };
+}
+function normalizeProductionBonuses(state, raw = state) {
+  const combined = new Map();
+  for (const item of Array.isArray(raw.missionProductionBonuses) ? raw.missionProductionBonuses.slice(-20) : []) {
+    if (!object(item) || !Object.hasOwn(PRODUCTION_RECIPES, item.building) || !finite(item.until) || item.until <= clock(state)) continue;
+    const existing = combined.get(item.building), until = Math.min(clock(state) + 30 * DAY * 1000, positive(item.until));
+    combined.set(item.building, { building: item.building, multiplier: 2, until: Math.max(existing?.until || 0, until),
+      receiptIds: [...new Set([...(existing?.receiptIds || []), ...(Array.isArray(item.receiptIds) ? item.receiptIds : [])]
+        .filter(id => typeof id === 'string' && id.length <= 160))].slice(-256) });
+  }
+  state.missionProductionBonuses = [...combined.values()];
+}
+
+function normalizedReward(raw) {
+  const reward = cleanCost(raw);
+  if (whole(raw?.residents) > 0) reward.residents = Math.min(6, whole(raw.residents));
+  if (Object.hasOwn(PRODUCTION_RECIPES, raw?.production?.building)) reward.production = {
+    building: raw.production.building, multiplier: 2,
+    seconds: Math.max(60, Math.min(DAY, whole(raw.production.seconds, MISSION_RULES.productionBonusSeconds))) };
+  return reward;
+}
+
+export function missionRewardText(reward, language = 'pl') {
+  const pl = language !== 'en', names = pl ? { coins:'monet',wood:'drewna',stone:'kamienia',grain:'zboża',food:'żywności',planks:'desek' } : { coins:'coins',wood:'wood',stone:'stone',grain:'grain',food:'food',planks:'planks' };
+  const buildings = pl ? { farm:'Gospodarstwo',windmill:'Młyn',lumber:'Drwale',sawmill:'Tartak',quarry:'Kamieniołom' } : { farm:'Farm',windmill:'Windmill',lumber:'Lumber Camp',sawmill:'Sawmill',quarry:'Quarry' };
+  const parts = RESOURCES.filter(id => whole(reward?.[id]) > 0).map(id => `${whole(reward[id])} ${names[id]}`);
+  if (reward?.residents) parts.push(pl ? `nowi mieszkańcy: ${whole(reward.residents)} (do limitu Ratusza)` : `new residents: ${whole(reward.residents)} (within the Town Hall limit)`);
+  if (reward?.production) parts.push(`${buildings[reward.production.building]}: ${pl ? 'produkcja' : 'production'} ×2 / ${whole(reward.production.seconds) / HOUR} ${pl ? 'godz.' : 'h'}`);
+  return parts.join(' · ') || (pl ? 'Dalszy etap wspólnej przygody' : 'The next stage of the shared adventure');
+}
 
 // This is a conservative free-action plan, not a promise about every possible
 // future strategy. It can propose recalling/reassigning the existing workforce,
@@ -139,7 +209,7 @@ function eligible(state) {
   return lev(state, 'townhall') >= 2 && !(state.onboarding?.worldStartedAt === null) && courseOpen(state);
 }
 function defaults() {
-  return { version: 1, chapter: null, stack: [], completedLevels: [], receipts: [], invited: 0, lastIncident: null, lastCompletion: null };
+  return { version: 1, chapter: null, stack: [], completedLevels: [], receipts: [], invited: 0, lastIncident: null, lastCompletion: null, lastReward: null };
 }
 function normalizeObjective(raw) {
   if (!object(raw) || !['contribute','building','production','stock','invitation','assign','delivered'].includes(raw.type)) return null;
@@ -155,12 +225,13 @@ function normalizeTask(raw) {
   const objective = normalizeObjective(raw.objective); if (!objective) return null;
   return { id: raw.id, status: raw.status, objective, requirements: cleanCost(raw.requirements), deposited: cleanCost(raw.deposited),
     title: String(raw.title || '').slice(0, 180), titlePl: String(raw.titlePl || '').slice(0, 180), description: String(raw.description || '').slice(0, 600), descriptionPl: String(raw.descriptionPl || '').slice(0, 600),
-    reward: { coins: whole(raw.reward?.coins) }, duration: Math.max(600, Math.min(7 * DAY, positive(raw.duration, 6 * HOUR))),
+    reward: normalizedReward(raw.reward), duration: Math.max(600, Math.min(7 * DAY, positive(raw.duration, 6 * HOUR))),
     offeredAt: positive(raw.offeredAt), acceptedAt: finite(raw.acceptedAt) ? positive(raw.acceptedAt) : null,
     deadline: finite(raw.deadline) ? positive(raw.deadline) : null, attempt: whole(raw.attempt) };
 }
 export function normalizeMissions(state, raw = state) {
   const source = raw.lighthouseMissions?.version === 1 ? raw.lighthouseMissions : {}, m = defaults();
+  normalizeProductionBonuses(state, raw);
   m.completedLevels = [...new Set((Array.isArray(source.completedLevels) ? source.completedLevels : []).filter(n => Number.isSafeInteger(n) && n >= 2 && n <= 100))].sort((a,b) => a-b);
   m.receipts = [...new Set((Array.isArray(source.receipts) ? source.receipts : []).filter(id => typeof id === 'string' && id.length <= 160))].slice(-MISSION_RULES.maximumReceipts);
   m.invited = whole(source.invited);
@@ -168,7 +239,7 @@ export function normalizeMissions(state, raw = state) {
     const c = source.chapter;
     m.chapter = { id: `lighthouse-chapter-${whole(c.level)}`, level: whole(c.level), targetLevel: Math.max(1, Math.min(100, whole(c.targetLevel, 1))),
       startedAt: positive(c.startedAt), invitedBaseline: whole(c.invitedBaseline), productionBaseline: Object.fromEntries(MATERIAL_IDS.map(id => [id, whole(c.productionBaseline?.[id])])),
-      status: c.status === 'completed' ? 'completed' : 'active' };
+      status: c.status === 'completed' ? 'completed' : 'active', storyId: missionStory(c.level).id, introSeen: c.introSeen === true };
     for (const item of Array.isArray(source.stack) ? source.stack.slice(0,3) : []) {
       const kinds = ['main','support','rescue'], kind = kinds[m.stack.length];
       if (item?.kind !== kind) break;
@@ -182,6 +253,10 @@ export function normalizeMissions(state, raw = state) {
   }
   if (object(source.lastIncident)) m.lastIncident = { at: positive(source.lastIncident.at), id: String(source.lastIncident.id || '').slice(0,160), kind:'plague-ship', narrativeOnly:true };
   if (object(source.lastCompletion)) m.lastCompletion = { level: whole(source.lastCompletion.level), at:positive(source.lastCompletion.at) };
+  if (object(source.lastReward) && typeof source.lastReward.id === 'string') m.lastReward = {
+    id: source.lastReward.id.slice(0,160), at: positive(source.lastReward.at),
+    reward: normalizedReward(source.lastReward.reward), residentsRequested: whole(source.lastReward.residentsRequested),
+    residentsAccepted: whole(source.lastReward.residentsAccepted), residentsUnaccepted: whole(source.lastReward.residentsUnaccepted) };
   state.lighthouseMissions = m;
   return m;
 }
@@ -195,6 +270,11 @@ function costFor(state, building, context = {}) {
     return Object.fromEntries(Object.entries(result).map(([id,n])=>[id,n*factor]));
   }
   return Object.fromEntries(RESOURCES.map(id=>[id,500*l]));
+}
+// The invitation is priced from the completed Town Hall, not a queued future
+// level or the discounted first construction lesson.
+export function missionResidentCost(state) {
+  return Object.fromEntries(RESOURCES.map(resource => [resource, 500 * Math.max(1, lev(state, 'townhall'))]));
 }
 function taskText(index) {
   return [null,
@@ -215,15 +295,32 @@ function newTask(state, m, frame, context) {
     duration:6*HOUR,reward:{coins:Math.min(60,10+2*level)} };
   if (frame.kind === 'main') {
     const [title,titlePl,description,descriptionPl]=taskText(frame.index); Object.assign(base,{title,titlePl,description,descriptionPl});
+    const story = missionStory(level);
+    const reasons = {
+      'meteor-tourists': ['Przygotujmy wyspę na przyjazd gości.', 'Prepare the island for arriving visitors.'],
+      'century-storm': ['Zabezpieczmy osadę przed nadchodzącym sztormem.', 'Prepare the settlement for the approaching storm.'],
+      'meteor-watch': ['Przygotujmy osadę na wspólne świętowanie pod rozgwieżdżonym niebem.', 'Prepare a shared celebration beneath a sky full of stars.']
+    }[story.id];
+    base.descriptionPl = `${reasons[0]} ${descriptionPl}`;
+    base.description = `${reasons[1]} ${description}`;
     const target = id => Math.min(level, Math.max(1, lev(state,id)) + 1);
     if (frame.index === 1) { base.objective={type:'contribute'};base.requirements={wood:Math.max(1,Math.min(25*level,available(state,'wood') || 1))}; }
     if (frame.index === 2) base.objective={type:'building',building:'lumber',target:target('lumber')};
     if (frame.index === 3) base.objective={type:'production',resource:'planks',count:Math.min(100,10*level),baseline:m.chapter.productionBaseline.planks};
     if (frame.index === 4) base.objective={type:'building',building:'house',target:target('house')};
-    if (frame.index === 5) base.objective={type:'stock',requirements:costFor(state,'townhall',context)};
+    if (frame.index === 5) base.objective={type:'stock',requirements:missionResidentCost(state)};
     if (frame.index === 6) base.objective={type:'invitation',count:1,baseline:m.chapter.invitedBaseline};
     if (frame.index === 7) base.objective={type:'stock',requirements:costFor(state,'lighthouse',context)};
     if (frame.index === 8) base.objective={type:'building',building:'lighthouse',target:m.chapter.targetLevel};
+    // Rewards follow the chapter story and the action, rather than granting a
+    // large identical pile after every small step. The final group is an
+    // example-sized crew, not a fixed five residents in every chapter.
+    if (frame.index === 1) base.reward.stone = Math.min(30, 5 * level);
+    if (frame.index === 2) base.reward.food = Math.min(30, 5 * level);
+    if (frame.index === 3) base.reward.production = { building:'quarry', multiplier:2, seconds:MISSION_RULES.productionBonusSeconds };
+    if (frame.index === 4) base.reward.residents = 1;
+    if (frame.index === 7) base.reward.production = { building:'farm', multiplier:2, seconds:MISSION_RULES.productionBonusSeconds };
+    if (frame.index === 8) base.reward.residents = Math.min(3, 1 + Math.floor((level - 2) / 3));
   } else {
     const parent=m.stack[m.stack.length-2]?.task, resource=firstNeeded(parent), producer=PRODUCER[resource];
     const n=Math.max(1,Math.min(10,level*2));
@@ -248,7 +345,7 @@ function newTask(state, m, frame, context) {
   }
   if(base.objective.type==='stock')base.requirements=cleanCost(base.objective.requirements);
   if(base.objective.type==='building')base.requirements=lev(state,base.objective.building)>=base.objective.target?{}:costFor(state,base.objective.building,context);
-  if(base.objective.type==='invitation')base.requirements=costFor(state,'townhall',context);
+  if(base.objective.type==='invitation')base.requirements=missionResidentCost(state);
   return base;
 }
 function remainingCost(state, task, context) {
@@ -319,19 +416,37 @@ function proof(state,m,task,context={}) {
   return{feasible:false,ready:false,requirements:cost,reasonPl:'Przygotuj zapasy, produkcję i transport. Zadanie otrzymasz, gdy będzie możliwe do wykonania.'};
 }
 function credit(state,m,task){
-  if(m.receipts.includes(task.id))return;
-  const amount=task.reward.coins;
-  if(!Number.isSafeInteger(whole(state.resources?.coins)+amount))return;
-  state.resources.coins=whole(state.resources?.coins)+amount;m.receipts.push(task.id);m.receipts=m.receipts.slice(-256);
+  if(m.receipts.includes(task.id))return true;
+  const reward=normalizedReward(task.reward), amount=whole(reward.coins);
+  if(!Number.isSafeInteger(whole(state.resources?.coins)+amount)||MATERIAL_IDS.some(id=>positive(state.resources?.[id])+whole(reward[id])>SAFE))return false;
+  state.resources.coins=whole(state.resources?.coins)+amount;
+  grantBonusMaterials(state,reward);
+  const residentsRequested=whole(reward.residents);
+  const residentsAccepted=Math.min(residentsRequested,Math.max(0,lev(state,'townhall')*24-whole(state.population)-whole(state.incomingPassengers)));
+  if(residentsAccepted){state.population=whole(state.population)+residentsAccepted;synchronizeResidents(state);}
+  if(reward.production){
+    normalizeProductionBonuses(state);
+    const existing=state.missionProductionBonuses.find(item=>item.building===reward.production.building);
+    if(existing){existing.until=Math.max(clock(state),existing.until)+reward.production.seconds*1000;existing.receiptIds=[...existing.receiptIds,task.id].slice(-256);}
+    else state.missionProductionBonuses.push({building:reward.production.building,multiplier:2,until:clock(state)+reward.production.seconds*1000,receiptIds:[task.id]});
+  }
+  m.lastReward={id:task.id,at:clock(state),reward:clone(reward),residentsRequested,residentsAccepted,residentsUnaccepted:residentsRequested-residentsAccepted};
+  m.receipts.push(task.id);m.receipts=m.receipts.slice(-256);
+  return true;
 }
 function completeFrameTask(state,m,frame){
-  const task=frame.task;credit(state,m,task);
-  event(state,'lighthouse-mission-step','Lighthouse mission step complete','Etap misji Latarni ukończony','The reward is already in your resources. Continue to the next task.','Nagroda została dodana do Twoich zasobów. Przejdź do kolejnego zadania.');
-  if(frame.index<frame.total){frame.index++;frame.task=null;return;}
+  const task=frame.task;if(!credit(state,m,task))return false;
+  const result=m.lastReward?.id===task.id?m.lastReward:null;
+  const residentsPl=result?.residentsRequested ? ` Przyjęto nowych mieszkańców: ${result.residentsAccepted} z ${result.residentsRequested}.${result.residentsUnaccepted?' Pozostali nie zostali przyjęci z powodu limitu Ratusza; nie czekają w kolejce.':''}` : '';
+  const residentsEn=result?.residentsRequested ? ` New residents welcomed: ${result.residentsAccepted} of ${result.residentsRequested}.${result.residentsUnaccepted?' The others could not join within the Town Hall limit and do not enter a waiting queue.':''}` : '';
+  event(state,'lighthouse-mission-step','Lighthouse mission step complete','Etap misji Latarni ukończony',
+    `Reward received: ${missionRewardText(task.reward,'en')}.${residentsEn} Continue to the next story step.`,
+    `Nagroda odebrana: ${missionRewardText(task.reward,'pl')}.${residentsPl} Przejdź do kolejnego etapu przygody.`);
+  if(frame.index<frame.total){frame.index++;frame.task=null;return true;}
   if(frame.kind==='main'){
     m.chapter.status='completed';m.completedLevels=[...new Set([...m.completedLevels,m.chapter.level])].slice(-100);
     m.lastCompletion={level:m.chapter.level,at:clock(state)};m.stack=[];
-    event(state,'lighthouse-mission-chapter','A shared goal achieved','Wspólny cel osiągnięty','The Lighthouse is ready. Prepare your island for the next challenge.','Latarnia znów świeci, a Twoja osada jest gotowa na dalszy rozwój.');return;
+    event(state,'lighthouse-mission-chapter','A shared goal achieved','Wspólny cel osiągnięty','The Lighthouse is ready. Prepare your island for the next challenge.','Latarnia znów świeci, a Twoja osada jest gotowa na dalszy rozwój.');return true;
   }
   m.stack.pop();const parent=m.stack.at(-1);
   // The final repair objective is the same actual objective, not a fake level.
@@ -342,6 +457,7 @@ function completeFrameTask(state,m,frame){
     completeFrameTask(state,m,parent);
     event(state,'lighthouse-mission-return','Back to the next step','Wracamy do kolejnego etapu','The support plan is complete. Your previous progress is preserved.','Plan pomocy zakończony. Wcześniejszy postęp pozostaje zachowany.');
   }
+  return true;
 }
 function repairContributionParent(m,task){
   const parent=m.stack[m.stack.length-2]?.task;
@@ -361,22 +477,24 @@ function fail(state,m,frame){
 }
 function unlock(state,m){
   if(!eligible(state)||m.chapter?.status==='active')return;
-  const level=lev(state,'townhall');if(m.completedLevels.includes(level))return;
+  const level=Array.from({length:Math.max(0,lev(state,'townhall')-1)},(_,index)=>index+2).find(value=>!m.completedLevels.includes(value));
+  if(!level)return;
   const target=Math.min(100,lev(state,'lighthouse')+1);
   // A maxed Lighthouse has no remaining real upgrade to promise.
   if(lev(state,'lighthouse')>=100)return;
   m.chapter={id:`lighthouse-chapter-${level}`,level,targetLevel:target,startedAt:clock(state),invitedBaseline:m.invited,
-    productionBaseline:Object.fromEntries(MATERIAL_IDS.map(id=>[id,metric(state,'produced',id)])),status:'active'};
+    productionBaseline:Object.fromEntries(MATERIAL_IDS.map(id=>[id,metric(state,'produced',id)])),status:'active',storyId:missionStory(level).id,introSeen:false};
   m.stack=[{kind:'main',index:1,total:8,prefix:m.chapter.id,task:null}];m.receipts=[];
 }
 export function advanceMissions(state,seconds=0,context={}){
   const m=ensure(state);if(state._missionForecast===true)return m;
+  normalizeProductionBonuses(state);
   unlock(state,m);
   for(let guard=0;guard<24&&m.stack.length;guard++){
     const frame=m.stack.at(-1);frame.task ||= newTask(state,m,frame,context);const task=frame.task;
     const precredited=['building','stock','invitation','assign'].includes(task.objective.type);
     if(accomplished(state,m,task)&&(task.status==='active'||precredited)){
-      repairContributionParent(m,task);completeFrameTask(state,m,frame);continue;
+      repairContributionParent(m,task);if(!completeFrameTask(state,m,frame))break;continue;
     }
     if(task.status==='active'&&task.deadline!==null&&clock(state)>=task.deadline-EPS){fail(state,m,frame);continue;}
     break;
@@ -385,7 +503,8 @@ export function advanceMissions(state,seconds=0,context={}){
 }
 export function nextMissionEvent(state){
   const task=ensure(state).stack.at(-1)?.task;
-  return task?.status==='active'&&finite(task.deadline)?Math.max(0,(task.deadline-clock(state))/1000):Infinity;
+  const deadline=task?.status==='active'&&finite(task.deadline)?Math.max(0,(task.deadline-clock(state))/1000):Infinity;
+  return Math.min(deadline,...(state.missionProductionBonuses||[]).filter(effect=>finite(effect.until)&&effect.until>clock(state)).map(effect=>(effect.until-clock(state))/1000));
 }
 export function recordMissionAction(state,action,result,context={}){
   if(!result?.ok)return;
@@ -393,21 +512,35 @@ export function recordMissionAction(state,action,result,context={}){
   if(action?.type==='buyResident')m.invited=Math.min(SAFE,m.invited+Math.max(1,whole(result.quantity,1)));
   advanceMissions(state,0,context);
 }
+// Reading this introduction never accepts a task or starts a deadline. The host
+// queues it after the practical course's final reward and before ad invitations.
+export function missionStoryIntro(state) {
+  const m=ensure(state), chapter=m.chapter;
+  return { available:eligible(state)&&chapter?.status==='active'&&chapter.introSeen!==true,
+    chapterId:chapter?.id||null, chapterLevel:chapter?.level||null,
+    ...missionStory(chapter?.level||2) };
+}
 export function missionStatus(state,context={}){
   const m=ensure(state),frame=m.stack.at(-1),task=frame?.task;
   if(!frame||!task)return{available:false,preview:lev(state,'townhall')>=2&&!courseOpen(state),finished:m.chapter?.status==='completed',chapter:m.chapter?clone(m.chapter):null,
-    reasonPl:!courseOpen(state)?'Misje Latarni czekają po ukończeniu lub zamknięciu samouczka.':'Rozbuduj Ratusz, aby rozpocząć kolejny rozdział.',completedLevels:[...m.completedLevels]};
+    reasonPl:!courseOpen(state)?'Misje Latarni czekają po ukończeniu lub zamknięciu samouczka.':'Rozbuduj Ratusz, aby rozpocząć kolejny rozdział.',completedLevels:[...m.completedLevels],
+    story:missionStory(m.chapter?.level||2),introduction:missionStoryIntro(state),lastReward:m.lastReward?clone(m.lastReward):null};
   const plan=proof(state,m,task,context);
   return{available:true,finished:false,chapter:clone(m.chapter),kind:frame.kind,index:frame.index,total:frame.total,task:clone(task),plan,
     active:task.status==='active',canStart:task.status!=='active'&&plan.feasible,
     remaining:task.deadline===null?null:Math.max(0,(task.deadline-clock(state))/1000),
     progress:task.objective.type==='production'||task.objective.type==='delivered'?Math.min(task.objective.count,Math.max(0,metric(state,task.objective.type==='production'?'produced':'delivered',task.objective.resource)-task.objective.baseline)):null,
-    incident:m.lastIncident?clone(m.lastIncident):null,parents:m.stack.slice(0,-1).map(f=>({kind:f.kind,index:f.index,total:f.total}))};
+    incident:m.lastIncident?clone(m.lastIncident):null,parents:m.stack.slice(0,-1).map(f=>({kind:f.kind,index:f.index,total:f.total})),
+    story:missionStory(m.chapter.level),introduction:missionStoryIntro(state),lastReward:m.lastReward?clone(m.lastReward):null};
 }
 export function missionAction(state,action,context={}){
-  if(!['missionStart','missionRetry','missionDeposit','missionNext'].includes(action?.type))return null;
+  if(!['missionStart','missionRetry','missionDeposit','missionNext','missionIntroSeen'].includes(action?.type))return null;
   advanceMissions(state,0,context);const m=ensure(state),frame=m.stack.at(-1),task=frame?.task;
   if(action.type==='missionNext'){unlock(state,m);advanceMissions(state,0,context);return good('Lighthouse missions refreshed.');}
+  if(action.type==='missionIntroSeen'){
+    if(!m.chapter||action.chapterId&&action.chapterId!==m.chapter.id)return bad('This Lighthouse chapter introduction is no longer available.');
+    m.chapter.introSeen=true;return good('Lighthouse chapter introduction read.',{chapterId:m.chapter.id});
+  }
   if(!task||action.id!==task.id)return bad('This Lighthouse mission step is no longer available.');
   if(action.type==='missionStart'||action.type==='missionRetry'){
     if(task.status==='active')return bad('This Lighthouse mission step is already active.');

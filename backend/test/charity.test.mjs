@@ -23,7 +23,7 @@ class Store {
 const world = coins => ({ version: 9, islandStartedAt: NOW - DAY, lastSimulatedAt: NOW, resources: { coins, wood: 100, stone: 100, grain: 100, food: 100, planks: 100 }, buildings: { townhall: { level: 4 }, house: { level: 1 } } });
 function fixture({ simulation = true, balance = 5000, prefund = 5000, pilot = true, margin = null } = {}) {
   const store = new Store(); let at = NOW;
-  for (const uid of ['one', 'two']) { store.put(`accounts/${uid}`, { islandGeneration: 1 }); store.put(`islands/${uid}`, { payload: JSON.stringify(world(balance)), revision: 1, generation: 1 }); }
+  for (const uid of ['one', 'two']) { store.put(`accounts/${uid}`, { islandGeneration: 1, createdAt: NOW - 20 * DAY, activePlayDays: ['2026-10-20','2026-10-21','2026-10-22','2026-10-23','2026-10-24'] }); store.put(`islands/${uid}`, { payload: JSON.stringify(world(balance)), revision: 1, generation: 1 }); }
   const credits = new Map();
   const service = createCharityService({ store, simulation, environment: simulation ? 'development' : 'production', now: () => at,
     verifyCredit: async ({ eventId }) => credits.get(eventId),
@@ -46,8 +46,8 @@ test('historical balances and opaque client saves never qualify; spending proven
   await store.runTransaction(async tx => { const document = await tx.get('islands/one'), state = JSON.parse(document.payload); state.resources.coins -= 600; document.payload = JSON.stringify(state); await tx.set('islands/one', document); });
   status = await f.service.status({ uid: 'one' }); assert.equal(status.qualifiedCoins, 0); assert.equal(status.unqualifiedCoins, 5800);
   const trustedWallet = { qualified: 1000, unqualified: 500 };
-  assert.deepEqual(spendWallet(trustedWallet, 200), { qualified: 200, unqualified: 0 });
-  assert.deepEqual(trustedWallet, { qualified: 800, unqualified: 500 });
+  assert.deepEqual(spendWallet(trustedWallet, 200), { qualified: 0, unqualified: 200 });
+  assert.deepEqual(trustedWallet, { qualified: 1000, unqualified: 300 });
 });
 
 test('net-zero client spend plus unqualified income cannot wash spent qualified coins back into eligibility', async () => {
@@ -79,7 +79,8 @@ test('client assertions cannot fund or confirm a real campaign, or mint qualifie
   await rejects(real.recordVerifiedCredit({ uid: 'one', eventId: 'fakecredit_123', amount: 1000, source: 'tax-base', verified: true }), 'charity-trusted-issuer-unavailable');
   await rejects(real.configureCampaign({ month: '2026-10', organization: 'Fake', goal: 'Fake', prefundedCents: 5000, verified: true }), 'charity-funding-unverified');
   await rejects(real.confirmTransfer({ donationId: `charity_${'a'.repeat(40)}`, transferEventId: 'fakeproof_123', verified: true }), 'charity-transfer-unverified');
-  assert.throws(() => createCharityService({ store: f.store, simulation: true, environment: 'preprod' }), /restricted/);
+  assert.doesNotThrow(() => createCharityService({ store: f.store, simulation: true, environment: 'preprod' }));
+  assert.throws(() => createCharityService({ store: f.store, simulation: true, environment: 'production' }), /restricted/);
 });
 
 test('donation reserves exactly PLN1, burns 1000 qualified coins once, and waits for a verified transfer', async () => {
