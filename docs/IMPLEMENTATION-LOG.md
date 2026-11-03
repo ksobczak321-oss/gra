@@ -1067,3 +1067,8 @@ Wdrożono nową krzywą budowy45s→24h, stałe pojemności Magazynu i wydobycie
 Lokalnie1060frontend +133backend +7planszówka=1200NodePASS;141Python i36zestawówChromiumPASS. Prędkość dostaw uwzględnia rzeczywistą obsadę, głód, łóżka i bonusy; ukończenie Domu nie zmienia przeszłego segmentu. Zachowano stare projekty i programy. [Excel12](arkusze/HARBORLIGHT12-zasady.xlsx) zachowuje66historycznych arkuszy/48komentarzy/3992cache i prezentuje dane z aktualnego kodu. [397kart/134ręczneNOTRUN](tracking/CHANGE-REGISTER.md). [Raport](DEV-0.13.0.0-VALIDATION.md) oddziela odbiór lokalny od publikacji.
 
 Git/push, własne CI, Pages oraz tag wymagają kolejnego potwierdzenia. PRE-PROD pozostaje0.12.0.0/d9e2940. Nie resetowano kont, nie promowanoPROD i nie aktywowano operatorów ani integracji planszówki.
+
+
+### Odebrany Git/CI/Pages v29
+
+Źródło `cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da`, [CI 41657032913](https://github.com/ksobczak321-oss/gra/actions/runs/41657032913) **SUCCESS, 13m 13s**, [Pages 41657032922](https://github.com/ksobczak321-oss/gra/actions/runs/41657032922) **SUCCESS, 41s**. Tag `dev-0.13.0.0-20261103` jest opublikowany i wskazuje to samo źródło. Push `main` i zdalne rozwiązanie tagu potwierdzono. Pakiet73pliki/11558134bajty przeszedł weryfikację i ekstrakcję; hashe i granice dowodów są w [raporcie](DEV-0.13.0.0-VALIDATION.md). PRE-PROD0.12/d9e2940 pozostaje bez zmian. Kolejny commit dowodów nie zmienia publicznych plików gry; ręczne wyniki134przypadków nadalNOTRUN.

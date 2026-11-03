@@ -1,6 +1,6 @@
 # HARBORLIGHT
 
-**DEV 0.13.0.0 / v29 — lokalny odbiór PASS, publikacja w toku.** Nowa krzywa budowy, pojemność Magazynu, tutorial34/samouczek25, powitalni mieszkańcy, Teatr i dziewięć przygód. [Zakres](docs/FRONTEND-V29-REQUIREMENTS.md) · [Bieżąca walidacja](docs/DEV-0.13.0.0-VALIDATION.md) · [Excel12](docs/arkusze/HARBORLIGHT12-zasady.xlsx) · [134 scenariusze do odhaczania](docs/testing/START-HERE.md). Wyniki ręczne nadal NOT RUN. PRE-PROD pozostaje odebrane0.12.0.0; ten zakres nie jest nową promocją GCP.
+**DEV 0.13.0.0 / v29 odebrany.** Źródło `cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da`, [CI 41657032913](https://github.com/ksobczak321-oss/gra/actions/runs/41657032913) **SUCCESS, 13m 13s**, [Pages 41657032922](https://github.com/ksobczak321-oss/gra/actions/runs/41657032922) **SUCCESS, 41s**. Tag `dev-0.13.0.0-20261103` jest opublikowany i wskazuje to samo źródło. Nowa krzywa budowy, pojemność Magazynu, tutorial34/samouczek25, powitalni mieszkańcy, Teatr i dziewięć przygód. [Zakres](docs/FRONTEND-V29-REQUIREMENTS.md) · [Bieżąca walidacja](docs/DEV-0.13.0.0-VALIDATION.md) · [Excel12](docs/arkusze/HARBORLIGHT12-zasady.xlsx) · [134 scenariusze do odhaczania](docs/testing/START-HERE.md). Wyniki ręczne nadal NOT RUN. PRE-PROD pozostaje odebrane0.12.0.0; ten zakres nie jest nową promocją GCP.
 
 Poniżej zachowano dowody poprzedniego odebranego wydania; nie zastępują własnego odbioru nowego kodu.
 
@@ -10,17 +10,17 @@ Tag [`preprod-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/pr
 
 **[Graj w PRE-PROD 0.12.0.0](https://harborlight-dev.web.app)** · **[Podgląd DEV 0.12.0.0](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v28-2)**. Aplikacja zachowuje schemat świata9 i archipelag2; 60 publicznych wejść jest identycznych z odebranym DEV0ca7715.
 
-**DEV 0.12.0.0 odebrany dla źródła `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`**, cache `frontend-v28-2`. Własne [CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) zakończyło się **SUCCESS, 12 min 33 s**; obie grupy Chromium przeszły dla tego samego SHA. [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) ma **SUCCESS, 31 s**. Push na `main` potwierdzono. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) jest **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie ten SHA.
+**Poprzedni DEV 0.12.0.0 odebrany dla źródła `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`**, cache `frontend-v28-2`. Własne [CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) zakończyło się **SUCCESS, 12 min 33 s**; obie grupy Chromium przeszły dla tego samego SHA. [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) ma **SUCCESS, 31 s**. Push na `main` potwierdzono. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) jest **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie ten SHA.
 
-**[96 scenariuszy ręcznych](docs/testing/qa-checklist.html)** · **[Lista do odhaczania](docs/testing/START-HERE.md)** · **[351 kart zmian](docs/tracking/CHANGE-REGISTER.md)** · **[Planszówka do wydruku](docs/boardgame/README.md)**. Browser aktualnej listy QA 96 PASS; wszystkie ręczne wyniki nadal **NOT RUN**. Integracja planszówki online pozostaje odłożona.
+**[134 scenariusze ręczne](docs/testing/qa-checklist.html)** · **[Lista do odhaczania](docs/testing/START-HERE.md)** · **[397 kart zmian](docs/tracking/CHANGE-REGISTER.md)** · **[Planszówka do wydruku](docs/boardgame/README.md)**. Automatyczny odbiór listy QA nie zalicza prób ręcznych; wszystkie ich wyniki nadal **NOT RUN**. Integracja planszówki online pozostaje odłożona.
 
-Nowe reguły obejmują 33 opisy tutoriala, 25 lekcji programu 6 od 3 tragarzy, rzeczywiste przyspieszenia, bank 7 porcji, modlitwę, narracyjne misje Latarni, usługi monetami TH1/doładowania TH3, ligę z playoffami i oznaczony mock Pomagam. [Zakres](docs/FRONTEND-V28-REQUIREMENTS.md) · [Pełny odbiór i artefakty](docs/DEV-0.12.0.0-VALIDATION.md) · [Środowiska](docs/ENVIRONMENT-STATUS.md).
+Aktualny pakiet ma34kroki tutoriala,25lekcji programu7, nową krzywą budowy i pojemności, powitalnych mieszkańców, Teatr i9przygód. Zachowuje bank7porcji, modlitwę, misje Latarni, usługi monetami, ligę i oznaczony mock Pomagam. [Zakres](docs/FRONTEND-V29-REQUIREMENTS.md) · [Pełny odbiór i artefakty](docs/DEV-0.13.0.0-VALIDATION.md) · [Środowiska](docs/ENVIRONMENT-STATUS.md).
 
 ## Środowiska i wydanie
 
 | Miejsce | Potwierdzony stan |
 |---|---|
-| DEV | `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`, cache `frontend-v28-2`; własne CI SUCCESS, 12 min 33 s, Pages SUCCESS, 31 s. Tag `dev-0.12.0.0-20261102` opublikowany i potwierdzony zdalnie. |
+| DEV | **0.13.0.0**, `cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da`, cache `frontend-v29`; własne CI41657032913 SUCCESS (13m 13s), Pages41657032922 SUCCESS (41s). Tag `dev-0.13.0.0-20261103` opublikowany i potwierdzony zdalnie. |
 | PRE-PROD `harborlight-dev` | **0.12.0.0**, `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`; [deploy41482455135, próba1](https://github.com/ksobczak321-oss/gra/actions/runs/41482455135) SUCCESS, 2 min 20 s. Hosting, zalogowana gra i konta/izolacja PASS; bez resetu. |
 | PROD `harborlight-prod` | Bez nowej promocji i potwierdzenia uruchomienia domeny. |
 

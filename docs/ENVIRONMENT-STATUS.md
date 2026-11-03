@@ -2,9 +2,9 @@
 
 Aktualizacja operacyjna: **3 listopada 2026, Europe/Warsaw**. Akceptacja opisów i pierwotny odbiór lokalny pozostają z 1 listopada. Historia wyników jest w [dzienniku](IMPLEMENTATION-LOG.md); warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-## DEV 0.13.0.0 — lokalny odbiór PASS; Git/CI/Pages w toku
+## Aktualny DEV 0.13.0.0 — własne CI i Pages SUCCESS
 
-Nowy zakres ma GO wyłącznieDEV/Git/CI/Pages. [Wymagania](FRONTEND-V29-REQUIREMENTS.md) i [raport odbioru](DEV-0.13.0.0-VALIDATION.md) oddzielają kod, lokalne testy, publikację i faktyczny stan chmury. PRE-PROD0.12.0.0/d9e2940 pozostaje bez zmian; nie wykonano resetu ani aktywacji operatorów. Lokalnie1200Node +141Python +36zestawówChromiumPASS;397kart/134ręczneNOTRUN. Nowe źródło, własne CI, Pages i tag nie są jeszcze potwierdzone.
+Nowy zakres ma GO wyłącznieDEV/Git/CI/Pages. [Wymagania](FRONTEND-V29-REQUIREMENTS.md) i [raport odbioru](DEV-0.13.0.0-VALIDATION.md) oddzielają kod, lokalne testy, publikację i faktyczny stan chmury. PRE-PROD0.12.0.0/d9e2940 pozostaje bez zmian; nie wykonano resetu ani aktywacji operatorów. Lokalnie1200Node +141Python +36zestawówChromiumPASS;397kart/134ręczneNOTRUN. Źródło `cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da`, [CI 41657032913](https://github.com/ksobczak321-oss/gra/actions/runs/41657032913) **SUCCESS, 13m 13s**, [Pages 41657032922](https://github.com/ksobczak321-oss/gra/actions/runs/41657032922) **SUCCESS, 41s**. Tag `dev-0.13.0.0-20261103` jest opublikowany i wskazuje to samo źródło.
 
 
 ## Aktualny PRE-PROD 0.12.0.0 — pełny odbiór SUCCESS

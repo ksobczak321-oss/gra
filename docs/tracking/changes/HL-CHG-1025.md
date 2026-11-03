@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `locally_validated_pending_publication` |
-| CI | `not_run_for_change` |
+| DEV | `validated_ci_and_pages_source_cf6739a` |
+| CI | `passed_source_cf6739a` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -39,6 +39,7 @@ Data pierwotnej wiadomości: 2026-11-03. Data zbiorczego GO, Europe/Warsaw; wcze
 - **Dokumenty:** [docs/FRONTEND-V29-REQUIREMENTS.md](../../FRONTEND-V29-REQUIREMENTS.md), [docs/testing/MANUAL-TEST-PLAN.md](../../testing/MANUAL-TEST-PLAN.md), [docs/DEV-0.13.0.0-VALIDATION.md](../../DEV-0.13.0.0-VALIDATION.md)
 - **Kod:** [harborlight-v1-logistics.js](../../../harborlight-v1-logistics.js), [harborlight-v1-economy.js](../../../harborlight-v1-economy.js), [harborlight-v1-activities.js](../../../harborlight-v1-activities.js)
 - **Scenariusze automatyczne:** [tests/harborlight-economy-v29.test.mjs](../../../tests/harborlight-economy-v29.test.mjs)
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41657032913.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
@@ -46,7 +47,7 @@ Powiązane przypadki do ręcznego przeklikania:
 - [HL-TC-0097 — Nowe zamówienia respektują45sekund, proporcje i stałą dobę od poziomu24](../../testing/manual/HL-TC-0097.md) — `NOT RUN`.
 - [HL-TC-0099 — Brak gotowej obsady nie kończy materiałowego transportu automatycznie](../../testing/manual/HL-TC-0099.md) — `NOT RUN`.
 
-Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN.
+DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.
 
 ## Relacje
 

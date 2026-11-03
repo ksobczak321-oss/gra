@@ -19331,8 +19331,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19363,7 +19363,10 @@
           "tests/harborlight-economy-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -19386,8 +19389,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19420,7 +19423,10 @@
           "tests/harborlight-economy-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -19443,8 +19449,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19477,7 +19483,10 @@
           "tests/harborlight-economy-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [
         "Nowe dostawy uwzględniają głód, brak łóżka, aktywność i ścieżki. Prędkość kursu liczona jest dla stanu początku segmentu; ukończenie Domu nie przyspiesza wstecz transportu."
@@ -19502,8 +19511,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19535,7 +19544,10 @@
           "tests/harborlight-economy-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -19558,8 +19570,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19590,7 +19602,10 @@
           "tests/harborlight-economy-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -19613,8 +19628,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19648,7 +19663,10 @@
           "tests/harborlight-economy-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -19671,8 +19689,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19707,7 +19725,10 @@
           "tests/harborlight-learning-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -19730,8 +19751,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19760,7 +19781,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -19783,8 +19807,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19814,7 +19838,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -19837,8 +19864,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19871,7 +19898,10 @@
           "tests/harborlight-learning-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -19894,8 +19924,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19928,7 +19958,10 @@
           "tests/harborlight-learning-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -19951,8 +19984,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -19984,7 +20017,10 @@
           "tests/harborlight-learning-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20007,8 +20043,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20042,7 +20078,10 @@
           "tests/harborlight-learning-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20065,8 +20104,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20098,7 +20137,10 @@
           "tests/harborlight-learning-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20121,8 +20163,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20154,7 +20196,10 @@
           "tests/harborlight-learning-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20177,8 +20222,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20212,7 +20257,10 @@
           "tests/harborlight-release-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [
         "Wspólny limit raz na dzień obejmuje również logowanie na wyspie córce; mieszkaniec trafia na otwartą wyspę. Restart nie odnawia wygasłego okresu, także przy pustej historii odbioru. Regresja: tests/harborlight-release-v29.test.mjs."
@@ -20237,8 +20285,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20271,7 +20319,10 @@
           "tests/harborlight-release-v29-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20294,8 +20345,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20323,7 +20374,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20346,8 +20400,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20374,7 +20428,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20397,8 +20454,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20427,7 +20484,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20450,8 +20510,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20480,7 +20540,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20503,8 +20566,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20536,7 +20599,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20559,8 +20625,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20590,7 +20656,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20613,8 +20682,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20645,7 +20714,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20668,8 +20740,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20698,7 +20770,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20721,8 +20796,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20752,7 +20827,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20775,8 +20853,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20812,7 +20890,10 @@
           "tests/harborlight-release-v29-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20835,8 +20916,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20870,7 +20951,10 @@
           "tests/harborlight-release-v29-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20893,8 +20977,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20925,7 +21009,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -20948,8 +21035,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -20979,7 +21066,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21002,8 +21092,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21033,7 +21123,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [
         "Pełna gra sprawdza rzeczywisty odbiór kliknięć nad nagłówkiem i poza ramką dialogu oraz dokładną nagrodę; naprawiono kontekst warstw nakładki."
@@ -21058,8 +21151,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21090,7 +21183,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21113,8 +21209,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21145,7 +21241,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21168,8 +21267,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21202,7 +21301,10 @@
           "tests/harborlight-v29-adventures.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21225,8 +21327,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21257,7 +21359,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21280,8 +21385,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21311,7 +21416,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21334,8 +21442,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21365,7 +21473,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21388,8 +21499,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21419,7 +21530,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21442,8 +21556,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21473,7 +21587,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21496,8 +21613,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21531,7 +21648,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21554,8 +21674,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21587,7 +21707,10 @@
           "backend/test/community-dev-accounts.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21610,8 +21733,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21642,7 +21765,10 @@
           "tests/harborlight-community-v24-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21665,8 +21791,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21701,7 +21827,7 @@
           "backend/test/community-service.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
         "full_backend_validation": {
           "date": "2026-11-03",
           "result": "PASS",
@@ -21710,7 +21836,10 @@
           "environment": "local isolated HTTP",
           "command": "node --test --test-concurrency=1 --test-isolation=none backend/test/*.test.mjs",
           "log": "/tmp/harborlight-v29-backend-full.log"
-        }
+        },
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21733,8 +21862,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21764,7 +21893,10 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21787,8 +21919,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21820,7 +21952,7 @@
           "tests/harborlight-tracking-issues.test.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
         "registry_validation": {
           "date": "2026-11-03",
           "result": "PASS",
@@ -21832,7 +21964,10 @@
             "python3 scripts/build_manual_checklist.py --check",
             "python3 tests/harborlight-tracking-issues.test.py"
           ]
-        }
+        },
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21855,8 +21990,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_cf6739a",
+        "ci": "passed_source_cf6739a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -21890,7 +22025,10 @@
           "scripts/build_workbook_v12.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
       },
       "notes": [],
       "tags": [
@@ -21902,8 +22040,8 @@
   "current_environment": {
     "as_of": "2026-11-03",
     "dev_application_version": "0.13.0.0",
-    "dev_status": "local_validation_complete_pending_publication",
-    "dev_ci": "not_run_for_change",
+    "dev_status": "verified_ci_and_pages",
+    "dev_ci": "success",
     "preprod_application_version": "0.12.0.0",
     "preprod_source_sha": "d9e2940b9a00755d979c159ec0fb62e290dd7ff1",
     "preprod_ci_run_id": 41480146644,
@@ -21912,6 +22050,10 @@
     "preprod_status": "previous_release_verified",
     "prod_status": "no_new_deployment",
     "full_test_account_reset": "not_performed",
-    "note": "Historyczny environment_baseline poniżej zachowuje początek ewidencji v22.1. Bieżący PRE-PROD jest odrębnym odebranym wydaniem 0.12.0.0; nowe karty v29 nie dziedziczą tamtej promocji ani wyników CI."
+    "note": "Historyczny environment_baseline poniżej zachowuje początek ewidencji v22.1. Bieżący PRE-PROD jest odrębnym odebranym wydaniem 0.12.0.0; nowe karty v29 nie dziedziczą tamtej promocji ani wyników CI.",
+    "dev_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+    "dev_ci_run_id": 41657032913,
+    "dev_pages_run_id": 41657032922,
+    "dev_tag": "dev-0.13.0.0-20261103"
   }
 }

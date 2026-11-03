@@ -1826,6 +1826,10 @@
     "application_version": "0.13.0.0",
     "preprod_application_version": "0.12.0.0",
     "preprod_source_sha": "d9e2940b9a00755d979c159ec0fb62e290dd7ff1",
-    "note": "TC0097–0134 obejmują GO v29 i wymagają własnego rzeczywistego buildu. Wszystkie wyniki ręczne pozostają NOT RUN; automatyzacja ich nie zalicza. Historyczny baseline definicji oraz TC0001–0096 zachowują historię. Sprzeczne oczekiwania starszych przypadków zastępują aktualne reguły v29. PRE-PROD 0.12 jest odrębnym odebranym wydaniem; bez nowej promocji, resetu kont i PROD."
+    "note": "TC0097–0134 obejmują GO v29 i wymagają własnego rzeczywistego buildu. Wszystkie wyniki ręczne pozostają NOT RUN; automatyzacja ich nie zalicza. Historyczny baseline definicji oraz TC0001–0096 zachowują historię. Sprzeczne oczekiwania starszych przypadków zastępują aktualne reguły v29. PRE-PROD 0.12 jest odrębnym odebranym wydaniem; bez nowej promocji, resetu kont i PROD.",
+    "dev_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+    "ci_run_id": 41657032913,
+    "pages_run_id": 41657032922,
+    "dev_status": "verified_ci_and_pages_manual_cases_not_run"
   }
 }
