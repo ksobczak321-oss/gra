@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `locally_validated_pending_publication` |
-| CI | `not_run_for_change` |
+| DEV | `validated_ci_and_pages_source_13c55a4` |
+| CI | `passed_source_13c55a4` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -38,13 +38,14 @@ Data pierwotnej wiadomości: 2026-11-03. Data nowego GO dotyczącego wyglądu Te
 - **Dokumenty:** [docs/FRONTEND-V30-REQUIREMENTS.md](../../FRONTEND-V30-REQUIREMENTS.md), [docs/testing/MANUAL-TEST-PLAN.md](../../testing/MANUAL-TEST-PLAN.md), [docs/DEV-0.13.1.0-VALIDATION.md](../../DEV-0.13.1.0-VALIDATION.md)
 - **Kod:** [harborlight-version.js](../../../harborlight-version.js), [scripts/build_frontend.py](../../../scripts/build_frontend.py), [.github/workflows/ci.yml](../../../.github/workflows/ci.yml)
 - **Scenariusze automatyczne:** [tests/harborlight-frontend-bundle.test.py](../../../tests/harborlight-frontend-bundle.test.py), [scripts/build_workbook_v13.py](../../../scripts/build_workbook_v13.py)
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41667711260.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0145 — DEV 0.13.1.0 wymaga własnych testów i dowodów publikacji nowej grafiki](../../testing/manual/HL-TC-0145.md) — `NOT RUN`.
 
-DEV0.13.1.0/v30 lokalnie odebrany:1219Node/141PythonPASS, nowe studio4/4 i pełna gra4/4, dwie regresje, zrzuty obejrzane. Własne CI i Pages wymagają nowego SHA; PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.
+DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.
 
 ## Relacje
 

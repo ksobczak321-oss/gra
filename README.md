@@ -1,6 +1,6 @@
 # HARBORLIGHT
 
-**DEV 0.13.1.0 / v30 — lokalny odbiór PASS, publikacja w toku.** Teatr pasujący do wyspy, plac po kliknięciu, bogate dekoracje, trzy pomysły i automatyczny zapis. Dalsze poziomy ozdób przy20miejscach. [Odbiór](docs/DEV-0.13.1.0-VALIDATION.md) · [Wymagania](docs/FRONTEND-V30-REQUIREMENTS.md) · [Excel13](docs/arkusze/HARBORLIGHT13-zasady.xlsx) · [147 scenariuszy](docs/testing/START-HERE.md). PRE-PROD0.12 pozostaje bez nowej promocji.
+**DEV 0.13.1.0 / v30 odebrany.** Źródło `13c55a4e4853edf44c185747c1c626ac42c221fc`; [CI 41667711260](https://github.com/ksobczak321-oss/gra/actions/runs/41667711260) **SUCCESS, 14m 39s**; [Pages 41667711124](https://github.com/ksobczak321-oss/gra/actions/runs/41667711124) **SUCCESS, 50s**. Tag `dev-0.13.1.0-20261103` opublikowany i zdalnie potwierdzony na tym samym źródle. Teatr pasujący do wyspy, plac po kliknięciu, bogate dekoracje, trzy pomysły i automatyczny zapis. Dalsze poziomy ozdób przy20miejscach. [Odbiór](docs/DEV-0.13.1.0-VALIDATION.md) · [Wymagania](docs/FRONTEND-V30-REQUIREMENTS.md) · [Excel13](docs/arkusze/HARBORLIGHT13-zasady.xlsx) · [147 scenariuszy](docs/testing/START-HERE.md). Promocja PRE-PROD0.13.1.0 jest autoryzowana i oczekuje własnego CI/GCP; [stan](docs/PREPROD-V30-PROMOTION.md).
 
 **DEV 0.13.0.0 / v29 odebrany.** Źródło `cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da`, [CI 41657032913](https://github.com/ksobczak321-oss/gra/actions/runs/41657032913) **SUCCESS, 13m 13s**, [Pages 41657032922](https://github.com/ksobczak321-oss/gra/actions/runs/41657032922) **SUCCESS, 41s**. Tag `dev-0.13.0.0-20261103` jest opublikowany i wskazuje to samo źródło. Nowa krzywa budowy, pojemność Magazynu, tutorial34/samouczek25, powitalni mieszkańcy, Teatr i dziewięć przygód. [Zakres](docs/FRONTEND-V29-REQUIREMENTS.md) · [Bieżąca walidacja](docs/DEV-0.13.0.0-VALIDATION.md) · [Excel12](docs/arkusze/HARBORLIGHT12-zasady.xlsx) · [134 scenariusze do odhaczania](docs/testing/START-HERE.md). Wyniki ręczne nadal NOT RUN. PRE-PROD pozostaje odebrane0.12.0.0; ten zakres nie jest nową promocją GCP.
 
@@ -14,7 +14,7 @@ Tag [`preprod-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/pr
 
 **Poprzedni DEV 0.12.0.0 odebrany dla źródła `0ca7715b6e9282b31ca7941c89c3c742ac0df9e6`**, cache `frontend-v28-2`. Własne [CI 41475214118](https://github.com/ksobczak321-oss/gra/actions/runs/41475214118) zakończyło się **SUCCESS, 12 min 33 s**; obie grupy Chromium przeszły dla tego samego SHA. [Pages 41475213874](https://github.com/ksobczak321-oss/gra/actions/runs/41475213874) ma **SUCCESS, 31 s**. Push na `main` potwierdzono. Tag [`dev-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/dev-0.12.0.0-20261102) jest **opublikowany i potwierdzony zdalnie**, wskazuje dokładnie ten SHA.
 
-**[134 scenariusze ręczne](docs/testing/qa-checklist.html)** · **[Lista do odhaczania](docs/testing/START-HERE.md)** · **[397 kart zmian](docs/tracking/CHANGE-REGISTER.md)** · **[Planszówka do wydruku](docs/boardgame/README.md)**. Automatyczny odbiór listy QA nie zalicza prób ręcznych; wszystkie ich wyniki nadal **NOT RUN**. Integracja planszówki online pozostaje odłożona.
+**[147 scenariuszy ręcznych](docs/testing/qa-checklist.html)** · **[Lista do odhaczania](docs/testing/START-HERE.md)** · **[411 kart zmian](docs/tracking/CHANGE-REGISTER.md)** · **[Planszówka do wydruku](docs/boardgame/README.md)**. Automatyczny odbiór listy QA nie zalicza prób ręcznych; wszystkie ich wyniki nadal **NOT RUN**. Integracja planszówki online pozostaje odłożona.
 
 Aktualny pakiet ma34kroki tutoriala,25lekcji programu7, nową krzywą budowy i pojemności, powitalnych mieszkańców, Teatr i9przygód. Zachowuje bank7porcji, modlitwę, misje Latarni, usługi monetami, ligę i oznaczony mock Pomagam. [Zakres](docs/FRONTEND-V29-REQUIREMENTS.md) · [Pełny odbiór i artefakty](docs/DEV-0.13.0.0-VALIDATION.md) · [Środowiska](docs/ENVIRONMENT-STATUS.md).
 
@@ -22,7 +22,7 @@ Aktualny pakiet ma34kroki tutoriala,25lekcji programu7, nową krzywą budowy i p
 
 | Miejsce | Potwierdzony stan |
 |---|---|
-| DEV | **0.13.0.0**, `cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da`, cache `frontend-v29`; własne CI41657032913 SUCCESS (13m 13s), Pages41657032922 SUCCESS (41s). Tag `dev-0.13.0.0-20261103` opublikowany i potwierdzony zdalnie. |
+| DEV | **0.13.1.0**, `13c55a4e4853edf44c185747c1c626ac42c221fc`, cache `frontend-v30`; własne CI41667711260 SUCCESS (14m 39s), Pages41667711124 SUCCESS (50s). Tag `dev-0.13.1.0-20261103` opublikowany i potwierdzony. |
 | PRE-PROD `harborlight-dev` | **0.12.0.0**, `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`; [deploy41482455135, próba1](https://github.com/ksobczak321-oss/gra/actions/runs/41482455135) SUCCESS, 2 min 20 s. Hosting, zalogowana gra i konta/izolacja PASS; bez resetu. |
 | PROD `harborlight-prod` | Bez nowej promocji i potwierdzenia uruchomienia domeny. |
 

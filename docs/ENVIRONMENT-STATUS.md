@@ -2,9 +2,13 @@
 
 Aktualizacja operacyjna: **3 listopada 2026, Europe/Warsaw**. Akceptacja opisów i pierwotny odbiór lokalny pozostają z 1 listopada. Historia wyników jest w [dzienniku](IMPLEMENTATION-LOG.md); warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-## DEV0.13.1.0 — lokalny odbiór PASS; publikacja w toku
+## Autoryzowana promocja PRE-PROD0.13.1.0 — przygotowanie
 
-Nowy Teatr ma zaakceptowaną oprawę,20miejsc i dalsze poziomy, trwałość przez sesje i automatyczny zapis. Lokalnie1219Node +141PythonPASS; nowe studio i pełna gra po4wariantyPASS, dwie regresjePASS i końcowe zrzuty obejrzane. [Raport](DEV-0.13.1.0-VALIDATION.md) rozdziela te wyniki od nowego CI i Pages. PRE-PROD0.12/d9e2940 bez zmian.
+Użytkownik polecił „super GO na pre prod”. Odebrany DEV13c55a4/0.13.1.0 jest bazą nowej promocji, obejmującej v29 i v30. Wąski marker `[preprod:0.13.1.0]` zachowuje wszystkie bramki. Commit promocji wymaga własnego CI oraz odrębnego wyniku GCP; nie wykonujemy resetu, zmian haseł ani PROD. [Rejestr promocji](PREPROD-V30-PROMOTION.md) zawiera wymagane dowody. Do końcowego SUCCESS aktualnym PRE-PROD pozostaje0.12/d9e2940. Rejestr411kart/147ręcznychNOTRUN.
+
+## Aktualny DEV0.13.1.0 — własne CI i Pages SUCCESS
+
+Nowy Teatr ma zaakceptowaną oprawę,20miejsc i dalsze poziomy, trwałość przez sesje i automatyczny zapis. Źródło `13c55a4e4853edf44c185747c1c626ac42c221fc`; [CI 41667711260](https://github.com/ksobczak321-oss/gra/actions/runs/41667711260) **SUCCESS, 14m 39s**; [Pages 41667711124](https://github.com/ksobczak321-oss/gra/actions/runs/41667711124) **SUCCESS, 50s**. Tag `dev-0.13.1.0-20261103` opublikowany i zdalnie potwierdzony na tym samym źródle. Lokalnie1219Node +141PythonPASS; nowe studio i pełna gra po4wariantyPASS, dwie regresjePASS i końcowe zrzuty obejrzane. [Raport](DEV-0.13.1.0-VALIDATION.md) rozdziela te wyniki od nowego CI i Pages. PRE-PROD0.12/d9e2940 bez zmian.
 
 
 ## Poprzedni odebrany DEV 0.13.0.0 — własne CI i Pages SUCCESS

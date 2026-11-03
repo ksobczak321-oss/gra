@@ -25,6 +25,14 @@ Tag nie jest przesuwany i nie uruchamia publikacji GCP. Pozwala zapisać wynik j
 
 ## 2. Promocja na PRE-PROD
 
+### Autoryzowana promocja 0.13.1.0 — PENDING
+
+Zlecenie użytkownika „super GO na pre prod” autoryzuje standardową promocję 0.13.1.0, bez resetu kont, PROD i uruchamiania rzeczywistych operatorów. Przygotowana aplikacja DEV ma źródło `13c55a4e4853edf44c185747c1c626ac42c221fc`; własne CI [41667711260](https://github.com/ksobczak321-oss/gra/actions/runs/41667711260) zakończyło się **SUCCESS, 14 min 39 s**, a [Pages41667711124](https://github.com/ksobczak321-oss/gra/actions/runs/41667711124) zakończyło się **SUCCESS, 50 s**. Te stany nie stanowią wyniku GCP.
+
+Dokładny marker `[preprod:0.13.1.0]` rozszerza zamkniętą allowlistę istniejącego bridge. Nowy commit promocji musi zachować aplikację i otrzymać własne zielone CI pełnego SHA; obowiązują te same bramki repozytorium, workflow, prób, deduplikacji i niezmienionego `main`. Nie omijamy standardowego workflow `google-cloud-dev.yml`, WIF ani odczytowych kontroli kont i postępu.
+
+[Dokument promocji v30](PREPROD-V30-PROMOTION.md) ma jawne TODO na pełny SHA promocji, jego CI, rzeczywisty bridge, deploy i artefakty. Do potwierdzenia końcowego SUCCESS nowego wdrożenia faktycznym PRE-PROD pozostaje **0.12.0.0 / d9e2940b9a00755d979c159ec0fb62e290dd7ff1**. Same marker, push i Pages nie zmieniają tego statusu. Nie twórz tagu PRE-PROD przed odbiorem.
+
 ### Odebrana promocja 0.12.0.0
 
 Zlecenie „Promuj na pre prod” z2listopada2026 zrealizowano standardowym workflow, bez resetu i PROD. Źródło `d9e2940b9a00755d979c159ec0fb62e290dd7ff1` ma własne [CI41480146644](https://github.com/ksobczak321-oss/gra/actions/runs/41480146644) **SUCCESS13min46s**, Pages41480146737 **SUCCESS41s**, rzeczywisty bridge41482423516 **SUCCESS21s** i [deploy41482455135, próba1](https://github.com/ksobczak321-oss/gra/actions/runs/41482455135) **SUCCESS2min20s**. Wymagane kontrole Hostingu, hostowanej zalogowanej gry i izolacji kont przeszły; oba artefakty udanej próby opublikowano.

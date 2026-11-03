@@ -52,7 +52,7 @@ test('fresh CI and workflow metadata must agree with the event and attempt', asy
 });
 
 test('only the exact allowlisted markers in the API-read source commit can request promotion', async () => {
-  assert.deepEqual(AUTHORIZED_MARKERS, ['[preprod:0.9.1.2]', '[preprod:0.10.1.0]', '[preprod:0.11.0.0]', '[preprod:0.12.0.0]']);
+  assert.deepEqual(AUTHORIZED_MARKERS, ['[preprod:0.9.1.2]', '[preprod:0.10.1.0]', '[preprod:0.11.0.0]', '[preprod:0.12.0.0]', '[preprod:0.13.1.0]']);
   assert.equal(Object.isFrozen(AUTHORIZED_MARKERS), true);
   assert.throws(() => AUTHORIZED_MARKERS.push('[preprod:0.13.0.0]'), TypeError);
   for (const marker of AUTHORIZED_MARKERS) {
@@ -63,6 +63,7 @@ test('only the exact allowlisted markers in the API-read source commit can reque
   for (const message of ['Ordinary update', '[preprod:0.9.1.3]', '[preprod:0.9.1.20]', '[preprod:0.10.1.1]',
     '[preprod:0.10.1.00]', '[preprod:0.10.1.0-beta]', '[preprod:0.11.0.1]', '[preprod:0.11.0.00]',
     '[preprod:0.11.0.0-beta]', '[preprod:0.12.0.1]', '[preprod:0.12.0.00]', '[preprod:0.12.0.0-beta]',
+    '[preprod:0.13.0.0]', '[preprod:0.13.1.1]', '[preprod:0.13.1.00]', '[preprod:0.13.1.0-beta]',
     '[preprod:*]', '[preprod:0.10.1.0', '[PREPROD:0.10.1.0]']) {
     const { api, calls } = fixture({ getCommit: async () => ({ sha: sourceSha, commit: { message } }) });
     assert.equal((await dispatchUrgent(api, event(), identity)).reason, 'no-urgent-marker');
@@ -146,6 +147,51 @@ test('0.12.0.0 authorization cannot bypass CI identity, a stale attempt, main mo
   const duplicate = fixture({ listDeploymentRuns: async () => [deployment({ status: 'completed', conclusion: 'failure' })] }, marker);
   assert.equal((await dispatchUrgent(duplicate.api, event(), identity)).reason, 'deployment-already-exists');
   assert.ok(!duplicate.calls.some(call => ['main', 'dispatch'].includes(call[0])));
+});
+
+test('authorized 0.13.1.0 promotion dispatches its exact successful source only once', async () => {
+  const marker = '[preprod:0.13.1.0]';
+  let previous = [];
+  const { api, calls } = fixture({
+    listDeploymentRuns: async sha => { calls.push(['deployments', sha]); return previous; },
+    dispatch: async () => { calls.push(['dispatch']); previous = [deployment()]; }
+  }, marker);
+  assert.deepEqual(await dispatchUrgent(api, event(), identity), {
+    dispatched: true, sourceSha, workflow: '.github/workflows/google-cloud-dev.yml'
+  });
+  assert.deepEqual(calls, [['run', 123], ['workflow', 456], ['commit', sourceSha],
+    ['deployments', sourceSha], ['main'], ['dispatch']]);
+  assert.deepEqual(await dispatchUrgent(api, event(), identity), {
+    dispatched: false, reason: 'deployment-already-exists', sourceSha, deploymentRunId: 789
+  });
+  assert.equal(calls.filter(([kind]) => kind === 'dispatch').length, 1);
+});
+
+test('0.13.1.0 authorization preserves CI, repository, SHA, attempt, main and prior-deployment gates', async () => {
+  const marker = '[preprod:0.13.1.0]';
+  for (const change of [{ conclusion: 'failure' }, { status: 'in_progress' }, { event: 'workflow_dispatch' },
+    { head_branch: 'feature' }, { repository: { ...repository, id: 1 } },
+    { head_repository: { ...repository, full_name: 'fork/gra' } }]) {
+    const { api, calls } = fixture({}, marker);
+    await assert.rejects(dispatchUrgent(api, event(change), identity));
+    assert.deepEqual(calls, []);
+  }
+  for (const changed of [ci({ run_attempt: 2 }), ci({ head_sha: 'b'.repeat(40) })]) {
+    const stale = fixture({ getRun: async () => changed }, marker);
+    await assert.rejects(dispatchUrgent(stale.api, event(), identity), /fresh CI run/);
+    assert.ok(!stale.calls.some(call => call[0] === 'dispatch'));
+  }
+  const changedCommit = fixture({ getCommit: async () => ({ sha: 'b'.repeat(40), commit: { message: marker } }) }, marker);
+  await assert.rejects(dispatchUrgent(changedCommit.api, event(), identity), /source commit/);
+  assert.ok(!changedCommit.calls.some(call => call[0] === 'dispatch'));
+  const moved = fixture({ getMain: async () => ({ ref: 'refs/heads/main', object: { type: 'commit', sha: 'b'.repeat(40) } }) }, marker);
+  assert.equal((await dispatchUrgent(moved.api, event(), identity)).reason, 'main-moved');
+  assert.ok(!moved.calls.some(call => call[0] === 'dispatch'));
+  for (const conclusion of ['failure', 'cancelled']) {
+    const duplicate = fixture({ listDeploymentRuns: async () => [deployment({ status: 'completed', conclusion })] }, marker);
+    assert.equal((await dispatchUrgent(duplicate.api, event(), identity)).reason, 'deployment-already-exists');
+    assert.ok(!duplicate.calls.some(call => ['main', 'dispatch'].includes(call[0])));
+  }
 });
 
 test('known movement of main blocks dispatch after successful CI and duplicate lookup', async () => {

@@ -1079,3 +1079,13 @@ Git/push, własne CI, Pages oraz tag wymagają kolejnego potwierdzenia. PRE-PROD
 Użytkownik zaakceptował nowe ilustracje i sprecyzował mapę z samym budynkiem, plac po kliknięciu, trwałość między dniami oraz dalszy rozwój ozdób przy20miejscach. Zmieniono scenografię na styl wyspy, dodano atlas50ilustracji, podziwianie/zoom, trzy pomysły i atmosferę. Usunięto limit20; ceny do20zachowano, reklamy są co5. Przenoszenie i odtwarzanie nie cofają rozwoju ani zakupów.
 
 Lokalnie1078frontend +134backend +7planszówka=1219NodePASS;141PythonPASS; nowe studio4/4 i pełna gra4/4PASS, starszy Teatr4/4 i gra v29 2/2PASS. Końcowe zrzuty obejrzane. Lokalny HTTP testuje trzy dni/sesje i ponowne otwarcia; nie jest nowym testem rzeczywistego Firestore. Excel13 zwalidowany z zachowanym12,410kart/147ręczneNOTRUN. [Raport](DEV-0.13.1.0-VALIDATION.md). Git, własne CI i Pages nowego źródła oczekują osobnego potwierdzenia; PRE-PROD0.12/d9e2940 i PROD bez zmian.
+
+
+### Odebrany Git/CI/Pages v30
+
+Źródło `13c55a4e4853edf44c185747c1c626ac42c221fc`; [CI 41667711260](https://github.com/ksobczak321-oss/gra/actions/runs/41667711260) **SUCCESS, 14m 39s**; [Pages 41667711124](https://github.com/ksobczak321-oss/gra/actions/runs/41667711124) **SUCCESS, 50s**. Tag `dev-0.13.1.0-20261103` opublikowany i zdalnie potwierdzony na tym samym źródle. Pakiet77plików/19410989bajty verify/extractPASS; pełne38zestawów Chromium wCI PASS. [Raport](DEV-0.13.1.0-VALIDATION.md) zawiera hashe i granice dowodów.410kart/147ręczneNOTRUN. PRE-PROD0.12/d9e2940 nadal bez zmian. Następny commit dowodów zachowuje wszystkie publiczne pliki aplikacji.
+
+
+### GO promocji PRE-PROD0.13.1.0
+
+Użytkownik polecił „super GO na pre prod”. Wąska allowlista zawiera dokładnie nowy marker0.13.1.0; testy15/15 i pełny frontend1080/1080PASS (poza backend134 i planszówką7), bez zmian75wejść aplikacji, indeksu, WIF lub workflowGCP. Nowy commit wymaga własnego CI. Odczytowy audyt kontrolera potwierdził zgodność z premią powitalnego mieszkańca i polami Teatru:26testów oraz12wariantówPASS, bez prawdziwych loginów/zapisów.411kart/147ręcznychNOTRUN; nowaHL-CHG-1082 dokumentuje operacjęPENDING. AktualnePRE-PROD nadal0.12/d9e2940 do nowego sukcesu; bez resetu,PROD lub realnych operatorów.

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "as_of": "2026-11-03",
-  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu.",
+  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu. Jawne zlecenie promocji0.13.1.0napreprod ma odrębną kartę1082:PENDINGdo własnegoCI nowegoSHA i rzeczywistegoSUCCESSGCP.411kart/147ręcznychNOTRUN,bez resetu iPROD.",
   "environment_baseline": {
     "application_source_sha": "092e75226fbb14cab09826f313e11d10891966d8",
     "ci_run_id": 41221965032,
@@ -22059,8 +22059,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_13c55a4",
+        "ci": "passed_source_13c55a4",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -22095,7 +22095,10 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0/v30 lokalnie odebrany:1219Node/141PythonPASS, nowe studio4/4 i pełna gra4/4, dwie regresje, zrzuty obejrzane. Własne CI i Pages wymagają nowego SHA; PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN."
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
       },
       "notes": [
         "Zastąpiono tylko prezentację aranżacji na głównej mapie. Stały budynek i duże wejście z wcześniejszej karty pozostają."
@@ -22121,8 +22124,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_13c55a4",
+        "ci": "passed_source_13c55a4",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -22158,7 +22161,10 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0/v30 lokalnie odebrany:1219Node/141PythonPASS, nowe studio4/4 i pełna gra4/4, dwie regresje, zrzuty obejrzane. Własne CI i Pages wymagają nowego SHA; PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN."
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
       },
       "notes": [],
       "tags": [
@@ -22182,8 +22188,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_13c55a4",
+        "ci": "passed_source_13c55a4",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -22217,7 +22223,10 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0/v30 lokalnie odebrany:1219Node/141PythonPASS, nowe studio4/4 i pełna gra4/4, dwie regresje, zrzuty obejrzane. Własne CI i Pages wymagają nowego SHA; PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN."
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
       },
       "notes": [],
       "tags": [
@@ -22241,8 +22250,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_13c55a4",
+        "ci": "passed_source_13c55a4",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -22274,7 +22283,10 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0/v30 lokalnie odebrany:1219Node/141PythonPASS, nowe studio4/4 i pełna gra4/4, dwie regresje, zrzuty obejrzane. Własne CI i Pages wymagają nowego SHA; PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN."
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
       },
       "notes": [
         "Liczbowe narzędzia studia są jawnymi parametrami wdrożenia DEV realizującymi zaakceptowaną swobodę aranżacji; bez dodatkowych opłat i bonusów gospodarczych."
@@ -22300,8 +22312,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_13c55a4",
+        "ci": "passed_source_13c55a4",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -22334,7 +22346,10 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0/v30 lokalnie odebrany:1219Node/141PythonPASS, nowe studio4/4 i pełna gra4/4, dwie regresje, zrzuty obejrzane. Własne CI i Pages wymagają nowego SHA; PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN."
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
       },
       "notes": [
         "Liczbowe narzędzia studia są jawnymi parametrami wdrożenia DEV realizującymi zaakceptowaną swobodę aranżacji; bez dodatkowych opłat i bonusów gospodarczych."
@@ -22360,8 +22375,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_13c55a4",
+        "ci": "passed_source_13c55a4",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -22391,7 +22406,10 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0/v30 lokalnie odebrany:1219Node/141PythonPASS, nowe studio4/4 i pełna gra4/4, dwie regresje, zrzuty obejrzane. Własne CI i Pages wymagają nowego SHA; PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN."
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
       },
       "notes": [
         "Liczbowe narzędzia studia są jawnymi parametrami wdrożenia DEV realizującymi zaakceptowaną swobodę aranżacji; bez dodatkowych opłat i bonusów gospodarczych."
@@ -22417,8 +22435,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_13c55a4",
+        "ci": "passed_source_13c55a4",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -22457,7 +22475,10 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0/v30 lokalnie odebrany:1219Node/141PythonPASS, nowe studio4/4 i pełna gra4/4, dwie regresje, zrzuty obejrzane. Własne CI i Pages wymagają nowego SHA; PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN."
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
       },
       "notes": [
         "W trakcie v30 użytkownik usunął twardy koniec20. Ostatecznie plac pozostaje20-miejscowy, bez sektorów; dalszy rozwój wyglądu opisujeHL-CHG-1081."
@@ -22483,8 +22504,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_13c55a4",
+        "ci": "passed_source_13c55a4",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -22521,7 +22542,10 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0/v30 lokalnie odebrany:1219Node/141PythonPASS, nowe studio4/4 i pełna gra4/4, dwie regresje, zrzuty obejrzane. Własne CI i Pages wymagają nowego SHA; PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN."
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
       },
       "notes": [],
       "tags": [
@@ -22545,8 +22569,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_13c55a4",
+        "ci": "passed_source_13c55a4",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -22577,7 +22601,10 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0/v30 lokalnie odebrany:1219Node/141PythonPASS, nowe studio4/4 i pełna gra4/4, dwie regresje, zrzuty obejrzane. Własne CI i Pages wymagają nowego SHA; PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN."
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
       },
       "notes": [
         "Liczbowe narzędzia studia są jawnymi parametrami wdrożenia DEV realizującymi zaakceptowaną swobodę aranżacji; bez dodatkowych opłat i bonusów gospodarczych."
@@ -22603,8 +22630,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_13c55a4",
+        "ci": "passed_source_13c55a4",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -22636,7 +22663,10 @@
           "scripts/build_workbook_v13.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0/v30 lokalnie odebrany:1219Node/141PythonPASS, nowe studio4/4 i pełna gra4/4, dwie regresje, zrzuty obejrzane. Własne CI i Pages wymagają nowego SHA; PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN."
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
       },
       "notes": [
         "Końcowa ponowna generacja i oddzielna walidacja uwzględniają147przypadków,20miejscbezsektorów,brakfabularnegomaksimum20,reklamęco5oraz260przykładowychcen(wtym21,25,30,50,100,1000). Zachowano77arkuszy,48komentarzy i4325cache;333noweformuły/500próbekruntimePASS. Excel12nienaruszony."
@@ -22662,8 +22692,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_13c55a4",
+        "ci": "passed_source_13c55a4",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -22696,7 +22726,10 @@
           "scripts/build_workbook_v13.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0/v30 lokalnie odebrany:1219Node/141PythonPASS, nowe studio4/4 i pełna gra4/4, dwie regresje, zrzuty obejrzane. Własne CI i Pages wymagają nowego SHA; PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN."
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
       },
       "notes": [],
       "tags": [
@@ -22715,8 +22748,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_13c55a4",
+        "ci": "passed_source_13c55a4",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -22744,7 +22777,10 @@
           "backend/test/theatre-persistence-v30.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0/v30 lokalnie odebrany:1219Node/141PythonPASS, nowe studio4/4 i pełna gra4/4, dwie regresje, zrzuty obejrzane. Własne CI i Pages wymagają nowego SHA; PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN."
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
       },
       "notes": [
         "Lokalny test HTTP: PASS. Trzy dni i trzy sesje tego samego QA UID, dwa restarty serwera, zapis/odczyt account API i konflikt409. Izolowany transakcyjny store w pamięci przeżywa wymianę instancji serwera; to nie dowód Firestore, dysku produkcyjnego ani nowego wdrożenia GCP."
@@ -22775,8 +22811,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "locally_validated_pending_publication",
-        "ci": "not_run_for_change",
+        "dev": "validated_ci_and_pages_source_13c55a4",
+        "ci": "passed_source_13c55a4",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -22808,7 +22844,10 @@
           "tests/harborlight-theatre-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0/v30 lokalnie odebrany:1219Node/141PythonPASS, nowe studio4/4 i pełna gra4/4, dwie regresje, zrzuty obejrzane. Własne CI i Pages wymagają nowego SHA; PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN."
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
       },
       "notes": [
         "Ostateczna odpowiedź użytkownika: dalsze poziomy,20miejsc,bez nowych sektorów. Kontrola bezpiecznych liczb jest ograniczeniem technicznym poprawnego zapisu i ceny, a nie fabularnym końcem na20.",
@@ -22830,13 +22869,77 @@
         "Plac zachowuje20miejsc bez nowych sektorów. Ceny do20 pozostają, dalej rosną tą samą formułą; reklama przypada co5poziomów także25/30, a uprawnienie bez reklam pozostaje.",
         "Po20 pozostaje mistrzowska baza; kolejne poziomy dopracowują detale, światło i cokół bez gigantycznego powiększania dekoracji. Nie zapisujemy Infinity ani niebezpiecznych wartości."
       ]
+    },
+    {
+      "id": "HL-CHG-1082",
+      "epic": "HL-EPIC-INF",
+      "area": "Promocja PRE-PROD 0.13.1.0",
+      "type": "Ops",
+      "title": "Autoryzowana promocja 0.13.1.0 zachowuje dane i wymaga własnego CI oraz odbioru GCP",
+      "source": {
+        "kind": "user_chat_preprod_authorization_v30",
+        "date": "2026-11-03",
+        "date_note": "Nowe jawne zlecenie promocji po pracach DEV, Europe/Warsaw.",
+        "summary": "Użytkownik napisał super GO na pre prod. Standardowa promocja0.13.1.0, bez resetu kont, PROD lub rzeczywistych operatorów.",
+        "reference": "chat:GO:preprod-0.13.1.0"
+      },
+      "status": {
+        "implementation": "in_progress",
+        "dev": "promotion_prepared",
+        "ci": "not_run_for_promotion_source",
+        "preprod": "pending_deployment",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Zachowaj75wejść aplikacjiDEV13c55a4e4853edf44c185747c1c626ac42c221fc bajtwbajt; generowanyindex.html sprawdź osobno. Manifest,TAR,ZIPartefaktu i obraz backendu mają odrębne digests.",
+        "Dokładny marker[preprod:0.13.1.0] korzysta ze standardowego bridge i wymaga własnego zielonegoCI tego samego pełnegoSHA oraz istniejących bramek repozytorium,workflow,prób,deduplikacji i niezmienionegomain.",
+        "Dopiero rzeczywistySUCCESSstandardowegoGCPworkflow i wymaganych kontroli oraz obu artefaktów potwierdza nowe wdrożenie. Do tego czasu faktycznyPRE-PROD pozostaje0.12/d9e2940.",
+        "Zachowaj konta,UID,hasła,wyspy,kolekcje i postęp; bez resetu,PROD,realnychoperatorów i automatycznego zaliczania147ręcznych prób."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1079",
+        "HL-CHG-1080",
+        "HL-CHG-1081"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/PREPROD-V30-PROMOTION.md",
+          "docs/RELEASE-PROCESS.md",
+          "docs/testing/manual/HL-TC-0031.md",
+          "docs/testing/manual/HL-TC-0145.md",
+          "docs/testing/manual/HL-TC-0146.md"
+        ],
+        "code": [
+          "infra/google-cloud/urgent-preprod-dispatch.mjs",
+          ".github/workflows/promote-urgent-preprod.yml",
+          ".github/workflows/google-cloud-dev.yml"
+        ],
+        "automated_tests": [
+          "tests/harborlight-urgent-preprod-dispatch.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "PromocjaPENDING. DEV13c55a4:CI41667711260SUCCESS14min39s,Pages41667711124SUCCESS50s,tagDEVopublikowany. PełnySHAcommitu promocji,jegoCI,bridge,deploy,próba,artefaktyitagPRE-PROD:TODOpoodczycie. FaktycznyPRE-PROD nadal0.12/d9e2940."
+      },
+      "notes": [
+        "Tagpreprod-v30 zamiastv30 oddziela operację promocji od odbioruCI aplikacjiDEV.",
+        "Odwołania do istniejącychTC0031/0145/0146 nie zwiększają liczby147przypadków i nie zmieniają Excela."
+      ],
+      "tags": [
+        "preprod-v30",
+        "release-0-13-1-0"
+      ]
     }
   ],
   "current_environment": {
     "as_of": "2026-11-03",
     "dev_application_version": "0.13.1.0",
-    "dev_status": "local_validation_complete_pending_publication",
-    "dev_ci": "not_run_for_change",
+    "dev_status": "verified_ci_and_pages",
+    "dev_ci": "success",
     "preprod_application_version": "0.12.0.0",
     "preprod_source_sha": "d9e2940b9a00755d979c159ec0fb62e290dd7ff1",
     "preprod_ci_run_id": 41480146644,
@@ -22852,6 +22955,12 @@
       "dev_ci_run_id": 41657032913,
       "dev_pages_run_id": 41657032922,
       "dev_tag": "dev-0.13.0.0-20261103"
-    }
+    },
+    "dev_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+    "dev_ci_run_id": 41667711260,
+    "dev_pages_run_id": 41667711124,
+    "dev_tag": "dev-0.13.1.0-20261103",
+    "preprod_promotion_status": "authorized_pending_exact_source_ci_and_deployment",
+    "preprod_promotion_target": "0.13.1.0"
   }
 }

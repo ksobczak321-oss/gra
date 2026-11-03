@@ -1,6 +1,6 @@
 # Wersja gry HARBORLIGHT
 
-Bieżący zakres DEV: **0.13.1.0 / v30**, lokalnie odebrany, publikacja w toku. Odebrane poprzednie DEV0.13.0.0 ma źródło `cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da`; PRE-PROD pozostaje **0.12.0.0/d9e2940**. Numer aplikacji jest odrębny od schematu9 i archipelagu2. Wydanie Google Play nadal1.0.0.0.
+Bieżący odebrany DEV: **0.13.1.0 / v30**, źródło `13c55a4e4853edf44c185747c1c626ac42c221fc`; własne CI i Pages SUCCESS. PRE-PROD pozostaje **0.12.0.0/d9e2940** do sukcesu autoryzowanej promocji0.13.1.0. Numer aplikacji jest odrębny od schematu9 i archipelagu2. Pierwsze wydanie Google Play nadal1.0.0.0.
 
 ## Proponowana polityka czterech segmentów
 
