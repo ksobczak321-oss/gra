@@ -11,7 +11,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Implementacja | `implemented` |
 | DEV | `validated_ci_and_pages_source_cf6739a` |
 | CI | `passed_source_cf6739a` |
-| PRE-PROD | `not_deployed` |
+| PRE-PROD | `deployed_source_68e9bcd` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -35,7 +35,7 @@ Data pierwotnej wiadomości: 2026-11-03. Data zbiorczego GO, Europe/Warsaw; wcze
 
 ## Dowody
 
-- **Dokumenty:** [docs/FRONTEND-V29-REQUIREMENTS.md](../../FRONTEND-V29-REQUIREMENTS.md), [docs/testing/MANUAL-TEST-PLAN.md](../../testing/MANUAL-TEST-PLAN.md), [docs/DEV-0.13.0.0-VALIDATION.md](../../DEV-0.13.0.0-VALIDATION.md)
+- **Dokumenty:** [docs/FRONTEND-V29-REQUIREMENTS.md](../../FRONTEND-V29-REQUIREMENTS.md), [docs/testing/MANUAL-TEST-PLAN.md](../../testing/MANUAL-TEST-PLAN.md), [docs/DEV-0.13.0.0-VALIDATION.md](../../DEV-0.13.0.0-VALIDATION.md), [docs/PREPROD-V30-PROMOTION.md](../../PREPROD-V30-PROMOTION.md)
 - **Kod:** [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-adventures.css](../../../harborlight-v1-adventures.css)
 - **Scenariusze automatyczne:** nie przypisano.
 - **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41657032913.
@@ -45,7 +45,7 @@ Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0116 — Podczas długiej misji dostępne są krótkie dobrowolne cele bez popupspamu](../../testing/manual/HL-TC-0116.md) — `NOT RUN`.
 
-DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.
+DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.
 
 ## Relacje
 

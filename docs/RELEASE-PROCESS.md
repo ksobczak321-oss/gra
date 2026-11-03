@@ -25,13 +25,13 @@ Tag nie jest przesuwany i nie uruchamia publikacji GCP. Pozwala zapisać wynik j
 
 ## 2. Promocja na PRE-PROD
 
-### Autoryzowana promocja 0.13.1.0 — PENDING
+### Odebrana promocja 0.13.1.0
 
-Zlecenie użytkownika „super GO na pre prod” autoryzuje standardową promocję 0.13.1.0, bez resetu kont, PROD i uruchamiania rzeczywistych operatorów. Przygotowana aplikacja DEV ma źródło `13c55a4e4853edf44c185747c1c626ac42c221fc`; własne CI [41667711260](https://github.com/ksobczak321-oss/gra/actions/runs/41667711260) zakończyło się **SUCCESS, 14 min 39 s**, a [Pages41667711124](https://github.com/ksobczak321-oss/gra/actions/runs/41667711124) zakończyło się **SUCCESS, 50 s**. Te stany nie stanowią wyniku GCP.
+Źródło `68e9bcd6adf22ab98f963688726a71d4d8a66c6b`; CI [41671140612](https://github.com/ksobczak321-oss/gra/actions/runs/41671140612) **SUCCESS, 14m 57s**, Pages [41671140578](https://github.com/ksobczak321-oss/gra/actions/runs/41671140578) **SUCCESS, 32s**, bridge [41673757060](https://github.com/ksobczak321-oss/gra/actions/runs/41673757060) **SUCCESS, 26s**, deploy [41673824262, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41673824262) **SUCCESS, 2m 56s**. Kontrole API/health/ready, dokładnego Hostingu, zalogowanej gry i izolacji trzech kont PASS; oba artefakty opublikowano. Konta, UID, hasła i postęp zachowano bez resetu. PROD i rzeczywiści operatorzy bez nowej aktywacji.
 
-Dokładny marker `[preprod:0.13.1.0]` rozszerza zamkniętą allowlistę istniejącego bridge. Nowy commit promocji musi zachować aplikację i otrzymać własne zielone CI pełnego SHA; obowiązują te same bramki repozytorium, workflow, prób, deduplikacji i niezmienionego `main`. Nie omijamy standardowego workflow `google-cloud-dev.yml`, WIF ani odczytowych kontroli kont i postępu.
+Tag `preprod-0.13.1.0-20261103` jest opublikowany i potwierdzony zdalnie: obiekt `52888386a2233fc326e4fa6e0169b1054c0316d4` rozwiązuje się do `68e9bcd6adf22ab98f963688726a71d4d8a66c6b`. Tag DEV `dev-0.13.1.0-20261103` pozostaje na `13c55a4e4853edf44c185747c1c626ac42c221fc`. Późniejszy commit dokumentacji nie zastępuje źródła wdrożenia ani nie przesuwa tagów.
 
-[Dokument promocji v30](PREPROD-V30-PROMOTION.md) ma jawne TODO na pełny SHA promocji, jego CI, rzeczywisty bridge, deploy i artefakty. Do potwierdzenia końcowego SUCCESS nowego wdrożenia faktycznym PRE-PROD pozostaje **0.12.0.0 / d9e2940b9a00755d979c159ec0fb62e290dd7ff1**. Same marker, push i Pages nie zmieniają tego statusu. Nie twórz tagu PRE-PROD przed odbiorem.
+Standardowy bridge z markerem `[preprod:0.13.1.0]` zachował wszystkie istniejące bramki.76plików treści z DEV13c55a4 i backend bez zmiany; nowy manifest wiąże źródło promocji. [Dokument promocji v30](PREPROD-V30-PROMOTION.md) zawiera joby, próbę, artefakty i osobne digests.411kart/147ręcznychNOTRUN.
 
 ### Odebrana promocja 0.12.0.0
 
@@ -124,7 +124,11 @@ OAuth Google/Facebook wymaga konfiguracji dostawcy i domen; prawdziwe Paynow/rek
 
 ## 5. Bieżące i historyczne potwierdzenia
 
-Bieżący PRE-PROD to **0.12.0.0 / `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`**: własne CI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, bridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Rzeczywisty Hosting, zalogowana gra, konta i izolacja przeszły; oba artefakty udanej próby są opublikowane. Kont i historii nie resetowano, PROD bez nowej promocji. [Dowody i rozdzielenie digestów](PREPROD-V28-PROMOTION.md).
+Bieżący PRE-PROD to **0.13.1.0 / `68e9bcd6adf22ab98f963688726a71d4d8a66c6b`**: CI41671140612SUCCESS14m57s, Pages41671140578SUCCESS32s, bridge41673757060SUCCESS26s i deploy41673824262/próba1SUCCESS2m56s. Hosting, zalogowana gra, konta/izolacja i oba artefakty przeszły. Zdalny tagPRE-PROD potwierdzony; bez resetu/PROD. [Dowody](PREPROD-V30-PROMOTION.md).
+
+### Historyczne PRE-PROD0.12.0.0
+
+Historyczny PRE-PROD to **0.12.0.0 / `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`**: własne CI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, bridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Rzeczywisty Hosting, zalogowana gra, konta i izolacja przeszły; oba artefakty udanej próby są opublikowane. Kont i historii nie resetowano, PROD bez nowej promocji. [Dowody i rozdzielenie digestów](PREPROD-V28-PROMOTION.md).
 
 ### Historyczne PRE-PROD0.10.1.0
 

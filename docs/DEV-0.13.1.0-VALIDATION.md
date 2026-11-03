@@ -1,6 +1,6 @@
 # DEV 0.13.1.0 — odbiór Teatru v30
 
-Użytkownik zatwierdził przebudowę wyglądu, zaakceptował przygotowane ilustracje i doprecyzował: na mapie tylko budynek, plac po kliknięciu, automatyczny zapis między dniami oraz dalsze poziomy dekoracji przy 20 miejscach. [Wymagania](FRONTEND-V30-REQUIREMENTS.md). To wydanie DEV; PRE-PROD pozostaje 0.12.0.0/d9e2940. Nie resetowano kont i nie aktywowano prawdziwych płatności ani reklam.
+Użytkownik zatwierdził przebudowę wyglądu, zaakceptował przygotowane ilustracje i doprecyzował: na mapie tylko budynek, plac po kliknięciu, automatyczny zapis między dniami oraz dalsze poziomy dekoracji przy 20 miejscach. [Wymagania](FRONTEND-V30-REQUIREMENTS.md). W chwili odbioru tego DEV PRE-PROD pozostawał0.12.0.0/d9e2940. Późniejsza [promocja0.13.1.0](PREPROD-V30-PROMOTION.md) ma osobne źródło i własny odbiór. Nie resetowano kont i nie aktywowano prawdziwych płatności ani reklam.
 
 ## Lokalny odbiór
 

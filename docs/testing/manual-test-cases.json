@@ -1977,12 +1977,12 @@
   ],
   "current_scope": {
     "date": "2026-11-03",
-    "environment": "DEV only",
+    "environment": "DEV and PRE-PROD",
     "physical_online_integration": "excluded_by_user",
     "application_version": "0.13.1.0",
-    "preprod_application_version": "0.12.0.0",
-    "preprod_source_sha": "d9e2940b9a00755d979c159ec0fb62e290dd7ff1",
-    "note": "TC0135–0147 dotycząGOv30 i wymagają rzeczywistego buildu0.13.1.0. Wszystkie147wyników ręcznych pozostająNOTRUN. Ostateczne zasady:trwały plac zapisywany z wyspą,20miejsc bez sektorów,dalsze poziomy bez końca20,ceny tym samym wzorem i reklamy co5także25/30. Starsze scenariusze zachowują wersjonowaną historię. Bez nowej promocji PRE-PROD,resetu iPROD.",
+    "preprod_application_version": "0.13.1.0",
+    "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+    "note": "AktualnyDEV0.13.1.0/13c55a4 i odebranyPRE-PROD0.13.1.0/68e9bcd mają odrębne źródła i dowody. Wszystkie147ręcznychwyników pozostająNOT RUN; odczytoweGCPkontrole nie zaliczają testu zapisu. TC0135–0147 dotycząv30:trwały plac,20miejsc bez sektorów,dalsze poziomy bez końca20,ceny tym samym wzorem i reklamy co5także25/30. Stare scenariusze zachowują historię. Bez resetu,PROD lub realnychoperatorów.",
     "dev_status": "verified_ci_and_pages_manual_cases_not_run",
     "case_range": "TC0135–0147",
     "previous_case_range": "TC0097–0134",
@@ -1995,6 +1995,10 @@
     },
     "dev_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
     "ci_run_id": 41667711260,
-    "pages_run_id": 41667711124
+    "pages_run_id": 41667711124,
+    "preprod_ci_run_id": 41671140612,
+    "preprod_deployment_run_id": 41673824262,
+    "preprod_deployment_attempt": 1,
+    "preprod_status": "verified_deployment_manual_cases_not_run"
   }
 }

@@ -11,7 +11,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Implementacja | `implemented` |
 | DEV | `validated_ci_and_pages_source_13c55a4` |
 | CI | `passed_source_13c55a4` |
-| PRE-PROD | `not_deployed` |
+| PRE-PROD | `deployed_source_68e9bcd` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -35,7 +35,7 @@ Data pierwotnej wiadomości: 2026-11-03. Data nowego GO dotyczącego wyglądu Te
 
 ## Dowody
 
-- **Dokumenty:** [docs/FRONTEND-V30-REQUIREMENTS.md](../../FRONTEND-V30-REQUIREMENTS.md), [docs/testing/MANUAL-TEST-PLAN.md](../../testing/MANUAL-TEST-PLAN.md), [docs/DEV-0.13.1.0-VALIDATION.md](../../DEV-0.13.1.0-VALIDATION.md)
+- **Dokumenty:** [docs/FRONTEND-V30-REQUIREMENTS.md](../../FRONTEND-V30-REQUIREMENTS.md), [docs/testing/MANUAL-TEST-PLAN.md](../../testing/MANUAL-TEST-PLAN.md), [docs/DEV-0.13.1.0-VALIDATION.md](../../DEV-0.13.1.0-VALIDATION.md), [docs/PREPROD-V30-PROMOTION.md](../../PREPROD-V30-PROMOTION.md)
 - **Kod:** [harborlight-v1-theatre.js](../../../harborlight-v1-theatre.js), [harborlight-v1-theatre-ui.js](../../../harborlight-v1-theatre-ui.js), [harborlight-v1-theatre-art.js](../../../harborlight-v1-theatre-art.js)
 - **Scenariusze automatyczne:** [tests/harborlight-theatre-layouts-v30.test.mjs](../../../tests/harborlight-theatre-layouts-v30.test.mjs), [tests/harborlight-theatre-v30-smoke.py](../../../tests/harborlight-theatre-v30-smoke.py), [tests/harborlight-theatre-v30-game-smoke.py](../../../tests/harborlight-theatre-v30-game-smoke.py)
 - **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/41667711260.
@@ -45,7 +45,7 @@ Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0138 — Światło i nawierzchnia są bezpłatnymi narzędziami własnej kompozycji](../../testing/manual/HL-TC-0138.md) — `NOT RUN`.
 
-DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.
+DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.
 
 ## Relacje
 

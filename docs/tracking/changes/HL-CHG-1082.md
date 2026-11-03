@@ -8,10 +8,10 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `in_progress` |
-| DEV | `promotion_prepared` |
-| CI | `not_run_for_promotion_source` |
-| PRE-PROD | `pending_deployment` |
+| Implementacja | `implemented` |
+| DEV | `validated_promotion_source_68e9bcd` |
+| CI | `passed_source_68e9bcd` |
+| PRE-PROD | `deployed_source_68e9bcd` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -41,7 +41,7 @@ Data pierwotnej wiadomości: 2026-11-03. Nowe jawne zlecenie promocji po pracach
 - **Scenariusze automatyczne:** [tests/harborlight-urgent-preprod-dispatch.test.mjs](../../../tests/harborlight-urgent-preprod-dispatch.test.mjs)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-PromocjaPENDING. DEV13c55a4:CI41667711260SUCCESS14min39s,Pages41667711124SUCCESS50s,tagDEVopublikowany. PełnySHAcommitu promocji,jegoCI,bridge,deploy,próba,artefaktyitagPRE-PROD:TODOpoodczycie. FaktycznyPRE-PROD nadal0.12/d9e2940.
+PRE-PROD0.13.1.0 odebrany: źródło68e9bcd6adf22ab98f963688726a71d4d8a66c6b, własneCI41671140612SUCCESS14m57s, Pages41671140578SUCCESS32s, bridge41673757060SUCCESS26s i deploy41673824262/próba1SUCCESS2m56s. Oba artefakty, wszystkie wymagane kontrole i zdalny tagpreprod-0.13.1.0-20261103 potwierdzone. DEVtag pozostaje na13c55a4.147ręcznychNOTRUN; bez resetu,PROD lub realnychoperatorów.
 
 ## Relacje
 

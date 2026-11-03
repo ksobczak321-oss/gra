@@ -19333,7 +19333,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -19353,7 +19353,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-economy.js",
@@ -19363,10 +19364,31 @@
           "tests/harborlight-economy-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -19391,7 +19413,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -19412,7 +19434,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-state.js",
@@ -19423,10 +19446,31 @@
           "tests/harborlight-economy-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -19451,7 +19495,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -19472,7 +19516,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-logistics.js",
@@ -19483,10 +19528,31 @@
           "tests/harborlight-economy-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [
         "Nowe dostawy uwzględniają głód, brak łóżka, aktywność i ścieżki. Prędkość kursu liczona jest dla stanu początku segmentu; ukończenie Domu nie przyspiesza wstecz transportu."
@@ -19513,7 +19579,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -19534,7 +19600,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-logistics.js",
@@ -19544,10 +19611,31 @@
           "tests/harborlight-economy-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -19572,7 +19660,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -19592,7 +19680,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-logistics.js",
@@ -19602,10 +19691,31 @@
           "tests/harborlight-economy-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -19630,7 +19740,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -19652,7 +19762,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-logistics.js",
@@ -19663,10 +19774,31 @@
           "tests/harborlight-economy-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -19691,7 +19823,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -19714,7 +19846,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-progression.js",
@@ -19725,10 +19858,31 @@
           "tests/harborlight-learning-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -19753,7 +19907,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -19773,7 +19927,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-play.css",
@@ -19781,10 +19936,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -19809,7 +19985,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -19829,7 +20005,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-learning-feedback.js",
@@ -19838,10 +20015,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -19866,7 +20064,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -19887,7 +20085,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-progression.js",
@@ -19898,10 +20097,31 @@
           "tests/harborlight-learning-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -19926,7 +20146,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -19947,7 +20167,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-progression.js",
@@ -19958,10 +20179,31 @@
           "tests/harborlight-learning-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -19986,7 +20228,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -20006,7 +20248,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-progression.js",
@@ -20017,10 +20260,31 @@
           "tests/harborlight-learning-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -20045,7 +20309,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -20067,7 +20331,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-progression.js",
@@ -20078,10 +20343,31 @@
           "tests/harborlight-learning-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -20106,7 +20392,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -20126,7 +20412,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-approved-copy.js",
@@ -20137,10 +20424,31 @@
           "tests/harborlight-learning-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -20165,7 +20473,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -20185,7 +20493,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-state.js",
@@ -20196,10 +20505,31 @@
           "tests/harborlight-learning-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -20224,7 +20554,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -20245,7 +20575,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-state.js",
@@ -20257,10 +20588,31 @@
           "tests/harborlight-release-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [
         "Wspólny limit raz na dzień obejmuje również logowanie na wyspie córce; mieszkaniec trafia na otwartą wyspę. Restart nie odnawia wygasłego okresu, także przy pustej historii odbioru. Regresja: tests/harborlight-release-v29.test.mjs."
@@ -20287,7 +20639,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -20309,7 +20661,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-missions.js",
@@ -20319,10 +20672,31 @@
           "tests/harborlight-release-v29-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -20347,7 +20721,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -20366,7 +20740,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-play.js",
@@ -20374,10 +20749,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -20402,7 +20798,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -20421,17 +20817,39 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-play.js"
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -20456,7 +20874,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -20476,7 +20894,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-play.js",
@@ -20484,10 +20903,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -20512,7 +20952,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -20531,7 +20971,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-tutorial-ui.js",
@@ -20540,10 +20981,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -20568,7 +21030,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "partially_superseded"
       },
@@ -20591,7 +21053,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre.js",
@@ -20601,10 +21064,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [
         "GO v30 zastępuje wyłącznie prezentację całej aranżacji na głównej mapie: pozostaje sam pasujący budynek, a plac i dekoracje są dostępne po kliknięciu. Historyczny odbiór źródła cf6739a pozostaje faktem; zobacz HL-CHG-1069."
@@ -20631,7 +21115,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -20652,7 +21136,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre.js",
@@ -20660,10 +21145,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -20688,7 +21194,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "partially_superseded"
       },
@@ -20711,7 +21217,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre.js",
@@ -20720,10 +21227,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [
         "Dodatkowy steeringv30 usuwa twardy koniec20poziomów. Historyczny odbiór sourcecf i wygląd dotychczasowych etapów pozostają historią; dalszy zakres placu jest osobno doprecyzowywany wHL-CHG-1081."
@@ -20750,7 +21278,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -20770,7 +21298,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre.js",
@@ -20778,10 +21307,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -20806,7 +21356,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -20826,7 +21376,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre-art.js",
@@ -20835,10 +21386,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -20863,7 +21435,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -20884,7 +21456,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre.js",
@@ -20898,10 +21471,31 @@
           "tests/harborlight-release-v29-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -20926,7 +21520,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -20946,7 +21540,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre.js",
@@ -20959,10 +21554,31 @@
           "tests/harborlight-release-v29-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -20987,7 +21603,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21007,7 +21623,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre.js",
@@ -21017,10 +21634,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -21045,7 +21683,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21066,7 +21704,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-play.js",
@@ -21074,10 +21713,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -21102,7 +21762,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21123,7 +21783,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-adventures-art.js",
@@ -21131,10 +21792,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [
         "Pełna gra sprawdza rzeczywisty odbiór kliknięć nad nagłówkiem i poza ramką dialogu oraz dokładną nagrodę; naprawiono kontekst warstw nakładki."
@@ -21161,7 +21843,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21182,7 +21864,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-minigames.js",
@@ -21191,10 +21874,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -21219,7 +21923,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21240,7 +21944,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-minigames.js",
@@ -21249,10 +21954,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -21277,7 +22003,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21299,7 +22025,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-adventure-puzzles.js",
@@ -21309,10 +22036,31 @@
           "tests/harborlight-v29-adventures.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -21337,7 +22085,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21358,7 +22106,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-adventure-puzzles.js",
@@ -21367,10 +22116,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -21395,7 +22165,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21415,7 +22185,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-adventure-puzzles.js",
@@ -21424,10 +22195,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -21452,7 +22244,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21472,7 +22264,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-adventure-puzzles.js",
@@ -21481,10 +22274,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -21509,7 +22323,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21529,7 +22343,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-adventure-puzzles.js",
@@ -21538,10 +22353,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -21566,7 +22402,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21586,7 +22422,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-adventure-puzzles.js",
@@ -21595,10 +22432,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -21623,7 +22481,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21647,7 +22505,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-state.js",
@@ -21656,10 +22515,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -21684,7 +22564,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21705,7 +22585,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "backend/community-service.mjs",
@@ -21715,10 +22596,31 @@
           "backend/test/community-dev-accounts.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -21743,7 +22645,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21764,7 +22666,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-community-ui.js"
@@ -21773,10 +22676,31 @@
           "tests/harborlight-community-v24-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -21801,7 +22725,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21823,7 +22747,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "backend/community-service.mjs",
@@ -21835,7 +22760,7 @@
           "backend/test/community-service.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "full_backend_validation": {
           "date": "2026-11-03",
           "result": "PASS",
@@ -21847,7 +22772,28 @@
         },
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -21872,7 +22818,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21892,7 +22838,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-version.js",
@@ -21901,10 +22848,31 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -21929,7 +22897,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -21950,7 +22918,8 @@
         "documents": [
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.0.0-VALIDATION.md"
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "scripts/build_change_register.py",
@@ -21960,7 +22929,7 @@
           "tests/harborlight-tracking-issues.test.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "registry_validation": {
           "date": "2026-11-03",
           "result": "PASS",
@@ -21975,7 +22944,28 @@
         },
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -22000,7 +22990,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_cf6739a",
         "ci": "passed_source_cf6739a",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -22023,7 +23013,8 @@
           "docs/FRONTEND-V29-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
           "docs/DEV-0.13.0.0-VALIDATION.md",
-          "docs/arkusze/HARBORLIGHT12-walidacja.json"
+          "docs/arkusze/HARBORLIGHT12-walidacja.json",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "scripts/build_workbook_v12.py",
@@ -22033,10 +23024,31 @@
           "scripts/build_workbook_v12.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN.",
+        "release_note": "DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI41657032913 i Pages41657032922 SUCCESS. Lokalnie1200Node/141Python/36ChromiumPASS. PRE-PROD pozostaje0.12.0.0/d9e2940 bez resetu i PROD. Ręczne134NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032913",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41657032922",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -22061,7 +23073,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_13c55a4",
         "ci": "passed_source_13c55a4",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -22081,7 +23093,8 @@
         "documents": [
           "docs/FRONTEND-V30-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.1.0-VALIDATION.md"
+          "docs/DEV-0.13.1.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-play.js",
@@ -22095,10 +23108,31 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [
         "Zastąpiono tylko prezentację aranżacji na głównej mapie. Stały budynek i duże wejście z wcześniejszej karty pozostają."
@@ -22126,7 +23160,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_13c55a4",
         "ci": "passed_source_13c55a4",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -22146,7 +23180,8 @@
         "documents": [
           "docs/FRONTEND-V30-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.1.0-VALIDATION.md"
+          "docs/DEV-0.13.1.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre-art.js",
@@ -22161,10 +23196,31 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -22190,7 +23246,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_13c55a4",
         "ci": "passed_source_13c55a4",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -22211,7 +23267,8 @@
         "documents": [
           "docs/FRONTEND-V30-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.1.0-VALIDATION.md"
+          "docs/DEV-0.13.1.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre-ui.js",
@@ -22223,10 +23280,31 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -22252,7 +23330,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_13c55a4",
         "ci": "passed_source_13c55a4",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -22270,7 +23348,8 @@
         "documents": [
           "docs/FRONTEND-V30-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.1.0-VALIDATION.md"
+          "docs/DEV-0.13.1.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre.js",
@@ -22283,10 +23362,31 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [
         "Liczbowe narzędzia studia są jawnymi parametrami wdrożenia DEV realizującymi zaakceptowaną swobodę aranżacji; bez dodatkowych opłat i bonusów gospodarczych."
@@ -22314,7 +23414,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_13c55a4",
         "ci": "passed_source_13c55a4",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -22334,7 +23434,8 @@
         "documents": [
           "docs/FRONTEND-V30-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.1.0-VALIDATION.md"
+          "docs/DEV-0.13.1.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre.js",
@@ -22346,10 +23447,31 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [
         "Liczbowe narzędzia studia są jawnymi parametrami wdrożenia DEV realizującymi zaakceptowaną swobodę aranżacji; bez dodatkowych opłat i bonusów gospodarczych."
@@ -22377,7 +23499,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_13c55a4",
         "ci": "passed_source_13c55a4",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -22395,7 +23517,8 @@
         "documents": [
           "docs/FRONTEND-V30-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.1.0-VALIDATION.md"
+          "docs/DEV-0.13.1.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre-ui.js",
@@ -22406,10 +23529,31 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [
         "Liczbowe narzędzia studia są jawnymi parametrami wdrożenia DEV realizującymi zaakceptowaną swobodę aranżacji; bez dodatkowych opłat i bonusów gospodarczych."
@@ -22437,7 +23581,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_13c55a4",
         "ci": "passed_source_13c55a4",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -22459,7 +23603,8 @@
         "documents": [
           "docs/FRONTEND-V30-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.1.0-VALIDATION.md"
+          "docs/DEV-0.13.1.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre-art.js",
@@ -22475,10 +23620,31 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [
         "W trakcie v30 użytkownik usunął twardy koniec20. Ostatecznie plac pozostaje20-miejscowy, bez sektorów; dalszy rozwój wyglądu opisujeHL-CHG-1081."
@@ -22506,7 +23672,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_13c55a4",
         "ci": "passed_source_13c55a4",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -22528,7 +23694,8 @@
         "documents": [
           "docs/FRONTEND-V30-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.1.0-VALIDATION.md"
+          "docs/DEV-0.13.1.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre.js",
@@ -22542,10 +23709,31 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -22571,7 +23759,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_13c55a4",
         "ci": "passed_source_13c55a4",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -22589,7 +23777,8 @@
         "documents": [
           "docs/FRONTEND-V30-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.1.0-VALIDATION.md"
+          "docs/DEV-0.13.1.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre-ui.js",
@@ -22601,10 +23790,31 @@
           "tests/harborlight-theatre-v30-game-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [
         "Liczbowe narzędzia studia są jawnymi parametrami wdrożenia DEV realizującymi zaakceptowaną swobodę aranżacji; bez dodatkowych opłat i bonusów gospodarczych."
@@ -22632,7 +23842,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_13c55a4",
         "ci": "passed_source_13c55a4",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -22653,7 +23863,8 @@
           "docs/FRONTEND-V30-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
           "docs/arkusze/HARBORLIGHT13-walidacja.json",
-          "docs/DEV-0.13.1.0-VALIDATION.md"
+          "docs/DEV-0.13.1.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "scripts/build_workbook_v13.py",
@@ -22663,10 +23874,31 @@
           "scripts/build_workbook_v13.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [
         "Końcowa ponowna generacja i oddzielna walidacja uwzględniają147przypadków,20miejscbezsektorów,brakfabularnegomaksimum20,reklamęco5oraz260przykładowychcen(wtym21,25,30,50,100,1000). Zachowano77arkuszy,48komentarzy i4325cache;333noweformuły/500próbekruntimePASS. Excel12nienaruszony."
@@ -22694,7 +23926,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_13c55a4",
         "ci": "passed_source_13c55a4",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -22714,7 +23946,8 @@
         "documents": [
           "docs/FRONTEND-V30-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.1.0-VALIDATION.md"
+          "docs/DEV-0.13.1.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-version.js",
@@ -22726,10 +23959,31 @@
           "scripts/build_workbook_v13.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [],
       "tags": [
@@ -22750,7 +24004,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_13c55a4",
         "ci": "passed_source_13c55a4",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -22766,7 +24020,8 @@
         "documents": [
           "docs/FRONTEND-V30-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.1.0-VALIDATION.md"
+          "docs/DEV-0.13.1.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre.js",
@@ -22777,10 +24032,31 @@
           "backend/test/theatre-persistence-v30.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [
         "Lokalny test HTTP: PASS. Trzy dni i trzy sesje tego samego QA UID, dwa restarty serwera, zapis/odczyt account API i konflikt409. Izolowany transakcyjny store w pamięci przeżywa wymianę instancji serwera; to nie dowód Firestore, dysku produkcyjnego ani nowego wdrożenia GCP."
@@ -22813,7 +24089,7 @@
         "implementation": "implemented",
         "dev": "validated_ci_and_pages_source_13c55a4",
         "ci": "passed_source_13c55a4",
-        "preprod": "not_deployed",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -22831,7 +24107,8 @@
         "documents": [
           "docs/FRONTEND-V30-REQUIREMENTS.md",
           "docs/testing/MANUAL-TEST-PLAN.md",
-          "docs/DEV-0.13.1.0-VALIDATION.md"
+          "docs/DEV-0.13.1.0-VALIDATION.md",
+          "docs/PREPROD-V30-PROMOTION.md"
         ],
         "code": [
           "harborlight-v1-theatre.js",
@@ -22844,10 +24121,31 @@
           "tests/harborlight-theatre-v29.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN.",
+        "release_note": "DEV0.13.1.0 odebrany dla 13c55a4e4853edf44c185747c1c626ac42c221fc; własne CI41667711260 i Pages41667711124 SUCCESS. Lokalnie1219Node/141PythonPASS; nowe studio4/4 i pełna gra4/4 oraz dwie regresje; pełne38ChromiumwCI PASS. PRE-PROD0.12/d9e2940 bez zmian. Ręczne147NOTRUN. PRE-PROD0.13.1.0 wdrożony ze źródła68e9bcd6adf22ab98f963688726a71d4d8a66c6b; własneCI41671140612,bridge41673757060,deploy41673824262/próba1SUCCESS. Oba artefakty i tagPRE-PROD potwierdzone; bez resetu/PROD/realnychoperatorów.147ręcznychNOTRUN.",
         "application_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711260",
-        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124"
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41667711124",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103"
       },
       "notes": [
         "Ostateczna odpowiedź użytkownika: dalsze poziomy,20miejsc,bez nowych sektorów. Kontrola bezpiecznych liczb jest ograniczeniem technicznym poprawnego zapisu i ceny, a nie fabularnym końcem na20.",
@@ -22884,10 +24182,10 @@
         "reference": "chat:GO:preprod-0.13.1.0"
       },
       "status": {
-        "implementation": "in_progress",
-        "dev": "promotion_prepared",
-        "ci": "not_run_for_promotion_source",
-        "preprod": "pending_deployment",
+        "implementation": "implemented",
+        "dev": "validated_promotion_source_68e9bcd",
+        "ci": "passed_source_68e9bcd",
+        "preprod": "deployed_source_68e9bcd",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -22923,7 +24221,29 @@
           "tests/harborlight-urgent-preprod-dispatch.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "PromocjaPENDING. DEV13c55a4:CI41667711260SUCCESS14min39s,Pages41667711124SUCCESS50s,tagDEVopublikowany. PełnySHAcommitu promocji,jegoCI,bridge,deploy,próba,artefaktyitagPRE-PROD:TODOpoodczycie. FaktycznyPRE-PROD nadal0.12/d9e2940."
+        "release_note": "PRE-PROD0.13.1.0 odebrany: źródło68e9bcd6adf22ab98f963688726a71d4d8a66c6b, własneCI41671140612SUCCESS14m57s, Pages41671140578SUCCESS32s, bridge41673757060SUCCESS26s i deploy41673824262/próba1SUCCESS2m56s. Oba artefakty, wszystkie wymagane kontrole i zdalny tagpreprod-0.13.1.0-20261103 potwierdzone. DEVtag pozostaje na13c55a4.147ręcznychNOTRUN; bez resetu,PROD lub realnychoperatorów.",
+        "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "preprod_ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41671140612",
+        "preprod_deployment_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/41673824262",
+        "preprod_deployment_attempt": 1,
+        "preprod_artifacts": [
+          {
+            "kind": "frontend",
+            "name": "harborlight-dev-frontend-41673824262-1",
+            "id": 13248538829,
+            "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+            "attempt": 1
+          },
+          {
+            "kind": "release",
+            "name": "harborlight-dev-release-41673824262-1",
+            "id": 13248913826,
+            "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+            "attempt": 1
+          }
+        ],
+        "preprod_tag": "preprod-0.13.1.0-20261103",
+        "promotion_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
       },
       "notes": [
         "Tagpreprod-v30 zamiastv30 oddziela operację promocji od odbioruCI aplikacjiDEV.",
@@ -22940,15 +24260,15 @@
     "dev_application_version": "0.13.1.0",
     "dev_status": "verified_ci_and_pages",
     "dev_ci": "success",
-    "preprod_application_version": "0.12.0.0",
-    "preprod_source_sha": "d9e2940b9a00755d979c159ec0fb62e290dd7ff1",
-    "preprod_ci_run_id": 41480146644,
-    "preprod_deployment_run_id": 41482455135,
+    "preprod_application_version": "0.13.1.0",
+    "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+    "preprod_ci_run_id": 41671140612,
+    "preprod_deployment_run_id": 41673824262,
     "preprod_deployment_attempt": 1,
-    "preprod_status": "previous_release_verified",
+    "preprod_status": "verified_deployment_and_artifacts",
     "prod_status": "no_new_deployment",
     "full_test_account_reset": "not_performed",
-    "note": "Bieżące GO v30 wymaga własnego SHA i odbioru. Poprzedni odebrany DEV0.13.0.0/cf6739a ma oddzielne dowody w previous_accepted_dev. PRE-PROD pozostaje0.12.0.0/d9e2940; bez resetu i PROD. Historyczny environment_baseline zachowuje początek ewidencji.",
+    "note": "PRE-PROD0.13.1.0/68e9bcd odebrany własnymCI i standardowymGCPworkflow. DEV13c55a4 i wcześniejsze dowody zachowane; bez resetu,PROD i realnych operatorów.147ręcznychNOTRUN. DigestsZIP nie są digestamiTAR/manifestu/obrazu; prywatnego receipt i zapisuFirestore nie odczytano niezależnie.",
     "previous_accepted_dev": {
       "dev_application_version": "0.13.0.0",
       "dev_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
@@ -22960,7 +24280,35 @@
     "dev_ci_run_id": 41667711260,
     "dev_pages_run_id": 41667711124,
     "dev_tag": "dev-0.13.1.0-20261103",
-    "preprod_promotion_status": "authorized_pending_exact_source_ci_and_deployment",
-    "preprod_promotion_target": "0.13.1.0"
+    "preprod_promotion_status": "completed_verified",
+    "preprod_promotion_target": "0.13.1.0",
+    "previous_accepted_preprod": {
+      "preprod_application_version": "0.12.0.0",
+      "preprod_source_sha": "d9e2940b9a00755d979c159ec0fb62e290dd7ff1",
+      "preprod_ci_run_id": 41480146644,
+      "preprod_deployment_run_id": 41482455135,
+      "preprod_deployment_attempt": 1,
+      "preprod_status": "previous_release_verified"
+    },
+    "preprod_pages_run_id": 41671140578,
+    "preprod_bridge_run_id": 41673757060,
+    "preprod_tag": "preprod-0.13.1.0-20261103",
+    "preprod_tag_remote_object": "52888386a2233fc326e4fa6e0169b1054c0316d4",
+    "preprod_artifacts": [
+      {
+        "kind": "frontend",
+        "name": "harborlight-dev-frontend-41673824262-1",
+        "id": 13248538829,
+        "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+        "attempt": 1
+      },
+      {
+        "kind": "release",
+        "name": "harborlight-dev-release-41673824262-1",
+        "id": 13248913826,
+        "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+        "attempt": 1
+      }
+    ]
   }
 }
