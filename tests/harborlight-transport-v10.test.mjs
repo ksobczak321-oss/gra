@@ -289,7 +289,7 @@ test('hypothetical construction excludes gathering and preserves the actual Food
   const {state}=upgradePreviewIsland();state.constructionProjects=[];
   const before=JSON.stringify(state);
   const estimate=constructionScheduleEstimate(state,{wood:66},'farm');
-  assert.equal(estimate.total,600);assert.equal(JSON.stringify(state),before);
+  assert.ok(Math.abs(estimate.total-41990.4*.65)<1e-7);assert.equal(JSON.stringify(state),before);
   const foodEstimate=constructionScheduleEstimate(state,{food:150,wood:66},'farm');
   assert.ok(Number.isFinite(foodEstimate.total));
   assert.equal(JSON.stringify(state),before);

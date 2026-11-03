@@ -75,7 +75,8 @@ def immediate_first_rewards(browser):
 
 def final_real_action(browser):
     value = model(24)
-    assert sum(value['resources'][resource] for resource in MATERIALS) < 6000
+    capacity = json.loads(subprocess.run(['node', '--input-type=module', '-e', 'import {warehouseCapacityForLevel} from "./harborlight-v1-economy.js"; console.log(JSON.stringify(warehouseCapacityForLevel(%d)))' % value['buildings']['warehouse']['level']], cwd=ROOT, text=True, capture_output=True, check=True).stdout)
+    assert sum(value['resources'][resource] for resource in MATERIALS) < capacity['total']
     context, page = enter(browser, value)
     finish = page.locator('[data-finish-tutorial]')
     expect(finish).to_be_enabled()
@@ -83,12 +84,13 @@ def final_real_action(browser):
     expect(page.locator('[data-tutorial-finished]')).to_be_visible()
     after = qa.state(page)
     assert after['tutorial']['settled']
-    assert sum(after['resources'][resource] for resource in MATERIALS) == 6000
+    assert sum(after['resources'][resource] for resource in MATERIALS) == capacity['total']
+    assert all(after['resources'][resource] == capacity['perResource'] for resource in MATERIALS)
     assert all(after['bonusMaterials'][resource] == 0 for resource in MATERIALS)
     assert all(chest['claimed'] and chest['skipped'] for chest in after['tutorial']['chests'].values())
     assert not page.locator('[data-tutorial-achievement],[data-tutorial-claim],[data-tutorial-review]').count()
     context.close()
-    print('PASS21 real final button: actual 24-lesson model outcome becomes full6000 Warehouse and all25 settled rewards without waiting crates', flush=True)
+    print('PASS21 real final button: actual 24-lesson model outcome becomes full current-capacity Warehouse and all25 settled rewards without waiting crates', flush=True)
 
 
 def external_bonus_is_preserved(browser):

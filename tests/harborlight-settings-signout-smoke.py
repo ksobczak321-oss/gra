@@ -26,12 +26,13 @@ def seed():
     fixture.DOCUMENTS[UID] = {'payload': json.dumps(saved), 'revision': 5, 'updateTime': fixture.timestamp()}
 
 
-def assert_history():
+def assert_history(*, welcome_claimed=False):
     saved = fixture.cloud_state(UID)
     assert saved['version'] == 9, 'Public game version must not replace the saved-world schema'
     assert saved['resources']['coins'] == 777
     assert saved['islandName'] == 'Port admin1'
-    assert saved['population'] == 12
+    assert saved['population'] == (13 if welcome_claimed else 12), 'The pending welcome resident is persisted only after acknowledgement'
+    assert saved['welcomeWorkers']['granted'] == (1 if welcome_claimed else 0)
     assert saved['buildings']['townhall']['level'] == 4
     assert saved['buildings']['farm']['ready'] == 17
     assert saved['statistics']['expeditions'] == 7
@@ -66,7 +67,7 @@ def delayed_signout(browser, language, mobile):
     version = page.locator('[data-settings-version]')
     expect(version).to_be_visible()
     expect(version).to_contain_text('Wersja gry' if language == 'pl' else 'Game version')
-    expect(version.locator('[data-game-version]')).to_have_text('0.12.0.0')
+    expect(version.locator('[data-game-version]')).to_have_text('0.13.0.0')
     version_box = version.bounding_box()
     assert version_box and version_box['y'] >= 0, 'Game version must be visible when Settings opens'
     assert version_box['y'] + version_box['height'] <= page.viewport_size['height'], version_box
@@ -93,7 +94,7 @@ def delayed_signout(browser, language, mobile):
     page.wait_for_url('**/harborlight-auth.html?mode=login')
     assert page.evaluate('(key)=>localStorage.getItem(key)', fixture.SESSION) is None
     assert fixture.cloud_state(UID)['settings']['language'] == new_language
-    assert_history()
+    assert_history(welcome_claimed=True)
     fixture.no_island_cache(page)
     context.close()
 
@@ -131,7 +132,7 @@ def run():
             assert not fixture.ERRORS, fixture.ERRORS
         finally:
             browser.close()
-    print('PASS Settings version0.12.0.0 and logout in PL/EN on desktop/mobile: pending cloud acknowledgement, offline logout and existing world-schema/history preserved; no island cache')
+    print('PASS Settings version0.13.0.0 and logout in PL/EN on desktop/mobile: pending cloud acknowledgement, offline logout and existing world-schema/history preserved; no island cache')
 
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "as_of": "2026-11-02",
-  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków.",
+  "as_of": "2026-11-03",
+  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru.",
   "environment_baseline": {
     "application_source_sha": "092e75226fbb14cab09826f313e11d10891966d8",
     "ci_run_id": 41221965032,
@@ -19315,6 +19315,2603 @@
         "preprod",
         "release"
       ]
+    },
+    {
+      "id": "HL-CHG-1023",
+      "epic": "HL-EPIC-ECO",
+      "area": "Czasy rozwoju",
+      "type": "Story",
+      "title": "Budowa i transport mają wspólną krzywą od 45 sekund do stałej doby od poziomu24",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1023"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przy trzech gotowych tragarzach i dostępnym zapasie, dla ukończonego Ratusza 1 referencyjny najdłuższy transport z budową trwa 45 s. Mnożniki: 2–5 ×3, 6–8 ×2, 9–11 ×1,2, 12–14 ×1,1, 15–17 ×1,05, 18–22 ×1,02.",
+        "Ratusz 23 daje referencyjnie 23 godz. 55 min; od poziomu 24 do 100 referencyjny budżet wynosi 24 godziny i już nie rośnie. Mniejsza obsada, oczekiwanie na materiał lub kolejka mogą wydłużyć rzeczywisty czas.",
+        "Wewnętrzna precyzja pozostaje zachowana, a czytelny czas w oknie rozbudowy odpowiada rzeczywistym nowym zamówieniom."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0979"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-economy.js",
+          "harborlight-v1-logistics.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-economy-v29.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1024",
+      "epic": "HL-EPIC-ECO",
+      "area": "Migracja zamówień",
+      "type": "Bug",
+      "title": "Nowe migawki budowy nie przeliczają rozpoczętych projektów i historycznego turbo",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1024"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nowe finansowane zlecenie zapisuje wersję parametrów, ukończony Ratusz i własny podział czasu.",
+        "Przyjęta dostawa lub rozpoczęta budowa starszego świata zachowuje swoją migawkę, koszty, postęp i ETA, także historyczne starterTurbo.",
+        "Odczyt, ponowne otwarcie panelu i zapis nie rozpoczynają projektu od nowa."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1012",
+        "HL-CHG-1023"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-state.js",
+          "harborlight-v1-logistics.js",
+          "harborlight-v1-economy.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-economy-v29.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1025",
+      "epic": "HL-EPIC-ECO",
+      "area": "Obsada i budżet czasu",
+      "type": "Story",
+      "title": "Krótsze budynki i rzeczywista obsada warunkują nowy czas dostawy",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1025"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Budynki otrzymują jawne proporcjonalne wagi; czas krzywej to wariant referencyjny dla trzech gotowych tragarzy, a nie jednakowy czas każdego obiektu i każdej obsady.",
+        "Gotowi tragarze przewożą faktyczne materiały; brak tragarzy, towaru albo miejsca nie kończy dostawy automatycznie.",
+        "Dojście i powrót120s są osobnym warunkiem. Gra nie obiecuje dostawy45s od przydziału osoby, która jeszcze nie dotarła do pracy.",
+        "Jeden i dwóch gotowych tragarzy nadal przewozi faktyczne materiały, odpowiednio dłużej. Nie blokujemy działającej obsady poniżej trzech; przy zerze lub w czasie dojścia dostawa czeka. Historyczne turbo zachowuje własny zapisany wymóg sześciu osób."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1023"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-logistics.js",
+          "harborlight-v1-economy.js",
+          "harborlight-v1-activities.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-economy-v29.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [
+        "Nowe dostawy uwzględniają głód, brak łóżka, aktywność i ścieżki. Prędkość kursu liczona jest dla stanu początku segmentu; ukończenie Domu nie przyspiesza wstecz transportu."
+      ],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1026",
+      "epic": "HL-EPIC-ECO",
+      "area": "Balans produkcji",
+      "type": "Story",
+      "title": "Wydobycie i przeliczanie postępu odpowiadają nowemu rytmowi gospodarki",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1026"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Wydobycie jest dostosowane jawnymi parametrami DEV; zachowane są receptury, obsada, podatki i ograniczenia magazynów.",
+        "Zmiana tempa nie odbiera ukończonych zapasów i nie wywołuje podwójnej wypłaty częściowo wykonanej produkcji.",
+        "Koszt zaproszenia mieszkańca pozostaje500×ukończony Ratusz każdego z sześciu zasobów; nie otrzymuje fikcyjnego rabatu nowych czasów."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0995",
+        "HL-CHG-1023"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-logistics.js",
+          "harborlight-v1-economy.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-economy-v29.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1027",
+      "epic": "HL-EPIC-ECO",
+      "area": "Pojemność Magazynu",
+      "type": "Story",
+      "title": "Magazyn ma stały limit na poziom i łączną pojemność pięciu materiałów",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1027"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Pojemność wynika ze stałej tabeli poziomu Magazynu i nie zmienia się po wybraniu innej misji lub budowy.",
+        "Łączny limit pozwala jednocześnie wypełnić pięć limitów materiałowych. Monety nie zajmują miejsca.",
+        "Materiały z nagród nadal są natychmiast wydawalne poza zwykłym limitem dostaw; gracz nie musi czytać technicznego podziału w każdym wierszu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1026"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-logistics.js",
+          "harborlight-v1-economy.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-economy-v29.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1028",
+      "epic": "HL-EPIC-ECO",
+      "area": "Wykonalność przechowywania",
+      "type": "Story",
+      "title": "Pojemność obejmuje rozbudowę, misję, zapas jedzenia i bufor bez blokady samorozbudowy",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1028"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Odpowiedni Magazyn mieści największą rozbudowę danego etapu, jedną bieżącą misję, chronioną żywność i25%buforu.",
+        "Koszt rozbudowy samego Magazynu mieści się w poprzednim poziomie; rozwój nie wymaga niemożliwej dostawy do zbyt małego obiektu.",
+        "Prognoza misji uwzględnia rzeczywiste zapasy, produkcję, czas i transport; większy magazyn nie udaje istniejących zasobów."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0994",
+        "HL-CHG-1020",
+        "HL-CHG-1027"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-logistics.js",
+          "harborlight-v1-economy.js",
+          "harborlight-v1-missions.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-economy-v29.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1029",
+      "epic": "HL-EPIC-TUT",
+      "area": "Dwie drogi budowy",
+      "type": "Story",
+      "title": "Samouczek pokazuje przyspieszenie oraz naturalne czekanie z trzema tragarzami",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1029"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nowy kurs zachowuje25lekcji i pierwszych3tragarzy; jedna rozbudowa prowadzi przez realne skrócenie za monety.",
+        "Inny budynek wyjaśnia oczekiwanie i prowadzi do naturalnego końca czasu; nie wymusza zakupu wszystkich rozbudów.",
+        "Wcześniejsze nagrody pokrywają realną naukę przyspieszania; stare programy, zaliczenia i nagrody pozostają zachowane."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0978",
+        "HL-CHG-0980",
+        "HL-CHG-0981",
+        "HL-CHG-1023"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-progression.js",
+          "harborlight-v1-tutorial-ui.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-v29.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1030",
+      "epic": "HL-EPIC-UI",
+      "area": "Wyrównanie Pomocy",
+      "type": "Bug",
+      "title": "Przyciski w obu ramkach Pomocy mają jednakowe krawędzie i szerokość",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1030"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Żółty przycisk wznowienia i niebieski rozpoczęcia mają wspólne lewe i prawe krawędzie w każdej ramce.",
+        "Różna długość tytułu lub opisu nie rozsuwa kolumn i nie powoduje wyjścia poza ekran telefonu.",
+        "Naprawa obejmuje PL/EN, dotyk, klawiaturę oraz widok wąski i szeroki."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0985"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-play.css",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1031",
+      "epic": "HL-EPIC-UI",
+      "area": "Widoczny powrót do Pomocy",
+      "type": "Bug",
+      "title": "Znak zapytania w komunikacie zamknięcia tutoriala ma trzykrotny rozmiar",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1031"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Znak?we wskazówce powrotu ma wysokość trzykrotnie większą od sąsiedniego tekstu i pozostaje czytelnie wyrównany.",
+        "Zamknięcie tutoriala nadal podświetla rzeczywisty przycisk Pomocy na wyspie, bez wskazywania innego menu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0985",
+        "HL-CHG-1030"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-learning-feedback.js",
+          "harborlight-v1-learning-feedback.css",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1032",
+      "epic": "HL-EPIC-TUT",
+      "area": "Wznowienie obu przewodników",
+      "type": "Bug",
+      "title": "Dokończenie wznowionego tutoriala automatycznie prowadzi do praktycznego samouczka",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1032"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Wyjście na dowolnym kroku i wznowienie przez?otwiera zapisane miejsce tutoriala.",
+        "Po jego ukończeniu otwiera się niedokończony samouczek na właściwej lekcji; wcześniej ukończony kurs nie startuje ponownie samoczynnie.",
+        "Powrót nie zeruje świata, czasu, postępu ani odebranych nagród."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0985",
+        "HL-CHG-1012"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-progression.js",
+          "harborlight-v1-onboarding-ui.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-v29.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1033",
+      "epic": "HL-EPIC-TUT",
+      "area": "Zwięzły tutorial produkcji",
+      "type": "Story",
+      "title": "Producenci mają krótkie opisy, a pełny magazyn jedną osobną demonstrację",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1033"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Każdy z pięciu producentów otrzymuje krótki opis roli i wytwarzanego dobra.",
+        "Bezpośrednio po Gospodarstwie jest jeden pełny opis tragarzy, priorytetu, wolnego miejsca, lekcji11 i natychmiastowego transportu.",
+        "W tym kroku nad Gospodarstwem widać pokazową smutną buźkę, która znika po kroku; rzeczywiste oznaczenia pełnych producentów nadal działają."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0983",
+        "HL-CHG-0987"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-progression.js",
+          "harborlight-v1-approved-copy.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-v29.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1034",
+      "epic": "HL-EPIC-TUT",
+      "area": "Teatr w oprowadzaniu",
+      "type": "Story",
+      "title": "Teatr otrzymuje własny krok tutoriala po Domu",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1034"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Krok po Domu wskazuje nowy Teatr na mapie i opisuje odpoczynek, integrację i dekoracje.",
+        "Dodanie miejsca nie myli numeracji, wznowienia ani istniejącego postępu starszej trasy."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1033",
+        "HL-CHG-1044"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-progression.js",
+          "harborlight-v1-approved-copy.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-v29.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1035",
+      "epic": "HL-EPIC-TUT",
+      "area": "Port bez mylącego podświetlenia",
+      "type": "Bug",
+      "title": "Port i statek tworzą jeden krok z ramką kończącą się nad Administracją",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1035"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Dawne Port i Statek/handel są jednym krokiem z handlemNPC4/PvP6, koloniami i fizycznym transportem.",
+        "Ramka Portu nie obejmuje przycisku Administracja ani dolnej nawigacji.",
+        "Nowa trasa ma34kroki, stabilne identyfikatory i migrację miejsca starszego oprowadzania."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0984",
+        "HL-CHG-0988",
+        "HL-CHG-1034"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-progression.js",
+          "harborlight-v1-onboarding-ui.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-v29.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1036",
+      "epic": "HL-EPIC-UI",
+      "area": "Polskie teksty v29",
+      "type": "Bug",
+      "title": "Opisy używają magazynu centralnego, przewodnika po wyspie i premii ścieżek",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1036"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Szczęście mówi o północy, bez dopisku czasu Warszawy; rzeczywiste rozliczenie pozostaje w tej strefie.",
+        "Gospodarka mówi o dostawie do magazynu centralnego. Ścieżki opisują ukończenie wszystkich odcinków, premię i następny poziom.",
+        "Pomoc oprowadza po wyspie i zasadach gry; Ustawienia mówią o automatycznym zapisie bez technicznego interwału30s. Sam zapis nie jest wyłączany."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0988"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-approved-copy.js",
+          "harborlight-v1-progression.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-v29.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1037",
+      "epic": "HL-EPIC-PEO",
+      "area": "Powitalna ludność",
+      "type": "Story",
+      "title": "Pierwsze logowanie każdego z pierwszych siedmiu dni daje mieszkańca",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1037"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Dzień rozpoczęcia jest pierwszym z siedmiu dni kalendarzowych; pierwsze logowanie danego dnia daje jednego mieszkańca.",
+        "Wiadomość wyraźnie mówi o maksymalnie7dodatkowych osobach ponad zwykły przyrost i o wolnych miejscach/łóżkach.",
+        "Nagroda jest niezależna od72godzin ochrony szczęścia i nie nadrabia dni nieobecności."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0977"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-state.js",
+          "harborlight-v1-progression.js",
+          "harborlight-v1-residents.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-v29.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1038",
+      "epic": "HL-EPIC-ACC",
+      "area": "Trwałość powitalnej nagrody",
+      "type": "Bug",
+      "title": "Powitalny mieszkaniec ma wspólne konto, limit Ratusza i jednokrotne rozliczenie",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1038"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Ponowne logowanie, wczytanie, druga karta i zmiana wyspy nie dają drugiej nagrody tego samego dnia.",
+        "Przy pełnym limicie Ratusza nie powstaje kolejka do późniejszego odbioru; po siódmym dniu bonus wygasa.",
+        "Dodanie mieszkańca nie blokuje rozdania szczęścia lub ukończenia kursu przez niespójność z pulą Domu; dane konta i historia są zachowane."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0999",
+        "HL-CHG-1037"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-state.js",
+          "harborlight-v1-progression.js",
+          "harborlight-v1-residents.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-learning-v29.test.mjs",
+          "tests/harborlight-release-v29.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [
+        "Wspólny limit raz na dzień obejmuje również logowanie na wyspie córce; mieszkaniec trafia na otwartą wyspę. Restart nie odnawia wygasłego okresu, także przy pustej historii odbioru. Regresja: tests/harborlight-release-v29.test.mjs."
+      ],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1039",
+      "epic": "HL-EPIC-PEO",
+      "area": "Kolejne osiem misji",
+      "type": "Bug",
+      "title": "Po samouczku aktywny jest wyłącznie bieżący etap przygody głównej",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1039"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Po25lekcjach fabularne wejście prowadzi do pierwszego zadania1/8; pozostałe etapy nie wyglądają na jednocześnie aktywne.",
+        "Zaliczenie odblokowuje kolejne zadanie, aż do8; istniejące rozdziały, pięć pomocniczych i trzy ratunkowe zachowują zasady.",
+        "Opcjonalne aktywności mogą wypełniać oczekiwanie, lecz nie odblokowują pominiętych głównych etapów.",
+        "Przyjęte przed aktualizacją dodatkowe zlecenie pozostaje widoczne i możliwe do dokończenia; nie pokazujemy nowych nieprzyjętych zleceń jako równoległych etapów głównej misji."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0996",
+        "HL-CHG-0997"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-release-v29-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1040",
+      "epic": "HL-EPIC-UI",
+      "area": "Wejście do misji",
+      "type": "Bug",
+      "title": "Widżet nazywa się Aktualne Misje i ma wyraźniejszy przycisk Otwórz",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1040"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nazwa Misje Latarni jest zastąpiona przez Aktualne Misje w odpowiednim widżecie.",
+        "Otwórz ma czytelniejszy rozmiar/kontrast i prowadzi bezpośrednio do aktualnego etapu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1039"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-play.css"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1041",
+      "epic": "HL-EPIC-UI",
+      "area": "Regresja Wstecz to island",
+      "type": "Bug",
+      "title": "Każdy wariant udostępniania poziomu wraca poprawnie na wyspę",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1041"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Również modal po podniesieniu poziomu ma polski przycisk Wróć na wyspę; mieszany tekst Wstecz to island nie pojawia się.",
+        "Otwarcie lub skopiowanie wpisu nadal nie udaje potwierdzonej publikacji i nie przyznaje niezweryfikowanych monet."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1011"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1042",
+      "epic": "HL-EPIC-UI",
+      "area": "Częstotliwość informacji obsady",
+      "type": "Bug",
+      "title": "Wyjaśnienie wycofywania tragarzy pojawia się najwyżej raz dziennie do poziomu5",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1042"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Pierwsza odpowiednia czynność po logowaniu może pokazać komunikat tylko na Ratuszu1–5 i najwyżej raz w dniu.",
+        "Ponowny login nie omija dziennego limitu, a od Ratusza6 automatyczna informacja już się nie pojawia.",
+        "Sama zmiana obsady działa zawsze: rozpoczęta dostawa jest kończona i następuje120s powrotu; ograniczamy popup, nie zasady transportu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1025"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-state.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1043",
+      "epic": "HL-EPIC-TUT",
+      "area": "Czytelne potwierdzenie lekcji",
+      "type": "Bug",
+      "title": "Nagroda lekcji nie zawiera zdania o nieistniejącej dodatkowej skrzyni",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1043"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Po ukończeniu pozostaje jasne potwierdzenie dodania nagrody do zasobów i przejścia przyciskiem Dalej.",
+        "Zdanie Nie czeka na Ciebie dodatkowa skrzynia znika we wszystkich wariantach, bez zmiany wypłaty lub jednokrotności."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1029"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-tutorial-ui.js",
+          "harborlight-v1-learning-feedback.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1044",
+      "epic": "HL-EPIC-UI",
+      "area": "Nowy budynek Teatru",
+      "type": "Story",
+      "title": "Stały Teatr ma miejsce na mapie osady i własny duży widok dziedzińca",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1044"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Teatr jest widoczny i klikalny na wyspie obok Domu; pojawia się również w istniejących zapisach bez resetu.",
+        "Kliknięcie otwiera duży widok z Teatrem i aranżacją. Budynek nie ma zwykłego ulepszania poziomu.",
+        "Widoczna aranżacja odpowiada zapisanym dekoracjom także na głównej mapie wyspy."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1034",
+        "HL-CHG-1045"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-theatre.js",
+          "harborlight-v1-theatre-ui.js",
+          "harborlight-v1-state.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1045",
+      "epic": "HL-EPIC-UI",
+      "area": "Paleta i miejsca dekoracji",
+      "type": "Story",
+      "title": "Dziesięć rodzajów dekoracji można rozmieszczać w dwudziestu miejscach Teatru",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1045"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Paleta obejmuje fontanny, kolumny, rzeźby, kwietniki, drzewa ozdobne, żywopłoty, ławki, latarnie ogrodowe, bramy i mozaiki.",
+        "Dziedziniec ma20miejsc; każda kupiona sztuka ma odrębną tożsamość i poziom.",
+        "Granice miejsca i własności są sprawdzane przy każdym działaniu; brak21miejsca lub cudzej dekoracji."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1044",
+        "HL-CHG-1046"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-theatre.js",
+          "harborlight-v1-theatre-ui.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1046",
+      "epic": "HL-EPIC-UI",
+      "area": "Widoczny rozwój dekoracji",
+      "type": "Story",
+      "title": "Każda dekoracja ma dwadzieścia rzeczywiście widocznych poziomów wyglądu",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1046"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Każdy z10typów zmienia wygląd przy ulepszaniu1–20; zmiana nie ogranicza się do liczby w menu.",
+        "Fontanna rośnie od skromnej misy do dużej lśniącej konstrukcji z wodą, detalami i oświetleniem.",
+        "Podgląd przed zakupem pokazuje docelowy wygląd, a ustawienie ograniczenia animacji jest respektowane."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1045",
+        "HL-CHG-1048"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-theatre.js",
+          "harborlight-v1-theatre-art.js",
+          "harborlight-v1-theatre-ui.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1047",
+      "epic": "HL-EPIC-UI",
+      "area": "Własność i aranżowanie",
+      "type": "Bug",
+      "title": "Dekoracje da się bezpłatnie przestawiać, zamieniać i zdejmować do kolekcji",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1047"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przenoszenie, zamiana miejsc i zdjęcie nie pobierają monet ani nie niszczą dekoracji.",
+        "Zdjęta sztuka wraca do kolekcji z poziomem i może zostać ponownie ustawiona.",
+        "Powtórzenie działania i odczyt nie powielają sztuk, poziomów lub zwrotów środków."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1045"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-theatre.js",
+          "harborlight-v1-theatre-ui.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1048",
+      "epic": "HL-EPIC-UI",
+      "area": "Style i podgląd",
+      "type": "Story",
+      "title": "Style Teatru można mieszać i oglądać przed zakupem",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1048"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Aranżacja pozwala mieszać style nadmorski, piracki, ogrodowy, marmurowy i świąteczny.",
+        "Podgląd nie pobiera monet i nie zmienia posiadanej kolekcji, dopóki gracz nie zatwierdzi zakupu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1046",
+        "HL-CHG-1049"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-theatre-art.js",
+          "harborlight-v1-theatre-ui.js",
+          "harborlight-v1-theatre.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1049",
+      "epic": "HL-EPIC-COM",
+      "area": "Płatności Teatru",
+      "type": "Story",
+      "title": "Dekoracje kosztują monety, a progi5/10/15/20 wymagają reklamy lub aktywnego bez reklam",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1049"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Cena w monetach jest widoczna przed zakupem/ulepszeniem i rośnie według jawnych parametrów DEV.",
+        "Ulepszenia do5/10/15/20 dodatkowo wymagają ukończonej reklamy z nagrodą; aktywne uprawnienie bez reklam pomija film, ale nie cenę.",
+        "Nie pojawia się osobny zakup usługi zaPLN; prawdziwe pieniądze służą wyłącznie dokupieniu monet zgodnie z istniejącym progiemTH3."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-0972",
+        "HL-CHG-1050"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-theatre.js",
+          "harborlight-v1-theatre-ui.js",
+          "harborlight-v1-commerce.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-theatre-v29.test.mjs",
+          "tests/harborlight-theatre-v29-smoke.py",
+          "tests/harborlight-release-v29-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1050",
+      "epic": "HL-EPIC-COM",
+      "area": "Jednokrotna reklama i zakup",
+      "type": "Bug",
+      "title": "Przerwana reklama Teatru nie pobiera ceny i nie odblokowuje ulepszenia",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1050"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Anulowanie, przerwanie filmu, ponowne wczytanie albo brak potwierdzenia nie pobierają monet i nie ulepszają sztuki.",
+        "Potwierdzony efekt i obciążenie są jednokrotne; ponowne użycie starej intencji nie powiela ulepszenia.",
+        "DEV oznacza symulację, a PROD nie uznaje samego verified:true z klienta jako prawdziwego dowodu dostawcy."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1049"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-theatre.js",
+          "harborlight-v1-commerce.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-theatre-v29.test.mjs",
+          "tests/harborlight-theatre-v29-smoke.py",
+          "tests/harborlight-release-v29-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1051",
+      "epic": "HL-EPIC-PEO",
+      "area": "Teatr podczas oczekiwania",
+      "type": "Story",
+      "title": "Aranżowanie Teatru nie zatrzymuje gospodarki, a kolekcja daje kosmetyczne wyróżnienie",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1051"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Podczas aranżacji produkcja, dostawy, budowy i terminy misji nadal biegną.",
+        "Ukończona kolekcja może dać jasno opisaną nagrodę kosmetyczną; brak nieograniczonego źródła monet lub szczęścia."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1047",
+        "HL-CHG-1052"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-theatre.js",
+          "harborlight-v1-theatre-ui.js",
+          "harborlight-v1-state.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1052",
+      "epic": "HL-EPIC-MIN",
+      "area": "Zajęcia podczas oczekiwania",
+      "type": "Story",
+      "title": "Panel aktywności łączy długą misję, krótką przygodę i zdarzenie na kilkadziesiąt sekund",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1052"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Co możesz zrobić teraz? przedstawia sensowne dostępne zajęcia podczas produkcji do długiego zadania.",
+        "Gracz sam rozpoczyna aktywność; nie uruchamiamy serii przymusowych popupów, a tutorial/samouczek pozostają chronione.",
+        "Jedna skupiona aktywność jest wykonywana naraz, a główna misja i gospodarka nadal mają własny postęp."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1039",
+        "HL-CHG-1051"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-adventures.css"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1053",
+      "epic": "HL-EPIC-MIN",
+      "area": "Spadający ładunek",
+      "type": "Story",
+      "title": "Awaria samolotu rozsypuje po całym ekranie nagrody do rzeczywistego łapania",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1053"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Samolot rozpoczyna ograniczoną falę spadających monet lub materiałów po całym obszarze ekranu.",
+        "Rzeczywiste trafienie myszą lub dotykiem zwiększa licznik; końcowa wypłata odpowiada wyłącznie złapanym przedmiotom.",
+        "Nagroda jest jednokrotna i materiały trafiają do dostępnego zapasu nagród, bez ukrytej skrzyni lub uznania niezłapanych rzeczy."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1052",
+        "HL-CHG-1062"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-adventures-art.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [
+        "Pełna gra sprawdza rzeczywisty odbiór kliknięć nad nagłówkiem i poza ramką dialogu oraz dokładną nagrodę; naprawiono kontekst warstw nakładki."
+      ],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1054",
+      "epic": "HL-EPIC-MIN",
+      "area": "Przygoda z mapą",
+      "type": "Story",
+      "title": "Dopasowane trójki tworzą mapę do ułożenia i skarb na wyspie",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1054"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Faktyczne dopasowania trójek odsłaniają cztery różne fragmenty mapy.",
+        "Gracz układa fragmenty, odczytuje wskazówkę i znajduje oznaczone miejsce skarbu na wyspie.",
+        "Powtórne otwarcie gry lub użycie starego wyniku nie daje drugiego fragmentu bądź tej samej wypłaty."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1052",
+        "HL-CHG-1062"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-minigames.js",
+          "harborlight-v1-adventure-puzzles.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1055",
+      "epic": "HL-EPIC-MIN",
+      "area": "Od labiryntu do bitwy",
+      "type": "Story",
+      "title": "Wygrane labirynty dają kule do celowania w piratów i uratowania kupca",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1055"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Ukończenie rzeczywistej rundy labiryntu przyznaje jedną kulę do późniejszej przygody.",
+        "Gracz celuje i strzela do poruszających się pirackich statków; trafienia wynikają z przebiegu gry, nie przycisku udającego wygraną.",
+        "Uratowany kupiec kończy historię ograniczoną, jednokrotną nagrodą."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1052",
+        "HL-CHG-1062"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-minigames.js",
+          "harborlight-v1-adventure-puzzles.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1056",
+      "epic": "HL-EPIC-MIN",
+      "area": "Logiczna budowa mostu",
+      "type": "Story",
+      "title": "Most ma ograniczoną liczbę elementów, próbę przejścia i dobrowolne dodatkowe części",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1056"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Gracz faktycznie rozmieszcza belki/podpory i sprawdza przejście mieszkańców po konstrukcji.",
+        "Podstawowa liczba części zawsze wystarcza do poprawnego rozwiązania; brak wymuszonego zakupu do ukończenia.",
+        "Dodatkowe elementy można kupić monetami albo otrzymać po ukończonej reklamie; anulowanie nie daje części i nie pobiera ceny."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1050",
+        "HL-CHG-1052",
+        "HL-CHG-1062"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-adventure-puzzles.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v29-adventures.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1057",
+      "epic": "HL-EPIC-MIN",
+      "area": "Nocna Latarnia",
+      "type": "Story",
+      "title": "Nocne sygnały Latarni prowadzą statek do portu przez zadanie pamięciowe",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1057"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Gracz obserwuje i odtwarza sygnały świetlne w rzeczywistej grze pamięciowej.",
+        "Poprawne działania prowadzą statek do portu i kończą historię nagrodą lub dalszą wskazówką.",
+        "Błędna sekwencja nie zalicza zadania; można ponowić zgodnie z jawnymi zasadami."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1052",
+        "HL-CHG-1062"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-adventure-puzzles.js",
+          "harborlight-v1-adventures-art.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1058",
+      "epic": "HL-EPIC-MIN",
+      "area": "Przygoda obserwacyjna",
+      "type": "Story",
+      "title": "Przemoczone listy łączą wskazówki z wyspy z dostarczeniem trzech przesyłek",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1058"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Gracz znajduje wskazówki związane z widocznymi miejscami wyspy i rozpoznaje adresatów trzech listów.",
+        "Tylko właściwe dopasowanie adresata zalicza dostarczenie; zakończenie ma widoczny skutek fabularny i ograniczoną nagrodę."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1052",
+        "HL-CHG-1062"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-adventure-puzzles.js",
+          "harborlight-v1-adventures-art.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1059",
+      "epic": "HL-EPIC-MIN",
+      "area": "Muzyczna przygoda",
+      "type": "Story",
+      "title": "Portowa orkiestra wymaga rozpoznania instrumentów i odtworzenia rytmu",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1059"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Rozpoznanie instrumentów oraz rzeczywiste odtworzenie rytmu składają się na przygotowanie koncertu.",
+        "Koncert stanowi widoczny finał historii; efekt i wypłata nie powielają się po odczycie."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1052",
+        "HL-CHG-1062"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-adventure-puzzles.js",
+          "harborlight-v1-adventures-art.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1060",
+      "epic": "HL-EPIC-MIN",
+      "area": "Przestrzenne kanały",
+      "type": "Story",
+      "title": "Ogród przypływu wymaga doprowadzenia wody obracanymi kanałami",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1060"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Gracz obraca odcinki i tworzy faktycznie połączoną trasę wody do sadzawek.",
+        "Niepołączona sieć nie kończy przygody; rozwiązanie daje widoczny rozkwit ogrodu i jednokrotny efekt."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1052",
+        "HL-CHG-1062"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-adventure-puzzles.js",
+          "harborlight-v1-adventures-art.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1061",
+      "epic": "HL-EPIC-MIN",
+      "area": "Ładunek pod kontrolą",
+      "type": "Story",
+      "title": "Załadunek łączy rozmieszczanie ciężarów, równowagę statku i wybór rejsu",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1061"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przenoszenie skrzyń zmienia rozkład ciężaru; tylko dopuszczalna równowaga pozwala bezpiecznie odpłynąć.",
+        "Wybór rejsu kończy fabularny łańcuch, a nagroda jest ograniczona i jednokrotna."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1052",
+        "HL-CHG-1062"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-adventure-puzzles.js",
+          "harborlight-v1-adventures-art.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1062",
+      "epic": "HL-EPIC-ACC",
+      "area": "Trwałość krótkich przygód",
+      "type": "Bug",
+      "title": "Przygody zapisują etapy i jednokrotne nagrody bez automatycznej kwalifikacji dobroczynnej",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1062"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Zamknięcie widoku i odczyt przywracają właściwy etap; duplikat wyniku lub odebranej nagrody niczego nie powiela.",
+        "Czasy odnowienia, maksymalne fale i nagrody są jawnymi parametrami DEV, bez nieskończonego klikania monet.",
+        "Nowe źródło monet nie staje się samo dowodem kwalifikacji do Pomagam; brak aktywacji prawdziwych reklam i przelewów."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1006",
+        "HL-CHG-1053",
+        "HL-CHG-1054",
+        "HL-CHG-1055",
+        "HL-CHG-1056"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-state.js",
+          "harborlight-v1-adventure-puzzles.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1063",
+      "epic": "HL-EPIC-COM",
+      "area": "Katalog kont testowych",
+      "type": "Bug",
+      "title": "Trzy istniejące konta DEV są wykrywane przez rzeczywisty katalog społeczności",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1063"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Katalog odkrywa admin1/admin2/admin3 na podstawie istniejących światów serwerowych, bez wymogu otwierania trzech formularzy pseudonimu.",
+        "Istniejący wybrany pseudonim nie jest nadpisywany. Nie tworzymy przeciwnika, jeśli konto nie ma świata.",
+        "Odpowiedź zawiera wyłącznie publiczne nazwy i niejawne identyfikatory; nie ujawnia UID Firebase, haseł, e-maili lub prywatnych zasobów. Automatyczna migracja jest ograniczona do trzech kont nonPROD."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1005",
+        "HL-CHG-1065"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "backend/community-service.mjs",
+          "backend/server.mjs"
+        ],
+        "automated_tests": [
+          "backend/test/community-dev-accounts.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1064",
+      "epic": "HL-EPIC-COM",
+      "area": "Żywy panel społeczności",
+      "type": "Bug",
+      "title": "Czat odświeża graczy i prośby o sojusz bez kasowania szkicu wiadomości",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1064"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nowy gracz i prośba o przyjęcie pojawiają się bez ponownego otwierania panelu; istnieje też jawne Odśwież graczy i sojusze.",
+        "Odświeżanie zachowuje pisaną wiadomość i wybranego rozmówcę; nie wysyła szkicu automatycznie.",
+        "Po odejściu lub usunięciu z sojuszu tracony jest dostęp do jego czatu zgodnie z bieżącym serwerowym członkostwem."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1002",
+        "HL-CHG-1063"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-v1-community-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-community-v24-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1065",
+      "epic": "HL-EPIC-COM",
+      "area": "Odbiór społeczności DEV",
+      "type": "Story",
+      "title": "Rzeczywiste HTTP trzech kont potwierdza prywatne rozmowy, sojusz i trwały powrót",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1065"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Trzy niezależne uwierzytelnione klienty odnajdują się, wymieniająDM, zakładają/dołączają do sojuszu i rozmawiają wspólnie.",
+        "Odejście natychmiast odbiera dostęp403; trzeci gracz nie czyta cudzej rozmowy prywatnej. Restart usługi zachowuje członkostwo i wiadomości.",
+        "Limity1000znaków,20wiadomości/20s,30dni i zamrożony skład ligi pozostają. Test lokalny nie jest dowodem nowego wdrożeniaGCP."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1002",
+        "HL-CHG-1005",
+        "HL-CHG-1063"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "backend/community-service.mjs",
+          "backend/server.mjs",
+          "harborlight-v1-community-client.js"
+        ],
+        "automated_tests": [
+          "backend/test/community-dev-accounts.test.mjs",
+          "backend/test/community-service.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN.",
+        "full_backend_validation": {
+          "date": "2026-11-03",
+          "result": "PASS",
+          "tests": 133,
+          "failures": 0,
+          "environment": "local isolated HTTP",
+          "command": "node --test --test-concurrency=1 --test-isolation=none backend/test/*.test.mjs",
+          "log": "/tmp/harborlight-v29-backend-full.log"
+        }
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1066",
+      "epic": "HL-EPIC-INF",
+      "area": "Odbiór wydania v29",
+      "type": "Ops",
+      "title": "Wydanie0.13 ma własne testy i dowody DEV bez domyślnej promocji PRE-PROD",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1066"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Wersja aplikacji i cache odpowiadają nowej paczce; pakiet obejmuje wszystkie faktycznie importowane moduły i zasoby.",
+        "Pełne lokalne kontrole oraz własneCI/Pages dotyczą rzeczywistego nowegoSHA. WcześniejszePASS0.12 nie zastępują odbioru.",
+        "PRE-PROD pozostaje0.12, bez resetu adminów, PROD, fizycznej integracji lub aktywacji prawdziwych operatorów; publikacjaDEV jest raportowana osobno."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1022"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "harborlight-version.js",
+          "scripts/build_frontend.py",
+          ".github/workflows/ci.yml"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1067",
+      "epic": "HL-EPIC-OPS",
+      "area": "Rejestr i odhaczanie odbioru",
+      "type": "Ops",
+      "title": "Każda zmiana v29 ma kartę Git i osobny powiązany scenariusz ręczny",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1067"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Atomowe karty rejestru obejmują cały zatwierdzony zakres v29, są pogrupowane tematycznie i mają oddzielne statusy warstw.",
+        "Lista START-HERE/interaktywnyQA i osobne scenariusze umożliwiają ręczne odhaczanie; wszystkie nowe wyniki zaczynają sięNOTRUN.",
+        "Nie tworzymy fikcyjnych natywnychIssues lub wynikówCI. Ręczne wykonanie wymaga rzeczywistego testera, buildu i dowodu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1015",
+        "HL-CHG-1066"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md"
+        ],
+        "code": [
+          "scripts/build_change_register.py",
+          "scripts/build_manual_checklist.py"
+        ],
+        "automated_tests": [
+          "tests/harborlight-tracking-issues.test.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN.",
+        "registry_validation": {
+          "date": "2026-11-03",
+          "result": "PASS",
+          "change_cards": 397,
+          "manual_cases": 134,
+          "manual_executed": 0,
+          "commands": [
+            "python3 scripts/build_change_register.py --check",
+            "python3 scripts/build_manual_checklist.py --check",
+            "python3 tests/harborlight-tracking-issues.test.py"
+          ]
+        }
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1068",
+      "epic": "HL-EPIC-OPS",
+      "area": "Aktualny arkusz zasad",
+      "type": "Ops",
+      "title": "Excel 12 przedstawia bieżące zasady DEV i zachowuje wcześniejsze arkusze",
+      "source": {
+        "kind": "user_chat_approved_batch_v29",
+        "date": "2026-11-03",
+        "date_note": "Data zbiorczego GO, Europe/Warsaw; wcześniejsze uwagi zachowują chronologię w czacie.",
+        "summary": "Zatwierdzony zakres zbierany po PRE-PROD0.12; użytkownik udzielił GO wyłącznie na DEV. Szczegóły i granice opisuje FRONTEND-V29-REQUIREMENTS.md.",
+        "reference": "chat:GO:dev-v29:HL-CHG-1068"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "locally_validated_pending_publication",
+        "ci": "not_run_for_change",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nowy arkusz opisuje rzeczywiste parametry kodu 0.13, w tym krzywą budowy, magazyn, wydobycie, tutorial, samouczek, Teatr i przygody.",
+        "Archiwum Excel 11 nie jest nadpisywane; wcześniejsze arkusze, komentarze i historyczne formuły zachowują dane.",
+        "Arkusz rozdziela przygotowany DEV 0.13 od odebranego PRE-PROD 0.12. Scenariusze ręczne zaczynają z wynikiem NOT RUN."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1023",
+        "HL-CHG-1027",
+        "HL-CHG-1066"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V29-REQUIREMENTS.md",
+          "docs/testing/MANUAL-TEST-PLAN.md",
+          "docs/DEV-0.13.0.0-VALIDATION.md",
+          "docs/arkusze/HARBORLIGHT12-walidacja.json"
+        ],
+        "code": [
+          "scripts/build_workbook_v12.py",
+          "docs/arkusze/HARBORLIGHT12-zasady.xlsx"
+        ],
+        "automated_tests": [
+          "scripts/build_workbook_v12.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Implementacja DEV0.13.0.0/v29 ukończona; lokalny odbiór opisuje docs/DEV-0.13.0.0-VALIDATION.md. Własne CI i Pages oczekują publikacji końcowego SHA. PRE-PROD pozostaje odebrane0.12.0.0/d9e2940, bez resetu i PROD. Ręczne wyniki NOT RUN."
+      },
+      "notes": [],
+      "tags": [
+        "v29",
+        "dev-only"
+      ]
     }
-  ]
+  ],
+  "current_environment": {
+    "as_of": "2026-11-03",
+    "dev_application_version": "0.13.0.0",
+    "dev_status": "local_validation_complete_pending_publication",
+    "dev_ci": "not_run_for_change",
+    "preprod_application_version": "0.12.0.0",
+    "preprod_source_sha": "d9e2940b9a00755d979c159ec0fb62e290dd7ff1",
+    "preprod_ci_run_id": 41480146644,
+    "preprod_deployment_run_id": 41482455135,
+    "preprod_deployment_attempt": 1,
+    "preprod_status": "previous_release_verified",
+    "prod_status": "no_new_deployment",
+    "full_test_account_reset": "not_performed",
+    "note": "Historyczny environment_baseline poniżej zachowuje początek ewidencji v22.1. Bieżący PRE-PROD jest odrębnym odebranym wydaniem 0.12.0.0; nowe karty v29 nie dziedziczą tamtej promocji ani wyników CI."
+  }
 }

@@ -147,11 +147,21 @@ def assert_supplies_guide_geometry(page):
 def first_five_actions(browser):
     context, page = first_four_actions(browser)
     overfull = snapshot(page)
-    assert sum(overfull['resources'][material] for material in MATERIALS) > 4000
+    limits = page.evaluate('async value => {const M=await import("./harborlight-v1-logistics.js?v=frontend-v29");return M.warehouseLimits(value);}', overfull)
+    # This regression deliberately represents a saved over-capacity island.
+    # The larger v29 warehouse must still defer a chest until real carriers
+    # spend reserved construction goods; do not rely on the retired 4000 cap.
+    for material in MATERIALS:
+        overfull['resources'][material] = limits['perResource'] + 250
+    install(page, overfull)
+    # Use the actual map route. X intentionally pauses the practical course
+    # and therefore correctly removes its floating guide.
+    page.locator('[data-tutorial-visit="townhall-upgrade"]').click()
+    assert sum(overfull['resources'][material] for material in MATERIALS) > limits['total']
     assert overfull['tutorial']['claimed']['food-check']
     assert_supplies_guide_geometry(page)
     page.locator('[data-tutorial-go="townhall-upgrade"]').click()
-    page.locator('[data-tutorial-supplies]').click()
+    page.locator('[data-tutorial-supplies]:visible').click()
     page.locator('#hit-world-townhall').click()
     supplied = snapshot(page)
     assert supplied['tutorial']['buildingSuppliesClaimed']
@@ -201,7 +211,7 @@ def first_five_actions(browser):
         if released['tutorial']['claimed'].get('townhall-upgrade'):
             break
         totals = [released['resources'][material] for material in MATERIALS]
-        assert sum(totals) > 4000 or max(totals) > 1000, 'An eligible completed chest must be paid without another tutorial action'
+        assert sum(totals) > limits['total'] or max(totals) > limits['perResource'], 'An eligible completed chest must be paid without another tutorial action'
     assert released['tutorial']['claimed'].get('townhall-upgrade'), {
         'resources': released['resources'], 'projects': released['constructionProjects'],
         'trips': released['haulTrips']}
@@ -221,7 +231,7 @@ def legacy_supplies_mobile(browser):
         page.locator('[data-tutorial-go="townhall-upgrade"]').click()
         assert snapshot(page)['resources'] == before['resources']
         assert snapshot(page)['tutorial']['completed'] == before['tutorial']['completed']
-        page.locator('[data-tutorial-supplies]').click()
+        page.locator('[data-tutorial-supplies]:visible').click()
         townhall = page.locator('#hit-world-townhall')
         expect(townhall).to_have_attribute('data-tutorial-map-target', 'townhall-upgrade')
         expect(townhall).to_be_in_viewport(ratio=0.99)

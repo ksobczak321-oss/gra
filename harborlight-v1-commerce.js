@@ -1,7 +1,7 @@
 // Optional storefront and rewarded-ad commands. Real money/provider receipts
 // must be verified by a server. The browser can simulate only outside PROD.
-import { MATERIAL_IDS, receiveMaterials } from './harborlight-v1-logistics.js?v=frontend-v28-2';
-import { engagementOfferStatus, completeEngagementOffer, claimInitialPremiumBonus } from './harborlight-v1-engagement.js?v=frontend-v28-2';
+import { MATERIAL_IDS, receiveMaterials } from './harborlight-v1-logistics.js?v=frontend-v29';
+import { engagementOfferStatus, completeEngagementOffer, claimInitialPremiumBonus } from './harborlight-v1-engagement.js?v=frontend-v29';
 
 const DAY = 86400000;
 const clock = state => Number.isFinite(state.worldTimeMs) ? state.worldTimeMs : Date.now();
@@ -11,7 +11,7 @@ const integer = n => Number.isSafeInteger(n) && n >= 0;
 const object = n => n && typeof n === 'object' && !Array.isArray(n);
 export const COIN_PACKAGES = Object.freeze([100,500,1000,2000,5000,10000,50000].map(grossGrosz => Object.freeze({ grossGrosz, coins: grossGrosz / 10 })));
 export const COMMERCE_RULES = Object.freeze({ provider: 'Paynow', topupUnlockLevel: 3, noAdsThresholdGrosz: 1999, noAdsWindowDays: 30, materialAdMinimum: 10, materialAdMaximum: 30, simulatedAdSeconds: 10 });
-export const ACCOUNT_PROGRESS_FIELDS = Object.freeze(['commerce','loyalty','socialRewards','referrals','engagementSchedule','welcome']);
+export const ACCOUNT_PROGRESS_FIELDS = Object.freeze(['commerce','loyalty','socialRewards','referrals','engagementSchedule','welcome','welcomeWorkers','carrierRecallNoticeDay']);
 export function preserveAccountProgress(previous, next) {
   for(const field of ACCOUNT_PROGRESS_FIELDS) if(previous[field]!==undefined) next[field]=structuredClone(previous[field]);
   next.islandGeneration=previous.islandGeneration || 1;

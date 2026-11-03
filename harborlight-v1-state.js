@@ -1,29 +1,34 @@
 // Economy and progression for the interactive approved-screen prototype.
 // Pure data module: browser UI and Node tests share the same rules.
-import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange, townhallPopulationRequirement, playerTradeUnlocked, starterTurboAvailable, unlockStarterTurbo, starterConstructionTiming, missionProductionMultiplier } from './harborlight-v1-logistics.js?v=frontend-v28-2';
-export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty, townhallPopulationRequirement, playerTradeUnlocked } from './harborlight-v1-logistics.js?v=frontend-v28-2';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange, townhallPopulationRequirement, playerTradeUnlocked, starterTurboAvailable, unlockStarterTurbo, starterConstructionTiming, missionProductionMultiplier } from './harborlight-v1-logistics.js?v=frontend-v29';
+export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty, townhallPopulationRequirement, playerTradeUnlocked } from './harborlight-v1-logistics.js?v=frontend-v29';
 
-import { normalizeResidents, applyDailyHappinessDecay, residentPrayerAction, residentPopulationMinimum, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds, residentHasHousing, housingStatus, foodDemandPerHour as residentFoodDemandPerHour } from './harborlight-v1-residents.js?v=frontend-v28-2';
-export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v28-2';
-export { residentPrayerQuote, residentPrayerStatus, PRAYER_RULES } from './harborlight-v1-residents.js?v=frontend-v28-2';
+import { normalizeResidents, applyDailyHappinessDecay, residentPrayerAction, residentPopulationMinimum, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds, residentHasHousing, housingStatus, foodDemandPerHour as residentFoodDemandPerHour } from './harborlight-v1-residents.js?v=frontend-v29';
+export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v29';
+export { residentPrayerQuote, residentPrayerStatus, PRAYER_RULES } from './harborlight-v1-residents.js?v=frontend-v29';
 
-import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction, quotePremiumBuilding, quoteTransport, quoteAcceleration } from './harborlight-v1-activities.js?v=frontend-v28-2';
-import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v28-2';
-import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v28-2';
-import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v28-2';
-import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v28-2';
-import { normalizeIslandProfile, validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v28-2';
-import { consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v28-2';
-import { warsawParts, warsawDayKey, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v28-2';
-import { welcomeStatus, WELCOME_SECONDS } from './harborlight-v1-residents.js?v=frontend-v28-2';
-export { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v28-2';
-import { normalizeWorldEvents, advanceWorldEvents, nextWorldEvent, recordChapelBlessing, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v28-2';
-import { normalizeCommerce, commerceAction, nextCommerceEvent, advanceCommerce } from './harborlight-v1-commerce.js?v=frontend-v28-2';
-import { normalizeEngagementSchedule } from './harborlight-v1-engagement.js?v=frontend-v28-2';
-import { constructionScheduleEstimate } from './harborlight-v1-logistics.js?v=frontend-v28-2';
-import { normalizeMissions, advanceMissions, nextMissionEvent, missionAction, recordMissionAction } from './harborlight-v1-missions.js?v=frontend-v28-2';
-import { residentWorkMultiplier } from './harborlight-v1-housing.js?v=frontend-v28-2';
-import { APPROVED_TOUR_VERSION, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v28-2';
+import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction, quotePremiumBuilding, quoteTransport, quoteAcceleration } from './harborlight-v1-activities.js?v=frontend-v29';
+import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v29';
+import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v29';
+import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v29';
+import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v29';
+import { normalizeIslandProfile, validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v29';
+import { consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v29';
+import { warsawParts, warsawDayKey, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v29';
+import { welcomeStatus, WELCOME_SECONDS } from './harborlight-v1-residents.js?v=frontend-v29';
+export { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v29';
+import { normalizeWorldEvents, advanceWorldEvents, nextWorldEvent, recordChapelBlessing, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v29';
+import { normalizeCommerce, commerceAction, nextCommerceEvent, advanceCommerce } from './harborlight-v1-commerce.js?v=frontend-v29';
+import { normalizeEngagementSchedule } from './harborlight-v1-engagement.js?v=frontend-v29';
+import { constructionScheduleEstimate } from './harborlight-v1-logistics.js?v=frontend-v29';
+import { normalizeMissions, advanceMissions, nextMissionEvent, missionAction, recordMissionAction } from './harborlight-v1-missions.js?v=frontend-v29';
+import { residentWorkMultiplier } from './harborlight-v1-housing.js?v=frontend-v29';
+import { APPROVED_TOUR_VERSION, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v29';
+import { attachConstructionTiming } from './harborlight-v1-logistics.js?v=frontend-v29';
+import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v29';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v29';
+import { normalizeWelcomeWorkers, claimWelcomeWorker, welcomeWorkerCopy } from './harborlight-v1-welcome.js?v=frontend-v29';
+import { commerceStatus } from './harborlight-v1-commerce.js?v=frontend-v29';
 
 export const RESOURCES = {
   coins: { name: 'Coins', short: 'coins', symbol: '◉', price: 1 },
@@ -39,15 +44,16 @@ export const WORKPLACE_IDS = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry',
 export const CONSTRUCTION_IDS = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'townhall', 'house', 'market', 'warehouse', 'dock', 'chapel', 'lighthouse'];
 
 export const BUILDINGS = {
+  theatre: { name: 'Theatre', description: 'A place to rest and meet neighbours. Arrange twenty spaces with decorations from your collection; the Theatre itself has no building upgrades.', cost: {}, maxLevel: 1 },
   house: { name: 'House', description: 'Each level provides housing for 24 residents. Residents without a bed work at half speed and eat twice as much. Daily House happiness points are available only to housed residents.', cost: { coins: 100, wood: 40, stone: 20, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
-  farm: { name: 'Farm', description: 'Each farmer produces 20 grain per hour at level 1, 24 at level 2, and two more per level thereafter. Harvests wait locally for warehouse workers.', cost: { coins: 80, wood: 30, stone: 10 }, resource: 'grain', rate: 20, maxLevel: MAX_BUILDING_LEVEL },
-  sawmill: { name: 'Sawmill', description: 'Each worker produces 20 planks per hour at level 1, 24 at level 2, and two more per level thereafter. Each plank requires 2 wood from central storage.', cost: { coins: 120, wood: 45, stone: 25 }, resource: 'planks', rate: 20, input: 'wood', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
-  quarry: { name: 'Quarry', description: 'Each quarry worker produces 20 stone per hour at level 1, 24 at level 2, and two more per level thereafter. Stone waits locally for transport.', cost: { coins: 150, wood: 35, stone: 20 }, resource: 'stone', rate: 20, maxLevel: MAX_BUILDING_LEVEL },
+  farm: { name: 'Farm', description: 'Each farmer produces 40 grain per hour at level 1 and four more per level thereafter. Harvests wait locally for warehouse workers.', cost: { coins: 80, wood: 30, stone: 10 }, resource: 'grain', rate: 40, maxLevel: MAX_BUILDING_LEVEL },
+  sawmill: { name: 'Sawmill', description: 'Each worker produces 40 planks per hour at level 1 and four more per level thereafter. Each plank requires 2 wood from central storage.', cost: { coins: 120, wood: 45, stone: 25 }, resource: 'planks', rate: 40, input: 'wood', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
+  quarry: { name: 'Quarry', description: 'Each quarry worker produces 40 stone per hour at level 1 and four more per level thereafter. Stone waits locally for transport.', cost: { coins: 150, wood: 35, stone: 20 }, resource: 'stone', rate: 40, maxLevel: MAX_BUILDING_LEVEL },
   dock: { name: 'Harbor', description: 'Connects the island to trade and expeditions.', cost: { coins: 200, wood: 60, planks: 25 }, maxLevel: MAX_BUILDING_LEVEL },
-  warehouse: { name: 'Warehouse', description: 'At level 1 each carrier carries 120 items per base five-minute course; storage holds 1,000 per material and 4,000 total. Capacity grows by 50% up to 10 million per material and 40 million total. After level 24 only crew capacity grows; separate road upgrades still apply.', cost: { coins: 160, wood: 35, stone: 30, planks: 15 }, maxLevel: MAX_BUILDING_LEVEL },
-  lighthouse: { name: 'Lighthouse', description: 'Completing a level sets everyone’s happiness to 100% and doubles material production for 24 hours × the new level. Construction takes four times as long as transport.', cost: { coins: 300, planks: 30 }, maxLevel: MAX_BUILDING_LEVEL },
-  lumber: { name: 'Lumber Camp', description: 'Each lumberjack produces 20 wood per hour at level 1, 24 at level 2, and two more per level thereafter. Wood waits locally for transport.', cost: { coins: 90, wood: 25, stone: 15 }, resource: 'wood', rate: 20, maxLevel: MAX_BUILDING_LEVEL },
-  windmill: { name: 'Windmill', description: 'Each miller produces 20 food per hour at level 1, 24 at level 2, and two more per level thereafter. Each Food requires 2 grain from central storage.', cost: { coins: 140, wood: 40, stone: 20, planks: 15 }, resource: 'food', rate: 20, input: 'grain', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
+  warehouse: { name: 'Warehouse', description: 'At level 1 the central Warehouse holds 2,688 per material and 13,440 total. Each level has fixed limits for upgrades, missions, meals and a buffer. Reward materials remain available outside ordinary capacity. Carriers supply construction and collect goods; paths improve transport.', cost: { coins: 160, wood: 35, stone: 30, planks: 15 }, maxLevel: MAX_BUILDING_LEVEL },
+  lighthouse: { name: 'Lighthouse', description: 'Completing a level sets everyone’s happiness to 100% and doubles material production for 24 hours × the new level. New construction uses the island-level time budget shown before ordering.', cost: { coins: 300, planks: 30 }, maxLevel: MAX_BUILDING_LEVEL },
+  lumber: { name: 'Lumber Camp', description: 'Each lumberjack produces 40 wood per hour at level 1 and four more per level thereafter. Wood waits locally for transport.', cost: { coins: 90, wood: 25, stone: 15 }, resource: 'wood', rate: 40, maxLevel: MAX_BUILDING_LEVEL },
+  windmill: { name: 'Windmill', description: 'Each miller produces 40 food per hour at level 1 and four more per level thereafter. Each Food requires 2 grain from central storage.', cost: { coins: 140, wood: 40, stone: 20, planks: 15 }, resource: 'food', rate: 40, input: 'grain', inputRate: 2, maxLevel: MAX_BUILDING_LEVEL },
   townhall: { name: 'Town Hall', description: 'The Town Hall determines the island level and the upgrade limit for other buildings. Each level allows 24 residents; the House provides their housing.', cost: { coins: 240, wood: 50, stone: 50, planks: 20 }, maxLevel: MAX_BUILDING_LEVEL },
   chapel: { name: 'Chapel', description: 'Completing an upgrade grants +10 happiness × the new level and taxes ×2 for 10 hours. One free blessing renews at Warsaw midnight without accumulation. Every manual blessing gives +50 of every resource and +20 happiness for one hour. Paid and ad blessings share a four-hour wait after their effect ends.', cost: { coins: 180, wood: 20, stone: 60, planks: 10 }, maxLevel: MAX_BUILDING_LEVEL },
   market: { name: 'Market', description: 'Merchants exchange goods without coins.', cost: { coins: 130, wood: 35, stone: 15 }, maxLevel: MAX_BUILDING_LEVEL }
@@ -125,6 +131,9 @@ export function createState(now = Date.now(), options = {}) {
   normalizeEngagementSchedule(state, {});
   normalizeWorldEvents(state, {});
   normalizeCommerce(state, {});
+  normalizeWelcomeWorkersForState(state, {});
+  Theatre.normalizeTheatre(state, {});
+  Adventures.normalizeAdventures(state, {});
   normalizeEffectNotifications(state);
   state.paused = options.onboarding === true;
   return state;
@@ -208,6 +217,8 @@ function startOnboardedWorld(state, now) {
   state.islandStartedAt = at;
   state.onboarding = { ...state.onboarding, stage: 'complete', worldStartedAt: at, completedAt: at };
   state.paused = false;
+  if (!(state.welcomeWorkers?.claimedDays || []).length && state.welcomeWorkers.startedAt >= origin) state.welcomeWorkers = normalizeWelcomeWorkers({}, { startedAt: at });
+  grantWelcomeWorker(state, at);
   return good('The introduction is complete. Your island clock has started.');
 }
 
@@ -336,7 +347,28 @@ export function updateHappiness(state) {
 
 export function recordVisit(state, now = Date.now()) {
   if (onboardingStatus(state).pending) return false;
-  return recordProgressionLogin(state, now);
+  const login = recordProgressionLogin(state, now);
+  grantWelcomeWorker(state, now);
+  return login;
+}
+
+function normalizeWelcomeWorkersForState(state, raw) {
+  const startedAt = raw.welcomeWorkers?.startedAt ?? raw.welcome?.startedAt ?? raw.onboarding?.worldStartedAt ?? raw.islandStartedAt ?? state.welcome.startedAt;
+  state.welcomeWorkers = normalizeWelcomeWorkers(raw.welcomeWorkers, { startedAt });
+}
+
+function grantWelcomeWorker(state, now) {
+  // The account's shared ledger permits one welcome person per day across all
+  // islands. They arrive on the island opened after login, use the ordinary
+  // settling period and never inflate today's House point pool.
+  const result = claimWelcomeWorker(state, { now, population: state.population, limit: state.buildings.townhall.level * 24 });
+  if (result.count > 0) { state.population += result.count; synchronizeResidents(state); updateHappiness(state); }
+  if (result.ok && !state.welcomeWorkers.announced) {
+    const copy = welcomeWorkerCopy(state.settings.language);
+    notify(state, 'welcome-workers', copy.title, copy.text);
+    state.welcomeWorkers.announced = true;
+  }
+  return result;
 }
 
 export function housingCapacity(state) {
@@ -491,7 +523,7 @@ function advancePopulation(state, elapsedSeconds) {
     const serviceTime = Math.min(Infinity, ...(state.premiumServices || []).map(service => service.buildRemaining > 1e-9 ? service.buildRemaining : 1e-8));
     // residentSegments already includes nextResidentEvent and narrows it with
     // happiness boundaries; no resident clock changes during these quotes.
-    let duration = Math.min(remaining, boundaryTime, segment.nextEvent, logisticsEvent, nextActivitiesEvent(state), nextMissionEvent(state), nextLeisureEvent(state), nextProgressionEvent(state), nextWorldEvent(state), nextCommerceEvent(state), serviceTime, foodTime, taxFundingTime, rankingTime, premiumTime, houseTime,
+    let duration = Math.min(remaining, boundaryTime, segment.nextEvent, logisticsEvent, nextActivitiesEvent(state), Adventures.nextAdventuresEvent(state), Theatre.nextTheatreEvent(state), nextMissionEvent(state), nextLeisureEvent(state), nextProgressionEvent(state), nextWorldEvent(state), nextCommerceEvent(state), serviceTime, foodTime, taxFundingTime, rankingTime, premiumTime, houseTime,
       state.chapelRemaining > 0 ? state.chapelRemaining : Infinity,
       state.blessingRemaining > 0 ? state.blessingRemaining : Infinity,
       state.paidBlessingCooldownRemaining > 0 ? state.paidBlessingCooldownRemaining : Infinity,
@@ -536,6 +568,9 @@ function advancePopulation(state, elapsedSeconds) {
     advanceWorldEvents(state, duration, { removeResident: removeResidentForDeparture, synchronizeResidents });
     advanceCommerce(state, duration);
     advanceActivities(state, duration);
+    Adventures.advanceAdventures(state, duration);
+    Adventures.observeMiniGames(state);
+    Theatre.advanceTheatre(state, duration);
     advanceProgression(state, duration);
     for (const service of [...(state.premiumServices || [])]) {
       service.buildRemaining = countdown(service.buildRemaining, duration);
@@ -625,7 +660,7 @@ export function normalizeState(raw, now = Date.now()) {
   for (const id of Object.keys(BUILDINGS)) {
     const saved = raw.buildings?.[id];
     if (!saved || typeof saved !== 'object') continue;
-    const level = integer(saved.level, state.buildings[id].level, id === 'townhall' ? 1 : 0, BUILDINGS[id].maxLevel);
+    const level = id === 'theatre' ? 1 : integer(saved.level, state.buildings[id].level, id === 'townhall' ? 1 : 0, BUILDINGS[id].maxLevel);
     const workers = WORKPLACE_IDS.includes(id) && level > 0 ? integer(saved.workers, state.buildings[id].workers, 0, MAX_BUILDING_LEVEL * 24) : 0;
     state.buildings[id] = { level, workers, ready: BUILDINGS[id].resource && level > 0 ? integer(saved.ready, 0, 0, 10000000) : 0, workProgress: [] };
   }
@@ -723,6 +758,10 @@ export function normalizeState(raw, now = Date.now()) {
   normalizeEngagementSchedule(state, raw);
   normalizeWorldEvents(state, raw);
   normalizeCommerce(state, raw);
+  state.carrierRecallNoticeDay = typeof raw.carrierRecallNoticeDay === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(raw.carrierRecallNoticeDay) ? raw.carrierRecallNoticeDay : null;
+  normalizeWelcomeWorkersForState(state, raw);
+  Theatre.normalizeTheatre(state, raw);
+  Adventures.normalizeAdventures(state, raw);
   const serviceBuildings = new Set();
   state.premiumServices = (Array.isArray(raw.premiumServices) ? raw.premiumServices : []).filter(service => {
     if (!service || !owns(BUILDINGS, service.building) || serviceBuildings.has(service.building) || service.targetLevel !== state.buildings[service.building].level + 1 || service.targetLevel > buildingLevelLimit(state, service.building)) return false;
@@ -950,10 +989,7 @@ export function requestUpgrade(state, request) {
     stage: planned ? 'planned' : 'queued', order: ++state.constructionSequence, cost,
     instantTransport: immediate, forecast: planned, forecastFee: Number.isFinite(request.forecastFee) ? request.forecastFee : 0,
     reservationVersion: 9, reservedMaterials: Object.fromEntries(MATERIAL_IDS.map(resource => [resource, 0])), reservedCoins: !planned && !paidCoins ? cost.coins || 0 : 0 };
-  if (!premiumService && !immediate) {
-    const timing = starterConstructionTiming(state, project);
-    if (timing) project.starterTurbo = timing;
-  }
+  if (!premiumService && !immediate) attachConstructionTiming(state, project);
   if (premiumService) {
     project.premiumService = true; project.stage = 'building'; project.buildRemaining = 10;
     state.premiumServices ||= [];
@@ -1013,6 +1049,8 @@ export function act(state, action, now = Date.now(), context = {}) {
     quoteAcceleration: (world, project, percent) => quoteAcceleration(world, project, percent),
     constructionEstimate: constructionScheduleEstimate });
   if (result === null) result = residentPrayerAction(state, action);
+  if (result === null) result = Theatre.theatreAction(state, action, { ...context, noAds: commerceStatus(state).noAds });
+  if (result === null) result = Adventures.adventureAction(state, action, { ...context, noAds: commerceStatus(state).noAds });
   if (result === null) result = residentVisitAction(state, action);
   if (result === null) result = leisureAction(state, action);
   if (result === null) result = logisticsAction(state, action, state.worldTimeMs);
@@ -1022,11 +1060,16 @@ export function act(state, action, now = Date.now(), context = {}) {
     if (result.ok) {
       if (action.type === 'premiumAccelerate') for (const project of [...state.constructionProjects]) if (project.stage === 'building' && project.buildRemaining <= 1e-8) finishConstruction(state, project);
       recordProgressionAction(state, action, result);
+      Adventures.observeMiniGames(state);
       recordMissionAction(state, action, result, missionContext());
       updateStorageStatus(state); updateHappiness(state); syncPopulationProgress(state); syncEffectNotifications(state); state.lastActionAt = integer(now, state.lastActionAt, 0, Number.MAX_SAFE_INTEGER); }
     return result;
   }
   switch (action.type) {
+    case 'acknowledgeCarrierRecall': {
+      state.carrierRecallNoticeDay = warsawDayKey(now);
+      result = good('Carrier return information acknowledged.'); break;
+    }
     case 'renameIsland': {
       const name = validateIslandName(action.name);
       if (!name.ok) return bad(name.message);

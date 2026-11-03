@@ -1,5 +1,9 @@
 # HARBORLIGHT
 
+**DEV 0.13.0.0 / v29 — lokalny odbiór PASS, publikacja w toku.** Nowa krzywa budowy, pojemność Magazynu, tutorial34/samouczek25, powitalni mieszkańcy, Teatr i dziewięć przygód. [Zakres](docs/FRONTEND-V29-REQUIREMENTS.md) · [Bieżąca walidacja](docs/DEV-0.13.0.0-VALIDATION.md) · [Excel12](docs/arkusze/HARBORLIGHT12-zasady.xlsx) · [134 scenariusze do odhaczania](docs/testing/START-HERE.md). Wyniki ręczne nadal NOT RUN. PRE-PROD pozostaje odebrane0.12.0.0; ten zakres nie jest nową promocją GCP.
+
+Poniżej zachowano dowody poprzedniego odebranego wydania; nie zastępują własnego odbioru nowego kodu.
+
 **PRE-PROD 0.12.0.0 jest odebrany.** Źródło `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`, [CI 41480146644](https://github.com/ksobczak321-oss/gra/actions/runs/41480146644) **SUCCESS, 13 min 46 s**, [Pages 41480146737](https://github.com/ksobczak321-oss/gra/actions/runs/41480146737) **SUCCESS, 41 s**, [bridge 41482423516](https://github.com/ksobczak321-oss/gra/actions/runs/41482423516) **SUCCESS, 21 s** oraz [deploy 41482455135, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41482455135) **SUCCESS, 2 min 20 s**. Przeszły kontrole dokładnego Hostingu, zalogowanej gry i izolacji trzech kont. Oba artefakty opublikowano. Kont, haseł i historii gry nie resetowano; PROD i rzeczywiści operatorzy bez nowej aktywacji. [Pełne dowody promocji](docs/PREPROD-V28-PROMOTION.md).
 
 Tag [`preprod-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/preprod-0.12.0.0-20261102) jest **opublikowany i potwierdzony zdalnie**: obiekt `d66b25ba216e5b686e6a92b9b8558d35eda9fd2d` rozwiązuje się do `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`. Nie przesuwamy go na późniejsze commity metadanych.

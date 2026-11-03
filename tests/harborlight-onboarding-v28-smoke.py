@@ -63,7 +63,7 @@ def scenario(page, language):
     }''', language)
     tour = page.locator('[data-island-onboarding]')
     expect(tour).to_have_attribute('data-onboarding-step', 'category-economy')
-    expect(tour.locator('[data-onboarding-counter]')).to_contain_text('25 z 33' if language == 'pl' else '25 of 33')
+    expect(tour.locator('[data-onboarding-counter]')).to_contain_text('26 z 34' if language == 'pl' else '26 of 34')
     expect(tour.locator('[data-onboarding-paused]')).to_contain_text('biegnie dalej' if language == 'pl' else 'keeps running')
     bounded(page)
     page.evaluate('fixture.reject=true')
@@ -74,24 +74,24 @@ def scenario(page, language):
     tour.locator('[data-onboarding-next]').click()
     expect(tour).to_have_attribute('data-onboarding-step', 'category-resources')
     last = page.evaluate('fixture.updates.at(-1)')
-    assert last['index'] == 25 and last['routeVersion'] == 2, last
+    assert last['index'] == 26 and last['routeVersion'] == 3, last
     tour.locator('[data-onboarding-exit]').click()
     expect(tour).to_have_count(0)
     detail = page.evaluate('fixture.after.at(-1)')
-    assert detail['index'] == 25 and detail['stepId'] == 'category-resources' and detail['routeVersion'] == 2 and detail['removed'], detail
+    assert detail['index'] == 26 and detail['stepId'] == 'category-resources' and detail['routeVersion'] == 3 and detail['removed'], detail
     assert page.evaluate('JSON.stringify(fixture.world)===fixture.before')
     # A current persisted position must not migrate for a second time.
-    page.evaluate('openTour({routeVersion:2,index:25})')
+    page.evaluate('openTour({routeVersion:3,index:26})')
     expect(tour).to_have_attribute('data-onboarding-step', 'category-resources')
     for producer in ['farm', 'windmill', 'quarry', 'lumber', 'sawmill']:
         page.evaluate('''async producer => {
-          await fixture.flow.update({index:fixture.copy.APPROVED_TOUR_IDS.indexOf('building-'+producer),routeVersion:2});
+          await fixture.flow.update({index:fixture.copy.APPROVED_TOUR_IDS.indexOf('building-'+producer),routeVersion:3});
         }''', producer)
         expect(tour).to_have_attribute('data-onboarding-step', 'building-' + producer)
-        expect(tour.locator('#island-onboarding-description')).to_contain_text('lekcję 11' if language == 'pl' else 'lesson 11')
+        expect(tour.locator('#island-onboarding-description')).not_to_contain_text('lekcję 11' if language == 'pl' else 'lesson 11')
         bounded(page)
-    page.evaluate('''fixture.flow.update({index:fixture.copy.APPROVED_TOUR_IDS.indexOf('ship'),routeVersion:2})''')
-    expect(tour).to_have_attribute('data-onboarding-step', 'ship')
+    page.evaluate('''fixture.flow.update({index:fixture.copy.APPROVED_TOUR_IDS.indexOf('building-dock'),routeVersion:3})''')
+    expect(tour).to_have_attribute('data-onboarding-step', 'building-dock')
     expect(tour.locator('#island-onboarding-description')).to_contain_text('sama transakcja nie zastępuje dostawy' if language == 'pl' else 'does not deliver the goods')
     tour.locator('[data-onboarding-exit]').click()
     expect(tour).to_have_count(0)
@@ -105,11 +105,11 @@ def long_scrolling_tour(page, language):
       f.steps=f.copy.APPROVED_TOUR_IDS.map(id=>({id,target:'#target',
         title:()=>f.copy.getTourCopy(id,f.language).title,
         text:()=>Array(32).fill(f.copy.getTourCopy(id,f.language).text).join(' ')}));
-      await openTour({routeVersion:2,index:0});
+      await openTour({routeVersion:3,index:0});
     }''')
     tour = page.locator('[data-island-onboarding]')
     visited = []
-    for index in range(33):
+    for index in range(34):
         identity = tour.get_attribute('data-onboarding-step')
         assert identity not in visited, visited
         visited.append(identity)
@@ -134,14 +134,14 @@ def long_scrolling_tour(page, language):
         close_box = close.bounding_box()
         assert abs(close_box['y'] - card_box['y'] - 12) <= 1, (card_box, close_box)
         assert close.evaluate('node=>{const r=node.getBoundingClientRect();return document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)===node}'), identity
-        if index < 32:
+        if index < 33:
             tour.locator('[data-onboarding-next]').click()
             expect(tour).not_to_have_attribute('data-onboarding-step', identity)
         else:
             close.click()
             expect(tour).to_have_count(0)
-    assert len(visited) == 33
-    assert page.evaluate('fixture.pauses.at(-1).index') == 32
+    assert len(visited) == 34
+    assert page.evaluate('fixture.pauses.at(-1).index') == 33
     assert page.evaluate('JSON.stringify(fixture.world)===fixture.before')
 
 
@@ -176,7 +176,7 @@ def run():
                         context.close()
         finally:
             browser.close()
-    print('PASS v28 onboarding: 33 native steps, old/current resume, rejected navigation, acknowledged pause, full-store help, ship copy and bounded controls; 132 forced-scroll long mobile steps with visible usable Close; PL/EN desktop/mobile')
+    print('PASS v28 onboarding: 34 native steps, old/current resume, rejected navigation, acknowledged pause, full-store help, ship copy and bounded controls; 136 forced-scroll long mobile steps with visible usable Close; PL/EN desktop/mobile')
 
 
 if __name__ == '__main__':

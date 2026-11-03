@@ -362,7 +362,9 @@ def choice_and_ad_acceptance(browser):
                 assert after['worldTimeMs'] >= before['worldTimeMs'] + 10000
                 before_food = before['resources']['food'] + before['foodCredit']
                 after_food = after['resources']['food'] + after['foodCredit']
-                assert abs(after_food - (before_food - 12 * 10 / 3600)) < .001
+                food_rate = page.evaluate('async state => {const M=await import("./harborlight-v1-state.js?v=frontend-v29");return M.resourceRates(state).food.net;}', before)
+                assert food_rate < 0
+                assert abs(after_food - (before_food + food_rate * 10 / 3600)) < .001, (before_food, after_food, food_rate)
             assert run_of(after)['adPause'] is None
             assert after['resources']['coins'] == before['resources']['coins']
             for key in ['pot', 'level']:
@@ -447,14 +449,14 @@ def recall_acceptance(browser):
     assert delivered['resources']['wood'] == before['resources']['wood'] + 200
     assert delivered['buildings']['warehouse']['workers'] == 1
     assert person['workplace'] is None and abs(person['returnRemaining'] - 120) < .001
-    assert sum(not p['workplace'] and not p['returnRemaining'] for p in delivered['residents']) == 10
+    assert sum(not p['workplace'] and not p['returnRemaining'] for p in delivered['residents']) == len(before['residents']) - 2
     page.clock.fast_forward(119000)
     current = saved(page)
     assert next(p for p in current['residents'] if p['id'] == person_id)['returnRemaining'] > 0
     page.clock.fast_forward(1000)
     home = saved(page)
     assert next(p for p in home['residents'] if p['id'] == person_id)['returnRemaining'] == 0
-    assert sum(not p['workplace'] and not p['returnRemaining'] for p in home['residents']) == 11
+    assert sum(not p['workplace'] and not p['returnRemaining'] for p in home['residents']) == len(before['residents']) - 1
     context.close()
     print('PASS loaded carrier recall clearly announces departure/countdown; cargo arrives before the complete two-minute walk Home')
 

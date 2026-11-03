@@ -158,7 +158,7 @@ def introduction(page, language):
     expect(modal).to_have_attribute('data-onboarding-stage', 'tour')
     modal.locator('[data-onboarding-exit]').click()
     assert page.evaluate('''() => ['farm','windmill','quarry','lumber','sawmill'].every(id=>
-      fixture.copy.buildingPurpose(id,fixture.language).includes(fixture.language==='pl'?'smutna buźka':'sad face'))''')
+      !fixture.copy.buildingPurpose(id,fixture.language).includes(fixture.language==='pl'?'smutna buźka':'sad face'))''')
 
 
 def run():

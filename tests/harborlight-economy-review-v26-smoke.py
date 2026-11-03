@@ -3,7 +3,7 @@
 Fixtures are served from loopback and kept only in memory. No account, cloud
 save, real advertising service, bank transfer or existing island is touched.
 """
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import json
 import mimetypes
 import os
@@ -69,7 +69,7 @@ def scenario(browser, language, mobile, forced):
     context.add_init_script('window.__HARBORLIGHT_DEV_FIXTURE__=%s;localStorage.setItem("harborlight-language",%s);' % (json.dumps(seed(forced)), json.dumps(language)))
     page = context.new_page()
     page.on('pageerror', lambda error: errors.append(str(error)))
-    page.clock.install(time=NOW)
+    page.clock.install(time=NOW-timedelta(seconds=1))
     page.clock.pause_at(NOW)
     try:
         assert page.goto(ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok

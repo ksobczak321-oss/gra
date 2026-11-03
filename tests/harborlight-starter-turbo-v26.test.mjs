@@ -23,6 +23,7 @@ const OLD_TH2 = { version:1, level:2, carriers:6, capacity:120, trips:45, waves:
 function historicalOrder(state, building, timing) {
   const result = requestUpgrade(state, { building });
   assert.equal(result.ok,true);
+  delete result.project.economyTiming;delete result.project.economyVersion;
   result.project.starterTurbo = structuredClone(timing);
   return result;
 }
@@ -37,7 +38,7 @@ test('three actual introductory assignments unlock the price milestone without b
   act(daughter,{type:'assign',building:'warehouse',delta:6},NOW);assert.equal(daughter.starterTurbo,null);
 });
 
-test('first Town Hall retains its 100-each price and food reserve with ordinary clocks', () => {
+test('first Town Hall retains its 100-each price and food reserve with the new fixed budget', () => {
   const state = starter({ fund: false });
   assert.deepEqual(buildingCost(state, 'townhall'), { coins: 100, wood: 100, stone: 100, grain: 100, food: 100, planks: 100 });
   assert.equal(residentPurchaseQuote(state).unitCost.wood, 500);
@@ -46,17 +47,18 @@ test('first Town Hall retains its 100-each price and food reserve with ordinary 
   const order = requestUpgrade(state, { building: 'townhall' });
   assert.equal(order.ok, true); assert.equal(state.resources.food, 150);
   nextLogisticsEvent(state);
-  assert.equal(state.resources.food, 50);
-  assert.equal(state.haulTrips.warehouse.length, 5);
-  assert.equal(state.haulTrips.warehouse.every(trip => trip.amount === 100 && !trip.starterTurboClock), true);
+  assert.equal(state.resources.food, 150);
+  assert.equal(state.haulTrips.warehouse.length, 3);
+  assert.equal(state.haulTrips.warehouse.every(trip => trip.amount === 100 && trip.economyClock && !trip.starterTurboClock), true);
   assert.equal(order.project.goodsRemaining, 500);
-  advanceLogistics(state, 299.999);
+  advanceLogistics(state, 8.999);
   assert.equal(order.project.stage, 'transport'); assert.equal(order.project.delivered.wood, 0);
-  advanceLogistics(state, .001);
-  assert.equal(order.project.stage, 'building'); close(order.project.buildRemaining, 300);
+  advanceLogistics(state, 9.001);
+  assert.equal(state.resources.food,50);
+  assert.equal(order.project.stage, 'building'); close(order.project.buildRemaining, 27);
   assert.equal(order.project.goodsRemaining, 0);
   assert.equal(MATERIAL_IDS.every(resource => order.project.delivered[resource] === 100), true);
-  advanceLogistics(state, 300);
+  advanceLogistics(state, 27);
   assert.equal(state.buildings.townhall.level, 2);
   assert.equal(state.constructionProjects.length, 0);
   assert.equal(buildingCost(state, 'townhall').wood, 1000);
@@ -93,7 +95,7 @@ test('a saved level-two Town Hall retains 120-second transport and 300-second co
   advanceLogistics(state, .001, .1); assert.equal(state.buildings.townhall.level, 3);
 });
 
-test('new timing previews stay ordinary at every level and building, including saved course5',()=>{
+test('new timing previews use the new fixed budget at every level and building, including saved course5',()=>{
   for(const level of [1,2,3]) for(const curriculum of [5,6]) {
     const state=starter({level});state.tutorial.curriculum=curriculum;
     for(const building of ['house','warehouse','chapel','lighthouse']) {
@@ -104,7 +106,7 @@ test('new timing previews stay ordinary at every level and building, including s
     assert.equal(project.starterTurbo,undefined);
     nextLogisticsEvent(state);
     assert.ok(state.haulTrips.warehouse.length>0);
-    assert.equal(state.haulTrips.warehouse.every(trip=>trip.remaining===300&&!trip.starterTurboClock),true);
+    assert.equal(state.haulTrips.warehouse.every(trip=>trip.remaining===project.economyTiming.courseSeconds&&trip.economyClock&&!trip.starterTurboClock),true);
   }
 });
 
@@ -131,18 +133,19 @@ test('offline catch-up includes the initial carrier walk without starting the is
   const state = starter({ ready: false });
   const order = requestUpgrade(state, { building: 'townhall' });
   assert.equal(constructionEstimate(state, order.project).workers, 0);
-  close(constructionScheduleEstimate(state, order.project).total, 720);
-  advanceTo(state, NOW + 149000);
+  close(constructionScheduleEstimate(state, order.project).total, 165);
+  advanceTo(state, NOW + 137000);
   assert.equal(state.buildings.townhall.level, 1);
   assert.equal(order.project.stage, 'transport');
-  advanceTo(state, NOW + 720000);
+  advanceTo(state, NOW + 165000);
   assert.equal(state.buildings.townhall.level, 2);
 });
 
-test('old orders and level-three new orders keep the existing five-minute cargo rule', () => {
+test('old orders retain five-minute cargo while new level-three orders use a new snapshot', () => {
   const old = createState(NOW);
   for (const resource of Object.keys(old.resources)) old.resources[resource] = 10000;
   const legacy = requestUpgrade(old, { building: 'townhall' }).project;
+  delete legacy.economyTiming;delete legacy.economyVersion;
   assert.equal(legacy.cost.wood, 500); assert.equal(legacy.starterTurbo, undefined);
   act(old, { type: 'assign', building: 'warehouse', delta: 6 }, NOW);
   for (const person of old.residents) person.arrivalRemaining = 0;
@@ -153,7 +156,7 @@ test('old orders and level-three new orders keep the existing five-minute cargo 
   const ordinary = requestUpgrade(later, { building: 'house' }).project;
   assert.equal(ordinary.starterTurbo, undefined);
   nextLogisticsEvent(later);
-  assert.equal(later.haulTrips.warehouse.every(trip => trip.remaining === 300 && !trip.starterTurboClock), true);
+  assert.equal(later.haulTrips.warehouse.every(trip => trip.remaining === ordinary.economyTiming.courseSeconds && trip.economyClock && !trip.starterTurboClock), true);
 });
 
 test('cancelling before pickup restores coins and releases physical reserved goods', () => {
@@ -203,7 +206,7 @@ test('learning positions and ad cooldown persist during the frozen introduction 
   assert.equal(act(state, { type: 'learningUpdate', patch }, NOW + 86400000).ok, true);
   assert.equal(state.worldTimeMs, NOW); assert.deepEqual(state.resources, resources);
   const restored = normalizeState(JSON.parse(JSON.stringify(state)), NOW + 86400000);
-  assert.deepEqual(restored.learning, { version:1, ...patch, tour:{...patch.tour,routeVersion:2} });
+  assert.deepEqual(restored.learning, { version:1, ...patch, tour:{...patch.tour,routeVersion:3} });
   assert.equal(act(state, { type: 'learningUpdate', patch: { practical: { reviewIndex: 25 } } }, NOW).ok, false);
   assert.equal(act(state, { type: 'learningUpdate', patch: { tour: { paused: 'yes' } } }, NOW).ok, false);
 });

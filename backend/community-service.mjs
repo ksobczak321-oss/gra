@@ -7,6 +7,7 @@ import { LEAGUE_RULES, leagueCalendar, createLeagueChallenge, emptyLeagueProgres
 
 const DAY = 86400000, CHAT_TTL = 30 * DAY, REPORT_TTL = 90 * DAY;
 const DIRECTORY_LIMIT = 1000, MAX_REQUESTS = 30;
+const DEV_PLAYERS = ['dev-admin1', 'dev-admin2', 'dev-admin3'];
 const hash = v => createHash('sha256').update(v).digest('hex');
 const publicId = uid => 'u_' + hash('harborlight-community\0' + uid).slice(0, 24);
 const fail = (code, status = 409) => { throw new AccountServiceError(code, status); };
@@ -32,6 +33,7 @@ const seasonValue = value => typeof value === 'string' && /^\d{4}-(?:0[1-9]|1[0-
 export function createCommunityService({ store, now = () => Date.now(), environment = 'production' } = {}) {
   if (!store || typeof store.runTransaction !== 'function') throw new TypeError('A transactional community store is required.');
   store = createCharityLedgerStore(createIslandDocumentStore(store), { now });
+  const autoDevProfiles = ['development', 'dev', 'preprod'].includes(environment);
   const clock = () => { const value = now(); if (!Number.isSafeInteger(value) || value < 0) fail('invalid-server-clock', 500); return value; };
   async function transaction(work) {
     return store.runTransaction(async tx => {
@@ -48,6 +50,30 @@ export function createCommunityService({ store, now = () => Date.now(), environm
   const profile = async (tx, uid) => { const p = await tx.get(ppath(uid)); if (!p) fail('community-profile-required', 409); return p; };
   async function handle(tx, id) { const link = await tx.get(hpath(id)); if (!link) fail('community-player-not-found', 404); return profile(tx, link.uid); }
   async function directory(tx) { return await tx.get('communityDirectory/catalog') || { players: [], alliances: [] }; }
+  // Only the three configured test accounts receive automatic public profiles.
+  // Read an actual saved island before publishing a handle: a known login alone
+  // is not evidence that another player or island exists. Production continues
+  // to require the player's explicit nickname form.
+  async function ensureDevProfile(tx, uid, at, catalog) {
+    let p = await tx.get(ppath(uid));
+    if (p || !autoDevProfiles || !DEV_PLAYERS.includes(uid)) return p;
+    const island = await tx.get(`islands/${uid}`);
+    if (!island?.payload) return null;
+    let state; try { state = JSON.parse(island.payload); } catch { return null; }
+    const supplied = typeof state.islandName === 'string' ? state.islandName.normalize('NFC').trim() : '';
+    const name = supplied.length >= 2 && supplied.length <= 40 && !/[\u0000-\u001f\u007f@]/.test(supplied) ? supplied : uid.slice(4);
+    if (catalog.players.length >= DIRECTORY_LIMIT) return null;
+    const id = publicId(uid);
+    p = { uid, id, name, allianceId: null, epoch: 0, blocked: [], muted: [], createdAt: at, source: 'dev-island' };
+    catalog.players = [...catalog.players.filter(player => player.id !== id), { id, name }];
+    await tx.get(hpath(id));
+    tx.put(hpath(id), { uid }); tx.put(ppath(uid), p); tx.put('communityDirectory/catalog', catalog);
+    return p;
+  }
+  async function ensureProfile({ uid }) {
+    uidValue(uid); const at = clock();
+    return transaction(async tx => { const p = await ensureDevProfile(tx, uid, at, await directory(tx)); return p ? profilePublic(p) : null; });
+  }
   const updateDirectoryAlliance = (catalog, a) => { catalog.alliances = catalog.alliances.filter(x => x.id !== a.id); if (a.members.length) catalog.alliances.push({ id: a.id, name: a.name, count: a.members.length }); };
   async function refreshUnfrozenRoster(tx, alliance, at) {
     const cal = leagueCalendar(at); if (!cal.registration) return;
@@ -69,7 +95,9 @@ export function createCommunityService({ store, now = () => Date.now(), environm
   async function snapshot({ uid }) {
     uidValue(uid); const at = clock();
     return transaction(async tx => {
-      const p = await tx.get(ppath(uid)), catalog = await directory(tx);
+      const catalog = await directory(tx);
+      let p = await tx.get(ppath(uid));
+      if (autoDevProfiles) for (const player of DEV_PLAYERS) { const found = await ensureDevProfile(tx, player, at, catalog); if (player === uid) p = found; }
       const alliance = p?.allianceId ? await tx.get(apath(p.allianceId)) : null;
       const active = p?.activeAttemptId ? await tx.get(attemptPath(uid, p.activeAttemptId)) : null;
       return { self: p ? { ...profilePublic(p), blocked: p.blocked || [], muted: p.muted || [] } : { id: publicId(uid), name: '', allianceId: null, needsProfile: true }, alliance: alliancePublic(alliance), alliances: catalog.alliances, players: catalog.players.filter(x => x.id !== publicId(uid)), calendar: leagueCalendar(at), rules: LEAGUE_RULES, serverTime: at, environment, activeAttempt: active?.status === 'playing' ? publicAttempt(active, at) : null };
@@ -163,7 +191,7 @@ export function createCommunityService({ store, now = () => Date.now(), environm
         const name = clean(data.name, 2, 40); if (name.includes('@')) fail('community-public-name-required', 400);
         const catalog = await directory(tx), id = publicId(uid);
         if (!p && catalog.players.length >= DIRECTORY_LIMIT) fail('community-directory-full', 503);
-        p = { ...p, uid, id, name, allianceId: p?.allianceId || null, epoch: p?.epoch || 0, blocked: p?.blocked || [], muted: p?.muted || [], createdAt: p?.createdAt || at };
+        p = { ...p, uid, id, name, allianceId: p?.allianceId || null, epoch: p?.epoch || 0, blocked: p?.blocked || [], muted: p?.muted || [], createdAt: p?.createdAt || at, source: 'manual' };
         catalog.players = [...catalog.players.filter(x => x.id !== id), { id, name }];
         if (p.allianceId) { const a = await tx.get(apath(p.allianceId)); a.members = a.members.map(m => m.uid === uid ? { ...m, name } : m); tx.put(apath(a.id), a); }
         await tx.get(hpath(id)); tx.put(hpath(id), { uid }); tx.put(ppath(uid), p); tx.put('communityDirectory/catalog', catalog);
@@ -330,7 +358,7 @@ export function createCommunityService({ store, now = () => Date.now(), environm
       fail('community-unknown-command', 400);
     });
   }
-  return { snapshot, dispatch };
+  return { snapshot, dispatch, ensureProfile };
 }
 function compareTeams(a, b) { return (b.seasonScore ?? b.scored) - (a.seasonScore ?? a.scored); }
 function publicAttempt(attempt, at) { return { attemptId: attempt.id, challenge: attempt.challenge, progress: attempt.progress, sequence: attempt.sequence, practice: attempt.practice, startedAt: attempt.startedAt, deadlineAt: attempt.deadlineAt || attempt.startedAt + attempt.challenge.duration, serverTime: at, status: attempt.status, ...(attempt.playoff ? { playoff: attempt.playoff } : {}), ...(attempt.status === 'finished' ? { score: attempt.score } : {}) }; }

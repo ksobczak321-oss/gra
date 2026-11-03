@@ -85,7 +85,9 @@ def scenario(browser, language, mobile):
         assert state['charityReward']['mode'] == 'simulation'
         assert state['charityReward']['happinessPoints'] == 20
         assert state['charityReward']['expiresAt'] - state['charityReward']['claimedAt'] == 6 * 3600000
-        assert state['happiness'] >= 39.9, state['happiness']
+        settled = sum(person.get('newbornRemaining', 0) <= 0 for person in state['residents'])
+        expected = 20 + 20 * settled / state['population']
+        assert state['happiness'] >= expected - .1, (state['happiness'], expected)
         for port in page.locator('[data-dock-building="dock"]').all():
             expect(port).to_have_class(__import__('re').compile(r'charity-port-lit'))
         assert page.locator('[data-charity-claim]').count() == 0

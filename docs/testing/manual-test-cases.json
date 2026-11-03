@@ -1331,13 +1331,501 @@
         "HL-CHG-0985"
       ],
       "file": "manual/HL-TC-0096.md"
+    },
+    {
+      "id": "HL-TC-0097",
+      "title": "Nowe zamówienia respektują45sekund, proporcje i stałą dobę od poziomu24",
+      "area": "Nowe czasy rozbudowy",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1023",
+        "HL-CHG-1025"
+      ],
+      "file": "manual/HL-TC-0097.md"
+    },
+    {
+      "id": "HL-TC-0098",
+      "title": "Stary projekt zachowuje postęp i ETA po wczytaniu nowej wersji",
+      "area": "Migracja budowy",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1024"
+      ],
+      "file": "manual/HL-TC-0098.md"
+    },
+    {
+      "id": "HL-TC-0099",
+      "title": "Brak gotowej obsady nie kończy materiałowego transportu automatycznie",
+      "area": "Tragarze i dostawy",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1025",
+        "HL-CHG-1026"
+      ],
+      "file": "manual/HL-TC-0099.md"
+    },
+    {
+      "id": "HL-TC-0100",
+      "title": "Magazyn mieści rozwój i misję, ma stałą tabelę i nie blokuje własnego ulepszenia",
+      "area": "Pojemność magazynu",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1027",
+        "HL-CHG-1028"
+      ],
+      "file": "manual/HL-TC-0100.md"
+    },
+    {
+      "id": "HL-TC-0101",
+      "title": "Zmiana wydobycia zachowuje zapasy, receptury i wykonalność celu",
+      "area": "Balans gospodarki",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1026",
+        "HL-CHG-1028"
+      ],
+      "file": "manual/HL-TC-0101.md"
+    },
+    {
+      "id": "HL-TC-0102",
+      "title": "Pomoc ma równe przyciski, a komunikat wyjścia wyraźny duży znak zapytania",
+      "area": "Pomoc i układ",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1030",
+        "HL-CHG-1031"
+      ],
+      "file": "manual/HL-TC-0102.md"
+    },
+    {
+      "id": "HL-TC-0103",
+      "title": "Wznowienie kroku tutoriala kończy się automatycznym przejściem do samouczka",
+      "area": "Wznowienie nauki",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1032",
+        "HL-CHG-1035"
+      ],
+      "file": "manual/HL-TC-0103.md"
+    },
+    {
+      "id": "HL-TC-0104",
+      "title": "Pięciu producentów ma krótkie opisy i jeden pokaz pełnego magazynu",
+      "area": "Krótszy tutorial",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1033"
+      ],
+      "file": "manual/HL-TC-0104.md"
+    },
+    {
+      "id": "HL-TC-0105",
+      "title": "Trasa34łączy Port ze statkiem, dodaje Teatr i poprawia polskie opisy",
+      "area": "Kolejność i teksty tutoriala",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1034",
+        "HL-CHG-1035",
+        "HL-CHG-1036"
+      ],
+      "file": "manual/HL-TC-0105.md"
+    },
+    {
+      "id": "HL-TC-0106",
+      "title": "Praktyczny kurs uczy zarówno czekania, jak i przyspieszania za monety",
+      "area": "Dwie drogi samouczka",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1029",
+        "HL-CHG-1043"
+      ],
+      "file": "manual/HL-TC-0106.md"
+    },
+    {
+      "id": "HL-TC-0107",
+      "title": "Powitalny mieszkaniec wpada raz dziennie przez siedem dni i respektuje limit",
+      "area": "Powitalna populacja",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1037",
+        "HL-CHG-1038"
+      ],
+      "file": "manual/HL-TC-0107.md"
+    },
+    {
+      "id": "HL-TC-0108",
+      "title": "Po25lekcjach widać tylko aktywne1z8i wyraźne Aktualne Misje",
+      "area": "Główna narracja",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1039",
+        "HL-CHG-1040"
+      ],
+      "file": "manual/HL-TC-0108.md"
+    },
+    {
+      "id": "HL-TC-0109",
+      "title": "Modal awansu ma Wróć na wyspę, a nagroda lekcji nie mówi o skrzyni",
+      "area": "Teksty regresji",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1041",
+        "HL-CHG-1043"
+      ],
+      "file": "manual/HL-TC-0109.md"
+    },
+    {
+      "id": "HL-TC-0110",
+      "title": "Informacja wycofania tragarzy ma limit dzienny i znika po Ratuszu5",
+      "area": "Ograniczenie popupów",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1042"
+      ],
+      "file": "manual/HL-TC-0110.md"
+    },
+    {
+      "id": "HL-TC-0111",
+      "title": "Teatr jest stałym obiektem mapy i otwiera własny dziedziniec",
+      "area": "Nowy Teatr",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1044",
+        "HL-CHG-1034"
+      ],
+      "file": "manual/HL-TC-0111.md"
+    },
+    {
+      "id": "HL-TC-0112",
+      "title": "Teatr ma10rodzajów,20miejsc i widoczne zmiany poziomów1–20",
+      "area": "Paleta i wygląd",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1045",
+        "HL-CHG-1046",
+        "HL-CHG-1048"
+      ],
+      "file": "manual/HL-TC-0112.md"
+    },
+    {
+      "id": "HL-TC-0113",
+      "title": "Aranżacja zachowuje poziom i własność po przenoszeniu oraz ponownym wczytaniu",
+      "area": "Przenoszenie dekoracji",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1047",
+        "HL-CHG-1044"
+      ],
+      "file": "manual/HL-TC-0113.md"
+    },
+    {
+      "id": "HL-TC-0114",
+      "title": "Ulepszenia Teatru pobierają monety i wymagają potwierdzonej reklamy na progach",
+      "area": "Zakup dekoracji",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1049",
+        "HL-CHG-1050"
+      ],
+      "file": "manual/HL-TC-0114.md"
+    },
+    {
+      "id": "HL-TC-0115",
+      "title": "Produkcja i misja działają podczas dekorowania, a nagroda kolekcji jest jednokrotna",
+      "area": "Teatr w żywej gospodarce",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1051"
+      ],
+      "file": "manual/HL-TC-0115.md"
+    },
+    {
+      "id": "HL-TC-0116",
+      "title": "Podczas długiej misji dostępne są krótkie dobrowolne cele bez popupspamu",
+      "area": "Wypełnienie oczekiwania",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1052"
+      ],
+      "file": "manual/HL-TC-0116.md"
+    },
+    {
+      "id": "HL-TC-0117",
+      "title": "Awaria samolotu wypłaca dokładnie złapany ładunek na całym ekranie",
+      "area": "Spadające nagrody",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1053",
+        "HL-CHG-1062"
+      ],
+      "file": "manual/HL-TC-0117.md"
+    },
+    {
+      "id": "HL-TC-0118",
+      "title": "Prawdziwe trójki odsłaniają mapę, układanka prowadzi do skarbu",
+      "area": "Mapa z minigry",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1054",
+        "HL-CHG-1062"
+      ],
+      "file": "manual/HL-TC-0118.md"
+    },
+    {
+      "id": "HL-TC-0119",
+      "title": "Labirynt zasila amunicję, a rzeczywiste trafienia ratują kupca",
+      "area": "Kule i piraci",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1055",
+        "HL-CHG-1062"
+      ],
+      "file": "manual/HL-TC-0119.md"
+    },
+    {
+      "id": "HL-TC-0120",
+      "title": "Most da się rozwiązać podstawowymi częściami, a dodatki są dobrowolne",
+      "area": "Logiczny most",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1056",
+        "HL-CHG-1062"
+      ],
+      "file": "manual/HL-TC-0120.md"
+    },
+    {
+      "id": "HL-TC-0121",
+      "title": "Sygnały Latarni wymagają zapamiętania i odtworzenia sekwencji",
+      "area": "Pamięć i fabuła",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1057",
+        "HL-CHG-1062"
+      ],
+      "file": "manual/HL-TC-0121.md"
+    },
+    {
+      "id": "HL-TC-0122",
+      "title": "Przemoczone listy wymagają odnalezienia wskazówek i właściwych adresatów",
+      "area": "Obserwacja wyspy",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1058",
+        "HL-CHG-1062"
+      ],
+      "file": "manual/HL-TC-0122.md"
+    },
+    {
+      "id": "HL-TC-0123",
+      "title": "Orkiestra łączy rozpoznawanie instrumentów i odtwarzanie rytmu",
+      "area": "Muzyczna przygoda",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1059",
+        "HL-CHG-1062"
+      ],
+      "file": "manual/HL-TC-0123.md"
+    },
+    {
+      "id": "HL-TC-0124",
+      "title": "Ogród dostaje wodę dopiero po rzeczywistym połączeniu kanałów",
+      "area": "Przestrzenna układanka",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1060",
+        "HL-CHG-1062"
+      ],
+      "file": "manual/HL-TC-0124.md"
+    },
+    {
+      "id": "HL-TC-0125",
+      "title": "Załadunek zależy od ciężaru skrzyń i kończy się wyborem rejsu",
+      "area": "Równowaga i wybór",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1061",
+        "HL-CHG-1062"
+      ],
+      "file": "manual/HL-TC-0125.md"
+    },
+    {
+      "id": "HL-TC-0126",
+      "title": "Postęp przygód przetrwa odczyt, a wyniki nie powielają nagród ani pochodzenia monet",
+      "area": "Trwałość aktywności",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1062"
+      ],
+      "file": "manual/HL-TC-0126.md"
+    },
+    {
+      "id": "HL-TC-0127",
+      "title": "Trzy rzeczywiste konta widzą katalog bez formularzy i bez ujawniania prywatnych danych",
+      "area": "Katalog społeczności",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1063"
+      ],
+      "file": "manual/HL-TC-0127.md"
+    },
+    {
+      "id": "HL-TC-0128",
+      "title": "Trzy sesje rozmawiają prywatnie i w sojuszu, a odejście odcina czat",
+      "area": "Rzeczywisty sojusz i wiadomości",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1065"
+      ],
+      "file": "manual/HL-TC-0128.md"
+    },
+    {
+      "id": "HL-TC-0129",
+      "title": "Nowy rozmówca i prośba pojawiają się bez kasowania pisanego tekstu",
+      "area": "Odświeżanie społeczności",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1064"
+      ],
+      "file": "manual/HL-TC-0129.md"
+    },
+    {
+      "id": "HL-TC-0130",
+      "title": "OdbiórDEV0.13ma własne dowody i nie oznacza promocji lub zaliczenia ręcznego",
+      "area": "Dokumentacja wydania",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1066",
+        "HL-CHG-1067"
+      ],
+      "file": "manual/HL-TC-0130.md"
+    },
+    {
+      "id": "HL-TC-0131",
+      "title": "Zlecenie przyjęte przed aktualizacją pozostaje dostępne obok bieżącej misji",
+      "area": "Zgodność zapisów",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1039"
+      ],
+      "file": "manual/HL-TC-0131.md"
+    },
+    {
+      "id": "HL-TC-0132",
+      "title": "Powitalny mieszkaniec nie blokuje rozdania punktów Domu ani samouczka",
+      "area": "Powitanie i Dom",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1037",
+        "HL-CHG-1038"
+      ],
+      "file": "manual/HL-TC-0132.md"
+    },
+    {
+      "id": "HL-TC-0133",
+      "title": "Pełna gra rozlicza reklamę dekoracji i dodatkowej belki bez fałszywej nagrody",
+      "area": "Reklamy w przygodach",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1049",
+        "HL-CHG-1050",
+        "HL-CHG-1056"
+      ],
+      "file": "manual/HL-TC-0133.md"
+    },
+    {
+      "id": "HL-TC-0134",
+      "title": "Excel 12 odpowiada nowemu DEV i zachowuje historyczne zasady",
+      "area": "Arkusz zasad",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1068"
+      ],
+      "file": "manual/HL-TC-0134.md"
     }
   ],
   "current_scope": {
-    "date": "2026-11-02",
+    "date": "2026-11-03",
     "environment": "DEV only",
     "physical_online_integration": "excluded_by_user",
-    "application_version": "0.12.0.0",
-    "note": "TC0071–0096 obejmują GOv28 i wymagają własnego aktualnego buildu. Wszystkie ręczne wynikiNOT RUN. Historyczny baseline definicji oraz wcześniejsze scenariusze zachowują historię; nowe zasady supersedują sprzeczne oczekiwania dawnych fixture. PRE-PROD pozostaje0.11/c7c3974, bez nowej promocji i resetu. Regresję wykonalności czasowej premii odbiera TC0095 na poprawionym źródle. TC0096 odbiera mobilny błąd pierwszegoCI41471972606."
+    "application_version": "0.13.0.0",
+    "preprod_application_version": "0.12.0.0",
+    "preprod_source_sha": "d9e2940b9a00755d979c159ec0fb62e290dd7ff1",
+    "note": "TC0097–0134 obejmują GO v29 i wymagają własnego rzeczywistego buildu. Wszystkie wyniki ręczne pozostają NOT RUN; automatyzacja ich nie zalicza. Historyczny baseline definicji oraz TC0001–0096 zachowują historię. Sprzeczne oczekiwania starszych przypadków zastępują aktualne reguły v29. PRE-PROD 0.12 jest odrębnym odebranym wydaniem; bez nowej promocji, resetu kont i PROD."
   }
 }

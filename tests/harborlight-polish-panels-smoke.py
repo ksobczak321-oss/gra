@@ -54,7 +54,7 @@ def seed():
       import {missionStoryIntro} from './harborlight-v1-missions.js';
       import {grantBonusMaterials} from './harborlight-v1-inventory.js';
       const now=%d, start=now-6*60000;
-      let s=S.createState(start);s.islandName='Old Harbor';s.population=50;
+      let s=S.createState(start);S.recordVisit(s,start);s.islandName='Old Harbor';s.population=50;
       for(const b of Object.values(s.buildings))b.level=3;
       s.buildings.townhall.level=13;s.buildings.house.level=10;s.buildings.warehouse.level=10;
       s.resources.coins=1000000;
@@ -110,7 +110,8 @@ def route(page, mobile, kind):
     grid = page.locator('#island-dialog .panel-grid').filter(
         has=page.locator('[data-archipelago-open]')).first
     overview_routes = [route for route in HOME_ROUTES if route not in ['help', 'tutorial']]
-    grid.locator(':scope > button').nth(overview_routes.index(kind)).click()
+    labels={'rules':'Zasady wyspy','objective':'Główny cel','buildings':'Budynki','expeditions':'Ekspedycje','tasks':'Zadania','residents':'Mieszkańcy','resources':'Magazyn','trade':'Handel','archipelago':'Twoje wyspy','map':'Mapa wyspy','settings':'Ustawienia'}
+    grid.get_by_role('button',name=labels[kind],exact=True).click()
     expect(page.locator('#island-dialog')).to_have_attribute('data-panel-kind', kind)
 
 

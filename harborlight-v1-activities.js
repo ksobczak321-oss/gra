@@ -5,14 +5,14 @@ import {
   MATERIAL_IDS, stockRoom, receiveMaterials, notify,
   quoteInstantTransport, instantTransport, estimateMaterialsSeconds, availableGoods, haulCapacity,
   townhallPopulationRequirement, plannedLevel
-} from './harborlight-v1-logistics.js?v=frontend-v28-2';
-import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v28-2';
+} from './harborlight-v1-logistics.js?v=frontend-v29';
+import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v29';
 import { secondsUntilWarsawMidnight } from './harborlight-v1-calendar.js';
-import { tutorialTaskStatus } from './harborlight-v1-progression.js?v=frontend-v28-2';
-import { affordableTaskRequirements, missionFeasibility, fitTaskRewardToRequirements } from './harborlight-v1-missions.js?v=frontend-v28-2';
+import { tutorialTaskStatus } from './harborlight-v1-progression.js?v=frontend-v29';
+import { affordableTaskRequirements, missionFeasibility, fitTaskRewardToRequirements } from './harborlight-v1-missions.js?v=frontend-v29';
 import { MINI_GAME_RULES, miniGameRoundRules, createMiniGame, normalizeMiniGame,
-  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v28-2';
-export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v28-2';
+  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v29';
+export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v29';
 
 const HOUR = 3600;
 const QUEST_LIFE = 6 * HOUR;
@@ -635,6 +635,7 @@ function warehouseCarryCapacity(state) {
   return haulCapacity(state, 'warehouse');
 }
 export function quotePremiumBuilding(state, building, context = {}) {
+  if (building === 'theatre') return bad('The Theatre is a permanent venue. Arrange and upgrade its decorations instead.');
   if (level(state, 'townhall') < ACTIVITY_RULES.premiumUnlockLevel) return bad('Buying a building without materials unlocks at Town Hall level 1.');
   if (!state.buildings?.[building]) return bad('This building does not exist.');
   const nextLevel = plannedLevel(state, building) + 1;
@@ -661,6 +662,7 @@ export function quotePremiumBuilding(state, building, context = {}) {
   });
 }
 export function quoteForecastPlan(state, building, context = {}) {
+  if (building === 'theatre') return bad('The Theatre is a permanent venue. Arrange and upgrade its decorations instead.');
   if (typeof context.buildingCost !== 'function') return bad('The construction price is not available.');
   if (!(state.premium?.expiresAt > (validNumber(state.worldTimeMs) ? state.worldTimeMs : Date.now()))) return bad('A construction package is required to schedule expected deliveries.');
   if (building === 'townhall') {

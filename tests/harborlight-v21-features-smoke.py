@@ -23,11 +23,12 @@ START = int(cloud.NOW.timestamp() * 1000)
 
 def world(mode='copy', population=12):
     script = '''
-      import {createState,normalizeState} from './harborlight-v1-state.js';
+      import {createState,normalizeState,recordVisit} from './harborlight-v1-state.js';
       import * as Progression from './harborlight-v1-progression.js';
       import {act} from './harborlight-v1-state.js';
       import {missionStoryIntro} from './harborlight-v1-missions.js';
       let s=createState(%d);
+      recordVisit(s,s.worldTimeMs); // These population fixtures describe a day whose real welcome login has already been processed.
       s.islandName='Port Zachowanego Postępu';
       s.tutorial={...s.tutorial,version:3,autoOpenDisabled:true,completed:{},claimed:{},chests:{}};
       for(const row of Progression.tutorialRows(s)){s.tutorial.completed[row.id]=true;s.tutorial.claimed[row.id]=true;}

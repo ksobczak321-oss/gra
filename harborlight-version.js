@@ -1,3 +1,3 @@
 // Public application release. Saved-world schema, cloud revisions and island
 // generations have their own independent versions and must remain unchanged.
-export const GAME_VERSION = '0.12.0.0';
+export const GAME_VERSION = '0.13.0.0';

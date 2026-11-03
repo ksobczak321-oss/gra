@@ -87,7 +87,7 @@ test('road speed does not shorten the two-minute walk or accelerate production',
   assert.equal(state.buildings.farm.ready, 0);
   tick(state, 1);
   near(state.residents.find(person => person.workplace === 'farm').arrivalRemaining, 0);
-  tick(state, 179);
+  tick(state, 89);
   assert.equal(state.buildings.farm.ready, 0);
   tick(state, 1);
   assert.equal(state.buildings.farm.ready, 1);

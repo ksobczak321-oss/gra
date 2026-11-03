@@ -33,11 +33,11 @@ const close=(a,b)=>assert.ok(Math.abs(a-b)<1e-6,`${a} != ${b}`);
 test('only the unhoused producer works at half speed; physical product and input costs remain whole',()=>{
   const state=island(); crew(state,'windmill',[1,25]);
   assert.equal(effectiveWorkerCount(state,'windmill'),1.5);
-  advanceLogistics(state,180);
+  advanceLogistics(state,90);
   assert.equal(state.buildings.windmill.ready,1);
   assert.equal(state.resources.grain,98);
-  assert.deepEqual(state.buildings.windmill.workProgress,[0,90]);
-  advanceLogistics(state,180);
+  assert.deepEqual(state.buildings.windmill.workProgress,[0,45]);
+  advanceLogistics(state,90);
   assert.equal(state.buildings.windmill.ready,3);
   assert.equal(state.resources.grain,94);
   assert.equal(state.economyLedger.produced.food,3);
@@ -46,14 +46,14 @@ test('only the unhoused producer works at half speed; physical product and input
 
 test('adding beds preserves a half-finished unit and makes its worker fully productive',()=>{
   const state=island(); crew(state,'sawmill',[25]); state.resources.wood=100;
-  advanceLogistics(state,180);
+  advanceLogistics(state,90);
   assert.equal(state.buildings.sawmill.ready,0);
-  assert.equal(state.buildings.sawmill.workProgress[0],90);
+  assert.equal(state.buildings.sawmill.workProgress[0],45);
   const raw=structuredClone(state), restored=structuredClone(raw);
   normalizeLogisticsState(restored,raw);
-  assert.equal(restored.buildings.sawmill.workProgress[0],90);
+  assert.equal(restored.buildings.sawmill.workProgress[0],45);
   restored.buildings.house.level=2;
-  advanceLogistics(restored,90);
+  advanceLogistics(restored,45);
   assert.equal(restored.buildings.sawmill.ready,1);
   assert.equal(restored.resources.wood,98);
   assert.equal(restored.economyLedger.produced.planks,1);
@@ -150,10 +150,10 @@ test('mission economy counters survive reload and ignore rewards, old inventory 
   receiveMaterials(state,{wood:200,food:200});
   assert.equal(state.economyLedger.produced.wood,0);
   assert.equal(state.economyLedger.delivered.wood,0);
-  crew(state,'lumber',[1]); advanceLogistics(state,360);
+  crew(state,'lumber',[1]); advanceLogistics(state,180);
   const raw=structuredClone(state), restored=structuredClone(raw); normalizeLogisticsState(restored,raw);
   assert.deepEqual(restored.economyLedger,state.economyLedger);
   assert.equal(restored.economyLedger.produced.wood,2);
   advanceLogistics(restored,180);
-  assert.equal(restored.economyLedger.produced.wood,3);
+  assert.equal(restored.economyLedger.produced.wood,4);
 });

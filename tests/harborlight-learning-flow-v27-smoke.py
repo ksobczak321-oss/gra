@@ -27,6 +27,7 @@ def world(*, through=0, resource_tour=False):
     code = '''import {createState,act,advanceTo} from './harborlight-v1-state.js';
       import {grantBonusMaterials} from './harborlight-v1-inventory.js';
       import {runTutorialV26} from './tests/helpers/tutorial-v26-course.mjs';
+      import {APPROVED_TOUR_IDS} from './harborlight-v1-approved-copy.js';
       const state=%s ? runTutorialV26({now:1793527200000,through:%d}).state : createState(1793527200000);
       const run=action=>{const result=act(state,action,state.worldTimeMs);if(!result.ok)throw Error(JSON.stringify({action,result}));};
       state.islandName='Przystań testowa';
@@ -35,7 +36,7 @@ def world(*, through=0, resource_tour=False):
         run({type:'assign',building:'quarry',delta:1});
         advanceTo(state,state.worldTimeMs+120000);
         run({type:'dismissTutorial'});
-        run({type:'learningUpdate',patch:{tour:{index:24,active:false,paused:true},adsNotBeforeActiveSeconds:100000}});
+        run({type:'learningUpdate',patch:{tour:{index:APPROVED_TOUR_IDS.indexOf('category-economy'),active:false,paused:true},adsNotBeforeActiveSeconds:100000}});
       }else{
         run({type:'learningUpdate',patch:{adsNotBeforeActiveSeconds:100000}});
       }
@@ -105,7 +106,7 @@ def tour_and_help(browser, language, mobile):
         help_panel(page, mobile).locator('[data-help-return-tour]').click()
         tour = page.locator('[data-island-onboarding]')
         expect(tour).to_have_attribute('data-onboarding-step', 'category-economy')
-        expect(tour.locator('[data-onboarding-counter]')).to_contain_text('33')
+        expect(tour.locator('[data-onboarding-counter]')).to_contain_text('34')
         # The tour was created before production below. T27 must resolve live
         # numbers when entered, while this already-started world keeps running.
         page.clock.run_for(240_000)
@@ -129,7 +130,7 @@ def tour_and_help(browser, language, mobile):
                     'rozmawiać online z innymi graczami' if language == 'pl' else 'chat online with other players')
         close_tour(page, language)
         paused = saved(page)
-        assert paused['learning']['tour']['paused'] and paused['learning']['tour']['index'] == 32
+        assert paused['learning']['tour']['paused'] and paused['learning']['tour']['index'] == 33
         assert lesson_history(paused) == before, 'Screen explanations changed practical lesson rewards'
         page.reload()
         page.wait_for_function('document.getElementById("loading").hidden')
@@ -430,7 +431,7 @@ def run():
     if recovery_only:
         print('PASS8 replay navigation/restart lost-ACK scenarios: confirmed cloud cursor adopted without duplicate writes or changed practical history; PL/EN desktop/mobile')
     else:
-        print('PASS integrated v27 learning: Help has two entries, overview excludes them,33 tour steps with live resources and chat, saved resume/restart and lost-ACK readback, read-only practical review, actual construction countdown, receipt-before-effect arrows; PL/EN desktop/mobile')
+        print('PASS integrated v27 learning: Help has two entries, overview excludes them,34 tour steps with live resources and chat, saved resume/restart and lost-ACK readback, read-only practical review, actual construction countdown, receipt-before-effect arrows; PL/EN desktop/mobile')
 
 
 if __name__ == '__main__':

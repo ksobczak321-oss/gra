@@ -295,7 +295,7 @@ test('the full course with independent early House and first carrier actions sti
   assert.equal(tutorialStatus(state).finished, true);
   assert.equal(tutorialStatus(state).skipped, 2);
   assert.equal(tutorialStatus(state).claimed, 23);
-  assert.equal(ordinaryWarehouseUsed(state), 6000);
+  assert.equal(ordinaryWarehouseUsed(state), 20315);
   assert.deepEqual(tutorialPendingRewards(state), []);
   assert.equal(state.tutorial.chests['personal-happiness'], undefined);
   assert.equal(state.tutorial.chests['island-map'], undefined);

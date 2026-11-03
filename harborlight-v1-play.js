@@ -1,35 +1,45 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v28-2';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v28-2';
-import * as State from './harborlight-v1-state.js?v=frontend-v28-2';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v28-2';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v28-2';
-import * as Missions from './harborlight-v1-missions.js?v=frontend-v28-2';
-import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v28-2';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v28-2';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v28-2';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v28-2';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v28-2';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v28-2';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v28-2';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v28-2';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v28-2';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v28-2';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v28-2';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v28-2';
-import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v28-2';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v28-2';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v28-2';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v28-2-fit2';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v28-2';
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v28-2';
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v28-2';
-import { GAME_VERSION } from './harborlight-version.js?v=frontend-v28-2';
-import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v28-2';
-import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v28-2';
-import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v28-2';
-import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v28-2';
-import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v28-2';
-import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v28-2';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v29';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v29';
+import * as State from './harborlight-v1-state.js?v=frontend-v29';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v29';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v29';
+import * as Missions from './harborlight-v1-missions.js?v=frontend-v29';
+import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v29';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v29';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v29';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v29';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v29';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v29';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v29';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v29';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v29';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v29';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v29';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v29';
+import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v29';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v29';
+import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v29';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v29';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v29';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v29';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v29';
+import { GAME_VERSION } from './harborlight-version.js?v=frontend-v29';
+import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v29';
+import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v29';
+import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v29';
+import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v29';
+import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v29';
+import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v29';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v29';
+import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v29';
+import { renderTheatreScene } from './harborlight-v1-theatre-art.js?v=frontend-v29';
+import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v29';
+import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v29';
+import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v29';
+
+I18n.registerTranslations(Theatre.THEATRE_TRANSLATIONS || {});
+I18n.registerTranslations(Adventures.ADVENTURE_TRANSLATIONS || {});
+I18n.registerTranslations({ 'Theatre': 'Teatr', 'Island adventures': 'Przygody na wyspie', 'Back to island': 'Wróć na wyspę', 'Carrier return information acknowledged.': 'Informacja o powrocie tragarzy została zapisana.' });
 
 I18n.registerTranslations({
   "Choose a minigame": "Wybierz minigrę",
@@ -136,6 +146,10 @@ const placementBanner = document.getElementById('placement-banner');
 const LOCAL_PREVIEW = !devCloud.enabled && Commerce.runtimeCapabilities().environment === 'development';
 const LOOPBACK_PREVIEW = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
 let state, archipelago;
+let theatreController = null, adventuresController = null;
+let theatreMapNode = null, theatreMapSignature = null;
+let adventureEffectsNode = null, adventureEffectsSignature = null;
+let lastPerformedResult = null;
 let charityAdapter = null;
 let worldAdoptionEpoch = 0;
 const worldAdapters = { normalizeState, createState, advanceTo: State.advanceTo };
@@ -469,6 +483,7 @@ function perform(action, context = {}) {
   if (['expeditionStart', 'expeditionContinue'].includes(action.type)) { miniController?.dispose(); miniController = null; }
   const beforeLearning = captureLearningFeedback(state);
   const result = act(state, action, Date.now(), context);
+  lastPerformedResult = result;
   learningFeedback?.recordAction(action, beforeLearning, state, result);
   if (result.ok && result.project && action.building === 'townhall' && result.project.targetLevel === 2 && state.tutorial?.curriculum >= 6) pendingStarterConstructionGuide = result.project;
   if (result.ok && action.type === 'dismissTutorial' && !Progression.tutorialStatus(state).finished) {
@@ -477,7 +492,7 @@ function perform(action, context = {}) {
   panelNotice = omitTaxInformation(result.message);
   if (result.ok) { if (action.type === 'setting' && action.key === 'language') { try { localStorage.setItem('harborlight-language', state.settings.language); } catch {} } void save(true); renderHUD(); }
   toast(result.message);
-  if (panel && dialog.open) {
+  if (panel && dialog.open && !action.type.startsWith('theatre') && !action.type.startsWith('adventure')) {
     renderPanel();
     const target = focusWarehousePriority ? dialog.querySelector(`[data-warehouse-priority="${focusWarehousePriority}"]`) : focusPriority ? dialog.querySelector(`[data-priority-resource="${focusPriority}"][data-priority-direction="${focusPriorityDirection}"]`) : focusWorker ? dialog.querySelector(`[data-worker-building="${focusWorker}"][${focusWorkerAction ? `data-worker-action="${focusWorkerAction}"` : `data-worker-delta="${focusWorkerDelta}"`}]`) : [...dialog.querySelectorAll('button,input')].find(node => node.textContent === focusLabel && !node.disabled);
     (target && !target.disabled ? target : dialog.querySelector('.dialog-close'))?.focus({ preventScroll: true });
@@ -494,8 +509,9 @@ function perform(action, context = {}) {
 document.body.append(button('Island menu', () => openPanel('menu'), { class: 'mobile-island-menu', 'aria-label': 'Open island menu' }), button('Tasks', () => openPanel('tasks'), { class: 'mobile-activities', 'aria-label': 'Open Lighthouse tasks' }));
 
 const buildingRegions = {
+  theatre: [830, 290, 164, 135],
   lighthouse: [1238, 64, 153, 190], house: [486, 195, 105, 95], farm: [137, 304, 260, 116],
-  sawmill: [329, 501, 189, 157], quarry: [1041, 282, 186, 188], dock: [234, 625, 482, 149],
+  sawmill: [329, 501, 189, 157], quarry: [1041, 282, 186, 188], dock: [234, 625, 482, 119],
   warehouse: [412, 406, 133, 116], lumber: [604, 111, 120, 137], windmill: [224, 206, 105, 117],
   townhall: [714, 126, 161, 155], chapel: [536, 273, 117, 116], market: [634, 331, 138, 98],
 };
@@ -528,9 +544,13 @@ for (const [id, region] of Object.entries(buildingRegions)) {
       const type = state.buildings[id].level ? 'upgrade' : 'build';
       cancelPlacement();
       if (perform({ type, building: id })) openPanel('building', id);
-    } else openPanel('building', id);
+    } else openPanel(id === 'theatre' ? 'theatre' : 'building', id);
   }, 'world-hotspot');
 }
+// The tour points at the upper quay. The real Harbor hit area still includes
+// the lower pier; its explanation must not highlight the category navigation.
+layer.append(el('span', { id: 'tour-port-region', 'aria-hidden': 'true',
+  style: { position: 'absolute', left: '234px', top: '625px', width: '482px', height: '70px', pointerEvents: 'none' } }));
 hotspot('boat', 'Ship — harbor trade', [215, 635, 219, 137], () => openPanel('trade'));
 const dockCategories = [['administration', 'Administration'], ['economy', 'Economy'], ['resources', 'Resources'], ['decorations', 'Decorations'], ['paths', 'Paths']];
 const dockTabs = el('nav', { class: 'dock-tabs', 'aria-label': 'Island building and resource dock' },
@@ -773,6 +793,10 @@ function renderHUD() {
   hud.working.textContent = count(state.residents.filter(person => Residents.residentIsWorking(state, person)).length);
   hud.arrival.textContent = nextResidentText();
   hud.points.textContent = communityClient?.rankingPosition?.() ? `#${count(communityClient.rankingPosition())}` : '—';
+  refreshTheatreMap();
+  refreshAdventureEffects();
+  theatreController?.update(state);
+  adventuresController?.update(state);
   refreshDockBadges();
   refreshResourceTrends();
   hud.population.textContent = `${state.population} / ${state.capacity}`;
@@ -811,7 +835,7 @@ function renderHUD() {
     } else constructionBadge?.remove();
     let sadFace = node.querySelector('[data-production-penalty]');
     const localFull = !!PRODUCTION_RECIPES[id] && producerCapacity(state, id) > 0 && value.ready >= producerCapacity(state, id);
-    if (localFull || productionPenalties.has(id)) {
+    if (localFull || productionPenalties.has(id) || id === 'farm' && document.body.dataset.tourStorageDemo === 'true') {
       if (!sadFace) { sadFace = el('span', { class: 'world-production-penalty', 'data-production-penalty': id, role: 'img' }, '☹'); node.append(sadFace); }
       if (productionPenalties.has(id)) sadFace.setAttribute('data-world-penalty', id); else sadFace.removeAttribute('data-world-penalty');
       sadFace.dataset.localStorageFull = String(localFull);
@@ -1082,6 +1106,8 @@ function backPanel() {
   (dialog.querySelector('[data-panel-back]') || dialog.querySelector('.dialog-close'))?.focus({ preventScroll: true });
 }
 function closePanel(force = false) {
+  theatreController?.destroy(); theatreController = null;
+  adventuresController?.destroy(); adventuresController = null;
   if (force !== true && expeditionSession()) { requestExpeditionExit(() => closePanel(true)); return; }
   if (force !== true && panel?.kind === 'tutorial') {
     const unfinished = state.learning?.practical?.reviewActive ? state.learning.practical.reviewIndex < 24 : !Progression.tutorialStatus(state).finished;
@@ -1092,6 +1118,8 @@ function closePanel(force = false) {
   }
   closeInfoPopup(false);
   dialog.querySelector('[data-community-panel]')?.dispose?.();
+  theatreController?.destroy(); theatreController = null;
+  adventuresController?.destroy(); adventuresController = null;
   dialog.close();
   miniController?.dispose(); miniController = null;
   panel = null;
@@ -1404,6 +1432,7 @@ function producerSummary(id) {
 }
 
 function buildingPanel(id) {
+  if (id === 'theatre') return theatrePanel();
   const data = BUILDINGS[id];
   const value = state.buildings[id];
   const isProducer = productionBuildings.includes(id);
@@ -1426,7 +1455,7 @@ function buildingPanel(id) {
       button('Construction and queue', () => openPanel('construction'), { class: 'action secondary', 'data-construction-entry': '' }),
       button(uiCopy('Your islands', 'Twoje wyspy'), () => openPanel('archipelago'), { class: 'action secondary', 'data-archipelago-entry': '' })));
   }
-  if (id === 'lighthouse') main.append(button(uiCopy('Lighthouse missions', 'Misje Latarni'), () => openPanel('tasks'), { class: 'action secondary', 'data-lighthouse-missions-entry': '' }));
+  if (id === 'lighthouse') main.append(button(uiCopy('Current missions', 'Aktualne Misje'), () => openPanel('tasks'), { class: 'action secondary', 'data-lighthouse-missions-entry': '' }));
   if (id === 'warehouse') {
     const limits = warehouseLimits(state);
     main.append(el('div', { class: 'stat-grid building-warehouse-summary' }, stat('Storage used', el('span', {}, el('span', { 'data-logistics-stat': 'used' }, count(warehouseUsed(state))), ' / ', el('span', { 'data-logistics-stat': 'total' }, count(limits.total)))), stat('Capacity per resource', el('span', { 'data-logistics-stat': 'per-resource' }, count(limits.perResource))), stat('Transport capacity', el('span', { 'data-logistics-stat': 'carrier-rate' }, transportRate('warehouse')))));
@@ -1577,9 +1606,10 @@ function centralStockText(id, limits = warehouseLimits(state)) {
 }
 function warehouseOverview() {
   const limits = warehouseLimits(state);
+  const firstLevel = warehouseLimits({ buildings: { warehouse: { level: 1 } } });
   return card(informationHeading('central-warehouse', 'Central warehouse',
       uiCopy('All listed materials can be spent immediately. Ordinary deliveries use storage capacity; rewards do not. This is why the available amount can exceed the stated capacity. Coins are stored separately.', 'Wszystkie pokazane materiały możesz od razu wydać. Zwykłe dostawy zajmują miejsce w magazynie, a nagrody nie. Dlatego dostępny zapas może przekraczać podaną pojemność. Monety są przechowywane osobno.'),
-      uiCopy('At level 1, ordinary capacity is 4,000 units in total and 1,000 per material. It grows by 50% per level up to level 24. Carriers collect goods and deliver construction materials according to your priorities.', 'Na poziomie 1 magazyn mieści łącznie 4000 jednostek ze zwykłych dostaw, do 1000 każdego materiału. Pojemność rośnie o 50% na poziom, do poziomu 24. Tragarze odbierają towary i dowożą materiały na budowy zgodnie z ustawionymi priorytetami.'),
+      uiCopy(`Level 1 holds ${count(firstLevel.total)} ordinary items in total, up to ${count(firstLevel.perResource)} per material. Each level has fixed limits allowing for upgrades, a mission, meals and a buffer. Carriers collect goods and supply construction according to your priorities.`, `Na poziomie 1 magazyn mieści łącznie ${count(firstLevel.total)} sztuk ze zwykłych dostaw, do ${count(firstLevel.perResource)} każdego materiału. Każdy poziom ma stałą pojemność uwzględniającą rozbudowę, misję, jedzenie i bufor. Tragarze odbierają towary i zaopatrują budowy zgodnie z ustawionymi priorytetami.`),
       uiCopy('A carrier takes one material per trip, including a partial load. The base round trip is 5 minutes; completed path levels reduce it. Level 1 carries 120 units per trip. Hunger halves effective transport. Central replenishment comes before construction unless you change priorities. Food reserve: 50 × Warehouse level, capped at level 24. The practical guide teaches paid acceleration using game coins; it does not secretly shorten ordinary delivery times.', 'Tragarz przewozi jeden rodzaj materiału na kurs, także przy częściowym ładunku. Podstawowy kurs w obie strony trwa 5 minut; ukończone ścieżki go skracają. Na poziomie 1 tragarz zabiera do 120 sztuk. Głód zmniejsza wydajność transportu o połowę. Uzupełnianie magazynu wyprzedza budowy, dopóki nie zmienisz priorytetu. Rezerwa żywności wynosi 50 × poziom Magazynu, najwyżej 1200 na poziomie 24. Samouczek pokazuje przyspieszenia za monety; nie skraca ukradkiem zwykłego czasu dostaw.'),
       ...MATERIAL_IDS.map(id => uiCopy(`${nameOf(id)}: ${count(Logistics.ordinaryStock(state, id))} ordinary, ${count(Logistics.bonusStock(state, id))} from rewards.`, `${text(nameOf(id))}: ${count(Logistics.ordinaryStock(state, id))} ze zwykłych dostaw, ${count(Logistics.bonusStock(state, id))} z nagród.`))),
     el('div', { class: 'stat-grid logistics-stats' },
@@ -2517,14 +2547,16 @@ function renderActivityStack() {
   const tasks = state.lighthouseTasks || [];
   const mission = missionViewStatus();
   const missionSignature = [mission.chapter?.id, mission.chapter?.status, mission.kind, mission.index, mission.task?.id, mission.task?.status];
-  const signature = JSON.stringify([missionSignature, state.activeTaskId, tasks.map(t => [t.id, t.acceptedAt, t.multiplier, t.deposited, statusOfTask(t).multiplier])]);
+  const signature = JSON.stringify([missionSignature, language(), state.adventures?.sequence, state.adventures?.active?.id, state.adventures?.active?.stage, state.activeTaskId, tasks.map(t => [t.id, t.acceptedAt, t.multiplier, t.deposited, statusOfTask(t).multiplier])]);
   if (activitySignature !== signature || !activityStack.firstChild) {
     activitySignature = signature;
     activityStack.replaceChildren(
-      el('div', { class: 'activity-section-heading' }, el('h3', { 'data-i18n-ignore': '' }, uiCopy('Lighthouse missions', 'Misje Latarni')), button(uiCopy('Open', 'Otwórz'), () => openPanel('tasks'), { class: 'activity-link', 'data-open-lighthouse-missions': '' })),
+      el('div', { class: 'activity-section-heading' }, el('h3', { 'data-i18n-ignore': '' }, uiCopy('Current missions', 'Aktualne Misje')), button(uiCopy('Open', 'Otwórz'), () => openPanel('tasks'), { class: 'activity-link', 'data-open-lighthouse-missions': '' })),
       el('p', { class: 'notice', 'data-i18n-ignore': '' }, mission.task ? `${language() === 'pl' ? mission.task.titlePl : mission.task.title} · ${mission.index}/${mission.total}` : uiCopy('Develop your island and restore its guiding light.', 'Rozwijaj wyspę i przywracaj blask jej Latarni.')),
-      el('div', { class: 'activity-section-heading' }, el('h3', {}, 'Current tasks'), button('All', () => openPanel('tasks'), { class: 'activity-link', 'aria-label': 'Open all Lighthouse tasks' })),
-      ...tasks.slice(0, 3).map(task => taskCard(task, true)),
+
+      ...(!mission.available ? tasks.slice(0, 1).map(task => taskCard(task, true)) : []),
+      el('div', { class: 'activity-section-heading' }, el('h3', { 'data-i18n-ignore': '' }, uiCopy('What can you do now?', 'Co możesz zrobić teraz?'))),
+      ...adventureChoiceButtons(),
       el('div', { class: 'activity-section-heading' }, el('h3', {}, 'Expeditions'), button('Choose a minigame', () => openPanel('expeditions'), { class: 'activity-link' })),
       button('Choose a minigame', () => openPanel('expeditions'), { class: 'activity-expedition' }));
   }
@@ -2592,9 +2624,61 @@ function missionViewStatus(current = state) {
 }
 function tasksPanel() {
   const missions = createLighthouseMissionsPanel({ state, missionStatus: missionViewStatus, perform, language: language(), onOpenBuilding: id => openPanel('building', id) });
+  if (missionViewStatus().available) return el('div', { 'data-task-list': missionViewStatus().task?.id || '', 'data-sequential-mission': '' }, missions, ...(state.lighthouseTasks || []).filter(task => task.id === state.activeTaskId).map(task => card(el('h3', { 'data-i18n-ignore': '' }, uiCopy('Previously accepted order', 'Zlecenie przyjęte wcześniej')), taskCard(task))), button(uiCopy('Adventures while you wait', 'Przygody podczas oczekiwania'), () => openPanel('adventures'), { class: 'action secondary', 'data-open-adventures': '' }));
   return el('div', { 'data-task-list': (state.lighthouseTasks || []).map(taskId).join(',') }, missions, el('h3', { 'data-i18n-ignore': '' }, uiCopy('Additional Lighthouse orders', 'Dodatkowe zlecenia Latarni')), note('You can work on one task at a time and donate goods directly from central storage, including in instalments. Donations cannot be withdrawn and are lost if the task expires. Each task has its own countdown; protected food reserves cannot be donated.'),
     button('Lighthouse — visits and upgrades', () => openPanel('building', 'lighthouse'), { class: 'action secondary' }),
     ...(state.lighthouseTasks || []).map(task => taskCard(task)));
+}
+
+function refreshTheatreMap() {
+  const signature = JSON.stringify([state.theatre, language()]);
+  if (signature === theatreMapSignature) return;
+  theatreMapSignature = signature;
+  if (!theatreMapNode) { theatreMapNode = el('div', { class: 'theatre-map-scene', 'data-theatre-map': '', 'aria-hidden': 'true' }); layer.append(theatreMapNode); }
+  theatreMapNode.innerHTML = renderTheatreScene(state, { compact: true, language: language(), prefix: 'island-theatre' });
+}
+function refreshAdventureEffects() {
+  const signature = JSON.stringify([state.adventures?.effects || [], language()]);
+  if (signature === adventureEffectsSignature) return;
+  adventureEffectsSignature = signature;
+  const next = renderAdventureEffects(state, { language: language() });
+  if (adventureEffectsNode) adventureEffectsNode.replaceWith(next); else layer.append(next);
+  adventureEffectsNode = next;
+}
+function performScene(action, context) { perform(action, context); return lastPerformedResult; }
+function theatrePanel() {
+  theatreController = createTheatrePanel({ state, language: language(), perform: performScene, onOpenAttractions: () => { closePanel(true); setDockCategory('decorations'); }, noAds: () => Commerce.commerceStatus(state).noAds,
+    requestRewardedAd: ({ nonce }) => {
+      const caps = Commerce.runtimeCapabilities();
+      const cancel = () => { perform({ type: 'theatreCancelUpgradeAd', nonce }); };
+      if (!caps.simulatedAds) { showAdUnavailable(); cancel(); return false; }
+      simulateRewardedAd({ title: uiCopy('Improve your decoration', 'Upiększ dekorację'), onCancel: cancel,
+        onComplete: receiptId => perform({ type: 'theatreCompleteUpgradeAd', nonce, receiptId }, { ...caps, devSimulation: true, rewardedAdVerified: true }) });
+      return true;
+    } });
+  return theatreController.element;
+}
+function adventuresPanel() {
+  adventuresController = createAdventuresPanel({ state, language: language(), onAction: performScene,
+    onMiniGame: kind => startExpedition(EXPEDITIONS[0].id, kind),
+    onRewardedAd: action => {
+      const caps = Commerce.runtimeCapabilities();
+      if (!caps.simulatedAds) { showAdUnavailable(); return false; }
+      simulateRewardedAd({ title: uiCopy('Extra building supplies', 'Dodatkowe elementy mostu'),
+        onComplete: receiptId => performScene({ ...action, receiptId }, { ...caps, devSimulation: true, rewardedAdVerified: true, rewardedAdAuthorization: { purpose: 'adventure-bridge', adventureId: action.adventureId, nonce: receiptId, verified: true } }) });
+      return true;
+    }, onClose: () => closePanel(true) });
+  return adventuresController.element;
+}
+function adventureChoiceButtons() {
+  const all = Adventures.adventureChoices(state);
+  const offset = (state.adventures?.sequence || 0) % all.length;
+  const ordered = [...all.slice(offset), ...all.slice(0, offset)];
+  const choices = [...ordered.filter(choice => choice.resume), ...ordered.filter(choice => !choice.resume && choice.available)].slice(0, 3);
+  return choices.map(choice => button(
+    el('span', { 'data-i18n-ignore': '' }, typeof choice.title === 'object' ? choice.title[language()] : choice.titlePl && language() === 'pl' ? choice.titlePl : choice.title,
+      el('small', {}, uiCopy('A short island adventure — open', 'Krótka przygoda na wyspie — otwórz'))),
+    () => openPanel('adventures'), { class: 'activity-adventure-choice', 'data-adventure-choice': choice.id || choice.kind }));
 }
 
 function decorationsPanel() {
@@ -2663,7 +2747,7 @@ function settingsPanel() {
     el('span', {}, uiCopy('Game version', 'Wersja gry')), el('strong', { 'data-game-version': '' }, GAME_VERSION));
   return el('div', {}, signout, version, legalLinks, el('label', { class: 'setting-row' }, el('span', {}, 'Language'), languageSelect), notificationFilterSettings(), checkbox('motion', 'Animations and highlights'),
     !effectiveAnimationsEnabled() ? note(state.settings.motion ? uiCopy('Your device limits animations. Change its reduced-motion setting to enable water, smoke and island animation.', 'Na urządzeniu włączono ograniczenie animacji. Aby uruchomić ruch wody, dymu i wyspy, zmień ustawienia ograniczenia ruchu na urządzeniu.') : 'Animations are off. Enable the checkbox to turn on water, smoke and island movement.') : null,
-    note(devAccount ? (language() === 'pl' ? 'Postęp zapisuje się automatycznie co 30 sekund, wyłącznie w chmurze. Po zakończeniu wprowadzenia wyspa działa w czasie rzeczywistym, także podczas nieobecności.' : 'Progress saves automatically every 30 seconds, exclusively to the cloud. After the introduction, the island continues in real time, including while you are away.') : 'Development preview runs in memory. Hosted accounts save exclusively in the cloud.'),
+    note(devAccount ? (language() === 'pl' ? 'Postęp zapisuje się automatycznie. Po zakończeniu wprowadzenia wyspa działa w czasie rzeczywistym, także podczas nieobecności.' : 'Progress saves automatically. After the introduction, the island continues in real time, including while you are away.') : 'Development preview runs in memory. Hosted accounts save exclusively in the cloud.'),
     button(uiCopy('Help', 'Pomoc'), () => openPanel('help'), { class: 'action secondary', 'data-open-help': '' }),
     button('Premium options', () => openPanel('premium'), { class: 'action secondary' }),
     button('Start a new island', () => openPanel('reset'), { class: 'action danger' }));
@@ -2713,12 +2797,16 @@ async function replayIslandTour(fromBeginning = false) {
     allowRestart: true, onAfterPause: detail => showTutorialExitReminder({ language: language(), firstIntroduction: !detail.replay }),
     onUpdate: next => persistLearning({ tour: { index: next.index, active: true } }),
     onPause: async next => {
+      delete document.body.dataset.tourStorageDemo;
       if (!await persistLearning({ tour: { index: next.index, active: false, paused: true }, adsNotBeforeActiveSeconds: (state.engagementSchedule?.activeSeconds || 0) + 3600 })) return false;
       replayTour = null; renderHUD(); return true;
     },
     onFinish: async () => {
+      delete document.body.dataset.tourStorageDemo;
       if (!await persistLearning({ tour: { active: false, paused: false, completed: true } })) return false;
-      replayTour = null; renderHUD(); return true;
+      replayTour = null; renderHUD();
+      if (!Progression.tutorialStatus(state).finished) queueMicrotask(() => void resumePracticalTutorial());
+      return true;
     }
   });
   await replayTour.start();
@@ -2915,6 +3003,8 @@ function expeditionStatusText(run) {
 function renderPanel() {
   if (!panel) return;
   dialog.querySelector('[data-community-panel]')?.dispose?.();
+  theatreController?.destroy(); theatreController = null;
+  adventuresController?.destroy(); adventuresController = null;
   const rosterOpen = dialog.querySelector('[data-resident-roster]')?.open;
   const rosterScroll = dialog.querySelector('[data-resident-list]')?.scrollTop || 0;
   closeInfoPopup(false);
@@ -2924,6 +3014,8 @@ function renderPanel() {
   let body;
   switch (panel.kind) {
     case 'building': body = buildingPanel(panel.id); break;
+    case 'theatre': title = uiCopy('Theatre', 'Teatr'); body = theatrePanel(); break;
+    case 'adventures': title = uiCopy('Island adventures', 'Przygody na wyspie'); body = adventuresPanel(); break;
     case 'building-details': body = buildingDetailsPanel(panel.id); break;
     case 'effects': title = 'Active bonuses and penalties'; body = activeEffectsPanel(); break;
     case 'buildings': body = buildingsPanel(); break;
@@ -2962,7 +3054,7 @@ function renderPanel() {
       button('Notifications', () => openPanel('notifications'), { class: 'action secondary' }),
       button('Premium options', () => openPanel('premium'), { class: 'action secondary' }),
       el('div', { class: 'stat-grid' }, stat('Town Hall level', el('span', { 'data-population-stat': 'level' }, state.buildings.townhall.level)), stat('Residents', el('span', { 'data-population-stat': 'population' }, `${state.population} / ${state.capacity}`)), stat('Happiness', el('span', { 'data-population-stat': 'happiness' }, happinessText())), stat('Day', state.day)),
-      el('div', { class: 'panel-grid' }, [['rules', 'Island rules'], ['objective', 'Main objective'], ['buildings', 'Buildings'], ['expeditions', 'Expeditions'], ['tasks', 'Tasks'], ['residents', 'Residents'], ['resources', 'Warehouse'], ['trade', 'Trade'], ['archipelago', uiCopy('Your islands', 'Twoje wyspy')], ['map', 'Island map'], ['settings', 'Settings']].map(([kind, label]) => button(label, () => openPanel(kind), kind === 'archipelago' ? { 'data-archipelago-open': '' } : {}))),
+      el('div', { class: 'panel-grid' }, [['rules', 'Island rules'], ['objective', 'Main objective'], ['buildings', 'Buildings'], ['expeditions', 'Expeditions'], ['tasks', 'Tasks'], ['residents', 'Residents'], ['resources', 'Warehouse'], ['trade', 'Trade'], ['archipelago', uiCopy('Your islands', 'Twoje wyspy')], ['map', 'Island map'], ['theatre', uiCopy('Theatre', 'Teatr')], ['adventures', uiCopy('Island adventures', 'Przygody na wyspie')], ['settings', 'Settings']].map(([kind, label]) => button(label, () => openPanel(kind), kind === 'archipelago' ? { 'data-archipelago-open': '' } : {}))),
       el('div', { class: 'social-menu-entries', 'data-social-menu': '' },
         card(button('Ranking', () => openPanel('ranking'), { 'data-open-ranking': '' }), note(uiCopy('Compare hourly results and your place among players.', 'Sprawdź swoją pozycję i porównaj wyniki graczy, aktualizowane co pełną godzinę.'))),
         card(button(uiCopy('Alliance and league', 'Sojusz i liga'), () => openPanel('community'), { 'data-open-community': '' }), note(uiCopy('Join forces, talk to your alliance and compete in the monthly league.', 'Dołącz do sojuszu, rozmawiaj z jego członkami i rywalizuj we wspólnej lidze.'))),
@@ -3016,7 +3108,7 @@ function openLevelShare(level) {
     localize(popup);
   }, { class:'action secondary', 'data-copy-share': '' }));
   const facebook = new URL('https://www.facebook.com/sharer/sharer.php'); facebook.searchParams.set('u',OFFICIAL_GAME_URL); facebook.searchParams.set('quote',prepared);
-  actions.append(el('a', { class:'action secondary', href:facebook.href, target:'_blank', rel:'noopener noreferrer', 'data-facebook-share': '' }, 'Open Facebook sharing dialog'), button(uiCopy('Back to island', 'Wróć na wyspę'), dispose, { class:'action secondary', 'data-close-share': '' }));
+  actions.append(el('a', { class:'action secondary', href:facebook.href, target:'_blank', rel:'noopener noreferrer', 'data-facebook-share': '' }, 'Open Facebook sharing dialog'), button(uiCopy('Back to island', 'Wróć na wyspę'), dispose, { class:'action secondary', 'data-i18n-ignore': '', 'data-close-share': '' }));
   popup.querySelector('.flow-body').append(actions); popup.addEventListener('cancel',event=>{event.preventDefault();dispose();}); localize(popup); popup.showModal(); field.focus();
 }
 
@@ -3333,7 +3425,9 @@ function createFlowDialog(id, title, description) {
 }
 function showWarehouseRecall(beforeIds) {
   const recalledIds = beforeIds.filter(id => { const person = state.residents.find(resident => resident.id === id); return person && (person.pendingRelease || person.workplace !== 'warehouse'); });
-  if (!recalledIds.length) return;
+  if (!recalledIds.length || state.buildings.townhall.level > 5 || state.carrierRecallNoticeDay === warsawDayKey(Date.now())) return;
+  if (!act(state, { type: 'acknowledgeCarrierRecall' }).ok) return;
+  void save(true);
   const old = document.getElementById('warehouse-recall'); if (old) { old.close(); old.remove(); }
   const previous = document.activeElement;
   const popup = createFlowDialog('warehouse-recall', 'Warehouse workers recalled', el('div', {},
@@ -3402,14 +3496,19 @@ function onboardingSteps() {
   });
   return APPROVED_TOUR_IDS.map(id => {
     let target = targetHud(id), prepare;
+    const resetDemo = () => { if (document.body.dataset.tourStorageDemo) { delete document.body.dataset.tourStorageDemo; renderHUD(); } };
+    prepare = resetDemo;
     if (id.startsWith('building-')) {
       const building = id.slice(9);
-      target = () => document.getElementById(`hit-world-${building}`);
-      prepare = () => window.dispatchEvent(new CustomEvent('island-tour-focus', { detail: { region: buildingRegions[building] } }));
+      target = () => document.getElementById(building === 'dock' ? 'tour-port-region' : `hit-world-${building}`);
+      prepare = () => { resetDemo(); window.dispatchEvent(new CustomEvent('island-tour-focus', { detail: { region: buildingRegions[building] } })); };
     } else if (id.startsWith('category-')) {
       const category = id.slice(9);
       target = () => visible(`[data-mobile-category="${category}"]`, `#hit-category-${category}`);
-      prepare = () => setDockCategory(category);
+      prepare = () => { resetDemo(); setDockCategory(category); };
+    } else if (id === 'producer-storage') {
+      target = () => document.getElementById('hit-world-farm');
+      prepare = () => { document.body.dataset.tourStorageDemo = 'true'; renderHUD(); window.dispatchEvent(new CustomEvent('island-tour-focus', { detail: { region: buildingRegions.farm } })); };
     } else if (id === 'tasks') target = () => visible('.mobile-activities', '.island-activity-stack .activity-section-heading .activity-link');
     else if (id === 'expeditions') target = () => visible('.island-activity-stack .activity-expedition', '.mobile-island-menu');
     else if (id === 'ship') { target = () => document.getElementById('hit-boat'); prepare = () => window.dispatchEvent(new CustomEvent('island-tour-focus', { detail: { region: [215, 635, 219, 137] } })); }
@@ -3420,6 +3519,7 @@ function onboardingSteps() {
 async function beginOnboarding() {
   const status = State.onboardingStatus(state);
   const finishInitialTour = async (next, paused) => {
+    delete document.body.dataset.tourStorageDemo;
     if (devSync && !devSync.writable && !await devSync.recover()) return false;
     if (!act(state, { type: 'learningUpdate', patch: { tour: { index: next?.index ?? state.onboarding.index, active: false, paused, completed: !paused }, ...(paused ? { adsNotBeforeActiveSeconds: (state.engagementSchedule?.activeSeconds || 0) + 3600 } : {}) } }).ok) return false;
     if (!act(state, { type: 'onboardingFinish' }).ok) return false;
@@ -3453,6 +3553,7 @@ function beginWorldExperience() {
   worldExperienceReady = true;
   lastTick = Date.now(); foregroundAnchor = Date.now();
   recoverInterruptedStandardAd();
+  if (state.theatre?.pendingUpgrade) act(state, { type: 'theatreCancelUpgradeAd', nonce: state.theatre.pendingUpgrade.nonce });
   settleActiveTick();
   if (!NEW_PLAYER_PROFILE) State.applyBuildTestStock?.(state);
   recordVisit(state); save();
@@ -3520,7 +3621,7 @@ function refreshPlayerOffers() {
         note(uiCopy('You have finished the practical guide. The island is yours to develop. Your next adventure has eight stages that will help you improve the island and restore the Lighthouse. Review a stage before accepting it: its timer starts only when you accept.', 'Samouczek ukończony! Teraz przejmujesz kontrolę nad wyspą i możesz ją dowolnie rozwijać. Przed Tobą przygoda złożona z ośmiu etapów, które pomogą rozwinąć osadę i Latarnię. Najpierw poznasz wymagania — czas zadania ruszy dopiero po jego przyjęciu.'))));
     const close = () => { popup.close(); popup.remove(); };
     popup.querySelector('.flow-body').append(el('div', { class: 'flow-actions' },
-      button(uiCopy('See the eight-stage adventure', 'Zobacz osiem etapów przygody'), () => { close(); openPanel('tasks'); }, { 'data-story-task': '' }),
+      button(uiCopy('Open your first mission', 'Otwórz pierwszą misję'), () => { close(); openPanel('tasks'); }, { 'data-story-task': '' }),
       button(uiCopy('Return to the island', 'Wróć na wyspę'), close, { class: 'action secondary', 'data-story-close': '' })));
     popup.addEventListener('cancel', event => { event.preventDefault(); close(); }); localize(popup); popup.showModal(); return true;
   }
@@ -3531,6 +3632,7 @@ function refreshPlayerOffers() {
   save();
   const popup = createFlowDialog('daily-loyalty-offer', uiCopy('Your daily login reward', 'Twoja nagroda za codzienne logowanie'),
     el('div', {}, note(uiCopy('Welcome back! Your reward for this Warsaw day is ready. Collect it here or later from Notifications. The reward is not granted until you collect it.', 'Dobrze Cię widzieć! Czeka nagroda za logowanie w nowym dniu czasu Warszawy. Odbierz ją tutaj albo później w Powiadomieniach. Nagroda trafi do zasobów dopiero po jej odebraniu.')),
+      state.welcomeWorkers && state.welcomeWorkers.claimedDays.includes(warsawDayKey(Date.now())) && state.welcomeWorkers.granted > 0 ? note(uiCopy('Welcome support: log in on each of your first 7 days to receive one extra resident, up to 7 people beyond ordinary population growth. Free Town Hall capacity is required.', 'Powitalne wsparcie osady: logowanie w każdym z pierwszych 7 dni daje dodatkowego mieszkańca — nawet 7 osób ponad zwykły przyrost populacji. Potrzebujesz wolnego miejsca w limicie Ratusza.')) : null,
       el('p', { 'data-loyalty-reward': '' }, costText(offer.reward))));
   const close = () => { popup.close(); popup.remove(); };
   popup.querySelector('.flow-body').append(el('div', { class: 'flow-actions' },

@@ -48,11 +48,11 @@ test('workers arrive after two minutes without retroactive production or taxes',
   tick(state, 1);
   assert.equal(state.buildings.farm.ready, 0);
   assert.equal(taxRate(state), 1);
-  tick(state, 179);
+  tick(state, 89);
   assert.equal(state.buildings.farm.ready, 0);
   tick(state, 1);
   assert.equal(state.buildings.farm.ready, 1);
-  close(state.taxProgress, 0.05);
+  close(state.taxProgress, 0.025);
 });
 
 test('workforce caps use each own building level and one shared Home pool', () => {
@@ -82,7 +82,7 @@ test('blocked but arrived producers still pay taxes and do not earn work happine
 
 test('a pickup unblocks producer happiness at dispatch rather than at the end of its trip', () => {
   const state = island({ population: 6 });
-  assign(state, 'quarry', 1); assign(state, 'warehouse', 1); tick(state, 300);
+  assign(state, 'quarry', 1); assign(state, 'warehouse', 1); tick(state, 120);
   for (const person of state.residents) person.happiness = 0;
   state.buildings.quarry.ready = 200;
   const quarryWorker = state.residents.find(person => person.workplace === 'quarry');
@@ -152,14 +152,14 @@ test('real-time catch-up is idempotent and legacy pause/speed do not alter econo
   state.paused = true; state.speed = 4;
   const food = state.resources.food;
   assert.equal(advanceTo(state, NOW + 3600000), 3600);
-  assert.equal(state.buildings.farm.ready, 19); // First two minutes are travel.
+  assert.equal(state.buildings.farm.ready, 38); // 40/h after the first two minutes of travel.
   assert.equal(food - state.resources.food, 6);
   const stored = JSON.stringify(state);
   assert.equal(advanceTo(state, NOW + 3600000), 0);
   assert.equal(JSON.stringify(state), stored);
   const saved = reload(state);
   assert.equal(advanceTo(saved, NOW + 7200000), 3600);
-  assert.equal(saved.buildings.farm.ready, 39);
+  assert.equal(saved.buildings.farm.ready, 78);
 });
 
 test('old saves are not retroactively simulated using an unreliable lastActionAt', () => {
@@ -434,7 +434,7 @@ test('the authorized preview stock fills current central limits once without cha
   assert.equal(applyBuildTestStock(state), true);
   assert.equal(state.previewBuildStockVersion, BUILD_TEST_STOCK_VERSION);
   assert.equal(warehouseUsed(state), warehouseLimits(state).total);
-  for (const id of MATERIAL_IDS) assert.equal(state.resources[id], 800);
+  for (const id of MATERIAL_IDS) assert.equal(state.resources[id], 2688);
   assert.equal(state.resources.coins, 12345);
   assert.deepEqual(Object.fromEntries(Object.entries(state.buildings).map(([id, b]) => [id, b.level])), levels);
   const snapshot = JSON.stringify(state);
@@ -450,17 +450,17 @@ test('preview stock marker survives spending and reload without refilling a seco
   const snapshot = JSON.stringify(state);
   assert.equal(applyBuildTestStock(state), false);
   assert.equal(JSON.stringify(state), snapshot);
-  assert.equal(state.resources.wood, 728);
+  assert.equal(state.resources.wood, 2616);
 });
 
 test('preview stock respects higher warehouse limits and does not erase an existing excess', () => {
   const state = createState(NOW);
   state.buildings.townhall.level = state.buildings.house.level = state.buildings.warehouse.level = 2;
-  state.resources = { coins: 12345, wood: 1600, stone: 10, grain: 20, food: 30, planks: 40 };
+  state.resources = { coins: 12345, wood: 5000, stone: 10, grain: 20, food: 30, planks: 40 };
   applyBuildTestStock(state);
-  assert.equal(state.resources.wood, 1600);
-  assert.equal(warehouseUsed(state), 6000);
-  for (const id of MATERIAL_IDS.filter(id => id !== 'wood')) assert.ok(state.resources[id] <= 1500);
+  assert.equal(state.resources.wood, 5000);
+  assert.equal(warehouseUsed(state), 20315);
+  for (const id of MATERIAL_IDS.filter(id => id !== 'wood')) assert.ok(state.resources[id] <= 4063);
   assert.equal(state.resources.coins, 12345);
 });
 

@@ -87,6 +87,11 @@ jobs:
       - name: Verify generated legal documents match their reviewed drafts
         run: python3 scripts/build_legal_pages.py --check
 
+      - name: Verify Excel 12 against current rules and preserved historical worksheets
+        run: |
+          python3 -m pip install --disable-pip-version-check openpyxl==3.1.5 lxml==6.1.1
+          python3 scripts/build_workbook_v12.py --validate-only
+
       - name: Install browser acceptance dependencies
         shell: bash
         run: |
@@ -125,7 +130,7 @@ jobs:
           import subprocess
           import sys
 
-          for test in ('tests/harborlight-frontend-v17-smoke.py', 'tests/harborlight-frontend-v18-smoke.py', 'tests/harborlight-tutorial-v18-smoke.py', 'tests/harborlight-tutorial-v21-smoke.py', 'tests/harborlight-tutorial-v22-smoke.py', 'tests/harborlight-tutorial-priority-v22-smoke.py', 'tests/harborlight-tutorial-map-v25-smoke.py', 'tests/harborlight-learning-review-v26-smoke.py', 'tests/harborlight-learning-flow-v26-smoke.py', 'tests/harborlight-starter-course-v26-smoke.py', 'tests/harborlight-learning-feedback-v27-smoke.py', 'tests/harborlight-learning-flow-v27-smoke.py', 'tests/harborlight-missions-ui-v27-smoke.py', 'tests/harborlight-missions-game-v27-smoke.py', 'tests/harborlight-release-v28-smoke.py', 'tests/harborlight-starter-course-v28-smoke.py'):
+          for test in ('tests/harborlight-frontend-v17-smoke.py', 'tests/harborlight-frontend-v18-smoke.py', 'tests/harborlight-tutorial-v18-smoke.py', 'tests/harborlight-tutorial-v21-smoke.py', 'tests/harborlight-tutorial-v22-smoke.py', 'tests/harborlight-tutorial-priority-v22-smoke.py', 'tests/harborlight-tutorial-map-v25-smoke.py', 'tests/harborlight-learning-review-v26-smoke.py', 'tests/harborlight-learning-flow-v26-smoke.py', 'tests/harborlight-starter-course-v26-smoke.py', 'tests/harborlight-learning-feedback-v27-smoke.py', 'tests/harborlight-learning-flow-v27-smoke.py', 'tests/harborlight-missions-ui-v27-smoke.py', 'tests/harborlight-missions-game-v27-smoke.py', 'tests/harborlight-release-v28-smoke.py', 'tests/harborlight-starter-course-v28-smoke.py', 'scripts/test_frontend_v29_learning.py', 'tests/harborlight-theatre-v29-smoke.py', 'tests/harborlight-adventures-v29-smoke.py', 'tests/harborlight-release-v29-smoke.py'):
               print('Starting browser acceptance: ' + test, flush=True)
               status = subprocess.call([sys.executable, '-u', test])
               if status:

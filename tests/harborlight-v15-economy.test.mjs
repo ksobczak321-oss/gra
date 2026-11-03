@@ -30,23 +30,23 @@ function construction(state, amount) {
   return project;
 }
 
-test('all five producers use doubled level rates while normal starter resources stay unchanged', () => {
+test('all five producers use the current conservative level rates while normal starter resources stay unchanged', () => {
   const state = island();
   assert.deepEqual(Object.values(state.resources), [100000, 100, 100, 100, 100, 100]);
   for (const id of ['farm', 'windmill', 'quarry', 'lumber', 'sawmill']) {
-    for (const [level, expected] of [[0, 0], [1, 20], [2, 24], [3, 26], [4, 28], [100, 220]]) {
+    for (const [level, expected] of [[0, 0], [1, 40], [2, 44], [3, 48], [4, 52], [100, 436]]) {
       state.buildings[id].level = level;
       assert.equal(productionRate(state, id), expected, `${id}, level ${level}`);
     }
   }
 });
 
-test('raw and processed goods actually produce twenty units per hour and recipes still consume two inputs', () => {
+test('raw and processed goods actually produce forty units per hour and recipes still consume two inputs', () => {
   const state = island();
   for (const id of ['farm', 'windmill', 'quarry', 'lumber', 'sawmill']) arrived(state, id);
   tick(state, 3600);
-  for (const id of ['farm', 'windmill', 'quarry', 'lumber', 'sawmill']) assert.equal(state.buildings[id].ready, 20, id);
-  assert.equal(state.resources.wood, 60); assert.equal(state.resources.grain, 60);
+  for (const id of ['farm', 'windmill', 'quarry', 'lumber', 'sawmill']) assert.equal(state.buildings[id].ready, 40, id);
+  assert.equal(state.resources.wood, 20); assert.equal(state.resources.grain, 20);
   near(state.resources.food + state.foodCredit, 88);
   near(state.statistics.taxCollected + state.taxProgress, 5);
 });
@@ -54,11 +54,11 @@ test('raw and processed goods actually produce twenty units per hour and recipes
 test('hunger halves the doubled production, while taxes and meal demand keep their own rates', () => {
   const state = island(); arrived(state, 'farm');
   state.resources.food = 0; state.foodCredit = 0;
-  assert.equal(resourceRates(state).grain.production, 10);
+  assert.equal(resourceRates(state).grain.production, 20);
   assert.equal(resourceRates(state).food.consumption, 12);
   assert.equal(taxRate(state), 1);
   tick(state, 3600);
-  assert.equal(state.buildings.farm.ready, 10);
+  assert.equal(state.buildings.farm.ready, 20);
   near(state.statistics.taxCollected + state.taxProgress, 1);
 });
 
@@ -66,10 +66,10 @@ test('active play and lighthouse bonuses multiply the new base instead of replac
   const state = island(); arrived(state, 'farm');
   state.lighthouseRemaining = 1000;
   act(state, { type: 'userActivity', visible: true, focused: true });
-  assert.equal(resourceRates(state).grain.production, 80);
+  assert.equal(resourceRates(state).grain.production, 160);
   assert.equal(resourceRates(state).food.consumption, 12);
   tick(state, 180);
-  assert.equal(state.buildings.farm.ready, 4);
+  assert.equal(state.buildings.farm.ready, 8);
   near(state.taxProgress, 360 / 3600);
 });
 
@@ -157,22 +157,22 @@ test('a three-quarter legacy unit migrates to three quarters of the new cycle ex
   delete old.productionRateVersion;
   old.buildings.farm.workProgress[0] = 270;
   const migrated = normalizeState(old, NOW);
-  assert.equal(migrated.productionRateVersion, 2);
-  assert.equal(migrated.buildings.farm.workProgress[0], 135);
+  assert.equal(migrated.productionRateVersion, 3);
+  assert.equal(migrated.buildings.farm.workProgress[0], 67.5);
   assert.equal(migrated.buildings.farm.ready, 0);
   const twice = reload(migrated);
-  assert.equal(twice.buildings.farm.workProgress[0], 135);
-  tick(twice, 44); assert.equal(twice.buildings.farm.ready, 0);
+  assert.equal(twice.buildings.farm.workProgress[0], 67.5);
+  tick(twice, 21.5); assert.equal(twice.buildings.farm.ready, 0);
   tick(twice, 1); assert.equal(twice.buildings.farm.ready, 1);
 });
 
 test('new production progress survives reload and in-flight legacy cargo is never doubled', () => {
   const state = island(); arrived(state, 'farm'); arrived(state, 'warehouse');
-  state.buildings.farm.workProgress[0] = 90;
+  state.buildings.farm.workProgress[0] = 45;
   state.haulTrips.warehouse = [{ worker: 0, residentId: state.residents.find(person => person.workplace === 'warehouse').id,
     kind: 'producer', producer: 'lumber', resource: 'wood', amount: 60, remaining: 120 }];
   const restored = reload(state);
-  assert.equal(restored.buildings.farm.workProgress[0], 90);
+  assert.equal(restored.buildings.farm.workProgress[0], 45);
   assert.equal(restored.haulTrips.warehouse[0].amount, 60);
   assert.equal(restored.haulTrips.warehouse[0].remaining, 120);
   tick(restored, 120);

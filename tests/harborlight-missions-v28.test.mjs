@@ -104,14 +104,14 @@ test('production prize multiplies Lighthouse output, expires inside offline catc
   state.lighthouseRemaining=600;state.engagement.activeUntil=0;state.engagement.lastRealActivityAt=state.worldTimeMs;
   preparedReward(state,{coins:0,production:{building:'quarry',multiplier:2,seconds:60}});
   assert.equal(missionProductionMultiplier(state,'quarry'),2);
-  assert.equal(State.resourceRates(state).stone.production,80);
+  assert.equal(State.resourceRates(state).stone.production,160);
   const until=state.missionProductionBonuses[0].until;
   const restored=clone(state);Missions.normalizeMissions(restored,restored);Missions.advanceMissions(restored,0,context);
   assert.equal(restored.missionProductionBonuses[0].until,until);
   State.tick(state,120);
   assert.equal(missionProductionMultiplier(state,'quarry'),1);
-  assert.equal(state.buildings.quarry.ready,2);
-  assert.equal(State.resourceRates(state).stone.production,40);
+  assert.equal(state.buildings.quarry.ready,4);
+  assert.equal(State.resourceRates(state).stone.production,80);
 });
 
 test('a second producer prize extends the same factor rather than multiplying it',()=>{

@@ -141,7 +141,7 @@ def ui_scenario(browser, language, mobile):
         screenshot(page, label + '-help')
         help_panel.locator('[data-help-tour-from-start]').click()
         tour = page.locator('[data-island-onboarding]')
-        expect(tour.locator('[data-onboarding-counter]')).to_contain_text('1 z 33' if language == 'pl' else '1 of 33')
+        expect(tour.locator('[data-onboarding-counter]')).to_contain_text('1 z 34' if language == 'pl' else '1 of 34')
         expect(tour).to_have_attribute('data-onboarding-step', 'home')
         tour.locator('[data-onboarding-next]').click()
         expect(tour).to_have_attribute('data-onboarding-step', 'level')

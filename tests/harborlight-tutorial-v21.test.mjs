@@ -31,7 +31,7 @@ test('normal first-user play finishes all 25 actual lessons with full ordinary s
   assert.equal(state.buildings.lighthouse.level, 1);
   assert.equal(trace.length, 25);
   assert.equal(trace.every(row => row.pendingTutorialRewards === 0), true);
-  assert.equal(trace.every(row => row.ordinaryUsed <= 4000 * 1.5 ** (row.warehouseLevel - 1) + 1e-7), true);
+  assert.equal(trace.every(row => row.ordinaryUsed <= warehouseLimits({buildings:{warehouse:{level:row.warehouseLevel}}}).total + 1e-7), true);
   assert.equal(trace.filter(row => row.action.startsWith('upgrade-')).length >= 7, true);
   assert.ok(trace[7].elapsedSeconds > 0, 'the actual first construction and deliveries took time');
   assert.equal(tutorialStatus(state).completed, 25);
@@ -39,7 +39,7 @@ test('normal first-user play finishes all 25 actual lessons with full ordinary s
   assert.equal(tutorialStatus(state).finished, true);
   assert.equal(state.tutorial.settled, true);
   assert.equal(ordinaryWarehouseUsed(state), warehouseLimits(state).total);
-  assert.deepEqual(Object.fromEntries(MATERIALS.map(id => [id, state.resources[id]])), Object.fromEntries(MATERIALS.map(id => [id, 1200])));
+  assert.deepEqual(Object.fromEntries(MATERIALS.map(id => [id, state.resources[id]])), Object.fromEntries(MATERIALS.map(id => [id, 4063])));
   assert.equal(MATERIALS.every(id => state.bonusMaterials[id] === 0), true);
   assert.deepEqual(tutorialPendingRewards(state), []);
   const before = structuredClone(state.resources);

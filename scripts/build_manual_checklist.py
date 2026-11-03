@@ -9,7 +9,8 @@ DIRECTORY = ROOT / 'docs/testing'
 
 
 def outputs():
-    cases = json.loads((DIRECTORY / 'manual-test-cases.json').read_text())['cases']
+    data = json.loads((DIRECTORY / 'manual-test-cases.json').read_text())
+    cases = data['cases']
     assert len({case['id'] for case in cases}) == len(cases), 'Duplicate case ID'
     for case in cases:
         assert (DIRECTORY / case['file']).is_file(), case['id']
@@ -21,6 +22,10 @@ def outputs():
         'notatki i dowody zapisują się w tej przeglądarce; przyciskiem „Eksportuj raport JSON” pobierz '
         'kopię. Ten plik i jego wyniki są dokumentacją QA, nie zapisem wyspy. '
         'Na GitHub pobierz HTML lub użyj podglądu Pages po jego publikacji; sam widok kodu HTML nie uruchamia listy.', '',
+        '**Bieżąca paczka DEV ' + data.get('current_scope', {}).get('application_version', '—') +
+        ':** zacznij od TC0097–0134. Starsze przypadki zachowują historię i niezmienione regresje. '
+        'Liczba scenariuszy: **' + str(len(cases)) + '**. Do filtrowania użyj ID lub obszaru. '
+        'Przed pierwszym testem sprawdź rzeczywisty build w Ustawieniach — aktualizacja listy nie oznacza promocji PRE-PROD.', '',
         '1. Wpisz rzeczywisty build/SHA, środowisko, datę i testera. DEV oznacza przestrzeń roboczą/Pages, '
         'PRE-PROD — `harborlight-dev.web.app`; nowy zakres nie jest automatycznie wdrożony w chmurze.',
         '2. Otwórz kartę, przygotuj wskazane dane, wykonaj wszystkie kroki. Brak fixture, usługi, '

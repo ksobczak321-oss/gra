@@ -355,7 +355,9 @@ def run():
         assert DOCUMENTS['dev-admin3']['revision'] >= 1
         fresh = cloud_state('dev-admin3')
         assert fresh['resources']['coins'] == fresh['resources']['wood'] == 100
-        assert fresh['population'] == 12
+        assert fresh['population'] == 13
+        assert fresh['welcomeWorkers']['granted'] == 1
+        assert len(fresh['welcomeWorkers']['claimedDays']) == 1
         assert fresh['happiness'] >= 20
         assert int(NOW.timestamp()*1000) <= fresh['welcome']['startedAt'] <= int(NOW.timestamp()*1000) + 1000
         no_island_cache(new_page)
@@ -363,6 +365,8 @@ def run():
         new_page.wait_for_selector('[data-hud="working"]', state='attached')
         assert cloud_state('dev-admin3')['welcome']['startedAt'] == fresh['welcome']['startedAt']
         assert cloud_state('dev-admin3')['resources']['coins'] == 100
+        assert cloud_state('dev-admin3')['population'] == 13, 'Reload cannot grant another welcome resident'
+        assert cloud_state('dev-admin3')['welcomeWorkers']['granted'] == 1
         no_island_cache(new_page)
         third.close()
 

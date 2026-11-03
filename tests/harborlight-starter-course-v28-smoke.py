@@ -87,8 +87,8 @@ def natural_delivery_and_resume(browser,language,mobile):
         expect(page.locator('[data-premium-route="construction"]')).to_have_class(re.compile('tutorial-action-target'))
         # Let three actual carriers walk and complete every ordinary delivery.
         # This checks recovery when the player waits instead of buying delivery.
-        for _ in range(12):
-            page.clock.fast_forward(120000)
+        for _ in range(36):
+            page.clock.fast_forward(5000)
             current=base.saved(page)
             project=next((p for p in current['constructionProjects'] if p['building']=='townhall'),None)
             if project and project['stage']=='building':break
@@ -100,7 +100,7 @@ def natural_delivery_and_resume(browser,language,mobile):
         expect(page.locator('[data-tutorial-current-substep="building"]:visible').first).to_be_visible()
         # Reload a second time at the changed phase. No dead transport button
         # may reclaim the arrow; the actual100% construction service is next.
-        page.reload();page.wait_for_function('document.body.dataset.cloudStatus !== undefined');page.clock.run_for(30000)
+        page.reload();page.wait_for_function('document.body.dataset.cloudStatus !== undefined');page.clock.run_for(1000)
         expect(page.locator('[data-tutorial-current-substep="building"]:visible').first).to_be_visible()
         open_map(page,'townhall-upgrade','townhall')
         accelerate=page.locator('[data-premium-percent="100"]')

@@ -135,7 +135,14 @@ export function createServer({
         if (offerCommand) { send(200, await playerTradeService[offerCommand[2] === 'accept' ? 'acceptOffer' : 'cancelOffer']({ ...common, offerId: offerCommand[1], ...(offerCommand[2] === 'accept' ? { islandId: body.islandId } : {}) })); return; }
         send(200, await playerTradeService.claimInbox({ ...common, inboxId: inboxCommand[1] })); return;
       }
-      if (request.method === 'GET') { send(200, await (path === '/api/v1/legal' ? accountService.readLegalStatus({ uid }) : accountService.readIsland({ uid }))); return; }
+      if (request.method === 'GET') {
+        const result = await (path === '/api/v1/legal' ? accountService.readLegalStatus({ uid }) : accountService.readIsland({ uid }));
+        // Community onboarding is independent of loading the player's world.
+        // The service only creates public handles for existing DEV test worlds;
+        // an unavailable community store must never make a valid save unreadable.
+        if (path === '/api/v1/island' && result?.island && typeof communityService?.ensureProfile === 'function') await communityService.ensureProfile({ uid }).catch(() => null);
+        send(200, result); return;
+      }
       const body = await requestJson(request, path === '/api/v1/island' && request.method === 'PUT' ? 29_000_000 : 1_500_000);
       if (path === '/api/v1/legal') {
         send(200, await accountService.acceptLegal({ uid, termsVersion: body.termsVersion, privacyVersion: body.privacyVersion,
@@ -144,6 +151,7 @@ export function createServer({
       if (path === '/api/v1/island' && request.method === 'POST') {
         if (Object.keys(body).length) throw new AccountServiceError('starter-is-server-owned', 400);
         await accountService.startIsland({ uid, payload: starter(now()) });
+        if (typeof communityService?.ensureProfile === 'function') await communityService.ensureProfile({ uid }).catch(() => null);
         send(201, await accountService.readIsland({ uid })); return;
       }
       if (path === '/api/v1/island') {

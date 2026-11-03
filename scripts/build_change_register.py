@@ -139,7 +139,7 @@ def index(data, changes):
              'Dostęp do API GitHub nie jest uwierzytelniony w tej sesji. Każdy rekord ma `issue_url: null` i ' +
              '`published_to_github_issues: false`; istniejące numery Issues są wyłącznie historycznymi powiązaniami. ' +
              'Nie utworzono fikcyjnych numerów ani nie zamknięto zdalnych zgłoszeń.', '',
-             '## Potwierdzony punkt odniesienia', '',
+             '## Historyczny punkt odniesienia ewidencji', '',
              '- Kod aplikacji PRE-PROD: `' + baseline['application_source_sha'] + '` (**v22.1**).',
              '- CI: [41221965032 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41221965032).',
              '- PRE-PROD: [41222765705, próba 1 — SUCCESS](https://github.com/ksobczak321-oss/gra/actions/runs/41222765705).',
@@ -163,6 +163,16 @@ def index(data, changes):
     for tag in sorted({tag for item in changes for tag in item.get('tags', [])}):
         tagged = [item for item in changes if tag in item.get('tags', [])]
         lines += ['**Tag `' + tag + '`:** ' + ', '.join('[' + item['id'] + ' — ' + item['title'] + '](changes/' + item['id'] + '.md)' for item in tagged) + '.', '']
+    current = data.get('current_environment')
+    if current:
+        position = lines.index('## Historyczny punkt odniesienia ewidencji')
+        lines[position:position] = [
+            '## Bieżące środowiska', '',
+            '- Nowy DEV **' + current['dev_application_version'] + '**: `' + current['dev_status'] + '`; CI `' + current['dev_ci'] + '`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.',
+            '- Odebrany PRE-PROD **' + current['preprod_application_version'] + '**: źródło `' + current['preprod_source_sha'] + '`; [deploy ' + str(current['preprod_deployment_run_id']) + '](https://github.com/ksobczak321-oss/gra/actions/runs/' + str(current['preprod_deployment_run_id']) + '), próba ' + str(current['preprod_deployment_attempt']) + '.',
+            '- PRE-PROD tej wcześniejszej wersji nie oznacza promocji nowych kart. PROD oraz pełny reset kont: bez nowej operacji.',
+            current['note'], '',
+        ]
     for epic in data['epics']:
         selected = [item for item in changes if item['epic'] == epic['id']]
         lines += ['<a id="' + epic['id'].lower() + '"></a>', '',

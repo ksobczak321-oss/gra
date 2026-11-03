@@ -85,7 +85,10 @@ export function showTutorialExitReminder({ language = 'en', firstIntroduction = 
   if (previous) { previous.focus(); return { element: previous, dispose: () => { previous.close(); previous.remove(); } }; }
   const popup = element('dialog', { class: 'learning-feedback-reminder', 'data-tutorial-exit-reminder': '', 'data-i18n-ignore': '', 'aria-labelledby': 'tutorial-exit-reminder-title' },
     element('h2', { id: 'tutorial-exit-reminder-title' }, pick(language, 'Tutorial został zamknięty', 'The tutorial has been closed')),
-    element('p', {}, pick(language, 'Aby wrócić do przerwanego miejsca, kliknij ? → Wznów tutorial.', 'To return to your saved place, select ? → Resume tutorial.')),
+    element('p', { class: 'learning-feedback-help-instruction' },
+      pick(language, 'Aby wrócić do przerwanego miejsca, kliknij ', 'To return to your saved place, select '),
+      element('span', { class: 'learning-feedback-help-symbol', 'data-tutorial-exit-help-symbol': '', 'aria-label': pick(language, 'Pomoc', 'Help') }, '?'),
+      pick(language, ' → Wznów tutorial.', ' → Resume tutorial.')),
     element('p', { class: 'learning-feedback-reminder-clock' }, firstIntroduction ? pick(language, 'Czas na wyspie zaczyna teraz biec.', 'Island time now starts running.') : pick(language, 'Twoja wyspa działa dalej.', 'Your island keeps running.')));
   const helpTargets = [...document.querySelectorAll('#hit-tutorial, [data-mobile-control=\"tutorial\"], [data-mobile-hud=\"tutorial\"]')].filter(target => target.getClientRects().length);
   for (const target of helpTargets) target.classList.add('learning-help-highlight');

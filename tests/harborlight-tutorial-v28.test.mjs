@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createState, normalizeState, act, advanceTo, buildingCost } from '../harborlight-v1-state.js';
-import { TUTORIAL_VERSION, TUTORIAL_LESSONS, V5_TUTORIAL_LESSONS, tutorialRows, tutorialStatus, tutorialPendingRewards, normalizeProgression, loyaltyOfferStatus, recordProgressionLogin } from '../harborlight-v1-progression.js';
+import { TUTORIAL_VERSION, V6_TUTORIAL_LESSONS as TUTORIAL_LESSONS, V5_TUTORIAL_LESSONS, tutorialRows, tutorialStatus, tutorialPendingRewards, normalizeProgression, loyaltyOfferStatus, recordProgressionLogin } from '../harborlight-v1-progression.js';
 import { quoteTransport, quoteAcceleration, quotePremiumBuilding } from '../harborlight-v1-activities.js';
 import { ordinaryWarehouseUsed, centralAvailable } from '../harborlight-v1-inventory.js';
 import { warehouseLimits, starterConstructionTiming, constructionScheduleEstimate } from '../harborlight-v1-logistics.js';
@@ -14,7 +14,8 @@ const reload = state => normalizeState(JSON.parse(JSON.stringify(state)),state.w
 
 test('curriculum 6 keeps 25 stable lessons and rewards the third carrier, not the first or second',()=>{
  const s=createState(NOW);
- assert.equal(TUTORIAL_VERSION,6);assert.equal(s.tutorial.curriculum,6);assert.equal(TUTORIAL_LESSONS.length,25);
+ assert.equal(TUTORIAL_VERSION,7);assert.equal(s.tutorial.curriculum,7);
+ s.tutorial.curriculum=6;assert.equal(TUTORIAL_LESSONS.length,25);
  assert.deepEqual(TUTORIAL_LESSONS.map(x=>x.id).sort(),V5_TUTORIAL_LESSONS.map(x=>x.id).sort());
  assert.equal(tutorialRows(s)[0].progressRequired,3);
  for(let n=1;n<=2;n++){
@@ -122,7 +123,7 @@ test('paced course budgets remain affordable while the Mill and Sawmill consume 
 
 test('saved curriculum 5 keeps six carriers, old goals and rewards without switching to 6',()=>{
  const s=createState(NOW);normalizeProgression(s,{...s,tutorial:{version:5}});
- assert.equal(s.tutorial.version,6);assert.equal(s.tutorial.curriculum,5);assert.equal(tutorialRows(s)[0].assignmentCount,6);
+ assert.equal(s.tutorial.version,7);assert.equal(s.tutorial.curriculum,5);assert.equal(tutorialRows(s)[0].assignmentCount,6);
  for(let n=0;n<6;n++)command(s,{type:'assign',building:'warehouse',delta:1});reward(s,'island-map');
  const old=structuredClone(s.tutorial.chests['island-map']);const restored=reload(s);
  assert.equal(restored.tutorial.curriculum,5);assert.deepEqual(restored.tutorial.chests['island-map'],old);

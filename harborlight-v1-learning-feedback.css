@@ -19,3 +19,5 @@
 .tutorial-service-substeps li{padding:7px 10px;border:1px solid #6c8d9c55;border-radius:8px;overflow-wrap:anywhere}
 .tutorial-service-substeps li[aria-current=step]{border-color:#f1ce86;background:#ecc77b12;color:#ffe2a2;font-weight:700}
 .tutorial-service-substeps li[data-completed=true]{color:#acd6a9}
+
+.learning-feedback-help-symbol{display:inline-block;font-size:3em;font-weight:800;line-height:1;vertical-align:middle;color:#ffe2a2;margin:0 .08em}

@@ -14,7 +14,7 @@ const reload = state => normalizeState(JSON.parse(JSON.stringify(state)), state.
 
 test('saved curriculum5 orders six carriers, construction priority, farmer, lumberjack, Town Hall and mill', () => {
   const state = createState(NOW), rows = tutorialRows(state);
-  assert.equal(TUTORIAL_VERSION, 6); assert.equal(state.tutorial.curriculum, 5);
+  assert.equal(TUTORIAL_VERSION, 7); assert.equal(state.tutorial.curriculum, 5);
   assert.equal(rows.length, 25);
   assert.deepEqual(rows.slice(0, 7).map(row => row.subject), ['assign-warehouse','transport-priority','assign-farm','assign-lumber','upgrade-townhall','assign-windmill','assign-quarry']);
   assert.equal(rows[0].assignmentCount, 6);
@@ -70,7 +70,7 @@ test('older curricula keep lesson order, conditions and rolled/paid rewards afte
     command(state, { type: 'claimTutorial', taskId: 'rules-read' });
     const before = structuredClone(state.tutorial.chests['rules-read']), resources = structuredClone(state.resources);
     const restored = reload(state);
-    assert.equal(restored.tutorial.version, 6); assert.equal(restored.tutorial.curriculum, curriculum);
+    assert.equal(restored.tutorial.version, 7); assert.equal(restored.tutorial.curriculum, curriculum);
     assert.deepEqual(tutorialRows(restored).map(row => [row.id,row.subject,row.goalLevel]), (curriculum === 3 ? LEGACY_TUTORIAL_LESSONS : V4_TUTORIAL_LESSONS).map(row => [row.id,row.subject,row.goalLevel]));
     assert.deepEqual(restored.tutorial.chests['rules-read'], before); assert.deepEqual(restored.resources, resources);
     assert.equal(act(restored, { type: 'claimTutorial', taskId: 'rules-read' }, restored.worldTimeMs).ok, false);

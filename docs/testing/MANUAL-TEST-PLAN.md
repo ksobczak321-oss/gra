@@ -1,6 +1,6 @@
 # HARBORLIGHT — ręczny plan testów i osobne przypadki
 
-**Zacznij od [listy do odhaczania](START-HERE.md) albo [interaktywnego raportu QA](qa-checklist.html).** Zestaw obejmuje **96 osobnych przypadków**, w tym **TC0071–0096 dla DEV 0.12.0.0/v28**, zachowane TC0060–0070 dla v27 i wcześniejsze regresje. Wszystkie wyniki ręczne pozostają **NOT RUN**. Definicja scenariusza oraz sukces automatyzacji nie oznaczają jego wykonania.
+**Zacznij od [listy do odhaczania](START-HERE.md) albo [interaktywnego raportu QA](qa-checklist.html).** Zestaw obejmuje **134 osobne przypadki**, w tym **TC0097–0134 dla DEV 0.13.0.0/v29**, zachowane TC0071–0096 dla v28 oraz wcześniejsze regresje. Wszystkie wyniki ręczne pozostają **NOT RUN**. Definicja scenariusza oraz sukces automatyzacji nie oznaczają jego wykonania.
 
 ## Jak odhaczać pojedyncze przypadki
 
@@ -33,9 +33,11 @@ Profile QA są specyfikacją danych do przygotowania w izolowanym harnessie, nie
 
 Nie używaj `admin1`–`admin3` jako danych jednorazowych; nie resetuj i nie podmieniaj ich historii. Osobne historyczne zlecenie resetu po promocji nie uprawnia do dowolnego czyszczenia danych podczas QA. Próby płatności i dobroczynności korzystają z oznaczonej symulacji DEV, bez rzeczywistych przelewów.
 
+Nowa krzywa budowy, pojemność i wydobycie zastępują sprzeczne czasy oraz limity wcześniejszych scenariuszy. Aktualne sprawdzenie to TC0097–0100. Kurs programu 7 ma trzy osoby w Magazynie, rzeczywiste przyspieszenie jednej budowy i naturalne oczekiwanie na inną (TC0101). Tutorial ma 34 kroki (TC0105–0106). Nie odtwarzaj historycznego turbo jako oczekiwania nowego świata; stare rozpoczęte projekty zachowują jednak swoje zapisane zasady.
+
 ## Proponowana kolejność odbioru
 
-1. Nowy zakres DEV 0.12.0.0/v28: TC0071–0096, najpierw dane i płatności, potem kurs/opisy/misje/społeczność. Następnie niezmienione oczekiwania TC0060–0070 i starsza regresja na opisanym wariancie fixture.
+1. Nowy zakres DEV 0.13.0.0/v29: TC0097–0134. Zacznij od pojemności i danych, powitalnych mieszkańców, samouczka i wznowienia tutoriala; potem sprawdź Teatr, przygody, reklamy i rozmowy trzech kont. TC0131–0134 uzupełniają zgodność starych zleceń, pulę Domu, pełny przebieg reklamy i Excel 12. Następnie wykonaj niezmienione oczekiwania TC0071–0096 i starszą regresję na opisanym wariancie fikstury.
 2. Dostęp i integralność: TC19–23, TC29, TC31.
 3. Nowa gra i czytelność: TC01–05, TC30, TC43–45 oraz powroty w Pomocy TC47, prowadzenie po mapie TC51 i przegląd polszczyzny TC52–53.
 4. Gospodarka i mieszkańcy: TC06–18, TC24–25.
@@ -146,6 +148,44 @@ TC26 jest obecnie testem zachowania wcześniejszych dwóch światów podczas mig
 | [HL-TC-0094 — Nowa rejestracja zapisuje Regulamin draft5 i niezmienioną Politykę prywatności draft4](manual/HL-TC-0094.md) | Dokumenty i konto | P0 | READY | NOT RUN |
 | [HL-TC-0095 — Wykonalność nie przedłuża czasowej premii na całe okno zadania](manual/HL-TC-0095.md) | Misje i prognoza produkcji | P0 | READY | NOT RUN |
 | [HL-TC-0096 — Przewinięty długi tutorial telefonu zachowuje widoczny przycisk wyjścia](manual/HL-TC-0096.md) | Tutorial i przewijanie | P0 | READY | NOT RUN |
+| [HL-TC-0097 — Nowe zamówienia respektują45sekund, proporcje i stałą dobę od poziomu24](manual/HL-TC-0097.md) | Nowe czasy rozbudowy | P0 | READY | NOT RUN |
+| [HL-TC-0098 — Stary projekt zachowuje postęp i ETA po wczytaniu nowej wersji](manual/HL-TC-0098.md) | Migracja budowy | P0 | READY | NOT RUN |
+| [HL-TC-0099 — Brak gotowej obsady nie kończy materiałowego transportu automatycznie](manual/HL-TC-0099.md) | Tragarze i dostawy | P0 | READY | NOT RUN |
+| [HL-TC-0100 — Magazyn mieści rozwój i misję, ma stałą tabelę i nie blokuje własnego ulepszenia](manual/HL-TC-0100.md) | Pojemność magazynu | P0 | READY | NOT RUN |
+| [HL-TC-0101 — Zmiana wydobycia zachowuje zapasy, receptury i wykonalność celu](manual/HL-TC-0101.md) | Balans gospodarki | P0 | READY | NOT RUN |
+| [HL-TC-0102 — Pomoc ma równe przyciski, a komunikat wyjścia wyraźny duży znak zapytania](manual/HL-TC-0102.md) | Pomoc i układ | P1 | READY | NOT RUN |
+| [HL-TC-0103 — Wznowienie kroku tutoriala kończy się automatycznym przejściem do samouczka](manual/HL-TC-0103.md) | Wznowienie nauki | P0 | READY | NOT RUN |
+| [HL-TC-0104 — Pięciu producentów ma krótkie opisy i jeden pokaz pełnego magazynu](manual/HL-TC-0104.md) | Krótszy tutorial | P1 | READY | NOT RUN |
+| [HL-TC-0105 — Trasa34łączy Port ze statkiem, dodaje Teatr i poprawia polskie opisy](manual/HL-TC-0105.md) | Kolejność i teksty tutoriala | P1 | READY | NOT RUN |
+| [HL-TC-0106 — Praktyczny kurs uczy zarówno czekania, jak i przyspieszania za monety](manual/HL-TC-0106.md) | Dwie drogi samouczka | P0 | READY | NOT RUN |
+| [HL-TC-0107 — Powitalny mieszkaniec wpada raz dziennie przez siedem dni i respektuje limit](manual/HL-TC-0107.md) | Powitalna populacja | P0 | READY | NOT RUN |
+| [HL-TC-0108 — Po25lekcjach widać tylko aktywne1z8i wyraźne Aktualne Misje](manual/HL-TC-0108.md) | Główna narracja | P0 | READY | NOT RUN |
+| [HL-TC-0109 — Modal awansu ma Wróć na wyspę, a nagroda lekcji nie mówi o skrzyni](manual/HL-TC-0109.md) | Teksty regresji | P1 | READY | NOT RUN |
+| [HL-TC-0110 — Informacja wycofania tragarzy ma limit dzienny i znika po Ratuszu5](manual/HL-TC-0110.md) | Ograniczenie popupów | P1 | READY | NOT RUN |
+| [HL-TC-0111 — Teatr jest stałym obiektem mapy i otwiera własny dziedziniec](manual/HL-TC-0111.md) | Nowy Teatr | P1 | READY | NOT RUN |
+| [HL-TC-0112 — Teatr ma10rodzajów,20miejsc i widoczne zmiany poziomów1–20](manual/HL-TC-0112.md) | Paleta i wygląd | P1 | READY | NOT RUN |
+| [HL-TC-0113 — Aranżacja zachowuje poziom i własność po przenoszeniu oraz ponownym wczytaniu](manual/HL-TC-0113.md) | Przenoszenie dekoracji | P0 | READY | NOT RUN |
+| [HL-TC-0114 — Ulepszenia Teatru pobierają monety i wymagają potwierdzonej reklamy na progach](manual/HL-TC-0114.md) | Zakup dekoracji | P0 | READY | NOT RUN |
+| [HL-TC-0115 — Produkcja i misja działają podczas dekorowania, a nagroda kolekcji jest jednokrotna](manual/HL-TC-0115.md) | Teatr w żywej gospodarce | P0 | READY | NOT RUN |
+| [HL-TC-0116 — Podczas długiej misji dostępne są krótkie dobrowolne cele bez popupspamu](manual/HL-TC-0116.md) | Wypełnienie oczekiwania | P1 | READY | NOT RUN |
+| [HL-TC-0117 — Awaria samolotu wypłaca dokładnie złapany ładunek na całym ekranie](manual/HL-TC-0117.md) | Spadające nagrody | P0 | READY | NOT RUN |
+| [HL-TC-0118 — Prawdziwe trójki odsłaniają mapę, układanka prowadzi do skarbu](manual/HL-TC-0118.md) | Mapa z minigry | P0 | READY | NOT RUN |
+| [HL-TC-0119 — Labirynt zasila amunicję, a rzeczywiste trafienia ratują kupca](manual/HL-TC-0119.md) | Kule i piraci | P0 | READY | NOT RUN |
+| [HL-TC-0120 — Most da się rozwiązać podstawowymi częściami, a dodatki są dobrowolne](manual/HL-TC-0120.md) | Logiczny most | P0 | READY | NOT RUN |
+| [HL-TC-0121 — Sygnały Latarni wymagają zapamiętania i odtworzenia sekwencji](manual/HL-TC-0121.md) | Pamięć i fabuła | P1 | READY | NOT RUN |
+| [HL-TC-0122 — Przemoczone listy wymagają odnalezienia wskazówek i właściwych adresatów](manual/HL-TC-0122.md) | Obserwacja wyspy | P1 | READY | NOT RUN |
+| [HL-TC-0123 — Orkiestra łączy rozpoznawanie instrumentów i odtwarzanie rytmu](manual/HL-TC-0123.md) | Muzyczna przygoda | P1 | READY | NOT RUN |
+| [HL-TC-0124 — Ogród dostaje wodę dopiero po rzeczywistym połączeniu kanałów](manual/HL-TC-0124.md) | Przestrzenna układanka | P1 | READY | NOT RUN |
+| [HL-TC-0125 — Załadunek zależy od ciężaru skrzyń i kończy się wyborem rejsu](manual/HL-TC-0125.md) | Równowaga i wybór | P1 | READY | NOT RUN |
+| [HL-TC-0126 — Postęp przygód przetrwa odczyt, a wyniki nie powielają nagród ani pochodzenia monet](manual/HL-TC-0126.md) | Trwałość aktywności | P0 | READY | NOT RUN |
+| [HL-TC-0127 — Trzy rzeczywiste konta widzą katalog bez formularzy i bez ujawniania prywatnych danych](manual/HL-TC-0127.md) | Katalog społeczności | P0 | READY | NOT RUN |
+| [HL-TC-0128 — Trzy sesje rozmawiają prywatnie i w sojuszu, a odejście odcina czat](manual/HL-TC-0128.md) | Rzeczywisty sojusz i wiadomości | P0 | READY | NOT RUN |
+| [HL-TC-0129 — Nowy rozmówca i prośba pojawiają się bez kasowania pisanego tekstu](manual/HL-TC-0129.md) | Odświeżanie społeczności | P1 | READY | NOT RUN |
+| [HL-TC-0130 — OdbiórDEV0.13ma własne dowody i nie oznacza promocji lub zaliczenia ręcznego](manual/HL-TC-0130.md) | Dokumentacja wydania | P0 | READY | NOT RUN |
+| [HL-TC-0131 — Zlecenie przyjęte przed aktualizacją pozostaje dostępne obok bieżącej misji](manual/HL-TC-0131.md) | Zgodność zapisów | P0 | READY | NOT RUN |
+| [HL-TC-0132 — Powitalny mieszkaniec nie blokuje rozdania punktów Domu ani samouczka](manual/HL-TC-0132.md) | Powitanie i Dom | P0 | READY | NOT RUN |
+| [HL-TC-0133 — Pełna gra rozlicza reklamę dekoracji i dodatkowej belki bez fałszywej nagrody](manual/HL-TC-0133.md) | Reklamy w przygodach | P0 | READY | NOT RUN |
+| [HL-TC-0134 — Excel 12 odpowiada nowemu DEV i zachowuje historyczne zasady](manual/HL-TC-0134.md) | Arkusz zasad | P1 | READY | NOT RUN |
 
 ## Raport i zgłoszenia
 

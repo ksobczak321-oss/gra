@@ -23,12 +23,12 @@ test('current building descriptions explain concrete recipes and preserve actual
   for (const [id, building] of Object.entries(BUILDINGS)) assertPolish(building.description, id);
   const mill = translate(BUILDINGS.windmill.description, 'pl');
   const sawmill = translate(BUILDINGS.sawmill.description, 'pl');
-  assert.match(mill, /20 jednostek żywności.*24.*2 jednostki na godzinę/);
-  assert.match(mill, /Jedna jednostka żywności wymaga 2 jednostek zboża z magazynu centralnego/);
+  assert.match(mill, /40 jednostek żywności na godzinę.*kolejny poziom.*o 4/);
+  assert.match(mill, /Jedna jednostka żywności zużywa 2 jednostki zboża z magazynu centralnego/);
   assert.equal(BUILDINGS.windmill.inputRate, 2);
-  assert.match(sawmill, /Jedna deska wymaga 2 jednostek drewna z magazynu centralnego/);
+  assert.match(sawmill, /Na jedną deskę potrzeba 2 jednostek drewna z magazynu centralnego/);
   assert.equal(BUILDINGS.sawmill.inputRate, 2);
-  assert.match(translate(BUILDINGS.warehouse.description, 'pl'), /1000.*4000.*120.*pięciominutowym.*50%.*10 mln.*40 mln.*24/);
+  assert.match(translate(BUILDINGS.warehouse.description, 'pl'), /2688.*13 440.*stałą pojemność.*rozbudowę.*misję.*jedzenia.*bufor/);
   assert.match(buildingPurpose('dock', 'pl'), /Od 4\. poziomu.*Od 6\..*10, 13, 16.*20 wysp/);
   assert.match(residentsPurpose('pl'), /macierzystej.*12.*córce.*6.*0 punktów.*100 punktów.*30 minut.*72 godziny.*20 punktów/);
   assert.match(warehousePurpose('pl'), /nagród.*ponad zwykłym limitem/);

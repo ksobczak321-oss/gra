@@ -368,7 +368,7 @@ def complete_mobile_tour(browser):
         expect(guide).not_to_have_attribute('data-onboarding-step', step_id)
     else:
         raise AssertionError('The complete walkthrough did not finish in100 steps')
-    assert len(ids) == 33, ids
+    assert len(ids) == 34, ids
     assert ids[:8] == ['home', 'level', 'happiness', 'coins', 'working', 'arrival', 'points', 'population'], ids[:8]
     assert ids.index('chat') + 1 == ids.index('notifications'), ids
     for building in BUILDINGS:
@@ -457,7 +457,8 @@ def lost_finish_acknowledgement(browser):
     page.locator('[data-close-tutorial-exit-reminder]').click()
     expect(page.locator('[data-tutorial-current]')).to_be_visible()
     assert cloud.DOCUMENTS[UID]['revision'] == revision, 'A confirmed ambiguous completion must not be sent twice'
-    assert cloud.cloud_state(UID)['population'] == 12
+    assert cloud.cloud_state(UID)['population'] == 13
+    assert cloud.cloud_state(UID)['welcomeWorkers']['granted'] == 1
     assert cloud.cloud_state(UID)['islandName'] == 'Port po utracie odpowiedzi'
     assert cloud.cloud_state(UID)['tutorial']['curriculum'] == 4
 
@@ -468,7 +469,8 @@ def lost_finish_acknowledgement(browser):
     page.locator('[data-worker-building="farm"][data-worker-delta="1"]').click()
     expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
     assert cloud.cloud_state(UID)['buildings']['farm']['workers'] == 1
-    assert cloud.cloud_state(UID)['population'] == 12
+    assert cloud.cloud_state(UID)['population'] == 13
+    assert cloud.cloud_state(UID)['welcomeWorkers']['granted'] == 1
     cloud.no_island_cache(page)
     context.close()
     print('PASS20 lost finish acknowledgement is reconciled once; tutorial and a real worker assignment continue without an island reset', flush=True)

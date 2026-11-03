@@ -1,5 +1,5 @@
-import { APPROVED_TRANSLATIONS } from './harborlight-v1-approved-copy.js?v=frontend-v28-2';
-import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v28-2';
+import { APPROVED_TRANSLATIONS } from './harborlight-v1-approved-copy.js?v=frontend-v29';
+import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v29';
 
 /** English is the source language. Polish strings are presentation only: saves,
  * identifiers, action payloads and user-entered values are never translated. */
@@ -1973,7 +1973,7 @@ Payment amount in PLN|Kwota płatności w PLN
 `);
 
 // Queue headings may already contain a localized building name from titleOf().
-priorityRule(/^(House|Farm|Sawmill|Quarry|Harbor|Warehouse|Lighthouse|Lumber Camp|Windmill|Town Hall|Chapel|Market|Dom|Gospodarstwo|Tartak|Kamieniołom|Port|Magazyn|Latarnia morska|Drwale|Młyn|Ratusz|Kaplica|Targ) → level (\d+)$/, (_, building, level) => `${tr(building)} → poziom ${level}`);
+priorityRule(/^(Theatre|Teatr|House|Farm|Sawmill|Quarry|Harbor|Warehouse|Lighthouse|Lumber Camp|Windmill|Town Hall|Chapel|Market|Dom|Gospodarstwo|Tartak|Kamieniołom|Port|Magazyn|Latarnia morska|Drwale|Młyn|Ratusz|Kaplica|Targ) → level (\d+)$/, (_, building, level) => `${tr(building)} → poziom ${level}`);
 priorityRule(/^\+([\d,.\s]+)% (speed|load)$/, (_, value, kind) => `+${value}% ${kind === 'speed' ? 'szybkości' : 'ładowności'}`);
 entries(`
 Construction package quote.|Wycena pakietu budowlanego.
@@ -2218,3 +2218,22 @@ Each eligible resident receives the temporary happiness bonus. New residents kee
 `);
 priorityRule(/^([+−-]?[\d,.\s]+) points\/h$/, (_, number) => `${happinessPoints(number)}/godz.`);
 priorityRule(/^([+−-]?[\d,.\s]+) happiness points$/, (_, number) => `${happinessPoints(number)} szczęścia`);
+priorityRule(/^Level (\d+) — Town Hall; capacity (\d+) residents$/, (_, level, capacity) => `Poziom wyspy ${level} — Ratusz; limit ludności: ${capacity} osób`);
+
+// v29: current economic figures and the permanent Theatre venue.
+entries(`
+Theatre|Teatr
+Actual working residents|Mieszkańcy, którzy dotarli do pracy
+Next population change at current happiness|Przewidywane przybycie lub odejście mieszkańca przy obecnym szczęściu
+Back to island|Wróć na wyspę
+Carrier return information acknowledged.|Informacja o powrocie tragarzy została zapisana.
+A place to rest and meet neighbours. Arrange twenty spaces with decorations from your collection; the Theatre itself has no building upgrades.|Miejsce odpoczynku i spotkań mieszkańców. Urządź dwadzieścia miejsc, wybierając ozdoby ze swojej kolekcji. Sam Teatr nie wymaga rozbudowy.
+Each farmer produces 40 grain per hour at level 1 and four more per level thereafter. Harvests wait locally for warehouse workers.|Na poziomie 1 każdy rolnik zbiera 40 jednostek zboża na godzinę. Każdy kolejny poziom zwiększa ten wynik o 4. Zbiory czekają przy Gospodarstwie na odbiór przez tragarzy.
+Each worker produces 40 planks per hour at level 1 and four more per level thereafter. Each plank requires 2 wood from central storage.|Na poziomie 1 każdy pracownik wytwarza 40 desek na godzinę. Każdy kolejny poziom zwiększa ten wynik o 4. Na jedną deskę potrzeba 2 jednostek drewna z magazynu centralnego.
+Each quarry worker produces 40 stone per hour at level 1 and four more per level thereafter. Stone waits locally for transport.|Na poziomie 1 każdy kamieniarz wydobywa 40 jednostek kamienia na godzinę. Każdy kolejny poziom zwiększa ten wynik o 4. Kamień czeka przy Kamieniołomie na odbiór przez tragarzy.
+Each lumberjack produces 40 wood per hour at level 1 and four more per level thereafter. Wood waits locally for transport.|Na poziomie 1 każdy drwal pozyskuje 40 jednostek drewna na godzinę. Każdy kolejny poziom zwiększa ten wynik o 4. Drewno czeka przy budynku Drwali na odbiór przez tragarzy.
+Each miller produces 40 food per hour at level 1 and four more per level thereafter. Each Food requires 2 grain from central storage.|Na poziomie 1 każdy młynarz wytwarza 40 jednostek żywności na godzinę. Każdy kolejny poziom zwiększa ten wynik o 4. Jedna jednostka żywności zużywa 2 jednostki zboża z magazynu centralnego.
+At level 1 the central Warehouse holds 2,688 per material and 13,440 total. Each level has fixed limits for upgrades, missions, meals and a buffer. Reward materials remain available outside ordinary capacity. Carriers supply construction and collect goods; paths improve transport.|Magazyn centralny na poziomie 1 mieści po 2688 sztuk każdego materiału, łącznie 13 440. Każdy poziom ma stałą pojemność uwzględniającą rozbudowę, misję, zapas jedzenia i bufor. Materiały z nagród pozostają dostępne poza zwykłym limitem. Tragarze zaopatrują budowy i odbierają gotowe towary. Lepsze ścieżki usprawniają przewóz.
+Completing a level sets everyone’s happiness to 100% and doubles material production for 24 hours × the new level. New construction uses the island-level time budget shown before ordering.|Ukończenie poziomu Latarni zapewnia wszystkim 100 punktów szczęścia i podwaja produkcję materiałów na 24 godziny × nowy poziom. Czas nowej budowy zależy od poziomu wyspy; sprawdzisz go przed zleceniem.
+The Theatre is a permanent venue. Arrange and upgrade its decorations instead.|Teatr jest stałym miejscem spotkań. Zamiast rozbudowy budynku możesz przestawiać i ulepszać jego dekoracje.
+`);

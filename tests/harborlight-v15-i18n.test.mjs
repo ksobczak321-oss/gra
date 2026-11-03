@@ -88,8 +88,8 @@ test('resident and warehouse introductions retain constraints and use new carrie
   assert.match(residentsPurpose('pl'), /macierzystej pozostaje co najmniej 12 osób/);
   assert.match(residentsPurpose('pl'), /córce — 6/);
   assert.match(residentsPurpose('pl'), /Przy szczęściu 0 punktów/);
-  assert.match(warehousePurpose('pl'), /120 sztuk/);
-  assert.match(warehousePurpose('pl'), /pięciominutowym/);
+  assert.match(warehousePurpose('pl'), /2688 sztuk/);
+  assert.match(warehousePurpose('pl'), /czasu przewidzianego dla poziomu wyspy/);
   assert.equal(translate(residentsPurpose(), 'pl'), residentsPurpose('pl'));
   assert.equal(translate(warehousePurpose(), 'pl'), warehousePurpose('pl'));
 });

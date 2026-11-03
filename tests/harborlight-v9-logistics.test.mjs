@@ -5,7 +5,7 @@ import {
   nextLogisticsEvent, logisticsAction, warehouseUsed, stockRoom, availableGoods,
   centralReserved, centralAvailable, reserveConstructionMaterials, promoteConstructionQueue,
   receiveMaterials, bonusStock, ordinaryWarehouseUsed, consumeMaterial, updateStorageStatus, cancelConstruction, constructionScheduleEstimate,
-  quoteInstantTransport, instantTransport, productionBlocked, haulCapacity, estimateMaterialsSeconds
+  quoteInstantTransport, instantTransport, productionBlocked, haulCapacity, estimateMaterialsSeconds, warehouseLimits
 } from '../harborlight-v1-logistics.js';
 
 function island() {
@@ -93,11 +93,11 @@ test('reward overflow is spendable immediately and never expires',()=>{
 });
 
 test('bonus goods do not occupy the ordinary central space reserved for emergency meals',()=>{
-  const s=island();Object.assign(s.resources,{wood:1000,stone:1000,grain:1000,planks:950,food:0});
-  assert.equal(warehouseUsed(s),3950);assert.equal(stockRoom(s,'planks'),0);assert.equal(stockRoom(s,'food'),50);
-  receiveMaterials(s,{planks:50});assert.equal(bonusStock(s,'planks'),50);assert.equal(s.resources.planks,1000);
-  receiveMaterials(s,{food:50});assert.equal(s.resources.food,50);assert.equal(warehouseUsed(s),4050);
-  assert.equal(ordinaryWarehouseUsed(s),3950);
+  const s=island(), cap=warehouseLimits(s).perResource;Object.assign(s.resources,{wood:cap,stone:cap,grain:cap,planks:cap,food:0});
+  assert.equal(warehouseUsed(s),4*cap);assert.equal(stockRoom(s,'planks'),0);assert.equal(stockRoom(s,'food'),cap);
+  receiveMaterials(s,{planks:50});assert.equal(bonusStock(s,'planks'),50);assert.equal(s.resources.planks,cap+50);
+  receiveMaterials(s,{food:50});assert.equal(s.resources.food,50);assert.equal(warehouseUsed(s),4*cap+100);
+  assert.equal(ordinaryWarehouseUsed(s),4*cap);
   consumeMaterial(s,'food',20);updateStorageStatus(s);assert.equal(bonusStock(s,'planks'),50);
 });
 
@@ -221,11 +221,11 @@ test('an exceptional partially expired Harbor sale pays only its actual loaded q
 });
 
 test('processing consumes inputs only on a finished output and preserves a blocked partial phase',()=>{
-  const s=island();s.resources.wood=2;crew(s,'sawmill',1);advanceLogistics(s,90);
-  assert.equal(s.resources.wood,2);assert.equal(s.buildings.sawmill.ready,0);assert.equal(s.buildings.sawmill.workProgress[0],90);
-  const p=project(s,{wood:2},{fund:false});advanceLogistics(s,90);
-  assert.equal(s.buildings.sawmill.workProgress[0],90);assert.equal(s.resources.wood,2);
-  cancelConstruction(s,p.order);advanceLogistics(s,90);
+  const s=island();s.resources.wood=2;crew(s,'sawmill',1);advanceLogistics(s,45);
+  assert.equal(s.resources.wood,2);assert.equal(s.buildings.sawmill.ready,0);assert.equal(s.buildings.sawmill.workProgress[0],45);
+  const p=project(s,{wood:2},{fund:false});advanceLogistics(s,45);
+  assert.equal(s.buildings.sawmill.workProgress[0],45);assert.equal(s.resources.wood,2);
+  cancelConstruction(s,p.order);advanceLogistics(s,45);
   assert.equal(s.resources.wood,0);assert.equal(s.buildings.sawmill.ready,1);assert.equal(s.buildings.sawmill.workProgress[0],0);
 });
 

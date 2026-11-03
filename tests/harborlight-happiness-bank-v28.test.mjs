@@ -134,8 +134,8 @@ test('tour removal migrates each saved index exactly once in onboarding and revi
   const migrated = reload(raw), twice = reload(migrated);
   assert.equal(migrated.onboarding.index, 8);
   assert.equal(migrated.learning.tour.index, 8);
-  assert.equal(migrated.onboarding.routeVersion, 2);
-  assert.equal(migrated.learning.tour.routeVersion, 2);
+  assert.equal(migrated.onboarding.routeVersion, 3);
+  assert.equal(migrated.learning.tour.routeVersion, 3);
   assert.equal(twice.onboarding.index, 8);
   assert.equal(twice.learning.tour.index, 8);
 });

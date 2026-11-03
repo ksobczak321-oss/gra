@@ -145,6 +145,52 @@ def shared_window_contract(browser, base):
     context.close()
     print('PASS community shared league window: PL/EN at19:15 and20:15 start both distinct kinds; at21:00 no ranked starts; open UI closes live at21:00 and practice remains')
 
+def directory_refresh_contract(browser, base):
+    document = '''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:8px;background:#102d3c;color:white">
+    <script type="module">
+      import {createCommunityPanel} from './harborlight-v1-community-ui.js?v=directory-contract';
+      window.directory={self:{id:'own',name:'Kapitan',blocked:[],muted:[]},players:[],alliances:[],alliance:null};
+      const client={simulation:false,snapshot:async()=>structuredClone(window.directory),request:async(command)=>{
+        if(command==='chatRead')return{messages:[],muted:false};throw new Error('Unexpected command: '+command);}};
+      document.body.append(createCommunityPanel({client,section:'chat',language:new URLSearchParams(location.search).get('language')}));
+    </script></body></html>'''
+    def asset(route):
+        if urlsplit(route.request.url).path == '/community-directory-contract.html':
+            return route.fulfill(body=document, content_type='text/html')
+        target = (FRONTEND_ROOT / unquote(urlsplit(route.request.url).path).lstrip('/')).resolve()
+        if not target.is_relative_to(FRONTEND_ROOT) or not target.is_file():
+            return route.fulfill(status=404, body='Missing fixture asset')
+        return route.fulfill(body=target.read_bytes(), content_type=mimetypes.guess_type(str(target))[0] or 'application/octet-stream')
+    for language, width in [('pl', 1100), ('en', 390)]:
+        context = browser.new_context(viewport={'width': width, 'height': 900})
+        context.route(base+'/**', asset)
+        page = context.new_page()
+        page.clock.install()
+        page.goto(base+'/community-directory-contract.html?language='+language)
+        panel = page.locator('[data-community-panel]')
+        expect(panel.locator('[data-community-conversation]')).to_have_count(0)
+        page.evaluate("window.directory.players=[{id:'second',name:'Drugi gracz'}]")
+        page.clock.run_for(3100)
+        selector = panel.locator('[data-community-conversation]')
+        expect(selector).to_have_value('second')
+        draft = panel.get_by_role('textbox', name='Wiadomość' if language == 'pl' else 'Message', exact=True)
+        draft.fill('Nie kasuj mojego szkicu')
+        page.evaluate("window.directory.players.push({id:'third',name:'Trzeci gracz'})")
+        page.clock.run_for(3100)
+        expect(selector.locator('option')).to_have_count(2)
+        expect(selector).to_have_value('second')
+        expect(draft).to_have_value('Nie kasuj mojego szkicu')
+        page.evaluate("window.directory.alliance={id:'crew',name:'Załoga',captainId:'own',members:[{id:'own',name:'Kapitan'}],pending:[]}")
+        panel.locator('[data-community-tab="alliance"]').click()
+        expect(panel.get_by_role('heading', level=3)).to_have_text('Załoga')
+        page.evaluate("window.directory.alliance.pending=[{id:'second',name:'Drugi gracz'}]")
+        page.clock.run_for(3100)
+        expect(panel.get_by_role('button', name='Przyjmij' if language == 'pl' else 'Accept', exact=True)).to_be_visible()
+        expect(panel.locator('[data-community-refresh]')).to_be_visible()
+        assert page.evaluate('document.documentElement.scrollWidth<=window.innerWidth+1')
+        context.close()
+    print('PASS community live directory PL/EN: new players appear without reopening, typed draft and chosen conversation survive, captain sees incoming application')
+
 def run():
     base = 'http://127.0.0.1:47383'
     errors = []
@@ -219,6 +265,7 @@ def run():
                     context.close()
                     print('PASS community: alliance request/approval, identity switch, plaintext chat, private messages/block, league logic+arcade and bounded layout: %s/%s' % (language, 'mobile' if mobile else 'desktop'))
                 shared_window_contract(browser, base)
+                directory_refresh_contract(browser, base)
                 assert not errors, errors
             finally:
                 browser.close()

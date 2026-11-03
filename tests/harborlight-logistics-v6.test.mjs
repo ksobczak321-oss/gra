@@ -16,7 +16,7 @@ function project(s,cost={wood:60},building='house',targetLevel=2){const p={build
 
 test('production uses own producer level and individual complete units',()=>{
  const s=island();s.buildings.farm.level=2;crew(s,'farm',2);
- assert.equal(productionRate(s,'farm'),24);advanceLogistics(s,149);assert.equal(s.buildings.farm.ready,0);advanceLogistics(s,1);assert.equal(s.buildings.farm.ready,2);advanceLogistics(s,3450);assert.equal(s.buildings.farm.ready,48);
+ assert.equal(productionRate(s,'farm'),44);const cycle=3600/44;advanceLogistics(s,cycle-1);assert.equal(s.buildings.farm.ready,0);advanceLogistics(s,1);assert.equal(s.buildings.farm.ready,2);advanceLogistics(s,3600-cycle);assert.equal(s.buildings.farm.ready,88);
 });
 test('walking assignees neither produce nor carry before arriving',()=>{
  const s=island();crew(s,'farm',1,300);crew(s,'warehouse',1,300);s.buildings.lumber.ready=60;advanceLogistics(s,300);assert.equal(s.buildings.farm.ready,0);assert.equal(s.resources.wood,0);assert.equal(s.haulTrips.warehouse.length,0);

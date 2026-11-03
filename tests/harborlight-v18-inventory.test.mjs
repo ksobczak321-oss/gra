@@ -32,33 +32,33 @@ function reload(state) {
 }
 
 test('reward overflow is spendable and leaves ordinary production slots intact', () => {
-  const state = island(); state.resources.wood = 800;
+  const state = island(); state.resources.wood = 2488;
   receiveMaterials(state, { wood: 400 });
-  assert.equal(state.resources.wood, 1200);
+  assert.equal(state.resources.wood, 2888);
   assert.equal(bonusStock(state, 'wood'), 400);
-  assert.equal(ordinaryStock(state, 'wood'), 800);
+  assert.equal(ordinaryStock(state, 'wood'), 2488);
   assert.equal(stockRoom(state, 'wood'), 200);
-  assert.equal(centralAvailable(state, 'wood'), 1200);
+  assert.equal(centralAvailable(state, 'wood'), 2888);
   receiveMaterials(state, { wood: 200 }, { bonus: false });
-  assert.equal(state.resources.wood, 1400);
-  assert.equal(ordinaryStock(state, 'wood'), 1000);
+  assert.equal(state.resources.wood, 3088);
+  assert.equal(ordinaryStock(state, 'wood'), 2688);
   assert.equal(stockRoom(state, 'wood'), 0);
   assert.equal(state.pendingDeliveries.wood, 0);
 });
 
 test('spending consumes bonus first and only then frees ordinary warehouse capacity', () => {
-  const state = island(); state.resources.wood = 1000;
+  const state = island(); state.resources.wood = 2688;
   receiveMaterials(state, { wood: 400 });
   assert.equal(consumeMaterial(state, 'wood', 250), 250);
-  assert.equal(state.resources.wood, 1150);
+  assert.equal(state.resources.wood, 2838);
   assert.equal(bonusStock(state, 'wood'), 150);
   assert.equal(stockRoom(state, 'wood'), 0);
   assert.equal(spendMaterials(state, { wood: 200, coins: 10 }), true);
   assert.equal(bonusStock(state, 'wood'), 0);
-  assert.equal(ordinaryStock(state, 'wood'), 950);
+  assert.equal(ordinaryStock(state, 'wood'), 2638);
   assert.equal(stockRoom(state, 'wood'), 50);
   const before = structuredClone(state.resources);
-  assert.equal(spendMaterials(state, { wood: 1000, coins: 100 }), false);
+  assert.equal(spendMaterials(state, { wood: 2688, coins: 100 }), false);
   assert.deepEqual(state.resources, before, 'a failed multi-resource spend is atomic');
 });
 
@@ -99,7 +99,7 @@ test('a full material reward survives inbound reservations and remains immediate
 });
 
 test('instant producer delivery refuses space reserved by ordinary inbound cargo', () => {
-  const state = island(); state.resources.stone = 880; state.buildings.quarry.ready = 120;
+  const state = island(); state.resources.stone = 2568; state.buildings.quarry.ready = 120;
   state.haulTrips.warehouse.push({ kind: 'producer', resource: 'stone', amount: 120, remaining: 100, producer: 'quarry', worker: -1 });
   const before = structuredClone(state);
   assert.equal(quoteInstantTransport(state, { route: 'producer', building: 'quarry' }).ok, false);
@@ -184,12 +184,12 @@ test('transport activity changes remaining travel speed without changing carried
 
 
 test('bonus Food cannot consume the ordinary emergency Food delivery reserve', () => {
-  const state = island(); Object.assign(state.resources, { wood: 1000, stone: 1000, grain: 1000, planks: 950, food: 0 });
+  const state = island(); Object.assign(state.resources, { wood: 2688, stone: 2688, grain: 2688, planks: 2688, food: 0 });
   receiveMaterials(state, { food: 100 });
   assert.equal(stockRoom(state, 'planks'), 0);
   assert.equal(centralRoom(state, 'planks'), 0);
   consumeMaterial(state, 'food', 100);
-  assert.equal(centralRoom(state, 'food'), 50);
+  assert.equal(centralRoom(state, 'food'), 2688);
   receiveMaterials(state, { food: 50 }, { bonus: false });
   assert.equal(ordinaryStock(state, 'food'), 50);
 });

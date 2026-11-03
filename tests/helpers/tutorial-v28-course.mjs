@@ -1,13 +1,15 @@
 // Execute fresh curriculum 6 through real commands, material deliveries,
 // construction, a completed Lighthouse task and a won/cashed-out minigame.
 import { createState, act, advanceTo } from '../../harborlight-v1-state.js';
-import { TUTORIAL_LESSONS, tutorialRows, tutorialStatus } from '../../harborlight-v1-progression.js';
+import { V6_TUTORIAL_LESSONS, TUTORIAL_LESSONS, tutorialRows, tutorialStatus } from '../../harborlight-v1-progression.js';
 import { quoteTransport, quoteAcceleration, quotePremiumBuilding } from '../../harborlight-v1-activities.js';
 import { leisureOffers } from '../../harborlight-v1-leisure.js';
 import { ordinaryWarehouseUsed } from '../../harborlight-v1-inventory.js';
 
-export function runTutorialV28({ now = Date.parse('2026-11-01T10:00:00Z'), through = 25, beforeLesson = null } = {}) {
+export function runTutorialV28({ now = Date.parse('2026-11-01T10:00:00Z'), through = 25, beforeLesson = null, curriculum = 6 } = {}) {
   const state = createState(now), trace = [];
+  state.tutorial.curriculum = curriculum; // Historical callers keep6; v29 explicitly selects7.
+  const lessons = curriculum === 6 ? V6_TUTORIAL_LESSONS : TUTORIAL_LESSONS;
   const command = action => {
     const result = act(state, action, state.worldTimeMs);
     if (!result.ok) throw new Error(JSON.stringify({ action, result, tutorial: tutorialStatus(state), resources: state.resources, bonus: state.bonusMaterials }));
@@ -17,7 +19,7 @@ export function runTutorialV28({ now = Date.parse('2026-11-01T10:00:00Z'), throu
     advanceTo(state, state.worldTimeMs + seconds * 1000);
     command({ type: 'userActivity', visible: true, focused: true });
   };
-  for (const lesson of TUTORIAL_LESSONS.slice(0, through)) {
+  for (const lesson of lessons.slice(0, through)) {
     beforeLesson?.(state, command, lesson);
     command({ type: 'userActivity', visible: true, focused: true });
     if (!state.tutorial.completed[lesson.id]) {

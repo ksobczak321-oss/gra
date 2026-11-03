@@ -1,5 +1,19 @@
 # Reguły gospodarki HARBORLIGHT — DEV 0.12.0.0 / v28
 
+## Bieżący zakres DEV 0.13.0.0 / v29 — 3 listopada 2026
+
+[Zatwierdzone wymagania](FRONTEND-V29-REQUIREMENTS.md) zastępują opis v28 poniżej w zakresie czasu budowy, wydobycia, pojemności i nauki. PRE-PROD pozostaje0.12.0.0 do osobnej promocji. [Excel12](arkusze/HARBORLIGHT12-zasady.xlsx) pobiera bieżące parametry bezpośrednio z kodu.
+
+- Bazowy łączny czas nowej budowy i dowozu: 45s na ukończonym Ratuszu1; ×3 na poziomach2–5, ×2 na6–8, ×1,2 na9–11, ×1,1 na12–14, ×1,05 na15–17, ×1,02 na18–22; poziom23=23h55min, od24=24h. Ratusz i Latarnia mają wagę1, pozostałe budynki mniejszą. Nowe zamówienie zapisuje parametry; stare projekty zachowują swoje zegary.
+- Referencyjna obsada to trzej gotowi tragarze. Jeden lub dwóch nadal pracuje, wykonując więcej kursów. Dojście120s, czekanie na materiały, kolejka i istniejące dostawy są osobne. Głód i brak łóżka spowalniają przewóz, a aktywność i ścieżki mogą go przyspieszyć. Budowa i dostawa stanowią osobne fazy; 40% bazowego budżetu przypada na transport,60% na budowę.
+- Produkcja bazowa na pracownika:40+4×(własny poziom budynku−1) jednostek/h. Receptury pozostają2drewna→1deska i2zboża→1żywność. Zachowujemy ułamek już rozpoczętej produkcji przy migracji.
+- Magazyn1:2688 każdego materiału/13440łącznie. Każdy kolejny poziom ma stałą tabelę uwzględniającą rozbudowę, misję, żywność i25%bufor; zachowujemy większą wcześniejszą pojemność. Łączny limit równa się pięciu limitom materiałowym. Monety są osobno, nagrody pozostają dostępne poza limitem zwykłych dostaw. Rozbudowa własnego Magazynu mieści się w poprzednim poziomie.
+- Tutorial34kroki; samouczek25lekcji/program7. Jeden budynek uczymy przyspieszać, na inny czekać. Historyczne programy zostają. Powitalny mieszkaniec za logowanie każdego z pierwszych7dni, bez nadrabiania nieobecności, do limitu Ratusza i raz na konto/dzień.
+- Teatr ma20miejsc,10rodzajów dekoracji,20poziomów każdej posiadanej sztuki. Bezpłatne przenoszenie i przechowywanie. Zakup25–35monet zależnie od typu; ulepszenie:zaokrąglone w górę do5 monet12×poziom^1,35×waga typu. Poziomy5/10/15/20 wymagają też ukończonej reklamy, chyba że konto ma aktywne uprawnienie bez reklam.
+- Dziewięć przygód:45-sekundowy zrzut, mapa z trójek, kule i piraci, most, sygnały Latarni, listy, rytm, ogród i równoważenie ładunku. Zrzut najwyżej30przedmiotów:po5monet lub10materiałów. Odnowienie zrzutu30min, innych przygód15min. Nagrody pozostałych:25–80monet i materiały. To jawne parametry DEV, nie wynik symulacji rentowności ani uruchomienie dostawcy reklam.
+
+### Historyczna podstawa v28 — poniższe różnice zastąpiono powyżej
+
 Reguły bieżącego kodu DEV łączą historyczną bazę v18–v27 z najnowszym [GO v28](FRONTEND-V28-REQUIREMENTS.md). Opisują mechanikę, a nie wynik publikacji. **DEV 0.12.0.0 jest w trakcie własnego odbioru. PRE-PROD pozostaje 0.11.0.0 / `c7c39742594599c54ee8b074b5c313efd88af4cb`, deploy 41362782175/próba 1 SUCCESS.** Nowe GO nie promuje GCP, nie resetuje danych i nie obejmuje PROD. [Rejestr środowisk](ENVIRONMENT-STATUS.md) i [walidacja 0.12](DEV-0.12.0.0-VALIDATION.md) rozdzielają przygotowany kod, testy i wdrożenia.
 
 V18 zastąpiło sprzeczne reguły v17 i wcześniejszych manifestów; późniejsze zatwierdzone zmiany poniżej mają pierwszeństwo. Starsze arkusze pozostają archiwami, a dawne pytania nie otwierają ponownie rozstrzygniętych zasad.

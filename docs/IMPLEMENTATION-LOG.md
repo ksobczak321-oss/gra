@@ -1058,3 +1058,12 @@ Wszystkie60publicznych wejść odpowiadają odebranemu DEV0ca7715; schemat9/arch
 ## 2026-11-02 — tag PRE-PROD0.12 opublikowany i potwierdzony
 
 Tag [`preprod-0.12.0.0-20261102`](https://github.com/ksobczak321-oss/gra/tree/preprod-0.12.0.0-20261102) jest **opublikowany i potwierdzony zdalnie**: obiekt `d66b25ba216e5b686e6a92b9b8558d35eda9fd2d` rozwiązuje się do `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`. Nie przesuwamy go na późniejsze commity metadanych. Potwierdzenie `git ls-remote` nastąpiło po sukcesie deployu41482455135/próba1 i odczycie publicznych metadanych obu artefaktów udanej próby. Poprzedni akapit o odrębnym potwierdzeniu tagu opisuje wcześniejszy etap; bieżący tag jest już opublikowany. Późniejszy commit dowodów nie zmienia60publicznych wejść aplikacji. Bez resetu kont, PROD i rzeczywistych operatorów.
+
+
+## 2026-11-03 — DEV0.13.0.0 /v29, lokalny odbiór zatwierdzonej paczki
+
+Wdrożono nową krzywą budowy45s→24h, stałe pojemności Magazynu i wydobycie40+4/poziom, tutorial34/samouczek25 z przyspieszaniem i czekaniem, powitalnych mieszkańców przez7dni, sekwencyjne bieżące misje, Teatr z20miejscami/10rodzajami/20poziomami oraz9fabularnych przygód. Trzy testowe konta są widoczne w rzeczywistym katalogu API; lokalny HTTP potwierdza prywatne rozmowy, sojusz i trwałość. Uzupełniono redakcję Pomocy, tooltipów i komunikatów, prawdziwy obszar Portu w tutorialu oraz nakładkę łapania nagród.
+
+Lokalnie1060frontend +133backend +7planszówka=1200NodePASS;141Python i36zestawówChromiumPASS. Prędkość dostaw uwzględnia rzeczywistą obsadę, głód, łóżka i bonusy; ukończenie Domu nie zmienia przeszłego segmentu. Zachowano stare projekty i programy. [Excel12](arkusze/HARBORLIGHT12-zasady.xlsx) zachowuje66historycznych arkuszy/48komentarzy/3992cache i prezentuje dane z aktualnego kodu. [397kart/134ręczneNOTRUN](tracking/CHANGE-REGISTER.md). [Raport](DEV-0.13.0.0-VALIDATION.md) oddziela odbiór lokalny od publikacji.
+
+Git/push, własne CI, Pages oraz tag wymagają kolejnego potwierdzenia. PRE-PROD pozostaje0.12.0.0/d9e2940. Nie resetowano kont, nie promowanoPROD i nie aktywowano operatorów ani integracji planszówki.

@@ -1,4 +1,4 @@
-import { LOGIC_TASKS, ARCADE_TASKS, logicChoices, arcadeTarget } from './harborlight-v1-league.js?v=frontend-v28-2';
+import { LOGIC_TASKS, ARCADE_TASKS, logicChoices, arcadeTarget } from './harborlight-v1-league.js?v=frontend-v29';
 const pick = (language, pl, en) => language === 'en' ? en : pl;
 const node = (tag, attrs = {}, ...children) => { const el = document.createElement(tag); for (const [k,v] of Object.entries(attrs)) { if(k.startsWith('on'))el.addEventListener(k.slice(2),v);else if(k==='class')el.className=v;else if(v!==false&&v!=null)el.setAttribute(k,v===true?'':String(v)); } for(const child of children.flat())if(child!=null)el.append(child instanceof Node?child:document.createTextNode(String(child)));return el; };
 const copy = (lang, value) => value?.[lang === 'en' ? 1 : 0] || '';
@@ -36,14 +36,14 @@ function styles() {
  * acknowledges writes before displaying them as delivered/accepted. */
 export function createCommunityPanel({ client, language = 'pl', initialTab = 'alliance', section = initialTab, onError = () => {}, onChanged = async () => {} } = {}) {
   styles(); const t=(pl,en)=>pick(language,pl,en), root=node('div',{class:'community-panel','data-community-panel':'','data-i18n-ignore':''}), notice=node('div',{'aria-live':'polite'}), content=node('div',{class:'community-box'});
-  let tab=['ranking','alliance','chat','league'].includes(section)?section:'alliance', snapshot=null, alive=true, timer=0, chatPoll=0, leagueSlotTimer=0, challengeCleanup=()=>{}, currentChat=null;
+  let tab=['ranking','alliance','chat','league'].includes(section)?section:'alliance', snapshot=null, alive=true, timer=0, chatPoll=0, leagueSlotTimer=0, challengeCleanup=()=>{}, currentChat=null, syncChatDirectory=null, directoryBusy=false;
   const say=(message,isError=false)=>{notice.replaceChildren(node('p',{class:isError?'community-error':'community-notice',role:isError?'alert':'status'},message));};
   const failure=e=>{if(!alive)return;onError(e);say(copy(language,ERRORS[e.code||e.message])||t('Nie udało się potwierdzić operacji. Odśwież dane i spróbuj ponownie.','The operation could not be confirmed. Refresh and try again.'),true);};
   const action=(label,fn,attrs={})=>node('button',{type:'button',...attrs,onclick:async e=>{const b=e.currentTarget;if(b.disabled)return;b.disabled=true;try{await fn();}catch(error){failure(error);}finally{if(b.isConnected)b.disabled=false;}}},label);
   async function call(command,data={}) {const result=await client.request(command,data);return result;}
   async function reload(){snapshot=await client.snapshot();if(alive)render();}
   const tabs=node('div',{class:'community-tabs'},...[['ranking',t('Ranking','Ranking')],['alliance',t('Sojusz','Alliance')],['league',t('Liga','League')],['chat',t('Wiadomości','Messages')]].map(([id,label])=>action(label,async()=>{challengeCleanup();clearInterval(chatPoll);tab=id;await reload();},{'data-community-tab':id,'aria-pressed':tab===id})));
-  root.append(notice,tabs,content);
+  root.append(notice,node('div',{class:'community-row'},tabs,action(t('Odśwież graczy i sojusze','Refresh players and alliances'),reload,{'data-community-refresh':''})),content);
   if(client.simulation){
     const identity=node('select',{'aria-label':t('Konto demonstracyjne','Demo identity'),'data-community-demo-identity':''},...(client.listIdentities?.()||[]).map(p=>node('option',{value:p.id,selected:p.id===client.identity?.()},p.name)));
     identity.addEventListener('change',async()=>{challengeCleanup();clearInterval(chatPoll);client.setIdentity(identity.value);client.activeAttempt=null;try{await reload();}catch(e){failure(e);}});
@@ -51,9 +51,9 @@ export function createCommunityPanel({ client, language = 'pl', initialTab = 'al
   }
   function profileForm(){const input=node('input',{required:true,minlength:2,maxlength:40,value:snapshot.self.name||'',placeholder:t('Publiczny pseudonim','Public nickname'),'aria-label':t('Publiczny pseudonim','Public nickname')});const form=node('form',{},input,node('button',{type:'submit',class:'primary'},t('Zapisz pseudonim','Save nickname')));form.addEventListener('submit',async e=>{e.preventDefault();try{await call('profile',{name:input.value});await reload();}catch(error){failure(error);}});return form;}
   function render(){
-    clearInterval(chatPoll);clearInterval(leagueSlotTimer);challengeCleanup();currentChat=null;content.replaceChildren();tabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.communityTab===tab)));
+    clearInterval(chatPoll);clearInterval(leagueSlotTimer);challengeCleanup();currentChat=null;syncChatDirectory=null;content.replaceChildren();tabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.communityTab===tab)));
     if(snapshot.self.needsProfile){content.append(node('h3',{},t('Twój profil społeczności','Your community profile')),node('p',{},t('Wpisz publiczny pseudonim. Nie podawaj e-maila ani danych płatniczych.','Choose a public nickname. Do not include email or payment details.')),profileForm());return;}
-    content.append(node('p',{class:'community-muted'},`${snapshot.self.name} · ${snapshot.alliance?.name||t('Bez sojuszu','No alliance')}`));
+    content.append(node('p',{class:'community-muted','data-community-self':''},`${snapshot.self.name} · ${snapshot.alliance?.name||t('Bez sojuszu','No alliance')}`));
     if(tab==='ranking')renderRanking();else if(tab==='alliance')renderAlliance();else if(tab==='league')renderLeague().catch(failure);else renderChat();
   }
   function renderRanking(){
@@ -91,12 +91,13 @@ export function createCommunityPanel({ client, language = 'pl', initialTab = 'al
   }
   function renderChat(preselected=null){
     tab='chat';tabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.communityTab===tab)));
-    clearInterval(chatPoll);challengeCleanup();content.replaceChildren(node('h3',{},t('Czat sojuszu i rozmowy prywatne','Alliance chat and direct messages')),node('p',{},t('Tu możesz rozmawiać online z innymi graczami. Wybierz czat swojego sojuszu albo prywatną rozmowę z jedną osobą.','Talk online with other players here. Choose your alliance chat or a private conversation with one player.')));
+    clearInterval(chatPoll);challengeCleanup();syncChatDirectory=null;content.replaceChildren(node('h3',{},t('Czat sojuszu i rozmowy prywatne','Alliance chat and direct messages')),node('p',{},t('Tu możesz rozmawiać online z innymi graczami. Wybierz czat swojego sojuszu albo prywatną rozmowę z jedną osobą.','Talk online with other players here. Choose your alliance chat or a private conversation with one player.')));
     const selector=node('select',{'aria-label':t('Wybierz rozmowę','Choose conversation'),'data-community-conversation':''});
     if(snapshot.alliance)selector.append(node('option',{value:'alliance'},t('Sojusz: ','Alliance: ')+snapshot.alliance.name));for(const p of snapshot.players)selector.append(node('option',{value:p.id},p.name));
     if(preselected)selector.value=preselected;if(!selector.options.length){content.append(node('p',{},t('Nie ma jeszcze dostępnych rozmów. Załóż sojusz lub poczekaj na innego gracza.','No conversations are available yet. Create an alliance or wait for another player.')));return;}
     const messages=node('div',{class:'community-messages','aria-live':'polite','data-community-messages':''}),text=node('textarea',{maxlength:1000,rows:2,required:true,'aria-label':t('Wiadomość','Message'),placeholder:t('Wiadomość…','Message…')}),send=node('button',{type:'submit',class:'primary'},t('Wyślij','Send')),form=node('form',{},text,send),controls=node('div',{class:'community-row'});
     const data=()=>selector.value==='alliance'?{channel:'alliance',targetId:snapshot.alliance.id}:{channel:'direct',targetId:selector.value};
+    syncChatDirectory=()=>{const selected=selector.value;selector.replaceChildren(...(snapshot.alliance?[node('option',{value:'alliance'},t('Sojusz: ','Alliance: ')+snapshot.alliance.name)]:[]),...snapshot.players.map(p=>node('option',{value:p.id},p.name)));if([...selector.options].some(o=>o.value===selected))selector.value=selected;send.disabled=!selector.options.length;if(selected!==selector.value){messages.replaceChildren();controls.replaceChildren();if(selector.options.length)refresh();}};
     async function refresh(){const chosen=selector.value;try{const result=await call('chatRead',data());if(!alive||chosen!==selector.value||!messages.isConnected)return;const wasBottom=messages.scrollTop+messages.clientHeight>=messages.scrollHeight-30;messages.replaceChildren(...result.messages.map(m=>node('div',{class:'community-message'},node('div',{class:'community-row'},node('strong',{},m.authorName),node('small',{class:'community-muted'},new Intl.DateTimeFormat(language==='en'?'en-GB':'pl-PL',{hour:'2-digit',minute:'2-digit'}).format(m.createdAt))),node('p',{},m.text),action(t('Zgłoś','Report'),async()=>{await call('chatReport',{...data(),messageId:m.id,reason:t('Zgłoszenie przez gracza','Player report')});say(client.simulation?t('Zgłoszenie demonstracyjne zapisano w pamięci tego podglądu.','Demo report recorded in this preview’s memory.'):t('Wiadomość została zgłoszona.','The message was reported.'));}))));if(!result.messages.length)messages.append(node('p',{class:'community-muted'},t('Brak wiadomości. Zacznij rozmowę.','No messages yet. Start the conversation.')));if(wasBottom)messages.scrollTop=messages.scrollHeight;controls.replaceChildren(action(result.muted?t('Włącz powiadomienia','Unmute'):t('Wycisz rozmowę','Mute conversation'),async()=>{await call('chatMute',{...data(),muted:!result.muted});await refresh();}));if(selector.value!=='alliance'){const blocked=(snapshot.self.blocked||[]).includes(selector.value);controls.append(action(blocked?t('Odblokuj gracza','Unblock player'):t('Zablokuj gracza','Block player'),async()=>{await call('playerBlock',{playerId:selector.value,blocked:!blocked});await reload();}));}}catch(error){messages.replaceChildren(node('p',{class:'community-error'},copy(language,ERRORS[error.code||error.message])||t('Nie udało się pobrać rozmowy.','Could not load conversation.')));controls.replaceChildren();if(selector.value!=='alliance'&&(snapshot.self.blocked||[]).includes(selector.value))controls.append(action(t('Odblokuj gracza','Unblock player'),async()=>{await call('playerBlock',{playerId:selector.value,blocked:false});await reload();}));}}
     form.addEventListener('submit',async e=>{e.preventDefault();send.disabled=true;try{await call('chatSend',{...data(),text:text.value});text.value='';await refresh();}catch(error){failure(error);}finally{send.disabled=false;}});selector.addEventListener('change',()=>refresh());content.append(selector,node('p',{class:'community-muted'},t('Do 1000 znaków; 20 wiadomości / 20 sekund. W rozmowie prywatnej wiadomości widzą tylko rozmówcy.','Up to 1,000 characters; twenty messages per twenty seconds. Direct messages are visible only to the participants.')),messages,controls,form);refresh();chatPoll=setInterval(()=>{if(root.isConnected)refresh();},5000);
   }
@@ -152,7 +153,22 @@ export function createCommunityPanel({ client, language = 'pl', initialTab = 'al
       if(ms>=effectiveDuration){remaining.textContent=t('Czas minął. Zakończ próbę, aby zatwierdzić wynik.','Time is up. Finish the attempt to confirm your score.');area.querySelectorAll('button').forEach(b=>b.disabled=true);return;}frame=requestAnimationFrame(animate);}
     challengeCleanup=()=>cancelAnimationFrame(frame);draw();frame=requestAnimationFrame(animate);
   }
-  timer=setInterval(()=>{if(root.isConnected&&tab==='ranking'&&snapshot?.ranking?.nextUpdateAt<=Date.now())reload().catch(failure);if(!root.isConnected){alive=false;clearInterval(timer);clearInterval(chatPoll);clearInterval(leagueSlotTimer);challengeCleanup();}},3000);
+  async function refreshDirectory(){
+    if(directoryBusy||!alive||!root.isConnected||!snapshot||!['alliance','chat'].includes(tab))return;
+    directoryBusy=true;
+    try{
+      const next=await client.snapshot();if(!alive||!root.isConnected)return;
+      const fields=value=>JSON.stringify([value.self,value.alliance,value.players,value.alliances]);
+      if(fields(next)===fields(snapshot))return;
+      snapshot=next;
+      if(tab==='chat'&&syncChatDirectory){syncChatDirectory();return;}
+      const editing=[...content.querySelectorAll('input,textarea')].some(input=>input.value!==input.defaultValue)||content.contains(document.activeElement)&&document.activeElement.matches('input,textarea,select');
+      if(editing){say(t('Są nowe dane o graczach lub sojuszach. Dokończ wpisywanie i wybierz „Odśwież graczy i sojusze”.','Players or alliances have changed. Finish typing, then choose “Refresh players and alliances”.'));return;}
+      render();
+    }catch{ /* Polling is retried; explicit operations retain visible errors. */ }
+    finally{directoryBusy=false;}
+  }
+  timer=setInterval(()=>{if(root.isConnected&&tab==='ranking'&&snapshot?.ranking?.nextUpdateAt<=Date.now())reload().catch(failure);refreshDirectory();if(!root.isConnected){alive=false;clearInterval(timer);clearInterval(chatPoll);clearInterval(leagueSlotTimer);challengeCleanup();}},3000);
   root.dispose=()=>{alive=false;clearInterval(timer);clearInterval(chatPoll);clearInterval(leagueSlotTimer);challengeCleanup();};
   reload().catch(failure);return root;
 }

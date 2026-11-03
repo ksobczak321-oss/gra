@@ -4,6 +4,8 @@ Każdy wiersz prowadzi do osobnego scenariusza. Wszystkie wyniki startowe to **N
 
 Najwygodniej otworzyć [interaktywną listę](qa-checklist.html): wynik PASS / FAIL / BLOCKED, notatki i dowody zapisują się w tej przeglądarce; przyciskiem „Eksportuj raport JSON” pobierz kopię. Ten plik i jego wyniki są dokumentacją QA, nie zapisem wyspy. Na GitHub pobierz HTML lub użyj podglądu Pages po jego publikacji; sam widok kodu HTML nie uruchamia listy.
 
+**Bieżąca paczka DEV 0.13.0.0:** zacznij od TC0097–0134. Starsze przypadki zachowują historię i niezmienione regresje. Liczba scenariuszy: **134**. Do filtrowania użyj ID lub obszaru. Przed pierwszym testem sprawdź rzeczywisty build w Ustawieniach — aktualizacja listy nie oznacza promocji PRE-PROD.
+
 1. Wpisz rzeczywisty build/SHA, środowisko, datę i testera. DEV oznacza przestrzeń roboczą/Pages, PRE-PROD — `harborlight-dev.web.app`; nowy zakres nie jest automatycznie wdrożony w chmurze.
 2. Otwórz kartę, przygotuj wskazane dane, wykonaj wszystkie kroki. Brak fixture, usługi, dostępu albo zatwierdzonej reguły to **BLOCKED** z przyczyną.
 3. Zapisz wynik i dowód. Przy FAIL opisz oczekiwane i rzeczywiste zachowanie; dopiero wtedy powstaje zgłoszenie błędu. Wyniki automatyzacji nie zaliczają testu ręcznego.
@@ -111,6 +113,44 @@ Pełna metodyka i zależności: [MANUAL-TEST-PLAN.md](MANUAL-TEST-PLAN.md). Bie�
 - [ ] [HL-TC-0094 — Nowa rejestracja zapisuje Regulamin draft5 i niezmienioną Politykę prywatności draft4](manual/HL-TC-0094.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0095 — Wykonalność nie przedłuża czasowej premii na całe okno zadania](manual/HL-TC-0095.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0096 — Przewinięty długi tutorial telefonu zachowuje widoczny przycisk wyjścia](manual/HL-TC-0096.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0097 — Nowe zamówienia respektują45sekund, proporcje i stałą dobę od poziomu24](manual/HL-TC-0097.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0098 — Stary projekt zachowuje postęp i ETA po wczytaniu nowej wersji](manual/HL-TC-0098.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0099 — Brak gotowej obsady nie kończy materiałowego transportu automatycznie](manual/HL-TC-0099.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0100 — Magazyn mieści rozwój i misję, ma stałą tabelę i nie blokuje własnego ulepszenia](manual/HL-TC-0100.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0101 — Zmiana wydobycia zachowuje zapasy, receptury i wykonalność celu](manual/HL-TC-0101.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0102 — Pomoc ma równe przyciski, a komunikat wyjścia wyraźny duży znak zapytania](manual/HL-TC-0102.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0103 — Wznowienie kroku tutoriala kończy się automatycznym przejściem do samouczka](manual/HL-TC-0103.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0104 — Pięciu producentów ma krótkie opisy i jeden pokaz pełnego magazynu](manual/HL-TC-0104.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0105 — Trasa34łączy Port ze statkiem, dodaje Teatr i poprawia polskie opisy](manual/HL-TC-0105.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0106 — Praktyczny kurs uczy zarówno czekania, jak i przyspieszania za monety](manual/HL-TC-0106.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0107 — Powitalny mieszkaniec wpada raz dziennie przez siedem dni i respektuje limit](manual/HL-TC-0107.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0108 — Po25lekcjach widać tylko aktywne1z8i wyraźne Aktualne Misje](manual/HL-TC-0108.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0109 — Modal awansu ma Wróć na wyspę, a nagroda lekcji nie mówi o skrzyni](manual/HL-TC-0109.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0110 — Informacja wycofania tragarzy ma limit dzienny i znika po Ratuszu5](manual/HL-TC-0110.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0111 — Teatr jest stałym obiektem mapy i otwiera własny dziedziniec](manual/HL-TC-0111.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0112 — Teatr ma10rodzajów,20miejsc i widoczne zmiany poziomów1–20](manual/HL-TC-0112.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0113 — Aranżacja zachowuje poziom i własność po przenoszeniu oraz ponownym wczytaniu](manual/HL-TC-0113.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0114 — Ulepszenia Teatru pobierają monety i wymagają potwierdzonej reklamy na progach](manual/HL-TC-0114.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0115 — Produkcja i misja działają podczas dekorowania, a nagroda kolekcji jest jednokrotna](manual/HL-TC-0115.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0116 — Podczas długiej misji dostępne są krótkie dobrowolne cele bez popupspamu](manual/HL-TC-0116.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0117 — Awaria samolotu wypłaca dokładnie złapany ładunek na całym ekranie](manual/HL-TC-0117.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0118 — Prawdziwe trójki odsłaniają mapę, układanka prowadzi do skarbu](manual/HL-TC-0118.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0119 — Labirynt zasila amunicję, a rzeczywiste trafienia ratują kupca](manual/HL-TC-0119.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0120 — Most da się rozwiązać podstawowymi częściami, a dodatki są dobrowolne](manual/HL-TC-0120.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0121 — Sygnały Latarni wymagają zapamiętania i odtworzenia sekwencji](manual/HL-TC-0121.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0122 — Przemoczone listy wymagają odnalezienia wskazówek i właściwych adresatów](manual/HL-TC-0122.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0123 — Orkiestra łączy rozpoznawanie instrumentów i odtwarzanie rytmu](manual/HL-TC-0123.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0124 — Ogród dostaje wodę dopiero po rzeczywistym połączeniu kanałów](manual/HL-TC-0124.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0125 — Załadunek zależy od ciężaru skrzyń i kończy się wyborem rejsu](manual/HL-TC-0125.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0126 — Postęp przygód przetrwa odczyt, a wyniki nie powielają nagród ani pochodzenia monet](manual/HL-TC-0126.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0127 — Trzy rzeczywiste konta widzą katalog bez formularzy i bez ujawniania prywatnych danych](manual/HL-TC-0127.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0128 — Trzy sesje rozmawiają prywatnie i w sojuszu, a odejście odcina czat](manual/HL-TC-0128.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0129 — Nowy rozmówca i prośba pojawiają się bez kasowania pisanego tekstu](manual/HL-TC-0129.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0130 — OdbiórDEV0.13ma własne dowody i nie oznacza promocji lub zaliczenia ręcznego](manual/HL-TC-0130.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0131 — Zlecenie przyjęte przed aktualizacją pozostaje dostępne obok bieżącej misji](manual/HL-TC-0131.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0132 — Powitalny mieszkaniec nie blokuje rozdania punktów Domu ani samouczka](manual/HL-TC-0132.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0133 — Pełna gra rozlicza reklamę dekoracji i dodatkowej belki bez fałszywej nagrody](manual/HL-TC-0133.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0134 — Excel 12 odpowiada nowemu DEV i zachowuje historyczne zasady](manual/HL-TC-0134.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
 
 ## Wynik pojedynczego przypadku
 

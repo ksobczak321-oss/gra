@@ -5,9 +5,9 @@ import { TUTORIAL_LESSONS, V4_TUTORIAL_LESSONS } from '../harborlight-v1-progres
 import { buildingPurpose, gameGoal, residentsPurpose } from '../harborlight-v1-copy.js';
 import { translate } from '../harborlight-v1-i18n.js';
 
-test('approved 33-step route preserves HUD order and places Chat before the bell', () => {
-  assert.equal(APPROVED_TOUR_IDS.length, 33);
-  assert.equal(new Set(APPROVED_TOUR_IDS).size, 33);
+test('approved 34-step route preserves HUD order and places Chat before the bell', () => {
+  assert.equal(APPROVED_TOUR_IDS.length, 34);
+  assert.equal(new Set(APPROVED_TOUR_IDS).size, 34);
   assert.deepEqual(APPROVED_TOUR_IDS.slice(0, 8), ['home','level','happiness','coins','working','arrival','points','population']);
   assert.deepEqual(APPROVED_TOUR_IDS.slice(-5), ['tutorial','chat','notifications','settings','menu']);
   for (const id of APPROVED_TOUR_IDS) for (const language of ['pl','en']) {

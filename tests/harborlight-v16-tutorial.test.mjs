@@ -128,6 +128,7 @@ test('the seed57 fourth chest still has a celebration and Skip when its reward o
   normalizeProgression(state, { ...state, tutorial: { version: 3 } });
   for (const [taskId, building] of [['rules-read', 'farm'], ['island-map', 'warehouse'], ['first-job', 'windmill'], ['food-check', 'lumber']]) {
     assert.equal(run({ type: 'assign', building, delta: 1 }).ok, true);
+    if (taskId === 'food-check') for (const resource of MATERIALS) state.resources[resource] = 2687; // Deliberately fill the larger v29 warehouse before the fourth reward.
     assert.equal(run({ type: 'claimTutorial', taskId }).ok, true);
     if (taskId !== 'food-check') assert.equal(run({ type: 'skipTutorialShare', taskId }).ok, true);
   }
@@ -148,14 +149,14 @@ test('the seed57 fourth chest still has a celebration and Skip when its reward o
 
 test('opening one chest may exceed capacity, but the next claim and doubling wait until materials are spent', () => {
   const state = island(); finishThrough(state, 'island-map');
-  for (const id of MATERIALS) state.resources[id] = 800;
+  for (const id of MATERIALS) state.resources[id] = 2688;
   const firstReward = { ...state.tutorial.chests['rules-read'].reward };
   assert.equal(claim(state, 'rules-read').ok, true);
   assert.equal(tutorialWarehouseOverfull(state), true);
   assert.equal(claim(state, 'island-map').ok, false);
   assert.equal(action(state, 'shareTutorialReward', { taskId: 'rules-read' }).ok, false);
   for (const id of MATERIALS) {
-    assert.equal(state.resources[id], 800 + firstReward[id]);
+    assert.equal(state.resources[id], 2688 + firstReward[id]);
     assert.equal(state.pendingDeliveries[id], 0);
   }
   spendMaterials(state, firstReward);
@@ -167,7 +168,7 @@ test('opening one chest may exceed capacity, but the next claim and doubling wai
 
 test('overfull storage never blocks real lesson actions or the one-time upgrade help', () => {
   const state = island();
-  for (const id of MATERIALS) state.resources[id] = 1500;
+  for (const id of MATERIALS) state.resources[id] = 3000;
   finishThrough(state, 'food-check');
   assert.equal(claim(state, 'rules-read').ok, false);
   assert.equal(action(state, 'prepareTutorialUpgrade').ok, true);

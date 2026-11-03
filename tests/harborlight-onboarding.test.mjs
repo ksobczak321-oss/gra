@@ -16,7 +16,7 @@ function nameIsland(state, at = NOW) {
 
 test('first-time introduction keeps the starter world and all clocks frozen', () => {
   const state = starter(), before = json(state);
-  assert.deepEqual(onboardingStatus(state), { pending: true, stage: 'intro', index: 0, routeVersion: 2, worldStartedAt: null, completedAt: null });
+  assert.deepEqual(onboardingStatus(state), { pending: true, stage: 'intro', index: 0, routeVersion: 3, worldStartedAt: null, completedAt: null });
   tick(state, 100 * HOUR / 1000);
   assert.equal(advanceTo(state, NOW + 100 * HOUR), 0);
   assert.equal(recordVisit(state, NOW + 100 * HOUR), false);
@@ -77,7 +77,7 @@ test('finishing or leaving the tour starts day one once at the real completion t
   assert.equal(advanceTo(state, NOW + 100 * HOUR), 0);
   assert.equal(act(state, { type: 'onboardingFinish' }, NOW + 100 * HOUR).ok, true);
   const start = NOW + 100 * HOUR;
-  assert.deepEqual(onboardingStatus(state), { pending: false, stage: 'complete', index: 0, routeVersion: 2, worldStartedAt: start, completedAt: start });
+  assert.deepEqual(onboardingStatus(state), { pending: false, stage: 'complete', index: 0, routeVersion: 3, worldStartedAt: start, completedAt: start });
   assert.equal(state.islandStartedAt, start);
   assert.equal(state.worldTimeMs, start);
   assert.equal(state.lastSimulatedAt, start);
@@ -92,7 +92,10 @@ test('finishing or leaving the tour starts day one once at the real completion t
   assert.equal(state.activityClock, 0);
   assert.equal(state.engagementSchedule.activeSeconds, 0);
   assert.deepEqual(state.resources, goods);
-  assert.deepEqual(state.residents, residents);
+  assert.deepEqual(state.residents.slice(0, residents.length), residents);
+  assert.equal(state.residents.length, residents.length + 1, 'the first real day grants its one welcome resident');
+  assert.equal(state.welcomeWorkers.granted, 1);
+  assert.equal(state.welcomeWorkers.claimedDays.length, 1);
   assert.equal(tutorialStatus(state).shouldAutoOpen, true);
   const confirmed = json(state);
   assert.equal(act(state, { type: 'onboardingFinish' }, start + HOUR).ok, false);

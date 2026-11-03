@@ -26,7 +26,7 @@ def model(curriculum):
         assert value['tutorial']['curriculum'] == 4, 'Historical route must retain curriculum4'
         return value
     script = """import {createState,act} from './harborlight-v1-state.js';
-      import {normalizeProgression,tutorialStatus} from './harborlight-v1-progression.js';
+      import {normalizeProgression,tutorialStatus,tutorialRows} from './harborlight-v1-progression.js';
       const state=createState(Date.parse('2026-10-31T10:00:00Z'));
       normalizeProgression(state,{...state,tutorial:{version:3,seed:57}});
       const run=action=>{const result=act(state,action,state.worldTimeMs);if(!result.ok)throw Error(JSON.stringify({action,result}));};
@@ -36,6 +36,7 @@ def model(curriculum):
       run({type:'prepareTutorialUpgrade'});run({type:'upgrade',building:'townhall'});
       run({type:'houseHappinessAll',amount:1});
       run({type:'assign',building:'quarry',delta:1});run({type:'assign',building:'sawmill',delta:1});
+      for(const row of tutorialRows(state)){if(row.canClaim){run({type:'claimTutorial',taskId:row.id});run({type:'skipTutorialShare',taskId:row.id});}}
       if(tutorialStatus(state).nextLessonId!=='transport-priority')throw Error('Wrong real legacy fixture');
       console.log(JSON.stringify(state));"""
     result = subprocess.run(['node', '--input-type=module', '-e', script], cwd=ROOT,
