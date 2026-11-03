@@ -98,7 +98,7 @@ test('normalization rejects duplicate ids and slots, invalid styles/types and ne
     { id: 'decoration-3', type: 'not-real', level: 3, slot: 2 },
     { id: '<script>', type: 'tree', level: 3, slot: 2 }
   ] } });
-  assert.equal(state.theatre.collection.length, 2); assert.equal(state.theatre.collection[0].level, 20);
+  assert.equal(state.theatre.collection.length, 2); assert.equal(state.theatre.collection[0].level, 99);
   assert.equal(state.theatre.collection[1].slot, null); assert.equal(state.theatre.collection[1].style, 'coastal');
   const bought = buy(state, 'bench', 19); assert.equal(bought.id, 'decoration-3');
 });

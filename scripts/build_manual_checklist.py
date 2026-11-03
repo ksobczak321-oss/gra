@@ -23,7 +23,9 @@ def outputs():
         'kopię. Ten plik i jego wyniki są dokumentacją QA, nie zapisem wyspy. '
         'Na GitHub pobierz HTML lub użyj podglądu Pages po jego publikacji; sam widok kodu HTML nie uruchamia listy.', '',
         '**Bieżąca paczka DEV ' + data.get('current_scope', {}).get('application_version', '—') +
-        ':** zacznij od TC0097–0134. Starsze przypadki zachowują historię i niezmienione regresje. '
+        ':** zacznij od ' + data.get('current_scope', {}).get('case_range', 'TC0097–0134') +
+        '. Starsze przypadki zachowują historię i niezmienione regresje; sprzeczne oczekiwania '
+        'sprawdzaj na wskazanym historycznym buildzie, a bieżącą prezentację według nowego zakresu. '
         'Liczba scenariuszy: **' + str(len(cases)) + '**. Do filtrowania użyj ID lub obszaru. '
         'Przed pierwszym testem sprawdź rzeczywisty build w Ustawieniach — aktualizacja listy nie oznacza promocji PRE-PROD.', '',
         '1. Wpisz rzeczywisty build/SHA, środowisko, datę i testera. DEV oznacza przestrzeń roboczą/Pages, '

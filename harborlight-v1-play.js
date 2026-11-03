@@ -1,41 +1,41 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v29';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v29';
-import * as State from './harborlight-v1-state.js?v=frontend-v29';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v29';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v29';
-import * as Missions from './harborlight-v1-missions.js?v=frontend-v29';
-import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v29';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v29';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v29';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v29';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v29';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v29';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v29';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v29';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v29';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v29';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v29';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v29';
-import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v29';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v29';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v29';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v29';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v29';
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v29';
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v29';
-import { GAME_VERSION } from './harborlight-version.js?v=frontend-v29';
-import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v29';
-import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v29';
-import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v29';
-import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v29';
-import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v29';
-import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v29';
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v29';
-import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v29';
-import { renderTheatreScene } from './harborlight-v1-theatre-art.js?v=frontend-v29';
-import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v29';
-import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v29';
-import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v29';
+import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v30';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v30';
+import * as State from './harborlight-v1-state.js?v=frontend-v30';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v30';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v30';
+import * as Missions from './harborlight-v1-missions.js?v=frontend-v30';
+import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v30';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v30';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v30';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v30';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v30';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v30';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v30';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v30';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v30';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v30';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v30';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v30';
+import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v30';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v30';
+import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v30';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v30';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v30';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v30';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v30';
+import { GAME_VERSION } from './harborlight-version.js?v=frontend-v30';
+import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v30';
+import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v30';
+import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v30';
+import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v30';
+import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v30';
+import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v30';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v30';
+import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v30';
+import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v30';
+import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v30';
+import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v30';
+import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v30';
 
 I18n.registerTranslations(Theatre.THEATRE_TRANSLATIONS || {});
 I18n.registerTranslations(Adventures.ADVENTURE_TRANSLATIONS || {});
@@ -509,7 +509,7 @@ function perform(action, context = {}) {
 document.body.append(button('Island menu', () => openPanel('menu'), { class: 'mobile-island-menu', 'aria-label': 'Open island menu' }), button('Tasks', () => openPanel('tasks'), { class: 'mobile-activities', 'aria-label': 'Open Lighthouse tasks' }));
 
 const buildingRegions = {
-  theatre: [830, 290, 164, 135],
+  theatre: [438, 306, 94, 100],
   lighthouse: [1238, 64, 153, 190], house: [486, 195, 105, 95], farm: [137, 304, 260, 116],
   sawmill: [329, 501, 189, 157], quarry: [1041, 282, 186, 188], dock: [234, 625, 482, 119],
   warehouse: [412, 406, 133, 116], lumber: [604, 111, 120, 137], windmill: [224, 206, 105, 117],
@@ -2631,11 +2631,11 @@ function tasksPanel() {
 }
 
 function refreshTheatreMap() {
-  const signature = JSON.stringify([state.theatre, language()]);
+  const signature = JSON.stringify([state.islandId, language()]);
   if (signature === theatreMapSignature) return;
   theatreMapSignature = signature;
   if (!theatreMapNode) { theatreMapNode = el('div', { class: 'theatre-map-scene', 'data-theatre-map': '', 'aria-hidden': 'true' }); layer.append(theatreMapNode); }
-  theatreMapNode.innerHTML = renderTheatreScene(state, { compact: true, language: language(), prefix: 'island-theatre' });
+  theatreMapNode.innerHTML = renderTheatreMapBuilding(state, { language: language(), prefix: 'island-theatre' });
 }
 function refreshAdventureEffects() {
   const signature = JSON.stringify([state.adventures?.effects || [], language()]);
@@ -2647,7 +2647,9 @@ function refreshAdventureEffects() {
 }
 function performScene(action, context) { perform(action, context); return lastPerformedResult; }
 function theatrePanel() {
-  theatreController = createTheatrePanel({ state, language: language(), perform: performScene, onOpenAttractions: () => { closePanel(true); setDockCategory('decorations'); }, noAds: () => Commerce.commerceStatus(state).noAds,
+  theatreController = createTheatrePanel({ state, language: language(), perform: performScene,
+    persistence: devAccount ? 'cloud' : 'preview', getSaveStatus: () => devSyncStatus,
+    onOpenAttractions: () => { closePanel(true); setDockCategory('decorations'); }, noAds: () => Commerce.commerceStatus(state).noAds,
     requestRewardedAd: ({ nonce }) => {
       const caps = Commerce.runtimeCapabilities();
       const cancel = () => { perform({ type: 'theatreCancelUpgradeAd', nonce }); };

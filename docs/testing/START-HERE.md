@@ -4,7 +4,7 @@ Każdy wiersz prowadzi do osobnego scenariusza. Wszystkie wyniki startowe to **N
 
 Najwygodniej otworzyć [interaktywną listę](qa-checklist.html): wynik PASS / FAIL / BLOCKED, notatki i dowody zapisują się w tej przeglądarce; przyciskiem „Eksportuj raport JSON” pobierz kopię. Ten plik i jego wyniki są dokumentacją QA, nie zapisem wyspy. Na GitHub pobierz HTML lub użyj podglądu Pages po jego publikacji; sam widok kodu HTML nie uruchamia listy.
 
-**Bieżąca paczka DEV 0.13.0.0:** zacznij od TC0097–0134. Starsze przypadki zachowują historię i niezmienione regresje. Liczba scenariuszy: **134**. Do filtrowania użyj ID lub obszaru. Przed pierwszym testem sprawdź rzeczywisty build w Ustawieniach — aktualizacja listy nie oznacza promocji PRE-PROD.
+**Bieżąca paczka DEV 0.13.1.0:** zacznij od TC0135–0147. Starsze przypadki zachowują historię i niezmienione regresje; sprzeczne oczekiwania sprawdzaj na wskazanym historycznym buildzie, a bieżącą prezentację według nowego zakresu. Liczba scenariuszy: **147**. Do filtrowania użyj ID lub obszaru. Przed pierwszym testem sprawdź rzeczywisty build w Ustawieniach — aktualizacja listy nie oznacza promocji PRE-PROD.
 
 1. Wpisz rzeczywisty build/SHA, środowisko, datę i testera. DEV oznacza przestrzeń roboczą/Pages, PRE-PROD — `harborlight-dev.web.app`; nowy zakres nie jest automatycznie wdrożony w chmurze.
 2. Otwórz kartę, przygotuj wskazane dane, wykonaj wszystkie kroki. Brak fixture, usługi, dostępu albo zatwierdzonej reguły to **BLOCKED** z przyczyną.
@@ -151,6 +151,19 @@ Pełna metodyka i zależności: [MANUAL-TEST-PLAN.md](MANUAL-TEST-PLAN.md). Bie�
 - [ ] [HL-TC-0132 — Powitalny mieszkaniec nie blokuje rozdania punktów Domu ani samouczka](manual/HL-TC-0132.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0133 — Pełna gra rozlicza reklamę dekoracji i dodatkowej belki bez fałszywej nagrody](manual/HL-TC-0133.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0134 — Excel 12 odpowiada nowemu DEV i zachowuje historyczne zasady](manual/HL-TC-0134.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0135 — Budynek Teatru pasuje do osady, a dziedziniec jest dostępny po kliknięciu](manual/HL-TC-0135.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0136 — Sceneria placu i ozdoby Teatru mają szczegółową grafikę spójną z wyspą](manual/HL-TC-0136.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0137 — Studio pozwala wygodnie aranżować dwadzieścia miejsc na komputerze i telefonie](manual/HL-TC-0137.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0138 — Światło i nawierzchnia są bezpłatnymi narzędziami własnej kompozycji](manual/HL-TC-0138.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0139 — Trzy własne układy można zapisywać i odtwarzać bez cofania własności lub ulepszeń](manual/HL-TC-0139.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0140 — Inspiracje pomagają tworzyć własny ogród bez rankingu piękna i wymuszania zakupów](manual/HL-TC-0140.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0141 — Ulepszanie dekoracji i podgląd stylów pokazują rzeczywistą zmianę wyglądu](manual/HL-TC-0141.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0142 — Nowy wygląd zachowuje kolekcję, ceny, potwierdzenia reklam i działanie wyspy](manual/HL-TC-0142.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0143 — Tryb podziwiania pozwala obejrzeć własną kompozycję bez siatki i narzędzi](manual/HL-TC-0143.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0144 — Excel 13 opisuje aktualny Teatr i zachowuje cały Excel 12](manual/HL-TC-0144.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0145 — DEV 0.13.1.0 wymaga własnych testów i dowodów publikacji nowej grafiki](manual/HL-TC-0145.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0146 — Plac Teatru zapisuje się automatycznie i pozwala kontynuować po dniach](manual/HL-TC-0146.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0147 — Dostępne środki pozwalają rozwijać Teatr bez twardego końca na poziomie20](manual/HL-TC-0147.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 
 ## Wynik pojedynczego przypadku
 

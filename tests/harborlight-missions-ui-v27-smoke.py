@@ -16,10 +16,10 @@ DOCUMENT = '''<!doctype html><html><head><meta charset="utf-8"><style>
 body{margin:0;padding:12px;background:#092331;color:#e5f0f4;font:16px Arial,sans-serif}
 main{max-width:760px;margin:auto}button{touch-action:manipulation}
 </style></head><body><main></main><script type="module">
-import {createState} from './harborlight-v1-state.js?v=frontend-v29';
-import * as Missions from './harborlight-v1-missions.js?v=frontend-v29';
+import {createState} from './harborlight-v1-state.js?v=frontend-v30';
+import * as Missions from './harborlight-v1-missions.js?v=frontend-v30';
 import {createLighthouseMissionsPanel} from './harborlight-v1-missions-ui.js?v=contract';
-import {grantBonusMaterials} from './harborlight-v1-inventory.js?v=frontend-v29';
+import {grantBonusMaterials} from './harborlight-v1-inventory.js?v=frontend-v30';
 const language=new URLSearchParams(location.search).get('language')||'pl';
 const state=createState(Date.parse('2026-11-01T12:00:00Z'));
 state.settings.language=language;state.tutorial.autoOpenDisabled=true;

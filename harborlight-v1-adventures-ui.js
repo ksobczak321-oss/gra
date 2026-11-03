@@ -1,5 +1,5 @@
-import { adventureChoices, ADVENTURE_CATALOG, pipePorts, adventureMessage } from './harborlight-v1-adventures.js?v=frontend-v29';
-import { adventureArt, cargoArt, mapTileArt, shipDrawing, planeDrawing } from './harborlight-v1-adventures-art.js?v=frontend-v29';
+import { adventureChoices, ADVENTURE_CATALOG, pipePorts, adventureMessage } from './harborlight-v1-adventures.js?v=frontend-v30';
+import { adventureArt, cargoArt, mapTileArt, shipDrawing, planeDrawing } from './harborlight-v1-adventures-art.js?v=frontend-v30';
 
 const pick = (lang, pl, en) => lang === 'en' ? en : pl;
 const text = (lang, value) => typeof value === 'string' ? value : value?.[lang === 'en' ? 'en' : 'pl'] || value?.pl || '';
@@ -19,7 +19,7 @@ function svg(tag, attributes = {}) { const result = document.createElementNS(NS,
 function setText(element, value) { if (element.textContent !== String(value)) element.textContent = String(value); }
 function stylesheet() {
   if (document.querySelector('[data-adventures-css]')) return;
-  document.head.append(node('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-adventures.css?v=frontend-v29', import.meta.url).href, 'data-adventures-css': '' }));
+  document.head.append(node('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-adventures.css?v=frontend-v30', import.meta.url).href, 'data-adventures-css': '' }));
 }
 const BUILDINGS = {
   farm: ['Gospodarstwo', 'Farm'], lumber: ['Drwale', 'Lumber camp'], quarry: ['Kamieniołom', 'Quarry'], windmill: ['Młyn', 'Mill'], sawmill: ['Tartak', 'Sawmill'],

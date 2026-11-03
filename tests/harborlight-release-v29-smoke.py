@@ -24,13 +24,15 @@ def scenario(browser, language, mobile):
     context, page, errors, external = base.new_page(browser, initial, language, mobile)
     try:
         expect(page.locator('[data-theatre-map] svg')).to_have_count(1)
-        assert len(page.locator('[data-theatre-map]').inner_html()) > 1000
+        expect(page.locator('[data-theatre-map] .theatre-map-building-image')).to_have_count(1)
+        expect(page.locator('[data-theatre-map] [data-theatre-scene-slot], [data-theatre-map] .theatre-decoration')).to_have_count(0)
         open_menu_item(page, mobile, 'Teatr' if language == 'pl' else 'Theatre')
         theatre = page.locator('[data-theatre-panel]')
         expect(theatre).to_be_visible()
         expect(theatre.locator('[data-theatre-slot]')).to_have_count(20)
-        # Select and buy a real decoration, then observe its saved ownership and
-        # the same arrangement on the actual island rather than a component mock.
+        # Select and buy a real decoration, then observe its saved ownership
+        # inside the real Theatre. The revised island intentionally shows only
+        # its integrated building, keeping the decorated courtyard behind a click.
         buy = theatre.locator('[data-theatre-buy]')
         expect(buy).to_be_visible()
         before = base.state_of(page)['resources']['coins']
@@ -41,8 +43,9 @@ def scenario(browser, language, mobile):
         assert saved['theatre']['collection'][0]['level'] == 1
         first = saved['theatre']['collection'][0]
         assert first['slot'] is not None
-        main_svg = page.locator('[data-theatre-map]').inner_html()
-        expect(page.locator(f'[data-theatre-map] [data-theatre-scene-slot="{first["slot"]}"] .theatre-decoration-fountain')).to_have_count(1)
+        expect(page.locator('[data-theatre-map] .theatre-map-building-image')).to_have_count(1)
+        expect(page.locator('[data-theatre-map] [data-theatre-scene-slot], [data-theatre-map] .theatre-decoration')).to_have_count(0)
+        expect(theatre.locator(f'[data-theatre-scene-slot="{first["slot"]}"] .theatre-decoration-fountain')).to_have_count(1)
         # A background tick keeps the same interactive panel alive.
         page.clock.fast_forward(1200)
         expect(page.locator('[data-theatre-panel]')).to_have_count(1)

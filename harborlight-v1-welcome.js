@@ -1,7 +1,7 @@
 // Calendar-based welcome residents. The account host calls this once after a
 // confirmed login; catch-up simulation and ordinary activity never grant one.
-import { uiCopy } from './harborlight-v1-approved-copy.js?v=frontend-v29';
-import { warsawDayKey, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v29';
+import { uiCopy } from './harborlight-v1-approved-copy.js?v=frontend-v30';
+import { warsawDayKey, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v30';
 
 export const WELCOME_WORKER_DAYS = 7;
 const finite = value => typeof value === 'number' && Number.isFinite(value) && value >= 0;

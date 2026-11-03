@@ -792,7 +792,7 @@ body.reduce-motion .world-hotspot.tutorial-map-target{animation:none!important}
 #island-dialog .help-learning-grid h3{min-height:2.6em}
 #island-dialog .help-learning-grid button.action{display:flex;width:100%;margin:8px 0 0!important;box-sizing:border-box}
 .activity-section-heading [data-open-lighthouse-missions]{font-size:13px;font-weight:800;color:#ffe5ab;border-color:#d2ad69;min-height:32px;padding:5px 10px}
-.theatre-map-scene{position:absolute;left:812px;top:267px;width:205px;height:172px;pointer-events:none;z-index:3;filter:drop-shadow(0 5px 5px #132f2e88)}
+.theatre-map-scene{position:absolute;left:433px;top:300px;width:104px;height:112px;pointer-events:none;z-index:3;filter:drop-shadow(0 2px 2px #143a2c30)}
 .theatre-map-scene svg{width:100%;height:100%;overflow:visible}
 #island-dialog:has([data-theatre-panel]),#island-dialog:has([data-adventures-panel]){width:min(1200px,calc(100vw - 24px))}
 .activity-adventure-choice{min-height:38px;display:block;width:100%;padding:8px 10px;border:1px solid #a3b7a0;border-radius:8px;background:#244755;color:#ffe8b2;font:650 12px/1.35 inherit;text-align:left;cursor:pointer}

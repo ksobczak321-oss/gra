@@ -1,10 +1,10 @@
 // Lighthouse chapters are optional world objectives, independent of the
 // practical course. Accepted clocks and receipts are persisted with the island.
 import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, availableGoods,
-  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve } from './harborlight-v1-logistics.js?v=frontend-v29';
-import { consumeMaterial, grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v29';
-import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v29';
-import { residentAtHome, synchronizeResidents } from './harborlight-v1-residents.js?v=frontend-v29';
+  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve } from './harborlight-v1-logistics.js?v=frontend-v30';
+import { consumeMaterial, grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v30';
+import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v30';
+import { residentAtHome, synchronizeResidents } from './harborlight-v1-residents.js?v=frontend-v30';
 
 const HOUR = 3600, DAY = 24 * HOUR, EPS = 1e-7, SAFE = Number.MAX_SAFE_INTEGER;
 const RESOURCES = ['coins', ...MATERIAL_IDS];

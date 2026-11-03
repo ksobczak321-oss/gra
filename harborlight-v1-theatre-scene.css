@@ -1,0 +1,19 @@
+/* Illustrated Theatre world. The PNG scene and atlas share the island's light,
+   perspective and materials; these effects only add atmosphere and feedback. */
+.theatre-scene{display:block;width:100%;height:100%;overflow:hidden;background:#405b53;image-rendering:auto}
+.theatre-scene image,.theatre-map-building image{image-rendering:auto}
+.theatre-world-layer{isolation:isolate}
+.theatre-sprite-window{overflow:hidden}
+.theatre-decoration-icon{overflow:visible}
+.theatre-slot-marker{pointer-events:none}
+.theatre-placement-preview{transition:opacity .18s ease}
+.theatre-map-building{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 2px 1px #203d3030)}
+.theatre-paving-treatment{pointer-events:none}
+.theatre-water-sheen{animation:theatre-water-reflection 4.8s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+.theatre-soft-light{animation:theatre-evening-glow 7s ease-in-out infinite}
+.theatre-evening-spark{animation:theatre-evening-sparkle 8s ease-in-out infinite;animation-delay:var(--theatre-spark-delay,0s)}
+@keyframes theatre-water-reflection{0%,100%{opacity:.17;transform:scaleX(.96)}50%{opacity:.34;transform:scaleX(1.03)}}
+@keyframes theatre-evening-glow{0%,100%{opacity:.19}50%{opacity:.29}}
+@keyframes theatre-evening-sparkle{0%,100%{opacity:.3}50%{opacity:.62}}
+@media(prefers-reduced-motion:reduce){.theatre-water-sheen,.theatre-soft-light,.theatre-evening-spark{animation:none}}
+body.reduce-motion .theatre-water-sheen,body.reduce-motion .theatre-soft-light,body.reduce-motion .theatre-evening-spark{animation:none}

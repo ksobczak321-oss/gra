@@ -5,14 +5,14 @@ import {
   MATERIAL_IDS, stockRoom, receiveMaterials, notify,
   quoteInstantTransport, instantTransport, estimateMaterialsSeconds, availableGoods, haulCapacity,
   townhallPopulationRequirement, plannedLevel
-} from './harborlight-v1-logistics.js?v=frontend-v29';
-import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v29';
+} from './harborlight-v1-logistics.js?v=frontend-v30';
+import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v30';
 import { secondsUntilWarsawMidnight } from './harborlight-v1-calendar.js';
-import { tutorialTaskStatus } from './harborlight-v1-progression.js?v=frontend-v29';
-import { affordableTaskRequirements, missionFeasibility, fitTaskRewardToRequirements } from './harborlight-v1-missions.js?v=frontend-v29';
+import { tutorialTaskStatus } from './harborlight-v1-progression.js?v=frontend-v30';
+import { affordableTaskRequirements, missionFeasibility, fitTaskRewardToRequirements } from './harborlight-v1-missions.js?v=frontend-v30';
 import { MINI_GAME_RULES, miniGameRoundRules, createMiniGame, normalizeMiniGame,
-  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v29';
-export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v29';
+  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v30';
+export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v30';
 
 const HOUR = 3600;
 const QUEST_LIFE = 6 * HOUR;

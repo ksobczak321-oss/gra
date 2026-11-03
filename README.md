@@ -1,5 +1,7 @@
 # HARBORLIGHT
 
+**DEV 0.13.1.0 / v30 — lokalny odbiór PASS, publikacja w toku.** Teatr pasujący do wyspy, plac po kliknięciu, bogate dekoracje, trzy pomysły i automatyczny zapis. Dalsze poziomy ozdób przy20miejscach. [Odbiór](docs/DEV-0.13.1.0-VALIDATION.md) · [Wymagania](docs/FRONTEND-V30-REQUIREMENTS.md) · [Excel13](docs/arkusze/HARBORLIGHT13-zasady.xlsx) · [147 scenariuszy](docs/testing/START-HERE.md). PRE-PROD0.12 pozostaje bez nowej promocji.
+
 **DEV 0.13.0.0 / v29 odebrany.** Źródło `cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da`, [CI 41657032913](https://github.com/ksobczak321-oss/gra/actions/runs/41657032913) **SUCCESS, 13m 13s**, [Pages 41657032922](https://github.com/ksobczak321-oss/gra/actions/runs/41657032922) **SUCCESS, 41s**. Tag `dev-0.13.0.0-20261103` jest opublikowany i wskazuje to samo źródło. Nowa krzywa budowy, pojemność Magazynu, tutorial34/samouczek25, powitalni mieszkańcy, Teatr i dziewięć przygód. [Zakres](docs/FRONTEND-V29-REQUIREMENTS.md) · [Bieżąca walidacja](docs/DEV-0.13.0.0-VALIDATION.md) · [Excel12](docs/arkusze/HARBORLIGHT12-zasady.xlsx) · [134 scenariusze do odhaczania](docs/testing/START-HERE.md). Wyniki ręczne nadal NOT RUN. PRE-PROD pozostaje odebrane0.12.0.0; ten zakres nie jest nową promocją GCP.
 
 Poniżej zachowano dowody poprzedniego odebranego wydania; nie zastępują własnego odbioru nowego kodu.

@@ -1,9 +1,23 @@
 // The Theatre is a permanent, single-level meeting place. Decorations are
 // individual possessions: moving them never buys, duplicates or destroys them.
 // Ad verification is supplied by the account/provider adapter, never an action.
-export const THEATRE_RULES = Object.freeze({ version: 1, slots: 20, maxLevel: 20,
-  adMilestones: Object.freeze([5, 10, 15, 20]), adIntentSeconds: 120,
-  maxCollection: 2000, completionBadge: 'island-stage-pennant' });
+export const THEATRE_RULES = Object.freeze({ version: 1, slots: 20, maxLevel: null, unlimitedLevels: true,
+  adMilestones: Object.freeze([5, 10, 15, 20]), adMilestoneStep: 5, adIntentSeconds: 120,
+  maxCollection: 2000, savedLayouts: 3, completionBadge: 'island-stage-pennant' });
+
+// Atmosphere and remembered arrangements are creative tools, not purchases or
+// scores. They cannot change a possession's level or create another copy.
+export const THEATRE_LIGHTING = Object.freeze([
+  { id: 'day', namePl: 'Słoneczny dzień', name: 'Sunny day' },
+  { id: 'golden', namePl: 'Zachód słońca', name: 'Golden sunset' },
+  { id: 'night', namePl: 'Wieczór przy latarniach', name: 'Lantern evening' }
+].map(Object.freeze));
+export const THEATRE_PAVING = Object.freeze([
+  { id: 'sandstone', namePl: 'Ciepły piaskowiec', name: 'Warm sandstone' },
+  { id: 'stone', namePl: 'Kamienne płyty', name: 'Stone paving' },
+  { id: 'brick', namePl: 'Ceglana mozaika', name: 'Brick mosaic' }
+].map(Object.freeze));
+export const THEATRE_DEFAULT_ATMOSPHERE = Object.freeze({ lighting: 'day', paving: 'sandstone' });
 
 export const THEATRE_DECORATIONS = Object.freeze([
   ['fountain', 'Fontanna', 'Fountain', 1.4], ['column', 'Kolumny', 'Columns', 1.15],
@@ -46,29 +60,75 @@ export const THEATRE_TRANSLATIONS = Object.freeze({
   'This improvement does not require an advertisement.': 'To ulepszenie nie wymaga oglądania reklamy.',
   'Finish or cancel the current decoration advertisement.': 'Najpierw obejrzyj do końca albo anuluj obecną reklamę.',
   'Watch the complete advertisement to improve this decoration.': 'Obejrzyj całą reklamę, aby ulepszyć dekorację.',
-  'This improvement requires coins and a completed advertisement.': 'To ulepszenie wymaga monet i obejrzenia całej reklamy.'
+  'This improvement requires coins and a completed advertisement.': 'To ulepszenie wymaga monet i obejrzenia całej reklamy.',
+  'Choose daylight, sunset or lantern evening and an available paving.': 'Wybierz dzień, zachód słońca lub wieczór przy latarniach oraz dostępną posadzkę.',
+  'The garden atmosphere has changed.': 'Ogród ma już nowy nastrój.',
+  'Choose one of the three remembered arrangements.': 'Wybierz jeden z trzech zapisanych pomysłów.',
+  'Your garden arrangement has been remembered.': 'Twój pomysł na ogród został zapisany.',
+  'There is no saved arrangement in this place yet.': 'W tym miejscu nie ma jeszcze zapisanego pomysłu.',
+  'Your remembered garden arrangement is ready.': 'Ogród wygląda już tak jak w zapisanym pomyśle.',
+  'The remembered arrangement has been removed. Your decorations are preserved.': 'Zapisany pomysł został usunięty. Wszystkie dekoracje pozostają Twoje.',
+  'The next decoration level cannot be represented safely.': 'Ten poziom wykracza poza obsługiwany zakres zapisu. Dekoracja i monety pozostają bez zmian.',
+  'The decoration price exceeds the supported coin range.': 'Cena tego ulepszenia przekracza obsługiwany zakres monet. Dekoracja i monety pozostają bez zmian.'
 });
 
 const catalog = new Map(THEATRE_DECORATIONS.map(item => [item.id, item]));
 const styles = new Set(THEATRE_STYLES.map(item => item.id));
+const lightingIds = new Set(THEATRE_LIGHTING.map(item => item.id));
+const pavingIds = new Set(THEATRE_PAVING.map(item => item.id));
 const object = value => value && typeof value === 'object' && !Array.isArray(value);
 const integer = value => Number.isSafeInteger(value) && value >= 0;
 const slotValid = value => integer(value) && value < THEATRE_RULES.slots;
+const layoutSlotValid = value => integer(value) && value < THEATRE_RULES.savedLayouts;
+const AD_RECEIPT_HISTORY = 2000;
 const clock = state => Number.isFinite(state.worldTimeMs) ? state.worldTimeMs : 0;
 const good = (message, details = {}) => ({ ok: true, message, ...details });
 const bad = (message, code = 'invalid', details = {}) => ({ ok: false, message, code, ...details });
 const localizedName = (id, language = 'pl') => catalog.get(id)?.[language === 'en' ? 'name' : 'namePl'] || id;
-const price = (kind, level) => 5 * Math.ceil((level === 1 ? 25 : 12 * level ** 1.35) * catalog.get(kind).priceWeight / 5);
+const price = (kind, level) => {
+  const coins = 5 * Math.ceil((level === 1 ? 25 : 12 * level ** 1.35) * catalog.get(kind).priceWeight / 5);
+  return Number.isSafeInteger(coins) && coins > 0 ? coins : null;
+};
+export const requiresTheatreAdvertisement = level => Number.isSafeInteger(level) && level > 1 && level % THEATRE_RULES.adMilestoneStep === 0;
+
+function normalizeAtmosphere(source) {
+  return { lighting: lightingIds.has(source?.lighting) ? source.lighting : THEATRE_DEFAULT_ATMOSPHERE.lighting,
+    paving: pavingIds.has(source?.paving) ? source.paving : THEATRE_DEFAULT_ATMOSPHERE.paving };
+}
+
+function normalizeLayouts(source, collection, now) {
+  const available = new Map(collection.map(item => [item.id, item]));
+  return Array.from({ length: THEATRE_RULES.savedLayouts }, (_, index) => {
+    const saved = Array.isArray(source) ? source[index] : null;
+    if (!object(saved)) return null;
+    const ids = new Set(), slots = new Set(), placements = [];
+    // A saved scene contains only installed possessions. Levels, prices and
+    // ownership in imported snapshots are deliberately never retained.
+    for (const entry of (Array.isArray(saved.placements) ? saved.placements : []).slice(0, THEATRE_RULES.slots)) {
+      if (!object(entry) || !available.has(entry.id) || ids.has(entry.id) || !slotValid(entry.slot) || slots.has(entry.slot)) continue;
+      ids.add(entry.id); slots.add(entry.slot);
+      placements.push({ id: entry.id, slot: entry.slot,
+        style: styles.has(entry.style) ? entry.style : available.get(entry.id).style });
+    }
+    return { savedAt: Number.isFinite(saved.savedAt) && saved.savedAt >= 0 ? Math.min(now, saved.savedAt) : now,
+      atmosphere: normalizeAtmosphere(saved.atmosphere), placements };
+  });
+}
+
+function cloneLayout(layout) {
+  return layout ? { savedAt: layout.savedAt, atmosphere: { ...layout.atmosphere },
+    placements: layout.placements.map(entry => ({ ...entry })) } : null;
+}
 
 export function normalizeTheatre(state, raw = state) {
-  const saved = object(raw.theatre) ? raw.theatre : {}, ids = new Set(), slots = new Set();
+  const saved = object(raw?.theatre) ? raw.theatre : {}, ids = new Set(), slots = new Set();
   const collection = [];
   for (const entry of (Array.isArray(saved.collection) ? saved.collection : []).slice(0, THEATRE_RULES.maxCollection)) {
     if (!object(entry) || !/^decoration-[1-9]\d{0,12}$/.test(entry.id || '') || ids.has(entry.id) || !catalog.has(entry.type)) continue;
     ids.add(entry.id);
     const slot = slotValid(entry.slot) && !slots.has(entry.slot) ? entry.slot : null;
     if (slot !== null) slots.add(slot);
-    collection.push({ id: entry.id, type: entry.type, level: integer(entry.level) ? Math.max(1, Math.min(20, entry.level)) : 1,
+    collection.push({ id: entry.id, type: entry.type, level: integer(entry.level) ? Math.max(1, entry.level) : 1,
       style: styles.has(entry.style) ? entry.style : 'coastal', slot });
   }
   const sequence = Math.max(integer(saved.sequence) ? saved.sequence : 0,
@@ -76,17 +136,25 @@ export function normalizeTheatre(state, raw = state) {
   const pending = saved.pendingUpgrade;
   const pendingUpgrade = object(pending) && /^theatre-ad-[1-9]\d{0,14}$/.test(pending.nonce || '') &&
     collection.some(item => item.id === pending.id && item.level + 1 === pending.targetLevel) &&
-    THEATRE_RULES.adMilestones.includes(pending.targetLevel) && integer(pending.coins) && Number.isFinite(pending.startedAt) &&
+    requiresTheatreAdvertisement(pending.targetLevel) && integer(pending.coins) && Number.isFinite(pending.startedAt) &&
     clock(state) >= pending.startedAt && clock(state) - pending.startedAt < THEATRE_RULES.adIntentSeconds * 1000
     ? { nonce: pending.nonce, id: pending.id, targetLevel: pending.targetLevel, coins: pending.coins, startedAt: pending.startedAt } : null;
   state.theatre = { version: THEATRE_RULES.version, sequence, collection, pendingUpgrade,
-    adReceipts: [...new Set((Array.isArray(saved.adReceipts) ? saved.adReceipts : []).filter(id => typeof id === 'string' && id.length > 0 && id.length <= 200))].slice(-2000),
+    atmosphere: normalizeAtmosphere(saved.atmosphere), layouts: normalizeLayouts(saved.layouts, collection, clock(state)),
+    adReceipts: [...new Set((Array.isArray(saved.adReceipts) ? saved.adReceipts : []).filter(id => typeof id === 'string' && id.length > 0 && id.length <= 200))].slice(-AD_RECEIPT_HISTORY),
     badges: Array.isArray(saved.badges) && saved.badges.includes(THEATRE_RULES.completionBadge) ? [THEATRE_RULES.completionBadge] : [] };
   awardCollectionBadge(state.theatre);
   return state.theatre;
 }
 
-function current(state) { return state.theatre || normalizeTheatre(state); }
+function current(state) {
+  const theatre = state.theatre || normalizeTheatre(state);
+  // Hosts holding an already-running v29 world can adopt the added fields
+  // without normalizing away an active advertisement or changing possessions.
+  if (!lightingIds.has(theatre.atmosphere?.lighting) || !pavingIds.has(theatre.atmosphere?.paving)) theatre.atmosphere = normalizeAtmosphere(theatre.atmosphere);
+  if (!Array.isArray(theatre.layouts) || theatre.layouts.length !== THEATRE_RULES.savedLayouts) theatre.layouts = normalizeLayouts(theatre.layouts, theatre.collection, clock(state));
+  return theatre;
+}
 function awardCollectionBadge(theatre) {
   if (THEATRE_DECORATIONS.every(kind => theatre.collection.some(item => item.type === kind.id)) && !theatre.badges.includes(THEATRE_RULES.completionBadge)) {
     theatre.badges.push(THEATRE_RULES.completionBadge);
@@ -105,16 +173,19 @@ export function theatreQuote(state, action = {}, context = {}) {
   }
   const item = theatre.collection.find(entry => entry.id === action.id);
   if (!item) return bad('This decoration is not in your collection.', 'not-owned');
-  if (item.level >= THEATRE_RULES.maxLevel) return bad('This decoration is already at its highest level.', 'max-level');
+  if (!integer(item.level) || item.level < 1 || !Number.isSafeInteger(item.level + 1)) return bad('The next decoration level cannot be represented safely.', 'level-out-of-range');
   const targetLevel = item.level + 1, coins = price(item.type, targetLevel);
+  if (coins === null) return bad('The decoration price exceeds the supported coin range.', 'price-out-of-range');
   return good('Decoration improvement price.', { id: item.id, targetLevel, coins,
-    requiresAd: THEATRE_RULES.adMilestones.includes(targetLevel) && context.noAds !== true,
+    requiresAd: requiresTheatreAdvertisement(targetLevel) && context.noAds !== true,
     affordable: canSpend(state, coins) });
 }
 
 export function theatreStatus(state, context = {}) {
   const theatre = current(state), placed = theatre.collection.filter(item => item.slot !== null);
-  return { version: THEATRE_RULES.version, maxLevel: 20, slots: THEATRE_RULES.slots, usedSlots: placed.length,
+  return { version: THEATRE_RULES.version, maxLevel: null, unlimitedLevels: true, slots: THEATRE_RULES.slots, usedSlots: placed.length,
+    atmosphere: { ...theatre.atmosphere },
+    layouts: theatre.layouts.map(layout => layout ? { ...cloneLayout(layout), placementCount: layout.placements.length } : null),
     freeSlots: THEATRE_RULES.slots - placed.length, collection: theatre.collection.map(item => ({ ...item })),
     pendingUpgrade: theatre.pendingUpgrade ? { ...theatre.pendingUpgrade } : null, badges: [...theatre.badges],
     noAds: context.noAds === true, uniqueTypes: new Set(theatre.collection.map(item => item.type)).size,
@@ -125,8 +196,44 @@ export function theatreStatus(state, context = {}) {
  * into it. PROD requires a provider receipt confirmed outside the browser. */
 export function theatreAction(state, action = {}, context = {}) {
   if (!['theatreBuy', 'theatrePlace', 'theatreMove', 'theatreRemove', 'theatreRestyle', 'theatreUpgrade',
-    'theatreBeginUpgradeAd', 'theatreCompleteUpgradeAd', 'theatreCancelUpgradeAd'].includes(action.type)) return null;
+    'theatreBeginUpgradeAd', 'theatreCompleteUpgradeAd', 'theatreCancelUpgradeAd',
+    'theatreSetAtmosphere', 'theatreSaveLayout', 'theatreRestoreLayout', 'theatreDeleteLayout'].includes(action.type)) return null;
   const theatre = current(state);
+  if (action.type === 'theatreSetAtmosphere') {
+    const hasLighting = Object.hasOwn(action, 'lighting'), hasPaving = Object.hasOwn(action, 'paving');
+    if ((!hasLighting && !hasPaving) || hasLighting && !lightingIds.has(action.lighting) || hasPaving && !pavingIds.has(action.paving)) {
+      return bad('Choose daylight, sunset or lantern evening and an available paving.', 'invalid-atmosphere');
+    }
+    theatre.atmosphere = { lighting: hasLighting ? action.lighting : theatre.atmosphere.lighting,
+      paving: hasPaving ? action.paving : theatre.atmosphere.paving };
+    return good('The garden atmosphere has changed.', { atmosphere: { ...theatre.atmosphere } });
+  }
+  if (['theatreSaveLayout', 'theatreRestoreLayout', 'theatreDeleteLayout'].includes(action.type)) {
+    if (!layoutSlotValid(action.slot)) return bad('Choose one of the three remembered arrangements.', 'invalid-layout-slot');
+    if (action.type === 'theatreSaveLayout') {
+      theatre.layouts[action.slot] = { savedAt: clock(state), atmosphere: { ...theatre.atmosphere },
+        placements: theatre.collection.filter(item => item.slot !== null).map(item => ({ id: item.id, slot: item.slot, style: item.style })) };
+      return good('Your garden arrangement has been remembered.', { slot: action.slot, layout: cloneLayout(theatre.layouts[action.slot]) });
+    }
+    if (action.type === 'theatreDeleteLayout') {
+      theatre.layouts[action.slot] = null;
+      return good('The remembered arrangement has been removed. Your decorations are preserved.', { slot: action.slot });
+    }
+    const layout = theatre.layouts[action.slot];
+    if (!layout) return bad('There is no saved arrangement in this place yet.', 'layout-not-saved');
+    // Revalidate against current ownership, even if the scene was saved before
+    // a later purchase or an imported snapshot lost a decoration. New items
+    // return to the collection; no item, coin, level or receipt is restored.
+    const restored = normalizeLayouts([layout], theatre.collection, clock(state))[0];
+    const placements = new Map(restored.placements.map(entry => [entry.id, entry]));
+    for (const item of theatre.collection) {
+      const placement = placements.get(item.id);
+      item.slot = placement?.slot ?? null;
+      if (placement) item.style = placement.style;
+    }
+    theatre.atmosphere = { ...restored.atmosphere };
+    return good('Your remembered garden arrangement is ready.', { slot: action.slot, placementCount: restored.placements.length });
+  }
   if (action.type === 'theatreBuy') {
     const quote = theatreQuote(state, action, context);
     if (!quote.ok) return quote;
@@ -155,7 +262,9 @@ export function theatreAction(state, action = {}, context = {}) {
     if (!quote.affordable) return bad('Not enough coins for this decoration improvement.', 'not-enough-coins', { quote });
     const item = theatre.collection.find(entry => entry.id === pending.id);
     state.resources.coins -= quote.coins; item.level = quote.targetLevel;
-    theatre.adReceipts.push(receipt); theatre.pendingUpgrade = null;
+    theatre.adReceipts.push(receipt);
+    if (theatre.adReceipts.length > AD_RECEIPT_HISTORY) theatre.adReceipts.splice(0, theatre.adReceipts.length - AD_RECEIPT_HISTORY);
+    theatre.pendingUpgrade = null;
     return good('Decoration improved.', { item: { ...item }, coins: quote.coins, simulated: context.devSimulation === true && context.verifiedProvider !== true });
   }
   const item = theatre.collection.find(entry => entry.id === action.id);

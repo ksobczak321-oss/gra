@@ -1817,19 +1817,181 @@
         "HL-CHG-1068"
       ],
       "file": "manual/HL-TC-0134.md"
+    },
+    {
+      "id": "HL-TC-0135",
+      "title": "Budynek Teatru pasuje do osady, a dziedziniec jest dostępny po kliknięciu",
+      "area": "Teatr na mapie",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1069"
+      ],
+      "file": "manual/HL-TC-0135.md"
+    },
+    {
+      "id": "HL-TC-0136",
+      "title": "Sceneria placu i ozdoby Teatru mają szczegółową grafikę spójną z wyspą",
+      "area": "Sceneria i grafika",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1070"
+      ],
+      "file": "manual/HL-TC-0136.md"
+    },
+    {
+      "id": "HL-TC-0137",
+      "title": "Studio pozwala wygodnie aranżować dwadzieścia miejsc na komputerze i telefonie",
+      "area": "Studio i obsługa",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1071"
+      ],
+      "file": "manual/HL-TC-0137.md"
+    },
+    {
+      "id": "HL-TC-0138",
+      "title": "Światło i nawierzchnia są bezpłatnymi narzędziami własnej kompozycji",
+      "area": "Atmosfera ogrodu",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1072"
+      ],
+      "file": "manual/HL-TC-0138.md"
+    },
+    {
+      "id": "HL-TC-0139",
+      "title": "Trzy własne układy można zapisywać i odtwarzać bez cofania własności lub ulepszeń",
+      "area": "Zapamiętane aranżacje",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1073"
+      ],
+      "file": "manual/HL-TC-0139.md"
+    },
+    {
+      "id": "HL-TC-0140",
+      "title": "Inspiracje pomagają tworzyć własny ogród bez rankingu piękna i wymuszania zakupów",
+      "area": "Inspiracje i swoboda",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1074"
+      ],
+      "file": "manual/HL-TC-0140.md"
+    },
+    {
+      "id": "HL-TC-0141",
+      "title": "Ulepszanie dekoracji i podgląd stylów pokazują rzeczywistą zmianę wyglądu",
+      "area": "Rozwój wizualny",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1075"
+      ],
+      "file": "manual/HL-TC-0141.md"
+    },
+    {
+      "id": "HL-TC-0142",
+      "title": "Nowy wygląd zachowuje kolekcję, ceny, potwierdzenia reklam i działanie wyspy",
+      "area": "Ciągłość i reklamy",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1076"
+      ],
+      "file": "manual/HL-TC-0142.md"
+    },
+    {
+      "id": "HL-TC-0143",
+      "title": "Tryb podziwiania pozwala obejrzeć własną kompozycję bez siatki i narzędzi",
+      "area": "Podziwianie ogrodu",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1077"
+      ],
+      "file": "manual/HL-TC-0143.md"
+    },
+    {
+      "id": "HL-TC-0144",
+      "title": "Excel 13 opisuje aktualny Teatr i zachowuje cały Excel 12",
+      "area": "Arkusz zasad",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1078"
+      ],
+      "file": "manual/HL-TC-0144.md"
+    },
+    {
+      "id": "HL-TC-0145",
+      "title": "DEV 0.13.1.0 wymaga własnych testów i dowodów publikacji nowej grafiki",
+      "area": "Odbiór wydania",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1079"
+      ],
+      "file": "manual/HL-TC-0145.md"
+    },
+    {
+      "id": "HL-TC-0146",
+      "title": "Plac Teatru zapisuje się automatycznie i pozwala kontynuować po dniach",
+      "area": "Trwała kompozycja",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1080"
+      ],
+      "file": "manual/HL-TC-0146.md"
+    },
+    {
+      "id": "HL-TC-0147",
+      "title": "Dostępne środki pozwalają rozwijać Teatr bez twardego końca na poziomie20",
+      "area": "Dalszy rozwój Teatru",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1081"
+      ],
+      "file": "manual/HL-TC-0147.md"
     }
   ],
   "current_scope": {
     "date": "2026-11-03",
     "environment": "DEV only",
     "physical_online_integration": "excluded_by_user",
-    "application_version": "0.13.0.0",
+    "application_version": "0.13.1.0",
     "preprod_application_version": "0.12.0.0",
     "preprod_source_sha": "d9e2940b9a00755d979c159ec0fb62e290dd7ff1",
-    "note": "TC0097–0134 obejmują GO v29 i wymagają własnego rzeczywistego buildu. Wszystkie wyniki ręczne pozostają NOT RUN; automatyzacja ich nie zalicza. Historyczny baseline definicji oraz TC0001–0096 zachowują historię. Sprzeczne oczekiwania starszych przypadków zastępują aktualne reguły v29. PRE-PROD 0.12 jest odrębnym odebranym wydaniem; bez nowej promocji, resetu kont i PROD.",
-    "dev_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
-    "ci_run_id": 41657032913,
-    "pages_run_id": 41657032922,
-    "dev_status": "verified_ci_and_pages_manual_cases_not_run"
+    "note": "TC0135–0147 dotycząGOv30 i wymagają rzeczywistego buildu0.13.1.0. Wszystkie147wyników ręcznych pozostająNOTRUN. Ostateczne zasady:trwały plac zapisywany z wyspą,20miejsc bez sektorów,dalsze poziomy bez końca20,ceny tym samym wzorem i reklamy co5także25/30. Starsze scenariusze zachowują wersjonowaną historię. Bez nowej promocji PRE-PROD,resetu iPROD.",
+    "dev_status": "implementation_and_validation_in_progress_manual_cases_not_run",
+    "case_range": "TC0135–0147",
+    "previous_case_range": "TC0097–0134",
+    "previous_accepted_dev": {
+      "dev_application_version": "0.13.0.0",
+      "dev_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+      "dev_ci_run_id": 41657032913,
+      "dev_pages_run_id": 41657032922,
+      "dev_tag": "dev-0.13.0.0-20261103"
+    }
   }
 }

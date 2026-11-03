@@ -13,7 +13,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | CI | `passed_source_cf6739a` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
-| Decyzja | `accepted` |
+| Decyzja | `partially_superseded` |
 
 **Tagi:** `v29`, `dev-only`.
 
@@ -51,8 +51,12 @@ DEV0.13.0.0 odebrany dla cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da; własne CI416
 ## Relacje
 
 - **Zastępuje:** Brak.
-- **Zastąpione lub ograniczone przez:** Brak.
+- **Zastąpione lub ograniczone przez:** [HL-CHG-1069](HL-CHG-1069.md)
 - **Powiązane:** [HL-CHG-1034](HL-CHG-1034.md), [HL-CHG-1045](HL-CHG-1045.md)
+
+## Uwagi
+
+- GO v30 zastępuje wyłącznie prezentację całej aranżacji na głównej mapie: pozostaje sam pasujący budynek, a plac i dekoracje są dostępne po kliknięciu. Historyczny odbiór źródła cf6739a pozostaje faktem; zobacz HL-CHG-1069.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

@@ -1,5 +1,9 @@
 # Reguły gospodarki HARBORLIGHT — DEV 0.12.0.0 / v28
 
+## Uzupełnienie DEV0.13.1.0 / v30
+
+Teatr ma nadal20miejsc i10rodzajów ozdób, ale poziom20 nie jest końcem. Dalsze ulepszenia korzystają z tej samej formuły ceny; reklama jest wymagana co5poziomów, także25i30, chyba że konto ma aktywne uprawnienie bez reklam. Cena i poziom muszą być bezpiecznie przedstawialne; brak poprawnej wyceny nie pobiera monet. Światło, posadzka, przenoszenie i trzy zapisane pomysły pozostają bezpłatne. Przywrócenie pomysłu nie cofa ulepszeń ani zakupów. Bieżący plac zapisuje się automatycznie razem z wyspą. [Zakres](FRONTEND-V30-REQUIREMENTS.md) · [Excel13](arkusze/HARBORLIGHT13-zasady.xlsx). Poniższy opis v29 zachowuje historię; jego limit20poziomów ozdoby został zastąpiony.
+
 ## Bieżący zakres DEV 0.13.0.0 / v29 — 3 listopada 2026
 
 [Zatwierdzone wymagania](FRONTEND-V29-REQUIREMENTS.md) zastępują opis v28 poniżej w zakresie czasu budowy, wydobycia, pojemności i nauki. PRE-PROD pozostaje0.12.0.0 do osobnej promocji. [Excel12](arkusze/HARBORLIGHT12-zasady.xlsx) pobiera bieżące parametry bezpośrednio z kodu.

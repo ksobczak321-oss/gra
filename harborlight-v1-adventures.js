@@ -2,10 +2,10 @@
 // All wins are derived from concrete inputs, physics or actual mini-game boards.
 // Rewarded-ad authorizations belong to the caller's verified provider flow;
 // an action's `verified` field is never accepted as proof.
-import { grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v29';
+import { grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v30';
 import { BRIDGE_NODES, BRIDGE_HINT, bridgeEdgeAllowed, normalizedBridgeEdges, testBridge,
-  createGardenPuzzle, gardenFlow, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v29';
-export { BRIDGE_NODES, BRIDGE_HINT, pipePorts, testBridge, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v29';
+  createGardenPuzzle, gardenFlow, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v30';
+export { BRIDGE_NODES, BRIDGE_HINT, pipePorts, testBridge, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v30';
 
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const GOODS = ['coins', ...MATERIALS];

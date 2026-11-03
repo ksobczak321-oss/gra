@@ -1072,3 +1072,10 @@ Git/push, własne CI, Pages oraz tag wymagają kolejnego potwierdzenia. PRE-PROD
 ### Odebrany Git/CI/Pages v29
 
 Źródło `cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da`, [CI 41657032913](https://github.com/ksobczak321-oss/gra/actions/runs/41657032913) **SUCCESS, 13m 13s**, [Pages 41657032922](https://github.com/ksobczak321-oss/gra/actions/runs/41657032922) **SUCCESS, 41s**. Tag `dev-0.13.0.0-20261103` jest opublikowany i wskazuje to samo źródło. Push `main` i zdalne rozwiązanie tagu potwierdzono. Pakiet73pliki/11558134bajty przeszedł weryfikację i ekstrakcję; hashe i granice dowodów są w [raporcie](DEV-0.13.0.0-VALIDATION.md). PRE-PROD0.12/d9e2940 pozostaje bez zmian. Kolejny commit dowodów nie zmienia publicznych plików gry; ręczne wyniki134przypadków nadalNOTRUN.
+
+
+## 2026-11-03 — DEV0.13.1.0 /v30, przebudowany Teatr
+
+Użytkownik zaakceptował nowe ilustracje i sprecyzował mapę z samym budynkiem, plac po kliknięciu, trwałość między dniami oraz dalszy rozwój ozdób przy20miejscach. Zmieniono scenografię na styl wyspy, dodano atlas50ilustracji, podziwianie/zoom, trzy pomysły i atmosferę. Usunięto limit20; ceny do20zachowano, reklamy są co5. Przenoszenie i odtwarzanie nie cofają rozwoju ani zakupów.
+
+Lokalnie1078frontend +134backend +7planszówka=1219NodePASS;141PythonPASS; nowe studio4/4 i pełna gra4/4PASS, starszy Teatr4/4 i gra v29 2/2PASS. Końcowe zrzuty obejrzane. Lokalny HTTP testuje trzy dni/sesje i ponowne otwarcia; nie jest nowym testem rzeczywistego Firestore. Excel13 zwalidowany z zachowanym12,410kart/147ręczneNOTRUN. [Raport](DEV-0.13.1.0-VALIDATION.md). Git, własne CI i Pages nowego źródła oczekują osobnego potwierdzenia; PRE-PROD0.12/d9e2940 i PROD bez zmian.

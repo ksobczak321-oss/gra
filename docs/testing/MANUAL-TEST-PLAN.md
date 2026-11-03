@@ -1,6 +1,8 @@
 # HARBORLIGHT — ręczny plan testów i osobne przypadki
 
-**Zacznij od [listy do odhaczania](START-HERE.md) albo [interaktywnego raportu QA](qa-checklist.html).** Zestaw obejmuje **134 osobne przypadki**, w tym **TC0097–0134 dla DEV 0.13.0.0/v29**, zachowane TC0071–0096 dla v28 oraz wcześniejsze regresje. Wszystkie wyniki ręczne pozostają **NOT RUN**. Definicja scenariusza oraz sukces automatyzacji nie oznaczają jego wykonania.
+**Zacznij od [listy do odhaczania](START-HERE.md) albo [interaktywnego raportu QA](qa-checklist.html).** Zestaw obejmuje **147 osobnych przypadków**, w tym **TC0135–0147 dla DEV 0.13.1.0/v30**, zachowane TC0097–0134 dla v29 i wcześniejsze regresje. Wszystkie wyniki ręczne pozostają **NOT RUN**. Definicja scenariusza oraz sukces automatyzacji nie oznaczają jego wykonania.
+
+Nowa decyzja o Teatrze zastępuje wyłącznie prezentację całego placu na głównej mapie: w bieżącym buildzie na wyspie pozostaje sam budynek, a aranżacja otwiera się po kliknięciu. Historyczne kroki TC0111 i TC0113 dotyczą wcześniejszego buildu; aktualną prezentację sprawdzaj według TC0135. Pozostałe warunki własności i zapisu nadal mają osobne regresje.
 
 ## Jak odhaczać pojedyncze przypadki
 
@@ -186,6 +188,19 @@ TC26 jest obecnie testem zachowania wcześniejszych dwóch światów podczas mig
 | [HL-TC-0132 — Powitalny mieszkaniec nie blokuje rozdania punktów Domu ani samouczka](manual/HL-TC-0132.md) | Powitanie i Dom | P0 | READY | NOT RUN |
 | [HL-TC-0133 — Pełna gra rozlicza reklamę dekoracji i dodatkowej belki bez fałszywej nagrody](manual/HL-TC-0133.md) | Reklamy w przygodach | P0 | READY | NOT RUN |
 | [HL-TC-0134 — Excel 12 odpowiada nowemu DEV i zachowuje historyczne zasady](manual/HL-TC-0134.md) | Arkusz zasad | P1 | READY | NOT RUN |
+| [HL-TC-0135 — Budynek Teatru pasuje do osady, a dziedziniec jest dostępny po kliknięciu](manual/HL-TC-0135.md) | Teatr na mapie | P1 | READY | NOT RUN |
+| [HL-TC-0136 — Sceneria placu i ozdoby Teatru mają szczegółową grafikę spójną z wyspą](manual/HL-TC-0136.md) | Sceneria i grafika | P1 | READY | NOT RUN |
+| [HL-TC-0137 — Studio pozwala wygodnie aranżować dwadzieścia miejsc na komputerze i telefonie](manual/HL-TC-0137.md) | Studio i obsługa | P1 | READY | NOT RUN |
+| [HL-TC-0138 — Światło i nawierzchnia są bezpłatnymi narzędziami własnej kompozycji](manual/HL-TC-0138.md) | Atmosfera ogrodu | P1 | READY | NOT RUN |
+| [HL-TC-0139 — Trzy własne układy można zapisywać i odtwarzać bez cofania własności lub ulepszeń](manual/HL-TC-0139.md) | Zapamiętane aranżacje | P0 | READY | NOT RUN |
+| [HL-TC-0140 — Inspiracje pomagają tworzyć własny ogród bez rankingu piękna i wymuszania zakupów](manual/HL-TC-0140.md) | Inspiracje i swoboda | P1 | READY | NOT RUN |
+| [HL-TC-0141 — Ulepszanie dekoracji i podgląd stylów pokazują rzeczywistą zmianę wyglądu](manual/HL-TC-0141.md) | Rozwój wizualny | P1 | READY | NOT RUN |
+| [HL-TC-0142 — Nowy wygląd zachowuje kolekcję, ceny, potwierdzenia reklam i działanie wyspy](manual/HL-TC-0142.md) | Ciągłość i reklamy | P0 | READY | NOT RUN |
+| [HL-TC-0143 — Tryb podziwiania pozwala obejrzeć własną kompozycję bez siatki i narzędzi](manual/HL-TC-0143.md) | Podziwianie ogrodu | P1 | READY | NOT RUN |
+| [HL-TC-0144 — Excel 13 opisuje aktualny Teatr i zachowuje cały Excel 12](manual/HL-TC-0144.md) | Arkusz zasad | P1 | READY | NOT RUN |
+| [HL-TC-0145 — DEV 0.13.1.0 wymaga własnych testów i dowodów publikacji nowej grafiki](manual/HL-TC-0145.md) | Odbiór wydania | P0 | READY | NOT RUN |
+| [HL-TC-0146 — Plac Teatru zapisuje się automatycznie i pozwala kontynuować po dniach](manual/HL-TC-0146.md) | Trwała kompozycja | P0 | READY | NOT RUN |
+| [HL-TC-0147 — Dostępne środki pozwalają rozwijać Teatr bez twardego końca na poziomie20](manual/HL-TC-0147.md) | Dalszy rozwój Teatru | P0 | READY | NOT RUN |
 
 ## Raport i zgłoszenia
 
