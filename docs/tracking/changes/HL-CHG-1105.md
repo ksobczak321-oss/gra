@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `verified_locally_pending_own_ci` |
-| CI | `not_run_for_current_source` |
+| CI | `failure_source_d2f9ab3` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -37,6 +37,7 @@ Data pierwotnej wiadomości: 2026-11-04. Zebrane uwagi po PRE-PROD 0.13.1.0 oraz
 - **Dokumenty:** [docs/FRONTEND-V31-REQUIREMENTS.md](../../FRONTEND-V31-REQUIREMENTS.md), [docs/DEV-0.14.0.0-VALIDATION.md](../../DEV-0.14.0.0-VALIDATION.md), [docs/design/FLOW-AUDIT-20261104.md](../../design/FLOW-AUDIT-20261104.md), [docs/design/ACTIVE-PLAYER-50-DAYS.md](../../design/ACTIVE-PLAYER-50-DAYS.md)
 - **Kod:** [harborlight-v1-theatre.js](../../../harborlight-v1-theatre.js), [harborlight-v1-theatre-art.js](../../../harborlight-v1-theatre-art.js)
 - **Scenariusze automatyczne:** nie przypisano.
+- **Kod dowodowy:** `d2f9ab311b9f3ad5e6d45a6f4e934ce501973324`.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:

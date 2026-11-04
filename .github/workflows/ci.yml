@@ -131,7 +131,7 @@ jobs:
           import subprocess
           import sys
 
-          for test in ('tests/harborlight-frontend-v17-smoke.py', 'tests/harborlight-frontend-v18-smoke.py', 'tests/harborlight-tutorial-v18-smoke.py', 'tests/harborlight-tutorial-v21-smoke.py', 'tests/harborlight-tutorial-v22-smoke.py', 'tests/harborlight-tutorial-priority-v22-smoke.py', 'tests/harborlight-tutorial-map-v25-smoke.py', 'tests/harborlight-learning-review-v26-smoke.py', 'tests/harborlight-learning-flow-v26-smoke.py', 'tests/harborlight-starter-course-v26-smoke.py', 'tests/harborlight-learning-feedback-v27-smoke.py', 'tests/harborlight-learning-flow-v27-smoke.py', 'tests/harborlight-missions-ui-v27-smoke.py', 'tests/harborlight-missions-game-v27-smoke.py', 'tests/harborlight-release-v28-smoke.py', 'tests/harborlight-starter-course-v28-smoke.py', 'scripts/test_frontend_v29_learning.py', 'tests/harborlight-theatre-v29-smoke.py', 'tests/harborlight-adventures-v29-smoke.py', 'tests/harborlight-release-v29-smoke.py', 'tests/harborlight-theatre-v30-smoke.py', 'tests/harborlight-theatre-v30-game-smoke.py', 'tests/harborlight-theatre-free-placement-v31-smoke.py', 'tests/harborlight-adventures-v31-smoke.py', 'tests/harborlight-missions-v31-smoke.py', 'tests/harborlight-release-v31-smoke.py'):
+          for test in ('tests/harborlight-theatre-free-placement-v31-smoke.py', 'tests/harborlight-frontend-v17-smoke.py', 'tests/harborlight-frontend-v18-smoke.py', 'tests/harborlight-tutorial-v18-smoke.py', 'tests/harborlight-tutorial-v21-smoke.py', 'tests/harborlight-tutorial-v22-smoke.py', 'tests/harborlight-tutorial-priority-v22-smoke.py', 'tests/harborlight-tutorial-map-v25-smoke.py', 'tests/harborlight-learning-review-v26-smoke.py', 'tests/harborlight-learning-flow-v26-smoke.py', 'tests/harborlight-starter-course-v26-smoke.py', 'tests/harborlight-learning-feedback-v27-smoke.py', 'tests/harborlight-learning-flow-v27-smoke.py', 'tests/harborlight-missions-ui-v27-smoke.py', 'tests/harborlight-missions-game-v27-smoke.py', 'tests/harborlight-release-v28-smoke.py', 'tests/harborlight-starter-course-v28-smoke.py', 'scripts/test_frontend_v29_learning.py', 'tests/harborlight-theatre-v29-smoke.py', 'tests/harborlight-adventures-v29-smoke.py', 'tests/harborlight-release-v29-smoke.py', 'tests/harborlight-theatre-v30-smoke.py', 'tests/harborlight-theatre-v30-game-smoke.py', 'tests/harborlight-adventures-v31-smoke.py', 'tests/harborlight-missions-v31-smoke.py', 'tests/harborlight-release-v31-smoke.py'):
               print('Starting browser acceptance: ' + test, flush=True)
               status = subprocess.call([sys.executable, '-u', test])
               if status:
@@ -144,9 +144,10 @@ jobs:
           import { readFileSync } from 'node:fs';
           const text = readFileSync(process.argv[2], 'utf8') || 'Browser acceptance failed without output.';
           let escaped = '';
-          for (const character of Array.from(text.slice(-6000)).reverse()) {
+          // Public annotations can truncate long messages. Keep the final cause.
+          for (const character of Array.from(text.slice(-2500)).reverse()) {
             const piece = character === '%' ? '%25' : character === '\r' ? '%0D' : character === '\n' ? '%0A' : character;
-            if (escaped.length + piece.length > 6000) break;
+            if (escaped.length + piece.length > 2500) break;
             escaped = piece + escaped;
           }
           console.log(`::error title=Packaged game browser acceptance failed::${escaped}`);
@@ -176,8 +177,13 @@ jobs:
           if (( browser_status != 0 )); then
             node --input-type=module - "$RUNNER_TEMP/harborlight-dev-browser.log" <<'JS' || true
           import { readFileSync } from 'node:fs';
-          const text = readFileSync(process.argv[2], 'utf8').slice(-6000);
-          const escaped = text.replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+          const text = readFileSync(process.argv[2], 'utf8');
+          let escaped = '';
+          for (const character of Array.from(text.slice(-2500)).reverse()) {
+            const piece = character === '%' ? '%25' : character === '\r' ? '%0D' : character === '\n' ? '%0A' : character;
+            if (escaped.length + piece.length > 2500) break;
+            escaped = piece + escaped;
+          }
           console.log(`::error title=DEV account browser acceptance failed::${escaped}`);
           JS
           fi

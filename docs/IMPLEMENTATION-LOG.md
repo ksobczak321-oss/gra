@@ -1111,3 +1111,9 @@ Użytkownik wyjaśnił, że polecenie oznacza DEV → PRE-PROD. Usunięto lokaln
 ### Lokalny odbiór0.14.0.0 zakończony
 
 1190frontend +134backend +7planszówka=1331NodePASS,141Python i43zestawyChromiumPASS po poprawkach; ostatni test rzeczywistego hosta chroni240sawarii i rozróżnia zwykłą nieobecność. Nowy odbiór mapy/House/parkowanych scen obejmuje12przypadków PL/EN desktop/mobile. Excel14 zwalidowany z zachowanym13.450kart/179ręcznychNOTRUN. NowySHA, własneCI/Pages i PRE-PROD pozostają do odczytu. Pełny eksperyment50dni w toku, bez twierdzenia o150h zabawy.
+
+Źródło`d2f9ab311b9f3ad5e6d45a6f4e934ce501973324` wysłano do main; własnyCI41896847613 INPROGRESS, Pages41896847615SUCCESS25s. Pakiet85plików/19681606bajtów verify/extractPASS; hashe w raporcie odbioru. Do potwierdzenia źródła deployu nie przesuwamy main.
+
+PierwszyCI41896847613/d2f9ab3: FAILURE13m16s w nowym teście swobodnego Teatru, pierwsza próba PL/desktop. PagesSUCCESS25s; bez tagu i bez nowej promocji PRE-PROD. Ten błąd pozostaje historią także po kolejnej poprawce.
+
+Poprawka wyłącznie gotowości testu Teatru i diagnostykiCI:4/4 standardowo+4/4 przyCSS2500ms, starytestzawodzi przytymopóźnieniu. Asercje jakości zachowane; kod i85pliki aplikacji bez zmian. Bramki32/32PASS, Excel14/generatoryPASS. NowySHA wymaga własnegoCI; nie ponawiamy nieudanegoSHA jako nowego sukcesu.

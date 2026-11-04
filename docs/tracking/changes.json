@@ -24270,7 +24270,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -24297,7 +24297,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24324,7 +24328,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -24352,7 +24356,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24379,7 +24387,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -24407,7 +24415,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24434,7 +24446,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -24461,7 +24473,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24488,7 +24504,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -24516,7 +24532,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24543,7 +24563,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -24571,7 +24591,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24598,7 +24622,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -24626,7 +24650,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24653,7 +24681,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -24680,7 +24708,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24707,7 +24739,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -24734,7 +24766,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24761,7 +24797,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -24788,7 +24824,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24815,7 +24855,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -24843,7 +24883,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24870,7 +24914,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -24900,7 +24944,11 @@
         ],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24927,7 +24975,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -24954,7 +25002,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24981,7 +25033,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25011,7 +25063,11 @@
         ],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25038,7 +25094,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25066,7 +25122,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25093,7 +25153,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25120,7 +25180,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25147,7 +25211,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25174,7 +25238,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25201,7 +25269,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25228,7 +25296,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25255,7 +25327,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25282,7 +25354,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25309,7 +25385,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25336,7 +25412,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25363,7 +25443,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25391,7 +25471,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25418,7 +25502,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25446,7 +25530,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25473,7 +25561,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25501,7 +25589,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25528,7 +25620,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25556,7 +25648,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25583,7 +25679,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25611,7 +25707,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25639,7 +25739,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25667,7 +25767,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25694,7 +25798,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25722,7 +25826,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25749,7 +25857,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25776,7 +25884,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25803,7 +25915,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25831,7 +25943,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25858,7 +25974,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25886,7 +26002,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25913,7 +26033,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25941,7 +26061,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25968,7 +26092,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -25996,7 +26120,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26023,7 +26151,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -26050,7 +26178,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26077,7 +26209,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "targeted_tests_passed_full_50_days_in_progress",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -26105,7 +26237,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26132,7 +26268,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -26160,7 +26296,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26187,7 +26327,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "targeted_tests_passed_full_50_days_in_progress",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -26216,7 +26356,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26243,7 +26387,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -26272,7 +26416,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26299,7 +26447,7 @@
       "status": {
         "implementation": "implemented",
         "dev": "verified_locally_pending_own_ci",
-        "ci": "not_run_for_current_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -26327,11 +26475,16 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "release_note": "Zakres v31 został zatwierdzony. Implementacja, integracja i własny odbiór pozostają PENDING. Nie jest to potwierdzenie pełnego CI, Pages, nowego SHA, tagu ani promocji GCP. PRE-PROD pozostaje 0.13.1.0/68e9bcd; ręczne próby nie zostały wykonane.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
-        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej.",
+        "PierwszyCI41896847613/d2f9ab3FAILURE13m16s. Fixture Teatru oczekuje na gotowe CSS;4/4+4/4 przyCSS2500msPASS. Asercje nieosłabione, aplikacja bez zmiany; wymagany własnyCI nowegoSHA."
       ],
       "tags": [
         "v31",
@@ -26354,7 +26507,7 @@
       "status": {
         "implementation": "in_progress",
         "dev": "promotion_prepared",
-        "ci": "not_run_for_promotion_source",
+        "ci": "failure_source_d2f9ab3",
         "preprod": "pending_deployment",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -26393,7 +26546,11 @@
         ],
         "manual_execution": "NOT_RUN",
         "release_note": "Użytkownik doprecyzował wyłącznie DEV → PRE-PROD. Końcowe źródło, własne CI, bridge, deploy, próba, wymagane kontrole, oba artefakty i tag 0.14.0.0 pozostają PENDING do własnego odczytu. Faktyczny odebrany PRE-PROD nadal 0.13.1.0/68e9bcd. Operacji PROD nie wykonano;179 ręcznych prób NOT RUN.",
-        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+        "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+        "ci_run_id": 41896847613,
+        "pages_run_id": 41896847615,
+        "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD"
       },
       "notes": [
         "Korekta niejednoznacznego polecenia określa finalny zakres tej samej nieopublikowanej karty operacyjnej. Nie przepisuje poprzednich449 definicji ani ich statusów.",
@@ -26409,8 +26566,8 @@
   "current_environment": {
     "as_of": "2026-11-04",
     "dev_application_version": "0.14.0.0",
-    "dev_status": "local_acceptance_passed_pending_own_ci_pages",
-    "dev_ci": "not_run_for_current_source",
+    "dev_status": "ci_fixture_readiness_fix_prepared_pending_new_source_ci",
+    "dev_ci": "failure",
     "preprod_application_version": "0.13.1.0",
     "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
     "preprod_ci_run_id": 41671140612,
@@ -26419,7 +26576,7 @@
     "preprod_status": "verified_deployment_and_artifacts",
     "prod_status": "not_authorized_latest_request_preprod_only",
     "full_test_account_reset": "not_performed",
-    "note": "Użytkownik doprecyzował GO jako0.14.0.0 DEV/CI → PRE-PROD. Końcowy SHA, własneCI/Pages, nowe artefakty i wdrożenie pozostają PENDING. Odebrany PRE-PROD0.13.1.0/68e9bcd nadal aktualny.450kart/179ręcznychNOTRUN. Bez resetu i PROD; lokalny nieopublikowany mostPROD usunięto.",
+    "note": "PRE-PROD0.14autoryzowany. PierwszyCI d2f9ab3/41896847613FAILURE13m16s, PagesSUCCESS25s. FixtureCSSgotowy4/4+4/4; aplikacja bez zmian. NowySHA/CI/PRE-PROD wymagają własnego wyniku.450kart/179ręcznychNOTRUN, bez resetu i PROD.",
     "previous_accepted_dev": {
       "dev_application_version": "0.13.0.0",
       "dev_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
@@ -26427,11 +26584,11 @@
       "dev_pages_run_id": 41657032922,
       "dev_tag": "dev-0.13.0.0-20261103"
     },
-    "dev_source_sha": null,
-    "dev_ci_run_id": null,
-    "dev_pages_run_id": null,
+    "dev_source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+    "dev_ci_run_id": 41896847613,
+    "dev_pages_run_id": 41896847615,
     "dev_tag": null,
-    "preprod_promotion_status": "authorized_v31_pending_dev_validation",
+    "preprod_promotion_status": "blocked_by_source_ci_failure",
     "preprod_promotion_target": "0.14.0.0",
     "previous_accepted_preprod": {
       "preprod_application_version": "0.12.0.0",
@@ -26475,6 +26632,14 @@
     "local_boardgame_node": 7,
     "local_python": 141,
     "local_browser_suites": 43,
-    "workbook": 14
+    "workbook": 14,
+    "first_v31_ci_attempt": {
+      "source_sha": "d2f9ab311b9f3ad5e6d45a6f4e934ce501973324",
+      "run_id": 41896847613,
+      "conclusion": "failure",
+      "duration": "13m16s",
+      "pages_run_id": 41896847615,
+      "pages_conclusion": "success"
+    }
   }
 }

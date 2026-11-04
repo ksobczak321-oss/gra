@@ -48,3 +48,11 @@ Po rzeczywistym sukcesie dopisujemy numery runów i prób CI/bridge/deploy, peł
 Osobna karta operacji **HL-CHG-1121** reprezentuje tę promocję; rejestr ma **450 kart**, a **179 ręcznych prób pozostaje NOT RUN**.
 
 [Wymagania v31](FRONTEND-V31-REQUIREMENTS.md) · [Odbiór DEV](DEV-0.14.0.0-VALIDATION.md) · [Proces promocji](RELEASE-PROCESS.md) · [Stan środowisk](ENVIRONMENT-STATUS.md).
+
+## Wysłane źródło — stan po uruchomieniu
+
+`d2f9ab311b9f3ad5e6d45a6f4e934ce501973324` w main. WłasneCI41896847613FAILURE13m16s; Pages41896847615SUCCESS25s. Most PRE-PROD czeka na sukcesCI; nowego wdrożenia ani tagu nie zaliczono. Bieżący PRE-PROD pozostaje0.13.1.0/68e9bcd.
+
+Pierwszy CI zablokował promocję na pierwszej próbie PL/desktop swobodnego Teatru. PRE-PROD nie wystartował; poprzedni0.13.1.0 pozostaje aktualny. Wymagana poprawka oraz własny udanyCI nowego źródła.
+
+Przygotowano poprawkę gotowości osobnego testu Teatru, z zachowanymi asercjami i diagnostyką.4/4+4/4 przy opóźnieniuCSSPASS; publiczna aplikacja bez zmian. Kolejnycommit wymaga własnego udanegoCI i standardowej promocji.

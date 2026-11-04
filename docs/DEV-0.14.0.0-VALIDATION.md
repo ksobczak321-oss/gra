@@ -11,8 +11,8 @@ Stan z 4 listopada 2026. Użytkownik zatwierdził [zakres v31](FRONTEND-V31-REQU
 | Pozostały Node |134 backend +7 planszówka PASS; razem1331 |
 | Python |141/141 PASS w11zestawach |
 | Chromium |43zestawy lokalniePASS po poprawkach; własnyCI powtórzy cały spis |
-| SHA / CI / Pages |PENDING — własne źródło i przebiegi po commit/push |
-| Pakiet / tag |PENDING — końcowy manifest po ustaleniu SHA; tag dopiero po CI/Pages |
+| SHA / CI / Pages |`d2f9ab311b9f3ad5e6d45a6f4e934ce501973324`; CI41896847613 FAILURE13m16s; Pages41896847615 SUCCESS25s |
+| Pakiet / tag |85plików /19681606bajtów; verify/extractPASS. Tag nadalPENDING do sukcesuCI |
 | Excel14 |100zakładek, walidacjaPASS; historyczny13 zachowany |
 | Ewidencja |450kart,179ręcznych prób NOT RUN |
 | PRE-PROD |Nadal0.13.1.0 /68e9bcd; nowa promocja autoryzowana, wynik PENDING |
@@ -48,3 +48,17 @@ Długi catch-up jest kosztowny na maszynie testowej. Zmniejszono alokacje dróg 
 Excel14 zachowuje 88 historycznych zakładek13,48 komentarzy,208 części OOXML i4658 wyników formuł. Nowe 324 formuły z cache oraz200 próbek runtime przechodzą walidację. Nie uruchamiano LibreOffice i nie przypisujemy mu przeliczenia pliku. Aktualny hash jest w [raporcie arkusza](arkusze/HARBORLIGHT14-walidacja.json).
 
 Ostateczny SHA, hashe pakietu, własne CI/Pages, tag i standardowy PRE-PROD wymagają uzupełnienia po odczycie rzeczywistych wyników. Rzeczywistych kont nie resetowano. [179 prób ręcznych](testing/START-HERE.md) pozostaje NOT RUN.
+
+## Wysłane źródło i pakiet
+
+Commit `d2f9ab311b9f3ad5e6d45a6f4e934ce501973324` jest w main z autoryzowanym znacznikiem PRE-PROD0.14.0.0. [CI41896847613](https://github.com/ksobczak321-oss/gra/actions/runs/41896847613) zakończył się FAILURE13m16s. [Pages41896847615](https://github.com/ksobczak321-oss/gra/actions/runs/41896847615) zakończyło się SUCCESS25s. Bez niezależnego odczytu bajtów Pages przez ograniczony proxy tej sesji.
+
+Pakiet85plików/19681606bajtów: TAR`fa07a6100414cfc35e812a6eecb7fa6a2bbaf58ab0b16285827b2cb40e81a60d`, manifest`e3f8c9590dd36274506a970512e34868992c9c3516721cfe085d969ceff57638`. Weryfikacja i rozpakowanie dokładnego źródła PASS. Te digests nie są digestamiZIPartefaktów GitHub ani obrazuAPI. BieżącyExcel14: SHA`9216f66d10a69f2ee27249053a3462bcae1c29b809806f645317ba249d4b2ebb`.
+
+## Pierwszy CI — zachowany błąd
+
+Źródło d2f9ab3 ma FAILURE13m16s w `tests/harborlight-theatre-free-placement-v31-smoke.py`, pierwsza próba PL/desktop. Wszystkie wcześniejsze reguły, pakowanie/Excel i starsze testy Teatru przeszły. Publiczna adnotacja urywała traceback przed przyczyną; diagnoza i poprawka wymagają osobnego źródła/CI. Nie utworzono tagu i nie uruchomiono PRE-PROD. Pages tego źródła pozostaje SUCCESS25s.
+
+### Poprawka gotowości testu
+
+Kontrolowane opóźnienie lokalnych CSS o2,5s odtworzyło nieostylowany plac i błąd starego testu. Fixture czeka teraz na oba arkusze, geometrię, fonty i obrazy; zachowano dokładność ruchu62/30,1, klawiaturę3/15, pojedynczy zapis i ochronę portfela. Nowy test zaliczył4/4 zwykle i4/4 z opóźnieniem. UI/CSS i pozostałe pliki publiczne gry nie zmieniły się. LokalnyChromium154 nie zastępuje przypiętego151 wCI; oba oficjalne pobrania151 blokuje sieciowe403. Pełna przyczyna pierwszegoCI pozostaje niedostępna poza uciętym tracebackiem, więc nowy własnyCI jest wymagany. Publiczne adnotacje skrócono do końcowych2500znaków, aby zachowały przyczynę.
