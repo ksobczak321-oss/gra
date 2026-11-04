@@ -1,4 +1,4 @@
-import { translate, formatNumber, formatHappinessPoints } from './harborlight-v1-i18n.js?v=frontend-v31';
+import { translate, formatNumber, formatHappinessPoints } from './harborlight-v1-i18n.js?v=frontend-v31-2';
 
 const names = { farm: ['Gospodarstwo', 'Gospodarstwa'], windmill: ['Młyn', 'Młyna'], lumber: ['Drwale', 'obozu drwali'], quarry: ['Kamieniołom', 'Kamieniołomu'], sawmill: ['Tartak', 'Tartaku'] };
 const goods = { wood: 'drewna', stone: 'kamienia', grain: 'zboża', food: 'żywności', planks: 'desek' };

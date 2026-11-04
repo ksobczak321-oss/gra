@@ -13,6 +13,17 @@ ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
 ORIGIN = 'https://theatre-free-placement.harborlight.test'
 SHOTS = Path('/tmp/harborlight-theatre-v31')
 
+# Browsers may blur a disabled active control immediately or at their next
+# rendering update. Exercise the immediate case even on a deferred-blur build.
+IMMEDIATE_BLUR = '''(()=>{
+  const descriptor=Object.getOwnPropertyDescriptor(HTMLButtonElement.prototype,'disabled');
+  Object.defineProperty(HTMLButtonElement.prototype,'disabled',{...descriptor,set(value){
+    const wasFocused=document.activeElement===this;
+    descriptor.set.call(this,value);
+    if(value&&wasFocused)this.blur();
+  }});
+})();'''
+
 def assets(route):
     path = unquote(urlsplit(route.request.url).path)
     if path == '/':
@@ -48,14 +59,16 @@ def failure_details(page):
     return page.evaluate('''()=>{
       const bounds=selector=>{const n=document.querySelector(selector);if(!n)return null;const r=n.getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height};};
       return{viewport:{width:innerWidth,height:innerHeight,scrollY},
+        focus:{tag:document.activeElement?.tagName,slot:document.activeElement?.dataset?.theatreSlot,item:document.activeElement?.dataset?.theatreItem},
         styles:['harborlight-theatre-css','harborlight-theatre-scene-css'].map(id=>({id,loaded:!!document.getElementById(id)?.sheet})),
         canvas:bounds('[data-theatre-canvas]'),plane:bounds('.theatre-scene-plane'),
         dragged:!!document.querySelector('.is-dragging'),
         positions:fixture?.state?.theatre?.positions,calls:fixture?.calls?.slice(-3)};
     }''')
 
-def scenario(browser,language,mobile):
+def scenario(browser,language,mobile,immediate_blur=False):
     context=browser.new_context(viewport={'width':390 if mobile else 1440,'height':844 if mobile else 1100},has_touch=mobile,reduced_motion='reduce')
+    if immediate_blur:context.add_init_script(IMMEDIATE_BLUR)
     context.route(ORIGIN+'/**',assets)
     page=context.new_page();page.set_default_timeout(10000);errors=[]
     page.on('pageerror',lambda error:errors.append(str(error)))
@@ -63,7 +76,7 @@ def scenario(browser,language,mobile):
     try:
         page.goto(ORIGIN)
         page.evaluate('''async language=>{
-          const [T,U]=await Promise.all([import('/harborlight-v1-theatre.js?v=frontend-v31'),import('/harborlight-v1-theatre-ui.js?v=frontend-v31')]);
+          const [T,U]=await Promise.all([import('/harborlight-v1-theatre.js?v=frontend-v31-2'),import('/harborlight-v1-theatre-ui.js?v=frontend-v31-2')]);
           const state={worldTimeMs:1793793600000,resources:{coins:100000},settings:{language}};T.normalizeTheatre(state);
           const f=window.fixture={T,U,state,language,status:'saved',calls:[]};
           f.perform=action=>{f.calls.push(structuredClone(action));return T.theatreAction(state,action,{noAds:true});};
@@ -126,6 +139,37 @@ def scenario(browser,language,mobile):
         page.wait_for_function('(p)=>Math.abs(fixture.state.theatre.positions[p.id].x-p.x-3)<.2',arg={'id':identity,'x':tapped['x']})
         page.keyboard.press('Shift+ArrowDown')
         page.wait_for_function('(p)=>Math.abs(fixture.state.theatre.positions[p.id].y-p.y-15)<.2',arg={'id':identity,'y':tapped['y']})
+        # Real consecutive keyboard actions must survive a render each time.
+        # Hold animation frames so deferred focus repair cannot hide a gap.
+        stage='rapid-keyboard-no-animation-frame'
+        rapid_before=position(page,identity)
+        calls_before=page.evaluate('fixture.calls.length')
+        page.evaluate('''()=>{
+          window.__theatreOriginalRAF=window.requestAnimationFrame;
+          window.__theatreHeldFrames=[];
+          window.requestAnimationFrame=callback=>window.__theatreHeldFrames.push(callback);
+        }''')
+        for key in ['ArrowRight','Shift+ArrowDown','ArrowLeft','ArrowUp']:
+            page.keyboard.press(key)
+        rapid=page.evaluate('''id=>({point:fixture.state.theatre.positions[id],
+          focus:document.activeElement?.dataset?.theatreItem,calls:fixture.calls.slice(-4)})''',identity)
+        assert page.evaluate('fixture.calls.length')==calls_before+4,rapid
+        assert all(action['type']=='theatreMove' and action['id']==identity for action in rapid['calls']),rapid
+        assert abs(rapid['point']['x']-rapid_before['x'])<.2,rapid
+        assert abs(rapid['point']['y']-rapid_before['y']-12)<.2,rapid
+        assert rapid['focus']==identity,rapid
+        page.evaluate('''()=>{
+          window.requestAnimationFrame=window.__theatreOriginalRAF;
+          for(const callback of window.__theatreHeldFrames)requestAnimationFrame(callback);
+          delete window.__theatreOriginalRAF;delete window.__theatreHeldFrames;
+        }''')
+        # The common command path also preserves a select and an action button.
+        stage='generic-control-focus'
+        lighting=page.locator('select[data-theatre-lighting]')
+        lighting.focus();lighting.select_option('golden')
+        assert page.evaluate('document.activeElement?.matches("select[data-theatre-lighting]")')
+        page.locator('[data-theatre-save-layout="1"]').click()
+        assert page.evaluate('document.activeElement?.dataset.theatreSaveLayout==="1"')
         fixed=position(page,identity)
         # Remember layout, improve beyond20, change the scene, then restore and reload.
         stage='saved-layout-and-level22'
@@ -153,9 +197,10 @@ def scenario(browser,language,mobile):
         }''')
         SHOTS.mkdir(exist_ok=True)
         panel.locator('.theatre-canvas').scroll_into_view_if_needed()
-        page.screenshot(path=str(SHOTS/f'{language}-{"mobile" if mobile else "desktop"}.png'))
+        suffix='-immediate-blur' if immediate_blur else ''
+        page.screenshot(path=str(SHOTS/f'{language}-{"mobile" if mobile else "desktop"}{suffix}.png'))
         assert not errors,errors
-        print(json.dumps({'language':language,'mobile':mobile,'result':'PASS','realDrag':True,'singleDropCommit':True,'fineKeyboard':True,'savedPosition':fixed,'preservedLevel':22}),flush=True)
+        print(json.dumps({'language':language,'mobile':mobile,'immediateBlur':immediate_blur,'result':'PASS','realDrag':True,'singleDropCommit':True,'fineKeyboard':True,'rapidKeyboardWithoutFrames':True,'genericFocus':True,'savedPosition':fixed,'preservedLevel':22}),flush=True)
     except Exception as error:
         details={'diagnostic':'unavailable'}
         try:
@@ -164,15 +209,16 @@ def scenario(browser,language,mobile):
             page.screenshot(path=str(SHOTS/f'{language}-{"mobile" if mobile else "desktop"}-failure.png'),full_page=True)
         except Exception as diagnostic_error:
             details['diagnosticError']=str(diagnostic_error).splitlines()[0]
-        raise RuntimeError(f'Theatre free placement {language}/{"mobile" if mobile else "desktop"} at {stage}: {str(error).splitlines()[0] if str(error) else type(error).__name__}; {json.dumps(details)}') from error
+        raise RuntimeError(f'Theatre free placement {language}/{"mobile" if mobile else "desktop"} immediateBlur={immediate_blur} at {stage}: {str(error).splitlines()[0] if str(error) else type(error).__name__}; {json.dumps(details)}') from error
     finally:context.close()
 
 def run():
     with sync_playwright() as p:
         browser=p.chromium.launch(executable_path=os.environ.get('HARBORLIGHT_CHROMIUM','/usr/bin/chromium'),headless=True,args=['--no-sandbox'])
         try:
-            for language in ['pl','en']:
-                for mobile in [False,True]:scenario(browser,language,mobile)
+            for immediate_blur in [False,True]:
+                for language in ['pl','en']:
+                    for mobile in [False,True]:scenario(browser,language,mobile,immediate_blur)
         finally:browser.close()
     print('PASS Theatrev31 freepointer/touch,onecommit,keyboardfineplacement,welcomeonce,cloudstatus,designrestore/reload,level22andcoinspreserved;PL/ENdesktop/mobile')
 if __name__=='__main__':run()

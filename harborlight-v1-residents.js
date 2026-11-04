@@ -1,9 +1,9 @@
 // Persistent residents and visits. Every duration is a real elapsed second.
-import { residentLeisureBonus } from './harborlight-v1-leisure.js?v=frontend-v31';
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v31';
-import { residentHasHousing } from './harborlight-v1-housing.js?v=frontend-v31';
-import { worldEventHappinessPenalty } from './harborlight-v1-events.js?v=frontend-v31';
-export { housingStatus, residentHasHousing, residentWorkMultiplier, residentFoodMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v31';
+import { residentLeisureBonus } from './harborlight-v1-leisure.js?v=frontend-v31-2';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v31-2';
+import { residentHasHousing } from './harborlight-v1-housing.js?v=frontend-v31-2';
+import { worldEventHappinessPenalty } from './harborlight-v1-events.js?v=frontend-v31-2';
+export { housingStatus, residentHasHousing, residentWorkMultiplier, residentFoodMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v31-2';
 export const RESIDENT_WORKPLACES = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'warehouse', 'dock', 'market'];
 export const NEED_GRACE_SECONDS = 12 * 3600;
 export const NEED_PENALTY = 5;

@@ -1,6 +1,6 @@
-import { THEATRE_DECORATIONS, THEATRE_STYLES, theatreStatus, theatreQuote, theatreDecorationName, THEATRE_LIGHTING, THEATRE_PAVING, THEATRE_TRANSLATIONS, THEATRE_GARDEN_BOUNDS, THEATRE_WELCOME_GARDEN, theatrePosition } from './harborlight-v1-theatre.js?v=frontend-v31';
-import { renderTheatreScene, theatreIconSvg, THEATRE_SLOT_POSITIONS, theatrePerspectiveScale } from './harborlight-v1-theatre-art.js?v=frontend-v31';
-import { ATTRACTIONS } from './harborlight-v1-leisure.js?v=frontend-v31';
+import { THEATRE_DECORATIONS, THEATRE_STYLES, theatreStatus, theatreQuote, theatreDecorationName, THEATRE_LIGHTING, THEATRE_PAVING, THEATRE_TRANSLATIONS, THEATRE_GARDEN_BOUNDS, THEATRE_WELCOME_GARDEN, theatrePosition } from './harborlight-v1-theatre.js?v=frontend-v31-2';
+import { renderTheatreScene, theatreIconSvg, THEATRE_SLOT_POSITIONS, theatrePerspectiveScale } from './harborlight-v1-theatre-art.js?v=frontend-v31-2';
+import { ATTRACTIONS } from './harborlight-v1-leisure.js?v=frontend-v31-2';
 
 const CITY_NAMES = {
   'flower-beds': 'Rabaty kwiatowe', 'village-benches': 'Ławki w osadzie', 'lantern-strings': 'Girlandy świetlne',
@@ -26,7 +26,7 @@ const node = (tag, attrs = {}, ...children) => {
 const svgNode = markup => { const holder = node('span', { class: 'theatre-art' }); holder.innerHTML = markup; return holder; };
 function styles() {
   for (const [id, file] of [['harborlight-theatre-css', 'harborlight-v1-theatre.css'], ['harborlight-theatre-scene-css', 'harborlight-v1-theatre-scene.css']]) {
-    if (!document.getElementById(id)) document.head.append(node('link', { id, rel: 'stylesheet', href: new URL(`./${file}?v=frontend-v31`, import.meta.url).href }));
+    if (!document.getElementById(id)) document.head.append(node('link', { id, rel: 'stylesheet', href: new URL(`./${file}?v=frontend-v31-2`, import.meta.url).href }));
   }
 }
 
@@ -71,6 +71,10 @@ export function createTheatrePanel({ state, perform = () => false, requestReward
   }
   async function command(action, success = '') {
     if (busy || !alive) return false;
+    // Disabling a focused button can synchronously move focus to the document.
+    // Remember it before the pending state, so the next arrow key still reaches
+    // the same ornament after this command replaces the editor controls.
+    const focus = focusToken();
     busy = true; refreshBalances();
     try {
       const result = await perform(action);
@@ -83,7 +87,7 @@ export function createTheatrePanel({ state, perform = () => false, requestReward
       return false;
     } finally {
       busy = false;
-      if (alive) render();
+      if (alive) render(focus);
     }
   }
   function saveState() {
@@ -341,10 +345,10 @@ export function createTheatrePanel({ state, perform = () => false, requestReward
       dragging = null; render();
     });
   }
-  function render() {
+  function render(fallbackFocus = null) {
     if (!alive || dragging) return;
     refreshAdNotice();
-    const focus = focusToken(), oldCanvas = root.querySelector('.theatre-canvas');
+    const focus = focusToken() || fallbackFocus, oldCanvas = root.querySelector('.theatre-canvas');
     const scroll = { left: oldCanvas?.scrollLeft || 0, top: oldCanvas?.scrollTop || 0 };
     const status = theatreStatus(state, context()), item = selected();
     if (!Number.isInteger(selectedSlot) || selectedSlot < 0 || selectedSlot > 19) selectedSlot = 0;

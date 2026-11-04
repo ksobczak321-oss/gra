@@ -14,7 +14,7 @@ Rejestr nie publikuje prywatnych kwot Billing ani danych osobistych związanych 
 
 ## Bieżące środowiska
 
-- Nowy DEV **0.14.0.0**: `ci_fixture_readiness_fix_prepared_pending_new_source_ci`; CI `failure`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
+- Nowy DEV **0.14.0.0**: `keyboard_fix_locally_validated_pending_new_source_ci`; CI `failure`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
 - Odebrany PRE-PROD **0.13.1.0**: źródło `68e9bcd6adf22ab98f963688726a71d4d8a66c6b`; [deploy 41673824262](https://github.com/ksobczak321-oss/gra/actions/runs/41673824262), próba 1.
 - PRE-PROD tej wcześniejszej wersji nie oznacza promocji nowych kart. PROD oraz pełny reset kont: bez nowej operacji.
 PRE-PROD0.14autoryzowany. PierwszyCI d2f9ab3/41896847613FAILURE13m16s, PagesSUCCESS25s. FixtureCSSgotowy4/4+4/4; aplikacja bez zmian. NowySHA/CI/PRE-PROD wymagają własnego wyniku.450kart/179ręcznychNOTRUN, bez resetu i PROD.

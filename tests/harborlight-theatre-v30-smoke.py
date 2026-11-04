@@ -69,8 +69,8 @@ def scenario(browser, language, mobile):
     try:
         page.goto(ORIGIN)
         page.evaluate('''async language=>{
-          const [T,U,A]=await Promise.all([import('/harborlight-v1-theatre.js?v=frontend-v31'),
-            import('/harborlight-v1-theatre-ui.js?v=frontend-v31'),import('/harborlight-v1-theatre-art.js?v=frontend-v31')]);
+          const [T,U,A]=await Promise.all([import('/harborlight-v1-theatre.js?v=frontend-v31-2'),
+            import('/harborlight-v1-theatre-ui.js?v=frontend-v31-2'),import('/harborlight-v1-theatre-art.js?v=frontend-v31-2')]);
           const state={worldTimeMs:1793700000000,resources:{coins:100000},settings:{language}};
           T.normalizeTheatre(state);
           const foundation=[['fountain',0,4],['bench',6,8],['tree',19,12]];

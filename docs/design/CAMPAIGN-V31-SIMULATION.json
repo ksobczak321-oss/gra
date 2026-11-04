@@ -1,0 +1,824 @@
+{
+  "version": "0.14.0.0",
+  "kind": "actual-command-driven-partial-campaign-observation",
+  "recordedAt": "2026-11-04T19:59:41.394651+00:00",
+  "plannedHorizonDays": 50,
+  "observedThroughDay": 26,
+  "dailyCheckpointsObserved": 26,
+  "targetLevel": 20,
+  "townHall20ObservedByDay": null,
+  "chapter20CompletionObservedByDay": null,
+  "chapter20CompletionEvidence": null,
+  "full50DayRunCompleted": false,
+  "currentFullCommandLedgerAvailable": false,
+  "currentObservedActiveHours": null,
+  "dailyInputBudgetHours": 3,
+  "notes": [
+    "Partial observation of a running actual-command model plan; not a completed 50-day result.",
+    "Basic daily trace stores Town Hall, residents, floor(coins), current chapter and step only. Detailed current command counts and daily inventory snapshots remain in the running process and are unavailable in this partial report.",
+    "All times below are observed daily upper bounds, not exact level-up timestamps.",
+    "The separate completed 3-day result used an earlier planner strategy; its metrics are not merged into the current run.",
+    "Loaded model predates later equivalent helper/calendar optimizations and fixes for active-story rebind, parked-story cap and UI close. Those functional branches are not visited by this continuous-story strategy. No exact latest-source byte identity is claimed.",
+    "The process was SIGSTOP-paused for a separate full regression; real execution time is not game time or a clean CPU benchmark."
+  ],
+  "currentDailyTrace": [
+    {
+      "elapsedDays": 1,
+      "townHallLevel": 4,
+      "population": 95,
+      "coinsFloor": 1097,
+      "missionChapter": 3,
+      "missionIndex": 8
+    },
+    {
+      "elapsedDays": 2,
+      "townHallLevel": 5,
+      "population": 120,
+      "coinsFloor": 3043,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 3,
+      "townHallLevel": 6,
+      "population": 144,
+      "coinsFloor": 2254,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 4,
+      "townHallLevel": 7,
+      "population": 168,
+      "coinsFloor": 4181,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 5,
+      "townHallLevel": 8,
+      "population": 184,
+      "coinsFloor": 5224,
+      "missionChapter": 8,
+      "missionIndex": 1
+    },
+    {
+      "elapsedDays": 6,
+      "townHallLevel": 8,
+      "population": 192,
+      "coinsFloor": 7448,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 7,
+      "townHallLevel": 9,
+      "population": 216,
+      "coinsFloor": 9413,
+      "missionChapter": 9,
+      "missionIndex": 8
+    },
+    {
+      "elapsedDays": 8,
+      "townHallLevel": 9,
+      "population": 216,
+      "coinsFloor": 12314,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 9,
+      "townHallLevel": 10,
+      "population": 240,
+      "coinsFloor": 10621,
+      "missionChapter": 10,
+      "missionIndex": 8
+    },
+    {
+      "elapsedDays": 10,
+      "townHallLevel": 11,
+      "population": 254,
+      "coinsFloor": 10974,
+      "missionChapter": 11,
+      "missionIndex": 1
+    },
+    {
+      "elapsedDays": 11,
+      "townHallLevel": 11,
+      "population": 264,
+      "coinsFloor": 16659,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 12,
+      "townHallLevel": 11,
+      "population": 264,
+      "coinsFloor": 18875,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 13,
+      "townHallLevel": 12,
+      "population": 281,
+      "coinsFloor": 20593,
+      "missionChapter": 12,
+      "missionIndex": 1
+    },
+    {
+      "elapsedDays": 14,
+      "townHallLevel": 12,
+      "population": 288,
+      "coinsFloor": 25260,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 15,
+      "townHallLevel": 13,
+      "population": 295,
+      "coinsFloor": 21643,
+      "missionChapter": 13,
+      "missionIndex": 1
+    },
+    {
+      "elapsedDays": 16,
+      "townHallLevel": 13,
+      "population": 312,
+      "coinsFloor": 21340,
+      "missionChapter": 13,
+      "missionIndex": 8
+    },
+    {
+      "elapsedDays": 17,
+      "townHallLevel": 13,
+      "population": 312,
+      "coinsFloor": 30641,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 18,
+      "townHallLevel": 14,
+      "population": 322,
+      "coinsFloor": 32665,
+      "missionChapter": 14,
+      "missionIndex": 1
+    },
+    {
+      "elapsedDays": 19,
+      "townHallLevel": 14,
+      "population": 336,
+      "coinsFloor": 36845,
+      "missionChapter": 14,
+      "missionIndex": 8
+    },
+    {
+      "elapsedDays": 20,
+      "townHallLevel": 15,
+      "population": 336,
+      "coinsFloor": 33369,
+      "missionChapter": 15,
+      "missionIndex": 1
+    },
+    {
+      "elapsedDays": 21,
+      "townHallLevel": 15,
+      "population": 360,
+      "coinsFloor": 40643,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 22,
+      "townHallLevel": 15,
+      "population": 360,
+      "coinsFloor": 43471,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 23,
+      "townHallLevel": 15,
+      "population": 360,
+      "coinsFloor": 53296,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 24,
+      "townHallLevel": 16,
+      "population": 371,
+      "coinsFloor": 55638,
+      "missionChapter": 16,
+      "missionIndex": 1
+    },
+    {
+      "elapsedDays": 25,
+      "townHallLevel": 16,
+      "population": 384,
+      "coinsFloor": 54496,
+      "missionChapter": 16,
+      "missionIndex": 8
+    },
+    {
+      "elapsedDays": 26,
+      "townHallLevel": 17,
+      "population": 408,
+      "coinsFloor": 56707,
+      "missionChapter": 17,
+      "missionIndex": 1
+    }
+  ],
+  "rawProgressTrace": "day1 TH4 pop95 coins1097 mission3/8\nday2 TH5 pop120 coins3043 mission-/-\nday3 TH6 pop144 coins2254 mission-/-\nStarting inspector on 127.0.0.1:9229 failed: operation not permitted\nday4 TH7 pop168 coins4181 mission-/-\nday5 TH8 pop184 coins5224 mission8/1\nday6 TH8 pop192 coins7448 mission-/-\nday7 TH9 pop216 coins9413 mission9/8\nday8 TH9 pop216 coins12314 mission-/-\nday9 TH10 pop240 coins10621 mission10/8\nday10 TH11 pop254 coins10974 mission11/1\nday11 TH11 pop264 coins16659 mission-/-\nday12 TH11 pop264 coins18875 mission-/-\nday13 TH12 pop281 coins20593 mission12/1\nday14 TH12 pop288 coins25260 mission-/-\nday15 TH13 pop295 coins21643 mission13/1\nday16 TH13 pop312 coins21340 mission13/8\nday17 TH13 pop312 coins30641 mission-/-\nday18 TH14 pop322 coins32665 mission14/1\nday19 TH14 pop336 coins36845 mission14/8\nday20 TH15 pop336 coins33369 mission15/1\nday21 TH15 pop360 coins40643 mission-/-\nday22 TH15 pop360 coins43471 mission-/-\nday23 TH15 pop360 coins53296 mission-/-\nday24 TH16 pop371 coins55638 mission16/1\nday25 TH16 pop384 coins54496 mission16/8\nday26 TH17 pop408 coins56707 mission17/1\n",
+  "separateEarlierThreeDayRun": {
+    "scope": "Previous planner variant; completed 3-day actual-command ledger, not current-run metrics.",
+    "result": {
+      "version": "0.14.0.0",
+      "kind": "actual-command-driven-free-player-plan",
+      "assumptions": [
+        "Fresh normal state: no edited Coins, people, building levels or progress flags.",
+        "Three one-hour sessions at08:00/14:00/20:00 Warsaw on the default winter calendar; offline simulation between sessions.",
+        "Deterministic perfect-information puzzle solver sends legal inputs, not solved/completion flags. At least5active minutes per standalone puzzle and15per connected story.",
+        "Normal earned coin services are used only when the practical course teaches them. No real money, advertisements, referrals, other-player gifts or unlimited expedition farm.",
+        "Actual NPC purchases needed by story and sales of produced surplus are allowed; all cargo needs real Port workers and time.",
+        "This is one automated strategy, not a retention forecast, a human playtest or a guarantee for every strategy."
+      ],
+      "horizonDays": 3,
+      "targetLevel": 20,
+      "targetReached": false,
+      "targetReachedDay": null,
+      "elapsedDays": 3,
+      "stopReason": "observation-horizon",
+      "commands": 800,
+      "actionCounts": {
+        "onboardingNext": 1,
+        "onboardingName": 1,
+        "onboardingFinish": 1,
+        "assign": 57,
+        "claimTutorial": 24,
+        "skipTutorialShare": 24,
+        "warehousePriority": 2,
+        "prepareTutorialUpgrade": 1,
+        "upgrade": 25,
+        "premiumTransport": 3,
+        "premiumAccelerate": 3,
+        "houseHappinessAll": 1,
+        "premiumBuyBuilding": 1,
+        "upgradeRoad": 1,
+        "buyAttraction": 1,
+        "blessing": 3,
+        "taskAccept": 1,
+        "confirmTaskAcceptance": 1,
+        "taskDeposit": 2,
+        "skipTaskAchievement": 1,
+        "expeditionStart": 1,
+        "expeditionMiniGameReveal": 24,
+        "expeditionCashout": 1,
+        "build": 1,
+        "finishTutorial": 1,
+        "claimLoyalty": 1,
+        "missionReview": 6,
+        "missionStart": 5,
+        "missionDeposit": 2,
+        "userActivity": 474,
+        "adventureStart": 8,
+        "adventureInput": 107,
+        "trade": 15
+      },
+      "commandFailures": [],
+      "sessions": 9,
+      "activeSeconds": 32400,
+      "checkpoints": [
+        {
+          "elapsedDays": 1,
+          "at": 1793862000000,
+          "level": 4,
+          "population": 95,
+          "happiness": 100,
+          "houseLevel": 3,
+          "beds": 72,
+          "warehouseLevel": 2,
+          "warehouse": {
+            "perResource": 4063,
+            "total": 20315
+          },
+          "lighthouseLevel": 2,
+          "lighthouseHours": 24.418,
+          "resources": {
+            "coins": 1097,
+            "wood": 4063,
+            "stone": 4177,
+            "grain": 4041,
+            "food": 4052,
+            "planks": 4063
+          },
+          "bonusMaterials": {
+            "wood": 0,
+            "stone": 114,
+            "grain": 0,
+            "food": 0,
+            "planks": 0
+          },
+          "workers": {
+            "warehouse": {
+              "assigned": 9,
+              "arrived": 9
+            },
+            "farm": {
+              "assigned": 23,
+              "arrived": 23
+            },
+            "windmill": {
+              "assigned": 7,
+              "arrived": 7
+            },
+            "lumber": {
+              "assigned": 19,
+              "arrived": 19
+            },
+            "sawmill": {
+              "assigned": 6,
+              "arrived": 6
+            },
+            "quarry": {
+              "assigned": 6,
+              "arrived": 6
+            },
+            "dock": {
+              "assigned": 0,
+              "arrived": 0
+            },
+            "market": {
+              "assigned": 0,
+              "arrived": 0
+            }
+          },
+          "producerLevels": {
+            "farm": 2,
+            "windmill": 2,
+            "lumber": 2,
+            "sawmill": 2,
+            "quarry": 2
+          },
+          "rates": {
+            "wood": {
+              "production": 0,
+              "consumption": 0,
+              "net": 0
+            },
+            "stone": {
+              "production": 0,
+              "consumption": 0,
+              "net": 0
+            },
+            "grain": {
+              "production": 0,
+              "consumption": 0,
+              "net": 0
+            },
+            "food": {
+              "production": 0,
+              "consumption": 118,
+              "net": -118
+            },
+            "planks": {
+              "production": 0,
+              "consumption": 0,
+              "net": 0
+            }
+          },
+          "projects": [],
+          "tutorialFinished": true,
+          "mission": {
+            "chapter": 3,
+            "index": 8,
+            "kind": "main",
+            "id": "lighthouse-chapter-3:8",
+            "type": "building",
+            "status": "offered",
+            "title": "Zapal światło dla nowych sąsiadów",
+            "objective": {
+              "type": "building",
+              "building": "lighthouse",
+              "target": 3
+            },
+            "reason": null
+          },
+          "completedChapters": [
+            2
+          ]
+        },
+        {
+          "elapsedDays": 2,
+          "at": 1793948400000,
+          "level": 5,
+          "population": 120,
+          "happiness": 100,
+          "houseLevel": 4,
+          "beds": 96,
+          "warehouseLevel": 2,
+          "warehouse": {
+            "perResource": 4063,
+            "total": 20315
+          },
+          "lighthouseLevel": 5,
+          "lighthouseHours": 109.418,
+          "resources": {
+            "coins": 3049,
+            "wood": 4063,
+            "stone": 4063,
+            "grain": 4031,
+            "food": 4051,
+            "planks": 4063
+          },
+          "bonusMaterials": {
+            "wood": 0,
+            "stone": 0,
+            "grain": 0,
+            "food": 0,
+            "planks": 0
+          },
+          "workers": {
+            "warehouse": {
+              "assigned": 13,
+              "arrived": 13
+            },
+            "farm": {
+              "assigned": 24,
+              "arrived": 24
+            },
+            "windmill": {
+              "assigned": 11,
+              "arrived": 11
+            },
+            "lumber": {
+              "assigned": 24,
+              "arrived": 24
+            },
+            "sawmill": {
+              "assigned": 9,
+              "arrived": 9
+            },
+            "quarry": {
+              "assigned": 24,
+              "arrived": 24
+            },
+            "dock": {
+              "assigned": 2,
+              "arrived": 2
+            },
+            "market": {
+              "assigned": 0,
+              "arrived": 0
+            }
+          },
+          "producerLevels": {
+            "farm": 3,
+            "windmill": 3,
+            "lumber": 3,
+            "sawmill": 2,
+            "quarry": 2
+          },
+          "rates": {
+            "wood": {
+              "production": 0,
+              "consumption": 0,
+              "net": 0
+            },
+            "stone": {
+              "production": 0,
+              "consumption": 0,
+              "net": 0
+            },
+            "grain": {
+              "production": 0,
+              "consumption": 0,
+              "net": 0
+            },
+            "food": {
+              "production": 0,
+              "consumption": 144,
+              "net": -144
+            },
+            "planks": {
+              "production": 0,
+              "consumption": 0,
+              "net": 0
+            }
+          },
+          "projects": [],
+          "tutorialFinished": true,
+          "mission": null,
+          "completedChapters": [
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "elapsedDays": 3,
+          "at": 1794034800000,
+          "level": 6,
+          "population": 144,
+          "happiness": 100,
+          "houseLevel": 5,
+          "beds": 120,
+          "warehouseLevel": 3,
+          "warehouse": {
+            "perResource": 5438,
+            "total": 27190
+          },
+          "lighthouseLevel": 6,
+          "lighthouseHours": 133.729,
+          "resources": {
+            "coins": 2360,
+            "wood": 5438,
+            "stone": 5438,
+            "grain": 5406,
+            "food": 5423,
+            "planks": 5438
+          },
+          "bonusMaterials": {
+            "wood": 0,
+            "stone": 0,
+            "grain": 0,
+            "food": 0,
+            "planks": 0
+          },
+          "workers": {
+            "warehouse": {
+              "assigned": 16,
+              "arrived": 16
+            },
+            "farm": {
+              "assigned": 36,
+              "arrived": 36
+            },
+            "windmill": {
+              "assigned": 13,
+              "arrived": 13
+            },
+            "lumber": {
+              "assigned": 36,
+              "arrived": 36
+            },
+            "sawmill": {
+              "assigned": 11,
+              "arrived": 11
+            },
+            "quarry": {
+              "assigned": 16,
+              "arrived": 16
+            },
+            "dock": {
+              "assigned": 2,
+              "arrived": 2
+            },
+            "market": {
+              "assigned": 0,
+              "arrived": 0
+            }
+          },
+          "producerLevels": {
+            "farm": 3,
+            "windmill": 3,
+            "lumber": 3,
+            "sawmill": 3,
+            "quarry": 3
+          },
+          "rates": {
+            "wood": {
+              "production": 0,
+              "consumption": 0,
+              "net": 0
+            },
+            "stone": {
+              "production": 0,
+              "consumption": 0,
+              "net": 0
+            },
+            "grain": {
+              "production": 0,
+              "consumption": 0,
+              "net": 0
+            },
+            "food": {
+              "production": 0,
+              "consumption": 168,
+              "net": -168
+            },
+            "planks": {
+              "production": 0,
+              "consumption": 0,
+              "net": 0
+            }
+          },
+          "projects": [],
+          "tutorialFinished": true,
+          "mission": null,
+          "completedChapters": [
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "milestones": [
+        {
+          "level": 2,
+          "elapsedDays": 0,
+          "population": 13,
+          "coins": 345
+        },
+        {
+          "level": 3,
+          "elapsedDays": 0.02,
+          "population": 14,
+          "coins": 1425
+        },
+        {
+          "level": 4,
+          "elapsedDays": 0.505,
+          "population": 72,
+          "coins": 197
+        },
+        {
+          "level": 5,
+          "elapsedDays": 1.286,
+          "population": 96,
+          "coins": 146
+        },
+        {
+          "level": 6,
+          "elapsedDays": 2.285,
+          "population": 120,
+          "coins": 1075
+        }
+      ],
+      "campaignMilestones": [
+        {
+          "elapsedDays": 0.018,
+          "completed": [
+            2
+          ]
+        },
+        {
+          "elapsedDays": 1.013,
+          "completed": [
+            2,
+            3
+          ]
+        },
+        {
+          "elapsedDays": 1.266,
+          "completed": [
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "elapsedDays": 2,
+          "completed": [
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "elapsedDays": 3,
+          "completed": [
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "puzzles": 6,
+      "stories": 2,
+      "realMoneyPurchases": 0,
+      "rewardedAdvertisements": 0,
+      "externalPlayerTrades": 0,
+      "activeHours": 9,
+      "decisions": 634,
+      "idleDecisions": 474,
+      "final": {
+        "elapsedDays": 3,
+        "at": 1794034800000,
+        "level": 6,
+        "population": 144,
+        "happiness": 100,
+        "houseLevel": 5,
+        "beds": 120,
+        "warehouseLevel": 3,
+        "warehouse": {
+          "perResource": 5438,
+          "total": 27190
+        },
+        "lighthouseLevel": 6,
+        "lighthouseHours": 133.729,
+        "resources": {
+          "coins": 2360,
+          "wood": 5438,
+          "stone": 5438,
+          "grain": 5406,
+          "food": 5423,
+          "planks": 5438
+        },
+        "bonusMaterials": {
+          "wood": 0,
+          "stone": 0,
+          "grain": 0,
+          "food": 0,
+          "planks": 0
+        },
+        "workers": {
+          "warehouse": {
+            "assigned": 16,
+            "arrived": 16
+          },
+          "farm": {
+            "assigned": 36,
+            "arrived": 36
+          },
+          "windmill": {
+            "assigned": 13,
+            "arrived": 13
+          },
+          "lumber": {
+            "assigned": 36,
+            "arrived": 36
+          },
+          "sawmill": {
+            "assigned": 11,
+            "arrived": 11
+          },
+          "quarry": {
+            "assigned": 16,
+            "arrived": 16
+          },
+          "dock": {
+            "assigned": 2,
+            "arrived": 2
+          },
+          "market": {
+            "assigned": 0,
+            "arrived": 0
+          }
+        },
+        "producerLevels": {
+          "farm": 3,
+          "windmill": 3,
+          "lumber": 3,
+          "sawmill": 3,
+          "quarry": 3
+        },
+        "rates": {
+          "wood": {
+            "production": 0,
+            "consumption": 0,
+            "net": 0
+          },
+          "stone": {
+            "production": 0,
+            "consumption": 0,
+            "net": 0
+          },
+          "grain": {
+            "production": 0,
+            "consumption": 0,
+            "net": 0
+          },
+          "food": {
+            "production": 0,
+            "consumption": 168,
+            "net": -168
+          },
+          "planks": {
+            "production": 0,
+            "consumption": 0,
+            "net": 0
+          }
+        },
+        "projects": [],
+        "tutorialFinished": true,
+        "mission": null,
+        "completedChapters": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      }
+    }
+  }
+}

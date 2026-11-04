@@ -17,8 +17,9 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    # The full campaign execution and 43 browser suites run sequentially.
-    timeout-minutes: 30
+    # The full campaign and 43 browser suites are sequential; browser setup
+    # took over nine minutes on a fresh runner in the previous attempt.
+    timeout-minutes: 35
     steps:
       - name: Checkout exact source commit
         uses: actions/checkout@v4

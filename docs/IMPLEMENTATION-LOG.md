@@ -1117,3 +1117,7 @@ Użytkownik wyjaśnił, że polecenie oznacza DEV → PRE-PROD. Usunięto lokaln
 PierwszyCI41896847613/d2f9ab3: FAILURE13m16s w nowym teście swobodnego Teatru, pierwsza próba PL/desktop. PagesSUCCESS25s; bez tagu i bez nowej promocji PRE-PROD. Ten błąd pozostaje historią także po kolejnej poprawce.
 
 Poprawka wyłącznie gotowości testu Teatru i diagnostykiCI:4/4 standardowo+4/4 przyCSS2500ms, starytestzawodzi przytymopóźnieniu. Asercje jakości zachowane; kod i85pliki aplikacji bez zmian. Bramki32/32PASS, Excel14/generatoryPASS. NowySHA wymaga własnegoCI; nie ponawiamy nieudanegoSHA jako nowego sukcesu.
+
+DrugiCI41901040379/4db95a3: FAILURE12m33s, instalacjaChromiumSUCCESS9m33s. Dokładnytrace wskazał utratęShift+ArrowDown. Naprawiono zapisfokusu przed wyłączeniemkontrolki;8/8testów, w tym synchronicznyblur i klawisze bezRAF. Cachefrontend-v31-2, arkusz14 ponownieprzygotowany; własnyCI nowegoźródła pozostaje wymagany. PRE-PROD13.1/68e9bcd bez zmiany.
+
+Poprawka fokusu/cachefrontend-v31-2:1190/1190frontend NodePASS188,02s; sześć regresji pakietuPASS (8+4+4+12+4+4warianty), Excel14/karty/listyPASS. Bez zmian gospodarki i backendu. NowySHA iCI nadal wymagane; źródła d2f9ab3 i4db95a3 zachowują historyczne FAILURE.

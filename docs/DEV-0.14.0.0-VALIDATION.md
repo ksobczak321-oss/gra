@@ -6,12 +6,12 @@ Stan z 4 listopada 2026. Użytkownik zatwierdził [zakres v31](FRONTEND-V31-REQU
 
 | Warstwa | Wynik |
 |---|---|
-| Kod |0.14.0.0, cache frontend-v31; schemat świata9 / archipelagu2 zachowany |
-| Reguły gry |1190/1190 frontend Node PASS, końcowy pełny przebieg178,84s |
+| Kod |0.14.0.0, cache frontend-v31-2; schemat świata9 / archipelagu2 zachowany |
+| Reguły gry |1190/1190 frontend Node PASS, najnowszy pełny przebieg188,02s |
 | Pozostały Node |134 backend +7 planszówka PASS; razem1331 |
 | Python |141/141 PASS w11zestawach |
 | Chromium |43zestawy lokalniePASS po poprawkach; własnyCI powtórzy cały spis |
-| SHA / CI / Pages |`d2f9ab311b9f3ad5e6d45a6f4e934ce501973324`; CI41896847613 FAILURE13m16s; Pages41896847615 SUCCESS25s |
+| SHA / CI / Pages |`4db95a38a507df887e255331271a007947bc69c0`; CI41901040379 INPROGRESS; Pages41901040067SUCCESS1m20s |
 | Pakiet / tag |85plików /19681606bajtów; verify/extractPASS. Tag nadalPENDING do sukcesuCI |
 | Excel14 |100zakładek, walidacjaPASS; historyczny13 zachowany |
 | Ewidencja |450kart,179ręcznych prób NOT RUN |
@@ -62,3 +62,17 @@ Pakiet85plików/19681606bajtów: TAR`fa07a6100414cfc35e812a6eecb7fa6a2bbaf58ab0b
 ### Poprawka gotowości testu
 
 Kontrolowane opóźnienie lokalnych CSS o2,5s odtworzyło nieostylowany plac i błąd starego testu. Fixture czeka teraz na oba arkusze, geometrię, fonty i obrazy; zachowano dokładność ruchu62/30,1, klawiaturę3/15, pojedynczy zapis i ochronę portfela. Nowy test zaliczył4/4 zwykle i4/4 z opóźnieniem. UI/CSS i pozostałe pliki publiczne gry nie zmieniły się. LokalnyChromium154 nie zastępuje przypiętego151 wCI; oba oficjalne pobrania151 blokuje sieciowe403. Pełna przyczyna pierwszegoCI pozostaje niedostępna poza uciętym tracebackiem, więc nowy własnyCI jest wymagany. Publiczne adnotacje skrócono do końcowych2500znaków, aby zachowały przyczynę.
+
+## Poprawiony kandydat4db95a3
+
+`4db95a38a507df887e255331271a007947bc69c0` wysłany do main. [CI41901040379](https://github.com/ksobczak321-oss/gra/actions/runs/41901040379) trwa, [Pages41901040067](https://github.com/ksobczak321-oss/gra/actions/runs/41901040067) SUCCESS1m20s. Wszystkie83publiczne wejścia aplikacji są identyczne z d2f9ab3. Pakiet85plików/19681606bajtów verify/extractPASS; TAR`8f63d334d618c225ac7b9b8bb163901bc74b8cac47480c88c8aa0dc604b4ebdd`, manifest`5953c91a5ea5cbc36195f4bc7725d81d4c620aed040296c12d175baa14c72149`. Hash manifestu zmienia się razem ze źródłem release.json. Pierwszy błądCI pozostaje przypisany d2f9ab3.
+
+## DrugiCI i naprawa fokusu
+
+Źródło4db95a3: [CI41901040379](https://github.com/ksobczak321-oss/gra/actions/runs/41901040379) FAILURE12m33s, Pages41901040067SUCCESS1m20s. Po udanej instalacji9m33s test ujawnił utratę drugiego klawisza w PL/desktop, już z gotowym CSS. Publiczny pełny ślad pokazuje wykonanyArrowRight i niewykonanyShift+ArrowDown. PRE-PROD nie wystartował.
+
+Odtworzono przyczynę: wyłączenie aktywnego przycisku przenosi fokus doBODY przed jego zapamiętaniem. UI zapisuje teraz token przed stanem oczekiwania i używa go przy końcowym renderowaniu.8/8prób PASS naChromium154, w tym wymuszony synchronicznyblur oraz cztery szybkie klawisze przy wstrzymanymRAF; zachowano SELECT, zapis układu, cenę i pozycję. Cache zmieniono nafrontend-v31-2; nowy pakiet/Excel i własnyCI wymagają ponownego odbioru.
+
+### Lokalny odbiór poprawki fokusu
+
+1190/1190frontend NodePASS po poprawce i zmianie namespace cache. Sześć pakietowych regresji PASS: swobodne rozmieszczanie8wariantów (w tym blur), studio4, pełna gra4, mapa/House/wznowienie12, biblioteka przygód4 i awariachmury4. Historyczny spis43zestawów zaliczono wcześniej; własnyCI nowegoSHA ponowi go w całości. Excel14, karty i lista ręczna zwalidowane;179ręcznych nadalNOTRUN.

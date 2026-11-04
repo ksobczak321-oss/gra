@@ -1,7 +1,7 @@
 // Protection for a known, foreground cloud interruption. Ordinary absence never
 // creates a snapshot. This module only moves matching accepted clocks; it does
 // not advance the world, grant rewards, spend money or adopt a foreign save.
-import { pauseAdventureFor } from './harborlight-v1-adventures.js?v=frontend-v31';
+import { pauseAdventureFor } from './harborlight-v1-adventures.js?v=frontend-v31-2';
 
 const MAX_SECONDS = 31 * 24 * 3600;
 const MAX_RECEIPTS = 128;

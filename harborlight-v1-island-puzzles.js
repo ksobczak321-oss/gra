@@ -1,8 +1,8 @@
 // Deterministic, saved island puzzles. Player commands describe moves only.
 // Generators start from a valid construction; completion is recomputed from the
 // board. Free hints, reset and bounded undo never require money or an ad.
-import { createMiniGame, revealMiniGameCard, setMiniGameTilt, advanceMiniGame, normalizeMiniGame } from './harborlight-v1-minigames.js?v=frontend-v31';
-import { ISLAND_PUZZLE_CATALOG, puzzleById } from './harborlight-v1-story-catalog.js?v=frontend-v31';
+import { createMiniGame, revealMiniGameCard, setMiniGameTilt, advanceMiniGame, normalizeMiniGame } from './harborlight-v1-minigames.js?v=frontend-v31-2';
+import { ISLAND_PUZZLE_CATALOG, puzzleById } from './harborlight-v1-story-catalog.js?v=frontend-v31-2';
 const clone=x=>JSON.parse(JSON.stringify(x));
 const int=(n,a=0,b=Number.MAX_SAFE_INTEGER)=>Number.isSafeInteger(n)&&n>=a&&n<=b;
 const text=(language,pl,en)=>language==='en'?en:pl;

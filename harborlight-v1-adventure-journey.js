@@ -1,11 +1,11 @@
 // Connected, optional island stories. The account coordinator owns the shared
 // reward budget; these models own play, proof, saved rooms and one-use receipts.
-import { ISLAND_PUZZLE_CATALOG, STORY_CATALOG, storyById, puzzleById, storyRoomKinds } from './harborlight-v1-story-catalog.js?v=frontend-v31';
-import { createIslandPuzzle, normalizeIslandPuzzle, applyIslandPuzzle, recordIslandPuzzleTick, resetIslandPuzzle, getIslandPuzzleView, islandPuzzleProof } from './harborlight-v1-island-puzzles.js?v=frontend-v31';
-import { adventureRewardStatus } from './harborlight-v1-adventure-budget.js?v=frontend-v31';
-export { adventureRewardStatus } from './harborlight-v1-adventure-budget.js?v=frontend-v31';
-export { ISLAND_PUZZLE_CATALOG, STORY_CATALOG, getStoryCatalog } from './harborlight-v1-story-catalog.js?v=frontend-v31';
-export { getIslandPuzzleView } from './harborlight-v1-island-puzzles.js?v=frontend-v31';
+import { ISLAND_PUZZLE_CATALOG, STORY_CATALOG, storyById, puzzleById, storyRoomKinds } from './harborlight-v1-story-catalog.js?v=frontend-v31-2';
+import { createIslandPuzzle, normalizeIslandPuzzle, applyIslandPuzzle, recordIslandPuzzleTick, resetIslandPuzzle, getIslandPuzzleView, islandPuzzleProof } from './harborlight-v1-island-puzzles.js?v=frontend-v31-2';
+import { adventureRewardStatus } from './harborlight-v1-adventure-budget.js?v=frontend-v31-2';
+export { adventureRewardStatus } from './harborlight-v1-adventure-budget.js?v=frontend-v31-2';
+export { ISLAND_PUZZLE_CATALOG, STORY_CATALOG, getStoryCatalog } from './harborlight-v1-story-catalog.js?v=frontend-v31-2';
+export { getIslandPuzzleView } from './harborlight-v1-island-puzzles.js?v=frontend-v31-2';
 const clone=x=>JSON.parse(JSON.stringify(x));
 const plain=x=>!!x&&typeof x==='object'&&!Array.isArray(x);
 const whole=(x,f=0,max=Number.MAX_SAFE_INTEGER)=>Number.isSafeInteger(x)&&x>=0&&x<=max?x:f;

@@ -14,11 +14,11 @@ BASE = 'http://harborlight-campaign.test'
 DOCUMENT = '''<!doctype html><html><head><meta charset="utf-8"><style>
 body{margin:0;padding:12px;background:#092331;color:#e5f0f4;font:16px Arial,sans-serif}main{max-width:760px;margin:auto}
 </style></head><body><main></main><script type="module">
-import * as State from './harborlight-v1-state.js?v=frontend-v31';
-import * as Missions from './harborlight-v1-missions.js?v=frontend-v31';
-import {createLighthouseMissionsPanel} from './harborlight-v1-missions-ui.js?v=frontend-v31';
-import {grantBonusMaterials} from './harborlight-v1-inventory.js?v=frontend-v31';
-import {synchronizeResidents} from './harborlight-v1-residents.js?v=frontend-v31';
+import * as State from './harborlight-v1-state.js?v=frontend-v31-2';
+import * as Missions from './harborlight-v1-missions.js?v=frontend-v31-2';
+import {createLighthouseMissionsPanel} from './harborlight-v1-missions-ui.js?v=frontend-v31-2';
+import {grantBonusMaterials} from './harborlight-v1-inventory.js?v=frontend-v31-2';
+import {synchronizeResidents} from './harborlight-v1-residents.js?v=frontend-v31-2';
 const language=new URLSearchParams(location.search).get('language')||'pl';
 let state,panel;window.buildings=[];window.adventures=[];
 window.mount=(kind='campaign')=>{

@@ -1,4 +1,4 @@
-import { warsawDayKey, nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v31';
+import { warsawDayKey, nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v31-2';
 
 // One bounded reward budget per account, shared by every island and puzzle.
 // A chapter identity survives goal changes, reloads and practice replays.

@@ -1,6 +1,6 @@
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v31';
-import { puzzleSceneArt, puzzleTokenArt } from './harborlight-v1-adventures-art.js?v=frontend-v31';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v31';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v31-2';
+import { puzzleSceneArt, puzzleTokenArt } from './harborlight-v1-adventures-art.js?v=frontend-v31-2';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v31-2';
 
 const words = (language, pl, en) => language === 'en' ? en : pl;
 const line = (value, language) => typeof value === 'string' ? value : value?.[language] || value?.pl || '';
@@ -203,7 +203,7 @@ export function createExpandedAdventureScene({ getState, getRun, language = 'pl'
     reconcile(items, itemRows, 'item'); reconcile(targets, targetRows, 'target'); reconcile(controls, controlRows, 'control');
     controls.hidden = !controlRows.length;
     if (view.miniGame) {
-      if (!document.querySelector('[data-adventure-minigame-css]')) document.head.append(element('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-minigame.css?v=frontend-v31', import.meta.url).href, 'data-adventure-minigame-css': '' }));
+      if (!document.querySelector('[data-adventure-minigame-css]')) document.head.append(element('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-minigame.css?v=frontend-v31-2', import.meta.url).href, 'data-adventure-minigame-css': '' }));
       minigame.hidden = false;
       const mini = { id: run.id, miniGame: view.miniGame, status: view.solved ? 'won' : 'active', level: run.data.puzzle.difficulty || 1, roundStartedAt: run.startedAt || 0 };
       const status = { elapsed: Math.max(0, (getState()?.adventures?.clock || 0) - (run.startedAt || 0)), remaining: Infinity };

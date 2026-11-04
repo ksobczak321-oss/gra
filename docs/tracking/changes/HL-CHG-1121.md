@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `in_progress` |
 | DEV | `promotion_prepared` |
-| CI | `failure_source_d2f9ab3` |
+| CI | `failure_source_4db95a3` |
 | PRE-PROD | `pending_deployment` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -40,7 +40,7 @@ Data pierwotnej wiadomości: 2026-11-04. Doprecyzowanie zastępuje niejednoznacz
 - **Dokumenty:** [docs/PREPROD-V31-PROMOTION.md](../../PREPROD-V31-PROMOTION.md), [docs/FRONTEND-V31-REQUIREMENTS.md](../../FRONTEND-V31-REQUIREMENTS.md), [docs/RELEASE-PROCESS.md](../../RELEASE-PROCESS.md), [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md)
 - **Kod:** [.github/workflows/promote-urgent-preprod.yml](../../../.github/workflows/promote-urgent-preprod.yml), [.github/workflows/google-cloud-dev.yml](../../../.github/workflows/google-cloud-dev.yml), [infra/google-cloud/urgent-preprod-dispatch.mjs](../../../infra/google-cloud/urgent-preprod-dispatch.mjs), [infra/google-cloud/promotion.mjs](../../../infra/google-cloud/promotion.mjs)
 - **Scenariusze automatyczne:** [tests/harborlight-urgent-preprod-dispatch.test.mjs](../../../tests/harborlight-urgent-preprod-dispatch.test.mjs), [tests/harborlight-promotion.test.mjs](../../../tests/harborlight-promotion.test.mjs)
-- **Kod dowodowy:** `d2f9ab311b9f3ad5e6d45a6f4e934ce501973324`.
+- **Kod dowodowy:** `4db95a38a507df887e255331271a007947bc69c0`.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Użytkownik doprecyzował wyłącznie DEV → PRE-PROD. Końcowe źródło, własne CI, bridge, deploy, próba, wymagane kontrole, oba artefakty i tag 0.14.0.0 pozostają PENDING do własnego odczytu. Faktyczny odebrany PRE-PROD nadal 0.13.1.0/68e9bcd. Operacji PROD nie wykonano;179 ręcznych prób NOT RUN.

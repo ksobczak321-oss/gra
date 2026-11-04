@@ -2,13 +2,13 @@
 // All wins are derived from concrete inputs, physics or actual mini-game boards.
 // Rewarded-ad authorizations belong to the caller's verified provider flow;
 // an action's `verified` field is never accepted as proof.
-import { grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v31';
+import { grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v31-2';
 import { BRIDGE_NODES, BRIDGE_HINT, bridgeEdgeAllowed, normalizedBridgeEdges, testBridge,
-  createGardenPuzzle, gardenFlow, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v31';
-export { BRIDGE_NODES, BRIDGE_HINT, pipePorts, testBridge, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v31';
+  createGardenPuzzle, gardenFlow, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v31-2';
+export { BRIDGE_NODES, BRIDGE_HINT, pipePorts, testBridge, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v31-2';
 
-import * as Journey from './harborlight-v1-adventure-journey.js?v=frontend-v31';
-export { getIslandPuzzleView, getCurrentStoryRoom, getStoryCatalog, ISLAND_PUZZLE_CATALOG, STORY_CATALOG, adventureRewardStatus, JOURNEY_RULES } from './harborlight-v1-adventure-journey.js?v=frontend-v31';
+import * as Journey from './harborlight-v1-adventure-journey.js?v=frontend-v31-2';
+export { getIslandPuzzleView, getCurrentStoryRoom, getStoryCatalog, ISLAND_PUZZLE_CATALOG, STORY_CATALOG, adventureRewardStatus, JOURNEY_RULES } from './harborlight-v1-adventure-journey.js?v=frontend-v31-2';
 
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const GOODS = ['coins', ...MATERIALS];

@@ -10,7 +10,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 |---|---|
 | Implementacja | `implemented` |
 | DEV | `verified_locally_pending_own_ci` |
-| CI | `failure_source_d2f9ab3` |
+| CI | `failure_source_4db95a3` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -37,7 +37,7 @@ Data pierwotnej wiadomości: 2026-11-04. Zebrane uwagi po PRE-PROD 0.13.1.0 oraz
 - **Dokumenty:** [docs/FRONTEND-V31-REQUIREMENTS.md](../../FRONTEND-V31-REQUIREMENTS.md), [docs/DEV-0.14.0.0-VALIDATION.md](../../DEV-0.14.0.0-VALIDATION.md), [docs/design/FLOW-AUDIT-20261104.md](../../design/FLOW-AUDIT-20261104.md), [docs/design/ACTIVE-PLAYER-50-DAYS.md](../../design/ACTIVE-PLAYER-50-DAYS.md)
 - **Kod:** [harborlight-version.js](../../../harborlight-version.js), [scripts/build_frontend.py](../../../scripts/build_frontend.py)
 - **Scenariusze automatyczne:** nie przypisano.
-- **Kod dowodowy:** `d2f9ab311b9f3ad5e6d45a6f4e934ce501973324`.
+- **Kod dowodowy:** `4db95a38a507df887e255331271a007947bc69c0`.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
@@ -57,6 +57,7 @@ Zakres v31 został zatwierdzony. Implementacja, integracja i własny odbiór poz
 - Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.
 - Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej.
 - PierwszyCI41896847613/d2f9ab3FAILURE13m16s. Fixture Teatru oczekuje na gotowe CSS;4/4+4/4 przyCSS2500msPASS. Asercje nieosłabione, aplikacja bez zmiany; wymagany własnyCI nowegoSHA.
+- DrugiCIodtworzył focus po disabled=true. UI zachowuje token przed busy;8/8testów, w tym cztery szybkie klawisze bezRAF. Cachefrontend-v31-2; nowy pełnyodbiór w toku.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

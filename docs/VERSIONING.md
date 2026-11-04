@@ -1,6 +1,6 @@
 # Wersja gry HARBORLIGHT
 
-Przygotowywany DEV: **0.14.0.0/v31**, cache docelowy `frontend-v31`; [odbiór w toku](DEV-0.14.0.0-VALIDATION.md). Nie zastępuje jeszcze odebranego źródła poniżej. Schemat świata9 i archipelagu2 pozostają zgodne.
+Przygotowywany DEV: **0.14.0.0/v31**, cache docelowy `frontend-v31-2`; [odbiór w toku](DEV-0.14.0.0-VALIDATION.md). Nie zastępuje jeszcze odebranego źródła poniżej. Schemat świata9 i archipelagu2 pozostają zgodne.
 
 
 Bieżący odebrany DEV: **0.13.1.0 / v30**, źródło `13c55a4e4853edf44c185747c1c626ac42c221fc`; własne CI i Pages SUCCESS. PRE-PROD **0.13.1.0** jest odebrany dla źródła `68e9bcd6adf22ab98f963688726a71d4d8a66c6b`; własneCI41671140612 i deploy41673824262/próba1 SUCCESS. Tag`preprod-0.13.1.0-20261103` opublikowany i potwierdzony zdalnie; [dowody](PREPROD-V30-PROMOTION.md). Numer aplikacji jest odrębny od schematu9 i archipelagu2. Pierwsze wydanie Google Play nadal1.0.0.0.

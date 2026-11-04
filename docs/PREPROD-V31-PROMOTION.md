@@ -56,3 +56,7 @@ Osobna karta operacji **HL-CHG-1121** reprezentuje tę promocję; rejestr ma **4
 Pierwszy CI zablokował promocję na pierwszej próbie PL/desktop swobodnego Teatru. PRE-PROD nie wystartował; poprzedni0.13.1.0 pozostaje aktualny. Wymagana poprawka oraz własny udanyCI nowego źródła.
 
 Przygotowano poprawkę gotowości osobnego testu Teatru, z zachowanymi asercjami i diagnostyką.4/4+4/4 przy opóźnieniuCSSPASS; publiczna aplikacja bez zmian. Kolejnycommit wymaga własnego udanegoCI i standardowej promocji.
+
+Nowy kandydat`4db95a38a507df887e255331271a007947bc69c0`: własnyCI41901040379 INPROGRESS, Pages41901040067SUCCESS1m20s. Publiczna aplikacja identyczna z poprzednim kandydatem, poprawiono jedynie gotowość testu i diagnostykę. GCP nadal czeka na sukces tego konkretnegoCI.
+
+DrugiCI41901040379/4db95a3FAILURE12m33s; PagesSUCCESS1m20s. Wykryto realną utratę fokusu po disabled=true. Poprawka UI i cachefrontend-v31-2 mają8/8testów kierunkowychPASS; nowy własnyCI wymagany. Nadal bez nowegoPRE-PROD, tagów i resetu.

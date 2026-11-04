@@ -2,7 +2,7 @@
 
 ## DEV0.14.0.0/v31 — odbiór w toku
 
-GO użytkownika obejmuje ukończenie0.14.0.0 i standardową drogę DEV/CI → PRE-PROD. Lokalnie1331Node +141Python i43zestawyChromiumPASS. Źródło`d2f9ab311b9f3ad5e6d45a6f4e934ce501973324` wysłane do main; CI41896847613FAILURE13m16s (pierwsza próba swobodnego Teatru), Pages41896847615SUCCESS25s. Pełna symulacja50dni nadal trwa. [Raport](DEV-0.14.0.0-VALIDATION.md) · [PromocjaPRE-PROD](PREPROD-V31-PROMOTION.md).450kart/179ręcznychNOTRUN. PRE-PROD poniżej bez zmiany; PROD poza zakresem doprecyzowanego polecenia.
+GO użytkownika obejmuje ukończenie0.14.0.0 i standardową drogę DEV/CI → PRE-PROD. Lokalnie1331Node +141Python i43zestawyChromiumPASS. Poprawiony kandydat`4db95a38a507df887e255331271a007947bc69c0` w main; CI41901040379FAILURE12m33s, Pages41901040067SUCCESS1m20s. Naprawa fokusu i cachefrontend-v31-2 mają1190Node+6regresji pakietuPASS; wymagany nowy własnyCI. Pierwszy d2f9ab3/CI41896847613 zachowuje FAILURE13m16s. Pełna symulacja50dni nadal trwa. [Raport](DEV-0.14.0.0-VALIDATION.md) · [PromocjaPRE-PROD](PREPROD-V31-PROMOTION.md).450kart/179ręcznychNOTRUN. PRE-PROD poniżej bez zmiany; PROD poza zakresem doprecyzowanego polecenia.
 
 
 Aktualizacja operacyjna: **3 listopada 2026, Europe/Warsaw**. Akceptacja opisów i pierwotny odbiór lokalny pozostają z 1 listopada. Historia wyników jest w [dzienniku](IMPLEMENTATION-LOG.md); warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
