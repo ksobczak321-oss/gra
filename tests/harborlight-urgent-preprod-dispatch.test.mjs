@@ -52,7 +52,7 @@ test('fresh CI and workflow metadata must agree with the event and attempt', asy
 });
 
 test('only the exact allowlisted markers in the API-read source commit can request promotion', async () => {
-  assert.deepEqual(AUTHORIZED_MARKERS, ['[preprod:0.9.1.2]', '[preprod:0.10.1.0]', '[preprod:0.11.0.0]', '[preprod:0.12.0.0]', '[preprod:0.13.1.0]']);
+  assert.deepEqual(AUTHORIZED_MARKERS, ['[preprod:0.9.1.2]', '[preprod:0.10.1.0]', '[preprod:0.11.0.0]', '[preprod:0.12.0.0]', '[preprod:0.13.1.0]', '[preprod:0.14.0.0]']);
   assert.equal(Object.isFrozen(AUTHORIZED_MARKERS), true);
   assert.throws(() => AUTHORIZED_MARKERS.push('[preprod:0.13.0.0]'), TypeError);
   for (const marker of AUTHORIZED_MARKERS) {
@@ -64,6 +64,7 @@ test('only the exact allowlisted markers in the API-read source commit can reque
     '[preprod:0.10.1.00]', '[preprod:0.10.1.0-beta]', '[preprod:0.11.0.1]', '[preprod:0.11.0.00]',
     '[preprod:0.11.0.0-beta]', '[preprod:0.12.0.1]', '[preprod:0.12.0.00]', '[preprod:0.12.0.0-beta]',
     '[preprod:0.13.0.0]', '[preprod:0.13.1.1]', '[preprod:0.13.1.00]', '[preprod:0.13.1.0-beta]',
+    '[preprod:0.14.0.1]', '[preprod:0.14.0.00]', '[preprod:0.14.0.0-beta]',
     '[preprod:*]', '[preprod:0.10.1.0', '[PREPROD:0.10.1.0]']) {
     const { api, calls } = fixture({ getCommit: async () => ({ sha: sourceSha, commit: { message } }) });
     assert.equal((await dispatchUrgent(api, event(), identity)).reason, 'no-urgent-marker');

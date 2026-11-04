@@ -1973,19 +1973,413 @@
         "HL-CHG-1081"
       ],
       "file": "manual/HL-TC-0147.md"
+    },
+    {
+      "id": "HL-TC-0148",
+      "title": "Rozdział pokazuje osiągalne zależności przed terminem i wpłatą",
+      "area": "Wykonalność misji",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1083",
+        "HL-CHG-1116"
+      ],
+      "file": "manual/HL-TC-0148.md"
+    },
+    {
+      "id": "HL-TC-0149",
+      "title": "Misja zaproszenia otwiera Dom bez niepotrzebnego Ratusza 4",
+      "area": "Nawigacja rekrutacji",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1084"
+      ],
+      "file": "manual/HL-TC-0149.md"
+    },
+    {
+      "id": "HL-TC-0150",
+      "title": "Cena rekrutacji odświeża się przed startem i jest spójna po akceptacji",
+      "area": "Koszt rekrutacji",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1085"
+      ],
+      "file": "manual/HL-TC-0150.md"
+    },
+    {
+      "id": "HL-TC-0151",
+      "title": "Pomoc 5 i ratunek 3 odpowiadają na konkretny brak",
+      "area": "Pomoc i ratunek",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1086"
+      ],
+      "file": "manual/HL-TC-0151.md"
+    },
+    {
+      "id": "HL-TC-0152",
+      "title": "Ratunek przyjmuje ludzi i rozlicza właściwy cel rekrutacji",
+      "area": "Rekrutacja z przygody",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1087",
+        "HL-CHG-1114"
+      ],
+      "file": "manual/HL-TC-0152.md"
+    },
+    {
+      "id": "HL-TC-0153",
+      "title": "Pełny limit i pasażerowie mają pozytywną alternatywę celu",
+      "area": "Maksymalna populacja",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1088"
+      ],
+      "file": "manual/HL-TC-0153.md"
+    },
+    {
+      "id": "HL-TC-0154",
+      "title": "Próg 54 osób jest przygotowany przed awansem Ratusza 3→4",
+      "area": "Ludność i łóżka",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1089"
+      ],
+      "file": "manual/HL-TC-0154.md"
+    },
+    {
+      "id": "HL-TC-0155",
+      "title": "Pełny Młyn jest opróżniany mimo aktywnej budowy",
+      "area": "Transport żywności",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1090"
+      ],
+      "file": "manual/HL-TC-0155.md"
+    },
+    {
+      "id": "HL-TC-0156",
+      "title": "Starszy projekt turbo zachowuje opłatę i rusza z bieżącą ekipą",
+      "area": "Starsze budowy",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1091"
+      ],
+      "file": "manual/HL-TC-0156.md"
+    },
+    {
+      "id": "HL-TC-0157",
+      "title": "Opłacony plan uruchamia się po końcu pakietu",
+      "area": "Planowanie",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1092"
+      ],
+      "file": "manual/HL-TC-0157.md"
+    },
+    {
+      "id": "HL-TC-0158",
+      "title": "Pojemność misji uwzględnia towar, jedzenie i rezerwacje",
+      "area": "Magazyn i cele",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1093"
+      ],
+      "file": "manual/HL-TC-0158.md"
+    },
+    {
+      "id": "HL-TC-0159",
+      "title": "Odrzucony zapis ma działającą ścieżkę potwierdzonego odczytu",
+      "area": "Odzyskiwanie chmury",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1094"
+      ],
+      "file": "manual/HL-TC-0159.md"
+    },
+    {
+      "id": "HL-TC-0160",
+      "title": "Stara belka oczekiwania znika po udanym zapisie",
+      "area": "Komunikaty chmury",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1095"
+      ],
+      "file": "manual/HL-TC-0160.md"
+    },
+    {
+      "id": "HL-TC-0161",
+      "title": "Szybkie ruchy przy wolnym ACK nie cofają nowszej sceny",
+      "area": "Płynność i nagrody",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1096",
+        "HL-CHG-1108"
+      ],
+      "file": "manual/HL-TC-0161.md"
+    },
+    {
+      "id": "HL-TC-0162",
+      "title": "Pełne 100 szczęścia nie zatrzymuje praktycznej lekcji",
+      "area": "Nauka szczęścia",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1097"
+      ],
+      "file": "manual/HL-TC-0162.md"
+    },
+    {
+      "id": "HL-TC-0163",
+      "title": "Bonusy i legalne rezerwacje nie blokują finału 25 lekcji",
+      "area": "Finał nauki",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1098"
+      ],
+      "file": "manual/HL-TC-0163.md"
+    },
+    {
+      "id": "HL-TC-0164",
+      "title": "Buźka nad Gospodarstwem ma poprawną wysokość na mapie i w tutorialu",
+      "area": "Mapa producentów",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1099"
+      ],
+      "file": "manual/HL-TC-0164.md"
+    },
+    {
+      "id": "HL-TC-0165",
+      "title": "Teatr i jego obszar kliknięcia są w nowym miejscu na mapie",
+      "area": "Mapa Teatru",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1100"
+      ],
+      "file": "manual/HL-TC-0165.md"
+    },
+    {
+      "id": "HL-TC-0166",
+      "title": "Poprawione opisy Targu i Latarni są widoczne po polsku",
+      "area": "Redakcja tekstów",
+      "priority": "P2",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1101",
+        "HL-CHG-1102"
+      ],
+      "file": "manual/HL-TC-0166.md"
+    },
+    {
+      "id": "HL-TC-0167",
+      "title": "Górne kontrolki Teatru są czytelne na telefonie",
+      "area": "Układ Teatru",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1103"
+      ],
+      "file": "manual/HL-TC-0167.md"
+    },
+    {
+      "id": "HL-TC-0168",
+      "title": "Dekorację można swobodnie przeciągać myszą i dotykiem",
+      "area": "Przestawianie Teatru",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1104"
+      ],
+      "file": "manual/HL-TC-0168.md"
+    },
+    {
+      "id": "HL-TC-0169",
+      "title": "Plac bazowy, katalog i starsza kolekcja tworzą spójny ogród",
+      "area": "Personalizacja Teatru",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1105",
+        "HL-CHG-1119"
+      ],
+      "file": "manual/HL-TC-0169.md"
+    },
+    {
+      "id": "HL-TC-0170",
+      "title": "Godzinny licznik przetrwa wypłatę, przegraną, wyjście i zmianę wyspy",
+      "area": "Trudność na koncie",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1106"
+      ],
+      "file": "manual/HL-TC-0170.md"
+    },
+    {
+      "id": "HL-TC-0171",
+      "title": "Wspólny budżet nie odnawia się między grami i wyspami",
+      "area": "Pule nagród",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1107",
+        "HL-CHG-1116"
+      ],
+      "file": "manual/HL-TC-0171.md"
+    },
+    {
+      "id": "HL-TC-0172",
+      "title": "Łap ładunek rozlicza pojedynczy klik bez duplikatów",
+      "area": "Sterowanie ładunkiem",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1108"
+      ],
+      "file": "manual/HL-TC-0172.md"
+    },
+    {
+      "id": "HL-TC-0173",
+      "title": "Escape room wymaga rozwiązania powiązanych pomieszczeń",
+      "area": "Zagadki przyczynowe",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1109"
+      ],
+      "file": "manual/HL-TC-0173.md"
+    },
+    {
+      "id": "HL-TC-0174",
+      "title": "Katalog opowieści odpowiada poziomom i pozwala kontynuować fabułę",
+      "area": "Ścieżka1–20",
+      "priority": "P1",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1110",
+        "HL-CHG-1113"
+      ],
+      "file": "manual/HL-TC-0174.md"
+    },
+    {
+      "id": "HL-TC-0175",
+      "title": "Nowe mechaniki weryfikują rzeczywiste rozwiązania",
+      "area": "Biblioteka mechanik",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1111"
+      ],
+      "file": "manual/HL-TC-0175.md"
+    },
+    {
+      "id": "HL-TC-0176",
+      "title": "Warianty zachowują dane po wznowieniu i mają sprawdzone rozwiązania",
+      "area": "Generowanie wariantów",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1112"
+      ],
+      "file": "manual/HL-TC-0176.md"
+    },
+    {
+      "id": "HL-TC-0177",
+      "title": "Cel 50 dni ma odrębny raport kosztów, ludności i zawartości",
+      "area": "Plan i balans",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1115",
+        "HL-CHG-1116",
+        "HL-CHG-1118"
+      ],
+      "file": "manual/HL-TC-0177.md"
+    },
+    {
+      "id": "HL-TC-0178",
+      "title": "Drogi poboczne i migracja zachowują główny postęp",
+      "area": "Ciągłość i gałęzie",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1117",
+        "HL-CHG-1119"
+      ],
+      "file": "manual/HL-TC-0178.md"
+    },
+    {
+      "id": "HL-TC-0179",
+      "title": "Wydanie v31 ma własne dowody i nie odznacza ręcznych prób",
+      "area": "Odbiór wydania",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1120"
+      ],
+      "file": "manual/HL-TC-0179.md"
     }
   ],
   "current_scope": {
-    "date": "2026-11-03",
-    "environment": "DEV and PRE-PROD",
+    "date": "2026-11-04",
+    "environment": "DEV",
     "physical_online_integration": "excluded_by_user",
-    "application_version": "0.13.1.0",
+    "application_version": "0.14.0.0",
     "preprod_application_version": "0.13.1.0",
     "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-    "note": "AktualnyDEV0.13.1.0/13c55a4 i odebranyPRE-PROD0.13.1.0/68e9bcd mają odrębne źródła i dowody. Wszystkie147ręcznychwyników pozostająNOT RUN; odczytoweGCPkontrole nie zaliczają testu zapisu. TC0135–0147 dotycząv30:trwały plac,20miejsc bez sektorów,dalsze poziomy bez końca20,ceny tym samym wzorem i reklamy co5także25/30. Stare scenariusze zachowują historię. Bez resetu,PROD lub realnychoperatorów.",
-    "dev_status": "verified_ci_and_pages_manual_cases_not_run",
-    "case_range": "TC0135–0147",
-    "previous_case_range": "TC0097–0134",
+    "note": "Nowy DEV 0.14.0.0 / v31 jest w integracji; końcowy SHA, własne CI, Pages i pakiet pozostają PENDING. 179 ręcznych prób ma NOT RUN; zachowano 147 historycznych definicji i wyników. PRE-PROD pozostaje 0.13.1.0/68e9bcd, bez nowej promocji, resetu, PROD i realnych operatorów. Cel 50 dni i 150 godzin wymaga osobnych dowodów.",
+    "dev_status": "implementation_in_progress_manual_cases_not_run",
+    "case_range": "TC0148–0179",
+    "previous_case_range": "TC0135–0147",
     "previous_accepted_dev": {
       "dev_application_version": "0.13.0.0",
       "dev_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
@@ -1993,12 +2387,19 @@
       "dev_pages_run_id": 41657032922,
       "dev_tag": "dev-0.13.0.0-20261103"
     },
-    "dev_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
-    "ci_run_id": 41667711260,
-    "pages_run_id": 41667711124,
+    "dev_source_sha": null,
+    "ci_run_id": null,
+    "pages_run_id": null,
     "preprod_ci_run_id": 41671140612,
     "preprod_deployment_run_id": 41673824262,
     "preprod_deployment_attempt": 1,
-    "preprod_status": "verified_deployment_manual_cases_not_run"
+    "preprod_status": "verified_deployment_manual_cases_not_run",
+    "previous_accepted_dev_v30": {
+      "application_version": "0.13.1.0",
+      "dev_status": "verified_ci_and_pages_manual_cases_not_run",
+      "dev_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+      "ci_run_id": 41667711260,
+      "pages_run_id": 41667711124
+    }
   }
 }

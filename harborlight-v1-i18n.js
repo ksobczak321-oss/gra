@@ -1,5 +1,5 @@
-import { APPROVED_TRANSLATIONS } from './harborlight-v1-approved-copy.js?v=frontend-v30';
-import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v30';
+import { APPROVED_TRANSLATIONS } from './harborlight-v1-approved-copy.js?v=frontend-v31';
+import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v31';
 
 /** English is the source language. Polish strings are presentation only: saves,
  * identifiers, action payloads and user-entered values are never translated. */
@@ -41,6 +41,12 @@ export function registerTranslations(catalog = {}) {
   for (const [source, translated] of Object.entries(catalog)) if (typeof translated === 'string') translations.set(source, translated);
 }
 registerTranslations(COPY_TRANSLATIONS);
+registerTranslations({
+  'House happiness points kept for later.': 'Punkty szczęścia z Domu zostały zachowane na później.',
+  'Keep points for later when nobody can currently receive them.': 'Zachowaj punkty na później, gdy nikt nie może ich teraz otrzymać.',
+  'The earned assistance could not be committed.': 'Nie udało się zatwierdzić zdobytej pomocy.',
+  'Waiting for the planned materials of the accepted construction order.': 'Oczekiwanie na materiały do przyjętego zlecenia budowy.'
+});
 function entries(source) { for (const line of source.trim().split('\n')) { const divider = line.indexOf('|'); if (divider > 0) translations.set(line.slice(0, divider), line.slice(divider + 1)); } }
 entries(`
 Coins|Monety

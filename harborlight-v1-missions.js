@@ -1,10 +1,11 @@
 // Lighthouse chapters are optional world objectives, independent of the
 // practical course. Accepted clocks and receipts are persisted with the island.
 import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, availableGoods,
-  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve } from './harborlight-v1-logistics.js?v=frontend-v30';
-import { consumeMaterial, grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v30';
-import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v30';
-import { residentAtHome, synchronizeResidents } from './harborlight-v1-residents.js?v=frontend-v30';
+  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve, townhallPopulationRequirement, quoteTrade } from './harborlight-v1-logistics.js?v=frontend-v31';
+import { consumeMaterial, grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v31';
+import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v31';
+import { residentAtHome, synchronizeResidents } from './harborlight-v1-residents.js?v=frontend-v31';
+import { CAMPAIGN_VERSION, campaignChapter, campaignChapterPreview, campaignBudget, campaignStepReward } from './harborlight-v1-campaign.js?v=frontend-v31';
 
 const HOUR = 3600, DAY = 24 * HOUR, EPS = 1e-7, SAFE = Number.MAX_SAFE_INTEGER;
 const RESOURCES = ['coins', ...MATERIAL_IDS];
@@ -209,14 +210,16 @@ function eligible(state) {
   return lev(state, 'townhall') >= 2 && !(state.onboarding?.worldStartedAt === null) && courseOpen(state);
 }
 function defaults() {
-  return { version: 1, chapter: null, stack: [], completedLevels: [], receipts: [], invited: 0, lastIncident: null, lastCompletion: null, lastReward: null };
+  return { version: 1, campaignEnabled: false, chapter: null, stack: [], completedLevels: [], receipts: [], invited: 0,
+    recruitmentReceipts: [], assistanceContracts: [], reviewed: [], worldChanges: [], lastIncident: null, lastCompletion: null, lastReward: null };
 }
 function normalizeObjective(raw) {
-  if (!object(raw) || !['contribute','building','production','stock','invitation','assign','delivered'].includes(raw.type)) return null;
+  if (!object(raw) || !['contribute','building','production','stock','invitation','assign','delivered','review','check','adventure','recruitment','shipping'].includes(raw.type)) return null;
   const result = { type: raw.type };
   if (typeof raw.building === 'string' && /^[a-z-]{1,30}$/.test(raw.building)) result.building = raw.building;
   if (MATERIAL_IDS.includes(raw.resource)) result.resource = raw.resource;
-  for (const name of ['target','baseline','count']) if (finite(raw[name])) result[name] = whole(raw[name]);
+  for (const name of ['target','baseline','count','value','targetPopulation','recruitmentTarget']) if (finite(raw[name])) result[name] = whole(raw[name]);
+  for (const name of ['check','kind','puzzleKind','storyId','direction']) if (typeof raw[name] === 'string' && /^[a-zA-Z][\w-]{0,70}$/.test(raw[name])) result[name] = raw[name];
   if (raw.requirements) result.requirements = cleanCost(raw.requirements);
   return result;
 }
@@ -227,19 +230,32 @@ function normalizeTask(raw) {
     title: String(raw.title || '').slice(0, 180), titlePl: String(raw.titlePl || '').slice(0, 180), description: String(raw.description || '').slice(0, 600), descriptionPl: String(raw.descriptionPl || '').slice(0, 600),
     reward: normalizedReward(raw.reward), duration: Math.max(600, Math.min(7 * DAY, positive(raw.duration, 6 * HOUR))),
     offeredAt: positive(raw.offeredAt), acceptedAt: finite(raw.acceptedAt) ? positive(raw.acceptedAt) : null,
-    deadline: finite(raw.deadline) ? positive(raw.deadline) : null, attempt: whole(raw.attempt) };
+    deadline: finite(raw.deadline) ? positive(raw.deadline) : null, attempt: whole(raw.attempt),
+    ...(raw.campaignVersion === CAMPAIGN_VERSION ? {campaignVersion: CAMPAIGN_VERSION,untimed: raw.untimed !== false} : {}),
+    ...(object(raw.purchaseUnitCost) ? {purchaseUnitCost:cleanCost(raw.purchaseUnitCost)} : objective.type==='invitation'&&raw.acceptedAt!=null?{purchaseUnitCost:cleanCost(raw.requirements)}:{}) };
 }
 export function normalizeMissions(state, raw = state) {
   const source = raw.lighthouseMissions?.version === 1 ? raw.lighthouseMissions : {}, m = defaults();
   normalizeProductionBonuses(state, raw);
+  m.campaignEnabled = source.campaignEnabled === true;
   m.completedLevels = [...new Set((Array.isArray(source.completedLevels) ? source.completedLevels : []).filter(n => Number.isSafeInteger(n) && n >= 2 && n <= 100))].sort((a,b) => a-b);
   m.receipts = [...new Set((Array.isArray(source.receipts) ? source.receipts : []).filter(id => typeof id === 'string' && id.length <= 160))].slice(-MISSION_RULES.maximumReceipts);
   m.invited = whole(source.invited);
+  m.recruitmentReceipts = [...new Set((Array.isArray(source.recruitmentReceipts) ? source.recruitmentReceipts : []).filter(id=>typeof id==='string'&&id.length<=200))].slice(-512);
+  m.reviewed = [...new Set((Array.isArray(source.reviewed) ? source.reviewed : []).filter(id=>typeof id==='string'&&id.length<=160))].slice(-256);
+  m.worldChanges = (Array.isArray(source.worldChanges)?source.worldChanges:[]).filter(item=>object(item)&&whole(item.level)>=2&&whole(item.level)<=100).slice(-100).map(item=>({level:whole(item.level),at:positive(item.at),title:String(item.title||'').slice(0,180),titlePl:String(item.titlePl||'').slice(0,180)}));
+  m.assistanceContracts = (Array.isArray(source.assistanceContracts)?source.assistanceContracts:[]).filter(item=>object(item)&&typeof item.missionId==='string'&&item.missionId.length<=160&&typeof item.receiptId==='string'&&item.receiptId.length<=200).slice(-256).map(item=>({source:'campaign',storyId:'captainless-ship',missionId:item.missionId,goalMissionId:typeof item.goalMissionId==='string'?item.goalMissionId.slice(0,160):item.missionId,receiptId:item.receiptId,chapterId:String(item.chapterId||'').slice(0,160),targetPopulation:whole(item.targetPopulation),mode:['count','population','supplies'].includes(item.mode)?item.mode:'population',goalComplete:item.goalComplete===true,maximumResidents:whole(item.maximumResidents,whole(item.residentsRequested)),residentsAccepted:whole(item.residentsAccepted),residentsRequested:Math.min(54,whole(item.residentsRequested)),supplies:cleanCost(item.supplies),claimed:item.claimed===true,completionReceiptId:typeof item.completionReceiptId==='string'?item.completionReceiptId.slice(0,200):null}));
   if (object(source.chapter) && whole(source.chapter.level) >= 2 && whole(source.chapter.level) <= 100) {
     const c = source.chapter;
     m.chapter = { id: `lighthouse-chapter-${whole(c.level)}`, level: whole(c.level), targetLevel: Math.max(1, Math.min(100, whole(c.targetLevel, 1))),
       startedAt: positive(c.startedAt), invitedBaseline: whole(c.invitedBaseline), productionBaseline: Object.fromEntries(MATERIAL_IDS.map(id => [id, whole(c.productionBaseline?.[id])])),
-      status: c.status === 'completed' ? 'completed' : 'active', storyId: missionStory(c.level).id, introSeen: c.introSeen === true };
+      status: c.status === 'completed' ? 'completed' : 'active', storyId: c.campaignVersion===CAMPAIGN_VERSION?(campaignChapter(c.level)?.storyId||missionStory(c.level).id):missionStory(c.level).id, introSeen: c.introSeen === true,
+      materialsAwarded:whole(c.materialsAwarded),coinsAwarded:whole(c.coinsAwarded),
+      ...(c.campaignVersion===CAMPAIGN_VERSION?{campaignVersion:CAMPAIGN_VERSION,
+        buildingBaseline:Object.fromEntries(Object.entries(c.buildingBaseline||{}).filter(([id,n])=>/^[a-z-]{1,30}$/.test(id)&&finite(n)).map(([id,n])=>[id,whole(n)])),
+        deliveryBaseline:Object.fromEntries(MATERIAL_IDS.map(id=>[id,whole(c.deliveryBaseline?.[id])])),
+        adventureBaseline:Object.fromEntries(Object.entries(c.adventureBaseline||{}).filter(([id,n])=>/^[\w:-]{1,100}$/.test(id)&&finite(n)).map(([id,n])=>[id,whole(n)])),
+        shippingBaseline:whole(c.shippingBaseline),materialsAwarded:whole(c.materialsAwarded),coinsAwarded:whole(c.coinsAwarded)}:{}) };
     for (const item of Array.isArray(source.stack) ? source.stack.slice(0,3) : []) {
       const kinds = ['main','support','rescue'], kind = kinds[m.stack.length];
       if (item?.kind !== kind) break;
@@ -260,7 +276,96 @@ export function normalizeMissions(state, raw = state) {
   state.lighthouseMissions = m;
   return m;
 }
-function ensure(state) { return state.lighthouseMissions?.version === 1 ? state.lighthouseMissions : normalizeMissions(state); }
+function ensure(state) {
+  const m=state.lighthouseMissions?.version===1?state.lighthouseMissions:normalizeMissions(state);
+  for(const key of ['recruitmentReceipts','assistanceContracts','reviewed','worldChanges'])if(!Array.isArray(m[key]))m[key]=[];
+  return m;
+}
+/** Enable future chapters without replacing an existing accepted chapter. */
+export function enableCampaign(state) { const m=ensure(state);m.campaignEnabled=true;return m; }
+const readyCrew=(state,id)=>(state.residents||[]).filter(person=>person.workplace===id&&!person.visitGroup&&!(person.prayerRemaining>EPS)&&!(person.arrivalRemaining>EPS)&&!person.pendingRelease).length;
+function adventureMetric(state,objective) {
+  if(objective.kind==='escapeStory')return whole(state.adventures?.completedEscapeStories?.[objective.storyId]);
+  if(objective.kind==='islandPuzzle')return whole(state.adventures?.completedPuzzles?.[objective.puzzleKind]);
+  return whole(state.adventures?.completed?.[objective.kind]);
+}
+const adventureKey=o=>`${o.kind}:${o.storyId||o.puzzleKind||''}`;
+function shippingQuote(state){
+  const action={resource:'grain',direction:'buy',amount:100};
+  const quote=quoteTrade(state,action);
+  if(quote.ok)return quote;
+  // Read the same cost formula without spending or creating an order. Other
+  // physical-capacity and unlock failures remain genuine failures.
+  return quoteTrade({...state,resources:{...state.resources,coins:SAFE}},action);
+}
+function checkAccomplished(state,objective) {
+  const value=Math.max(1,whole(objective.value,1));
+  if(objective.check==='housing')return housingStatus(state).beds>=Math.min(lev(state,'townhall')*24,whole(state.population)+value);
+  if(objective.check==='food')return positive(state.resources?.food)>=foodReserve(state)+Math.max(1,whole(state.population)/2);
+  if(objective.check==='warehouseCrew')return readyCrew(state,'warehouse')>=value;
+  if(objective.check==='dockCrew')return lev(state,'townhall')>=4&&readyCrew(state,'dock')>=value;
+  if(objective.check==='foodChain')return ['farm','windmill','warehouse'].every(id=>readyCrew(state,id)>=1);
+  if(objective.check==='storageRoom'){
+    const limits=warehouseLimits(state),used=MATERIAL_IDS.reduce((n,id)=>n+ordinaryStock(state,id),0);
+    return limits.total-used>=value&&MATERIAL_IDS.some(id=>limits.perResource-ordinaryStock(state,id)>=value);
+  }
+  return false;
+}
+function checkReason(state,o){
+  if(o.check==='housing')return `Przygotuj łóżka w Domu: ${housingStatus(state).beds} dostępnych. Potrzebujesz miejsca dla mieszkańców i planowanych gości.`;
+  if(o.check==='food')return `Zabezpiecz jedzenie w magazynie centralnym. Chroniona rezerwa wynosi ${foodReserve(state)}.`;
+  if(o.check==='storageRoom')return `Zwolnij co najmniej ${whole(o.value,1)} miejsc na potrzebną dostawę albo rozbuduj Magazyn.`;
+  if(o.check==='dockCrew')return 'Otwórz Port, przydziel pracownika i zaczekaj na jego dojście. Port działa od 4 poziomu Ratusza.';
+  if(o.check==='foodChain')return 'Przygotuj co najmniej jednego gotowego rolnika, pracownika Młyna i tragarza. Zboże musi trafić do magazynu centralnego, a żywność zostać odebrana z Młyna.';
+  return `Otwórz Magazyn i przygotuj co najmniej ${whole(o.value,1)} gotowych tragarzy. Ich dojście z Domu trwa dwie minuty.`;
+}
+function campaignTask(state,m,frame,context) {
+  const definition=campaignChapter(m.chapter.level)?.steps[frame.index-1];
+  if(!definition)return null;
+  const objective={type:definition.type},amount=Math.max(1,Math.min(100,whole(definition.scale,3)*m.chapter.level));
+  const task={id:`${frame.prefix}:${frame.index}`,status:'offered',requirements:{},deposited:{},offeredAt:clock(state),acceptedAt:null,deadline:null,attempt:0,
+    duration:6*HOUR,campaignVersion:CAMPAIGN_VERSION,untimed:true,title:definition.title.en,titlePl:definition.title.pl,
+    description:campaignChapter(m.chapter.level).title.en,descriptionPl:campaignChapter(m.chapter.level).title.pl,
+    reward:campaignStepReward(m.chapter.level,frame.index),objective};
+  if(frame.index===8){
+    const people={4:1,6:1,10:2,13:1,16:2,19:3}[m.chapter.level];if(people)task.reward.residents=people;
+    const producer={5:'windmill',7:'quarry',14:'sawmill',18:'farm'}[m.chapter.level];if(producer)task.reward.production={building:producer,multiplier:2,seconds:HOUR};
+  }
+  for(const key of ['building','check','value','kind','puzzleKind','storyId','recruitmentTarget','targetPopulation','direction'])if(definition[key]!==undefined)objective[key]=definition[key];
+  if(definition.type==='building')objective.target=definition.target||Math.min(lev(state,'townhall'),m.chapter.targetLevel);
+  if(definition.type==='production'||definition.type==='delivered'){
+    objective.resource=definition.resource;objective.count=amount;
+    objective.baseline=definition.type==='production'?m.chapter.productionBaseline[definition.resource]:whole(m.chapter.deliveryBaseline?.[definition.resource],metric(state,'delivered',definition.resource));
+  }
+  if(definition.type==='stock'){
+    objective.requirements=definition.costBuilding?(lev(state,definition.costBuilding)>=m.chapter.targetLevel?{}:costFor(state,definition.costBuilding,context)):{[definition.resource]:amount};
+    if(definition.resource==='coins'&&[4,16].includes(m.chapter.level))objective.requirements={coins:shippingQuote(state).price||50};
+    task.requirements=cleanCost(objective.requirements);
+  }
+  if(definition.type==='contribute')task.requirements={[definition.resource]:amount};
+  if(definition.type==='adventure'){
+    objective.count=1;objective.baseline=whole(m.chapter.adventureBaseline[adventureKey(objective)]);
+  }
+  if(definition.type==='recruitment'){objective.count=definition.count||1;objective.baseline=m.chapter.invitedBaseline;}
+  if(definition.type==='shipping'){objective.count=definition.count||1;objective.baseline=m.chapter.shippingBaseline;objective.resource='grain';task.requirements={coins:shippingQuote(state).price||50};}
+  if(definition.type==='building')task.requirements=lev(state,objective.building)>=objective.target?{}:costFor(state,objective.building,context);
+  // Material funding follows an earned chapter step and fills at most two
+  // actual shortfalls, never a fresh full pile after every click.
+  const budget=campaignBudget(m.chapter.level),room=Math.max(0,budget.materials-whole(m.chapter.materialsAwarded));
+  const next=campaignChapter(m.chapter.level).steps[frame.index];
+  if(room&&next){
+    const nextCost=next.type==='building'||next.costBuilding?costFor(state,next.building||next.costBuilding,context):next.resource?{[next.resource]:Math.max(1,Math.min(100,whole(next.scale,3)*m.chapter.level))}:{};
+    let left=Math.min(room,Math.ceil(budget.materials/4));
+    for(const id of MATERIAL_IDS.filter(id=>(nextCost[id]||0)>available(state,id)).slice(0,2)){
+      const n=Math.min(left,Math.ceil((nextCost[id]||0)-available(state,id)));if(n>0){task.reward[id]=n;left-=n;}
+    }
+  }
+  return task;
+}
+function campaignStoryFor(state,m=ensure(state)) {
+  const chapter=m.chapter?.campaignVersion===CAMPAIGN_VERSION?campaignChapter(m.chapter.level):null;
+  return chapter?{id:chapter.storyId,title:chapter.title.en,titlePl:chapter.title.pl,description:chapter.worldChange.en,descriptionPl:chapter.worldChange.pl,steps:8}:missionStory(m.chapter?.level||2);
+}
 function costFor(state, building, context = {}) {
   if (typeof context.buildingCost === 'function') return cleanCost(context.buildingCost(state, building, { queued:false }));
   const l = Math.max(1, lev(state,building));
@@ -275,6 +380,107 @@ function costFor(state, building, context = {}) {
 // level or the discounted first construction lesson.
 export function missionResidentCost(state) {
   return Object.fromEntries(RESOURCES.map(resource => [resource, 500 * Math.max(1, lev(state, 'townhall'))]));
+}
+/** The paid path uses the very same accepted quote as its mission. */
+export function missionResidentPurchaseCost(state,quantity=1){
+  if(!Number.isSafeInteger(quantity)||quantity<1)return null;
+  const m=ensure(state),task=m.stack.at(-1)?.task;
+  if(!task||task.status!=='active'||!['invitation','recruitment'].includes(task.objective.type))return null;
+  const remaining=task.objective.targetPopulation?Math.max(0,task.objective.targetPopulation-whole(state.population)):Math.max(0,whole(task.objective.count,1)-(m.invited-whole(task.objective.baseline)));
+  if(quantity>remaining)return null;
+  const unit=cleanCost(task.purchaseUnitCost||task.requirements);
+  if(!RESOURCES.every(id=>whole(unit[id])>0))return null;
+  const cost=Object.fromEntries(RESOURCES.map(id=>[id,unit[id]*quantity]));
+  return Object.values(cost).every(Number.isSafeInteger)?cost:null;
+}
+const contractContext=runContext=>object(runContext?.rescueContext)?runContext.rescueContext:runContext;
+function assistanceSource(state){
+  const m=ensure(state),task=m.stack.at(-1)?.task;
+  if(!task)return null;
+  const parent=m.stack[0]?.task;
+  return {m,task,parent:parent||task};
+}
+/** Preview only. Awards require a saved canonical contract and a solved game. */
+export function missionAssistanceOffer(state,context={}){
+  const source=assistanceSource(state);if(!source)return null;
+  const {m,task,parent}=source,o=parent.objective;
+  const mode=o.targetPopulation||o.recruitmentTarget||o.building==='townhall'?'population':['recruitment','invitation'].includes(o.type)?'count':'supplies';
+  let target=whole(o.targetPopulation||o.recruitmentTarget);
+  if(o.type==='building'&&o.building==='townhall')target=townhallPopulationRequirement(state,o.target).populationRequired;
+  if(['recruitment','invitation'].includes(o.type)&&!target)target=whole(state.population)+Math.max(0,whole(o.count,1)-(m.invited-whole(o.baseline)));
+  const capacity=lev(state,'townhall')*24;
+  target=Math.min(capacity,Math.max(whole(state.population),target));
+  const goalMissionId=target===54&&m.chapter?.level===3?`${m.chapter.id}:recruitment-54`:parent.id;
+  const goalContracts=m.assistanceContracts.filter(contract=>(contract.goalMissionId||contract.missionId)===goalMissionId);
+  const previous=goalContracts.find(contract=>!contract.claimed);
+  if(previous)return {...clone(previous),source:'campaign'};
+  if(goalContracts.length){
+    target=goalContracts[0].targetPopulation;
+    const totalAccepted=goalContracts.reduce((n,item)=>n+whole(item.residentsAccepted),0);
+    if(goalContracts.some(item=>item.goalComplete)||(mode==='population'&&whole(state.population)>=target)||totalAccepted>=goalContracts[0].maximumResidents)return null;
+  }
+  const receiptId=goalContracts.length?`${goalContracts[0].receiptId.split(':wave-')[0]}:wave-${goalContracts.length+1}`:`${goalMissionId}:assistance:wave-1`;
+  const maximumResidents=goalContracts.length?goalContracts[0].maximumResidents:Math.max(0,target-whole(state.population));
+  const awarded=goalContracts.reduce((n,item)=>n+whole(item.residentsAccepted),0);
+  const requested=Math.min(54,mode==='count'?Math.max(0,maximumResidents-awarded):Math.max(0,target-whole(state.population)),Math.max(0,maximumResidents-awarded));
+  const needs=remainingCost(state,parent,context),budget=campaignBudget(m.chapter?.level||lev(state,'townhall'));
+  let room=Math.max(0,budget.materials-whole(m.chapter?.materialsAwarded));
+  const supplies={};
+  for(const id of MATERIAL_IDS.filter(id=>(needs[id]||0)>available(state,id)).sort((a,b)=>((needs[b]||0)-available(state,b))-((needs[a]||0)-available(state,a))).slice(0,2)){
+    const n=Math.min(room,Math.max(0,(needs[id]||0)-available(state,id)));if(n){supplies[id]=n;room-=n;}
+  }
+  const coinNeed=Math.max(0,(needs.coins||0)-available(state,'coins'));
+  const coins=Math.min(coinNeed,Math.max(0,budget.coins-whole(m.chapter?.coinsAwarded)));
+  if(coins)supplies.coins=coins;
+  const positiveGoal=requested>0||['invitation','recruitment'].includes(o.type)||o.recruitmentTarget||o.targetPopulation;
+  if(!positiveGoal&&!Object.keys(supplies).length)return null;
+  return {source:'campaign',missionId:task.id,goalMissionId,chapterId:m.chapter.id,receiptId,targetPopulation:target,mode,goalComplete:false,maximumResidents,residentsRequested:requested,residentsAccepted:0,supplies,claimed:false,
+    ...(requested===0&&positiveGoal?{helpNeighbors:true}:{}),storyId:'captainless-ship'};
+}
+/** Called by the trusted state dispatcher before starting the real adventure. */
+export function prepareMissionAssistance(state,missionId,context={}){
+  const m=ensure(state),task=m.stack.at(-1)?.task;
+  if(!task||task.id!==missionId)return bad('This assistance request is no longer available.');
+  const offer=missionAssistanceOffer(state,context);
+  if(!offer)return bad('This mission has no unclaimed assistance contract.');
+  let contract=m.assistanceContracts.find(item=>item.receiptId===offer.receiptId);
+  if(!contract){contract=clone(offer);m.assistanceContracts.push(contract);m.assistanceContracts=m.assistanceContracts.slice(-256);}
+  return {...clone(contract),ok:true,source:'campaign'};
+}
+/** Quote only; the state reward hook applies these actual people/materials. */
+export function recruitmentRewardQuote(state,runContext){
+  const raw=contractContext(runContext),m=ensure(state);
+  if(!object(raw)||raw.source!=='campaign')return bad('A verified campaign assistance context is required.');
+  const contract=m.assistanceContracts.find(item=>item.receiptId===raw.receiptId&&item.missionId===raw.missionId&&item.chapterId===raw.chapterId);
+  if(!contract||contract.claimed||m.recruitmentReceipts.includes(contract.receiptId))return bad('This assistance reward was already received or is unavailable.');
+  if(m.chapter?.id!==contract.chapterId||m.chapter?.status==='completed'||m.receipts.includes(contract.goalMissionId))return{ok:true,missionId:contract.missionId,recruitmentReceiptId:contract.receiptId,receiptId:contract.receiptId,residentsRequested:0,residentsAccepted:0,supplies:{},targetPopulation:contract.targetPopulation,helpNeighbors:true,goalAlreadyResolved:true};
+  const spaces=Math.max(0,lev(state,'townhall')*24-whole(state.population)-whole(state.incomingPassengers));
+  const requested=Math.max(0,Math.min(contract.residentsRequested,contract.mode==='count'?contract.residentsRequested:contract.targetPopulation-whole(state.population)));
+  const budget=campaignBudget(m.chapter?.level||lev(state,'townhall'));
+  const supplies=cleanCost(contract.supplies);
+  let room=Math.max(0,budget.materials-whole(m.chapter?.materialsAwarded));
+  for(const id of MATERIAL_IDS){supplies[id]=Math.min(whole(supplies[id]),room);room-=supplies[id];if(!supplies[id])delete supplies[id];}
+  if(supplies.coins)supplies.coins=Math.min(supplies.coins,Math.max(0,budget.coins-whole(m.chapter?.coinsAwarded)));
+  return {ok:true,missionId:contract.missionId,recruitmentReceiptId:contract.receiptId,receiptId:contract.receiptId,
+    residentsRequested:requested,residentsAccepted:Math.min(requested,spaces),targetPopulation:contract.targetPopulation,supplies,helpNeighbors:requested===0};
+}
+/** Commit only after the trusted completion hook actually applied the quote. */
+export function recordMissionAssistance(state,runContext,result={}){
+  const raw=contractContext(runContext),m=ensure(state);
+  if(!object(raw)||typeof result.completionReceiptId!=='string'||!result.completionReceiptId||result.completionReceiptId.length>200)return bad('A completed adventure receipt is required.');
+  const contract=m.assistanceContracts.find(item=>item.receiptId===raw.receiptId&&item.missionId===raw.missionId&&item.chapterId===raw.chapterId);
+  if(!contract||contract.claimed||m.recruitmentReceipts.includes(contract.receiptId))return bad('This assistance reward was already received.');
+  const accepted=whole(result.residentsAccepted);
+  if(accepted>contract.residentsRequested)return bad('The recruitment result exceeds its canonical contract.');
+  const values=cleanCost(result.supplies||{});
+  if(RESOURCES.some(id=>whole(values[id])>whole(contract.supplies?.[id])))return bad('The assistance result exceeds its canonical supplies.');
+  contract.claimed=true;contract.residentsAccepted=accepted;contract.goalComplete=contract.mode==='population'?whole(state.population)>=contract.targetPopulation:contract.mode==='count'?accepted>=contract.maximumResidents||whole(state.population)+whole(state.incomingPassengers)>=lev(state,'townhall')*24:true;contract.completionReceiptId=result.completionReceiptId;m.recruitmentReceipts.push(contract.receiptId);m.recruitmentReceipts=m.recruitmentReceipts.slice(-512);
+  m.invited=Math.min(SAFE,m.invited+accepted);
+  if(m.chapter?.id===contract.chapterId){
+    m.chapter.materialsAwarded=whole(m.chapter.materialsAwarded)+MATERIAL_IDS.reduce((n,id)=>n+whole(values[id]),0);
+    m.chapter.coinsAwarded=whole(m.chapter.coinsAwarded)+whole(values.coins);
+  }
+  return good('The earned assistance was recorded.',{residentsAccepted:accepted,recruitmentReceiptId:contract.receiptId});
 }
 function taskText(index) {
   return [null,
@@ -291,6 +497,7 @@ function firstNeeded(task) {
   return MATERIAL_IDS.find(id => (task?.requirements?.[id] || task?.objective?.requirements?.[id] || 0) > (task?.deposited?.[id] || 0)) || task?.objective?.resource || 'wood';
 }
 function newTask(state, m, frame, context) {
+  if(frame.kind==='main'&&m.chapter.campaignVersion===CAMPAIGN_VERSION){const task=campaignTask(state,m,frame,context);if(task)return task;}
   const level = m.chapter.level, base = { id:`${frame.prefix}:${frame.index}`,status:'offered',requirements:{},deposited:{},offeredAt:clock(state),acceptedAt:null,deadline:null,attempt:0,
     duration:6*HOUR,reward:{coins:Math.min(60,10+2*level)} };
   if (frame.kind === 'main') {
@@ -323,6 +530,50 @@ function newTask(state, m, frame, context) {
     if (frame.index === 8) base.reward.residents = Math.min(3, 1 + Math.floor((level - 2) / 3));
   } else {
     const parent=m.stack[m.stack.length-2]?.task, resource=firstNeeded(parent), producer=PRODUCER[resource];
+    if(m.chapter.campaignVersion===CAMPAIGN_VERSION&&parent){
+      const population=parent.objective.targetPopulation||parent.objective.recruitmentTarget||
+        (parent.objective.building==='townhall'?townhallPopulationRequirement(state,parent.objective.target).populationRequired:0);
+      if(population>whole(state.population)||['recruitment','invitation'].includes(parent.objective.type)){
+        const index=frame.index,last=frame.kind==='support'?5:3;
+        Object.assign(base,{campaignVersion:CAMPAIGN_VERSION,untimed:true,reward:{},title:'Prepare real recruitment',titlePl:'Przygotuj rzeczywiste przyjęcie mieszkańców',description:'Solve the rescue adventure and welcome the actual crew within the Town Hall limit.',descriptionPl:'Przygotuj miejsca, ukończ wyprawę ratunkową i przyjmij rzeczywistą załogę w limicie Ratusza.'});
+        if(index===last){base.objective=clone(parent.objective);base.requirements=clone(parent.requirements);base.deposited=clone(parent.deposited);if(parent.purchaseUnitCost)base.purchaseUnitCost=clone(parent.purchaseUnitCost);}
+        else if(index===1){base.objective={type:'review',building:'house'};base.titlePl='Sprawdź brak mieszkańców i dostępne miejsca';}
+        else if(frame.kind==='support'&&index===2){base.objective={type:'check',check:'housing',value:1,building:'house'};base.titlePl='Przygotuj miejsca w Domu';}
+        else if(frame.kind==='support'&&index===4){base.objective={type:'recruitment',count:1,baseline:m.chapter.invitedBaseline,...(population?{targetPopulation:population}:{})};base.titlePl='Przyjmij uratowaną załogę';}
+        else {base.objective={type:'adventure',kind:'escapeStory',storyId:'captainless-ship',count:1,baseline:adventureMetric(state,{kind:'escapeStory',storyId:'captainless-ship'}),...(population?{recruitmentTarget:population}:{})};base.titlePl='Ukończ wyprawę po załogę';}
+        return base;
+      }
+      const index=frame.index,last=frame.kind==='support'?5:3,o=parent.objective;
+      Object.assign(base,{campaignVersion:CAMPAIGN_VERSION,untimed:true,reward:{},title:'Prepare the interrupted objective',titlePl:'Przygotuj przerwany cel',
+        description:'Follow the exact missing prerequisite. Your previous contributions stay recorded.',descriptionPl:'Uzupełnij konkretny brak wskazany przy celu. Wcześniejsze wpłaty pozostają zaliczone.'});
+      if(index===last){base.objective=clone(o);base.requirements=clone(parent.requirements);base.deposited=clone(parent.deposited);if(parent.purchaseUnitCost)base.purchaseUnitCost=clone(parent.purchaseUnitCost);}
+      else if(index===1){base.objective={type:'review',building:o.building||'warehouse'};base.titlePl='Sprawdź dokładny brak i drogę przygotowania';base.title='Review the exact shortfall and preparation route';}
+      else if(o.type==='check'&&['warehouseCrew','dockCrew','foodChain'].includes(o.check)){
+        base.objective=clone(o);base.titlePl='Przygotuj właściwą ekipę i zaczekaj na dojście';base.title='Prepare the right crew and wait for arrival';
+        if(index===4){base.objective={type:'review',building:o.building||'warehouse'};base.titlePl='Sprawdź gotowy harmonogram dostaw';base.title='Review the ready delivery schedule';}
+      }else if(o.type==='check'&&o.check==='housing'){
+        base.objective=index===2?{type:'building',building:'house',target:Math.min(lev(state,'townhall'),Math.ceil(Math.min(lev(state,'townhall')*24,whole(state.population)+Math.max(1,o.value||1))/24))}:clone(o);
+        base.titlePl='Przygotuj rzeczywiste miejsca w Domu';base.title='Prepare actual beds at Home';
+      }else if(o.type==='check'&&o.check==='food'){
+        base.objective=index===2?{type:'check',check:'foodChain',building:'warehouse',value:1}:clone(o);
+        base.titlePl='Uruchom żywienie i rzeczywisty odbiór';base.title='Restore meals and actual collection';
+      }else if(o.type==='check'&&o.check==='storageRoom'){
+        base.objective=index===2||index===3?{type:'review',building:'warehouse'}:clone(o);
+        base.titlePl=index===2?'Wybierz potrzebne wykorzystanie zapasu':'Potwierdź realnie wolne miejsce';base.title=index===2?'Choose a useful way to use the stock':'Confirm actual free storage';
+      }else if(o.type==='adventure'){
+        base.objective=clone(o);base.titlePl='Wróć do zapisanych wskazówek i ukończ przygodę';base.title='Return to the saved clues and finish the adventure';
+        if(index===4){base.objective={type:'review',building:'lighthouse'};base.titlePl='Połącz rozwiązanie z celem misji';base.title='Connect the solution to the mission objective';}
+      }else if(o.type==='shipping'){
+        base.objective=index===2?{type:'check',check:'dockCrew',value:1,building:'dock'}:index===3?clone(o):{type:'review',building:'dock'};
+        base.requirements=index===3?{coins:shippingQuote(state).price||50}:{};base.titlePl='Przygotuj Port i zakończ rzeczywisty odbiór';base.title='Prepare the Harbor and complete actual collection';
+      }else if(index===2){
+        base.objective={type:'adventure',kind:'escapeStory',storyId:'captainless-ship',count:1,baseline:adventureMetric(state,{kind:'escapeStory',storyId:'captainless-ship'})};
+        base.titlePl='Odzyskaj brakujące zaopatrzenie w wyprawie';base.title='Recover the missing supplies in an adventure';
+      }else if(index===3){base.objective={type:'stock',requirements:remainingCost(state,parent,context)};base.requirements=clone(base.objective.requirements);base.titlePl='Przygotuj pozostały rzeczywisty koszt';base.title='Prepare the actual remaining cost';}
+      else{base.objective={type:'review',building:o.building||'warehouse'};base.titlePl='Sprawdź gotowość przed dokończeniem';base.title='Check readiness before finishing';}
+      if(base.objective.type==='building')base.requirements=lev(state,base.objective.building)>=base.objective.target?{}:costFor(state,base.objective.building,context);
+      return base;
+    }
     const n=Math.max(1,Math.min(10,level*2));
     const texts=frame.kind==='support' ? [null,
       ['Gather the support crew','Zbierz ekipę wsparcia','Assign the displayed crew to help prepare supplies.','Przydziel mieszkańców do wskazanego miejsca pracy, aby przygotować potrzebne zapasy.'],
@@ -341,6 +592,7 @@ function newTask(state, m, frame, context) {
     else if(frame.kind==='support'&&frame.index===4)base.objective={type:'stock',requirements:remainingCost(state,parent,context)};
     else {
       base.objective=clone(parent.objective);base.requirements=clone(parent.requirements);base.deposited=clone(parent.deposited);
+      if(parent.purchaseUnitCost)base.purchaseUnitCost=clone(parent.purchaseUnitCost);
     }
   }
   if(base.objective.type==='stock')base.requirements=cleanCost(base.objective.requirements);
@@ -350,6 +602,8 @@ function newTask(state, m, frame, context) {
 }
 function remainingCost(state, task, context) {
   if(!task)return{};
+  if(task.objective.type==='invitation')return task.purchaseUnitCost?cleanCost(task.purchaseUnitCost):task.status==='active'?cleanCost(task.requirements):missionResidentCost(state);
+  if(task.objective.type==='shipping')return{coins:shippingQuote(state).price||whole(task.requirements?.coins,50)};
   if(task.objective.type==='building'){
     const project=state.buildings?.[task.objective.building]?.construction;
     return lev(state,task.objective.building)>=task.objective.target||project?.targetLevel>=task.objective.target?{}:costFor(state,task.objective.building,context);
@@ -358,16 +612,31 @@ function remainingCost(state, task, context) {
 }
 function accomplished(state,m,task) {
   if(!task)return false;const o=task.objective;
+  if(o.type==='review')return m.reviewed.includes(task.id);
+  if(o.type==='check')return checkAccomplished(state,o);
+  if(o.type==='adventure')return adventureMetric(state,o)-whole(o.baseline)>=whole(o.count,1);
+  if(o.type==='shipping')return (state.dock?.orders||[]).filter(order=>whole(order.id)>whole(o.baseline)&&order.direction===(o.direction||'buy')&&order.stage==='complete'&&positive(order.delivered)>=positive(order.amount)).length>=whole(o.count,1);
+  if(o.type==='recruitment')return o.targetPopulation?whole(state.population)>=o.targetPopulation:
+    m.invited-whole(o.baseline)>=whole(o.count,1)||m.assistanceContracts.some(contract=>contract.missionId===task.id&&contract.claimed);
   if(o.type==='building')return lev(state,o.building)>=o.target;
   if(o.type==='production'||o.type==='delivered')return metric(state,o.type==='production'?'produced':'delivered',o.resource)-o.baseline>=o.count;
   if(o.type==='stock')return Object.entries(o.requirements||{}).every(([id,n])=>available(state,id)>=n);
-  if(o.type==='invitation')return m.invited-o.baseline>=o.count;
+  if(o.type==='invitation')return m.invited-o.baseline>=o.count||m.assistanceContracts.some(contract=>contract.claimed&&contract.residentsRequested===0&&[contract.missionId,contract.goalMissionId].includes(task.id));
   if(o.type==='assign')return whole(state.buildings?.[o.building]?.workers)>=o.count;
   return Object.entries(task.requirements).every(([id,n])=>whole(task.deposited?.[id])>=n);
 }
 function proof(state,m,task,context={}) {
   if(accomplished(state,m,task))return{feasible:true,ready:true,duration:600,staffing:{},reason:null};
   const o=task.objective;
+  if(o.type==='review'||o.type==='adventure')return{feasible:true,ready:false,duration:6*HOUR,staffing:{},requirements:{},reason:null};
+  if(o.type==='recruitment')return{feasible:!o.targetPopulation||o.targetPopulation<=lev(state,'townhall')*24,ready:false,duration:6*HOUR,staffing:{},requirements:{},
+    reasonPl:o.targetPopulation>lev(state,'townhall')*24?'Najpierw zapewnij odpowiedni limit Ratusza.':'Ukończ wyprawę ratunkową albo zaproś mieszkańca w Domu. Przy pełnym limicie pomożesz sąsiedniej osadzie.'};
+  if(o.type==='check')return{feasible:false,ready:false,duration:6*HOUR,staffing:{},requirements:{},reasonPl:checkReason(state,o)};
+  if(o.type==='shipping'){
+    const quote=shippingQuote(state),cost=remainingCost(state,task,context);
+    return{feasible:lev(state,'townhall')>=4&&readyCrew(state,'dock')>=1&&quote.ok&&whole(state.resources?.coins)>=cost.coins,ready:false,duration:DAY,staffing:{dock:1},requirements:cost,
+      reasonPl:`Otwórz Port. Przygotuj ${cost.coins} monet na 100 zboża, miejsce na towar i gotowego pracownika Portu; zaczekaj na rzeczywisty odbiór.`,reason:`Open the Harbor. Prepare ${cost.coins} Coins for 100 Grain, cargo space and a ready Harbor worker; wait for actual collection.`};
+  }
   if(o.type==='assign'){
     const free=(state.residents||[]).filter(residentAtHome).length;
     const assigned=whole(state.buildings?.[o.building]?.workers);
@@ -375,7 +644,12 @@ function proof(state,m,task,context={}) {
   }
   if(o.type==='invitation'&&whole(state.population)+whole(state.incomingPassengers)>=lev(state,'townhall')*24)return{feasible:false,ready:false,reasonPl:'Najpierw przygotuj wolne miejsce w limicie Ratusza.'};
   const cost=remainingCost(state,task,context);
-  if(o.type==='building'&&o.target>lev(state,'townhall'))return{feasible:false,ready:false,reasonPl:'Najpierw rozbuduj Ratusz do wymaganego poziomu.'};
+  if(o.type==='building'&&(o.target>100||o.building!=='townhall'&&o.target>lev(state,'townhall')))return{feasible:false,ready:false,reasonPl:'Najpierw rozbuduj Ratusz do wymaganego poziomu.'};
+  if(o.type==='building'&&o.building==='townhall'){
+    const population=townhallPopulationRequirement(state,o.target);
+    if(!population.ok)return{feasible:false,ready:false,requirements:cost,shortfall:'population',targetPopulation:population.populationRequired,
+      reasonPl:`Do tego awansu potrzeba ${population.populationRequired} mieszkańców. Obecnie: ${population.populationCurrent}. Najpierw przygotuj Dom, jedzenie i wyprawę ratunkową.`};
+  }
   let constructionSeconds=0;
   if(o.type==='building'){
     const project=state.buildings?.[o.building]?.construction;
@@ -418,8 +692,14 @@ function proof(state,m,task,context={}) {
 function credit(state,m,task){
   if(m.receipts.includes(task.id))return true;
   const reward=normalizedReward(task.reward), amount=whole(reward.coins);
-  if(!Number.isSafeInteger(whole(state.resources?.coins)+amount)||MATERIAL_IDS.some(id=>positive(state.resources?.[id])+whole(reward[id])>SAFE))return false;
-  state.resources.coins=whole(state.resources?.coins)+amount;
+  if(m.chapter.campaignVersion===CAMPAIGN_VERSION){
+    const budget=campaignBudget(m.chapter.level);
+    reward.coins=Math.min(amount,Math.max(0,budget.coins-whole(m.chapter.coinsAwarded)));
+    let room=Math.max(0,budget.materials-whole(m.chapter.materialsAwarded));
+    for(const id of MATERIAL_IDS){if(reward[id]){reward[id]=Math.min(reward[id],room);room-=reward[id];}}
+  }
+  if(!Number.isSafeInteger(whole(state.resources?.coins)+whole(reward.coins))||MATERIAL_IDS.some(id=>positive(state.resources?.[id])+whole(reward[id])>SAFE))return false;
+  state.resources.coins=whole(state.resources?.coins)+whole(reward.coins);
   grantBonusMaterials(state,reward);
   const residentsRequested=whole(reward.residents);
   const residentsAccepted=Math.min(residentsRequested,Math.max(0,lev(state,'townhall')*24-whole(state.population)-whole(state.incomingPassengers)));
@@ -432,6 +712,7 @@ function credit(state,m,task){
   }
   m.lastReward={id:task.id,at:clock(state),reward:clone(reward),residentsRequested,residentsAccepted,residentsUnaccepted:residentsRequested-residentsAccepted};
   m.receipts.push(task.id);m.receipts=m.receipts.slice(-256);
+  if(m.chapter.campaignVersion===CAMPAIGN_VERSION){m.chapter.coinsAwarded=whole(m.chapter.coinsAwarded)+whole(reward.coins);m.chapter.materialsAwarded=whole(m.chapter.materialsAwarded)+MATERIAL_IDS.reduce((n,id)=>n+whole(reward[id]),0);}
   return true;
 }
 function completeFrameTask(state,m,frame){
@@ -446,6 +727,8 @@ function completeFrameTask(state,m,frame){
   if(frame.kind==='main'){
     m.chapter.status='completed';m.completedLevels=[...new Set([...m.completedLevels,m.chapter.level])].slice(-100);
     m.lastCompletion={level:m.chapter.level,at:clock(state)};m.stack=[];
+    const change=m.chapter.campaignVersion===CAMPAIGN_VERSION?campaignChapter(m.chapter.level)?.worldChange:null;
+    if(change&&!m.worldChanges.some(item=>item.level===m.chapter.level))m.worldChanges.push({level:m.chapter.level,at:clock(state),title:change.en,titlePl:change.pl});
     event(state,'lighthouse-mission-chapter','A shared goal achieved','Wspólny cel osiągnięty','The Lighthouse is ready. Prepare your island for the next challenge.','Latarnia znów świeci, a Twoja osada jest gotowa na dalszy rozwój.');return true;
   }
   m.stack.pop();const parent=m.stack.at(-1);
@@ -464,6 +747,7 @@ function repairContributionParent(m,task){
   if(parent?.objective.type==='contribute'&&task.objective.type==='contribute')for(const[id,n]of Object.entries(task.deposited))parent.deposited[id]=Math.max(parent.deposited[id]||0,n);
 }
 function fail(state,m,frame){
+  if(frame.task.objective.type==='invitation'&&frame.task.acceptedAt!==null&&!frame.task.purchaseUnitCost)frame.task.purchaseUnitCost=cleanCost(frame.task.requirements);
   frame.task.status=frame.kind==='rescue'?'retry':'assistance';frame.task.deadline=null;frame.task.acceptedAt=null;
   if(frame.kind==='rescue'){
     frame.task.attempt++;
@@ -481,9 +765,18 @@ function unlock(state,m){
   if(!level)return;
   const target=Math.min(100,lev(state,'lighthouse')+1);
   // A maxed Lighthouse has no remaining real upgrade to promise.
-  if(lev(state,'lighthouse')>=100)return;
+  const definition=m.campaignEnabled?campaignChapter(level):null;
+  if(lev(state,'lighthouse')>=100&&!definition)return;
   m.chapter={id:`lighthouse-chapter-${level}`,level,targetLevel:target,startedAt:clock(state),invitedBaseline:m.invited,
-    productionBaseline:Object.fromEntries(MATERIAL_IDS.map(id=>[id,metric(state,'produced',id)])),status:'active',storyId:missionStory(level).id,introSeen:false};
+    productionBaseline:Object.fromEntries(MATERIAL_IDS.map(id=>[id,metric(state,'produced',id)])),status:'active',storyId:missionStory(level).id,introSeen:false,coinsAwarded:0,materialsAwarded:0};
+  if(definition){
+    m.chapter.campaignVersion=CAMPAIGN_VERSION;m.chapter.storyId=definition.storyId;
+    m.chapter.targetLevel=Math.min(100,lev(state,'townhall'),lev(state,'lighthouse')+1);
+    m.chapter.buildingBaseline=Object.fromEntries(Object.entries(state.buildings||{}).map(([id,value])=>[id,whole(value.level)]));
+    m.chapter.deliveryBaseline=Object.fromEntries(MATERIAL_IDS.map(id=>[id,metric(state,'delivered',id)]));
+    m.chapter.adventureBaseline=Object.fromEntries(definition.steps.filter(step=>step.type==='adventure').map(step=>[adventureKey(step),adventureMetric(state,step)]));
+    m.chapter.shippingBaseline=whole(state.dock?.nextOrderId);m.chapter.coinsAwarded=0;m.chapter.materialsAwarded=0;
+  }
   m.stack=[{kind:'main',index:1,total:8,prefix:m.chapter.id,task:null}];m.receipts=[];
 }
 export function advanceMissions(state,seconds=0,context={}){
@@ -492,7 +785,7 @@ export function advanceMissions(state,seconds=0,context={}){
   unlock(state,m);
   for(let guard=0;guard<24&&m.stack.length;guard++){
     const frame=m.stack.at(-1);frame.task ||= newTask(state,m,frame,context);const task=frame.task;
-    const precredited=['building','stock','invitation','assign'].includes(task.objective.type);
+    const precredited=['building','stock','invitation','assign','review','check','adventure','recruitment','shipping'].includes(task.objective.type);
     if(accomplished(state,m,task)&&(task.status==='active'||precredited)){
       repairContributionParent(m,task);if(!completeFrameTask(state,m,frame))break;continue;
     }
@@ -518,34 +811,76 @@ export function missionStoryIntro(state) {
   const m=ensure(state), chapter=m.chapter;
   return { available:eligible(state)&&chapter?.status==='active'&&chapter.introSeen!==true,
     chapterId:chapter?.id||null, chapterLevel:chapter?.level||null,
-    ...missionStory(chapter?.level||2) };
+    ...campaignStoryFor(state,m) };
+}
+/** One preview for all eight dependencies; future stock is a preparation,
+ * never an instruction to pay the same materials a second time. */
+export function campaignReadiness(state,context={}){
+  const m=ensure(state),chapter=m.chapter;
+  if(chapter?.campaignVersion!==CAMPAIGN_VERSION)return null;
+  const definition=campaignChapter(chapter.level),limits=warehouseLimits(state);
+  if(!definition)return null;
+  const steps=definition.steps.map((step,i)=>{
+    const candidate=campaignTask(state,m,{kind:'main',index:i+1,prefix:chapter.id},context),o=candidate.objective;
+    const requirements=remainingCost(state,candidate,context),missing=Object.fromEntries(Object.entries(requirements).map(([id,n])=>[id,Math.max(0,n-available(state,id))]).filter(([,n])=>n>0));
+    const prerequisites=[];
+    if(o.type==='building'&&o.building!=='townhall'&&o.target>lev(state,'townhall'))prerequisites.push({type:'townhall',target:o.target,messagePl:`Najpierw Ratusz ${o.target}.`,message:`Town Hall ${o.target} is needed first.`});
+    if(o.type==='building'&&o.building==='townhall'){
+      const quote=townhallPopulationRequirement(state,o.target);
+      if(!quote.ok)prerequisites.push({type:'population',target:quote.populationRequired,actual:quote.populationCurrent,messagePl:`Przygotuj ${quote.populationRequired} mieszkańców przed awansem.`,message:`Prepare ${quote.populationRequired} residents before upgrading.`});
+    }
+    if(o.type==='building'&&!readyCrew(state,'warehouse'))prerequisites.push({type:'warehouseCrew',target:1,messagePl:'Przygotuj gotowych tragarzy.',message:'Prepare ready warehouse carriers.'});
+    if(o.type==='shipping'&&lev(state,'townhall')<4)prerequisites.push({type:'townhall',target:4,messagePl:'Port działa od 4 poziomu Ratusza.',message:'The Harbor unlocks at Town Hall level 4.'});
+    if(o.type==='check'&&!checkAccomplished(state,o))prerequisites.push({type:o.check,messagePl:checkReason(state,o),message:'Prepare the displayed island condition.'});
+    if(['stock','building'].includes(o.type))for(const id of MATERIAL_IDS){const ordinary=Math.max(0,(requirements[id]||0)-bonusStock(state,id)+(id==='food'?foodReserve(state):0));if(ordinary>limits.perResource)prerequisites.push({type:'storage',resource:id,required:ordinary,capacity:limits.perResource,messagePl:`Zwiększ pojemność na ${id}: potrzeba ${ordinary}.`,message:`Increase ${id} storage to ${ordinary}.`});}
+    return{index:i+1,title:candidate.title,titlePl:candidate.titlePl,objective:clone(o),requirements,missing,prerequisites,complete:accomplished(state,m,candidate),active:m.stack[0]?.index===i+1,requiresPayment:['contribute','building','shipping'].includes(o.type),optionalPaidRecruitment:o.type==='recruitment'};
+  });
+  return{level:chapter.level,valid:steps.every(step=>step.objective.type!=='building'||step.objective.target<=100),providerIndependent:true,
+    title:definition.title.en,titlePl:definition.title.pl,worldChange:clone(definition.worldChange),budget:campaignBudget(chapter.level),steps};
 }
 export function missionStatus(state,context={}){
   const m=ensure(state),frame=m.stack.at(-1),task=frame?.task;
   if(!frame||!task)return{available:false,preview:lev(state,'townhall')>=2&&!courseOpen(state),finished:m.chapter?.status==='completed',chapter:m.chapter?clone(m.chapter):null,
     reasonPl:!courseOpen(state)?'Misje Latarni czekają po ukończeniu lub zamknięciu samouczka.':'Rozbuduj Ratusz, aby rozpocząć kolejny rozdział.',completedLevels:[...m.completedLevels],
-    story:missionStory(m.chapter?.level||2),introduction:missionStoryIntro(state),lastReward:m.lastReward?clone(m.lastReward):null};
+    story:campaignStoryFor(state,m),introduction:missionStoryIntro(state),lastReward:m.lastReward?clone(m.lastReward):null,worldChanges:clone(m.worldChanges)};
   const plan=proof(state,m,task,context);
-  return{available:true,finished:false,chapter:clone(m.chapter),kind:frame.kind,index:frame.index,total:frame.total,task:clone(task),plan,
+  const view=clone(task);
+  if(task.objective.type==='invitation')view.requirements=remainingCost(state,task,context);
+  return{available:true,finished:false,chapter:clone(m.chapter),kind:frame.kind,index:frame.index,total:frame.total,task:view,plan,
     active:task.status==='active',canStart:task.status!=='active'&&plan.feasible,
     remaining:task.deadline===null?null:Math.max(0,(task.deadline-clock(state))/1000),
     progress:task.objective.type==='production'||task.objective.type==='delivered'?Math.min(task.objective.count,Math.max(0,metric(state,task.objective.type==='production'?'produced':'delivered',task.objective.resource)-task.objective.baseline)):null,
     incident:m.lastIncident?clone(m.lastIncident):null,parents:m.stack.slice(0,-1).map(f=>({kind:f.kind,index:f.index,total:f.total})),
-    story:missionStory(m.chapter.level),introduction:missionStoryIntro(state),lastReward:m.lastReward?clone(m.lastReward):null};
+    story:campaignStoryFor(state,m),introduction:missionStoryIntro(state),lastReward:m.lastReward?clone(m.lastReward):null,
+    assistance:missionAssistanceOffer(state,context),previewSteps:context.previewSteps===false?[]:campaignReadiness(state,context)?.steps||[],worldChanges:clone(m.worldChanges)};
 }
 export function missionAction(state,action,context={}){
-  if(!['missionStart','missionRetry','missionDeposit','missionNext','missionIntroSeen'].includes(action?.type))return null;
+  if(!['missionStart','missionRetry','missionDeposit','missionNext','missionIntroSeen','missionReview','missionRequestHelp'].includes(action?.type))return null;
   advanceMissions(state,0,context);const m=ensure(state),frame=m.stack.at(-1),task=frame?.task;
   if(action.type==='missionNext'){unlock(state,m);advanceMissions(state,0,context);return good('Lighthouse missions refreshed.');}
   if(action.type==='missionIntroSeen'){
     if(!m.chapter||action.chapterId&&action.chapterId!==m.chapter.id)return bad('This Lighthouse chapter introduction is no longer available.');
     m.chapter.introSeen=true;return good('Lighthouse chapter introduction read.',{chapterId:m.chapter.id});
   }
+  if(action.type==='missionReview'){
+    if(!task||action.id!==task.id||task.objective.type!=='review')return bad('This briefing is no longer available.');
+    if(!m.reviewed.includes(task.id))m.reviewed.push(task.id);m.reviewed=m.reviewed.slice(-256);advanceMissions(state,0,context);return good('The island preparation briefing was read.');
+  }
+  if(action.type==='missionRequestHelp'){
+    if(!task||action.id!==task.id)return bad('This mission step is no longer available.');
+    if(m.stack.length>=3)return bad('The rescue plan is already active. Complete its real preparation steps.');
+    fail(state,m,frame);advanceMissions(state,0,context);return good('An assistance plan for this objective is ready.');
+  }
+  if(action.id&&m.receipts.includes(action.id)&&action.id!==task?.id)return good('This mission step was already completed.',{completed:true,missionId:action.id});
   if(!task||action.id!==task.id)return bad('This Lighthouse mission step is no longer available.');
   if(action.type==='missionStart'||action.type==='missionRetry'){
     if(task.status==='active')return bad('This Lighthouse mission step is already active.');
     const plan=proof(state,m,task,context);if(!plan.feasible)return bad('Prepare the required stock, production and transport before starting.',{plan});
-    task.duration=plan.duration;task.acceptedAt=clock(state);task.deadline=clock(state)+plan.duration*1000;task.status='active';
+    if(['invitation','recruitment'].includes(task.objective.type)){
+      task.purchaseUnitCost ||= missionResidentCost(state);
+      if(task.objective.type==='invitation')task.requirements=clone(task.purchaseUnitCost);
+    }
+    task.duration=plan.duration;task.acceptedAt=clock(state);task.deadline=task.untimed?null:clock(state)+plan.duration*1000;task.status='active';
     return good('Lighthouse mission step started.',{missionId:task.id,duration:task.duration,plan});
   }
   if(task.status!=='active'||task.objective.type!=='contribute')return bad('Start the material contribution step first.');

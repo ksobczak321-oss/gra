@@ -56,7 +56,8 @@ test('new practical copy teaches three carriers and actual services while preser
   assert.match(lessonCopy('construction-queue','pl',{curriculum:6}).description,/Kup rozbudowę.*10 sekund/);
   assert.match(lessonCopy('storage-limits','pl',{curriculum:6}).description,/Zboże.*zachowując.*Budowę/);
   assert.match(lessonCopy('house-points','pl',{curriculum:6}).description,/Znajdź Magazyn/);
-  assert.match(lessonCopy('personal-happiness','pl',{curriculum:6}).description,/wszystkim.*siedem porcji/);
+  assert.match(lessonCopy('personal-happiness','pl',{curriculum:6}).description,/wszystkim.*siedmiu porcji/);
+  assert.match(lessonCopy('personal-happiness','pl',{curriculum:7}).description,/Zachowaj punkty na później/);
   assert.doesNotMatch(lessonCopy('personal-happiness','pl',{curriculum:6}).description,/wybrać konkretną osobę/);
 });
 

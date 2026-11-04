@@ -5,9 +5,22 @@ const formatter = new Intl.DateTimeFormat('en-CA', {
   timeZone: GAME_TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit',
   hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'
 });
+const partsCache = new Map();
+const PARTS_CACHE_LIMIT = 128;
 export function warsawParts(milliseconds) {
   const time = Number.isFinite(milliseconds) ? milliseconds : Date.now();
-  return Object.fromEntries(formatter.formatToParts(new Date(time)).filter(part => part.type !== 'literal').map(part => [part.type, part.value]));
+  // Date first truncates fractional milliseconds, including negative values.
+  const second = Math.floor(Math.trunc(time) / 1000);
+  // An invalid date can share its second with the valid range endpoint.
+  const cached = Math.abs(time) <= 8640000000000000 ? partsCache.get(second) : undefined;
+  if (cached) return { ...cached };
+  const result = {};
+  for (const part of formatter.formatToParts(new Date(time))) {
+    if (part.type !== 'literal') result[part.type] = part.value;
+  }
+  if (partsCache.size >= PARTS_CACHE_LIMIT) partsCache.delete(partsCache.keys().next().value);
+  partsCache.set(second, result);
+  return { ...result };
 }
 export function warsawDayKey(milliseconds) {
   const p = warsawParts(milliseconds);

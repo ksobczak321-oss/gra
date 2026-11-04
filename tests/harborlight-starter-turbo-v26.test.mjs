@@ -168,7 +168,7 @@ test('cancelling before pickup restores coins and releases physical reserved goo
   assert.equal(state.haulTrips.warehouse.length, 0);
 });
 
-test('a missing carrier in a saved turbo project pauses new pickups without losing already loaded cargo', () => {
+test('a missing carrier in a saved turbo project leaves loaded cargo intact while the smaller crew continues', () => {
   const state = starter({ level: 2 });
   const project = historicalOrder(state,'townhall',OLD_TH2).project;
   advanceLogistics(state, 5);
@@ -178,11 +178,13 @@ test('a missing carrier in a saved turbo project pauses new pickups without losi
   const delivered = MATERIAL_IDS.reduce((sum, resource) => sum + project.delivered[resource], 0);
   assert.equal(delivered, 720);
   assert.equal(state.haulTrips.warehouse.length, 0);
-  assert.equal(constructionEstimate(state, project).waitingForCarriers, true);
+  assert.equal(constructionEstimate(state, project).waitingForCarriers, false);
   advanceLogistics(state, 20);
-  assert.equal(MATERIAL_IDS.reduce((sum, resource) => sum + project.delivered[resource], 0), delivered);
+  assert.ok(MATERIAL_IDS.reduce((sum, resource) => sum + project.delivered[resource], 0) > delivered);
   carrier.arrivalRemaining = 0;
-  advanceLogistics(state, 105);
+  const estimate = constructionScheduleEstimate(state, project);
+  assert.ok(Number.isFinite(estimate.transport));
+  advanceLogistics(state, estimate.transport);
   assert.equal(project.stage, 'building');
   close(project.buildRemaining, 300);
   assert.equal(MATERIAL_IDS.every(resource => project.delivered[resource] === 1000), true);

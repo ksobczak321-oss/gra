@@ -48,7 +48,7 @@ def fixture(page, mode):
       const {createState,act}=await import('./harborlight-v1-state.js?v=frontend-v17');
       const s=createState(Date.now());s.tutorial.autoOpenDisabled=true;
       if(mode==='tutorial'){
-        const {normalizeProgression}=await import('./harborlight-v1-progression.js?v=frontend-v30');
+        const {normalizeProgression}=await import('./harborlight-v1-progression.js?v=frontend-v31');
         normalizeProgression(s,{...s,tutorial:{version:3}});
         s.tutorial.autoOpenDisabled=false;return s;
       }
@@ -265,7 +265,9 @@ def descriptions_match_rules(browser):
     page.locator('#hit-home').click()
     page.locator('#island-dialog').get_by_role('button', name='Ekspedycje', exact=True).click()
     expect(page.locator('#island-dialog')).to_contain_text('50, 100, 200, 400')
-    expect(page.locator('#island-dialog')).to_contain_text('50, 150, 350, 750')
+    expect(page.locator('#island-dialog')).to_contain_text('800 monet za rundę')
+    expect(page.locator('#island-dialog')).to_contain_text('zerują niewypłaconą pulę')
+    expect(page.locator('#island-dialog')).to_contain_text('zeruje się co godzinę')
     close_panel(page)
     page.locator('#hit-world-chapel').click()
     body = page.locator('#island-dialog')
@@ -273,7 +275,7 @@ def descriptions_match_rules(browser):
     assert '3 + poziom kaplicy' in body.text_content()
     assert '6–15' in body.text_content()
     context.close()
-    print('PASS18 descriptions: distinct population arrival/departure rates, exponential round/pot rewards, Warsaw blessing and Chapel neglect grace', flush=True)
+    print('PASS18 descriptions: distinct population rates, capped round rewards and pot risk, shared hourly difficulty, Warsaw blessing and Chapel neglect grace', flush=True)
 
 
 def run():

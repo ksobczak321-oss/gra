@@ -1,5 +1,7 @@
-import { adventureChoices, ADVENTURE_CATALOG, pipePorts, adventureMessage } from './harborlight-v1-adventures.js?v=frontend-v30';
-import { adventureArt, cargoArt, mapTileArt, shipDrawing, planeDrawing } from './harborlight-v1-adventures-art.js?v=frontend-v30';
+import { adventureChoices, ADVENTURE_CATALOG, pipePorts, adventureMessage } from './harborlight-v1-adventures.js?v=frontend-v31';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v31';
+import { adventureArt, cargoArt, mapTileArt, shipDrawing, planeDrawing } from './harborlight-v1-adventures-art.js?v=frontend-v31';
+import { createExpandedAdventureScene } from './harborlight-v1-adventures-expanded-ui.js?v=frontend-v31';
 
 const pick = (lang, pl, en) => lang === 'en' ? en : pl;
 const text = (lang, value) => typeof value === 'string' ? value : value?.[lang === 'en' ? 'en' : 'pl'] || value?.pl || '';
@@ -19,7 +21,7 @@ function svg(tag, attributes = {}) { const result = document.createElementNS(NS,
 function setText(element, value) { if (element.textContent !== String(value)) element.textContent = String(value); }
 function stylesheet() {
   if (document.querySelector('[data-adventures-css]')) return;
-  document.head.append(node('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-adventures.css?v=frontend-v30', import.meta.url).href, 'data-adventures-css': '' }));
+  document.head.append(node('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-adventures.css?v=frontend-v31', import.meta.url).href, 'data-adventures-css': '' }));
 }
 const BUILDINGS = {
   farm: ['Gospodarstwo', 'Farm'], lumber: ['Drwale', 'Lumber camp'], quarry: ['Kamieniołom', 'Quarry'], windmill: ['Młyn', 'Mill'], sawmill: ['Tartak', 'Sawmill'],
@@ -37,7 +39,7 @@ const ERRORS = {
 };
 /** A view over the adventure model. It never grants a reward or advances the
  * island clock. onAction must pass input through the normal state/save path. */
-export function createAdventuresPanel({ state: initialState, language = 'pl', onAction = () => ({ ok: false }), onMiniGame = () => {}, onRewardedAd = null, onClose = () => {} } = {}) {
+export function createAdventuresPanel({ state: initialState, language = 'pl', onAction = () => ({ ok: false }), onMiniGame = () => {}, onRewardedAd = null, onClose = () => {}, onMainMission = null, mainMission = null } = {}) {
   stylesheet();
   const lang = language === 'en' ? 'en' : 'pl', t = (pl, en) => pick(lang, pl, en);
   const labelBuilding = id => t(...(BUILDINGS[id] || [id, id]));
@@ -49,7 +51,7 @@ export function createAdventuresPanel({ state: initialState, language = 'pl', on
   const content = node('div', { 'data-adventures-content': '' });
   const footer = node('div', { class: 'adv-bottom' });
   element.append(intro, notice, content, footer);
-  let state = initialState, alive = true, allChoices = false, currentKey = '', sceneUpdate = () => {}, sceneDispose = () => {}, frame = 0, lastUpdate = performance.now(), selectedMap = null, selectedBridge = null, selectedCrate = null, selectedLetter = null;
+  let state = initialState, alive = true, allChoices = false, choiceFilter = 'all', currentKey = '', sceneUpdate = () => {}, sceneDispose = () => {}, frame = 0, lastUpdate = performance.now(), selectedMap = null, selectedBridge = null, selectedCrate = null, selectedLetter = null;
   let audio = null;
   const cleanup = [];
   function unlockAudio() { try { if (!audio && (window.AudioContext || window.webkitAudioContext)) audio = new (window.AudioContext || window.webkitAudioContext)(); if (audio?.state === 'suspended') audio.resume().catch(() => {}); } catch {} }
@@ -81,8 +83,9 @@ export function createAdventuresPanel({ state: initialState, language = 'pl', on
   const miniGame = kind => { unlockAudio(); onMiniGame(kind); };
   function standardScene(adventure, description) {
     const spec = ADVENTURE_CATALOG?.find(item => item.kind === adventure.kind) || {};
+    const expandedTitle = adventure.kind === 'escapeStory' ? Adventures.getCurrentStoryRoom?.(adventure, lang)?.title : adventure.kind === 'islandPuzzle' ? Adventures.getIslandPuzzleView?.(adventure.data?.puzzle, lang)?.title : '';
     const root = node('div', { class: 'adv-active', 'data-adventure-kind': adventure.kind, 'data-adventure-stage': adventure.stage });
-    root.append(node('div', { class: 'adv-active-header' }, node('div', {}, node('span', { class: 'adv-label' }, t('Twoja przygoda', 'Your adventure')), node('h4', {}, text(lang, spec.title) || adventure.kind)), button(t('Wróć na wyspę', 'Return to island'), onClose, { class: 'adv-quiet', 'data-adventure-close': '' })));
+    root.append(node('div', { class: 'adv-active-header' }, node('div', {}, node('span', { class: 'adv-label' }, t('Twoja przygoda', 'Your adventure')), node('h4', {}, expandedTitle || text(lang, spec.title) || t('Przygoda na wyspie', 'Island adventure'))), button(t('Wróć na wyspę', 'Return to island'), onClose, { class: 'adv-quiet', 'data-adventure-close': '' })));
     root.append(node('p', { class: 'adv-stage-help' }, description));
     return root;
   }
@@ -93,15 +96,40 @@ export function createAdventuresPanel({ state: initialState, language = 'pl', on
     board.append(drawing); return { board, drawing };
   }
   function choiceView() {
-    const choices = adventureChoices(state), shown = allChoices ? choices : choices.filter(item => item.available).slice(0, 3);
-    const fallback = shown.length ? shown : choices.slice(0, 3);
+    const choices = adventureChoices(state), available = choices.filter(item => item.available);
+    const story = available.find(item => item.kind === 'escapeStory' && item.resume) || available.find(item => item.kind === 'escapeStory');
+    const short = available.find(item => item.kind === 'islandPuzzle' && item.tier === 'short') || available.find(item => item.kind === 'cargoRain') || available.find(item => item.kind === 'islandPuzzle');
+    const medium = available.find(item => item.kind === 'islandPuzzle' && item.tier !== 'short') || available.find(item => ![story, short].includes(item));
+    const recommendations = [story, ...(onMainMission ? [] : [medium]), short].filter(Boolean);
+    for (const choice of available) if (recommendations.length < (onMainMission ? 2 : 3) && !recommendations.includes(choice)) recommendations.push(choice);
+    const shown = allChoices ? choices.filter(item => choiceFilter === 'all' || choiceFilter === 'story' && item.kind === 'escapeStory' || choiceFilter === 'puzzle' && item.kind === 'islandPuzzle' || choiceFilter === 'classic' && !['escapeStory', 'islandPuzzle'].includes(item.kind)) : recommendations;
+    const fallback = shown.length ? shown : choices.slice(0, onMainMission ? 2 : 3);
     const grid = node('div', { class: 'adv-choices' });
+    if (!allChoices && typeof onMainMission === 'function') {
+      grid.append(node('article', { class: 'adv-choice', 'data-current-mission-choice': '' }, vector(adventureArt('signals', { title: t('Główna przygoda Twojej wyspy', 'Your island’s main adventure') })), node('div', { class: 'adv-choice-copy' },
+        node('span', { class: 'adv-choice-role' }, t('Rozwijaj wyspę', 'Develop your island')), node('h4', {}, text(lang, mainMission?.title) || t('Twoja aktualna misja', 'Your current mission')),
+        node('p', {}, text(lang, mainMission?.description) || t('Sprawdź następny krok, potrzebne przygotowania i nagrodę. Wyspa rozwija się we własnym tempie.', 'Review your next step, the preparations and its reward. Grow the island at your own pace.')),
+        node('div', { class: 'adv-choice-meta' }, node('span', {}, t('Główny szlak', 'Main journey'))), button(t('Otwórz aktualną misję', 'Open current mission'), onMainMission, { class: 'adv-primary', 'data-open-main-mission': '' }))));
+    }
     for (const choice of fallback) {
       const duration = choice.durationSeconds >= 120 ? `${Math.round(choice.durationSeconds / 60)} ${t('min', 'min')}` : `${choice.durationSeconds || 45} s`;
-      const card = node('article', { class: 'adv-choice', 'data-adventure-choice': choice.kind }, vector(adventureArt(choice.kind, { title: text(lang, choice.title) })), node('div', { class: 'adv-choice-copy' }, node('h4', {}, text(lang, choice.title)), node('p', {}, text(lang, choice.description)), node('div', { class: 'adv-choice-meta' }, node('span', {}, duration), choice.progress?.total ? node('span', {}, `${choice.progress.current} / ${choice.progress.total}`) : null), button(choice.available ? t('Zacznij przygodę', 'Start adventure') : t('Przygoda wróci później', 'Available later'), () => dispatch({ type: 'adventureStart', kind: choice.kind }), { class: 'adv-primary', disabled: !choice.available, 'data-adventure-start': choice.kind })));
+      const preview = choice.rewardPreview?.resources || choice.rewardPreview || {};
+      const actualRewards = Object.entries(preview).filter(([id, amount]) => RESOURCES[id] && Number(amount) > 0);
+      const startLabel = !choice.available && choice.reason === 'level' ? t(`Od ${choice.requiredLevel} poziomu Ratusza`, `Town Hall level ${choice.requiredLevel} required`) : choice.available ? choice.resume ? t('Wróć do przygody', 'Resume adventure') : choice.practice ? t('Zagraj dla przyjemności', 'Play for fun') : t('Zacznij przygodę', 'Start adventure') : t('Przygoda wróci później', 'Available later');
+      const card = node('article', { class: 'adv-choice', 'data-adventure-choice': choice.kind, ...(choice.storyId ? { 'data-story-choice': choice.storyId } : {}), ...(choice.puzzleKind ? { 'data-puzzle-choice': choice.puzzleKind } : {}) }, vector(adventureArt(choice.kind === 'escapeStory' ? 'signals' : choice.kind === 'islandPuzzle' ? ({ gull: 'cargoRain', hiddenObjects: 'letters', optics: 'signals', hotel: 'letters', photo: 'treasureMap', tides: 'garden' }[choice.puzzleKind] || 'treasureMap') : choice.kind, { title: text(lang, choice.title) })), node('div', { class: 'adv-choice-copy' },
+        node('span', { class: 'adv-choice-role' }, choice.kind === 'escapeStory' ? t('Połączona opowieść', 'Connected story') : choice.tier === 'short' || choice.kind === 'cargoRain' ? t('Mała przygoda', 'A little adventure') : t('Pomysł i zagadka', 'A puzzle to explore')),
+        node('h4', {}, text(lang, choice.title)), node('p', {}, text(lang, choice.description)), node('div', { class: 'adv-choice-meta' }, node('span', {}, `${t('Około', 'About')} ${duration}`), choice.progress?.total ? node('span', {}, `${choice.progress.current} / ${choice.progress.total}`) : null),
+        choice.practice ? node('p', { class: 'adv-practice-label' }, t('Dla przyjemności — bez kolejnej nagrody.', 'For fun — without another reward.')) : actualRewards.length ? node('div', { class: 'adv-reward-preview', 'aria-label': t('Możliwa nagroda', 'Possible reward') }, ...actualRewards.map(([id, amount]) => node('span', {}, `+${amount} ${rewardUnit(id, Number(amount))}`))) : null,
+        button(startLabel, () => dispatch(choice.startAction || { type: 'adventureStart', kind: choice.kind }), { class: 'adv-primary', disabled: !choice.available, 'data-adventure-start': choice.kind, ...(choice.puzzleKind ? { 'data-puzzle-start': choice.puzzleKind } : {}), ...(choice.storyId ? { 'data-story-start': choice.storyId } : {}) })));
       grid.append(card);
     }
-    content.replaceChildren(grid);
+    const catalogFilter = node('div', { class: 'adv-tools', 'aria-label': t('Rodzaj przygody', 'Adventure type') });
+    if (allChoices) for (const [id, pl, en] of [['all', 'Wszystkie', 'All'], ['story', 'Opowieści', 'Stories'], ['puzzle', 'Zagadki', 'Puzzles'], ['classic', 'Znane przygody', 'Familiar adventures']]) catalogFilter.append(button(t(pl, en), () => { choiceFilter = id; currentKey = ''; render(); }, { class: 'adv-quiet', 'aria-pressed': String(choiceFilter === id), 'data-adventure-filter': id }));
+    const budget = Adventures.adventureRewardStatus?.(state), pool = node('div', { class: 'adv-hour-pool', 'data-adventure-reward-pool': '' });
+    const practice = budget && (budget.dailyRemaining <= 0 || budget.chapterRemaining <= 0);
+    if (budget) pool.append(node('strong', {}, practice ? t('Dalsza zabawa jest otwarta', 'Keep playing for fun') : t('Nagrody opowieści i zagadek', 'Story and puzzle rewards')),
+      node('span', {}, practice ? t('Wykorzystano obecną pulę nagród opowieści i zagadek. Możesz kontynuować je dla przyjemności. Znane przygody zachowują podane zasady nagród.', 'The story and puzzle reward pool is used up. You can continue them for fun. Familiar adventures keep their stated reward rules.') : t('Wypłata opowieści i zagadek uwzględnia pozostałą pulę dnia i rozdziału. Znane przygody zachowują podane zasady nagród. Wcześniejsze wyjście zachowuje postęp.', 'Story and puzzle payouts respect the remaining daily and chapter pools. Familiar adventures keep their stated reward rules. Leaving early preserves your progress.')));
+    content.replaceChildren(...(budget ? [pool] : []), ...(allChoices ? [catalogFilter] : []), grid);
     footer.replaceChildren(node('span', { class: 'adv-saved' }, t('Postęp przygód jest zapisywany razem z wyspą.', 'Adventure progress is saved with your island.')), button(allChoices ? t('Pokaż trzy propozycje', 'Show three suggestions') : t('Zobacz wszystkie przygody', 'See every adventure'), () => { allChoices = !allChoices; currentKey = ''; render(); }, { class: 'adv-quiet', 'data-adventure-all': '' }));
   }
   function cargoScene(adventure) {
@@ -128,7 +156,11 @@ export function createAdventuresPanel({ state: initialState, language = 'pl', on
         const y = (now - drop.appearAt) / drop.fallSeconds * 100;
         if (drop.caught || y < 0 || y > 105) continue;
         visible.add(String(drop.id)); let target = drops.get(String(drop.id));
-        if (!target) { target = button('', () => send('catch', { dropId: drop.id }), { class: 'adv-falling-cargo', 'data-cargo-drop': drop.id, 'aria-label': `${labelResource(drop.resource)} +${drop.amount}` }); target.append(vector(cargoArt(drop.resource))); zone.append(target); drops.set(String(drop.id), target); }
+        if (!target) {
+          const catchDrop = () => { if (target.disabled) return; target.disabled = true; Promise.resolve(send('catch', { dropId: drop.id })).finally(() => { if (target.isConnected) target.disabled = false; }); };
+          target = button('', event => { if (event.detail === 0) catchDrop(); }, { class: 'adv-falling-cargo', 'data-cargo-drop': drop.id, 'aria-label': `${labelResource(drop.resource)} +${drop.amount}`, onpointerdown: event => { if (event.button !== 0) return; event.preventDefault(); catchDrop(); } });
+          target.append(vector(cargoArt(drop.resource))); zone.append(target); drops.set(String(drop.id), target);
+        }
         target.style.setProperty('--x', `${Math.max(5, Math.min(95, drop.x))}%`); target.style.setProperty('--y', `${y}%`); target.style.setProperty('--spin', `${Math.sin(now + Number(drop.id || 0)) * 16}deg`);
       }
       for (const [id, target] of drops) if (!visible.has(id)) { target.remove(); drops.delete(id); }
@@ -257,13 +289,20 @@ export function createAdventuresPanel({ state: initialState, language = 'pl', on
   function finishedScene(adventure) {
     const root = standardScene(adventure, t('Jeszcze jedna historia, którą Twoja wyspa będzie wspominać.', 'Another story your island will remember.'));
     const reward = adventure.data?.reward || adventure.reward || {}, values = reward.resources || reward;
-    root.append(node('div', { class: 'adv-reward' }, vector(adventureArt(adventure.kind, { title: t('Przygoda ukończona', 'Adventure complete'), className: '' })), node('h4', {}, t('Udało się!', 'You did it!')), node('p', { class: 'adv-stage-help' }, text(lang, adventure.data?.ending) || t(...({ cargoRain: ['Złapany ładunek jest już w Twoich zasobach. Dobra robota! Osada może działać dalej.', 'The cargo you caught is already in your resources. Well done! Your settlement can keep working.'], treasureMap: ['Mapa zaprowadziła Cię do ukrytego skarbu. Znalezione monety i materiały wesprą rozwój osady.', 'The map led you to a hidden treasure. Its coins and materials will help your settlement grow.'], pirateCannon: ['Droga do portu jest wolna! Uratowany kupiec zacumował przy wyspie i zostawił nagrodę.', 'The route to port is clear! The rescued merchant has docked and left you a reward.'], bridge: ['Most wytrzymał próbę. Mieszkańcy mogą bezpiecznie przejść na drugi brzeg.', 'The bridge passed its test. Residents can safely cross to the other bank.'], signals: ['Kapitan dostrzegł właściwy sygnał. Zagubiony statek bezpiecznie dotarł do portu.', 'The captain recognised your signal. The lost ship safely reached the harbor.'], letters: ['Wszystkie listy dotarły do adresatów. Rodzina spotkała się na nabrzeżu, a mieszkańcy dziękują Ci za pomoc.', 'Every letter reached its recipient. The family has reunited at the quay, and your residents thank you for helping.'], rhythm: ['Koncert rozpoczęty! Port wypełnia muzyka, a mieszkańcy bawią się przy wspólnie przygotowanej melodii.', 'The concert has begun! Music fills the port as residents enjoy the tune you prepared together.'], garden: ['Woda znów dociera do sadzawek. Ogród rozkwitł i stał się nowym miejscem odpoczynku na wyspie.', 'Water reaches the ponds again. The garden has bloomed into a new place to rest on the island.'], cargoBalance: ['Statek bezpiecznie dotarł do portu. Kupiec rozładowuje towary i przekazuje Ci podziękowanie.', 'The ship safely reached the harbor. The merchant is unloading and has a gift to thank you.'] }[adventure.kind] || ['Nagroda trafiła do Twojej osady.', 'Your settlement has received its reward.']))), node('div', { class: 'adv-reward-values' }, ...Object.entries(values).filter(([id, amount]) => RESOURCES[id] && Number(amount) > 0).map(([id, amount]) => node('span', {}, `+${amount} ${rewardUnit(id, Number(amount))}`))), button(t('Wybierz kolejną przygodę', 'Choose another adventure'), () => dispatch({ type: 'adventureSuspend' }), { class: 'adv-primary', 'data-adventure-continue': '' })));
+    const expandedEnding = adventure.data?.practice ? t('Odkrycie i ukończona próba zostały zapisane. Ta rozgrywka była dla przyjemności i nie przyznaje kolejnej wypłaty.', 'Your discovery and completed challenge are saved. This round was for fun and does not award another payout.') : adventure.kind === 'escapeStory' ? t('Wszystkie pomieszczenia tej opowieści są już odkryte! Zachowujesz rozwiązania i zdobytą nagrodę.', 'Every room in this story is now explored! Your discoveries and earned reward are yours to keep.') : adventure.kind === 'islandPuzzle' ? t('Zagadka rozwiązana! Twoja nagroda została dodana do zasobów wyspy.', 'Puzzle solved! Your reward has been added to the island’s resources.') : '';
+    root.append(node('div', { class: 'adv-reward' }, vector(adventureArt(adventure.kind, { title: t('Przygoda ukończona', 'Adventure complete'), className: '' })), node('h4', {}, t('Udało się!', 'You did it!')), node('p', { class: 'adv-stage-help' }, expandedEnding || text(lang, adventure.data?.ending) || t(...({ cargoRain: ['Złapany ładunek jest już w Twoich zasobach. Dobra robota! Osada może działać dalej.', 'The cargo you caught is already in your resources. Well done! Your settlement can keep working.'], treasureMap: ['Mapa zaprowadziła Cię do ukrytego skarbu. Znalezione monety i materiały wesprą rozwój osady.', 'The map led you to a hidden treasure. Its coins and materials will help your settlement grow.'], pirateCannon: ['Droga do portu jest wolna! Uratowany kupiec zacumował przy wyspie i zostawił nagrodę.', 'The route to port is clear! The rescued merchant has docked and left you a reward.'], bridge: ['Most wytrzymał próbę. Mieszkańcy mogą bezpiecznie przejść na drugi brzeg.', 'The bridge passed its test. Residents can safely cross to the other bank.'], signals: ['Kapitan dostrzegł właściwy sygnał. Zagubiony statek bezpiecznie dotarł do portu.', 'The captain recognised your signal. The lost ship safely reached the harbor.'], letters: ['Wszystkie listy dotarły do adresatów. Rodzina spotkała się na nabrzeżu, a mieszkańcy dziękują Ci za pomoc.', 'Every letter reached its recipient. The family has reunited at the quay, and your residents thank you for helping.'], rhythm: ['Koncert rozpoczęty! Port wypełnia muzyka, a mieszkańcy bawią się przy wspólnie przygotowanej melodii.', 'The concert has begun! Music fills the port as residents enjoy the tune you prepared together.'], garden: ['Woda znów dociera do sadzawek. Ogród rozkwitł i stał się nowym miejscem odpoczynku na wyspie.', 'Water reaches the ponds again. The garden has bloomed into a new place to rest on the island.'], cargoBalance: ['Statek bezpiecznie dotarł do portu. Kupiec rozładowuje towary i przekazuje Ci podziękowanie.', 'The ship safely reached the harbor. The merchant is unloading and has a gift to thank you.'] }[adventure.kind] || ['Nagroda trafiła do Twojej osady.', 'Your settlement has received its reward.']))), node('div', { class: 'adv-reward-values' }, ...Object.entries(values).filter(([id, amount]) => RESOURCES[id] && Number(amount) > 0).map(([id, amount]) => node('span', {}, `+${amount} ${rewardUnit(id, Number(amount))}`))), button(t('Wybierz kolejną przygodę', 'Choose another adventure'), () => dispatch({ type: 'adventureSuspend' }), { class: 'adv-primary', 'data-adventure-continue': '' })));
+    if (Number(adventure.data?.residentsAccepted) > 0) root.querySelector('.adv-reward-values')?.append(node('span', { 'data-adventure-residents-accepted': '' }, `${t('Nowi mieszkańcy', 'New residents')}: ${adventure.data.residentsAccepted}`));
+    if (Number(adventure.data?.residentsRequested) > Number(adventure.data?.residentsAccepted || 0)) root.append(node('p', { class: 'adv-status', 'data-adventure-resident-cap': '' }, t(`Przyjęto ${adventure.data.residentsAccepted || 0} z ${adventure.data.residentsRequested} osób, zgodnie z wolnymi miejscami w limicie Ratusza.`, `${adventure.data.residentsAccepted || 0} of ${adventure.data.residentsRequested} people joined, within the Town Hall’s available population places.`)));
     return root;
   }
-  const renderers = { cargoRain: cargoScene, treasureMap: mapScene, pirateCannon: cannonScene, bridge: bridgeScene, signals: signalsScene, letters: lettersScene, rhythm: rhythmScene, garden: gardenScene, cargoBalance: cargoBalanceScene };
+  function expandedScene(adventure) {
+    const controller = createExpandedAdventureScene({ getState: () => state, getRun: active, language: lang, standardScene, send });
+    sceneUpdate = controller.update; sceneDispose = controller.destroy; return controller.element;
+  }
+  const renderers = { cargoRain: cargoScene, treasureMap: mapScene, pirateCannon: cannonScene, bridge: bridgeScene, signals: signalsScene, letters: lettersScene, rhythm: rhythmScene, garden: gardenScene, cargoBalance: cargoBalanceScene, islandPuzzle: expandedScene, escapeStory: expandedScene };
   function render() {
     if (!alive || !state?.adventures) return;
-    const adventure = active(), key = adventure ? `${adventure.id}:${adventure.kind}:${adventure.stage}` : `choices:${allChoices}:${adventureChoices(state).map(choice => `${choice.kind}:${choice.available}:${choice.progress?.current}`).join('|')}`;
+    const adventure = active(), key = adventure ? `${adventure.id}:${adventure.kind}:${adventure.stage}` : `choices:${allChoices}:${adventureChoices(state).map(choice => `${choice.id || choice.kind}:${choice.available}:${choice.progress?.current}:${choice.practice}:${choice.resume}`).join('|')}`;
     if (key !== currentKey) {
       sceneDispose(); sceneDispose = () => {}; sceneUpdate = () => {}; currentKey = key; selectedMap = null; selectedBridge = null;
       footer.replaceChildren();

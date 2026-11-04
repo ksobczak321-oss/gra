@@ -792,7 +792,7 @@ body.reduce-motion .world-hotspot.tutorial-map-target{animation:none!important}
 #island-dialog .help-learning-grid h3{min-height:2.6em}
 #island-dialog .help-learning-grid button.action{display:flex;width:100%;margin:8px 0 0!important;box-sizing:border-box}
 .activity-section-heading [data-open-lighthouse-missions]{font-size:13px;font-weight:800;color:#ffe5ab;border-color:#d2ad69;min-height:32px;padding:5px 10px}
-.theatre-map-scene{position:absolute;left:433px;top:300px;width:104px;height:112px;pointer-events:none;z-index:3;filter:drop-shadow(0 2px 2px #143a2c30)}
+.theatre-map-scene{position:absolute;left:1075px;top:444px;width:114px;height:124px;pointer-events:none;z-index:3;filter:drop-shadow(0 2px 2px #143a2c30)}
 .theatre-map-scene svg{width:100%;height:100%;overflow:visible}
 #island-dialog:has([data-theatre-panel]),#island-dialog:has([data-adventures-panel]){width:min(1200px,calc(100vw - 24px))}
 .activity-adventure-choice{min-height:38px;display:block;width:100%;padding:8px 10px;border:1px solid #a3b7a0;border-radius:8px;background:#244755;color:#ffe8b2;font:650 12px/1.35 inherit;text-align:left;cursor:pointer}
@@ -805,3 +805,6 @@ body.reduce-motion .world-hotspot.tutorial-map-target{animation:none!important}
 /* Happiness is expressed in points; longer Polish units remain readable. */
 .topbar-happiness .topbar-copy strong{font-size:12px;line-height:1.2;white-space:normal;overflow:visible;text-overflow:clip;max-width:82px}
 [data-mobile-hud="happiness"]{white-space:normal;font-size:12px;line-height:1.2}
+
+/* Keep the storage demonstration above the Farm roof and highlight frame. */
+[data-production-penalty="farm"]{top:-62px}

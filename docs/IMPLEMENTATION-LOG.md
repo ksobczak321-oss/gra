@@ -1097,3 +1097,17 @@ Użytkownik polecił „super GO na pre prod”. Wąska allowlista zawiera dokł
 Tag `preprod-0.13.1.0-20261103` jest opublikowany i potwierdzony zdalnie: obiekt `52888386a2233fc326e4fa6e0169b1054c0316d4` rozwiązuje się do `68e9bcd6adf22ab98f963688726a71d4d8a66c6b`. Tag DEV `dev-0.13.1.0-20261103` pozostaje na `13c55a4e4853edf44c185747c1c626ac42c221fc`. Późniejszy commit dokumentacji nie zastępuje źródła wdrożenia ani nie przesuwa tagów.
 
 76plików treści aplikacjiDEV13c55a4 i backend bez zmiany. Lokalnie1221NodePASS (1080+134+7),15bridge,18tracking oraz generatory/Excel13PASS. Pakiet77plików/19410989bajtów TAR`9b49b70d318222ed3740e26aa632975e7a760f5f108cf5f2c0ce4833779b60d4`, manifest`1e960edec80fdc7d89e359700d1c1c29e621369d04f78ed7f80364f681020b6d`; verify/extractPASS. [Pełny odbiór](PREPROD-V30-PROMOTION.md) podaje dokładne joby i oba artefakty tej samej próby oraz rozdzielaZIP/TAR/manifest/nieodczytany digest obrazu. Bez niezależnego odczytu prywatnego receipt lub zapisuFirestore.411kart,59implementacji v29/v30 +Ops1082wdrożone,147ręcznychNOTRUN.
+
+
+## 2026-11-04 — GO DEV0.14.0.0/v31
+
+Zatwierdzono naprawy zebranego flow, rzeczywistą pomoc rekrutacyjną, transport, odporność zapisu, uczenie bez blokad bonusów, godzinny licznik ekspedycji, swobodne20ozdób oraz19rozdziałów i bibliotekę przygód projektu50dni. Integracja i kierunkowe testy są w toku; [raport odbioru](DEV-0.14.0.0-VALIDATION.md) nie przypisuje dawnych wyników nowemu źródłu.449kart/179ręcznychNOTRUN; Excel14 zachowuje historyczne arkusze13. Bez nowej promocji PRE-PROD, resetu kont i PROD.
+
+
+### Doprecyzowane GO PRE-PROD0.14.0.0
+
+Użytkownik wyjaśnił, że polecenie oznacza DEV → PRE-PROD. Usunięto lokalny, nieopublikowany mostPROD i jego testy; nie wykonano operacjiPROD. Istniejący most PRE-PROD rozszerzono wyłącznie o `[preprod:0.14.0.0]`; standardowe bramkiCI/WIF i odczytowy odbiór kont pozostają.450kart/179ręcznychNOTRUN. [Raport promocji](PREPROD-V31-PROMOTION.md) pozostaje PENDING do własnego CI i wdrożenia.
+
+### Lokalny odbiór0.14.0.0 zakończony
+
+1190frontend +134backend +7planszówka=1331NodePASS,141Python i43zestawyChromiumPASS po poprawkach; ostatni test rzeczywistego hosta chroni240sawarii i rozróżnia zwykłą nieobecność. Nowy odbiór mapy/House/parkowanych scen obejmuje12przypadków PL/EN desktop/mobile. Excel14 zwalidowany z zachowanym13.450kart/179ręcznychNOTRUN. NowySHA, własneCI/Pages i PRE-PROD pozostają do odczytu. Pełny eksperyment50dni w toku, bez twierdzenia o150h zabawy.

@@ -199,7 +199,7 @@ export const TOUR_COPY = Object.freeze({
   "building-market": {
     "pl": {
       "title": "Targ",
-      "text": "Wymieniaj towary z grą w obrębie tej samej kategorii. Prowizja wynosi 10%. Od 6. poziomu Ratusza możesz też sprzedawać materiały innym graczom za monety. Możesz ustawić niższą cenę, ale nie wyższą niż podstawowa cena zakupu tych towarów od gry."
+      "text": "Wymieniaj towary z grą w obrębie tej samej kategorii. Prowizja wynosi 10%. Od 6 poziomu Ratusza możesz też sprzedawać materiały innym graczom za monety. Możesz ustawić niższą cenę, ale nie wyższą niż podstawowa cena zakupu tych towarów od gry."
     },
     "en": {
       "title": "Market",
@@ -502,11 +502,11 @@ export const LESSON_COPY = Object.freeze({
   "personal-happiness": {
     "pl": {
       "title": "Znajdź Dom i rozdaj punkty szczęścia",
-      "description": "Znajdź Dom i przekaż zgromadzone punkty szczęścia wszystkim uprawnionym mieszkańcom. Zachowujesz maksymalnie siedem porcji dobowych, naliczanych na koniec dnia Warszawy według liczby mieszkańców mających łóżko. Po rozdaniu pokażemy wpływ punktów na szczęście."
+      "description": "Znajdź Dom i przekaż zgromadzone punkty szczęścia wszystkim uprawnionym mieszkańcom. Jeśli nikt nie może ich teraz otrzymać, kliknij „Zachowaj punkty na później”, aby ukończyć lekcję. Dom przechowuje do siedmiu porcji dobowych, naliczanych o północy według liczby mieszkańców mających łóżko."
     },
     "en": {
       "title": "Find the House and share happiness points",
-      "description": "Find the House and share its saved happiness points with all eligible residents. Save up to seven daily portions, credited at the end of each Warsaw day according to the number of housed residents. After sharing, we will show the effect on happiness."
+      "description": "Find the House and share its saved happiness points with all eligible residents. If nobody can receive them now, choose Keep points for later to finish the lesson. The House stores up to seven daily portions, credited at midnight according to the number of housed residents."
     }
   },
   "upgrade-cost": {
@@ -724,7 +724,7 @@ export const UI_COPY = Object.freeze({
     "en": "Develop the settlement, care for its residents and restore the Lighthouse’s light. Each restoration stage brings new goals: stronger production, a larger settlement and better living conditions. Every completed task brings the whole island closer to its next achievement."
   },
   "lighthouseDescription": {
-    "pl": "Latarnia jest sercem wyspy i jednym z głównych celów jej rozwoju. Rozwijaj produkcję, przygotowuj zapasy i angażuj mieszkańców w kolejne misje, aby przywracać jej dawny blask. Ukończona rozbudowa na pewien czas zwiększa szczęście wszystkich mieszkańców i podwaja produkcję materiałów. Mieszkańcy też chętnie ją zwiedzają — po powrocie otrzymają premię szczęścia.",
+    "pl": "Latarnia jest sercem wyspy i jednym z głównych celów jej rozwoju. Rozwijaj produkcję, przygotowuj zapasy i angażuj mieszkańców w kolejne misje, aby przywracać jej dawny blask. Ukończona rozbudowa na pewien czas zwiększa szczęście wszystkich mieszkańców i podwaja produkcję materiałów. Mieszkańcy też chętnie ją zwiedzają — po powrocie ze zwiedzania otrzymają premię szczęścia.",
     "en": "The Lighthouse is the heart of the island and one of its main development goals. Grow production, prepare supplies and involve residents in new missions to restore its light. A completed upgrade improves every resident’s happiness for a while and doubles material production. Residents also enjoy visiting it and return with a happiness benefit."
   },
   "houseDescription": {

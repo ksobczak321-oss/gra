@@ -1,5 +1,5 @@
-import { availableGoods } from './harborlight-v1-logistics.js?v=frontend-v30';
-import { missionRewardText } from './harborlight-v1-missions.js?v=frontend-v30';
+import { availableGoods } from './harborlight-v1-logistics.js?v=frontend-v31';
+import { missionRewardText } from './harborlight-v1-missions.js?v=frontend-v31';
 
 const NAMES = {
   coins: ['Monety', 'Coins'], wood: ['Drewno', 'Wood'], stone: ['Kamień', 'Stone'],
@@ -53,7 +53,7 @@ function styles() {
 
 /** Native PL/EN presentation only. Every mutation goes through the game's
  * perform callback; this panel never grants a level, reward or receipt itself. */
-export function createLighthouseMissionsPanel({ state, missionStatus, perform = () => false, onOpenBuilding = () => {}, onChange, language: requestedLanguage } = {}) {
+export function createLighthouseMissionsPanel({ state, missionStatus, perform = () => false, onOpenBuilding = () => {}, onOpenAdventure = () => {}, onChange, language: requestedLanguage } = {}) {
   styles();
   const language = requestedLanguage === 'en' || requestedLanguage === 'pl' ? requestedLanguage : state?.settings?.language === 'en' ? 'en' : 'pl';
   const t = (pl, en) => language === 'en' ? en : pl;
@@ -88,6 +88,9 @@ export function createLighthouseMissionsPanel({ state, missionStatus, perform = 
     } finally { pending = false; render(); }
   } }, label);
   const openBuilding = id => node('button', { type: 'button', class: 'secondary', 'data-mission-open-building': id, onclick: () => onOpenBuilding(id) }, t('Otwórz: ', 'Open: ') + name(id));
+  const openAdventure = (objective,assistance=null) => node('button',{type:'button',class:'primary','data-mission-open-adventure':objective.kind||'escapeStory',
+    onclick:()=>onOpenAdventure(objective.kind||'escapeStory',{...(objective.storyId?{storyId:objective.storyId}:{}),...(objective.puzzleKind?{puzzleKind:objective.puzzleKind}:{}),
+      ...(assistance?{rescueContext:assistance}:{})})},assistance?t('Wyrusz z pomocą','Start the rescue'):t('Rozpocznij przygodę','Start the adventure'));
 
   function objectiveInfo(current, box) {
     const task = current.task, objective = task.objective || {}, requirements = task.requirements || objective.requirements || {};
@@ -98,11 +101,26 @@ export function createLighthouseMissionsPanel({ state, missionStatus, perform = 
       box.append(node('p', { 'data-mission-objective-progress': '' }, `${objective.type === 'production' ? t('Wyprodukowano', 'Produced') : t('Dostarczono do Magazynu', 'Delivered to central storage')}: ${name(objective.resource)} ${count(current.progress)} / ${count(objective.count)}`),
         node('progress', { value: whole(current.progress), max: Math.max(1, whole(objective.count)), 'aria-label': t('Postęp zadania', 'Task progress') }), openBuilding(PRODUCER[objective.resource] || 'warehouse'));
       if (objective.type === 'delivered') box.append(openBuilding('warehouse'));
+      if(objective.type==='delivered')box.append(node('p',{class:'lighthouse-mission-muted'},t('W szczegółach Magazynu ustaw priorytet odbioru: ','In Warehouse details prioritize collection of: ')+name(objective.resource)+t('. Zadbaj o wolne miejsce na ten towar i gotowych tragarzy.','. Keep room for this material and ready warehouse carriers.')));
     } else if (objective.type === 'assign') {
       box.append(node('p', { 'data-mission-objective-progress': '' }, `${name(objective.building)}: ${t('przydzieleni mieszkańcy', 'assigned residents')} ${count(state?.buildings?.[objective.building]?.workers)} / ${count(objective.count)}`), openBuilding(objective.building));
-    } else if (objective.type === 'invitation') {
+    } else if (objective.type === 'invitation' || objective.type === 'recruitment') {
       const progress = Math.min(whole(objective.count), Math.max(0, whole(state?.lighthouseMissions?.invited) - whole(objective.baseline)));
-      box.append(node('p', { 'data-mission-objective-progress': '' }, `${t('Zaproszeni mieszkańcy', 'Invited residents')}: ${count(progress)} / ${count(objective.count)}`), openBuilding('townhall'));
+      box.append(node('p', { 'data-mission-objective-progress': '' }, objective.targetPopulation?`${t('Mieszkańcy na wyspie','Island residents')}: ${count(state.population)} / ${count(objective.targetPopulation)}`:`${t('Przyjęci mieszkańcy', 'Welcomed residents')}: ${count(progress)} / ${count(objective.count)}`), openBuilding('house'));
+      if(objective.type==='recruitment')box.append(node('p',{class:'lighthouse-mission-muted'},t('Możesz zaprosić osobę w Domu albo przyjąć załogę po prawdziwej wyprawie ratunkowej. Przy pełnym limicie pomożesz sąsiedniej osadzie.','Invite a resident at Home or welcome a crew after a real rescue adventure. At the population limit you can help the neighboring settlement.')));
+    } else if(objective.type==='review'){
+      if(objective.building)box.append(openBuilding(objective.building));
+      box.append(action(t('Plan przeczytany — przejdź dalej','Plan read — continue'),'missionReview',{'data-mission-review':task.id,class:'primary'}));
+    } else if(objective.type==='adventure'){
+      box.append(node('p',{class:'lighthouse-mission-muted'},t('Postęp zaliczy się po rzeczywistym rozwiązaniu przygody. Możesz wracać do zapisanych wskazówek i korzystać z bezpłatnych podpowiedzi.','Progress counts after you actually solve the adventure. You can return to saved clues and use free hints.')),
+        openAdventure(objective,objective.recruitmentTarget||current.kind!=='main'?current.assistance:null));
+    } else if(objective.type==='check'){
+      if(objective.building)box.append(openBuilding(objective.building));
+      box.append(node('p',{class:'lighthouse-mission-muted'},reason(current)));
+    } else if(objective.type==='shipping'){
+      const completed=(state.dock?.orders||[]).filter(order=>order.id>objective.baseline&&order.direction===(objective.direction||'buy')&&order.stage==='complete'&&order.delivered>=order.amount).length;
+      box.append(node('p',{'data-mission-objective-progress':''},`${t('Odebrane zakupy','Received purchases')}: ${count(completed)} / ${count(objective.count)}`),openBuilding('dock'),
+        node('p',{class:'lighthouse-mission-muted'},t('Wybierz mały zakup u gry, przygotuj pracownika Portu i miejsce w Magazynie. Zadanie zalicza dopiero rzeczywiste zakończenie dostawy.','Choose a small purchase from the game, prepare a Harbor worker and Warehouse space. The objective counts only an actually completed delivery.')));
     }
     const entries = Object.entries(requirements).filter(([, n]) => n > 0);
     if (!entries.length) return;
@@ -111,7 +129,7 @@ export function createLighthouseMissionsPanel({ state, missionStatus, perform = 
       const grid = node('div', { class: 'lighthouse-mission-grid' });
       for (const [resource, required] of entries) grid.append(node('div', {}, node('span', {}, name(resource)), node('strong', { 'data-mission-requirement': resource }, objective.type === 'stock' ? `${count(available(resource))} / ${count(required)}` : count(required))));
       box.append(grid);
-      if (objective.type === 'stock') box.append(node('p', { class: 'lighthouse-mission-muted' }, t('Wystarczy zgromadzić wolny zapas. Ten etap nie pobiera zasobów; wykorzystasz je przy właściwej akcji.', 'Gather the unreserved stock. This step does not spend it; the actual action will use it.')), openBuilding(current.kind === 'main' && current.index === 5 ? 'townhall' : 'warehouse'));
+      if (objective.type === 'stock') box.append(node('p', { class: 'lighthouse-mission-muted' }, t('Wystarczy zgromadzić wolny zapas. Ten etap nie pobiera zasobów; wykorzystasz je przy właściwej akcji.', 'Gather the unreserved stock. This step does not spend it; the actual action will use it.')), openBuilding(!current.task.campaignVersion&&current.kind === 'main' && current.index === 5 ? 'house' : 'warehouse'));
       return;
     }
     for (const [resource, required] of entries) {
@@ -135,6 +153,17 @@ export function createLighthouseMissionsPanel({ state, missionStatus, perform = 
     if (status.story) root.append(node('section', { class:'lighthouse-mission-box', 'data-mission-story':status.story.id },
       node('h4', {}, localized(status.story,'title')), node('p', {}, localized(status.story,'description')),
       node('p', { class:'lighthouse-mission-muted' }, t('Ta historia poprowadzi Cię przez 8 zadań rozwijających wyspę i Latarnię. Możesz też swobodnie rozwijać osadę poza misją.', 'This story guides you through eight tasks developing the island and the Lighthouse. You remain free to develop the settlement outside the mission.'))));
+    if(status.previewSteps?.length){
+      const preview=node('details',{'data-campaign-preview':''},node('summary',{},t('Plan całego rozdziału — 8 etapów','The whole chapter plan — 8 steps')));
+      for(const step of status.previewSteps){
+        const section=node('section',{class:'lighthouse-mission-box','data-campaign-preview-step':step.index},node('strong',{},`${count(step.index)}. ${localized(step,'title')}`));
+        if(step.complete)section.append(node('p',{},t('Warunek już spełniony.','This requirement is already met.')));
+        for(const item of step.prerequisites||[])section.append(node('p',{class:'lighthouse-mission-muted'},language==='pl'?item.messagePl:item.message));
+        const missing=Object.entries(step.missing||{});if(missing.length)section.append(node('p',{class:'lighthouse-mission-muted'},t('Do przygotowania: ','To prepare: ')+missing.map(([id,n])=>`${name(id)} ${count(n)}`).join(' · ')));
+        section.append(node('p',{class:'lighthouse-mission-muted'},step.requiresPayment?t('Koszt jest pobierany tylko przy właściwej akcji.','The cost is charged only by the actual action.'):t('Ten etap nie pobiera opłaty za samo rozpoczęcie.','Starting this step does not charge a fee.')));preview.append(section);
+      }
+      root.append(preview);
+    }
     const path = node('div', { class: 'lighthouse-mission-path', 'aria-label': t('Ścieżki misji Latarni', 'Lighthouse mission paths') });
     for (const [kind, total] of [['main', 8], ['support', 5], ['rescue', 3]]) {
       const frame = status.kind === kind ? status : status.parents?.find(parent => parent.kind === kind);
@@ -152,16 +181,19 @@ export function createLighthouseMissionsPanel({ state, missionStatus, perform = 
       node('h4', {}, localized(task, 'title')), node('p', {}, localized(task, 'description')),
       node('p', { 'data-mission-reward':'' }, `${t('Nagroda za ten etap', 'Reward for this step')}: ${missionRewardText(task.reward,language)}`));
     if (status.kind !== 'main') box.append(node('p', { class: 'lighthouse-mission-notice' }, t('Mieszkańcy pomagają dokończyć przygotowania. Wykonaj tę ścieżkę, a wrócisz do dalszego rozwoju wyspy.', 'The residents are helping you finish preparations. Complete this path to return to the island’s next goal.')));
-    box.append(node('p', { 'data-mission-timing': '' }, status.active ? t('Pozostały czas: ', 'Time remaining: ') : t('Czas na etap po rozpoczęciu: ', 'Time allowed after starting: '),
+    if(task.untimed)box.append(node('p',{'data-mission-timing':''},t('Przygotowania bez limitu czasu. Postęp zostaje zapisany.','Preparation has no time limit. Your progress is saved.')));
+    else box.append(node('p', { 'data-mission-timing': '' }, status.active ? t('Pozostały czas: ', 'Time remaining: ') : t('Czas na etap po rozpoczęciu: ', 'Time allowed after starting: '),
       node('strong', { 'data-mission-countdown': task.id, 'data-mission-deadline': task.deadline ?? '', 'data-mission-language': language }, formatMissionDuration(status.active ? status.remaining : status.plan?.duration || task.duration, language))));
     objectiveInfo(status, box);
-    if (!status.active) {
+    if(status.assistance&&task.objective.type!=='adventure')box.append(openAdventure({kind:'escapeStory',storyId:status.assistance.storyId||'captainless-ship'},status.assistance),node('p',{class:'lighthouse-mission-muted'},t('Pomoc wymaga ukończenia wyprawy. Jej nagroda uzupełnia wskazany brak tylko raz, w granicach celu i limitu Ratusza.','Assistance requires completing the adventure. Its reward fills the displayed shortfall once within the objective and Town Hall limits.')));
+    if (!status.active&&task.objective.type!=='review') {
       if (!status.canStart) box.append(node('p', { class: 'lighthouse-mission-notice', 'data-mission-feasibility': '' }, reason(status)));
       const staffing = Object.entries(status.plan?.staffing || {}).filter(([, n]) => n > 0);
       if (staffing.length) box.append(node('p', { class: 'lighthouse-mission-muted', 'data-mission-staffing': '' }, t('Plan przygotowania — potrzebna obsada: ', 'Preparation plan — workers needed: ') + staffing.map(([id, n]) => `${name(id)}: ${count(n)}`).join(' · ')));
       const retry = task.status === 'retry';
       box.append(action(retry ? t('Spróbuj ponownie', 'Try again') : t('Rozpocznij etap', 'Start step'), retry ? 'missionRetry' : 'missionStart', { class: 'primary', disabled: !status.canStart, 'data-mission-start': task.id }));
-    } else box.append(node('p', { class: 'lighthouse-mission-muted', 'data-mission-active': '' }, t('Etap jest aktywny. Wykonaj wskazaną czynność w grze — postęp i nagroda zostaną rozliczone automatycznie.', 'This step is active. Perform the stated action in the game; progress and the reward are recorded automatically.')));
+    } else if(status.active)box.append(node('p', { class: 'lighthouse-mission-muted', 'data-mission-active': '' }, t('Etap jest aktywny. Wykonaj wskazaną czynność w grze — postęp i nagroda zostaną rozliczone automatycznie.', 'This step is active. Perform the stated action in the game; progress and the reward are recorded automatically.')));
+    if(status.kind!=='rescue'&&task.objective.type!=='review'&&(!status.canStart||status.active))box.append(action(t('Przygotuj plan pomocy','Prepare an assistance plan'),'missionRequestHelp',{'data-mission-request-help':task.id,class:'secondary'}));
     root.append(box);
   }
   // The owner can refresh this existing panel on its normal world-clock tick.

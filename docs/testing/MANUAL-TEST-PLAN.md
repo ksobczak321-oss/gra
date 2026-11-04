@@ -201,6 +201,38 @@ TC26 jest obecnie testem zachowania wcześniejszych dwóch światów podczas mig
 | [HL-TC-0145 — DEV 0.13.1.0 wymaga własnych testów i dowodów publikacji nowej grafiki](manual/HL-TC-0145.md) | Odbiór wydania | P0 | READY | NOT RUN |
 | [HL-TC-0146 — Plac Teatru zapisuje się automatycznie i pozwala kontynuować po dniach](manual/HL-TC-0146.md) | Trwała kompozycja | P0 | READY | NOT RUN |
 | [HL-TC-0147 — Dostępne środki pozwalają rozwijać Teatr bez twardego końca na poziomie20](manual/HL-TC-0147.md) | Dalszy rozwój Teatru | P0 | READY | NOT RUN |
+| [HL-TC-0148 — Rozdział pokazuje osiągalne zależności przed terminem i wpłatą](manual/HL-TC-0148.md) | Wykonalność misji | P0 | READY | NOT RUN |
+| [HL-TC-0149 — Misja zaproszenia otwiera Dom bez niepotrzebnego Ratusza 4](manual/HL-TC-0149.md) | Nawigacja rekrutacji | P0 | READY | NOT RUN |
+| [HL-TC-0150 — Cena rekrutacji odświeża się przed startem i jest spójna po akceptacji](manual/HL-TC-0150.md) | Koszt rekrutacji | P0 | READY | NOT RUN |
+| [HL-TC-0151 — Pomoc 5 i ratunek 3 odpowiadają na konkretny brak](manual/HL-TC-0151.md) | Pomoc i ratunek | P0 | READY | NOT RUN |
+| [HL-TC-0152 — Ratunek przyjmuje ludzi i rozlicza właściwy cel rekrutacji](manual/HL-TC-0152.md) | Rekrutacja z przygody | P0 | READY | NOT RUN |
+| [HL-TC-0153 — Pełny limit i pasażerowie mają pozytywną alternatywę celu](manual/HL-TC-0153.md) | Maksymalna populacja | P0 | READY | NOT RUN |
+| [HL-TC-0154 — Próg 54 osób jest przygotowany przed awansem Ratusza 3→4](manual/HL-TC-0154.md) | Ludność i łóżka | P0 | READY | NOT RUN |
+| [HL-TC-0155 — Pełny Młyn jest opróżniany mimo aktywnej budowy](manual/HL-TC-0155.md) | Transport żywności | P0 | READY | NOT RUN |
+| [HL-TC-0156 — Starszy projekt turbo zachowuje opłatę i rusza z bieżącą ekipą](manual/HL-TC-0156.md) | Starsze budowy | P0 | READY | NOT RUN |
+| [HL-TC-0157 — Opłacony plan uruchamia się po końcu pakietu](manual/HL-TC-0157.md) | Planowanie | P0 | READY | NOT RUN |
+| [HL-TC-0158 — Pojemność misji uwzględnia towar, jedzenie i rezerwacje](manual/HL-TC-0158.md) | Magazyn i cele | P0 | READY | NOT RUN |
+| [HL-TC-0159 — Odrzucony zapis ma działającą ścieżkę potwierdzonego odczytu](manual/HL-TC-0159.md) | Odzyskiwanie chmury | P0 | READY | NOT RUN |
+| [HL-TC-0160 — Stara belka oczekiwania znika po udanym zapisie](manual/HL-TC-0160.md) | Komunikaty chmury | P1 | READY | NOT RUN |
+| [HL-TC-0161 — Szybkie ruchy przy wolnym ACK nie cofają nowszej sceny](manual/HL-TC-0161.md) | Płynność i nagrody | P0 | READY | NOT RUN |
+| [HL-TC-0162 — Pełne 100 szczęścia nie zatrzymuje praktycznej lekcji](manual/HL-TC-0162.md) | Nauka szczęścia | P0 | READY | NOT RUN |
+| [HL-TC-0163 — Bonusy i legalne rezerwacje nie blokują finału 25 lekcji](manual/HL-TC-0163.md) | Finał nauki | P0 | READY | NOT RUN |
+| [HL-TC-0164 — Buźka nad Gospodarstwem ma poprawną wysokość na mapie i w tutorialu](manual/HL-TC-0164.md) | Mapa producentów | P1 | READY | NOT RUN |
+| [HL-TC-0165 — Teatr i jego obszar kliknięcia są w nowym miejscu na mapie](manual/HL-TC-0165.md) | Mapa Teatru | P1 | READY | NOT RUN |
+| [HL-TC-0166 — Poprawione opisy Targu i Latarni są widoczne po polsku](manual/HL-TC-0166.md) | Redakcja tekstów | P2 | READY | NOT RUN |
+| [HL-TC-0167 — Górne kontrolki Teatru są czytelne na telefonie](manual/HL-TC-0167.md) | Układ Teatru | P1 | READY | NOT RUN |
+| [HL-TC-0168 — Dekorację można swobodnie przeciągać myszą i dotykiem](manual/HL-TC-0168.md) | Przestawianie Teatru | P0 | READY | NOT RUN |
+| [HL-TC-0169 — Plac bazowy, katalog i starsza kolekcja tworzą spójny ogród](manual/HL-TC-0169.md) | Personalizacja Teatru | P1 | READY | NOT RUN |
+| [HL-TC-0170 — Godzinny licznik przetrwa wypłatę, przegraną, wyjście i zmianę wyspy](manual/HL-TC-0170.md) | Trudność na koncie | P0 | READY | NOT RUN |
+| [HL-TC-0171 — Wspólny budżet nie odnawia się między grami i wyspami](manual/HL-TC-0171.md) | Pule nagród | P0 | READY | NOT RUN |
+| [HL-TC-0172 — Łap ładunek rozlicza pojedynczy klik bez duplikatów](manual/HL-TC-0172.md) | Sterowanie ładunkiem | P0 | READY | NOT RUN |
+| [HL-TC-0173 — Escape room wymaga rozwiązania powiązanych pomieszczeń](manual/HL-TC-0173.md) | Zagadki przyczynowe | P0 | READY | NOT RUN |
+| [HL-TC-0174 — Katalog opowieści odpowiada poziomom i pozwala kontynuować fabułę](manual/HL-TC-0174.md) | Ścieżka1–20 | P1 | READY | NOT RUN |
+| [HL-TC-0175 — Nowe mechaniki weryfikują rzeczywiste rozwiązania](manual/HL-TC-0175.md) | Biblioteka mechanik | P0 | READY | NOT RUN |
+| [HL-TC-0176 — Warianty zachowują dane po wznowieniu i mają sprawdzone rozwiązania](manual/HL-TC-0176.md) | Generowanie wariantów | P0 | READY | NOT RUN |
+| [HL-TC-0177 — Cel 50 dni ma odrębny raport kosztów, ludności i zawartości](manual/HL-TC-0177.md) | Plan i balans | P0 | READY | NOT RUN |
+| [HL-TC-0178 — Drogi poboczne i migracja zachowują główny postęp](manual/HL-TC-0178.md) | Ciągłość i gałęzie | P0 | READY | NOT RUN |
+| [HL-TC-0179 — Wydanie v31 ma własne dowody i nie odznacza ręcznych prób](manual/HL-TC-0179.md) | Odbiór wydania | P0 | READY | NOT RUN |
 
 ## Raport i zgłoszenia
 

@@ -362,7 +362,7 @@ def choice_and_ad_acceptance(browser):
                 assert after['worldTimeMs'] >= before['worldTimeMs'] + 10000
                 before_food = before['resources']['food'] + before['foodCredit']
                 after_food = after['resources']['food'] + after['foodCredit']
-                food_rate = page.evaluate('async state => {const M=await import("./harborlight-v1-state.js?v=frontend-v30");return M.resourceRates(state).food.net;}', before)
+                food_rate = page.evaluate('async state => {const M=await import("./harborlight-v1-state.js?v=frontend-v31");return M.resourceRates(state).food.net;}', before)
                 assert food_rate < 0
                 assert abs(after_food - (before_food + food_rate * 10 / 3600)) < .001, (before_food, after_food, food_rate)
             assert run_of(after)['adPause'] is None

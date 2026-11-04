@@ -2,10 +2,13 @@
 // All wins are derived from concrete inputs, physics or actual mini-game boards.
 // Rewarded-ad authorizations belong to the caller's verified provider flow;
 // an action's `verified` field is never accepted as proof.
-import { grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v30';
+import { grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v31';
 import { BRIDGE_NODES, BRIDGE_HINT, bridgeEdgeAllowed, normalizedBridgeEdges, testBridge,
-  createGardenPuzzle, gardenFlow, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v30';
-export { BRIDGE_NODES, BRIDGE_HINT, pipePorts, testBridge, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v30';
+  createGardenPuzzle, gardenFlow, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v31';
+export { BRIDGE_NODES, BRIDGE_HINT, pipePorts, testBridge, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v31';
+
+import * as Journey from './harborlight-v1-adventure-journey.js?v=frontend-v31';
+export { getIslandPuzzleView, getCurrentStoryRoom, getStoryCatalog, ISLAND_PUZZLE_CATALOG, STORY_CATALOG, adventureRewardStatus, JOURNEY_RULES } from './harborlight-v1-adventure-journey.js?v=frontend-v31';
 
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const GOODS = ['coins', ...MATERIALS];
@@ -125,6 +128,7 @@ const MESSAGES = [
   ['Ładunek jest zrównoważony. Teraz wybierz bezpieczną trasę.', 'The cargo is balanced. Now choose a safe route.'],
   ['Złapany ładunek został od razu dodany do zasobów.', 'Caught cargo has been added straight to your resources.'],
   ['Nagroda została dodana do Twoich zasobów. Główna misja trwa dalej.', 'The reward has been added to your resources. Your main mission continues.'],
+  ...Journey.JOURNEY_MESSAGES,
   ...ADVENTURE_CATALOG.map(item => [`Przygoda ukończona: ${item.title.pl}`, `Adventure complete: ${item.title.en}`])
 ];
 export const ADVENTURE_TRANSLATIONS = Object.freeze(Object.fromEntries(MESSAGES.map(([pl, en]) => [en, pl])));
@@ -132,7 +136,7 @@ const ENGLISH_MESSAGES = Object.freeze(Object.fromEntries(MESSAGES));
 export function adventureMessage(message, language = 'pl') {
   return language === 'pl' ? ADVENTURE_TRANSLATIONS[message] || message : ENGLISH_MESSAGES[message] || message;
 }
-const KINDS = ADVENTURE_CATALOG.map(item => item.kind);
+const KINDS = [...ADVENTURE_CATALOG.map(item => item.kind), 'islandPuzzle', 'escapeStory'];
 const STAGES = { cargoRain: ['catch'], treasureMap: ['pieces', 'arrange', 'search'], pirateCannon: ['battle'],
   bridge: ['build'], signals: ['memorize', 'repeat'], letters: ['deliver'], rhythm: ['find', 'listen', 'perform'], garden: ['irrigate'], cargoBalance: ['load', 'route'] };
 const SPOTS = ['farm', 'lumber', 'quarry', 'windmill', 'sawmill', 'warehouse', 'lighthouse', 'theatre'];
@@ -195,10 +199,12 @@ function makeRun(state, kind) {
   return run;
 }
 function normalizeRun(raw, clock) {
+  if (Journey.isJourneyKind(raw?.kind)) return Journey.normalizeJourneyRun(raw, clock);
   if (!plain(raw) || !KINDS.includes(raw.kind) || typeof raw.id !== 'string' || !/^adventure-\d+$/.test(raw.id)) return null;
   const kind = raw.kind, stage = [...STAGES[kind], 'complete'].includes(raw.stage) ? raw.stage : STAGES[kind][0];
-  const seed = whole(raw.seed, 1, 0xffffffff), startedAt = finite(raw.startedAt, clock, 0, clock);
-  const result = { id: raw.id, kind, stage, seed, startedAt, claimed: raw.claimed === true || stage === 'complete', data: makeData(kind, seed, startedAt) };
+  const recoveryPauseRemaining = finite(raw.recoveryPauseRemaining, 0, 0, 2678400);
+  const seed = whole(raw.seed, 1, 0xffffffff), startedAt = finite(raw.startedAt, clock, 0, clock + recoveryPauseRemaining);
+  const result = { id: raw.id, kind, stage, seed, startedAt, ...(recoveryPauseRemaining > 0 ? { recoveryPauseRemaining } : {}), claimed: raw.claimed === true || stage === 'complete', data: makeData(kind, seed, startedAt) };
   const saved = plain(raw.data) ? raw.data : {}, data = result.data;
   if (kind === 'cargoRain') {
     for (const drop of data.drops) drop.caught = saved.drops?.find(item => item?.id === drop.id)?.caught === true;
@@ -211,7 +217,7 @@ function normalizeRun(raw, clock) {
     for (const ship of data.ships) ship.alive = saved.ships?.find(item => item?.id === ship.id)?.alive !== false;
     data.shotSequence = whole(saved.shotSequence); data.shots = whole(saved.shots);
     data.projectiles = (Array.isArray(saved.projectiles) ? saved.projectiles : []).slice(0, 12).filter(plain).map(item => ({ id: whole(item.id), x: finite(item.x, 50, -10, 110), y: finite(item.y, 94, -10, 110), vx: finite(item.vx, 0, -60, 60), vy: finite(item.vy, -58, -60, 0), age: finite(item.age, 0, 0, 2.4) }));
-    positionShips(result, clock);
+    positionShips(result, clock + recoveryPauseRemaining);
   } else if (kind === 'bridge') {
     data.extraPurchased = whole(saved.extraPurchased, 0, ADVENTURE_RULES.bridgeMaximumExtraBeams); data.budget += data.extraPurchased;
     data.edges = normalizedBridgeEdges(saved.edges).slice(0, data.budget);
@@ -225,7 +231,7 @@ function normalizeRun(raw, clock) {
   } else if (kind === 'rhythm') {
     for (const instrument of data.instruments) instrument.found = saved.instruments?.find(item => item?.id === instrument.id)?.found === true;
     data.beats = (Array.isArray(saved.beats) ? saved.beats : []).slice(0, 5).map(value => whole(value, 0, 2));
-    data.performStartedAt = Number.isFinite(saved.performStartedAt) ? finite(saved.performStartedAt, clock, 0, clock) : null;
+    data.performStartedAt = Number.isFinite(saved.performStartedAt) ? finite(saved.performStartedAt, clock, 0, clock + recoveryPauseRemaining) : null;
     data.playUntil = Number.isFinite(saved.playUntil) ? finite(saved.playUntil) : null; data.attempts = whole(saved.attempts);
   } else if (kind === 'garden') {
     data.tiles.forEach((tile, index) => { tile.rotation = whole(saved.tiles?.[index]?.rotation, tile.rotation, 3); }); data.wet = gardenFlow(data);
@@ -252,11 +258,12 @@ export function normalizeAdventures(state, raw = state) {
     effects: (Array.isArray(saved.effects) ? saved.effects : []).filter(item => plain(item) && typeof item.kind === 'string').slice(0, 24).map(item => ({ kind: item.kind.slice(0, 50), at: finite(item.at), count: whole(item.count, 1) })),
     adReceipts: [...new Set((Array.isArray(saved.adReceipts) ? saved.adReceipts : []).filter(value => typeof value === 'string'))].slice(-32) };
   for (const kind of KINDS) { const run = normalizeRun(saved.parked?.[kind], clock); if (run && run.kind !== state.adventures.active?.kind) state.adventures.parked[kind] = run; }
+  Journey.normalizeJourneyFields(state.adventures, saved, clock);
   const runs = [state.adventures.active, ...Object.values(state.adventures.parked)].filter(Boolean);
   state.adventures.sequence = Math.max(state.adventures.sequence, ...runs.map(run => whole(Number(run.id.slice(10)))));
   return state.adventures;
 }
-const ensure = state => state.adventures?.version === 1 ? state.adventures : normalizeAdventures(state);
+const ensure = state => state.adventures?.version === 1 && state.adventures.completedPuzzles && state.adventures.completedEscapeStories && Array.isArray(state.adventures.libraryReceipts) ? state.adventures : normalizeAdventures(state);
 function notify(state, title, message) {
   state.notifications ||= []; state.notificationSequence = whole(state.notificationSequence) + 1;
   state.notifications.unshift({ id: state.notificationSequence, kind: 'adventure-complete', title: adventureMessage(title, 'en'), message: adventureMessage(message, 'en'), at: state.activeSeconds || 0, read: false }); state.notifications.length = Math.min(100, state.notifications.length);
@@ -284,7 +291,7 @@ function complete(state, run) {
   state.adventures.cooldowns[run.kind] = state.adventures.clock + (run.kind === 'cargoRain' ? ADVENTURE_RULES.cargoRainCooldownSeconds : ADVENTURE_RULES.ordinaryCooldownSeconds);
   const catalog = ADVENTURE_CATALOG.find(item => item.kind === run.kind);
   notify(state, `Przygoda ukończona: ${catalog.title.pl}`, run.kind === 'cargoRain' ? 'Złapany ładunek został od razu dodany do zasobów.' : 'Nagroda została dodana do Twoich zasobów. Główna misja trwa dalej.');
-  return good('Brawo! Nagroda została dodana do Twoich zasobów.', { completed: true, reward, effect: run.data.effect, coinSource: 'adventure' });
+  return good('Brawo! Nagroda została dodana do Twoich zasobów.', { completed: true, kind: run.kind, runId: run.id, completionReceiptId: `legacy-adventure:${run.id}`, reward, effect: run.data.effect, coinSource: 'adventure' });
 }
 function stageProgress(state, kind, run) {
   if (kind === 'treasureMap') return { current: state.adventures.progress.mapPieces.length, total: 4 };
@@ -302,7 +309,7 @@ export function adventureChoices(state) {
     const remaining = Math.max(0, adventures.cooldowns[item.kind] - adventures.clock);
     return { ...item, available: !remaining || (!!run && run.stage !== 'complete'), reason: remaining ? 'cooldown' : null, cooldownSeconds: remaining,
       resume: !!run && run.stage !== 'complete', progress: stageProgress(state, item.kind, run), completed: adventures.completed[item.kind] };
-  });
+  }).concat(Journey.journeyChoices(state));
 }
 export function adventureStatus(state) {
   const adventures = ensure(state); return { ...adventures, choices: adventureChoices(state), bridgeHint: BRIDGE_HINT };
@@ -340,7 +347,16 @@ export function advanceAdventures(state, seconds) {
   if (!Number.isFinite(seconds) || seconds < 0) return;
   const from = adventures.clock; adventures.clock += seconds;
   for (const run of [adventures.active, ...Object.values(adventures.parked)].filter(Boolean)) {
-    if (run.kind === 'pirateCannon' && run.stage !== 'complete') advanceCannon(state, run, seconds, from);
+    const paused = Math.min(seconds, finite(run.recoveryPauseRemaining));
+    if (paused > 0) { run.recoveryPauseRemaining -= paused; if (run.recoveryPauseRemaining < EPS) delete run.recoveryPauseRemaining; }
+    const activeSeconds = seconds - paused;
+    if (Journey.isJourneyKind(run.kind)) {
+      // A suspended library board is a saved checkpoint, not a background
+      // physics simulation. The original nine adventures retain their timers.
+      if (run === adventures.active) Journey.advanceJourney(state, run, activeSeconds);
+      continue;
+    }
+    if (run.kind === 'pirateCannon' && run.stage !== 'complete') advanceCannon(state, run, activeSeconds, from + paused);
     refreshStages(state, run);
   }
 }
@@ -399,7 +415,7 @@ function start(state, kind) {
   if (adventures.active?.kind === kind && adventures.active.stage !== 'complete') return good('Wracasz do rozpoczętej przygody.', { adventureId: adventures.active.id });
   const parked = adventures.parked[kind];
   if ((!parked || parked.stage === 'complete') && adventures.cooldowns[kind] > adventures.clock + EPS) return bad('Ta przygoda odpoczywa. Wybierz na razie inną.', 'adventure-cooldown');
-  if (adventures.active && adventures.active.stage !== 'complete') adventures.parked[adventures.active.kind] = adventures.active;
+  if (adventures.active && adventures.active.stage !== 'complete') adventures.parked[Journey.journeyRunKey(adventures.active)] = adventures.active;
   adventures.active = parked && parked.stage !== 'complete' ? parked : makeRun(state, kind);
   delete adventures.parked[kind]; refreshStages(state, adventures.active);
   return good('Przygoda rozpoczęta. Główna misja trwa dalej.', { adventureId: adventures.active.id });
@@ -429,10 +445,12 @@ function extraBridgeBeam(state, action, context) {
 export function adventureAction(state, action, context = {}) {
   if (typeof action?.type !== 'string' || !action.type.startsWith('adventure')) return null;
   ensure(state);
+  const journeyResult = Journey.journeyAction(state, action, context);
+  if (journeyResult !== null) return journeyResult;
   if (action.type === 'adventureStart') return start(state, action.kind);
   if (action.type === 'adventureSuspend') {
     const active = state.adventures.active;
-    if (active && active.stage !== 'complete') state.adventures.parked[active.kind] = active;
+    if (active && active.stage !== 'complete') state.adventures.parked[Journey.journeyRunKey(active)] = active;
     state.adventures.active = null; return good('Postęp przygody został zachowany.');
   }
   if (action.type === 'adventureBridgeExtra') return extraBridgeBeam(state, action, context);
@@ -551,4 +569,25 @@ export function adventureAction(state, action, context = {}) {
     run.stage = 'route'; return good('Ładunek jest zrównoważony. Teraz wybierz bezpieczną trasę.');
   }
   return bad('Nieznane działanie w przygodzie.');
+}
+
+
+/** Compensate only a host-confirmed, foreground interruption. Ordinary absence
+ * never calls this helper. The caller verifies account/generation/run identity. */
+export function pauseAdventureFor(state, adventureId, seconds) {
+  if (typeof adventureId !== 'string' || !Number.isFinite(seconds) || seconds < 0 || seconds > 2678400) return { ok: false, pausedSeconds: 0 };
+  const adventures = ensure(state), run = [adventures.active, ...Object.values(adventures.parked)].find(item => item?.id === adventureId && item.stage !== 'complete');
+  if (!run) return { ok: false, pausedSeconds: 0 };
+  const existing = finite(run.recoveryPauseRemaining);
+  const paused = Math.min(seconds, 2678400 - existing);
+  if (!(paused > 0)) return { ok: true, pausedSeconds: 0 };
+  run.startedAt += paused;
+  if (run.kind === 'cargoRain') for (const drop of run.data.drops) drop.appearAt += paused;
+  if (run.kind === 'signals') run.data.showUntil += paused;
+  if (run.kind === 'rhythm') {
+    if (Number.isFinite(run.data.playUntil)) run.data.playUntil += paused;
+    if (Number.isFinite(run.data.performStartedAt)) run.data.performStartedAt += paused;
+  }
+  run.recoveryPauseRemaining = existing + paused;
+  return { ok: true, pausedSeconds: paused };
 }

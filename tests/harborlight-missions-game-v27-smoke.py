@@ -23,6 +23,7 @@ UID = 'dev-admin3'
 def initial_state():
     code = '''import {createState,normalizeState} from './harborlight-v1-state.js';
       import {grantBonusMaterials} from './harborlight-v1-inventory.js';
+      import {normalizeMissions,advanceMissions} from './harborlight-v1-missions.js';
       const at=Date.parse('2026-11-01T12:00:00Z');let state=createState(at);
       state.islandName='Światło Przystani';state.tutorial.autoOpenDisabled=true;
       state.engagementSchedule.initialCompleted=true;state.engagementSchedule.initialAnchored=true;
@@ -30,6 +31,13 @@ def initial_state():
       for(const id of ['townhall','house','warehouse','lumber'])state.buildings[id].level=2;
       state.capacity=48;state.buildings.lighthouse.level=1;
       grantBonusMaterials(state,{wood:5000,stone:5000,grain:5000,food:5000,planks:5000});
+      // This regression loads an already persisted v27 chapter. Fresh v31
+      // islands deliberately begin with the new campaign briefing instead.
+      // Activating the new catalog must preserve this old contribution and
+      // its real 8→5→3 deadlines, including later cloud reloads.
+      normalizeMissions(state,{});advanceMissions(state);
+      const chapter=state.lighthouseMissions.chapter;
+      if(chapter.campaignVersion || state.lighthouseMissions.stack[0].task.objective.type!=='contribute')throw new Error('Expected an explicit persisted legacy chapter');
       state=normalizeState(state,at);console.log(JSON.stringify(state));'''
     return json.loads(subprocess.run(['node', '--input-type=module', '-e', code], cwd=ROOT, capture_output=True, text=True, check=True).stdout)
 

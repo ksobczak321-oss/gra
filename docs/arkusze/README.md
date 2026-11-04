@@ -1,38 +1,47 @@
 # Arkusz zasad HARBORLIGHT
 
-Bieżący plik: **[HARBORLIGHT13-zasady.xlsx](HARBORLIGHT13-zasady.xlsx)** — zasady kodu DEV **0.13.1.0 / v30**, odczytane z rzeczywistych eksportów modułów. Ta aktualizacja dotyczy Teatru jako miejsca swobodnego aranżowania własnej okolicy; zachowuje pozostałe zasady gry z v29.
+Bieżący plik: **[HARBORLIGHT14-zasady.xlsx](HARBORLIGHT14-zasady.xlsx)** — aktualne zasady kodu DEV **0.14.0.0 / v31**, odczytane z rzeczywistych eksportów modułów gry.
 
-[Pobierz Excel 13](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT13-zasady.xlsx). Gdy GitHub pokazuje stronę pliku, wybierz **Download raw file**. Plik można otworzyć w Excelu, LibreOffice Calc lub zaimportować do Arkuszy Google.
+[Pobierz Excel 14](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT14-zasady.xlsx). Jeśli GitHub pokazuje stronę pliku, wybierz **Download raw file**. Plik otworzysz w Excelu, LibreOffice Calc lub Arkuszach Google.
 
-**Arkusz opisuje przygotowany kod, nie ogłasza jego publikacji.** Poprzedni odebrany DEV **0.13.0.0** ma źródło `cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da`, własne CI `41657032913` SUCCESS i Pages `41657032922` SUCCESS. PRE-PROD pozostaje odrębnym odebranym **0.12.0.0**, źródło `d9e2940b9a00755d979c159ec0fb62e290dd7ff1`. Bieżące dowody następnego wydania są w [rejestrze środowisk](../ENVIRONMENT-STATUS.md).
+**Arkusz opisuje kod i katalog scenariuszy. Nie potwierdza publikacji nowego DEV ani promocji.** Odebrany PRE-PROD pozostaje **0.13.1.0**, źródło `68e9bcd6adf22ab98f963688726a71d4d8a66c6b`, własne CI `41671140612` i deploy `41673824262` / próba 1 SUCCESS. Własne dowody nowszego wydania publikuje [rejestr środowisk](../ENVIRONMENT-STATUS.md).
 
 | Widoczna zakładka | Zawartość |
 |---|---|
-| Przeczytaj v13 | Aktualny zakres DEV, osobno poprzedni odebrany DEV i PRE-PROD, granice integracji oraz droga do odbioru |
-| Gospodarka v13 | Poziomy 1–100: bazowy czas transportu i budowy, stałe pojemności Magazynu, żywność, ładunek, obsada i stawki produkcji |
-| Budynki v13 | 13 budynków, proporcje czasu, przykłady kosztów i stały Teatr bez rozbudowy |
-| Nauka v13 | Wszystkie 34 opisy tutoriala i 25 praktycznych lekcji ze stabilnymi ID |
-| Testy v13 | Każdy ręczny przypadek, jego warunki, kroki i oczekiwania, link do osobnej karty w Git oraz wynik do odhaczenia |
-| Teatr v13 | Plac po kliknięciu budynku, 20 miejsc bez nowych sektorów, 10 rodzajów, dalsze poziomy bez końca20, ceny i reklamy co5poziomów; bezpłatne oświetlenie, posadzki i trzy zapisane aranżacje |
-| Przygody v13 | Dziewięć aktywności na czas oczekiwania, parametry nagród i ograniczeń |
-| Zasady v13 | Szczęście, łóżka, bank Domu, modlitwa, powitanie, misje 8/5/3, wyspy, handel, monety, społeczność, liga i Pomagam |
-| Kalkulator v13 | Edytowalne wejścia i formuły czasu, pojemności, produkcji oraz modlitwy z zapisanymi wynikami początkowymi |
+| Przeczytaj v14 | Bieżący zakres, warunki odbioru, ważne zależności i granice dowodów |
+| 50 dni v14 | 50 wpisów z katalogu: zakres poziomów, temat dnia, konkretne cele, przygoda i zagadki; 180 minut to założenie projektowe |
+| Misje v14 | 19 rozdziałów poziomów 2–20, po 8 celów: razem 152 etapy, ich typy, warunki, nagrody i zmiany świata |
+| Zagadki v14 | 22 mechaniki oraz 20 dłuższych opowieści, każda w 5 wariantach; instrukcje, kolejność pomieszczeń i zakres kontroli modelu |
+| Testy v14 | 179 oddzielnych prób ręcznych, opis, link do karty w Git i pole wyniku do odhaczania |
+| Gospodarka v14 | Rzeczywiste koszty, stawki, pojemności, progi ludności i referencyjne czasy poziomów 1–100; orientacyjne okna dni dla poziomów 1–20 |
+| Transport v14 | Przyczyny blokad, obsada budowy i odbioru żywności, starsze zapisy, kolejka przyjętych planów oraz ścieżki pomocy |
+| Nagrody v14 | Budżety fabuły i wspólne limity przygód, zachowanie po odczycie, reset godzinowy oraz pułap nagrody rundy 800 monet |
+| Teatr v14 | Swobodne pozycje w ogrodzie, limit 20 ustawionych ozdób, kolekcja, powitalna aranżacja, zapis i aktualne ceny dalszych ulepszeń |
+| Kalkulator v14 | Edytowalne wejścia, produkcja, koszt referencyjny i jawny przykład personogodzin/podatków; formuły mają zapisane wyniki początkowe |
 
-Na głównej mapie Teatr ma być częścią zabudowy. Jego plac, dekoracje i narzędzia aranżowania otwierają się po kliknięciu. Gracz sam wybiera, co uważa za piękne; nie ma rankingu gustu ani dodatkowych korzyści gospodarczych za ocenę wyglądu. Zapisane układy pamiętają rozmieszczenie posiadanych dekoracji oraz nastrój i posadzkę. Przywrócenie nie tworzy kolejnych egzemplarzy, nie cofa poziomów ani nie zwraca monet. Przenoszenie do kolekcji zachowuje własność i ulepszenia. Bieżący plac zapisuje się automatycznie z wyspą niezależnie od trzech Pomysłów, tak aby można było kontynuować tę samą kompozycję po kolejnych dniach. Poziom20 nie kończy ulepszania: cena rośnie nadal tą samą formułą, a reklama przypada co5poziomów także25/30. Tabela pokazuje pierwsze20etapów oraz przykłady21,25,30,50,100i1000; nie oznacza to nowego twardego końca.
+Plan 50 dni jest propozycją tempa i zajęć, a nie blokadą kalendarza. Gracz kontynuuje swój rozdział zależnie od postępu. **50 × 180 minut to założenie 150 godzin aktywności, a nie pomiar 150 godzin atrakcyjnej zabawy.** Sam katalog i kontrola rozwiązań nie potwierdzają bezpłatnego osiągnięcia Ratusza 20 w 50 dni. Do tego potrzeba pełnej symulacji zapasów, populacji, podatków, transportu i wydatków oraz testów graczy.
 
-Najdłuższy bazowy wspólny czas transportu i budowy pozostaje **45 sekund przy Ratuszu 1**, a od Ratusza 24 **24 godziny**. Referencja zakłada dostępne materiały i trzech gotowych tragarzy. Jedna lub dwie osoby nadal dostarczają towary, wykonując więcej kursów. Dojście pracowników, kolejka i brak materiałów wydłużają oczekiwanie; wyżywienie, łóżka, aktywność i ścieżki wpływają na rzeczywisty przewóz. Samouczek pokazuje przyspieszenie za monety oraz zwykłe czekanie. Rozpoczęte wcześniej budowy zachowują zapisane zasady.
+Główne wymagania trzeba oceniać razem. Przykładowo Ratusz 3→4 wymaga 54 mieszkańców; potrzebne materiały nie zastępują ludności. Pomoc ma uzupełniać faktyczny brak przed powrotem do celu. Miejsce na konkretny towar, gotowy tragarz i wolna pojemność łączna to odrębne warunki. Zwykłe wdrożenie nie resetuje kont, haseł ani postępu.
 
-**77 zakładek Excela 12**, ich **48 komentarzy** i **4325 historycznych formuł z zapisanymi wynikami** pozostają nienaruszonym ukrytym archiwum. Źródłowy plik 12 ma SHA-256 `8e2ffb524398aabcae98653f6adce2a217d26e2c72decaf151147a58de6b0eca`; generator odmawia pracy po zmianie tych bajtów. Archiwalne zakładki można odkryć poleceniem **Odkryj arkusz / Unhide**. Dawne reguły nie mają pierwszeństwa przed bieżącymi kartami v13. Dwie nowe ukryte zakładki `Kontrole v13` i `Źródła v13` dokumentują eksporty i wyniki kontroli.
+Nagrody nowych zagadek i opowieści mają wspólny limit wartości na konto: 20% kwoty referencyjnej `500 × najwyższy osiągnięty poziom Ratusza` w dobie oraz 30% `500 × poziom rozdziału` w całym rozdziale. Oba ograniczenia działają razem; nie są osobnymi pełnymi pulami dla każdej wyspy, gry i zasobu. Wartość monet to 1, drewna/kamienia/zboża 0,5, żywności/desek 1,5. Zużytej puli nie odnawia zamknięcie gry, zmiana celu ani przełączenie wyspy. W zakładce Nagrody są rzeczywiste próbki odczytu, ponowienia i kolejnej doby. Dziewięć wcześniejszych przygód zachowuje podane nagrody, w tym dokładnie złapany ładunek. Główna fabuła ma osobno określone nagrody; pochodzenie monet do „Pomagam” wymaga zaufanego potwierdzenia serwera.
 
-Do ręcznego odbioru służą [START-HERE](../testing/START-HERE.md), [lista w Markdown](../testing/MANUAL-TEST-PLAN.md) oraz [interaktywna lista](../testing/qa-checklist.html). Wszystkie **147 wyników ręcznych** pozostają **NOT RUN**, dopóki tester nie wykona kroków i nie zapisze dowodu. Wyniki automatyczne nie są ręcznym odbiorem. Nie resetujemy stałych kont ani haseł; przypadki wymagające zmiany czasu, zasobów, płatności lub reguł wykonuje się na izolowanych fiksturach albo przeznaczonym koncie testowym.
+Trudność ekspedycji jest pamiętana po zamknięciu i odczycie gry. Zerowanie następuje po pełnej godzinie zegarowej. Nowa polityka nagród rund daje 50, 100, 200, 400, 800, a następnie 800 monet; rozpoczęte starsze rozgrywki zachowują poprzednią politykę. Nagroda rundy i rosnąca pula serii nie są tym samym.
 
-Generator: [scripts/build_workbook_v13.py](../../scripts/build_workbook_v13.py). Wymaga Python z `openpyxl`, `lxml` i Node.js:
+Teatr pokazuje budynek na mapie i osobny ogród po wejściu. Limit dotyczy 20 ustawionych dekoracji; zapis obejmuje swobodne współrzędne w dozwolonym obszarze. Zdjęcie ozdoby zachowuje własność i poziom. Przywrócenie Pomysłu nie cofa ulepszeń i monet. Modelowa próba w generatorze zachowuje pozycję `421,468`, poziom 2 i saldo przez zapis, przestawienie i przywrócenie. Rzeczywisty zapis chmurowy pozostaje osobnym scenariuszem ręcznym.
+
+**88 zakładek Excela 13, ich 48 komentarzy i 4658 historycznych formuł z zapisanymi wynikami pozostają nienaruszonym ukrytym archiwum.** Wcześniejsze części OOXML są porównywane bajt w bajt; zmieniają się tylko metadane umożliwiające dodanie zakładek i wybranie widoku. Bazowy plik ma SHA-256 `016baa56460f1cc6d5bff50863d496c4eec6a40190e36445a3434bb394a30be1`. Generator odmawia pracy po zmianie jego bajtów. Archiwalne zakładki można odkryć poleceniem **Odkryj arkusz / Unhide**. Bieżące v14 mają pierwszeństwo przed historycznymi opisami.
+
+Dwie ukryte zakładki `Kontrole v14` i `Źródła v14` przechowują wyniki kontroli i pełny snapshot eksportów, w tym aktualne teksty tutoriala oraz samouczka. Cały plik ma **100 zakładek: 10 bieżących widocznych, 2 nowe ukryte i 88 historycznych**.
+
+Do odbioru służą [START-HERE](../testing/START-HERE.md), [lista w Markdown](../testing/MANUAL-TEST-PLAN.md) oraz [interaktywna lista](../testing/qa-checklist.html). Wszystkie 179 wyników ręcznych pozostają **NOT RUN**. Automatyczne wyniki nie są ręcznym przeklikaniem. Próby zmieniające czas, zasoby i uprawnienia należy wykonywać na izolowanych fiksturach lub przeznaczonym koncie testowym.
+
+Generator: [scripts/build_workbook_v14.py](../../scripts/build_workbook_v14.py). Wymaga Python z `openpyxl`, `lxml` oraz Node.js:
 
 ```sh
-python3 scripts/build_workbook_v13.py
-python3 scripts/build_workbook_v13.py --validate-only
+python3 scripts/build_workbook_v14.py
+python3 scripts/build_workbook_v14.py --validate-only
 ```
 
-Walidacja porównuje historyczne części ZIP bajt w bajt, kontroluje komentarze i wcześniejsze wyniki, sprawdza nowe komórki oraz **500 próbek formuł** wobec rzeczywistych eksportów gry na poziomach 1–100. Dodatkowo wykonuje modelowy zapis i odtworzenie aranżacji, sprawdzając zachowanie poziomu, własności i monet. Nowe formuły mają niezależnie obliczone zapisane wyniki. **Nie uruchamiano LibreOffice i nie przypisano mu przeliczenia pliku.** Raport: [HARBORLIGHT13-walidacja.json](HARBORLIGHT13-walidacja.json). Końcowa generacja i oddzielna kontrola `--validate-only` przeszły: **88 zakładek, 333 nowe formuły z cache, 500 próbek runtime, 147 ręcznych NOT RUN**.
+Kontrola obejmuje 208 zachowanych części ZIP, 48 komentarzy, 4658 wcześniejszych wyników formuł, 324 nowe formuły z cache oraz 200 próbek formuł wobec eksportów poziomów 1–100. Sprawdza też 110 wariantów struktur/rozwiązań mechanik. Dla kulki kontrola generatora dotyczy struktury fizyki, nie rozegrania trasy; testy fizyki i całych przygód są osobnymi dowodami. **Nie uruchamiano LibreOffice i nie przypisujemy mu przeliczenia arkusza.** Raport: [HARBORLIGHT14-walidacja.json](HARBORLIGHT14-walidacja.json).
 
-Archiwa pozostają bez nadpisywania: [Excel 12](HARBORLIGHT12-zasady.xlsx), [Excel 11](HARBORLIGHT11-zasady.xlsx), [Excel 10](HARBORLIGHT10-zasady.xlsx), [Excel 9](HARBORLIGHT9-zasady.xlsx), [Excel 8](HARBORLIGHT8-zasady.xlsx), [Excel 7](HARBORLIGHT7-zasady.xlsx). Generatory wcześniejszych wydań zachowują ich historyczne zakresy. Żaden arkusz nie uruchamia PROD, rzeczywistych płatności, reklam, przelewów ani integracji fizycznej gry z kontem.
+Archiwa bez nadpisywania: [Excel 13](HARBORLIGHT13-zasady.xlsx), [Excel 12](HARBORLIGHT12-zasady.xlsx), [Excel 11](HARBORLIGHT11-zasady.xlsx), [Excel 10](HARBORLIGHT10-zasady.xlsx), [Excel 9](HARBORLIGHT9-zasady.xlsx), [Excel 8](HARBORLIGHT8-zasady.xlsx), [Excel 7](HARBORLIGHT7-zasady.xlsx). Żaden arkusz nie uruchamia promocji, rzeczywistych płatności, reklam, przelewów ani integracji fizycznej gry z kontem.

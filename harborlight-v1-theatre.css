@@ -35,3 +35,18 @@
 #island-dialog:has([data-theatre-panel])>.dialog-header.has-panel-back{padding-inline-start:78px}
 @media(max-width:720px){#island-dialog:has([data-theatre-panel])>.dialog-header.has-panel-back{padding-inline-start:72px}}
 .theatre-canvas,.theatre-inspector{scroll-margin-block:85px 20px}
+/* v31: free positions; slots are invisible legacy identity tokens, not a grid. */
+.theatre-panel button.theatre-slot-hit{transform:translate(-50%,-65%);touch-action:none;user-select:none;opacity:0;z-index:1}
+.theatre-panel button.theatre-slot-hit:focus-visible{opacity:1}
+.theatre-panel button.theatre-object-hit{transform:translate(-50%,-96%);opacity:1;z-index:2;border-radius:18px;cursor:grab;background:transparent}
+.theatre-panel .theatre-object-hit:hover:not(:disabled){background:#fff1c40a;outline:1px solid #fff0bd55}
+.theatre-scene-plane.is-dragging,.theatre-scene-plane.is-dragging .theatre-object-hit{cursor:grabbing}
+.theatre-moving .theatre-scene-plane{cursor:crosshair}
+.theatre-environment h4,.theatre-layouts h4{font-size:1.3rem;line-height:1.3}
+.theatre-environment p,.theatre-section-heading p{font-size:1rem;line-height:1.5;color:#c4d4c8}
+.theatre-environment-field{font-size:1rem;line-height:1.4}
+.theatre-environment select{font-size:1rem;min-height:46px}
+.theatre-layout-caption strong{font-size:1.1rem}.theatre-layout-caption small{font-size:.9rem}
+.theatre-panel .theatre-layout-actions button{font-size:.94rem;min-height:42px}
+.theatre-scene-caption{font-size:.94rem;line-height:1.45}.theatre-scene-caption .primary{width:100%;min-height:46px}
+@media(max-width:720px){.theatre-layout-list{grid-template-columns:1fr}.theatre-layout-card{grid-template-columns:110px minmax(0,1fr);grid-template-areas:'picture caption' 'picture actions';gap:8px 12px;padding:10px}.theatre-layout-actions{flex-wrap:wrap}.theatre-panel .theatre-layout-actions button{flex:1 1 auto;font-size:.9rem}.theatre-panel .theatre-layout-actions .theatre-icon-button{flex:0 0 38px}.theatre-layout-caption small{font-size:.85rem}.theatre-environment-field,.theatre-environment select{font-size:1rem}.theatre-environment h4,.theatre-layouts h4{font-size:1.2rem}.theatre-environment p,.theatre-section-heading p{font-size:.96rem}.theatre-scene-caption{font-size:.9rem}}

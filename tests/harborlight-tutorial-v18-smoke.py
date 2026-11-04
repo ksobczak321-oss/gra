@@ -147,7 +147,7 @@ def assert_supplies_guide_geometry(page):
 def first_five_actions(browser):
     context, page = first_four_actions(browser)
     overfull = snapshot(page)
-    limits = page.evaluate('async value => {const M=await import("./harborlight-v1-logistics.js?v=frontend-v30");return M.warehouseLimits(value);}', overfull)
+    limits = page.evaluate('async value => {const M=await import("./harborlight-v1-logistics.js?v=frontend-v31");return M.warehouseLimits(value);}', overfull)
     # This regression deliberately represents a saved over-capacity island.
     # The larger v29 warehouse must still defer a chest until real carriers
     # spend reserved construction goods; do not rely on the retired 4000 cap.

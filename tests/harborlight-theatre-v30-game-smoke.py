@@ -118,7 +118,9 @@ def scenario(browser, language, mobile):
         assert any('theatre-decor-atlas-v30.png' in url for url in urls)
         assert not page.evaluate('document.documentElement.scrollWidth>innerWidth+1'), 'Theatre forced horizontal page scrolling'
         assert page.locator('#island-dialog .dialog-body').evaluate('node=>node.scrollWidth<=node.clientWidth+2'), 'Theatre content was clipped horizontally'
-        scene = panel.locator('.theatre-scene').first
+        # Saved ideas are now above the studio. Their scene thumbnails are
+        # intentionally small; measure the actual editable courtyard.
+        scene = panel.locator('[data-theatre-canvas] .theatre-scene')
         box = scene.bounding_box()
         assert box and box['width'] >= (280 if mobile else 650) and box['height'] >= 150, box
         screen(page, label + '-studio')
@@ -148,7 +150,9 @@ def scenario(browser, language, mobile):
         mood(page, 'night', 'brick')
         choose_owned(page, fountain)
         page.locator(f'[data-theatre-move="{fountain}"]').click()
-        page.locator('[data-theatre-slot="19"]').click()
+        # Legacy position shortcuts remain keyboard-accessible behind freely placed art.
+        page.locator('[data-theatre-slot="19"]').focus()
+        page.keyboard.press('Enter')
         assert item(page, fountain)['slot'] == 19
         page.locator('[data-theatre-save-layout="1"]').click()
         saved_night = theatre(page)['layouts'][1]
@@ -167,7 +171,9 @@ def scenario(browser, language, mobile):
         page.locator(f'[data-theatre-remove="{fountain}"]').click()
         assert item(page, fountain)['slot'] is None and item(page, fountain)['level'] == 5
         page.locator(f'[data-theatre-move="{fountain}"]').click()
-        page.locator('[data-theatre-slot="5"]').click()
+        # Legacy position shortcuts remain keyboard-accessible behind freely placed art.
+        page.locator('[data-theatre-slot="5"]').focus()
+        page.keyboard.press('Enter')
         assert item(page, fountain)['slot'] == 5
         assert snapshot(page)['resources']['coins'] == before_layout
 

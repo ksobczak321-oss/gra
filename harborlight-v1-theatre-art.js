@@ -1,8 +1,8 @@
 // Theatre presentation: the map has one village building; the private garden
 // uses illustrated game art and an owned collection. Rendering never mutates it.
-import { THEATRE_STYLES } from './harborlight-v1-theatre.js?v=frontend-v30';
+import { THEATRE_STYLES, theatrePosition } from './harborlight-v1-theatre.js?v=frontend-v31';
 
-const asset = name => new URL(`./assets/${name}?v=frontend-v30`, import.meta.url).href;
+const asset = name => new URL(`./assets/${name}?v=frontend-v31`, import.meta.url).href;
 export const THEATRE_ART_ASSETS = Object.freeze({
   building: asset('theatre-building-v30.png'),
   courtyard: asset('theatre-courtyard-v30.png'),
@@ -120,18 +120,21 @@ export function renderTheatreMapBuilding(_state, { language = 'pl', prefix = 'ma
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="${id}-title" class="theatre-map-building"><title id="${id}-title">${title}</title><image class="theatre-map-building-image" href="${THEATRE_ART_ASSETS.building}" width="512" height="512" preserveAspectRatio="xMidYMid meet"/></svg>`;
 }
 
+export function theatrePerspectiveScale(y) { return Math.max(.65, Math.min(1.04, .65 + (y - 310) * .35 / 265)); }
 export function renderTheatreScene(state = {}, { compact = false, selectedSlot = null, preview = null, prefix = 'theatre', language = 'pl', editing = false } = {}) {
   if (compact) return renderTheatreMapBuilding(state, { language, prefix });
   const id = safeId(prefix), collection = Array.isArray(state.theatre?.collection) ? state.theatre.collection : [];
   const atmosphere = state.theatre?.atmosphere || {}, lighting = ['day', 'golden', 'night'].includes(atmosphere.lighting) ? atmosphere.lighting : 'day';
   const paving = ['sandstone', 'stone', 'brick'].includes(atmosphere.paving) ? atmosphere.paving : 'sandstone';
   const title = localized(language, 'Teatr i ogród Twojej wyspy', 'Your island theatre and garden');
-  const placed = THEATRE_SLOT_POSITIONS.map(position => {
-    const owned = collection.find(item => item.slot === position.slot);
-    const item = editing && preview?.slot === position.slot ? preview : owned;
+  const placed = THEATRE_SLOT_POSITIONS.map(legacyPosition => {
+    const owned = collection.find(item => item.slot === legacyPosition.slot);
+    const item = editing && preview?.slot === legacyPosition.slot ? preview : owned;
+    const point = item?.position || (owned && theatrePosition(state, owned)) || legacyPosition;
+    const position = { ...legacyPosition, ...point, scale: theatrePerspectiveScale(point.y) };
     const isPreview = !!item && item === preview && item !== owned;
-    return `<g data-theatre-scene-slot="${position.slot}" transform="translate(${position.x},${position.y}) scale(${position.scale})">${editing ? marker(id, position, selectedSlot === position.slot, !!owned) : ''}${item ? `<g class="${isPreview ? 'theatre-placement-preview' : 'theatre-placed-art'}" opacity="${isPreview ? '.75' : '1'}">${theatreDecorationSvg(item.type, item.level, item.style, { prefix: `${id}-slot-${position.slot}`, lighting })}</g>` : ''}</g>`;
-  }).join('');
+    return { y: position.y, markup: `<g data-theatre-scene-slot="${position.slot}"${owned ? ` data-theatre-scene-item="${owned.id}"` : ''} transform="translate(${position.x},${position.y}) scale(${position.scale})">${editing && selectedSlot === position.slot ? marker(id, position, true, !!owned) : ''}${item ? `<g class="${isPreview ? 'theatre-placement-preview' : 'theatre-placed-art'}" opacity="${isPreview ? '.75' : '1'}">${theatreDecorationSvg(item.type, item.level, item.style, { prefix: `${id}-slot-${position.slot}`, lighting })}</g>` : ''}</g>` };
+  }).sort((a,b) => a.y-b.y).map(entry => entry.markup).join('');
   const tint = paving === 'brick' ? '#975a42' : '#647f85';
   const ground = paving === 'sandstone' ? '' : `<g clip-path="url(#${id}-ground)" class="theatre-paving-treatment" data-theatre-paving="${paving}"><path d="M0 300H1000V700H0Z" fill="${tint}" opacity="${paving === 'brick' ? '.15' : '.12'}" style="mix-blend-mode:multiply"/><path d="M0 300H1000V700H0Z" fill="url(#${id}-pavers)" opacity=".7"/></g>`;
   const filter = lighting === 'day' ? '' : ` filter="url(#${id}-${lighting})"`;

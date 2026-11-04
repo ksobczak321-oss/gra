@@ -1,3 +1,5 @@
+import { normalizeExpeditionHour, reserveExpeditionDifficulty, expeditionHourStatus, cappedExpeditionReward } from './harborlight-v1-expedition-hour.js?v=frontend-v31';
+export { expeditionHourStatus } from './harborlight-v1-expedition-hour.js?v=frontend-v31';
 // Agreed activities and coin services. Timers are elapsed world seconds, including offline time.
 // No network integrations. The approved task-achievement click bonus is local;
 // other community rewards remain unavailable until their integrations exist.
@@ -5,18 +7,19 @@ import {
   MATERIAL_IDS, stockRoom, receiveMaterials, notify,
   quoteInstantTransport, instantTransport, estimateMaterialsSeconds, availableGoods, haulCapacity,
   townhallPopulationRequirement, plannedLevel
-} from './harborlight-v1-logistics.js?v=frontend-v30';
-import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v30';
-import { secondsUntilWarsawMidnight } from './harborlight-v1-calendar.js';
-import { tutorialTaskStatus } from './harborlight-v1-progression.js?v=frontend-v30';
-import { affordableTaskRequirements, missionFeasibility, fitTaskRewardToRequirements } from './harborlight-v1-missions.js?v=frontend-v30';
+} from './harborlight-v1-logistics.js?v=frontend-v31';
+import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v31';
+import { secondsUntilWarsawMidnight } from './harborlight-v1-calendar.js?v=frontend-v31';
+import { tutorialTaskStatus } from './harborlight-v1-progression.js?v=frontend-v31';
+import { affordableTaskRequirements, missionFeasibility, fitTaskRewardToRequirements } from './harborlight-v1-missions.js?v=frontend-v31';
 import { MINI_GAME_RULES, miniGameRoundRules, createMiniGame, normalizeMiniGame,
-  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v30';
-export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v30';
+  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v31';
+export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v31';
 
 const HOUR = 3600;
 const QUEST_LIFE = 6 * HOUR;
 const DAY = 24 * HOUR;
+const MAX_KNOWN_PAUSE_SECONDS = 31 * DAY;
 export const TASK_SHARE_BONUS = 500;
 const SAFE = Number.MAX_SAFE_INTEGER;
 const SIZES = ['small', 'medium', 'large'];
@@ -224,7 +227,8 @@ function normalizeTask(raw, slot, clock) {
   const createdAt = nonnegative(raw.createdAt, clock);
   const expiresAt = nonnegative(raw.expiresAt, createdAt + QUEST_LIFE);
   const anchorAt = validNumber(raw.anchorAt) && raw.anchorAt >= 0 && raw.anchorAt <= createdAt ? raw.anchorAt : null;
-  if (expiresAt <= createdAt || expiresAt - createdAt > (anchorAt === null ? QUEST_LIFE : 26 * HOUR) + 1e-7) return null;
+  const knownPauseSeconds = nonnegative(raw.knownPauseSeconds, 0, MAX_KNOWN_PAUSE_SECONDS);
+  if (expiresAt <= createdAt || expiresAt - createdAt > (anchorAt === null ? QUEST_LIFE : 26 * HOUR) + knownPauseSeconds + 1e-7) return null;
   const acceptedAt = validNumber(raw.acceptedAt) && raw.acceptedAt >= createdAt && raw.acceptedAt < expiresAt ? raw.acceptedAt : null;
   const bonusLockedAt = acceptedAt !== null && validNumber(raw.bonusLockedAt) && raw.bonusLockedAt >= createdAt && raw.bonusLockedAt <= acceptedAt ? raw.bonusLockedAt : acceptedAt;
   return {
@@ -235,6 +239,7 @@ function normalizeTask(raw, slot, clock) {
     rewardLevel: Math.max(1, integer(raw.rewardLevel, 1, 100)),
     chainId: typeof raw.chainId === 'string' ? raw.chainId.slice(0, 80) : 'chain-' + slot,
     anchorAt, createdAt, expiresAt, acceptedAt, bonusLockedAt,
+    ...(knownPauseSeconds > 0 ? { knownPauseSeconds } : {}),
     multiplier: bonusLockedAt === null ? 1 : bonusLockedAt - createdAt < 15 ? 3 : bonusLockedAt - createdAt < 300 ? 2 : 1,
     ...(raw.tutorialStarter === true ? { tutorialStarter: true } : {}),
     ...(Number.isSafeInteger(raw.nominalRewardCoins) && raw.nominalRewardCoins > 0 ? { nominalRewardCoins: raw.nominalRewardCoins } : {}),
@@ -260,6 +265,7 @@ function ensureTutorialTask(state, tutorial) {
 }
 
 export function normalizeActivities(state, raw = {}) {
+  normalizeExpeditionHour(state, raw);
   if (raw === state) raw = JSON.parse(JSON.stringify(raw));
   state.activityClock = nonnegative(raw.activityClock, nonnegative(state.activeSeconds));
   state.activityEpochMs = validNumber(raw.activityEpochMs) ? raw.activityEpochMs : (validNumber(state.worldTimeMs) ? state.worldTimeMs : Date.now()) - state.activityClock * 1000;
@@ -287,7 +293,9 @@ export function normalizeActivities(state, raw = {}) {
     }
   };
   state.taskScheduleVersion = 9;
-  state.lastMeaningfulActivityAt = Math.min(state.activityClock, nonnegative(raw.lastMeaningfulActivityAt, state.activityClock));
+  const knownPresencePause = Math.max(0, ...Object.values(plain(raw.expeditionRuns) ? raw.expeditionRuns : {}).map(run =>
+    ['active', 'decision'].includes(run?.status) ? nonnegative(run.knownPauseRemaining, 0, MAX_KNOWN_PAUSE_SECONDS) : 0));
+  state.lastMeaningfulActivityAt = Math.min(state.activityClock + knownPresencePause, nonnegative(raw.lastMeaningfulActivityAt, state.activityClock));
   state.rewardBuffer = zeros();
   // normalizeLogisticsState migrates legacy pending/reward goods into the
   // spendable bonus ledger. Never restore that old buffer a second time.
@@ -335,26 +343,29 @@ export function normalizeActivities(state, raw = {}) {
   for (const [id, item] of entries(raw.expeditionRuns)) {
     if (!plain(item) || typeof item.id !== 'string' || !['active', 'decision', 'closed', 'lost'].includes(item.status)) continue;
     const n = integer(item.level, 1);
-    const startedAt = Math.min(state.activityClock, nonnegative(item.roundStartedAt, nonnegative(item.startedAt, state.activityClock)));
+    const knownPauseRemaining = nonnegative(item.knownPauseRemaining, 0, MAX_KNOWN_PAUSE_SECONDS);
+    const startedAt = Math.min(state.activityClock + knownPauseRemaining, nonnegative(item.roundStartedAt, nonnegative(item.startedAt, state.activityClock)));
     const defaultRules = expeditionRoundRules(n, state.activitySettings.expeditionCurve);
     const oldLimit = validNumber(item.remaining) ? item.remaining + state.activityClock - startedAt : defaultRules.timeLimit;
     const roundLimit = Math.max(0.001, nonnegative(item.roundLimit, oldLimit, 86400));
     const rulesVersion = item.rulesVersion === 16 ? 16 : 9;
-    const miniGame = rulesVersion === 16 ? normalizeMiniGame(item.miniGame, Math.max(1, n), state.activityClock) : null;
+    const difficultyLevel = integer(item.difficultyLevel, n, 1000000);
+    const miniGame = rulesVersion === 16 ? normalizeMiniGame(item.miniGame, Math.max(1, difficultyLevel), state.activityClock) : null;
     state.expeditionRuns[id] = {
       id: item.id.slice(0, 80), expedition: id,
-      level: Math.max(1, n), pot: integer(item.pot),
+      level: Math.max(1, n), difficultyLevel: Math.max(1, difficultyLevel), rewardPolicyVersion: item.rewardPolicyVersion === 31 ? 31 : 16, pot: integer(item.pot),
       status: item.status, mode: 'time', moveLimit: null,
       roundStartedAt: startedAt, startedAt, roundLimit,
       roundBasePot: integer(item.roundBasePot, Math.min(SAFE, integer(item.pot) + 50)),
       remaining: Math.max(0, roundLimit - (state.activityClock - startedAt)),
-      presencePromptAt: validNumber(item.presencePromptAt) && item.presencePromptAt <= state.activityClock ? nonnegative(item.presencePromptAt) : null,
+      presencePromptAt: validNumber(item.presencePromptAt) && item.presencePromptAt <= state.activityClock + knownPauseRemaining ? nonnegative(item.presencePromptAt) : null,
       finishedAt: validNumber(item.finishedAt) ? nonnegative(item.finishedAt) : null,
       lossReason: typeof item.lossReason === 'string' ? item.lossReason.slice(0, 80) : null,
       extraTimePurchases: integer(item.extraTimePurchases, 0, ACTIVITY_RULES.maximumExtraTimePurchases),
       adAttempts: integer(item.adAttempts, 0, 1),
       adTimeRewards: integer(item.adTimeRewards, 0, ACTIVITY_RULES.maximumAdTimeRewards),
-      adSequence: integer(item.adSequence), adPause: null
+      adSequence: integer(item.adSequence), adPause: null,
+      ...(knownPauseRemaining > 0 ? { knownPauseRemaining } : {})
     };
     if (rulesVersion === 16) {
       const restored = state.expeditionRuns[id];
@@ -479,7 +490,7 @@ export function expeditionRoundStatus(state, runOrId = activeExpeditionRun(state
     const fullRewardUntil = run.roundLimit * MINI_GAME_RULES.fullRewardRatio;
     const penaltyEvery = run.roundLimit / MINI_GAME_RULES.penaltyIntervals;
     const penalty = Math.floor(Math.max(0, elapsed - fullRewardUntil) / penaltyEvery + 1e-9);
-    const nominalReward = expeditionRoundReward(run.level);
+    const nominalReward = expeditionRoundReward(run.level, run.rewardPolicyVersion);
     const roundReward = nominalReward === null ? 0 : Math.max(0, nominalReward - penalty);
     const presenceRequired = ['active', 'decision'].includes(run.status) && run.presencePromptAt !== null;
     return { active, decision: run.status === 'decision', stage: run.level, pot: run.pot,
@@ -563,8 +574,13 @@ export function advanceActivities(state, seconds, options = {}) {
   if (!validNumber(seconds) || seconds < 0) return;
   const previousClock = currentClock(state), target = previousClock + seconds;
   for (const run of Object.values(state.expeditionRuns || {})) {
+    const knownPauseSeconds = ['active', 'decision'].includes(run.status) ? Math.min(seconds, nonnegative(run.knownPauseRemaining, 0, MAX_KNOWN_PAUSE_SECONDS)) : 0;
+    if (knownPauseSeconds > 0) {
+      run.knownPauseRemaining -= knownPauseSeconds;
+      if (run.knownPauseRemaining <= 1e-9) delete run.knownPauseRemaining;
+    }
     if (run.rulesVersion !== 16 || run.status !== 'active' || !run.miniGame) continue;
-    const pauseSeconds = run.adPause ? Math.min(seconds, run.adPause.remaining) : 0;
+    const pauseSeconds = run.adPause ? Math.min(seconds - knownPauseSeconds, run.adPause.remaining) : 0;
     if (pauseSeconds) {
       run.roundStartedAt += pauseSeconds;
       state.lastMeaningfulActivityAt = nonnegative(state.lastMeaningfulActivityAt, previousClock) + pauseSeconds; // Presence pause only; engagement tracks real input separately.
@@ -572,9 +588,10 @@ export function advanceActivities(state, seconds, options = {}) {
       run.adPause.remaining = Math.max(0, run.adPause.remaining - pauseSeconds);
       if (run.adPause.remaining <= 1e-9) run.adPause = null;
     }
-    const availableSeconds = Math.max(0, Math.min(seconds - pauseSeconds, run.roundStartedAt + run.roundLimit - previousClock - pauseSeconds));
-    const result = advanceMiniGame(run.miniGame, availableSeconds, previousClock + pauseSeconds);
-    if (result.solved) finishMiniGameRound(state, run, previousClock + pauseSeconds + result.elapsed);
+    const allPaused = knownPauseSeconds + pauseSeconds;
+    const availableSeconds = Math.max(0, Math.min(seconds - allPaused, run.roundStartedAt + run.roundLimit - previousClock - allPaused));
+    const result = advanceMiniGame(run.miniGame, availableSeconds, previousClock + allPaused);
+    if (result.solved) finishMiniGameRound(state, run, previousClock + allPaused + result.elapsed);
   }
   state.activityClock = target;
   if (state.taskAcceptanceDraft && state.taskAcceptanceDraft.expiresAt <= target + 1e-9) state.taskAcceptanceDraft = null;
@@ -724,7 +741,8 @@ function expeditionOf(state, runId) {
 function definitionOf(context, id) {
   return (context.expeditions || []).find(definition => definition.id === id) || null;
 }
-export function expeditionRoundReward(stageNumber = 1) {
+export function expeditionRoundReward(stageNumber = 1, policyVersion = 16) {
+  if (policyVersion === 31) return cappedExpeditionReward(stageNumber);
   if (!Number.isSafeInteger(stageNumber) || stageNumber < 1 || stageNumber > 48) return null;
   const value = ACTIVITY_RULES.expeditionBase * 2 ** (stageNumber - 1);
   return Number.isSafeInteger(value) && value > 0 ? value : null;
@@ -743,10 +761,13 @@ function prepareMiniGameRound(state, run, stage, context, requestedKind) {
   const kind = isMiniGameKind(requestedKind) ? requestedKind :
     isMiniGameKind(run.selectedGameKind) ? run.selectedGameKind : random(state) < 0.5 ? 'tilt' : 'triples';
   const seed = Math.floor(random(state) * 0x100000000) || 1;
-  const rules = miniGameRoundRules(kind, stage, context.expeditionCurve || state.activitySettings?.expeditionCurve);
+  const roundIdentity = `${state.islandId ? `${state.islandId}:` : ''}${run.id}:${stage}`;
+  const difficulty = run.rewardPolicyVersion === 31 ? reserveExpeditionDifficulty(state, roundIdentity) : stage;
+  const rules = { ...miniGameRoundRules(kind, difficulty, context.expeditionCurve || state.activitySettings?.expeditionCurve), baseReward: expeditionRoundReward(stage, run.rewardPolicyVersion) };
+  run.difficultyLevel = difficulty;
   run.rulesVersion = 16;
   run.selectedGameKind = kind;
-  run.miniGame = createMiniGame(kind, stage, seed, currentClock(state));
+  run.miniGame = createMiniGame(kind, difficulty, seed, currentClock(state));
   run.roundLimit = rules.timeLimit; run.remaining = rules.timeLimit;
   run.extraTimePurchases = 0; run.adTimeRewards = 0; run.adAttempts = 0; run.adPause = null;
   return rules;
@@ -950,7 +971,7 @@ export function activityAction(state, action, context = {}) {
     const rules = expeditionRoundRules(1, context.expeditionCurve || state.activitySettings?.expeditionCurve);
     const limit = validNumber(action.limit) && action.limit > 0 ? Math.min(86400, action.limit) : rules.timeLimit;
     const run = {
-      id: 'run-' + (++state.expeditionSequence), expedition: action.expedition, level: 1, pot: 0,
+      id: 'run-' + (++state.expeditionSequence), expedition: action.expedition, level: 1, rewardPolicyVersion: 31, difficultyLevel: 1, pot: 0,
       status: 'active', mode: 'time', moveLimit: null, remaining: limit,
       startedAt: currentClock(state), roundStartedAt: currentClock(state), roundLimit: limit, roundBasePot: 50,
       presencePromptAt: null, finishedAt: null, lossReason: null
@@ -987,7 +1008,7 @@ export function activityAction(state, action, context = {}) {
       if (action.gameKind !== undefined && !isMiniGameKind(action.gameKind)) return bad('Choose Marble maze or Picture triples.');
       if (run.status !== 'decision') return bad('Complete the current level before continuing.');
       if (run.presencePromptAt !== null) return bad('Confirm your presence before starting the next round.');
-      const nextReward = run.rulesVersion === 16 ? expeditionRoundReward(run.level + 1) : 50;
+      const nextReward = run.rulesVersion === 16 ? expeditionRoundReward(run.level + 1, run.rewardPolicyVersion) : 50;
       if (nextReward === null || !Number.isSafeInteger(run.pot + nextReward) || !Number.isSafeInteger(run.level + 1)) return bad('Cash out the current pot before starting another series.');
       const rules = expeditionRoundRules(run.level + 1, context.expeditionCurve || state.activitySettings?.expeditionCurve);
       const limit = validNumber(action.limit) && action.limit > 0 ? Math.min(86400, action.limit) : rules.timeLimit;

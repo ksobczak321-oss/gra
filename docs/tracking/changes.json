@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "as_of": "2026-11-03",
-  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu. Jawne zlecenie promocji0.13.1.0napreprod ma odrębną kartę1082:PENDINGdo własnegoCI nowegoSHA i rzeczywistegoSUCCESSGCP.411kart/147ręcznychNOTRUN,bez resetu iPROD.",
+  "as_of": "2026-11-04",
+  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu. Jawne zlecenie promocji0.13.1.0napreprod ma odrębną kartę1082:PENDINGdo własnegoCI nowegoSHA i rzeczywistegoSUCCESSGCP.411kart/147ręcznychNOTRUN,bez resetu iPROD. GO DEV0.14.0.0/v31 z4listopada2026 zatwierdza paczkę po audycie ścieżek i plan50dni, karty1083–1120 i ręczneTC0148–0179. Implementacja i własna walidacja końcowego źródła pozostają w toku; PRE-PROD0.13.1.0/68e9bcd bez nowej promocji.449kart/179ręcznychNOTRUN; bez resetu,PROD i realnychoperatorów. Cel20w50dni/150godzin nie jest wynikiem testu.",
   "environment_baseline": {
     "application_source_sha": "092e75226fbb14cab09826f313e11d10891966d8",
     "ci_run_id": 41221965032,
@@ -24253,22 +24253,2173 @@
         "preprod-v30",
         "release-0-13-1-0"
       ]
+    },
+    {
+      "id": "HL-CHG-1083",
+      "epic": "HL-EPIC-TUT",
+      "area": "Wykonalność misji",
+      "type": "Story",
+      "title": "Rozdział sprawdza zależności całej drogi przed terminem i wpłatą",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Rozdział sprawdza zależności całej drogi przed terminem i wpłatą.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1083"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Plan ośmiu etapów obejmuje odblokowania, zasoby po rezerwacjach, ludność, łóżka, gotową obsadę, receptury, pojemność i rzeczywisty czas.",
+        "Główna droga ma osiągalny bezpłatny wariant bez obowiązkowej reklamy, cudzej oferty lub kalendarza ligi."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1084",
+      "epic": "HL-EPIC-TUT",
+      "area": "Nawigacja misji",
+      "type": "Bug",
+      "title": "Misja zaproszenia mieszkańca prowadzi do zakupu w Domu",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Misja zaproszenia mieszkańca prowadzi do zakupu w Domu.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1084"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Etap rekrutacji otwiera właściwy panel Domu i wskazuje czynność przyjęcia osoby.",
+        "Ratusz 3 z wolnymi miejscami nie wymaga niepotrzebnego awansu na 4 do zaproszenia jednej osoby."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions-ui.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1085",
+      "epic": "HL-EPIC-ECO",
+      "area": "Wspólny kosztorys",
+      "type": "Bug",
+      "title": "Misja i zakup używają jednej uzgodnionej ceny rekrutacji",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Misja i zakup używają jednej uzgodnionej ceny rekrutacji.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1085"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przed przyjęciem oferta uwzględnia aktualny ukończony poziom Ratusza.",
+        "Po akceptacji cena operacji związanej z misją nie zmienia się niejawnie przy awansie lub wznowieniu; opłata pobierana raz."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js",
+          "harborlight-v1-state.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1086",
+      "epic": "HL-EPIC-TUT",
+      "area": "Ścieżki pomocy",
+      "type": "Bug",
+      "title": "Pomoc 5 i ratunek 3 usuwają przyczynę braku oraz zachowują wykonane wpłaty",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Pomoc5 i ratunek3 usuwają przyczynę braku oraz zachowują wykonane wpłaty.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1086"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Pomoc dla braku ludzi, zasobów, pojemności lub transportu daje rzeczywistą osiągalną drogę usunięcia konkretnego braku.",
+        "Nie kopiuje wyłącznie nieosiągalnego celu; zachowuje wpłaty i wraca do właściwego następnego etapu według przyjętej sekwencji 8/5/3."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1087",
+      "epic": "HL-EPIC-PEO",
+      "area": "Nagrody mieszkańcami",
+      "type": "Story",
+      "title": "Rekrutacja po ratunku rzeczywiście przyjmuje mieszkańców i zalicza cel",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Rekrutacja po ratunku rzeczywiście przyjmuje mieszkańców i zalicza cel.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1087"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przygoda rekrutacyjna przyjmuje rzeczywistych mieszkańców, zamiast zastępować ich samą paczką monet.",
+        "Cel wyraźnie rozróżnia zakup, ratunek i inne przyjęcie; odpowiadające mu potwierdzenie jest zapisane i rozliczane raz."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js",
+          "harborlight-v1-adventures.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1088",
+      "epic": "HL-EPIC-PEO",
+      "area": "Pełna populacja",
+      "type": "Bug",
+      "title": "Pełny końcowy limit ma pozytywny równoważny cel bez wymuszania emigracji",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Pełny końcowy limit ma pozytywny równoważny cel bez wymuszania emigracji.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1088"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Sprawdzane są wolne miejsca oraz rezerwacje przybywających pasażerów.",
+        "Przy niedostępnym dalszym wzroście obowiązkowy cel ma wariant pomocy gościom lub sąsiadom; nie wymaga utraty mieszkańców."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js",
+          "harborlight-v1-residents.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1089",
+      "epic": "HL-EPIC-PEO",
+      "area": "Przygotowanie awansu",
+      "type": "Story",
+      "title": "Scenariusz przygotowuje ludność, łóżka i jedzenie do progu Ratusza 3→4",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Scenariusz przygotowuje ludność, łóżka i jedzenie do progu Ratusza 3→4.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1089"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Wymagane 54 osoby i potrzeba Domu oraz jedzenia są pokazane przed żądaniem awansu.",
+        "Małe partie rekrutacji mają osiągalne finansowanie i limit; nie mylimy zakupu jednej osoby z progiem awansu Ratusza."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js",
+          "harborlight-v1-residents.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1090",
+      "epic": "HL-EPIC-ECO",
+      "area": "Transport żywności",
+      "type": "Bug",
+      "title": "Odbiór żywności działa także przy zarezerwowanej ekipie budowlanej",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Odbiór żywności działa także przy zarezerwowanej ekipie budowlanej.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1090"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Pełny Młyn, miejsce dla żywności i jej priorytet nie kończą się bezterminowym brakiem odbioru przez ukrytą rezerwację ekipy.",
+        "Obsada, kursy i ETA pokazują rzeczywistą dostępność tragarzy; test obejmuje 1/2/3/4 i więcej osób."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-logistics.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1091",
+      "epic": "HL-EPIC-ECO",
+      "area": "Migracja budów",
+      "type": "Bug",
+      "title": "Starszy projekt turbo nie utknie na ukrytym wymaganiu sześciu tragarzy",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Starszy projekt turbo nie utknie na ukrytym wymaganiu sześciu tragarzy.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1091"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Legalne starsze projekty mają osiągalną obsługę w bieżącym modelu uczącym 3 tragarzy.",
+        "Zachowane są opłacone materiały, postęp transportu i budowy; migracja nie kasuje ani nie dubluje projektu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-logistics.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1092",
+      "epic": "HL-EPIC-COM",
+      "area": "Planowanie rozbudowy",
+      "type": "Bug",
+      "title": "Opłacony plan rozbudowy może ruszyć po wygaśnięciu pakietu",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Opłacony plan rozbudowy może ruszyć po wygaśnięciu pakietu.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1092"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przyjęty opłacony plan zachowuje uprawnienie wykonania, gdy materiały zbiorą się po końcu pakietu.",
+        "Anulowanie i ponowienie nie pobierają drugi raz kosztu; rozpoczęcie nie wymaga odnowienia pakietu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-logistics.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1093",
+      "epic": "HL-EPIC-ECO",
+      "area": "Pojemność i cele",
+      "type": "Story",
+      "title": "Wymagania pojemności rozróżniają konkretny towar, rezerwy i bonusy",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Wymagania pojemności rozróżniają konkretny towar, rezerwy i bonusy.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1093"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przed celem uwzględniany jest limit danego towaru oraz całości, rezerwacje i chronione jedzenie.",
+        "Zapóźniony Magazyn otrzymuje osiągalne wskazanie rozwoju; bonusów nie trzeba niszczyć dla pozornego zwolnienia limitu zwykłych dostaw."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-logistics.js",
+          "harborlight-v1-missions.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1094",
+      "epic": "HL-EPIC-ACC",
+      "area": "Odzyskiwanie chmury",
+      "type": "Bug",
+      "title": "Odrzucony zapis ma działający powrót do potwierdzonego stanu",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Odrzucony zapis ma działający powrót do potwierdzonego stanu.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1094"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Powrót do potwierdzonego stanu wykonuje rzeczywisty odczyt i nie wysyła w ciemno odrzuconego payloadu.",
+        "Błąd odczytu pozostawia ochronę danych; nie ma martwego przycisku ani fałszywego odblokowania."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-dev-sync.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-dev-sync-v31.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1095",
+      "epic": "HL-EPIC-UI",
+      "area": "Status zapisu",
+      "type": "Bug",
+      "title": "Komunikat oczekiwania znika po potwierdzeniu zapisu",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Komunikat oczekiwania znika po potwierdzeniu zapisu.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1095"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Żółta belka nie pozostaje jako bieżąca blokada po przejściu do saved.",
+        "Interfejs rozróżnia zapisywanie, przejściową awarię, logowanie i trwały błąd; przycisk odpowiada rzeczywistej czynności."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1096",
+      "epic": "HL-EPIC-ACC",
+      "area": "Płynność i potwierdzenia",
+      "type": "Bug",
+      "title": "Szybkie ruchy sceny nie czekają na ACK po każdym kliknięciu",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Szybkie ruchy sceny nie czekają na ACK po każdym kliknięciu.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1096"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Łapanie i ustawianie przyjmują szybkie wejścia podczas zwykłego zapisu; starszy ACK nie cofa nowszego snapshotu.",
+        "Wypłaty i zakupy zachowują ochronę przed podwójnym wydaniem, lostACK i obcą rewizją; ochrona czasu próby jest osobno sprawdzana."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-dev-sync.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-dev-sync-v31.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1097",
+      "epic": "HL-EPIC-TUT",
+      "area": "Alternatywna kolejność nauki",
+      "type": "Bug",
+      "title": "Lekcja szczęścia rozpoznaje pełne 100 i uczy zachowania punktów",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Lekcja szczęścia rozpoznaje pełne100 i uczy zachowania punktów.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1097"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Wcześniejsza Latarnia i 100 szczęścia nie blokują lekcji zbiorowego rozdawania punktów.",
+        "Gracz może świadomie zachować pulę; nie trzeba obniżać szczęścia ani czekać dobę."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-progression.js",
+          "harborlight-v1-tutorial-ui.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1098",
+      "epic": "HL-EPIC-TUT",
+      "area": "Zakończenie samouczka",
+      "type": "Bug",
+      "title": "Finał 25 lekcji nie wymaga pozbycia się bonusów i legalnych rezerwacji",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Finał25 lekcji nie wymaga pozbycia się bonusów i legalnych rezerwacji.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1098"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Dodatkowe bonusowe materiały lub legalna rezerwacja nie zatrzymują zakończenia nauki.",
+        "Nagroda oraz historia ukończenia są jednokrotne; wcześniejsze programy i wpłaty pozostają."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-progression.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1099",
+      "epic": "HL-EPIC-UI",
+      "area": "Mapa i tutorial",
+      "type": "Bug",
+      "title": "Smutna buźka jest nad Gospodarstwem i nie nachodzi na pole",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Smutna buźka jest nad Gospodarstwem i nie nachodzi na pole.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1099"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Znacznik pełnego lokalnego magazynu jest nad budynkiem, także w demonstracji tutoriala.",
+        "Nie nachodzi na pole, ramkę ani przyciski na komputerze i telefonie."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1100",
+      "epic": "HL-EPIC-UI",
+      "area": "Położenie Teatru",
+      "type": "Story",
+      "title": "Teatr przenosi się na polanę wskazaną strzałką użytkownika",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Teatr przenosi się na polanę wskazaną strzałką użytkownika.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1100"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Budynek jest na wskazanej polanie przy lesie po prawej stronie wyspy.",
+        "Kliknięcie, dostępność i podświetlenie tutoriala są zgodne z nowym budynkiem; plac nadal otwiera się po wejściu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1101",
+      "epic": "HL-EPIC-UI",
+      "area": "Redakcja Targu",
+      "type": "Story",
+      "title": "Opis Targu ma zapis „Od 6 poziomu Ratusza” bez wskazanej kropki",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Opis Targu ma zapis „Od6poziomuRatusza” bez wskazanej kropki.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1101"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "W tutorialu usunięto kropkę po 6 z fragmentu wskazanego przez użytkownika.",
+        "Pozostałe wymagania handlu i poziom odblokowania są zachowane."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1102",
+      "epic": "HL-EPIC-UI",
+      "area": "Redakcja Latarni",
+      "type": "Story",
+      "title": "Opis Latarni precyzuje premię po powrocie ze zwiedzania",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Opis Latarni precyzuje premię po powrocie ze zwiedzania.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1102"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Opis brzmi: Mieszkańcy też chętnie ją zwiedzają — po powrocie ze zwiedzania otrzymają premię szczęścia.",
+        "Zmiana tekstu nie przesuwa momentu nagrody ani nie tworzy nowego efektu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1103",
+      "epic": "HL-EPIC-UI",
+      "area": "Czytelność Teatru",
+      "type": "Bug",
+      "title": "Górne ustawienia i opisy Teatru są czytelne na telefonie",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Górne ustawienia i opisy Teatru są czytelne na telefonie.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1103"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Atmosfera, pomysły, inspektor i ich etykiety są widoczne bez mikroskopijnego tekstu.",
+        "Przewijanie, zoom i układ mobilny nie ukrywają wymaganych kontrolek."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-theatre-ui.js",
+          "harborlight-v1-theatre.css"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1104",
+      "epic": "HL-EPIC-UI",
+      "area": "Swobodna aranżacja",
+      "type": "Bug",
+      "title": "Dwadzieścia ozdób można swobodnie przestawiać bez skoków pól",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Dwadzieścia ozdób można swobodnie przestawiać bez skoków pól.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1104"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Zamiast sztywnych pól są pozycje w obrębie placu z limitem 20 ustawionych dekoracji.",
+        "Przeciąganie myszą/dotykiem i alternatywa klawiaturowa dają przewidywalne położenie oraz zachowują własność, poziom i zapis."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-theatre.js",
+          "harborlight-v1-theatre-ui.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1105",
+      "epic": "HL-EPIC-UI",
+      "area": "Oprawa i sklep Teatru",
+      "type": "Story",
+      "title": "Ładny plac bazowy i katalog pozwalają personalizować Teatr",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Ładny plac bazowy i katalog pozwalają personalizować Teatr.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1105"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Plac od początku tworzy spójną kompozycję, a kolejne zakupy i ulepszenia mają widoczne odzwierciedlenie.",
+        "Dawne przedmioty, style, poziomy i pomysły pozostają; kosmetyka nie blokuje obowiązkowej fabuły ani nie daje nieograniczonych monet."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-theatre.js",
+          "harborlight-v1-theatre-art.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1106",
+      "epic": "HL-EPIC-MIN",
+      "area": "Godzinne okno minigier",
+      "type": "Story",
+      "title": "Godzinny licznik i trudność minigier zachowują się na koncie",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Godzinny licznik i trudność minigier zachowują się na koncie.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1106"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Wyjście, przegrana, wypłata, zmiana wyspy i logowanie nie odnawiają licznika przed granicą godziny.",
+        "UI pokazuje czas do resetu, a aktywna seria oraz należna jednorazowa nagroda zachowują spójność na granicy okna."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-activities.js",
+          "harborlight-v1-archipelago.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1107",
+      "epic": "HL-EPIC-MIN",
+      "area": "Budżet nagród",
+      "type": "Story",
+      "title": "Wspólna pula nagród ogranicza wypłaty między grami i wyspami",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Wspólna pula nagród ogranicza wypłaty między grami i wyspami.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1107"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Krzywa i wspólna pula konta ograniczają wypłaty, gdy trudność osiąga już sufit.",
+        "Nowe kwoty i limity są opisanymi parametramiDEV, wymagają porównania z kodem i nie odnawiają się przez kontekst wyspy."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-activities.js",
+          "harborlight-v1-adventures.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej.",
+        "Wspólny budżet dotyczy nowej biblioteki zagadek i opowieści. Dziewięć wcześniejszych przygód zachowuje podane nagrody; złapany ładunek nie jest po cichu obcinany."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1108",
+      "epic": "HL-EPIC-MIN",
+      "area": "Sterowanie ładunkiem",
+      "type": "Bug",
+      "title": "Łap ładunek zbiera pojedynczym kliknięciem lub dotknięciem",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Łapładunek zbiera pojedynczym kliknięciem lub dotknięciem.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1108"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Jedno celne kliknięcie lub dotknięcie zbiera jeden wskazany ładunek.",
+        "Szybkie kolejne złapania nie wymagają podwójnego kliku ani czekania naACK; duplikat tej samej sztuki nie zwiększa nagrody."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-adventures-ui.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1109",
+      "epic": "HL-EPIC-MIN",
+      "area": "Przygody wieloetapowe",
+      "type": "Story",
+      "title": "Escape room łączy realne zagadki i zachowuje postęp po przerwie",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Escape room łączy realne zagadki i zachowuje postęp po przerwie.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1109"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Rozwiązanie sceny tworzy narzędzie, informację albo stan potrzebny w kolejnej scenie; sam przycisk nie potwierdza dowolnego rozwiązania.",
+        "Podstawowe podpowiedzi są dostępne, wznowienie zachowuje postęp, a zakończenie i nagroda są jednokrotne."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-story-catalog.js",
+          "harborlight-v1-island-puzzles.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1110",
+      "epic": "HL-EPIC-TUT",
+      "area": "Katalog opowieści",
+      "type": "Story",
+      "title": "Biblioteka zawiera zróżnicowane opowieści od prologu do poziomu 20",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Biblioteka zawiera zróżnicowane opowieści od prologu do poziomu20.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1110"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Około 20 większych konstrukcji odpowiada etapom zatwierdzonego planu, z 19 rozdziałami 2–20 po 8 celów.",
+        "Odblokowanie zależy od gotowości i postępu, a nie obowiązkowego numeru dnia, zakupu córki lub reklamy."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-story-catalog.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1111",
+      "epic": "HL-EPIC-MIN",
+      "area": "Biblioteka zagadek",
+      "type": "Story",
+      "title": "Nowe mechaniki mają rzeczywistą interakcję i weryfikowane rozwiązanie",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Nowe mechaniki mają rzeczywistą interakcję i weryfikowane rozwiązanie.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1111"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Lekkie, średnie i wymagające gry różnią reguły działania, a nie tylko nazwę lub grafikę.",
+        "Każda dodana mechanika ma osiągalne poprawne rozwiązanie, obsługę błędu i narzędzia do ukończenia bez zakupu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-island-puzzles.js",
+          "harborlight-v1-story-catalog.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1112",
+      "epic": "HL-EPIC-MIN",
+      "area": "Warianty rozgrywki",
+      "type": "Story",
+      "title": "Warianty przygód zmieniają układ, wskazówki i rozwiązanie",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Warianty przygód zmieniają układ, wskazówki i rozwiązanie.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1112"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Wariant przechowuje seed i związane dane, aby wznowienie nie zmieniło rozwiązywanej zagadki.",
+        "Różne warianty mają sprawdzone zależności i rozwiązania; losowe przemalowanie nie jest liczone jako nowa zawartość."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-island-puzzles.js",
+          "harborlight-v1-story-catalog.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1113",
+      "epic": "HL-EPIC-TUT",
+      "area": "Główne cele1–20",
+      "type": "Story",
+      "title": "Zróżnicowane cele fabularne nie powtarzają zakupu mieszkańca w każdym rozdziale",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Zróżnicowane cele fabularne nie powtarzają zakupu mieszkańca w każdym rozdziale.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1113"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Scenariusz miesza przygotowanie osady, ratunek, rejsy, zagadki i rzeczywisty rozwój Latarni.",
+        "Nie żąda ponownego opłacenia wcześniej wykonanej tej samej potrzeby ani budynku ponad aktualny limit."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js",
+          "harborlight-v1-story-catalog.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1114",
+      "epic": "HL-EPIC-PEO",
+      "area": "Fabuła i ludność",
+      "type": "Story",
+      "title": "Opowieść o rozbitkach ma rzeczywistą ograniczoną nagrodę rekrutacyjną",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Opowieść o rozbitkach ma rzeczywistą ograniczoną nagrodę rekrutacyjną.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1114"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Finał rekrutacyjny pokazuje i przyznaje ludzi w granicach wolnych miejsc Ratusza.",
+        "Potwierdzenie przetrwa wznowienie i nie daje powtarzalnych ludzi za ten sam ukończony wariant."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-adventures.js",
+          "harborlight-v1-story-catalog.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1115",
+      "epic": "HL-EPIC-OPS",
+      "area": "Plan aktywnego gracza",
+      "type": "Ops",
+      "title": "Projekt 50 dni rozdziela cel tempa od dowodu 150 godzin zabawy",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Projekt50 dni rozdziela cel tempa od dowodu150 godzin zabawy.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1115"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Zachowana jest pełna zatwierdzona redakcja 50 dni z dniami, poziomami i różnym wysiłkiem myślowym.",
+        "Poziom 20 w 50 dni i 150 godzin aktywności pozostają celami do walidacji, nie są ogłaszane wynikiem katalogu lub krótkiej symulacji."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-story-catalog.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1116",
+      "epic": "HL-EPIC-ECO",
+      "area": "Budżet głównej drogi",
+      "type": "Story",
+      "title": "Budżet fabuły zapewnia konieczne koszty bez grindu opcjonalnych gier",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Budżet fabuły zapewnia konieczne koszty bez grindu opcjonalnych gier.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1116"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "targeted_tests_passed_full_50_days_in_progress",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Koszty obowiązkowych etapów porównuje się z gwarantowanymi wpływami, produkcją i realną obsadą.",
+        "Nagrody minigier, liga, Pomagam, reklamy i prawdziwe doładowania nie są ukrytym koniecznym finansowaniem."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js",
+          "harborlight-v1-economy.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1117",
+      "epic": "HL-EPIC-ARC",
+      "area": "Opcjonalne gałęzie",
+      "type": "Story",
+      "title": "Drogi poboczne i nowa córka nie tworzą ukrytej blokady fabuły",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Drogi poboczne i nowa córka nie tworzą ukrytej blokady fabuły.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1117"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Lokalna osiągalna droga zastępuje brak oferty innego gracza, sojusznika lub udziału w lidze.",
+        "Opcjonalna córka ma plan startu 6 osób i dostaw; jej zakup nie jest nieopisaną obowiązkową opłatą za dalszą historię."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-missions.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1118",
+      "epic": "HL-EPIC-OPS",
+      "area": "Walidacja osiągalności",
+      "type": "Ops",
+      "title": "Sprawdzenie trajektorii porównuje wspólnie ludność, koszty i gospodarkę",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Sprawdzenie trajektorii porównuje wspólnie ludność, koszty i gospodarkę.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1118"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "targeted_tests_passed_full_50_days_in_progress",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Własny model nowego kodu kontroluje kolejne wymagania 1–20 i rozdziela cel projektu od uzyskanego wyniku.",
+        "Warianty przy pełnym limicie, wolnym Magazynie, głodzie i starszym zapisie są osobno odnotowane; brak dowodu nie otrzymujePASS."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-v1-missions.js",
+          "harborlight-v1-economy.js",
+          "harborlight-v1-residents.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1119",
+      "epic": "HL-EPIC-ACC",
+      "area": "Ciągłość zapisów",
+      "type": "Story",
+      "title": "Migracja zachowuje stare światy, opłacone projekty i jednokrotne nagrody",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: Migracja zachowuje stare światy, opłacone projekty i jednokrotne nagrody.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1119"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Odczyt starej wyspy zachowuje rozdział, kolekcje, rzeczywiste wpłaty, już przyjęte nagrody i projekty.",
+        "Powrót, reset widoku i zmiana wyspy nie kopiują przedmiotów ani potwierdzeń; brak resetu rzeczywistych kont."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-dev-sync.js",
+          "harborlight-v1-theatre.js",
+          "harborlight-v1-missions.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1120",
+      "epic": "HL-EPIC-INF",
+      "area": "Odbiór wydania",
+      "type": "Ops",
+      "title": "DEV 0.14.0.0 ma własny odbiór i osobne ręczne scenariusze",
+      "source": {
+        "kind": "user_go_dev_v31",
+        "date": "2026-11-04",
+        "date_note": "Zebrane uwagi po PRE-PROD 0.13.1.0 oraz późniejsze GO DEV, Europe/Warsaw.",
+        "summary": "Użytkownik zebrał zgłoszenia i zatwierdził paczkę DEV 0.14.0.0 oraz projekt 50 dni. Ten wpis reprezentuje konkretny zakres: DEV 0.14.0.0 ma własny odbiór i osobne ręczne scenariusze.",
+        "reference": "chat:GO:dev-v31:HL-CHG-1120"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_pending_own_ci",
+        "ci": "not_run_for_current_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nowy końcowySHA wymaga własnegoCI,Pages,pakietu i tagu; historyczne wyniki pozostają przypisane starym źródłom.",
+        "Nowe ręczne przypadki pozostająNOTRUNdo wykonania; toGO nie promujePRE-PROD,PROD ani realnychoperatorów."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/DEV-0.14.0.0-VALIDATION.md",
+          "docs/design/FLOW-AUDIT-20261104.md",
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+        ],
+        "code": [
+          "harborlight-version.js",
+          "scripts/build_frontend.py"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Zakres v31 został zatwierdzony. Implementacja, integracja i własny odbiór pozostają PENDING. Nie jest to potwierdzenie pełnego CI, Pages, nowego SHA, tagu ani promocji GCP. PRE-PROD pozostaje 0.13.1.0/68e9bcd; ręczne próby nie zostały wykonane.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
+        "Bez resetu kont, PROD, realnych operatorów i integracji gry fizycznej."
+      ],
+      "tags": [
+        "v31",
+        "dev-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1121",
+      "epic": "HL-EPIC-INF",
+      "area": "Promocja PRE-PROD 0.14.0.0",
+      "type": "Ops",
+      "title": "Autoryzowana promocja 0.14.0.0 przechodzi własne CI i standardowy odbiór PRE-PROD",
+      "source": {
+        "kind": "user_chat_preprod_clarification_v31",
+        "date": "2026-11-04",
+        "date_note": "Doprecyzowanie zastępuje niejednoznaczne go na prod; Europe/Warsaw.",
+        "summary": "Użytkownik wyjaśnił: Miałem na myśli z dev na pre prod. Aktualny zakres obejmuje wyłącznie DEV → własne CI → PRE-PROD, z zachowaniem istniejących danych.",
+        "reference": "chat:GO:preprod-0.14.0.0:clarification"
+      },
+      "status": {
+        "implementation": "in_progress",
+        "dev": "promotion_prepared",
+        "ci": "not_run_for_promotion_source",
+        "preprod": "pending_deployment",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Końcowe źródło aplikacji i wymagany SHA promocji mają własne zielone CI. Stary sukces 0.13.1.0 ani sam podgląd Pages nie potwierdza publikacji 0.14.0.0.",
+        "Dokładny marker [preprod:0.14.0.0] korzysta z istniejącego bridge i dispatchera PRE-PROD. Zachowuje bramki repozytorium, workflow, SHA, prób, deduplikacji i niezmienionego main; brak omijania WIF lub niepewnego ponowienia dispatchu.",
+        "Standardowy google-cloud-dev.yml publikuje do harborlight-dev i potwierdza właściwe API/health/ready, zgodność wszystkich hostowanych plików z pakietem, rzeczywiste renderowanie zalogowanej istniejącej wyspy oraz izolację stałych kont.",
+        "Dopiero pełny sukces wymaganych kontroli i publikacja obu artefaktów z jednej próby potwierdzają wdrożenie. Numery runów, próby, pełny SHA, obraz po digest, hash TAR, manifestu i digests ZIP mają odrębne dowody.",
+        "Zachowaj Authentication, UID, loginy, hasła, wyspy, kolekcje i historię. Bez resetu, operacji PROD, aktywacji realnych operatorów i integracji fizycznej gry. Wszystkie 179 ręcznych wyników pozostają NOT RUN."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1120",
+        "HL-CHG-1082"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/PREPROD-V31-PROMOTION.md",
+          "docs/FRONTEND-V31-REQUIREMENTS.md",
+          "docs/RELEASE-PROCESS.md",
+          "docs/ENVIRONMENT-STATUS.md"
+        ],
+        "code": [
+          ".github/workflows/promote-urgent-preprod.yml",
+          ".github/workflows/google-cloud-dev.yml",
+          "infra/google-cloud/urgent-preprod-dispatch.mjs",
+          "infra/google-cloud/promotion.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-urgent-preprod-dispatch.test.mjs",
+          "tests/harborlight-promotion.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Użytkownik doprecyzował wyłącznie DEV → PRE-PROD. Końcowe źródło, własne CI, bridge, deploy, próba, wymagane kontrole, oba artefakty i tag 0.14.0.0 pozostają PENDING do własnego odczytu. Faktyczny odebrany PRE-PROD nadal 0.13.1.0/68e9bcd. Operacji PROD nie wykonano;179 ręcznych prób NOT RUN.",
+        "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b"
+      },
+      "notes": [
+        "Korekta niejednoznacznego polecenia określa finalny zakres tej samej nieopublikowanej karty operacyjnej. Nie przepisuje poprzednich449 definicji ani ich statusów.",
+        "Marker i przygotowany kod nie stanowią potwierdzenia nowego wdrożenia; aktualny stan rozstrzygają własne runy i dokument środowisk."
+      ],
+      "tags": [
+        "preprod-v31",
+        "release-0-14-0-0",
+        "preprod-authorized"
+      ]
     }
   ],
   "current_environment": {
-    "as_of": "2026-11-03",
-    "dev_application_version": "0.13.1.0",
-    "dev_status": "verified_ci_and_pages",
-    "dev_ci": "success",
+    "as_of": "2026-11-04",
+    "dev_application_version": "0.14.0.0",
+    "dev_status": "local_acceptance_passed_pending_own_ci_pages",
+    "dev_ci": "not_run_for_current_source",
     "preprod_application_version": "0.13.1.0",
     "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
     "preprod_ci_run_id": 41671140612,
     "preprod_deployment_run_id": 41673824262,
     "preprod_deployment_attempt": 1,
     "preprod_status": "verified_deployment_and_artifacts",
-    "prod_status": "no_new_deployment",
+    "prod_status": "not_authorized_latest_request_preprod_only",
     "full_test_account_reset": "not_performed",
-    "note": "PRE-PROD0.13.1.0/68e9bcd odebrany własnymCI i standardowymGCPworkflow. DEV13c55a4 i wcześniejsze dowody zachowane; bez resetu,PROD i realnych operatorów.147ręcznychNOTRUN. DigestsZIP nie są digestamiTAR/manifestu/obrazu; prywatnego receipt i zapisuFirestore nie odczytano niezależnie.",
+    "note": "Użytkownik doprecyzował GO jako0.14.0.0 DEV/CI → PRE-PROD. Końcowy SHA, własneCI/Pages, nowe artefakty i wdrożenie pozostają PENDING. Odebrany PRE-PROD0.13.1.0/68e9bcd nadal aktualny.450kart/179ręcznychNOTRUN. Bez resetu i PROD; lokalny nieopublikowany mostPROD usunięto.",
     "previous_accepted_dev": {
       "dev_application_version": "0.13.0.0",
       "dev_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
@@ -24276,12 +26427,12 @@
       "dev_pages_run_id": 41657032922,
       "dev_tag": "dev-0.13.0.0-20261103"
     },
-    "dev_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
-    "dev_ci_run_id": 41667711260,
-    "dev_pages_run_id": 41667711124,
-    "dev_tag": "dev-0.13.1.0-20261103",
-    "preprod_promotion_status": "completed_verified",
-    "preprod_promotion_target": "0.13.1.0",
+    "dev_source_sha": null,
+    "dev_ci_run_id": null,
+    "dev_pages_run_id": null,
+    "dev_tag": null,
+    "preprod_promotion_status": "authorized_v31_pending_dev_validation",
+    "preprod_promotion_target": "0.14.0.0",
     "previous_accepted_preprod": {
       "preprod_application_version": "0.12.0.0",
       "preprod_source_sha": "d9e2940b9a00755d979c159ec0fb62e290dd7ff1",
@@ -24309,6 +26460,21 @@
         "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
         "attempt": 1
       }
-    ]
+    ],
+    "previous_accepted_dev_v30": {
+      "dev_application_version": "0.13.1.0",
+      "dev_status": "verified_ci_and_pages",
+      "dev_ci": "success",
+      "dev_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+      "dev_ci_run_id": 41667711260,
+      "dev_pages_run_id": 41667711124,
+      "dev_tag": "dev-0.13.1.0-20261103"
+    },
+    "local_frontend_node": 1190,
+    "local_backend_node": 134,
+    "local_boardgame_node": 7,
+    "local_python": 141,
+    "local_browser_suites": 43,
+    "workbook": 14
   }
 }

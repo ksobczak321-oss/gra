@@ -17,7 +17,8 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # The full campaign execution and 43 browser suites run sequentially.
+    timeout-minutes: 30
     steps:
       - name: Checkout exact source commit
         uses: actions/checkout@v4
@@ -87,10 +88,10 @@ jobs:
       - name: Verify generated legal documents match their reviewed drafts
         run: python3 scripts/build_legal_pages.py --check
 
-      - name: Verify Excel 13 against current rules and preserved historical worksheets
+      - name: Verify Excel 14 against current rules and preserved historical worksheets
         run: |
           python3 -m pip install --disable-pip-version-check openpyxl==3.1.5 lxml==6.1.1
-          python3 scripts/build_workbook_v13.py --validate-only
+          python3 scripts/build_workbook_v14.py --validate-only
 
       - name: Install browser acceptance dependencies
         shell: bash
@@ -130,7 +131,7 @@ jobs:
           import subprocess
           import sys
 
-          for test in ('tests/harborlight-frontend-v17-smoke.py', 'tests/harborlight-frontend-v18-smoke.py', 'tests/harborlight-tutorial-v18-smoke.py', 'tests/harborlight-tutorial-v21-smoke.py', 'tests/harborlight-tutorial-v22-smoke.py', 'tests/harborlight-tutorial-priority-v22-smoke.py', 'tests/harborlight-tutorial-map-v25-smoke.py', 'tests/harborlight-learning-review-v26-smoke.py', 'tests/harborlight-learning-flow-v26-smoke.py', 'tests/harborlight-starter-course-v26-smoke.py', 'tests/harborlight-learning-feedback-v27-smoke.py', 'tests/harborlight-learning-flow-v27-smoke.py', 'tests/harborlight-missions-ui-v27-smoke.py', 'tests/harborlight-missions-game-v27-smoke.py', 'tests/harborlight-release-v28-smoke.py', 'tests/harborlight-starter-course-v28-smoke.py', 'scripts/test_frontend_v29_learning.py', 'tests/harborlight-theatre-v29-smoke.py', 'tests/harborlight-adventures-v29-smoke.py', 'tests/harborlight-release-v29-smoke.py', 'tests/harborlight-theatre-v30-smoke.py', 'tests/harborlight-theatre-v30-game-smoke.py'):
+          for test in ('tests/harborlight-frontend-v17-smoke.py', 'tests/harborlight-frontend-v18-smoke.py', 'tests/harborlight-tutorial-v18-smoke.py', 'tests/harborlight-tutorial-v21-smoke.py', 'tests/harborlight-tutorial-v22-smoke.py', 'tests/harborlight-tutorial-priority-v22-smoke.py', 'tests/harborlight-tutorial-map-v25-smoke.py', 'tests/harborlight-learning-review-v26-smoke.py', 'tests/harborlight-learning-flow-v26-smoke.py', 'tests/harborlight-starter-course-v26-smoke.py', 'tests/harborlight-learning-feedback-v27-smoke.py', 'tests/harborlight-learning-flow-v27-smoke.py', 'tests/harborlight-missions-ui-v27-smoke.py', 'tests/harborlight-missions-game-v27-smoke.py', 'tests/harborlight-release-v28-smoke.py', 'tests/harborlight-starter-course-v28-smoke.py', 'scripts/test_frontend_v29_learning.py', 'tests/harborlight-theatre-v29-smoke.py', 'tests/harborlight-adventures-v29-smoke.py', 'tests/harborlight-release-v29-smoke.py', 'tests/harborlight-theatre-v30-smoke.py', 'tests/harborlight-theatre-v30-game-smoke.py', 'tests/harborlight-theatre-free-placement-v31-smoke.py', 'tests/harborlight-adventures-v31-smoke.py', 'tests/harborlight-missions-v31-smoke.py', 'tests/harborlight-release-v31-smoke.py'):
               print('Starting browser acceptance: ' + test, flush=True)
               status = subprocess.call([sys.executable, '-u', test])
               if status:
@@ -165,7 +166,7 @@ jobs:
           import subprocess
           import sys
 
-          for test in ('tests/harborlight-dev-auth-smoke.py', 'tests/harborlight-dev-game-smoke.py', 'tests/harborlight-settings-signout-smoke.py', 'tests/harborlight-v18-auth-smoke.py', 'tests/harborlight-onboarding-v20-smoke.py', 'tests/harborlight-v21-features-smoke.py', 'tests/harborlight-help-v24-smoke.py', 'tests/harborlight-community-v24-smoke.py', 'tests/harborlight-charity-v24-smoke.py', 'tests/harborlight-manual-checklist-smoke.py', 'tests/harborlight-polish-panels-smoke.py', 'tests/harborlight-economy-review-v26-smoke.py', 'tests/harborlight-housing-v27-smoke.py', 'tests/harborlight-onboarding-v28-smoke.py', 'tests/harborlight-social-v28-smoke.py', 'tests/harborlight-ship-capacity-v28-smoke.py'):
+          for test in ('tests/harborlight-dev-auth-smoke.py', 'tests/harborlight-dev-game-smoke.py', 'tests/harborlight-settings-signout-smoke.py', 'tests/harborlight-v18-auth-smoke.py', 'tests/harborlight-onboarding-v20-smoke.py', 'tests/harborlight-v21-features-smoke.py', 'tests/harborlight-help-v24-smoke.py', 'tests/harborlight-community-v24-smoke.py', 'tests/harborlight-charity-v24-smoke.py', 'tests/harborlight-manual-checklist-smoke.py', 'tests/harborlight-polish-panels-smoke.py', 'tests/harborlight-economy-review-v26-smoke.py', 'tests/harborlight-housing-v27-smoke.py', 'tests/harborlight-onboarding-v28-smoke.py', 'tests/harborlight-social-v28-smoke.py', 'tests/harborlight-ship-capacity-v28-smoke.py', 'tests/harborlight-cloud-interruption-v31-smoke.py'):
               status = subprocess.call([sys.executable, '-u', test])
               if status:
                   sys.exit(status)

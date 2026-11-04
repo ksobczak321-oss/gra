@@ -1,6 +1,6 @@
-import { THEATRE_DECORATIONS, THEATRE_STYLES, theatreStatus, theatreQuote, theatreDecorationName, THEATRE_LIGHTING, THEATRE_PAVING, THEATRE_TRANSLATIONS } from './harborlight-v1-theatre.js?v=frontend-v30';
-import { renderTheatreScene, theatreIconSvg, THEATRE_SLOT_POSITIONS } from './harborlight-v1-theatre-art.js?v=frontend-v30';
-import { ATTRACTIONS } from './harborlight-v1-leisure.js?v=frontend-v30';
+import { THEATRE_DECORATIONS, THEATRE_STYLES, theatreStatus, theatreQuote, theatreDecorationName, THEATRE_LIGHTING, THEATRE_PAVING, THEATRE_TRANSLATIONS, THEATRE_GARDEN_BOUNDS, THEATRE_WELCOME_GARDEN, theatrePosition } from './harborlight-v1-theatre.js?v=frontend-v31';
+import { renderTheatreScene, theatreIconSvg, THEATRE_SLOT_POSITIONS, theatrePerspectiveScale } from './harborlight-v1-theatre-art.js?v=frontend-v31';
+import { ATTRACTIONS } from './harborlight-v1-leisure.js?v=frontend-v31';
 
 const CITY_NAMES = {
   'flower-beds': 'Rabaty kwiatowe', 'village-benches': 'Ławki w osadzie', 'lantern-strings': 'Girlandy świetlne',
@@ -26,7 +26,7 @@ const node = (tag, attrs = {}, ...children) => {
 const svgNode = markup => { const holder = node('span', { class: 'theatre-art' }); holder.innerHTML = markup; return holder; };
 function styles() {
   for (const [id, file] of [['harborlight-theatre-css', 'harborlight-v1-theatre.css'], ['harborlight-theatre-scene-css', 'harborlight-v1-theatre-scene.css']]) {
-    if (!document.getElementById(id)) document.head.append(node('link', { id, rel: 'stylesheet', href: new URL(`./${file}?v=frontend-v30`, import.meta.url).href }));
+    if (!document.getElementById(id)) document.head.append(node('link', { id, rel: 'stylesheet', href: new URL(`./${file}?v=frontend-v31`, import.meta.url).href }));
   }
 }
 
@@ -42,6 +42,7 @@ export function createTheatrePanel({ state, perform = () => false, requestReward
   const context = () => ({ noAds: typeof noAds === 'function' ? !!noAds() : !!noAds });
   const modelKey = () => JSON.stringify([state.theatre, context().noAds]);
   let selectedSlot = 0, selectedKind = 'fountain', selectedItemId = null, chosenStyle = 'coastal', movingId = null;
+  let selectedPoint = { x: 270, y: 310 }, dragging = null, suppressClick = false, touchPlacement = null, ignoredTouchClickUntil = 0;
   let busy = false, alive = true, editing = true, zoomed = false, collectionLimit = 40, inspiration = null;
   let noticeText = '', noticeError = false, lastModelKey = '', awaitingAd = null, revealTimer = 0;
   const selected = () => state.theatre?.collection?.find(item => item.id === selectedItemId) || null;
@@ -150,19 +151,48 @@ export function createTheatrePanel({ state, perform = () => false, requestReward
     if (state.theatre?.collection?.some(entry => entry.slot === selectedSlot)) selectedSlot = freeSlot() ?? selectedSlot;
     render();
   }
-  async function chooseSlot(slot) {
+  const clampPoint = point => ({ x: Math.max(THEATRE_GARDEN_BOUNDS.left, Math.min(THEATRE_GARDEN_BOUNDS.right, point.x)),
+    y: Math.max(THEATRE_GARDEN_BOUNDS.top, Math.min(THEATRE_GARDEN_BOUNDS.bottom, point.y)) });
+  function pointAt(event, plane) {
+    const rect = plane.getBoundingClientRect();
+    return { x: (event.clientX - rect.left) / rect.width * 1000, y: (event.clientY - rect.top) / rect.height * 700 };
+  }
+  async function choosePoint(point, slot) {
+    if (!editing || busy || suppressClick) return;
+    if (point.y < THEATRE_GARDEN_BOUNDS.top || point.y > THEATRE_GARDEN_BOUNDS.bottom || point.x < THEATRE_GARDEN_BOUNDS.left || point.x > THEATRE_GARDEN_BOUNDS.right) return;
+    selectedPoint = clampPoint(point);
+    if (movingId) {
+      const id = movingId;
+      const result = await command({ type: 'theatrePlace', id, ...selectedPoint, ...(Number.isInteger(slot) ? { slot } : {}) }, t('Ozdoba stoi dokładnie tam, gdzie ją ustawisz.', 'Your ornament is exactly where you placed it.'));
+      if (result === false || result?.ok === false) return;
+      selectedItemId = id; selectedSlot = selected()?.slot ?? selectedSlot; movingId = null;
+    } else { selectedItemId = null; if (Number.isInteger(slot)) selectedSlot = slot; }
+    render();
+  }
+  async function chooseSlot(slot, point) {
     if (!editing || busy) return;
     const placed = state.theatre?.collection?.find(entry => entry.slot === slot);
     if (movingId) {
       const id = movingId;
-      const result = await command({ type: 'theatrePlace', id, slot }, t('Gotowe. Przymierzaj kolejne układy bez opłat.', 'Done. Try another arrangement whenever you like, free of charge.'));
+      const result = await command({ type: 'theatrePlace', id, slot, ...(point || theatrePosition(state, placed) || THEATRE_SLOT_POSITIONS[slot]) }, t('Gotowe. Przymierzaj kolejne układy bez opłat.', 'Done. Try another arrangement whenever you like, free of charge.'));
       if (result === false || result?.ok === false) return;
       selectedItemId = id; movingId = null;
     } else { selectedItemId = placed?.id || null; chosenStyle = placed?.style || chosenStyle; }
+    selectedPoint = theatrePosition(state, selected()) || point || THEATRE_SLOT_POSITIONS[slot];
     selectedSlot = slot; render();
   }
   function keySlot(event, slot) {
     const key = event.key;
+    if (movingId && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(key)) {
+      event.preventDefault(); event.stopPropagation();
+      const item = state.theatre.collection.find(entry => entry.id === movingId);
+      if (!item) return;
+      const point = theatrePosition(state, item) || selectedPoint, step = event.shiftKey ? 15 : 3;
+      selectedPoint = clampPoint({ x: point.x + (key === 'ArrowRight' ? step : key === 'ArrowLeft' ? -step : 0),
+        y: point.y + (key === 'ArrowDown' ? step : key === 'ArrowUp' ? -step : 0) });
+      command({ type: 'theatreMove', id: item.id, ...selectedPoint }, t('Ustawienie poprawione. Strzałki przesuwają ozdobę małymi krokami.', 'Position adjusted. Arrow keys move the ornament in small steps.'));
+      return;
+    }
     const columns = THEATRE_SLOT_POSITIONS.filter(position => position.y === THEATRE_SLOT_POSITIONS[0].y).length || 4;
     let next = slot;
     if (key === 'ArrowLeft') next = slot % columns ? slot - 1 : slot;
@@ -188,7 +218,7 @@ export function createTheatrePanel({ state, perform = () => false, requestReward
   }
   function savedScene(layout, index) {
     const planned = new Map(layout.placements.map(item => [item.id, item]));
-    const view = { ...state, theatre: { ...state.theatre, atmosphere: layout.atmosphere,
+    const view = { ...state, theatre: { ...state.theatre, atmosphere: layout.atmosphere, positions: layout.positions,
       collection: state.theatre.collection.map(item => ({ ...item, slot: planned.get(item.id)?.slot ?? null, style: planned.get(item.id)?.style || item.style })) } };
     return svgNode(renderTheatreScene(view, { editing: false, language, prefix: `theatre-layout-${index}` }));
   }
@@ -245,15 +275,81 @@ export function createTheatrePanel({ state, perform = () => false, requestReward
     if (typeof onOpenAttractions === 'function') city.append(button(t('Zobacz dekoracje i atrakcje', 'View decorations and attractions'), onOpenAttractions, { 'data-theatre-open-attractions': '' }));
     return city;
   }
+  function attachPointerPlacement(plane, hitboxes) {
+    plane.addEventListener('click', event => {
+      if (suppressClick || event.pointerType === 'touch' && performance.now() < ignoredTouchClickUntil) { event.preventDefault(); event.stopPropagation(); return; }
+      const hit = event.target.closest?.('[data-theatre-slot]');
+      if (hit) return;
+      choosePoint(pointAt(event, plane));
+    });
+    plane.addEventListener('pointerdown', event => {
+      if (!editing || busy || event.button !== 0) return;
+      if (movingId && event.pointerType === 'touch') {
+        // A synthesized mobile click may be shifted to a nearby button by the
+        // browser's tap-target adjustment. Commit the actual pointer coordinate.
+        touchPlacement = { pointerId: event.pointerId, x: event.clientX, y: event.clientY };
+        plane.setPointerCapture?.(event.pointerId); event.preventDefault(); return;
+      }
+      const hit = event.target.closest?.('[data-theatre-item]');
+      if (!hit) return;
+      const item = state.theatre.collection.find(entry => entry.id === hit.dataset.theatreItem);
+      if (!item || movingId && movingId !== item.id) return;
+      const point = theatrePosition(state, item), cursor = pointAt(event, plane);
+      selectedItemId = item.id; selectedSlot = item.slot; chosenStyle = item.style; selectedPoint = point;
+      dragging = { id: item.id, slot: item.slot, pointerId: event.pointerId, hit, x: event.clientX, y: event.clientY,
+        dx: point.x - cursor.x, dy: point.y - cursor.y, point, moved: false };
+      hit.setPointerCapture?.(event.pointerId);
+    });
+    plane.addEventListener('pointermove', event => {
+      if (!dragging || event.pointerId !== dragging.pointerId) return;
+      if (!dragging.moved && Math.hypot(event.clientX - dragging.x, event.clientY - dragging.y) < 4) return;
+      dragging.moved = true;
+      event.preventDefault();
+      const cursor = pointAt(event, plane), point = clampPoint({ x: cursor.x + dragging.dx, y: cursor.y + dragging.dy });
+      dragging.point = point;
+      plane.classList.add('is-dragging');
+      const art = plane.querySelector(`[data-theatre-scene-slot="${dragging.slot}"]`);
+      art?.setAttribute('transform', `translate(${point.x},${point.y}) scale(${theatrePerspectiveScale(point.y)})`);
+      if (art?.nextElementSibling) art.parentElement.append(art);
+      dragging.hit.style.left = `${point.x / 10}%`; dragging.hit.style.top = `${point.y / 7}%`;
+      dragging.hit.style.zIndex = String(Math.round(point.y));
+    });
+    plane.addEventListener('pointerup', event => {
+      if (touchPlacement && event.pointerId === touchPlacement.pointerId) {
+        const tap = touchPlacement; touchPlacement = null; ignoredTouchClickUntil = performance.now() + 600;
+        event.preventDefault();
+        if (Math.hypot(event.clientX - tap.x, event.clientY - tap.y) < 12) choosePoint(pointAt(event, plane));
+        return;
+      }
+      if (!dragging || event.pointerId !== dragging.pointerId) return;
+      const drop = dragging;
+      dragging = null; plane.classList.remove('is-dragging');
+      if (!drop.moved) {
+        if (event.pointerType === 'touch') { ignoredTouchClickUntil = performance.now() + 600; event.preventDefault(); chooseSlot(drop.slot, clampPoint(pointAt(event, plane))); }
+        return;
+      }
+      event.preventDefault();
+      suppressClick = true;
+      if (event.pointerType === 'touch') ignoredTouchClickUntil = performance.now() + 600;
+      setTimeout(() => { suppressClick = false; }, 0);
+      selectedPoint = drop.point; selectedItemId = drop.id; selectedSlot = drop.slot; movingId = null;
+      command({ type: 'theatreMove', id: drop.id, ...drop.point }, t('Gotowe — możesz dalej poprawiać swój ogród.', 'Done — keep shaping your garden however you like.'));
+    });
+    plane.addEventListener('pointercancel', () => {
+      touchPlacement = null;
+      if (!dragging) return;
+      dragging = null; render();
+    });
+  }
   function render() {
-    if (!alive) return;
+    if (!alive || dragging) return;
     refreshAdNotice();
     const focus = focusToken(), oldCanvas = root.querySelector('.theatre-canvas');
     const scroll = { left: oldCanvas?.scrollLeft || 0, top: oldCanvas?.scrollTop || 0 };
     const status = theatreStatus(state, context()), item = selected();
     if (!Number.isInteger(selectedSlot) || selectedSlot < 0 || selectedSlot > 19) selectedSlot = 0;
     const occupied = status.collection.find(entry => entry.slot === selectedSlot);
-    const preview = editing && !item && !occupied ? { type: selectedKind, level: 1, style: chosenStyle, slot: selectedSlot } : null;
+    const preview = editing && !item && status.freeSlots > 0 ? { type: selectedKind, level: 1, style: chosenStyle, slot: freeSlot(), position: selectedPoint } : null;
     const atmosphere = status.atmosphere || { lighting: 'day', paving: 'sandstone' };
     root.dataset.theatreEditing = String(editing);
     const header = node('header', { class: 'theatre-intro' }, node('div', {}, node('p', { class: 'theatre-eyebrow' }, t('MAŁE MIEJSCE. WIELKA WYOBRAŹNIA.', 'A LITTLE PLACE. A BIG IMAGINATION.')),
@@ -267,18 +363,31 @@ export function createTheatrePanel({ state, perform = () => false, requestReward
           if (zoomed) requestAnimationFrame(() => { const canvas = root.querySelector('.theatre-canvas'); if (canvas) canvas.scrollTo({ left: (canvas.scrollWidth - canvas.clientWidth) / 2, top: (canvas.scrollHeight - canvas.clientHeight) * .7 }); });
         }, { 'data-theatre-zoom': '', 'aria-pressed': String(zoomed) })));
     const canvas = node('div', { class: `theatre-canvas${movingId ? ' theatre-moving' : ''}${zoomed ? ' is-zoomed' : ''}`, 'data-theatre-canvas': '', tabindex: '0', 'aria-label': t('Ogród Teatru. Wybierz miejsce lub powiększ plac, aby obejrzeć szczegóły.', 'The Theatre garden. Choose a place or explore closer to see details.') });
-    const plane = node('div', { class: 'theatre-scene-plane' }, svgNode(renderTheatreScene(state, { editing, selectedSlot: editing ? selectedSlot : null, preview, language, prefix: 'theatre-editor' })));
-    const hitboxes = node('div', { class: 'theatre-slot-layer', hidden: !editing, 'aria-label': t('Dwadzieścia miejsc na dekoracje', 'Twenty decoration places') });
-    for (const position of THEATRE_SLOT_POSITIONS) {
-      const object = status.collection.find(entry => entry.slot === position.slot);
-      const label = `${t('Miejsce', 'Place')} ${position.slot + 1}: ${object ? `${theatreDecorationName(object.type, language)}, ${t('poziom', 'level')} ${object.level}` : t('wolne', 'empty')}`;
-      hitboxes.append(button('', () => chooseSlot(position.slot), { class: 'theatre-slot-hit', style: `left:${position.x / 10}%;top:${position.y / 7}%;width:${(position.hitWidth || 125) / 10}%;height:${(position.hitHeight || 70) / 7}%;`,
-        'aria-label': label, title: label, 'aria-pressed': String(editing && selectedSlot === position.slot), 'data-theatre-slot': position.slot, onkeydown: event => keySlot(event, position.slot) }));
+    const welcomeView = status.welcomeGardenAvailable ? { ...state, theatre: { ...state.theatre,
+      collection: THEATRE_WELCOME_GARDEN.map((entry,index) => ({ ...entry, id: `welcome-${index}`, level: 1 })) } } : state;
+    const plane = node('div', { class: 'theatre-scene-plane' }, svgNode(renderTheatreScene(welcomeView, { editing, selectedSlot: editing ? selectedSlot : null, preview: status.welcomeGardenAvailable ? null : preview, language, prefix: 'theatre-editor' })));
+    const hitboxes = node('div', { class: 'theatre-slot-layer', hidden: !editing, 'aria-label': t('Swobodne rozmieszczanie maksymalnie dwudziestu dekoracji', 'Freely arrange up to twenty decorations') });
+    for (const legacyPosition of THEATRE_SLOT_POSITIONS) {
+      const object = status.collection.find(entry => entry.slot === legacyPosition.slot);
+      const position = { ...legacyPosition, ...(theatrePosition(state, object) || {}) };
+      const label = object ? `${theatreDecorationName(object.type, language)}, ${t('poziom', 'level')} ${object.level}. ${t('Przeciągnij lub wybierz Przenieś.', 'Drag it, or choose Move.')}` : `${t('Podpowiedź ustawienia', 'Suggested position')} ${position.slot + 1}`;
+      const width = object ? 130 * theatrePerspectiveScale(position.y) : 35, height = object ? 145 * theatrePerspectiveScale(position.y) : 30;
+      hitboxes.append(button('', event => {
+        event.stopPropagation();
+        if (!suppressClick && !(event.pointerType === 'touch' && performance.now() < ignoredTouchClickUntil)) {
+          const point = event.detail === 0 ? (theatrePosition(state, object) || legacyPosition) : clampPoint(pointAt(event, plane));
+          chooseSlot(position.slot, point);
+        }
+      },
+        { class: `theatre-slot-hit${object ? ' theatre-object-hit' : ''}`, style: `left:${position.x / 10}%;top:${position.y / 7}%;width:${width / 10}%;height:${height / 7}%;z-index:${object ? Math.round(position.y) : 1};`,
+        'aria-label': label, title: label, 'aria-pressed': String(editing && selectedSlot === position.slot), 'data-theatre-slot': position.slot,
+        ...(object ? { 'data-theatre-item': object.id } : {}), onkeydown: event => keySlot(event, position.slot) }));
     }
-    plane.append(hitboxes); canvas.append(plane);
+    plane.append(hitboxes); canvas.append(plane); attachPointerPlacement(plane, hitboxes);
     canvas.append(node('div', { class: 'theatre-scene-label', 'aria-hidden': 'true' }, t('TEATR • TWÓJ ZAKĄTEK WYSPY', 'THEATRE • YOUR ISLAND CORNER')));
-    const caption = node('div', { class: 'theatre-scene-caption' }, node('strong', {}, movingId ? t('Wskaż nowe miejsce', 'Choose a new place') : editing ? `${t('Miejsce', 'Place')} ${selectedSlot + 1} / 20` : t('Tak wygląda Twój pomysł', 'Your idea, brought to life')),
-      node('span', {}, `${status.usedSlots}/20 ${t('miejsc', 'places')} · ${status.uniqueTypes}/10 ${t('rodzajów w kolekcji', 'types collected')}`));
+    const caption = node('div', { class: 'theatre-scene-caption' }, node('strong', {}, movingId ? t('Dotknij nowego miejsca lub przesuń strzałkami', 'Tap a new position or move with arrow keys') : editing ? t('Przeciągnij ozdobę albo wybierz ją i wskaż nowe miejsce', 'Drag an ornament, or select it and choose a new position') : t('Tak wygląda Twój pomysł', 'Your idea, brought to life')),
+      node('span', {}, `${status.usedSlots}/20 ${t('ustawionych ozdób', 'placed ornaments')} · ${status.uniqueTypes}/10 ${t('rodzajów w kolekcji', 'types collected')}`));
+    if (status.welcomeGardenAvailable) caption.append(button(t('Odbierz powitalny ogród — 6 ozdób bez opłat', 'Keep this welcome garden — 6 free ornaments'), () => command({ type: 'theatreWelcomeGarden' }, t('Ten ogród jest już Twój. Przestawiaj, ulepszaj i twórz własne pomysły.', 'This garden is yours. Move, improve and make it your own.')), { class: 'primary', 'data-theatre-welcome': '' }));
     if (movingId) caption.append(button(t('Anuluj przenoszenie', 'Cancel moving'), () => { movingId = null; render(); }, { 'data-theatre-cancel-moving': '' }));
     const saved = saveState();
     const courtyard = node('div', { class: 'theatre-courtyard' }, canvas, caption, node('p', { class: 'theatre-save-status', 'data-theatre-save-status': '', 'data-save-status': saved.status, role: 'status', 'aria-live': 'polite' }, saved.text));
@@ -301,20 +410,25 @@ export function createTheatrePanel({ state, perform = () => false, requestReward
         button(`${t('Ulepsz do poziomu', 'Improve to level')} ${item.level + 1}`, () => improve(item), { class: 'primary', disabled: busy || !quote.affordable, 'data-theatre-upgrade': item.id }));
       else inspector.append(node('p', { class: 'theatre-muted' }, errorText(quote)));
       inspector.append(node('div', { class: 'theatre-object-actions' },
-        button(item.slot === null ? t('Ustaw w ogrodzie', 'Place in the garden') : t('Przenieś lub zamień miejscami', 'Move or swap places'), () => { movingId = item.id; editing = true; say(t('Wybierz nowe miejsce. Zajęte miejsca można zamieniać.', 'Choose a new place. Occupied places can be swapped.')); render(); revealArea('.theatre-canvas'); }, { 'data-theatre-move': item.id }),
+        button(item.slot === null ? t('Ustaw w ogrodzie', 'Place in the garden') : t('Przenieś ozdobę', 'Move ornament'), () => {
+          movingId = item.id; editing = true; selectedPoint = theatrePosition(state, item) || selectedPoint;
+          say(t('Dotknij wybranego miejsca na placu. Możesz też użyć strzałek, aby poprawić ustawienie małymi krokami.', 'Tap a position in the courtyard. You can also use arrow keys for fine adjustments.'));
+          render(); revealArea('.theatre-canvas'); root.querySelector(`[data-theatre-slot="${item.slot ?? selectedSlot}"]`)?.focus({ preventScroll: true });
+        }, { 'data-theatre-move': item.id }),
         button(t('Odłóż do kolekcji', 'Store in collection'), () => command({ type: 'theatreRemove', id: item.id }, t('Dekoracja czeka w kolekcji i zachowuje swój poziom.', 'The decoration is stored, keeping its level.')), { disabled: busy || item.slot === null, 'data-theatre-remove': item.id })),
         button(t('Zastosuj wybrany styl bez opłat', 'Apply this style for free'), () => command({ type: 'theatreRestyle', id: item.id, style: chosenStyle }, t('Styl zmieniony.', 'Style changed.')), { disabled: busy || item.style === chosenStyle, 'data-theatre-restyle': item.id }));
     } else {
-      const buySlot = occupied ? null : selectedSlot;
-      const quote = theatreQuote(state, { type: 'theatreBuy', decoration: selectedKind, style: chosenStyle, slot: buySlot }, context());
+      const buySlot = occupied ? (freeSlot() ?? null) : selectedSlot;
+      const placement = buySlot === null ? {} : { slot: buySlot, ...selectedPoint };
+      const quote = theatreQuote(state, { type: 'theatreBuy', decoration: selectedKind, style: chosenStyle, ...placement }, context());
       inspector.append(svgNode(theatreIconSvg(selectedKind, 1, chosenStyle)), node('p', { class: 'theatre-muted' }, t('Zacznij od poziomu 1. Ulepszaj dalej, gdy masz środki — każdy kolejny poziom dopracowuje Twoją ozdobę.', 'Start at level 1. Keep improving when you have the coins: each new level adds refinement to your ornament.')),
         node('p', { class: 'theatre-price' }, quote.ok ? `${count(quote.coins)} ${t('monet', 'coins')}` : errorText(quote)),
-        button(occupied ? t('Kup do kolekcji', 'Buy for your collection') : t('Kup i ustaw tutaj', 'Buy and place here'), async () => {
-          const result = await command({ type: 'theatreBuy', decoration: selectedKind, style: chosenStyle, slot: buySlot }, t('Pierwszy krok do piękniejszego zakątka!', 'One more beautiful corner of your island!'));
+        button(buySlot === null ? t('Kup do kolekcji', 'Buy for your collection') : t('Kup i ustaw tutaj', 'Buy and place here'), async () => {
+          const result = await command({ type: 'theatreBuy', decoration: selectedKind, style: chosenStyle, ...placement }, t('Pierwszy krok do piękniejszego zakątka!', 'One more beautiful corner of your island!'));
           if (result && result.ok !== false) selectedItemId = result.item?.id || state.theatre.collection.find(entry => entry.slot === buySlot)?.id;
           render(); if (result && result.ok !== false) reveal(buySlot);
         }, { class: 'primary', disabled: busy || !quote.ok || !quote.affordable, 'data-theatre-buy': selectedKind }));
-      if (occupied) {
+      if (status.freeSlots === 0) {
         const available = freeSlot();
         inspector.append(node('p', { class: 'theatre-muted' }, available !== undefined
           ? t('Wybrane miejsce jest zajęte. Wskaż inne albo kup nową ozdobę do kolekcji.', 'This place is occupied. Choose another one or buy the new ornament for your collection.')
@@ -333,7 +447,7 @@ export function createTheatrePanel({ state, perform = () => false, requestReward
     const owned = node('div', { class: 'theatre-owned' });
     for (const entry of status.collection.slice(0, collectionLimit)) {
       const card = button(node('span', {}, svgNode(theatreIconSvg(entry.type, entry.level, entry.style)), node('strong', {}, theatreDecorationName(entry.type, language)),
-        node('small', {}, `${t('Poz.', 'Lv.')} ${entry.level} · ${entry.slot === null ? t('w kolekcji', 'stored') : `${t('miejsce', 'place')} ${entry.slot + 1}`}`)), () => { editing = true; selectedItemId = entry.id; selectedSlot = entry.slot ?? selectedSlot; chosenStyle = entry.style; movingId = null; render(); revealArea('.theatre-inspector'); },
+        node('small', {}, `${t('Poz.', 'Lv.')} ${entry.level} · ${entry.slot === null ? t('w kolekcji', 'stored') : t('na placu', 'in the garden')}`)), () => { editing = true; selectedItemId = entry.id; selectedSlot = entry.slot ?? selectedSlot; chosenStyle = entry.style; movingId = null; render(); revealArea('.theatre-inspector'); },
         { class: 'theatre-owned-item', 'aria-pressed': String(entry.id === selectedItemId), 'data-theatre-owned': entry.id }); owned.append(card);
     }
     collection.append(owned.children.length ? owned : node('p', { class: 'theatre-empty-collection' }, t('Tu zacznie się Twoja kolekcja. Wybierz coś z palety powyżej.', 'Your collection starts here. Choose something from the palette above.')));
@@ -341,10 +455,10 @@ export function createTheatrePanel({ state, perform = () => false, requestReward
     const notice = node('p', { class: `theatre-notice${noticeError ? ' theatre-error' : ''}`, role: noticeError ? 'alert' : 'status', 'aria-live': 'polite' },
       noticeText || t('Przymierz dekorację, wskaż miejsce i zobacz efekt przed zakupem. Tu nie ma jednego sposobu na piękny ogród.', 'Preview an ornament, choose a place and see the effect before buying. There is no single way to make a beautiful garden.'));
     const rules = node('details', { class: 'theatre-rules' }, node('summary', {}, t('Jak urządzać Teatr?', 'How to decorate the Theatre')),
-      node('p', {}, t('Teatr pozostaje na jednym poziomie. W ogrodzie masz 20 miejsc i 10 rodzajów ozdób w pięciu stylach. Ozdoby rozwijasz dalej, dopóki masz środki — poziom 20 nie jest końcem. Ceny widzisz przed zakupem lub ulepszeniem. Co piąty poziom wymaga też ukończonej reklamy; aktywne uprawnienie bez reklam zastępuje film, a cena w monetach pozostaje taka sama.',
-        'The Theatre stays at one building level. Its garden has twenty places and ten ornament types in five styles. Keep improving ornaments as long as you have the coins: level twenty is not the end. Prices appear before purchase or improvement. Every fifth level also needs a completed advertisement; an active no-ads entitlement replaces the film, while the coin price stays the same.')),
+      node('p', {}, t('Teatr pozostaje na jednym poziomie. Na placu ustawisz do 20 ozdób w dowolnych miejscach. Wybierasz spośród 10 rodzajów i pięciu stylów. Przeciągaj ozdoby albo wybierz „Przenieś” i dotknij nowego miejsca. Strzałki w trybie przenoszenia poprawiają pozycję małymi krokami. Ozdoby rozwijasz dalej, dopóki masz środki — poziom 20 nie jest końcem. Ceny widzisz przed zakupem lub ulepszeniem. Co piąty poziom wymaga też ukończonej reklamy; uprawnienie bez reklam zastępuje film.',
+        'The Theatre stays at one building level. Freely arrange up to twenty ornaments in the courtyard, with ten types and five styles. Drag an ornament, or choose Move and tap a new position. Arrow keys make fine adjustments in moving mode. Keep improving as long as you have the coins: level twenty is not the end. Prices appear before purchase or improvement. Every fifth level also needs a completed advertisement; no-ads entitlement replaces the film.')),
       node('p', {}, t('Pomysły zapisują układ i wygląd Twoich ozdób. Nie kupują nowych przedmiotów i nie cofają poziomów ani wydanych monet. Wyspa działa dalej: produkcja, transport i misje biegną podczas aranżowania.', 'Saved ideas remember the arrangement and appearance of your ornaments. They never buy items or undo levels or coin spending. Production, transport and missions keep running while you decorate.')));
-    root.replaceChildren(...[header, toolbar, sceneLayout, notice, environment, renderLayouts(status), renderInspiration(), collection,
+    root.replaceChildren(...[header, environment, renderLayouts(status), toolbar, sceneLayout, notice, renderInspiration(), collection,
       status.badges.length ? node('p', { class: 'theatre-achievement', 'data-theatre-pennant': '' }, t('Proporzec kolekcjonera zdobi Twój Teatr!', 'The collector’s pennant flies above your Theatre!')) : null, renderCity(), rules].filter(Boolean));
     lastModelKey = modelKey();
     const nextCanvas = root.querySelector('.theatre-canvas');
@@ -358,7 +472,7 @@ export function createTheatrePanel({ state, perform = () => false, requestReward
     const upgrade = root.querySelector('[data-theatre-upgrade]');
     if (upgrade) { const quote = theatreQuote(state, { id: upgrade.dataset.theatreUpgrade }, context()); upgrade.disabled = busy || !quote.ok || !quote.affordable; }
     const buy = root.querySelector('[data-theatre-buy]');
-    if (buy) { const occupied = state.theatre.collection.some(item => item.slot === selectedSlot); const quote = theatreQuote(state, { type: 'theatreBuy', decoration: buy.dataset.theatreBuy, style: chosenStyle, slot: occupied ? null : selectedSlot }, context()); buy.disabled = busy || !quote.ok || !quote.affordable; }
+    if (buy) { const available = state.theatre.collection.some(entry => entry.slot === selectedSlot) ? freeSlot() : selectedSlot; const quote = theatreQuote(state, { type: 'theatreBuy', decoration: buy.dataset.theatreBuy, style: chosenStyle, ...(available === undefined ? {} : { slot: available, ...selectedPoint }) }, context()); buy.disabled = busy || !quote.ok || !quote.affordable; }
   }
   render();
   const update = nextState => {

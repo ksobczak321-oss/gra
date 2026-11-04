@@ -18,6 +18,18 @@ export const THEATRE_PAVING = Object.freeze([
   { id: 'brick', namePl: 'Ceglana mozaika', name: 'Brick mosaic' }
 ].map(Object.freeze));
 export const THEATRE_DEFAULT_ATMOSPHERE = Object.freeze({ lighting: 'day', paving: 'sandstone' });
+// Positions are coordinates in the illustrated 1000×700 courtyard. Slots remain
+// stable possession tokens for older saves, rather than a visible placement grid.
+export const THEATRE_GARDEN_BOUNDS = Object.freeze({ left: 150, right: 850, top: 310, bottom: 600 });
+export const THEATRE_PLACEMENT_POINTS = Object.freeze([
+  [270,310],[423,310],[577,310],[730,310], [230,375],[410,375],[590,375],[770,375],
+  [220,440],[407,440],[593,440],[780,440], [230,505],[410,505],[590,505],[770,505],
+  [280,575],[430,575],[580,575],[730,575]
+].map(([x,y], slot) => Object.freeze({ slot, x, y })));
+export const THEATRE_WELCOME_GARDEN = Object.freeze([
+  ['tree', 'garden', 0], ['flowerbed', 'garden', 3], ['bench', 'coastal', 5],
+  ['fountain', 'marble', 10], ['lantern', 'coastal', 12], ['flowerbed', 'garden', 19]
+].map(([type,style,slot]) => Object.freeze({ type, style, slot })));
 
 export const THEATRE_DECORATIONS = Object.freeze([
   ['fountain', 'Fontanna', 'Fountain', 1.4], ['column', 'Kolumny', 'Columns', 1.15],
@@ -70,6 +82,10 @@ export const THEATRE_TRANSLATIONS = Object.freeze({
   'The remembered arrangement has been removed. Your decorations are preserved.': 'Zapisany pomysł został usunięty. Wszystkie dekoracje pozostają Twoje.',
   'The next decoration level cannot be represented safely.': 'Ten poziom wykracza poza obsługiwany zakres zapisu. Dekoracja i monety pozostają bez zmian.',
   'The decoration price exceeds the supported coin range.': 'Cena tego ulepszenia przekracza obsługiwany zakres monet. Dekoracja i monety pozostają bez zmian.'
+  , 'Choose a point inside the Theatre garden.': 'Wskaż miejsce na placu przed Teatrem.',
+  'The garden already contains twenty decorations. Store one before adding another.': 'Na placu jest już dwadzieścia ozdób. Odłóż jedną do kolekcji, aby ustawić kolejną.',
+  'Your welcome garden is ready. Its decorations are yours to rearrange and improve.': 'Twój powitalny ogród jest gotowy. Możesz przestawiać i ulepszać jego ozdoby.',
+  'Your welcome garden was already received.': 'Powitalny ogród został już odebrany.'
 });
 
 const catalog = new Map(THEATRE_DECORATIONS.map(item => [item.id, item]));
@@ -80,6 +96,11 @@ const object = value => value && typeof value === 'object' && !Array.isArray(val
 const integer = value => Number.isSafeInteger(value) && value >= 0;
 const slotValid = value => integer(value) && value < THEATRE_RULES.slots;
 const layoutSlotValid = value => integer(value) && value < THEATRE_RULES.savedLayouts;
+const pointValid = value => object(value) && Number.isFinite(value.x) && Number.isFinite(value.y) &&
+  value.x >= THEATRE_GARDEN_BOUNDS.left && value.x <= THEATRE_GARDEN_BOUNDS.right &&
+  value.y >= THEATRE_GARDEN_BOUNDS.top && value.y <= THEATRE_GARDEN_BOUNDS.bottom;
+const cleanPoint = value => ({ x: Math.round(value.x * 10) / 10, y: Math.round(value.y * 10) / 10 });
+const defaultPoint = slot => ({ x: THEATRE_PLACEMENT_POINTS[slot].x, y: THEATRE_PLACEMENT_POINTS[slot].y });
 const AD_RECEIPT_HISTORY = 2000;
 const clock = state => Number.isFinite(state.worldTimeMs) ? state.worldTimeMs : 0;
 const good = (message, details = {}) => ({ ok: true, message, ...details });
@@ -94,6 +115,16 @@ export const requiresTheatreAdvertisement = level => Number.isSafeInteger(level)
 function normalizeAtmosphere(source) {
   return { lighting: lightingIds.has(source?.lighting) ? source.lighting : THEATRE_DEFAULT_ATMOSPHERE.lighting,
     paving: pavingIds.has(source?.paving) ? source.paving : THEATRE_DEFAULT_ATMOSPHERE.paving };
+}
+
+function normalizePositions(source, collection) {
+  return Object.fromEntries(collection.filter(item => item.slot !== null).map(item => [item.id,
+    pointValid(source?.[item.id]) ? cleanPoint(source[item.id]) : defaultPoint(item.slot)]));
+}
+export function theatrePosition(state, item) {
+  if (!item || !slotValid(item.slot)) return null;
+  const value = state.theatre?.positions?.[item.id];
+  return pointValid(value) ? cleanPoint(value) : defaultPoint(item.slot);
 }
 
 function normalizeLayouts(source, collection, now) {
@@ -111,13 +142,15 @@ function normalizeLayouts(source, collection, now) {
         style: styles.has(entry.style) ? entry.style : available.get(entry.id).style });
     }
     return { savedAt: Number.isFinite(saved.savedAt) && saved.savedAt >= 0 ? Math.min(now, saved.savedAt) : now,
-      atmosphere: normalizeAtmosphere(saved.atmosphere), placements };
+      atmosphere: normalizeAtmosphere(saved.atmosphere), placements,
+      positions: normalizePositions(saved.positions, placements) };
   });
 }
 
 function cloneLayout(layout) {
   return layout ? { savedAt: layout.savedAt, atmosphere: { ...layout.atmosphere },
-    placements: layout.placements.map(entry => ({ ...entry })) } : null;
+    placements: layout.placements.map(entry => ({ ...entry })),
+    positions: Object.fromEntries(Object.entries(layout.positions || {}).map(([id, point]) => [id, { ...point }])) } : null;
 }
 
 export function normalizeTheatre(state, raw = state) {
@@ -140,6 +173,7 @@ export function normalizeTheatre(state, raw = state) {
     clock(state) >= pending.startedAt && clock(state) - pending.startedAt < THEATRE_RULES.adIntentSeconds * 1000
     ? { nonce: pending.nonce, id: pending.id, targetLevel: pending.targetLevel, coins: pending.coins, startedAt: pending.startedAt } : null;
   state.theatre = { version: THEATRE_RULES.version, sequence, collection, pendingUpgrade,
+    positions: normalizePositions(saved.positions, collection), welcomeGardenGranted: saved.welcomeGardenGranted === true,
     atmosphere: normalizeAtmosphere(saved.atmosphere), layouts: normalizeLayouts(saved.layouts, collection, clock(state)),
     adReceipts: [...new Set((Array.isArray(saved.adReceipts) ? saved.adReceipts : []).filter(id => typeof id === 'string' && id.length > 0 && id.length <= 200))].slice(-AD_RECEIPT_HISTORY),
     badges: Array.isArray(saved.badges) && saved.badges.includes(THEATRE_RULES.completionBadge) ? [THEATRE_RULES.completionBadge] : [] };
@@ -153,6 +187,7 @@ function current(state) {
   // without normalizing away an active advertisement or changing possessions.
   if (!lightingIds.has(theatre.atmosphere?.lighting) || !pavingIds.has(theatre.atmosphere?.paving)) theatre.atmosphere = normalizeAtmosphere(theatre.atmosphere);
   if (!Array.isArray(theatre.layouts) || theatre.layouts.length !== THEATRE_RULES.savedLayouts) theatre.layouts = normalizeLayouts(theatre.layouts, theatre.collection, clock(state));
+  if (!object(theatre.positions)) theatre.positions = normalizePositions(null, theatre.collection);
   return theatre;
 }
 function awardCollectionBadge(theatre) {
@@ -168,6 +203,10 @@ export function theatreQuote(state, action = {}, context = {}) {
     if (!catalog.has(action.decoration) || !styles.has(action.style || 'coastal')) return bad('Choose a decoration and an available style.');
     if (theatre.collection.length >= THEATRE_RULES.maxCollection) return bad('The decoration collection is full.', 'collection-full');
     if (action.slot != null && (!slotValid(action.slot) || theatre.collection.some(item => item.slot === action.slot))) return bad('Choose a free courtyard place.', 'slot-occupied');
+    if (Object.hasOwn(action, 'x') || Object.hasOwn(action, 'y')) {
+      if (!pointValid(action)) return bad('Choose a point inside the Theatre garden.', 'invalid-position');
+      if (theatre.collection.filter(item => item.slot !== null).length >= THEATRE_RULES.slots) return bad('The garden already contains twenty decorations. Store one before adding another.', 'garden-full');
+    }
     const coins = price(action.decoration, 1);
     return good('Decoration price.', { coins, targetLevel: 1, requiresAd: false, affordable: canSpend(state, coins) });
   }
@@ -185,6 +224,8 @@ export function theatreStatus(state, context = {}) {
   const theatre = current(state), placed = theatre.collection.filter(item => item.slot !== null);
   return { version: THEATRE_RULES.version, maxLevel: null, unlimitedLevels: true, slots: THEATRE_RULES.slots, usedSlots: placed.length,
     atmosphere: { ...theatre.atmosphere },
+    positions: Object.fromEntries(Object.entries(theatre.positions).map(([id, point]) => [id, { ...point }])),
+    welcomeGardenAvailable: theatre.welcomeGardenGranted !== true && theatre.collection.length === 0,
     layouts: theatre.layouts.map(layout => layout ? { ...cloneLayout(layout), placementCount: layout.placements.length } : null),
     freeSlots: THEATRE_RULES.slots - placed.length, collection: theatre.collection.map(item => ({ ...item })),
     pendingUpgrade: theatre.pendingUpgrade ? { ...theatre.pendingUpgrade } : null, badges: [...theatre.badges],
@@ -197,8 +238,17 @@ export function theatreStatus(state, context = {}) {
 export function theatreAction(state, action = {}, context = {}) {
   if (!['theatreBuy', 'theatrePlace', 'theatreMove', 'theatreRemove', 'theatreRestyle', 'theatreUpgrade',
     'theatreBeginUpgradeAd', 'theatreCompleteUpgradeAd', 'theatreCancelUpgradeAd',
-    'theatreSetAtmosphere', 'theatreSaveLayout', 'theatreRestoreLayout', 'theatreDeleteLayout'].includes(action.type)) return null;
+    'theatreSetAtmosphere', 'theatreSaveLayout', 'theatreRestoreLayout', 'theatreDeleteLayout', 'theatreWelcomeGarden'].includes(action.type)) return null;
   const theatre = current(state);
+  if (action.type === 'theatreWelcomeGarden') {
+    if (theatre.welcomeGardenGranted === true) return bad('Your welcome garden was already received.', 'welcome-already-received');
+    theatre.welcomeGardenGranted = true;
+    if (!theatre.collection.length) for (const entry of THEATRE_WELCOME_GARDEN) {
+      const item = { id: `decoration-${++theatre.sequence}`, type: entry.type, level: 1, style: entry.style, slot: entry.slot };
+      theatre.collection.push(item); theatre.positions[item.id] = defaultPoint(item.slot);
+    }
+    return good('Your welcome garden is ready. Its decorations are yours to rearrange and improve.', { received: true, count: theatre.collection.length });
+  }
   if (action.type === 'theatreSetAtmosphere') {
     const hasLighting = Object.hasOwn(action, 'lighting'), hasPaving = Object.hasOwn(action, 'paving');
     if ((!hasLighting && !hasPaving) || hasLighting && !lightingIds.has(action.lighting) || hasPaving && !pavingIds.has(action.paving)) {
@@ -212,7 +262,8 @@ export function theatreAction(state, action = {}, context = {}) {
     if (!layoutSlotValid(action.slot)) return bad('Choose one of the three remembered arrangements.', 'invalid-layout-slot');
     if (action.type === 'theatreSaveLayout') {
       theatre.layouts[action.slot] = { savedAt: clock(state), atmosphere: { ...theatre.atmosphere },
-        placements: theatre.collection.filter(item => item.slot !== null).map(item => ({ id: item.id, slot: item.slot, style: item.style })) };
+        placements: theatre.collection.filter(item => item.slot !== null).map(item => ({ id: item.id, slot: item.slot, style: item.style })),
+        positions: normalizePositions(theatre.positions, theatre.collection) };
       return good('Your garden arrangement has been remembered.', { slot: action.slot, layout: cloneLayout(theatre.layouts[action.slot]) });
     }
     if (action.type === 'theatreDeleteLayout') {
@@ -232,6 +283,7 @@ export function theatreAction(state, action = {}, context = {}) {
       if (placement) item.style = placement.style;
     }
     theatre.atmosphere = { ...restored.atmosphere };
+    theatre.positions = normalizePositions(restored.positions, theatre.collection);
     return good('Your remembered garden arrangement is ready.', { slot: action.slot, placementCount: restored.placements.length });
   }
   if (action.type === 'theatreBuy') {
@@ -241,6 +293,8 @@ export function theatreAction(state, action = {}, context = {}) {
     state.resources.coins -= quote.coins;
     const item = { id: `decoration-${++theatre.sequence}`, type: action.decoration, level: 1,
       style: action.style || 'coastal', slot: action.slot ?? null };
+    if (pointValid(action)) item.slot = Array.from({ length: THEATRE_RULES.slots }, (_, index) => index).find(slot => !theatre.collection.some(entry => entry.slot === slot));
+    if (item.slot !== null) theatre.positions[item.id] = pointValid(action) ? cleanPoint(action) : defaultPoint(item.slot);
     theatre.collection.push(item); awardCollectionBadge(theatre);
     return good('Decoration added to your collection.', { item: { ...item }, coins: quote.coins });
   }
@@ -269,18 +323,40 @@ export function theatreAction(state, action = {}, context = {}) {
   }
   const item = theatre.collection.find(entry => entry.id === action.id);
   if (!item) return bad('This decoration is not in your collection.', 'not-owned');
-  if (action.type === 'theatreRemove') { item.slot = null; return good('Decoration stored. Its level is preserved.', { item: { ...item } }); }
+  if (action.type === 'theatreRemove') { item.slot = null; delete theatre.positions[item.id]; return good('Decoration stored. Its level is preserved.', { item: { ...item } }); }
   if (action.type === 'theatreRestyle') {
     if (!styles.has(action.style)) return bad('Choose an available style.');
     item.style = action.style; return good('Decoration style changed.', { item: { ...item } });
   }
   if (action.type === 'theatrePlace' || action.type === 'theatreMove') {
+    if (Object.hasOwn(action, 'x') || Object.hasOwn(action, 'y')) {
+      if (!pointValid(action)) return bad('Choose a point inside the Theatre garden.', 'invalid-position');
+      const previousSlot = item.slot, previousPoint = theatrePosition(state, item);
+      if (slotValid(action.slot)) {
+        const displaced = theatre.collection.find(entry => entry.slot === action.slot && entry.id !== item.id);
+        item.slot = action.slot;
+        if (displaced) {
+          displaced.slot = previousSlot;
+          if (previousPoint) theatre.positions[displaced.id] = previousPoint;
+          else delete theatre.positions[displaced.id];
+        }
+      }
+      if (item.slot === null) {
+        const free = Array.from({ length: THEATRE_RULES.slots }, (_, index) => index).find(slot => !theatre.collection.some(entry => entry.slot === slot));
+        if (free === undefined) return bad('The garden already contains twenty decorations. Store one before adding another.', 'garden-full');
+        item.slot = free;
+      }
+      theatre.positions[item.id] = cleanPoint(action);
+      return good('Decoration placed.', { item: { ...item }, position: { ...theatre.positions[item.id] } });
+    }
     if (!slotValid(action.slot)) return bad('Choose one of the twenty courtyard places.');
     const previous = item.slot, other = theatre.collection.find(entry => entry.slot === action.slot && entry.id !== item.id);
     item.slot = action.slot;
     // An installed decoration swaps with another installed decoration. Installing
     // from the collection stores the displaced item, without destroying it.
     if (other) other.slot = previous;
+    theatre.positions[item.id] = defaultPoint(item.slot);
+    if (other) { if (other.slot === null) delete theatre.positions[other.id]; else theatre.positions[other.id] = defaultPoint(other.slot); }
     return good(other ? 'Decorations rearranged.' : 'Decoration placed.', { item: { ...item }, swapped: other?.id || null });
   }
   const quote = theatreQuote(state, action, context);

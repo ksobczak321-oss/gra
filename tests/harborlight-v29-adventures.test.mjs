@@ -40,7 +40,9 @@ function winTilt(state, level) {
 
 test('nine optional adventures are introduced without touching missions, resources or old expedition progress', () => {
   const state = island(); state.lighthouseMission = { stage: 3 }; const saved = structuredClone(state);
-  assert.equal(ADVENTURE_CATALOG.length, 9); assert.equal(adventureChoices(state).filter(item => item.available).length, 9);
+  assert.equal(ADVENTURE_CATALOG.length, 9);
+  assert.equal(adventureChoices(state).filter(item => ADVENTURE_CATALOG.some(legacy => legacy.kind === item.kind) && item.available).length, 9);
+  assert.ok(adventureChoices(state).some(item => item.kind === 'islandPuzzle' && item.available));
   assert.deepEqual(state.resources, saved.resources); assert.deepEqual(state.lighthouseMission, { stage: 3 });
   assert.equal(adventureAction(state, { type: 'upgrade', building: 'farm' }), null);
   assert.equal(nextAdventuresEvent(state), Infinity);

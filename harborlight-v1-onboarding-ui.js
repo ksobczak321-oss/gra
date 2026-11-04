@@ -1,5 +1,5 @@
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v30';
-import { introCopy, APPROVED_TOUR_VERSION, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v30';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v31';
+import { introCopy, APPROVED_TOUR_VERSION, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v31';
 
 const pick = (language, pl, en) => language === 'pl' ? pl : en;
 const valueFor = (value, language) => {

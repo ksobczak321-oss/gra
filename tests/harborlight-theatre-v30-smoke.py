@@ -69,8 +69,8 @@ def scenario(browser, language, mobile):
     try:
         page.goto(ORIGIN)
         page.evaluate('''async language=>{
-          const [T,U,A]=await Promise.all([import('/harborlight-v1-theatre.js?v=frontend-v30'),
-            import('/harborlight-v1-theatre-ui.js?v=frontend-v30'),import('/harborlight-v1-theatre-art.js?v=frontend-v30')]);
+          const [T,U,A]=await Promise.all([import('/harborlight-v1-theatre.js?v=frontend-v31'),
+            import('/harborlight-v1-theatre-ui.js?v=frontend-v31'),import('/harborlight-v1-theatre-art.js?v=frontend-v31')]);
           const state={worldTimeMs:1793700000000,resources:{coins:100000},settings:{language}};
           T.normalizeTheatre(state);
           const foundation=[['fountain',0,4],['bench',6,8],['tree',19,12]];
@@ -102,7 +102,7 @@ def scenario(browser, language, mobile):
         assert not page.evaluate('document.documentElement.scrollWidth>innerWidth+1'), 'Studio overflowed the viewport'
         scene_box = canvas.bounding_box()
         assert scene_box['width'] >= (330 if mobile else 600), scene_box
-        assert scene_box['y'] < 320, 'The scenery was pushed below a long settings form'
+        assert page.evaluate('''()=>{const mood=document.querySelector('.theatre-environment'),ideas=document.querySelector('.theatre-layouts'),scene=document.querySelector('.theatre-canvas');return mood.getBoundingClientRect().top<scene.getBoundingClientRect().top&&ideas.getBoundingClientRect().top<scene.getBoundingClientRect().top&&parseFloat(getComputedStyle(mood.querySelector('select')).fontSize)>=16;}'''), 'Mood and saved designs must be legible above the courtyard'
         assert scene_box['height'] >= 200, scene_box
         # Real generated artwork must load; an SVG fallback alone cannot pass.
         page.wait_for_function('document.querySelectorAll(".theatre-scene image").length>0')
@@ -182,7 +182,9 @@ def scenario(browser, language, mobile):
         # Make another design, including a newly acquired decoration. Restoring
         # the old design cannot delete it, duplicate it, refund coins or undo10.
         page.locator(f'[data-theatre-move="{bench_id}"]').click()
-        page.locator('[data-theatre-slot="10"]').click()
+        # Legacy position shortcuts remain keyboard-accessible behind freely placed art.
+        page.locator('[data-theatre-slot="10"]').focus()
+        page.keyboard.press('Enter')
         assert item(page, bench_id)['slot'] == 10
         change_mood(page, 'golden', 'brick')
         page.locator('[data-theatre-kind="flowerbed"]').click()
@@ -232,7 +234,9 @@ def scenario(browser, language, mobile):
         assert item(page, bench_id)['level'] == 25
         assert coins(page) < before_twenty_five
         page.locator(f'[data-theatre-move="{bench_id}"]').click()
-        page.locator('[data-theatre-slot="11"]').click()
+        # Legacy position shortcuts remain keyboard-accessible behind freely placed art.
+        page.locator('[data-theatre-slot="11"]').focus()
+        page.keyboard.press('Enter')
         balance_at_twenty_five = coins(page)
         page.locator('[data-theatre-restore-layout="0"]').click()
         assert item(page, bench_id)['level'] == 25
@@ -245,7 +249,9 @@ def scenario(browser, language, mobile):
         page.locator(f'[data-theatre-remove="{tree_id}"]').click()
         assert item(page, tree_id)['slot'] is None
         page.locator(f'[data-theatre-move="{tree_id}"]').click()
-        page.locator('[data-theatre-slot="17"]').click()
+        # Legacy position shortcuts remain keyboard-accessible behind freely placed art.
+        page.locator('[data-theatre-slot="17"]').focus()
+        page.keyboard.press('Enter')
         assert item(page, tree_id)['slot'] == 17
         assert item(page, tree_id)['level'] == 12
 

@@ -1,5 +1,10 @@
 # HARBORLIGHT — stan środowisk
 
+## DEV0.14.0.0/v31 — odbiór w toku
+
+GO użytkownika obejmuje ukończenie0.14.0.0 i standardową drogę DEV/CI → PRE-PROD. Lokalnie1331Node +141Python i43zestawyChromiumPASS. Końcowy commit i własneCI/Pages pozostają PENDING; pełna symulacja50dni nadal trwa. [Raport](DEV-0.14.0.0-VALIDATION.md) · [PromocjaPRE-PROD](PREPROD-V31-PROMOTION.md).450kart/179ręcznychNOTRUN. PRE-PROD poniżej bez zmiany; PROD poza zakresem doprecyzowanego polecenia.
+
+
 Aktualizacja operacyjna: **3 listopada 2026, Europe/Warsaw**. Akceptacja opisów i pierwotny odbiór lokalny pozostają z 1 listopada. Historia wyników jest w [dzienniku](IMPLEMENTATION-LOG.md); warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
 ## Aktualny PRE-PROD 0.13.1.0 — pełny odbiór SUCCESS

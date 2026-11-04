@@ -1,19 +1,19 @@
 // The client snapshot keeps a mother-root account revision with up to twenty
 // worlds. Cloud adapters persist bounded per-world documents atomically.
 // Simulation is injected: this module does not import the state coordinator.
-import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v30';
-import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v30';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v30';
-import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v30';
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v30';
-import { residentFoodMultiplier } from './harborlight-v1-housing.js?v=frontend-v30';
+import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v31';
+import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v31';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v31';
+import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v31';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v31';
+import { residentFoodMultiplier } from './harborlight-v1-housing.js?v=frontend-v31';
 
 export const ISLAND_IDS = Object.freeze(Array.from({ length: 20 }, (_, index) => `island-${index + 1}`));
 export const ARCHIPELAGO_RULES = Object.freeze({ version: 2, secondIslandLevel: 10, maximumIslands: 20, islandLevelStep: 3, colonists: 6,
   passengerCapacity: 100, passengerVoyageSeconds: 1800,
   baseShipCapacity: 1000, voyageSeconds: 600, capacityUnit: 1000,
   capacityUnitCoins: 50, capacityUnitGrosz: 499, maximumUnitsPerCheckout: 100, completedVoyageHistory: 50 });
-export const SHARED_ACCOUNT_FIELDS = Object.freeze(['commerce', 'loyalty', 'socialRewards', 'referrals', 'engagementSchedule', 'welcome', 'welcomeWorkers', 'carrierRecallNoticeDay', 'premium', 'settings', 'charitySimulation']);
+export const SHARED_ACCOUNT_FIELDS = Object.freeze(['commerce', 'loyalty', 'socialRewards', 'referrals', 'engagementSchedule', 'welcome', 'welcomeWorkers', 'carrierRecallNoticeDay', 'premium', 'settings', 'charitySimulation', 'expeditionHour', 'adventureJourney', 'adventureBudget']);
 const adaptersFor = new WeakMap();
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const integer = value => Number.isSafeInteger(value) && value >= 0;

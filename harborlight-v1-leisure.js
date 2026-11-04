@@ -1,8 +1,8 @@
 // Daily attractions and completed road tiers. All clocks use elapsed world
 // seconds, so the same rules apply while the island is open and offline.
 // This module intentionally imports no state, residents or logistics module.
-import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v30';
-import { centralAvailable, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v30';
+import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v31';
+import { centralAvailable, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v31';
 
 export const LEISURE_DAY_SECONDS = 86400;
 export const ATTRACTION_EFFECT_SECONDS = 21600;
@@ -193,8 +193,18 @@ export function roadSummary(state) {
     speedPercent: 10 * level, capacityPercent: 10 * Math.max(0, level - 2), costPerSection: ROAD_SECTION_COST };
 }
 
-export const roadSpeedMultiplier = state => 1 + roadSummary(state).speedPercent / 100;
-export const roadCapacityMultiplier = state => 1 + roadSummary(state).capacityPercent / 100;
+// Cargo calculations only need the completed tier, not the full UI summary.
+// Read the live array each time: road sections are also upgraded in place.
+function completedRoadLevel(state) {
+  const segments = state.roads?.segments;
+  if (!Array.isArray(segments) || segments.length !== ROAD_SECTIONS) return 0;
+  let level = ROAD_MAX_LEVEL;
+  for (let index = 0; index < ROAD_SECTIONS; index++) level = Math.min(level, segments[index]);
+  return Math.max(0, level);
+}
+
+export const roadSpeedMultiplier = state => 1 + 10 * completedRoadLevel(state) / 100;
+export const roadCapacityMultiplier = state => 1 + 10 * Math.max(0, completedRoadLevel(state) - 2) / 100;
 
 export function leisureAction(state, action) {
   if (!action || !['buyAttraction', 'upgradeRoad'].includes(action.type)) return null;

@@ -75,12 +75,16 @@ def scenario(browser, language, mobile):
         assert page.evaluate('fixture.state.theatre.collection[0].level') == 5
         assert page.evaluate('fixture.state.resources.coins') < coins_before
         page.locator(f'[data-theatre-move="{item_id}"]').click()
-        page.locator('[data-theatre-slot="19"]').click()
+        # Legacy position shortcuts remain keyboard-accessible behind freely placed art.
+        page.locator('[data-theatre-slot="19"]').focus()
+        page.keyboard.press('Enter')
         assert page.evaluate('fixture.state.theatre.collection[0].slot') == 19
         page.locator(f'[data-theatre-remove="{item_id}"]').click()
         assert page.evaluate('fixture.state.theatre.collection[0].slot') is None
         page.locator(f'[data-theatre-move="{item_id}"]').click()
-        page.locator('[data-theatre-slot="5"]').click()
+        # Legacy position shortcuts remain keyboard-accessible behind freely placed art.
+        page.locator('[data-theatre-slot="5"]').focus()
+        page.keyboard.press('Enter')
         assert page.evaluate('fixture.state.theatre.collection[0].slot') == 5
         assert page.evaluate('fixture.state.theatre.collection[0].level') == 5
         page.locator('[data-theatre-style]').select_option('marble')
