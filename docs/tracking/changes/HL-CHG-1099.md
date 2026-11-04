@@ -9,9 +9,9 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `verified_locally_pending_own_ci` |
-| CI | `failure_source_4db95a3` |
-| PRE-PROD | `not_deployed` |
+| DEV | `verified_own_ci_and_pages` |
+| CI | `passed_source_7e81a1a` |
+| PRE-PROD | `deployed_source_7e81a1a` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -34,17 +34,17 @@ Data pierwotnej wiadomości: 2026-11-04. Zebrane uwagi po PRE-PROD 0.13.1.0 oraz
 
 ## Dowody
 
-- **Dokumenty:** [docs/FRONTEND-V31-REQUIREMENTS.md](../../FRONTEND-V31-REQUIREMENTS.md), [docs/DEV-0.14.0.0-VALIDATION.md](../../DEV-0.14.0.0-VALIDATION.md), [docs/design/FLOW-AUDIT-20261104.md](../../design/FLOW-AUDIT-20261104.md), [docs/design/ACTIVE-PLAYER-50-DAYS.md](../../design/ACTIVE-PLAYER-50-DAYS.md)
+- **Dokumenty:** [docs/FRONTEND-V31-REQUIREMENTS.md](../../FRONTEND-V31-REQUIREMENTS.md), [docs/DEV-0.14.0.0-VALIDATION.md](../../DEV-0.14.0.0-VALIDATION.md), [docs/design/FLOW-AUDIT-20261104.md](../../design/FLOW-AUDIT-20261104.md), [docs/design/ACTIVE-PLAYER-50-DAYS.md](../../design/ACTIVE-PLAYER-50-DAYS.md), [docs/PREPROD-V31-EVIDENCE.json](../../PREPROD-V31-EVIDENCE.json)
 - **Kod:** [harborlight-v1-play.js](../../../harborlight-v1-play.js)
 - **Scenariusze automatyczne:** nie przypisano.
-- **Kod dowodowy:** `4db95a38a507df887e255331271a007947bc69c0`.
+- **Kod dowodowy:** `7e81a1a436770f57fd8abf390b6af8022e3300f6`.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0164 — Buźka nad Gospodarstwem ma poprawną wysokość na mapie i w tutorialu](../../testing/manual/HL-TC-0164.md) — `NOT RUN`.
 
-Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.
+Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.
 
 ## Relacje
 

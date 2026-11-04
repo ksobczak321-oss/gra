@@ -1121,3 +1121,10 @@ Poprawka wyłącznie gotowości testu Teatru i diagnostykiCI:4/4 standardowo+4/4
 DrugiCI41901040379/4db95a3: FAILURE12m33s, instalacjaChromiumSUCCESS9m33s. Dokładnytrace wskazał utratęShift+ArrowDown. Naprawiono zapisfokusu przed wyłączeniemkontrolki;8/8testów, w tym synchronicznyblur i klawisze bezRAF. Cachefrontend-v31-2, arkusz14 ponownieprzygotowany; własnyCI nowegoźródła pozostaje wymagany. PRE-PROD13.1/68e9bcd bez zmiany.
 
 Poprawka fokusu/cachefrontend-v31-2:1190/1190frontend NodePASS188,02s; sześć regresji pakietuPASS (8+4+4+12+4+4warianty), Excel14/karty/listyPASS. Bez zmian gospodarki i backendu. NowySHA iCI nadal wymagane; źródła d2f9ab3 i4db95a3 zachowują historyczne FAILURE.
+
+
+## 4 listopada2026 — DEV → PRE-PROD0.14.0.0 odebrane
+
+Doprecyzowane polecenie użytkownika oznaczało wyłącznie DEV → PRE-PROD. Źródło7e81a1a436770f57fd8abf390b6af8022e3300f6 ma własneCI41906515746SUCCESS17m12s iPages41906515747SUCCESS50s. Obie grupyChromiumPASS10m37s+3m30s. Bridge41909239074SUCCESS13s uruchomił standardowydeploy41909268052/próba1SUCCESS2m12s. RzeczywistyHosting/pliki/API/health/ready, zalogowana gra i izolacja trzech kontPASS; oba artefakty opublikowano. Konta, hasła i postęp zachowano bez resetu; bezPROD i realnychoperatorów.
+
+Tagi DEV iPRE-PROD0.14.0.0-20261104 opublikowano i zdalnie potwierdzono na7e81a1a. Pakiet85plików/19682273bajty verify/extractPASS;TARb43a736f4c30e8db9d2704b50219e0e6c1cf06c32660640ef66f1861cc412196,manifest2dea4d8563fadaf38dcd8103dc9ee66088e69e34ba8cc74b544aaea4bf3bc54e. Publiczne digestsZIP odrębne odTAR/manifestu/obrazu; prywatnych wnętrz nie odczytano niezależnie.450kart/179ręcznychNOTRUN; Excel14PASS jako migawka sprzed promocji. Pełny50-dniowy eksperyment pozostaje częściowy, nie jest pomiarem150godzin zabawy. Dwa wcześniejsze nieudaneCI zachowują swoje źródła i wyniki. [Raport](PREPROD-V31-PROMOTION.md), [dowodyJSON](PREPROD-V31-EVIDENCE.json). Kolejny commit metadanych nie zmienia publicznej aplikacji ani tagów.

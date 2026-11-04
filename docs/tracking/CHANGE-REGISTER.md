@@ -14,10 +14,10 @@ Rejestr nie publikuje prywatnych kwot Billing ani danych osobistych związanych 
 
 ## Bieżące środowiska
 
-- Nowy DEV **0.14.0.0**: `keyboard_fix_locally_validated_pending_new_source_ci`; CI `failure`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
-- Odebrany PRE-PROD **0.13.1.0**: źródło `68e9bcd6adf22ab98f963688726a71d4d8a66c6b`; [deploy 41673824262](https://github.com/ksobczak321-oss/gra/actions/runs/41673824262), próba 1.
+- Nowy DEV **0.14.0.0**: `verified_own_ci_and_pages`; CI `success`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
+- Odebrany PRE-PROD **0.14.0.0**: źródło `7e81a1a436770f57fd8abf390b6af8022e3300f6`; [deploy 41909268052](https://github.com/ksobczak321-oss/gra/actions/runs/41909268052), próba 1.
 - PRE-PROD tej wcześniejszej wersji nie oznacza promocji nowych kart. PROD oraz pełny reset kont: bez nowej operacji.
-PRE-PROD0.14autoryzowany. PierwszyCI d2f9ab3/41896847613FAILURE13m16s, PagesSUCCESS25s. FixtureCSSgotowy4/4+4/4; aplikacja bez zmian. NowySHA/CI/PRE-PROD wymagają własnego wyniku.450kart/179ręcznychNOTRUN, bez resetu i PROD.
+DEV iPRE-PROD0.14.0.0: własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s, bridge41909239074 i standardowydeploy41909268052/próba1SUCCESS dokładnego źródła7e81a1a. API, dokładnyHosting, zalogowana gra i izolacja trzech kontPASS; oba artefakty opublikowano. Bez resetu iPROD;450kart/179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy.
 
 ## Historyczny punkt odniesienia ewidencji
 
@@ -146,14 +146,14 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1075 — Ulepszanie dekoracji i podgląd stylów pokazują dalszy rozwój wyglądu](changes/HL-CHG-1075.md) | Story | `accepted` | `validated_ci_and_pages_source_13c55a4` | `deployed_source_68e9bcd` |
 | [HL-CHG-1077 — Tryb podziwiania pozwala obejrzeć własną kompozycję bez siatki i narzędzi](changes/HL-CHG-1077.md) | Story | `accepted` | `validated_ci_and_pages_source_13c55a4` | `deployed_source_68e9bcd` |
 | [HL-CHG-1081 — Dostępne środki pozwalają rozwijać Teatr bez twardego końca na poziomie20](changes/HL-CHG-1081.md) | Story | `accepted` | `validated_ci_and_pages_source_13c55a4` | `deployed_source_68e9bcd` |
-| [HL-CHG-1095 — Komunikat oczekiwania znika po potwierdzeniu zapisu](changes/HL-CHG-1095.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1099 — Smutna buźka jest nad Gospodarstwem i nie nachodzi na pole](changes/HL-CHG-1099.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1100 — Teatr przenosi się na polanę wskazaną strzałką użytkownika](changes/HL-CHG-1100.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1101 — Opis Targu ma zapis „Od 6 poziomu Ratusza” bez wskazanej kropki](changes/HL-CHG-1101.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1102 — Opis Latarni precyzuje premię po powrocie ze zwiedzania](changes/HL-CHG-1102.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1103 — Górne ustawienia i opisy Teatru są czytelne na telefonie](changes/HL-CHG-1103.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1104 — Dwadzieścia ozdób można swobodnie przestawiać bez skoków pól](changes/HL-CHG-1104.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1105 — Ładny plac bazowy i katalog pozwalają personalizować Teatr](changes/HL-CHG-1105.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
+| [HL-CHG-1095 — Komunikat oczekiwania znika po potwierdzeniu zapisu](changes/HL-CHG-1095.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1099 — Smutna buźka jest nad Gospodarstwem i nie nachodzi na pole](changes/HL-CHG-1099.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1100 — Teatr przenosi się na polanę wskazaną strzałką użytkownika](changes/HL-CHG-1100.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1101 — Opis Targu ma zapis „Od 6 poziomu Ratusza” bez wskazanej kropki](changes/HL-CHG-1101.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1102 — Opis Latarni precyzuje premię po powrocie ze zwiedzania](changes/HL-CHG-1102.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1103 — Górne ustawienia i opisy Teatru są czytelne na telefonie](changes/HL-CHG-1103.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1104 — Dwadzieścia ozdób można swobodnie przestawiać bez skoków pól](changes/HL-CHG-1104.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1105 — Ładny plac bazowy i katalog pozwalają personalizować Teatr](changes/HL-CHG-1105.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 
 <a id="hl-epic-tut"></a>
 
@@ -198,13 +198,13 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1034 — Teatr otrzymuje własny krok tutoriala po Domu](changes/HL-CHG-1034.md) | Story | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
 | [HL-CHG-1035 — Port i statek tworzą jeden krok z ramką kończącą się nad Administracją](changes/HL-CHG-1035.md) | Bug | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
 | [HL-CHG-1043 — Nagroda lekcji nie zawiera zdania o nieistniejącej dodatkowej skrzyni](changes/HL-CHG-1043.md) | Bug | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
-| [HL-CHG-1083 — Rozdział sprawdza zależności całej drogi przed terminem i wpłatą](changes/HL-CHG-1083.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1084 — Misja zaproszenia mieszkańca prowadzi do zakupu w Domu](changes/HL-CHG-1084.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1086 — Pomoc 5 i ratunek 3 usuwają przyczynę braku oraz zachowują wykonane wpłaty](changes/HL-CHG-1086.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1097 — Lekcja szczęścia rozpoznaje pełne 100 i uczy zachowania punktów](changes/HL-CHG-1097.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1098 — Finał 25 lekcji nie wymaga pozbycia się bonusów i legalnych rezerwacji](changes/HL-CHG-1098.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1110 — Biblioteka zawiera zróżnicowane opowieści od prologu do poziomu 20](changes/HL-CHG-1110.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1113 — Zróżnicowane cele fabularne nie powtarzają zakupu mieszkańca w każdym rozdziale](changes/HL-CHG-1113.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
+| [HL-CHG-1083 — Rozdział sprawdza zależności całej drogi przed terminem i wpłatą](changes/HL-CHG-1083.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1084 — Misja zaproszenia mieszkańca prowadzi do zakupu w Domu](changes/HL-CHG-1084.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1086 — Pomoc 5 i ratunek 3 usuwają przyczynę braku oraz zachowują wykonane wpłaty](changes/HL-CHG-1086.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1097 — Lekcja szczęścia rozpoznaje pełne 100 i uczy zachowania punktów](changes/HL-CHG-1097.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1098 — Finał 25 lekcji nie wymaga pozbycia się bonusów i legalnych rezerwacji](changes/HL-CHG-1098.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1110 — Biblioteka zawiera zróżnicowane opowieści od prologu do poziomu 20](changes/HL-CHG-1110.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1113 — Zróżnicowane cele fabularne nie powtarzają zakupu mieszkańca w każdym rozdziale](changes/HL-CHG-1113.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 
 <a id="hl-epic-eco"></a>
 
@@ -246,11 +246,11 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1026 — Wydobycie i przeliczanie postępu odpowiadają nowemu rytmowi gospodarki](changes/HL-CHG-1026.md) | Story | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
 | [HL-CHG-1027 — Magazyn ma stały limit na poziom i łączną pojemność pięciu materiałów](changes/HL-CHG-1027.md) | Story | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
 | [HL-CHG-1028 — Pojemność obejmuje rozbudowę, misję, zapas jedzenia i bufor bez blokady samorozbudowy](changes/HL-CHG-1028.md) | Story | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
-| [HL-CHG-1085 — Misja i zakup używają jednej uzgodnionej ceny rekrutacji](changes/HL-CHG-1085.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1090 — Odbiór żywności działa także przy zarezerwowanej ekipie budowlanej](changes/HL-CHG-1090.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1091 — Starszy projekt turbo nie utknie na ukrytym wymaganiu sześciu tragarzy](changes/HL-CHG-1091.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1093 — Wymagania pojemności rozróżniają konkretny towar, rezerwy i bonusy](changes/HL-CHG-1093.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1116 — Budżet fabuły zapewnia konieczne koszty bez grindu opcjonalnych gier](changes/HL-CHG-1116.md) | Story | `accepted` | `targeted_tests_passed_full_50_days_in_progress` | `not_deployed` |
+| [HL-CHG-1085 — Misja i zakup używają jednej uzgodnionej ceny rekrutacji](changes/HL-CHG-1085.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1090 — Odbiór żywności działa także przy zarezerwowanej ekipie budowlanej](changes/HL-CHG-1090.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1091 — Starszy projekt turbo nie utknie na ukrytym wymaganiu sześciu tragarzy](changes/HL-CHG-1091.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1093 — Wymagania pojemności rozróżniają konkretny towar, rezerwy i bonusy](changes/HL-CHG-1093.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1116 — Budżet fabuły zapewnia konieczne koszty bez grindu opcjonalnych gier](changes/HL-CHG-1116.md) | Story | `accepted` | `targeted_tests_passed_full_50_days_in_progress` | `deployed_source_7e81a1a` |
 
 <a id="hl-epic-peo"></a>
 
@@ -312,10 +312,10 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1037 — Pierwsze logowanie każdego z pierwszych siedmiu dni daje mieszkańca](changes/HL-CHG-1037.md) | Story | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
 | [HL-CHG-1039 — Po samouczku aktywny jest wyłącznie bieżący etap przygody głównej](changes/HL-CHG-1039.md) | Bug | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
 | [HL-CHG-1051 — Aranżowanie Teatru nie zatrzymuje gospodarki, a kolekcja daje kosmetyczne wyróżnienie](changes/HL-CHG-1051.md) | Story | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
-| [HL-CHG-1087 — Rekrutacja po ratunku rzeczywiście przyjmuje mieszkańców i zalicza cel](changes/HL-CHG-1087.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1088 — Pełny końcowy limit ma pozytywny równoważny cel bez wymuszania emigracji](changes/HL-CHG-1088.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1089 — Scenariusz przygotowuje ludność, łóżka i jedzenie do progu Ratusza 3→4](changes/HL-CHG-1089.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1114 — Opowieść o rozbitkach ma rzeczywistą ograniczoną nagrodę rekrutacyjną](changes/HL-CHG-1114.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
+| [HL-CHG-1087 — Rekrutacja po ratunku rzeczywiście przyjmuje mieszkańców i zalicza cel](changes/HL-CHG-1087.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1088 — Pełny końcowy limit ma pozytywny równoważny cel bez wymuszania emigracji](changes/HL-CHG-1088.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1089 — Scenariusz przygotowuje ludność, łóżka i jedzenie do progu Ratusza 3→4](changes/HL-CHG-1089.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1114 — Opowieść o rozbitkach ma rzeczywistą ograniczoną nagrodę rekrutacyjną](changes/HL-CHG-1114.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 
 <a id="hl-epic-min"></a>
 
@@ -357,12 +357,12 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1059 — Portowa orkiestra wymaga rozpoznania instrumentów i odtworzenia rytmu](changes/HL-CHG-1059.md) | Story | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
 | [HL-CHG-1060 — Ogród przypływu wymaga doprowadzenia wody obracanymi kanałami](changes/HL-CHG-1060.md) | Story | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
 | [HL-CHG-1061 — Załadunek łączy rozmieszczanie ciężarów, równowagę statku i wybór rejsu](changes/HL-CHG-1061.md) | Story | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
-| [HL-CHG-1106 — Godzinny licznik i trudność minigier zachowują się na koncie](changes/HL-CHG-1106.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1107 — Wspólna pula nagród ogranicza wypłaty między grami i wyspami](changes/HL-CHG-1107.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1108 — Łap ładunek zbiera pojedynczym kliknięciem lub dotknięciem](changes/HL-CHG-1108.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1109 — Escape room łączy realne zagadki i zachowuje postęp po przerwie](changes/HL-CHG-1109.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1111 — Nowe mechaniki mają rzeczywistą interakcję i weryfikowane rozwiązanie](changes/HL-CHG-1111.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1112 — Warianty przygód zmieniają układ, wskazówki i rozwiązanie](changes/HL-CHG-1112.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
+| [HL-CHG-1106 — Godzinny licznik i trudność minigier zachowują się na koncie](changes/HL-CHG-1106.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1107 — Wspólna pula nagród ogranicza wypłaty między grami i wyspami](changes/HL-CHG-1107.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1108 — Łap ładunek zbiera pojedynczym kliknięciem lub dotknięciem](changes/HL-CHG-1108.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1109 — Escape room łączy realne zagadki i zachowuje postęp po przerwie](changes/HL-CHG-1109.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1111 — Nowe mechaniki mają rzeczywistą interakcję i weryfikowane rozwiązanie](changes/HL-CHG-1111.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1112 — Warianty przygód zmieniają układ, wskazówki i rozwiązanie](changes/HL-CHG-1112.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 
 <a id="hl-epic-acc"></a>
 
@@ -402,9 +402,9 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1062 — Przygody zapisują etapy i jednokrotne nagrody bez automatycznej kwalifikacji dobroczynnej](changes/HL-CHG-1062.md) | Bug | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
 | [HL-CHG-1073 — Trzy własne układy można zapisywać i odtwarzać bez cofania własności lub ulepszeń](changes/HL-CHG-1073.md) | Story | `accepted` | `validated_ci_and_pages_source_13c55a4` | `deployed_source_68e9bcd` |
 | [HL-CHG-1080 — Plac Teatru zapisuje się automatycznie i pozwala kontynuować po dniach](changes/HL-CHG-1080.md) | Story | `accepted` | `validated_ci_and_pages_source_13c55a4` | `deployed_source_68e9bcd` |
-| [HL-CHG-1094 — Odrzucony zapis ma działający powrót do potwierdzonego stanu](changes/HL-CHG-1094.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1096 — Szybkie ruchy sceny nie czekają na ACK po każdym kliknięciu](changes/HL-CHG-1096.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1119 — Migracja zachowuje stare światy, opłacone projekty i jednokrotne nagrody](changes/HL-CHG-1119.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
+| [HL-CHG-1094 — Odrzucony zapis ma działający powrót do potwierdzonego stanu](changes/HL-CHG-1094.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1096 — Szybkie ruchy sceny nie czekają na ACK po każdym kliknięciu](changes/HL-CHG-1096.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1119 — Migracja zachowuje stare światy, opłacone projekty i jednokrotne nagrody](changes/HL-CHG-1119.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 
 <a id="hl-epic-com"></a>
 
@@ -439,7 +439,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1064 — Czat odświeża graczy i prośby o sojusz bez kasowania szkicu wiadomości](changes/HL-CHG-1064.md) | Bug | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
 | [HL-CHG-1065 — Rzeczywiste HTTP trzech kont potwierdza prywatne rozmowy, sojusz i trwały powrót](changes/HL-CHG-1065.md) | Story | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
 | [HL-CHG-1076 — Nowy wygląd zachowuje kolekcję, ceny, potwierdzenia reklam i działanie wyspy](changes/HL-CHG-1076.md) | Story | `accepted` | `validated_ci_and_pages_source_13c55a4` | `deployed_source_68e9bcd` |
-| [HL-CHG-1092 — Opłacony plan rozbudowy może ruszyć po wygaśnięciu pakietu](changes/HL-CHG-1092.md) | Bug | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
+| [HL-CHG-1092 — Opłacony plan rozbudowy może ruszyć po wygaśnięciu pakietu](changes/HL-CHG-1092.md) | Bug | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 
 <a id="hl-epic-inf"></a>
 
@@ -476,8 +476,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1066 — Wydanie0.13 ma własne testy i dowody DEV bez domyślnej promocji PRE-PROD](changes/HL-CHG-1066.md) | Ops | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
 | [HL-CHG-1079 — DEV 0.13.1.0 wymaga własnych testów i dowodów publikacji nowej grafiki](changes/HL-CHG-1079.md) | Ops | `accepted` | `validated_ci_and_pages_source_13c55a4` | `deployed_source_68e9bcd` |
 | [HL-CHG-1082 — Autoryzowana promocja 0.13.1.0 zachowuje dane i wymaga własnego CI oraz odbioru GCP](changes/HL-CHG-1082.md) | Ops | `accepted` | `validated_promotion_source_68e9bcd` | `deployed_source_68e9bcd` |
-| [HL-CHG-1120 — DEV 0.14.0.0 ma własny odbiór i osobne ręczne scenariusze](changes/HL-CHG-1120.md) | Ops | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1121 — Autoryzowana promocja 0.14.0.0 przechodzi własne CI i standardowy odbiór PRE-PROD](changes/HL-CHG-1121.md) | Ops | `accepted` | `promotion_prepared` | `pending_deployment` |
+| [HL-CHG-1120 — DEV 0.14.0.0 ma własny odbiór i osobne ręczne scenariusze](changes/HL-CHG-1120.md) | Ops | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1121 — Autoryzowana promocja 0.14.0.0 przechodzi własne CI i standardowy odbiór PRE-PROD](changes/HL-CHG-1121.md) | Ops | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 
 <a id="hl-epic-ops"></a>
 
@@ -507,8 +507,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1067 — Każda zmiana v29 ma kartę Git i osobny powiązany scenariusz ręczny](changes/HL-CHG-1067.md) | Ops | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
 | [HL-CHG-1068 — Excel 12 przedstawia bieżące zasady DEV i zachowuje wcześniejsze arkusze](changes/HL-CHG-1068.md) | Ops | `accepted` | `validated_ci_and_pages_source_cf6739a` | `deployed_source_68e9bcd` |
 | [HL-CHG-1078 — Excel 13 opisuje aktualny Teatr i zachowuje cały Excel 12](changes/HL-CHG-1078.md) | Ops | `accepted` | `validated_ci_and_pages_source_13c55a4` | `deployed_source_68e9bcd` |
-| [HL-CHG-1115 — Projekt 50 dni rozdziela cel tempa od dowodu 150 godzin zabawy](changes/HL-CHG-1115.md) | Ops | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
-| [HL-CHG-1118 — Sprawdzenie trajektorii porównuje wspólnie ludność, koszty i gospodarkę](changes/HL-CHG-1118.md) | Ops | `accepted` | `targeted_tests_passed_full_50_days_in_progress` | `not_deployed` |
+| [HL-CHG-1115 — Projekt 50 dni rozdziela cel tempa od dowodu 150 godzin zabawy](changes/HL-CHG-1115.md) | Ops | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
+| [HL-CHG-1118 — Sprawdzenie trajektorii porównuje wspólnie ludność, koszty i gospodarkę](changes/HL-CHG-1118.md) | Ops | `accepted` | `targeted_tests_passed_full_50_days_in_progress` | `deployed_source_7e81a1a` |
 
 <a id="hl-epic-arc"></a>
 
@@ -546,7 +546,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-0973 — Pojemność towarowa wspólnego statku rośnie o 1000 za 50 monet](changes/HL-CHG-0973.md) | Story | `accepted` | `validated_pages_published` | `deployed_source_d9e2940` |
 | [HL-CHG-0974 — Zmiana nazwy córki kontroluje unikalność tak samo jak kolonizacja](changes/HL-CHG-0974.md) | Bug | `accepted` | `validated_pages_published` | `deployed_source_d9e2940` |
 | [HL-CHG-1017 — Utrata odpowiedzi zakupu statku zachowuje ten sam zamiar i nie pobiera drugi raz](changes/HL-CHG-1017.md) | Bug | `accepted` | `validated_pages_published` | `deployed_source_d9e2940` |
-| [HL-CHG-1117 — Drogi poboczne i nowa córka nie tworzą ukrytej blokady fabuły](changes/HL-CHG-1117.md) | Story | `accepted` | `verified_locally_pending_own_ci` | `not_deployed` |
+| [HL-CHG-1117 — Drogi poboczne i nowa córka nie tworzą ukrytej blokady fabuły](changes/HL-CHG-1117.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 
 <a id="hl-epic-soc"></a>
 

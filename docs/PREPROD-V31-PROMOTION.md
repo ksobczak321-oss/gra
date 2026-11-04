@@ -1,62 +1,55 @@
-# PRE-PROD 0.14.0.0 / v31 — promocja autoryzowana, wynik PENDING
+# PRE-PROD 0.14.0.0 / v31 — odebrany
 
-**4 listopada 2026, Europe/Warsaw:** użytkownik doprecyzował „Miałem na myśli z dev na pre prod”; wcześniejsze niejednoznaczne „go na prod” oznacza zatem wyłącznie promocję DEV → PRE-PROD, bez operacji PROD.
+**4 listopada 2026: promocja DEV → PRE-PROD zakończona sukcesem.** Gra jest dostępna pod adresem [harborlight-dev.web.app](https://harborlight-dev.web.app). Użytkownik doprecyzował „Miałem na myśli z dev na pre prod”; operacje PROD nie były objęte tym zleceniem.
 
-Realizujemy standardową kolejność **DEV → własne CI dokładnego źródła → PRE-PROD i jego odbiór**. Zachowujemy konta, hasła, wyspy, kolekcje i historię nagród. Dokument zapisuje autoryzację i wymagane dowody, nie potwierdza ukończenia nowej publikacji.
+Wdrożono dokładne źródło `7e81a1a436770f57fd8abf390b6af8022e3300f6`, aplikacja **0.14.0.0**, cache `frontend-v31-2`. Standardowa ścieżka zachowała bramki CI, niezmienionego main i WIF. Konta, UID, hasła, wyspy, kolekcje i historia nagród pozostały zachowane bez resetu.
 
-Do sukcesu nowego wdrożenia ostatnim odebranym PRE-PROD pozostaje **0.13.1.0**, źródło `68e9bcd6adf22ab98f963688726a71d4d8a66c6b`, deploy [41673824262, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41673824262). Nowa wersja 0.14.0.0 ma status **PENDING**. Główny [rejestr środowisk](ENVIRONMENT-STATUS.md) rozdziela bieżący kod, własne CI, podgląd Pages i faktycznie opublikowany pakiet GCP.
+## Własne przebiegi dokładnego źródła
 
-## Stan etapów i wymagane dowody
+| Etap | Przebieg | Wynik | Czas |
+|---|---|---|---|
+| CI | [41906515746](https://github.com/ksobczak321-oss/gra/actions/runs/41906515746) | SUCCESS | 17 min 12 s |
+| Podgląd Pages | [41906515747](https://github.com/ksobczak321-oss/gra/actions/runs/41906515747) | SUCCESS | 50 s |
+| Bridge PRE-PROD | [41909239074](https://github.com/ksobczak321-oss/gra/actions/runs/41909239074) | SUCCESS | 13 s |
+| Standardowy deploy | [41909268052, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41909268052) | SUCCESS | 2 min 12 s |
 
-| Etap | Stan przed publikacją |
-|---|---|
-| Autoryzacja | Jawne doprecyzowanie: wyłącznie DEV → PRE-PROD |
-| Końcowe źródło DEV 0.14.0.0 | **PENDING**: pełny SHA, własny odbiór, pakiet i manifest |
-| Źródło promocji | **PENDING**: pełny SHA i własne zielone CI tego samego źródła |
-| Pages | **PENDING**: oddzielny podgląd, który nie potwierdza wdrożenia Google Cloud |
-| Wąski bridge PRE-PROD | Dokładny marker `[preprod:0.14.0.0]`; rzeczywisty run i dispatch pozostają **PENDING** |
-| Standardowy deploy | **PENDING**: run, próba i źródło istniejącego workflow `google-cloud-dev.yml` |
-| API/health/ready | **PENDING**: potwierdzenie właściwego środowiska i dokładnego wydania |
-| Hosting | **PENDING**: publikacja oraz zgodność manifestu i każdego pliku publicznego z pakietem |
-| Rzeczywista gra | **PENDING**: odczyt zalogowanej istniejącej wyspy w Chromium, z blokadą zapisów testowych |
-| Stałe konta | **PENDING**: logowanie admin1–admin3, odczyt własnych zapisów i izolacja danych |
-| Artefakty v2 | **PENDING**: `harborlight-dev-frontend-RUN-ATTEMPT` i `harborlight-dev-release-RUN-ATTEMPT` z jednej udanej próby |
-| Potwierdzenie wydania | **PENDING**: SHA, własny CI, próba, digest obrazu, hash TAR i manifestu; wartości odrębne od digestów ZIP GitHub |
-| Tag PRE-PROD | **PENDING**: tworzony po sukcesie publikacji i potwierdzony odczytem zdalnego źródła |
-| Ręczna lista | **179 przypadków NOT RUN**; automatyzacja nie zalicza prób użytkownika |
+Pełny SHA potwierdzono na stronach przebiegów. Bramka wdrożenia miała 7 pomyślnych kroków, a job deploy 31. CI zaliczył obie grupy Chromium: 26 zestawów gry i nauki w 10 min 37 s oraz 17 zestawów logowania/zapisów w 3 min 30 s. Lokalne wyniki to 1190 frontend + 134 backend + 7 planszówka = 1331 Node, 141 Python oraz 43 zestawy Chromium PASS.
 
-## Standardowa ścieżka uruchomienia
+## Odbiór faktycznie opublikowanej gry
 
-Istniejący [bridge](../.github/workflows/promote-urgent-preprod.yml) reaguje na sukces właściwego CI, a [dispatcher](../infra/google-cloud/urgent-preprod-dispatch.mjs) przyjmuje tylko jawnie autoryzowane oznaczenia. Wersja 0.14.0.0 korzysta z dokładnego markera `[preprod:0.14.0.0]`, zachowując kontrole repozytorium, workflow, pełnego SHA, próby, poprzednich uruchomień i niezmienionego `main`.
+Standardowy workflow `google-cloud-dev.yml` potwierdził właściwe API/health/ready, dokładne wydanie Hostingu i każdy publiczny plik. Test Chromium otworzył rzeczywistą zalogowaną istniejącą wyspę, a osobna kontrola zaliczyła logowanie stałych kont admin1–admin3, odczyt własnego zapisu i izolację danych. Kontrole były odczytowe; nie zastępują ręcznej próby trwałego zapisu. Oba wymagane artefakty powstały z tej samej udanej próby.
 
-Przygotowany marker, push i pozytywny lokalny test nie są dowodem uruchomienia ani sukcesu Google Cloud. Końcowy commit promocji musi mieć własne zielone CI. Do odczytu źródła rozpoczętego deployu nie przesuwamy `main`; nie ponawiamy niepewnego dispatchu bez sprawdzenia faktycznego przebiegu.
+Nie wykonywano resetu kont ani aktywacji rzeczywistych płatności, reklam, przelewów dobroczynnych lub integracji fizycznej gry. PROD zachował wcześniejszy stan.
 
-[google-cloud-dev.yml](../.github/workflows/google-cloud-dev.yml) zachowuje bramkę wymaganego CI dokładnego źródła przed dostępem WIF. Buduje niezmienny obraz backendu i deterministyczny publiczny frontend, publikuje je do istniejącego projektu **harborlight-dev**, a następnie sprawdza endpointy API, wszystkie hostowane pliki, rzeczywistą zalogowaną grę i stałe konta. Dopiero wymagany sukces tworzy oraz publikuje pełne potwierdzenie wydania i parę artefaktów tej samej próby.
+## Pakiet i artefakty
 
-## Dane i zakres odbioru
+Dokładny lokalny pakiet zawiera **85 plików / 19 682 273 bajty**. Budowa, pełna weryfikacja i rozpakowanie PASS:
 
-Zwykłe wdrożenie zachowuje Authentication, UID, loginy, hasła i postęp admin1–admin3. Test opublikowanej gry nie tworzy zastępczej wyspy i nie nadpisuje istniejącego świata fiksturą. Potwierdzenie odczytowego renderowania nie jest automatycznie odbiorem trwałego zapisu; odpowiednie ręczne przypadki zachowują swój wynik NOT RUN.
+- TAR SHA-256: `b43a736f4c30e8db9d2704b50219e0e6c1cf06c32660640ef66f1861cc412196`.
+- Manifest SHA-256: `2dea4d8563fadaf38dcd8103dc9ee66088e69e34ba8cc74b544aaea4bf3bc54e`.
 
-Nie uruchamiamy resetu kont, integracji fizycznej gry ani rzeczywistych płatności, reklam czy przelewów dobroczynnych. Nie zmieniamy istniejących bramek CI/WIF ani konfiguracji usług w celu obejścia braku dowodu. Stan aktualnego PRE-PROD oraz rezultat nowej promocji są rozliczane osobno.
+| Artefakt udanej próby | ID GitHub | Publiczny SHA-256 ZIP GitHub |
+|---|---:|---|
+| `harborlight-dev-frontend-41909268052-1` | 13362655258 | `703190f7cbdcb5c958e43ca13b9eb0ba0329f62916fb3aab8b19fb068d66e18b` |
+| `harborlight-dev-release-41909268052-1` | 13361328096 | `2a13c37f0180e310ba11c545737a48a19ee16bd057ac823836a74d8c359fd01e` |
 
-## Pakiet, artefakty i zakończenie odbioru
+Nazwy, ID i digests odczytano z publicznego HTML GitHub Actions. Prywatnych ZIP-ów, wnętrza receipt, digestu obrazu ani dokumentów Firestore nie pobrano niezależnie w tej sesji. Publiczne hashe ZIP są odrębne od wewnętrznego TAR, manifestu i obrazu. Workflow zweryfikował i opublikował pełne potwierdzenie wydania; nie przypisujemy sobie osobnego odczytu jego prywatnych pól.
 
-Końcowy manifest wiąże pełny SHA z nazwą, rozmiarem i hashem każdego publicznego pliku. Liczbę plików, rozmiar TAR, hash archiwum, hash manifestu i dokładny digest obrazu uzupełniamy po zbudowaniu i weryfikacji tego źródła. Nie przenosimy wartości z 0.13.1.0 na nowe 0.14.0.0.
+## Tagi i ewidencja
 
-Po rzeczywistym sukcesie dopisujemy numery runów i prób CI/bridge/deploy, pełne źródło, wyniki bramek i kontroli, identyfikatory obu artefaktów oraz osobne digests i zdalnie potwierdzony tag. Publiczny digest ZIP artefaktu nie zastępuje odczytu oryginalnego receipt, hashów wewnętrznego TAR i manifestu ani digestu obrazu. Brak niezależnego odczytu tych wartości pozostaje jawnym ograniczeniem odbioru.
+Oba tagi są opublikowane i potwierdzone zdalnie; rozwiązują się do `7e81a1a436770f57fd8abf390b6af8022e3300f6`:
 
-Osobna karta operacji **HL-CHG-1121** reprezentuje tę promocję; rejestr ma **450 kart**, a **179 ręcznych prób pozostaje NOT RUN**.
+- `dev-0.14.0.0-20261104`: obiekt `df353ff2a4ab68a7f4a671cb6261f81d4d805b1c`.
+- `preprod-0.14.0.0-20261104`: obiekt `1b32f383eed957b03120c1616cbb50435e19c19f`.
 
-[Wymagania v31](FRONTEND-V31-REQUIREMENTS.md) · [Odbiór DEV](DEV-0.14.0.0-VALIDATION.md) · [Proces promocji](RELEASE-PROCESS.md) · [Stan środowisk](ENVIRONMENT-STATUS.md).
+Późniejszy commit dokumentacji nie przesuwa tagów ani nie zastępuje źródła wdrożenia. Rejestr ma **450 kart**; nowe implementacje HL-CHG-1083–1120 i operacja HL-CHG-1121 mają `deployed_source_7e81a1a`. Wszystkie **179 ręcznych prób pozostaje NOT RUN**. Excel 14 zaliczył walidację jako migawka reguł przygotowana przed promocją; jego informacja o poprzednim PRE-PROD jest historyczna.
 
-## Wysłane źródło — stan po uruchomieniu
+## Zachowana historia i granice dowodów
 
-`d2f9ab311b9f3ad5e6d45a6f4e934ce501973324` w main. WłasneCI41896847613FAILURE13m16s; Pages41896847615SUCCESS25s. Most PRE-PROD czeka na sukcesCI; nowego wdrożenia ani tagu nie zaliczono. Bieżący PRE-PROD pozostaje0.13.1.0/68e9bcd.
+Pierwszy kandydat `d2f9ab311b9f3ad5e6d45a6f4e934ce501973324` zachowuje CI 41896847613 FAILURE 13 min 16 s, Pages 41896847615 SUCCESS 25 s. Drugi `4db95a38a507df887e255331271a007947bc69c0` zachowuje CI 41901040379 FAILURE 12 min 33 s, Pages 41901040067 SUCCESS 1 min 20 s. Oba CI zablokowały promocję; tagów dla nich nie utworzono. Naprawiono gotowość osobnego testu i rzeczywisty błąd utraty fokusu Teatru. Dopiero trzeci kandydat ma własny pełny sukces.
 
-Pierwszy CI zablokował promocję na pierwszej próbie PL/desktop swobodnego Teatru. PRE-PROD nie wystartował; poprzedni0.13.1.0 pozostaje aktualny. Wymagana poprawka oraz własny udanyCI nowego źródła.
+Poprzedni odebrany PRE-PROD 0.13.1.0 / `68e9bcd6adf22ab98f963688726a71d4d8a66c6b`, deploy 41673824262, pozostaje historią. Jego tagów i dowodów nie zmieniono.
 
-Przygotowano poprawkę gotowości osobnego testu Teatru, z zachowanymi asercjami i diagnostyką.4/4+4/4 przy opóźnieniuCSSPASS; publiczna aplikacja bez zmian. Kolejnycommit wymaga własnego udanegoCI i standardowej promocji.
+[Symulacja gracza](design/CAMPAIGN-V31-SIMULATION.md) jest częściową obserwacją. Nie zaliczamy pełnych 50 dni ani 150 godzin ludzkiej zabawy na podstawie katalogu, finansowanych fikstur lub dotychczasowego śladu. Te ograniczenia pozostają oddzielne od pomyślnego wdrożenia.
 
-Nowy kandydat`4db95a38a507df887e255331271a007947bc69c0`: własnyCI41901040379 INPROGRESS, Pages41901040067SUCCESS1m20s. Publiczna aplikacja identyczna z poprzednim kandydatem, poprawiono jedynie gotowość testu i diagnostykę. GCP nadal czeka na sukces tego konkretnegoCI.
-
-DrugiCI41901040379/4db95a3FAILURE12m33s; PagesSUCCESS1m20s. Wykryto realną utratę fokusu po disabled=true. Poprawka UI i cachefrontend-v31-2 mają8/8testów kierunkowychPASS; nowy własnyCI wymagany. Nadal bez nowegoPRE-PROD, tagów i resetu.
+[Dowody strukturalne](PREPROD-V31-EVIDENCE.json) · [Odbiór DEV](DEV-0.14.0.0-VALIDATION.md) · [Stan środowisk](ENVIRONMENT-STATUS.md) · [Proces promocji](RELEASE-PROCESS.md).

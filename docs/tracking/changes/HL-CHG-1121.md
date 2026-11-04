@@ -8,10 +8,10 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `in_progress` |
-| DEV | `promotion_prepared` |
-| CI | `failure_source_4db95a3` |
-| PRE-PROD | `pending_deployment` |
+| Implementacja | `implemented` |
+| DEV | `verified_own_ci_and_pages` |
+| CI | `passed_source_7e81a1a` |
+| PRE-PROD | `deployed_source_7e81a1a` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -37,13 +37,13 @@ Data pierwotnej wiadomości: 2026-11-04. Doprecyzowanie zastępuje niejednoznacz
 
 ## Dowody
 
-- **Dokumenty:** [docs/PREPROD-V31-PROMOTION.md](../../PREPROD-V31-PROMOTION.md), [docs/FRONTEND-V31-REQUIREMENTS.md](../../FRONTEND-V31-REQUIREMENTS.md), [docs/RELEASE-PROCESS.md](../../RELEASE-PROCESS.md), [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md)
+- **Dokumenty:** [docs/PREPROD-V31-PROMOTION.md](../../PREPROD-V31-PROMOTION.md), [docs/FRONTEND-V31-REQUIREMENTS.md](../../FRONTEND-V31-REQUIREMENTS.md), [docs/RELEASE-PROCESS.md](../../RELEASE-PROCESS.md), [docs/ENVIRONMENT-STATUS.md](../../ENVIRONMENT-STATUS.md), [docs/PREPROD-V31-EVIDENCE.json](../../PREPROD-V31-EVIDENCE.json)
 - **Kod:** [.github/workflows/promote-urgent-preprod.yml](../../../.github/workflows/promote-urgent-preprod.yml), [.github/workflows/google-cloud-dev.yml](../../../.github/workflows/google-cloud-dev.yml), [infra/google-cloud/urgent-preprod-dispatch.mjs](../../../infra/google-cloud/urgent-preprod-dispatch.mjs), [infra/google-cloud/promotion.mjs](../../../infra/google-cloud/promotion.mjs)
 - **Scenariusze automatyczne:** [tests/harborlight-urgent-preprod-dispatch.test.mjs](../../../tests/harborlight-urgent-preprod-dispatch.test.mjs), [tests/harborlight-promotion.test.mjs](../../../tests/harborlight-promotion.test.mjs)
-- **Kod dowodowy:** `4db95a38a507df887e255331271a007947bc69c0`.
+- **Kod dowodowy:** `7e81a1a436770f57fd8abf390b6af8022e3300f6`.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Użytkownik doprecyzował wyłącznie DEV → PRE-PROD. Końcowe źródło, własne CI, bridge, deploy, próba, wymagane kontrole, oba artefakty i tag 0.14.0.0 pozostają PENDING do własnego odczytu. Faktyczny odebrany PRE-PROD nadal 0.13.1.0/68e9bcd. Operacji PROD nie wykonano;179 ręcznych prób NOT RUN.
+Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.
 
 ## Relacje
 

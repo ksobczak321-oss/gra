@@ -1,13 +1,22 @@
 # HARBORLIGHT — stan środowisk
 
-## DEV0.14.0.0/v31 — odbiór w toku
+## Aktualne DEV i PRE-PROD 0.14.0.0 — SUCCESS
 
-GO użytkownika obejmuje ukończenie0.14.0.0 i standardową drogę DEV/CI → PRE-PROD. Lokalnie1331Node +141Python i43zestawyChromiumPASS. Poprawiony kandydat`4db95a38a507df887e255331271a007947bc69c0` w main; CI41901040379FAILURE12m33s, Pages41901040067SUCCESS1m20s. Naprawa fokusu i cachefrontend-v31-2 mają1190Node+6regresji pakietuPASS; wymagany nowy własnyCI. Pierwszy d2f9ab3/CI41896847613 zachowuje FAILURE13m16s. Pełna symulacja50dni nadal trwa. [Raport](DEV-0.14.0.0-VALIDATION.md) · [PromocjaPRE-PROD](PREPROD-V31-PROMOTION.md).450kart/179ręcznychNOTRUN. PRE-PROD poniżej bez zmiany; PROD poza zakresem doprecyzowanego polecenia.
+Źródło `7e81a1a436770f57fd8abf390b6af8022e3300f6`, cache `frontend-v31-2`; świat9 / archipelag2. Własne [CI41906515746](https://github.com/ksobczak321-oss/gra/actions/runs/41906515746) SUCCESS17m12s, [Pages41906515747](https://github.com/ksobczak321-oss/gra/actions/runs/41906515747) SUCCESS50s, [bridge41909239074](https://github.com/ksobczak321-oss/gra/actions/runs/41909239074) SUCCESS13s i [PRE-PROD41909268052, próba1](https://github.com/ksobczak321-oss/gra/actions/runs/41909268052) SUCCESS2m12s. Sprawdzono API/health/ready, dokładny Hosting, zalogowaną grę i izolację trzech stałych kont. Oba artefakty udanej próby opublikowano. Konta, UID, hasła i postęp zachowano bez resetu; bez nowej promocji PROD i aktywacji rzeczywistych operatorów.
 
+[Graj w PRE-PROD](https://harborlight-dev.web.app) · [Podgląd DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v31-2) · [Raport](PREPROD-V31-PROMOTION.md) · [Dowody JSON](PREPROD-V31-EVIDENCE.json).
+
+Tag DEV `dev-0.14.0.0-20261104`, obiekt `df353ff2a4ab68a7f4a671cb6261f81d4d805b1c`, i tag PRE-PROD `preprod-0.14.0.0-20261104`, obiekt `1b32f383eed957b03120c1616cbb50435e19c19f`, są opublikowane i potwierdzone zdalnie. Oba rozwiązują się do tego samego pełnego źródła. Kolejny commit metadanych nie zastępuje źródła wdrożenia.
+
+Pakiet85plików/19 682 273bajty, verify/extractPASS; TAR`b43a736f4c30e8db9d2704b50219e0e6c1cf06c32660640ef66f1861cc412196`, manifest`2dea4d8563fadaf38dcd8103dc9ee66088e69e34ba8cc74b544aaea4bf3bc54e`. Publiczne digests ZIP i ID obu artefaktów są w raporcie. Prywatnego receipt, obrazu i zapisu Firestore nie odczytano niezależnie.
+
+Lokalnie1331Node +141Python i43zestawyChromiumPASS; własnyCI powtórzył cały spis43przeglądarek. Excel14PASS jako migawka sprzed promocji;450kart/179ręcznychNOTRUN. Pierwsze dwaCI zachowują FAILURE własnych źródeł. [Eksperyment50dni](design/CAMPAIGN-V31-SIMULATION.md) nadal jest częściowy; nie dowodzi150godzin ludzkiej zabawy.
+
+## Historia poprzednich wydań
 
 Aktualizacja operacyjna: **3 listopada 2026, Europe/Warsaw**. Akceptacja opisów i pierwotny odbiór lokalny pozostają z 1 listopada. Historia wyników jest w [dzienniku](IMPLEMENTATION-LOG.md); warunki promocji w [procesie wydań](RELEASE-PROCESS.md).
 
-## Aktualny PRE-PROD 0.13.1.0 — pełny odbiór SUCCESS
+## Poprzedni PRE-PROD 0.13.1.0 — pełny odbiór SUCCESS
 
 Źródło `68e9bcd6adf22ab98f963688726a71d4d8a66c6b`; CI [41671140612](https://github.com/ksobczak321-oss/gra/actions/runs/41671140612) **SUCCESS, 14m 57s**, Pages [41671140578](https://github.com/ksobczak321-oss/gra/actions/runs/41671140578) **SUCCESS, 32s**, bridge [41673757060](https://github.com/ksobczak321-oss/gra/actions/runs/41673757060) **SUCCESS, 26s**, deploy [41673824262, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41673824262) **SUCCESS, 2m 56s**. Kontrole API/health/ready, dokładnego Hostingu, zalogowanej gry i izolacji trzech kont PASS; oba artefakty opublikowano. Konta, UID, hasła i postęp zachowano bez resetu. PROD i rzeczywiści operatorzy bez nowej aktywacji.
 
@@ -22,7 +31,7 @@ Tag `preprod-0.13.1.0-20261103` jest opublikowany i potwierdzony zdalnie: obiekt
 
 Rejestr411kart:59implementacji v29/v30 oraz Ops1082 mają `deployed_source_68e9bcd`; decyzje częściowo zastąpione i DEVdowody zachowano.147ręcznychNOTRUN. [Pełny odbiór](PREPROD-V30-PROMOTION.md).
 
-## Aktualny DEV0.13.1.0 — własne CI i Pages SUCCESS
+## Poprzedni DEV0.13.1.0 — własne CI i Pages SUCCESS
 
 Nowy Teatr ma zaakceptowaną oprawę,20miejsc i dalsze poziomy, trwałość przez sesje i automatyczny zapis. Źródło `13c55a4e4853edf44c185747c1c626ac42c221fc`; [CI 41667711260](https://github.com/ksobczak321-oss/gra/actions/runs/41667711260) **SUCCESS, 14m 39s**; [Pages 41667711124](https://github.com/ksobczak321-oss/gra/actions/runs/41667711124) **SUCCESS, 50s**. Tag `dev-0.13.1.0-20261103` opublikowany i zdalnie potwierdzony na tym samym źródle. Lokalnie1219Node +141PythonPASS; nowe studio i pełna gra po4wariantyPASS, dwie regresjePASS i końcowe zrzuty obejrzane. [Raport](DEV-0.13.1.0-VALIDATION.md) rozdziela te wyniki od nowego CI i Pages. W chwili tego odbioru DEV PRE-PROD0.12/d9e2940 pozostawał bez zmian; obecny odbiór0.13.1.0 jest powyżej.
 
