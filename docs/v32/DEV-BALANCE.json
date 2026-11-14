@@ -1,0 +1,1150 @@
+{
+  "schema": 1,
+  "scope": "Deterministic DEV math and actual single-batch/meal/loan model checks; no human session or50-day certification.",
+  "seed": 851112245,
+  "capacity": [
+    {
+      "level": 1,
+      "stage": 2,
+      "largestUpgrade": 7700,
+      "mission": 7000,
+      "foodReserve": 10368,
+      "buffer": 1.4,
+      "perResource": 35096,
+      "total": 701920,
+      "materialCount": 20,
+      "devCalibration": true,
+      "currentFullPopulation": 36,
+      "currentFullPopulationRawFood24h": 5184,
+      "start18RawFood24h": 2592,
+      "foodEnvelopeHoursAtNextPopulation": 24
+    },
+    {
+      "level": 2,
+      "stage": 3,
+      "largestUpgrade": 11550,
+      "mission": 10500,
+      "foodReserve": 15552,
+      "buffer": 1.4,
+      "perResource": 52643,
+      "total": 1052860,
+      "materialCount": 20,
+      "devCalibration": true,
+      "currentFullPopulation": 72,
+      "currentFullPopulationRawFood24h": 10368,
+      "start18RawFood24h": 2592,
+      "foodEnvelopeHoursAtNextPopulation": 24
+    },
+    {
+      "level": 3,
+      "stage": 4,
+      "largestUpgrade": 15400,
+      "mission": 14000,
+      "foodReserve": 20736,
+      "buffer": 1.4,
+      "perResource": 70191,
+      "total": 1403820,
+      "materialCount": 20,
+      "devCalibration": true,
+      "currentFullPopulation": 108,
+      "currentFullPopulationRawFood24h": 15552,
+      "start18RawFood24h": 2592,
+      "foodEnvelopeHoursAtNextPopulation": 24
+    },
+    {
+      "level": 5,
+      "stage": 6,
+      "largestUpgrade": 23100,
+      "mission": 21000,
+      "foodReserve": 31104,
+      "buffer": 1.4,
+      "perResource": 105286,
+      "total": 2105720,
+      "materialCount": 20,
+      "devCalibration": true,
+      "currentFullPopulation": 180,
+      "currentFullPopulationRawFood24h": 25920,
+      "start18RawFood24h": 2592,
+      "foodEnvelopeHoursAtNextPopulation": 24
+    },
+    {
+      "level": 8,
+      "stage": 9,
+      "largestUpgrade": 34650,
+      "mission": 31500,
+      "foodReserve": 46656,
+      "buffer": 1.4,
+      "perResource": 157929,
+      "total": 3158580,
+      "materialCount": 20,
+      "devCalibration": true,
+      "currentFullPopulation": 288,
+      "currentFullPopulationRawFood24h": 41472,
+      "start18RawFood24h": 2592,
+      "foodEnvelopeHoursAtNextPopulation": 24
+    },
+    {
+      "level": 10,
+      "stage": 11,
+      "largestUpgrade": 42350,
+      "mission": 38500,
+      "foodReserve": 57024,
+      "buffer": 1.4,
+      "perResource": 193024,
+      "total": 3860480,
+      "materialCount": 20,
+      "devCalibration": true,
+      "currentFullPopulation": 360,
+      "currentFullPopulationRawFood24h": 51840,
+      "start18RawFood24h": 2592,
+      "foodEnvelopeHoursAtNextPopulation": 24
+    },
+    {
+      "level": 15,
+      "stage": 16,
+      "largestUpgrade": 61600,
+      "mission": 56000,
+      "foodReserve": 82944,
+      "buffer": 1.4,
+      "perResource": 280762,
+      "total": 5615240,
+      "materialCount": 20,
+      "devCalibration": true,
+      "currentFullPopulation": 540,
+      "currentFullPopulationRawFood24h": 77760,
+      "start18RawFood24h": 2592,
+      "foodEnvelopeHoursAtNextPopulation": 24
+    },
+    {
+      "level": 20,
+      "stage": 21,
+      "largestUpgrade": 80850,
+      "mission": 73500,
+      "foodReserve": 108864,
+      "buffer": 1.4,
+      "perResource": 368500,
+      "total": 7370000,
+      "materialCount": 20,
+      "devCalibration": true,
+      "currentFullPopulation": 720,
+      "currentFullPopulationRawFood24h": 103680,
+      "start18RawFood24h": 2592,
+      "foodEnvelopeHoursAtNextPopulation": 24
+    },
+    {
+      "level": 24,
+      "stage": 25,
+      "largestUpgrade": 96250,
+      "mission": 87500,
+      "foodReserve": 129600,
+      "buffer": 1.4,
+      "perResource": 438690,
+      "total": 8773800,
+      "materialCount": 20,
+      "devCalibration": true,
+      "currentFullPopulation": 864,
+      "currentFullPopulationRawFood24h": 124416,
+      "start18RawFood24h": 2592,
+      "foodEnvelopeHoursAtNextPopulation": 24
+    },
+    {
+      "level": 50,
+      "stage": 51,
+      "largestUpgrade": 196350,
+      "mission": 178500,
+      "foodReserve": 264384,
+      "buffer": 1.4,
+      "perResource": 894928,
+      "total": 17898560,
+      "materialCount": 20,
+      "devCalibration": true,
+      "currentFullPopulation": 1800,
+      "currentFullPopulationRawFood24h": 259200,
+      "start18RawFood24h": 2592,
+      "foodEnvelopeHoursAtNextPopulation": 24
+    },
+    {
+      "level": 100,
+      "stage": 101,
+      "largestUpgrade": 388850,
+      "mission": 353500,
+      "foodReserve": 523584,
+      "buffer": 1.4,
+      "perResource": 1772308,
+      "total": 35446160,
+      "materialCount": 20,
+      "devCalibration": true,
+      "currentFullPopulation": 3600,
+      "currentFullPopulationRawFood24h": 518400,
+      "start18RawFood24h": 2592,
+      "foodEnvelopeHoursAtNextPopulation": 24
+    }
+  ],
+  "stockCases": [
+    {
+      "people": 18,
+      "housePeople": 18,
+      "satietyHour": 108,
+      "rawGoods24h": 2592,
+      "bread24h": 72,
+      "cake24h": 54,
+      "rawLevel1Workers": 3
+    },
+    {
+      "people": 36,
+      "housePeople": 36,
+      "satietyHour": 216,
+      "rawGoods24h": 5184,
+      "bread24h": 144,
+      "cake24h": 108,
+      "rawLevel1Workers": 6
+    },
+    {
+      "people": 36,
+      "housePeople": 18,
+      "satietyHour": 324,
+      "rawGoods24h": 7776,
+      "bread24h": 216,
+      "cake24h": 162,
+      "rawLevel1Workers": 9
+    },
+    {
+      "people": 72,
+      "housePeople": 36,
+      "satietyHour": 648,
+      "rawGoods24h": 15552,
+      "bread24h": 432,
+      "cake24h": 324,
+      "rawLevel1Workers": 17
+    }
+  ],
+  "recipes": [
+    {
+      "id": "farmGrain",
+      "building": "farm",
+      "inputs": {},
+      "outputs": {
+        "grain": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "grain": 40
+      },
+      "inputSatietyPerBatch": 0,
+      "outputSatietyPerBatch": 1,
+      "netSatietyPerBatch": 1,
+      "endToEndSatietyPerWorkerHour": 40,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "farmVegetables",
+      "building": "farm",
+      "inputs": {},
+      "outputs": {
+        "vegetables": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "vegetables": 40
+      },
+      "inputSatietyPerBatch": 0,
+      "outputSatietyPerBatch": 1,
+      "netSatietyPerBatch": 1,
+      "endToEndSatietyPerWorkerHour": 40,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "farmLivestock",
+      "building": "farm",
+      "inputs": {},
+      "outputs": {
+        "livestock": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "livestock": 40
+      },
+      "inputSatietyPerBatch": 0,
+      "outputSatietyPerBatch": 0,
+      "netSatietyPerBatch": 0,
+      "endToEndSatietyPerWorkerHour": null,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "farmMilk",
+      "building": "farm",
+      "inputs": {},
+      "outputs": {
+        "rawMilk": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "rawMilk": 40
+      },
+      "inputSatietyPerBatch": 0,
+      "outputSatietyPerBatch": 1,
+      "netSatietyPerBatch": 1,
+      "endToEndSatietyPerWorkerHour": 40,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "farmCheese",
+      "building": "farm",
+      "inputs": {
+        "sourMilk": 4
+      },
+      "outputs": {
+        "cheese": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "cheese": 40
+      },
+      "inputSatietyPerBatch": 2,
+      "outputSatietyPerBatch": 12,
+      "netSatietyPerBatch": 10,
+      "endToEndSatietyPerWorkerHour": 96,
+      "requires72hCentralMilkAging": true
+    },
+    {
+      "id": "flour",
+      "building": "windmill",
+      "inputs": {
+        "grain": 4
+      },
+      "outputs": {
+        "flour": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "flour": 40
+      },
+      "inputSatietyPerBatch": 4,
+      "outputSatietyPerBatch": 6,
+      "netSatietyPerBatch": 2,
+      "endToEndSatietyPerWorkerHour": 48,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "bread",
+      "building": "bakery",
+      "inputs": {
+        "flour": 4
+      },
+      "outputs": {
+        "bread": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "bread": 40
+      },
+      "inputSatietyPerBatch": 24,
+      "outputSatietyPerBatch": 36,
+      "netSatietyPerBatch": 12,
+      "endToEndSatietyPerWorkerHour": 68.57142857,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "cake",
+      "building": "bakery",
+      "inputs": {
+        "flour": 4,
+        "rawMilk": 2
+      },
+      "outputs": {
+        "cake": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "cake": 40
+      },
+      "inputSatietyPerBatch": 26,
+      "outputSatietyPerBatch": 48,
+      "netSatietyPerBatch": 22,
+      "endToEndSatietyPerWorkerHour": 83.47826087,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "pasteurizedMilk",
+      "building": "dairy",
+      "inputs": {
+        "rawMilk": 4
+      },
+      "outputs": {
+        "pasteurizedMilk": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "pasteurizedMilk": 40
+      },
+      "inputSatietyPerBatch": 4,
+      "outputSatietyPerBatch": 6,
+      "netSatietyPerBatch": 2,
+      "endToEndSatietyPerWorkerHour": 48,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "meat",
+      "building": "slaughterhouse",
+      "inputs": {
+        "livestock": 2
+      },
+      "outputs": {
+        "meat": 2
+      },
+      "batchesPerAssignedWorkerHour": 20,
+      "outputsPerAssignedWorkerHour": {
+        "meat": 40
+      },
+      "inputSatietyPerBatch": 0,
+      "outputSatietyPerBatch": 12,
+      "netSatietyPerBatch": 12,
+      "endToEndSatietyPerWorkerHour": 120,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "leather",
+      "building": "slaughterhouse",
+      "inputs": {
+        "livestock": 2
+      },
+      "outputs": {
+        "leather": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "leather": 40
+      },
+      "inputSatietyPerBatch": 0,
+      "outputSatietyPerBatch": 0,
+      "netSatietyPerBatch": 0,
+      "endToEndSatietyPerWorkerHour": null,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "fish",
+      "building": "fisher",
+      "inputs": {},
+      "outputs": {
+        "fish": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "fish": 40
+      },
+      "inputSatietyPerBatch": 0,
+      "outputSatietyPerBatch": 1,
+      "netSatietyPerBatch": 1,
+      "endToEndSatietyPerWorkerHour": 40,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "civilianClothes",
+      "building": "leatherworks",
+      "inputs": {
+        "leather": 4
+      },
+      "outputs": {
+        "civilianClothes": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "civilianClothes": 40
+      },
+      "inputSatietyPerBatch": 0,
+      "outputSatietyPerBatch": 0,
+      "netSatietyPerBatch": 0,
+      "endToEndSatietyPerWorkerHour": null,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "militaryClothes",
+      "building": "leatherworks",
+      "inputs": {
+        "leather": 8
+      },
+      "outputs": {
+        "militaryClothes": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "militaryClothes": 40
+      },
+      "inputSatietyPerBatch": 0,
+      "outputSatietyPerBatch": 0,
+      "netSatietyPerBatch": 0,
+      "endToEndSatietyPerWorkerHour": null,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "professorRobes",
+      "building": "leatherworks",
+      "inputs": {
+        "leather": 8
+      },
+      "outputs": {
+        "professorRobes": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "professorRobes": 40
+      },
+      "inputSatietyPerBatch": 0,
+      "outputSatietyPerBatch": 0,
+      "netSatietyPerBatch": 0,
+      "endToEndSatietyPerWorkerHour": null,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "wood",
+      "building": "lumber",
+      "inputs": {},
+      "outputs": {
+        "wood": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "wood": 40
+      },
+      "inputSatietyPerBatch": 0,
+      "outputSatietyPerBatch": 0,
+      "netSatietyPerBatch": 0,
+      "endToEndSatietyPerWorkerHour": null,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "stone",
+      "building": "quarry",
+      "inputs": {},
+      "outputs": {
+        "stone": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "stone": 40
+      },
+      "inputSatietyPerBatch": 0,
+      "outputSatietyPerBatch": 0,
+      "netSatietyPerBatch": 0,
+      "endToEndSatietyPerWorkerHour": null,
+      "requires72hCentralMilkAging": false
+    },
+    {
+      "id": "planks",
+      "building": "sawmill",
+      "inputs": {
+        "wood": 2
+      },
+      "outputs": {
+        "planks": 1
+      },
+      "batchesPerAssignedWorkerHour": 40,
+      "outputsPerAssignedWorkerHour": {
+        "planks": 40
+      },
+      "inputSatietyPerBatch": 0,
+      "outputSatietyPerBatch": 0,
+      "netSatietyPerBatch": 0,
+      "endToEndSatietyPerWorkerHour": null,
+      "requires72hCentralMilkAging": false
+    }
+  ],
+  "crew": [
+    {
+      "level": 1,
+      "farm": {
+        "perProduct": 12,
+        "total": 18,
+        "products": 2
+      },
+      "slaughterhouse": {
+        "perProduct": 12,
+        "total": 18,
+        "products": 2
+      },
+      "leatherworks": {
+        "perProduct": 12,
+        "total": 24,
+        "products": 3
+      }
+    },
+    {
+      "level": 2,
+      "farm": {
+        "perProduct": 24,
+        "total": 60,
+        "products": 4
+      },
+      "slaughterhouse": {
+        "perProduct": 24,
+        "total": 36,
+        "products": 2
+      },
+      "leatherworks": {
+        "perProduct": 24,
+        "total": 48,
+        "products": 3
+      }
+    },
+    {
+      "level": 6,
+      "farm": {
+        "perProduct": 72,
+        "total": 216,
+        "products": 5
+      },
+      "slaughterhouse": {
+        "perProduct": 72,
+        "total": 108,
+        "products": 2
+      },
+      "leatherworks": {
+        "perProduct": 72,
+        "total": 144,
+        "products": 3
+      }
+    }
+  ],
+  "actualModel": {
+    "singleRecipeBatches": [
+      {
+        "recipe": "farmGrain",
+        "seconds": 90,
+        "assignedWorkers": 1,
+        "actual": {
+          "grain": 1
+        },
+        "expected": {
+          "grain": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "farmVegetables",
+        "seconds": 90,
+        "assignedWorkers": 1,
+        "actual": {
+          "vegetables": 1
+        },
+        "expected": {
+          "vegetables": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "farmLivestock",
+        "seconds": 81.81818182,
+        "assignedWorkers": 1,
+        "actual": {
+          "livestock": 1
+        },
+        "expected": {
+          "livestock": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "farmMilk",
+        "seconds": 81.81818182,
+        "assignedWorkers": 1,
+        "actual": {
+          "rawMilk": 1
+        },
+        "expected": {
+          "rawMilk": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "farmCheese",
+        "seconds": 60,
+        "assignedWorkers": 1,
+        "actual": {
+          "cheese": 1
+        },
+        "expected": {
+          "cheese": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "flour",
+        "seconds": 90,
+        "assignedWorkers": 1,
+        "actual": {
+          "flour": 1
+        },
+        "expected": {
+          "flour": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "bread",
+        "seconds": 90,
+        "assignedWorkers": 1,
+        "actual": {
+          "bread": 1
+        },
+        "expected": {
+          "bread": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "cake",
+        "seconds": 90,
+        "assignedWorkers": 1,
+        "actual": {
+          "cake": 1
+        },
+        "expected": {
+          "cake": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "pasteurizedMilk",
+        "seconds": 90,
+        "assignedWorkers": 1,
+        "actual": {
+          "pasteurizedMilk": 1
+        },
+        "expected": {
+          "pasteurizedMilk": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "meat",
+        "seconds": 180,
+        "assignedWorkers": 1,
+        "actual": {
+          "meat": 2
+        },
+        "expected": {
+          "meat": 2
+        },
+        "pass": true
+      },
+      {
+        "recipe": "leather",
+        "seconds": 90,
+        "assignedWorkers": 1,
+        "actual": {
+          "leather": 1
+        },
+        "expected": {
+          "leather": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "fish",
+        "seconds": 90,
+        "assignedWorkers": 1,
+        "actual": {
+          "fish": 1
+        },
+        "expected": {
+          "fish": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "civilianClothes",
+        "seconds": 90,
+        "assignedWorkers": 1,
+        "actual": {
+          "civilianClothes": 1
+        },
+        "expected": {
+          "civilianClothes": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "militaryClothes",
+        "seconds": 90,
+        "assignedWorkers": 1,
+        "actual": {
+          "militaryClothes": 1
+        },
+        "expected": {
+          "militaryClothes": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "professorRobes",
+        "seconds": 90,
+        "assignedWorkers": 1,
+        "actual": {
+          "professorRobes": 1
+        },
+        "expected": {
+          "professorRobes": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "wood",
+        "seconds": 90,
+        "assignedWorkers": 1,
+        "actual": {
+          "wood": 1
+        },
+        "expected": {
+          "wood": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "stone",
+        "seconds": 90,
+        "assignedWorkers": 1,
+        "actual": {
+          "stone": 1
+        },
+        "expected": {
+          "stone": 1
+        },
+        "pass": true
+      },
+      {
+        "recipe": "planks",
+        "seconds": 90,
+        "assignedWorkers": 1,
+        "actual": {
+          "planks": 1
+        },
+        "expected": {
+          "planks": 1
+        },
+        "pass": true
+      }
+    ],
+    "food24h": [
+      {
+        "people": 18,
+        "housePeople": 18,
+        "satietyHour": 108,
+        "rawGoods24h": 2592,
+        "bread24h": 72,
+        "cake24h": 54,
+        "rawLevel1Workers": 3,
+        "elapsedMinutes": 1440,
+        "consumedSatiety": 2592,
+        "remainingGrain": 0,
+        "minimumCoverage": 1,
+        "pass": true
+      },
+      {
+        "people": 36,
+        "housePeople": 36,
+        "satietyHour": 216,
+        "rawGoods24h": 5184,
+        "bread24h": 144,
+        "cake24h": 108,
+        "rawLevel1Workers": 6,
+        "elapsedMinutes": 1440,
+        "consumedSatiety": 5184,
+        "remainingGrain": 0,
+        "minimumCoverage": 1,
+        "pass": true
+      },
+      {
+        "people": 36,
+        "housePeople": 18,
+        "satietyHour": 324,
+        "rawGoods24h": 7776,
+        "bread24h": 216,
+        "cake24h": 162,
+        "rawLevel1Workers": 9,
+        "elapsedMinutes": 1440,
+        "consumedSatiety": 7776,
+        "remainingGrain": 0,
+        "minimumCoverage": 1,
+        "pass": true
+      },
+      {
+        "people": 72,
+        "housePeople": 36,
+        "satietyHour": 648,
+        "rawGoods24h": 15552,
+        "bread24h": 432,
+        "cake24h": 324,
+        "rawLevel1Workers": 17,
+        "elapsedMinutes": 1440,
+        "consumedSatiety": 15552,
+        "remainingGrain": 0,
+        "minimumCoverage": 1,
+        "pass": true
+      }
+    ],
+    "loans": {
+      "applications": 1000,
+      "approved": 704,
+      "forgiven": 295,
+      "repaid": 409,
+      "meanNetPerApproved1000": 389.98579545,
+      "method": "Actual kingdomAction + advanceKingdom; amount1000/day1, cash held, no overridden draws."
+    }
+  },
+  "loans": {
+    "closedForm": [
+      {
+        "days": 1,
+        "forgivenessProbability": 0.40951,
+        "fullRepaymentPer1000": 1050,
+        "expectedRepaymentPer1000": 620.0145,
+        "expectedBorrowerNetPer1000": 379.9855,
+        "assumptions": "Approved loan, held to full term, no partial payments, all five draws allowed, coins available for timely repayment if not forgiven."
+      },
+      {
+        "days": 4,
+        "forgivenessProbability": 0.40951,
+        "fullRepaymentPer1000": 1200,
+        "expectedRepaymentPer1000": 708.588,
+        "expectedBorrowerNetPer1000": 291.412,
+        "assumptions": "Approved loan, held to full term, no partial payments, all five draws allowed, coins available for timely repayment if not forgiven."
+      },
+      {
+        "days": 7,
+        "forgivenessProbability": 0.40951,
+        "fullRepaymentPer1000": 1350,
+        "expectedRepaymentPer1000": 797.1615,
+        "expectedBorrowerNetPer1000": 202.8385,
+        "assumptions": "Approved loan, held to full term, no partial payments, all five draws allowed, coins available for timely repayment if not forgiven."
+      },
+      {
+        "days": 14,
+        "forgivenessProbability": 0.40951,
+        "fullRepaymentPer1000": 1700,
+        "expectedRepaymentPer1000": 1003.833,
+        "expectedBorrowerNetPer1000": -3.833,
+        "assumptions": "Approved loan, held to full term, no partial payments, all five draws allowed, coins available for timely repayment if not forgiven."
+      },
+      {
+        "days": 28,
+        "forgivenessProbability": 0.40951,
+        "fullRepaymentPer1000": 2400,
+        "expectedRepaymentPer1000": 1417.176,
+        "expectedBorrowerNetPer1000": -417.176,
+        "assumptions": "Approved loan, held to full term, no partial payments, all five draws allowed, coins available for timely repayment if not forgiven."
+      }
+    ],
+    "monteCarlo": {
+      "seed": 851112245,
+      "applications": 100000,
+      "approved": 70136,
+      "approvalRate": 0.70136,
+      "forgiven": 28792,
+      "forgivenessRateAmongApproved": 0.41051671,
+      "closedFormForgivenessRate": 0.40951,
+      "meanNetPerApproved1000OneDay": 381.04254591,
+      "standardErrorForgiveness": 0.00185681,
+      "expected95PercentHalfWidth": 0.00363935
+    },
+    "skipAfterForgiveness": {
+      "status": "DEV_PROPOSAL_REQUIRES_REVIEW",
+      "parameters": {
+        "version": 1,
+        "status": "DEV_PROPOSAL_REQUIRES_REVIEW",
+        "forgivenessSkipPrincipalShare": 0.1,
+        "forgivenessSkipMinimumElapsedHours": 24,
+        "missionGoodsPerTownhall": 12,
+        "missionCoinsPerTownhall": 25,
+        "rewardShare": 0.15,
+        "lendingGiftProbability": 0.1,
+        "lendingGiftInterestValueShare": 0.1,
+        "maximumRecordCount": 1000
+      },
+      "examples": [
+        {
+          "lastForgivenPrincipal": 100,
+          "proposedMinimumPrincipal": 10,
+          "proposedMinimumElapsedHours": 24,
+          "oneCoinImmediateClearsGate": false,
+          "oneCoinDayClearsGate": false,
+          "interestCostOnQualifying24h": 1,
+          "optimisticWoodSaleWorkerMinutesToEarnInterest": 0.5,
+          "costShareOfPreviousPrincipal": 0.01,
+          "estimatedExpectedFirstEligibleOneDayNet": 37.99855,
+          "estimatedNetLessExpectedSkipInterest": 37.58904
+        },
+        {
+          "lastForgivenPrincipal": 1000,
+          "proposedMinimumPrincipal": 100,
+          "proposedMinimumElapsedHours": 24,
+          "oneCoinImmediateClearsGate": false,
+          "oneCoinDayClearsGate": false,
+          "interestCostOnQualifying24h": 5,
+          "optimisticWoodSaleWorkerMinutesToEarnInterest": 2.5,
+          "costShareOfPreviousPrincipal": 0.005,
+          "estimatedExpectedFirstEligibleOneDayNet": 379.9855,
+          "estimatedNetLessExpectedSkipInterest": 377.93795
+        },
+        {
+          "lastForgivenPrincipal": 10000,
+          "proposedMinimumPrincipal": 1000,
+          "proposedMinimumElapsedHours": 24,
+          "oneCoinImmediateClearsGate": false,
+          "oneCoinDayClearsGate": false,
+          "interestCostOnQualifying24h": 50,
+          "optimisticWoodSaleWorkerMinutesToEarnInterest": 25,
+          "costShareOfPreviousPrincipal": 0.005,
+          "estimatedExpectedFirstEligibleOneDayNet": 3799.855,
+          "estimatedNetLessExpectedSkipInterest": 3779.3795
+        }
+      ]
+    },
+    "allianceRewards": [
+      {
+        "members": 1,
+        "capital": 1000,
+        "termHours": 24,
+        "interestPerMember": 30,
+        "fullAllianceInterest": 30,
+        "accountCapitalReturnTotal": 1000,
+        "allianceInterestRatePerDay": 0.03,
+        "borrowRatePerDay": 0.05,
+        "directBorrowedCoinRelendingAllowed": false
+      },
+      {
+        "members": 2,
+        "capital": 1000,
+        "termHours": 24,
+        "interestPerMember": 30,
+        "fullAllianceInterest": 60,
+        "accountCapitalReturnTotal": 1000,
+        "allianceInterestRatePerDay": 0.06,
+        "borrowRatePerDay": 0.05,
+        "directBorrowedCoinRelendingAllowed": false
+      },
+      {
+        "members": 3,
+        "capital": 1000,
+        "termHours": 24,
+        "interestPerMember": 30,
+        "fullAllianceInterest": 90,
+        "accountCapitalReturnTotal": 1000,
+        "allianceInterestRatePerDay": 0.09,
+        "borrowRatePerDay": 0.05,
+        "directBorrowedCoinRelendingAllowed": false
+      },
+      {
+        "members": 4,
+        "capital": 1000,
+        "termHours": 24,
+        "interestPerMember": 30,
+        "fullAllianceInterest": 120,
+        "accountCapitalReturnTotal": 1000,
+        "allianceInterestRatePerDay": 0.12,
+        "borrowRatePerDay": 0.05,
+        "directBorrowedCoinRelendingAllowed": false
+      },
+      {
+        "members": 5,
+        "capital": 1000,
+        "termHours": 24,
+        "interestPerMember": 30,
+        "fullAllianceInterest": 150,
+        "accountCapitalReturnTotal": 1000,
+        "allianceInterestRatePerDay": 0.15,
+        "borrowRatePerDay": 0.05,
+        "directBorrowedCoinRelendingAllowed": false
+      }
+    ],
+    "legalGoodsConversionRisk": [
+      {
+        "days": 1,
+        "borrowed": 10000,
+        "stonePurchased": 1666,
+        "purchaseCost": 9996,
+        "saleOwnCoins": 6664,
+        "residualBorrowedCoins": 4,
+        "conversionLoss": 3332,
+        "allianceMembers": 5,
+        "fullGroupLendingInterest": 1000,
+        "borrowDebt": 10500,
+        "groupNetAfterTimelyDebt": -2832,
+        "forgivenessAssumed": false,
+        "reinvestmentAssumed": false,
+        "lendingTermsMaximum96h": true
+      },
+      {
+        "days": 4,
+        "borrowed": 10000,
+        "stonePurchased": 1666,
+        "purchaseCost": 9996,
+        "saleOwnCoins": 6664,
+        "residualBorrowedCoins": 4,
+        "conversionLoss": 3332,
+        "allianceMembers": 5,
+        "fullGroupLendingInterest": 4000,
+        "borrowDebt": 12000,
+        "groupNetAfterTimelyDebt": -1332,
+        "forgivenessAssumed": false,
+        "reinvestmentAssumed": false,
+        "lendingTermsMaximum96h": true
+      },
+      {
+        "days": 7,
+        "borrowed": 10000,
+        "stonePurchased": 1666,
+        "purchaseCost": 9996,
+        "saleOwnCoins": 6664,
+        "residualBorrowedCoins": 4,
+        "conversionLoss": 3332,
+        "allianceMembers": 5,
+        "fullGroupLendingInterest": 7000,
+        "borrowDebt": 13500,
+        "groupNetAfterTimelyDebt": 168,
+        "forgivenessAssumed": false,
+        "reinvestmentAssumed": false,
+        "lendingTermsMaximum96h": true
+      },
+      {
+        "days": 14,
+        "borrowed": 10000,
+        "stonePurchased": 1666,
+        "purchaseCost": 9996,
+        "saleOwnCoins": 6664,
+        "residualBorrowedCoins": 4,
+        "conversionLoss": 3332,
+        "allianceMembers": 5,
+        "fullGroupLendingInterest": 14000,
+        "borrowDebt": 17000,
+        "groupNetAfterTimelyDebt": 3668,
+        "forgivenessAssumed": false,
+        "reinvestmentAssumed": false,
+        "lendingTermsMaximum96h": true
+      },
+      {
+        "days": 28,
+        "borrowed": 10000,
+        "stonePurchased": 1666,
+        "purchaseCost": 9996,
+        "saleOwnCoins": 6664,
+        "residualBorrowedCoins": 4,
+        "conversionLoss": 3332,
+        "allianceMembers": 5,
+        "fullGroupLendingInterest": 28000,
+        "borrowDebt": 24000,
+        "groupNetAfterTimelyDebt": 10668,
+        "forgivenessAssumed": false,
+        "reinvestmentAssumed": false,
+        "lendingTermsMaximum96h": true
+      }
+    ],
+    "findings": [
+      "Five independent10%draws mean40.951%chance, not10%.",
+      "10%principal/24hskip prevents immediate symbolic bypass but does not balance money creation.",
+      "Full reward per alliance member intentionally multiplies currency creation.",
+      "Purchasing and selling goods removes coin provenance under decision29; long-term alliance carry remains mathematically profitable.",
+      "Warehouse envelope is keyed to warehouse level, not a guarantee for arbitrarily higherTownHall.",
+      "Per-recipe rates remain DEV calibration; chain bottlenecks, transport, local capacities, feeding and study compete for actual people."
+    ]
+  }
+}

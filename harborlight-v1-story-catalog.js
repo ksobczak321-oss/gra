@@ -2,6 +2,8 @@
 // they never grant a reward or assert that an input was solved.
 const t=(pl,en)=>Object.freeze({pl,en});
 export const ISLAND_PUZZLE_CATALOG=Object.freeze([
+ ['signal-line','Sieć latarnika','Keeper’s signal network','Przeprowadź sygnał przez każdy przewód jednym ruchem, bez ponownego użycia przewodu.','Trace every wire in one stroke without using a wire twice.',180,'medium'],
+ ['harbor-routes','Konwoje na redzie','Convoys at anchor','Wypraw konwoje w kolejności, która zwalnia drogę przed ich strzałkami.','Send convoys out in an order that clears the way ahead of their arrows.',150,'medium'],
  ['gull','Mewa-złodziejka','The thieving gull','Odwróć uwagę mewy i odzyskaj klucz.','Distract the gull and recover the key.',60,'short'],
  ['crabs','Parada krabów','Crab parade','Poprowadź rodzinę krabów do bezpiecznych muszli.','Guide the crab family to safe shells.',90,'short'],
  ['hiddenObjects','Okulary latarnika','The keeper’s glasses','Obejrzyj przedmioty i znajdź zgubę według wskazówki.','Inspect the scene and follow the clue to the lost item.',75,'short'],
@@ -26,13 +28,13 @@ export const ISLAND_PUZZLE_CATALOG=Object.freeze([
  ['marbleMaze','Kula mechanizmu','The mechanism’s marble','Przechylaj planszę, aby doprowadzić kulę do celu.','Tilt the board to guide the marble to its goal.',420,'medium']
 ].map(([id,pl,en,ip,ie,durationSeconds,tier])=>Object.freeze({id,title:t(pl,en),description:t(ip,ie),durationSeconds,tier})));
 const stories=[
- ['first-light','Pierwszy blask','The first glow',1,['hiddenObjects','signalsDecode','gears','optics'],'Odnajdź zapiski latarnika i przywróć światło.','Find the keeper’s notes and restore the light.'],
+ ['first-light','Pierwszy blask','The first glow',1,['hiddenObjects','signal-line','signalsDecode','gears','optics'],'Odnajdź zapiski latarnika i przywróć światło.','Find the keeper’s notes and restore the light.'],
  ['star-guests','Goście spod gwiazd','Guests beneath the stars',2,['gull','packing','cooking','hotel','optics'],'Przygotuj nocleg dla pierwszych gości obserwujących meteory.','Prepare a welcome for the first meteor-watchers.'],
  ['captainless-ship','Statek bez kapitana','The captainless ship',2,['deduction','hiddenObjects','signalsDecode','packing','navigation','hotel'],'Odtwórz zdarzenia na dryfującym statku i sprowadź załogę na wyspę.','Reconstruct what happened aboard the drifting ship and bring the crew ashore.'],
- ['harbor-opening','Przystań otwarta','The harbor opens',4,['untangle','packing','scheduling','navigation','balance'],'Poprowadź pierwszy konwój od przygotowania do bezpiecznej dostawy.','Lead the first convoy from preparation to safe delivery.'],
+ ['harbor-opening','Przystań otwarta','The harbor opens',4,['untangle','packing','harbor-routes','scheduling','navigation','balance'],'Poprowadź pierwszy konwój od przygotowania do bezpiecznej dostawy.','Lead the first convoy from preparation to safe delivery.'],
  ['storm-shelter','Noc sztormowa','Storm night',5,['invention','tides','gears','optics','scheduling'],'Uruchom awaryjne światło i zabezpiecz drogę do schronienia.','Restore the emergency light and secure the route to shelter.'],
  ['bottle-message','Wiadomość w butelce','A message in a bottle',6,['paperFold','parrot','deduction','navigation','packing'],'Złożona mapa i słowa papugi wyjaśnią, dokąd wysłać przesyłkę.','A folded map and a parrot’s words reveal where to send the parcel.'],
- ['fog-convoy','Konwój przez mgłę','Convoy through fog',7,['signalsDecode','photo','optics','navigation','scheduling'],'Połącz światło, pomiary i rozkład rejsów.','Combine light, observations and the sailing schedule.'],
+ ['fog-convoy','Konwój przez mgłę','Convoy through fog',7,['signalsDecode','signal-line','photo','optics','navigation','harbor-routes','scheduling'],'Połącz światło, pomiary i rozkład rejsów.','Combine light, observations and the sailing schedule.'],
  ['keeper-map','Mapa starego latarnika','The old keeper’s map',8,['memoryTriples','paperFold','photo','navigation','hiddenObjects'],'Fragmenty dziennika prowadzą do zapomnianej zatoczki.','Journal fragments lead to a forgotten cove.'],
  ['supply-voyage','Zapasy na dalszą drogę','Supplies for the journey',9,['packing','cooking','balance','scheduling','navigation'],'Przygotuj samodzielną wyprawę bez kupowania nowej wyspy.','Prepare an independent voyage without buying another island.'],
  ['second-shore','Światło na drugim brzegu','Light on the other shore',10,['navigation','crabs','invention','gears','optics'],'Odkryj dawny punkt sygnałowy na drugim brzegu.','Discover an old signal station on the far shore.'],

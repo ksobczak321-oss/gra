@@ -29,9 +29,9 @@ test('current building descriptions explain concrete recipes and preserve actual
   assert.match(sawmill, /Na jedną deskę potrzeba 2 jednostek drewna z magazynu centralnego/);
   assert.equal(BUILDINGS.sawmill.inputRate, 2);
   assert.match(translate(BUILDINGS.warehouse.description, 'pl'), /2688.*13 440.*stałą pojemność.*rozbudowę.*misję.*jedzenia.*bufor/);
-  assert.match(buildingPurpose('dock', 'pl'), /Od 4\. poziomu.*Od 6\..*10, 13, 16.*20 wysp/);
+  assert.match(buildingPurpose('dock', 'pl'), /Kupuj i sprzedawaj towary.*wysyłaj statki.*ładunek, pasażerów/);
   assert.match(residentsPurpose('pl'), /macierzystej.*12.*córce.*6.*0 punktów.*100 punktów.*30 minut.*72 godziny.*20 punktów/);
-  assert.match(warehousePurpose('pl'), /nagród.*ponad zwykłym limitem/);
+  assert.match(warehousePurpose('pl'), /Godzinna rezerwa.*najtańszego wyżywienia.*chroniona.*poziomu 5/);
 });
 
 test('coin and plank quantities follow Polish nominative and accusative rules in notifications and controls', () => {

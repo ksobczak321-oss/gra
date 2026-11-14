@@ -1,6 +1,7 @@
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v31-2';
-import { puzzleSceneArt, puzzleTokenArt } from './harborlight-v1-adventures-art.js?v=frontend-v31-2';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v31-2';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-2';
+import { puzzleSceneArt, puzzleTokenArt } from './harborlight-v1-adventures-art.js?v=frontend-v32-2';
+import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-2';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-2';
 
 const words = (language, pl, en) => language === 'en' ? en : pl;
 const line = (value, language) => typeof value === 'string' ? value : value?.[language] || value?.pl || '';
@@ -22,10 +23,11 @@ const coordinate = value => Math.max(-12, Math.min(112, Number(value) || 0));
 
 /** Only visible clues and legal moves leave the model. UI input never decides
  * whether a room is solved, modifies a checkpoint, or grants a reward. */
-export function createExpandedAdventureScene({ getState, getRun, language = 'pl', standardScene, send }) {
+export function createExpandedAdventureScene({ getState, getRun, language = 'pl', standardScene, send, allowAdSimulation=false }) {
   const t = (pl, en) => words(language, pl, en);
   const initial = getRun(), storyMode = initial.kind === 'escapeStory';
-  const root = standardScene(initial, t('Rozglądaj się, porównuj wskazówki i eksperymentuj. Każdy ruch możesz przemyśleć — ta zagadka nie ma limitu czasu.', 'Look around, compare the clues and experiment. Take your time: this puzzle has no deadline.'));
+  const timed=getState()?.ruleset===32;const root=standardScene(initial,timed?t('Rozglądaj się, porównuj wskazówki i eksperymentuj. Każdy etap ma własny limit czasu. Wyjście kończy bieżącą próbę, zachowując wcześniejsze odkrycia.','Look around, compare clues and experiment. Every stage has its own timer. Leaving ends this attempt and keeps earlier discoveries.'):t('Rozglądaj się, porównuj wskazówki i eksperymentuj. Każdy ruch możesz przemyśleć — ta zagadka nie ma limitu czasu.','Look around, compare the clues and experiment. Take your time: this puzzle has no deadline.'));
+  if(!document.querySelector('[data-original-puzzle-css]'))document.head.append(element('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-2',import.meta.url).href,'data-original-puzzle-css':''}));
   root.classList.add('adv-expanded'); root.dataset.expandedAdventure = initial.kind;
   const story = element('section', { class: 'adv-story-heading', 'data-puzzle-story': '' });
   const hero = element('div', { class: 'adv-puzzle-hero' });
@@ -61,14 +63,16 @@ export function createExpandedAdventureScene({ getState, getRun, language = 'pl'
   const undo = button(t('Cofnij ruch', 'Undo move'), () => send('puzzleUndo'), { class: 'adv-quiet', 'data-puzzle-undo': '' });
   const hintButton = button(t('Mała podpowiedź', 'A little hint'), () => send('puzzleHint'), { class: 'adv-quiet', 'data-puzzle-hint-button': '' });
   const reset = button(t('Ułóż ten pokój od nowa', 'Reset this room'), () => send('puzzleReset'), { class: 'adv-quiet', 'data-puzzle-reset': '' });
-  actions.append(hintButton, undo, reset);
-  journal.append(cluesHeading, connection, clues, knowledge, hint, actions, element('p', { class: 'adv-puzzle-checkpoint' }, t('Możesz wrócić później. Ruchy i odkrycia są zapisywane razem z wyspą.', 'Come back whenever you like. Your moves and discoveries are saved with the island.')));
+  const easier=button(t('Łatwiejszy etap · pozostałe nagrody 50%','Easier stage · remaining rewards 50%'),()=>send('puzzleEasier'),{class:'adv-quiet','data-puzzle-easier':''});
+  actions.append(hintButton, undo, reset,easier);
+  journal.append(cluesHeading, connection, clues, knowledge, hint, actions, element('p', { class: 'adv-puzzle-checkpoint' }, t('Wyjście kończy bieżącą próbę. Zachowujesz ukończone etapy, odkrycia, przedmioty i wcześniej odebrane nagrody.', 'Leaving ends the current attempt. Completed stages, clues, items and earlier rewards are kept.')));
   workbench.append(boardColumn, journal);
   const roomSuccess = element('section', { class: 'adv-room-success', 'data-room-success': '', role: 'status', hidden: true }, element('span', { class: 'adv-room-seal', 'aria-hidden': 'true' }, '✓'), element('div', {}, element('h5', {}, t('To odkrycie prowadzi dalej!', 'Your discovery opens the way!')), element('p', {}, t('Zabierasz ze sobą nową wskazówkę. Przyda się w kolejnej części historii.', 'You are taking a new clue with you. It will help in the next part of the story.'))));
   const nextRoom = button(t('Otwórz następny pokój', 'Open the next room'), () => send('puzzleNextRoom'), { class: 'adv-primary', 'data-puzzle-next-room': '' });
   roomSuccess.append(nextRoom);
-  root.append(story, hero, workbench, roomSuccess);
-  let lastSignature = '', shape = '', selectedDrag = null, miniController = null, currentMiniId = '', disposed = false;
+  const timerOffer=element('div',{class:'adv-v32-time-offer',hidden:true,'data-journey-time-offer':''}),failedNotice=element('p',{class:'adv-status','data-journey-failed':'',hidden:true},t('Ta próba zakończyła się przegraną. Wcześniejsze etapy i przedmioty pozostają. Rozpocznij nową próbę tego etapu.','This attempt ended. Earlier stages and items are kept. Start a new attempt of this stage.'));
+  root.append(story, hero,failedNotice,workbench, roomSuccess,timerOffer);
+  let lastSignature = '', shape = '', selectedDrag = null, miniController = null, originalController=null, originalKey='',timeOfferKey='', currentMiniId = '', disposed = false;
   const maps = new Map();
   let latestView = null;
   const move = async input => {
@@ -124,11 +128,12 @@ export function createExpandedAdventureScene({ getState, getRun, language = 'pl'
     if (disposed) return;
     const run = getRun();
     if (!run || run.id !== initial.id || !run.data?.puzzle || typeof Adventures.getIslandPuzzleView !== 'function') return;
-    const signature = JSON.stringify([run.data.puzzle, run.data.story, run.stage]);
+    const signature = JSON.stringify([run.data.puzzle, run.data.story, run.stage,run.data.stageAttempt,run.data.rewardScale]);
     if (signature === lastSignature) return;
     lastSignature = signature;
     const view = Adventures.getIslandPuzzleView(run.data.puzzle, language); latestView = view;
     if (!view) return;
+    const stage=Adventures.journeyStageStatus?.(getState(),run)||{},attempt=stage.attempt;const failed=attempt&&attempt.status!=='active'&&attempt.status!=='won';failedNotice.hidden=!failed;
     const room = storyMode ? Adventures.getCurrentStoryRoom?.(run, language) : null;
     const nextShape = `${run.data.puzzle.kind || view.kind}:${run.data.story?.roomIndex ?? 0}`;
     if (nextShape !== shape) {
@@ -138,7 +143,7 @@ export function createExpandedAdventureScene({ getState, getRun, language = 'pl'
     }
     setText(heading, line(view.title, language)); setText(instruction, line(view.instruction, language));
     setText(eyebrow, room ? `${t('Pokój', 'Room')} ${room.roomIndex + 1} / ${room.roomCount}` : t('Mała przygoda, prawdziwy pomysł', 'A little adventure, a real idea'));
-    metadata.replaceChildren(element('span', {}, t('Bez limitu czasu', 'No time limit')), element('span', { 'data-puzzle-progress': '' }, `${view.progress?.current ?? 0} / ${view.progress?.total ?? 1}`),
+    metadata.replaceChildren(element('span', {}, !timed?t('Bez limitu czasu','No time limit'):attempt?`${t('Czas etapu','Stage time')}: ${Math.ceil(attempt.remaining)} s`:t('Rozpocznij próbę etapu','Start this stage')),element('span',{},`${t('Trudność','Difficulty')}: ${attempt?.difficulty||1}${run.data.rewardScale===.5?' · 50% nagrody':''}`), element('span', { 'data-puzzle-progress': '' }, `${view.progress?.current ?? 0} / ${view.progress?.total ?? 1}`),
       element('span', {}, `${t('Wariant', 'Variant')} ${view.variant || 1}`), ...(view.status ? [element('span', { 'data-puzzle-status': '' }, line(view.status, language))] : []));
     if (room) {
       story.hidden = false;
@@ -161,9 +166,9 @@ export function createExpandedAdventureScene({ getState, getRun, language = 'pl'
     }
     knowledge.hidden = !notes.length;
     const hintText = line(view.hint, language); setText(hint, hintText); hint.hidden = !hintText;
-    undo.disabled = !view.canUndo; reset.disabled = view.solved === true; hintButton.disabled = view.solved === true;
+    undo.disabled = !view.canUndo||failed||!!attempt?.timeOffer; reset.disabled = view.solved === true;hintButton.hidden=timed&&!stage.canUseHelp;hintButton.disabled = view.solved===true||failed||attempt?.hintUsed===true;easier.hidden=!timed||!stage.canUseHelp||view.solved===true;setText(reset,!timed?t('Ułóż ten pokój od nowa','Reset this room'):failed?t('Spróbuj ponownie','Try again'):t('Zakończ próbę i zacznij etap od nowa','End attempt and restart stage'));
     const cells = view.grid?.cells || [], rows = view.grid?.rows || 1, cols = view.grid?.cols || 1;
-    gridWrap.hidden = !cells.length || !!view.miniGame;
+    gridWrap.hidden = !cells.length || !!view.miniGame||!!view.originalAttempt;
     board.style.setProperty('--puzzle-columns', cols); board.style.setProperty('--puzzle-rows', rows);
     board.setAttribute('aria-label', line(view.title, language));
     reconcile(board, cells, 'cell');
@@ -202,18 +207,28 @@ export function createExpandedAdventureScene({ getState, getRun, language = 'pl'
     interactionHelp.hidden = !(itemRows.length && targetRows.length);
     reconcile(items, itemRows, 'item'); reconcile(targets, targetRows, 'target'); reconcile(controls, controlRows, 'control');
     controls.hidden = !controlRows.length;
-    if (view.miniGame) {
-      if (!document.querySelector('[data-adventure-minigame-css]')) document.head.append(element('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-minigame.css?v=frontend-v31-2', import.meta.url).href, 'data-adventure-minigame-css': '' }));
+    if(view.originalAttempt){
+      miniController?.dispose();miniController=null;minigame.hidden=false;
+      const key=attempt?.id||`${run.id}:${room?.roomIndex||0}`;
+      const status=()=>{const current=getRun(),p=current.data.puzzle,a=current.data.stageAttempt,s=Adventures.journeyStageStatus(getState(),current),b=p.data.attempt;return{...s,attempt:{...b,...a,id:a?.id||b.id,variant:p.kind},canStart:false,progress:p.kind==='signal-line'?b.usedEdges.length/b.board.edges.length:b.board.removed.length/b.board.paths.length,reward:0};};
+      if(!originalController||originalKey!==key){originalController?.dispose();originalKey=key;originalController=mountOriginalPuzzle({host:minigame,variant:run.data.puzzle.kind,getStatus:status,embedded:true,allowAdSimulation,onAction:action=>{if(action.type==='originalPuzzleInput'){const i=action.input;return move(i.kind==='node'?{type:'node',id:i.node}:i.kind==='convoy'?{type:'convoy',id:i.id}:{type:i.kind});}if(action.type==='originalPuzzleTimeChoice')return send('puzzleTimeChoice',{method:action.method});if(action.type==='originalPuzzleExtend')return send('puzzleAdComplete',{receipt:action.receipt,completed:action.completed});}});}else originalController.update();
+    }else if (view.miniGame) {
+      originalController?.dispose();originalController=null;
+      if (!document.querySelector('[data-adventure-minigame-css]')) document.head.append(element('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-minigame.css?v=frontend-v32-2', import.meta.url).href, 'data-adventure-minigame-css': '' }));
       minigame.hidden = false;
-      const mini = { id: run.id, miniGame: view.miniGame, status: view.solved ? 'won' : 'active', level: run.data.puzzle.difficulty || 1, roundStartedAt: run.startedAt || 0 };
-      const status = { elapsed: Math.max(0, (getState()?.adventures?.clock || 0) - (run.startedAt || 0)), remaining: Infinity };
+      const mini = { id: run.id, miniGame: view.miniGame, status: view.solved ? 'won' : failed?'lost':'active', level: run.data.puzzle.difficulty || 1, roundStartedAt: run.startedAt || 0 };
+      const status = { elapsed:attempt?attempt.initialDuration-attempt.remaining:0, remaining:attempt?.remaining||0,adPaused:!!attempt?.timeOffer };
       const miniKey = `${run.id}:${room?.roomIndex || 0}:${view.miniGame.kind}:${view.miniGame.cards?.length || 0}`;
       if (!miniController || currentMiniId !== miniKey) {
         miniController?.dispose(); currentMiniId = miniKey;
         miniController = mountMiniGame({ host: minigame, controlsHost: miniControls, run: mini, language, status,
           onAction: input => move(input.type === 'expeditionMiniGameReveal' ? { type: 'reveal', index: input.index } : { type: 'tilt', tiltX: input.tiltX, tiltY: input.tiltY }) });
       } else miniController.update(mini, status);
-    } else { minigame.hidden = true; if (miniController) { miniController.dispose(); miniController = null; minigame.replaceChildren(); miniControls.replaceChildren(); } }
+    } else { originalController?.dispose();originalController=null;minigame.hidden = true; if (miniController) { miniController.dispose(); miniController = null; minigame.replaceChildren(); miniControls.replaceChildren(); } }
+    timerOffer.hidden=!attempt?.timeOffer||!!view.originalAttempt;
+    const offerKey=timerOffer.hidden?'':`${attempt.id}:${attempt.timeOffer.status}:${attempt.timeOffer.receipt||''}`;
+    if(offerKey!==timeOfferKey){timeOfferKey=offerKey;timerOffer.replaceChildren();if(offerKey){const dialog=element('section',{class:'original-puzzle-dialog',role:'dialog','aria-modal':'true','aria-label':t('Dodatkowy czas','Extra time')});dialog.append(element('h4',{},t('Potrzebujesz więcej czasu?','Need more time?')));if(attempt.timeOffer.status==='choice'){dialog.append(element('p',{},`${t('Dodaj','Add')} ${Math.ceil(Math.max(60,attempt.remaining*.5))} s`),element('p',{'data-journey-countdown':''}),button(`${10*attempt.highestTownhall} ${t('monet','coins')}`,()=>send('puzzleTimeChoice',{method:'coins'})));if(allowAdSimulation)dialog.append(button(t('Reklama — symulacja DEV','Ad — DEV simulation'),()=>send('puzzleTimeChoice',{method:'ad'})));dialog.append(button(t('Gram dalej','Keep playing'),()=>send('puzzleTimeChoice',{method:'decline'})));}else{dialog.append(element('p',{},t('Zegar etapu jest zatrzymany.','The stage clock is paused.')));if(allowAdSimulation)dialog.append(button(t('Zakończ symulację reklamy','Complete simulated ad'),()=>send('puzzleAdComplete',{receipt:attempt.timeOffer.receipt,completed:true})));dialog.append(button(t('Przerwij i graj dalej','Cancel and keep playing'),()=>send('puzzleAdComplete',{receipt:attempt.timeOffer.receipt,completed:false})));}timerOffer.append(dialog);}}
+    const countdown=timerOffer.querySelector('[data-journey-countdown]');if(countdown)countdown.textContent=`${t('Powrót do gry','Resume in')}: ${Math.ceil(attempt.timeOffer?.choiceRemaining||0)} s`;
     roomSuccess.hidden = !(view.solved || room?.nextAvailable);
     nextRoom.disabled = !(view.solved || room?.nextAvailable);
     const moreRooms = room && room.roomIndex + 1 < room.roomCount;
@@ -222,5 +237,5 @@ export function createExpandedAdventureScene({ getState, getRun, language = 'pl'
     setText(nextRoom, moreRooms ? t('Otwórz następny pokój', 'Open the next room') : storyMode ? t('Zakończ przygodę', 'Finish adventure') : t('Zakończ próbę', 'Finish puzzle'));
   }
   update();
-  return { element: root, update, destroy() { disposed = true; miniController?.dispose(); } };
+  return { element: root, update, destroy() { disposed = true; miniController?.dispose();originalController?.dispose(); } };
 }

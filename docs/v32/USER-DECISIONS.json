@@ -1,0 +1,487 @@
+{
+  "source": "HARBORLIGHT_moje_odpowiedzi.txt",
+  "source_sha256": "34116e1e48cb351ce491e148c3ed0219660b26d7902354b6f1070e510a042ab9",
+  "raw_filled_fields": 39,
+  "answers": [
+    {
+      "id": 1,
+      "question": "Jak Targ powinien wymieniać nowe towary?",
+      "choice": "A",
+      "answer": "Według wartości towarów, z prowizją 10%.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 2,
+      "question": "Czy monety mogą mieć części ułamkowe?",
+      "choice": "X",
+      "answer": "tylko całe, w razie co zaokrąglenie w górę",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 3,
+      "question": "Ustawiasz „wydaj 100 warzyw”. Co ma się stać, gdy mieszkańcy zużyją te 100?",
+      "choice": "A",
+      "answer": "To jedna partia. Limit nie odnawia się sam; ustawiam kolejną, kiedy chcę.",
+      "note": "",
+      "status": "confirmed_in_clarifications",
+      "source": "HARBORLIGHT_doprecyzowania_odpowiedzi.txt",
+      "previous_version": {
+        "id": 3,
+        "question": "Co oznacza ustawiona ilość jedzenia do wydania?",
+        "choice": null,
+        "answer": "",
+        "note": "",
+        "status": "unanswered"
+      }
+    },
+    {
+      "id": 4,
+      "question": "Limit 100 warzyw został wykorzystany, ale w Magazynie zostało jeszcze 500. Bez ich wydania mieszkańcy nie dostaną pełnej racji. Czy gra może przekroczyć limit?",
+      "choice": "X",
+      "answer": "jeżeli dostępne jest inne jedzenie to nie wydajesz jeżeli to jest jedyne jedzenie to tak wydajesz",
+      "note": "",
+      "status": "confirmed_in_clarifications",
+      "source": "HARBORLIGHT_doprecyzowania_odpowiedzi.txt",
+      "previous_version": {
+        "id": 4,
+        "question": "Czy awaryjne karmienie może przekroczyć ustawioną ilość jedzenia?",
+        "choice": null,
+        "answer": "",
+        "note": "",
+        "status": "unanswered"
+      },
+      "interpretation_note": "Zachować własną odpowiedź dosłownie. Nie dopisywać szerszej zgody na przekraczanie limitu przy każdym częściowym niedoborze racji."
+    },
+    {
+      "id": 5,
+      "question": "Jak wybieramy produkty do chronionej godzinnej rezerwy jedzenia?",
+      "choice": "B",
+      "answer": "Automatycznie według najtańszego wyżywienia.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 6,
+      "question": "Jak oceniamy dietę nowego mieszkańca i dietę po awansie Ratusza?",
+      "choice": "B",
+      "answer": "Po przybyciu i podniesieniu wymagań dajemy 24 godziny ochrony przed karą za różnorodność.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 7,
+      "question": "Ile ciasta trzeba zjeść, aby otrzymać premię szczęścia?",
+      "choice": "A",
+      "answer": "Porcję odpowiadającą godzinie wyżywienia danej osoby.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 8,
+      "question": "Budowa wymaga 36 punktów sytości. Można zużyć np. 36 zboża, 6 mąki albo 1 chleb — zawsze ponad rezerwę. Czy chcesz decydować, który zestaw zostanie pobrany?",
+      "choice": "A",
+      "answer": "Gra pokazuje proponowany zestaw, a ja mogę go zmienić przed potwierdzeniem.",
+      "note": "",
+      "status": "confirmed_in_clarifications",
+      "source": "HARBORLIGHT_doprecyzowania_odpowiedzi.txt",
+      "previous_version": {
+        "id": 8,
+        "question": "Jak wybieramy jedzenie na wyżywienie budowy?",
+        "choice": null,
+        "answer": "",
+        "note": "nie rozumiem",
+        "status": "unanswered"
+      }
+    },
+    {
+      "id": 9,
+      "question": "Co robimy, gdy mleko kwaśnieje przy pełnym limicie kwaśnego mleka?",
+      "choice": "B",
+      "answer": "Nadmiar powstałego kwaśnego mleka przepada.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 10,
+      "question": "Jaką wartość nadajemy starym zapasom ogólnej „żywności”?",
+      "choice": "X",
+      "answer": "wszystkie zapasy są na nowo liczone, zresetuj wszystkie konta admin1, 2, 3 do stanu zerowego, na admin 3 daj dodatkowo (na potrzeby środowiska dev możliwosć przyspieszania czasu może być ordynarna strzałka gdzieś w rogu)",
+      "note": "",
+      "status": "future_plan_not_authorization"
+    },
+    {
+      "id": 11,
+      "question": "Kiedy odblokowujemy podstawowe ciasto?",
+      "choice": "B",
+      "answer": "Od razu w Piekarni; badania odblokowują dopiero kolejne wypieki.",
+      "note": "odpowiadałem na to w tamtym czacie",
+      "status": "resolved_from_earlier_user_statement",
+      "evidence": "Pasted text.txt:54073; 54155; rozbieżne odkrycie podstawowego ciasta było późniejszą propozycją asystenta, a nie nowym poleceniem użytkownika."
+    },
+    {
+      "id": 12,
+      "question": "Kiedy odblokowujemy szaty profesorskie?",
+      "choice": "A",
+      "answer": "Automatycznie po odblokowaniu Akademii.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 13,
+      "question": "Co robimy z niepełnymi recepturami i badaniami?",
+      "choice": "A",
+      "answer": "Najpierw wdrażamy kompletnie opisane; pozostałe czekają na dopracowanie.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 14,
+      "question": "Czy składniki i gotowe wyroby współdzielą magazyn lokalny producenta?",
+      "choice": "A",
+      "answer": "Tak: osobne limity towarów i jeden wspólny limit budynku.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 15,
+      "question": "Ile miejsc mieszkalnych ma Akademia?",
+      "choice": "A",
+      "answer": "3 + poziom Akademii, dla profesorów; adepci pozostają w Domu.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 16,
+      "question": "Jak działa połowa wydajności profesora poza Akademią?",
+      "choice": "B",
+      "answer": "Połowa bazowej wydajności niewykształconego mieszkańca.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 17,
+      "question": "Maria ukończyła 3 rundy Akademii. Przeprowadza się na wyspę, która prowadzi rundę 5. Jak ma tam kontynuować naukę?",
+      "choice": "A",
+      "answer": "Od razu może nadrabiać rundy 4 i 5. Jej ukończone rundy zostają; poprzednia wyspa usuwa ją ze swojej listy.",
+      "note": "",
+      "status": "confirmed_in_clarifications",
+      "source": "HARBORLIGHT_doprecyzowania_odpowiedzi.txt",
+      "previous_version": {
+        "id": 17,
+        "question": "Jak rozliczamy rundy nauki po przeprowadzce?",
+        "choice": null,
+        "answer": "",
+        "note": "nie rozumiem",
+        "status": "unanswered"
+      }
+    },
+    {
+      "id": 18,
+      "question": "Profesor prowadzi badanie lub kurs i zostaje przymusowo usunięty z wyspy, np. przez dżumę. Co dzieje się z pozostawionym procesem?",
+      "choice": "A",
+      "answer": "Czeka na zastępcę; zachowuje dotychczasowy postęp i wniesioną opłatę.",
+      "note": "",
+      "status": "confirmed_in_clarifications",
+      "source": "HARBORLIGHT_doprecyzowania_odpowiedzi.txt",
+      "previous_version": {
+        "id": 18,
+        "question": "Co dzieje się z kursem lub badaniem po przymusowej utracie prowadzącego?",
+        "choice": null,
+        "answer": "",
+        "note": "nie rozumiem jaka to jest sytuacjia ?",
+        "status": "unanswered"
+      }
+    },
+    {
+      "id": 19,
+      "question": "Czy ręczne przerwanie kursu Akademii zwraca opłatę?",
+      "choice": "A",
+      "answer": "Nie; przepada opłata i postęp bieżącego kursu.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 20,
+      "question": "Twój mechanizm oczekiwania wojska i darmowej rozbudowy Koszar jest zapisany. Został jeden przypadek: Koszary mają wolne łóżka, ale Ratusz ma pełny limit ludności. Czy żołnierze mają czekać także wtedy?",
+      "choice": "A",
+      "answer": "Tak — czekają poza populacją, a na każdy konieczny poziom Ratusza jest 96 godzin. Gdy Koszary mają miejsce, nie trzeba ich dodatkowo rozbudowywać.",
+      "note": "",
+      "status": "confirmed_in_clarifications",
+      "source": "HARBORLIGHT_doprecyzowania_odpowiedzi.txt",
+      "previous_version": {
+        "id": 20,
+        "question": "Jak zapewniamy miejsce w Ratuszu dla wracającego wojska?",
+        "choice": "X",
+        "answer": "wyjaśniałem to obszernie w tamtej konwersacji",
+        "note": "",
+        "status": "reference_to_history"
+      },
+      "interpretation_note": "Obowiązuje treść nowego pytania 20: oczekiwanie poza populacją i 96 godzin na każdy konieczny poziom Ratusza. To NIE jest stare 20A o rezerwacji miejsc na czas wyprawy."
+    },
+    {
+      "id": 21,
+      "question": "Wybrałeś A i dopisałeś „nie rozumiem”. Przykład: wszyscy Twoi profesorowie są w drodze na statku. Czy Królestwo ma już darować kolejnego?",
+      "choice": "A",
+      "answer": "Nie — profesorowie nadal istnieją na koncie, więc sam brak dostępnej osoby nie uruchamia daru.",
+      "note": "",
+      "status": "confirmed_in_clarifications",
+      "source": "HARBORLIGHT_doprecyzowania_odpowiedzi.txt",
+      "previous_version": {
+        "id": 21,
+        "question": "Kiedy uznajemy, że zabrakło specjalistów na koncie?",
+        "choice": "A",
+        "answer": "Gdy nie ma ich również na statkach, wyprawach, odpoczynku ani w oczekiwaniu.",
+        "note": "nie rozumiem",
+        "status": "selected_with_clarification"
+      }
+    },
+    {
+      "id": 22,
+      "question": "Czy ratunkowego profesora można oddać Królestwu za nagrodę?",
+      "choice": "A",
+      "answer": "Nie; ratunkowi profesorowie nie zaliczają zadań wymagających oddania profesora.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 23,
+      "question": "Czy darmowa rozbudowa Koszar przy powrocie może powtarzać się bez ograniczeń?",
+      "choice": "B",
+      "answer": "Przy każdym kwalifikującym powrocie, jak w dotychczasowym projekcie.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 24,
+      "question": "Ratusz mieści 36 osób. Masz 30 mieszkańców i 10 uratowanych ludzi czekających na przyjęcie. Czy możesz zaczynać kolejne akcje ratunkowe?",
+      "choice": "A",
+      "answer": "Nie — już oczekujący wystarczą do zapełnienia obecnego Ratusza. Przyjmuję ich lub zwiększam limit; zdobytych osób nie tracę.",
+      "note": "",
+      "status": "confirmed_in_clarifications",
+      "source": "HARBORLIGHT_doprecyzowania_odpowiedzi.txt",
+      "previous_version": {
+        "id": 24,
+        "question": "Czy oczekujący uratowani ludzie wpływają na dostępność kolejnego ratunku?",
+        "choice": null,
+        "answer": "",
+        "note": "nie rozumiem",
+        "status": "unanswered"
+      }
+    },
+    {
+      "id": 25,
+      "question": "Jak sprawdzamy wykonalność zadań szkoleniowych?",
+      "choice": "B",
+      "answer": "Wystarczy dostępny budynek; zdobycie reszty pozostawiamy graczowi.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 26,
+      "question": "Jak umożliwiamy odejście z sojuszu podczas zadań?",
+      "choice": "B",
+      "answer": "Odejście dopiero gdy sojusz nie ma żadnych aktywnych zobowiązań.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 27,
+      "question": "Zadanie wymaga 100 drewna. Wpłaciłeś już 60, a w Magazynie zostało Ci 10. Czy możesz teraz zaprosić sojusz z progiem „mam najwyżej połowę wymagań”?",
+      "choice": "A",
+      "answer": "Nie — do progu liczymy już wpłacone 60 oraz posiadane 10; razem 70 przekracza połowę.",
+      "note": "",
+      "status": "confirmed_in_clarifications",
+      "source": "HARBORLIGHT_doprecyzowania_odpowiedzi.txt",
+      "previous_version": {
+        "id": 27,
+        "question": "Jak liczymy próg 50% przed zaproszeniem sojuszu?",
+        "choice": null,
+        "answer": "",
+        "note": "nie rozumiem kontekst przykłald poproszę",
+        "status": "unanswered"
+      }
+    },
+    {
+      "id": 28,
+      "question": "Co oznacza przynajmniej jedna prośba Królestwa dziennie?",
+      "choice": "A",
+      "answer": "Jedna w aktywnym dniu kalendarzowym Warszawy, bez zaległych ofert.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 29,
+      "question": "Czy pochodzenie pożyczonych pieniędzy przechodzi na zakupione towary?",
+      "choice": "X",
+      "answer": "nie przechodzi jak kupi, to móże to co kupi np kamien dać w misji królestwu",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 30,
+      "question": "Przyjąłeś, że symboliczna pożyczka spłacona od razu nie usuwa blokady kolejnego umorzenia. Jak wyznaczyć minimalną kwotę i czas takiej „pomijanej” pożyczki?",
+      "choice": "A",
+      "answer": "Dobierz te dwa progi w analizie balansu i przedstaw je przed wdrożeniem; na razie nie zatwierdzam konkretnych liczb.",
+      "note": "",
+      "status": "rule_confirmed_numeric_thresholds_pending_balance_analysis",
+      "source": "HARBORLIGHT_doprecyzowania_odpowiedzi.txt",
+      "previous_version": {
+        "id": 30,
+        "question": "Czy minimalna, natychmiast spłacona pożyczka usuwa blokadę następnego umorzenia?",
+        "choice": "A",
+        "answer": "Nie; pominięcie zalicza dopiero pożyczka spełniająca minimalny próg kwoty i czasu.",
+        "note": "",
+        "status": "selected"
+      },
+      "interpretation_note": "Użytkownik zlecił dobrać progi kwoty i czasu w analizie i przedstawić przed wdrożeniem. Nie zatwierdził konkretnych liczb."
+    },
+    {
+      "id": 31,
+      "question": "Czy windykacja obejmuje towary poza centralnymi Magazynami?",
+      "choice": "B",
+      "answer": "Tylko centralne Magazyny, jak ustalono wcześniej.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 32,
+      "question": "Czy błogosławieństwo Latarni usuwa finansową karę szczęścia, czy ją odracza?",
+      "choice": "A",
+      "answer": "Odracza karę do wygaśnięcia ochrony; kara nie przepada.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 33,
+      "question": "Czy ograniczamy liczbę sfinansowanych pożyczek dla Królestwa oczekujących na zwrot?",
+      "choice": "A",
+      "answer": "Maksymalnie trzy oczekujące pożyczki na konto.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 34,
+      "question": "Czy widz Teatru produkuje podczas przedstawienia?",
+      "choice": "B",
+      "answer": "Przedstawienie nie zmniejsza produkcji.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 35,
+      "question": "Czy teatralny wybór „wszyscy” obejmuje osoby zajęte badaniami i szkoleniem?",
+      "choice": "B",
+      "answer": "Tak; uczestniczą bez zatrzymywania swoich procesów.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 36,
+      "question": "Jak rozliczamy zmienioną widownię między planowaniem a początkiem przedstawienia?",
+      "choice": "B",
+      "answer": "Lista i pełny koszt są zamrożone przy planowaniu.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 37,
+      "question": "Kiedy tutorial zatrzymuje czas?",
+      "choice": "A",
+      "answer": "Tylko pierwsze wprowadzenie zatrzymuje lokalną wyspę; późniejsze oprowadzanie nie zatrzymuje czasu.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 38,
+      "question": "Co dzieje się z zegarem minigry podczas wybranej reklamy lub płatności za czas?",
+      "choice": "A",
+      "answer": "Czeka na zakończenie operacji; bez wyboru rusza po 5 sekundach.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 39,
+      "question": "Czy propozycja dokupienia czasu wraca przy kolejnym zejściu do 30 sekund?",
+      "choice": "A",
+      "answer": "Tak, raz przy każdym nowym przekroczeniu progu 30 sekund.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 40,
+      "question": "Co zachowujemy po wyjściu z nieukończonej planszy?",
+      "choice": "B",
+      "answer": "Wyjście kończy bieżącą próbę jako przegraną; zostają wcześniejsze etapy i przedmioty.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 41,
+      "question": "Jak ograniczamy gromadzenie wielu przygód z zamrożoną łatwą trudnością?",
+      "choice": "A",
+      "answer": "Trudność ustalamy na początku etapu; jedna aktywna próba danej odmiany naraz.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 42,
+      "question": "Jak łatwiejsza wersja po trzech porażkach zmienia nagrodę?",
+      "choice": "A",
+      "answer": "Obniżamy nagrodę pozostałego etapu i odpowiednio finałową; wcześniejsze wypłaty zostają.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 43,
+      "question": "Za jaki czas płacimy przy natychmiastowym ukończeniu badania?",
+      "choice": "A",
+      "answer": "Za pozostałe minuty oczekiwania przy obecnej obsadzie.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 44,
+      "question": "Jak ustalamy tempo nowych procesów spożywczych?",
+      "choice": "A",
+      "answer": "Osobno dla receptur, zachowując ustalone składniki, sytość i ceny.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 45,
+      "question": "Jak traktujemy bardzo szybkie badania na późniejszych wyspach?",
+      "choice": "A",
+      "answer": "Zachowujemy mnożniki; równoważymy koszty, transport i magazyny przez symulację.",
+      "note": "",
+      "status": "selected"
+    },
+    {
+      "id": 46,
+      "question": "Jak przenosimy już opłacone budowy i rozpoczęte procesy na nowe zasady?",
+      "choice": "X",
+      "answer": "wyzej już napisałem graczy na pre prod jest 3 na potrzeby testów zresetuj grę wszystkich 3 kont",
+      "note": "",
+      "status": "future_plan_not_authorization"
+    },
+    {
+      "id": 47,
+      "question": "Co robimy ze starymi materiałami bonusowymi ponad pojemnością?",
+      "choice": "A",
+      "answer": "Stare bonusy pozostają dostępne; nowe niemieszczące się nagrody czekają na odbiór.",
+      "note": "",
+      "status": "selected",
+      "scope_note": "Zachowanie starych bonusów nie dotyczy postępu kont, które zostaną w przyszłości zresetowane."
+    }
+  ],
+  "future_plan": [
+    "Reset postępu admin1, admin2, admin3; bez usuwania kont i danych logowania. Nie wykonywać teraz.",
+    "Przyspieszanie czasu dla admin3 wyłącznie w DEV; nie implementować teraz."
+  ],
+  "prohibition": "Użytkownik zakazał developmentu i wdrożeń. Załącznik jest materiałem do ustalenia zasad; nie uruchamia żadnej operacji.",
+  "clarifications_source": "HARBORLIGHT_doprecyzowania_odpowiedzi.txt",
+  "clarifications_sha256": "504e23b37c426f13077ee2179ae97ad5d5a1e576e0c0e90a0c2bea481ed33943",
+  "state": "Wszystkie pozycje formularzy mają odpowiedź lub wcześniejsze źródło. Parametry liczbowe pkt30 do opracowania. Bez zgody na development lub operacje na kontach.",
+  "form_filled_items": 47
+}

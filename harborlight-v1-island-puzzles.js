@@ -1,8 +1,9 @@
 // Deterministic, saved island puzzles. Player commands describe moves only.
 // Generators start from a valid construction; completion is recomputed from the
 // board. Free hints, reset and bounded undo never require money or an ad.
-import { createMiniGame, revealMiniGameCard, setMiniGameTilt, advanceMiniGame, normalizeMiniGame } from './harborlight-v1-minigames.js?v=frontend-v31-2';
-import { ISLAND_PUZZLE_CATALOG, puzzleById } from './harborlight-v1-story-catalog.js?v=frontend-v31-2';
+import { createOriginalAttempt, applyOriginalInput, availableConvoyIds } from './harborlight-v1-original-puzzles.js?v=frontend-v32-2';
+import { createMiniGame, revealMiniGameCard, setMiniGameTilt, advanceMiniGame, normalizeMiniGame } from './harborlight-v1-minigames.js?v=frontend-v32-2';
+import { ISLAND_PUZZLE_CATALOG, puzzleById } from './harborlight-v1-story-catalog.js?v=frontend-v32-2';
 const clone=x=>JSON.parse(JSON.stringify(x));
 const int=(n,a=0,b=Number.MAX_SAFE_INTEGER)=>Number.isSafeInteger(n)&&n>=a&&n<=b;
 const text=(language,pl,en)=>language==='en'?en:pl;
@@ -171,38 +172,49 @@ engine.balance={
  solution:d=>d.weights.map((w,i)=>({type:'place',id:w.id,target:String(i<2?0:1)}))
 };
 engine.memoryTriples={
- make(r,p){return{miniGame:createMiniGame('triples',1+rint(r,3),(p.seed^Math.imul(p.variant,0x9e3779b9))>>>0,p.clock)};},
+ make(r,p){return{miniGame:createMiniGame('triples',p.difficulty||1+rint(r,3),(p.seed^Math.imul(p.variant,0x9e3779b9))>>>0,p.clock)};},
  move(d,m,p){return m.type==='reveal'&&revealMiniGameCard(d.miniGame,m.index,p.clock);},solved:d=>d.miniGame.solved,
  advance(d,seconds,from){advanceMiniGame(d.miniGame,seconds,from);},
  view(d,l){return{clues:[text(l,'Odzyskuj fragmenty dokumentu, znajdując trójki. Ta plansza nie pobiera ani nie wypłaca monet osobnej ekspedycji.','Recover document fragments by matching triples. This board does not charge or award a separate expedition pot.')],miniGame:d.miniGame,progress:{current:d.miniGame.matched.filter(Boolean).length,total:d.miniGame.cards.length}};},
  solution:d=>[...new Set(d.miniGame.cards)].flatMap(symbol=>d.miniGame.cards.flatMap((v,index)=>v===symbol&&!d.miniGame.matched[index]?[{type:'reveal',index}]:[]))
 };
 engine.marbleMaze={
- make(r,p){return{miniGame:createMiniGame('tilt',1,(p.seed^Math.imul(p.variant,0x9e3779b9))>>>0,p.clock)};},
+ make(r,p){return{miniGame:createMiniGame('tilt',p.difficulty||1,(p.seed^Math.imul(p.variant,0x9e3779b9))>>>0,p.clock)};},
  move(d,m){return m.type==='tilt'&&setMiniGameTilt(d.miniGame,m.tiltX,m.tiltY);},solved:d=>d.miniGame.solved,
  advance(d,seconds,from){advanceMiniGame(d.miniGame,seconds,from);},
- view(d,l){return{clues:[text(l,'Przechylaj planszę i doprowadź kulę do celu. Zatrzymanie i wznowienie nie gubią postępu; tutaj nie ma limitu czasu.','Tilt the board and guide the marble to the goal. Pause and resume preserve progress; this story board has no deadline.')],miniGame:d.miniGame,progress:{current:d.miniGame.balls.filter(b=>b.settled).length,total:d.miniGame.balls.length}};},
+ view(d,l){return{clues:[text(l,'Przechylaj planszę i doprowadź kulę do celu. Każdy etap ma własny czas; wyjście kończy bieżącą próbę.','Tilt the board and guide the marble to the goal. Every stage has its own timer; leaving ends the current attempt.')],miniGame:d.miniGame,progress:{current:d.miniGame.balls.filter(b=>b.settled).length,total:d.miniGame.balls.length}};},
  solution:()=>[]
 };
+for(const variant of ['signal-line','harbor-routes'])engine[variant]={
+ make(r,p){return{attempt:createOriginalAttempt(variant,{seed:(p.seed^Math.imul(p.variant,0x9e3779b9))>>>0,difficulty:p.difficulty||1,now:p.clock*1000})};},
+ move(d,m){const input=m.type==='node'?{kind:'node',node:m.id}:m.type==='convoy'?{kind:'convoy',id:m.id}:['clear','lift'].includes(m.type)?{kind:m.type}:null;if(!input)return false;const result=applyOriginalInput(d.attempt,input);return result.ok||result.code==='stroke-lifted';},
+ solved:d=>d.attempt.status==='won',
+ view(d,l){const a=d.attempt;return{originalAttempt:a,clues:[text(l,'Każdy przewód i konwój należy do tego etapu. Nagrodę odbierasz po ukończeniu przygody.','Every wire and convoy belongs to this stage. Claim the reward when the adventure is complete.')],progress:{current:variant==='signal-line'?a.usedEdges.length:a.board.removed.length,total:variant==='signal-line'?a.board.edges.length:a.board.paths.length}};},
+ solution(d){const a=d.attempt;if(variant==='harbor-routes'){const board=clone(a.board),moves=[];while(board.removed.length<board.paths.length){const id=availableConvoyIds(board)[0];if(!id)return[];moves.push({type:'convoy',id});board.removed.push(id);}return moves;}
+  const used=new Set(a.usedEdges),adj=new Map(a.board.nodes.map(n=>[n.id,[]]));for(const e of a.board.edges)if(!used.has(e.id)){adj.get(e.a).push([e.b,e.id]);adj.get(e.b).push([e.a,e.id]);}const start=a.trail.at(-1)||a.board.starts[0],stack=[start],out=[],visited=new Set();while(stack.length){const list=adj.get(stack.at(-1));while(list.length&&visited.has(list.at(-1)[1]))list.pop();if(list.length){const[next,id]=list.pop();visited.add(id);stack.push(next);}else out.push(stack.pop());}if(visited.size!==a.board.edges.length-used.size)return[{type:'clear'}];return out.reverse().slice(a.trail.length?1:0).map(id=>({type:'node',id}));}
+};
 export const ISLAND_PUZZLE_KINDS=Object.freeze(Object.keys(engine));
-export function createIslandPuzzle(kind,{seed=1,variant=1,level=1,clock=0}={}){
+export function createIslandPuzzle(kind,{seed=1,variant=1,level=1,difficulty,clock=0}={}){
  if(!engine[kind])throw new TypeError('Unknown island puzzle.');
- const p={version:1,kind,seed:int(seed,0,4294967295)?seed:1,variant:int(variant,1,5)?variant:1,level:int(level,1,100)?level:1,clock:Number.isFinite(clock)&&clock>=0?clock:0,startedClock:Number.isFinite(clock)&&clock>=0?clock:0,moves:0,solved:false,hints:0,log:[]};Object.defineProperty(p,'history',{value:[],writable:true,enumerable:false,configurable:true});
+ const p={version:1,kind,seed:int(seed,0,4294967295)?seed:1,variant:int(variant,1,5)?variant:1,level:int(level,1,1000000)?level:1,clock:Number.isFinite(clock)&&clock>=0?clock:0,startedClock:Number.isFinite(clock)&&clock>=0?clock:0,moves:0,solved:false,hints:0,log:[]};Object.defineProperty(p,'history',{value:[],writable:true,enumerable:false,configurable:true});
+ if(int(difficulty,1,1000000))p.difficulty=difficulty;
  p.data=engine[kind].make(rng((p.seed^Math.imul(p.variant,0x9e3779b9))>>>0),p);
  // A new board must contain an actual move, never a reward-only solved button.
  p.solved=engine[kind].solved(p.data);if(p.solved&&kind==='paperFold'){p.data.target[0]=1-p.data.target[0];p.solved=false;}if(p.solved&&kind==='gears'){p.data.targetReverse=1-p.data.targetReverse;p.solved=false;}return p;
 }
 function snapshot(p){return{data:clone(p.data),solved:p.solved,moves:p.moves,clock:p.clock};}
-const MOVE_TYPES=Object.freeze(['select','place','rotate','remove','choose','inspect','navigate','submit','clear','reveal','tilt','hint','undo','tick']);
+const MOVE_TYPES=Object.freeze(['select','place','rotate','remove','choose','inspect','navigate','submit','clear','reveal','tilt','hint','undo','tick','node','convoy','lift']);
 const MOVE_FIELDS=Object.freeze(['id','target','index','value','from','to','tiltX','tiltY','seconds']);
 function encodeMove(move){const row=[MOVE_TYPES.indexOf(move.type)];for(let i=0;i<MOVE_FIELDS.length;i++)if(move[MOVE_FIELDS[i]]!==undefined)row.push(i,move[MOVE_FIELDS[i]]);return row;}
 function decodeMove(row){if(!Array.isArray(row))return row;if(!int(row[0],0,MOVE_TYPES.length-1)||row.length>19||row.length%2!==1)return null;const move={type:MOVE_TYPES[row[0]]};for(let i=1;i<row.length;i+=2){if(!int(row[i],0,MOVE_FIELDS.length-1))return null;move[MOVE_FIELDS[row[i]]]=row[i+1];}return move;}
 function checkpointActions(p){
- const d=p.data,b=createIslandPuzzle(p.kind,{seed:p.seed,variant:p.variant,level:p.level,clock:p.startedClock}),initial=b.data,a=[];
+ const d=p.data,b=createIslandPuzzle(p.kind,{seed:p.seed,variant:p.variant,level:p.level,difficulty:p.difficulty,clock:p.startedClock}),initial=b.data,a=[];
  const choose=(index,value)=>a.push({type:'choose',index,...(value===undefined?{}:{value})});
  const place=(id,target)=>a.push({type:'place',id,target:String(target)});
  const rotate=(index,id)=>a.push({type:'rotate',...(index===undefined?{}:{index}),...(id===undefined?{}:{id})});
  switch(p.kind){
+ case'signal-line':for(const id of d.attempt.trail)a.push({type:'node',id});break;
+ case'harbor-routes':for(const id of d.attempt.board.removed)a.push({type:'convoy',id});break;
  case'gull':if(d.bait!==null)choose(d.bait);if(d.key)a.push({type:'inspect',id:'key'});break;
  case'hiddenObjects':for(const index of d.inspected)a.push({type:'inspect',index});if(d.found)choose(d.target);break;
  case'parrot':for(const word of d.entered)choose(names.indexOf(word));break;
@@ -234,23 +246,23 @@ function restoreCheckpoint(p,saved,withUndo=true){
  p.clock=saved.clock;
  for(const raw of saved.actions){const move=cleanPuzzleMove(decodeMove(raw));if(!move||!engine[p.kind].move(p.data,move,p))return false;}
  if(p.kind==='memoryTriples'&&p.data.miniGame.hideAt!==null){if(saved.hideRemaining===null)p.data.miniGame.hideAt=null;else if(Number.isFinite(saved.hideRemaining)&&saved.hideRemaining>=0&&saved.hideRemaining<=.8)p.data.miniGame.hideAt=p.clock+saved.hideRemaining;else return false;}
- p.solved=engine[p.kind].solved(p.data);p.moves=int(saved.moves)?saved.moves:saved.actions.length;p.hints=int(saved.hints,0,3)?saved.hints:0;p.history.length=0;if(withUndo&&Array.isArray(saved.undo)){for(const entry of saved.undo.slice(-4)){const previous=createIslandPuzzle(p.kind,{seed:p.seed,variant:p.variant,level:p.level,clock:p.startedClock});if(!restoreCheckpoint(previous,entry,false))return false;p.history.push(snapshot(previous));}}return true;
+ p.solved=engine[p.kind].solved(p.data);p.moves=int(saved.moves)?saved.moves:saved.actions.length;p.hints=int(saved.hints,0,3)?saved.hints:0;p.history.length=0;if(withUndo&&Array.isArray(saved.undo)){for(const entry of saved.undo.slice(-4)){const previous=createIslandPuzzle(p.kind,{seed:p.seed,variant:p.variant,level:p.level,difficulty:p.difficulty,clock:p.startedClock});if(!restoreCheckpoint(previous,entry,false))return false;p.history.push(snapshot(previous));}}return true;
 }
 function replaySavedMove(p,raw){const entry=decodeMove(raw);if(!entry)return false;if(entry.type==='tick'&&Number.isFinite(entry.seconds)&&entry.seconds>=0&&entry.seconds<=2678400){advanceIslandPuzzle(p,entry.seconds);return true;}const cleaned=cleanPuzzleMove(entry);return!!cleaned&&applyIslandPuzzle(p,cleaned,{replay:true}).ok;}
 function compactPuzzleLog(p){
  if(p.kind==='marbleMaze'||p.log.length<64)return;
- const take=p.log.length-32,base=createIslandPuzzle(p.kind,{seed:p.seed,variant:p.variant,level:p.level,clock:p.startedClock});
+ const take=p.log.length-32,base=createIslandPuzzle(p.kind,{seed:p.seed,variant:p.variant,level:p.level,difficulty:p.difficulty,clock:p.startedClock});
  if(p.checkpoint&&!restoreCheckpoint(base,p.checkpoint))throw new Error('Invalid internal puzzle checkpoint.');
  for(const entry of p.log.slice(0,take))if(!replaySavedMove(base,entry))throw new Error('Invalid internal puzzle move history.');
  p.checkpoint=checkpointFor(base);p.log=p.log.slice(take);
 }
 export function islandPuzzleProof(p){
  if(!p||!engine[p.kind]||!engine[p.kind].solved(p.data))return null;
- return{version:1,kind:p.kind,seed:p.seed,variant:p.variant,level:p.level,startedClock:p.startedClock,clock:p.clock,moves:p.moves,hints:p.hints,log:[],...(p.kind==='marbleMaze'?{data:{miniGame:clone(p.data.miniGame)}}:{checkpoint:checkpointFor(p,false)})};
+ return{version:1,kind:p.kind,seed:p.seed,variant:p.variant,level:p.level,...(p.difficulty?{difficulty:p.difficulty}:{}),startedClock:p.startedClock,clock:p.clock,moves:p.moves,hints:p.hints,log:[],...(p.kind==='marbleMaze'?{data:{miniGame:clone(p.data.miniGame)}}:{checkpoint:checkpointFor(p,false)})};
 }
 
 function cleanPuzzleMove(raw){
- if(!raw||!['select','place','rotate','remove','choose','inspect','navigate','submit','clear','reveal','tilt','hint','undo'].includes(raw.type))return null;
+ if(!raw||!['select','place','rotate','remove','choose','inspect','navigate','submit','clear','reveal','tilt','hint','undo','node','convoy','lift'].includes(raw.type))return null;
  const move={type:raw.type};for(const key of ['id','target'])if(raw[key]!==undefined){if(typeof raw[key]!=='string'||raw[key].length>80)return null;move[key]=raw[key];}
  for(const key of ['index','value','from','to','tiltX','tiltY'])if(raw[key]!==undefined){if(!Number.isFinite(raw[key])||Math.abs(raw[key])>1000000)return null;move[key]=raw[key];}return move;
 }
@@ -277,12 +289,12 @@ export function advanceIslandPuzzle(p,seconds){
 }
 export function normalizeIslandPuzzle(raw){
  if(!raw||raw.version!==1||!engine[raw.kind]||!int(raw.seed,0,4294967295))return null;
- const p=createIslandPuzzle(raw.kind,{seed:raw.seed,variant:raw.variant,level:raw.level,clock:Number.isFinite(raw.startedClock)&&raw.startedClock>=0?raw.startedClock:0});
+ const p=createIslandPuzzle(raw.kind,{seed:raw.seed,variant:raw.variant,level:raw.level,difficulty:raw.difficulty,clock:Number.isFinite(raw.startedClock)&&raw.startedClock>=0?raw.startedClock:0});
  if(raw.kind==='marbleMaze'){
   const saved=raw.data?.miniGame,base=p.data.miniGame;
   if(saved&&Array.isArray(saved.balls)&&saved.balls.length===base.balls.length){
    const balls=saved.balls.map((b,i)=>{const goal=base.goals[b.goalId];const settled=b.settled===true&&goal&&Number.isFinite(b.x)&&Number.isFinite(b.y)&&Math.hypot(b.x-goal.x,b.y-goal.y)<.01;return{...b,id:i,settled:!!settled,goalId:settled?b.goalId:null};});
-   p.data.miniGame=normalizeMiniGame({...base,balls,tiltX:saved.tiltX,tiltY:saved.tiltY,physicsRemainder:saved.physicsRemainder},1,p.clock);
+   p.data.miniGame=normalizeMiniGame({...base,balls,tiltX:saved.tiltX,tiltY:saved.tiltY,physicsRemainder:saved.physicsRemainder},p.difficulty||1,p.clock);
   }
   p.clock=Number.isFinite(raw.clock)&&raw.clock>=p.clock?raw.clock:p.clock;p.moves=int(raw.moves)?raw.moves:0;p.hints=Math.min(3,Math.max(0,Number(raw.hints)||0));p.solved=engine.marbleMaze.solved(p.data);return p;
  }
@@ -303,23 +315,21 @@ export function recordIslandPuzzleTick(p,seconds){
  if(p?.kind==='memoryTriples'&&seconds>0){const prev=decodeMove(p.log.at(-1));if(prev?.type==='tick'&&prev.seconds+seconds<=2678400)p.log[p.log.length-1]=encodeMove({...prev,seconds:prev.seconds+seconds});else record(p,{type:'tick',seconds});}
  return done;
 }
-export function resetIslandPuzzle(p){return createIslandPuzzle(p.kind,{seed:p.seed,variant:p.variant,level:p.level,clock:p.clock});}
+export function resetIslandPuzzle(p){return createIslandPuzzle(p.kind,{seed:p.seed,variant:p.variant,level:p.level,difficulty:p.difficulty,clock:p.clock});}
 export function islandPuzzleSolution(p){return clone(p&&engine[p.kind]?.solution(p.data,p)||[]);}
 export function getIslandPuzzleView(p,language='pl'){
  if(!p||!engine[p.kind])return null;const spec=puzzleById(p.kind),view=engine[p.kind].view(p.data,language);
  const solution=islandPuzzleSolution(p),next=solution[0];
  let hint='';if(p.hints){hint=spec?.description?.[language]||spec?.description?.pl||'';if(p.hints>=2)hint+=text(language,' Sprawdź kolejno oznaczenia i dostępne cele.',' Compare the markings and available targets.');if(p.hints>=3&&next){const candidates=[...(view.controls||[]),...(view.items||[]),...(view.targets||[]),...(view.grid?.cells||[])],match=candidates.find(x=>x.move&&Object.entries(x.move).every(([key,value])=>next[key]===value)),item=next.id?view.items?.find(x=>x.id===next.id):null;hint+=text(language,' Następny pomocny ruch: ',' A helpful next move: ')+(match?(item?`${item.label} → ${match.label}`:match.label):text(language,'porównaj oznaczenia z podanym celem; możesz bezpłatnie cofnąć ruch.','compare the markings with the stated goal; you can undo a move for free.'));}}
- return{kind:p.kind,title:spec?.title?.[language]||spec?.title?.pl||p.kind,instruction:spec?.description?.[language]||spec?.description?.pl||'',clues:[],items:[],targets:[],controls:[],objects:[],connections:[],rays:[],...view,selected:p.data.selected||null,solved:p.solved,canUndo:(p.history?.length||0)>0,moves:p.moves,hintsUsed:p.hints,hint,seed:p.seed,variant:p.variant,level:p.level,clock:p.clock};
+ return{kind:p.kind,title:spec?.title?.[language]||spec?.title?.pl||p.kind,instruction:spec?.description?.[language]||spec?.description?.pl||'',clues:[],items:[],targets:[],controls:[],objects:[],connections:[],rays:[],...view,selected:p.data.selected||null,solved:p.solved,canUndo:(p.history?.length||0)>0,moves:p.moves,hintsUsed:p.hints,hint,seed:p.seed,variant:p.variant,level:p.level,difficulty:p.difficulty,clock:p.clock};
 }
 export function validateIslandPuzzle(p){
  if(!p||!engine[p.kind])return false;
  if(p.kind==='marbleMaze'){
-  const g=p.data.miniGame;if(g.kind!=='tilt'||g.balls.length!==1||g.goals.length!==1)return false;
-  const xy=i=>({x:24+(i%3+.5)*184,y:24+(Math.floor(i/3)+.5)*184}),q=[0],seen=new Set([0]);
-  for(const i of q)for(const j of[i-3,i+3,i-1,i+1]){if(j<0||j>8||seen.has(j)||Math.abs(Math.floor(i/3)-Math.floor(j/3))+Math.abs(i%3-j%3)!==1)continue;const a=xy(i),b=xy(j),x=(a.x+b.x)/2,y=(a.y+b.y)/2;if(!g.walls.some(w=>x>=w.x&&x<=w.x+w.width&&y>=w.y&&y<=w.y+w.height)){seen.add(j);q.push(j);}}
-  const goal=g.goals[0],cell=Math.floor((goal.y-24)/184)*3+Math.floor((goal.x-24)/184);return seen.size===9&&seen.has(cell);
+  const g=p.data.miniGame,base=createMiniGame('tilt',p.difficulty||1,(p.seed^Math.imul(p.variant,0x9e3779b9))>>>0,p.startedClock);
+  return g.kind==='tilt'&&g.balls.length===base.balls.length&&g.goals.length===base.goals.length&&JSON.stringify(g.walls)===JSON.stringify(base.walls)&&JSON.stringify(g.goals.map(q=>[q.x,q.y]))===JSON.stringify(base.goals.map(q=>[q.x,q.y]));
  }
- const copy=createIslandPuzzle(p.kind,{seed:p.seed,variant:p.variant,level:p.level,clock:p.clock});
+ const copy=createIslandPuzzle(p.kind,{seed:p.seed,variant:p.variant,level:p.level,difficulty:p.difficulty,clock:p.clock});
  for(const move of islandPuzzleSolution(copy)){if(copy.solved)break;if(!applyIslandPuzzle(copy,move).ok)return false;}
  return copy.solved;
 }

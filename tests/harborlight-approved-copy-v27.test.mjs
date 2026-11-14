@@ -5,18 +5,19 @@ import { TUTORIAL_LESSONS, V4_TUTORIAL_LESSONS } from '../harborlight-v1-progres
 import { buildingPurpose, gameGoal, residentsPurpose } from '../harborlight-v1-copy.js';
 import { translate } from '../harborlight-v1-i18n.js';
 
-test('approved 34-step route preserves HUD order and places Chat before the bell', () => {
-  assert.equal(APPROVED_TOUR_IDS.length, 34);
-  assert.equal(new Set(APPROVED_TOUR_IDS).size, 34);
-  assert.deepEqual(APPROVED_TOUR_IDS.slice(0, 8), ['home','level','happiness','coins','working','arrival','points','population']);
-  assert.deepEqual(APPROVED_TOUR_IDS.slice(-5), ['tutorial','chat','notifications','settings','menu']);
+test('approved 48-step route covers the current island systems with stable IDs', () => {
+  assert.equal(APPROVED_TOUR_IDS.length, 48);
+  assert.equal(new Set(APPROVED_TOUR_IDS).size, 48);
+  assert.deepEqual(APPROVED_TOUR_IDS.slice(0, 8), ['home','level','happiness','coins','working','building-house','food','clothing']);
+  assert.deepEqual(APPROVED_TOUR_IDS.slice(-5), ['league','charity','category-paths','tutorial','settings']);
+  for(const id of ['building-bakery','building-dairy','building-slaughterhouse','building-fisher','building-leatherworks','building-academy','building-barracks','kingdom','research','minigame-rules'])assert.ok(APPROVED_TOUR_IDS.includes(id));
   for (const id of APPROVED_TOUR_IDS) for (const language of ['pl','en']) {
     const copy = getTourCopy(id, language, { cloudAccount:true, firstIntroduction:true });
     assert.ok(copy.title && copy.text, `${id}/${language}`);
     assert.doesNotMatch(copy.text, /\[(?:uwaga|czy możesz)/i);
   }
-  assert.equal(getTourCopy('tutorial', 'pl').title, 'Pomoc');
-  assert.equal(getTourCopy('chat', 'pl').text, 'Tu możesz rozmawiać online z innymi graczami — prywatnie lub na czacie swojego sojuszu.');
+  assert.equal(getTourCopy('tutorial', 'pl').title, 'Tutorial i samouczek');
+  assert.match(getTourCopy('chat', 'pl').text,/Sojusz może liczyć do pięciu osób/);
 });
 
 test('the resource explanation uses fresh real values and never presents the old invented example', () => {
@@ -54,8 +55,8 @@ test('new lesson presentation updates all 25 native descriptions without changin
 test('housing copy distinguishes Town Hall population, House points and personal work/meal consequences', () => {
   for (const language of ['pl','en']) {
     const text = getTourCopy('building-house',language).text;
-    assert.match(text,language==='pl'?/Ratusz.*maksymalną liczbę.*Dom.*miejsc/:/Town Hall.*population limit.*House.*housing/);
-    assert.match(text,language==='pl'?/dwa razy wolniej.*dwa razy więcej/:/half speed.*twice as much/);
+    assert.match(text,language==='pl'?/Każdy poziom daje 36 miejsc/:/Town Hall.*population limit.*House.*housing/);
+    assert.match(text,language==='pl'?/połową wydajności.*dwa razy więcej/:/half speed.*twice as much/);
   }
   assert.match(residentsPurpose('pl'),/Brak łóżek nie obniża szczęścia całej wyspy/);
   assert.match(translate('Only residents with a bed can receive House happiness points.','pl'),/tylko mieszkańcy mający/);

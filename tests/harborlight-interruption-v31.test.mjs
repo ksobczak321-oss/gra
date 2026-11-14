@@ -13,7 +13,7 @@ const definition = { id: 'islands', map: ['S.G'], tools: {} };
 const context = { expeditions: [definition] };
 
 function island(kind = 'tilt') {
-  const state = {
+  const state = {ruleset:32,
     islandId: 'island-1', islandGeneration: 1, welcome: { startedAt: NOW, until: NOW + 259200000 },
     worldTimeMs: NOW, lastSimulatedAt: NOW, activityClock: 0,
     resources: { coins: 100, wood: 100, stone: 100, grain: 100, food: 100, planks: 100 },
@@ -97,7 +97,7 @@ test('a persisted per-world receipt prevents double compensation after serializa
 test('ordinary absence has no interruption protection and still expires an unanswered expedition', () => {
   const state = island(), run = state.expeditionRuns.islands;
   const resources = clone(state.resources);
-  advanceActivities(state, run.roundLimit + 1);
+  advanceActivities(state, run.roundLimit + 6);
   assert.equal(run.status, 'lost'); assert.equal(run.lossReason, 'deadline');
   assert.deepEqual(state.resources, resources);
   assert.equal(state.knownInterruptions, undefined);
@@ -137,11 +137,11 @@ test('pending pause timestamps and extended ordinary tasks survive normalization
   normalizeActivities(restored, raw); normalizeInterruptions(restored, raw);
   const restoredRun = restored.expeditionRuns.islands;
   assert.equal(restoredRun.knownPauseRemaining, 60); assert.equal(restoredRun.roundStartedAt, 60);
-  assert.equal(restoredRun.presencePromptAt, 60); assert.equal(restored.lastMeaningfulActivityAt, 60);
+  assert.equal(restoredRun.status,'lost');assert.equal(restoredRun.lossReason,'abandoned');assert.equal(restoredRun.presencePromptAt,null);assert.equal(restored.lastMeaningfulActivityAt,60);
   assert.equal(restored.activeTaskId, state.activeTaskId);
   assert.equal(restored.lighthouseTasks[0].expiresAt, previousExpiry + 60);
   advanceActivities(restored, 60);
-  assert.equal(restoredRun.status, 'active'); assert.equal(restoredRun.presencePromptAt, 60);
+  assert.equal(restoredRun.status,'lost');assert.equal(restoredRun.presencePromptAt,null);
   assert.equal(restored.knownInterruptions.receipts.length, 1);
 });
 

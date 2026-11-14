@@ -1,9 +1,9 @@
 // PRE-PROD preserves its test accounts. PROD uses Firebase email and OAuth accounts.
 // Passwords are sent only by the Firebase client and never saved in browser storage.
-import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v31-2';
-import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v31-2';
-import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v31-2';
-import { signInWithProvider } from './harborlight-auth-providers.js?v=frontend-v31-2';
+import { registerTranslations, translate, translateDOM } from './harborlight-v1-i18n.js?v=frontend-v32-2';
+import { gameHref, authProfileSearch, validateIslandName, saveIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-2';
+import { createDevCloud, DEV_USERS } from './harborlight-dev-cloud.js?v=frontend-v32-2';
+import { signInWithProvider } from './harborlight-auth-providers.js?v=frontend-v32-2';
 import { legalAcceptance, validLegalAcceptance } from './harborlight-legal.js?v=legal-v5';
 
 registerTranslations({
@@ -150,7 +150,7 @@ registerTranslations({
   const preferenceKey = 'harborlight-language';
   const profileSearch = authProfileSearch(location.search);
   const devCloud = createDevCloud();
-  const hostedMode = devCloud.enabled, devMode = devCloud.preprod;
+  const hostedMode = devCloud.enabled, devMode = devCloud.preprod || devCloud.local === true;
   document.documentElement.dataset.environment = devCloud.environment;
   let language = hostedMode ? 'pl' : 'en';
   try { const saved = localStorage.getItem(preferenceKey); if (['pl', 'en'].includes(saved)) language = saved; } catch { /* Keep the form usable without storage. */ }
@@ -196,6 +196,21 @@ registerTranslations({
       ? 'Sign in to your island. Your progress is saved in the cloud.'
       : 'Welcome to HARBORLIGHT. Sign in, create an account, or continue exploring your island as a guest.', language);
     translateDOM(document, language);
+    if (devCloud.local === true) {
+      const pl = language === 'pl';
+      document.title = 'HARBORLIGHT — lokalny DEV';
+      document.querySelector('.brand').setAttribute('aria-label', 'HARBORLIGHT — lokalny DEV');
+      document.querySelector('.account-eyebrow').textContent = 'LOKALNY DEV · 3 KONTA TESTOWE';
+      document.getElementById('auth-title').textContent = pl ? 'Zaloguj się do DEV' : 'Sign in to local DEV';
+      document.getElementById('auth-intro').textContent = pl ? 'Wybierz admin1, admin2 lub admin3. Każde konto ma osobną wyspę w tym serwerze DEV.' : 'Use admin1, admin2 or admin3. Each account has a separate island in this DEV server.';
+      for (const node of document.querySelectorAll('.social-options,.divider')) node.hidden = true;
+      document.getElementById('social-availability').textContent = pl ? 'To osobne konta lokalne. Dane Firebase i PRE-PROD pozostają bez zmian.' : 'These are separate local accounts. Firebase and PRE-PROD data are unchanged.';
+      document.querySelector('label[for="email"]').textContent = 'Login';
+      email.placeholder = 'admin1, admin2, admin3';
+      const hint = document.getElementById('password-hint');
+      hint.hidden = false;
+      hint.textContent = pl ? 'Hasło tylko do lokalnego DEV: harborlight-local-dev' : 'Local DEV password: harborlight-local-dev';
+    }
   }
 
   function announce(message, kind = 'info') {
@@ -387,7 +402,7 @@ registerTranslations({
     if (mode === 'register' && !hostedMode && name.value.trim().length < 2) fail(name, 'Enter a name with at least 2 characters.');
     const chosenIslandName = mode === 'register' && !hostedMode ? validateIslandName(islandName.value) : null;
     if (chosenIslandName && !chosenIslandName.ok) fail(islandName, chosenIslandName.message);
-    if (devMode && !DEV_USERS.some(user => user.login === email.value)) fail(email, 'Enter your PRE-PROD username: admin1, admin2 or admin3.');
+    if (devMode && !DEV_USERS.some(user => user.login === email.value)) fail(email, devCloud.local ? 'Wpisz login lokalnego DEV: admin1, admin2 albo admin3.' : 'Enter your PRE-PROD username: admin1, admin2 or admin3.');
     else if (!email.value) fail(email, 'Enter your email address.');
     else if (!email.validity.valid) fail(email, 'Enter a valid email address.');
     if (!password.value) fail(password, 'Enter your password.');

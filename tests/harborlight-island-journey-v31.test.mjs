@@ -5,8 +5,8 @@ import { STORY_CATALOG, ISLAND_PUZZLE_CATALOG, storyRoomKinds } from '../harborl
 import { normalizeAdventures, adventureAction, adventureChoices, advanceAdventures } from '../harborlight-v1-adventures.js';
 const NOW=Date.parse('2026-11-04T12:00:00Z');
 const copy=x=>JSON.parse(JSON.stringify(x));
-function island(){const s={worldTimeMs:NOW,activityClock:0,activitySeed:1234567,resources:{coins:100,wood:100,stone:100,grain:100,food:100,planks:100},buildings:{townhall:{level:20}},notifications:[]};normalizeAdventures(s);return s;}
-function reload(s){const raw=copy(s),next=copy(s);normalizeAdventures(next,raw);return next;}
+function island(){const s={ruleset:32,worldTimeMs:NOW,activityClock:0,activitySeed:1234567,resources:{coins:100,wood:100,stone:100,grain:100,food:100,planks:100},buildings:{townhall:{level:20}},notifications:[]};normalizeAdventures(s);return s;}
+function reload(s){const raw=copy(s),next=copy(s);normalizeAdventures(next,raw);if(next.adventures.active?.stage==='failed'){const before=copy(next.adventures.active.data.story?.completedRooms||[]);assert.equal(adventureAction(next,{type:'adventureInput',adventureId:next.adventures.active.id,command:'puzzleReset'}).ok,true);assert.deepEqual(next.adventures.active.data.story?.completedRooms||[],before,'retry preserves completed room proofs');}return next;}
 function mazeWaypoints(p){const g=p.data.miniGame,cols=3,cell=184,start=Math.max(0,Math.min(8,Math.floor((g.balls[0].y-24)/cell)*3+Math.floor((g.balls[0].x-24)/cell))),goal=Math.floor((g.goals[0].y-24)/cell)*3+Math.floor((g.goals[0].x-24)/cell),q=[start],prev=new Map([[start,null]]);const xy=i=>({x:24+(i%3+.5)*cell,y:24+(Math.floor(i/3)+.5)*cell});for(const i of q){if(i===goal)break;const a=xy(i);for(const j of[i-3,i+3,i-1,i+1]){if(j<0||j>8||Math.abs(Math.floor(i/3)-Math.floor(j/3))+Math.abs(i%3-j%3)!==1||prev.has(j))continue;const b=xy(j),x=(a.x+b.x)/2,y=(a.y+b.y)/2;if(g.walls.some(w=>x>=w.x&&x<=w.x+w.width&&y>=w.y&&y<=w.y+w.height))continue;prev.set(j,i);q.push(j);}}assert.ok(prev.has(goal),'generated maze must have a route');const path=[];for(let i=goal;i!==null;i=prev.get(i))path.unshift(xy(i));return path.slice(1);}
 function solve(p,send=move=>applyIslandPuzzle(p,move),advance=seconds=>recordIslandPuzzleTick(p,seconds)){
  if(p.kind!=='marbleMaze'){for(const move of islandPuzzleSolution(p)){if(p.solved)break;const r=send(move);assert.equal(r.ok,true,`${p.kind}: ${JSON.stringify(move)}: ${r.message}`);}assert.equal(p.solved,true,p.kind);return;}
@@ -23,8 +23,8 @@ function solve(p,send=move=>applyIslandPuzzle(p,move),advance=seconds=>recordIsl
 function start(s,action){const result=adventureAction(s,{type:'adventureStart',...action});assert.equal(result.ok,true,result.message);return s.adventures.active;}
 function input(s,command,extra={},ctx={}){return adventureAction(s,{type:'adventureInput',adventureId:s.adventures.active.id,command,...extra},ctx);}
 
-test('twenty-two concrete mechanics have generated solvable boards for every variant and representative levels',()=>{
- assert.equal(ISLAND_PUZZLE_KINDS.length,22);assert.equal(ISLAND_PUZZLE_CATALOG.length,22);
+test('twenty-four concrete mechanics have generated solvable boards for every variant and representative levels',()=>{
+ assert.equal(ISLAND_PUZZLE_KINDS.length,24);assert.equal(ISLAND_PUZZLE_CATALOG.length,24);
  let checked=0;
  for(const kind of ISLAND_PUZZLE_KINDS)for(let seed=1;seed<=25;seed++)for(let variant=1;variant<=5;variant++){
   const p=createIslandPuzzle(kind,{seed:seed*271,variant,level:[1,5,10,20][seed%4]});
@@ -32,7 +32,7 @@ test('twenty-two concrete mechanics have generated solvable boards for every var
   if(kind!=='marbleMaze')solve(p);else if(seed<=3)solve(p);
   checked++;
  }
- assert.equal(checked,2750);
+ assert.equal(checked,3000);
 });
 
 test('saved partial moves, free hints, undo and reset preserve actual state without claimed solved flags',()=>{
@@ -87,7 +87,7 @@ test('story proof rejects forged room indices, completed rooms and player-suppli
 
 test('free practice remains available when the shared economic budget has been exhausted',()=>{
  const s=island();s.adventureBudget={version:1,day:'2026-11-04',highestLevel:20,dailyLimit:2000,dailySpent:2000,chapters:{'chapter-20':{limit:3000,spent:3000}},receipts:[]};
- const options=adventureChoices(s).filter(c=>c.kind==='islandPuzzle');assert.equal(options.length,22);assert.ok(options.every(c=>c.available&&c.practice));
+ const options=adventureChoices(s).filter(c=>c.kind==='islandPuzzle');assert.equal(options.length,24);assert.ok(options.every(c=>c.available&&c.practice));
  const run=start(s,{kind:'islandPuzzle',puzzleKind:'gull'});solve(run.data.puzzle,move=>input(s,'puzzleMove',{move}));
  const result=input(s,'puzzleNextRoom');assert.equal(result.completed,true);assert.equal(result.practice,true);assert.equal(s.resources.coins,100);
 });
@@ -113,7 +113,7 @@ test('English and Polish puzzle views provide usable moves, clues and no hidden 
  for(const kind of ISLAND_PUZZLE_KINDS)for(const language of['pl','en']){
   const p=createIslandPuzzle(kind,{seed:19,variant:2}),v=getIslandPuzzleView(p,language);
   assert.equal(v.kind,kind);assert.ok(v.title&&v.instruction&&v.clues.length);
-  assert.ok(v.miniGame||[...v.items,...v.targets,...v.controls,...(v.grid?.cells||[])].some(item=>item.move));
+  assert.ok(v.originalAttempt||v.miniGame||[...v.items,...v.targets,...v.controls,...(v.grid?.cells||[])].some(item=>item.move));
   assert.ok(!JSON.stringify(v).includes('"type":"win"'));
  }
 });
@@ -180,13 +180,13 @@ test('twelve thousand physical controls never fill a move log or strand a marble
 test('thirty-two parked six-room stories and one active story fit a real cloud-world document',async()=>{
  const{createState}=await import('../harborlight-v1-state.js');
  let s=createState(NOW,{onboarding:false});s.buildings.townhall.level=20;
- const cases=STORY_CATALOG.filter(story=>story.mechanics.length===6).flatMap(story=>Array.from({length:5},(_,i)=>({story,variant:i+1}))).slice(0,33);assert.equal(cases.length,33);
+ const cases=STORY_CATALOG.filter(story=>story.mechanics.length===6&&!story.mechanics.includes('marbleMaze')).flatMap(story=>Array.from({length:5},(_,i)=>({story,variant:i+1}))).slice(0,33);assert.equal(cases.length,33);
  for(const{story,variant}of cases){
   start(s,{kind:'escapeStory',storyId:story.id,variant});
   while(s.adventures.active.data.story.roomIndex<5){const p=s.adventures.active.data.puzzle;solve(p,move=>input(s,'puzzleMove',{move}),seconds=>advanceAdventures(s,seconds));assert.equal(input(s,'puzzleNextRoom').ok,true);}
   const p=s.adventures.active.data.puzzle;
   // Long real sessions: try an actual move, undo, and retain the room for later.
-  if(p.kind!=='marbleMaze'){for(let i=0;i<100;i++){const move=islandPuzzleSolution(p)[0];assert.equal(input(s,'puzzleMove',{move}).ok,true);assert.equal(input(s,'puzzleUndo').ok,true);}}
+  if(p.kind!=='marbleMaze'){for(let i=0;i<100&&!p.solved;i++){const move=islandPuzzleSolution(p)[0];assert.equal(input(s,'puzzleMove',{move}).ok,true);if(!p.solved)assert.equal(input(s,'puzzleUndo').ok,true);}}
  }
  assert.equal(Object.keys(s.adventures.parked).length,32);
  const bytes=Buffer.byteLength(JSON.stringify(s));assert.ok(bytes<500000,`cloud world is ${bytes} bytes`);
@@ -196,7 +196,7 @@ test('thirty-two parked six-room stories and one active story fit a real cloud-w
  console.log(`v31 maximum parked-story stress: ${bytes} bytes before reload, ${Buffer.byteLength(JSON.stringify(s))} after; cloud document limit700000`);
 });
 
-test('suspending a standalone or story marble freezes its board until actual resumption',()=>{
+test('suspending a standalone or story marble loses only its current attempt and a retry starts a fresh clock',()=>{
  for(const action of[{kind:'islandPuzzle',puzzleKind:'marbleMaze'},{kind:'escapeStory',storyId:'merchant-rescue',variant:1}]){
   let s=island(),run=start(s,action);assert.equal(run.data.puzzle.kind,'marbleMaze');
   assert.equal(input(s,'puzzleMove',{move:{type:'tilt',tiltX:.5,tiltY:0}}).ok,true);advanceAdventures(s,.25);
@@ -205,7 +205,7 @@ test('suspending a standalone or story marble freezes its board until actual res
   assert.equal(s.adventures.clock,301.25);assert.equal(s.adventures.active,null);
   const parked=Object.values(s.adventures.parked).find(r=>r.id===id);assert.deepEqual(copy(parked.data.puzzle),before);
   s=reload(s);run=start(s,action);assert.equal(run.id,id);assert.deepEqual(copy(run.data.puzzle),before);
-  advanceAdventures(s,.25);assert.ok(run.data.puzzle.clock>before.clock);assert.notDeepEqual(run.data.puzzle.data.miniGame.balls,before.data.miniGame.balls);
+  assert.equal(run.data.stageAttempt.status,'abandoned');assert.equal(input(s,'puzzleMove',{move:{type:'tilt',tiltX:.5,tiltY:0}}).ok,false);assert.equal(input(s,'puzzleReset').ok,true);assert.equal(run.data.stageAttempt.remaining,run.data.stageAttempt.initialDuration);const fresh=copy(run.data.puzzle.data.miniGame.balls);assert.equal(input(s,'puzzleMove',{move:{type:'tilt',tiltX:.5,tiltY:0}}).ok,true);advanceAdventures(s,.25);assert.ok(run.data.puzzle.clock>before.clock);assert.notDeepEqual(run.data.puzzle.data.miniGame.balls,fresh);
  }
 });
 
@@ -248,19 +248,15 @@ test('only new trusted host context can replace a stale contract on an unfinishe
  }
 });
 
-test('a full set of thirty-two parked adventures permits swapping, rejects overflow and admits a new start after completion',()=>{
- let s=island();const first=start(s,{kind:'islandPuzzle',puzzleKind:'gull'}),firstId=first.id;
- assert.equal(input(s,'puzzleMove',{move:{type:'choose',index:0}}).ok,true);const firstBoard=copy(first.data.puzzle);
- for(const puzzleKind of ISLAND_PUZZLE_KINDS.filter(kind=>kind!=='gull'))start(s,{kind:'islandPuzzle',puzzleKind});
- const storyStarts=STORY_CATALOG.flatMap(story=>Array.from({length:5},(_,i)=>({kind:'escapeStory',storyId:story.id,variant:i+1}))).slice(0,11);
- for(const action of storyStarts)start(s,action);
- assert.equal(Object.keys(s.adventures.parked).length,32);const formerActiveId=s.adventures.active.id;
- const fresh={type:'adventureStart',kind:'escapeStory',storyId:'homecoming',variant:5},before=copy(s);
- const overflow=adventureAction(s,fresh);assert.equal(overflow.ok,false,'cannot add a thirty-third parked unfinished adventure');assert.deepEqual(copy(s),before,'rejected overflow changes no progress, resource or sequence');
- const resumed=start(s,{kind:'islandPuzzle',puzzleKind:'gull'});assert.equal(resumed.id,firstId);assert.deepEqual(copy(resumed.data.puzzle),firstBoard);assert.equal(Object.keys(s.adventures.parked).length,32);assert.ok(Object.values(s.adventures.parked).some(run=>run.id===formerActiveId));
- s=reload(s);assert.equal(s.adventures.active.id,firstId);assert.deepEqual(copy(s.adventures.active.data.puzzle),firstBoard);assert.equal(Object.keys(s.adventures.parked).length,32);
- assert.equal(adventureAction(s,fresh).ok,false);
- solve(s.adventures.active.data.puzzle,move=>input(s,'puzzleMove',{move}));assert.equal(input(s,'puzzleNextRoom').completed,true);assert.equal(s.adventures.active.stage,'complete');
- assert.equal(adventureAction(s,fresh).ok,true,'a completed active run needs no parked slot');assert.equal(s.adventures.active.data.story.storyId,'homecoming');assert.equal(Object.keys(s.adventures.parked).length,32);
- s=reload(s);assert.equal(Object.keys(s.adventures.parked).length,32);assert.equal(s.adventures.active.data.story.storyId,'homecoming');assert.equal(s.resources.coins,100);
+test('the 3×highest town hall limit permits resuming, rejects new adventures atomically, and frees a slot on completion',()=>{
+ const s=island();s.buildings.townhall.level=2;
+ const first=start(s,{kind:'islandPuzzle',puzzleKind:'gull'}),firstId=first.id;
+ input(s,'puzzleMove',{move:{type:'choose',index:0}});
+ for(const puzzleKind of['crabs','hiddenObjects','parrot','packing','untangle'])start(s,{kind:'islandPuzzle',puzzleKind});
+ assert.equal(Object.keys(s.adventures.parked).length,5);
+ const fresh={type:'adventureStart',kind:'escapeStory',storyId:'star-guests',variant:1},before=copy(s);
+ assert.equal(adventureAction(s,fresh).code,'adventure-limit');assert.deepEqual(copy(s),before);
+ const resumed=start(s,{kind:'islandPuzzle',puzzleKind:'gull'});assert.equal(resumed.id,firstId);assert.equal(Object.keys(s.adventures.parked).length,5);
+ assert.equal(input(s,'puzzleReset').ok,true);solve(resumed.data.puzzle,move=>input(s,'puzzleMove',{move}));assert.equal(input(s,'puzzleNextRoom').completed,true);
+ assert.equal(adventureAction(s,fresh).ok,true);assert.equal(Object.keys(s.adventures.parked).length,5);assert.equal(s.adventures.active.data.story.storyId,'star-guests');assert.equal(s.resources.coins,100);
 });

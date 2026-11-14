@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createState, normalizeState, act, advanceTo, buildingCost, requestUpgrade, residentPurchaseQuote } from '../harborlight-v1-state.js';
 import { MATERIAL_IDS, advanceLogistics, nextLogisticsEvent, constructionEstimate, constructionScheduleEstimate, starterConstructionTiming, cancelConstruction } from '../harborlight-v1-logistics.js';
+import { APPROVED_TOUR_VERSION } from '../harborlight-v1-approved-copy.js';
 
 const NOW = Date.UTC(2026, 10, 1, 12);
 const close = (actual, expected) => assert.ok(Math.abs(actual - expected) < 1e-6, `${actual} != ${expected}`);
@@ -208,7 +209,7 @@ test('learning positions and ad cooldown persist during the frozen introduction 
   assert.equal(act(state, { type: 'learningUpdate', patch }, NOW + 86400000).ok, true);
   assert.equal(state.worldTimeMs, NOW); assert.deepEqual(state.resources, resources);
   const restored = normalizeState(JSON.parse(JSON.stringify(state)), NOW + 86400000);
-  assert.deepEqual(restored.learning, { version:1, ...patch, tour:{...patch.tour,routeVersion:3} });
+  assert.deepEqual(restored.learning, { version:1, ...patch, tour:{...patch.tour,routeVersion:APPROVED_TOUR_VERSION} });
   assert.equal(act(state, { type: 'learningUpdate', patch: { practical: { reviewIndex: 25 } } }, NOW).ok, false);
   assert.equal(act(state, { type: 'learningUpdate', patch: { tour: { paused: 'yes' } } }, NOW).ok, false);
 });

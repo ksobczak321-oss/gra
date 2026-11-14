@@ -167,3 +167,42 @@
  #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]) .minigame-side .stat strong{font-size:14px;white-space:nowrap}
  #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]) .minigame-side :is([data-minigame-result-actions],.minigame-ad-slot) .action{width:100%;min-height:40px;margin:0;padding:6px 8px;font-size:11px;line-height:1.25}
 }
+
+/* v32: consistent touch targets and centered labels around the controller. */
+.minigame-side :is([data-minigame-result-actions],.minigame-ad-slot) .action{
+ display:flex;align-items:center;justify-content:center;min-height:44px;width:100%;
+ margin:0!important;text-align:center;line-height:1.35;
+}
+.minigame-ad-slot{display:grid;gap:8px;align-content:start}
+.marble-controls .marble-joystick{grid-row:2}
+.marble-controls .marble-centre,.marble-controls [data-motion-enable]{
+ display:flex;align-items:center;justify-content:center;align-self:center;min-height:64px;height:64px;
+ margin:0!important;box-sizing:border-box;text-align:center;line-height:1.3;
+}
+.marble-controls [data-motion-calibrate]{display:flex;align-items:center;justify-content:center;min-height:44px;line-height:1.3}
+.minigame-v32-help{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.minigame-v32-help>button{
+ display:flex;align-items:center;justify-content:center;min-height:44px;border:1px solid #7caaa6;border-radius:8px;
+ padding:10px 14px;background:#24565e;color:#eaf8ee;font:inherit;text-align:center;line-height:1.35;
+}
+.minigame-v32-help>p{flex-basis:100%;line-height:1.5;color:#d8e8e6}
+@media(max-width:520px){
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind]) .minigame-side :is([data-minigame-result-actions],.minigame-ad-slot) .action{min-height:44px;font-size:12px}
+ .expedition-minigame[data-minigame-kind="triples"] .minigame-help{font-size:12px;line-height:1.35}
+}
+.marble-controls [hidden]{display:none!important}
+/* Completed rounds keep the next-game label and selector on their own rows. */
+#island-dialog .minigame-side .expedition-decision{display:grid;gap:10px;padding:0}
+.minigame-side .next-expedition-choice{display:grid;gap:7px;min-width:0;font-size:13px;line-height:1.4;color:#dbe9e7}
+#island-dialog .minigame-side .next-expedition-choice>select{width:100%;min-height:44px;box-sizing:border-box;font:inherit}
+.minigame-panel:has(.expedition-decision) .minigame-ad-slot{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:520px){
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]):has(.expedition-decision) [data-minigame-result-actions]{grid-column:1/-1;grid-row:4}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]):has(.expedition-decision) .minigame-ad-slot{grid-column:1/-1;grid-row:5}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]):has(.expedition-decision) [data-minigame-result-actions]{grid-column:1/-1;grid-row:5}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="tilt"]):has(.expedition-decision) .minigame-ad-slot{grid-column:1/-1;grid-row:6}
+}
+@media(max-width:520px){
+ #island-dialog[data-panel-kind="puzzle"]:has(.expedition-decision) .minigame-side>.minigame-ad-slot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;min-width:0;justify-self:stretch}
+ #island-dialog[data-panel-kind="puzzle"]:has(.expedition-decision) .minigame-side>.minigame-ad-slot>:is([data-buy-extra-time],[data-minigame-ad]){grid-column:auto;grid-row:auto}
+}

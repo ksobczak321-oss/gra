@@ -49,4 +49,24 @@
 .theatre-layout-caption strong{font-size:1.1rem}.theatre-layout-caption small{font-size:.9rem}
 .theatre-panel .theatre-layout-actions button{font-size:.94rem;min-height:42px}
 .theatre-scene-caption{font-size:.94rem;line-height:1.45}.theatre-scene-caption .primary{width:100%;min-height:46px}
+/* Form and toolbar geometry audited at 1440px and 390px. Scene hit areas keep
+   their art coordinates; surrounding controls use comfortable native targets. */
+.theatre-panel button:not(.theatre-slot-hit):not(.theatre-object-hit){min-height:44px;line-height:1.4}
+.theatre-panel .theatre-layout-actions{align-items:stretch;gap:8px}
+.theatre-panel .theatre-layout-actions button{min-height:44px;margin:0;display:inline-flex;align-items:center;justify-content:center}
+.theatre-panel .theatre-layout-actions .theatre-icon-button{flex:0 0 44px;min-width:44px;width:44px}
+.theatre-environment{align-items:end}
+.theatre-environment-field{display:grid;align-content:end;gap:7px;min-width:0}
+.theatre-environment select,.theatre-style-control select{box-sizing:border-box;height:46px;min-height:46px;line-height:1.4;margin:0}
 @media(max-width:720px){.theatre-layout-list{grid-template-columns:1fr}.theatre-layout-card{grid-template-columns:110px minmax(0,1fr);grid-template-areas:'picture caption' 'picture actions';gap:8px 12px;padding:10px}.theatre-layout-actions{flex-wrap:wrap}.theatre-panel .theatre-layout-actions button{flex:1 1 auto;font-size:.9rem}.theatre-panel .theatre-layout-actions .theatre-icon-button{flex:0 0 38px}.theatre-layout-caption small{font-size:.85rem}.theatre-environment-field,.theatre-environment select{font-size:1rem}.theatre-environment h4,.theatre-layouts h4{font-size:1.2rem}.theatre-environment p,.theatre-section-heading p{font-size:.96rem}.theatre-scene-caption{font-size:.9rem}}
+@media(max-width:720px){
+ .theatre-layout-card{grid-template-areas:'picture caption' 'actions actions';row-gap:12px}
+ .theatre-layout-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 44px;gap:8px}
+ .theatre-panel .theatre-layout-actions button{width:100%;min-width:0;min-height:44px;padding:9px 7px;font-size:14px}
+ .theatre-panel .theatre-layout-actions .theatre-icon-button{width:44px;min-width:44px;min-height:44px}
+ .theatre-panel .theatre-palette-item strong,.theatre-owned-item strong{font-size:12px;line-height:1.35}
+ .theatre-panel .theatre-palette-item small,.theatre-owned-item small{font-size:11px;line-height:1.4}
+ .theatre-panel .theatre-inspector button{font-size:14px;min-height:44px}
+ .theatre-panel .theatre-view-tools button{font-size:14px;min-height:44px}
+}
+@media(max-width:480px){.theatre-environment{grid-template-columns:minmax(0,1fr)}.theatre-environment>div{grid-column:auto}.theatre-environment-field{width:100%}}

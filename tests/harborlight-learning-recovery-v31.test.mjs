@@ -41,7 +41,7 @@ function rescueIsland() {
 function solveActualStory(state,{reloadAfterFirstRoom=false}={}) {
   let rooms = 0, final;
   while (state.adventures.active.stage !== 'complete') {
-    const run = state.adventures.active, puzzle = run.data.puzzle;
+    const run=state.adventures.active;if(run.data.stageAttempt&&run.data.stageAttempt.status!=='active'&&run.data.stageAttempt.status!=='won'){const before=copy(run.data.story.completedRooms);command(state,{type:'adventureInput',adventureId:run.id,command:'puzzleReset'});assert.deepEqual(run.data.story.completedRooms,before,'failed-current-stage retry keeps earned proof');}const puzzle=run.data.puzzle;
     assert.equal(State.act(state,{type:'adventureInput',adventureId:run.id,command:'puzzleNextRoom'},state.worldTimeMs).ok,false);
     for (const move of islandPuzzleSolution(puzzle)) command(state,{type:'adventureInput',adventureId:run.id,command:'puzzleMove',move});
     assert.equal(puzzle.solved,true,'only real puzzle inputs complete a room');
@@ -151,7 +151,7 @@ test('a player-supplied rescueContext cannot grant people, but the same discover
 });
 
 test('real world wrapping, daughter creation, game commands and serializer roundtrip retain one account hour and reward budget', () => {
-  const initial = State.createState(NOW); initial.islandName = 'Dom';
+  const initial=State.createState(NOW,{ruleset:32});initial.islandName='Dom';
   initial.buildings.townhall.level = 10; initial.buildings.warehouse.level = 9;
   initial.population = 18; initial.resources.coins = 100000;
   grantBonusMaterials(initial,{wood:100000,stone:100000,grain:100000,food:100000,planks:100000});
@@ -164,7 +164,7 @@ test('real world wrapping, daughter creation, game commands and serializer round
   const first = mother.expeditionRuns.misty; assert.equal(first.difficultyLevel,1);
   command(mother,{type:'expeditionLose',runId:first.id});
   command(daughter,{type:'expeditionStart',expedition:'misty',gameKind:'triples'});
-  const second = daughter.expeditionRuns.misty; assert.equal(second.difficultyLevel,2);
+  const second=daughter.expeditionRuns.misty;assert.equal(second.difficultyLevel,1,'losses do not increase account difficulty');
   command(daughter,{type:'expeditionMiniGameReveal',runId:second.id,index:0});
   const board = copy(second.miniGame);
   const before = adventureRewardStatus(mother).dailyRemaining;
@@ -177,14 +177,14 @@ test('real world wrapping, daughter creation, game commands and serializer round
   assert.equal(snapshot.archipelago.islands['island-2'].adventureBudget,undefined);
   bundle = Arch.restoreArchipelago(copy(snapshot),adapters,NOW); mother = bundle.primary; daughter = bundle.secondary;
   assert.equal(mother.expeditionHour,daughter.expeditionHour); assert.equal(mother.adventureBudget,daughter.adventureBudget);
-  assert.deepEqual(mother.expeditionHour,hour); assert.deepEqual(mother.adventureBudget,budget);
+  assert.equal(mother.expeditionHour.hourIndex,hour.hourIndex);assert.equal(expeditionHourStatus(mother,'triples').wins,0);assert.equal(expeditionHourStatus(mother,'triples').activeRoundId,null);assert.equal(daughter.expeditionRuns.misty.status,'lost');assert.deepEqual(mother.adventureBudget,budget);
   assert.deepEqual(daughter.expeditionRuns.misty.miniGame,board);
   assert.equal(claimAdventureBudget(daughter,{receiptId:'canonical-mother-result',reward:{coins:180}}).duplicate,true);
   command(mother,{type:'expeditionStart',expedition:'misty',gameKind:'triples'});
-  assert.equal(mother.expeditionRuns.misty.difficultyLevel,3); assert.equal(expeditionHourStatus(daughter).nextDifficulty,4);
+  assert.equal(mother.expeditionRuns.misty.difficultyLevel,1);assert.equal(expeditionHourStatus(daughter,'triples').nextDifficulty,1);const third=mother.expeditionRuns.misty;for(const symbol of new Set(third.miniGame.cards))for(let index=0;index<third.miniGame.cards.length;index++)if(third.miniGame.cards[index]===symbol&&!third.miniGame.matched[index])command(mother,{type:'expeditionMiniGameReveal',runId:third.id,index});assert.equal(expeditionHourStatus(daughter,'triples').nextDifficulty,2);
   const spent = mother.adventureBudget.dailySpent;
   Arch.advanceArchipelago(bundle,NOW+3600000);
-  assert.equal(expeditionHourStatus(mother).nextDifficulty,1); assert.equal(expeditionHourStatus(daughter).nextDifficulty,1);
+  assert.equal(expeditionHourStatus(mother,'triples').nextDifficulty,1); assert.equal(expeditionHourStatus(daughter,'triples').nextDifficulty,1);
   assert.equal(mother.expeditionHour,daughter.expeditionHour); assert.equal(mother.adventureBudget.dailySpent,spent);
 });
 

@@ -1,4 +1,5 @@
-import { getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v31-2';
+import { developmentBuildingCopy } from './harborlight-v1-development-copy.js';
+import { getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-2';
 
 // Presentation only: descriptions and level names never affect saved mechanics.
 const purposes = {
@@ -24,6 +25,7 @@ for (const id of Object.keys(purposes)) {
 }
 purposes.house = [approvedCopy('houseDescription', 'en'), approvedCopy('houseDescription', 'pl')];
 purposes.lighthouse = [approvedCopy('lighthouseDescription', 'en'), approvedCopy('lighthouseDescription', 'pl')];
+for (const id of Object.keys(purposes)) purposes[id][1] = developmentBuildingCopy(id) || purposes[id][1];
 
 const goal = {
   title: [approvedCopy('goalTitle', 'en'), approvedCopy('goalTitle', 'pl')],
@@ -34,6 +36,8 @@ const residents = [
   'Dbaj o jedzenie, mieszkanie i pracę mieszkańców — to oni produkują zasoby i wożą towary. Gdy średnie szczęście jest dodatnie, przybywają nowe osoby; gdy spada poniżej zera, mieszkańcy odchodzą. Na wyspie macierzystej pozostaje co najmniej 12 osób, a na wyspie córce — 6. Ratusz wyznacza limit ludności niezależnie od liczby łóżek w Domu. Przy szczęściu 0 punktów populacja jest stała, a przy stałym poziomie 100 punktów nowa osoba przybywa co 30 minut, jeśli Ratusz pozwala przyjąć kolejną. Mieszkańcy bez miejsca w Domu pracują dwa razy wolniej, jedzą dwa razy więcej i nie otrzymują codziennych punktów szczęścia z Domu. Brak łóżek nie obniża szczęścia całej wyspy. Przez pierwsze 72 godziny wszyscy mieszkańcy mają minimum 20 punktów szczęścia; wymuszone przez Latarnię 100 punktów ma pierwszeństwo.'
 ];
 const warehouse = ['The central warehouse stores materials used for meals, construction, trade and tasks, with both a total limit and a separate limit for each material. Warehouse carriers collect goods from producers and supply construction; each level has a fixed capacity. At level 1 it holds 2,688 of each material and 13,440 in total. New construction deliveries use the time budget of the current island level; missing workers, materials and queued projects can extend the wait. Storage and Warehouse-level carrying capacity grow up to level 24; later levels only add crew places. Reward materials remain spendable outside ordinary capacity. Active play doubles carrying speed; after 48 hours without play it halves. Paths independently improve transport.', 'Zbieraj w magazynie centralnym zapasy na jedzenie, budowę, handel i zadania. Pilnuj zarówno łącznego miejsca, jak i limitu dla każdego materiału. Przydziel tragarzy, aby odbierali gotowe towary i dowozili materiały na budowę. Każdy poziom ma stałą pojemność. Na poziomie 1 zmieści się po 2688 sztuk każdego materiału, łącznie 13 440. Nowe dostawy na budowę korzystają z czasu przewidzianego dla poziomu wyspy. Brak obsady, materiałów lub kolejka wydłużają oczekiwanie. Rozbudowuj magazyn, by zwiększać jego pojemność i ładowność tragarzy do poziomu 24. Dalsza rozbudowa dodaje już tylko miejsca pracy. Materiały z nagród możesz wydawać także ponad zwykłym limitem miejsca. Gdy aktywnie grasz, towary są przewożone dwa razy szybciej. Po 48 godzinach bez gry przewóz spowalnia o połowę. Ulepszaj też ścieżki, aby dodatkowo usprawnić transport.'];
+
+warehouse[1] = developmentBuildingCopy('warehouse', {}, 'INFO') || warehouse[1];
 
 // Every achieved level has a distinct restoration title; these are narrative
 // milestones, not additional gameplay effects or requirements.
@@ -141,10 +145,10 @@ Legacy of the light|Dziedzictwo światła
 `.trim().split('\n').map(line => line.split('|'));
 
 const localized = (pair, language) => pair[language === 'pl' ? 1 : 0];
-export const buildingPurpose = (id, language = 'en') => localized(purposes[id] || ['', ''], language);
+export const buildingPurpose = (id, language = 'en', state = {}) => language === 'pl' ? developmentBuildingCopy(id, state) || localized(purposes[id] || ['', ''], language) : localized(purposes[id] || ['', ''], language);
 export const gameGoal = (language = 'en') => ({ title: localized(goal.title, language), description: localized(goal.description, language) });
-export const residentsPurpose = (language = 'en') => localized(residents, language);
-export const warehousePurpose = (language = 'en') => localized(warehouse, language);
+export const residentsPurpose = (language = 'en', state = {}) => language === 'pl' && state.ruleset === 32 ? 'Dbaj o jedzenie, mieszkanie i pracę mieszkańców. Każdy poziom Ratusza pozwala przyjąć 36 osób, a każdy poziom Domu zapewnia 36 łóżek. Mieszkańcy bez łóżka pracują i uczą się z połową wydajności oraz jedzą dwa razy więcej; brak łóżek nie obniża szczęścia całej wyspy. Przydzielaj wolnych cywilów do pracy lub nauki. Profesorowie i żołnierze mają własne miejsca mieszkalne w Akademii i Koszarach. O kierunku zmian populacji decyduje średnie szczęście, a przewidywany czas przybycia zobaczysz na wyspie.' : localized(residents, language);
+export const warehousePurpose = (language = 'en') => language === 'pl' ? developmentBuildingCopy('warehouse', {}, 'INFO') : localized(warehouse, language);
 export function lighthouseLevelName(level, language = 'en') {
   const achieved = Math.max(0, Math.min(100, Math.floor(Number(level) || 0)));
   return achieved ? localized(lighthouseStages[achieved - 1], language) : language === 'pl' ? 'Ruiny' : 'Ruins';

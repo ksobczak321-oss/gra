@@ -1,3 +1,4 @@
+import { MATERIAL_IDS as NEW_MATERIALS } from './harborlight-v1-provisions.js?v=frontend-v32-2';
 // DEV v29 economy parameters. Pure functions: no clocks, random numbers or saves.
 export const ECONOMY_RULES = Object.freeze({
   version: 1, firstLevelSeconds: 45, maximumSeconds: 86400,
@@ -10,7 +11,7 @@ export const ECONOMY_RULES = Object.freeze({
 export const BUILDING_TIME_WEIGHTS = Object.freeze({
   townhall: 1, lighthouse: 1, house: .8, warehouse: .8,
   chapel: .85, dock: .85, market: .6,
-  farm: .65, windmill: .65, lumber: .65, sawmill: .65, quarry: .65
+  farm: .65, windmill: .65, lumber: .65, sawmill: .65, quarry: .65, bakery:.65,dairy:.65,slaughterhouse:.65,fisher:.65,leatherworks:.65,academy:.85,barracks:.85
 });
 const materials = ['wood', 'stone', 'grain', 'food', 'planks'];
 const levelNumber = value => Math.max(1, Math.floor(Number(value) || 1));
@@ -32,7 +33,19 @@ export const productionPerWorkerHour = level => {
 // Capacity depends only on the warehouse level. It never changes when a mission
 // is accepted/completed. Use the next stage as a conservative planning envelope;
 // old higher capacities are retained, including the existing level-24 ceiling.
-export function warehouseCapacityPlan(level) {
+export function warehouseCapacityPlan(level, options = {}) {
+  if (options.ruleset === 32) {
+    const current = Math.min(100,Math.max(0,Math.floor(Number(level)||0))), stage=current+1;
+    if (!current) return {level:0,stage:0,perResource:0,total:0,buffer:1.4};
+    const largestUpgrade=Math.ceil(550*stage)*7, mission=500*stage*7;
+    // Base grain plus converted legacy food can require seven raw units per
+    // old material unit (1grain + 6satiety). Include both uses in each budget.
+    // Conservative raw-food envelope: one type can support the entire population
+    // for24h. Variety and cheaper dense foods reduce actual space, never this cap.
+    const foodReserve=36*stage*6*24;
+    const perResource=Math.min(100000000,Math.ceil((largestUpgrade+mission+foodReserve)*1.4));
+    return {level:current,stage,largestUpgrade,mission,foodReserve,buffer:1.4,perResource,total:perResource*NEW_MATERIALS.length,materialCount:NEW_MATERIALS.length,devCalibration:true};
+  }
   const current = Math.min(24, Math.max(0, Math.floor(Number(level) || 0)));
   if (!current) return { level: 0, stage: 0, largestUpgrade: 0, mission: 0, foodReserve: 0, buffer: 1.25, perResource: 0, total: 0 };
   const stage = current + 1;
@@ -45,8 +58,8 @@ export function warehouseCapacityPlan(level) {
   return { level: current, stage, largestUpgrade, mission, foodReserve, buffer: 1.25, perResource, total: perResource * 5 };
 }
 export const WAREHOUSE_CAPACITY_TABLE = Object.freeze(Array.from({length: 24}, (_, index) => Object.freeze(warehouseCapacityPlan(index + 1))));
-export const warehouseCapacityForLevel = level => {
-  const plan = warehouseCapacityPlan(level);
+export const warehouseCapacityForLevel = (level, options = {}) => {
+  const plan = warehouseCapacityPlan(level,options);
   return { perResource: plan.perResource, total: plan.total };
 };
 // A snapshot is attached at order time. A later Town Hall/road upgrade must not
@@ -55,10 +68,10 @@ export const warehouseCapacityForLevel = level => {
 export function constructionTiming(state, project, options = {}) {
   const weight = BUILDING_TIME_WEIGHTS[project?.building];
   if (!weight) return null; // Theatre is a static venue, never a build project.
-  const completedTownhallLevel = levelNumber(state?.buildings?.townhall?.level);
+  const completedTownhallLevel = state?.ruleset === 32 ? levelNumber(project?.targetLevel || (state?.buildings?.[project?.building]?.level || 0)+1) : levelNumber(state?.buildings?.townhall?.level);
   const warehouseLevel = Math.min(24, levelNumber(state?.buildings?.warehouse?.level));
   const capacity = Math.max(1, Math.floor(options.capacity || Math.floor(120 * 1.1 ** (warehouseLevel - 1))));
-  const trips = materials.reduce((sum, id) => sum + Math.ceil(Math.max(0, Number(project.cost?.[id]) || 0) / capacity), 0);
+  const trips = (state?.ruleset === 32 ? NEW_MATERIALS : materials).reduce((sum, id) => sum + Math.ceil(Math.max(0, Number(project.cost?.[id]) || 0) / capacity), 0);
   const requiredWorkers = 3;
   const waves = Math.max(1, Math.ceil(trips / requiredWorkers));
   const totalSeconds = longestConstructionSeconds(completedTownhallLevel) * weight;

@@ -1,13 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizeExpeditionHour, reserveExpeditionDifficulty, expeditionHourStatus, cappedExpeditionReward } from '../harborlight-v1-expedition-hour.js';
+import { normalizeExpeditionHour, reserveExpeditionDifficulty, recordExpeditionOutcome, expeditionHourStatus, cappedExpeditionReward } from '../harborlight-v1-expedition-hour.js';
 import { normalizeAdventureBudget, adventureRewardStatus, claimAdventureBudget } from '../harborlight-v1-adventure-budget.js';
 import { normalizeActivities, activityAction, expeditionRoundReward } from '../harborlight-v1-activities.js';
 import { normalizeLogisticsState } from '../harborlight-v1-logistics.js';
 const NOW = Date.parse('2026-11-04T12:10:00Z');
 const definition = { id: 'islands', map: ['S.G'], tools: {} }, context = { expeditions: [definition] };
 function world(at = NOW) {
-  const state = { worldTimeMs: at, resources: { coins:100,wood:100,stone:100,grain:100,food:100,planks:100 }, population:12, foodCredit:1, activeSeconds:0,
+  const state = { ruleset:32,worldTimeMs: at, resources: { coins:100,wood:100,stone:100,grain:100,food:100,planks:100 }, population:12, foodCredit:1, activeSeconds:0,
     buildings: Object.fromEntries(['farm','windmill','lumber','sawmill','quarry','warehouse','market','dock','house','townhall','chapel','lighthouse'].map(id=>[id,{level:id==='townhall'?2:1,workers:0,ready:0,workProgress:[]}])),
     residents:[],returningWorkers:[],constructionProjects:[],premiumServices:[],premium:{expiresAt:0},notifications:[],statistics:{expeditions:0},roads:{segments:Array(100).fill(0)} };
   normalizeLogisticsState(state,state); normalizeActivities(state,{}); normalizeAdventureBudget(state,{}); return state;
@@ -20,15 +20,14 @@ test('cashout, losing and a new series all keep account difficulty during the ho
   assert.equal(activityAction(state,{type:'expeditionCashout',runId:first.id},context).ok,true);
   const second=start(state);assert.equal(second.level,1);assert.equal(second.difficultyLevel,2);assert.equal(second.miniGame.cards.length,30);
   assert.equal(activityAction(state,{type:'expeditionLose',runId:second.id},context).ok,true);
-  const third=start(state);assert.equal(third.difficultyLevel,3);assert.equal(third.miniGame.cards.length,36);
+  const third=start(state);assert.equal(third.difficultyLevel,2);assert.equal(third.miniGame.cards.length,30);assert.equal(expeditionHourStatus(state,'triples').wins,1);assert.equal(expeditionHourStatus(state,'triples').failures,1);
 });
-test('reload preserves the exact board and hourly counter without creating another reservation',()=>{
-  const state=world(),run=start(state);activityAction(state,{type:'expeditionMiniGameReveal',runId:run.id,index:0},context);
-  const raw=structuredClone(state), restored={...structuredClone(raw)};normalizeActivities(restored,raw);
-  assert.deepEqual(restored.expeditionRuns.islands.miniGame,run.miniGame);
-  assert.equal(expeditionHourStatus(restored).nextDifficulty,2);
-  assert.equal(reserveExpeditionDifficulty(restored,`${run.id}:1`),1);
-  assert.equal(expeditionHourStatus(restored).roundsStarted,1);
+test('reload ends the current v32 attempt without increasing its difficulty or creating another reservation',()=>{
+ const state=world(),run=start(state);activityAction(state,{type:'expeditionMiniGameReveal',runId:run.id,index:0},context);
+ const raw=structuredClone(state),restored={...structuredClone(raw)};normalizeActivities(restored,raw);
+ assert.equal(restored.expeditionRuns.islands.status,'lost');assert.equal(restored.expeditionRuns.islands.lossReason,'abandoned');
+ assert.equal(expeditionHourStatus(restored,'triples').nextDifficulty,1);assert.equal(expeditionHourStatus(restored,'triples').roundsStarted,1);assert.equal(expeditionHourStatus(restored,'triples').failures,1);
+ const retry=start(restored);assert.equal(retry.difficultyLevel,1);assert.notEqual(retry.roundIdentity,run.roundIdentity);assert.equal(expeditionHourStatus(restored,'triples').roundsStarted,2);
 });
 test('a completed clock hour resets future difficulty, preserving the already running board',()=>{
   const state=world(),run=start(state),board=structuredClone(run.miniGame);
@@ -36,12 +35,14 @@ test('a completed clock hour resets future difficulty, preserving the already ru
   assert.equal(expeditionHourStatus(state).nextDifficulty,1);assert.deepEqual(run.miniGame,board);
   assert.equal(expeditionHourStatus(state).remaining,3600);
 });
-test('hour rollover mutates a shared account ledger in place and a backwards clock cannot mint a reset',()=>{
-  const a=world(),b=world();b.expeditionHour=a.expeditionHour;
-  reserveExpeditionDifficulty(a,'mother:1');assert.equal(reserveExpeditionDifficulty(b,'daughter:1'),2);
-  a.worldTimeMs=Date.parse('2026-11-04T13:00:00Z');normalizeExpeditionHour(a,a);
-  assert.equal(b.expeditionHour,a.expeditionHour);assert.equal(reserveExpeditionDifficulty(b,'daughter:2'),1);
-  assert.equal(reserveExpeditionDifficulty(a,'mother:2'),2);
+test('shared account difficulty only advances on wins and a rollover preserves one active frozen attempt',()=>{
+ const a=world(),b=world();b.expeditionHour=a.expeditionHour;
+ assert.equal(reserveExpeditionDifficulty(a,'mother:1','triples'),1);assert.throws(()=>reserveExpeditionDifficulty(b,'daughter:1','triples'),{code:'active-round-exists'});
+ assert.equal(recordExpeditionOutcome(a,'mother:1','won','triples'),true);assert.equal(reserveExpeditionDifficulty(b,'daughter:1','triples'),2);
+ a.worldTimeMs=Date.parse('2026-11-04T13:00:00Z');normalizeExpeditionHour(a,a);
+ assert.equal(b.expeditionHour,a.expeditionHour);assert.equal(expeditionHourStatus(b,'triples').nextDifficulty,1);assert.throws(()=>reserveExpeditionDifficulty(a,'mother:2','triples'),{code:'active-round-exists'});
+ recordExpeditionOutcome(b,'daughter:1','lost','triples');assert.equal(reserveExpeditionDifficulty(a,'mother:2','triples'),1);
+ assert.equal(expeditionHourStatus(b,'triples').hourIndex,expeditionHourStatus(a,'triples').hourIndex);assert.equal(expeditionHourStatus(b,'triples').nextDifficulty,1,'a backwards clock cannot mint a second reset');
 });
 test('new series awards are capped even after the board difficulty has reached its ceiling',()=>{
   assert.deepEqual([1,2,3,4,5,6,20,1000].map(cappedExpeditionReward),[50,100,200,400,800,800,800,800]);

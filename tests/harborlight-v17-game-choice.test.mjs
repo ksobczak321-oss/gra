@@ -7,7 +7,7 @@ const NOW = Date.parse('2026-10-30T08:00:00Z');
 const expedition = EXPEDITIONS[0].id;
 const snapshot = value => JSON.parse(JSON.stringify(value));
 function island(seed = 123456789) {
-  const state = createState(NOW);
+  const state=createState(NOW,{ruleset:32});
   state.activitySeed = seed;
   return state;
 }
@@ -82,7 +82,7 @@ test('an explicit next-round choice switches type without cashing out or changin
   assert.equal(run.pot, 50);
   assert.equal(run.selectedGameKind, 'tilt');
   assert.equal(run.miniGame.kind, 'tilt');
-  assert.equal(run.roundLimit, 180 / 1.1);
+  assert.equal(run.roundLimit,180,'the first tilt win has not occurred yet; triples difficulty is separate');
   assert.equal(expeditionRoundStatus(state, run).potentialPot, 150);
   assert.equal(state.resources.coins, 100);
   assert.equal(normalizeState(snapshot(state), NOW).expeditionRuns[expedition].selectedGameKind, 'tilt');

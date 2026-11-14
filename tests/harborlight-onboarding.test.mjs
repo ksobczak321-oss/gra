@@ -4,6 +4,8 @@ import { createState, normalizeState, onboardingStatus, act, tick, advanceTo, re
 import { tutorialStatus, registerMeaningfulActivity, recordProgressionLogin } from '../harborlight-v1-progression.js';
 import { advanceEngagementSchedule } from '../harborlight-v1-engagement.js';
 import { nextWarsawMidnightMs } from '../harborlight-v1-calendar.js';
+import { APPROVED_TOUR_VERSION, APPROVED_TOUR_IDS } from '../harborlight-v1-approved-copy.js';
+import { dietStatus } from '../harborlight-v1-provisions.js';
 
 const NOW = Date.parse('2026-10-30T21:40:00Z');
 const HOUR = 3600000;
@@ -16,7 +18,8 @@ function nameIsland(state, at = NOW) {
 
 test('first-time introduction keeps the starter world and all clocks frozen', () => {
   const state = starter(), before = json(state);
-  assert.deepEqual(onboardingStatus(state), { pending: true, stage: 'intro', index: 0, routeVersion: 3, worldStartedAt: null, completedAt: null });
+  assert.equal(APPROVED_TOUR_IDS.length,48);
+  assert.deepEqual(onboardingStatus(state), { pending: true, stage: 'intro', index: 0, routeVersion: APPROVED_TOUR_VERSION, worldStartedAt: null, completedAt: null });
   tick(state, 100 * HOUR / 1000);
   assert.equal(advanceTo(state, NOW + 100 * HOUR), 0);
   assert.equal(recordVisit(state, NOW + 100 * HOUR), false);
@@ -77,7 +80,7 @@ test('finishing or leaving the tour starts day one once at the real completion t
   assert.equal(advanceTo(state, NOW + 100 * HOUR), 0);
   assert.equal(act(state, { type: 'onboardingFinish' }, NOW + 100 * HOUR).ok, true);
   const start = NOW + 100 * HOUR;
-  assert.deepEqual(onboardingStatus(state), { pending: false, stage: 'complete', index: 0, routeVersion: 3, worldStartedAt: start, completedAt: start });
+  assert.deepEqual(onboardingStatus(state), { pending: false, stage: 'complete', index: 0, routeVersion: APPROVED_TOUR_VERSION, worldStartedAt: start, completedAt: start });
   assert.equal(state.islandStartedAt, start);
   assert.equal(state.worldTimeMs, start);
   assert.equal(state.lastSimulatedAt, start);
@@ -167,4 +170,14 @@ test('finishing a recreated island cannot renew inherited account welcome or ent
   assert.deepEqual(state.engagementSchedule, schedule);
   assert.deepEqual(state.commerce, commerce);
   assert.deepEqual(state.premium, premium);
+});
+
+test('v32 frozen introduction preserves rations and individual diet grace through a hundred-hour resume',()=>{
+  let state=createState(NOW,{onboarding:true,ruleset:32});const frozen=json(state),uids=state.residents.map(p=>p.personUid);
+  tick(state,100*3600);assert.equal(advanceTo(state,NOW+100*HOUR),0);assert.deepEqual(json(state),frozen);
+  nameIsland(state);state=normalizeState(json(state),NOW+100*HOUR);const before=json(state.resources),education=json(state.education),military=json(state.military),start=NOW+100*HOUR;
+  assert.equal(state.worldTimeMs,NOW);assert.equal(act(state,{type:'onboardingFinish'},start).ok,true);assert.deepEqual(state.resources,before);assert.deepEqual(state.education,education);assert.deepEqual(state.military,military);
+  assert.equal(state.provisions.clockMs,start);assert.equal(state.provisions.feedClockMs,start);
+  for(const uid of uids){const person=state.residents.find(p=>p.personUid===uid),p=state.provisions.people[uid];assert.equal(p.joinedAt,start);assert.equal(p.dietGraceUntil,start+24*HOUR);assert.equal(dietStatus(state,person).protected,true);}
+  advanceTo(state,start+1000);for(const uid of uids)assert.equal(dietStatus(state,state.residents.find(p=>p.personUid===uid)).protected,true);
 });

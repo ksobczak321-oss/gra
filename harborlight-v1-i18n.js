@@ -1,5 +1,5 @@
-import { APPROVED_TRANSLATIONS } from './harborlight-v1-approved-copy.js?v=frontend-v31-2';
-import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v31-2';
+import { APPROVED_TRANSLATIONS } from './harborlight-v1-approved-copy.js?v=frontend-v32-2';
+import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v32-2';
 
 /** English is the source language. Polish strings are presentation only: saves,
  * identifiers, action payloads and user-entered values are never translated. */
@@ -42,6 +42,10 @@ export function registerTranslations(catalog = {}) {
 }
 registerTranslations(COPY_TRANSLATIONS);
 registerTranslations({
+  'Tutorial complete: basic Warehouse stocks': 'Samouczek ukończony',
+  'Wood, stone, grain, flour and planks were filled to their current limits. Other stocks were preserved; no tutorial rewards are waiting.': 'Uzupełniono zapasy drewna, kamienia, zboża, mąki i desek do limitu każdego z tych towarów. Pozostałe zapasy pozostają zachowane; nie ma oczekujących nagród samouczka.',
+  'Tutorial complete. Basic materials have been replenished and no rewards are waiting.': 'Samouczek ukończony. Podstawowe materiały uzupełniono; nie ma oczekujących nagród.',
+  'Rescued supplies arrive through the warehouse; overflow waits for space.': 'Ocalone materiały trafiają do Magazynu. Część niemieszcząca się w jego pojemności czeka na wolne miejsce.',
   'House happiness points kept for later.': 'Punkty szczęścia z Domu zostały zachowane na później.',
   'Keep points for later when nobody can currently receive them.': 'Zachowaj punkty na później, gdy nikt nie może ich teraz otrzymać.',
   'The earned assistance could not be committed.': 'Nie udało się zatwierdzić zdobytej pomocy.',
@@ -1979,7 +1983,7 @@ Payment amount in PLN|Kwota płatności w PLN
 `);
 
 // Queue headings may already contain a localized building name from titleOf().
-priorityRule(/^(Theatre|Teatr|House|Farm|Sawmill|Quarry|Harbor|Warehouse|Lighthouse|Lumber Camp|Windmill|Town Hall|Chapel|Market|Dom|Gospodarstwo|Tartak|Kamieniołom|Port|Magazyn|Latarnia morska|Drwale|Młyn|Ratusz|Kaplica|Targ) → level (\d+)$/, (_, building, level) => `${tr(building)} → poziom ${level}`);
+priorityRule(/^(Theatre|Teatr|House|Farm|Sawmill|Quarry|Harbor|Warehouse|Lighthouse|Lumber Camp|Windmill|Town Hall|Chapel|Market|Dom|Gospodarstwo|Tartak|Kamieniołom|Port|Magazyn|Latarnia morska|Latarnia|Drwale|Młyn|Ratusz|Kaplica|Targ|Bakery|Dairy|Slaughterhouse|Fisher|Leatherworks|Academy|Barracks|Piekarnia|Mleczarnia|Rzeźnia|Rybak|Zakład skórzany|Akademia|Koszary) → level (\d+)$/, (_, building, level) => `${tr(building)} → poziom ${level}`);
 priorityRule(/^\+([\d,.\s]+)% (speed|load)$/, (_, value, kind) => `+${value}% ${kind === 'speed' ? 'szybkości' : 'ładowności'}`);
 entries(`
 Construction package quote.|Wycena pakietu budowlanego.
@@ -2243,3 +2247,12 @@ At level 1 the central Warehouse holds 2,688 per material and 13,440 total. Each
 Completing a level sets everyone’s happiness to 100% and doubles material production for 24 hours × the new level. New construction uses the island-level time budget shown before ordering.|Ukończenie poziomu Latarni zapewnia wszystkim 100 punktów szczęścia i podwaja produkcję materiałów na 24 godziny × nowy poziom. Czas nowej budowy zależy od poziomu wyspy; sprawdzisz go przed zleceniem.
 The Theatre is a permanent venue. Arrange and upgrade its decorations instead.|Teatr jest stałym miejscem spotkań. Zamiast rozbudowy budynku możesz przestawiać i ulepszać jego dekoracje.
 `);
+
+// Current editorial copy supersedes historical whole-sentence aliases.
+registerTranslations(COPY_TRANSLATIONS);
+registerTranslations({
+  'House':'Dom','Town Hall':'Ratusz','Warehouse':'Magazyn','Farm':'Gospodarstwo','Windmill':'Młyn','Quarry':'Kamieniołom','Lumber Camp':'Drwale','Sawmill':'Tartak','Market':'Targ','Harbor':'Port','Dock':'Port','Chapel':'Kaplica','Theatre':'Teatr','Lighthouse':'Latarnia',
+  'Grasz dalej.':'Grasz dalej.',
+  'Wybierz przycisk monet albo reklamy.':'Wybierz przycisk monet albo reklamy.',
+  'Not enough market capacity for this exchange.':'Brakuje miejsca na Targu na tę wymianę.'
+});

@@ -1,15 +1,21 @@
 // Lighthouse chapters are optional world objectives, independent of the
 // practical course. Accepted clocks and receipts are persisted with the island.
 import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, availableGoods,
-  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve, townhallPopulationRequirement, quoteTrade } from './harborlight-v1-logistics.js?v=frontend-v31-2';
-import { consumeMaterial, grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v31-2';
-import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v31-2';
-import { residentAtHome, synchronizeResidents } from './harborlight-v1-residents.js?v=frontend-v31-2';
-import { CAMPAIGN_VERSION, campaignChapter, campaignChapterPreview, campaignBudget, campaignStepReward } from './harborlight-v1-campaign.js?v=frontend-v31-2';
+  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve, townhallPopulationRequirement, quoteTrade, receiveMaterials } from './harborlight-v1-logistics.js?v=frontend-v32-2';
+import { consumeMaterial, grantBonusMaterials, quoteMaterialSpend, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-2';
+import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v32-2';
+import { residentAtHome, synchronizeResidents } from './harborlight-v1-residents.js?v=frontend-v32-2';
+import { CAMPAIGN_VERSION, campaignChapter, campaignChapterPreview, campaignBudget, campaignStepReward } from './harborlight-v1-campaign.js?v=frontend-v32-2';
+
+import { MATERIAL_IDS as DEVELOPMENT_MATERIAL_IDS, GOODS, RECIPE_CATALOG, recipeRatePerWorkerHour } from './harborlight-v1-provisions.js?v=frontend-v32-2';
 
 const HOUR = 3600, DAY = 24 * HOUR, EPS = 1e-7, SAFE = Number.MAX_SAFE_INTEGER;
 const RESOURCES = ['coins', ...MATERIAL_IDS];
-const PRODUCER = { wood: 'lumber', stone: 'quarry', grain: 'farm', food: 'windmill', planks: 'sawmill' };
+const KNOWN_RESOURCES = ['coins',...new Set([...MATERIAL_IDS,...DEVELOPMENT_MATERIAL_IDS])];
+const missionMaterials=state=>state.ruleset===32?DEVELOPMENT_MATERIAL_IDS:MATERIAL_IDS;
+const missionResources=state=>['coins',...missionMaterials(state)];
+const developmentRecipe=resource=>Object.entries(RECIPE_CATALOG).find(([,r])=>Object.hasOwn(r.outputs,resource==='food'?'flour':resource));
+const PRODUCER = { wood: 'lumber', stone: 'quarry', grain: 'farm', food: 'windmill', flour:'windmill', planks: 'sawmill', vegetables:'farm',livestock:'farm',rawMilk:'farm',fish:'fisher',bread:'bakery',cake:'bakery',pasteurizedMilk:'dairy',meat:'slaughterhouse',leather:'slaughterhouse',civilianClothes:'leatherworks',militaryClothes:'leatherworks',professorRobes:'leatherworks' };
 const finite = n => typeof n === 'number' && Number.isFinite(n);
 const positive = (n, fallback = 0) => finite(n) ? Math.max(0, Math.min(SAFE, n)) : fallback;
 const whole = (n, fallback = 0) => Math.floor(positive(n, fallback));
@@ -18,11 +24,13 @@ const clock = state => positive(state.worldTimeMs, positive(state.lastSimulatedA
 const lev = (state, id) => whole(state.buildings?.[id]?.level);
 const good = (message, extra = {}) => ({ ok: true, message, ...extra });
 const bad = (message, extra = {}) => ({ ok: false, message, ...extra });
-const cleanCost = cost => Object.fromEntries(RESOURCES.filter(id => whole(cost?.[id]) > 0).map(id => [id, whole(cost[id])]));
+const cleanCost = cost => Object.fromEntries(KNOWN_RESOURCES.filter(id => whole(cost?.[id]) > 0).map(id => [id, whole(cost[id])]));
 const clone = value => JSON.parse(JSON.stringify(value));
 const available = (state, resource) => resource === 'coins' ? whole(state.resources?.coins) : whole(availableGoods(state, resource));
 const count = cost => Object.values(cost || {}).reduce((a, b) => a + b, 0);
-const metric = (state, kind, resource) => whole(state.economyLedger?.[kind]?.[resource]);
+const metric = (state, kind, resource) => whole(state.economyLedger?.[kind]?.[state.ruleset===32&&resource==='food'?'flour':resource]);
+const costReady=(state,cost)=>state.ruleset===32?quoteMaterialSpend(state,cost).ok:Object.entries(cost||{}).every(([id,n])=>available(state,id)>=n);
+function rewardCost(state,raw){const values=Object.fromEntries((state?.ruleset===32?KNOWN_RESOURCES:RESOURCES).filter(id=>whole(raw?.[id])>0).map(id=>[id,whole(raw[id])]));if(state?.ruleset===32&&values.food){values.flour=(values.flour||0)+values.food;delete values.food;}return values;}
 
 export const MISSION_RULES = Object.freeze({ version: 1, firstTownHallLevel: 2,
   mainSteps: 8, supportSteps: 5, rescueSteps: 3, minimumSeconds: 600,
@@ -80,8 +88,8 @@ function normalizeProductionBonuses(state, raw = state) {
   state.missionProductionBonuses = [...combined.values()];
 }
 
-function normalizedReward(raw) {
-  const reward = cleanCost(raw);
+function normalizedReward(raw,state) {
+  const reward = rewardCost(state,raw);
   if (whole(raw?.residents) > 0) reward.residents = Math.min(6, whole(raw.residents));
   if (Object.hasOwn(PRODUCTION_RECIPES, raw?.production?.building)) reward.production = {
     building: raw.production.building, multiplier: 2,
@@ -90,9 +98,9 @@ function normalizedReward(raw) {
 }
 
 export function missionRewardText(reward, language = 'pl') {
-  const pl = language !== 'en', names = pl ? { coins:'monet',wood:'drewna',stone:'kamienia',grain:'zboża',food:'żywności',planks:'desek' } : { coins:'coins',wood:'wood',stone:'stone',grain:'grain',food:'food',planks:'planks' };
+  const pl = language !== 'en', names = pl ? { coins:'monet',wood:'drewna',stone:'kamienia',grain:'zboża',food:'żywności',planks:'desek',flour:'mąki' } : { coins:'coins',wood:'wood',stone:'stone',grain:'grain',food:'food',planks:'planks',flour:'flour' };
   const buildings = pl ? { farm:'Gospodarstwo',windmill:'Młyn',lumber:'Drwale',sawmill:'Tartak',quarry:'Kamieniołom' } : { farm:'Farm',windmill:'Windmill',lumber:'Lumber Camp',sawmill:'Sawmill',quarry:'Quarry' };
-  const parts = RESOURCES.filter(id => whole(reward?.[id]) > 0).map(id => `${whole(reward[id])} ${names[id]}`);
+  const parts = KNOWN_RESOURCES.filter(id => whole(reward?.[id]) > 0).map(id => `${whole(reward[id])} ${names[id]||GOODS[id]?.namePl||id}`);
   if (reward?.residents) parts.push(pl ? `nowi mieszkańcy: ${whole(reward.residents)} (do limitu Ratusza)` : `new residents: ${whole(reward.residents)} (within the Town Hall limit)`);
   if (reward?.production) parts.push(`${buildings[reward.production.building]}: ${pl ? 'produkcja' : 'production'} ×2 / ${whole(reward.production.seconds) / HOUR} ${pl ? 'godz.' : 'h'}`);
   return parts.join(' · ') || (pl ? 'Dalszy etap wspólnej przygody' : 'The next stage of the shared adventure');
@@ -103,11 +111,13 @@ export function missionRewardText(reward, language = 'pl') {
 // but never assumes a paid boost, future immigrant, random reward or trade.
 // Four production/delivery phases per batch account for recipe dependencies.
 export function missionFeasibility(state, requirements, options = {}) {
+  const materials=missionMaterials(state),resources=missionResources(state);
   const cost = cleanCost(requirements), mode = options.mode || 'gather';
   const duration = Math.max(1, Math.min(MISSION_RULES.maximumSeconds, positive(options.duration, 6 * HOUR)));
-  const stock = Object.fromEntries(RESOURCES.map(id => [id, available(state, id)]));
-  const missing = Object.fromEntries(RESOURCES.map(id => [id, Math.max(0, (cost[id] || 0) - stock[id])]));
-  const ready = RESOURCES.every(id => missing[id] === 0);
+  const stock = Object.fromEntries(resources.map(id => [id, available(state, id)]));
+  const missing = Object.fromEntries(resources.map(id => [id, Math.max(0, (cost[id] || 0) - stock[id])]));
+  if(state.ruleset===32&&cost.food){const afterPhysical=materials.filter(id=>id!=='food').reduce((sum,id)=>sum+Math.max(0,stock[id]-(cost[id]||0))*(GOODS[id]?.satiety||0),0);missing.food=Math.max(missing.food,Math.max(0,cost.food-Math.floor(afterPhysical/6+EPS)));}
+  const ready = resources.every(id => missing[id] === 0)&&costReady(state,cost);
   if (ready && options.productionResource == null) return { feasible: true, ready: true, duration, requirements: cost, stock,
     maximum: { ...stock }, missing, staffing: {}, preparationSeconds: 0, reason: null };
   if (options.allowProduction === false) return { feasible: false, ready, duration, requirements: cost, stock,
@@ -116,7 +126,7 @@ export function missionFeasibility(state, requirements, options = {}) {
   const people = Array.isArray(state.residents) ? state.residents.filter(person => !person.visitGroup && !(person.prayerRemaining > EPS)) : [];
   const workers = people.length;
   const housing = housingStatus(state);
-  const totalCapacity = Math.max(whole(state.capacity), lev(state, 'townhall') * 24, workers);
+  const totalCapacity = state.ruleset===32?workers:Math.max(whole(state.capacity), lev(state, 'townhall') * 24, workers);
   const mealDemand = totalCapacity + Math.max(0, totalCapacity - housing.beds);
   const housingFactor = housing.unhoused > 0 ? .5 : 1;
   const lastActivity = positive(state.engagement?.lastRealActivityAt, clock(state));
@@ -129,36 +139,37 @@ export function missionFeasibility(state, requirements, options = {}) {
   const returns = Math.max(0, ...people.map(person => positive(person.returnRemaining) + positive(person.arrivalRemaining)));
   const preparation = 2 * MISSION_RULES.workerWalkSeconds + Math.max(loaded, returns);
   const window = Math.max(0, duration - preparation) / 4;
-  const staffing = {}, produced = Object.fromEntries(MATERIAL_IDS.map(id => [id, missing[id]]));
-  if (options.productionResource && MATERIAL_IDS.includes(options.productionResource)) {
+  const staffing = {}, produced = Object.fromEntries(materials.map(id => [id, missing[id]]));
+  if (options.productionResource && materials.includes(options.productionResource)) {
     produced[options.productionResource] = Math.max(produced[options.productionResource], whole(options.productionAmount, 1));
   }
   if (mode !== 'contribute' && count(missing) > 0 && (cost.food || 0) > 0) produced.food += Math.ceil(mealDemand * duration / HOUR);
   // Recipe inputs belong to the same joint budget, never also to a donation.
   produced.wood = Math.max(produced.wood, Math.max(0, (cost.wood || 0) + 2 * produced.planks - stock.wood));
-  produced.grain = Math.max(produced.grain, Math.max(0, (cost.grain || 0) + 2 * produced.food - stock.grain));
+  produced.grain = Math.max(produced.grain, Math.max(0, (cost.grain || 0) + (state.ruleset===32?4:2) * produced.food + (state.ruleset===32?4*(produced.flour||0):0) - stock.grain));
+  if(state.ruleset===32){for(let pass=0;pass<12;pass++){const inputs={};for(const[resource,n]of Object.entries(produced)){if(!n)continue;const row=developmentRecipe(resource),recipe=row?.[1];if(!recipe)continue;const batches=Math.ceil(n/recipe.outputs[resource==='food'?'flour':resource]);for(const[id,quantity]of Object.entries(recipe.inputs))inputs[id]=(inputs[id]||0)+batches*quantity;}let changed=false;for(const[id,n]of Object.entries(inputs)){const needed=Math.max(0,(cost[id]||0)+n-stock[id]);if(needed>(produced[id]||0)){produced[id]=needed;changed=true;}}if(!changed)break;}}
   let possible = workers > 0 && window > 0;
-  for (const resource of MATERIAL_IDS) {
+  for (const resource of materials) {
     if (!produced[resource]) continue;
-    const id = PRODUCER[resource], rate = productionRate(state, id) * outputFactor;
+    const row=state.ruleset===32?developmentRecipe(resource):null,id = row?.[1].building||PRODUCER[resource],rate=(state.ruleset===32?(row?recipeRatePerWorkerHour(state,row[0])*(row[1].outputs[resource==='food'?'flour':resource]||1):0):productionRate(state,id))*outputFactor;
     const needed = rate > 0 && window > 0 ? Math.ceil(produced[resource] * HOUR / window / rate) : SAFE;
-    staffing[id] = needed;
-    if (!lev(state, id) || needed > lev(state, id) * 12) possible = false;
+    staffing[id] = (staffing[id]||0)+needed;
+    if (!id || !lev(state, id) || staffing[id] > lev(state, id) * 12) possible = false;
   }
   const limits = warehouseLimits(state);
-  const ordinaryRequired = MATERIAL_IDS.reduce((n, id) => n + Math.max(0, (cost[id] || 0) + (id === 'food' ? foodReserve(state) : 0) - bonusStock(state, id)), 0);
-  if (mode !== 'contribute' && (ordinaryRequired > limits.total || MATERIAL_IDS.some(id => Math.max(0, (cost[id] || 0) + (id === 'food' ? foodReserve(state) : 0) - bonusStock(state, id)) > limits.perResource))) possible = false;
+  const ordinaryRequired = materials.reduce((n, id) => n + Math.max(0, (cost[id] || 0) + (id === 'food' ? foodReserve(state) : 0) - bonusStock(state, id)), 0);
+  if (mode !== 'contribute' && (ordinaryRequired > limits.total || materials.some(id => Math.max(0, (cost[id] || 0) + (id === 'food' ? foodReserve(state) : 0) - bonusStock(state, id)) > limits.perResource))) possible = false;
   // Any stock-only part of a contribution can be delivered first, releasing
   // real ordinary capacity. The remaining production can then arrive in batches.
-  const freed = mode === 'contribute' ? MATERIAL_IDS.reduce((n, id) => n + Math.min(ordinaryStock(state, id), Math.max(0, Math.min(cost[id] || 0, stock[id]) - bonusStock(state, id))), 0) : 0;
-  const used = MATERIAL_IDS.reduce((n, id) => n + ordinaryStock(state, id), 0);
+  const freed = mode === 'contribute' ? materials.reduce((n, id) => n + Math.min(ordinaryStock(state, id), Math.max(0, Math.min(cost[id] || 0, stock[id]) - bonusStock(state, id))), 0) : 0;
+  const used = materials.reduce((n, id) => n + ordinaryStock(state, id), 0);
   const globalRoom = Math.max(0, limits.total - used + freed);
   let courses = 0;
-  for (const resource of MATERIAL_IDS) {
+  for (const resource of materials) {
     if (!produced[resource]) continue;
     const initialUse = mode === 'contribute' ? Math.min(ordinaryStock(state, resource), Math.max(0, Math.min(cost[resource] || 0, stock[resource]) - bonusStock(state, resource))) : 0;
     // Consumed recipe inputs also release space before the dependent product.
-    const recipeRoom = resource === 'food' ? 2 * produced.food : resource === 'planks' ? 2 * produced.planks : 0;
+    const recipeRoom = resource === 'food' || state.ruleset===32&&resource==='flour' ? (state.ruleset===32?4:2) * produced[resource] : resource === 'planks' ? 2 * produced.planks : 0;
     const resourceRoom = limits.perResource - ordinaryStock(state, resource) + initialUse + (resource === 'food' ? mealDemand * duration / HOUR : 0);
     const capacity = Math.floor(Math.min(haulCapacity(state), Math.max(globalRoom, recipeRoom), Math.max(0, resourceRoom)));
     if (capacity < 1) { possible = false; continue; }
@@ -172,7 +183,7 @@ export function missionFeasibility(state, requirements, options = {}) {
   const coins = stock.coins + Math.floor(paidWorkers * ordinaryFactor * Math.max(0, duration - preparation) / HOUR);
   if ((cost.coins || 0) > coins) possible = false;
   const maximum = { ...stock, coins };
-  for (const resource of MATERIAL_IDS) maximum[resource] += possible ? Math.max(0, produced[resource]) : 0;
+  for (const resource of materials) maximum[resource] += possible ? Math.max(0, produced[resource]) : 0;
   return { feasible: possible, ready, duration, requirements: cost, stock, maximum, missing, staffing, preparationSeconds: preparation,
     reason: possible ? null : 'Prepare stock, production, carriers and storage space before starting this task.',
     reasonPl: possible ? null : 'Przed rozpoczęciem przygotuj zapasy, produkcję, tragarzy i miejsce w Magazynie.' };
@@ -182,7 +193,7 @@ export function affordableTaskRequirements(state, requested, { duration = 6 * HO
   // Prefer stock already usable at the instant of acceptance. It is a joint
   // physical budget, so recipe inputs and shipping slots cannot be double spent.
   const capped = {};
-  for (const id of MATERIAL_IDS) {
+  for (const id of missionMaterials(state)) {
     const amount = Math.min(whole(requested?.[id]), available(state, id));
     if (amount > 0) capped[id] = amount;
   }
@@ -213,22 +224,22 @@ function defaults() {
   return { version: 1, campaignEnabled: false, chapter: null, stack: [], completedLevels: [], receipts: [], invited: 0,
     recruitmentReceipts: [], assistanceContracts: [], reviewed: [], worldChanges: [], lastIncident: null, lastCompletion: null, lastReward: null };
 }
-function normalizeObjective(raw) {
+function normalizeObjective(raw,state) {
   if (!object(raw) || !['contribute','building','production','stock','invitation','assign','delivered','review','check','adventure','recruitment','shipping'].includes(raw.type)) return null;
   const result = { type: raw.type };
   if (typeof raw.building === 'string' && /^[a-z-]{1,30}$/.test(raw.building)) result.building = raw.building;
-  if (MATERIAL_IDS.includes(raw.resource)) result.resource = raw.resource;
+  if (missionMaterials(state).includes(raw.resource)) result.resource = raw.resource;
   for (const name of ['target','baseline','count','value','targetPopulation','recruitmentTarget']) if (finite(raw[name])) result[name] = whole(raw[name]);
   for (const name of ['check','kind','puzzleKind','storyId','direction']) if (typeof raw[name] === 'string' && /^[a-zA-Z][\w-]{0,70}$/.test(raw[name])) result[name] = raw[name];
   if (raw.requirements) result.requirements = cleanCost(raw.requirements);
   return result;
 }
-function normalizeTask(raw) {
+function normalizeTask(raw,state) {
   if (!object(raw) || typeof raw.id !== 'string' || raw.id.length > 160 || !['offered','active','assistance','retry'].includes(raw.status)) return null;
-  const objective = normalizeObjective(raw.objective); if (!objective) return null;
+  const objective = normalizeObjective(raw.objective,state); if (!objective) return null;
   return { id: raw.id, status: raw.status, objective, requirements: cleanCost(raw.requirements), deposited: cleanCost(raw.deposited),
     title: String(raw.title || '').slice(0, 180), titlePl: String(raw.titlePl || '').slice(0, 180), description: String(raw.description || '').slice(0, 600), descriptionPl: String(raw.descriptionPl || '').slice(0, 600),
-    reward: normalizedReward(raw.reward), duration: Math.max(600, Math.min(7 * DAY, positive(raw.duration, 6 * HOUR))),
+    reward: normalizedReward(raw.reward,state), duration: Math.max(600, Math.min(7 * DAY, positive(raw.duration, 6 * HOUR))),
     offeredAt: positive(raw.offeredAt), acceptedAt: finite(raw.acceptedAt) ? positive(raw.acceptedAt) : null,
     deadline: finite(raw.deadline) ? positive(raw.deadline) : null, attempt: whole(raw.attempt),
     ...(raw.campaignVersion === CAMPAIGN_VERSION ? {campaignVersion: CAMPAIGN_VERSION,untimed: raw.untimed !== false} : {}),
@@ -244,16 +255,16 @@ export function normalizeMissions(state, raw = state) {
   m.recruitmentReceipts = [...new Set((Array.isArray(source.recruitmentReceipts) ? source.recruitmentReceipts : []).filter(id=>typeof id==='string'&&id.length<=200))].slice(-512);
   m.reviewed = [...new Set((Array.isArray(source.reviewed) ? source.reviewed : []).filter(id=>typeof id==='string'&&id.length<=160))].slice(-256);
   m.worldChanges = (Array.isArray(source.worldChanges)?source.worldChanges:[]).filter(item=>object(item)&&whole(item.level)>=2&&whole(item.level)<=100).slice(-100).map(item=>({level:whole(item.level),at:positive(item.at),title:String(item.title||'').slice(0,180),titlePl:String(item.titlePl||'').slice(0,180)}));
-  m.assistanceContracts = (Array.isArray(source.assistanceContracts)?source.assistanceContracts:[]).filter(item=>object(item)&&typeof item.missionId==='string'&&item.missionId.length<=160&&typeof item.receiptId==='string'&&item.receiptId.length<=200).slice(-256).map(item=>({source:'campaign',storyId:'captainless-ship',missionId:item.missionId,goalMissionId:typeof item.goalMissionId==='string'?item.goalMissionId.slice(0,160):item.missionId,receiptId:item.receiptId,chapterId:String(item.chapterId||'').slice(0,160),targetPopulation:whole(item.targetPopulation),mode:['count','population','supplies'].includes(item.mode)?item.mode:'population',goalComplete:item.goalComplete===true,maximumResidents:whole(item.maximumResidents,whole(item.residentsRequested)),residentsAccepted:whole(item.residentsAccepted),residentsRequested:Math.min(54,whole(item.residentsRequested)),supplies:cleanCost(item.supplies),claimed:item.claimed===true,completionReceiptId:typeof item.completionReceiptId==='string'?item.completionReceiptId.slice(0,200):null}));
+  m.assistanceContracts = (Array.isArray(source.assistanceContracts)?source.assistanceContracts:[]).filter(item=>object(item)&&typeof item.missionId==='string'&&item.missionId.length<=160&&typeof item.receiptId==='string'&&item.receiptId.length<=200).slice(-256).map(item=>({source:'campaign',storyId:'captainless-ship',missionId:item.missionId,goalMissionId:typeof item.goalMissionId==='string'?item.goalMissionId.slice(0,160):item.missionId,receiptId:item.receiptId,chapterId:String(item.chapterId||'').slice(0,160),targetPopulation:whole(item.targetPopulation),mode:['count','population','supplies'].includes(item.mode)?item.mode:'population',goalComplete:item.goalComplete===true,maximumResidents:whole(item.maximumResidents,whole(item.residentsRequested)),residentsAccepted:whole(item.residentsAccepted),residentsRequested:Math.min(54,whole(item.residentsRequested)),supplies:rewardCost(state,item.supplies),claimed:item.claimed===true,completionReceiptId:typeof item.completionReceiptId==='string'?item.completionReceiptId.slice(0,200):null}));
   if (object(source.chapter) && whole(source.chapter.level) >= 2 && whole(source.chapter.level) <= 100) {
     const c = source.chapter;
     m.chapter = { id: `lighthouse-chapter-${whole(c.level)}`, level: whole(c.level), targetLevel: Math.max(1, Math.min(100, whole(c.targetLevel, 1))),
-      startedAt: positive(c.startedAt), invitedBaseline: whole(c.invitedBaseline), productionBaseline: Object.fromEntries(MATERIAL_IDS.map(id => [id, whole(c.productionBaseline?.[id])])),
+      startedAt: positive(c.startedAt), invitedBaseline: whole(c.invitedBaseline), productionBaseline: Object.fromEntries(missionMaterials(state).map(id => [id, whole(c.productionBaseline?.[id])])),
       status: c.status === 'completed' ? 'completed' : 'active', storyId: c.campaignVersion===CAMPAIGN_VERSION?(campaignChapter(c.level)?.storyId||missionStory(c.level).id):missionStory(c.level).id, introSeen: c.introSeen === true,
       materialsAwarded:whole(c.materialsAwarded),coinsAwarded:whole(c.coinsAwarded),
       ...(c.campaignVersion===CAMPAIGN_VERSION?{campaignVersion:CAMPAIGN_VERSION,
         buildingBaseline:Object.fromEntries(Object.entries(c.buildingBaseline||{}).filter(([id,n])=>/^[a-z-]{1,30}$/.test(id)&&finite(n)).map(([id,n])=>[id,whole(n)])),
-        deliveryBaseline:Object.fromEntries(MATERIAL_IDS.map(id=>[id,whole(c.deliveryBaseline?.[id])])),
+        deliveryBaseline:Object.fromEntries(missionMaterials(state).map(id=>[id,whole(c.deliveryBaseline?.[id])])),
         adventureBaseline:Object.fromEntries(Object.entries(c.adventureBaseline||{}).filter(([id,n])=>/^[\w:-]{1,100}$/.test(id)&&finite(n)).map(([id,n])=>[id,whole(n)])),
         shippingBaseline:whole(c.shippingBaseline),materialsAwarded:whole(c.materialsAwarded),coinsAwarded:whole(c.coinsAwarded)}:{}) };
     for (const item of Array.isArray(source.stack) ? source.stack.slice(0,3) : []) {
@@ -262,7 +273,7 @@ export function normalizeMissions(state, raw = state) {
       const total = kind === 'main' ? 8 : kind === 'support' ? 5 : 3;
       const frame = { kind, index: Math.max(1, Math.min(total, whole(item.index, 1))), total,
         prefix: typeof item.prefix === 'string' && item.prefix.length <= 140 ? item.prefix : m.chapter.id,
-        task: normalizeTask(item.task) };
+        task: normalizeTask(item.task,state) };
       m.stack.push(frame);
     }
     if (!m.stack.length && m.chapter.status !== 'completed') m.stack.push({ kind:'main',index:1,total:8,prefix:m.chapter.id,task:null });
@@ -271,7 +282,7 @@ export function normalizeMissions(state, raw = state) {
   if (object(source.lastCompletion)) m.lastCompletion = { level: whole(source.lastCompletion.level), at:positive(source.lastCompletion.at) };
   if (object(source.lastReward) && typeof source.lastReward.id === 'string') m.lastReward = {
     id: source.lastReward.id.slice(0,160), at: positive(source.lastReward.at),
-    reward: normalizedReward(source.lastReward.reward), residentsRequested: whole(source.lastReward.residentsRequested),
+    reward: normalizedReward(source.lastReward.reward,state), residentsRequested: whole(source.lastReward.residentsRequested),
     residentsAccepted: whole(source.lastReward.residentsAccepted), residentsUnaccepted: whole(source.lastReward.residentsUnaccepted) };
   state.lighthouseMissions = m;
   return m;
@@ -300,14 +311,14 @@ function shippingQuote(state){
 }
 function checkAccomplished(state,objective) {
   const value=Math.max(1,whole(objective.value,1));
-  if(objective.check==='housing')return housingStatus(state).beds>=Math.min(lev(state,'townhall')*24,whole(state.population)+value);
-  if(objective.check==='food')return positive(state.resources?.food)>=foodReserve(state)+Math.max(1,whole(state.population)/2);
+  if(objective.check==='housing')return housingStatus(state).beds>=Math.min(lev(state,'townhall')*(state.ruleset===32?36:24),whole(state.population)+value);
+  if(objective.check==='food')return state.ruleset===32?available(state,'food')>=Math.max(1,Math.ceil(whole(state.population)/2)):positive(state.resources?.food)>=foodReserve(state)+Math.max(1,whole(state.population)/2);
   if(objective.check==='warehouseCrew')return readyCrew(state,'warehouse')>=value;
   if(objective.check==='dockCrew')return lev(state,'townhall')>=4&&readyCrew(state,'dock')>=value;
   if(objective.check==='foodChain')return ['farm','windmill','warehouse'].every(id=>readyCrew(state,id)>=1);
   if(objective.check==='storageRoom'){
-    const limits=warehouseLimits(state),used=MATERIAL_IDS.reduce((n,id)=>n+ordinaryStock(state,id),0);
-    return limits.total-used>=value&&MATERIAL_IDS.some(id=>limits.perResource-ordinaryStock(state,id)>=value);
+    const limits=warehouseLimits(state),used=missionMaterials(state).reduce((n,id)=>n+ordinaryStock(state,id),0);
+    return limits.total-used>=value&&missionMaterials(state).some(id=>limits.perResource-ordinaryStock(state,id)>=value);
   }
   return false;
 }
@@ -316,7 +327,7 @@ function checkReason(state,o){
   if(o.check==='food')return `Zabezpiecz jedzenie w magazynie centralnym. Chroniona rezerwa wynosi ${foodReserve(state)}.`;
   if(o.check==='storageRoom')return `Zwolnij co najmniej ${whole(o.value,1)} miejsc na potrzebną dostawę albo rozbuduj Magazyn.`;
   if(o.check==='dockCrew')return 'Otwórz Port, przydziel pracownika i zaczekaj na jego dojście. Port działa od 4 poziomu Ratusza.';
-  if(o.check==='foodChain')return 'Przygotuj co najmniej jednego gotowego rolnika, pracownika Młyna i tragarza. Zboże musi trafić do magazynu centralnego, a żywność zostać odebrana z Młyna.';
+  if(o.check==='foodChain')return state.ruleset===32?'Przygotuj co najmniej jednego gotowego rolnika, pracownika Młyna i tragarza. Zboże musi dotrzeć do Młyna; mąkę odbierz do magazynu centralnego.':'Przygotuj co najmniej jednego gotowego rolnika, pracownika Młyna i tragarza. Zboże musi trafić do magazynu centralnego, a żywność zostać odebrana z Młyna.';
   return `Otwórz Magazyn i przygotuj co najmniej ${whole(o.value,1)} gotowych tragarzy. Ich dojście z Domu trwa dwie minuty.`;
 }
 function campaignTask(state,m,frame,context) {
@@ -332,6 +343,7 @@ function campaignTask(state,m,frame,context) {
     const producer={5:'windmill',7:'quarry',14:'sawmill',18:'farm'}[m.chapter.level];if(producer)task.reward.production={building:producer,multiplier:2,seconds:HOUR};
   }
   for(const key of ['building','check','value','kind','puzzleKind','storyId','recruitmentTarget','targetPopulation','direction'])if(definition[key]!==undefined)objective[key]=definition[key];
+  if(state.ruleset===32&&m.chapter.level===3){const required=townhallPopulationRequirement(state,4).populationRequired;for(const key of ['recruitmentTarget','targetPopulation'])if(objective[key]===54)objective[key]=required;task.titlePl=task.titlePl.replace(/54/g,String(required));task.title=task.title.replace(/54/g,String(required));}
   if(definition.type==='building')objective.target=definition.target||Math.min(lev(state,'townhall'),m.chapter.targetLevel);
   if(definition.type==='production'||definition.type==='delivered'){
     objective.resource=definition.resource;objective.count=amount;
@@ -356,10 +368,11 @@ function campaignTask(state,m,frame,context) {
   if(room&&next){
     const nextCost=next.type==='building'||next.costBuilding?costFor(state,next.building||next.costBuilding,context):next.resource?{[next.resource]:Math.max(1,Math.min(100,whole(next.scale,3)*m.chapter.level))}:{};
     let left=Math.min(room,Math.ceil(budget.materials/4));
-    for(const id of MATERIAL_IDS.filter(id=>(nextCost[id]||0)>available(state,id)).slice(0,2)){
+    for(const id of missionMaterials(state).filter(id=>(nextCost[id]||0)>available(state,id)).slice(0,2)){
       const n=Math.min(left,Math.ceil((nextCost[id]||0)-available(state,id)));if(n>0){task.reward[id]=n;left-=n;}
     }
   }
+  task.reward=normalizedReward(task.reward,state);
   return task;
 }
 function campaignStoryFor(state,m=ensure(state)) {
@@ -367,7 +380,7 @@ function campaignStoryFor(state,m=ensure(state)) {
   return chapter?{id:chapter.storyId,title:chapter.title.en,titlePl:chapter.title.pl,description:chapter.worldChange.en,descriptionPl:chapter.worldChange.pl,steps:8}:missionStory(m.chapter?.level||2);
 }
 function costFor(state, building, context = {}) {
-  if (typeof context.buildingCost === 'function') return cleanCost(context.buildingCost(state, building, { queued:false }));
+  if (typeof context.buildingCost === 'function'){const quoted=context.buildingCost(state,building,{queued:false}),cost=cleanCost(quoted);if(state.ruleset===32&&quoted.foodQuote?.ok===false&&positive(quoted.foodUnits)>0){for(const[id,n]of Object.entries(quoted.foodQuote.materials||{})){cost[id]=Math.max(0,(cost[id]||0)-n);if(!cost[id])delete cost[id];}cost.food=quoted.foodUnits;}return cost;}
   const l = Math.max(1, lev(state,building));
   if (PRODUCTION_RECIPES[building]) {
     const factor = building === 'farm' ? 1 : 2, result = {wood:72*l,stone:72*l};
@@ -408,9 +421,9 @@ export function missionAssistanceOffer(state,context={}){
   let target=whole(o.targetPopulation||o.recruitmentTarget);
   if(o.type==='building'&&o.building==='townhall')target=townhallPopulationRequirement(state,o.target).populationRequired;
   if(['recruitment','invitation'].includes(o.type)&&!target)target=whole(state.population)+Math.max(0,whole(o.count,1)-(m.invited-whole(o.baseline)));
-  const capacity=lev(state,'townhall')*24;
+  const capacity=lev(state,'townhall')*(state.ruleset===32?36:24);
   target=Math.min(capacity,Math.max(whole(state.population),target));
-  const goalMissionId=target===54&&m.chapter?.level===3?`${m.chapter.id}:recruitment-54`:parent.id;
+  const goalMissionId=target===townhallPopulationRequirement(state,4).populationRequired&&m.chapter?.level===3?`${m.chapter.id}:recruitment-54`:parent.id;
   const goalContracts=m.assistanceContracts.filter(contract=>(contract.goalMissionId||contract.missionId)===goalMissionId);
   const previous=goalContracts.find(contract=>!contract.claimed);
   if(previous)return {...clone(previous),source:'campaign'};
@@ -426,7 +439,7 @@ export function missionAssistanceOffer(state,context={}){
   const needs=remainingCost(state,parent,context),budget=campaignBudget(m.chapter?.level||lev(state,'townhall'));
   let room=Math.max(0,budget.materials-whole(m.chapter?.materialsAwarded));
   const supplies={};
-  for(const id of MATERIAL_IDS.filter(id=>(needs[id]||0)>available(state,id)).sort((a,b)=>((needs[b]||0)-available(state,b))-((needs[a]||0)-available(state,a))).slice(0,2)){
+  for(const id of missionMaterials(state).filter(id=>(needs[id]||0)>available(state,id)).sort((a,b)=>((needs[b]||0)-available(state,b))-((needs[a]||0)-available(state,a))).slice(0,2)){
     const n=Math.min(room,Math.max(0,(needs[id]||0)-available(state,id)));if(n){supplies[id]=n;room-=n;}
   }
   const coinNeed=Math.max(0,(needs.coins||0)-available(state,'coins'));
@@ -434,7 +447,7 @@ export function missionAssistanceOffer(state,context={}){
   if(coins)supplies.coins=coins;
   const positiveGoal=requested>0||['invitation','recruitment'].includes(o.type)||o.recruitmentTarget||o.targetPopulation;
   if(!positiveGoal&&!Object.keys(supplies).length)return null;
-  return {source:'campaign',missionId:task.id,goalMissionId,chapterId:m.chapter.id,receiptId,targetPopulation:target,mode,goalComplete:false,maximumResidents,residentsRequested:requested,residentsAccepted:0,supplies,claimed:false,
+  return {source:'campaign',missionId:task.id,goalMissionId,chapterId:m.chapter.id,receiptId,targetPopulation:target,mode,goalComplete:false,maximumResidents,residentsRequested:requested,residentsAccepted:0,supplies:rewardCost(state,supplies),claimed:false,
     ...(requested===0&&positiveGoal?{helpNeighbors:true}:{}),storyId:'captainless-ship'};
 }
 /** Called by the trusted state dispatcher before starting the real adventure. */
@@ -454,12 +467,12 @@ export function recruitmentRewardQuote(state,runContext){
   const contract=m.assistanceContracts.find(item=>item.receiptId===raw.receiptId&&item.missionId===raw.missionId&&item.chapterId===raw.chapterId);
   if(!contract||contract.claimed||m.recruitmentReceipts.includes(contract.receiptId))return bad('This assistance reward was already received or is unavailable.');
   if(m.chapter?.id!==contract.chapterId||m.chapter?.status==='completed'||m.receipts.includes(contract.goalMissionId))return{ok:true,missionId:contract.missionId,recruitmentReceiptId:contract.receiptId,receiptId:contract.receiptId,residentsRequested:0,residentsAccepted:0,supplies:{},targetPopulation:contract.targetPopulation,helpNeighbors:true,goalAlreadyResolved:true};
-  const spaces=Math.max(0,lev(state,'townhall')*24-whole(state.population)-whole(state.incomingPassengers));
+  const spaces=Math.max(0,lev(state,'townhall')*(state.ruleset===32?36:24)-whole(state.population)-whole(state.incomingPassengers));
   const requested=Math.max(0,Math.min(contract.residentsRequested,contract.mode==='count'?contract.residentsRequested:contract.targetPopulation-whole(state.population)));
   const budget=campaignBudget(m.chapter?.level||lev(state,'townhall'));
-  const supplies=cleanCost(contract.supplies);
+  const supplies=rewardCost(state,contract.supplies);
   let room=Math.max(0,budget.materials-whole(m.chapter?.materialsAwarded));
-  for(const id of MATERIAL_IDS){supplies[id]=Math.min(whole(supplies[id]),room);room-=supplies[id];if(!supplies[id])delete supplies[id];}
+  for(const id of missionMaterials(state)){supplies[id]=Math.min(whole(supplies[id]),room);room-=supplies[id];if(!supplies[id])delete supplies[id];}
   if(supplies.coins)supplies.coins=Math.min(supplies.coins,Math.max(0,budget.coins-whole(m.chapter?.coinsAwarded)));
   return {ok:true,missionId:contract.missionId,recruitmentReceiptId:contract.receiptId,receiptId:contract.receiptId,
     residentsRequested:requested,residentsAccepted:Math.min(requested,spaces),targetPopulation:contract.targetPopulation,supplies,helpNeighbors:requested===0};
@@ -472,12 +485,12 @@ export function recordMissionAssistance(state,runContext,result={}){
   if(!contract||contract.claimed||m.recruitmentReceipts.includes(contract.receiptId))return bad('This assistance reward was already received.');
   const accepted=whole(result.residentsAccepted);
   if(accepted>contract.residentsRequested)return bad('The recruitment result exceeds its canonical contract.');
-  const values=cleanCost(result.supplies||{});
-  if(RESOURCES.some(id=>whole(values[id])>whole(contract.supplies?.[id])))return bad('The assistance result exceeds its canonical supplies.');
-  contract.claimed=true;contract.residentsAccepted=accepted;contract.goalComplete=contract.mode==='population'?whole(state.population)>=contract.targetPopulation:contract.mode==='count'?accepted>=contract.maximumResidents||whole(state.population)+whole(state.incomingPassengers)>=lev(state,'townhall')*24:true;contract.completionReceiptId=result.completionReceiptId;m.recruitmentReceipts.push(contract.receiptId);m.recruitmentReceipts=m.recruitmentReceipts.slice(-512);
+  const values=rewardCost(state,result.supplies||{});
+  if(missionResources(state).some(id=>whole(values[id])>whole(contract.supplies?.[id])))return bad('The assistance result exceeds its canonical supplies.');
+  contract.claimed=true;contract.residentsAccepted=accepted;contract.goalComplete=contract.mode==='population'?whole(state.population)>=contract.targetPopulation:contract.mode==='count'?accepted>=contract.maximumResidents||whole(state.population)+whole(state.incomingPassengers)>=lev(state,'townhall')*(state.ruleset===32?36:24):true;contract.completionReceiptId=result.completionReceiptId;m.recruitmentReceipts.push(contract.receiptId);m.recruitmentReceipts=m.recruitmentReceipts.slice(-512);
   m.invited=Math.min(SAFE,m.invited+accepted);
   if(m.chapter?.id===contract.chapterId){
-    m.chapter.materialsAwarded=whole(m.chapter.materialsAwarded)+MATERIAL_IDS.reduce((n,id)=>n+whole(values[id]),0);
+    m.chapter.materialsAwarded=whole(m.chapter.materialsAwarded)+missionMaterials(state).reduce((n,id)=>n+whole(values[id]),0);
     m.chapter.coinsAwarded=whole(m.chapter.coinsAwarded)+whole(values.coins);
   }
   return good('The earned assistance was recorded.',{residentsAccepted:accepted,recruitmentReceiptId:contract.receiptId});
@@ -493,8 +506,8 @@ function taskText(index) {
     ['Lighthouse materials','Materiały dla Latarni','Gather the displayed building materials; the actual upgrade uses them in the next step.','Przygotuj pozostałe materiały potrzebne do rozbudowy Latarni. Gotowy zapas wykorzystasz w następnym etapie.'],
     ['Restore the Lighthouse light','Przywróćmy Latarni blask','Finish the actual Lighthouse upgrade.','Ukończ wskazaną rozbudowę Latarni. Zaczekaj na zakończenie dostaw i prac budowlanych.']][index];
 }
-function firstNeeded(task) {
-  return MATERIAL_IDS.find(id => (task?.requirements?.[id] || task?.objective?.requirements?.[id] || 0) > (task?.deposited?.[id] || 0)) || task?.objective?.resource || 'wood';
+function firstNeeded(task,state) {
+  return missionMaterials(state).find(id => (task?.requirements?.[id] || task?.objective?.requirements?.[id] || 0) > (task?.deposited?.[id] || 0)) || task?.objective?.resource || 'wood';
 }
 function newTask(state, m, frame, context) {
   if(frame.kind==='main'&&m.chapter.campaignVersion===CAMPAIGN_VERSION){const task=campaignTask(state,m,frame,context);if(task)return task;}
@@ -529,7 +542,7 @@ function newTask(state, m, frame, context) {
     if (frame.index === 7) base.reward.production = { building:'farm', multiplier:2, seconds:MISSION_RULES.productionBonusSeconds };
     if (frame.index === 8) base.reward.residents = Math.min(3, 1 + Math.floor((level - 2) / 3));
   } else {
-    const parent=m.stack[m.stack.length-2]?.task, resource=firstNeeded(parent), producer=PRODUCER[resource];
+    const parent=m.stack[m.stack.length-2]?.task, resource=firstNeeded(parent,state), producer=PRODUCER[resource];
     if(m.chapter.campaignVersion===CAMPAIGN_VERSION&&parent){
       const population=parent.objective.targetPopulation||parent.objective.recruitmentTarget||
         (parent.objective.building==='townhall'?townhallPopulationRequirement(state,parent.objective.target).populationRequired:0);
@@ -552,7 +565,7 @@ function newTask(state, m, frame, context) {
         base.objective=clone(o);base.titlePl='Przygotuj właściwą ekipę i zaczekaj na dojście';base.title='Prepare the right crew and wait for arrival';
         if(index===4){base.objective={type:'review',building:o.building||'warehouse'};base.titlePl='Sprawdź gotowy harmonogram dostaw';base.title='Review the ready delivery schedule';}
       }else if(o.type==='check'&&o.check==='housing'){
-        base.objective=index===2?{type:'building',building:'house',target:Math.min(lev(state,'townhall'),Math.ceil(Math.min(lev(state,'townhall')*24,whole(state.population)+Math.max(1,o.value||1))/24))}:clone(o);
+        base.objective=index===2?{type:'building',building:'house',target:Math.min(lev(state,'townhall'),Math.ceil(Math.min(lev(state,'townhall')*(state.ruleset===32?36:24),whole(state.population)+Math.max(1,o.value||1))/(state.ruleset===32?36:24)))}:clone(o);
         base.titlePl='Przygotuj rzeczywiste miejsca w Domu';base.title='Prepare actual beds at Home';
       }else if(o.type==='check'&&o.check==='food'){
         base.objective=index===2?{type:'check',check:'foodChain',building:'warehouse',value:1}:clone(o);
@@ -598,6 +611,7 @@ function newTask(state, m, frame, context) {
   if(base.objective.type==='stock')base.requirements=cleanCost(base.objective.requirements);
   if(base.objective.type==='building')base.requirements=lev(state,base.objective.building)>=base.objective.target?{}:costFor(state,base.objective.building,context);
   if(base.objective.type==='invitation')base.requirements=missionResidentCost(state);
+  base.reward=normalizedReward(base.reward,state);
   return base;
 }
 function remainingCost(state, task, context) {
@@ -620,7 +634,7 @@ function accomplished(state,m,task) {
     m.invited-whole(o.baseline)>=whole(o.count,1)||m.assistanceContracts.some(contract=>contract.missionId===task.id&&contract.claimed);
   if(o.type==='building')return lev(state,o.building)>=o.target;
   if(o.type==='production'||o.type==='delivered')return metric(state,o.type==='production'?'produced':'delivered',o.resource)-o.baseline>=o.count;
-  if(o.type==='stock')return Object.entries(o.requirements||{}).every(([id,n])=>available(state,id)>=n);
+  if(o.type==='stock')return costReady(state,o.requirements||{});
   if(o.type==='invitation')return m.invited-o.baseline>=o.count||m.assistanceContracts.some(contract=>contract.claimed&&contract.residentsRequested===0&&[contract.missionId,contract.goalMissionId].includes(task.id));
   if(o.type==='assign')return whole(state.buildings?.[o.building]?.workers)>=o.count;
   return Object.entries(task.requirements).every(([id,n])=>whole(task.deposited?.[id])>=n);
@@ -629,8 +643,8 @@ function proof(state,m,task,context={}) {
   if(accomplished(state,m,task))return{feasible:true,ready:true,duration:600,staffing:{},reason:null};
   const o=task.objective;
   if(o.type==='review'||o.type==='adventure')return{feasible:true,ready:false,duration:6*HOUR,staffing:{},requirements:{},reason:null};
-  if(o.type==='recruitment')return{feasible:!o.targetPopulation||o.targetPopulation<=lev(state,'townhall')*24,ready:false,duration:6*HOUR,staffing:{},requirements:{},
-    reasonPl:o.targetPopulation>lev(state,'townhall')*24?'Najpierw zapewnij odpowiedni limit Ratusza.':'Ukończ wyprawę ratunkową albo zaproś mieszkańca w Domu. Przy pełnym limicie pomożesz sąsiedniej osadzie.'};
+  if(o.type==='recruitment')return{feasible:!o.targetPopulation||o.targetPopulation<=lev(state,'townhall')*(state.ruleset===32?36:24),ready:false,duration:6*HOUR,staffing:{},requirements:{},
+    reasonPl:o.targetPopulation>lev(state,'townhall')*(state.ruleset===32?36:24)?'Najpierw zapewnij odpowiedni limit Ratusza.':'Ukończ wyprawę ratunkową albo zaproś mieszkańca w Domu. Przy pełnym limicie pomożesz sąsiedniej osadzie.'};
   if(o.type==='check')return{feasible:false,ready:false,duration:6*HOUR,staffing:{},requirements:{},reasonPl:checkReason(state,o)};
   if(o.type==='shipping'){
     const quote=shippingQuote(state),cost=remainingCost(state,task,context);
@@ -642,7 +656,7 @@ function proof(state,m,task,context={}) {
     const assigned=whole(state.buildings?.[o.building]?.workers);
     return{feasible:lev(state,o.building)>0&&o.count<=lev(state,o.building)*12&&assigned+free>=o.count,ready:false,duration:600,staffing:{[o.building]:o.count},reasonPl:'Przygotuj mieszkańca do pracy we wskazanym budynku.'};
   }
-  if(o.type==='invitation'&&whole(state.population)+whole(state.incomingPassengers)>=lev(state,'townhall')*24)return{feasible:false,ready:false,reasonPl:'Najpierw przygotuj wolne miejsce w limicie Ratusza.'};
+  if(o.type==='invitation'&&whole(state.population)+whole(state.incomingPassengers)>=lev(state,'townhall')*(state.ruleset===32?36:24))return{feasible:false,ready:false,reasonPl:'Najpierw przygotuj wolne miejsce w limicie Ratusza.'};
   const cost=remainingCost(state,task,context);
   if(o.type==='building'&&(o.target>100||o.building!=='townhall'&&o.target>lev(state,'townhall')))return{feasible:false,ready:false,reasonPl:'Najpierw rozbuduj Ratusz do wymaganego poziomu.'};
   if(o.type==='building'&&o.building==='townhall'){
@@ -673,7 +687,7 @@ function proof(state,m,task,context={}) {
         reason:'Prepare available warehouse carriers and a finite delivery schedule before starting.',
         reasonPl:'Najpierw przygotuj dostępnych tragarzy w Magazynie i możliwy do oszacowania harmonogram dostaw.'};
       const materialCost=project?.remainingMaterials||cost;
-      const trips=MATERIAL_IDS.reduce((n,id)=>n+Math.ceil((materialCost[id]||0)/Math.max(1,haulCapacity(state))),0);
+      const trips=missionMaterials(state).reduce((n,id)=>n+Math.ceil((materialCost[id]||0)/Math.max(1,haulCapacity(state))),0);
       constructionSeconds=positive(project?.transportSeconds)* (o.building==='lighthouse'?4:1)+trips*1200*(o.building==='lighthouse'?5:2)+240;
     }
   }
@@ -691,18 +705,18 @@ function proof(state,m,task,context={}) {
 }
 function credit(state,m,task){
   if(m.receipts.includes(task.id))return true;
-  const reward=normalizedReward(task.reward), amount=whole(reward.coins);
+  const reward=normalizedReward(task.reward,state), amount=whole(reward.coins);
   if(m.chapter.campaignVersion===CAMPAIGN_VERSION){
     const budget=campaignBudget(m.chapter.level);
     reward.coins=Math.min(amount,Math.max(0,budget.coins-whole(m.chapter.coinsAwarded)));
     let room=Math.max(0,budget.materials-whole(m.chapter.materialsAwarded));
-    for(const id of MATERIAL_IDS){if(reward[id]){reward[id]=Math.min(reward[id],room);room-=reward[id];}}
+    for(const id of missionMaterials(state)){if(reward[id]){reward[id]=Math.min(reward[id],room);room-=reward[id];}}
   }
-  if(!Number.isSafeInteger(whole(state.resources?.coins)+whole(reward.coins))||MATERIAL_IDS.some(id=>positive(state.resources?.[id])+whole(reward[id])>SAFE))return false;
+  if(!Number.isSafeInteger(whole(state.resources?.coins)+whole(reward.coins))||missionMaterials(state).some(id=>positive(state.resources?.[id])+whole(reward[id])>SAFE))return false;
   state.resources.coins=whole(state.resources?.coins)+whole(reward.coins);
-  grantBonusMaterials(state,reward);
+  if(state.ruleset===32)receiveMaterials(state,reward);else grantBonusMaterials(state,reward);
   const residentsRequested=whole(reward.residents);
-  const residentsAccepted=Math.min(residentsRequested,Math.max(0,lev(state,'townhall')*24-whole(state.population)-whole(state.incomingPassengers)));
+  const residentsAccepted=Math.min(residentsRequested,Math.max(0,lev(state,'townhall')*(state.ruleset===32?36:24)-whole(state.population)-whole(state.incomingPassengers)));
   if(residentsAccepted){state.population=whole(state.population)+residentsAccepted;synchronizeResidents(state);}
   if(reward.production){
     normalizeProductionBonuses(state);
@@ -712,7 +726,7 @@ function credit(state,m,task){
   }
   m.lastReward={id:task.id,at:clock(state),reward:clone(reward),residentsRequested,residentsAccepted,residentsUnaccepted:residentsRequested-residentsAccepted};
   m.receipts.push(task.id);m.receipts=m.receipts.slice(-256);
-  if(m.chapter.campaignVersion===CAMPAIGN_VERSION){m.chapter.coinsAwarded=whole(m.chapter.coinsAwarded)+whole(reward.coins);m.chapter.materialsAwarded=whole(m.chapter.materialsAwarded)+MATERIAL_IDS.reduce((n,id)=>n+whole(reward[id]),0);}
+  if(m.chapter.campaignVersion===CAMPAIGN_VERSION){m.chapter.coinsAwarded=whole(m.chapter.coinsAwarded)+whole(reward.coins);m.chapter.materialsAwarded=whole(m.chapter.materialsAwarded)+missionMaterials(state).reduce((n,id)=>n+whole(reward[id]),0);}
   return true;
 }
 function completeFrameTask(state,m,frame){
@@ -768,12 +782,12 @@ function unlock(state,m){
   const definition=m.campaignEnabled?campaignChapter(level):null;
   if(lev(state,'lighthouse')>=100&&!definition)return;
   m.chapter={id:`lighthouse-chapter-${level}`,level,targetLevel:target,startedAt:clock(state),invitedBaseline:m.invited,
-    productionBaseline:Object.fromEntries(MATERIAL_IDS.map(id=>[id,metric(state,'produced',id)])),status:'active',storyId:missionStory(level).id,introSeen:false,coinsAwarded:0,materialsAwarded:0};
+    productionBaseline:Object.fromEntries(missionMaterials(state).map(id=>[id,metric(state,'produced',id)])),status:'active',storyId:missionStory(level).id,introSeen:false,coinsAwarded:0,materialsAwarded:0};
   if(definition){
     m.chapter.campaignVersion=CAMPAIGN_VERSION;m.chapter.storyId=definition.storyId;
     m.chapter.targetLevel=Math.min(100,lev(state,'townhall'),lev(state,'lighthouse')+1);
     m.chapter.buildingBaseline=Object.fromEntries(Object.entries(state.buildings||{}).map(([id,value])=>[id,whole(value.level)]));
-    m.chapter.deliveryBaseline=Object.fromEntries(MATERIAL_IDS.map(id=>[id,metric(state,'delivered',id)]));
+    m.chapter.deliveryBaseline=Object.fromEntries(missionMaterials(state).map(id=>[id,metric(state,'delivered',id)]));
     m.chapter.adventureBaseline=Object.fromEntries(definition.steps.filter(step=>step.type==='adventure').map(step=>[adventureKey(step),adventureMetric(state,step)]));
     m.chapter.shippingBaseline=whole(state.dock?.nextOrderId);m.chapter.coinsAwarded=0;m.chapter.materialsAwarded=0;
   }
@@ -803,6 +817,7 @@ export function recordMissionAction(state,action,result,context={}){
   if(!result?.ok)return;
   const m=ensure(state);
   if(action?.type==='buyResident')m.invited=Math.min(SAFE,m.invited+Math.max(1,whole(result.quantity,1)));
+  if(state.ruleset===32&&action?.type==='civilianRescueClaim'&&(result.islandId||action.islandId||state.islandId)===state.islandId)m.invited=Math.min(SAFE,m.invited+whole(result.accepted));
   advanceMissions(state,0,context);
 }
 // Reading this introduction never accepts a task or starts a deadline. The host
@@ -832,7 +847,7 @@ export function campaignReadiness(state,context={}){
     if(o.type==='building'&&!readyCrew(state,'warehouse'))prerequisites.push({type:'warehouseCrew',target:1,messagePl:'Przygotuj gotowych tragarzy.',message:'Prepare ready warehouse carriers.'});
     if(o.type==='shipping'&&lev(state,'townhall')<4)prerequisites.push({type:'townhall',target:4,messagePl:'Port działa od 4 poziomu Ratusza.',message:'The Harbor unlocks at Town Hall level 4.'});
     if(o.type==='check'&&!checkAccomplished(state,o))prerequisites.push({type:o.check,messagePl:checkReason(state,o),message:'Prepare the displayed island condition.'});
-    if(['stock','building'].includes(o.type))for(const id of MATERIAL_IDS){const ordinary=Math.max(0,(requirements[id]||0)-bonusStock(state,id)+(id==='food'?foodReserve(state):0));if(ordinary>limits.perResource)prerequisites.push({type:'storage',resource:id,required:ordinary,capacity:limits.perResource,messagePl:`Zwiększ pojemność na ${id}: potrzeba ${ordinary}.`,message:`Increase ${id} storage to ${ordinary}.`});}
+    if(['stock','building'].includes(o.type))for(const id of missionMaterials(state)){const ordinary=Math.max(0,(requirements[id]||0)-bonusStock(state,id)+(id==='food'?foodReserve(state):0));if(ordinary>limits.perResource)prerequisites.push({type:'storage',resource:id,required:ordinary,capacity:limits.perResource,messagePl:`Zwiększ pojemność na ${id}: potrzeba ${ordinary}.`,message:`Increase ${id} storage to ${ordinary}.`});}
     return{index:i+1,title:candidate.title,titlePl:candidate.titlePl,objective:clone(o),requirements,missing,prerequisites,complete:accomplished(state,m,candidate),active:m.stack[0]?.index===i+1,requiresPayment:['contribute','building','shipping'].includes(o.type),optionalPaidRecruitment:o.type==='recruitment'};
   });
   return{level:chapter.level,valid:steps.every(step=>step.objective.type!=='building'||step.objective.target<=100),providerIndependent:true,
@@ -885,9 +900,9 @@ export function missionAction(state,action,context={}){
   }
   if(task.status!=='active'||task.objective.type!=='contribute')return bad('Start the material contribution step first.');
   const resource=action.resource,amount=action.amount;
-  if(!MATERIAL_IDS.includes(resource)||!Number.isSafeInteger(amount)||amount<1||amount>(task.requirements[resource]||0)-(task.deposited[resource]||0))return bad('Choose a whole amount within the remaining mission requirement.');
+  if(!missionMaterials(state).includes(resource)||!Number.isSafeInteger(amount)||amount<1||amount>(task.requirements[resource]||0)-(task.deposited[resource]||0))return bad('Choose a whole amount within the remaining mission requirement.');
   if(available(state,resource)<amount)return bad('Use unreserved central stock and preserve the food reserve.');
-  consumeMaterial(state,resource,amount);task.deposited[resource]=(task.deposited[resource]||0)+amount;repairContributionParent(m,task);
+  if(state.ruleset===32){if(!spendMaterials(state,{[resource]:amount}))return bad('Use unreserved central stock and preserve the food reserve.');}else consumeMaterial(state,resource,amount);task.deposited[resource]=(task.deposited[resource]||0)+amount;repairContributionParent(m,task);
   advanceMissions(state,0,context);
   return good('Mission contribution delivered.',{missionId:task.id,completed:m.receipts.includes(task.id)});
 }

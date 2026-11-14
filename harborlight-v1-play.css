@@ -770,6 +770,48 @@ body[data-active-island="island-2"] .topbar-brand,body[data-active-island="islan
 .archipelago-panel .info-card{min-width:0;overflow-wrap:anywhere}
 .archipelago-panel input,.island-shipping-form select{max-width:100%;min-width:0}
 
+/* DEV visual audit: keep form controls on a common baseline and give the
+   small staffing actions the same usable target as the other actions. */
+#island-dialog .producer-worker-controls{align-items:center;gap:8px}
+#island-dialog .producer-worker-controls button{flex:0 0 44px;width:44px;height:44px;min-width:44px;min-height:44px;margin:0;padding:0;display:inline-grid;place-items:center;font-size:21px;line-height:1}
+#island-dialog .pool-actions{align-items:end;gap:10px}
+#island-dialog .pool-actions>input,#island-dialog .pool-actions>select,#island-dialog .pool-actions>.action{min-height:44px;height:auto;margin:0;box-sizing:border-box}
+#island-dialog .pool-actions>input,#island-dialog .pool-actions>select{height:44px;padding:9px 10px;font-size:14px;line-height:1.4}
+#island-dialog .market-exchange-fields{align-items:end}
+#island-dialog .market-exchange-fields>label{display:grid;gap:7px;min-width:0;margin:0;color:#d5e7e9;font-size:13px;line-height:1.4}
+#island-dialog .market-exchange-fields input,#island-dialog .market-exchange-fields select{height:44px;min-height:44px;padding:9px 10px;line-height:1.4}
+#island-dialog .player-trade-form,#island-dialog .island-shipping-form{align-items:end}
+#island-dialog .player-trade-form label,#island-dialog .island-shipping-form label{align-self:stretch;align-content:end;line-height:1.4}
+#island-dialog .island-shipping-form select{width:100%;height:44px;min-height:44px;padding:9px 10px;border:1px solid #718e9f;border-radius:8px;background:#092b3e;color:#eef7f5;font:inherit}
+#island-dialog .hl-kingdom-card form>label{display:grid;grid-template-columns:minmax(0,1fr) minmax(110px,190px);align-items:center;column-gap:16px;row-gap:7px;margin-block:12px}
+#island-dialog .hl-kingdom-card form>label>input:not([type=checkbox]),#island-dialog .hl-kingdom-card form>label>select{width:100%;max-width:none;height:44px;min-height:44px;margin:0;box-sizing:border-box}
+#island-dialog .hl-kingdom-actions{align-items:stretch;gap:10px}
+#island-dialog .hl-kingdom-actions>button{min-height:44px;margin:0;line-height:1.4}
+#island-dialog [data-v32-dev-time]{min-height:44px;margin:0 10px 12px 0;padding:9px 11px;border:1px solid #718fa0;border-radius:8px;background:#14364c;color:#ffe1a7;font:inherit;vertical-align:middle}
+#island-dialog [data-v32-dev-time-submit]{min-height:44px;vertical-align:middle;margin-bottom:12px}
+#island-dialog select[data-v32-dev-time],#island-dialog button[data-v32-dev-time-submit]{height:44px;min-height:44px;vertical-align:top;margin-bottom:12px}
+#island-dialog button[data-v32-dev-time-submit]{margin-top:0}
+#island-dialog [data-v32-rescue-group]{display:grid;grid-template-columns:minmax(0,1fr) minmax(90px,.4fr) auto;align-items:end;gap:12px}
+#island-dialog [data-v32-rescue-group]>p{grid-column:1/-1;margin:0}
+#island-dialog [data-v32-rescue-group]>label{display:flex;flex-direction:column;align-items:stretch;gap:7px;min-width:0;margin:0;font-size:13px;line-height:1.4}
+#island-dialog [data-v32-rescue-group] input,#island-dialog [data-v32-rescue-group] select{width:100%;max-width:none;height:44px;min-height:44px;margin:0;padding:9px 10px;border:1px solid #718e9f;border-radius:8px;background:#092b3e;color:#eef7f5;font:inherit;box-sizing:border-box}
+#island-dialog [data-v32-rescue-group]>button{min-height:44px;margin:0}
+@media(max-width:600px){
+ #island-dialog .producer-workers-row{flex-wrap:wrap;row-gap:12px}
+ #island-dialog .producer-workers-row .labelled-values{flex:1 1 100%;width:100%}
+ #island-dialog .producer-workers-row .producer-worker-controls{flex:1 1 100%;width:100%;justify-content:flex-end;margin-top:0}
+ #island-dialog .pool-actions{grid-template-columns:minmax(0,1fr) 90px}
+ #island-dialog .pool-actions>.action{grid-column:1/-1;justify-self:stretch}
+ #island-dialog .hl-kingdom-card form>label{grid-template-columns:minmax(0,1fr);gap:7px}
+ #island-dialog .player-trade-form,#island-dialog .island-shipping-form{grid-template-columns:minmax(0,1fr);gap:12px}
+ #island-dialog .setting-row{align-items:center;gap:12px}
+ #island-dialog .setting-row>select{max-width:60%;min-width:0}
+ #island-dialog [data-v32-rescue-group]{grid-template-columns:minmax(0,1fr)}
+ #island-dialog [data-v32-rescue-group]>button{width:100%}
+ #island-dialog .hl-kingdom-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ #island-dialog .hl-kingdom-tabs>button{width:100%;min-height:44px;margin:0}
+}
+
 /* The practical tutorial points at real island buildings before their controls. */
 .world-hotspot.tutorial-map-target{border-color:#ffe19a;background:#ffdc7226;outline:3px solid #fff0b6;outline-offset:4px;animation:tutorial-map-glow 1.4s ease-in-out infinite}
 @keyframes tutorial-map-glow{0%,100%{background:#ffdc7210;box-shadow:inset 0 0 12px #ffdf7055,0 0 0 5px #e5b94e30}50%{background:#ffdc7248;box-shadow:inset 0 0 40px #ffdf70aa,0 0 0 9px #ffe19a80}}

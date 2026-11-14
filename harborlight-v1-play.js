@@ -1,42 +1,49 @@
-import { BUILDINGS, RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRate, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v31-2';
-import { MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v31-2';
-import * as State from './harborlight-v1-state.js?v=frontend-v31-2';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v31-2';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v31-2';
-import * as Missions from './harborlight-v1-missions.js?v=frontend-v31-2';
-import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v31-2';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v31-2';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v31-2';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v31-2';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v31-2';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v31-2';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v31-2';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v31-2';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v31-2';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v31-2';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v31-2';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v31-2';
-import { createDevCloud, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v31-2';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v31-2';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v31-2';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v31-2';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v31-2';
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v31-2';
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v31-2';
-import { GAME_VERSION } from './harborlight-version.js?v=frontend-v31-2';
-import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v31-2';
-import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v31-2';
-import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v31-2';
-import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v31-2';
-import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v31-2';
-import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v31-2';
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v31-2';
-import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v31-2';
-import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v31-2';
-import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v31-2';
-import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v31-2';
-import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v31-2';
-import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v31-2';
+import * as DevelopmentLogistics from './harborlight-v1-development-logistics.js?v=frontend-v32-2';
+import * as Development from './harborlight-v1-development.js?v=frontend-v32-2';
+import { createDevelopmentUI, developmentBuildingArt, DEVELOPMENT_BUILDINGS, renderDevelopmentBuildingPanel, renderProductionControls, renderFoodControls, renderConstructionFoodMix, renderTransportControls, renderTheatreControls } from './harborlight-v1-development-ui.js?v=frontend-v32-2';
+import { DEVELOPMENT_NAMES, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-2';
+import { createKingdomPanel } from './harborlight-v1-kingdom-ui.js?v=frontend-v32-2';
+import { kingdomServiceAction, giftServiceAction } from './harborlight-v1-kingdom-client.js?v=frontend-v32-2';
+import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-2';
+import { BUILDINGS as LEGACY_BUILDINGS, RESOURCES as LEGACY_RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRateForState, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS as LEGACY_WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v32-2';
+import { MATERIAL_IDS as LEGACY_MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v32-2';
+import * as State from './harborlight-v1-state.js?v=frontend-v32-2';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v32-2';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v32-2';
+import * as Missions from './harborlight-v1-missions.js?v=frontend-v32-2';
+import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v32-2';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v32-2';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v32-2';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v32-2';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v32-2';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v32-2';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v32-2';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v32-2';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v32-2';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v32-2';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v32-2';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-2';
+import { createDevCloud, createDevTimeController, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-2';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v32-2';
+import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v32-2';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-2';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-2';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-2';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-2';
+import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-2';
+import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-2';
+import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-2';
+import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-2';
+import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-2';
+import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v32-2';
+import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-2';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-2';
+import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v32-2';
+import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v32-2';
+import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v32-2';
+import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-2';
+import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v32-2';
+import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v32-2';
 
 I18n.registerTranslations(Theatre.THEATRE_TRANSLATIONS || {});
 I18n.registerTranslations(Adventures.ADVENTURE_TRANSLATIONS || {});
@@ -123,6 +130,8 @@ I18n.registerTranslations({
   'Choose an island name with 2–40 characters, without control characters or angle brackets.': 'Wybierz nazwę wyspy od 2 do 40 znaków, bez znaków sterujących ani nawiasów < >.'
 });
 
+function currentPopulationRate(happiness) {return populationRateForState(state,happiness);}
+
 const devCloud = createDevCloud();
 let devAccount = null, devSync = null, devSyncStatus = 'loading';
 let devCloudUiReady = false, devCloudAlert = null, devSigningOut = false;
@@ -146,6 +155,12 @@ const toastElement = document.getElementById('island-toast');
 const placementBanner = document.getElementById('placement-banner');
 const LOCAL_PREVIEW = !devCloud.enabled && Commerce.runtimeCapabilities().environment === 'development';
 const LOOPBACK_PREVIEW = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
+const USE_DEVELOPMENT_RULES = devCloud.local === true || LOCAL_PREVIEW && LOOPBACK_PREVIEW;
+const devTimeController = devCloud.local ? createDevTimeController(devCloud) : null;
+let devTimeStatus = null, devTimeOffsetSeconds = 0;
+if (devTimeController) { try { devTimeStatus = await devTimeController.status(); devTimeOffsetSeconds = Number(devTimeStatus.offsetSeconds) || 0; } catch {} }
+const simulationNow = () => Date.now() + devTimeOffsetSeconds * 1000;
+let developmentUI = null, kingdomController = null, originalPuzzleController = null, serverKingdomStatus = null, serverGiftStatus = null;
 let state, archipelago;
 let pendingJourneySuspension = null;
 const foregroundInterruptions = new Map();
@@ -163,10 +178,17 @@ let adventureEffectsNode = null, adventureEffectsSignature = null;
 let lastPerformedResult = null;
 let charityAdapter = null;
 let worldAdoptionEpoch = 0;
-const worldAdapters = { normalizeState, createState, advanceTo: State.advanceTo };
+function setDevelopmentRuntime(world) {
+  if (Development.isDevelopment(world)) {
+    Object.defineProperty(world,'runtimeKingdomServer',{configurable:true,writable:true,value:devCloud.local === true});
+    Object.defineProperty(world,'runtimeOnline',{configurable:true,writable:true,value:false});
+  }
+  return world;
+}
+const worldAdapters = { normalizeState: (raw,now) => setDevelopmentRuntime(normalizeState(raw,now)), createState: (now,options={}) => {const world=setDevelopmentRuntime(createState(now,{...options,...(USE_DEVELOPMENT_RULES?{ruleset:32}:{})}));if(USE_DEVELOPMENT_RULES)world.settings.language='pl';return world;}, advanceTo: State.advanceTo };
 function readWorldPayload(raw) {
   charityAdapter = null; worldAdoptionEpoch += 1;
-  archipelago = Archipelago.restoreArchipelago(raw, worldAdapters, Date.now());
+  archipelago = Archipelago.restoreArchipelago(raw, worldAdapters, simulationNow());
   state = Archipelago.activeIsland(archipelago);
   return state;
 }
@@ -206,7 +228,7 @@ if (devAccount) {
     onStatus: status => { captureForegroundInterruption(status); devSyncStatus = status; if (devCloudUiReady) updateDevCloudStatus(); } });
   for (;;) {
     try {
-      const payload=await devSync.open(JSON.stringify(createState(Date.now(), { onboarding: true })));
+      const payload=await devSync.open(JSON.stringify(worldAdapters.createState(simulationNow(), { onboarding: true })));
       try { readWorldPayload(JSON.parse(payload)); }
       catch { devSync.pause('invalid-cloud-data'); throw Object.assign(new Error('Invalid cloud save'),{code:'invalid-cloud-data'}); }
       break;
@@ -223,7 +245,7 @@ if (devAccount) {
   }
 } else if (LOCAL_PREVIEW) {
   const fixture=LOOPBACK_PREVIEW && globalThis.__HARBORLIGHT_DEV_FIXTURE__;
-  readWorldPayload(fixture ? structuredClone(fixture) : createState(Date.now(), { onboarding: NEW_PLAYER_PROFILE }));
+  readWorldPayload(fixture ? structuredClone(fixture) : worldAdapters.createState(simulationNow(), { onboarding: NEW_PLAYER_PROFILE }));
   if(LOOPBACK_PREVIEW) {
     delete globalThis.__HARBORLIGHT_DEV_FIXTURE__;
     Object.defineProperty(window,'__HARBORLIGHT_DEV_STATE__',{configurable:true,get:()=>structuredClone(state)});
@@ -233,6 +255,11 @@ if (devAccount) {
   location.replace('harborlight-auth.html?mode=login');
   await new Promise(()=>{});
 }
+if(LOOPBACK_PREVIEW&&devCloud.local){Object.defineProperty(window,'__HARBORLIGHT_DEV_STATE__',{configurable:true,get:()=>structuredClone(state)});Object.defineProperty(window,'__HARBORLIGHT_DEV_ARCHIPELAGO__',{configurable:true,get:()=>structuredClone(worldPayload())});}
+const BUILDINGS = Development.isDevelopment(state) ? (State.ALL_BUILDINGS || LEGACY_BUILDINGS) : LEGACY_BUILDINGS;
+const RESOURCES = Development.isDevelopment(state) ? (State.ALL_RESOURCES || LEGACY_RESOURCES) : LEGACY_RESOURCES;
+const MATERIAL_IDS = Development.isDevelopment(state) ? Development.developmentResourceIds.filter(id=>!Development.Provisions.GOODS[id]?.legacy||uiOwnsLegacyGood(id)) : LEGACY_MATERIAL_IDS;
+const WORKPLACE_IDS = Development.isDevelopment(state) ? (State.ALL_WORKPLACE_IDS || LEGACY_WORKPLACE_IDS) : LEGACY_WORKPLACE_IDS;
 try { const preferred = localStorage.getItem('harborlight-language'); if (['en','pl'].includes(preferred)) state.settings.language = preferred; } catch {}
 let panel = null;
 let placement = null;
@@ -277,8 +304,9 @@ let worldSignature = '';
 
 function settleActiveTick() {
   if (onboardingFlow?.active && !worldExperienceReady) return;
-  if (devSync && !devSync.writable) return;
-  const now = Date.now();
+  if (devSync && !devSync.writable || tradeMutationBusy || shipMutationPreparing || uncertainShipPurchase) return;
+  const now = simulationNow();
+  for (const world of Object.values(archipelago?.worlds || {})) if (Development.isDevelopment(world)) world.runtimeOnline = world === state && !document.hidden && document.hasFocus();
   if (archipelago) Archipelago.advanceArchipelago(archipelago, now);
   else if (typeof State.advanceTo === 'function') State.advanceTo(state, now);
   else tick(state, Math.max(0, (now - lastTick) / 1000));
@@ -297,12 +325,130 @@ function el(tag, attributes = {}, ...children) {
   for (const child of children.flat()) if (child != null) node.append(child instanceof Node ? child : document.createTextNode(String(child)));
   return node;
 }
-const nameOf = id => RESOURCES[id]?.name || ({ coins: 'Coins', wood: 'Wood', stone: 'Stone', food: 'Food', planks: 'Planks', grain: 'Grain', construction: 'Construction' }[id]) || id;
+function captureLiveDevelopmentActivities() {
+  const snapshots=new Map();
+  for(const [id,world]of Object.entries(archipelago?.worlds||{})){
+    if(!Development.isDevelopment(world))continue;
+    const original=Object.values(world.originalPuzzles?.attempts||{}).some(attempt=>attempt.status==='active');
+    const classic=Object.values(world.expeditionRuns||{}).some(run=>run.status==='active'||run.status==='decision');
+    const adventure=world.adventures?.active&&world.adventures.active.stage!=='complete';
+    if(!original&&!classic&&!adventure)continue;
+    const fields={expeditionHour:structuredClone(world.expeditionHour)};
+    if(original)fields.originalPuzzles=structuredClone(world.originalPuzzles);
+    if(classic){fields.expeditionRuns=structuredClone(world.expeditionRuns);fields.activeExpeditionId=world.activeExpeditionId;}
+    if(adventure)fields.adventures=structuredClone(world.adventures);
+    snapshots.set(id,{fields,classic,notificationIds:new Set((world.notifications||[]).map(n=>String(n.id)))});
+  }
+  return snapshots;
+}
+function restoreLiveDevelopmentActivities(snapshots) {
+  for(const [id,snapshot]of snapshots){const world=archipelago.worlds[id];if(!world)continue;Object.assign(world,snapshot.fields);if(snapshot.classic)world.notifications=(world.notifications||[]).filter(item=>item.kind!=='expedition-lost'||snapshot.notificationIds.has(String(item.id)));}
+}
+function civilianRescuePanel() {
+  const status=Development.civilianRescueStatus(state,developmentModelContext(state));
+  const root=card(el('h3',{},'Uratowani mieszkańcy'),note(`Za udaną wyprawę ratunkową możesz ocalić ${status.reward} osób. Czekają bezterminowo, aż wybierzesz wyspę i przygotujesz miejsce w limicie Ratusza. Wyprawa nie wymaga reklamy.`),button('Rozpocznij ratunek',()=>performDevelopment({type:'civilianRescueStart'}),{disabled:!status.available,'data-v32-rescue-start':''}));
+  if(!status.groups.length)root.append(note('Nie ma oczekujących grup.'));
+  for(const group of status.groups.filter(g=>g.remaining>0)){
+    const destination=el('select',{'aria-label':'Wyspa przyjęcia'},Object.entries(archipelago.worlds).map(([id,world])=>el('option',{value:id},`${islandNameFor(id)} · wolne miejsca: ${Math.max(0,world.buildings.townhall.level*36-world.population)}`)));
+    const amount=el('input',{type:'number',min:1,max:group.remaining,step:1,value:Math.min(group.remaining,Math.max(1,state.buildings.townhall.level*36-state.population)),'aria-label':'Liczba przyjmowanych osób'});
+    root.append(el('form',{class:'v32-form','data-v32-rescue-group':group.id,onsubmit:event=>{event.preventDefault();void performDevelopment({type:'civilianRescueClaim',groupId:group.id,islandId:destination.value,amount:Number(amount.value)});}},el('p',{},`Oczekuje ${group.remaining} uratowanych osób.`),el('label',{},'Wyspa',destination),el('label',{},'Osoby',amount),el('button',{type:'submit',class:'action'},'Przyjmij mieszkańców')));
+  }
+  return root;
+}
+async function refreshGiftsFromServer(action=null) {
+  if(!devCloud.local||tradeMutationBusy)return {ok:false,message:'Poczekaj na potwierdzenie poprzedniej operacji.'};
+  settleActiveTick();tradeMutationBusy=true;
+  try{const response=await giftServiceAction({cloud:devCloud,coordinator:devSync,getPayload:()=>JSON.stringify(worldPayload()),restore:restoreSyncedIsland,action});serverGiftStatus=response.status;if(response.message)toast(response.message);return response;}
+  catch(error){toast(error.message||'Nie udało się potwierdzić darowizny.');return {ok:false,message:error.message};}
+  finally{tradeMutationBusy=false;renderHUD();if(panel?.kind==='gifts'&&dialog.open)renderPanel();}
+}
+function giftsPanel() {
+  const root=el('div',{'data-v32-gifts':''},note('Raz na 24 godziny możesz wysłać towary sojusznikowi. Darowizna korzysta ze wspólnego statku i jego pojemności. Nadmiar, którego odbiorca nie pomieści, wraca do nadawcy. Rezerwa jedzenia mieszkańców jest chroniona.'));
+  if(!devCloud.local){root.append(note('Darowizny między kontami są dostępne po zalogowaniu do środowiska DEV.'));return root;}
+  if(state.buildings.townhall.level<6){root.append(note('Darowizny są dostępne od 6. poziomu Ratusza.'));return root;}
+  const status=serverGiftStatus;if(!status){root.append(note('Wczytywanie odbiorców i statku…'),button('Odśwież',()=>void refreshGiftsFromServer()));return root;}
+  root.append(...[stat('Pojemność statku',count(status.shipCapacity||archipelago.shipCapacity)),status.shipBusy?note('Statek jest zajęty. Poczekaj na zakończenie rejsu.'):null,status.nextSendAt>simulationNow()?note(`Kolejna darowizna: ${new Date(status.nextSendAt).toLocaleString('pl-PL')}.`):null].filter(Boolean));
+  const recipients=status.recipients||[];
+  if(!recipients.length){root.append(note('W sojuszu nie ma obecnie odbiorcy, któremu możesz wysłać darowiznę.'));return root;}
+  const recipient=el('select',{'aria-label':'Sojusznik',required:true},el('option',{value:''},'Wybierz sojusznika'),...recipients.map(person=>el('option',{value:person.id||person.uid||person.handle},person.handle||person.name||person.id||person.uid)));
+  const destination=el('select',{'aria-label':'Wyspa odbiorcy',required:true});
+  const updateDestination=()=>{const person=recipients.find(person=>(person.id||person.uid||person.handle)===recipient.value);destination.replaceChildren(...(person?.islands||[]).filter(island=>island.harbor).map(island=>el('option',{value:island.id},island.name||island.id)));};recipient.addEventListener('change',updateDestination);
+  const inputs=new Map(),summary=el('p',{class:'notice','data-v32-gift-total':''}),update=()=>{const total=[...inputs.values()].reduce((sum,input)=>sum+Math.max(0,Number(input.value)||0),0);summary.textContent=`Ładunek: ${count(total)} / ${count(status.shipCapacity||archipelago.shipCapacity)} sztuk.`;};
+  const form=el('form',{class:'island-shipping-form',onsubmit:event=>{event.preventDefault();const cargo=Object.fromEntries([...inputs].filter(([,input])=>Number(input.value)>0).map(([id,input])=>[id,Number(input.value)]));void refreshGiftsFromServer({targetId:recipient.value,fromIslandId:archipelago.activeIslandId,toIslandId:destination.value,cargo});}},el('label',{},'Sojusznik',recipient),el('label',{},'Wyspa odbiorcy',destination));
+  for(const id of MATERIAL_IDS){const max=Math.floor(Development.Provisions.availableForSpending(state,id,developmentModelContext(state)));const input=el('input',{type:'number',min:0,max,step:1,value:0,'aria-label':`Darowizna: ${nameOf(id)}`,oninput:update});inputs.set(id,input);form.append(el('label',{},`${nameOf(id)} · dostępne ${count(max)}`,input));}
+  form.append(summary,el('button',{type:'submit',class:'action',disabled:!status.canSend,'data-v32-send-gift':''},'Wyślij darowiznę'));update();root.append(form);
+  for(const outgoing of status.outgoing||[])root.append(card(el('h4',{},`Darowizna ${outgoing.id||''}`),note(outgoing.status||outgoing.stage||'W drodze'),note(costText(outgoing.cargo||{}))));
+  return root;
+}
+
+function developmentModelContext(world=state,extra={}) {
+  const worlds=Object.values(archipelago?.worlds||{active:world});
+  return Development.developmentContext(world,{worlds,highestTownhall:Math.max(...worlds.map(w=>w.buildings?.townhall?.level||1)),highestAcademyLevel:Math.max(...worlds.map(w=>w.buildings?.academy?.level||0)),accountId:devAccount?.uid||'preview',serverKingdom:devCloud.local===true,online:!document.hidden&&document.hasFocus(),allowAdSimulation:Commerce.runtimeCapabilities().simulatedAds===true,...extra});
+}
+function developmentPanelOptions({withoutBuildingControls=false}={}) {
+  return {getState:()=>state,onAction:performDevelopment,onFeedback:(text,ok)=>{if(text)toast(text);},onRefresh:()=>{renderHUD();if(panel&&dialog.open&&!['original-puzzle','kingdom'].includes(panel.kind))renderPanel();},context:{
+    ...developmentModelContext(state),provisions:Development.Provisions,education:Development.Education,military:Development.Military,
+    ...(!withoutBuildingControls?{buildingControls:developmentBuildingControls,workerControls:id=>workerStat(id)}:{}),
+    constructionQuote:id=>{const cost=buildingCost(state,id);return {foodUnits:cost.foodUnits||cost.food||0,...Development.Provisions.quoteConstructionFood(state,cost.foodUnits||cost.food||0,null,developmentModelContext(state))};},
+    constructionSubmit:(id,mix)=>{perform({type:state.buildings[id].level?'upgrade':'build',building:id,foodMix:mix,mix});return lastPerformedResult;},
+    requestRewardedAd:action=>{if(!Commerce.runtimeCapabilities().simulatedAds){showAdUnavailable();return;}simulateRewardedAd({title:'Przyspieszenie zajęć — symulacja DEV',onCancel:()=>{},onComplete:()=>performDevelopment(action)});},
+    theatreStatus:()=>Theatre.theatreStatus(state,developmentModelContext(state)),theatreScheduleActionType:'theatrePlanShow',
+    transportStatus:id=>{const routes=DevelopmentLogistics.directRouteCatalog(state).filter(route=>id==='warehouse'||route.source===id).map(route=>({...route,resource:route.product,destination:route.target}));return routes.length?{direct:true,routes,freeCarriers:Math.max(0,(state.buildings.warehouse?.workers||0)-1)}:null;}
+  }};
+}
+function developmentBuildingControls(id) {
+  const value=state.buildings[id],cost=buildingCost(state,id),eligibility=upgradeEligibility(state,id),max=value.level>=BUILDINGS[id].maxLevel;
+  return el('section',{class:'v32-section'},
+    el('h3',{},value.level?'Rozbudowa':'Budowa'),upgradeCostView(cost),eligibility.ok?null:note(upgradeEligibilityMessage(eligibility)),
+    button(value.construction?'Zleć kolejny poziom':value.level?'Rozbuduj':'Wybuduj',()=>openDevelopmentConstruction(id),{class:'action','data-upgrade-building':id,disabled:max||!eligibility.ok||!canAfford(state,cost)}),
+    value.construction?note(constructionDescription(id)):null);
+}
+function openDevelopmentConstruction(id) {
+  if(!Development.isDevelopment(state)){perform({type:state.buildings[id].level?'upgrade':'build',building:id});return;}
+  const cost=buildingCost(state,id);
+  if(!((cost.foodUnits||cost.food)>0)){perform({type:state.buildings[id].level?'upgrade':'build',building:id});return;}
+  const popup=createFlowDialog('development-construction','Wyżywienie budowy',el('div',{'data-v32-construction':id}));
+  const options=developmentPanelOptions();options.context.constructionSubmit=(building,mix)=>{perform({type:state.buildings[building].level?'upgrade':'build',building,foodMix:mix,mix});if(lastPerformedResult?.ok){popup.close();popup.remove();}return lastPerformedResult;};
+  popup.querySelector('[data-v32-construction]').append(renderConstructionFoodMix(id,options));popup.addEventListener('cancel',()=>popup.remove());popup.showModal();
+}
+async function performDevelopment(action) {
+  if(devCloud.local&&action.type?.startsWith('kingdom')) {
+    if(tradeMutationBusy)return {ok:false,message:'Poczekaj na potwierdzenie poprzedniej operacji.'};
+    settleActiveTick();tradeMutationBusy=true;
+    try {const response=await kingdomServiceAction({cloud:devCloud,coordinator:devSync,getPayload:()=>JSON.stringify(worldPayload()),restore:restoreSyncedIsland,action});serverKingdomStatus=response.status;if(response.message)toast(response.message);return response;}
+    catch(error){toast(error.message||'Nie udało się potwierdzić operacji Królestwa.');return {ok:false,message:error.message};}
+    finally {tradeMutationBusy=false;renderHUD();if(panel?.kind==='kingdom'&&dialog.open)renderPanel();}
+  }
+  const result=performScene(action,developmentModelContext(state));
+  if(result?.ok&&action.type==='civilianRescueStart')openPanel('original-puzzle','signal-line');
+  return result;
+}
+async function refreshKingdomFromServer() {
+  if(!devCloud.local||tradeMutationBusy)return;
+  settleActiveTick();tradeMutationBusy=true;
+  try {const response=await kingdomServiceAction({cloud:devCloud,coordinator:devSync,getPayload:()=>JSON.stringify(worldPayload()),restore:restoreSyncedIsland});serverKingdomStatus=response.status;}
+  catch(error){toast(error.message||'Nie udało się odświeżyć Królestwa.');}
+  finally {tradeMutationBusy=false;renderHUD();if(panel?.kind==='kingdom'&&dialog.open)renderPanel();}
+}
+async function advanceDevelopmentTime(seconds) {
+  if(!devCloud.local||!devTimeStatus?.canAdvance||tradeMutationBusy)return;
+  settleActiveTick();if(!await save(true))return;tradeMutationBusy=true;
+  try{const result=await devTimeController.advance(seconds);devTimeStatus=result;devTimeOffsetSeconds=Number(result.offsetSeconds)||0;Archipelago.advanceArchipelago(archipelago,simulationNow());lastTick=simulationNow();toast(`Przesunięto czas o ${durationText(result.advancedSeconds||0)}.`);}
+  catch(error){toast(error.message||'Nie udało się przesunąć czasu.');}
+  finally{tradeMutationBusy=false;await save(true);renderHUD();if(dialog.open)renderPanel();}
+}
+function exitOriginalPuzzle() {
+  if(panel?.kind!=='original-puzzle'||!Development.isDevelopment(state))return;
+  const status=Development.OriginalPuzzles.originalPuzzleStatus(state,panel.id),attempt=status.attempt;
+  if(attempt?.status==='active'){act(state,{type:'originalPuzzleExit',variant:panel.id,attemptId:attempt.id});void save(true);}
+}
+
+const nameOf = id => (Development.isDevelopment(state) && GOODS_NAMES[id]) || RESOURCES[id]?.name || ({ coins: 'Coins', wood: 'Wood', stone: 'Stone', food: 'Food', planks: 'Planks', grain: 'Grain', construction: 'Construction' }[id]) || id;
 const language = () => state.settings.language === 'pl' ? 'pl' : 'en';
 const count = value => I18n.formatNumber(Math.floor(value || 0), language());
 const text = value => I18n.translate(String(value), language());
 function localize(root = document.body) { I18n.translateDOM(root, language()); document.documentElement.lang = language(); }
-const titleOf = id => BUILDINGS[id]?.name || id;
+const titleOf = id => (Development.isDevelopment(state) && DEVELOPMENT_NAMES[id]) || BUILDINGS[id]?.name || id;
 const costText = cost => Object.entries(cost || {}).map(([id, value]) => `${text(nameOf(id))}: ${count(value)}`).join(' · ');
 const button = (label, fn, attributes = {}) => el('button', { type: 'button', class: 'action', onclick: fn, ...attributes }, label);
 const note = text => el('p', { class: 'notice' }, omitTaxInformation(text));
@@ -326,21 +472,22 @@ function charityPanel() {
     const assertCurrent = () => { if (epoch !== worldAdoptionEpoch) throw new Error(uiCopy('Reopen the charity panel to use the current cloud state.', 'Otwórz ponownie Pomagam, aby użyć aktualnego stanu z chmury.')); };
     if (LOCAL_PREVIEW || Commerce.runtimeCapabilities().environment === 'preprod') charityAdapter = createCharityPreviewAdapter({ environment: Commerce.runtimeCapabilities().environment, getState: () => { assertCurrent(); return worldPayload(); }, beforeMutation: () => { assertCurrent(); if (!allowIslandMutation()) throw new Error(uiCopy('Cloud confirmation is required before helping.', 'Poczekaj na potwierdzenie chmury przed operacją Pomagam.')); }, onPersistSimulation: metadata => { assertCurrent(); archipelago.primary.charitySimulation = metadata; state.charitySimulation = metadata; },
       getWorld: id => { assertCurrent(); return Archipelago.worldFor(archipelago, id); }, onMutation: async () => { assertCurrent(); renderHUD(); if (!await save(true)) throw new Error(uiCopy('The cloud has not confirmed this operation. Reconnect before continuing.', 'Chmura nie potwierdziła tej operacji. Przywróć połączenie, zanim przejdziesz dalej.')); } });
-    else if (devAccount && devCloud.accountApiEnabled) charityAdapter = { mode: 'real',
+    else if (devAccount && devCloud.accountApiEnabled) charityAdapter = { mode: devCloud.local ? 'simulation' : 'real',
       status: () => devCloud.requestGameService('/api/v1/charity'),
       donate: body => devCloud.requestGameService('/api/v1/charity', { ...body, command: 'donate' }),
       claimReward: body => devCloud.requestGameService('/api/v1/charity', { ...body, command: 'claim' }) };
   }
   return createCharityPanel({ adapter: charityAdapter, islandId: archipelago.activeIslandId, language: language(),
-    onChanged: async () => { if (devAccount && charityAdapter?.mode !== 'simulation') await reloadConfirmedIsland(); renderHUD(); } });
+    onChanged: async () => { if (devAccount && (devCloud.local || charityAdapter?.mode !== 'simulation')) await reloadConfirmedIsland(); renderHUD(); } });
 }
-const smoothSceneActions = new Set(['theatreMove', 'theatrePlace', 'theatreRemove', 'theatreRestyle', 'theatreSetAtmosphere', 'theatreSaveLayout', 'theatreLoadLayout', 'theatreRestoreLayout', 'theatreDeleteLayout', 'expeditionMiniGameInput', 'expeditionMiniGameReveal']);
+const smoothSceneActions = new Set(['theatreMove', 'theatrePlace', 'theatreRemove', 'theatreRestyle', 'theatreSetAtmosphere', 'theatreSaveLayout', 'theatreLoadLayout', 'theatreRestoreLayout', 'theatreDeleteLayout', 'expeditionMiniGameInput', 'expeditionMiniGameReveal', 'originalPuzzleInput']);
 function smoothSceneAction(action) {
   return smoothSceneActions.has(action?.type) || typeof action?.type === 'string' && action.type.startsWith('adventure') && action.type !== 'adventureBridgeExtra';
 }
 function act(...args) {
   if (tradeMutationBusy || (shipMutationPreparing || uncertainShipPurchase) && !['userActivity', 'heartbeat'].includes(args[1]?.type)) return { ok: false, message: uiCopy('Wait for this operation to be confirmed.', 'Poczekaj na potwierdzenie tej operacji.') };
   if (devSync && (!devSync.writable || devSync.saving && !smoothSceneAction(args[1]))) return {ok:false,message:'Cloud confirmation is required before another action.'};
+  if (Development.isDevelopment(args[0])) args[3] = developmentModelContext(args[0], args[3]);
   const result=modelAct(...args);
   if (result.ok && args[1]?.type === 'userActivity' && devAccount && devCloud.recordSessionActivity?.() === false) {
     finishDevSignout(); return { ok: false, message: 'Your session expired. Sign in again.' };
@@ -358,10 +505,13 @@ function save(immediate=false, { allowShipPreparation = false } = {}) {
   return immediate ? devSync.flush() : Promise.resolve(true);
 }
 function restoreSyncedIsland(payload, metadata = {}) {
+  const liveActivities = /^kingdom(?:-|$)/.test(metadata.reason||'') ? captureLiveDevelopmentActivities() : null;
   // A retry adopts either the server-confirmed pending write or a newer remote
   // version. Never replace an unreachable island with a fresh starter.
   miniController?.dispose(); miniController = null;
-  readWorldPayload(JSON.parse(payload)); lastTick = Date.now();
+  readWorldPayload(JSON.parse(payload));
+  if(liveActivities)restoreLiveDevelopmentActivities(liveActivities);
+  lastTick = Date.now();
   let protectedInterruption = false;
   if (!document.hidden && document.hasFocus() && metadata.reason === 'recovered') {
     for (const [id, snapshot] of foregroundInterruptions) {
@@ -521,7 +671,7 @@ function perform(action, context = {}) {
   panelNotice = omitTaxInformation(result.message);
   if (result.ok) { if (action.type === 'setting' && action.key === 'language') { try { localStorage.setItem('harborlight-language', state.settings.language); } catch {} } void save(!smoothSceneAction(action)); renderHUD(); }
   toast(result.message);
-  if (panel && dialog.open && !action.type.startsWith('theatre') && !action.type.startsWith('adventure')) {
+  if (panel && dialog.open && !action.type.startsWith('theatre') && !action.type.startsWith('adventure') && !action.type.startsWith('originalPuzzle')) {
     renderPanel();
     const target = focusWarehousePriority ? dialog.querySelector(`[data-warehouse-priority="${focusWarehousePriority}"]`) : focusPriority ? dialog.querySelector(`[data-priority-resource="${focusPriority}"][data-priority-direction="${focusPriorityDirection}"]`) : focusWorker ? dialog.querySelector(`[data-worker-building="${focusWorker}"][${focusWorkerAction ? `data-worker-action="${focusWorkerAction}"` : `data-worker-delta="${focusWorkerDelta}"`}]`) : [...dialog.querySelectorAll('button,input')].find(node => node.textContent === focusLabel && !node.disabled);
     (target && !target.disabled ? target : dialog.querySelector('.dialog-close'))?.focus({ preventScroll: true });
@@ -585,13 +735,19 @@ const dockCategories = [['administration', 'Administration'], ['economy', 'Econo
 const dockTabs = el('nav', { class: 'dock-tabs', 'aria-label': 'Island building and resource dock' },
   ...dockCategories.map(([id, label]) => button(label, () => setDockCategory(id), { id: `hit-category-${id}`, class: 'dock-tab', 'data-dock-category': id, 'aria-pressed': false })));
 layer.append(dockTabs);
-const BUILDING_DOCK_ORDER = ['townhall', 'house', 'farm', 'windmill', 'quarry', 'lumber', 'sawmill', 'warehouse', 'market', 'dock', 'chapel', 'lighthouse'];
+const BUILDING_DOCK_ORDER = ['townhall', 'house', 'farm', 'windmill', 'quarry', 'lumber', 'sawmill', 'warehouse', 'market', 'dock', 'chapel', 'lighthouse', ...(Development.isDevelopment(state) ? Object.keys(DEVELOPMENT_BUILDINGS) : [])];
 const BUILDING_DOCK_GROUPS = {
-  administration: ['townhall', 'house', 'warehouse', 'market', 'dock', 'chapel', 'lighthouse'],
-  economy: ['farm', 'windmill', 'quarry', 'lumber', 'sawmill']
+  administration: ['townhall', 'house', 'warehouse', 'market', 'dock', 'chapel', 'lighthouse', ...(Development.isDevelopment(state)?['academy','barracks']:[])],
+  economy: ['farm', 'windmill', 'quarry', 'lumber', 'sawmill', ...(Development.isDevelopment(state)?['bakery','dairy','slaughterhouse','fisher','leatherworks']:[])]
 };
 const buildingDock = el('nav', { class: 'building-dock-cards', 'aria-label': 'Buildings', 'data-building-dock': '' });
 for (const id of BUILDING_DOCK_ORDER) {
+  if (DEVELOPMENT_BUILDINGS[id]) {
+    const control=button('',()=>openPanel('building',id),{id:`hit-dock-${id}`,class:'building-dock-card','data-dock-building':id,'aria-label':titleOf(id)});
+    control.append(el('small',{class:'building-dock-level','data-dock-level':id},`Lv. ${state.buildings[id]?.level||0}`),developmentBuildingArt(id),el('span',{class:'building-dock-name'},titleOf(id)));
+    if(WORKPLACE_IDS.includes(id))control.append(el('span',{class:'building-dock-workers','data-dock-workers':id}));
+    buildingDock.append(control);continue;
+  }
   const [x,y,w,h] = buildingRegions[id];
   const frameWidth = 124, frameHeight = 84;
   const scale = Math.max(frameWidth / w, frameHeight / h);
@@ -612,17 +768,19 @@ const resourceIllustrations = {
   food: '<ellipse cx="49" cy="62" rx="36" ry="9" fill="#6a492a"/><path d="M14 54Q15 28 43 26Q72 19 85 46L82 60Q51 77 17 63Z" fill="#bd7839" stroke="#80502a" stroke-width="2"/><path d="M15 51Q24 25 49 25Q73 23 84 46Q53 62 15 51Z" fill="#e5b86d"/><path d="M31 32L36 47M46 28L51 43M62 29L67 41" stroke="#fcdf9c" stroke-width="5" stroke-linecap="round"/>',
   coins: '<g stroke="#986b24" stroke-width="2"><ellipse cx="33" cy="62" rx="20" ry="10" fill="#c18a2d"/><ellipse cx="33" cy="56" rx="20" ry="10" fill="#efd076"/><ellipse cx="64" cy="54" rx="20" ry="10" fill="#bd842b"/><ellipse cx="64" cy="48" rx="20" ry="10" fill="#f4d782"/><ellipse cx="44" cy="44" rx="20" ry="10" fill="#c58f32"/><ellipse cx="44" cy="38" rx="20" ry="10" fill="#f8dd8e"/></g><circle cx="65" cy="27" r="17" fill="#e8bd53" stroke="#987026" stroke-width="2"/><circle cx="65" cy="27" r="12" fill="none" stroke="#fff0aa" stroke-width="2"/><path d="M65 18V36M60 21Q71 18 70 25Q69 29 60 27Q58 34 70 33" fill="none" stroke="#a67420" stroke-width="2"/>'
 };
-const resourceProductionBuildings = { wood: 'lumber', planks: 'sawmill', stone: 'quarry', grain: 'farm', food: 'windmill' };
+const resourceProductionBuildings = { wood: 'lumber', planks: 'sawmill', stone: 'quarry', grain: 'farm', food: 'windmill', ...(Development.isDevelopment(state)?{vegetables:'farm',livestock:'farm',rawMilk:'farm',sourMilk:'farm',flour:'windmill',bread:'bakery',cake:'bakery',pasteurizedMilk:'dairy',meat:'slaughterhouse',leather:'slaughterhouse',fish:'fisher',cheese:'farm',civilianClothes:'leatherworks',militaryClothes:'leatherworks',professorRobes:'leatherworks'}:{}) };
+function displayedLocalStock(resource,producer=resourceProductionBuildings[resource]) { return Development.isDevelopment(state) ? Number(Development.Provisions.localStorageStatus(state,producer).stock[resource]||0) : Number(state.buildings[producer]?.ready||0); }
 const resourceDock = el('div', { class: 'resource-dock-cards', 'data-resource-dock': '', hidden: true, 'aria-label': 'Resource production buildings' });
 for (const id of Object.keys(resourceProductionBuildings)) {
+  if(Development.isDevelopment(state)&&id==='food'&&!state.resources.food)continue;
   const picture = svgNode('svg', { viewBox: '0 0 100 82', class: 'resource-dock-illustration', role: 'img', 'aria-label': nameOf(id) });
-  picture.innerHTML = '<ellipse cx="50" cy="71" rx="39" ry="7" fill="#031826" opacity=".35"/>' + resourceIllustrations[id];
+  picture.innerHTML = '<ellipse cx="50" cy="71" rx="39" ry="7" fill="#031826" opacity=".35"/>' + (resourceIllustrations[id] || `<path d="M22 29 50 15 78 29V61L50 74 22 61Z" fill="#d9ba75"/><path d="m22 29 28 14 28-14M50 43v31" fill="none" stroke="#8b703b" stroke-width="3"/>`);
   const control = button('', () => openPanel('building', resourceProductionBuildings[id]), { class: 'resource-dock-card', 'data-dock-resource': id, 'aria-label': `${nameOf(id)} — ${titleOf(resourceProductionBuildings[id])}` });
   const producer = resourceProductionBuildings[id];
   control.replaceChildren(
     el('small', { class: 'resource-dock-active', 'data-dock-active': id, title: 'Residents currently producing at this building', 'aria-label': 'Active workers' }, count(workingProducerCount(producer))),
     picture, el('span', { class: 'resource-dock-name' }, nameOf(id)),
-    el('span', { class: 'resource-dock-staffing', 'data-dock-staffing': id, 'data-dock-stock': id, 'aria-label': 'Local stock / central warehouse stock (all goods in transit)' }, el('span', { 'data-dock-local': id }, count(state.buildings[producer].ready)), ' / ', el('span', { 'data-dock-central': id }, count(state.resources[id])), ' (', el('span', { 'data-dock-transit': id }, '0'), ')'), el('span', { class: 'resource-dock-trend', 'data-resource-trend': id, title: 'Current hourly balance' }, '→ 0 units/h'));
+    el('span', { class: 'resource-dock-staffing', 'data-dock-staffing': id, 'data-dock-stock': id, 'aria-label': 'Local stock / central warehouse stock (all goods in transit)' }, el('span', { 'data-dock-local': id }, count(displayedLocalStock(id,producer))), ' / ', el('span', { 'data-dock-central': id }, count(state.resources[id])), ' (', el('span', { 'data-dock-transit': id }, '0'), ')'), el('span', { class: 'resource-dock-trend', 'data-resource-trend': id, title: 'Current hourly balance' }, '→ 0 units/h'));
   resourceDock.append(control);
 }
 layer.append(resourceDock);
@@ -784,7 +942,7 @@ const happinessPercent = value => {
 const happinessText = () => happinessPercent(state.happiness);
 function uiCopy(en, pl) { return language() === 'pl' ? pl : en; }
 function dailyBlessing() { return State.dailyBlessingStatus?.(state) || { available: false, remaining: 0 }; }
-function productionDescriptionText(id) { return uiCopy(`Base output per fed worker is ${ownProductionRate(id)} ${nameOf(PRODUCTION_RECIPES[id].output)} per hour at level ${state.buildings[id].level}, before temporary multipliers. Finished goods wait here for carriers.`, `Bazowa wydajność najedzonego pracownika na poziomie ${state.buildings[id].level} to ${ownProductionRate(id)} jedn. ${{ wood: 'drewna', stone: 'kamienia', grain: 'zboża', food: 'żywności', planks: 'desek' }[PRODUCTION_RECIPES[id].output]} na godzinę, bez czasowych premii. Gotowe towary czekają tutaj na tragarzy.`); }
+function productionDescriptionText(id) { if(Development.isDevelopment(state))return 'Wybierz produkt i przydziel pracowników. Receptury oraz lokalne zapasy pokazano poniżej. Składniki i gotowe wyroby współdzielą magazyn przy budynku; tempo zależy od poziomu, wyżywienia, wykształcenia i badań.';return uiCopy(`Base output per fed worker is ${ownProductionRate(id)} ${nameOf(PRODUCTION_RECIPES[id].output)} per hour at level ${state.buildings[id].level}, before temporary multipliers. Finished goods wait here for carriers.`, `Bazowa wydajność najedzonego pracownika na poziomie ${state.buildings[id].level} to ${ownProductionRate(id)} jedn. ${{ wood: 'drewna', stone: 'kamienia', grain: 'zboża', food: 'żywności', planks: 'desek' }[PRODUCTION_RECIPES[id].output]} na godzinę, bez czasowych premii. Gotowe towary czekają tutaj na tragarzy.`); }
 const productionSpeed = id => (state.lighthouseRemaining > 0 ? 2 : 1) * productionMultiplier(state) * (Progression.activePlayMultiplier?.(state) || 1) * (WorldEvents.eventProductionMultiplier?.(state, id) || 1);
 const activeCrew = id => Residents.activeWorkerCount?.(state, id) ?? state.buildings[id].workers;
 function workingProducerCount(id) {
@@ -795,12 +953,13 @@ const localProductionRate = id => `${Math.round((Logistics.effectiveWorkerCount?
 const spendable = id => id === 'coins' ? state.resources.coins : Logistics.availableGoods?.(state, id) ?? state.resources[id];
 const transportRate = id => `${activeCrew(id)} carriers · ${Logistics.haulCapacity?.(state, id) ?? 120} per trip`;
 function renderHUD() {
+  developmentUI?.update(); if(!dialog.contains(document.activeElement)||!['INPUT','SELECT'].includes(document.activeElement?.tagName))kingdomController?.update(); originalPuzzleController?.update();
   const chatDescription = uiCopy('Here you can chat online with other players.', 'Tu możesz rozmawiać online z innymi graczami.');
   chatControl.title = chatDescription;
   mobileHeading.querySelector('[data-mobile-control="chat"]').title = chatDescription;
   estimateFrame++;
   document.title = `${islandDisplayName(state, language())} — HARBORLIGHT`;
-  document.body.dataset.activeIsland = archipelago.activeIslandId;
+  document.body.dataset.activeIsland = archipelago.activeIslandId;document.body.dataset.ruleset=String(state.ruleset||'legacy');
   renderIslandSelection();
   document.querySelector('title').setAttribute('data-i18n-ignore', '');
   document.querySelectorAll('[data-island-name]').forEach(node => { node.textContent = islandDisplayName(state, language()); node.title = islandDisplayName(state, language()); });
@@ -812,7 +971,7 @@ function renderHUD() {
   });
   resourceDock.querySelectorAll('[data-dock-staffing]').forEach(node => {
     const producer = resourceProductionBuildings[node.dataset.dockStaffing];
-    node.querySelector('[data-dock-local]').textContent = count(state.buildings[producer].ready);
+    node.querySelector('[data-dock-local]').textContent = count(displayedLocalStock(node.dataset.dockStaffing,producer));
     node.querySelector('[data-dock-central]').textContent = count(state.resources[node.dataset.dockStaffing]);
     node.querySelector('[data-dock-transit]').textContent = count(resourceInTransit(node.dataset.dockStaffing));
   });
@@ -1110,6 +1269,7 @@ function suspendJourneyOnLeave() {
   if (act(state, { type: 'adventureSuspend' }).ok) { pendingJourneySuspension = null; void save(true); }
 }
 function openPanel(kind, id) {
+  if (panel?.kind==='original-puzzle' && (kind!=='original-puzzle'||id!==panel.id)) exitOriginalPuzzle();
   if (expeditionSession() && !['puzzle', 'expeditions'].includes(kind) && dialog.open) { requestExpeditionExit(() => openPanel(kind, id)); return; }
   if (placement) cancelPlacement();
   if (kind !== 'adventures') suspendJourneyOnLeave();
@@ -1130,6 +1290,8 @@ function openPanel(kind, id) {
   if (!restoringPanel) { dialog.scrollTop = 0; dialog.querySelector('.dialog-body')?.scrollTo(0, 0); }
   dialog.querySelector('.dialog-close')?.focus();
   if (tutorialReady) refreshTutorialExperience();
+  if(kind==='kingdom'&&devCloud.local)void refreshKingdomFromServer();
+  if(kind==='gifts'&&devCloud.local)void refreshGiftsFromServer();
 }
 function backPanel() {
   const previous = panelHistory.at(-1);
@@ -1144,6 +1306,8 @@ function backPanel() {
   (dialog.querySelector('[data-panel-back]') || dialog.querySelector('.dialog-close'))?.focus({ preventScroll: true });
 }
 function closePanel(force = false) {
+  if(panel?.kind==='original-puzzle')exitOriginalPuzzle();
+  originalPuzzleController?.dispose(); originalPuzzleController=null; kingdomController?.destroy(); kingdomController=null;
   suspendJourneyOnLeave();
   theatreController?.destroy(); theatreController = null;
   adventuresController?.destroy(); adventuresController = null;
@@ -1372,6 +1536,7 @@ function productionTimerText(id) {
 function buildingStatus(id) {
   const building = state.buildings[id], recipe = PRODUCTION_RECIPES[id];
   if (!building.level) return { kind: 'waiting', label: 'Not built', detail: 'Build this site to begin.' };
+  if(Development.isDevelopment(state)&&Development.Provisions.availableRecipes(state,id).length){const assignments=Development.Provisions.productionAssignments(state,id).filter(row=>row.workers>0);if(!building.workers||!activeCrew(id))return {kind:'waiting',label:'Oczekiwanie na pracowników',detail:'Przydziel mieszkańców i poczekaj, aż dotrą do budynku.'};const blocked=assignments.length&&assignments.every(row=>DevelopmentLogistics.developmentProductionBlocked(state,id,row.recipeId));return {kind:blocked?'blocked':'working',label:blocked?'Produkcja wstrzymana':'Produkcja',detail:blocked?'Sprawdź składniki w magazynie lokalnym oraz miejsce na gotowe towary.':assignments.map(row=>`${row.workers} os.: ${Object.keys(row.outputs).map(nameOf).join(', ')}`).join(' · ')};}
   if (recipe) {
     if (building.ready >= producerCapacity(state, id)) return { kind: 'blocked', label: 'Storage full', detail: 'Waiting for carriers to collect local goods.' };
     if (!building.workers || !activeCrew(id)) return { kind: 'waiting', label: 'Waiting for workers', detail: building.workers ? productionTimerText(id) : 'Assign a free resident from Home to start production.' };
@@ -1414,9 +1579,9 @@ function workerStat(id, readonly = false) {
   const building = state.buildings[id];
   return el('div', { class: 'stat producer-workers' }, el('small', {}, 'Workers'),
     el('div', { class: 'producer-workers-row' },
-      el('div', { class: 'labelled-values worker-values', 'aria-label': 'Assigned workers / free residents at Home / building worker limit' },
+      el('div', { class: 'labelled-values worker-values', 'aria-label': Development.isDevelopment(state)?uiCopy('Assigned workers / available residents / building worker limit','Przydzieleni pracownicy / dostępni mieszkańcy / limit pracowników budynku'):'Assigned workers / free residents at Home / building worker limit' },
         labelledValue(workerCountText(id), 'Assigned', { 'data-worker-count': id }),
-        labelledValue(freeWorkers(state), 'Free at home', { 'data-worker-free': id }),
+        labelledValue(freeWorkers(state), Development.isDevelopment(state)?uiCopy('Available','Dostępni'):'Free at home', { 'data-worker-free': id }),
         labelledValue(workerLimit(state, id), 'Max workers', { 'data-worker-limit': id })),
       readonly ? null : el('div', { class: 'producer-worker-controls' },
         button('−', () => perform({ type: 'assign', building: id, delta: -1 }), { class: 'producer-worker-button', disabled: releasableWorkers(id) === 0, 'data-worker-building': id, 'data-worker-delta': -1, 'aria-label': `Release worker: ${titleOf(id)}` }),
@@ -1471,16 +1636,17 @@ function producerSummary(id) {
 }
 
 function buildingPanel(id) {
+  if (Development.isDevelopment(state) && DEVELOPMENT_BUILDINGS[id]) return renderDevelopmentBuildingPanel(id, developmentPanelOptions());
   if (id === 'theatre') return theatrePanel();
   const data = BUILDINGS[id];
   const value = state.buildings[id];
   const isProducer = productionBuildings.includes(id);
   const content = el('div', { class: 'building-panel', 'data-building-panel': id, 'data-building-signature': `${value.level}:${(value.construction || value.premiumService)?.stage || ''}` },
-    el('p', { class: 'building-purpose', 'data-building-purpose': id }, buildingPurpose(id)));
+    el('p', { class: 'building-purpose', 'data-building-purpose': id }, buildingPurpose(id,language(),state)));
   const main = el('section', { class: 'building-main', 'aria-label': 'Building details' });
   const upgrades = el('section', { class: 'building-upgrade-column', 'aria-label': 'Construction and Premium' });
   if (!['townhall', 'house'].includes(id) && !(id === 'lighthouse' && !value.level)) main.append(buildingStatusBanner(id));
-  if (isProducer) main.append(producerSummary(id));
+  if (isProducer) main.append(Development.isDevelopment(state)?el('div',{class:'stat-grid'},stat('Level',value.level),workerStat(id)):producerSummary(id));
   else if (['townhall', 'house'].includes(id)) main.append(compactSettlementSummary(id));
   else main.append(el('div', { class: 'stat-grid building-basic-summary' },
     stat('Level', value.level || 'Ruins'),
@@ -1502,6 +1668,7 @@ function buildingPanel(id) {
   if (id === 'house') main.append(houseAssignmentPanel(), houseHappinessPanel(), prayerPanel());
   if (id === 'chapel') main.append(compactBlessingPanel());
   if (id === 'lighthouse') main.append(el('p', { class: 'notice', 'data-lighthouse-bonus': '' }, lighthouseDescription()), button('Lighthouse visits', () => openPanel('building-details', id), { class: 'action secondary', disabled: !value.level }));
+  if(id==='dock'&&Development.isDevelopment(state))main.append(button('Darowizna sojusznikowi',()=>openPanel('gifts'),{class:'action secondary','data-v32-gifts-open':''}));
   if (id === 'dock') main.append(button('Open Harbor orders', () => openPanel('trade'), { class: 'action secondary' }), button(uiCopy('I help — charity port', 'Pomagam — port dobroczynności'), () => openPanel('charity'), { class: 'action secondary', 'data-open-charity': '' }));
   if (id === 'market') main.append(button('Open Market exchange', () => openPanel('market'), { class: 'action secondary', 'data-market-entry': '', disabled: !workplaceUnlocked(state, id) }));
   const cost = buildingCost(state, id);
@@ -1511,7 +1678,7 @@ function buildingPanel(id) {
   if (value.construction || value.premiumService) {
     main.append(el('p', { class: 'notice compact-project-status construction-status', 'data-construction-status': id }, constructionDescription(id)));
   }
-  const upgradeButton = button(maxLevel ? 'Maximum level' : value.level ? 'Upgrade' : 'Build', () => perform({ type: value.level ? 'upgrade' : 'build', building: id }), { disabled: maxLevel || townhallLocked || !canAfford(state, cost), 'data-upgrade-building': id });
+  const upgradeButton = button(maxLevel ? 'Maximum level' : value.level ? 'Upgrade' : 'Build', () => Development.isDevelopment(state)?openDevelopmentConstruction(id):perform({ type: value.level ? 'upgrade' : 'build', building: id }), { disabled: maxLevel || townhallLocked || !canAfford(state, cost), 'data-upgrade-building': id });
   const upgradeSection = card(upgradeHeading(id, maxLevel ? 'Fully upgraded' : value.construction ? `Next level: ${plannedLevel(state, id) + 1}` : value.level ? 'Building upgrade' : 'Construction'),
     maxLevel ? null : upgradeCostView(cost),
     townhallLocked ? el('p', { class: 'notice building-lock', 'data-upgrade-lock': id, 'data-i18n-ignore': '' }, upgradeEligibilityMessage(eligibility)) : null,
@@ -1524,6 +1691,7 @@ function buildingPanel(id) {
   if (project?.stage === 'building' && !project.premiumService) upgrades.append(el('div', { class: 'compact-project-actions' }, (Activities.quoteAccelerationOptions?.(state, project.order) || []).map(({ percent }) => quotedButton(percent === 100 ? 'Finish construction now' : `Shorten building time by ${percent}%`, () => Activities.quoteAcceleration?.(state, project.order, percent), { type: 'premiumAccelerate', project: project.order, percent }, { class: 'action secondary', 'data-premium-percent': percent }))));
   else if (project?.stage === 'transport') upgrades.append(premiumTransportButton({ route: 'construction', project: project.order }));
   if (premiumActive(state) && !canAfford(state, cost)) upgrades.append(quotedButton('Schedule expected deliveries', () => Activities.quoteForecastPlan?.(state, id, { buildingCost }), { type: 'forecastPlan', building: id }, { class: 'action secondary', 'data-premium-forecast': id }));
+  if(Development.isDevelopment(state)){ const production=renderProductionControls(id,developmentPanelOptions({withoutBuildingControls:true}));if(production)main.append(production);if(id==='warehouse')main.append(renderFoodControls(developmentPanelOptions()));const transport=renderTransportControls(id,developmentPanelOptions());if(transport)main.append(transport); }
   content.append(el('div', { class: 'building-layout' }, main, upgrades),
     el('footer', { class: 'building-navigation' }, button('More building details', () => openPanel('building-details', id), { class: 'action secondary', 'data-building-more': id })));
   return content;
@@ -1550,7 +1718,7 @@ function warehouseDispatchSummary() {
 }
 function buildingDetailsPanel(id) {
   const building = state.buildings[id];
-  const content = el('div', { class: 'building-details-panel', 'data-building-details': id, 'data-building-signature': `${building.level}:${(building.construction || building.premiumService)?.stage || ''}` }, el('p', { class: 'building-purpose' }, buildingPurpose(id)));
+  const content = el('div', { class: 'building-details-panel', 'data-building-details': id, 'data-building-signature': `${building.level}:${(building.construction || building.premiumService)?.stage || ''}` }, el('p', { class: 'building-purpose' }, buildingPurpose(id,language(),state)));
   if (id === 'townhall') content.append(levelSharePanel(), worldEventsPanel(), activeEffectsPanel(), el('p', { class: 'notice', 'data-construction-summary': '' }, constructionSummary()), button('Construction and queue', () => openPanel('construction'), { class: 'action secondary' }));
   if (id === 'house') content.append(residentPurchasePanel(), rules('Lighthouse visits', visitsPanel()), residentRoster());
   if (id === 'warehouse') content.append(carrierJobsPanel(), warehouseOverview(), el('p', { class: 'notice', 'data-i18n-ignore': '', 'data-warehouse-dispatch-summary': '' }, warehouseDispatchSummary()), transportPriorityPanel());
@@ -1558,7 +1726,8 @@ function buildingDetailsPanel(id) {
   if (id === 'dock') content.append(button('Open Harbor orders', () => openPanel('trade')), note('Harbor workers carry goods between central storage, Harbor storage and the ship.'));
   if (id === 'chapel') content.append(blessingPanel());
   if (id === 'lighthouse') content.append(el('div', { class: 'stat-grid' }, stat('Level', state.buildings[id].level || 'Ruins'), stat('Stage', lighthouseLevelName(state.buildings[id].level))), visitsPanel());
-  if (PRODUCTION_RECIPES[id]) content.append(productionCard(id), el('p', { class: 'notice', 'data-i18n-ignore': '' }, productionDescriptionText(id)));
+  if (Development.isDevelopment(state)&&Development.Provisions.availableRecipes(state,id).length)content.append(productionCard(id));
+  else if (PRODUCTION_RECIPES[id]) content.append(productionCard(id), el('p', { class: 'notice', 'data-i18n-ignore': '' }, productionDescriptionText(id)));
   const project = state.buildings[id].construction || state.buildings[id].premiumService;
   if (project) content.append(card(el('h3', {}, 'Delivered building materials'), projectDeliveryView(project), el('p', { 'data-project-status': project.order }, projectDescription(project))));
   return content;
@@ -1580,7 +1749,7 @@ function objectivePanel() {
 }
 function buildingsPanel() {
   return el('div', {}, note(`Town Hall level ${state.buildings.townhall.level} allows other buildings to reach the same level.`),
-    el('div', { class: 'panel-grid' }, BUILDING_DOCK_ORDER.map(id => card(el('h3', {}, titleOf(id)), el('p', { 'data-building-purpose': id }, buildingPurpose(id)), el('p', {}, `Level ${state.buildings[id].level} / ${buildingLevelLimit(state, id)}`), button('Details and upgrades', () => openPanel('building', id))))));
+    el('div', { class: 'panel-grid' }, BUILDING_DOCK_ORDER.map(id => card(el('h3', {}, titleOf(id)), el('p', { 'data-building-purpose': id }, buildingPurpose(id,language(),state)), el('p', {}, `Level ${state.buildings[id].level} / ${buildingLevelLimit(state, id)}`), button('Details and upgrades', () => openPanel('building', id))))));
 }
 function resourcesPanel(selected) {
   return el('div', {}, note(warehousePurpose()), resourceNotationPanel(), selected === 'food' ? feedingPanel() : null, selected ? note(`${nameOf(selected)} — stock in the ${selected === 'coins' ? 'treasury' : 'central warehouse'}: ${count(state.resources[selected])}.`) : null,
@@ -1592,7 +1761,7 @@ function resourcesPanel(selected) {
     warehouseOverview(),
     button('Trade at the harbor', () => openPanel('trade')), button('Warehouse and carriers', () => openPanel('building', 'warehouse'), { class: 'action secondary' }),
     el('h3', {}, 'Production and transport'),
-    note('Farm → grain → Windmill → food. Lumber Camp → wood → Sawmill → planks. Quarry → stone. Carriers deliver finished goods from buildings to the warehouse.'),
+    note(Development.isDevelopment(state)?'Gospodarstwo dostarcza zboże, warzywa, a od poziomu 2 również żywiec i surowe mleko. Młyn przerabia zboże na mąkę, Piekarnia wypieka chleb i ciasto, a pozostałe zakłady mają własne receptury. Tragarze wożą składniki i gotowe wyroby między magazynami.':'Farm → grain → Windmill → food. Lumber Camp → wood → Sawmill → planks. Quarry → stone. Carriers deliver finished goods from buildings to the warehouse.'),
     el('div', { class: 'panel-grid' }, productionBuildings.map(id => productionCard(id, true))), transportPriorityPanel());
 }
 function resourceNotationPanel() {
@@ -1622,6 +1791,11 @@ function upgradeEligibilityMessage(eligibility) {
   return eligibility?.code === 'townhall-population' ? uiCopy(eligibility.message, `Awans Ratusza na poziom ${eligibility.targetLevel} wymaga co najmniej ${eligibility.populationRequired} mieszkańców (75% limitu poziomu ${eligibility.populationLevel}). Obecnie: ${eligibility.populationCurrent}.`) : text(eligibility?.message || '');
 }
 function productionCard(id, navigation = false) {
+  if(Development.isDevelopment(state)){
+    const content=card(el('h3',{},titleOf(id)),el('p',{},buildingPurpose(id,language(),state)),renderProductionControls(id,developmentPanelOptions({withoutBuildingControls:true})));
+    if(navigation)content.append(button('Workers and details',()=>openPanel('building',id),{class:'action secondary'}));
+    content.classList.add('production-overview-card');content.dataset.developmentProductionCard=id;return content;
+  }
   const recipe = PRODUCTION_RECIPES[id];
   const content = card(el('h3', {}, titleOf(id)),
     el('p', {}, 'Product: ', el('strong', {}, nameOf(recipe.output))),
@@ -1654,7 +1828,7 @@ function warehouseOverview() {
   return card(informationHeading('central-warehouse', 'Central warehouse',
       uiCopy('All listed materials can be spent immediately. Ordinary deliveries use storage capacity; rewards do not. This is why the available amount can exceed the stated capacity. Coins are stored separately.', 'Wszystkie pokazane materiały możesz od razu wydać. Zwykłe dostawy zajmują miejsce w magazynie, a nagrody nie. Dlatego dostępny zapas może przekraczać podaną pojemność. Monety są przechowywane osobno.'),
       uiCopy(`Level 1 holds ${count(firstLevel.total)} ordinary items in total, up to ${count(firstLevel.perResource)} per material. Each level has fixed limits allowing for upgrades, a mission, meals and a buffer. Carriers collect goods and supply construction according to your priorities.`, `Na poziomie 1 magazyn mieści łącznie ${count(firstLevel.total)} sztuk ze zwykłych dostaw, do ${count(firstLevel.perResource)} każdego materiału. Każdy poziom ma stałą pojemność uwzględniającą rozbudowę, misję, jedzenie i bufor. Tragarze odbierają towary i zaopatrują budowy zgodnie z ustawionymi priorytetami.`),
-      uiCopy('A carrier takes one material per trip, including a partial load. The base round trip is 5 minutes; completed path levels reduce it. Level 1 carries 120 units per trip. Hunger halves effective transport. Central replenishment comes before construction unless you change priorities. Food reserve: 50 × Warehouse level, capped at level 24. The practical guide teaches paid acceleration using game coins; it does not secretly shorten ordinary delivery times.', 'Tragarz przewozi jeden rodzaj materiału na kurs, także przy częściowym ładunku. Podstawowy kurs w obie strony trwa 5 minut; ukończone ścieżki go skracają. Na poziomie 1 tragarz zabiera do 120 sztuk. Głód zmniejsza wydajność transportu o połowę. Uzupełnianie magazynu wyprzedza budowy, dopóki nie zmienisz priorytetu. Rezerwa żywności wynosi 50 × poziom Magazynu, najwyżej 1200 na poziomie 24. Samouczek pokazuje przyspieszenia za monety; nie skraca ukradkiem zwykłego czasu dostaw.'),
+      Development.isDevelopment(state)?'Tragarz przewozi jeden rodzaj materiału na kurs. Ustawiaj priorytety dostaw i pilnuj miejsca w magazynach. Chroniona rezerwa obejmuje najtańsze pełne wyżywienie mieszkańców na godzinę, z wymaganą różnorodnością. Od Magazynu 5 i po odkryciu konkretnego kierunku możesz oddelegować tragarzy na stałą trasę.':uiCopy('A carrier takes one material per trip, including a partial load. The base round trip is 5 minutes; completed path levels reduce it. Level 1 carries 120 units per trip. Hunger halves effective transport. Central replenishment comes before construction unless you change priorities. Food reserve: 50 × Warehouse level, capped at level 24. The practical guide teaches paid acceleration using game coins; it does not secretly shorten ordinary delivery times.', 'Tragarz przewozi jeden rodzaj materiału na kurs, także przy częściowym ładunku. Podstawowy kurs w obie strony trwa 5 minut; ukończone ścieżki go skracają. Na poziomie 1 tragarz zabiera do 120 sztuk. Głód zmniejsza wydajność transportu o połowę. Uzupełnianie magazynu wyprzedza budowy, dopóki nie zmienisz priorytetu. Rezerwa żywności wynosi 50 × poziom Magazynu, najwyżej 1200 na poziomie 24. Samouczek pokazuje przyspieszenia za monety; nie skraca ukradkiem zwykłego czasu dostaw.'),
       ...MATERIAL_IDS.map(id => uiCopy(`${nameOf(id)}: ${count(Logistics.ordinaryStock(state, id))} ordinary, ${count(Logistics.bonusStock(state, id))} from rewards.`, `${text(nameOf(id))}: ${count(Logistics.ordinaryStock(state, id))} ze zwykłych dostaw, ${count(Logistics.bonusStock(state, id))} z nagród.`))),
     el('div', { class: 'stat-grid logistics-stats' },
       stat('Storage used', el('span', { 'data-logistics-stat': 'used' }, logisticsStatValue('used'))),
@@ -1733,6 +1907,7 @@ function foodStatValues() {
   return { demand: `${foodDemandPerHour(state)} food/h`, demandValue: count(foodDemandPerHour(state)), status: hasFoodForResidents(state) ? 'Food available' : 'Food needed', penalty: hungerPenaltyPerHour(state) ? `−5 happiness points/h per affected resident (${affected})` : '0 happiness points/h', penaltyCompact: hungerPenaltyPerHour(state) ? `−5 points/h × ${count(affected)}` : '0 points/h', efficiency: `${productionMultiplier(state) * 100}%` };
 }
 function feedingPanel() {
+  if(Development.isDevelopment(state)){const meal=Development.Provisions.mealStatus(state,null,developmentModelContext(state)),reserve=meal.reserve;return card(el('h3',{},'Posiłki mieszkańców'),el('div',{class:'stat-grid'},stat('Zapotrzebowanie na godzinę',`${count(meal.hourlySatiety)} pkt sytości`),stat('Pokrycie posiłków',`${Math.round(meal.coverage*100)}%`),stat('Rodzaje jedzenia',meal.requiredTypes),stat('Chroniona rezerwa',`${count(reserve.satiety)} / ${count(reserve.requiredSatiety)} pkt`)),note('Mieszkaniec potrzebuje 6 punktów sytości na godzinę; bez łóżka potrzebuje dwa razy więcej. Posiłki są przygotowywane również podczas nieobecności. Każdy wymagany rodzaj jedzenia powinien dostarczać co najmniej 20% sytości z ostatnich 24 godzin. Nowa osoba i nowy próg Ratusza mają 24 godziny ochrony przed karą za różnorodność.'),note('W Magazynie ustawisz kolejność wydawania oraz jednorazowe limity. Godzinna rezerwa jest dobierana według najtańszego wyżywienia i chroniona przed wydatkami.'),button('Ustaw wyżywienie',()=>openPanel('building','warehouse'),{class:'action secondary'}));}
   const values = foodStatValues();
   const content = card(el('div', { class: 'workers-food-heading' }, el('h3', {}, 'Meals for everyone'), el('span', { class: 'workers-meal-status', 'data-food-stat': 'status', 'data-fed': String(hasFoodForResidents(state)) }, values.status)),
     el('div', { class: 'workers-food-metrics' },
@@ -1747,28 +1922,28 @@ function workerManagementPanel() {
   const metric = (label, id, value) => el('div', { class: 'workers-metric' }, el('strong', { 'data-population-stat': id }, count(value)), el('span', {}, label));
   return el('div', { class: 'workers-panel', 'data-workers-panel': '' },
     el('p', { class: 'workers-intro' }, approvedCopy('workersDescription', language())),
-    el('div', { class: 'workers-overview' }, metric('Free at home', 'free', freeWorkers(state)), metric('Assigned', 'workers', totalWorkers(state)), metric('Walking to work', 'arriving', state.residents.filter(person => person.workplace && person.arrivalRemaining > 0).length), metric('Returning home', 'returning', (state.returningWorkers || []).length)),
-    feedingPanel(),
+    el('div', { class: 'workers-overview' }, metric(Development.isDevelopment(state)?uiCopy('Available','Dostępni'):'Free at home', 'free', freeWorkers(state)), metric('Assigned', 'workers', totalWorkers(state)), metric('Walking to work', 'arriving', state.residents.filter(person => person.workplace && person.arrivalRemaining > 0).length), metric('Returning home', 'returning', (state.returningWorkers || []).length)),
+    feedingPanel(), Development.isDevelopment(state)?civilianRescuePanel():null,
     el('div', { class: 'workers-section-heading' }, el('h3', {}, 'Your workplaces'), rules('Assignment help',
-      note('Each workplace can employ up to 12 × its own building level, limited by free residents at home. Each resident has one assignment. Workers shows assigned / free at Home / this building’s limit.'),
+      note(Development.isDevelopment(state)?'Limit załogi zależy od poziomu budynku i odblokowanych produktów. Jedną osobę przydzielasz do jednego produktu. Panel pokazuje osoby przydzielone, dostępnych mieszkańców oraz aktualny limit pracowników.':'Each workplace can employ up to 12 × its own building level, limited by free residents at home. Each resident has one assignment. Workers shows assigned / free at Home / this building’s limit.'),
       note('A resident starts working after the 2-minute walk to work. The Town Hall, House, Chapel and Lighthouse have no employees.'),
       note('A recalled carrier finishes the delivery already in progress, then walks home for two minutes. Other released workers start their two-minute walk immediately. They become available again on arrival.'),
-      note('Base production per worker is 20, 24, 26, 28… units per hour by the workplace’s own level, before temporary multipliers. Hunger halves production and transport immediately. Releasing a worker discards their unfinished unit.'))),
+      note(Development.isDevelopment(state)?'Produkcja zależy od wybranej receptury, poziomu budynku, wyżywienia, wykształcenia i badań. Sprawdź składniki i podział załogi w oknie producenta. Brak pełnego wyżywienia spowalnia pracę i transport.':'Base production per worker is 20, 24, 26, 28… units per hour by the workplace’s own level, before temporary multipliers. Hunger halves production and transport immediately. Releasing a worker discards their unfinished unit.'))),
     el('div', { class: 'panel-grid workforce-grid' }, WORKPLACE_IDS.map(id => workplaceCard(id, true))),
     el('div', { class: 'workers-footer' }, button('Residents and happiness', () => openPanel('residents'), { class: 'action secondary' }), button('Open House', () => openPanel('building', 'house'), { class: 'action secondary', 'data-workers-house-link': '' })));
 }
 function residentsPanel(manageWorkers = false) {
   if (manageWorkers) return workerManagementPanel();
   const liveStat = (label, id, value) => stat(label, el('span', { 'data-population-stat': id }, value));
-  return el('div', { class: 'residents-panel' }, note(residentsPurpose()), el('div', { class: 'stat-grid' }, liveStat('Town Hall level', 'level', state.buildings.townhall.level), liveStat('Residents', 'population', `${state.population} / ${state.capacity}`), liveStat('Assigned', 'workers', totalWorkers(state)), liveStat('Happiness', 'happiness', happinessText())),
+  return el('div', { class: 'residents-panel' }, note(residentsPurpose(language(),state)), el('div', { class: 'stat-grid' }, liveStat('Town Hall level', 'level', state.buildings.townhall.level), liveStat('Residents', 'population', `${state.population} / ${state.capacity}`), liveStat('Assigned', 'workers', totalWorkers(state)), liveStat('Happiness', 'happiness', happinessText())),
     feedingPanel(),
     card(el('h3', {}, 'Workforce'),
       el('div', { class: 'stat-grid workforce-summary' }, liveStat('Available', 'free', freeWorkers(state)), liveStat('Returning home', 'returning', (state.returningWorkers || []).length), liveStat('Workplace limit', 'worker-limit', '12 × building level')),
       el('p', { class: 'returning-status', 'data-population-stat': 'next-return' }, returnDescription()),
       rules('Work and return rules',
-        note('Each workplace can employ up to 12 × its own building level, limited by free residents at home. Each resident has one assignment. Workers shows assigned / free at Home / this building’s limit.'),
+        note(Development.isDevelopment(state)?'Limit załogi zależy od poziomu budynku i odblokowanych produktów. Jedną osobę przydzielasz do jednego produktu. Panel pokazuje osoby przydzielone, dostępnych mieszkańców oraz aktualny limit pracowników.':'Each workplace can employ up to 12 × its own building level, limited by free residents at home. Each resident has one assignment. Workers shows assigned / free at Home / this building’s limit.'),
         note('A recalled carrier finishes the delivery already in progress, then walks home for two minutes. Other released workers start their two-minute walk immediately. They become available again on arrival.'),
-        note('Base production per worker is 20, 24, 26, 28… units per hour by the workplace’s own level, before temporary multipliers. Hunger halves production and transport immediately. Releasing a worker discards their unfinished unit.'),
+        note(Development.isDevelopment(state)?'Produkcja zależy od wybranej receptury, poziomu budynku, wyżywienia, wykształcenia i badań. Sprawdź składniki i podział załogi w oknie producenta. Brak pełnego wyżywienia spowalnia pracę i transport.':'Base production per worker is 20, 24, 26, 28… units per hour by the workplace’s own level, before temporary multipliers. Hunger halves production and transport immediately. Releasing a worker discards their unfinished unit.'),
         note('A resident starts working after the 2-minute walk to work. The Town Hall, House, Chapel and Lighthouse have no employees.'))),
     manageWorkers ? null : button('Open House', () => openPanel('building', 'house'), { class: 'action secondary', 'data-workers-house-link': '' }),
     el('div', { class: 'panel-grid workforce-grid' }, WORKPLACE_IDS.map(id => manageWorkers ? workplaceCard(id, true) : workplaceOverviewCard(id))),
@@ -1789,7 +1964,7 @@ function residentsPanel(manageWorkers = false) {
         el('div', {}, el('span', {}, 'Happiness'), el('strong', {}, 'Change of 1 resident')),
         ...[25,50,75,100].flatMap(value => [value,-value]).map(value =>
           el('div', { 'data-population-rate': value }, el('span', {}, `${value>0?'+':'−'}${Math.abs(value)}%`),
-            el('strong', {}, uiCopy(`${value>0?'Arrival':'Departure'} every ${durationText(3600/Math.abs(populationRate(value)))}`, `${value>0?'Przybycie':'Odejście'} co ${durationText(3600/Math.abs(populationRate(value)))}`))))),
+            el('strong', {}, uiCopy(`${value>0?'Arrival':'Departure'} every ${durationText(3600/Math.abs(currentPopulationRate(value)))}`, `${value>0?'Przybycie':'Odejście'} co ${durationText(3600/Math.abs(currentPopulationRate(value)))}`))))),
       note('Hours mean real elapsed time. Production, feeding, happiness, population and all delivery/building timers continue while the game is closed.'),
       note('Food, employment and active effects change individual happiness over time. Missing beds affect only the unhoused residents: they work at half speed, eat twice as much and cannot receive House points. The next population change is estimated using the current population average.')),
     el('p', { class: 'notice', 'data-lighthouse-bonus': '' }, lighthouseDescription()), note('Attractions grant temporary happiness to selected residents. Upgraded paths improve transport. Chapel and Lighthouse bonuses last for a limited time.'));
@@ -1853,7 +2028,7 @@ function housingNotice() {
   return el('p', { class: 'notice housing-notice', 'data-housing-warning': '', 'data-overcrowded': String(unhousedResidents(state) > 0), 'data-population-stat': 'housing-status' }, housingDescription());
 }
 function populationGrowthRateText() {
-  const rate = populationRate(state.happiness);
+  const rate = currentPopulationRate(state.happiness);
   if (rate > 0 && state.population >= state.capacity) return 'At population limit · 0/h';
   if (rate < 0 && state.population <= Residents.residentPopulationMinimum(state)) return uiCopy('Minimum population · 0/h', 'Minimalna populacja · 0/h');
   if (!rate) return 'Stable · 0 residents/h';
@@ -1861,7 +2036,7 @@ function populationGrowthRateText() {
   return `${rate > 0 ? 'Growth' : 'Decline'} · ${rate > 0 ? '+' : '−'}${amount} residents/h`;
 }
 function populationDescription() {
-  const rate = populationRate(state.happiness);
+  const rate = currentPopulationRate(state.happiness);
   if (!rate) return `0 happiness points · no population growth or decline.`;
   if (rate > 0 && state.population >= state.capacity) return `Population capacity of ${state.capacity} reached. Upgrade the Town Hall to increase capacity.`;
   if (rate < 0 && state.population <= Residents.residentPopulationMinimum(state)) return uiCopy(`Minimum population of ${Residents.residentPopulationMinimum(state)} reached. Population cannot fall further; production and development remain available.`, `Osiągnięto minimum ${Residents.residentPopulationMinimum(state)} mieszkańców. Populacja nie spadnie niżej; produkcja i rozwój pozostają dostępne.`);
@@ -1872,18 +2047,29 @@ function populationDescription() {
   const time = `${hours ? `${hours} h ` : ''}${minutes ? `${minutes} min ` : ''}${remainder} s`;
   return `Estimate at current happiness: ${rate > 0 ? 'A new resident' : 'One resident leaves'} in ${time}.`;
 }
+function uiOwnsLegacyGood(id) {
+  const worlds=Object.values(archipelago?.worlds||{active:state});
+  for(const world of worlds){
+    if([world.resources?.[id],world.market?.stock?.[id],world.dock?.stock?.[id],world.pendingDeliveries?.[id]].some(value=>Number(value)>0))return true;
+    if([...(world.market?.orders||[]),...(world.market?.locked||[]),...(world.dock?.orders||[])].some(row=>row.resource===id&&Number(row.amount||row.remaining)>0))return true;
+    if((world.accountGifts?.outgoing||[]).some(row=>Number(row.cargo?.[id]||row.remainingCargo?.[id])>0))return true;
+  }
+  return (archipelago?.transfers||[]).some(row=>row.status!=='complete'&&Number(row.remainingCargo?.[id]||row.cargo?.[id])>0);
+}
+function developmentVisibleGoods({target=false}={}) { return MATERIAL_IDS.filter(id=>!Development.isDevelopment(state)||!Development.Provisions.GOODS[id]?.legacy||!target&&uiOwnsLegacyGood(id)); }
 function tradePanel() {
   if (!workplaceUnlocked(state, 'dock')) return el('div', {}, note('The Harbor unlocks at Town Hall level 4.'), button('Market — barter goods', () => openPanel('market')), button('Upgrade Town Hall', () => openPanel('building', 'townhall'), { class: 'action secondary' }));
   const dock = state.dock || { stock: {}, orders: [] };
-  const offers = MATERIAL_IDS.map(id => {
+  const offers = developmentVisibleGoods().map(id => {
     const sell = Logistics.quoteTrade?.(state, { resource: id, amount: 100, direction: 'sell' });
     const buy = Logistics.quoteTrade?.(state, { resource: id, amount: 100, direction: 'buy' });
-    const base = ['food', 'planks'].includes(id) ? [140, 150] : [40, 50];
+    const legacy=Development.isDevelopment(state)&&Development.Provisions.GOODS[id]?.legacy;
+    const base = Development.isDevelopment(state)?[Development.Provisions.quoteGoods(id,100,'sell').coins,Development.Provisions.quoteGoods(id,100,'buy').coins]:['food', 'planks'].includes(id) ? [140, 150] : [40, 50];
     return card(el('h3', {}, nameOf(id)), el('p', {}, `Central: ${count(state.resources[id])} · Harbor: ${count(dock.stock?.[id])}`),
       button(`Sell 100 → ${count(sell?.price ?? base[0])} coins`, () => perform({ type: 'trade', resource: id, amount: 100, direction: 'sell' }), { disabled: sell?.ok === false }),
-      button(`Buy 100 for ${count(buy?.price ?? base[1])} coins`, () => perform({ type: 'trade', resource: id, amount: 100, direction: 'buy' }), { class: 'action secondary', disabled: buy?.ok === false }));
+      legacy?null:button(`Buy 100 for ${count(buy?.price ?? base[1])} coins`, () => perform({ type: 'trade', resource: id, amount: 100, direction: 'buy' }), { class: 'action secondary', disabled: buy?.ok === false }));
   });
-  return el('div', {}, button(uiCopy('I help — charity port', 'Pomagam — port dobroczynności'), () => openPanel('charity'), { class: 'action secondary', 'data-open-charity': '' }), islandShippingPanel(), state.buildings.townhall.level >= 6 ? playerTradePanel() : null, note(uiCopy('Harbor trade with the game remains available. From Town Hall 6 you can also sell materials to players for coins, at or below the base NPC sale price.', 'Handel portowy z grą pozostaje dostępny. Od Ratusza 6 możesz także sprzedawać materiały graczom za monety po cenie nie wyższej od bazowej ceny sprzedaży NPC.')), note('Orders use full lots of 100. Purchase prices are frozen when ordered. Consecutive purchases within 3 hours increase the base price linearly. Every voyage takes 5 minutes; Harbor workers handle both transport stages.'),
+  return el('div', {}, button(uiCopy('I help — charity port', 'Pomagam — port dobroczynności'), () => openPanel('charity'), { class: 'action secondary', 'data-open-charity': '' }), islandShippingPanel(), state.buildings.townhall.level >= 6 ? playerTradePanel() : null, note(uiCopy('Harbor trade with the game remains available. From Town Hall 6 you can also sell materials to players for coins, at or below the base NPC sale price.', 'Handel portowy z grą pozostaje dostępny. Od Ratusza 6 możesz także sprzedawać materiały graczom za monety po cenie nie wyższej od bazowej ceny sprzedaży NPC.')), note(Development.isDevelopment(state)?'Ceny przycisków pochodzą z bieżącej wyceny całego zamówienia. Zakup kosztuje 150% bazowej wartości towaru, a sprzedaż przynosi jego bazową wartość; końcową kwotę zaokrąglamy w górę do pełnej monety. Cena jest ustalana przy potwierdzeniu. Towar wymaga transportu przez Port.':'Orders use full lots of 100. Purchase prices are frozen when ordered. Consecutive purchases within 3 hours increase the base price linearly. Every voyage takes 5 minutes; Harbor workers handle both transport stages.'),
     el('div', { class: 'stat-grid' }, stat('Harbor stock', `${count(Logistics.dockUsed?.(state) || 0)} / ${count(Logistics.dockCapacity?.(state)?.total || Logistics.dockCapacity?.(state) || 4000)}`), stat('Carriers', transportRate('dock'))),
     button('Open Market — goods for goods', () => openPanel('market'), { class: 'action secondary' }),
     el('div', { class: 'panel-grid' }, offers),
@@ -1962,7 +2148,7 @@ function playerTradePanel() {
   const root = el('section', { class: 'player-trade-panel', 'data-player-trade': '' },
     el('h3', {}, uiCopy('Player exchange offers', 'Oferty wymiany między graczami')),
     el('p', { class: 'notice', 'data-i18n-ignore': '' }, uiCopy('Your island’s name, offered goods and requested exchange will be visible to other signed-in players.', 'Nazwa Twojej wyspy, oferowane towary i oczekiwana wymiana będą widoczne dla innych zalogowanych graczy.')),
-    el('p', { class: 'notice', 'data-i18n-ignore': '' }, uiCopy('From Town Hall 6 you can sell materials for coins alongside NPC trade. Set a price no higher than the base NPC sale price: 50 coins per 100 wood, stone or grain; 150 per 100 food or planks. Whole offers expire after 24 hours; goods stay reserved until acceptance or return. Historical barter offers retain their original terms.', 'Od 6. poziomu ratusza możesz sprzedawać materiały innym graczom za monety i nadal handlować z grą. Cena oferty nie może przekraczać podstawowej ceny zakupu tego samego towaru od gry: 50 monet za 100 jednostek drewna, kamienia lub zboża; 150 monet za 100 jednostek żywności albo 100 desek. Oferta jest realizowana w całości i wygasa po 24 godzinach. Do tego czasu towary są zarezerwowane. Starsze oferty wymiany towar za towar zachowują wcześniej ustalone warunki.')));
+    el('p', { class: 'notice', 'data-i18n-ignore': '' }, Development.isDevelopment(state)?'Od 6. poziomu Ratusza możesz sprzedawać towary graczom za monety. Limit ceny zależy od bazowej wartości wybranego towaru i liczby sztuk; aktualną kwotę maksymalną zobaczysz pod formularzem. Oferta jest realizowana w całości i wygasa po 24 godzinach. Towary pozostają zarezerwowane do przyjęcia oferty albo zwrotu.':uiCopy('From Town Hall 6 you can sell materials for coins alongside NPC trade. Set a price no higher than the base NPC sale price: 50 coins per 100 wood, stone or grain; 150 per 100 food or planks. Whole offers expire after 24 hours; goods stay reserved until acceptance or return. Historical barter offers retain their original terms.', 'Od 6. poziomu ratusza możesz sprzedawać materiały innym graczom za monety i nadal handlować z grą. Cena oferty nie może przekraczać podstawowej ceny zakupu tego samego towaru od gry: 50 monet za 100 jednostek drewna, kamienia lub zboża; 150 monet za 100 jednostek żywności albo 100 desek. Oferta jest realizowana w całości i wygasa po 24 godzinach. Do tego czasu towary są zarezerwowane. Starsze oferty wymiany towar za towar zachowują wcześniej ustalone warunki.')));
   if (!tradeServiceReady()) {
     root.append(el('p', { class: 'notice', 'data-player-trade-unavailable': '', 'data-i18n-ignore': '' }, uiCopy('Player trading needs a signed-in account and the exchange service. This environment has not connected the service yet. No offer or exchange is simulated.', 'Handel między graczami wymaga konta gry i uruchomionej usługi handlu. W tym podglądzie nie jest jeszcze dostępny.')));
     return root;
@@ -1971,12 +2157,12 @@ function playerTradePanel() {
     note(uiCopy('Retry checks the same operation. It will not reserve or exchange these goods twice.', 'Ponowienie sprawdzi tę samą operację. Nie zarezerwuje ani nie wymieni towarów drugi raz.')),
     button(uiCopy('Confirm the pending operation', 'Potwierdź oczekującą operację'), () => void mutatePlayerTrade(uncertainTradeRequest.kind, uncertainTradeRequest.id, uncertainTradeRequest.values, uncertainTradeRequest), { class: 'action secondary', disabled: tradeMutationBusy, 'data-retry-player-trade': '' })));
   if (!playerTradeCache && !playerTradeLoading && !playerTradeError) queueMicrotask(refreshPlayerTrade);
-  const resourceChoice = (key, selected) => el('select', { 'aria-label': key === 'give' ? uiCopy('Offered resource', 'Oferowany zasób') : uiCopy('Requested resource', 'Oczekiwany zasób'), [`data-trade-${key}-resource`]: '' }, MATERIAL_IDS.map(id => el('option', { value: id, selected: id === selected }, nameOf(id))));
+  const resourceChoice = (key, selected) => el('select', { 'aria-label': key === 'give' ? uiCopy('Offered resource', 'Oferowany zasób') : uiCopy('Requested resource', 'Oczekiwany zasób'), [`data-trade-${key}-resource`]: '' }, developmentVisibleGoods().map(id => el('option', { value: id, selected: id === selected }, nameOf(id))));
   const give = resourceChoice('give', 'stone');
   const giveAmount = el('input', { type: 'number', min: '1', step: '1', value: '100', 'aria-label': uiCopy('Offered quantity', 'Oferowana ilość'), 'data-trade-give-amount': '' });
   const wantAmount = el('input', { type: 'number', min: '1', step: '1', value: '50', 'aria-label': uiCopy('Price in coins', 'Cena w monetach'), 'data-trade-want-amount': '' });
   const maximum = el('small', { 'data-trade-price-maximum': '', 'data-i18n-ignore': '' });
-  const updateMaximum = () => { const cap = Math.floor((['food','planks'].includes(give.value) ? 150 : 50) * Number(giveAmount.value) / 100); wantAmount.max = String(cap); maximum.textContent = uiCopy(`Maximum: ${cap} coins`, `Maksymalnie: ${cap} monet`); };
+  const updateMaximum = () => { const cap = Development.isDevelopment(state)?Math.ceil((Development.Provisions.GOODS[give.value]?.price||0)*Number(giveAmount.value)-1e-9):Math.floor((['food','planks'].includes(give.value) ? 150 : 50) * Number(giveAmount.value) / 100); wantAmount.max = String(cap); maximum.textContent = uiCopy(`Maximum: ${cap} coins`, `Maksymalnie: ${cap} monet`); };
   give.addEventListener('change', updateMaximum); giveAmount.addEventListener('input', updateMaximum); updateMaximum();
   const form = el('form', { class: 'player-trade-form', 'data-trade-create': '', onsubmit: event => {
     event.preventDefault();
@@ -2069,7 +2255,7 @@ async function resetSingleIsland() {
         toast(uiCopy('Cancel outstanding offers and collect all returned goods before starting over.', 'Przed rozpoczęciem od nowa anuluj własne oferty i odbierz wszystkie zwroty towarów.')); return;
       }
     }
-    readWorldPayload(Commerce.preserveAccountProgress(state, createState(Date.now(), { onboarding: true })));
+    readWorldPayload(Commerce.preserveAccountProgress(state, worldAdapters.createState(simulationNow(), { onboarding: true })));
     resetWorldInterface();
     if (!await save(true)) { renderHUD(); toast(devSyncMessage()); return; }
     tutorialReady = false; worldExperienceReady = false; closePanel(true);
@@ -2166,6 +2352,7 @@ function islandShippingPanel() {
       if (!result.ok) toast(result.message); else void save(true);
       renderHUD(); if (dialog.open) renderPanel();
     }, { class: 'action secondary', 'data-unload-island-transfer': transfer.id }));
+    if(transfer.mode==='passengers'&&transfer.status==='waiting'&&Development.isDevelopment(state)){const target=el('select',{'aria-label':'Nowy cel pasażerów'},Object.keys(archipelago.worlds).filter(id=>id!==transfer.toIslandId).map(id=>el('option',{value:id},islandNameFor(id))));row.append(note('Pasażerowie czekają na miejsce w Ratuszu. Możesz skierować statek na inną swoją wyspę; rejs trwa 30 minut.'),target,button('Skieruj pasażerów',()=>{if(!allowIslandMutation())return;const result=Archipelago.redirectPassengerTransfer(archipelago,{transferId:transfer.id,toIslandId:target.value},simulationNow());toast(result.message);if(result.ok){void save(true);renderHUD();renderPanel();}},{class:'action secondary','data-v32-redirect-passengers':transfer.id}));}
     section.append(row);
   }
   const units = el('input', { type: 'number', min: '1000', max: '100000', step: '1000', value: '1000', 'aria-label': uiCopy('Additional ship capacity', 'Dodatkowa pojemność statku'), 'data-ship-capacity-units': '' });
@@ -2360,20 +2547,25 @@ function blessingPanel() {
 }
 function marketPanel() {
   if (!workplaceUnlocked(state, 'market')) return note('The Market unlocks at Town Hall level 2.');
-  const rows = MATERIAL_IDS.map(id => card(el('h3', {}, nameOf(id)),
+  const rows = developmentVisibleGoods().map(id => card(el('h3', {}, nameOf(id)),
     el('div', { class: 'stat-grid' }, stat('Available at Market', el('span', { 'data-market-stock': id }, count(state.market.stock[id]))), stat('Locked for one hour', el('span', { 'data-market-locked': id }, count(state.market.locked.filter(lot => lot.resource === id).reduce((sum, lot) => sum + lot.amount, 0))))),
     button('Bring 10 to Market', () => perform({ type: 'marketOrder', resource: id, amount: 10 }), { class: 'action secondary', 'data-market-order': id }),
     button('Return goods to Warehouse', () => perform({ type: 'marketDispatch', resource: id, amount: Math.max(0, state.market.stock[id] - (state.market.dispatch?.[id] || 0)) }), { class: 'action secondary', 'data-market-dispatch': id }),
     premiumTransportButton({ route: 'marketOutbound', resource: id, amount: Math.max(0, state.market.stock[id] - (state.market.dispatch?.[id] || 0)) })));
-  const from = el('select', { id: 'market-from', 'aria-label': 'Goods offered' }, MATERIAL_IDS.map(id => el('option', { value: id }, nameOf(id))));
-  const to = el('select', { id: 'market-to', 'aria-label': 'Goods received' }, MATERIAL_IDS.map(id => el('option', { value: id, selected: id === 'stone' }, nameOf(id))));
-  const quantity = el('input', { id: 'market-quantity', type: 'number', min: '10', step: '10', value: '10', 'aria-label': 'Quantity to exchange' });
+  const from = el('select', { id: 'market-from', 'aria-label': 'Goods offered' }, developmentVisibleGoods().map(id => el('option', { value: id }, nameOf(id))));
+  const to = el('select', { id: 'market-to', 'aria-label': 'Goods received' }, developmentVisibleGoods({target:true}).map(id => el('option', { value: id, selected: id === 'stone' }, nameOf(id))));
+  const quantity = el('input', { id: 'market-quantity', type: 'number', min: Development.isDevelopment(state)?'1':'10', step: Development.isDevelopment(state)?'1':'10', value: '10', 'aria-label': 'Quantity to exchange' });
+  const preview=el('p',{class:'notice','data-market-value-preview':'','data-i18n-ignore':''});
+  const updatePreview=()=>{if(!Development.isDevelopment(state))return;const offered=Development.Provisions.GOODS[from.value],received=Development.Provisions.GOODS[to.value],amount=Number(quantity.value);if(!Number.isSafeInteger(amount)||amount<1){preview.textContent='Podaj dodatnią, pełną liczbę sztuk.';return;}if(from.value===to.value||offered.category!==received.category){preview.textContent='Wybierz dwa różne towary tej samej kategorii.';return;}const output=Math.floor(amount*offered.price*.9/received.price+1e-9);preview.textContent=`Za ${count(amount)} szt. ${nameOf(from.value)} otrzymasz ${count(output)} szt. ${nameOf(to.value)} po prowizji 10%. Wynik zaokrąglamy w dół do pełnych sztuk.`;};
+  from.addEventListener('change',updatePreview);to.addEventListener('change',updatePreview);quantity.addEventListener('input',updatePreview);updatePreview();
+  const categoryInfo=Development.isDevelopment(state)?'Wymieniaj towary według ich bazowej wartości, w obrębie tej samej kategorii. Prowizja wynosi 10%, a liczbę otrzymanych sztuk zaokrąglamy w dół. Wybierz towary, aby sprawdzić wynik przed potwierdzeniem.':null;
+  const categoryRows=Development.isDevelopment(state)?[1,2,3].map(category=>el('p',{'data-i18n-ignore':''},`Kategoria ${['I','II','III'][category-1]}: ${developmentVisibleGoods({target:true}).filter(id=>Development.Provisions.GOODS[id].category===category).map(nameOf).join(', ')}.`)):[];
   return el('div', {}, state.buildings.townhall.level >= 6 ? playerTradePanel() : null, el('h3', {}, 'Market — barter without coins'),
-    note('Raw materials: Wood, Stone, Grain. Processed goods: Planks, Food. Exchange within one category at 1:1 before the 10% fee: 10 units yield 9. There is no limit on the number of exchanges.'),
+    categoryInfo?el('div',{class:'notice','data-i18n-ignore':''},el('p',{},categoryInfo),...categoryRows):note('Raw materials: Wood, Stone, Grain. Processed goods: Planks, Food. Exchange within one category at 1:1 before the 10% fee: 10 units yield 9. There is no limit on the number of exchanges.'),
     el('div', { class: 'stat-grid' }, stat('Storage used', el('strong', { 'data-market-used': '' }, `${count(marketUsed(state))} / ${count(marketCapacity(state))}`)), stat('Delivery to Market', el('span', { 'data-logistics-stat': 'market-rate' }, transportRate('market')))),
     el('p', { class: 'notice', 'data-market-timer': '' }, state.market.locked.length ? durationText(Math.min(...state.market.locked.map(lot => lot.remaining))) : 'No locked goods'),
     note('Market workers carry goods in both directions. Arrivals are locked for one hour and expire after 24 hours. Exchanged goods receive a fresh 24-hour deadline. Request a return delivery to bring goods back to central storage.'),
-    card(el('h3', {}, 'Exchange goods'), el('div', { class: 'market-exchange-fields' }, from, to, quantity), button('Exchange — 10% fee', () => perform({ type: 'marketExchange', from: from.value, to: to.value, amount: Number(quantity.value) }), { 'data-market-exchange': '' })),
+    card(el('h3', {}, 'Exchange goods'), el('div', { class: 'market-exchange-fields' }, el('label',{},uiCopy('Goods offered','Oddajesz'),from),el('label',{},uiCopy('Goods received','Otrzymujesz'),to),el('label',{},uiCopy('Quantity','Liczba sztuk'),quantity)), Development.isDevelopment(state)?preview:null, button('Exchange — 10% fee', () => perform({ type: 'marketExchange', from: from.value, to: to.value, amount: Number(quantity.value) }), { 'data-market-exchange': '' })),
     ...(state.market.orders || []).map(order => card(el('h3', {}, `Delivery to Market: ${nameOf(order.resource)}`), el('p', { 'data-market-order-status': order.id || order.resource, 'data-market-order-resource': order.resource, 'data-i18n-ignore': '' }, uiCopy(`${count(order.amount)} remaining`, `Pozostało: ${count(order.amount)}`)), premiumTransportButton({ route: 'marketInbound', resource: order.resource }))),
     el('div', { class: 'panel-grid' }, rows));
 }
@@ -2696,8 +2888,21 @@ function refreshAdventureEffects() {
   if (adventureEffectsNode) adventureEffectsNode.replaceWith(next); else layer.append(next);
   adventureEffectsNode = next;
 }
-function performScene(action, context) { perform(action, context); return lastPerformedResult; }
+function performScene(action, context) {
+  perform(action, context);
+  const result=lastPerformedResult;
+  const newScene=action.type==='adventureStart'||action.type==='adventureInput'&&['puzzleNextRoom','puzzleReset'].includes(action.command);
+  if(result?.ok&&newScene){
+    const reset=()=>{if(panel?.kind==='adventures'&&dialog.open){dialog.scrollTop=0;dialog.querySelector('.dialog-body')?.scrollTo({top:0,left:0,behavior:'instant'});}};
+    reset();requestAnimationFrame(reset);
+  }
+  return result;
+}
 function theatrePanel() {
+  if(Development.isDevelopment(state)) { const host=el('div',{'data-v32-theatre':''},renderTheatreControls(developmentPanelOptions()));host.append(button('Dekoracje Teatru',()=>openPanel('theatre-garden'),{class:'action secondary'}));return host; }
+  return theatreGardenPanel();
+}
+function theatreGardenPanel() {
   theatreController = createTheatrePanel({ state, language: language(), perform: performScene,
     persistence: devAccount ? 'cloud' : 'preview', getSaveStatus: () => devSyncStatus,
     onOpenAttractions: () => { closePanel(true); setDockCategory('decorations'); }, noAds: () => Commerce.commerceStatus(state).noAds,
@@ -2713,7 +2918,7 @@ function theatrePanel() {
 }
 function adventuresPanel() {
   const overview = missionViewStatus(state, { previewSteps: false });
-  adventuresController = createAdventuresPanel({ state, language: language(), onAction: performScene,
+  adventuresController = createAdventuresPanel({ state, language: language(), onAction: performScene, allowAdSimulation: Commerce.runtimeCapabilities().simulatedAds,
     onMainMission: () => openPanel('tasks'), mainMission: { title: { pl: overview.task?.titlePl, en: overview.task?.title }, description: { pl: overview.task?.descriptionPl, en: overview.task?.description } },
     onMiniGame: kind => startExpedition(EXPEDITIONS[0].id, kind),
     onRewardedAd: action => {
@@ -2805,7 +3010,7 @@ function settingsPanel() {
     el('a', {href:'harborlight-privacy.html',target:'_blank',rel:'noopener'}, uiCopy('Privacy policy','Polityka prywatności')));
   const version = el('div', { class: 'setting-row', 'data-settings-version': '', 'data-i18n-ignore': '' },
     el('span', {}, uiCopy('Game version', 'Wersja gry')), el('strong', { 'data-game-version': '' }, GAME_VERSION));
-  return el('div', {}, signout, version, legalLinks, el('label', { class: 'setting-row' }, el('span', {}, 'Language'), languageSelect), notificationFilterSettings(), checkbox('motion', 'Animations and highlights'),
+  return el('div', {}, signout, version, legalLinks, devCloud.local&&devTimeStatus?.canAdvance?button('Zegar deweloperski',()=>openPanel('time'),{class:'action secondary','data-v32-dev-clock-open':''}):null, el('label', { class: 'setting-row' }, el('span', {}, 'Language'), languageSelect), notificationFilterSettings(), checkbox('motion', 'Animations and highlights'),
     !effectiveAnimationsEnabled() ? note(state.settings.motion ? uiCopy('Your device limits animations. Change its reduced-motion setting to enable water, smoke and island animation.', 'Na urządzeniu włączono ograniczenie animacji. Aby uruchomić ruch wody, dymu i wyspy, zmień ustawienia ograniczenia ruchu na urządzeniu.') : 'Animations are off. Enable the checkbox to turn on water, smoke and island movement.') : null,
     note(devAccount ? (language() === 'pl' ? 'Postęp zapisuje się automatycznie. Po zakończeniu wprowadzenia wyspa działa w czasie rzeczywistym, także podczas nieobecności.' : 'Progress saves automatically. After the introduction, the island continues in real time, including while you are away.') : 'Development preview runs in memory. Hosted accounts save exclusively in the cloud.'),
     button(uiCopy('Help', 'Pomoc'), () => openPanel('help'), { class: 'action secondary', 'data-open-help': '' }),
@@ -2873,11 +3078,13 @@ async function replayIslandTour(fromBeginning = false) {
 }
 
 function timePanel() {
+  if(Development.isDevelopment(state)&&devCloud.local&&devTimeStatus?.canAdvance){const select=el('select',{'data-v32-dev-time':''},...[60,600,3600,21600,86400].map(seconds=>el('option',{value:seconds},durationText(seconds))));return el('div',{},stat('Dzień wyspy',state.day),note('Zegar deweloperski konta admin3. Przesuwa symulację wysp tego konta: produkcję, transport, posiłki, kursy i badania. Wspólne zadania Królestwa oraz darowizny korzystają z zegara serwera.'),select,button('Przesuń czas',()=>void advanceDevelopmentTime(Number(select.value)),{'data-v32-dev-time-submit':''}),el('p',{'data-v32-time-offset':''},`Przesunięcie: ${durationText(devTimeOffsetSeconds)}`));}
   return el('div', {}, stat('Island day', state.day), note(uiCopy('The island calendar starts on 1 January. Its clock and daily renewals use Europe/Warsaw, independently of your device time zone. Effects, food and construction follow real elapsed time, including while you are away.', 'Kalendarz wyspy zaczyna się 1 stycznia. Zegar i odnowienia dzienne korzystają z czasu Europe/Warsaw, niezależnie od strefy urządzenia. Efekty, posiłki i budowy biegną w czasie rzeczywistym, również podczas nieobecności.')), button('Town Hall', () => openPanel('building', 'townhall')));
 }
 
 function expeditionRun(id) { return state.expeditionRuns?.[id] || null; }
 function expeditionsPanel() {
+  if(Development.isDevelopment(state)) return el('div',{},note('Wybierz minigrę. Każda odmiana ma własną trudność, rosnącą po wygranych i zerowaną co godzinę. Wyjście kończy bieżącą próbę jako przegraną.'),el('div',{class:'panel-grid'},card(el('h3',{},'Kulki w labiryncie'),note('Prowadź kulki do otworów myszą albo przechylając telefon.'),button('Zagraj',()=>startExpedition(EXPEDITIONS[0].id,'tilt'),{'data-expedition-choice':'tilt'})),card(el('h3',{},'Dopasuj trójki'),note('Odsłaniaj i łącz po trzy identyczne symbole.'),button('Zagraj',()=>startExpedition(EXPEDITIONS[0].id,'triples'),{'data-expedition-choice':'triples'})),...Development.OriginalPuzzles.originalPuzzleCatalog.map(game=>card(el('h3',{},game.title||game.name),note(game.description),button('Zagraj',()=>openPanel('original-puzzle',game.id),{'data-original-puzzle-choice':game.id})))),button('Poszukiwanie mieszkańców',()=>performDevelopment({type:'civilianRescueStart'}),{'data-v32-rescue-start':''}));
   const run = expeditionSession();
   const hour = Activities.expeditionHourStatus(state);
   const choiceCard = (kind, title, description) => card(el('h3', {}, title), note(description),
@@ -3067,6 +3274,7 @@ function expeditionStatusText(run) {
 
 function renderPanel() {
   if (!panel) return;
+  originalPuzzleController?.dispose();originalPuzzleController=null;kingdomController?.destroy();kingdomController=null;
   dialog.querySelector('[data-community-panel]')?.dispose?.();
   theatreController?.destroy(); theatreController = null;
   adventuresController?.destroy(); adventuresController = null;
@@ -3079,6 +3287,10 @@ function renderPanel() {
   let body;
   switch (panel.kind) {
     case 'building': body = buildingPanel(panel.id); break;
+    case 'gifts':title='Darowizna sojusznikowi';body=giftsPanel();break;
+    case 'kingdom': title='Królestwo'; kingdomController=createKingdomPanel({state,getState:()=>state,getStatus:()=>devCloud.local?serverKingdomStatus:null,onAction:performDevelopment,context:()=>developmentModelContext(state),language:language()});body=kingdomController.element;break;
+    case 'original-puzzle': title=panel.id==='harbor-routes'?'Konwoje w porcie':'Sieć latarnika';body=el('div',{'data-original-puzzle-host':'','data-i18n-ignore':''});break;
+    case 'theatre-garden': title='Dekoracje Teatru';body=theatreGardenPanel();break;
     case 'theatre': title = uiCopy('Theatre', 'Teatr'); body = theatrePanel(); break;
     case 'adventures': title = uiCopy('Island adventures', 'Przygody na wyspie'); body = adventuresPanel(); break;
     case 'building-details': body = buildingDetailsPanel(panel.id); break;
@@ -3119,7 +3331,7 @@ function renderPanel() {
       button('Notifications', () => openPanel('notifications'), { class: 'action secondary' }),
       button('Premium options', () => openPanel('premium'), { class: 'action secondary' }),
       el('div', { class: 'stat-grid' }, stat('Town Hall level', el('span', { 'data-population-stat': 'level' }, state.buildings.townhall.level)), stat('Residents', el('span', { 'data-population-stat': 'population' }, `${state.population} / ${state.capacity}`)), stat('Happiness', el('span', { 'data-population-stat': 'happiness' }, happinessText())), stat('Day', state.day)),
-      el('div', { class: 'panel-grid' }, [['rules', 'Island rules'], ['objective', 'Main objective'], ['buildings', 'Buildings'], ['expeditions', 'Expeditions'], ['tasks', 'Tasks'], ['residents', 'Residents'], ['resources', 'Warehouse'], ['trade', 'Trade'], ['archipelago', uiCopy('Your islands', 'Twoje wyspy')], ['map', 'Island map'], ['theatre', uiCopy('Theatre', 'Teatr')], ['adventures', uiCopy('Island adventures', 'Przygody na wyspie')], ['settings', 'Settings']].map(([kind, label]) => button(label, () => openPanel(kind), kind === 'archipelago' ? { 'data-archipelago-open': '' } : {}))),
+      el('div', { class: 'panel-grid' }, [...(Development.isDevelopment(state)?[['kingdom','Królestwo']]:[]),['rules', 'Island rules'], ['objective', 'Main objective'], ['buildings', 'Buildings'], ['expeditions', 'Expeditions'], ['tasks', 'Tasks'], ['residents', 'Residents'], ['resources', 'Warehouse'], ['trade', 'Trade'], ['archipelago', uiCopy('Your islands', 'Twoje wyspy')], ['map', 'Island map'], ['theatre', uiCopy('Theatre', 'Teatr')], ['adventures', uiCopy('Island adventures', 'Przygody na wyspie')], ['settings', 'Settings']].map(([kind, label]) => button(label, () => openPanel(kind), kind === 'archipelago' ? { 'data-archipelago-open': '' } : {}))),
       el('div', { class: 'social-menu-entries', 'data-social-menu': '' },
         card(button('Ranking', () => openPanel('ranking'), { 'data-open-ranking': '' }), note(uiCopy('Compare hourly results and your place among players.', 'Sprawdź swoją pozycję i porównaj wyniki graczy, aktualizowane co pełną godzinę.'))),
         card(button(uiCopy('Alliance and league', 'Sojusz i liga'), () => openPanel('community'), { 'data-open-community': '' }), note(uiCopy('Join forces, talk to your alliance and compete in the monthly league.', 'Dołącz do sojuszu, rozmawiaj z jego członkami i rywalizuj we wspólnej lidze.'))),
@@ -3141,8 +3353,9 @@ function renderPanel() {
   dialog.querySelector('.dialog-body').scrollTop = scroll;
   dialog.scrollTop = dialogScroll;
   localize(dialog);
+  const originalHost=dialog.querySelector('[data-original-puzzle-host]');if(originalHost)originalPuzzleController=mountOriginalPuzzle({host:originalHost,state,getState:()=>state,variant:panel.id,onAction:performDevelopment,onClose:closePanel,allowAdSimulation:!Development.OriginalPuzzles.originalPuzzleStatus(state,panel.id).attempt?.civilianRescue&&Commerce.runtimeCapabilities().simulatedAds===true});
   const gameHost = dialog.querySelector('[data-minigame-host]');
-  if (gameHost) { const run = expeditionRun(panel.id); miniGameStatus = run.status; miniController = mountMiniGame({ host: gameHost, controlsHost: dialog.querySelector('[data-minigame-controls-slot]'), run, onAction: miniGameInput, language: language(), status: Activities.expeditionRoundStatus(state, run), animations: effectiveAnimationsEnabled() }); }
+  if (gameHost) { const run = expeditionRun(panel.id); miniGameStatus = run.status; miniController = mountMiniGame({ host: gameHost, controlsHost: dialog.querySelector('[data-minigame-controls-slot]'), run, onAction: miniGameInput, language: language(), status: Activities.expeditionRoundStatus(state, run), animations: effectiveAnimationsEnabled(), onRewardedAd:()=>openRewardedAd(run) }); }
   if (tutorialReady) refreshTutorialExperience();
 }
 
@@ -3194,7 +3407,7 @@ function refreshResourceTrends() {
   });
 }
 function nextResidentText() {
-  const rate = populationRate(state.happiness);
+  const rate = currentPopulationRate(state.happiness);
   if (!rate) return '0 · Stable';
   if (rate > 0 && state.population >= state.capacity) return 'Capacity reached';
   if (rate < 0 && state.population <= Residents.residentPopulationMinimum(state)) return 'Minimum: 6';
@@ -3444,7 +3657,7 @@ document.body.append(mobileDock);
 new ResizeObserver(() => window.dispatchEvent(new Event('island-dock-layout'))).observe(mobileDock);
 function renderMobileDock(force = false) {
   if (!matchMedia('(max-width:900px),(max-height:500px)').matches) return;
-  const signature = JSON.stringify([language(), activeDockCategory, leisureDockSignature, BUILDING_DOCK_ORDER.map(id => [state.buildings[id].level, state.buildings[id].workers]), MATERIAL_IDS.map(id => [Math.floor(state.resources[id]), Math.floor(state.buildings[resourceProductionBuildings[id]].ready)]), [...buildingDock.querySelectorAll('[data-dock-workers]')].map(node => node.textContent)]);
+  const signature = JSON.stringify([language(), activeDockCategory, leisureDockSignature, BUILDING_DOCK_ORDER.map(id => [state.buildings[id].level, state.buildings[id].workers]), MATERIAL_IDS.map(id => [Math.floor(state.resources[id]), Math.floor(displayedLocalStock(id))]), [...buildingDock.querySelectorAll('[data-dock-workers]')].map(node => node.textContent)]);
   if (!force && signature === mobileDockSignature) return;
   mobileDockSignature = signature;
   const scrolled = mobileDock.querySelector('.mobile-dock-scroll')?.scrollLeft || 0;
@@ -3555,7 +3768,7 @@ function onboardingSteps() {
   });
   const targetHud = id => () => visible(`[data-mobile-control="${id}"]`, `[data-mobile-hud="${id}"]`, `#hit-${id === 'coins' ? 'resource-coins' : id}`);
   const currentCopy = id => getTourCopy(id, language(), {
-    firstIntroduction: State.onboardingStatus(state).pending, cloudAccount: !!devAccount,
+    firstIntroduction: State.onboardingStatus(state).pending, cloudAccount: !!devAccount, state,
     resourceExample: { resource: 'stone', local: Math.floor(state.buildings.quarry.ready || 0), central: Math.floor(state.resources.stone || 0),
       inTransit: Math.floor(resourceInTransit('stone')), hourlyBalance: State.resourceRates(state).stone.net }
   });
@@ -3565,8 +3778,8 @@ function onboardingSteps() {
     prepare = resetDemo;
     if (id.startsWith('building-')) {
       const building = id.slice(9);
-      target = () => document.getElementById(building === 'dock' ? 'tour-port-region' : `hit-world-${building}`);
-      prepare = () => { resetDemo(); window.dispatchEvent(new CustomEvent('island-tour-focus', { detail: { region: buildingRegions[building] } })); };
+      target = () => visible(`[data-mobile-building="${building}"]`,`[data-v32-building="${building}"]`,building === 'dock' ? '#tour-port-region' : `#hit-world-${building}`);
+      prepare = () => { resetDemo(); window.dispatchEvent(new CustomEvent('island-tour-focus', { detail: { region: buildingRegions[building] || (DEVELOPMENT_BUILDINGS[building] ? [DEVELOPMENT_BUILDINGS[building].x,DEVELOPMENT_BUILDINGS[building].y,95,100] : [650,350,200,180]) } })); };
     } else if (id.startsWith('category-')) {
       const category = id.slice(9);
       target = () => visible(`[data-mobile-category="${category}"]`, `#hit-category-${category}`);
@@ -3577,6 +3790,11 @@ function onboardingSteps() {
     } else if (id === 'tasks') target = () => visible('.mobile-activities', '.island-activity-stack .activity-section-heading .activity-link');
     else if (id === 'expeditions') target = () => visible('.island-activity-stack .activity-expedition', '.mobile-island-menu');
     else if (id === 'ship') { target = () => document.getElementById('hit-boat'); prepare = () => window.dispatchEvent(new CustomEvent('island-tour-focus', { detail: { region: [215, 635, 219, 137] } })); }
+    else if (['food','transport','construction'].includes(id)) target=()=>visible('[data-mobile-building="warehouse"]','#hit-world-warehouse');
+    else if(id==='clothing')target=()=>visible('[data-mobile-building="leatherworks"]','[data-v32-building="leatherworks"]','#hit-world-house');
+    else if(['education','research'].includes(id))target=()=>visible('[data-mobile-building="academy"]','[data-v32-building="academy"]');
+    else if(id==='military-officers')target=()=>visible('[data-mobile-building="barracks"]','[data-v32-building="barracks"]');
+    else if(id.startsWith('kingdom')||['archipelago','league','charity','minigame-rules'].includes(id))target=()=>visible('.mobile-island-menu','#hit-menu');
     else if (id === 'menu') target = () => visible('.mobile-island-menu', '#hit-menu');
     return { id, title: () => currentCopy(id).title, text: () => currentCopy(id).text, target, prepare };
   });
@@ -3819,6 +4037,7 @@ function meaningfulInput(event) {
 document.addEventListener('pointerdown', meaningfulInput, { capture: true, passive: true });
 document.addEventListener('keydown', meaningfulInput, { capture: true });
 
+if(Development.isDevelopment(state)){ developmentUI=createDevelopmentUI({getState:()=>state,onAction:performDevelopment,openPanel:id=>openPanel('building',id),language:language(),context:{...developmentPanelOptions().context,useExistingPanel:true}});layer.append(developmentUI.mapLayer);document.body.append(developmentUI.element);for(const [id,config]of Object.entries(DEVELOPMENT_BUILDINGS)){const marker=developmentUI.mapLayer.querySelector(`[data-v32-building="${id}"]`);marker.id=`hit-world-${id}`;} }
 devCloudUiReady = true;
 updateDevCloudStatus();
 setDockCategory('administration');
@@ -3835,6 +4054,7 @@ setInterval(() => {
   renderHUD();
 }, 1000);
 setInterval(() => { settleActiveTick(); void save(true); }, 30000);
+setInterval(() => { if(devCloud.local&&devAccount&&Development.isDevelopment(state)&&!State.onboardingStatus(state).pending&&!document.hidden&&document.hasFocus()&&!tradeMutationBusy)void refreshKingdomFromServer(); }, 60000);
 window.addEventListener('pagehide', () => { foregroundInterruptions.clear(); settleActiveTick(); save(); if (devSync) void devSync.flush(); });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { foregroundInterruptions.clear(); settleActiveTick(); save(); if (devSync) void devSync.flush(); }

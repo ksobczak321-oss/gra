@@ -1,5 +1,10 @@
 # Zasady pracy nad HARBORLIGHT
 
+## Bieżące GO DEV 0.15.0.0 / v32 — 14 listopada 2026
+
+Użytkownik polecił „Leć z developmentem najpierw na środowisku dev”. Obowiązuje [zakres v32](docs/FRONTEND-V32-REQUIREMENTS.md) i najnowsze47odpowiedzi z obu formularzy. Historyczne zakazydevelopmentu są zastąpione wyłącznie dlaDEV. PRE-PROD iPROD pozostają bez zmian, bez resetu chmurowychkont. Lokalne konta DEV wolno uruchomić z czystymstanem. Root integruje state/play/logistics/housing/residents/archipelago/version/pakowanie; agenci posiadają rozłączne moduły v32 zgodnie z przydziałem. Nie zmieniać globalnie namespacequery do końca integracji. Nowe minigry korzystają z własnych układów i oprawy, nie kopiują referencyjnych obrazów.
+
+
 ## Rozwój i publikacja
 
 - **Doprecyzowane GO PRE-PROD — 4 listopada2026:** użytkownik wyjaśnił „Miałem na myśli z dev na pre prod”. Obowiązuje ukończenie bieżącej0.14.0.0, własneCI/Pages i standardowy PRE-PROD dokładnie sprawdzonego źródła. Wcześniejsza interpretacja skrótu„prod” jakoPROD jest zastąpiona; nie wykonano operacjiPROD, a lokalny nieopublikowany mostPROD usunięto. Zachowaj konta i postęp, bez resetu i realnych operatorów. Nowa promocja PRE-PROD wymaga własnych dowodów.

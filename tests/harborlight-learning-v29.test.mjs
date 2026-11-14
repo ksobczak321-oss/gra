@@ -59,13 +59,15 @@ test('welcome wording explicitly promises the seven daily residents separately f
   assert.match(welcomeWorkerCopy('pl').text, /Ratuszu.*Domu/);
 });
 
-test('the tour explains storage once after the Farm, introduces the Theatre after the House, and merges ship/Port', () => {
+test('the tour explains storage once after the Farm, introduces food and clothing after the House, and merges ship/Port', () => {
   assert.equal(APPROVED_TOUR_IDS[APPROVED_TOUR_IDS.indexOf('building-farm') + 1], 'producer-storage');
-  assert.equal(APPROVED_TOUR_IDS[APPROVED_TOUR_IDS.indexOf('building-house') + 1], 'building-theatre');
+  assert.equal(APPROVED_TOUR_IDS[APPROVED_TOUR_IDS.indexOf('building-house') + 1], 'food');
+  assert.equal(APPROVED_TOUR_IDS[APPROVED_TOUR_IDS.indexOf('building-house') + 2], 'clothing');
+  assert.ok(APPROVED_TOUR_IDS.indexOf('building-theatre') > APPROVED_TOUR_IDS.indexOf('military-officers'));
   assert.ok(!APPROVED_TOUR_IDS.includes('ship'));
   const body = getTourCopy('building-dock','pl').text;
-  assert.match(body, /4\. poziomu.*6\. poziomu.*10, 13, 16.*20 wysp.*towary albo pasażerów.*nie zastępuje dostawy/);
-  assert.match(getTourCopy('building-theatre','pl').text, /odpoczynku i integracji.*dekoracje/);
+  assert.match(body, /4 poziomu.*6 poziomu.*towary lub pasażerów.*przy przypłynięciu/);
+  assert.match(getTourCopy('building-theatre','pl').text, /odpoczynku i integracji.*45-minutowym.*10 minut.*2 monety.*bez zatrzymywania/);
   assert.doesNotMatch(getTourCopy('happiness','pl').text, /czasu Warszawy/);
   assert.match(getTourCopy('category-economy','pl').text, /do magazynu centralnego/);
   assert.doesNotMatch(getTourCopy('tutorial','pl').text, /interfejs/);

@@ -1,9 +1,11 @@
 // Firebase owns credentials and verifies access to the UID-scoped documents.
 // Hosting selects the isolated project; runtime Firebase config never contains secrets.
-import { validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v31-2';
+import { validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v32-2';
 import { LEGAL_DOCUMENTS, validLegalAcceptance } from './harborlight-legal.js?v=legal-v4';
 export const DEV_PROJECT = 'harborlight-dev';
 export const PROD_PROJECT = 'harborlight-prod';
+export const LOCAL_DEV_PROJECT = 'harborlight-local-dev';
+export const LOCAL_DEV_SESSION_KEY = 'harborlight-local-dev-auth-v1';
 export const PROD_SESSION_KEY = 'harborlight-prod-auth-v1';
 export const DEV_USERS = Object.freeze(['admin1', 'admin2', 'admin3'].map(login =>
   Object.freeze({ login, uid: `dev-${login}`, email: `${login}@dev.harborlight.pl` })));
@@ -85,7 +87,16 @@ const MESSAGES = {
   'ship-capacity-active-island-changed': 'Zmieniono aktywną wyspę. Odśwież widok przed zakupem.',
   'ship-capacity-limit': 'Osiągnięto maksymalną obsługiwaną pojemność statku.',
   'ship-capacity-insufficient-coins': 'Brakuje monet na zwiększenie pojemności statku.',
-  'ship-capacity-api-unavailable': 'Zakup pojemności statku wymaga aktywnej usługi konta gry.'
+  'ship-capacity-api-unavailable': 'Zakup pojemności statku wymaga aktywnej usługi konta gry.',
+  'gift-cooldown': 'Następną darowiznę możesz wysłać po upływie 24 godzin od poprzedniej.',
+  'gift-alliance-required': 'Darowizny są dostępne dla członków sojuszu.',
+  'gift-alliance-recipient-required': 'Wybierz innego członka swojego sojuszu.',
+  'gift-level-required': 'Darowizny są dostępne od poziomu Ratusza 6.',
+  'gift-ship-busy': 'Statek jest zajęty. Zakończ jego obecny rejs i rozładunek.',
+  'gift-capacity-exceeded': 'Ładunek przekracza pojemność statku.',
+  'gift-insufficient-stock': 'Brakuje wolnych towarów ponad chronioną rezerwę jedzenia.',
+  'gift-invalid-cargo': 'Wybierz towary i dodatnie, całkowite ilości.',
+  'gift-invalid-harbor': 'Wybierz dostępne wyspy z Portem.'
 };
 const fail = code => Object.assign(new Error(MESSAGES[code]), { code });
 const userByUid = uid => DEV_USERS.find(user => user.uid === uid);
@@ -98,6 +109,7 @@ const timestamp = value => typeof value === 'string' &&
   Number.isFinite(Date.parse(value));
 
 export function accountSaveKey(uid, projectId = DEV_PROJECT) {
+  if (projectId === LOCAL_DEV_PROJECT && userByUid(uid)) return `harborlight-local-dev-island-${uid}`;
   if (projectId === DEV_PROJECT && userByUid(uid)) return `harborlight-dev-island-${uid}`;
   if (projectId === PROD_PROJECT && safeUid(uid)) return `harborlight-prod-island-${uid}`;
   throw fail('invalid-login');
@@ -168,8 +180,14 @@ export function createDevCloud({
   storage,
   hostname = globalThis.location?.hostname,
   now = () => Date.now(),
-  discoverAccountApi = true
+  discoverAccountApi = true,
+  localDevelopment = globalThis.__HARBORLIGHT_LOCAL_DEV__?.projectId === LOCAL_DEV_PROJECT
 } = {}) {
+  // Only serve-dev injects this bootstrap into public HTML. A static preview
+  // keeps its previous behavior; real hostnames always retain Firebase Auth.
+  if (localDevelopment === true && ['localhost', '127.0.0.1', '[::1]', '::1'].includes(hostname)) {
+    return createLocalDevCloud({ fetcher, storage, now });
+  }
   const projectId = HOST_PROJECTS.get(hostname) || null;
   const enabled = projectId !== null, preprod = projectId === DEV_PROJECT;
   const environment = preprod ? 'preprod' : enabled ? 'prod' : 'local';
@@ -685,4 +703,165 @@ export function createDevCloud({
     recordSessionActivity, signIn, registerEmail, acceptExternalSession, getPublicConfig: config, getProfile, getLegalStatus, acceptLegal, restoreSession, signOut: clear, loadIsland, createIsland, saveIsland, recordActivity, redeemPromoCode,
     requestGameService, listTradeOffers, listTradeReturns, createTradeOffer, acceptTradeOffer, cancelTradeOffer, claimTradeReturn,
     get accountStatus() { return accountStatus ? { ...accountStatus } : null; } };
+}
+
+/** Same-origin adapter for the explicitly started localhost DEV process.
+ * Its opaque tokens cannot be accepted by Firebase or a production verifier.
+ * Only authentication metadata is stored in the browser, never game state.
+ */
+function createLocalDevCloud({ fetcher, storage, now }) {
+  const projectId = LOCAL_DEV_PROJECT, sessionKey = LOCAL_DEV_SESSION_KEY;
+  const sessionStorage = () => storage === undefined ? globalThis.localStorage : storage;
+  let session = null, configPromise = null, refreshing = null, generation = null, accountStatus = null, attempt = 0, activityWrittenAt = 0;
+  const identity = () => session ? { uid: session.uid, login: session.login } : null;
+  const idleExpired = () => !!session && now() >= session.lastActivityAt + SESSION_IDLE_TIMEOUT_MS;
+  function clear() {
+    session = null; generation = null; accountStatus = null; attempt++;
+    try { sessionStorage().removeItem(sessionKey); } catch { throw fail('storage'); }
+  }
+  function store(next) {
+    const user = userByUid(next?.uid);
+    if (!user || user.login !== next.login || next.projectId !== projectId || !/^hl-local\.[A-Za-z0-9_-]{43}$/.test(next.idToken) ||
+        !Number.isSafeInteger(next.expiresAt) || !Number.isSafeInteger(next.lastActivityAt) || next.lastActivityAt < 0 || next.lastActivityAt > now() + 60_000) throw fail('auth-required');
+    const metadata = { projectId, uid: user.uid, login: user.login, idToken: next.idToken, expiresAt: next.expiresAt, lastActivityAt: next.lastActivityAt };
+    try { sessionStorage().setItem(sessionKey, JSON.stringify(metadata)); } catch { throw fail('storage'); }
+    if (session?.uid !== metadata.uid) { generation = null; accountStatus = null; }
+    session = metadata; activityWrittenAt = metadata.lastActivityAt;
+  }
+  async function request(path, body = null, authenticated = false, method = body === null ? 'GET' : 'POST') {
+    if (authenticated && (!session || idleExpired())) { clear(); throw fail('auth-required'); }
+    if (authenticated && !['/api/dev/session', '/api/dev/sign-out'].includes(path) && session.expiresAt <= now() + 60_000) {
+      if (!refreshing) refreshing = request('/api/dev/session', null, true).then(next => {
+        store({ ...next, lastActivityAt: session.lastActivityAt });
+      }).finally(() => { refreshing = null; });
+      await refreshing;
+    }
+    const uid = session?.uid, currentAttempt = attempt, controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 15_000);
+    let response, data;
+    try {
+      response = await fetcher(path, { method, credentials: 'omit', cache: 'no-store', redirect: 'error', signal: controller.signal,
+        headers: { ...(body !== null ? { 'Content-Type': 'application/json' } : {}), ...(authenticated ? { Authorization: `Bearer ${session.idToken}` } : {}) },
+        ...(body !== null ? { body: JSON.stringify(body) } : {}) });
+      data = await response.json();
+      if (!isObject(data)) throw Error();
+    } catch { throw fail('offline'); }
+    finally { clearTimeout(timer); }
+    if (authenticated && (currentAttempt !== attempt || session?.uid !== uid)) throw fail('auth-required');
+    if (!response.ok) {
+      const code = typeof data.error === 'string' ? data.error : '';
+      if (response.status === 401) { if (authenticated) clear(); throw fail(authenticated ? 'auth-required' : 'invalid-credentials'); }
+      if (response.status === 403) throw fail('permission');
+      if (code === 'island-conflict' || [409, 412].includes(response.status) && !/^(?:trade|community|charity|kingdom|gift)-/.test(code)) throw fail('conflict');
+      if (code === 'invalid-island' || code === 'invalid-generation' || code === 'invalid-revision') throw fail('invalid-state');
+      if (/^(?:trade|community|charity|kingdom|gift|ship-capacity)-[a-z-]{1,64}$/.test(code) || MESSAGES[code]) throw fail(code);
+      throw fail(response.status >= 500 ? 'offline' : 'configuration');
+    }
+    return data;
+  }
+  async function config() {
+    if (!configPromise) configPromise = request('/api/dev/config').then(body => {
+      if (body.localDev !== true || body.accountApi !== true || body.projectId !== projectId || body.environment !== 'development' || !['server-process-memory', 'local-dev-file'].includes(body.persistence)) throw fail('configuration');
+      return body;
+    }).catch(error => { configPromise = null; throw error; });
+    return configPromise;
+  }
+  async function signIn(login, password) {
+    if (!DEV_USERS.some(user => user.login === login)) throw fail('invalid-login');
+    await config();
+    attempt++;
+    const currentAttempt = attempt;
+    const next = await request('/api/dev/sign-in', { login, password });
+    if (currentAttempt !== attempt) throw fail('auth-required');
+    store(next); return identity();
+  }
+  async function restoreSession() {
+    let stored;
+    try { stored = sessionStorage().getItem(sessionKey); } catch { throw fail('storage'); }
+    if (!stored) return null;
+    try { store(JSON.parse(stored)); } catch { clear(); return null; }
+    if (idleExpired()) { clear(); return null; }
+    try {
+      await config();
+      const next = await request('/api/dev/session', null, true);
+      // Restoring a browser window does not count as fresh human activity.
+      store({ ...next, lastActivityAt: session.lastActivityAt });
+      return identity();
+    } catch (error) {
+      if (error.code === 'auth-required') return null;
+      if (error.code === 'offline') return identity();
+      throw error;
+    }
+  }
+  function recordSessionActivity() {
+    if (!session) return false;
+    if (idleExpired()) { clear(); return false; }
+    session.lastActivityAt = now();
+    if (session.lastActivityAt - activityWrittenAt >= 1000) store(session);
+    return true;
+  }
+  async function signOut() {
+    let revoke;
+    try { if (session) revoke = request('/api/dev/sign-out', {}, true); }
+    finally { clear(); }
+    // Local state clears immediately; revocation is also attempted server-side.
+    if (revoke) await revoke.catch(error => { if (error.code !== 'auth-required') throw error; });
+  }
+  function readIsland(body) {
+    if (!isObject(body.account)) throw fail('invalid-cloud-data');
+    accountStatus = { generation: body.account.generation, expired: body.account.expired === true, lastPlayedAt: body.account.lastPlayedAt ?? null };
+    generation = body.account.generation;
+    if (body.island === null) return null;
+    const island = body.island;
+    if (!isObject(island) || !validIslandPayload(island.payload) || !versionValid(island.version) || !integer(island.generation)) throw fail('invalid-cloud-data');
+    generation = island.generation;
+    return { payload: island.payload, version: island.version, generation };
+  }
+  const authenticated = async (path, body = null, method) => { await config(); return request(path, body, true, method); };
+  const loadIsland = async () => readIsland(await authenticated('/api/v1/island'));
+  const createIsland = async () => readIsland(await authenticated('/api/v1/island', {}));
+  async function saveIsland(payload, version = null) {
+    if (!validIslandPayload(payload) || !versionValid(version) || !integer(generation)) throw fail('invalid-state');
+    const body = await authenticated('/api/v1/island', { payload, expectedRevision: version.revision, generation }, 'PUT');
+    if (!integer(body.revision) || !timestamp(body.updateTime) || body.generation !== generation) throw fail('invalid-cloud-data');
+    return { revision: body.revision, updateTime: body.updateTime };
+  }
+  const recordActivity = () => authenticated('/api/v1/activity', { generation });
+  async function requestGameService(path, body = null) {
+    if (typeof path !== 'string' || !/^\/api\/(?:dev\/time|v1\/(?:(?:community|charity|kingdom|gifts)(?:\/[A-Za-z0-9_-]+)*(?:\?[A-Za-z0-9_=&%.-]*)?|ship-capacity))$/.test(path)) throw fail('invalid-state');
+    return authenticated(path, body);
+  }
+  const tradeId = value => { if (typeof value !== 'string' || !/^[A-Za-z0-9_-]{1,100}$/.test(value)) throw fail('trade-invalid-offer'); return value; };
+  const tradeCursor = cursor => { if (cursor !== null && cursor !== undefined && (typeof cursor !== 'string' || cursor.length > 4096 || !/^[A-Za-z0-9_-]+$/.test(cursor))) throw fail('trade-invalid-cursor'); return cursor; };
+  const listTradeOffers = ({ islandId = 'island-1', cursor = null } = {}) => {
+    if (!/^island-(?:[1-9]|1[0-9]|20)$/.test(islandId)) throw fail('trade-invalid-island');
+    const params = new URLSearchParams({ islandId }); if (tradeCursor(cursor)) params.set('cursor', cursor);
+    return authenticated(`/api/v1/trade/offers?${params}`);
+  };
+  return { enabled: true, preprod: false, local: true, projectId, environment: 'development', sessionKey, accountApiEnabled: true,
+    get lastSessionActivityAt() { return session?.lastActivityAt ?? null; }, get sessionIdleExpired() { return idleExpired(); },
+    recordSessionActivity, signIn, restoreSession, signOut, getPublicConfig: config,
+    registerEmail: async () => { throw fail('registration-disabled'); }, acceptExternalSession: async () => { throw fail('permission'); },
+    getProfile: async () => { await authenticated('/api/dev/session'); return { ...identity(), islandName: '' }; },
+    getLegalStatus: async () => { await authenticated('/api/v1/legal'); return { required: false, exempt: true }; },
+    acceptLegal: async () => { await authenticated('/api/v1/legal'); return { exempt: true }; },
+    loadIsland, createIsland, saveIsland, recordActivity, requestGameService,
+    redeemPromoCode: async code => ({ ...await authenticated('/api/v1/promotions/redeem', { code, generation }), island: await loadIsland() }),
+    listTradeOffers, createTradeOffer: body => authenticated('/api/v1/trade/offers', body),
+    acceptTradeOffer: (id, body) => authenticated(`/api/v1/trade/offers/${tradeId(id)}/accept`, body),
+    cancelTradeOffer: (id, body) => authenticated(`/api/v1/trade/offers/${tradeId(id)}/cancel`, body),
+    listTradeReturns: ({ cursor = null } = {}) => authenticated('/api/v1/trade/inbox' + (tradeCursor(cursor) ? `?cursor=${encodeURIComponent(cursor)}` : '')),
+    claimTradeReturn: (id, body) => authenticated(`/api/v1/trade/inbox/${tradeId(id)}/claim`, body),
+    get accountStatus() { return accountStatus ? { ...accountStatus } : null; } };
+}
+
+export function createDevTimeController(cloud) {
+  const requireLocal = () => { if (!cloud?.local || cloud.projectId !== LOCAL_DEV_PROJECT) throw fail('permission'); };
+  return Object.freeze({
+    async status() { requireLocal(); return cloud.requestGameService('/api/dev/time'); },
+    async advance(seconds, requestId = globalThis.crypto?.randomUUID?.()) {
+      requireLocal();
+      return cloud.requestGameService('/api/dev/time', { seconds, requestId });
+    }
+  });
 }

@@ -124,7 +124,7 @@ function icon(symbolId) {
   return svg;
 }
 
-export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, language = 'pl', status: initialStatus = {}, animations = true }) {
+export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, language = 'pl', status: initialStatus = {}, animations = true, onRewardedAd=null }) {
   if (!host || !initialRun?.miniGame) throw new TypeError('A host and an expedition mini-game are required.');
   let run = initialRun, status = initialStatus, disposed = false, frame = 0;
   const words = WORDS[language] || WORDS.en;
@@ -143,6 +143,12 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
   }
   const cleanup = [];
   let updateBoard = () => {}, drawBoard = () => {}, fitLayout = () => {}, lossAt = null, previousState = '';
+  const timeOffer=element('div',{class:'minigame-v32-time-offer',hidden:true,'data-expedition-time-offer':''});root.append(timeOffer);
+  if(!document.querySelector('[data-original-puzzle-css]')){const link=element('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-2',import.meta.url).href,'data-original-puzzle-css':''});document.head.append(link);}
+  const v32Help=element('div',{class:'minigame-v32-help','data-expedition-v32-help':''});root.append(v32Help);let helpKey='';
+  function renderHelp(){const key=`${run.id}:${run.status}:${status.canUseHelp}:${status.hintUsed}:${status.hint}`;if(key===helpKey)return;helpKey=key;v32Help.replaceChildren();if(status.canUseHelp){if(run.status==='active'&&!status.hintUsed){const b=element('button',{type:'button'},language==='en'?'Free hint':'Darmowa podpowiedź');b.addEventListener('click',()=>onAction?.({type:'expeditionHint',runId:run.id}));v32Help.append(b);}if(run.status==='lost'){const b=element('button',{type:'button'},language==='en'?'Easier attempt · 50% reward':'Łatwiejsza próba · 50% nagrody');b.addEventListener('click',()=>onAction?.({type:'expeditionRestartEasier',runId:run.id}));v32Help.append(b);}}if(status.hint)v32Help.append(element('p',{role:'status'},status.hint));}
+  let offerKey='';
+  function renderTimeOffer(){const offer=status.timeOffer;timeOffer.hidden=!offer;if(!offer){offerKey='';return;}const key=`${run.id}:${run.level}`;if(offerKey!==key){offerKey=key;timeOffer.replaceChildren();const dialog=element('section',{class:'original-puzzle-dialog',role:'dialog','aria-modal':'true','aria-label':language==='en'?'Extra time':'Dodatkowy czas'});dialog.append(element('h4',{},language==='en'?'Need more time?':'Potrzebujesz więcej czasu?'),element('p',{'data-expedition-offer-seconds':''}),element('p',{'data-expedition-offer-countdown':''}));const make=(label,fn)=>{const b=element('button',{type:'button'},label);b.addEventListener('click',fn);return b;};dialog.append(make(`${10*(status.highestTownhall||1)} ${language==='en'?'coins':'monet'}`,()=>onAction?.({type:'expeditionExtraTime',runId:run.id})));if(onRewardedAd)dialog.append(make(language==='en'?'Watch an ad':'Obejrzyj reklamę',()=>onRewardedAd(run)));dialog.append(make(language==='en'?'Keep playing':'Gram dalej',()=>onAction?.({type:'expeditionTimeChoice',runId:run.id,method:'decline'})));timeOffer.append(dialog);queueMicrotask(()=>dialog.querySelector('button')?.focus());}timeOffer.querySelector('[data-expedition-offer-seconds]').textContent=`${language==='en'?'Add':'Dodaj'} ${Math.ceil(Math.max(60,(status.remaining||30)*.5))} s`;timeOffer.querySelector('[data-expedition-offer-countdown]').textContent=`${language==='en'?'Resume in':'Powrót do gry'}: ${Math.ceil(offer.choiceRemaining)} s`;}
   const active = () => run.status === 'active' && !status.presenceRequired && !status.adPaused && !document.hidden;
   const send = action => {
     if (!active()) return;
@@ -452,15 +458,15 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
   function update(nextRun, nextStatus = status) {
     if (disposed || !nextRun?.miniGame) return;
     run = nextRun; status = nextStatus || {};
-    updateBoard();
+    updateBoard();renderTimeOffer();renderHelp();
   }
   function render(now) {
     if (disposed || !root.isConnected) return;
-    drawBoard(now);
+    renderTimeOffer();renderHelp();drawBoard(now);
     if (run.miniGame.kind === 'tilt') updateBoard();
     frame = requestAnimationFrame(render);
   }
-  updateBoard(); fitLayout();
+  updateBoard();renderTimeOffer(); fitLayout();
   // renderPanel mounts before a newly opened dialog enters the top layer.
   // Fit again in this same task after showModal, before its first paint.
   queueMicrotask(() => { if (!disposed) fitLayout(); });

@@ -1,3 +1,4 @@
+import { APPROVED_TOUR_IDS, APPROVED_TOUR_VERSION } from '../harborlight-v1-approved-copy.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createState, normalizeState, tick, act, houseHappinessStatus, HOUSE_HAPPINESS_RULES } from '../harborlight-v1-state.js';
@@ -132,10 +133,10 @@ test('tour removal migrates each saved index exactly once in onboarding and revi
   raw.onboarding = { version: 1, stage: 'tour', index: 9, worldStartedAt: null, completedAt: null };
   raw.learning.tour = { index: 9, active: true, paused: false, completed: false };
   const migrated = reload(raw), twice = reload(migrated);
-  assert.equal(migrated.onboarding.index, 8);
-  assert.equal(migrated.learning.tour.index, 8);
-  assert.equal(migrated.onboarding.routeVersion, 3);
-  assert.equal(migrated.learning.tour.routeVersion, 3);
-  assert.equal(twice.onboarding.index, 8);
-  assert.equal(twice.learning.tour.index, 8);
+  assert.equal(APPROVED_TOUR_IDS[migrated.onboarding.index], 'tasks');
+  assert.equal(APPROVED_TOUR_IDS[migrated.learning.tour.index], 'tasks');
+  assert.equal(migrated.onboarding.routeVersion, APPROVED_TOUR_VERSION);
+  assert.equal(migrated.learning.tour.routeVersion, APPROVED_TOUR_VERSION);
+  assert.equal(twice.onboarding.index, migrated.onboarding.index);
+  assert.equal(twice.learning.tour.index, migrated.learning.tour.index);
 });

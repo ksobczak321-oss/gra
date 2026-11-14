@@ -4,6 +4,8 @@
 export const THEATRE_RULES = Object.freeze({ version: 1, slots: 20, maxLevel: null, unlimitedLevels: true,
   adMilestones: Object.freeze([5, 10, 15, 20]), adMilestoneStep: 5, adIntentSeconds: 120,
   maxCollection: 2000, savedLayouts: 3, completionBadge: 'island-stage-pennant' });
+export const THEATRE_SHOW_RULES = Object.freeze({ minimumPlanSeconds:45*60,durationSeconds:10*60,coinsPerPerson:2,happinessPoints:10,happinessSeconds:6*3600,maximumDecorationHappiness:10,advertisementStep:3 });
+const development = (state,context={}) => state?.ruleset===32||context.ruleset===32;
 
 // Atmosphere and remembered arrangements are creative tools, not purchases or
 // scores. They cannot change a possession's level or create another copy.
@@ -110,7 +112,7 @@ const price = (kind, level) => {
   const coins = 5 * Math.ceil((level === 1 ? 25 : 12 * level ** 1.35) * catalog.get(kind).priceWeight / 5);
   return Number.isSafeInteger(coins) && coins > 0 ? coins : null;
 };
-export const requiresTheatreAdvertisement = level => Number.isSafeInteger(level) && level > 1 && level % THEATRE_RULES.adMilestoneStep === 0;
+export const requiresTheatreAdvertisement = (level,stateOrContext={}) => Number.isSafeInteger(level) && level > 1 && level % (development(stateOrContext)?3:THEATRE_RULES.adMilestoneStep) === 0;
 
 function normalizeAtmosphere(source) {
   return { lighting: lightingIds.has(source?.lighting) ? source.lighting : THEATRE_DEFAULT_ATMOSPHERE.lighting,
@@ -169,14 +171,17 @@ export function normalizeTheatre(state, raw = state) {
   const pending = saved.pendingUpgrade;
   const pendingUpgrade = object(pending) && /^theatre-ad-[1-9]\d{0,14}$/.test(pending.nonce || '') &&
     collection.some(item => item.id === pending.id && item.level + 1 === pending.targetLevel) &&
-    requiresTheatreAdvertisement(pending.targetLevel) && integer(pending.coins) && Number.isFinite(pending.startedAt) &&
+    requiresTheatreAdvertisement(pending.targetLevel,state) && integer(pending.coins) && Number.isFinite(pending.startedAt) &&
     clock(state) >= pending.startedAt && clock(state) - pending.startedAt < THEATRE_RULES.adIntentSeconds * 1000
     ? { nonce: pending.nonce, id: pending.id, targetLevel: pending.targetLevel, coins: pending.coins, startedAt: pending.startedAt } : null;
   state.theatre = { version: THEATRE_RULES.version, sequence, collection, pendingUpgrade,
     positions: normalizePositions(saved.positions, collection), welcomeGardenGranted: saved.welcomeGardenGranted === true,
     atmosphere: normalizeAtmosphere(saved.atmosphere), layouts: normalizeLayouts(saved.layouts, collection, clock(state)),
     adReceipts: [...new Set((Array.isArray(saved.adReceipts) ? saved.adReceipts : []).filter(id => typeof id === 'string' && id.length > 0 && id.length <= 200))].slice(-AD_RECEIPT_HISTORY),
-    badges: Array.isArray(saved.badges) && saved.badges.includes(THEATRE_RULES.completionBadge) ? [THEATRE_RULES.completionBadge] : [] };
+    badges: Array.isArray(saved.badges) && saved.badges.includes(THEATRE_RULES.completionBadge) ? [THEATRE_RULES.completionBadge] : [],
+    shows: normalizeShows(saved.shows),showSequence:integer(saved.showSequence)?saved.showSequence:0,
+    showBonuses:object(saved.showBonuses)?Object.fromEntries(Object.entries(saved.showBonuses).filter(([key,until])=>key.length<160&&Number.isFinite(until)&&until>0)):{} };
+  state.theatre.showSequence=Math.max(state.theatre.showSequence,...state.theatre.shows.map(s=>Number(s.id.slice(13))),0);
   awardCollectionBadge(state.theatre);
   return state.theatre;
 }
@@ -188,6 +193,9 @@ function current(state) {
   if (!lightingIds.has(theatre.atmosphere?.lighting) || !pavingIds.has(theatre.atmosphere?.paving)) theatre.atmosphere = normalizeAtmosphere(theatre.atmosphere);
   if (!Array.isArray(theatre.layouts) || theatre.layouts.length !== THEATRE_RULES.savedLayouts) theatre.layouts = normalizeLayouts(theatre.layouts, theatre.collection, clock(state));
   if (!object(theatre.positions)) theatre.positions = normalizePositions(null, theatre.collection);
+  if (!Array.isArray(theatre.shows)) theatre.shows=[];
+  if (!object(theatre.showBonuses)) theatre.showBonuses={};
+  if (!integer(theatre.showSequence)) theatre.showSequence=0;
   return theatre;
 }
 function awardCollectionBadge(theatre) {
@@ -198,6 +206,7 @@ function awardCollectionBadge(theatre) {
 function canSpend(state, coins) { return Number.isFinite(state.resources?.coins) && state.resources.coins >= coins; }
 
 export function theatreQuote(state, action = {}, context = {}) {
+  if(action.type==='theatrePlanShow')return theatreShowQuote(state,action,context);
   const theatre = current(state);
   if (action.type === 'theatreBuy') {
     if (!catalog.has(action.decoration) || !styles.has(action.style || 'coastal')) return bad('Choose a decoration and an available style.');
@@ -216,7 +225,7 @@ export function theatreQuote(state, action = {}, context = {}) {
   const targetLevel = item.level + 1, coins = price(item.type, targetLevel);
   if (coins === null) return bad('The decoration price exceeds the supported coin range.', 'price-out-of-range');
   return good('Decoration improvement price.', { id: item.id, targetLevel, coins,
-    requiresAd: requiresTheatreAdvertisement(targetLevel) && context.noAds !== true,
+    requiresAd: requiresTheatreAdvertisement(targetLevel,state) && context.noAds !== true,
     affordable: canSpend(state, coins) });
 }
 
@@ -230,12 +239,13 @@ export function theatreStatus(state, context = {}) {
     freeSlots: THEATRE_RULES.slots - placed.length, collection: theatre.collection.map(item => ({ ...item })),
     pendingUpgrade: theatre.pendingUpgrade ? { ...theatre.pendingUpgrade } : null, badges: [...theatre.badges],
     noAds: context.noAds === true, uniqueTypes: new Set(theatre.collection.map(item => item.type)).size,
-    catalog: THEATRE_DECORATIONS.map(item => ({ ...item, coins: price(item.id, 1) })) };
+    catalog: THEATRE_DECORATIONS.map(item => ({ ...item, coins: price(item.id, 1) })),...theatreShowStatus(state,context) };
 }
 
 /** Adapter context is trusted infrastructure. Never spread player action fields
  * into it. PROD requires a provider receipt confirmed outside the browser. */
 export function theatreAction(state, action = {}, context = {}) {
+  if(['theatrePlanShow','theatreCancelShow'].includes(action.type))return theatreShowAction(state,action,context);
   if (!['theatreBuy', 'theatrePlace', 'theatreMove', 'theatreRemove', 'theatreRestyle', 'theatreUpgrade',
     'theatreBeginUpgradeAd', 'theatreCompleteUpgradeAd', 'theatreCancelUpgradeAd',
     'theatreSetAtmosphere', 'theatreSaveLayout', 'theatreRestoreLayout', 'theatreDeleteLayout', 'theatreWelcomeGarden'].includes(action.type)) return null;
@@ -311,7 +321,7 @@ export function theatreAction(state, action = {}, context = {}) {
     if (!(context.rewardedAdVerified === true && (context.verifiedProvider === true || context.devSimulation === true && ['development', 'preprod'].includes(context.environment)))) {
       return bad('The advertisement provider has not confirmed completion.', 'ad-unverified');
     }
-    const quote = theatreQuote(state, { id: pending.id }, { noAds: false });
+    const quote = theatreQuote(state, { id: pending.id }, { ...context,noAds: false });
     if (!quote.ok || quote.targetLevel !== pending.targetLevel || quote.coins !== pending.coins) return bad('The decoration changed. Preview the improvement again.', 'quote-changed');
     if (!quote.affordable) return bad('Not enough coins for this decoration improvement.', 'not-enough-coins', { quote });
     const item = theatre.collection.find(entry => entry.id === pending.id);
@@ -375,11 +385,52 @@ export function theatreAction(state, action = {}, context = {}) {
 }
 
 export function nextTheatreEvent(state) {
-  const pending = current(state).pendingUpgrade;
-  return pending ? Math.max(0, THEATRE_RULES.adIntentSeconds - (clock(state) - pending.startedAt) / 1000) : Infinity;
+  const theatre=current(state),pending=theatre.pendingUpgrade;
+  let next=pending ? Math.max(0, THEATRE_RULES.adIntentSeconds - (clock(state) - pending.startedAt) / 1000) : Infinity;
+  if(development(state)){for(const show of theatre.shows)if(['planned','running'].includes(show.status))next=Math.min(next,Math.max(0,((show.status==='planned'?show.startAt:show.endAt)-clock(state))/1000));for(const until of Object.values(theatre.showBonuses))if(until>clock(state))next=Math.min(next,(until-clock(state))/1000);}
+  return next;
 }
-export function advanceTheatre(state, _seconds) {
+export function advanceTheatre(state, _seconds,context={}) {
   const theatre = current(state);
   if (theatre.pendingUpgrade && clock(state) - theatre.pendingUpgrade.startedAt >= THEATRE_RULES.adIntentSeconds * 1000) theatre.pendingUpgrade = null;
+  if(development(state))advanceShows(state,context);
 }
 export { localizedName as theatreDecorationName };
+
+const showPersonKey=p=>p?.personUid||(Number.isSafeInteger(p?.id)?`resident:${p.id}`:'');
+const showAt=(state,context={})=>Number.isFinite(context.now)?context.now:clock(state);
+function trimShows(shows){const active=shows.filter(s=>['planned','running'].includes(s.status)),room=Math.max(0,1000-active.length),past=room?shows.filter(s=>!['planned','running'].includes(s.status)).slice(-room):[];return [...past,...active].slice(-1000);}
+function normalizeShows(source){const known=new Set(),shows=[];for(const s of Array.isArray(source)?source:[]){if(!object(s)||!/^theatre-show-[1-9]\d{0,12}$/.test(s.id||'')||known.has(s.id)||!Number.isSafeInteger(s.startAt)||s.startAt<0||s.startAt>Number.MAX_SAFE_INTEGER-600000)continue;known.add(s.id);const people=[...new Set((Array.isArray(s.personUids)?s.personUids:[]).filter(id=>typeof id==='string'&&id.length>0&&id.length<160))];shows.push({...s,status:['planned','running','completed','cancelled'].includes(s.status)?s.status:'cancelled',startAt:s.startAt,endAt:s.startAt+600000,personUids:people,attendeeUids:[...new Set((Array.isArray(s.attendeeUids)?s.attendeeUids:[]).filter(id=>people.includes(id)))],coins:people.length*2});}return trimShows(shows);}
+
+function showCandidates(state){return (state.residents||[]).filter(p=>!p.pendingRelease&&!p.shipId&&!p.atSea).map(p=>({personUid:showPersonKey(p),name:p.name||p.nickname||`Mieszkaniec ${p.id}`,atHome:!p.workplace&&!(p.arrivalRemaining>0)&&!(p.returnRemaining>0),busy:!!p.workplace||!!state.education?.courses?.some(c=>c.studentUid===showPersonKey(p))||!!state.military?.courses?.some(c=>c.studentUid===showPersonKey(p))}));}
+export function theatreShowQuote(state,action={},context={}){
+  if(!development(state,context))return bad('Ręczne przedstawienia są dostępne w regułach DEV v32.','show-ruleset');
+  const theatre=current(state),now=showAt(state,context),startAt=Number(action.startAt),selected=Array.isArray(action.personUids)?[...new Set(action.personUids)]:[],scope=action.audienceScope==='home'?'home':'island',candidates=new Map(showCandidates(state).map(p=>[p.personUid,p]));
+  if(!Number.isSafeInteger(startAt)||startAt>Number.MAX_SAFE_INTEGER-600000||startAt<now+THEATRE_SHOW_RULES.minimumPlanSeconds*1000)return bad('Przedstawienie zaplanuj z wyprzedzeniem co najmniej 45 minut.','show-too-soon');
+  if(theatre.shows.filter(s=>['planned','running'].includes(s.status)).length>=1000)return bad('Najpierw zrealizuj lub odwołaj część zaplanowanych przedstawień.','show-record-limit');
+  const endAt=startAt+THEATRE_SHOW_RULES.durationSeconds*1000;
+  if(theatre.shows.some(s=>['planned','running'].includes(s.status)&&startAt<s.endAt&&endAt>s.startAt))return bad('W tym czasie w Teatrze zaplanowano już inne przedstawienie.','show-overlap');
+  if(!selected.length||selected.some(id=>typeof id!=='string'||!candidates.has(id)||scope==='home'&&!candidates.get(id).atHome))return bad(scope==='home'?'Wybierz co najmniej jednego mieszkańca przebywającego teraz w Domu.':'Wybierz co najmniej jednego mieszkańca obecnego na wyspie.','show-audience');
+  const coins=selected.length*THEATRE_SHOW_RULES.coinsPerPerson;
+  return good('Plan przedstawienia gotowy.',{startAt,endAt,personUids:selected,audienceScope:scope,audienceCount:selected.length,coins,affordable:typeof context.getCoins==='function'?context.getCoins()>=coins:canSpend(state,coins),durationSeconds:600,happinessPoints:10,happinessSeconds:21600});
+}
+function showNotify(state,context,title,message,at){if(typeof context.notify==='function')context.notify(state,'theatre-show',title,message);else{state.notifications||=[];state.notifications.push({id:`theatre-show-${at}-${state.notifications.length}`,kind:'theatre-show',title,message,at,read:false});}}
+function theatreShowAction(state,action,context){
+  if(!development(state,context))return bad('Ręczne przedstawienia są dostępne w regułach DEV v32.','show-ruleset');
+  const theatre=current(state),now=showAt(state,context);advanceShows(state,{...context,now});
+  if(action.type==='theatreCancelShow'){const show=theatre.shows.find(s=>s.id===action.showId);if(!show||show.status!=='planned'||show.startAt<=now)return bad('Można odwołać tylko przedstawienie, które jeszcze się nie rozpoczęło.','show-unavailable');show.status='cancelled';show.cancelledAt=now;if(typeof context.grantCoins==='function')context.grantCoins(show.coins);else state.resources.coins+=show.coins;return good('Przedstawienie odwołane. Cały koszt wrócił do portfela.',{coins:show.coins,showId:show.id});}
+  const quote=theatreShowQuote(state,action,context);if(!quote.ok)return quote;if(!quote.affordable)return bad('Brakuje monet na przedstawienie.','not-enough-coins',{quote});
+  if(typeof context.spendCoins==='function'){const result=context.spendCoins(quote.coins,{kind:'theatre-show'});if(result===false||result?.ok===false)return bad('Nie udało się pobrać monet za przedstawienie.','not-enough-coins');}else state.resources.coins-=quote.coins;
+  const show={id:`theatre-show-${++theatre.showSequence}`,status:'planned',createdAt:now,startAt:quote.startAt,endAt:quote.endAt,personUids:quote.personUids,attendeeUids:[],audienceScope:quote.audienceScope,coins:quote.coins};theatre.shows.push(show);theatre.shows=trimShows(theatre.shows);showNotify(state,context,'Przedstawienie zaplanowane',`Wybrano ${show.personUids.length} widzów. Lista i koszt ${show.coins} monet zostały zapisane.`,now);return good('Przedstawienie zaplanowane. Lista widzów i pełny koszt są zamrożone.',{showId:show.id,startAt:show.startAt,endAt:show.endAt,coins:show.coins});
+}
+function advanceShows(state,context={}){const theatre=current(state),now=showAt(state,context),present=new Set((state.residents||[]).map(showPersonKey));
+  for(const show of theatre.shows){if(show.status==='planned'&&show.startAt<=now){show.status='running';show.startedAt=show.startAt;show.attendeeUids=show.personUids.filter(id=>present.has(id));showNotify(state,context,'Przedstawienie rozpoczęte','Wybrani mieszkańcy uczestniczą w występie. Produkcja, nauka i szkolenia działają dalej.',show.startAt);}if(show.status==='running'&&show.endAt<=now){show.status='completed';show.completedAt=show.endAt;for(const id of show.attendeeUids)if(present.has(id))theatre.showBonuses[id]=Math.max(theatre.showBonuses[id]||0,show.endAt+THEATRE_SHOW_RULES.happinessSeconds*1000);showNotify(state,context,'Przedstawienie zakończone','Uczestnicy otrzymują +10 punktów szczęścia na sześć godzin. Kolejny występ odnawia czas premii.',show.endAt);}}
+  for(const[id,until]of Object.entries(theatre.showBonuses))if(until<=now)delete theatre.showBonuses[id];
+}
+export function theatreShowStatus(state,context={}){if(!development(state,context))return {};const theatre=current(state),now=showAt(state,context);return {showRules:{...THEATRE_SHOW_RULES},shows:theatre.shows.slice(-100).map(s=>({...s,personUids:[...s.personUids],attendeeUids:[...s.attendeeUids]})),audienceCandidates:showCandidates(state),showBonuses:Object.fromEntries(Object.entries(theatre.showBonuses).filter(([,until])=>until>now)),decorationHappiness:theatreDecorationHappiness(state,context),advertisementStep:3};}
+// The cap and effect area were approved. 0.05 points per installed level is an
+// explicit DEV balance coefficient, adjustable in the host's trusted context.
+export const THEATRE_DEV_BALANCE=Object.freeze({decorationPointsPerLevel:.05,status:'DEV_PROPOSAL_REQUIRES_REVIEW',cancelPlannedShowRefundShare:1});
+export function theatreDecorationHappiness(state,context={}){if(!development(state,context))return 0;const coefficient=Number.isFinite(context.decorationPointsPerLevel)?Math.max(0,context.decorationPointsPerLevel):THEATRE_DEV_BALANCE.decorationPointsPerLevel;return Math.min(10,current(state).collection.filter(item=>item.slot!==null).reduce((sum,item)=>sum+item.level*coefficient,0));}
+export function theatreHappinessBonus(state,person,context={}){if(!development(state,context))return 0;return theatreDecorationHappiness(state,context)+((current(state).showBonuses[showPersonKey(person)]||0)>showAt(state,context)?10:0);}
+export function theatrePorterCanStart(state,person,tripSeconds,context={}){if(!development(state,context))return true;const key=showPersonKey(person),now=showAt(state,context),finishAt=now+Math.max(0,Number(tripSeconds)||0)*1000;return !current(state).shows.some(show=>['planned','running'].includes(show.status)&&show.personUids.includes(key)&&now<show.endAt&&finishAt>show.startAt);}

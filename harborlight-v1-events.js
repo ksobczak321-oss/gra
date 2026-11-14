@@ -2,7 +2,7 @@
 // reading a panel never rerolls an offer or applies an event a second time.
 // This module imports inventory only: residents/logistics can safely read its
 // modifiers, and the state coordinator supplies population-changing callbacks.
-import { centralAvailable, grantBonusMaterials, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v31-2';
+import { centralAvailable, grantBonusMaterials, consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v32-2';
 
 const HOUR = 3600, DAY = 86400, EPS = 1e-7, SAFE = Number.MAX_SAFE_INTEGER;
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
@@ -140,12 +140,12 @@ function goodEvent(state, events, at, context) {
     titlePl = kind === 'treasure' ? 'Skarb z wraku' : 'Zwrot podatku królewskiego';
     message = `The wreck brought ${coins} coins.`; messagePl = `Ze wraku odzyskano ${coins} ${coinObject(coins)}.`;
   } else if (kind === 'supplies') {
-    const materials = Object.fromEntries(MATERIALS.map(id => [id, randomInt(events, 50, 150)]));
+    const materials = Object.fromEntries(MATERIALS.map(id => [state.ruleset===32&&id==='food'?'flour':id, randomInt(events, 50, 150)]));
     grantBonusMaterials(state, materials); details = { materials };
     title = 'Supplies rescued from the wreck'; titlePl = 'Ładunek ocalony z wraku';
-    message = 'Rescued materials are available in your bonus stock.'; messagePl = 'Ocalone materiały trafiły do zapasu z nagród. Możesz je wydać; nie zajmują zwykłej pojemności magazynu.';
+    message = state.ruleset===32?'Rescued supplies arrive through the warehouse; overflow waits for space.':'Rescued materials are available in your bonus stock.'; messagePl = state.ruleset===32?'Ocalone materiały trafiają do Magazynu. Część niemieszcząca się w jego pojemności czeka na wolne miejsce.':'Ocalone materiały trafiły do zapasu z nagród. Możesz je wydać; nie zajmują zwykłej pojemności magazynu.';
   } else if (kind === 'castaway') {
-    const capacity = town * 24 - Math.max(0, state.incomingPassengers || 0);
+    const capacity = town * (state.ruleset===32?36:24) - (state.ruleset===32?0:Math.max(0, state.incomingPassengers || 0));
     if (integer(state.population) < capacity && typeof context.synchronizeResidents === 'function') {
       state.population = integer(state.population) + 1; context.synchronizeResidents(state); details = { people: 1 };
       title = 'A castaway joins the island'; titlePl = 'Rozbitek zamieszkał na wyspie';

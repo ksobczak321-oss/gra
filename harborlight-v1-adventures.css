@@ -123,3 +123,25 @@
   .adventures-panel .adv-puzzle-item-button, .adventures-panel .adv-puzzle-target-button { padding: 9px 6px; }
   .adv-room-success { padding: 12px; }
 }
+
+/* v32: action rows stretch evenly; long Polish labels keep readable targets. */
+.adv-tools{align-items:stretch}
+.adv-tools>button,.adv-bottom>button,.adv-active-header>button{
+ display:flex;align-items:center;justify-content:center;min-height:44px;margin:0;text-align:center;overflow-wrap:anywhere;
+}
+.adv-tools[aria-label="Rodzaj przygody"],.adv-tools[aria-label="Adventure type"]{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
+}
+.adv-puzzle-journal-actions{align-items:stretch}
+.adventures-panel .adv-puzzle-journal-actions>button{
+ display:flex;align-items:center;justify-content:center;min-height:44px;margin:0;line-height:1.4;text-align:center;
+}
+.adv-puzzle-checkpoint{font-size:12px;line-height:1.55}
+@media(max-width:760px){
+ .adv-puzzle-journal-actions{display:flex;flex-wrap:wrap;gap:8px}
+ .adventures-panel .adv-puzzle-journal-actions>button{flex:1 1 140px;padding:10px 12px;font-size:13px}
+ .adventures-panel .adv-puzzle-journal-actions>[data-puzzle-easier]{flex-basis:100%}
+ .adv-tools[aria-label="Rodzaj przygody"],.adv-tools[aria-label="Adventure type"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.adv-active-header{align-items:center}
+.adv-active-header>div{flex:1 1 0;min-width:0;overflow-wrap:anywhere}

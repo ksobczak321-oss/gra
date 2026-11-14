@@ -1,20 +1,26 @@
+import { packAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-2';
+import { reconcileExpeditionOutcomes } from './harborlight-v1-expedition-hour.js?v=frontend-v32-2';
+import * as Provisions from './harborlight-v1-provisions.js?v=frontend-v32-2';
+import * as Education from './harborlight-v1-education.js?v=frontend-v32-2';
+import * as Military from './harborlight-v1-military.js?v=frontend-v32-2';
 // The client snapshot keeps a mother-root account revision with up to twenty
 // worlds. Cloud adapters persist bounded per-world documents atomically.
 // Simulation is injected: this module does not import the state coordinator.
-import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v31-2';
-import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v31-2';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v31-2';
-import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v31-2';
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v31-2';
-import { residentFoodMultiplier } from './harborlight-v1-housing.js?v=frontend-v31-2';
+import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v32-2';
+import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v32-2';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v32-2';
+import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v32-2';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v32-2';
+import { residentFoodMultiplier } from './harborlight-v1-housing.js?v=frontend-v32-2';
 
 export const ISLAND_IDS = Object.freeze(Array.from({ length: 20 }, (_, index) => `island-${index + 1}`));
 export const ARCHIPELAGO_RULES = Object.freeze({ version: 2, secondIslandLevel: 10, maximumIslands: 20, islandLevelStep: 3, colonists: 6,
   passengerCapacity: 100, passengerVoyageSeconds: 1800,
   baseShipCapacity: 1000, voyageSeconds: 600, capacityUnit: 1000,
   capacityUnitCoins: 50, capacityUnitGrosz: 499, maximumUnitsPerCheckout: 100, completedVoyageHistory: 50 });
-export const SHARED_ACCOUNT_FIELDS = Object.freeze(['commerce', 'loyalty', 'socialRewards', 'referrals', 'engagementSchedule', 'welcome', 'welcomeWorkers', 'carrierRecallNoticeDay', 'premium', 'settings', 'charitySimulation', 'expeditionHour', 'adventureJourney', 'adventureBudget']);
+export const SHARED_ACCOUNT_FIELDS = Object.freeze(['commerce', 'loyalty', 'socialRewards', 'referrals', 'engagementSchedule', 'welcome', 'welcomeWorkers', 'carrierRecallNoticeDay', 'premium', 'settings', 'charitySimulation', 'expeditionHour', 'adventureJourney', 'adventureBudget','kingdom','civilianRescue','accountGifts']);
 const adaptersFor = new WeakMap();
+const materialIds = state => state?.ruleset === 32 ? Provisions.MATERIAL_IDS : MATERIAL_IDS;
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const integer = value => Number.isSafeInteger(value) && value >= 0;
 const clone = value => structuredClone(value);
@@ -29,7 +35,7 @@ const clock = (bundle, now) => {
   if (!integer(at)) throw invalid('Invalid archipelago clock.');
   return at;
 };
-const busyVoyage = bundle => bundle.transfers.find(transfer => transfer.status !== 'complete');
+const busyVoyage = bundle => bundle.transfers.find(transfer => transfer.status !== 'complete') || bundle.primary.accountGifts?.outgoing?.find(gift=>gift.status!=='complete');
 const developmentHosts = new Set(['localhost', '127.0.0.1', '[::1]', 'ksobczak321-oss.github.io', 'harborlight-dev.web.app', 'harborlight-dev.firebaseapp.com']);
 const productionRuntime = adapters => ['production', 'prod'].includes(adapters?.environment) ||
   !!globalThis.location?.hostname && !developmentHosts.has(globalThis.location.hostname);
@@ -37,13 +43,22 @@ const worldShape = value => object(value) && integer(value.version) && value.ver
   integer(value.population) && object(value.resources) && object(value.buildings) &&
   ['townhall', 'warehouse', 'house'].every(id => object(value.buildings[id]) && integer(value.buildings[id].level)) &&
   ['coins', ...MATERIAL_IDS.filter(id => value.version > 3 || id !== 'grain')].every(id => Number.isFinite(value.resources[id]) && value.resources[id] >= 0);
-const asCargo = (value, { empty = false } = {}) => {
-  if (!object(value) || Object.entries(value).some(([id, amount]) => !MATERIAL_IDS.includes(id) || !integer(amount))) return null;
-  const result = Object.fromEntries(MATERIAL_IDS.filter(id => value[id] > 0).map(id => [id, value[id]]));
+const asCargo = (value, { empty = false, state = null } = {}) => {
+  if (!object(value) || Object.entries(value).some(([id, amount]) => !materialIds(state).includes(id) || !integer(amount))) return null;
+  const result = Object.fromEntries(materialIds(state).filter(id => value[id] > 0).map(id => [id, value[id]]));
   return Number.isSafeInteger(total(result)) && (empty || total(result) > 0) ? result : null;
 };
 
 function bindAccount(bundle) {
+  if (bundle.primary.ruleset === 32) {
+    bundle.sharedWallet ||= {coins:worlds(bundle).reduce((n,[,w])=>n+(w.resources.coins||0),0)};
+    const highestAcademyLevel = Math.max(1,...worlds(bundle).map(([,w])=>w.buildings.academy?.level||0));
+    const highestTownhall = Math.max(...worlds(bundle).map(([,w])=>w.buildings.townhall.level));
+    for (const [,world] of worlds(bundle)) {
+      Object.defineProperty(world.resources,'coins',{enumerable:true,configurable:true,get:()=>bundle.sharedWallet.coins,set:value=>{bundle.sharedWallet.coins=Math.min(Number.MAX_SAFE_INTEGER,Math.max(0,Math.floor(value)||0));}});
+      Object.defineProperties(world,{highestAcademyLevel:{value:highestAcademyLevel,writable:true,configurable:true},highestTownhall:{value:highestTownhall,writable:true,configurable:true}});
+    }
+  }
   const people = new Set();
   for (const [id, state] of worlds(bundle)) {
     state.islandId = id; state.islandRole = id === 'island-1' ? 'mother' : 'daughter';
@@ -57,6 +72,11 @@ function bindAccount(bundle) {
       if (bundle.primary[field] === undefined) delete state[field]; else state[field] = bundle.primary[field];
     }
     state.islandName = `${bundle.primary.islandName || 'Your island'} - ${state.islandSuffix || state.islandName || id}`;
+  }
+  for(const[,world]of worlds(bundle))reconcileExpeditionOutcomes(world);
+  if(bundle.primary.ruleset===32){
+    const travellers=bundle.transfers.filter(t=>t.mode==='passengers'&&t.status!=='complete').flatMap(t=>(t.passengers||[]).map(person=>({person,education:t.peopleRecords?.[person.personUid]?.education,military:t.peopleRecords?.[person.personUid]?.military})));
+    for(const kind of ['professor','soldier'])Military.ensureRescueSpecialist(bundle.primary,kind,{worlds:bundle.worlds,travellers,now:bundle.primary.worldTimeMs});
   }
   bundle.secondary = bundle.worlds['island-2'] || null;
   return bundle;
@@ -86,6 +106,10 @@ function transferRecord(value, bundle) {
     !['sailing', 'waiting', 'complete'].includes(value.status) || !integer(value.departedAt) || !integer(value.arrivesAt) ||
     value.arrivesAt !== value.departedAt + (value.mode === 'passengers' ? ARCHIPELAGO_RULES.passengerVoyageSeconds : ARCHIPELAGO_RULES.voyageSeconds) * 1000 ||
     !integer(value.capacityAtDeparture) || (value.mode === 'passengers' ? value.capacityAtDeparture !== 100 : value.capacityAtDeparture < ARCHIPELAGO_RULES.baseShipCapacity || value.capacityAtDeparture > bundle.shipCapacity)) throw invalid('Invalid island voyage.');
+  if (value.mode === 'passengers' && value.ruleset === 32) {
+    if (!Array.isArray(value.passengers)||value.passengers.length>100||!Array.isArray(value.passengerIds)||value.passengerIds.length>100||!['outbound','return','waiting-home'].includes(value.passengerPhase)||!object(value.peopleRecords)) throw invalid('Invalid DEV passenger voyage.');
+    return clone(value);
+  }
   if (value.mode === 'passengers') {
     const personalMeals = value.mealPolicy === 'housing-v1';
     const housingHistory = personalMeals && Array.isArray(value.unhousedPassengerIds) &&
@@ -103,15 +127,15 @@ function transferRecord(value, bundle) {
       worlds(bundle).some(([,state]) => state.residents.some(person => value.status === 'sailing' && value.passengerIds.includes(person.personUid)))) throw invalid('Invalid passenger voyage.');
     return clone(value);
   }
-  const cargo = asCargo(value.cargo), bonusCargo = asCargo(value.bonusCargo, { empty: true });
-  const remainingCargo = asCargo(value.remainingCargo, { empty: true }), remainingBonusCargo = asCargo(value.remainingBonusCargo, { empty: true });
+  const cargo = asCargo(value.cargo,{state:bundle.primary}), bonusCargo = asCargo(value.bonusCargo, { empty: true,state:bundle.primary });
+  const remainingCargo = asCargo(value.remainingCargo, { empty: true,state:bundle.primary }), remainingBonusCargo = asCargo(value.remainingBonusCargo, { empty: true,state:bundle.primary });
   if (!cargo || !bonusCargo || !remainingCargo || !remainingBonusCargo || total(cargo) > value.capacityAtDeparture ||
-    MATERIAL_IDS.some(id => (bonusCargo[id] || 0) > (cargo[id] || 0) ||
+    materialIds(bundle.primary).some(id => (bonusCargo[id] || 0) > (cargo[id] || 0) ||
       (remainingCargo[id] || 0) > (cargo[id] || 0) || (remainingBonusCargo[id] || 0) > (bonusCargo[id] || 0) ||
       (remainingBonusCargo[id] || 0) > (remainingCargo[id] || 0)) ||
     value.status === 'complete' && (total(remainingCargo) > 0 || !integer(value.deliveredAt) || value.deliveredAt < value.arrivesAt) ||
     value.status !== 'complete' && (!total(remainingCargo) || value.deliveredAt !== null) ||
-    value.status === 'sailing' && MATERIAL_IDS.some(id => (remainingCargo[id] || 0) !== (cargo[id] || 0) || (remainingBonusCargo[id] || 0) !== (bonusCargo[id] || 0))) {
+    value.status === 'sailing' && materialIds(bundle.primary).some(id => (remainingCargo[id] || 0) !== (cargo[id] || 0) || (remainingBonusCargo[id] || 0) !== (bonusCargo[id] || 0))) {
     throw invalid('Invalid island-voyage cargo.');
   }
   return { ...clone(value), cargo, bonusCargo, remainingCargo, remainingBonusCargo };
@@ -176,7 +200,8 @@ export function restoreArchipelago(raw, adapters, now = Date.now()) {
     bundle.transfers.filter(item => item.status !== 'complete').length > 1 ||
     bundle.transfers.some(item => Number(item.id.slice(7)) > bundle.sequence)) throw invalid('Duplicate or concurrent island voyages.');
   for (const [,state] of worlds(bundle)) state.incomingPassengers = 0;
-  for (const transfer of bundle.transfers) if (transfer.mode === 'passengers' && transfer.status !== 'complete') worldFor(bundle, transfer.toIslandId).incomingPassengers += transfer.passengerCount;
+  for (const transfer of bundle.transfers) if (transfer.mode === 'passengers' && transfer.status !== 'complete') worldFor(bundle, transfer.toIslandId).incomingPassengers += transfer.ruleset===32?transfer.passengers.length:transfer.passengerCount;
+  if(primary.ruleset===32) bundle.sharedWallet={coins:Number.isSafeInteger(metadata?.sharedWallet?.coins)?metadata.sharedWallet.coins:worlds(bundle).reduce((n,[,w])=>n+w.resources.coins,0)};
   adaptersFor.set(bundle, adapters); return bindAccount(bundle);
 }
 
@@ -191,6 +216,12 @@ export function compactResidentSnapshot(person) {
 }
 function compactWorld(state) {
   const world = clone(state); delete world.archipelago;
+  if(world.ruleset===32){
+    // Rebuilt by normalizeEffectNotifications; this cache is never read from
+    // a save. Persistent notifications and their read flags remain untouched.
+    delete world.effectNotificationState;
+    Provisions.compactDietHistories(world);packAdventureSave(world);
+  }
   if (Array.isArray(world.residents)) world.residents = world.residents.map(compactResidentSnapshot);
   return world;
 }
@@ -213,10 +244,11 @@ export function serializeArchipelago(bundle) {
   for (const [id,state] of worlds(bundle)) if (id !== 'island-1') {
     const saved = compactWorld(state);
     for (const field of SHARED_ACCOUNT_FIELDS) delete saved[field];
+    if(bundle.primary.ruleset===32) saved.resources.coins=0;
     daughters[id] = saved;
   }
   primary.archipelago = { version: 2, activeIslandId: bundle.activeIslandId, islands: daughters,
-    sequence: bundle.sequence, transfers: clone(retainedVoyages(bundle)), shipCapacity: bundle.shipCapacity,
+    ...(bundle.sharedWallet?{sharedWallet:clone(bundle.sharedWallet)}:{}), sequence: bundle.sequence, transfers: clone(retainedVoyages(bundle)), shipCapacity: bundle.shipCapacity,
     capacityReceipts: clone(bundle.capacityReceipts) };
   return primary;
 }
@@ -226,10 +258,12 @@ export const isPrimaryIsland = bundle => bundle.activeIslandId === 'island-1';
 export function advanceArchipelago(bundle, now = Date.now()) {
   const adapters = adaptersFor.get(bundle);
   if (!adapters) throw new Error('Restore the archipelago before advancing it.');
-  const at = clock(bundle, now), voyage = busyVoyage(bundle);
-  if (voyage?.status === 'sailing' && voyage.arrivesAt <= at) {
-    for (const [,state] of worlds(bundle)) adapters.advanceTo(state, voyage.arrivesAt);
-    if (voyage.mode === 'passengers') unloadPassengers(bundle, voyage, voyage.arrivesAt); else unloadCargo(bundle, voyage, voyage.arrivesAt);
+  const at = clock(bundle, now);
+  for(let events=0;events<40;events++){
+    const voyage=bundle.transfers.find(t=>t.status==='sailing'&&t.arrivesAt<=at);if(!voyage)break;
+    const arrival=voyage.arrivesAt;
+    for(const[,state]of worlds(bundle))adapters.advanceTo(state,arrival);
+    if(voyage.mode==='passengers')unloadPassengers(bundle,voyage,arrival);else unloadCargo(bundle,voyage,arrival);
   }
   for (const [,state] of worlds(bundle)) adapters.advanceTo(state, at);
   bindAccount(bundle); return activeIsland(bundle);
@@ -261,22 +295,24 @@ export function createNextIsland(bundle, { name = '' } = {}, now = Date.now()) {
   advanceArchipelago(bundle, now);
   const chosen = validateIslandName(name); if (!chosen.ok) return bad(chosen.message);
   const quote = quoteNextIsland(bundle, { name: chosen.name }, now); if (!quote.ok) return quote;
-  const at = clock(bundle, now), adapters = adaptersFor.get(bundle), fresh = adapters.createState(at, { onboarding: false });
+  const at = clock(bundle, now), adapters = adaptersFor.get(bundle), fresh = adapters.createState(at, { onboarding: false, ruleset:bundle.primary.ruleset });
   for (const building of Object.values(fresh.buildings)) building.level = 1;
   fresh.buildings.townhall.level = bundle.primary.buildings.townhall.level;
   fresh.buildings.warehouse.level = bundle.primary.buildings.warehouse.level;
   const colonists = bundle.primary.residents.filter(residentAtHome).slice(0, 6);
   for (const [id,value] of Object.entries(quote.cost)) consumeMaterial(bundle.primary,id,value);
+  const colonistRecords = colonists.map(p=>capturePerson(bundle.primary,p));
   const transferredIds = new Set(colonists.map(person => person.personUid));
   bundle.primary.residents = bundle.primary.residents.filter(person => !transferredIds.has(person.personUid));
   bundle.primary.population = bundle.primary.residents.length;
   fresh.residents = colonists.map((person,index) => ({ ...clone(person), id: index+1 }));
   fresh.residentSequence = 6; fresh.population = 6;
+  if(fresh.ruleset===32) for(const person of fresh.residents) restorePerson(fresh,person,colonistRecords.find(r=>r.uid===person.personUid));
   fresh.islandId = quote.islandId; fresh.islandRole = 'daughter'; fresh.islandSuffix = chosen.name;
   fresh.islandName = `${bundle.primary.islandName || 'Your island'} - ${chosen.name}`; fresh.islandNameUpdatedAt = at;
   fresh.objective = { ...fresh.objective, repaired: true };
   // Founding is funded by the mother, never a repeatable new-player reward.
-  fresh.resources = Object.fromEntries(['coins', ...MATERIAL_IDS].map(id => [id, 0]));
+  fresh.resources = Object.fromEntries(['coins', ...materialIds(fresh)].map(id => [id, 0]));
   for (const field of SHARED_ACCOUNT_FIELDS) if (bundle.primary[field] !== undefined) fresh[field] = clone(bundle.primary[field]);
   fresh.houseHappinessPool = { ...fresh.houseHappinessPool, points: 6, grantPopulation: 6,
     ...(Array.isArray(fresh.houseHappinessPool?.portions) ? { portions: [{ ...fresh.houseHappinessPool.portions[0], points: 6, population: 6 }] } : {}) };
@@ -300,13 +336,13 @@ export function renameArchipelagoIsland(bundle, islandId, name, now = Date.now()
 
 export function quoteIslandTransfer(bundle, { fromIslandId = bundle.activeIslandId, toIslandId, cargo } = {}, now = Date.now()) {
   if (!bundle.secondary) return bad('Found your second island before transporting goods between islands.');
-  const from = worldFor(bundle, fromIslandId), to = worldFor(bundle, toIslandId), contents = asCargo(cargo);
+  const from = worldFor(bundle, fromIslandId), to = worldFor(bundle, toIslandId), contents = asCargo(cargo,{state:bundle.primary});
   if (!from || !to || fromIslandId === toIslandId) return bad('Choose two different islands.');
   if (!contents) return bad('Choose positive whole quantities of materials. Coins cannot be transported.');
   if (!(from.buildings?.dock?.level > 0) || !(to.buildings?.dock?.level > 0)) return bad('Both islands need a Harbor.');
   if (busyVoyage(bundle)) return bad('The ship is busy. Finish unloading its current cargo first.');
   if (total(contents) > bundle.shipCapacity) return bad('This cargo exceeds the ship capacity.');
-  if (MATERIAL_IDS.some(id => (contents[id] || 0) > availableGoods(from, id))) return bad('Use available central stock; reserved goods and the protected Food reserve cannot be shipped.');
+  if (materialIds(from).some(id => (contents[id] || 0) > availableGoods(from, id))) return bad('Use available central stock; reserved goods and the protected Food reserve cannot be shipped.');
   if (!Number.isSafeInteger(bundle.sequence + 1)) return bad('The voyage history has reached its supported limit.');
   const at = clock(bundle, now);
   if (!Number.isSafeInteger(at + ARCHIPELAGO_RULES.voyageSeconds * 1000)) return bad('The voyage arrival time exceeds the supported clock.');
@@ -320,9 +356,11 @@ export function sendIslandTransfer(bundle, action = {}, now = Date.now()) {
   if (!quote.ok) return quote;
   const from = worldFor(bundle, quote.fromIslandId);
   const bonuses = Object.fromEntries(Object.entries(quote.cargo).map(([id, amount]) => [id, Math.min(amount, bonusStock(from, id))]).filter(([, amount]) => amount > 0));
-  for (const [id, amount] of Object.entries(quote.cargo)) consumeMaterial(from, id, amount);
+  const milkLots=from.ruleset===32&&quote.cargo.rawMilk?Provisions.withdrawMilk(from,quote.cargo.rawMilk):[];
+  if(from.ruleset===32&&quote.cargo.rawMilk&&from.bonusMaterials)from.bonusMaterials.rawMilk=Math.max(0,(from.bonusMaterials.rawMilk||0)-(bonuses.rawMilk||0));
+  for (const [id, amount] of Object.entries(quote.cargo)) if(id!=='rawMilk'||from.ruleset!==32)consumeMaterial(from, id, amount);
   const transfer = { id: `voyage-${++bundle.sequence}`, status: 'sailing', fromIslandId: quote.fromIslandId, toIslandId: quote.toIslandId,
-    mode: 'cargo', cargo: clone(quote.cargo), bonusCargo: bonuses, remainingCargo: clone(quote.cargo), remainingBonusCargo: clone(bonuses),
+    mode: 'cargo', milkLots, cargo: clone(quote.cargo), bonusCargo: bonuses, remainingCargo: clone(quote.cargo), remainingBonusCargo: clone(bonuses),
     capacityAtDeparture: bundle.shipCapacity, departedAt: quote.departedAt, arrivesAt: quote.arrivesAt, deliveredAt: null };
   bundle.transfers.push(transfer);
   bundle.transfers = retainedVoyages(bundle);
@@ -330,13 +368,13 @@ export function sendIslandTransfer(bundle, action = {}, now = Date.now()) {
 }
 function unloadCargo(bundle, transfer, now) {
   const destination = worldFor(bundle, transfer.toIslandId);
-  for (const id of ['food', ...MATERIAL_IDS.filter(id => id !== 'food')]) {
+  for (const id of ['food', ...materialIds(destination).filter(id => id !== 'food')]) {
     const bonus = transfer.remainingBonusCargo[id] || 0;
     const ordinary = (transfer.remainingCargo[id] || 0) - bonus;
     const accepted = Math.min(ordinary, stockRoom(destination, id));
     if ((destination.resources[id] || 0) + bonus + accepted > Number.MAX_SAFE_INTEGER) continue;
-    if (bonus > 0) grantBonusMaterials(destination, { [id]: bonus });
-    if (accepted > 0) destination.resources[id] += accepted;
+    if (bonus > 0) {if(id==='rawMilk'&&destination.ruleset===32){Provisions.depositMilk(destination,bonus,takeVoyageMilk(transfer,bonus));destination.bonusMaterials ||= {};destination.bonusMaterials.rawMilk=(destination.bonusMaterials.rawMilk||0)+bonus;}else grantBonusMaterials(destination, { [id]: bonus },{preserveLegacyFood:true});}
+    if (accepted > 0) {if(id==='rawMilk'&&destination.ruleset===32){Provisions.depositMilk(destination,accepted,takeVoyageMilk(transfer,accepted));}else destination.resources[id] += accepted;}
     const remaining = ordinary - accepted;
     if (remaining > 0) transfer.remainingCargo[id] = remaining; else delete transfer.remainingCargo[id];
     delete transfer.remainingBonusCargo[id];
@@ -361,17 +399,17 @@ export function quotePassengerTransfer(bundle, { fromIslandId = bundle.activeIsl
   if (!from.buildings?.dock?.level || !to.buildings?.dock?.level) return bad('Both islands need a Harbor.');
   if (busyVoyage(bundle)) return bad('The shared ship is busy with cargo or passengers.');
   if (passengerIds !== undefined && (!Array.isArray(passengerIds) || passengerIds.some(id => !Number.isSafeInteger(id) || id < 1))) return bad('Choose valid resident identifiers.');
-  const home=from.residents.filter(residentAtHome);
+  const home=from.residents.filter(p=>residentAtHome(p)&&!Education.educationBusy(from,p)&&!Military.militaryBusy(from,p));
   const count=passengerIds === undefined ? amount : passengerIds?.length;
   if (!Number.isSafeInteger(count) || count<1 || count>100) return bad('Choose between one and 100 passengers per voyage.');
   const chosen=passengerIds === undefined ? home.slice(0,count) : home.filter(person=>passengerIds.includes(person.id));
   if (chosen.length!==count || passengerIds && new Set(passengerIds).size!==count) return bad('All selected passengers must actually be at Home.');
   if (from.population-count < residentPopulationMinimum(from)) return bad(from.islandRole === 'daughter' ? 'At least six residents must remain on a daughter island.' : 'At least twelve residents must remain on the mother island.');
-  const destinationLimit=to.buildings.townhall.level*24;
-  if (to.population+(to.incomingPassengers || 0)+count>destinationLimit) return bad('The destination needs free Town Hall population places for all passengers.');
+  const destinationLimit=to.buildings.townhall.level*(from.ruleset===32?36:24);
+  if (from.ruleset!==32 && to.population+(to.incomingPassengers || 0)+count>destinationLimit) return bad('The destination needs free Town Hall population places for all passengers.');
   const unhousedPassengerIds=chosen.filter(person=>residentFoodMultiplier(from,person)===2).map(person=>person.personUid);
   const mealFood=chosen.reduce((sum,person)=>sum+residentFoodMultiplier(from,person)/2,0);
-  if ((from.foodCredit || 0)+Math.floor(centralAvailable(from,'food'))+1e-9 < mealFood) return bad('Prepare meals for the thirty-minute voyage: half a Food for a housed passenger and one Food for a passenger without a bed. These are ordinary meals, without a transport fee.');
+  if (from.ruleset===32 ? !Provisions.quoteConstructionFood(from,mealFood).ok : (from.foodCredit || 0)+Math.floor(centralAvailable(from,'food'))+1e-9 < mealFood) return bad('Prepare meals for the thirty-minute voyage: half a Food for a housed passenger and one Food for a passenger without a bed. These are ordinary meals, without a transport fee.');
   const at=clock(bundle,now);
   if (!Number.isSafeInteger(bundle.sequence+1) || !Number.isSafeInteger(at+1800000)) return bad('The voyage exceeds the supported clock or history.');
   return good('Passengers travel for thirty real minutes, using ordinary meals and no coin fee.', { fromIslandId,toIslandId,passengerIds:chosen.map(person=>person.id),personUids:chosen.map(person=>person.personUid),amount:count,capacity:100,seconds:1800,coins:0,mealFood,mealPolicy:'housing-v1',unhousedPassengerIds,departedAt:at,arrivesAt:at+1800000 });
@@ -382,10 +420,11 @@ export function sendPassengerTransfer(bundle, action = {}, now = Date.now()) {
   const from=worldFor(bundle,quote.fromIslandId), to=worldFor(bundle,quote.toIslandId);
   const chosen=new Set(quote.personUids), passengers=from.residents.filter(person=>chosen.has(person.personUid)).map(clone);
   const foodUnits=Math.max(0,Math.ceil(quote.mealFood-(from.foodCredit || 0)-1e-9));
-  consumeMaterial(from,'food',foodUnits);from.foodCredit=(from.foodCredit || 0)+foodUnits-quote.mealFood;
+  if(from.ruleset===32){const mix=Provisions.quoteConstructionFood(from,quote.mealFood);if(!mix.ok)return mix;for(const[id,n]of Object.entries(mix.materials))consumeMaterial(from,id,n);}else{consumeMaterial(from,'food',foodUnits);from.foodCredit=(from.foodCredit || 0)+foodUnits-quote.mealFood;}
+  const peopleRecords=Object.fromEntries(passengers.map(person=>[person.personUid,capturePerson(from,person)]));
   from.residents=from.residents.filter(person=>!chosen.has(person.personUid));from.population=from.residents.length;
   to.incomingPassengers=(to.incomingPassengers || 0)+quote.amount;
-  const transfer={ id:`voyage-${++bundle.sequence}`,mode:'passengers',status:'sailing',fromIslandId:quote.fromIslandId,toIslandId:quote.toIslandId,
+  const transfer={ ...(from.ruleset===32?{ruleset:32,passengerPhase:'outbound',homeIslandId:quote.fromIslandId,peopleRecords}:{}),id:`voyage-${++bundle.sequence}`,mode:'passengers',status:'sailing',fromIslandId:quote.fromIslandId,toIslandId:quote.toIslandId,
     departedAt:quote.departedAt,arrivesAt:quote.arrivesAt,deliveredAt:null,capacityAtDeparture:100,
     passengers,passengerIds:quote.personUids,passengerCount:quote.amount,mealFood:quote.mealFood,mealPolicy:quote.mealPolicy,unhousedPassengerIds:[...quote.unhousedPassengerIds],passengerWelcome:clone(from.welcome),
     cargo:{},bonusCargo:{},remainingCargo:{},remainingBonusCargo:{} };
@@ -408,6 +447,7 @@ function advancePassengerClock(transfer) {
   }
 }
 function unloadPassengers(bundle,transfer,now){
+  if(transfer.ruleset===32)return unloadDevelopmentPassengers(bundle,transfer,now);
   if(transfer.status==='complete')return good('Passengers have already arrived.',{transfer,duplicate:true});
   const to=worldFor(bundle,transfer.toIslandId);
   advancePassengerClock(transfer);
@@ -469,3 +509,36 @@ export function archipelagoStatus(bundle, now = Date.now()) {
     passengerCapacity: 100, passengerVoyageSeconds: 1800, busy: !!busy, activeTransfer: busy ? { ...clone(busy), remainingSeconds: Math.max(0, (busy.arrivesAt - at) / 1000), amountRemaining: busy.mode === 'passengers' ? busy.passengerCount : total(busy.remainingCargo) } : null,
     transfers: clone(bundle.transfers), capacityUnit: ARCHIPELAGO_RULES.capacityUnit, capacityUnitCoins: ARCHIPELAGO_RULES.capacityUnitCoins };
 }
+
+function capturePerson(state,person){
+ if(state.ruleset!==32)return {uid:person.personUid};
+ const uid=person.personUid;const record={uid,education:Education.detachPersonEducation(state,person),military:Military.detachPersonMilitary(state,person),provisions:clone(state.provisions?.people?.[uid]||{})};
+ if(state.provisions?.people)delete state.provisions.people[uid];return record;
+}
+function restorePerson(state,person,record){
+ if(state.ruleset!==32||!record)return;Education.importPersonEducation(state,person,record.education);Military.importPersonMilitary(state,person,record.military);
+ if(record.provisions){state.provisions.people[person.personUid]=clone(record.provisions);}
+}
+function unloadDevelopmentPassengers(bundle,transfer,now){
+ if(transfer.status==='complete')return good('Pasażerowie już dotarli.',{transfer,duplicate:true});
+ const to=worldFor(bundle,transfer.toIslandId), returning=transfer.passengerPhase!=='outbound';
+ const room=Math.max(0,to.buildings.townhall.level*36-to.population);
+ const specialist=p=>transfer.peopleRecords[p.personUid]?.education?.profession==='professor'||!!transfer.peopleRecords[p.personUid]?.military?.rank;
+ const sorted=[...transfer.passengers].sort((a,b)=>Number(specialist(b))-Number(specialist(a)));
+ const accepted=sorted.slice(0,room),left=sorted.slice(room);
+ for(const person of accepted){person.id=++to.residentSequence;person.workplace=null;person.arrivalRemaining=0;person.returnRemaining=0;to.residents.push(person);restorePerson(to,person,transfer.peopleRecords[person.personUid]);}
+ to.population=to.residents.length;to.incomingPassengers=Math.max(0,(to.incomingPassengers||0)-transfer.passengers.length);
+ transfer.passengers=left;
+ if(!left.length){transfer.status='complete';transfer.deliveredAt=now;return good('Pasażerowie dotarli na wyspę.',{transfer,accepted:accepted.length});}
+ if(returning){transfer.status='waiting';transfer.passengerPhase='waiting-home';return good('Brakuje miejsca na wyspie powrotu. Pasażerowie czekają na statku; możesz wskazać inną wyspę.',{transfer,waiting:left.length});}
+ transfer.fromIslandId=transfer.toIslandId;transfer.toIslandId=transfer.homeIslandId;transfer.passengerPhase='return';transfer.status='sailing';transfer.departedAt=now;transfer.arrivesAt=now+1800000;
+ worldFor(bundle,transfer.toIslandId).incomingPassengers=(worldFor(bundle,transfer.toIslandId).incomingPassengers||0)+left.length;
+ return good('Przyjęto osoby, dla których jest miejsce. Pozostali wracają statkiem.',{transfer,accepted:accepted.length,returning:left.length});
+}
+export function redirectPassengerTransfer(bundle,{transferId,toIslandId},now=Date.now()){
+ const transfer=bundle.transfers.find(t=>t.id===transferId);
+ if(!transfer||transfer.ruleset!==32||transfer.mode!=='passengers'||transfer.status!=='waiting'||!worldFor(bundle,toIslandId)||toIslandId===transfer.toIslandId)return bad('Wybierz oczekujący statek i inną wyspę.');
+ transfer.fromIslandId=transfer.toIslandId;transfer.toIslandId=toIslandId;transfer.status='sailing';transfer.passengerPhase='return';transfer.departedAt=clock(bundle,now);transfer.arrivesAt=transfer.departedAt+1800000;return good('Statek płynie na wskazaną wyspę.',{transfer});
+}
+
+function takeVoyageMilk(transfer,amount){const lots=[];let left=amount;for(const lot of transfer.milkLots||[]){const n=Math.min(left,lot.amount);if(n>0){lots.push({...lot,amount:n});lot.amount-=n;left-=n;}}transfer.milkLots=(transfer.milkLots||[]).filter(l=>l.amount>0);return lots;}

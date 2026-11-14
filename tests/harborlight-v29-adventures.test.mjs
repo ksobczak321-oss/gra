@@ -273,8 +273,8 @@ test('swapping adventures saves each puzzle and resumes it independently of main
   start(state, 'letters'); assert.equal(state.adventures.active.data.letters[0].read, true);
 });
 
-test('all nine puzzle snapshots survive normalization, including rewards already delivered', () => {
-  let state = island();
+test('all nine puzzle snapshots fit 3×townhall3 slots and retain rewards on normalization', () => {
+  let state=island();state.buildings={townhall:{level:3}};
   for (const descriptor of ADVENTURE_CATALOG) { start(state, descriptor.kind); state = reload(state); assert.equal(state.adventures.active.kind, descriptor.kind); }
   assert.equal(Object.keys(state.adventures.parked).length, 8); const resources = structuredClone(state.resources);
   state = reload(state); assert.deepEqual(state.resources, resources);

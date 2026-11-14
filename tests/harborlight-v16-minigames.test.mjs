@@ -10,7 +10,7 @@ const definition = { id: 'islands', map: ['S.G'], tools: {} };
 const context = { expeditions: [definition] };
 function island(seed = 123456789) {
   const state = {
-    resources: { coins: 100, wood: 100, stone: 100, grain: 100, food: 100, planks: 100 },
+    ruleset:32,resources: { coins: 100, wood: 100, stone: 100, grain: 100, food: 100, planks: 100 },
     population: 12, foodCredit: 1, activeSeconds: 0, worldTimeMs: NOW,
     buildings: Object.fromEntries(['farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'warehouse', 'market', 'dock', 'house', 'townhall', 'chapel', 'lighthouse'].map(id => [id, { level: 1, workers: 0, ready: 0, workProgress: [] }])),
     residents: [], returningWorkers: [], constructionProjects: [], premiumServices: [],
@@ -28,7 +28,7 @@ function reload(state) {
   normalizeActivities(restored, raw); return restored;
 }
 function fixture(state, kind, stage = 1) {
-  const run = start(state); run.level = stage;
+  const result=activityAction(state,{type:'expeditionStart',expedition:definition.id,gameKind:kind},context);assert.equal(result.ok,true,result.message);const run=state.expeditionRuns[definition.id];run.level=stage;
   run.miniGame = createMiniGame(kind, stage, 1234567, state.activityClock);
   run.roundLimit = miniGameRoundRules(kind, stage).timeLimit; run.remaining = run.roundLimit;
   return run;
@@ -178,7 +178,7 @@ test('memory reward scales the grace and coin steps to its own round limit', () 
 test('the exact hard deadline loses the entire series without touching island coins', () => {
   for (const kind of ['tilt', 'triples']) {
     const state = island(), run = fixture(state, kind); run.pot = 150;
-    advanceActivities(state, run.roundLimit - 0.001); assert.equal(run.status, 'active');
+    advanceActivities(state, run.roundLimit+5 - 0.001); assert.equal(run.status, 'active');
     advanceActivities(state, 0.001); assert.equal(run.status, 'lost'); assert.equal(run.pot, 0);
     assert.equal(run.lossReason, 'deadline'); assert.equal(state.resources.coins, 100);
     assert.equal(activityAction(state, { type: 'expeditionCashout', runId: run.id }, context).ok, false);
@@ -196,8 +196,7 @@ test('a late memory win adds only its reduced new reward to the previous at-risk
 test('offline elapsed time reaches a real deadline and cannot be reset by reloading', () => {
   const state = island(), run = fixture(state, 'triples'); run.pot = 50;
   advanceActivities(state, 150); const loaded = reload(state);
-  assert.equal(loaded.expeditionRuns.islands.roundStartedAt, 0); advanceActivities(loaded, 90);
-  assert.equal(loaded.expeditionRuns.islands.status, 'lost'); assert.equal(loaded.expeditionRuns.islands.lossReason, 'deadline');
+  assert.equal(loaded.expeditionRuns.islands.status,'lost');assert.equal(loaded.expeditionRuns.islands.lossReason,'abandoned');const before=loaded.expeditionRuns.islands.roundLimit;advanceActivities(loaded,90);assert.equal(loaded.expeditionRuns.islands.status,'lost');assert.equal(loaded.expeditionRuns.islands.roundLimit,before);
 });
 
 test('unchanged automatic tilt samples do not renew the presence clock', () => {

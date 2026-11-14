@@ -59,6 +59,21 @@ def scenario(browser, language, mobile):
         expect(page.locator('[data-puzzle-title]')).not_to_be_empty()
 
     def play_moves(moves):
+        if page.evaluate('window.view().originalAttempt?.variant') == 'signal-line':
+            svg=page.locator('svg.original-puzzle-signal');svg.focus()
+            board=page.evaluate('window.view().originalAttempt.board');nodes={n['id']:n for n in board['nodes']}
+            for move in moves:
+                if page.evaluate('window.view().solved'):break
+                node=nodes[move['id']]
+                previous=page.evaluate('window.view().originalAttempt.trail.at(-1)||null')
+                if previous:
+                    prior=nodes[previous];dx=node['x']-prior['x'];dy=node['y']-prior['y'];page.keyboard.press({(1,0):'ArrowRight',(-1,0):'ArrowLeft',(0,1):'ArrowDown',(0,-1):'ArrowUp'}[(dx,dy)])
+                page.keyboard.press('Enter')
+            return
+        if page.evaluate('window.view().originalAttempt?.variant') == 'harbor-routes':
+            for move in moves:
+                number=int(move['id'].split('-')[1]);tap(page.get_by_role('button',name='Konwój '+str(number),exact=True))
+            return
         for move in moves:
             if page.evaluate('window.view().solved'):
                 break

@@ -1,7 +1,7 @@
-import { adventureChoices, ADVENTURE_CATALOG, pipePorts, adventureMessage } from './harborlight-v1-adventures.js?v=frontend-v31-2';
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v31-2';
-import { adventureArt, cargoArt, mapTileArt, shipDrawing, planeDrawing } from './harborlight-v1-adventures-art.js?v=frontend-v31-2';
-import { createExpandedAdventureScene } from './harborlight-v1-adventures-expanded-ui.js?v=frontend-v31-2';
+import { adventureChoices, ADVENTURE_CATALOG, pipePorts, adventureMessage } from './harborlight-v1-adventures.js?v=frontend-v32-2';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-2';
+import { adventureArt, cargoArt, mapTileArt, shipDrawing, planeDrawing } from './harborlight-v1-adventures-art.js?v=frontend-v32-2';
+import { createExpandedAdventureScene } from './harborlight-v1-adventures-expanded-ui.js?v=frontend-v32-2';
 
 const pick = (lang, pl, en) => lang === 'en' ? en : pl;
 const text = (lang, value) => typeof value === 'string' ? value : value?.[lang === 'en' ? 'en' : 'pl'] || value?.pl || '';
@@ -21,7 +21,7 @@ function svg(tag, attributes = {}) { const result = document.createElementNS(NS,
 function setText(element, value) { if (element.textContent !== String(value)) element.textContent = String(value); }
 function stylesheet() {
   if (document.querySelector('[data-adventures-css]')) return;
-  document.head.append(node('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-adventures.css?v=frontend-v31-2', import.meta.url).href, 'data-adventures-css': '' }));
+  document.head.append(node('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-adventures.css?v=frontend-v32-2', import.meta.url).href, 'data-adventures-css': '' }));
 }
 const BUILDINGS = {
   farm: ['Gospodarstwo', 'Farm'], lumber: ['Drwale', 'Lumber camp'], quarry: ['Kamieniołom', 'Quarry'], windmill: ['Młyn', 'Mill'], sawmill: ['Tartak', 'Sawmill'],
@@ -39,7 +39,7 @@ const ERRORS = {
 };
 /** A view over the adventure model. It never grants a reward or advances the
  * island clock. onAction must pass input through the normal state/save path. */
-export function createAdventuresPanel({ state: initialState, language = 'pl', onAction = () => ({ ok: false }), onMiniGame = () => {}, onRewardedAd = null, onClose = () => {}, onMainMission = null, mainMission = null } = {}) {
+export function createAdventuresPanel({ state: initialState, language = 'pl', onAction = () => ({ ok: false }), onMiniGame = () => {}, onRewardedAd = null, onClose = () => {}, onMainMission = null, mainMission = null,allowAdSimulation=false } = {}) {
   stylesheet();
   const lang = language === 'en' ? 'en' : 'pl', t = (pl, en) => pick(lang, pl, en);
   const labelBuilding = id => t(...(BUILDINGS[id] || [id, id]));
@@ -66,7 +66,8 @@ export function createAdventuresPanel({ state: initialState, language = 'pl', on
       const result = await onAction(action);
       if (!alive) return result;
       if (result?.needsRewardedAd || result?.extra?.needsRewardedAd) {
-        if (onRewardedAd) await onRewardedAd(action, result);
+        if(action.command==='puzzleTimeChoice'&&allowAdSimulation)say(t('Symulacja DEV jest gotowa. Zakończ ją przyciskiem na planszy.','DEV simulation is ready. Complete it with the board button.'));
+        else if (onRewardedAd) await onRewardedAd(action, result);
         else say(t('Reklama nie jest teraz dostępna. Most można ukończyć z podstawowym zestawem belek.', 'The ad is unavailable right now. You can finish the bridge with the original set of beams.'));
       } else if (result?.ok === false) {
         const code = result.code || result.error || result.message;
@@ -85,8 +86,9 @@ export function createAdventuresPanel({ state: initialState, language = 'pl', on
     const spec = ADVENTURE_CATALOG?.find(item => item.kind === adventure.kind) || {};
     const expandedTitle = adventure.kind === 'escapeStory' ? Adventures.getCurrentStoryRoom?.(adventure, lang)?.title : adventure.kind === 'islandPuzzle' ? Adventures.getIslandPuzzleView?.(adventure.data?.puzzle, lang)?.title : '';
     const root = node('div', { class: 'adv-active', 'data-adventure-kind': adventure.kind, 'data-adventure-stage': adventure.stage });
-    root.append(node('div', { class: 'adv-active-header' }, node('div', {}, node('span', { class: 'adv-label' }, t('Twoja przygoda', 'Your adventure')), node('h4', {}, expandedTitle || text(lang, spec.title) || t('Przygoda na wyspie', 'Island adventure'))), button(t('Wróć na wyspę', 'Return to island'), onClose, { class: 'adv-quiet', 'data-adventure-close': '' })));
+    root.append(node('div', { class: 'adv-active-header' }, node('div', {}, node('span', { class: 'adv-label' }, t('Twoja przygoda', 'Your adventure')), node('h4', {}, expandedTitle || text(lang, spec.title) || t('Przygoda na wyspie', 'Island adventure'))), button(t('Wróć na wyspę', 'Return to island'), async()=>{await dispatch({type:'adventureSuspend'});onClose();}, { class: 'adv-quiet', 'data-adventure-close': '' })));
     root.append(node('p', { class: 'adv-stage-help' }, description));
+    if(adventure.data.classicAttempt){if(!document.querySelector('[data-original-puzzle-css]'))document.head.append(node('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-2',import.meta.url).href,'data-original-puzzle-css':''}));root.append(node('div',{class:'adv-classic-time','data-classic-time':''}),node('div',{class:'adv-v32-time-offer','data-classic-time-offer':'',hidden:true}));}
     return root;
   }
   function progressLine(current, total) { const line = node('div', { class: 'adv-progress-track' }, node('span', { style: `width:${Math.max(0, Math.min(100, current / total * 100))}%` })); line.setAttribute('role', 'progressbar'); line.setAttribute('aria-valuenow', current); line.setAttribute('aria-valuemin', 0); line.setAttribute('aria-valuemax', total); return line; }
@@ -128,7 +130,7 @@ export function createAdventuresPanel({ state: initialState, language = 'pl', on
     const budget = Adventures.adventureRewardStatus?.(state), pool = node('div', { class: 'adv-hour-pool', 'data-adventure-reward-pool': '' });
     const practice = budget && (budget.dailyRemaining <= 0 || budget.chapterRemaining <= 0);
     if (budget) pool.append(node('strong', {}, practice ? t('Dalsza zabawa jest otwarta', 'Keep playing for fun') : t('Nagrody opowieści i zagadek', 'Story and puzzle rewards')),
-      node('span', {}, practice ? t('Wykorzystano obecną pulę nagród opowieści i zagadek. Możesz kontynuować je dla przyjemności. Znane przygody zachowują podane zasady nagród.', 'The story and puzzle reward pool is used up. You can continue them for fun. Familiar adventures keep their stated reward rules.') : t('Wypłata opowieści i zagadek uwzględnia pozostałą pulę dnia i rozdziału. Znane przygody zachowują podane zasady nagród. Wcześniejsze wyjście zachowuje postęp.', 'Story and puzzle payouts respect the remaining daily and chapter pools. Familiar adventures keep their stated reward rules. Leaving early preserves your progress.')));
+      node('span', {}, practice ? t('Wykorzystano obecną pulę nagród opowieści i zagadek. Możesz kontynuować je dla przyjemności. Znane przygody zachowują podane zasady nagród.', 'The story and puzzle reward pool is used up. You can continue them for fun. Familiar adventures keep their stated reward rules.') : t('Wypłata opowieści i zagadek uwzględnia pozostałą pulę dnia i rozdziału. Znane przygody zachowują podane zasady nagród. Wyjście kończy bieżącą próbę; wcześniejsze etapy i przedmioty pozostają.', 'Story and puzzle payouts respect the remaining daily and chapter pools. Familiar adventures keep their stated reward rules. Leaving ends this attempt and keeps earlier stages and items.')));
     content.replaceChildren(...(budget ? [pool] : []), ...(allChoices ? [catalogFilter] : []), grid);
     footer.replaceChildren(node('span', { class: 'adv-saved' }, t('Postęp przygód jest zapisywany razem z wyspą.', 'Adventure progress is saved with your island.')), button(allChoices ? t('Pokaż trzy propozycje', 'Show three suggestions') : t('Zobacz wszystkie przygody', 'See every adventure'), () => { allChoices = !allChoices; currentKey = ''; render(); }, { class: 'adv-quiet', 'data-adventure-all': '' }));
   }
@@ -296,10 +298,14 @@ export function createAdventuresPanel({ state: initialState, language = 'pl', on
     return root;
   }
   function expandedScene(adventure) {
-    const controller = createExpandedAdventureScene({ getState: () => state, getRun: active, language: lang, standardScene, send });
+    const controller = createExpandedAdventureScene({ getState: () => state, getRun: active, language: lang, standardScene, send,allowAdSimulation });
     sceneUpdate = controller.update; sceneDispose = controller.destroy; return controller.element;
   }
   const renderers = { cargoRain: cargoScene, treasureMap: mapScene, pirateCannon: cannonScene, bridge: bridgeScene, signals: signalsScene, letters: lettersScene, rhythm: rhythmScene, garden: gardenScene, cargoBalance: cargoBalanceScene, islandPuzzle: expandedScene, escapeStory: expandedScene };
+  function classicTimeUI(){const run=active(),a=run?.data?.classicAttempt;if(!a||run.stage==='complete')return;const hud=content.querySelector('[data-classic-time]'),overlay=content.querySelector('[data-classic-time-offer]');if(!hud||!overlay)return;const info=Adventures.classicAdventureStatus(state,run),failed=a.status==='lost'||a.status==='abandoned';const key=`${a.id}:${a.status}:${a.timeOffer?.status||''}:${a.timeOffer?.receipt||''}:${a.hintUsed}:${info.hour.failures}`;
+   if(hud.dataset.value!==key){hud.dataset.value=key;hud.replaceChildren(node('span',{'data-classic-seconds':''}));if(info.hour.failures>=3&&!failed&&!a.hintUsed)hud.append(button(t('Darmowa podpowiedź','Free hint'),()=>send('classicHint')));overlay.replaceChildren();if(failed||a.timeOffer){const dialog=node('section',{class:'original-puzzle-dialog',role:'dialog','aria-modal':'true','aria-label':t('Czas etapu','Stage time')});if(failed){dialog.append(node('h4',{},t('Próba zakończona','Attempt ended')),node('p',{},t('Wcześniejsze etapy, przedmioty i odebrane nagrody pozostają.','Earlier stages, items and claimed rewards are kept.')),button(t('Spróbuj ponownie','Try again'),()=>send('classicRetry')));if(info.hour.failures>=3)dialog.append(button(t('Łatwiejsza próba · więcej czasu, nagroda 50%','Easier attempt · more time, reward 50%'),()=>send('classicEasier')));}else if(a.timeOffer.status==='choice'){dialog.append(node('h4',{},t('Potrzebujesz więcej czasu?','Need more time?')),node('p',{},`${t('Dodaj','Add')} ${Math.ceil(Math.max(60,a.remaining*.5))} s`),node('p',{'data-classic-countdown':''}),button(`${10*a.highestTownhall} ${t('monet','coins')}`,()=>send('classicTimeChoice',{method:'coins'})));if(allowAdSimulation)dialog.append(button(t('Reklama — symulacja DEV','Ad — DEV simulation'),()=>send('classicTimeChoice',{method:'ad'})));dialog.append(button(t('Gram dalej','Keep playing'),()=>send('classicTimeChoice',{method:'decline'})));}else{dialog.append(node('p',{},t('Zegar etapu jest zatrzymany.','The stage clock is paused.')));if(allowAdSimulation)dialog.append(button(t('Zakończ symulację reklamy','Complete simulated ad'),()=>send('classicAdComplete',{receipt:a.timeOffer.receipt,completed:true})));dialog.append(button(t('Przerwij i graj dalej','Cancel and keep playing'),()=>send('classicAdComplete',{receipt:a.timeOffer.receipt,completed:false})));}overlay.append(dialog);}}
+   hud.querySelector('[data-classic-seconds]').textContent=`${t('Czas etapu','Stage time')}: ${Math.ceil(a.remaining)} s · ${t('Trudność','Difficulty')}: ${a.difficulty}${run.data.rewardScale===.5?' · 50% nagrody':''}`;overlay.hidden=!failed&&!a.timeOffer;const c=overlay.querySelector('[data-classic-countdown]');if(c)c.textContent=`${t('Powrót do gry','Resume in')}: ${Math.ceil(a.timeOffer?.choiceRemaining||0)} s`;
+  }
   function render() {
     if (!alive || !state?.adventures) return;
     const adventure = active(), key = adventure ? `${adventure.id}:${adventure.kind}:${adventure.stage}` : `choices:${allChoices}:${adventureChoices(state).map(choice => `${choice.id || choice.kind}:${choice.available}:${choice.progress?.current}:${choice.practice}:${choice.resume}`).join('|')}`;
@@ -313,9 +319,9 @@ export function createAdventuresPanel({ state: initialState, language = 'pl', on
         footer.append(node('span', { class: 'adv-saved' }, t('Twoja wyspa wciąż pracuje w tle.', 'Your island keeps working in the background.')), button(t('Wybierz inną przygodę', 'Choose another adventure'), () => dispatch({ type: 'adventureSuspend' }), { class: 'adv-quiet', 'data-adventure-suspend': '' }));
       } else { intro.hidden = false; choiceView(); }
     }
-    sceneUpdate();
+    sceneUpdate();classicTimeUI();
   }
-  function animate() { if (!alive) return; if (element.isConnected && active()) sceneUpdate(); frame = requestAnimationFrame(animate); }
+  function animate() { if (!alive) return; if (element.isConnected && active()){sceneUpdate();classicTimeUI();} frame = requestAnimationFrame(animate); }
   render(); frame = requestAnimationFrame(animate);
   return {
     element,
