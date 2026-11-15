@@ -144,7 +144,7 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
   const cleanup = [];
   let updateBoard = () => {}, drawBoard = () => {}, fitLayout = () => {}, lossAt = null, previousState = '';
   const timeOffer=element('div',{class:'minigame-v32-time-offer',hidden:true,'data-expedition-time-offer':''});root.append(timeOffer);
-  if(!document.querySelector('[data-original-puzzle-css]')){const link=element('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-2',import.meta.url).href,'data-original-puzzle-css':''});document.head.append(link);}
+  if(!document.querySelector('[data-original-puzzle-css]')){const link=element('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-3',import.meta.url).href,'data-original-puzzle-css':''});document.head.append(link);}
   const v32Help=element('div',{class:'minigame-v32-help','data-expedition-v32-help':''});root.append(v32Help);let helpKey='';
   function renderHelp(){const key=`${run.id}:${run.status}:${status.canUseHelp}:${status.hintUsed}:${status.hint}`;if(key===helpKey)return;helpKey=key;v32Help.replaceChildren();if(status.canUseHelp){if(run.status==='active'&&!status.hintUsed){const b=element('button',{type:'button'},language==='en'?'Free hint':'Darmowa podpowiedź');b.addEventListener('click',()=>onAction?.({type:'expeditionHint',runId:run.id}));v32Help.append(b);}if(run.status==='lost'){const b=element('button',{type:'button'},language==='en'?'Easier attempt · 50% reward':'Łatwiejsza próba · 50% nagrody');b.addEventListener('click',()=>onAction?.({type:'expeditionRestartEasier',runId:run.id}));v32Help.append(b);}}if(status.hint)v32Help.append(element('p',{role:'status'},status.hint));}
   let offerKey='';

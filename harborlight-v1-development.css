@@ -88,7 +88,7 @@ body[data-ruleset="32"] .resource-dock-cards:not(.leisure-dock-cards)>.resource-
 @media(max-width:600px){.v32-button,.v32-field input:not([type=checkbox]),.v32-field select,.v32-food-row>input,.v32-form>select{min-height:44px}.v32-recipe .v32-field input,.v32-recipe>.v32-button{height:44px;min-height:44px}.v32-order .v32-button{min-height:32px}}
 
 /* Original painted building atlas, shared by the map, dock and panel header. */
-.v32-building-art--painted{background-image:url('assets/harborlight-development-buildings-v32.png?v=frontend-v32-2');background-size:300% 300%;background-repeat:no-repeat;aspect-ratio:1}
+.v32-building-art--painted{background-image:url('assets/harborlight-development-buildings-v32.png?v=frontend-v32-3');background-size:300% 300%;background-repeat:no-repeat;aspect-ratio:1}
 .v32-building-summary>.v32-building-art--painted{width:128px;flex:0 0 128px}
 #island-dialog .v32-section h3,#island-dialog .v32-section h4{color:#1c4150}
 #island-dialog .v32-section input:not([type=checkbox]):not([type=radio]),#island-dialog .v32-section select{background:#fffdf7;color:#244351;border-color:#899b97}

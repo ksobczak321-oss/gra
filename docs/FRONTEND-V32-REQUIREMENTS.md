@@ -6,7 +6,7 @@ Doprecyzowanie GO: użytkownik potwierdził wdrożenie całego uzgodnionego zakr
 
 ## Granice
 
-- Tylko DEV w tej przestrzeni. Bez promocji PRE-PROD/PROD i bez operacji na istniejących kontach chmurowych.
+- Tylko DEV. Uzupełnienie GO z15listopada2026 dopuszcza Git, własne CI i publiczny roboczy podgląd przez dotychczasowe GitHub Pages. Bez promocji PRE-PROD/PROD i bez resetu istniejących kont chmurowych. Hasła lokalnegoDEV mają być takie same jak loginy; identyczny stan PRE-PROD potwierdzono auth-only, bez potrzeby zmiany.
 - Trzy lokalne konta testowe DEV zaczynają od czystego stanu; to nie reset Firebase/PRE-PROD. Dane logowania i postęp chmurowy zachowane.
 - Admin3 ma izolowane narzędzie przyspieszania czasu tylko w DEV.
 - Excel ABC: kolumna B to aktualna redakcja uwzględniająca decyzje, kolumna C pozostaje pusta. Dotychczas nie dostarczono wypełnionej kolumny C.

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "as_of": "2026-11-04",
-  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu. Jawne zlecenie promocji0.13.1.0napreprod ma odrębną kartę1082:PENDINGdo własnegoCI nowegoSHA i rzeczywistegoSUCCESSGCP.411kart/147ręcznychNOTRUN,bez resetu iPROD. GO DEV0.14.0.0/v31 z4listopada2026 zatwierdza paczkę po audycie ścieżek i plan50dni, karty1083–1120 i ręczneTC0148–0179. Implementacja i własna walidacja końcowego źródła pozostają w toku; PRE-PROD0.13.1.0/68e9bcd bez nowej promocji.449kart/179ręcznychNOTRUN; bez resetu,PROD i realnychoperatorów. Cel20w50dni/150godzin nie jest wynikiem testu.",
+  "as_of": "2026-11-15",
+  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu. Jawne zlecenie promocji0.13.1.0napreprod ma odrębną kartę1082:PENDINGdo własnegoCI nowegoSHA i rzeczywistegoSUCCESSGCP.411kart/147ręcznychNOTRUN,bez resetu iPROD. GO DEV0.14.0.0/v31 z4listopada2026 zatwierdza paczkę po audycie ścieżek i plan50dni, karty1083–1120 i ręczneTC0148–0179. Implementacja i własna walidacja końcowego źródła pozostają w toku; PRE-PROD0.13.1.0/68e9bcd bez nowej promocji.449kart/179ręcznychNOTRUN; bez resetu,PROD i realnychoperatorów. Cel20w50dni/150godzin nie jest wynikiem testu. Nowe GO z14–15listopada2026 obejmuje pełny uzgodniony pakietv32/0.15.0.0 naDEV,47odpowiedzi z formularzy i poprawki UI. Karty1122–1138 mapują regułyR01–R59 z audytu. Nowe implementacje są lokalnie zweryfikowane, ale nowe CI i publiczny podgląd muszą mieć własny dowód; bez promocji PRE-PROD/PROD i bez resetu kont. Odłożone niepełne przepisy/sieć skórzana i niezatwierdzone parametry balansu zachowują odrębne ograniczenia.",
   "environment_baseline": {
     "application_source_sha": "092e75226fbb14cab09826f313e11d10891966d8",
     "ci_run_id": 41221965032,
@@ -24269,9 +24269,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -24289,20 +24289,26 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-missions.js"
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24328,9 +24334,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -24348,7 +24354,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-missions-ui.js",
@@ -24356,13 +24363,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24388,9 +24400,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -24408,7 +24420,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-missions.js",
@@ -24416,13 +24429,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24448,9 +24466,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -24468,20 +24486,26 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-missions.js"
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24507,9 +24531,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -24527,7 +24551,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-missions.js",
@@ -24535,13 +24560,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24567,9 +24597,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -24587,7 +24617,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-missions.js",
@@ -24595,13 +24626,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24627,9 +24663,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -24647,7 +24683,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-missions.js",
@@ -24655,13 +24692,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24687,9 +24729,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -24707,20 +24749,26 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-logistics.js"
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24746,9 +24794,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -24766,20 +24814,26 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-logistics.js"
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24805,9 +24859,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -24825,20 +24879,26 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-logistics.js"
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24864,9 +24924,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -24884,7 +24944,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-logistics.js",
@@ -24892,13 +24953,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24924,9 +24990,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -24944,7 +25010,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-dev-sync.js",
@@ -24954,13 +25021,18 @@
           "tests/harborlight-dev-sync-v31.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -24986,9 +25058,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25006,20 +25078,26 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-play.js"
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25045,9 +25123,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25065,7 +25143,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-dev-sync.js",
@@ -25075,13 +25154,18 @@
           "tests/harborlight-dev-sync-v31.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25107,9 +25191,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25127,7 +25211,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-progression.js",
@@ -25135,13 +25220,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25167,9 +25257,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25187,20 +25277,26 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-progression.js"
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25226,9 +25322,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25246,20 +25342,26 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-play.js"
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25285,9 +25387,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25305,20 +25407,26 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-play.js"
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25344,9 +25452,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25364,20 +25472,26 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-play.js"
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25403,9 +25517,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25423,20 +25537,26 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-play.js"
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25462,9 +25582,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25482,7 +25602,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-theatre-ui.js",
@@ -25490,13 +25611,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25522,9 +25648,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25542,7 +25668,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-theatre.js",
@@ -25550,14 +25677,19 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
         "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
-        "keyboard_focus_regression": "1190frontendNodePASS +sixpackagedsuites(8/4/4/12/4/4); cachefrontend-v31-2; pendingownCI"
+        "keyboard_focus_regression": "1190frontendNodePASS +sixpackagedsuites(8/4/4/12/4/4); cachefrontend-v31-2; pendingownCI",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25584,9 +25716,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25604,7 +25736,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-theatre.js",
@@ -25612,13 +25745,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25644,9 +25782,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25664,7 +25802,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-activities.js",
@@ -25672,13 +25811,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25704,9 +25848,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25724,7 +25868,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-activities.js",
@@ -25732,13 +25877,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25765,9 +25915,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25785,7 +25935,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-adventures-ui.js",
@@ -25793,13 +25944,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25825,9 +25981,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25845,7 +26001,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-story-catalog.js",
@@ -25853,13 +26010,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25885,9 +26047,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25905,20 +26067,26 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-story-catalog.js"
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -25944,9 +26112,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -25964,7 +26132,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-island-puzzles.js",
@@ -25972,13 +26141,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26004,9 +26178,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -26024,7 +26198,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-island-puzzles.js",
@@ -26032,13 +26207,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26064,9 +26244,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -26084,7 +26264,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-missions.js",
@@ -26092,13 +26273,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26124,9 +26310,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -26144,7 +26330,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-adventures.js",
@@ -26152,13 +26339,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26184,9 +26376,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -26204,20 +26396,26 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-story-catalog.js"
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26244,8 +26442,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "targeted_tests_passed_full_50_days_in_progress",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -26263,7 +26461,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-missions.js",
@@ -26271,13 +26470,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26303,9 +26507,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -26323,7 +26527,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-archipelago.js",
@@ -26331,13 +26536,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26364,8 +26574,8 @@
       "status": {
         "implementation": "implemented",
         "dev": "targeted_tests_passed_full_50_days_in_progress",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -26383,7 +26593,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-v1-missions.js",
@@ -26392,13 +26603,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26424,9 +26640,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -26444,7 +26660,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-dev-sync.js",
@@ -26453,13 +26670,18 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod0.14.0.0 i testy kierunkowe są gotowe; pełny frontend1190/1190PASS, backend134+planszówka7 orazPython141PASS. 43zestawyChromiumPASS; własneCI/Pages/PRE-PROD pozostają PENDING.179ręcznych prób NOTRUN. Pełny eksperyment50dni i pomiar150godzin zabawy nie są zaliczone tym wpisem.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26485,9 +26707,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_pending_own_ci",
-        "ci": "failure_source_4db95a3",
-        "preprod": "not_deployed",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -26505,7 +26727,8 @@
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/DEV-0.14.0.0-VALIDATION.md",
           "docs/design/FLOW-AUDIT-20261104.md",
-          "docs/design/ACTIVE-PLAYER-50-DAYS.md"
+          "docs/design/ACTIVE-PLAYER-50-DAYS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           "harborlight-version.js",
@@ -26513,14 +26736,19 @@
         ],
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
-        "release_note": "Zakres v31 został zatwierdzony. Implementacja, integracja i własny odbiór pozostają PENDING. Nie jest to potwierdzenie pełnego CI, Pages, nowego SHA, tagu ani promocji GCP. PRE-PROD pozostaje 0.13.1.0/68e9bcd; ręczne próby nie zostały wykonane.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
         "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
-        "keyboard_focus_regression": "1190frontendNodePASS +sixpackagedsuites(8/4/4/12/4/4); cachefrontend-v31-2; pendingownCI"
+        "keyboard_focus_regression": "1190frontendNodePASS + sixpackagedsuites(8/4/4/12/4/4); cachefrontend-v31-2; ownCI41906515746all43browserPASS",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Nowe kwoty i limity są parametrami DEV wymagającymi osobnego porównania z kodem.",
@@ -26547,10 +26775,10 @@
         "reference": "chat:GO:preprod-0.14.0.0:clarification"
       },
       "status": {
-        "implementation": "in_progress",
-        "dev": "promotion_prepared",
-        "ci": "failure_source_4db95a3",
-        "preprod": "pending_deployment",
+        "implementation": "implemented",
+        "dev": "verified_own_ci_and_pages",
+        "ci": "passed_source_7e81a1a",
+        "preprod": "deployed_source_7e81a1a",
         "prod": "not_deployed",
         "decision": "accepted"
       },
@@ -26574,7 +26802,8 @@
           "docs/PREPROD-V31-PROMOTION.md",
           "docs/FRONTEND-V31-REQUIREMENTS.md",
           "docs/RELEASE-PROCESS.md",
-          "docs/ENVIRONMENT-STATUS.md"
+          "docs/ENVIRONMENT-STATUS.md",
+          "docs/PREPROD-V31-EVIDENCE.json"
         ],
         "code": [
           ".github/workflows/promote-urgent-preprod.yml",
@@ -26587,13 +26816,18 @@
           "tests/harborlight-promotion.test.mjs"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Użytkownik doprecyzował wyłącznie DEV → PRE-PROD. Końcowe źródło, własne CI, bridge, deploy, próba, wymagane kontrole, oba artefakty i tag 0.14.0.0 pozostają PENDING do własnego odczytu. Faktyczny odebrany PRE-PROD nadal 0.13.1.0/68e9bcd. Operacji PROD nie wykonano;179 ręcznych prób NOT RUN.",
+        "release_note": "Źródło7e81a1a ma własneCI41906515746SUCCESS17m12s, Pages41906515747SUCCESS50s oraz standardowyPRE-PROD41909268052/próba1SUCCESS przez bridge41909239074.43zestawyChromium i kontrole opublikowanej gry/API/Hostingu/izolacji kontPASS; oba artefakty opublikowano. Pakiet85plików/19682273bajty verify/extractPASS, Excel14PASS. Konta i postęp zachowane bez resetu;179ręcznychNOTRUN. Pełny50-dniowy eksperyment pozostaje częściowy i nie dowodzi150godzin ludzkiej zabawy.",
         "source_baseline_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-        "source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-        "ci_run_id": 41901040379,
-        "pages_run_id": 41901040067,
+        "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "ci_run_id": 41906515746,
+        "pages_run_id": 41906515747,
         "first_v31_ci_failure": "41896847613:FAILURE13m16s; free-placement PL/desktop; noPRE-PROD",
-        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD"
+        "second_v31_ci_failure": "41901040379:FAILURE12m33s; Theatre keyboard focus; noPRE-PROD",
+        "preprod_run_id": 41909268052,
+        "preprod_attempt": 1,
+        "preprod_bridge_run_id": 41909239074,
+        "dev_tag": "dev-0.14.0.0-20261104",
+        "preprod_tag": "preprod-0.14.0.0-20261104"
       },
       "notes": [
         "Korekta niejednoznacznego polecenia określa finalny zakres tej samej nieopublikowanej karty operacyjnej. Nie przepisuje poprzednich449 definicji ani ich statusów.",
@@ -26604,35 +26838,1168 @@
         "release-0-14-0-0",
         "preprod-authorized"
       ]
+    },
+    {
+      "id": "HL-CHG-1122",
+      "epic": "HL-EPIC-PEO",
+      "area": "Ludność i budowa",
+      "type": "Story",
+      "title": "Start 18 osób, pojemność36L i siedem powitalnych wizyt",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-14",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R01,R02,R45.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1122"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nowa wyspa reguł32 zaczyna z18 osobami; Ratusz i Dom mają36 miejsc na poziom, wzrost imigracji jest zwiększony o50%.",
+        "Powitalne osoby mają zapisany termin24 h i czekają na ukończone zwiększenie pojemności; opłaconej budowy nie blokuje późniejszy spadek populacji."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md"
+        ],
+        "code": [
+          "harborlight-v1-state.js",
+          "harborlight-v1-housing.js",
+          "harborlight-v1-economy.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-world-integration.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R01",
+        "R02",
+        "R45"
+      ]
+    },
+    {
+      "id": "HL-CHG-1123",
+      "epic": "HL-EPIC-ECO",
+      "area": "Budynki i receptury",
+      "type": "Story",
+      "title": "Siedem nowych budynków i osobne kierunki wytwarzania",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-14",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R03,R04,R05,R06,R07,R09.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1123"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Piekarnia, Mleczarnia, Rzeźnia, Rybak, Zakład skórzany, Akademia i Koszary odblokowują się zgodnie z progami Ratusza 1/2/4.",
+        "Produkcja obsługuje odrębne receptury i pracowników, w tym mięso/skóry, chleb/ciasto, pasteryzowane mleko, ubrania i szaty; ser wymaga Gospodarstwa 6 i odkrycia."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md"
+        ],
+        "code": [
+          "harborlight-v1-provisions.js",
+          "harborlight-v1-development.js",
+          "harborlight-v1-development-logistics.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-provisions.test.mjs",
+          "tests/harborlight-v32-logistics.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R09"
+      ]
+    },
+    {
+      "id": "HL-CHG-1124",
+      "epic": "HL-EPIC-PEO",
+      "area": "Sytość i dieta",
+      "type": "Story",
+      "title": "Rzeczywiste racje, różnorodność i ułamkowy głód mieszkańców",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-14",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R10,R11,R12,R13,R43.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1124"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Racja wynosi6 punktów sytości/osobę/h, bez łóżka jest podwojona; dzielenie niedoboru jest proporcjonalne i zachowuje ułamki.",
+        "Historia rzeczywistych posiłków24 h, ochrona nowych osób i progów diety, rezerwa oraz wyjątek jedynego jedzenia działają po reloadzie; stroje cywilne nie dublują wyposażenia specjalistów."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md"
+        ],
+        "code": [
+          "harborlight-v1-provisions.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-housing.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-provisions.test.mjs",
+          "tests/harborlight-v32-world-integration.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R43"
+      ]
+    },
+    {
+      "id": "HL-CHG-1125",
+      "epic": "HL-EPIC-ECO",
+      "area": "Świeżość produktów",
+      "type": "Story",
+      "title": "Mleko zachowuje skumulowany wiek centralny podczas transportu",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-14",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R08.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1125"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Surowe mleko kwaśnieje po72 h skumulowanego pobytu w magazynie centralnym; lokalny bufor i tranzyt zatrzymują naliczanie zamiast odmładzać partię.",
+        "Metadane partii przechodzą przez kursy, handel i darowizny; nadmiar kwaśnego mleka ponad pojemność przepada bez tworzenia zapasu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md"
+        ],
+        "code": [
+          "harborlight-v1-provisions.js",
+          "harborlight-v1-development-logistics.js",
+          "backend/dev-runtime.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-provisions.test.mjs",
+          "tests/harborlight-v32-logistics.test.mjs",
+          "tests/harborlight-v32-dev-runtime.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R08"
+      ]
+    },
+    {
+      "id": "HL-CHG-1126",
+      "epic": "HL-EPIC-ECO",
+      "area": "Obsada i transport",
+      "type": "Story",
+      "title": "Wiele produktów ma fizyczne składniki, bufory i kursy tragarzy",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-14",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R14,R15,R16,R17.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1126"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Załoga12L[1+0,5(N−1)] i limit12L na kierunek nie dublują osób; lokalny magazyn mieści200L/towar i300L łącznie.",
+        "Pełny wynik blokuje całą recepturę; kursy rezerwują cargo i miejsce odbioru. Trasy bezpośrednie wymagają Magazynu 5 i właściwego odkrycia, najwyżej połowy załogi na każdą trasę i co najmniej jednego tragarza ogólnego."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md",
+          "docs/v32/DEV-BALANCE.md"
+        ],
+        "code": [
+          "harborlight-v1-development-logistics.js",
+          "harborlight-v1-logistics.js",
+          "harborlight-v1-inventory.js",
+          "harborlight-v1-economy.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-logistics.test.mjs",
+          "tests/harborlight-v32-world-integration.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [
+        "Tabela pojemności centralnej i skale kosztów są parametrami DEV opisanymi w raporcie balansu, nie wynikiem pełnej ekonomii50 dni."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R14",
+        "R15",
+        "R16",
+        "R17"
+      ]
+    },
+    {
+      "id": "HL-CHG-1127",
+      "epic": "HL-EPIC-PEO",
+      "area": "Akademia i badania",
+      "type": "Story",
+      "title": "Kursy, rundy i równoległe badania zachowują osoby i opłaty",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-14",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R18,R19,R20,R21,R22,R23,R24,R55.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1127"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Akademia oddziela stanowiska od łóżek, prowadzi kurs1profesor/1adept, rundy i kilka opłaconych badań z obsadą.",
+        "Zmiana wyspy przenosi zapis kariery po UID; wymuszone odejście prowadzącego zachowuje opłatę i postęp. Przyspieszenie używa aktualnej obsady i odrębnych potwierdzeń."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md"
+        ],
+        "code": [
+          "harborlight-v1-education.js",
+          "harborlight-v1-development.js",
+          "harborlight-v1-residents.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-people.test.mjs",
+          "tests/harborlight-v32-world-integration.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [
+        "Sieć wzmacniana skórą i dalsze nieopisane wypieki pozostają odłożone zgodnie z decyzją 13; zwykła premia Rybaka nie zastępuje brakującej receptury.",
+        "Koszty nowych odkryć i tabela czasów są jawnie parametrami DEV do osobnego odbioru balansu."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R18",
+        "R19",
+        "R20",
+        "R21",
+        "R22",
+        "R23",
+        "R24",
+        "R55"
+      ]
+    },
+    {
+      "id": "HL-CHG-1128",
+      "epic": "HL-EPIC-PEO",
+      "area": "Koszary i wyprawy",
+      "type": "Story",
+      "title": "Wojsko ma wyłączną karierę, szkolenia, wyprawy i kolejkę powrotów",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-14",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R25,R26,R27,R28,R29,R30,R31,R32,R33.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1128"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Kariery cywilna i wojskowa są wyłączne; rekrut/instruktor/oficer mają osobne koszty, czas, łóżka i skutki przerwania.",
+        "Losowanie i czas wyprawy1…96 h są zapisane; powroty przy pełnych budynkach oraz odpoczynek24 h nie dublują populacji. Ratunkowi specjaliści sprawdzają rzeczywistą kadrę całego konta."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md"
+        ],
+        "code": [
+          "harborlight-v1-military.js",
+          "harborlight-v1-education.js",
+          "harborlight-v1-housing.js",
+          "harborlight-v1-archipelago.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-people.test.mjs",
+          "tests/harborlight-v32-world-integration.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [
+        "Skale łupów są parametrami DEV; test pojedynczego zapisanego losowania nie stanowi pełnej analizy ekonomii."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R25",
+        "R26",
+        "R27",
+        "R28",
+        "R29",
+        "R30",
+        "R31",
+        "R32",
+        "R33"
+      ]
+    },
+    {
+      "id": "HL-CHG-1129",
+      "epic": "HL-EPIC-SOC",
+      "area": "Królestwo i sojusze",
+      "type": "Story",
+      "title": "Oferty, zaproszenia i wspólne zadania rozlicza lokalne API",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-14",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R34,R35,R36,R37.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1129"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Harmonogram ofert korzysta z aktywnego dnia Warszawy, progów budynków i zapisanych terminów, bez dopisywania całych dni nieobecności.",
+        "Roster sojuszu i wpłaty są zamrożone; jedna transakcja lokalnego DEV wypłaca pełne ustalone nagrody/kary i chroni przed ponowieniem."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md"
+        ],
+        "code": [
+          "harborlight-v1-kingdom.js",
+          "backend/dev-runtime.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-kingdom.test.mjs",
+          "tests/harborlight-v32-dev-runtime.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [
+        "Test lokalnego API nie oznacza aktywacji usług w PRE-PROD ani w statycznym podglądzie GitHub Pages."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R34",
+        "R35",
+        "R36",
+        "R37"
+      ]
+    },
+    {
+      "id": "HL-CHG-1130",
+      "epic": "HL-EPIC-SOC",
+      "area": "Finanse Królestwa",
+      "type": "Story",
+      "title": "Depozyty, pożyczki i windykacja zachowują zobowiązania",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-14",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R38,R39,R40,R41,R42,R56.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1130"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Finansowanie, kredyt, zwrot depozytu i windykacja używają zapisanych terminów, wartości dóbr, potwierdzeń i chronionej rezerwy.",
+        "Umorzenie korzysta z pięciu zapisanych losowań10%; dodatnie premie nie usuwają finansowego offsetu, a Latarnia odracza windykację."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md",
+          "docs/v32/DEV-BALANCE.md"
+        ],
+        "code": [
+          "harborlight-v1-kingdom.js",
+          "backend/dev-runtime.mjs",
+          "harborlight-v1-residents.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-kingdom.test.mjs",
+          "tests/harborlight-v32-dev-runtime.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [
+        "Decyzja30 nie zatwierdza liczb progu ponownego daru:10%poprzedniego kapitału+24 h pozostaje propozycją DEV do analizy i akceptacji przed PRE-PROD.",
+        "Gospodarka autosave ujawnia saldo netto; pochodzenie monet jest śledzone konserwatywnie, nie jako pełny autorytatywny serwerowy ledger wszystkich wydatków."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R38",
+        "R39",
+        "R40",
+        "R41",
+        "R42",
+        "R56"
+      ]
+    },
+    {
+      "id": "HL-CHG-1131",
+      "epic": "HL-EPIC-ECO",
+      "area": "Ceny i wyżywienie budowy",
+      "type": "Story",
+      "title": "Koszty budowy używają fizycznego miksu ponad rezerwę sytości",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-14",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R44,R59.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1131"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Każdą dawną jednostkę kosztu żywności zastępuje6 punktów sytości, pokrywanych edytowalnym fizycznym miksem towarów ponad chronioną rezerwę.",
+        "Zakup/sprzedaż zaokrągla całą transakcję monetarną, wymiana wartości pobiera10%prowizji, a materiały i rezerwacje nie są wydawane podwójnie."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md"
+        ],
+        "code": [
+          "harborlight-v1-provisions.js",
+          "harborlight-v1-economy.js",
+          "harborlight-v1-development-logistics.js",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-logistics.test.mjs",
+          "tests/harborlight-v32-world-integration.test.mjs",
+          "tests/harborlight-v32-dev-runtime.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R44",
+        "R59"
+      ]
+    },
+    {
+      "id": "HL-CHG-1132",
+      "epic": "HL-EPIC-ARC",
+      "area": "Archipelag i dary",
+      "type": "Story",
+      "title": "Wspólny portfel, pasażerowie i dary zachowują pochodzenie",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-14",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R47,R48,R49.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1132"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Monety są wspólne dla archipelagu, a przejazd zachowujeUID i karierę osoby; specjaliści mają pierwszeństwo przyjęcia, nadmiar wraca lub czeka na wolne miejsce.",
+        "Dar dla sojusznika od Ratusza 6 zajmuje rzeczywisty statek i limit1/24 h; automatyczny zwrot nadmiaru nie odnawia limitu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md"
+        ],
+        "code": [
+          "harborlight-v1-archipelago.js",
+          "backend/dev-runtime.mjs",
+          "harborlight-v1-development.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-world-integration.test.mjs",
+          "tests/harborlight-v32-dev-runtime.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [
+        "Czas rejsu daru10 min jest odziedziczonym parametrem DEV, nie nowo zatwierdzonym czasem PRE-PROD."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R47",
+        "R48",
+        "R49"
+      ]
+    },
+    {
+      "id": "HL-CHG-1133",
+      "epic": "HL-EPIC-PEO",
+      "area": "Ratunek cywilów",
+      "type": "Story",
+      "title": "Darmowy ratunek przyjmuje pełną grupę na wybranej wyspie",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-14",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R46.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1133"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Grupa2×poziomRatusza startowego zachowuje liczbę uratowanych; może czekać i być przyjmowana na wybranej wyspie bez obcinania nagrody.",
+        "Darmowe podejście nie wymaga reklamy; przyjęte osoby liczą się do rzeczywistego lokalnego zadania wyspy docelowej, nie źródłowej."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md"
+        ],
+        "code": [
+          "harborlight-v1-adventures.js",
+          "harborlight-v1-original-puzzles.js",
+          "harborlight-v1-archipelago.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-original-puzzles.test.mjs",
+          "tests/harborlight-v32-missions.test.mjs",
+          "tests/harborlight-v32-world-integration.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R46"
+      ]
+    },
+    {
+      "id": "HL-CHG-1134",
+      "epic": "HL-EPIC-UI",
+      "area": "Teatr i dekoracje",
+      "type": "Story",
+      "title": "Planowanie spektaklu i ogród działają przy zachowanej produkcji",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-14",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R50,R51.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1134"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Plan45 min i spektakl10 min zamrażają widownię i koszt2 monety/widz, dając10 punktów na6 h bez przerywania produkcji i nauki; tragarz kończy rozpoczęty kurs.",
+        "Dekoracje zachowują20 miejsc,10typów, swobodne pozycje i dalsze poziomy; reguły32 używają reklamy co3 poziomy."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md"
+        ],
+        "code": [
+          "harborlight-v1-theatre.js",
+          "harborlight-v1-development-logistics.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-kingdom.test.mjs",
+          "tests/harborlight-v32-logistics.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [
+        "Przelicznik0,05 punktu/poziom dekoracji oraz zwrot za anulowanie przed startem są propozycjami DEV do osobnego odbioru."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R50",
+        "R51"
+      ]
+    },
+    {
+      "id": "HL-CHG-1135",
+      "epic": "HL-EPIC-MIN",
+      "area": "Minigry i przygody",
+      "type": "Story",
+      "title": "Autorskie plansze, licznik odmian i przedłużenia czasu",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-14",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R52,R53,R54.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1135"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Nowe autorskie zagadki jednej linii i kierunkowych tras mają własne plansze i oprawę; ukończone etapy i wcześniejsze nagrody przygód pozostają zachowane.",
+        "Licznik trudności rośnie od wygranych osobno dla odmiany, trzy porażki dają pomoc; ostrzeżenia30 s/5 s i przedłużenia zatrzymują próbę, a wyjście przegrywa tylko bieżące podejście."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md"
+        ],
+        "code": [
+          "harborlight-v1-original-puzzles.js",
+          "harborlight-v1-expedition-hour.js",
+          "harborlight-v1-activities.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-original-puzzles.test.mjs",
+          "tests/harborlight-original-puzzles-v32-smoke.py",
+          "tests/harborlight-minigame-actual-layout-v32-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [
+        "Reklamy/płatności są jawnie symulowane tylko przy zdolności DEV; brak uruchomienia realnego operatora. Testy nie dowodzą150godzin różnorodnej zabawy."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R52",
+        "R53",
+        "R54"
+      ]
+    },
+    {
+      "id": "HL-CHG-1136",
+      "epic": "HL-EPIC-TUT",
+      "area": "Polskie teksty i nauka",
+      "type": "Story",
+      "title": "Tutorial 48 i samouczek 25 objaśniają nowe produkty i budynki",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-14",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R57.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1136"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Polskie opisy i teksty warunkowe obejmują nowe budynki, dietę, ser i szaty; tutorial i praktyczny samouczek zachowują stabilne identyfikatory migracji.",
+        "Samouczek25 kończy się podstawowymi drewnem, kamieniem, zbożem, mąką i deskami bez tworzenia dawnej żywności; arkusz redakcyjny ma dokładnie3 kolumny i puste C."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md"
+        ],
+        "code": [
+          "harborlight-v1-approved-copy.js",
+          "harborlight-v1-development-copy.js",
+          "harborlight-v1-progression.js",
+          "harborlight-v1-tutorial-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-progression.test.mjs",
+          "tests/harborlight-v32-missions.test.mjs",
+          "tests/harborlight-v32-ui-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [
+        "Pełny odbiór redakcyjny należy do użytkownika; puste C akceptuje tekst B, lecz nie autoryzuje promocji PRE-PROD."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R57"
+      ]
+    },
+    {
+      "id": "HL-CHG-1137",
+      "epic": "HL-EPIC-ACC",
+      "area": "Izolowany DEV i zapis",
+      "type": "Ops",
+      "title": "Trzy lokalne konta zachowują postęp po restarcie i mają hasło = login",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-15",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: R58.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1137"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "DEV używa odrębnego projektu lokalnego, trwałego pliku, izolacji kont i wersjonowaniaCAS bez wyspy lub kolejki zapisu w localStorage/sessionStorage.",
+        "Hasła lokalne są identyczne z loginami admin1/admin2/admin3, a poprzednie wspólne i cudze hasła są odrzucane; kompresja i sumy kontrolne zachowują dane przy limicie dokumentu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md",
+          "docs/v32/DEV-RUNTIME.md"
+        ],
+        "code": [
+          "backend/dev-runtime.mjs",
+          "harborlight-dev-cloud.js",
+          "harborlight-v1-save-packing.js",
+          "scripts/serve-dev.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-dev-runtime.test.mjs",
+          "tests/harborlight-v32-save-packing.test.mjs",
+          "tests/harborlight-v32-live-cas-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [
+        "Potwierdzone logowanie PRE-PROD 3/3 już przyjmowało hasło = login; nie zmieniano kont, sesji ani postępu.",
+        "DEV jest zgodny z kodem bazowym7e81a1a, lecz lokalny runtime nie jest kopią infrastrukturyFirebase/CloudRun1:1.",
+        "Nowe hasła po zmianie mają dowód źródła a5ee972; finalne SHA/CI/Pages zapisze odrębny odbiór."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "R58"
+      ]
+    },
+    {
+      "id": "HL-CHG-1138",
+      "epic": "HL-EPIC-UI",
+      "area": "Wyrównanie i ilustracje",
+      "type": "Story",
+      "title": "Formularze i grafiki budynków są spójne na komputerze i telefonie",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-15",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik polecił wdrożyć cały uzgodniony pakiet najpierw naDEV, użyć bieżących tekstów i oznaczyć nowe zmiany wyłącznie DEV. Zakres tej karty: UI:Osoby-Przydziel,lewy-górny-róg.",
+        "reference": "chat:GO:dev-v32:HL-CHG-1138"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Pola „Osoby” i przyciski „Przydziel” mają wspólne osie i rozmiary; przegląd obejmuje formularze, magazyn, Teatr, Królestwo i minigry na szerokościach 1440/390.",
+        "Nowe własne ilustracje siedmiu budynków zastępują słabe miniatury, kontrast i wielkości przycisków poprawiono; okna czasu minigier mieszczą się na telefonie."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md",
+          "docs/v32/VISUAL-REVIEW.md"
+        ],
+        "code": [
+          "harborlight-v1-development-ui.js",
+          "harborlight-v1-play.css",
+          "assets/harborlight-development-buildings-v32.png"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-ui-smoke.py",
+          "tests/harborlight-minigame-layout-v32-smoke.py",
+          "tests/harborlight-minigame-actual-layout-v32-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+        "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
+      },
+      "notes": [
+        "Automatyczny przegląd geometrii nie zastępuje ręcznego odbioru wyglądu przez użytkownika."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "UI:Osoby-Przydziel",
+        "lewy-górny-róg"
+      ]
     }
   ],
   "current_environment": {
-    "as_of": "2026-11-04",
-    "dev_application_version": "0.14.0.0",
-    "dev_status": "keyboard_fix_locally_validated_pending_new_source_ci",
-    "dev_ci": "failure",
-    "preprod_application_version": "0.13.1.0",
-    "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-    "preprod_ci_run_id": 41671140612,
-    "preprod_deployment_run_id": 41673824262,
+    "as_of": "2026-11-15",
+    "preprod_application_version": "0.14.0.0",
+    "preprod_source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+    "preprod_ci_run_id": 41906515746,
+    "preprod_deployment_run_id": 41909268052,
     "preprod_deployment_attempt": 1,
     "preprod_status": "verified_deployment_and_artifacts",
-    "prod_status": "not_authorized_latest_request_preprod_only",
+    "prod_status": "not_authorized",
     "full_test_account_reset": "not_performed",
-    "note": "PRE-PROD0.14autoryzowany. PierwszyCI d2f9ab3/41896847613FAILURE13m16s, PagesSUCCESS25s. FixtureCSSgotowy4/4+4/4; aplikacja bez zmian. NowySHA/CI/PRE-PROD wymagają własnego wyniku.450kart/179ręcznychNOTRUN, bez resetu i PROD.",
+    "note": "DEV0.15.0.0/v32 obejmuje zatwierdzone 47 odpowiedzi i bieżące poprawki wyłącznie na DEV. Kod bazuje na odebranym PRE-PROD0.14.0.0/7e81a1a; usług nie sklonowano1:1: lokalny runtime i osobne pliki zapisu zastępują Firebase/Cloud Run. Publiczny statyczny podgląd GitHub Pages jest przygotowywany; CI/Pages końcowego źródła pozostają PENDING. Nie jest dowodem trwałych kont ani wieloosobowego API w publicznym podglądzie. Nowych kart nie wdrożono na PRE-PROD/PROD; dotychczasowy kod PRE-PROD pozostaje7e81a1a. Hasło=login admin1/admin2/admin3: lokalnie wprowadzone, PRE-PROD auth-only3/3PASS — już było zgodne, bez mutacji kont/postępu. Dotychczasowe179ręczne wyniki pozostająNOT_RUN; odbiór użytkownika nie został wykonany.",
     "previous_accepted_dev": {
-      "dev_application_version": "0.13.0.0",
-      "dev_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
-      "dev_ci_run_id": 41657032913,
-      "dev_pages_run_id": 41657032922,
-      "dev_tag": "dev-0.13.0.0-20261103"
+      "as_of": "2026-11-04",
+      "dev_application_version": "0.14.0.0",
+      "dev_status": "verified_own_ci_and_pages",
+      "dev_ci": "success",
+      "dev_source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+      "dev_ci_run_id": 41906515746,
+      "dev_pages_run_id": 41906515747,
+      "dev_tag": "dev-0.14.0.0-20261104",
+      "dev_cache": "frontend-v31-2",
+      "dev_pages_conclusion": "success",
+      "dev_pages_duration": "50s",
+      "frontend_archive_sha256": "b43a736f4c30e8db9d2704b50219e0e6c1cf06c32660640ef66f1861cc412196",
+      "frontend_manifest_sha256": "2dea4d8563fadaf38dcd8103dc9ee66088e69e34ba8cc74b544aaea4bf3bc54e",
+      "frontend_file_count": 85,
+      "frontend_total_bytes": 19682273,
+      "dev_ci_duration": "17m12s",
+      "dev_tag_remote_object": "df353ff2a4ab68a7f4a671cb6261f81d4d805b1c",
+      "previous_accepted_dev": {
+        "dev_application_version": "0.13.0.0",
+        "dev_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+        "dev_ci_run_id": 41657032913,
+        "dev_pages_run_id": 41657032922,
+        "dev_tag": "dev-0.13.0.0-20261103"
+      }
     },
-    "dev_source_sha": "4db95a38a507df887e255331271a007947bc69c0",
-    "dev_ci_run_id": 41901040379,
-    "dev_pages_run_id": 41901040067,
-    "dev_tag": null,
-    "preprod_promotion_status": "blocked_by_second_source_ci_failure",
-    "preprod_promotion_target": "0.14.0.0",
+    "preprod_promotion_status": "not_authorized_for_v32",
+    "preprod_promotion_target": null,
     "previous_accepted_preprod": {
       "preprod_application_version": "0.12.0.0",
       "preprod_source_sha": "d9e2940b9a00755d979c159ec0fb62e290dd7ff1",
@@ -26641,23 +28008,23 @@
       "preprod_deployment_attempt": 1,
       "preprod_status": "previous_release_verified"
     },
-    "preprod_pages_run_id": 41671140578,
-    "preprod_bridge_run_id": 41673757060,
-    "preprod_tag": "preprod-0.13.1.0-20261103",
-    "preprod_tag_remote_object": "52888386a2233fc326e4fa6e0169b1054c0316d4",
+    "preprod_pages_run_id": 41906515747,
+    "preprod_bridge_run_id": 41909239074,
+    "preprod_tag": "preprod-0.14.0.0-20261104",
+    "preprod_tag_remote_object": "1b32f383eed957b03120c1616cbb50435e19c19f",
     "preprod_artifacts": [
       {
         "kind": "frontend",
-        "name": "harborlight-dev-frontend-41673824262-1",
-        "id": 13248538829,
-        "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+        "name": "harborlight-dev-frontend-41909268052-1",
+        "id": 13362655258,
+        "zip_sha256": "703190f7cbdcb5c958e43ca13b9eb0ba0329f62916fb3aab8b19fb068d66e18b",
         "attempt": 1
       },
       {
         "kind": "release",
-        "name": "harborlight-dev-release-41673824262-1",
-        "id": 13248913826,
-        "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+        "name": "harborlight-dev-release-41909268052-1",
+        "id": 13361328096,
+        "zip_sha256": "2a13c37f0180e310ba11c545737a48a19ee16bd057ac823836a74d8c359fd01e",
         "attempt": 1
       }
     ],
@@ -26692,6 +28059,45 @@
       "pages_run_id": 41901040067,
       "pages_conclusion": "success"
     },
-    "dev_cache": "frontend-v31-2"
+    "previous_accepted_preprod_v30": {
+      "preprod_application_version": "0.13.1.0",
+      "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+      "preprod_ci_run_id": 41671140612,
+      "preprod_deployment_run_id": 41673824262,
+      "preprod_deployment_attempt": 1,
+      "preprod_status": "verified_deployment_and_artifacts",
+      "preprod_pages_run_id": 41671140578,
+      "preprod_bridge_run_id": 41673757060,
+      "preprod_tag": "preprod-0.13.1.0-20261103",
+      "preprod_tag_remote_object": "52888386a2233fc326e4fa6e0169b1054c0316d4",
+      "preprod_artifacts": [
+        {
+          "kind": "frontend",
+          "name": "harborlight-dev-frontend-41673824262-1",
+          "id": 13248538829,
+          "zip_sha256": "35c21f4ac8230927de659d341820f6afd7707f916e343aa19e20871f22057229",
+          "attempt": 1
+        },
+        {
+          "kind": "release",
+          "name": "harborlight-dev-release-41673824262-1",
+          "id": 13248913826,
+          "zip_sha256": "b23aaeb6b7f4f6eaaa2a501634b6ac593616a9d28fff66a36b175cbbc9f82f7c",
+          "attempt": 1
+        }
+      ]
+    },
+    "preprod_bridge_duration": "13s",
+    "preprod_deployment_duration": "2m12s",
+    "dev_application_version": "0.15.0.0",
+    "dev_status": "implemented_and_verified_local_dev_only",
+    "dev_ci": "pending_for_final_source",
+    "dev_source_sha": null,
+    "dev_implementation_source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+    "dev_ci_run_id": null,
+    "dev_pages_run_id": null,
+    "dev_pages_conclusion": "pending",
+    "dev_tag": null,
+    "dev_cache": "frontend-v32-3"
   }
 }

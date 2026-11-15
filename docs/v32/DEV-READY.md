@@ -2,11 +2,17 @@
 
 Gałąź: `dev/0.15.0.0`. Punkt wyjścia: odebrane PRE-PROD `7e81a1a436770f57fd8abf390b6af8022e3300f6` / 0.14.0.0. Użytkownik potwierdził wdrożenie całego uzgodnionego zakresu z obecną redakcją; teksty będą poprawiane później na DEV.
 
+## Publiczny link roboczy
+
+[Otwórz podgląd DEV 0.15.0.0](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-3). To ten sam hosting GitHub Pages, który był używany w poprzedniej rozmowie. Bieżące własne wykonanie Pages i odczyt hostowanych bajtów muszą potwierdzić nową wersję; dawny link z parametrem v31 nie jest dowodem wdrożenia v32.
+
+Podgląd jest bez konta, a postęp istnieje tylko w pamięci otwartej karty. Odświeżenie zaczyna nowy podgląd. Pełne trzy konta z zapisem, handel między kontami i pozostałe współdzielone usługi działają na lokalnym serwerze DEV opisanym poniżej. Nie podłączono go publicznie do Pages ani do Firebase PRE-PROD.
+
 ## Uruchomienie
 
 W katalogu projektu: `node scripts/serve-dev.mjs` (Node24). Adres: `http://localhost:3000/harborlight-auth.html`. Lokalne pary login/hasło: `admin1/admin1`, `admin2/admin2`, `admin3/admin3`. Zapis jest trwały w `/workspace/work/dev-runtime/state-v32.json`; kolejne uruchomienie nie tworzy kont od nowa. Zmiana portu przez `PORT`.
 
-DEV to lokalne środowisko robocze, projekt `harborlight-local-dev`. Nie wykonano publikacji, promocji PRE-PROD/PROD, resetu Firebase ani zmiany chmurowych loginów i haseł. Konta lokalne są osobnymi kontami testowymi. Admin3 ma izolowane przyspieszanie własnej symulacji. Wspólne zobowiązania Królestwa i dary korzystają z zegara serwera.
+DEV to lokalne środowisko robocze, projekt `harborlight-local-dev`. Publikacja roboczego podglądu Pages jest dopuszczona poleceniem z15listopada2026. Nie wykonano promocji PRE-PROD/PROD, resetu Firebase ani zmiany chmurowych loginów i haseł. PRE-PROD już przyjmuje pary admin1/admin1, admin2/admin2, admin3/admin3; potwierdzono3/3 przez samo Authentication, bez otwierania gry. Konta lokalne są osobnymi kontami testowymi. Admin3 ma izolowane przyspieszanie własnej symulacji. Wspólne zobowiązania Królestwa i dary korzystają z zegara serwera.
 
 ## Zakres
 
@@ -25,3 +31,7 @@ Testy jednostkowe i integracyjne: `node --test --test-concurrency=4 --test-skip-
 Scenariusze zasilane zasobami testowymi i przyspieszony zegar nie są50 dniami ręcznego odbioru ani150 godzinami gry. Szczegóły balansu i jego granice: [DEV-BALANCE.md](DEV-BALANCE.md). Współczynniki oznaczone jako propozycje DEV, w tym progi odpowiedzi30, wymagają oceny przed PRE-PROD. Reguły umorzenia i pełnych nagród sojuszu zachowano; analiza pokazuje ich wpływ na podaż monet.
 
 Excel do dalszej redakcji: `/workspace/output/HARBORLIGHT_teksty_DEV_ABC.xlsx`. Wyłącznie A: opis/kontekst, B: obecny tekst, C: poprawka użytkownika. C jest całkowicie pusta; puste C oznacza przyjęcie B.
+
+## Weryfikacja dostępu 15 listopada 2026
+
+Zmiana lokalnych haseł:46/46 ukierunkowanych testów runtime/cloud PASS oraz faktyczne logowanie wszystkich trzech kont w Chromium390 PASS, bez błędów JavaScript. Poprzednie wspólne hasło i hasła pozostałych kont są odrzucane. Nie resetowano wysp. Odczyt repozytorium i żywego PRE-PROD potwierdza tę samą bazę7e81a1a. Kod korzysta z dotychczasowych modułów i wzorców stanu, ale lokalny runtime zastępuje Firebase i nie jest klonem infrastruktury Google Cloud1:1.

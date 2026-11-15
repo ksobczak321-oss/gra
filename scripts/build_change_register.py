@@ -136,7 +136,7 @@ def index(data, changes):
              '`--check` sprawdza zgodność bez zapisów. Nie edytuj wygenerowanych kart zamiast źródła JSON.', '',
              '## Zakres i granice', '', data['scope'], '', data['privacy_note'], '',
              '**To są wpisy repozytorium, nie opublikowane GitHub Issues.** ' +
-             'Dostęp do API GitHub nie jest uwierzytelniony w tej sesji. Każdy rekord ma `issue_url: null` i ' +
+             'Publikacja tych kart jako natywnych GitHub Issues nie została wykonana. Każdy rekord ma `issue_url: null` i ' +
              '`published_to_github_issues: false`; istniejące numery Issues są wyłącznie historycznymi powiązaniami. ' +
              'Nie utworzono fikcyjnych numerów ani nie zamknięto zdalnych zgłoszeń.', '',
              '## Historyczny punkt odniesienia ewidencji', '',

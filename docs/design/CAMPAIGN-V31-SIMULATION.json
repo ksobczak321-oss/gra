@@ -1,10 +1,10 @@
 {
   "version": "0.14.0.0",
   "kind": "actual-command-driven-partial-campaign-observation",
-  "recordedAt": "2026-11-04T19:59:41.394651+00:00",
+  "recordedAt": "2026-11-04T20:46:52.012822+00:00",
   "plannedHorizonDays": 50,
-  "observedThroughDay": 26,
-  "dailyCheckpointsObserved": 26,
+  "observedThroughDay": 35,
+  "dailyCheckpointsObserved": 35,
   "targetLevel": 20,
   "townHall20ObservedByDay": null,
   "chapter20CompletionObservedByDay": null,
@@ -12,6 +12,9 @@
   "full50DayRunCompleted": false,
   "currentFullCommandLedgerAvailable": false,
   "currentObservedActiveHours": null,
+  "currentFailedCommandCount": null,
+  "processStoppedAfterTargets": false,
+  "observationEndReason": "process-still-running",
   "dailyInputBudgetHours": 3,
   "notes": [
     "Partial observation of a running actual-command model plan; not a completed 50-day result.",
@@ -229,9 +232,81 @@
       "coinsFloor": 56707,
       "missionChapter": 17,
       "missionIndex": 1
+    },
+    {
+      "elapsedDays": 27,
+      "townHallLevel": 17,
+      "population": 408,
+      "coinsFloor": 57257,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 28,
+      "townHallLevel": 17,
+      "population": 408,
+      "coinsFloor": 68405,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 29,
+      "townHallLevel": 17,
+      "population": 408,
+      "coinsFloor": 79540,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 30,
+      "townHallLevel": 18,
+      "population": 416,
+      "coinsFloor": 82174,
+      "missionChapter": 18,
+      "missionIndex": 1
+    },
+    {
+      "elapsedDays": 31,
+      "townHallLevel": 18,
+      "population": 432,
+      "coinsFloor": 82434,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 32,
+      "townHallLevel": 19,
+      "population": 439,
+      "coinsFloor": 85234,
+      "missionChapter": 19,
+      "missionIndex": 1
+    },
+    {
+      "elapsedDays": 33,
+      "townHallLevel": 19,
+      "population": 456,
+      "coinsFloor": 94492,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 34,
+      "townHallLevel": 19,
+      "population": 456,
+      "coinsFloor": 97931,
+      "missionChapter": null,
+      "missionIndex": null
+    },
+    {
+      "elapsedDays": 35,
+      "townHallLevel": 19,
+      "population": 456,
+      "coinsFloor": 110383,
+      "missionChapter": null,
+      "missionIndex": null
     }
   ],
-  "rawProgressTrace": "day1 TH4 pop95 coins1097 mission3/8\nday2 TH5 pop120 coins3043 mission-/-\nday3 TH6 pop144 coins2254 mission-/-\nStarting inspector on 127.0.0.1:9229 failed: operation not permitted\nday4 TH7 pop168 coins4181 mission-/-\nday5 TH8 pop184 coins5224 mission8/1\nday6 TH8 pop192 coins7448 mission-/-\nday7 TH9 pop216 coins9413 mission9/8\nday8 TH9 pop216 coins12314 mission-/-\nday9 TH10 pop240 coins10621 mission10/8\nday10 TH11 pop254 coins10974 mission11/1\nday11 TH11 pop264 coins16659 mission-/-\nday12 TH11 pop264 coins18875 mission-/-\nday13 TH12 pop281 coins20593 mission12/1\nday14 TH12 pop288 coins25260 mission-/-\nday15 TH13 pop295 coins21643 mission13/1\nday16 TH13 pop312 coins21340 mission13/8\nday17 TH13 pop312 coins30641 mission-/-\nday18 TH14 pop322 coins32665 mission14/1\nday19 TH14 pop336 coins36845 mission14/8\nday20 TH15 pop336 coins33369 mission15/1\nday21 TH15 pop360 coins40643 mission-/-\nday22 TH15 pop360 coins43471 mission-/-\nday23 TH15 pop360 coins53296 mission-/-\nday24 TH16 pop371 coins55638 mission16/1\nday25 TH16 pop384 coins54496 mission16/8\nday26 TH17 pop408 coins56707 mission17/1\n",
+  "rawProgressTrace": "day1 TH4 pop95 coins1097 mission3/8\nday2 TH5 pop120 coins3043 mission-/-\nday3 TH6 pop144 coins2254 mission-/-\nStarting inspector on 127.0.0.1:9229 failed: operation not permitted\nday4 TH7 pop168 coins4181 mission-/-\nday5 TH8 pop184 coins5224 mission8/1\nday6 TH8 pop192 coins7448 mission-/-\nday7 TH9 pop216 coins9413 mission9/8\nday8 TH9 pop216 coins12314 mission-/-\nday9 TH10 pop240 coins10621 mission10/8\nday10 TH11 pop254 coins10974 mission11/1\nday11 TH11 pop264 coins16659 mission-/-\nday12 TH11 pop264 coins18875 mission-/-\nday13 TH12 pop281 coins20593 mission12/1\nday14 TH12 pop288 coins25260 mission-/-\nday15 TH13 pop295 coins21643 mission13/1\nday16 TH13 pop312 coins21340 mission13/8\nday17 TH13 pop312 coins30641 mission-/-\nday18 TH14 pop322 coins32665 mission14/1\nday19 TH14 pop336 coins36845 mission14/8\nday20 TH15 pop336 coins33369 mission15/1\nday21 TH15 pop360 coins40643 mission-/-\nday22 TH15 pop360 coins43471 mission-/-\nday23 TH15 pop360 coins53296 mission-/-\nday24 TH16 pop371 coins55638 mission16/1\nday25 TH16 pop384 coins54496 mission16/8\nday26 TH17 pop408 coins56707 mission17/1\nday27 TH17 pop408 coins57257 mission-/-\nday28 TH17 pop408 coins68405 mission-/-\nday29 TH17 pop408 coins79540 mission-/-\nday30 TH18 pop416 coins82174 mission18/1\nday31 TH18 pop432 coins82434 mission-/-\nday32 TH19 pop439 coins85234 mission19/1\nday33 TH19 pop456 coins94492 mission-/-\nday34 TH19 pop456 coins97931 mission-/-\nday35 TH19 pop456 coins110383 mission-/-\n",
   "separateEarlierThreeDayRun": {
     "scope": "Previous planner variant; completed 3-day actual-command ledger, not current-run metrics.",
     "result": {

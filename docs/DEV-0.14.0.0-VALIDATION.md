@@ -1,78 +1,89 @@
-# DEV 0.14.0.0 / v31 — odbiór lokalny i promocja w toku
+# DEV 0.14.0.0 / v31 — odbiór potwierdzony
 
-Stan z 4 listopada 2026. Użytkownik zatwierdził [zakres v31](FRONTEND-V31-REQUIREMENTS.md), a później doprecyzował publikację jako **DEV → PRE-PROD**. Ten raport rozdziela kod, dowody lokalne, własne CI i rzeczywiste wdrożenie. [Promocja](PREPROD-V31-PROMOTION.md) ma osobny rejestr.
+Stan z **4 listopada 2026, Europe/Warsaw**. Użytkownik zatwierdził [zakres v31](FRONTEND-V31-REQUIREMENTS.md), a następnie doprecyzował publikację jako **DEV → PRE-PROD**. Końcowe źródło `7e81a1a436770f57fd8abf390b6af8022e3300f6` ma własne zielone CI, opublikowany podgląd i zdalnie potwierdzony tag DEV. Standardowa promocja tego źródła na PRE-PROD również zakończyła się sukcesem; jej artefakty i tag mają osobny [raport promocji](PREPROD-V31-PROMOTION.md). Kont, haseł i postępu nie resetowano. Nie wykonano operacji PROD.
 
-## Stan
+## Końcowy stan wydania
 
-| Warstwa | Wynik |
+| Warstwa | Potwierdzony wynik |
 |---|---|
-| Kod |0.14.0.0, cache frontend-v31-2; schemat świata9 / archipelagu2 zachowany |
-| Reguły gry |1190/1190 frontend Node PASS, najnowszy pełny przebieg188,02s |
-| Pozostały Node |134 backend +7 planszówka PASS; razem1331 |
-| Python |141/141 PASS w11zestawach |
-| Chromium |43zestawy lokalniePASS po poprawkach; własnyCI powtórzy cały spis |
-| SHA / CI / Pages |`4db95a38a507df887e255331271a007947bc69c0`; CI41901040379 INPROGRESS; Pages41901040067SUCCESS1m20s |
-| Pakiet / tag |85plików /19681606bajtów; verify/extractPASS. Tag nadalPENDING do sukcesuCI |
-| Excel14 |100zakładek, walidacjaPASS; historyczny13 zachowany |
-| Ewidencja |450kart,179ręcznych prób NOT RUN |
-| PRE-PROD |Nadal0.13.1.0 /68e9bcd; nowa promocja autoryzowana, wynik PENDING |
-| Dane / PROD |Bez resetu kont, zmiany haseł lub operacjiPROD |
+| Źródło | `7e81a1a436770f57fd8abf390b6af8022e3300f6` |
+| Aplikacja | **0.14.0.0**, cache `frontend-v31-2`; schemat świata 9 i archipelagu 2 zachowany |
+| Własne CI | [41906515746](https://github.com/ksobczak321-oss/gra/actions/runs/41906515746) **SUCCESS, 17 min 12 s** |
+| Chromium w CI | Wszystkie **43 zestawy PASS**; grupa gry i nauki 10 min 37 s, grupa kont i zapisu 3 min 30 s |
+| Pages | [41906515747](https://github.com/ksobczak321-oss/gra/actions/runs/41906515747) **SUCCESS, 50 s**; podgląd odrębny od Google Cloud |
+| Tag DEV | `dev-0.14.0.0-20261104` opublikowany i potwierdzony zdalnie; obiekt `df353ff2a4ab68a7f4a671cb6261f81d4d805b1c` rozwiązuje się do końcowego źródła |
+| Lokalny Node | **1331 PASS**: 1190 frontend + 134 backend + 7 samodzielna planszówka; ostatni pełny frontend 188,02 s |
+| Lokalny Python | **141 PASS** w 11 zestawach |
+| Lokalny Chromium | **43 zestawy PASS** po poprawkach; własne CI tego źródła ponownie wykonało cały spis |
+| Pakiet | **85 plików / 19 682 273 bajty**, weryfikacja i rozpakowanie PASS |
+| Excel 14 | **100 zakładek**, walidacja PASS; chroniony Excel 13 zachowany |
+| Ewidencja | **450 kart**, wszystkie **179 ręcznych prób NOT RUN** |
+| PRE-PROD | [Deploy 41909268052, próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/41909268052) **SUCCESS, 2 min 12 s**; [bridge 41909239074](https://github.com/ksobczak321-oss/gra/actions/runs/41909239074) **SUCCESS, 13 s** |
+| Dane i zakres | Bez resetu kont, zmiany haseł, operacji PROD i aktywacji rzeczywistych operatorów |
 
-Pełny Node: `node --test --test-concurrency=1 --test-isolation=none tests/*.test.mjs`. Log roboczy: `/tmp/harborlight-v31-frontend-final.log`. Backend i planszówka mają odrębne przebiegi. Automatyczne sprawdzenie nie zmienia ręcznych wyników NOT RUN.
+Pełny lokalny frontend uruchamiano poleceniem `node --test --test-concurrency=1 --test-isolation=none tests/*.test.mjs`; log roboczy: `/tmp/harborlight-v31-keyboard-frontend-final.log`. Backend i planszówka mają odrębne przebiegi. Lokalny spis Chromium odtworzono z obu grup workflow. Ręczne przypadki nie dziedziczą wyników automatyzacji.
 
-Lokalny spis Chromium odtworzono z obu grup workflowCI. Regresje kończono w osobnych przebiegach po naprawach funkcji i aktualizacji starych oczekiwań wersji, istniejących misji i rozszerzonej biblioteki. Własny CI końcowegoSHA ma ponownie uruchomić wszystkie43zestawy w całości.
+## Dokładny pakiet i arkusz
+
+| Dowód końcowego źródła | SHA-256 |
+|---|---|
+| TAR frontendu | `b43a736f4c30e8db9d2704b50219e0e6c1cf06c32660640ef66f1861cc412196` |
+| Manifest `release.json` | `2dea4d8563fadaf38dcd8103dc9ee66088e69e34ba8cc74b544aaea4bf3bc54e` |
+| Excel 14 | `7f7ae4918964309b8e2b391edf8999d366dbbd0dcfa2676692984853e10962b6` |
+
+Pakiet zawiera 83 jawne wejścia źródłowe, generowany `index.html` oraz manifest. Wszystkie wejścia odpowiadają dokładnemu commitowi, a rozmiar i hash każdej pozycji pasują do manifestu. **203 lokalne odwołania** prowadzą do istniejących plików i stosują zgodny cache `frontend-v31-2`. To odczyt zawartości pakietu, odrębny od sprawdzenia opublikowanej witryny.
+
+Chroniona ilustracja wyspy, trzy PNG Teatru, Excel 13 oraz 147 historycznych definicji ręcznych są identyczne z baseline 0.13.1.0. Backend, standardowe workflow PRE-PROD/PROD i narzędzia kont/resetu pozostały bez zmian; nie ma nowego bridge PROD.
+
+Excel 14 zachowuje 88 historycznych zakładek arkusza 13, 48 komentarzy, 208 części OOXML i 4658 wyników formuł. Walidacja obejmuje 324 nowe formuły z cache i 200 próbek runtime. Nie uruchamiano LibreOffice i nie przypisujemy mu przeliczenia pliku. Szczegóły zawiera [raport arkusza](arkusze/HARBORLIGHT14-walidacja.json).
+
+Hash TAR, hash manifestu i hash arkusza nie są digestami ZIP artefaktów GitHub ani digestem obrazu API. Publikację Pages potwierdził workflow; niezależnego odczytu jego bajtów nie potwierdzono z powodu ograniczeń proxy tej sesji. [Odbiór PRE-PROD](PREPROD-V31-PROMOTION.md) osobno rozlicza hostowany pakiet, konta i artefakty rzeczywistej promocji.
 
 ## Co faktycznie sprawdzono
 
-- Wszystkie19 rozdziałów2–20 ukończono legalnymi komendami, ruchami zagadek, dostawami Portu i budowami w jawnie finansowanych niezależnych fiksturach. To dowód przechodniości152 celów, nie bezpłatnej ekonomii50 dni.
-- Model rozwiązuje2750 wygenerowanych plansz i wszystkie100 wariantów 20 opowieści, odtwarzając zapis po pokojach. Odrzuca podrobione ukończenia i podwójne wypłaty. Zapis32 odłożonych sześciopokojowych historii i33. aktywnej ma108972 bajty przy limicie 700000; długie sterowanie nie przepełnia dziennika ruchów.
-- Prawdziwe działania State obejmują zakończenie Latarni, zachowanie punktów Domu przy100 szczęścia, finał lekcji 7 z bonusami i rezerwacjami, zakup z uzgodnioną ceną oraz wspólne liczniki dwóch wysp. Niedokończona zwykła historia może zostać przypisana do pomocy misji: po pierwszym pokoju, zapisie i pozostałych pięciu przyjmuje 41 osób raz, zwiększając populację13→54.
-- Odbiór UI obejmuje PL/EN i emulowane widoki komputera/telefonu. Rozszerzony test v31 zaliczył12 scenariuszy: położenie Teatru, buźkę Farmy, poprawione opisy, prawdziwą strzałkę lekcji 14 oraz zamknięcie/odczyt/wznowienie kulki i historii przez X i nagłówkowy powrót. Ukryta plansza nie porusza się przez 5 minut działania wyspy.
-- Zapis sprawdzono przy utraconym ACK, kolejce szybkich wejść, obcej rewizji, odrzuconym stanie i potwierdzonym reloadzie. Cztery próby rzeczywistego hosta chronią aktywne timery podczas 240 sekund znanej awarii, ale nie rekompensują zwykłej nieobecności po ukryciu karty. Zamknięcie tutoriala nie jest ponownie zapisywane po odczycie już zatwierdzonej operacji.
-- Teatr zachowuje 20 swobodnych pozycji, własność, poziomy powyżej 20, układy, opłaty oraz reklamy. Właściwy plac ma 1005×703 px na komputerze i 350×244 px na telefonie; miniatury zapisanych pomysłów są osobnymi elementami.
+- Wszystkie **19 rozdziałów 2–20 i 152 cele** ukończono legalnymi komendami, ruchami zagadek, dostawami Portu i budowami w jawnie finansowanych, niezależnych fiksturach. To dowód przechodniości celów, a nie bezpłatnej ekonomii 50 dni.
+- Model rozwiązuje **2750 wygenerowanych plansz i 100 wariantów 20 opowieści**, odtwarzając zapis po pokojach. Odrzuca podrobione ukończenia i podwójne wypłaty. Zapis 32 odłożonych sześciopokojowych historii i 33. aktywnej zajmuje 108 972 bajty przy limicie 700 000. Długie sterowanie nie przepełnia dziennika ruchów.
+- Rzeczywiste działania modelu State obejmują zakończenie Latarni, zachowanie punktów Domu przy 100 szczęścia, finał lekcji programu 7 z bonusami i rezerwacjami, zakup z uzgodnioną ceną oraz wspólne liczniki dwóch wysp. Niedokończona zwykła historia może zostać przypisana do pomocy misji: po pierwszym pokoju, zapisie i pozostałych pięciu przyjmuje 41 osób raz, zwiększając populację 13→54.
+- Odbiór UI obejmuje PL/EN i emulowane widoki komputera/telefonu. Rozszerzony test v31 zaliczył 12 scenariuszy: położenie Teatru, buźkę Gospodarstwa, poprawione opisy, rzeczywistą strzałkę lekcji 14 oraz zamknięcie, odczyt i wznowienie kulki oraz historii przez X i nagłówkowy powrót. Ukryta plansza nie porusza się przez pięć minut działania wyspy.
+- Synchronizację sprawdzono przy utraconym ACK, kolejce szybkich wejść, obcej rewizji, odrzuconym stanie i potwierdzonym reloadzie. Cztery lokalne próby w przeglądarce chronią aktywne timery podczas 240 sekund znanej awarii, lecz nie rekompensują zwykłej nieobecności po ukryciu karty. Zamknięcie tutoriala nie jest ponownie zapisywane po odczycie już zatwierdzonej operacji.
+- Teatr zachowuje 20 swobodnych pozycji, własność, poziomy powyżej 20, układy, opłaty i reklamy. Właściwy plac ma 1005×703 px na komputerze i 350×244 px na telefonie; miniatury zapisanych pomysłów są osobnymi elementami. Naprawę utraty fokusu sprawdzono także przy wymuszonym synchronicznym blur i szybkich kolejnych klawiszach.
 
 Nowy budżet dotyczy zagadek i opowieści z rozszerzonej biblioteki. Dziewięć wcześniejszych przygód zachowuje podane nagrody, w tym dokładnie złapany ładunek. Ekspedycje mają osobny godzinny licznik konta i pułap 800 monet na rundę nowych serii; rozpoczęte starsze serie zachowują własną politykę.
 
 ## Trajektoria i granice dowodów
 
-[Projekt50 dni](design/ACTIVE-PLAYER-50-DAYS.md) zawiera 50 wpisów dnia,20 okien poziomów i19 rozdziałów po 8 celów. `scripts/simulate-campaign-v31.mjs` rozpoczyna od normalnego profilu, bez dopisywania monet, mieszkańców lub poziomów. Używa prawdziwych 25 lekcji, produkcji, podatków, transportu, zakupów NPC i legalnych rozwiązań zagadek; nie korzysta z pieniędzy, reklam ani darów innych graczy.
+[Projekt 50 dni](design/ACTIVE-PLAYER-50-DAYS.md) zawiera 50 wpisów dnia, 20 okien poziomów i 19 rozdziałów po 8 celów. `scripts/simulate-campaign-v31.mjs` rozpoczyna od normalnego profilu, bez dopisywania monet, mieszkańców lub poziomów. Używa rzeczywistych 25 lekcji, produkcji, podatków, transportu, zakupów NPC i legalnych rozwiązań zagadek. Nie korzysta z pieniędzy, reklam ani darów innych graczy.
 
-Ukończona próba 3 dni osiągnęła Ratusz 6, 144 mieszkańców i rozdziały 2–6, bez błędnych komend. Pełny eksperyment50 dni **pozostaje w toku**. Doskonały solver, trzy jednogodzinne sesje i przyjęte minimum 5/15 minut na zagadkę/opowieść są założeniami strategii. Nie są pomiarem ludzkiej trudności, retencji ani 150 godzin atrakcyjnej zabawy.
+**Ostatni częściowy raport obejmuje 35 dni, Ratusz 19 i ukończony rozdział 19.** Nie jest to potwierdzenie Ratusza 20, pełnych 50 dni ani 150 godzin atrakcyjnej zabawy. Wcześniejsza krótka próba trzech dni osiągnęła Ratusz 6, 144 mieszkańców i rozdziały 2–6 bez błędnych komend. Doskonały solver, trzy jednogodzinne sesje i przyjęte minimum 5/15 minut na zagadkę/opowieść są założeniami strategii, a nie pomiarem ludzkiej trudności i retencji.
 
-Długi catch-up jest kosztowny na maszynie testowej. Zmniejszono alokacje dróg i skanowania ładunków oraz dodano ograniczony cache części kalendarza; testy równoważności obejmują mutacje, błędne daty, zmiany czasu i zapis. Mikrobenchmark samych funkcji nie dowodzi szybkości całej gry ani telefonu. Trwający eksperyment wczytał wcześniejszą implementację tych równoważnych funkcji; nie przypisujemy mu fałszywie końcowego hasha załadowanych bajtów.
+Długi catch-up jest kosztowny na maszynie testowej. Zmniejszono alokacje dróg i skanowania ładunków oraz dodano ograniczony cache części kalendarza; testy równoważności obejmują mutacje, błędne daty, zmiany czasu i zapis. Mikrobenchmark funkcji nie dowodzi szybkości całej gry ani telefonu. Długi eksperyment rozpoczął się na wcześniejszej implementacji tych równoważnych funkcji; jego wyniku nie przypisujemy fałszywie do końcowego hasha załadowanych bajtów.
 
-[Audyt](design/FLOW-AUDIT-20261104.md) opisuje stary model i nie zastępuje testów nowego kodu. Pozostawiono wcześniej nierozstrzygnięte reguły: zamrożenie bazowego szczęścia pod Latarnią, utratę powitalnej okazji przy pełnym limicie oraz24h jako referencyjny budżet, a nie absolutną gwarancję ukończenia w każdych warunkach.
+[Audyt](design/FLOW-AUDIT-20261104.md) opisuje wcześniejszy model i nie zastępuje testów nowego kodu. Do osobnej decyzji pozostają zamrożenie bazowego szczęścia pod Latarnią, utrata powitalnej okazji przy pełnym limicie oraz 24 h jako referencyjny budżet, zamiast absolutnej gwarancji ukończenia w każdych warunkach.
 
-## Arkusz i publikacja
+## Historia wcześniejszych kandydatów
 
-Excel14 zachowuje 88 historycznych zakładek13,48 komentarzy,208 części OOXML i4658 wyników formuł. Nowe 324 formuły z cache oraz200 próbek runtime przechodzą walidację. Nie uruchamiano LibreOffice i nie przypisujemy mu przeliczenia pliku. Aktualny hash jest w [raporcie arkusza](arkusze/HARBORLIGHT14-walidacja.json).
+Wcześniejsze niepowodzenia zachowują własne źródła i nie są sukcesami końcowego wydania.
 
-Ostateczny SHA, hashe pakietu, własne CI/Pages, tag i standardowy PRE-PROD wymagają uzupełnienia po odczycie rzeczywistych wyników. Rzeczywistych kont nie resetowano. [179 prób ręcznych](testing/START-HERE.md) pozostaje NOT RUN.
+| Kandydat | Własny CI | Pages |
+|---|---|---|
+| `d2f9ab311b9f3ad5e6d45a6f4e934ce501973324` | [41896847613](https://github.com/ksobczak321-oss/gra/actions/runs/41896847613) **FAILURE, 13 min 16 s** | [41896847615](https://github.com/ksobczak321-oss/gra/actions/runs/41896847615) **SUCCESS, 25 s** |
+| `4db95a38a507df887e255331271a007947bc69c0` | [41901040379](https://github.com/ksobczak321-oss/gra/actions/runs/41901040379) **FAILURE, 12 min 33 s** | [41901040067](https://github.com/ksobczak321-oss/gra/actions/runs/41901040067) **SUCCESS, 1 min 20 s** |
 
-## Wysłane źródło i pakiet
+Pierwszy CI zatrzymał się w `tests/harborlight-theatre-free-placement-v31-smoke.py`, w pierwszej próbie PL/desktop. Publiczna adnotacja urywała traceback przed przyczyną; **dokładnej przyczyny pierwszej awarii nie potwierdzono**. Lokalnie opóźnienie CSS o 2,5 s odtworzyło nieostylowany plac. Scenariusz testowy poprawiono tak, aby czekał na oba arkusze, geometrię, fonty i obrazy, zachowując dokładność ruchu 62/30,1, klawiaturę 3/15, pojedynczy zapis i ochronę portfela. Zaliczono 4 zwykłe i 4 opóźnione warianty. Była to odtworzona lokalna usterka gotowości, nie dowód pełnej przyczyny tamtego CI. Lokalny Chromium 154 nie zastępował przypiętego 151 w CI; oba oficjalne pobrania 151 blokowało sieciowe 403. Publiczne adnotacje skrócono do końcowych 2500 znaków, aby zachowały przyczynę kolejnej awarii.
 
-Commit `d2f9ab311b9f3ad5e6d45a6f4e934ce501973324` jest w main z autoryzowanym znacznikiem PRE-PROD0.14.0.0. [CI41896847613](https://github.com/ksobczak321-oss/gra/actions/runs/41896847613) zakończył się FAILURE13m16s. [Pages41896847615](https://github.com/ksobczak321-oss/gra/actions/runs/41896847615) zakończyło się SUCCESS25s. Bez niezależnego odczytu bajtów Pages przez ograniczony proxy tej sesji.
+Drugi CI, już po instalacji zależności trwającej 9 min 33 s, pokazał wykonany `ArrowRight` i utracony `Shift+ArrowDown` przy gotowym CSS. Odtworzono przyczynę: wyłączenie aktywnego przycisku przenosiło fokus do BODY przed jego zapamiętaniem. Końcowy kod zapamiętuje token przed stanem oczekiwania i wykorzystuje go po renderowaniu, zachowując nowszą selekcję. Zaliczono 8 wariantów na Chromium 154, w tym wymuszony synchroniczny blur i cztery szybkie klawisze przy wstrzymanym RAF. Zachowano SELECT, zapis układu, cenę i pozycję. Nowy cache, pakiet i arkusz przeszły odrębny odbiór końcowego źródła.
 
-Pakiet85plików/19681606bajtów: TAR`fa07a6100414cfc35e812a6eecb7fa6a2bbaf58ab0b16285827b2cb40e81a60d`, manifest`e3f8c9590dd36274506a970512e34868992c9c3516721cfe085d969ceff57638`. Weryfikacja i rozpakowanie dokładnego źródła PASS. Te digests nie są digestamiZIPartefaktów GitHub ani obrazuAPI. BieżącyExcel14: SHA`9216f66d10a69f2ee27249053a3462bcae1c29b809806f645317ba249d4b2ebb`.
+### Historyczne hashe pakietów i arkusza
 
-## Pierwszy CI — zachowany błąd
+Oba wcześniejsze pakiety miały 85 plików / 19 681 606 bajtów i przeszły lokalne verify/extract. Wszystkie 83 publiczne wejścia aplikacji kandydata `4db95a3` były identyczne z `d2f9ab3`; różne manifesty wiązały różne źródła.
 
-Źródło d2f9ab3 ma FAILURE13m16s w `tests/harborlight-theatre-free-placement-v31-smoke.py`, pierwsza próba PL/desktop. Wszystkie wcześniejsze reguły, pakowanie/Excel i starsze testy Teatru przeszły. Publiczna adnotacja urywała traceback przed przyczyną; diagnoza i poprawka wymagają osobnego źródła/CI. Nie utworzono tagu i nie uruchomiono PRE-PROD. Pages tego źródła pozostaje SUCCESS25s.
+| Źródło | TAR SHA-256 | Manifest SHA-256 |
+|---|---|---|
+| `d2f9ab3` | `fa07a6100414cfc35e812a6eecb7fa6a2bbaf58ab0b16285827b2cb40e81a60d` | `e3f8c9590dd36274506a970512e34868992c9c3516721cfe085d969ceff57638` |
+| `4db95a3` | `8f63d334d618c225ac7b9b8bb163901bc74b8cac47480c88c8aa0dc604b4ebdd` | `5953c91a5ea5cbc36195f4bc7725d81d4c620aed040296c12d175baa14c72149` |
 
-### Poprawka gotowości testu
+Excel 14 z pierwszego kandydata miał hash `9216f66d10a69f2ee27249053a3462bcae1c29b809806f645317ba249d4b2ebb`. Jest to wartość historyczna, odrębna od końcowego `7f7ae4918964309b8e2b391edf8999d366dbbd0dcfa2676692984853e10962b6`. Nie utworzono tagów ani nie uruchomiono PRE-PROD dla tych dwóch nieudanych kandydatów.
 
-Kontrolowane opóźnienie lokalnych CSS o2,5s odtworzyło nieostylowany plac i błąd starego testu. Fixture czeka teraz na oba arkusze, geometrię, fonty i obrazy; zachowano dokładność ruchu62/30,1, klawiaturę3/15, pojedynczy zapis i ochronę portfela. Nowy test zaliczył4/4 zwykle i4/4 z opóźnieniem. UI/CSS i pozostałe pliki publiczne gry nie zmieniły się. LokalnyChromium154 nie zastępuje przypiętego151 wCI; oba oficjalne pobrania151 blokuje sieciowe403. Pełna przyczyna pierwszegoCI pozostaje niedostępna poza uciętym tracebackiem, więc nowy własnyCI jest wymagany. Publiczne adnotacje skrócono do końcowych2500znaków, aby zachowały przyczynę.
+Po końcowej poprawce lokalnie ponownie zaliczono 1190 testów frontendu oraz sześć pakietowych regresji: swobodne rozmieszczanie 8 wariantów, studio 4, pełna gra 4, mapa/Dom/wznowienie 12, biblioteka przygód 4 i awaria chmury 4. Excel 14, karty i lista ręczna przeszły walidację. Własny CI `41906515746` potwierdził następnie cały spis 43 zestawów, więc wcześniejszych awarii nie trzeba traktować jako nierozstrzygniętego odbioru bieżącego kodu.
 
-## Poprawiony kandydat4db95a3
-
-`4db95a38a507df887e255331271a007947bc69c0` wysłany do main. [CI41901040379](https://github.com/ksobczak321-oss/gra/actions/runs/41901040379) trwa, [Pages41901040067](https://github.com/ksobczak321-oss/gra/actions/runs/41901040067) SUCCESS1m20s. Wszystkie83publiczne wejścia aplikacji są identyczne z d2f9ab3. Pakiet85plików/19681606bajtów verify/extractPASS; TAR`8f63d334d618c225ac7b9b8bb163901bc74b8cac47480c88c8aa0dc604b4ebdd`, manifest`5953c91a5ea5cbc36195f4bc7725d81d4c620aed040296c12d175baa14c72149`. Hash manifestu zmienia się razem ze źródłem release.json. Pierwszy błądCI pozostaje przypisany d2f9ab3.
-
-## DrugiCI i naprawa fokusu
-
-Źródło4db95a3: [CI41901040379](https://github.com/ksobczak321-oss/gra/actions/runs/41901040379) FAILURE12m33s, Pages41901040067SUCCESS1m20s. Po udanej instalacji9m33s test ujawnił utratę drugiego klawisza w PL/desktop, już z gotowym CSS. Publiczny pełny ślad pokazuje wykonanyArrowRight i niewykonanyShift+ArrowDown. PRE-PROD nie wystartował.
-
-Odtworzono przyczynę: wyłączenie aktywnego przycisku przenosi fokus doBODY przed jego zapamiętaniem. UI zapisuje teraz token przed stanem oczekiwania i używa go przy końcowym renderowaniu.8/8prób PASS naChromium154, w tym wymuszony synchronicznyblur oraz cztery szybkie klawisze przy wstrzymanymRAF; zachowano SELECT, zapis układu, cenę i pozycję. Cache zmieniono nafrontend-v31-2; nowy pakiet/Excel i własnyCI wymagają ponownego odbioru.
-
-### Lokalny odbiór poprawki fokusu
-
-1190/1190frontend NodePASS po poprawce i zmianie namespace cache. Sześć pakietowych regresji PASS: swobodne rozmieszczanie8wariantów (w tym blur), studio4, pełna gra4, mapa/House/wznowienie12, biblioteka przygód4 i awariachmury4. Historyczny spis43zestawów zaliczono wcześniej; własnyCI nowegoSHA ponowi go w całości. Excel14, karty i lista ręczna zwalidowane;179ręcznych nadalNOTRUN.
+[179 prób ręcznych](testing/START-HERE.md) nadal pozostaje NOT RUN. Późniejszy commit dokumentacji nie zastępuje odebranego źródła ani nie przesuwa jego tagu.

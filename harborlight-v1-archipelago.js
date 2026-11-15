@@ -1,17 +1,17 @@
-import { packAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-2';
-import { reconcileExpeditionOutcomes } from './harborlight-v1-expedition-hour.js?v=frontend-v32-2';
-import * as Provisions from './harborlight-v1-provisions.js?v=frontend-v32-2';
-import * as Education from './harborlight-v1-education.js?v=frontend-v32-2';
-import * as Military from './harborlight-v1-military.js?v=frontend-v32-2';
+import { packAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-3';
+import { reconcileExpeditionOutcomes } from './harborlight-v1-expedition-hour.js?v=frontend-v32-3';
+import * as Provisions from './harborlight-v1-provisions.js?v=frontend-v32-3';
+import * as Education from './harborlight-v1-education.js?v=frontend-v32-3';
+import * as Military from './harborlight-v1-military.js?v=frontend-v32-3';
 // The client snapshot keeps a mother-root account revision with up to twenty
 // worlds. Cloud adapters persist bounded per-world documents atomically.
 // Simulation is injected: this module does not import the state coordinator.
-import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v32-2';
-import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v32-2';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v32-2';
-import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v32-2';
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v32-2';
-import { residentFoodMultiplier } from './harborlight-v1-housing.js?v=frontend-v32-2';
+import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v32-3';
+import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v32-3';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v32-3';
+import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v32-3';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v32-3';
+import { residentFoodMultiplier } from './harborlight-v1-housing.js?v=frontend-v32-3';
 
 export const ISLAND_IDS = Object.freeze(Array.from({ length: 20 }, (_, index) => `island-${index + 1}`));
 export const ARCHIPELAGO_RULES = Object.freeze({ version: 2, secondIslandLevel: 10, maximumIslands: 20, islandLevelStep: 3, colonists: 6,

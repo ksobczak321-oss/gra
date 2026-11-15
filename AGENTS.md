@@ -1,11 +1,18 @@
 # Zasady pracy nad HARBORLIGHT
 
+## Uzupełnienie GO DEV — 15 listopada 2026
+
+Użytkownik polecił opublikować aktualny roboczy podgląd przez dotychczasowe GitHub Pages, zaktualizować Git i oznaczyć zmiany jako wdrożone na razie tylko na DEV. Dopuszczone są push do repozytorium, własne CI i Pages; bez nowej promocji Google Cloud PRE-PROD/PROD. Brak markera promocji w nowych commitach. Publiczny podgląd jest nietrwały, bez kont i zapisu świata w przeglądarce; serwerowe konta lokalnego DEV pozostają odrębne od Firebase. Nie nazywać lokalnego API kopią usług chmurowych 1:1. Polecono hasła takie same jak istniejące loginy `admin1`, `admin2`, `admin3`; na lokalnym DEV należy je ustawić. PRE-PROD ma już te hasła, co potwierdzono auth-only 3/3; nie potrzeba mutacji kont. Zakaz resetu postępu i operacji PROD pozostaje. Źródło PRE-PROD nadal `7e81a1a436770f57fd8abf390b6af8022e3300f6`.
+
 ## Bieżące GO DEV 0.15.0.0 / v32 — 14 listopada 2026
 
 Użytkownik polecił „Leć z developmentem najpierw na środowisku dev”. Obowiązuje [zakres v32](docs/FRONTEND-V32-REQUIREMENTS.md) i najnowsze47odpowiedzi z obu formularzy. Historyczne zakazydevelopmentu są zastąpione wyłącznie dlaDEV. PRE-PROD iPROD pozostają bez zmian, bez resetu chmurowychkont. Lokalne konta DEV wolno uruchomić z czystymstanem. Root integruje state/play/logistics/housing/residents/archipelago/version/pakowanie; agenci posiadają rozłączne moduły v32 zgodnie z przydziałem. Nie zmieniać globalnie namespacequery do końca integracji. Nowe minigry korzystają z własnych układów i oprawy, nie kopiują referencyjnych obrazów.
 
 
 ## Rozwój i publikacja
+
+- **Odebrane DEV i PRE-PROD0.14.0.0 — 4 listopada2026:** źródło `7e81a1a436770f57fd8abf390b6af8022e3300f6`, cache `frontend-v31-2`. WłasneCI41906515746 SUCCESS17m12s, Pages41906515747 SUCCESS50s, bridge41909239074 SUCCESS13s i standardowydeploy41909268052/próba1 SUCCESS2m12s. API/health/ready, dokładnyHosting, zalogowana gra i izolacja trzech kontPASS; oba artefakty opublikowano. Tagi `dev-0.14.0.0-20261104` (obiektdf353ff2a4ab68a7f4a671cb6261f81d4d805b1c) i `preprod-0.14.0.0-20261104` (obiekt1b32f383eed957b03120c1616cbb50435e19c19f) są zdalnie potwierdzone na tym samymSHA. Konta/hasła/postęp zachowano, bez resetu iPROD. Pakiet85plików/19682273bajty verify/extractPASS; hashe i publiczne digests obuZIP w [raporcie](docs/PREPROD-V31-PROMOTION.md) i [dowodach](docs/PREPROD-V31-EVIDENCE.json). Prywatnego receipt/obrazu/Firestore nie odczytano niezależnie.1331Node +141Python +43zestawyChromiumPASS;450kart/179ręcznychNOTRUN; Excel14PASS jako migawka sprzed promocji. Dwa pierwszeCI zachowująFAILURE. Pełny50-dniowy eksperyment pozostaje częściowy, a150godzin ludzkiej zabawy nie zmierzono. Późniejsza dokumentacja nie przesuwa tagów ani źródła wdrożenia.
+
 
 - **Doprecyzowane GO PRE-PROD — 4 listopada2026:** użytkownik wyjaśnił „Miałem na myśli z dev na pre prod”. Obowiązuje ukończenie bieżącej0.14.0.0, własneCI/Pages i standardowy PRE-PROD dokładnie sprawdzonego źródła. Wcześniejsza interpretacja skrótu„prod” jakoPROD jest zastąpiona; nie wykonano operacjiPROD, a lokalny nieopublikowany mostPROD usunięto. Zachowaj konta i postęp, bez resetu i realnych operatorów. Nowa promocja PRE-PROD wymaga własnych dowodów.
 

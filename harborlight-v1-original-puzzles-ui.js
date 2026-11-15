@@ -1,4 +1,4 @@
-import { originalPuzzleCatalog, originalPuzzleStatus, availableConvoyIds } from './harborlight-v1-original-puzzles.js?v=frontend-v32-2';
+import { originalPuzzleCatalog, originalPuzzleStatus, availableConvoyIds } from './harborlight-v1-original-puzzles.js?v=frontend-v32-3';
 
 const SVG='http://www.w3.org/2000/svg';
 const el=(tag,classes,text)=>{const n=document.createElement(tag);if(classes)n.className=classes;if(text!==undefined)n.textContent=text;return n;};
