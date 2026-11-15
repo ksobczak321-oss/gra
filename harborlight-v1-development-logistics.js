@@ -1,6 +1,6 @@
 // Ruleset32 physical production. No imports from state, residents or logistics.
 // Timers remain in the host event loop; every job consumes local ingredients.
-import { GOODS, MATERIAL_IDS, RECIPE_CATALOG, availableRecipes, productionAssignments, localStorageStatus, normalizeProvisions, withdrawMilk, depositMilk } from './harborlight-v1-provisions.js?v=frontend-v32-5';
+import { GOODS, MATERIAL_IDS, RECIPE_CATALOG, availableRecipes, productionAssignments, localStorageStatus, normalizeProvisions, withdrawMilk, depositMilk } from './harborlight-v1-provisions.js?v=frontend-v32-6';
 const EPS=1e-7;
 const amount=n=>Number.isFinite(n)?Math.max(0,n):0;
 const whole=n=>Math.floor(amount(n));
@@ -77,14 +77,18 @@ export function completeDevelopmentJob(state,job,context={}) {
  const r=RECIPE_CATALOG[job.recipeId];for(const[id,n]of Object.entries(r.inputs))takeLocalGoods(state,r.building,id,n);for(const[id,n]of Object.entries(r.outputs)){putLocalGoods(state,r.building,id,n);context.record?.('produced',id,n);}progress[job.key]=0;
  if(Object.keys(r.inputs).length){state.statistics||={};state.statistics.crafted=Math.min(10000000,(state.statistics.crafted||0)+1);}return true;
 }
+function localProcessingReserve(state,building,resource) {
+ const needed=productionAssignments(state,building).filter(row=>row.workers>0&&RECIPE_CATALOG[row.recipeId]?.localInputs).reduce((sum,row)=>sum+(row.inputs[resource]||0)*row.workers*4,0);
+ return Math.min(200*state.buildings[building].level,needed);
+}
 export function developmentWarehouseSources(state,context={}) {
  ensure(state);const sources=[],priority=state.transportPriority||MATERIAL_IDS;
  for(const resource of priority)for(const building of developmentProducerIds(state)) {
-  const output=availableRecipes(state,building).some(r=>Object.hasOwn(r.outputs,resource)),ready=amount(local(state,building)[resource]),room=context.centralRoom?.(resource)||0;
+  const output=availableRecipes(state,building).some(r=>Object.hasOwn(r.outputs,resource)),ready=Math.max(0,amount(local(state,building)[resource])-localProcessingReserve(state,building,resource)),room=context.centralRoom?.(resource)||0;
   if(output&&ready>0&&room>0)sources.push({kind:'producer',producer:building,resource,available:Math.min(ready,room),priority:(state.logisticsPriority||[]).indexOf(`producer:${building}`)});
  }
  // Ingredients travel in a physical carrier course before a process can start.
- for(const building of developmentProducerIds(state))for(const row of productionAssignments(state,building).filter(r=>r.workers>0))for(const[resource,n]of Object.entries(row.inputs)) {
+ for(const building of developmentProducerIds(state))for(const row of productionAssignments(state,building).filter(r=>r.workers>0&&!RECIPE_CATALOG[r.recipeId]?.localInputs))for(const[resource,n]of Object.entries(row.inputs)) {
   const room=localReceivingRoom(state,building,resource),available=context.centralAvailable?.(resource)||0;if(room<1||available<1)continue;
   const buffered=amount(local(state,building)[resource])+localIncoming(state,building,resource);
   // Keep enough for several cycles without starving every other processor.
@@ -94,7 +98,7 @@ export function developmentWarehouseSources(state,context={}) {
  return sources;
 }
 export function directRouteCatalog(state) {
- return Object.entries(state.education?.routes||{}).filter(([id,r])=>state.education?.discoveries?.[id]===true&&r&&GOODS[r.product]&&state.buildings?.[r.source]&&state.buildings?.[r.target]&&availableRecipes(state,r.source).some(x=>Object.hasOwn(x.outputs,r.product))&&availableRecipes(state,r.target).some(x=>Object.hasOwn(x.inputs,r.product))).map(([id,r])=>({id,source:r.source,target:r.target,product:r.product,workers:whole(state.provisions?.routeAssignments?.[id]?.workers)}));
+ return Object.entries(state.education?.routes||{}).filter(([id,r])=>state.education?.discoveries?.[id]===true&&r&&GOODS[r.product]&&state.buildings?.[r.source]&&state.buildings?.[r.target]&&availableRecipes(state,r.source).some(x=>Object.hasOwn(x.outputs,r.product))&&availableRecipes(state,r.target).some(x=>!x.localInputs&&Object.hasOwn(x.inputs,r.product))).map(([id,r])=>({id,source:r.source,target:r.target,product:r.product,workers:whole(state.provisions?.routeAssignments?.[id]?.workers)}));
 }
 export function directRouteWorkers(state,indices) {
  ensure(state);const count=(state.residents||[]).filter(p=>p.workplace==='warehouse'&&!p.pendingRelease).length||whole(state.buildings?.warehouse?.workers),ready=[...indices],allocation=new Map();let used=0;

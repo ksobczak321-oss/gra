@@ -1,5 +1,13 @@
 # HARBORLIGHT — stan środowisk
 
+## Bieżąca paczka po odbiorze — cache6
+
+[Podgląd DEV na poziomie5](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?preview=admin1-level5&v=frontend-v32-6) jest docelowym linkiem tej paczki. Wdrożenie i odczyt faktycznie hostowanego poziomu5 wymagają nowego dowodu; poprzedni link cache5 startujący na poziomie1 nie spełniał tego zlecenia. Publiczny scenariusz ma jawne oznaczenie DEV i działa w pamięci karty, bez uwierzytelnionego konta lub trwałego zapisu. Lokalny `admin1/admin1` pozostaje osobnym kontem z Ratuszem5 i zachowanym postępem.
+
+Zakres: spójne logicznie i wizualnie menu, karty w obu kolumnach,44pxpola/przyciski, nieruchomy komunikat przy nazwie budynku, zachowanie trzech szybkich kliknięć+/−, usunięcie pustego „Więcej o budynku”, lokalna ryba wędzona i przetwory rybne IIIkategorii po badaniu od Rybaka5. Pojemność kolejnych poziomów Magazynu nadal liczy się analogicznie z koszyka+40%, w dół do10000. [Szczegółowy zakres](v32/GO-MENU-FISH-LEVEL5.md).
+
+Nowe CI/Pages oraz końcowy SHA pozostają do potwierdzenia. Poprzedni opublikowany cache5 ma osobny odczyt Pages43720686137SUCCESS dla `77a774c82f7cce85982be56aabdf166fc2078a34`; jego pełny CI nie jest tu uznawany za sukces. PRE-PROD7e81a1a i PROD bez nowego wdrożenia.
+
 ## DEV 0.15.0.0 / v32 — tylko DEV, 15 listopada 2026
 
 Aktualna gałąź rozwojowa to `dev/0.15.0.0`; publikacja na dotychczasowym GitHub Pages jest autoryzowana i nie uruchamia promocji PRE-PROD. Kod v32 bazuje dokładnie na wdrożonym `7e81a1a`, a późniejsze metadane odbioru 0.14.0.0 z `b2227d5` zachowano przez scalanie historii. [Publiczny podgląd DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-5) · [bieżący stan dostępu i testów](v32/DEV-READY.md).

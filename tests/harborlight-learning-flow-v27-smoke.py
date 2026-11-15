@@ -149,7 +149,7 @@ def tour_and_help(browser, language, mobile):
         page.reload()
         page.wait_for_function('document.getElementById("loading").hidden')
         help_panel(page, mobile).locator('[data-help-return-tour]').click()
-        expect(tour).to_have_attribute('data-onboarding-step', 'settings')
+        expect(tour).to_have_attribute('data-onboarding-step', TOUR_IDS[-1])
         tour.locator('[data-onboarding-restart]').click()
         expect(tour).to_have_attribute('data-onboarding-step', 'home')
         assert saved(page)['learning']['tour']['index'] == 0

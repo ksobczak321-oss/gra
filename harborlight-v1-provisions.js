@@ -16,6 +16,7 @@ export const GOODS = Object.freeze({
   vegetables: definition('Warzywa', 1, 2, 1), livestock: definition('Żywiec', 1, 2), rawMilk: definition('Surowe mleko', 1, 2, 1), sourMilk: definition('Kwaśne mleko', 1, 2, .5), fish: definition('Ryby', 1, 2, 1),
   flour: definition('Mąka', 2, 10, 6), pasteurizedMilk: definition('Mleko pasteryzowane', 2, 10, 6), meat: definition('Mięso', 2, 2.5, 6), leather: definition('Skóra', 2, 5),
   bread: definition('Chleb', 3, 50, 36), cake: definition('Ciasto', 3, 55, 48), cheese: definition('Ser', 3, 10, 12),
+  smokedFish: definition('Ryba wędzona', 3, 10, 12, { devBalanceProposal: true }), fishPreserves: definition('Przetwory rybne', 3, 15, 18, { devBalanceProposal: true }),
   civilianClothes: definition('Strój cywilny', 2, 25), militaryClothes: definition('Strój wojskowy', 2, 50), professorRobes: definition('Szata profesorska', 2, 50)
 });
 export const MATERIAL_IDS = Object.freeze(Object.keys(GOODS));
@@ -31,12 +32,14 @@ export const RECIPE_CATALOG = Object.freeze({
   farmCheese: recipe('farm', { sourMilk: 4 }, { cheese: 1 }, 6, { discovery: 'cheese' }),
   flour: recipe('windmill', { grain: 4 }, { flour: 1 }), bread: recipe('bakery', { flour: 4 }, { bread: 1 }), cake: recipe('bakery', { flour: 4, rawMilk: 2 }, { cake: 1 }),
   pasteurizedMilk: recipe('dairy', { rawMilk: 4 }, { pasteurizedMilk: 1 }), meat: recipe('slaughterhouse', { livestock: 2 }, { meat: 2 }), leather: recipe('slaughterhouse', { livestock: 2 }, { leather: 1 }), fish: recipe('fisher', {}, { fish: 1 }),
+  smokedFish: recipe('fisher', { fish: 4 }, { smokedFish: 1 }, 5, { discovery: 'fishProcessing', localInputs: true }),
+  fishPreserves: recipe('fisher', { fish: 6 }, { fishPreserves: 1 }, 5, { discovery: 'fishProcessing', localInputs: true }),
   civilianClothes: recipe('leatherworks', { leather: 4 }, { civilianClothes: 1 }), militaryClothes: recipe('leatherworks', { leather: 8 }, { militaryClothes: 1 }), professorRobes: recipe('leatherworks', { leather: 8 }, { professorRobes: 1 }, 1, { academy: true }),
   wood: recipe('lumber', {}, { wood: 1 }), stone: recipe('quarry', {}, { stone: 1 }), planks: recipe('sawmill', { wood: 2 }, { planks: 1 })
 });
 // Explicit DEV calibration: rates count recipe batches, not arbitrary outputs.
 // Advanced Academy/research multipliers are supplied by the production host.
-export const DEV_RECIPE_RATES = Object.freeze({ farmGrain: 40, farmVegetables: 40, farmLivestock: 40, farmMilk: 40, farmCheese: 40, flour: 40, bread: 40, cake: 40, pasteurizedMilk: 40, meat: 20, leather: 40, fish: 40, civilianClothes: 40, militaryClothes: 40, professorRobes: 40, wood: 40, stone: 40, planks: 40 });
+export const DEV_RECIPE_RATES = Object.freeze({ farmGrain: 40, farmVegetables: 40, farmLivestock: 40, farmMilk: 40, farmCheese: 40, flour: 40, bread: 40, cake: 40, pasteurizedMilk: 40, meat: 20, leather: 40, fish: 40, smokedFish: 40, fishPreserves: 40, civilianClothes: 40, militaryClothes: 40, professorRobes: 40, wood: 40, stone: 40, planks: 40 });
 export function recipeRatePerWorkerHour(state, id) {
   const r = RECIPE_CATALOG[id], level = finite(state.buildings?.[r?.building]?.level);
   return r && level > 0 ? DEV_RECIPE_RATES[id] * (1 + .1 * (level - 1)) : 0;
@@ -359,14 +362,19 @@ export function recipeBatchQuote(state, recipeId, batches=1, context={}) {
  const r=RECIPE_CATALOG[recipeId];
  if(!r||!Number.isSafeInteger(batches)||batches<=0||!availableRecipes(state,r.building,context).some(x=>x.id===recipeId))return result(false,'Ten kierunek produkcji nie jest odblokowany.');
  const inputs=Object.fromEntries(Object.entries(r.inputs).map(([id,n])=>[id,n*batches])),outputs=Object.fromEntries(Object.entries(r.outputs).map(([id,n])=>[id,n*batches]));
- if(Object.entries(inputs).some(([id,n])=>availableForSpending(state,id,context)+EPS<n))return result(false,'Brakuje składników ponad chronioną rezerwę jedzenia.');
  const local=context.localStock||state.provisions?.localStock?.[r.building]||{},status=localStorageStatus(state,r.building,local),outTotal=Object.values(outputs).reduce((a,b)=>a+b,0);
- if(status.used+outTotal>status.total+EPS||Object.entries(outputs).some(([id,n])=>finite(local[id])+n>status.perProduct+EPS))return result(false,'Brakuje miejsca w magazynie przy budynku.');
- return result(true,'Można wykonać recepturę.',{recipeId,building:r.building,batches,inputs,outputs});
+ if(r.localInputs) {
+  if(Object.entries(inputs).some(([id,n])=>finite(local[id])+EPS<n))return result(false,'Brakuje świeżych ryb w magazynie przy Rybaku.');
+ } else if(Object.entries(inputs).some(([id,n])=>availableForSpending(state,id,context)+EPS<n))return result(false,'Brakuje składników ponad chronioną rezerwę jedzenia.');
+ const consumedLocal=r.localInputs?Object.values(inputs).reduce((a,b)=>a+b,0):0;
+ if(status.used-consumedLocal+outTotal>status.total+EPS||Object.entries(outputs).some(([id,n])=>finite(local[id])-(r.localInputs?finite(inputs[id]):0)+n>status.perProduct+EPS))return result(false,'Brakuje miejsca w magazynie przy budynku.');
+ return result(true,'Można wykonać recepturę.',{recipeId,building:r.building,batches,inputs,outputs,...(r.localInputs?{localInputs:true}:{})});
 }
 export function produceRecipeBatch(state,recipeId,batches=1,context={}) {
  const quote=recipeBatchQuote(state,recipeId,batches,context);if(!quote.ok)return quote;
- for(const[id,n]of Object.entries(quote.inputs))consume(state,id,n,context);
  const stock=context.localStock||(ensure(state).localStock[quote.building]||=( {} ));
+ for(const[id,n]of Object.entries(quote.inputs)) {
+  if(quote.localInputs)stock[id]=Math.max(0,finite(stock[id])-n);else consume(state,id,n,context);
+ }
  for(const[id,n]of Object.entries(quote.outputs))stock[id]=finite(stock[id])+n;return quote;
 }

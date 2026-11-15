@@ -9,3 +9,9 @@ Początkowo te punkty były notatkami do następnej paczki. Późniejsze wyraźn
 - Pojemność: wspólny koszyk rozbudowa + misja + jedzenie, następnie40%bufora i zaokrąglenie w dół do10000. Użytkownik wyraźnie zatwierdził40tys.na1poziomie.
 
 To nadal wyłącznie DEV; brak promocji PRE-PROD/PROD.
+
+## Kolejne notatki zatwierdzone bieżącym GO
+
+Po kolejnym wstrzymaniu developmentu użytkownik wydał nowe GO dla wszystkich późniejszych uwag. Obejmuje ono spójność logiczną i wizualną wszystkich menu, przeniesienie modlitwy w Domu na prawo, usunięcie pustego „Więcej o budynku”, stały komunikat przy nazwie budynku bez przesuwania+/−, dwa lokalne produkty rybne IIIkategorii od badania na5poziomie Rybaka oraz rzeczywisty publiczny link do scenariusza poziomu5. Wzór kolejnych poziomów Magazynu pozostaje analogiczny: koszyk+40%, w dół do10000.
+
+Pełny zakres i rozróżnienie publicznego scenariusza od lokalnego kontaadmin1: [GO-MENU-FISH-LEVEL5.md](GO-MENU-FISH-LEVEL5.md). To zatwierdzenie implementacji, a nie dowód ukończenia testów, CI lub publikacji cache6.

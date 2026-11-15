@@ -1,5 +1,11 @@
 # Zasady pracy nad HARBORLIGHT
 
+## Nowe GO po pełnym przeglądzie menu — cache6
+
+Użytkownik polecił „dobra wrzucaj do DEV + pamiętaj aby uruchomić admin1 na 5 poziomie chce sprawdzić dostępne budynki”. To zatwierdza wszystkie późniejsze notatki o spójności logicznej i wizualnej menu, nieruchomych komunikatach przy przydziale pracowników, zbędnym „Więcej o budynku”, nowych przetworach rybnych oraz działającym linku testowym z poziomem5. Szczegóły: [zakres GO](docs/v32/GO-MENU-FISH-LEVEL5.md). Aktualna paczka pozostaje0.15.0.0, cache `frontend-v32-6`.
+
+Publiczny test ma jawny parametr `preview=admin1-level5` i widoczne oznaczenie scenariusza DEV. Musi faktycznie otwierać Ratusz5; lokalny awans admin1 bez takiego linku nie spełnia tego zlecenia. Pages nadal działa bez uwierzytelnionego konta i trwałego zapisu. Parametr nie zmienia rzeczywistych kont ani środowisk produkcyjnych; lokalny admin1 zachowuje własny stan i Ratusz5 bez resetu. Pełny CI, własne Pages i odczyt hostowanych plików cache6 wymagają nowych dowodów. PRE-PROD pozostaje `7e81a1a`, bez nowego deployu, resetu lub mutacji Firebase.
+
 ## Aktualne pełne GO po odbiorze UI
 
 Późniejsze „GO zrób wszystko powyżej” i „zrób DEV Go” rozszerzyły bieżącą paczkę o wybór widzów Teatru i Wyślijwszystkich, tutorialV5/56 w grupach z Teatrem i pięcioma dolnymi zakładkami, tytułUbrani i ramkę na buźce, trzy zamknięte sekcje Magazynu oraz wyrównanie kolumn. Zachowano wcześniej zatwierdzone ciemne menu, ramki hover i informację zamiast zablokowanego menu. LokalnyDEVadmin1 ma ręcznyRatusz5,bezresetu. Użytkownik wyraźnie polecił wspólną pojemnośćMagazynu liczyć z koszyka potrzeb+40%,zaokrąglając w dół do pełnych10000: L1=40000. Nie mnożyć globalnego koszyka przez20typówtowaru. Pełne notatki [PENDING-NOTES.md](docs/v32/PENDING-NOTES.md) są już objęte tymGO. NadaltylkoDEV/Git/CI/Pages; brak nowejpromocji PRE-PROD/PROD i brak chmurowychzmianpoziomów.

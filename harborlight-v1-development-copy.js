@@ -304,7 +304,7 @@ export const DEVELOPMENT_COPY = Object.freeze({
   "BLD-SLAUGHTERHOUSE-Podstawowy-OPIS": "Przydziel pracowników do produkcji mięsa lub skór. Każdy z tych wyrobów powstaje w osobnym procesie z żywca dostarczanego przez Gospodarstwo.",
   "BLD-SLAUGHTERHOUSE-Podstawowy-INFO": "Mięso: 2 żywca → 2 porcje mięsa. Skóry: 2 żywca → 1 skóra. Mięso nadaje się do jedzenia i nie ma terminu ważności. Skóry służą do szycia odzieży i wyposażenia.",
   "BLD-FISHER-Podstawowy-OPIS": "Zatrudnij rybaków, by dostarczali ryby. To dodatkowe źródło jedzenia, które pomaga urozmaicać posiłki mieszkańców.",
-  "BLD-FISHER-Podstawowy-INFO": "Ryby są jadalnym produktem I kategorii. Gotowy połów czeka na odbiór przez tragarzy. W Akademii możesz odkrywać sposoby zwiększania połowu.",
+  "BLD-FISHER-Podstawowy-INFO": "Ryby są jadalnym produktem I kategorii. Gotowy połów czeka na odbiór przez tragarzy. Od 5. poziomu Rybaka w Akademii odkryjesz wędzenie i przetwory rybne: produkty III kategorii, przygotowywane ze świeżych ryb na miejscu. Ryby potrzebne przydzielonym pracownikom pozostają przy budynku; nadwyżkę i gotowe wyroby odbierają tragarze.",
   "BLD-LEATHERWORKS-Przed szatami-OPIS": "Zakład skórzany przerabia skóry na ubrania cywilne i stroje wojskowe. Wybierz potrzebny wyrób i przydziel pracowników.",
   "BLD-LEATHERWORKS-Przed szatami-INFO": "4 skóry wystarczą na 1 strój cywilny, a 8 skór na 1 strój wojskowy. Stroje cywilne zaspokajają potrzeby mieszkańców od Ratusza 5; stroje wojskowe służą do szkolenia w Koszarach.",
   "BLD-LEATHERWORKS-Po szatach-OPIS": "Zakład skórzany szyje ubrania cywilne, stroje wojskowe i szaty profesorskie. Rozdziel załogę między potrzebne produkty.",
@@ -346,6 +346,8 @@ export const DEVELOPMENT_COPY = Object.freeze({
   "PROD-livestock": "Hodowla w Gospodarstwie. Nie jest jedzeniem; dostarczaj do Rzeźni.",
   "PROD-raw_milk": "Pozyskiwanie w Gospodarstwie. Jadalny produkt I kategorii; sytość: 1 punktów na porcję. Świeżość trwa 72 godziny łącznego pobytu w magazynie centralnym; transport i magazyn lokalny nie zużywają tego czasu.",
   "PROD-sour_milk": "72 h pobytu surowego mleka w centrali. Jadalny produkt I kategorii; sytość: 0,5 punktu na porcję. Może służyć do jedzenia lub wyrobu sera. Nadmiar powstały przy pełnym limicie kwaśnego mleka przepada.",
+  "PROD-smokedFish": "Wyrób u Rybaka: 4 świeże ryby → 1 ryba wędzona. Pożywienie III kategorii; sytość: 12 punktów na porcję. Wymaga odkrycia wędzenia i przetworów rybnych oraz 5. poziomu Rybaka. Świeże ryby są zużywane z miejscowego magazynu, bez przewozu do innego budynku.",
+  "PROD-fishPreserves": "Wyrób u Rybaka: 6 świeżych ryb → 1 porcja przetworów rybnych. Pożywienie III kategorii; sytość: 18 punktów na porcję. Wymaga tego samego odkrycia i 5. poziomu Rybaka. Świeże ryby są przerabiane na miejscu; gotowe przetwory czekają na tragarzy.",
   "PROD-fish": "Połów u Rybaka. Jadalny produkt I kategorii; sytość: 1 punktów na porcję.",
   "PROD-flour": "4 zboża → 1 mąka. Jadalny produkt II kategorii; sytość: 6 punktów na porcję.",
   "PROD-pasteurized_milk": "4 surowe mleka → 1 mleko pasteryzowane. Jadalny produkt II kategorii; sytość: 6 punktów na porcję. Nie kwaśnieje i można przechowywać je bezterminowo.",
@@ -393,7 +395,7 @@ export const DEVELOPMENT_COPY = Object.freeze({
 });
 
 export const DEVELOPMENT_NAMES = Object.freeze({bakery:'Piekarnia',dairy:'Mleczarnia',slaughterhouse:'Rzeźnia',fisher:'Rybak',leatherworks:'Zakład skórzany',academy:'Akademia',barracks:'Koszary',farm:'Gospodarstwo',warehouse:'Magazyn',theatre:'Teatr',windmill:'Młyn',lumber:'Drwale',quarry:'Kamieniołom',sawmill:'Tartak'});
-export const GOODS_NAMES = Object.freeze({wood:'Drewno',stone:'Kamień',planks:'Deski',grain:'Zboże',vegetables:'Warzywa',livestock:'Żywiec',rawMilk:'Surowe mleko',sourMilk:'Kwaśne mleko',fish:'Ryby',flour:'Mąka',pasteurizedMilk:'Mleko pasteryzowane',meat:'Mięso',leather:'Skóry',bread:'Chleb',cake:'Ciasto',cheese:'Ser',civilianClothes:'Ubrania cywilne',militaryClothes:'Stroje wojskowe',professorRobes:'Szaty profesorskie',food:'Żywność'});
+export const GOODS_NAMES = Object.freeze({wood:'Drewno',stone:'Kamień',planks:'Deski',grain:'Zboże',vegetables:'Warzywa',livestock:'Żywiec',rawMilk:'Surowe mleko',sourMilk:'Kwaśne mleko',fish:'Ryby',smokedFish:'Ryba wędzona',fishPreserves:'Przetwory rybne',flour:'Mąka',pasteurizedMilk:'Mleko pasteryzowane',meat:'Mięso',leather:'Skóry',bread:'Chleb',cake:'Ciasto',cheese:'Ser',civilianClothes:'Ubrania cywilne',militaryClothes:'Stroje wojskowe',professorRobes:'Szaty profesorskie',food:'Żywność'});
 export function developmentText(id, variables={}) { return (DEVELOPMENT_COPY[id] || '').replace(/\{([^}]+)\}/g,(match,key)=>Object.hasOwn(variables,key)?String(variables[key]):match); }
 export function developmentBuildingCopy(id,state={},type='OPIS') {
   let variant='Podstawowy';

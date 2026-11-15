@@ -862,3 +862,77 @@ body.reduce-motion .world-hotspot.tutorial-map-target{animation:none!important}
 
 /* Warehouse section toggles retain full touch targets in compact building panels. */
 #island-dialog button.action.warehouse-section-toggle{min-height:44px;margin:0;box-sizing:border-box}
+
+/* DEV: one visual rhythm for menu cards, forms and repeated actions. */
+#island-dialog{--menu-gap:12px;--menu-control-height:44px;--menu-card-radius:12px}
+#island-dialog .dialog-body button.action,
+#island-dialog .building-panel button.action{min-height:var(--menu-control-height);border-radius:9px;line-height:1.35}
+#island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-body>div>.action,
+#island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-body>div>.panel-grid>.action,
+#island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .social-menu-entries .action{min-height:var(--menu-control-height);padding:9px 12px}
+#island-dialog .info-card{border-radius:var(--menu-card-radius)}
+#island-dialog .panel-grid{align-items:stretch;gap:var(--menu-gap)}
+#island-dialog .panel-grid>.info-card{min-width:0;display:flex;flex-direction:column}
+#island-dialog .panel-grid>.info-card>.action:last-child{margin-top:auto}
+#island-dialog .menu-section-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--menu-gap);margin-block:var(--menu-gap);min-width:0}
+#island-dialog .menu-section-grid>*{min-width:0;max-width:100%;margin:0!important}
+#island-dialog .menu-section-grid>.info-card{display:flex;flex-direction:column}
+#island-dialog .menu-section-grid>.info-card>.action:last-child{margin-top:auto}
+#island-dialog .building-main,#island-dialog .building-upgrade-column{gap:var(--menu-gap)}
+#island-dialog .building-quick-actions,#island-dialog .compact-premium-actions,#island-dialog .workers-footer{gap:8px;align-items:stretch}
+#island-dialog .building-panel :is(input:not([type="checkbox"]):not([type="radio"]),select),
+#island-dialog .promo-code-fields :is(input,select){min-height:var(--menu-control-height);border-radius:8px}
+#island-dialog .promo-code-fields{display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,.65fr);align-items:end;gap:10px}
+#island-dialog .promo-code-fields>label{display:grid;gap:5px;min-width:0;margin:0}
+#island-dialog .promo-code-fields>.action{width:100%;margin:0;min-height:var(--menu-control-height)}
+#island-dialog .promo-code-fields :is(input,select){width:100%;height:var(--menu-control-height);margin:0}
+#island-dialog[data-panel-kind="settings"] .dialog-footer{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch}
+#island-dialog[data-panel-kind="settings"] .dialog-footer>.action{width:100%;margin:0;min-width:0}
+#island-dialog[data-panel-kind="settings"] .dialog-footer>.danger{grid-column:1/-1}
+
+/* Feedback owns a permanent header slot, so assigning people never moves + / -. */
+#island-dialog .dialog-header:has(>.dialog-header-feedback){display:grid;grid-template-columns:minmax(150px,.85fr) minmax(0,1.15fr);gap:18px;align-items:center;height:88px;min-height:88px;padding-block:12px}
+#island-dialog .dialog-header>.dialog-heading{min-width:0;max-height:64px;overflow:hidden}
+#island-dialog .dialog-header>.dialog-header-feedback{display:block;min-width:0;min-height:44px;max-height:60px;margin:0;padding:6px 10px;border:1px solid transparent;border-radius:9px;overflow:auto;overflow-wrap:anywhere;scrollbar-width:thin;color:#d2e5ed;font-size:12px;line-height:1.4;font-variant-numeric:tabular-nums;align-content:center}
+#island-dialog .dialog-header>.dialog-header-feedback:not(:empty){border-color:#6c8b9e80;background:#0b293a}
+#island-dialog .dialog-header>.dialog-header-feedback p{margin:0;font:inherit;color:inherit}
+#island-dialog .dialog-header>.dialog-heading h2{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+
+/* Kingdom keeps its own components inside the common dark menu surface. */
+#island-dialog .hl-kingdom-panel{max-width:none;max-height:none;overflow:visible;padding:0;border:0;border-radius:0;background:transparent;color:#d2e5ed;font:inherit}
+#island-dialog .hl-kingdom-panel>.hl-kingdom-heading>h2{display:none}
+#island-dialog .hl-kingdom-panel>.hl-kingdom-heading:not(:has(button)){display:none}
+#island-dialog .hl-kingdom-heading{gap:10px;min-height:44px}
+#island-dialog .hl-kingdom-panel :is(h2,h3){color:#ffe0a0}
+#island-dialog .hl-kingdom-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0}
+#island-dialog .hl-kingdom-panel button{min-height:44px;min-width:0;max-width:100%;padding:9px 12px;border-color:#e8c57d;border-radius:9px;background:linear-gradient(#edcb83,#c99a48);color:#152a32;font:700 13px/1.35 Inter,system-ui,sans-serif;overflow-wrap:anywhere}
+#island-dialog .hl-kingdom-panel button.hl-kingdom-secondary{border-color:#618398;background:linear-gradient(#254e67,#173a50);color:#edf7fa}
+#island-dialog .hl-kingdom-tabs>button{width:100%;margin:0}
+#island-dialog .hl-kingdom-card{padding:16px;margin:12px 0;border-color:#52718180;border-radius:12px;background:#102c3d}
+#island-dialog .hl-kingdom-muted{color:#b4c9d4}
+#island-dialog .hl-kingdom-panel :is(input[type="number"],select){min-width:0;min-height:44px;padding:8px 10px;border-color:#718e9f;border-radius:8px;background:#092b3e;color:#eef7f5}
+#island-dialog .hl-kingdom-actions{display:flex;gap:8px;align-items:stretch}
+#island-dialog .hl-kingdom-confirm{border-color:#d1b878;background:#17394c}
+
+@media(min-width:1100px) and (min-height:650px){
+ #island-dialog:is([data-panel-kind="residents"],[data-panel-kind="workers"],[data-panel-kind="resources"],[data-panel-kind="trade"],[data-panel-kind="premium"],[data-panel-kind="buildings"],[data-panel-kind="kingdom"],[data-panel-kind="building-details"]){width:min(1160px,calc(100vw - 40px));max-height:calc(100dvh - 28px)}
+ #island-dialog .menu-section-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #island-dialog:is([data-panel-kind="residents"],[data-panel-kind="workers"],[data-panel-kind="resources"],[data-panel-kind="trade"],[data-panel-kind="premium"],[data-panel-kind="buildings"]) .panel-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .dialog-body>div>.panel-grid{align-self:stretch}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .social-menu-entries{align-self:stretch;grid-template-rows:repeat(3,minmax(0,1fr));gap:10px}
+ #island-dialog:is([data-panel-kind="home"],[data-panel-kind="menu"]) .social-menu-entries .info-card{display:flex;flex-direction:column;justify-content:center;padding:10px}
+}
+@media(max-width:600px){
+ #island-dialog .dialog-header:has(>.dialog-header-feedback){grid-template-columns:minmax(0,1fr);grid-template-rows:42px 36px;gap:4px;height:112px;min-height:112px;padding-top:12px;padding-bottom:12px;padding-right:70px}
+ #island-dialog .dialog-header>.dialog-heading{max-height:42px}
+ #island-dialog .dialog-header>.dialog-heading .eyebrow{margin-bottom:2px;font-size:9px;line-height:12px}
+ #island-dialog .dialog-header>.dialog-heading h2{font-size:20px;line-height:26px;-webkit-line-clamp:1;text-overflow:ellipsis}
+ #island-dialog .dialog-header>.dialog-header-feedback{min-height:36px;max-height:36px;padding:3px 6px;font-size:11px;line-height:14px}
+ #island-dialog .promo-code-fields{grid-template-columns:minmax(0,1fr)}
+ #island-dialog .promo-code-fields>.action{width:100%}
+ #island-dialog[data-panel-kind="settings"] .dialog-footer{grid-template-columns:minmax(0,1fr)}
+ #island-dialog .warehouse-section-nav{grid-template-columns:minmax(0,1fr);gap:8px}
+ #island-dialog .warehouse-section-toggle{min-height:44px;font-size:13px;padding:10px 12px}
+ #island-dialog .hl-kingdom-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #island-dialog .hl-kingdom-actions>button{flex:1 1 140px}
+}

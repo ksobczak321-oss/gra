@@ -15,7 +15,7 @@ function crew(s,id,n,start=0) {for(const p of s.residents)if(p.workplace===id)p.
 function reload(s){const raw=structuredClone(s),out=structuredClone(raw);L.normalizeLogisticsState(out,raw);return out;}
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-5,`${a} != ${b}`);
 test('legacy material list remains five while32inventoryandpendingcapacity count every good',()=>{
- const s=island();assert.equal(L.MATERIAL_IDS.length,5);assert.equal(L.materialIds(s).length,20);s.resources.cheese=500;s.resources.professorRobes=400;assert.equal(L.ordinaryWarehouseUsed(s),900);assert.equal(L.warehouseUsed(s),900);
+ const s=island();assert.equal(L.MATERIAL_IDS.length,5);assert.equal(L.materialIds(s).length,22);s.resources.cheese=500;s.resources.professorRobes=400;assert.equal(L.ordinaryWarehouseUsed(s),900);assert.equal(L.warehouseUsed(s),900);
  const limits=L.warehouseLimits(s);s.resources.cheese=limits.perResource;const before=s.resources.cheese;L.receiveMaterials(s,{cheese:100});assert.equal(s.resources.cheese,before);assert.equal(s.pendingDeliveries.cheese,100);s.resources.cheese-=100;L.flushPendingDeliveries(s);assert.equal(s.resources.cheese,before);assert.equal(s.pendingDeliveries.cheese,0);
 });
 test('multiple farm directions produce separately with real assigned workers and reload keeps fractions',()=>{

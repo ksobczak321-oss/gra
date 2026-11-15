@@ -2,7 +2,7 @@
 
 To ściągawka do ręcznego sprawdzenia zmian DEV 0.15.0.0 / v32. Zaznaczaj punkt dopiero po własnej próbie. PRE-PROD nie otrzymał tego wydania.
 
-[Otwórz grę na DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-5) · [Otwórz klikaną listę](../testing/dev-v32-checklist.html)
+[Otwórz DEV na poziomie5](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?preview=admin1-level5&v=frontend-v32-6) · [Nowy gracz na poziomie1](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-6) · [Otwórz klikaną listę](../testing/dev-v32-checklist.html)
 
 Podgląd GitHub Pages działa bez logowania i trzyma postęp tylko w otwartej karcie. Odświeżenie lub zamknięcie zaczyna nowy podgląd. Zaznaczenia na osobnej liście nie są zapisem gry. Na szybki pierwszy przegląd wybierz punkty z etykietą „Szybki test”; procesy wielogodzinne wygodniej sprawdzać na lokalnym DEV z zegarem admin3.
 
@@ -11,7 +11,7 @@ Wszystkie punkty poniżej czekają na Twój ręczny odbiór. Wyniki testów auto
 ## Najpierw: wejście i nowe budynki
 
 - [ ] **DEV-01 — Start i miejsce dla mieszkańców** (Szybki test)
-  Sprawdź: Otwórz nowy podgląd i spójrz na licznik mieszkańców oraz opis Ratusza.
+  Sprawdź: Otwórz oddzielny link „Nowy gracz na poziomie1” i spójrz na licznik mieszkańców oraz opis Ratusza.
   Wynik: Start: 18 osób i 36 miejsc. Ratusz i Dom mają po 36 miejsc na poziom; tempo napływu mieszkańców zwiększono o 50%.
 
 - [ ] **DEV-02 — Wprowadzenie i samouczek** (Szybki test)
@@ -151,6 +151,28 @@ Wszystkie punkty poniżej czekają na Twój ręczny odbiór. Wyniki testów auto
   Wynik: Bazowa wspólna pojemność poziomu 1 wynosi 40 000. Koszyk potrzeb powiększa się o 40%, następnie zaokrągla w dół do pełnych 10 000. To jeden wspólny limit, bez mnożenia przez liczbę towarów. Stare zapasy ponad nowy limit nie są kasowane; nowe dostawy czekają na wolne miejsce.
 
 Pełna kolejność podświetleń: [CURRENT-TUTORIAL-ORDER.md](CURRENT-TUTORIAL-ORDER.md).
+
+## Nowe GO: menu, lokalne ryby i poziom5
+
+- [ ] **DEV-34 — Publiczny podgląd na poziomie5** (Szybki test)
+  Sprawdź: Otwórz link z preview=admin1-level5; sprawdź Ratusz, nazwę scenariusza i dostępne budynki. Osobno otwórz zwykły nowy profil.
+  Wynik: Scenariusz DEV faktycznie ma Ratusz5 i dostęp do budynków odblokowanych do tego poziomu. Rybak5 pozwala sprawdzić nowe badanie. Zwykły nowy gracz pozostaje na poziomie1. Publiczny scenariusz jest jawnie oznaczony i nie udaje logowania jakoadmin1.
+
+- [ ] **DEV-35 — Spójne menu i równowaga kolumn** (Szybki test)
+  Sprawdź: Porównaj Dom, Magazyn, producentów, Akademię, Koszary oraz menu główne, Ustawienia i Premium na komputerze i telefonie.
+  Wynik: Powiązane funkcje są razem, sekcje mają równe krawędzie i odstępy, pola i przyciski są wyrównane. Modlitwa jest po prawej w Domu. Telefon zachowuje logiczną kolejność jednej kolumny bez poziomego przewijania.
+
+- [ ] **DEV-36 — Trzy szybkie kliknięcia przydziału** (Szybki test)
+  Sprawdź: W budynku z wolnymi mieszkańcami kliknij+trzy razy szybko, patrząc na pozycję przycisku i komunikat o dojściu do pracy.
+  Wynik: Komunikat pojawia się przy nazwie budynku i nie przesuwa+/− ani przewinięcia. Wszystkie trzy kliknięcia trafiają w ten sam przycisk i przydzielają trzech mieszkańców, jeżeli pozwalają na to limity.
+
+- [ ] **DEV-37 — Lokalne przetwory rybne IIIkategorii** (Rozwój wyspy)
+  Sprawdź: Sprawdź próg badania przy Rybaku4/5. Ukończ odkrycie, przydziel załogę połowu i przetwarzania; obserwuj lokalne ryby i gotowe produkty.
+  Wynik: Od Rybaka5 jedno badanie odblokowuje rybę wędzoną i przetwory rybne IIIkategorii. Składniki są pobierane z lokalnego połowu bez transportu świeżych ryb do innego budynku. Kalibracja DEV:4ryby→1wędzona/12pkt;6ryb→1przetwory/18pkt.
+
+- [ ] **DEV-38 — Zbędne szczegóły i zachowane funkcje** (Szybki test)
+  Sprawdź: Sprawdź dół Magazynu i producentów, a następnie dostęp do zakupu mieszkańca, wizyt Latarni, wymiany Targu i informacji Ratusza.
+  Wynik: Nie ma pustego lub powtarzającego bieżący ekran przycisku „Więcej o budynku”. Rzeczywiste funkcje pozostają dostępne przez nazwane wejścia lub główny widok.
 
 ## Dostęp i granice testu
 

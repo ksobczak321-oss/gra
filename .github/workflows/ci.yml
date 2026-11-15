@@ -138,7 +138,7 @@ jobs:
           import subprocess
           import sys
 
-          for test in ('tests/harborlight-pages-dev-v32-smoke.py', 'tests/harborlight-native-map-v32-smoke.py', 'tests/harborlight-building-access-v32-smoke.py', 'tests/harborlight-tour-route-v5-smoke.py', 'tests/harborlight-warehouse-sections-v32-smoke.py', 'tests/harborlight-theatre-selection-v32-smoke.py', 'tests/harborlight-save-packing-v32-smoke.py', 'tests/harborlight-original-puzzles-v32-smoke.py'):
+          for test in ('tests/harborlight-pages-dev-v32-smoke.py', 'tests/harborlight-level5-preview-v32-smoke.py', 'tests/harborlight-new-building-layout-v32-smoke.py', 'tests/harborlight-menu-consistency-v32-smoke.py', 'tests/harborlight-worker-feedback-v32-smoke.py', 'tests/harborlight-native-map-v32-smoke.py', 'tests/harborlight-building-access-v32-smoke.py', 'tests/harborlight-tour-route-v5-smoke.py', 'tests/harborlight-warehouse-sections-v32-smoke.py', 'tests/harborlight-theatre-selection-v32-smoke.py', 'tests/harborlight-save-packing-v32-smoke.py', 'tests/harborlight-original-puzzles-v32-smoke.py'):
               print('Starting DEV v32 browser acceptance: ' + test, flush=True)
               status = subprocess.call([sys.executable, '-u', test])
               if status:

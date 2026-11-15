@@ -1,5 +1,5 @@
-import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js';
-import { NEW_BUILDINGS } from './harborlight-v1-provisions.js?v=frontend-v32-5';
+import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-6';
+import { NEW_BUILDINGS } from './harborlight-v1-provisions.js?v=frontend-v32-6';
 
 // Reuse the previously unused buildings painted into the approved island.
 // Coordinates refer to its original 1672 × 941 canvas; no new artwork overlays it.
@@ -12,11 +12,11 @@ export const DEVELOPMENT_BUILDINGS = Object.freeze({
   academy:{name:'Akademia',x:439,y:506,width:98,height:79,footprint:'polygon(3% 37%,20% 8%,53% 2%,91% 43%,90% 88%,34% 98%,8% 78%)'},
   barracks:{name:'Koszary',x:1295,y:162,width:87,height:92,footprint:'polygon(9% 38%,35% 6%,72% 16%,96% 44%,88% 91%,18% 100%)'}
 });
-const RECIPE_LABELS={farmGrain:'Zboże',farmVegetables:'Warzywa',farmLivestock:'Żywiec',farmMilk:'Surowe mleko',farmCheese:'Ser',wood:'Drewno',stone:'Kamień',flour:'Mąka',planks:'Deski',bread:'Chleb',cake:'Ciasto',pasteurizedMilk:'Mleko pasteryzowane',meat:'Mięso',leather:'Skóry',fish:'Ryby',civilianClothes:'Ubrania cywilne',militaryClothes:'Stroje wojskowe',professorRobes:'Szaty profesorskie'};
-const FALLBACK_RECIPES={farm:['farmGrain','farmVegetables','farmLivestock','farmMilk','farmCheese'],windmill:['flour'],bakery:['bread','cake'],dairy:['pasteurizedMilk'],slaughterhouse:['meat','leather'],fisher:['fish'],leatherworks:['civilianClothes','militaryClothes','professorRobes'],lumber:['wood'],quarry:['stone'],sawmill:['planks']};
-const RECIPE_INPUTS={flour:{grain:4},bread:{flour:4},cake:{flour:4,rawMilk:2},pasteurizedMilk:{rawMilk:4},meat:{livestock:2},leather:{livestock:2},farmCheese:{sourMilk:4},civilianClothes:{leather:4},militaryClothes:{leather:8},professorRobes:{leather:8},planks:{wood:2}};
-const FOOD_IDS=['grain','vegetables','rawMilk','sourMilk','fish','flour','pasteurizedMilk','meat','bread','cake','cheese','food'];
-const SATIETY={grain:1,vegetables:1,rawMilk:1,sourMilk:.5,fish:1,flour:6,pasteurizedMilk:6,meat:6,bread:36,cake:48,cheese:12,food:6};
+const RECIPE_LABELS={farmGrain:'Zboże',farmVegetables:'Warzywa',farmLivestock:'Żywiec',farmMilk:'Surowe mleko',farmCheese:'Ser',wood:'Drewno',stone:'Kamień',flour:'Mąka',planks:'Deski',bread:'Chleb',cake:'Ciasto',pasteurizedMilk:'Mleko pasteryzowane',meat:'Mięso',leather:'Skóry',fish:'Ryby',smokedFish:'Ryba wędzona',fishPreserves:'Przetwory rybne',civilianClothes:'Ubrania cywilne',militaryClothes:'Stroje wojskowe',professorRobes:'Szaty profesorskie'};
+const FALLBACK_RECIPES={farm:['farmGrain','farmVegetables','farmLivestock','farmMilk','farmCheese'],windmill:['flour'],bakery:['bread','cake'],dairy:['pasteurizedMilk'],slaughterhouse:['meat','leather'],fisher:['fish','smokedFish','fishPreserves'],leatherworks:['civilianClothes','militaryClothes','professorRobes'],lumber:['wood'],quarry:['stone'],sawmill:['planks']};
+const RECIPE_INPUTS={flour:{grain:4},bread:{flour:4},cake:{flour:4,rawMilk:2},pasteurizedMilk:{rawMilk:4},meat:{livestock:2},leather:{livestock:2},farmCheese:{sourMilk:4},civilianClothes:{leather:4},militaryClothes:{leather:8},professorRobes:{leather:8},planks:{wood:2},smokedFish:{fish:4},fishPreserves:{fish:6}};
+const FOOD_IDS=['grain','vegetables','rawMilk','sourMilk','fish','flour','pasteurizedMilk','meat','bread','cake','cheese','smokedFish','fishPreserves','food'];
+const SATIETY={grain:1,vegetables:1,rawMilk:1,sourMilk:.5,fish:1,flour:6,pasteurizedMilk:6,meat:6,bread:36,cake:48,cheese:12,smokedFish:12,fishPreserves:18,food:6};
 const num=value=>Number.isFinite(Number(value))?Number(value):0;
 const whole=value=>Math.max(0,Math.floor(num(value)));
 const label=id=>GOODS_NAMES[id]||RECIPE_LABELS[id]||DEVELOPMENT_NAMES[id]||id;
@@ -39,6 +39,14 @@ async function act(options,type,payload={}){try{const result=await options.onAct
 function submit(text,handler){return node('button',{type:'submit',class:'v32-button v32-primary',text,onClick:event=>{if(!event.currentTarget.form){event.preventDefault();handler(event);}}});}
 function form(handler,...children){return node('form',{class:'v32-form',onSubmit:event=>{event.preventDefault();if(event.currentTarget.reportValidity())handler(event);}},...children);}
 
+// Each column groups one task family; DOM order remains logical on a phone.
+function controlColumns(root,secondaryNodes=[]){
+  const main=node('div',{class:'v32-column','data-v32-column':'main'});
+  const secondary=node('div',{class:'v32-column','data-v32-column':'secondary'});
+  for(const child of [...root.children])(secondaryNodes.includes(child)?secondary:main).append(child);
+  root.classList.add('v32-panel-layout');root.append(main,secondary);return root;
+}
+
 /** The same native building, cropped with CSS for its dock and panel thumbnail. */
 export function developmentBuildingArt(id){
   const config=DEVELOPMENT_BUILDINGS[id]||DEVELOPMENT_BUILDINGS.bakery;
@@ -55,13 +63,13 @@ export function renderProductionControls(building,options={}){
   const available=call(options,'provisions','availableRecipes',state,building);
   const catalog=api(options,'provisions').RECIPE_CATALOG||{};
   const ids=Array.isArray(available)?available.map(item=>typeof item==='string'?item:item.id||item.recipeId):FALLBACK_RECIPES[building]||[];
-  const recipes=ids.filter(id=>id&&!(id==='farmCheese'&&!(num(b.level)>=6&&state.education?.discoveries?.cheese))&&!(id==='professorRobes'&&!num(state.buildings?.academy?.level))&&!(building==='farm'&&num(b.level)<2&&['farmLivestock','farmMilk'].includes(id)));
+  const recipes=ids.filter(id=>id&&!(['smokedFish','fishPreserves'].includes(id)&&!(num(b.level)>=5&&state.education?.discoveries?.fishProcessing))&&!(id==='farmCheese'&&!(num(b.level)>=6&&state.education?.discoveries?.cheese))&&!(id==='professorRobes'&&!num(state.buildings?.academy?.level))&&!(building==='farm'&&num(b.level)<2&&['farmLivestock','farmMilk'].includes(id)));
   if(!recipes.length)return null;
   const assignments=call(options,'provisions','productionAssignments',state,building)||state.provisions?.assignments?.[building]||{};
   const assigned=Array.isArray(assignments)?Object.fromEntries(assignments.map(item=>[item.recipeId||item.id,item.workers])):assignments;
   const capacity=call(options,'provisions','crewCapacity',state,building);
   const crewLimit=typeof capacity==='object'?capacity.total??capacity.capacity:capacity;
-  const title=section('Produkty i pracownicy',p(`Załoga: ${whole(b.workers)}${crewLimit==null?'':` / ${whole(crewLimit)}`}. Każdą osobę przydziel do jednego produktu.`),p('Przed zmianą produktu zmniejsz dotychczasowy przydział, a następnie przydziel wolne osoby do nowego produktu.','v32-muted'));
+  const title=section('Produkty i pracownicy',...(options.context?.compactProductionHelp?[]:[p(`Załoga: ${whole(b.workers)}${crewLimit==null?'':` / ${whole(crewLimit)}`}. Każdą osobę przydziel do jednego produktu.`),p('Przed zmianą produktu zmniejsz dotychczasowy przydział, a następnie przydziel wolne osoby do nowego produktu.','v32-muted')]));
   const shownGoods=new Set();
   for(const recipeId of recipes){
     const recipe=Array.isArray(catalog)?catalog.find(r=>(r.id||r.recipeId)===recipeId)||{}:catalog[recipeId]||{};
@@ -137,23 +145,25 @@ export function renderAcademyControls(options={}){
   root.append(courseList);
   const graduates=candidates.filter(person=>person.graduate||person.rounds>0||state.education?.people?.[uid(person)]?.rounds>0),appointment=selectPeople(graduates,'Wybierz absolwenta');appointment.required=true;
   root.append(section('Mianowanie profesora',p('Mianowanie zużywa jedną szatę profesorską. Profesor zajmuje miejsce i łóżko Akademii. Poza Akademią pracuje z połową wydajności niewykształconego mieszkańca.'),form(()=>act(options,'educationAppoint',{personUid:appointment.value}),field('Absolwent',appointment),submit('Mianuj profesora'))));
-  for(const professor of professors){root.append(node('div',{class:'v32-list-row'},node('span',{text:`${name(professor)}${professor.present===false?' · poza Akademią':professor.busy?' · zajęty':' · wolny'}`}),btn('Powrót do Akademii',()=>act(options,'educationReturnProfessor',{personUid:uid(professor)}),{disabled:Boolean(professor.busy)||professor.present!==false})));}
-  root.append(renderResearchControls(options,s));
+  const professorList=section('Zespół Akademii');
+  for(const professor of professors){professorList.append(node('div',{class:'v32-list-row'},node('span',{text:`${name(professor)}${professor.present===false?' · poza Akademią':professor.busy?' · zajęty':' · wolny'}`}),btn('Powrót do Akademii',()=>act(options,'educationReturnProfessor',{personUid:uid(professor)}),{disabled:Boolean(professor.busy)||professor.present!==false})));}
+  if(professors.length)root.append(professorList);
+  const research=renderResearchControls(options,s);root.append(research);
   root.append(section('Kolejna runda',p('Kolejna runda obejmuje mieszkańców aktualnie należących do wyspy. Przyrost wydajności z ukończonych rund pozostaje przy danej osobie.'),btn('Rozpocznij następną rundę',()=>act(options,'educationStartRound'),{'data-v32-next-round':''})));
-  return root;
+  return controlColumns(root,[research]);
 }
 
 export function renderResearchControls(options={},provided){
   const s=provided||educationState(options),root=section('Badania i odkrycia');
   const catalog=Array.isArray(s.researchCatalog)?s.researchCatalog:Object.entries(s.researchCatalog||{}).map(([id,item])=>({id,...item}));
-  const topic=node('select',{},node('option',{value:'',text:'Wybierz badanie'}),...catalog.map(item=>node('option',{value:item.id||item.topic,text:item.name||item.title||item.id||item.topic,disabled:item.available===false||item.quote?.ok===false})));topic.required=true;
+  const topic=node('select',{},node('option',{value:'',text:'Wybierz badanie'}),...catalog.map(item=>node('option',{value:item.id||item.topic,text:`${item.name||item.title||item.id||item.topic}${item.quote?.ok===false&&item.minimumBuilding?` · ${Object.entries(item.minimumBuilding).map(([id,n])=>`${DEVELOPMENT_NAMES[id]||id}: poziom ${n}`).join(', ')}`:''}`,disabled:item.available===false||item.quote?.ok===false})));topic.required=true;
   const selectProfessors=(selected=[])=>{const checks=new Map(),box=node('fieldset',{class:'v32-check-list'},node('legend',{text:'Profesorowie'}));for(const professor of s.professors||[]){const key=uid(professor),checkbox=node('input',{type:'checkbox',value:key,checked:selected.includes(key),disabled:professor.present===false||Boolean(professor.busy&&!selected.includes(key))});checks.set(key,checkbox);box.append(field(name(professor),checkbox));}return {element:box,values:()=>[...checks].filter(([,c])=>c.checked).map(([id])=>id)};};
   const staff=selectProfessors(),quoteInfo=p('Wybierz temat, aby zobaczyć koszt i bazowy czas.','v32-status');topic.addEventListener('change',()=>{const selected=catalog.find(item=>(item.id||item.topic)===topic.value),quote=selected?.quote;quoteInfo.textContent=quote?.ok?`${selected.effect||''} Koszt: ${Object.entries(quote.cost||{}).map(([id,n])=>`${format(n)} ${label(id)}`).join(', ')}. Bazowy czas jednego profesora: ${duration(quote.work)}.`:quote?.message||'Wybierz temat, aby zobaczyć koszt i bazowy czas.';});root.append(form(()=>{if(!staff.values().length){announce(options,'Wybierz co najmniej jednego profesora.',false);return;}act(options,'educationResearchStart',{topic:topic.value,professorUids:staff.values()});},field('Temat',topic),quoteInfo,staff.element,submit('Rozpocznij badanie')));
   for(const research of s.researches||[]){const speed=accelerationControls(options,'education',research.id);if(speed)root.append(speed);const staffEdit=selectProfessors(research.professorUids||[]);root.append(node('article',{class:'v32-card'},node('strong',{text:research.name||catalog.find(item=>(item.id||item.topic)===research.topic)?.name||research.topic}),p(`${research.paused?'Badanie wstrzymane. ':''}Pozostało około ${duration(research.remainingSeconds??research.remainingWork)}. Koszt opłacony: ${typeof research.cost==='object'?Object.entries(research.cost).map(([id,n])=>`${format(n)} ${label(id)}`).join(', '):`${format(research.cost)} monet`}.`),form(()=>act(options,'educationResearchAssign',{researchId:research.id,professorUids:staffEdit.values()}),staffEdit.element,submit('Zmień zespół')),btn('Anuluj badanie',()=>{const confirm=node('input',{type:'checkbox',required:true});const panel=node('div',{class:'v32-confirm'},p('Anulowanie usuwa postęp i opłatę.'),form(()=>act(options,'educationResearchCancel',{researchId:research.id}),field('Potwierdzam anulowanie',confirm),submit('Potwierdź anulowanie')));root.append(panel);})));}
   if(num(stateOf(options).buildings?.warehouse?.level)>=5){
     const catalog=api(options,'provisions').RECIPE_CATALOG||{},routes=[];
     for(const [sourceId,source]of Object.entries(catalog))for(const target of Object.values(catalog))for(const product of Object.keys(source.outputs||{}))if(source.building!==target.building&&target.inputs?.[product]&&num(stateOf(options).buildings?.[source.building]?.level)>0&&num(stateOf(options).buildings?.[target.building]?.level)>0){const id=`route:${source.building}:${target.building}:${product}`;if(!routes.some(route=>route.id===id)&&!s.discoveries?.[id])routes.push({id,source:source.building,target:target.building,product});}
-    if(routes.length){const select=node('select',{},...routes.map(route=>node('option',{value:route.id,text:`${DEVELOPMENT_NAMES[route.source]||route.source} → ${DEVELOPMENT_NAMES[route.target]||route.target}: ${label(route.product)}`}))),teachers=selectProfessors(),details=p('','v32-status');const update=()=>{const route=routes.find(route=>route.id===select.value),quote=call(options,'education','researchQuote',stateOf(options),route.id,options.context,route);details.textContent=quote?.ok?`Koszt: ${Object.entries(quote.cost).map(([id,n])=>`${format(n)} ${label(id)}`).join(', ')}. Bazowy czas: ${duration(quote.work)}.`:quote?.message||'';};select.addEventListener('change',update);update();root.append(section('Odkryj trasę dostaw',form(()=>{if(!teachers.values().length){announce(options,'Wybierz co najmniej jednego profesora.',false);return;}const route=routes.find(route=>route.id===select.value);act(options,'educationResearchStart',{topic:route.id,route:{source:route.source,target:route.target,product:route.product},professorUids:teachers.values()});},field('Kierunek i produkt',select),details,teachers.element,submit('Zbadaj trasę'))));}
+    if(routes.length){const select=node('select',{},...routes.map(route=>node('option',{value:route.id,text:`${DEVELOPMENT_NAMES[route.source]||route.source} → ${DEVELOPMENT_NAMES[route.target]||route.target}: ${label(route.product)}`}))),teachers=selectProfessors(),details=p('','v32-status');const update=()=>{const route=routes.find(route=>route.id===select.value),quote=call(options,'education','researchQuote',stateOf(options),route.id,options.context,{source:route.source,target:route.target,product:route.product});details.textContent=quote?.ok?`Koszt: ${Object.entries(quote.cost).map(([id,n])=>`${format(n)} ${label(id)}`).join(', ')}. Bazowy czas: ${duration(quote.work)}.`:quote?.message||'';};select.addEventListener('change',update);update();root.append(section('Odkryj trasę dostaw',form(()=>{if(!teachers.values().length){announce(options,'Wybierz co najmniej jednego profesora.',false);return;}const route=routes.find(route=>route.id===select.value);act(options,'educationResearchStart',{topic:route.id,route:{source:route.source,target:route.target,product:route.product},professorUids:teachers.values()});},field('Kierunek i produkt',select),details,teachers.element,submit('Zbadaj trasę'))));}
   }
   root.append(p('Szaty profesorskie są dostępne automatycznie po odblokowaniu Akademii. Podstawowe ciasto nie wymaga badań.','v32-muted'));return root;
 }
@@ -174,7 +184,7 @@ export function renderBarracksControls(options={}){
   const away=section('Oddziały i powroty');if(!s.squads?.length&&!s.waiting?.length)away.append(p('Żaden oddział nie oczekuje na powrót.','v32-muted'));
   const squads=[...(s.squads||[]).filter(item=>!item.stage||['away','waiting'].includes(item.stage)),...(s.waiting||[])].filter((item,index,all)=>all.findIndex(other=>other.id===item.id)===index);
   for(const squad of squads){const waiting=squad.stage==='waiting'||squad.status==='waiting'||squad.waiting||s.waiting?.some(item=>item.id===squad.id);away.append(node('article',{class:'v32-card'},node('strong',{text:squad.name||`Oddział ${squad.id}`}),p(waiting?'Oddział czeka poza wyspą. Odpoczynek zacznie się dopiero po jego przyjęciu.':'Oddział jest na wyprawie.'),waiting?p(squad.message||squad.waitReason||`Potrzeba Ratusza ${squad.waiting?.requiredTownhall||'—'} i Koszar ${squad.waiting?.requiredBarracks||'—'}. ${squad.waiting?.townhallDeadline?`Termin Ratusza: ${new Date(squad.waiting.townhallDeadline).toLocaleString('pl-PL')}.`:squad.waiting?.upgradeDeadline?`Bezpłatna rozbudowa Koszar do: ${new Date(squad.waiting.upgradeDeadline).toLocaleString('pl-PL')}.`:''}`):null,waiting?btn('Przyjmij oddział',()=>act(options,'militaryClaimReturn',{squadId:squad.id})):null,waiting&&(squad.freeBarracksUpgradeAvailable||num(squad.waiting?.upgradeDeadline)>num(s.now??state.worldTimeMs)&&num(state.buildings?.townhall?.level)>=num(squad.waiting?.requiredTownhall)&&num(state.buildings?.barracks?.level)<num(squad.waiting?.requiredBarracks))?btn('Bezpłatnie rozbuduj Koszary',()=>act(options,'militaryFreeBarracksUpgrade',{squadId:squad.id})):null));}
-  root.append(away);return root;
+  root.append(away);return controlColumns(root,[expedition,away]);
 }
 
 // Only the unfinished UI choice is retained here. It is neither a game save
@@ -243,7 +253,13 @@ export function renderTheatreControls(options={}){
   }
   time.addEventListener('input',()=>{draft.timeValue=time.value;draft.timeTouched=true;updateCost();});
   root.append(form(()=>schedule([...draft.selected].filter(key=>availableUids.has(key))),field('Początek przedstawienia',time),node('div',{class:'v32-audience-all'},sendAll,allCost),p('„Wyślij wszystkich” od razu planuje przedstawienie dla wszystkich dostępnych osób w wybranym terminie. Aby zaprosić część mieszkańców, rozwiń listę poniżej.','v32-muted'),audience,cost,p('Przy zatwierdzeniu utrwalamy listę widzów oraz pełną opłatę. Późniejsza zmiana pracy mieszkańca nie zmienia rezerwacji.','v32-muted'),submitSelected));updateCost();
-  const shows=s.shows||s.scheduled||s.performances||[];for(const show of shows){root.append(node('article',{class:'v32-card'},node('strong',{text:show.active||show.status==='running'?'Przedstawienie trwa':show.status==='completed'?'Zakończone przedstawienie':show.status==='cancelled'?'Odwołane przedstawienie':'Zaplanowane przedstawienie'}),p(`${new Date(show.startAt??show.startsAt).toLocaleString('pl-PL')} · ${show.audience?.length??show.personUids?.length??show.viewers??0} widzów · opłata ${format(show.cost??show.coins)} monet`),show.stage==='planned'||show.status==='planned'?btn('Anuluj przedstawienie',()=>act(options,'theatreCancelShow',{showId:show.id})):null));}
+  const shows=s.shows||s.scheduled||s.performances||[],showList=section('Przedstawienia na wyspie');
+  if(!shows.length)showList.append(p('Nie zaplanowano jeszcze przedstawienia.','v32-muted'));
+  for(const show of shows){showList.append(node('article',{class:'v32-card'},node('strong',{text:show.active||show.status==='running'?'Przedstawienie trwa':show.status==='completed'?'Zakończone przedstawienie':show.status==='cancelled'?'Odwołane przedstawienie':'Zaplanowane przedstawienie'}),p(`${new Date(show.startAt??show.startsAt).toLocaleString('pl-PL')} · ${show.audience?.length??show.personUids?.length??show.viewers??0} widzów · opłata ${format(show.cost??show.coins)} monet`),show.stage==='planned'||show.status==='planned'?btn('Anuluj przedstawienie',()=>act(options,'theatreCancelShow',{showId:show.id})):null));}
+  const description=root.querySelector(':scope>p'),planning=root.querySelector(':scope>form');
+  const main=section('Planowanie przedstawienia',planning),secondary=node('div',{class:'v32-column','data-v32-column':'secondary'},section('Zasady przedstawienia',description),showList);
+  root.classList.add('v32-theatre-controls');main.dataset.v32Column='main';main.classList.add('v32-column');
+  root.append(node('div',{class:'v32-panel-layout v32-theatre-layout'},main,secondary));
   return root;
 }
 
@@ -251,19 +267,31 @@ export function renderTheatreControls(options={}){
 export function renderDevelopmentBuildingPanel(id,options={}){
   const state=stateOf(options),b=state.buildings?.[id]||{},config=DEVELOPMENT_BUILDINGS[id];
   const root=node('div',{class:'v32-building-body','data-v32-panel':id});
-  root.append(node('div',{class:'v32-building-summary'},config?developmentBuildingArt(id):null,node('div',{},node('h2',{text:config?.name||DEVELOPMENT_NAMES[id]||id}),p(`Poziom ${whole(b.level)}`,'v32-eyebrow'))),p(developmentBuildingCopy(id,state)));
-  const info=node('details',{class:'v32-info'},node('summary',{text:'Więcej o budynku'}),p(developmentBuildingCopy(id,state,'INFO')));root.append(info);
-  if(num(b.level)<=0){root.append(p('Ten budynek wymaga odblokowania i wybudowania.'));if(options.context?.buildingControls)root.append(options.context.buildingControls(id));return root;}
-  if(options.context?.workerControls&&FALLBACK_RECIPES[id])root.append(options.context.workerControls(id));
-  const production=renderProductionControls(id,options);if(production)root.append(production);
-  if(id==='academy')root.append(renderAcademyControls(options));
-  if(id==='barracks')root.append(renderBarracksControls(options));
-  if(id==='warehouse')root.append(renderFoodControls(options));
-  if(id==='theatre')root.append(renderTheatreControls(options));
-  const transport=renderTransportControls(id,options);if(transport)root.append(transport);
-  if(options.context?.buildingControls)root.append(options.context.buildingControls(id));
-  if(options.showConstructionMix){const build=renderConstructionFoodMix(id,options);if(build)root.append(build);}
-  return root;
+  root.append(node('div',{class:'v32-building-summary v32-building-overview'},config?developmentBuildingArt(id):null,node('div',{},p(`Poziom ${whole(b.level)}`,'v32-eyebrow'),p(developmentBuildingCopy(id,state),'v32-building-description'))));
+  const producer=Boolean(FALLBACK_RECIPES[id])&&num(b.level)>0;
+  const info=producer?section('Zasady działania',p(developmentBuildingCopy(id,state,'INFO')),p('Każdą osobę przydziel do jednego produktu. Przed zmianą produktu zmniejsz dotychczasowy przydział, a następnie przydziel wolne osoby do nowego produktu.','v32-muted')):node('details',{class:'v32-info'},node('summary',{text:'Zasady działania'}),p(developmentBuildingCopy(id,state,'INFO')));
+  let layout,main,secondary;
+  if(num(b.level)>0&&(id==='academy'||id==='barracks')){
+    layout=id==='academy'?renderAcademyControls(options):renderBarracksControls(options);
+    main=layout.querySelector('[data-v32-column="main"]');secondary=layout.querySelector('[data-v32-column="secondary"]');
+  }
+  if(!main||!secondary){
+    layout=node('div',{class:'v32-panel-layout'});
+    main=node('div',{class:'v32-column','data-v32-column':'main'});
+    secondary=node('div',{class:'v32-column','data-v32-column':'secondary'});layout.append(main,secondary);
+    if(num(b.level)<=0)main.append(section('Budynek oczekuje',p('Ten budynek wymaga odblokowania i wybudowania.')));
+    else{
+      if(options.context?.workerControls&&FALLBACK_RECIPES[id])main.append(options.context.workerControls(id));
+      const production=renderProductionControls(id,{...options,context:{...options.context,compactProductionHelp:true}});if(production)main.append(production);
+      if(id==='warehouse')main.append(renderFoodControls(options));
+      if(id==='theatre')main.append(renderTheatreControls(options));
+    }
+  }
+  if(options.context?.buildingControls)secondary.prepend(options.context.buildingControls(id));
+  secondary.append(info);
+  const transport=num(b.level)>0?renderTransportControls(id,options):null;if(transport)secondary.append(transport);
+  if(options.showConstructionMix){const build=renderConstructionFoodMix(id,options);if(build)secondary.append(build);}
+  root.append(layout);return root;
 }
 
 export function createDevelopmentUI(options={}){

@@ -1,10 +1,10 @@
-import { warehouseCapacityForLevel } from './harborlight-v1-economy.js?v=frontend-v32-5';
-import { lessonCopy as approvedLessonCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-5';
+import { warehouseCapacityForLevel } from './harborlight-v1-economy.js?v=frontend-v32-6';
+import { lessonCopy as approvedLessonCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-6';
 // Persistent learning, meaningful activity and future verified social hooks.
 // No DOM, network requests or account creation happen in this module.
-import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v32-5';
-import { foodReservePlan, MATERIAL_IDS as DEV_MATERIAL_IDS } from './harborlight-v1-provisions.js?v=frontend-v32-5';
-import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v32-5';
+import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v32-6';
+import { foodReservePlan, MATERIAL_IDS as DEV_MATERIAL_IDS } from './harborlight-v1-provisions.js?v=frontend-v32-6';
+import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v32-6';
 
 export const ACTIVE_PLAY_SECONDS = 300;
 export const ABANDONED_PLAY_SECONDS = 48 * 3600;
@@ -512,7 +512,12 @@ export function tutorialRows(state) {
     const progressRequired = item.assignmentCount || null;
     const progressCurrent = progressRequired ? Math.min(progressRequired, (state.residents || []).filter(person => person.workplace === item.subject.slice(7) && !person.pendingRelease).length) : null;
     const guidance = tutorialGuidanceStatus(state, item);
-    return { ...item, balanced, progressCurrent, progressRequired, autoSkipped, currentSubstep: guidance?.current || null, substeps: guidance?.steps || [],
+    return { ...item,
+      ...(state.ruleset === 32 && item.route === 'warehouse' ? {
+        description: item.description?.replaceAll('More building details', 'Transport priorities').replaceAll('Warehouse building details', 'Warehouse transport priorities'),
+        descriptionPl: item.descriptionPl?.replaceAll('„Więcej o budynku”', '„Priorytety transportu”')
+      } : {}),
+      balanced, progressCurrent, progressRequired, autoSkipped, currentSubstep: guidance?.current || null, substeps: guidance?.steps || [],
       ...(guidance?.current ? { guideSelector: guidance.current.selector } : {}), pendingDecision: !autoSkipped && balanced && claimed && !!chest && !chest.skipped && !chest.shared,
       settlement: balanced && item.subject === 'finish-tutorial' ? tutorialSettlementStatus(state) : null,
       reward: chest ? { ...chest.reward } : {}, rewardRange: balanced ? null : { minimum: TUTORIAL_CHEST_MIN, maximum: TUTORIAL_CHEST_MAX, eachMaterial: true }, unlocked: prerequisiteMet || completed, prerequisiteMet, completed, claimed,

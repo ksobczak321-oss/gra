@@ -28198,6 +28198,149 @@
         "UI:bounded-dark-building-columns",
         "ECON:shared-warehouse-needs-basket-plus40-floor10000"
       ]
+    },
+    {
+      "id": "HL-CHG-1142",
+      "epic": "HL-EPIC-UI",
+      "area": "Odbiór wizualny i dostęp DEV",
+      "type": "Story",
+      "title": "Spójne menu, nieruchome komunikaty i publiczny scenariusz poziomu5",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-15",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Bieżące GO zatwierdza wszystkie późniejsze notatki o spójności menu, lokalnych przetworach rybnych i rzeczywistym linku do poziomu5.",
+        "reference": "chat:GO:menu-fish-public-level5"
+      },
+      "status": {
+        "implementation": "in_progress",
+        "dev": "implemented_locally_tested; publication_pending",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Wszystkie menu zachowują spójność logiczną i wizualną: grupy funkcji, wyrównane karty, krawędzie, odstępy i44pxkontrolki. Układ desktop wykorzystuje obie kolumny, telefon jedną logiczną kolejność.",
+        "Dom przenosi Indywidualną modlitwę na prawą stronę pod premium. Nowe budynki korzystają ze spójnego układu kart, Akademia rozdziela naukę i badania, Koszary szkolenie i wyprawy.",
+        "Komunikat o docieraniu pracowników ma stałe miejsce przy nazwie; nie przesuwa przycisków+/− ani przewinięcia. Trzy szybkie kliknięcia zachowują cel.",
+        "Puste Więcej o budynku znika z Magazynu i duplikujących paneli; rzeczywiste funkcje szczegółów mają zachowany dostęp.",
+        "Publiczny link preview=admin1-level5 faktycznie rozpoczyna oznaczony scenariusz Ratusza5 bez konta i trwałego zapisu. Zwykły nowy gracz pozostaje na poziomie1; parametr nie zmienia uwierzytelnionych zapisów ani obcych środowisk.",
+        "Lokalne admin1/admin1 zachowuje Ratusz5 i wcześniejszy postęp bez resetu; admin2/admin3 iPRE-PROD pozostają bez awansu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1140",
+        "HL-CHG-1141"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-MENU-FISH-LEVEL5.md",
+          "docs/v32/TEST-CHEATSHEET.md",
+          "docs/v32/DEV-READY.md"
+        ],
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-play.css",
+          "harborlight-v1-development-ui.js",
+          "harborlight-v1-development.css",
+          "harborlight-v1-profile.js",
+          "harborlight-v1-dev-preview.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": null,
+        "release_note": "Zakres zaakceptowany; dowody nowej implementacji, własnegoCI iPagescache6 oczekują na rzeczywiste wyniki. Przegląd sprzed poprawki obejmował96widoków głównych i24szczegółów; nie jest dowodem naprawy."
+      },
+      "notes": [
+        "Wcześniejsze oczekiwanie naGO zastępuje bieżące „dobra wrzucaj doDEV”.",
+        "Publiczny scenariusz poziomu5 nie jest uwierzytelnionym kontemadmin1; lokalny stan konta pozostaje osobny i chroniony."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "UI:consistent-balanced-menu-layout",
+        "UI:stable-header-worker-feedback",
+        "UI:no-empty-building-details",
+        "DEV:explicit-level5-preview"
+      ]
+    },
+    {
+      "id": "HL-CHG-1143",
+      "epic": "HL-EPIC-UI",
+      "area": "Odkrycie Rybaka",
+      "type": "Story",
+      "title": "Ryba wędzona i przetwory rybne IIIkategorii z lokalnego połowu",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-15",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Bieżące GO zatwierdza wszystkie późniejsze notatki o spójności menu, lokalnych przetworach rybnych i rzeczywistym linku do poziomu5.",
+        "reference": "chat:GO:menu-fish-public-level5"
+      },
+      "status": {
+        "implementation": "in_progress",
+        "dev": "implemented_locally_tested; publication_pending",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Jedno odkrycie fishProcessing dostępne od5poziomuRybaka odblokowuje rybę wędzoną i przetwory rybne IIIkategorii.",
+        "Przetwarzanie zużywa lokalne świeże ryby u Rybaka, bez kursu tragarza między budynkami lub pobrania tych składników z centrali. Zwykły odbiór gotowego produktu pozostaje dostępny.",
+        "KalibracjaDEV:4ryby→1smokedFish/12sytości/cena10;6ryb→1fishPreserves/18sytości/cena15. Kosztbadania24ryby+4deski, baza1800s; są to proponowane parametryDEV, nie nowe szczegółowe odpowiedzi użytkownika.",
+        "Normalizacja zachowuje stare zapasy, przydziały i odkrycia. Produkty wchodzą do istniejących reguł diety, wyżywienia, transportu i zapisów.",
+        "Wspólna pojemnośćMagazynu nadal wynika z koszyka potrzeb+40%, zaokrąglonego w dół do10000 na każdym poziomie. Dodanie towarów nie mnoży limitu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1140",
+        "HL-CHG-1141"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-MENU-FISH-LEVEL5.md",
+          "docs/v32/TEST-CHEATSHEET.md",
+          "docs/v32/DEV-READY.md"
+        ],
+        "code": [
+          "harborlight-v1-provisions.js",
+          "harborlight-v1-education.js",
+          "harborlight-v1-development-logistics.js",
+          "harborlight-v1-development-copy.js"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": null,
+        "release_note": "Zakres zaakceptowany; dowody nowej implementacji, własnegoCI iPagescache6 oczekują na rzeczywiste wyniki. Przegląd sprzed poprawki obejmował96widoków głównych i24szczegółów; nie jest dowodem naprawy."
+      },
+      "notes": [
+        "Wcześniejsze oczekiwanie naGO zastępuje bieżące „dobra wrzucaj doDEV”.",
+        "Publiczny scenariusz poziomu5 nie jest uwierzytelnionym kontemadmin1; lokalny stan konta pozostaje osobny i chroniony."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "ECON:local-fisher-processing",
+        "EDU:fisher5-fishProcessing",
+        "FOOD:category3-fish-products",
+        "ECON:shared-warehouse-needs-basket-plus40-floor10000"
+      ]
     }
   ],
   "current_environment": {
@@ -28210,7 +28353,7 @@
     "preprod_status": "verified_deployment_and_artifacts",
     "prod_status": "not_authorized",
     "full_test_account_reset": "not_performed",
-    "note": "DEV0.15.0.0/v32 obejmuje 47 zatwierdzonych odpowiedzi i pełne późniejsze GO: tutorial V5/56, Teatr z wyborem widzów i Wyślij wszystkich, trzy sekcje Magazynu, ciemne panele i wspólny limit 40 000 na poziomie 1. Lokalny admin1 ma Ratusz5 bez resetu. Cache5 ma Pages43720459381SUCCESS, zgodne hashe9plików i uruchomienie hostowanych bajtów1440/390PASS. Pełny CI końcowego commitu metadanych wymaga osobnego wyniku; poprzedni cache4/fc2e87e ma odrębne sukcesy. Lokalny runtime nie jest kopią infrastruktury Firebase1:1, a publiczny Pages pozostaje podglądem bez kont i trwałego zapisu. PRE-PROD nadal7e81a1a, bez nowego deployu i mutacji kont chmurowych. Hasła=loginy admin1/admin2/admin3: lokalnie ustawione, PRE-PROD auth-only3/3PASS już wcześniej. Ręczny odbiór użytkownika NOT_RUN.",
+    "note": "DEV0.15.0.0/cache6 realizuje najnowszeGO: spójne logicznie i wizualnie menu, stabilny komunikat przy nazwie budynku bez przesuwania+/−, usunięte puste szczegóły, lokalne przetwory rybne IIIkategorii odbadaniaRybaka5 oraz faktyczny publiczny scenariusz preview=admin1-level5. Konto lokalneadmin1 zachowuje odrębny Ratusz5 bez resetu; Pages nadal jest podglądem w pamięci bez uwierzytelnionego konta. Nowe źródło, testy,CIiPages wymagają dowodów. Poprzedni cache5/77a774c ma Pages43720686137SUCCESS, lecz nie jest odbiorem cache6. PRE-PROD7e81a1a/PROD/Firebase bez zmian.",
     "previous_accepted_dev": {
       "as_of": "2026-11-04",
       "dev_application_version": "0.14.0.0",
@@ -28329,15 +28472,15 @@
     "preprod_bridge_duration": "13s",
     "preprod_deployment_duration": "2m12s",
     "dev_application_version": "0.15.0.0",
-    "dev_status": "published_pages_verified; final_metadata_ci_requires_own_result",
-    "dev_ci": "pending_final_metadata_commit",
-    "dev_source_sha": "2dd923da9b830b755d490aceef3a446472795e33",
-    "dev_implementation_source_sha": "e59726a81d84cf8ddd04e3f45072fdd00d688a63",
+    "dev_status": "implemented_and_locally_tested; final_publication_pending",
+    "dev_ci": "not_run_for_final_source",
+    "dev_source_sha": null,
+    "dev_implementation_source_sha": null,
     "dev_ci_run_id": null,
-    "dev_pages_run_id": 43720459381,
-    "dev_pages_conclusion": "success",
+    "dev_pages_run_id": null,
+    "dev_pages_conclusion": "pending",
     "dev_tag": null,
-    "dev_cache": "frontend-v32-5",
+    "dev_cache": "frontend-v32-6",
     "previous_accepted_v32": {
       "source_sha": "fc2e87eec57c0388a16fb9b15a7d80ea0bc9c67c",
       "cache": "frontend-v32-4",
@@ -28349,6 +28492,23 @@
     "frontend_archive_sha256": "268ffe2ebc467a7f2104047c2648815d6cb3ebbf26a08f0c590be9946257b510",
     "frontend_manifest_sha256": "6b30a24cb6fe7f70c20ac165ffb5aedc24fbd4f028418f36df23836b19da67d8",
     "frontend_file_count": 100,
-    "frontend_total_bytes": 20240963
+    "frontend_total_bytes": 20240963,
+    "previous_published_v32_cache5": {
+      "dev_application_version": "0.15.0.0",
+      "dev_status": "published_pages_verified; final_metadata_ci_requires_own_result",
+      "dev_ci": "failure",
+      "dev_source_sha": "2dd923da9b830b755d490aceef3a446472795e33",
+      "dev_implementation_source_sha": "e59726a81d84cf8ddd04e3f45072fdd00d688a63",
+      "dev_ci_run_id": 43720686129,
+      "dev_pages_run_id": 43720459381,
+      "dev_pages_conclusion": "success",
+      "dev_tag": null,
+      "dev_cache": "frontend-v32-5",
+      "frontend_archive_sha256": "268ffe2ebc467a7f2104047c2648815d6cb3ebbf26a08f0c590be9946257b510",
+      "frontend_manifest_sha256": "6b30a24cb6fe7f70c20ac165ffb5aedc24fbd4f028418f36df23836b19da67d8",
+      "frontend_file_count": 100,
+      "frontend_total_bytes": 20240963,
+      "ci_failure_reason": "Stale final tour ID settings in legacy learning-flow browser test; fixed to actual last TOUR_IDS[-1] for cache6."
+    }
   }
 }

@@ -46,6 +46,7 @@ export const RESEARCH_CATALOG = Object.freeze([
   repeat('roads','Znajomość wyspiarskich traktów',{stone:12,planks:4},'+5% prędkości tragarzy'),
   repeat('warehouse','Każda skrzynia na swoim miejscu',{planks:8,stone:4},'+5% pojemności Magazynu'),
   repeat('construction','Rusztowania dobrego budowniczego',{planks:6,stone:8},'+5% szybkości budowy'),
+  Object.freeze({id:'fishProcessing',name:'Wędzenie i przetwory rybne',kind:'discovery',firstCost:{fish:24,planks:4},minimumAcademy:1,minimumBuilding:{fisher:5},effect:'Odblokowuje u Rybaka: 4 świeże ryby → 1 ryba wędzona oraz 6 świeżych ryb → 1 porcja przetworów rybnych; pożywienie III kategorii',devBalanceProposal:true}),
   Object.freeze({id:'cheese',name:'Wyrób sera',kind:'discovery',firstCost:{sourMilk:4,planks:4},minimumAcademy:1,minimumBuilding:{farm:6},effect:'Odblokowuje 4 kwaśne mleka → 1 ser',devBalanceProposal:true}),
   Object.freeze({id:'royalCredit',name:'Królewski kredyt',kind:'discovery',firstCost:{wood:40,stone:20,planks:10},minimumAcademy:1,minimumTownhall:5,effect:'Odblokowuje wniosek o pożyczkę',devBalanceProposal:true})
 ]);

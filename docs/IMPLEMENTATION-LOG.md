@@ -1147,3 +1147,10 @@ Lokalne testy wszystkich nowych przepływów na 1440/390 PASS; pełne 25 praktyc
 Ręcznie ustawiono lokalny admin1 na Ratusz5 bez resetu starych zasobów i mieszkańców; normalne przyznanie Akademii/Koszar daje26osób. Odczyt po restarcie: admin1=5/26osób, admin2/admin3=1/18osób. To lokalny trwały runtime; Pages pozostaje nietrwałym podglądem bez kont. PRE-PROD7e81a1a i PROD bez nowego wdrożenia.
 
 Publikacja pełnegoGO/cache5: commit2dd923d, Pages43720459381SUCCESS. Odczyt9dokładnychplików i prawdziwych hostowanychbajtów w Chromium1440/390PASS. [Dowody](v32/GO-PREVIEW-EVIDENCE.json). Późniejszy commit metadanych i pełnyCI mają odrębny status, bez przypisywania wcześniejszego sukcesu nowemuSHA. Excel5622/17/3, pustaC i odciskiźródełPASS; pakiet100plików verify/extractPASS.
+
+
+## GO DEV cache6 — menu, ryby i rzeczywisty link poziomu5
+
+Wdrożono zaakceptowane notatki: wspólny wygląd i logiczny podział sekcji, nagłówek o stałej wysokości z komunikatem bez przesuwania przycisków, konkretne wejścia zamiast powielanych Więcej o budynku. Nowe fishProcessing od Rybaka5 odblokowuje lokalną rybę wędzoną i przetwory IIIkategorii. Parametry są jawną kalibracjąDEV. Wspólna pojemność Magazynu pozostaje koszykiem+40% w dół do10000, także dla kolejnych poziomów; dodanie dwóch towarów nie mnoży limitu.
+
+Jawny publiczny scenariusz preview=admin1-level5 uruchamia Ratusz5,Dom5,Magazyn5,Rybaka5 i dostępne budynki; jest podpisanym podglądem bez autoryzacji i trwałego zapisu, nie kopią chmurowego konta. Rzeczywisty lokalny admin1 zachowujeRatusz5 i26osób, pozostali1/18. Lokalne1390Node i testy przeglądarek opisano w [przeglądzie](v32/VISUAL-REVIEW.md). Cache5CI43720686129 zachowuje FAILURE starego oczekiwania końca trasy; poprawiono test stabilnego ostatniegoID. Publikacja i CI cache6 są osobnymi wynikami; PRE-PROD/PROD bez zmian.

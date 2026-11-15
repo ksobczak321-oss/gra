@@ -84,7 +84,7 @@ body[data-ruleset="32"] .resource-dock-cards:not(.leisure-dock-cards)>.resource-
 @media(max-width:600px){.v32-button,.v32-field input:not([type=checkbox]),.v32-field select,.v32-food-row>input,.v32-form>select{min-height:44px}.v32-recipe .v32-field input,.v32-recipe>.v32-button{height:44px;min-height:44px}.v32-order .v32-button{min-height:32px}}
 
 /* Thumbnails show the exact existing building selected on the island. */
-.v32-building-art--native{background-image:url('assets/harborlight-v1-approved.png?v=frontend-v32-5');background-repeat:no-repeat;aspect-ratio:1;border-radius:10px}
+.v32-building-art--native{background-image:url('assets/harborlight-v1-approved.png?v=frontend-v32-6');background-repeat:no-repeat;aspect-ratio:1;border-radius:10px}
 .v32-building-summary>.v32-building-art--native{width:128px;flex:0 0 128px}
 #island-dialog .v32-section h3,#island-dialog .v32-section h4{color:#ffe0a0}
 #island-dialog .v32-section input:not([type=checkbox]):not([type=radio]),#island-dialog .v32-section select{background:#092b3e;color:#eef7f5;border-color:#718e9f}
@@ -109,3 +109,60 @@ body[data-ruleset="32"] .resource-dock-cards:not(.leisure-dock-cards)>.resource-
 .v32-audience-group>.v32-field:hover{background:#e7be6512}
 .v32-audience-group>.v32-field:focus-within{border-color:#e8c57d}
 @media(max-width:600px){.v32-audience-options{grid-template-columns:minmax(0,1fr);max-height:42dvh;padding:9px}.v32-audience-group>.v32-field{min-height:44px}}
+
+/* Development buildings use the same cards and task columns as the island menus. */
+#island-dialog [data-v32-panel]{padding:0;min-width:0;box-sizing:border-box}
+#island-dialog .v32-building-overview{display:flex;align-items:center;gap:12px;margin:0 0 12px;padding:14px;border:1px solid #52718180;border-radius:12px;background:#0c293a;box-sizing:border-box}
+#island-dialog .v32-building-overview>.v32-building-art--native{width:56px;height:56px;flex:0 0 56px;border-radius:8px}
+#island-dialog .v32-building-overview>div{min-width:0}
+#island-dialog .v32-building-overview .v32-eyebrow{margin:0 0 5px}
+#island-dialog .v32-building-overview .v32-building-description{margin:0;font-size:13px;line-height:1.45}
+#island-dialog .v32-panel-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0;width:100%;box-sizing:border-box;align-items:start}
+#island-dialog .v32-panel-layout>.v32-column{display:flex;flex-direction:column;gap:12px;min-width:0;max-width:100%;box-sizing:border-box}
+#island-dialog .v32-panel-layout>.v32-column>*{min-width:0;max-width:100%;width:100%;box-sizing:border-box;margin:0}
+#island-dialog .v32-panel-layout>.v32-column>.v32-section,
+#island-dialog .v32-panel-layout>.v32-section,
+#island-dialog .v32-panel-layout .v32-info{padding:14px;border:1px solid #52718180;border-radius:12px;background:#0c293a;color:#d2e5ed;margin:0}
+#island-dialog .v32-panel-layout h3{font-size:17px;line-height:1.3;margin:0 0 10px}
+#island-dialog .v32-panel-layout p{font-size:13px;line-height:1.45;margin:0 0 10px}
+#island-dialog .v32-panel-layout p:last-child{margin-bottom:0}
+#island-dialog .v32-panel-layout .v32-form{margin:12px 0 0;gap:10px;min-width:0}
+#island-dialog .v32-panel-layout .v32-form>*{max-width:100%;min-width:0;box-sizing:border-box}
+#island-dialog .v32-panel-layout .v32-field{flex-basis:150px}
+#island-dialog .v32-panel-layout .v32-recipe{gap:10px;padding:12px;background:#102c3d}
+#island-dialog .v32-panel-layout .v32-recipe>div:first-child{flex:1 1 0;min-width:0}
+#island-dialog .v32-panel-layout .v32-recipe .v32-field{flex:0 0 76px}
+#island-dialog .v32-panel-layout .v32-recipe strong{font-size:14px}
+#island-dialog .v32-panel-layout .v32-recipe p{font-size:12px;margin:3px 0 0}
+#island-dialog .v32-panel-layout .v32-section>.v32-section{padding:12px;margin:12px 0 0;border:1px solid #52718180;border-radius:8px;background:#102c3d}
+#island-dialog .v32-panel-layout .v32-list-row{flex-wrap:wrap;gap:8px;padding:10px 0}
+#island-dialog .v32-panel-layout .v32-list-row>span{flex:1 1 130px;min-width:0}
+#island-dialog .v32-panel-layout .v32-list-row>.v32-button{flex:0 1 auto}
+#island-dialog .v32-panel-layout .v32-info>summary{font-size:14px;line-height:1.4;min-height:20px}
+#island-dialog .v32-panel-layout .v32-info[open]>summary{margin-bottom:10px}
+#island-dialog .v32-panel-layout .v32-card{padding:12px;margin:12px 0 0;background:#102c3d}
+#island-dialog .v32-theatre-controls{padding:0;background:transparent;border:0;margin:0}
+#island-dialog .v32-theatre-controls>h3{margin:0 0 12px}
+#island-dialog .v32-theatre-layout>.v32-section{padding:14px;background:#0c293a}
+#island-dialog .v32-theatre-layout .v32-audience-options{grid-template-columns:minmax(0,1fr);padding:9px;max-height:360px}
+#island-dialog .v32-theatre-layout .v32-audience-all>.v32-muted{flex-basis:150px}
+/* Input and action dimensions are shared on desktop and phone. */
+#island-dialog .v32-button,
+#island-dialog .v32-field input:not([type=checkbox]):not([type=radio]),
+#island-dialog .v32-field select,
+#island-dialog .v32-food-row>input,
+#island-dialog .v32-form>select{min-height:44px;box-sizing:border-box}
+#island-dialog .v32-recipe .v32-field input,
+#island-dialog .v32-recipe>.v32-button{height:44px;min-height:44px;margin:0}
+#island-dialog .v32-form>.v32-button{margin-bottom:0}
+@media(min-width:900px){#island-dialog .v32-panel-layout{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){
+ #island-dialog .v32-building-overview{padding:12px;align-items:flex-start}
+ #island-dialog .v32-building-overview>.v32-building-art--native{width:44px;height:44px;flex-basis:44px}
+ #island-dialog .v32-panel-layout{gap:12px}
+ #island-dialog .v32-panel-layout>.v32-column>.v32-section,#island-dialog .v32-panel-layout .v32-info{padding:12px}
+ #island-dialog .v32-panel-layout .v32-recipe>div:first-child{flex-basis:100%}
+ #island-dialog .v32-panel-layout .v32-recipe .v32-field{flex:1 1 76px}
+ #island-dialog .v32-panel-layout .v32-form>.v32-button{flex:1 1 100%;width:100%}
+ #island-dialog .v32-panel-layout .v32-list-row>.v32-button{flex:1 1 100%;width:100%}
+}

@@ -2,6 +2,14 @@
 
 Gałąź: `dev/0.15.0.0`. Punkt wyjścia: odebrane PRE-PROD `7e81a1a436770f57fd8abf390b6af8022e3300f6` / 0.14.0.0. Użytkownik potwierdził wdrożenie całego uzgodnionego zakresu z obecną redakcją; teksty będą poprawiane później na DEV.
 
+## Bieżąca paczka po odbiorze — cache6
+
+[Podgląd DEV na poziomie5](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?preview=admin1-level5&v=frontend-v32-6) jest docelowym linkiem tej paczki. Wdrożenie i odczyt faktycznie hostowanego poziomu5 wymagają nowego dowodu; poprzedni link cache5 startujący na poziomie1 nie spełniał tego zlecenia. Publiczny scenariusz ma jawne oznaczenie DEV i działa w pamięci karty, bez uwierzytelnionego konta lub trwałego zapisu. Lokalny `admin1/admin1` pozostaje osobnym kontem z Ratuszem5 i zachowanym postępem.
+
+Zakres: spójne logicznie i wizualnie menu, karty w obu kolumnach,44pxpola/przyciski, nieruchomy komunikat przy nazwie budynku, zachowanie trzech szybkich kliknięć+/−, usunięcie pustego „Więcej o budynku”, lokalna ryba wędzona i przetwory rybne IIIkategorii po badaniu od Rybaka5. Pojemność kolejnych poziomów Magazynu nadal liczy się analogicznie z koszyka+40%, w dół do10000. [Szczegółowy zakres](GO-MENU-FISH-LEVEL5.md).
+
+Nowe CI/Pages oraz końcowy SHA pozostają do potwierdzenia. Poprzedni opublikowany cache5 ma osobny odczyt Pages43720686137SUCCESS dla `77a774c82f7cce85982be56aabdf166fc2078a34`; jego pełny CI nie jest tu uznawany za sukces. PRE-PROD7e81a1a i PROD bez nowego wdrożenia.
+
 ## Opublikowany pełny pakiet GO — cache5
 
 [Nowy link DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-5) jest opublikowany. Źródło aplikacji `e59726a81d84cf8ddd04e3f45072fdd00d688a63`, commit publikacji `2dd923da9b830b755d490aceef3a446472795e33`, [Pages43720459381](https://github.com/ksobczak321-oss/gra/actions/runs/43720459381) SUCCESS. Odczyt dziewięciu plików przez HTTPS potwierdził dokładne SHA256 nowego kodu i niezmienionej planszy. Faktycznie hostowane bajty uruchomiono w Chromium1440/390:18/36 osób,7 nowych budynków, polskie wprowadzenie, bez błędów JS/HTTP, żądań API i zapisu gry w przeglądarce. Transport z zachowaną weryfikacją TLS opisano w [dowodach](GO-PREVIEW-EVIDENCE.json).
