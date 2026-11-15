@@ -72,7 +72,12 @@ def natural_delivery_and_resume(browser,language,mobile):
         supplies=page.locator('[data-tutorial-supplies]')
         if supplies.is_visible():supplies.click()
         open_map(page,'townhall-upgrade','townhall')
+        before=base.saved(page)
         page.locator('[data-upgrade-building="townhall"]').click()
+        meals=page.locator('[data-v32-construction="townhall"]')
+        expect(meals).to_be_visible()
+        assert base.saved(page)['constructionProjects']==before['constructionProjects'],'Opening food selection must not create the construction order'
+        meals.get_by_role('button',name='Zatwierdź rozbudowę',exact=True).click()
         expect(page.locator('[data-starter-construction-guide]')).to_be_visible()
         page.locator('[data-start-acceleration-guide]').click()
         started=base.saved(page)

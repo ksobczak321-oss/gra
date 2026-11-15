@@ -29079,14 +29079,15 @@
         ],
         "manual_execution": "NOT_RUN",
         "source_baseline_sha": "e0aa2ff3f60edeb6a55190ea8b16f0329692b303",
-        "source_sha": "af8989f21598ee9df98bcc46e391132ecf22b12b",
-        "release_note": "Core/resetaf8989f, frontend/Excel1f bez dalszych zmian. Lokalnefrontend1410/1410,backend155/155(incl6communityfence),resetPython20/20,pakietDocker2 i wszystkie przydzielonecloudbrowser wtym v21PASS. Cleanup perUIDcommunity/mechanicalwallet zCAS/epoch/mutationRevision; zachowanie tożsamości/handles/blocked/muted, blokada każdego globalnego/shared/financial/externaltradepowiązania bez globalnychusunięć. Wymagane deployedresetFencecommunity-profile-v1,API/grantreadiness/lock/600s/guardedreset; rzeczywistyCI,wdrożenie ireset nadalPENDING,0resetwrites. Grant tylkoOWNER_REPORTED_APPLIED. E0filesSUCCESS/functionsREOPENED, PROD/DNSodłożone.",
+        "source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
+        "release_note": "Końcowe źródło aplikacji27f3ea4/0.15.0.1/cache11:93/93kierunkowych(incl5nowychregresji),syntax/imports,Docker2+canonical3JSstagePASS. Dokładne zapisanefood/flour obietnice,historia i claim/shareonce bez reroll/requote; render rzeczywistych nagród,latefood,guide i pendingcashout zaimplementowane. Wymaganyklaster6cloudcallers odebranyPASS zgodnie z końcowym raportem; opcjonalnylatefood ma lukęUI. Excel413/6/Cpusta/96fingerprints źródło27f,SHAe9119fec… . WłasnyCI/publikacja/wdrożenie/resetPENDING; brak zaakceptowanego tagu. b268CI43763863333FAILURE iE0filedeployment/functionsREOPENED zachowane.1410/155/20 to wcześniejszecheckpointy. Aktualnyfrozen27f:109plików/30767904bajtów,archive59b75952…/manifest5b499046…; czteryścisłesuitev22/learning26/starter26/learning27 poPL/ENdesktop/mobilePASS,misje4/4+starter28przy niezmienionymzakresiepoprzednioPASS. OpcjonalnylatefoodUI INCOMPLETE: modelclaimfood25/flour0+receiptPASS, popupworkerów blokował pełnytile/reload; brak pełnego desktop/mobileUIproof, testpoza repo i bez bramkiCI. Launcherwłaścicielski ma30sodliczanie,pinnedsource+oryginalneZIPproof i retrychronionegoresetu po10min; błędneargumenty odrzucone przed siecią. Żadnego rzeczywistegoCI/deploy/resetu nie wykonano.",
         "local_checkpoint_sha": "c6c4f401dd3bda605578e05efb7529cbbf6da102",
-        "frontend_application_source_sha": "1f1904587608f87ffbd2c7eed20d7749106dfc1f"
+        "frontend_application_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914"
       },
       "notes": [
         "Migracja przy odczycie zachowuje istniejący stan; osobny reset jest jawną autoryzowaną operacją po bramkach.",
-        "TagiE0 pozostają historycznymi odniesieniami plików/artefaktów, nie ukończonym odbiorem funkcji starych zapisów."
+        "TagiE0 pozostają historycznymi odniesieniami plików/artefaktów, nie ukończonym odbiorem funkcji starych zapisów.",
+        "b268/cache10 własnyCI43763863333FAILURE8m54s:26pierwszychkrokówPASS,step27tutorial-v22reward_grid6oczekiwane/5widoczne,step28cloudSKIPPED; Pages43763863357SUCCESS. Beznowegodeploy/resetu, brak zaakceptowanego tagu. Następnycache11/0.15.0.1 potrzebuje własnegoCI;1410/155/20 są wcześniejszymi checkpointami."
       ],
       "tags": [
         "v32",
@@ -29148,7 +29149,8 @@
         "code": [
           "infra/google-cloud/reset-preprod-accounts.py",
           "backend/starter-island.mjs",
-          "backend/server.mjs"
+          "backend/server.mjs",
+          "infra/google-cloud/reset-preprod-verified.sh"
         ],
         "automated_tests": [
           "tests/harborlight-preprod-reset.test.py",
@@ -29156,15 +29158,16 @@
         ],
         "manual_execution": "NOT_RUN",
         "source_baseline_sha": "e0aa2ff3f60edeb6a55190ea8b16f0329692b303",
-        "source_sha": "af8989f21598ee9df98bcc46e391132ecf22b12b",
-        "release_note": "Core/resetaf8989f, frontend/Excel1f bez dalszych zmian. Lokalnefrontend1410/1410,backend155/155(incl6communityfence),resetPython20/20,pakietDocker2 i wszystkie przydzielonecloudbrowser wtym v21PASS. Cleanup perUIDcommunity/mechanicalwallet zCAS/epoch/mutationRevision; zachowanie tożsamości/handles/blocked/muted, blokada każdego globalnego/shared/financial/externaltradepowiązania bez globalnychusunięć. Wymagane deployedresetFencecommunity-profile-v1,API/grantreadiness/lock/600s/guardedreset; rzeczywistyCI,wdrożenie ireset nadalPENDING,0resetwrites. Grant tylkoOWNER_REPORTED_APPLIED. E0filesSUCCESS/functionsREOPENED, PROD/DNSodłożone.",
+        "source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
+        "release_note": "Końcowe źródło aplikacji27f3ea4/0.15.0.1/cache11:93/93kierunkowych(incl5nowychregresji),syntax/imports,Docker2+canonical3JSstagePASS. Dokładne zapisanefood/flour obietnice,historia i claim/shareonce bez reroll/requote; render rzeczywistych nagród,latefood,guide i pendingcashout zaimplementowane. Wymaganyklaster6cloudcallers odebranyPASS zgodnie z końcowym raportem; opcjonalnylatefood ma lukęUI. Excel413/6/Cpusta/96fingerprints źródło27f,SHAe9119fec… . WłasnyCI/publikacja/wdrożenie/resetPENDING; brak zaakceptowanego tagu. b268CI43763863333FAILURE iE0filedeployment/functionsREOPENED zachowane.1410/155/20 to wcześniejszecheckpointy. Aktualnyfrozen27f:109plików/30767904bajtów,archive59b75952…/manifest5b499046…; czteryścisłesuitev22/learning26/starter26/learning27 poPL/ENdesktop/mobilePASS,misje4/4+starter28przy niezmienionymzakresiepoprzednioPASS. OpcjonalnylatefoodUI INCOMPLETE: modelclaimfood25/flour0+receiptPASS, popupworkerów blokował pełnytile/reload; brak pełnego desktop/mobileUIproof, testpoza repo i bez bramkiCI. Launcherwłaścicielski ma30sodliczanie,pinnedsource+oryginalneZIPproof i retrychronionegoresetu po10min; błędneargumenty odrzucone przed siecią. Żadnego rzeczywistegoCI/deploy/resetu nie wykonano.",
         "local_checkpoint_sha": "c6c4f401dd3bda605578e05efb7529cbbf6da102",
-        "frontend_application_source_sha": "1f1904587608f87ffbd2c7eed20d7749106dfc1f"
+        "frontend_application_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914"
       },
       "notes": [
         "Migracja przy odczycie zachowuje istniejący stan; osobny reset jest jawną autoryzowaną operacją po bramkach.",
         "TagiE0 pozostają historycznymi odniesieniami plików/artefaktów, nie ukończonym odbiorem funkcji starych zapisów.",
-        "Właściciel zgłosiłSUCCESS minimalnego roles/datastore.user dla runtimePRE-PROD:OWNER_REPORTED_APPLIED. Nie wykonano niezależnego odczytuIAM; pozostałe bramkiAPI/deploy/lock/600s/reset pozostająPENDING."
+        "Właściciel zgłosiłSUCCESS minimalnego roles/datastore.user dla runtimePRE-PROD:OWNER_REPORTED_APPLIED. Nie wykonano niezależnego odczytuIAM; pozostałe bramkiAPI/deploy/lock/600s/reset pozostająPENDING.",
+        "b268/cache10 własnyCI43763863333FAILURE8m54s:26pierwszychkrokówPASS,step27tutorial-v22reward_grid6oczekiwane/5widoczne,step28cloudSKIPPED; Pages43763863357SUCCESS. Beznowegodeploy/resetu, brak zaakceptowanego tagu. Następnycache11/0.15.0.1 potrzebuje własnegoCI;1410/155/20 są wcześniejszymi checkpointami."
       ],
       "tags": [
         "v32",
@@ -29541,10 +29544,10 @@
     "preprod_account_API_enabled": false,
     "current_preprod_fix": {
       "scope": "Fix official-cloud legacy ruleset activation, then separately reset exactly three PRE-PROD accounts; PROD/domain postponed",
-      "status": "local_final_checks_passed_actual_CI_deployment_reset_pending",
+      "status": "cache11_required_local_checks_passed_own_CI_deployment_reset_pending",
       "version": "0.15.0.1",
-      "cache": "frontend-v32-10",
-      "source_sha": "af8989f21598ee9df98bcc46e391132ecf22b12b",
+      "cache": "frontend-v32-11",
+      "source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
       "publication_commit": null,
       "ci_run_id": null,
       "ci_conclusion": "pending_own_run",
@@ -29736,7 +29739,7 @@
       },
       "manual_execution": "NOT_RUN",
       "local_checkpoint_sha": "c6c4f401dd3bda605578e05efb7529cbbf6da102",
-      "source_status": "core_and_reset_committed_metadata_candidate_CI_deploy_reset_pending",
+      "source_status": "application_committed_required_frozen_browser_acceptance_passed_optional_UI_gap_recorded",
       "local_checkpoint_workbook": {
         "application_source_sha": "c6c4f401dd3bda605578e05efb7529cbbf6da102",
         "sha256": "fdfb5e1d7e48ba2b235495455578288ccb63d4bed9f1f751c0f987b95f5e232a",
@@ -29764,16 +29767,17 @@
       },
       "current_six_sheet_workbook": {
         "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
-        "source_sha": "1f1904587608f87ffbd2c7eed20d7749106dfc1f",
-        "sha256": "b9d6e1d308bea38f30750c8a86300584c706e944fe5ebbd0b5ea12fcaa0b21ea",
+        "source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
+        "sha256": "e9119fec20af9ec6a4de5b6bea2cc4a099bb5eb12eb054118a61feba98a30d03",
         "rows": 413,
         "sheets": 6,
         "C_all_blank": true,
-        "reported_source_fingerprint_prefix": "1cc30fff",
+        "source_fingerprints_verified": 96,
+        "reported_source_fingerprint_prefix": "23b3b855",
         "workbook_modified_by_documentation_agent": false
       },
       "remaining_local_checks": [],
-      "frontend_application_source_sha": "1f1904587608f87ffbd2c7eed20d7749106dfc1f",
+      "frontend_application_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
       "local_final_checks": {
         "frontend": {
           "passed": 1410,
@@ -29822,18 +29826,149 @@
         "idempotency": "same reset receipt returns prior result before touching new progress",
         "tool_tests": "20/20 PASS",
         "actual_cloud_reset_writes": 0
-      }
+      },
+      "candidate_history": [
+        {
+          "source_sha": "b268bd6d2a4bb7e91c615370bca273e3873dba8f",
+          "version": "0.15.0.1",
+          "cache": "frontend-v32-10",
+          "ci": {
+            "run_id": 43763863333,
+            "conclusion": "failure",
+            "started_at": "2026-11-15T21:28:24Z",
+            "completed_at": "2026-11-15T21:37:18Z",
+            "duration_seconds": 534,
+            "duration": "8m54s",
+            "first_steps_passed": 26,
+            "failed_step": 27,
+            "failed_test": "tutorial-v22 reward_grid",
+            "expected_tiles": 6,
+            "actual_tiles": 5,
+            "reason": "fresh flour tile hidden",
+            "step28_DEV_cloud_browsers": "skipped"
+          },
+          "pages": {
+            "run_id": 43763863357,
+            "conclusion": "success",
+            "source_sha": "b268bd6d2a4bb7e91c615370bca273e3873dba8f"
+          },
+          "new_GCP_deployment": false,
+          "actual_account_reset": false,
+          "accepted_tag_created": false
+        }
+      ],
+      "retry_candidate": {
+        "version": "0.15.0.1",
+        "cache": "frontend-v32-11",
+        "source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
+        "publication_commit": null,
+        "CI": "pending_new_own_run",
+        "deployment": "pending",
+        "reset": "pending",
+        "accepted_tag_created": false
+      },
+      "local_check_results_scope": "1410 frontend/155 backend/20 reset and previous browser results are prior checkpoints; cache11 frozen-package browser results remain pending",
+      "latest_deployed_observation": {
+        "source_sha": "e0aa2ff3f60edeb6a55190ea8b16f0329692b303",
+        "version": "0.15.0.0",
+        "API_config_status": 503,
+        "independent_TLS_read": true,
+        "new_deployment_or_reset": false
+      },
+      "new_regression_investigation": {
+        "status": "in_progress_not_final_acceptance",
+        "legacy31_tutorial_and_loyalty_promises": "saved chest food25 and claimed history must remain immutable; no reroll/requote",
+        "UI": "render actual food/flour reward keys independently, refresh warehouse priority guide, retain pending expedition cashout",
+        "new_targeted_checkpoint_passed": 92,
+        "strengthening_pending_at_root_report": true
+      },
+      "current_candidate_local_checks": {
+        "source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
+        "targeted_learning_progression_migration": {
+          "passed": 93,
+          "total": 93,
+          "new_regression_cases": 5,
+          "result": "PASS"
+        },
+        "syntax_imports": "PASS",
+        "Docker_package": {
+          "passed": 2,
+          "result": "PASS"
+        },
+        "canonical_three_JS_stage": "PASS",
+        "browser_acceptance": {
+          "status": "SIX_REQUIRED_CLUSTER_PASS_OPTIONAL_LATEFOOD_INCOMPLETE",
+          "frozen_package_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
+          "strict_frozen_suites": {
+            "tutorial_v22": "PASS",
+            "learning_flow_v26": "PASS",
+            "starter_v26": "PASS",
+            "learning_flow_v27": "PASS"
+          },
+          "strict_variants": [
+            "PL desktop",
+            "EN desktop",
+            "PL mobile",
+            "EN mobile"
+          ],
+          "unchanged_prior_scope_passes": {
+            "missions": "4/4 PASS; unchanged scope not unnecessarily repeated",
+            "starter_v28": "PASS; unchanged scope not unnecessarily repeated"
+          },
+          "optional_late_legacy_food_UI_test": {
+            "status": "INCOMPLETE",
+            "strict_model_claim_food25_flour0_and_receipt": "PASS_PARTIAL",
+            "full_tile_reload_UI": "NOT_COMPLETED",
+            "blocker": "returning workers popup",
+            "full_desktop_mobile_UI_coverage": false,
+            "evidence": "/workspace/work/cloud-rules-v32/late-food-qa/incomplete-focused-test.json",
+            "test_in_repository": false,
+            "required_CI_entry": false
+          }
+        }
+      },
+      "current_candidate_implemented_changes": [
+        "immutable saved tutorial and loyalty reward promises including exact food/flour keys",
+        "no reroll/requote and claim/share once",
+        "achievement positive actual reward keys, independent food/flour and coins",
+        "late legacy food0 topositive resource tile",
+        "immediate tutorial pointer refresh for lazy warehouse priorities",
+        "inherited pending expedition cashout exposed in rules32 chooser"
+      ],
+      "frozen_package": {
+        "source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
+        "cache": "frontend-v32-11",
+        "version": "0.15.0.1",
+        "archive_sha256": "59b75952cc4f354973c3a253aac901ab411dc6b10d54c2554a05a465fb3f5abd",
+        "manifest_sha256": "5b499046aa85346b6edc26162f07a721fda5beff8988a1813b3661f9fbc96b20",
+        "files": 109,
+        "total_bytes": 30767904
+      },
+      "owner_reset_launcher": {
+        "path": "infra/google-cloud/reset-preprod-verified.sh",
+        "status": "added_not_executed_for_real_reset",
+        "proof_arguments": "exact frozen source/worktree SHA plus original artifact ZIP digests and sizes required",
+        "countdown_seconds": 30,
+        "uses_same_guarded_reset_tool": true,
+        "automatic_retry_after_minimum_propagation_minutes": 10,
+        "malformed_arguments_rejected_before_network": "PASS",
+        "CI_bash_n_check": "added; own CI pending",
+        "actual_cloud_reset_executed": false
+      },
+      "optional_verification_gaps": [
+        "late legacy-food tile/reload UI incomplete; model claim/receipt passed; not claimed as desktop/mobile UI coverage"
+      ]
     },
     "pending_next_source": {
       "version": "0.15.0.1",
-      "cache": "frontend-v32-10",
-      "application_source_sha": "af8989f21598ee9df98bcc46e391132ecf22b12b",
+      "cache": "frontend-v32-11",
+      "application_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
       "publication_sha": null,
       "CI": "PENDING",
       "deployment": "PENDING",
       "reset": "PENDING",
       "local_checkpoint_sha": "c6c4f401dd3bda605578e05efb7529cbbf6da102",
-      "frontend_application_source_sha": "1f1904587608f87ffbd2c7eed20d7749106dfc1f"
+      "frontend_application_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914"
     },
     "previous_accepted_preprod_v31": {
       "preprod_application_version": "0.14.0.0",
@@ -29868,6 +30003,34 @@
       "preprod_deployment_duration": "2m12s"
     },
     "preprod_tag_scope": "historical source and artifact verification; functional acceptance reopened",
-    "dev_tag_scope": "historical source and artifact verification; cloud legacy functional acceptance reopened"
+    "dev_tag_scope": "historical source and artifact verification; cloud legacy functional acceptance reopened",
+    "latest_fix_candidate_failure": {
+      "source_sha": "b268bd6d2a4bb7e91c615370bca273e3873dba8f",
+      "version": "0.15.0.1",
+      "cache": "frontend-v32-10",
+      "ci": {
+        "run_id": 43763863333,
+        "conclusion": "failure",
+        "started_at": "2026-11-15T21:28:24Z",
+        "completed_at": "2026-11-15T21:37:18Z",
+        "duration_seconds": 534,
+        "duration": "8m54s",
+        "first_steps_passed": 26,
+        "failed_step": 27,
+        "failed_test": "tutorial-v22 reward_grid",
+        "expected_tiles": 6,
+        "actual_tiles": 5,
+        "reason": "fresh flour tile hidden",
+        "step28_DEV_cloud_browsers": "skipped"
+      },
+      "pages": {
+        "run_id": 43763863357,
+        "conclusion": "success",
+        "source_sha": "b268bd6d2a4bb7e91c615370bca273e3873dba8f"
+      },
+      "new_GCP_deployment": false,
+      "actual_account_reset": false,
+      "accepted_tag_created": false
+    }
   }
 }

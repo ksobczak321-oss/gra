@@ -162,6 +162,9 @@ def tour_and_help(browser, language, mobile):
 
 def practical_review(browser, language, mobile):
     initial = world(through=1)
+    earned = initial['tutorial']['chests']['island-map']
+    assert initial['tutorial']['claimed']['island-map'] is True and earned['claimed'] is True
+    assert earned['reward']['food'] == 25 and 'flour' not in earned['reward']
     seed(initial)
     before = lesson_history(initial)
     context, page = cloud.context(browser, UID, language=language, mobile=mobile)

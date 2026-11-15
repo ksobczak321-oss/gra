@@ -67,7 +67,9 @@ jobs:
         run: python3 tests/harborlight-dev-users.test.py
 
       - name: Test guarded post-promotion PRE-PROD account reset
-        run: python3 tests/harborlight-preprod-reset.test.py
+        run: |
+          bash -n infra/google-cloud/reset-preprod-verified.sh
+          python3 tests/harborlight-preprod-reset.test.py
 
       - name: Test production domain preparation safety
         run: python3 tests/harborlight-domain.test.py

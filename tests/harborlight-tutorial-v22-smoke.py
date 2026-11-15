@@ -21,7 +21,7 @@ cloud = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(cloud)
 UID = 'dev-admin2'
 EARLY_LESSON = 'personal-happiness'
-MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks']
+MATERIALS = ['wood', 'stone', 'grain', 'flour', 'planks']
 
 
 def fresh_world():
@@ -48,6 +48,11 @@ def close_panel(page):
 def reward_grid(page, popup):
     tiles = popup.locator('[data-tutorial-reward-material]')
     expect(tiles).to_have_count(6)
+    assert set(tiles.evaluate_all('nodes=>nodes.map(node=>node.dataset.tutorialRewardMaterial)')) == {'coins', *MATERIALS}
+    for material in MATERIALS:
+        expect(popup.locator('[data-tutorial-reward-quantity="%s"]' % material)).to_have_text('25')
+    expect(popup.locator('[data-tutorial-reward-quantity="coins"]')).to_have_text('100')
+    expect(popup.locator('[data-tutorial-reward-material="flour"] span')).to_have_text('Mąka')
     boxes = tiles.evaluate_all('''nodes => nodes.map(node => {
       const box=node.getBoundingClientRect(), label=node.querySelector('span');
       return {x:box.x,y:box.y,width:box.width,right:box.right,
@@ -128,6 +133,7 @@ def early_house_then_reload(browser):
         expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
         received = cloud.cloud_state(UID)
         assert received['resources']['coins'] == farm_before['resources']['coins'] + 100
+        assert received['resources']['food'] == farm_before['resources']['food'], 'A fresh v32 reward must grant flour without replacing stored legacy food'
         for material in MATERIALS:
             assert received['resources'][material] == farm_before['resources'][material] + 25
         page.locator('[data-tutorial-skip="rules-read"]').click()

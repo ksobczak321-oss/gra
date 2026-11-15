@@ -125,10 +125,12 @@ def fresh_starter(browser, language, mobile):
         assert all(person.get('arrivalRemaining', 0) == 90 for person in third['residents'] if person.get('workplace') == 'warehouse')
 
         find_building(page, 'happiness-action', 'warehouse')
-        details = page.locator('[data-building-more="warehouse"]')
-        expect(details).to_have_class(re.compile('tutorial-action-target'))
+        priorities = page.locator('[data-warehouse-section-toggle="priorities"]')
+        expect(priorities).to_have_class(re.compile('tutorial-action-target'))
+        expect(priorities).to_have_attribute('aria-expanded', 'false')
         expect(page.locator('[data-warehouse-priority]')).to_have_count(0)
-        details.click()
+        priorities.click()
+        expect(priorities).to_have_attribute('aria-expanded', 'true')
         priority = page.locator('[data-warehouse-priority="construction"]')
         expect(priority).to_have_class(re.compile('tutorial-action-target'))
         assert not saved(page)['tutorial']['completed'].get('happiness-action')
@@ -156,6 +158,10 @@ def fresh_starter(browser, language, mobile):
         before = saved(page)
         assert before['resources']['coins'] < 2000 and not before['commerce']['receipts'], 'Starter must be funded by course rewards'
         upgrade.click()
+        meals = page.locator('[data-v32-construction="townhall"]')
+        expect(meals).to_be_visible()
+        assert saved(page)['constructionProjects'] == before['constructionProjects'], 'Opening food selection must not create the construction order'
+        meals.get_by_role('button', name='Zatwierdź rozbudowę', exact=True).click()
         explanation = page.locator('[data-starter-construction-guide]')
         expect(explanation).to_be_visible()
         expect(explanation).to_contain_text('monety z gry' if language == 'pl' else 'game coins')

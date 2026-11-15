@@ -38,6 +38,8 @@ Włączenie API przed promocją opisuje [RUNTIME-ACCOUNTS.md](RUNTIME-ACCOUNTS.m
 
 ## Wykonanie po zielonej promocji
 
+Właściciel może użyć launchera `infra/google-cloud/reset-preprod-verified.sh` z pięcioma zweryfikowanymi wartościami: ID nowego udanego wdrożenia, pełny SHA, ID artefaktu receipt, rozmiar oryginalnego ZIP i jego SHA256. Launcher pobiera oryginalny ZIP, sprawdza jego rozmiar i hash, uruchamia narzędzie z odizolowanego checkoutu właściwego SHA oraz automatycznie ponawia tę samą operację po wymaganej propagacji reguł. W czasie oczekiwania wypisuje stan co najwyżej co30sekund. Inne błędy zatrzymują wykonanie; wszystkie bramki oryginalnego narzędzia pozostają aktywne. Nie uruchamiaj go z danymi starego wydania bez API lub bez resetFence.
+
 Zapisz ID **nowego zakończonego sukcesem** przebiegu PRE-PROD i pełny SHA. W jego sekcji Artifacts pobierz ZIP `harborlight-dev-release-RUN-ATTEMPT`; nie rozpakowuj i nie przepakowuj ZIP. Prześlij go do Cloud Shell poza repozytorium, np. jako `~/harborlight-preprod-release.zip`. Alternatywnie zalogowany GitHub CLI może pobrać dokładne archiwum poleceniem `gh api repos/ksobczak321-oss/gra/actions/artifacts/ID_ARTEFAKTU/zip > ~/harborlight-preprod-release.zip`. Sekrety GitHub pozostają w Cloud Shell; publiczne odczyty metadanych nie wymagają tokenu, o ile nie przekroczono limitu API.
 
 Po zsynchronizowaniu kodu wykonaj plan, wstawiając rzeczywiste wartości:

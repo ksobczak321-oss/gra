@@ -42,7 +42,11 @@ def world(*, introduction=False, earned=False, due=False):
         state.engagementSchedule.pending={id:'engagement-1',kind:'initial-ad',sequence:1,started:false,choice:null,runId:null};
       }
       console.log(JSON.stringify(state));''' % (int(cloud.NOW.timestamp() * 1000), json.dumps(introduction), json.dumps(earned), json.dumps(not introduction), json.dumps(introduction), json.dumps(due))
-    return json.loads(subprocess.run(['node', '--input-type=module', '-e', code], cwd=ROOT, text=True, capture_output=True, check=True).stdout)
+    state = json.loads(subprocess.run(['node', '--input-type=module', '-e', code], cwd=ROOT, text=True, capture_output=True, check=True).stdout)
+    if earned:
+        reward = state['tutorial']['chests']['island-map']['reward']
+        assert reward['food'] == 25 and 'flour' not in reward, 'The preserved-history fixture must contain its actually earned legacy food reward'
+    return state
 
 
 def seed(state):
