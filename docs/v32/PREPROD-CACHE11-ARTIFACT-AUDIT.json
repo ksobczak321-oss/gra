@@ -1,0 +1,191 @@
+{
+  "audited_at_utc": "2026-11-15T22:28:59.312762+00:00",
+  "result": "PASS",
+  "environment": "PRE-PROD",
+  "public_url": "https://harborlight-dev.web.app",
+  "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+  "app_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
+  "deployment_run": {
+    "id": 43768861718,
+    "run_attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "head_branch": "main",
+    "path": ".github/workflows/google-cloud-dev.yml",
+    "event": "workflow_dispatch",
+    "repository": {
+      "id": 1428128759,
+      "full_name": "ksobczak321-oss/gra"
+    },
+    "head_repository": {
+      "id": 1428128759,
+      "full_name": "ksobczak321-oss/gra"
+    }
+  },
+  "source_ci_run": {
+    "id": 43766275390,
+    "run_attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "head_branch": "main",
+    "path": ".github/workflows/ci.yml",
+    "event": "push",
+    "repository": {
+      "id": 1428128759,
+      "full_name": "ksobczak321-oss/gra"
+    },
+    "head_repository": {
+      "id": 1428128759,
+      "full_name": "ksobczak321-oss/gra"
+    }
+  },
+  "immutable_receipt": {
+    "schema_version": 2,
+    "repository": "ksobczak321-oss/gra",
+    "repository_id": 1428128759,
+    "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "ci": {
+      "run_id": 43766275390,
+      "run_attempt": 1
+    },
+    "dev": {
+      "run_id": 43768861718,
+      "run_attempt": 1
+    },
+    "image": {
+      "uri": "europe-central2-docker.pkg.dev/harborlight-dev/harborlight/api@sha256:4cbb39a369df75aca9c4a3991c4c837966d934b941e858a5bd6558f0ad80e840",
+      "digest": "sha256:4cbb39a369df75aca9c4a3991c4c837966d934b941e858a5bd6558f0ad80e840"
+    },
+    "frontend": {
+      "artifact_name": "harborlight-dev-frontend-43768861718-1",
+      "archive_sha256": "fa51937cc56f16d5d59b69638f7521d3864567e031e390979096caf6974b0061",
+      "manifest_sha256": "735e6317fa7691e37a2147676ff495a5ad47a4c7b6154feaee7a5f74d4e4d171",
+      "site": "harborlight-dev",
+      "url": "https://harborlight-dev.web.app"
+    },
+    "checks": {
+      "ci": true,
+      "dev_smoke": true,
+      "frontend_smoke": true,
+      "account_api": true
+    }
+  },
+  "canonical_receipt_validation": {
+    "valid": true,
+    "require_account_api": true,
+    "sourceSha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "sourceImage": "europe-central2-docker.pkg.dev/harborlight-dev/harborlight/api@sha256:4cbb39a369df75aca9c4a3991c4c837966d934b941e858a5bd6558f0ad80e840",
+    "imageDigest": "sha256:4cbb39a369df75aca9c4a3991c4c837966d934b941e858a5bd6558f0ad80e840",
+    "ciRunId": 43766275390,
+    "ciRunAttempt": 1,
+    "frontendArtifactName": "harborlight-dev-frontend-43768861718-1",
+    "frontendArchiveSha256": "fa51937cc56f16d5d59b69638f7521d3864567e031e390979096caf6974b0061",
+    "frontendManifestSha256": "735e6317fa7691e37a2147676ff495a5ad47a4c7b6154feaee7a5f74d4e4d171"
+  },
+  "strict_default_archive_verification": {
+    "archive_sha256": "fa51937cc56f16d5d59b69638f7521d3864567e031e390979096caf6974b0061",
+    "commit": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "file_count": 109,
+    "manifest_sha256": "735e6317fa7691e37a2147676ff495a5ad47a4c7b6154feaee7a5f74d4e4d171",
+    "total_bytes": 30767904
+  },
+  "source_content_comparison": {
+    "content_files": 108,
+    "all_match_release_source_and_app_source_and_worktree": true,
+    "generated_index_matches_identical_trusted_template": true
+  },
+  "live_frontend": {
+    "tls_verified": true,
+    "content_files": 108,
+    "content_bytes": 30754604,
+    "all_match_manifest_and_immutable_archive": true,
+    "manifest_matches_immutable_archive": true,
+    "archive_and_published_files_including_manifest": 109,
+    "manifest_sha256": "735e6317fa7691e37a2147676ff495a5ad47a4c7b6154feaee7a5f74d4e4d171"
+  },
+  "live_api_config": {
+    "accountApi": true,
+    "projectId": "harborlight-dev",
+    "environment": "preprod",
+    "resetFence": "community-profile-v1"
+  },
+  "published_version": {
+    "game_version": "0.15.0.1",
+    "html_cache_references": [
+      "frontend-v32-11"
+    ],
+    "matches_expected": true
+  },
+  "owner_launcher_arguments": [
+    "43768861718",
+    "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "14183069464",
+    "616",
+    "b4543fe43c26b5d7ee44423c95ef6bd8aec280f88fc121034dd1f749255fc348"
+  ],
+  "owner_launcher_status": "Arguments verified from original new GitHub ZIP and successful API-enabled promotion; reset not executed by this audit. Owner tool must independently verify actual GCP/IAM/rules/private state before mutation.",
+  "audit_actions": {
+    "source_changes": false,
+    "frontend_rebuilt": false,
+    "git_mutations": false,
+    "gcp_mutations": false,
+    "account_or_gameplay_writes": false,
+    "reset_executed": false,
+    "prod_action": false,
+    "tls_bypass": false
+  },
+  "original_github_artifacts": [
+    {
+      "id": 14183427928,
+      "name": "harborlight-dev-frontend-43768861718-1",
+      "size_in_bytes": 28095527,
+      "digest": "sha256:c5305f6c01ccd355f59d8fbde765729caec1033fe9cabaa1bcf284bf663d4bc9",
+      "expired": false,
+      "created_at": "2026-11-15T22:24:06Z",
+      "expires_at": "2027-02-13T22:21:44Z",
+      "original_zip_size_and_digest_verified": true
+    },
+    {
+      "id": 14183069464,
+      "name": "harborlight-dev-release-43768861718-1",
+      "size_in_bytes": 616,
+      "digest": "sha256:b4543fe43c26b5d7ee44423c95ef6bd8aec280f88fc121034dd1f749255fc348",
+      "expired": false,
+      "created_at": "2026-11-15T22:24:07Z",
+      "expires_at": "2027-02-13T22:21:44Z",
+      "original_zip_size_and_digest_verified": true
+    }
+  ],
+  "owner_reset_promotion_gate_readonly": {
+    "result": "PASS",
+    "proof": {
+      "runId": 43768861718,
+      "runAttempt": 1,
+      "commit": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "manifestSha256": "735e6317fa7691e37a2147676ff495a5ad47a4c7b6154feaee7a5f74d4e4d171",
+      "artifactSha256": "b4543fe43c26b5d7ee44423c95ef6bd8aec280f88fc121034dd1f749255fc348",
+      "ciRunId": 43766275390,
+      "imageUri": "europe-central2-docker.pkg.dev/harborlight-dev/harborlight/api@sha256:4cbb39a369df75aca9c4a3991c4c837966d934b941e858a5bd6558f0ad80e840"
+    },
+    "gcp_private_iam_rules_and_data_checks_executed": false,
+    "actual_reset_executed": false
+  },
+  "hosted_acceptance": {
+    "result": "PASS",
+    "authenticated_existing_island": true,
+    "ruleset": 32,
+    "map_functions": 20,
+    "new_building_markers": 7,
+    "accepted_art_patches": 4,
+    "administration_cards": 9,
+    "economy_cards": 10,
+    "current_product_icons": 21,
+    "native_theatre": true,
+    "dark_ui": true,
+    "dock_aligned_and_ship_clear": true,
+    "browser_gameplay_writes_blocked": true,
+    "manual_user_qa": "NOT_RUN"
+  }
+}

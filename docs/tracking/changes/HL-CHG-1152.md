@@ -8,10 +8,10 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `implemented_locally` |
-| DEV | `final_app1f_locally_verified_new_pipeline_pending` |
-| CI | `pending_own_run` |
-| PRE-PROD | `e0_files_deployed_functional_acceptance_reopened_fix_pending` |
+| Implementacja | `implemented` |
+| DEV | `published_source_86eb8d9` |
+| CI | `passed_source_86eb8d9` |
+| PRE-PROD | `deployed_source_86eb8d9` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
 
@@ -38,13 +38,15 @@ Data pierwotnej wiadomości: 2026-11-15. Najnowsze GO po zgłoszeniu starego UI;
 
 ## Dowody
 
-- **Dokumenty:** [docs/v32/GO-PREPROD-RULESET-RESET.md](../../v32/GO-PREPROD-RULESET-RESET.md), [docs/v32/PREPROD-RULESET-RESET-EVIDENCE.json](../../v32/PREPROD-RULESET-RESET-EVIDENCE.json), [docs/PREPROD-V32-PROMOTION.md](../../PREPROD-V32-PROMOTION.md), [docs/PREPROD-V32-EVIDENCE.json](../../PREPROD-V32-EVIDENCE.json)
+- **Dokumenty:** [docs/v32/GO-PREPROD-RULESET-RESET.md](../../v32/GO-PREPROD-RULESET-RESET.md), [docs/v32/PREPROD-RULESET-RESET-EVIDENCE.json](../../v32/PREPROD-RULESET-RESET-EVIDENCE.json), [docs/PREPROD-V32-PROMOTION.md](../../PREPROD-V32-PROMOTION.md), [docs/PREPROD-V32-EVIDENCE.json](../../PREPROD-V32-EVIDENCE.json), [docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json](../../v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json)
 - **Kod:** [harborlight-v1-runtime-upgrade.js](../../../harborlight-v1-runtime-upgrade.js), [harborlight-dev-cloud.js](../../../harborlight-dev-cloud.js), [harborlight-dev-sync.js](../../../harborlight-dev-sync.js), [backend/starter-island.mjs](../../../backend/starter-island.mjs), [backend/server.mjs](../../../backend/server.mjs)
 - **Scenariusze automatyczne:** [tests/harborlight-runtime-upgrade-v32.test.mjs](../../../tests/harborlight-runtime-upgrade-v32.test.mjs), [tests/harborlight-cloud-rules-v32-smoke.py](../../../tests/harborlight-cloud-rules-v32-smoke.py)
-- **Kod dowodowy:** `27f3ea4f08474329108724c68c97c340ecaa1914`.
+- **Kod dowodowy:** `86eb8d9a40dab073c17a1b0f96dca38f1a15e24c`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/43766275390.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/43768861718.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Końcowe źródło aplikacji27f3ea4/0.15.0.1/cache11:93/93kierunkowych(incl5nowychregresji),syntax/imports,Docker2+canonical3JSstagePASS. Dokładne zapisanefood/flour obietnice,historia i claim/shareonce bez reroll/requote; render rzeczywistych nagród,latefood,guide i pendingcashout zaimplementowane. Wymaganyklaster6cloudcallers odebranyPASS zgodnie z końcowym raportem; opcjonalnylatefood ma lukęUI. Excel413/6/Cpusta/96fingerprints źródło27f,SHAe9119fec… . WłasnyCI/publikacja/wdrożenie/resetPENDING; brak zaakceptowanego tagu. b268CI43763863333FAILURE iE0filedeployment/functionsREOPENED zachowane.1410/155/20 to wcześniejszecheckpointy. Aktualnyfrozen27f:109plików/30767904bajtów,archive59b75952…/manifest5b499046…; czteryścisłesuitev22/learning26/starter26/learning27 poPL/ENdesktop/mobilePASS,misje4/4+starter28przy niezmienionymzakresiepoprzednioPASS. OpcjonalnylatefoodUI INCOMPLETE: modelclaimfood25/flour0+receiptPASS, popupworkerów blokował pełnytile/reload; brak pełnego desktop/mobileUIproof, testpoza repo i bez bramkiCI. Launcherwłaścicielski ma30sodliczanie,pinnedsource+oryginalneZIPproof i retrychronionegoresetu po10min; błędneargumenty odrzucone przed siecią. Żadnego rzeczywistegoCI/deploy/resetu nie wykonano.
+PRE-PROD86/0.15.0.1/cache11: własnyCI43766275390 SUCCESS26m17s, Pages43766275430 SUCCESS18s, standardowydeploy43768861718/1 SUCCESS2m12s. Natywna zalogowana gra32 PASS26s:108hashy,20funkcji,7markerów,4nakładki,19kart(9+10),21ikon,natywnyTeatr,ciemne wyrównaneUI,statek odsłonięty.3istniejące konta/3niepuste zapisy,0pustych;6obcych+3anon odmowy,3APIreads+3anonAPI401,0islandwrites. OryginalneZIP-y/innerreceiptv2/strict109verifierPASS;accountAPI=true/resetFence potwierdzone. Reset NOT_EXECUTED; wymagany CloudShell właściciela. PełnyTLS108plików+manifest/109archiwalnych PASS; tagpreprod-0.15.0.1-20261115 obiekt446347dab79ebc3e8c088d6d257adbdcd0f5f6e4→86 opublikowany/zdalniepotwierdzony. E0REOPENED,b268FAILURE i opcjonalnylatefoodINCOMPLETE pozostają historią; manualNOT_RUN,PROD/DNSodłożone.
 
 ## Relacje
 

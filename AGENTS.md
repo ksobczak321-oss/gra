@@ -1,6 +1,18 @@
 # Zasady pracy nad HARBORLIGHT
 
-## Bieżące GO — naprawa starego UI na PRE-PROD i osobny reset trzech kont
+## Bieżące GO — PRE-PROD0.15.0.1 odebrany, osobny reset niewykonany
+
+PRE-PROD **0.15.0.1 / frontend-v32-11** jest wdrożony i przeszedł rzeczywisty odbiór zalogowanej gry. Aplikacja `27f3ea4f08474329108724c68c97c340ecaa1914`, publikacja `86eb8d9a40dab073c17a1b0f96dca38f1a15e24c`. Własny CI43766275390 SUCCESS26m17s (32 kroki SUCCESS, 0 failed, 2 pominięte diagnostyki) i Pages43766275430 SUCCESS18s. Standardowy PRE-PROD43768861718/próba1 SUCCESS: gate8s, deploy22:21:58–22:24:10UTC, 2m12s, 31 kroków SUCCESS/0 failed/1 pominięta diagnostyka.
+
+Natywny odbiór hostowanej gry z rzeczywistym logowaniem PASS26s: 108 dokładnych hashy zasobów, reguły32, 20 funkcji mapy, 7 markerów nowych budynków, 4 nakładki grafiki, 19 kart (Administracja9/Gospodarka10), 21 ikon produktów, natywny Teatr, ciemne wyrównane menu i odsłonięty statek. Potwierdzono3 istniejące konta i3 niepuste zapisy, 0 pustych; 6 obcych i3 anonimowe odczyty odrzucone, 3 odczyty API zalogowanych kont PASS i3 anonimowe API401. Testy nie zapisywały wysp. Niezależny HTTPS potwierdził źródło86, wersję0.15.0.1 i config200 z accountAPI=true oraz `resetFence: community-profile-v1`.
+
+Oba oryginalne ZIP-y pobrano i sprawdzono względem rozmiaru/SHA256 GitHub. Rzeczywisty wewnętrzny receiptv2 odczytano i zwalidowano: wszystkie4 checks=true; rygorystyczny weryfikator archiwum109 plików PASS. Pełny niezależny audyt HTTPS/TLS PASS: 108 plików treści/30 754 604 bajty oraz manifest, łącznie109 plików, są identyczne z niezmiennym archiwum; treść odpowiada źródłu86 i aplikacji27f. Tag `preprod-0.15.0.1-20261115` jest opublikowany i zdalnie potwierdzony: obiekt `446347dab79ebc3e8c088d6d257adbdcd0f5f6e4` →86. Bezpieczny raport: [audyt artefaktów i hostingu](docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json). TagDEV `dev-0.15.0.1-20261115` jest opublikowany i zdalnie potwierdzony: obiekt `1d7997a0074f0f34229807f0092aec808e716783` →86.
+
+**Reset admin1–3 pozostaje NOT_EXECUTED.** Zachowano loginy, hasła, UID i dotychczasowy postęp. W tej sesji brak właścicielskiego GCPADC; chroniony reset wymaga zalogowanego CloudShell właściciela, blokady bezpośrednich zapisów i minimum10min propagacji. Dokładne polecenie z pięcioma zweryfikowanymi argumentami jest w [procedurze resetu](docs/PREPROD-RESET.md). Grant runtime ma status OWNER_REPORTED_APPLIED bez niezależnego odczytu IAM; skuteczne odczyty API potwierdzono osobno. PROD i domena pozostają odłożone. Historyczne E0 REOPENED_USER_REPORT, nieudany b268 oraz opcjonalny late-food UI INCOMPLETE pozostają zapisane; ręczny odbiór użytkownika NOT_RUN.
+
+[Zakres](docs/v32/GO-PREPROD-RULESET-RESET.md), [dowody](docs/v32/PREPROD-RULESET-RESET-EVIDENCE.json), BugHL-CHG-1152 i OpsHL-CHG-1153. Migracja zachowuje stare dane; reset nie wykonuje się automatycznie przy wdrożeniu. Nie zmieniaj PROD/DNS, aplikacji, arkuszy ani fingerprintów w aktualizacji samych dowodów.
+
+## Historia checkpointów tej naprawy (statusy w chwili zapisu)
 
 Użytkownik odłożyłPROD i domenę, polecił wdrożyćDEV naPRE-PROD, a po zgłoszeniu staregoUI zażądał naprawy i resetu wszystkich trzech kontPRE-PROD z zachowaniem loginów, haseł iUID. Starsza kolejność „PROD najpierw” jest zastąpiona. [Zakres](docs/v32/GO-PREPROD-RULESET-RESET.md), [dowody](docs/v32/PREPROD-RULESET-RESET-EVIDENCE.json), BugHL-CHG-1152 iOpsHL-CHG-1153. Nowa poprawka0.15.0.1/cachefrontend-v32-10 ma własne oczekująceCI,wdrożenie i reset; nie przenoś na nią dawnych sukcesów.
 
@@ -13,6 +25,8 @@ Dalsza konieczna zgodnośćAPI obejmuje istniejący wspólny portfelmatki: state
 Końcowycore/reset `af8989f21598ee9df98bcc46e391132ecf22b12b` ma lokalniefrontend1410/1410,backend155/155,resetPython20/20,pakietDocker2 i wszystkiecloudbrowser wtym v21PASS. Frontend iExcel pozostajązeźródła1f. Reset obejmuje tylko perUIDcommunity/mechanicalzero-wallet z zachowaniem tożsamości/blocked/muted; każdy shared/global/financial/externaltrade link blokuje operację. Epoch/mutationRevision/CAS oraz deployed `resetFence:community-profile-v1` są wymagane; idempotentny ten sam receipt nie dotyka nowego postępu. RzeczywistyCI/deploy/reset nadalPENDING,0resetwrites.
 
 Bieżący końcowy kandydat to `27f3ea4f08474329108724c68c97c340ecaa1914`,0.15.0.1/cachefrontend-v32-11.93/93kierunkowych(incl5nowychregresji),syntax/imports,Docker2+canonical3JSstagePASS. Wymaganyklaster6cloudcallers maPASS na zamrożonym27f we właściwych zakresach. OpcjonalnylatefoodUI pozostałINCOMPLETE: modelclaimfood25/flour0+receiptPASS, popupworkerów zablokował pełnytile/reload; brak pełnego desktop/mobileUIproof, testpoza repo i bez wpisuCI. Arkusz6/413/Cpusta z96odciskami ma źródło27f,SHAe9119fec20af9ec6a4de5b6bea2cc4a099bb5eb12eb054118a61feba98a30d03,odcisk23b3b855… . Żadnego nowegoCI,wdrożenia lub resetu jeszcze nie wykonano; b268FAILURE pozostaje historią.
+
+DEV poprawki jest opublikowany: aplikacja27f, publikacja `86eb8d9a40dab073c17a1b0f96dca38f1a15e24c`, własnyCI43766275390SUCCESS26m17s (32SUCCESS/0FAIL/2pominiętediagnostyki), Pages43766275430SUCCESS18s.46programówfrontendbrowser18m17s iDEVcloud4m17sPASS. Tag `dev-0.15.0.1-20261115` opublikowany i zdalniepotwierdzony: obiekt1d7997a0074f0f34229807f0092aec808e716783→86. JednorazowyPREPRODdispatch43768861718 o22:21:43UTC jest w toku i ma źródło86; nie ma jeszcze dowodu nowego wdrożenia/receiptu/hostingu. Reset **NOT_EXECUTED**: właścicielskiCloudShell nadal wymagany, lokalnegoADC brak; konkretne5argumentowe polecenie można związać dopiero z nowymi sprawdzonymi artefaktami. PROD/domena odłożone, stareFAILURE iE0REOPENED zachowane.
 
 ## Historyczne GO, zastąpione — najpierw obecny PRE-PROD doPROD, potem DEV doPRE-PROD
 

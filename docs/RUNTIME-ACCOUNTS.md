@@ -2,18 +2,18 @@
 
 ## Bieżący reset0.15.0.1 — dodatkowy zakres i bramki
 
-Status:PENDING rzeczywistegoCI/wdrożenia/resetu; lokalny frontend1410,backend155 i resetPython20PASS. Użytkownik autoryzował reset3PRE-PROD z zachowaniem loginów,haseł iUID. NoweAPI musi ogłaszać `resetFence: community-profile-v1`. Oprócz wysp reset atomowo czyści własne gameplaydescendantscommunity i tylko kwalifikowanyzerowy mechaniczny charityWalletroot, zachowując tożsamość,handle,name,preferences,blocked/muted. Każde powiązanie sharedseason/alliance/team/score/globaldonation/financial/externaltrade blokuje reset; brak globalnego kasowania.
+Status: własny CI43766275390 i PRE-PROD43768861718 źródła86 SUCCESS; kontoAPI=true i resetFence potwierdzone, reset **NOT_EXECUTED**. Lokalny frontend1410, backend155 i resetPython20 PASS. Użytkownik autoryzował reset3PRE-PROD z zachowaniem loginów,haseł iUID. NoweAPI musi ogłaszać `resetFence: community-profile-v1`. Oprócz wysp reset atomowo czyści własne gameplaydescendantscommunity i tylko kwalifikowanyzerowy mechaniczny charityWalletroot, zachowując tożsamość,handle,name,preferences,blocked/muted. Każde powiązanie sharedseason/alliance/team/score/globaldonation/financial/externaltrade blokuje reset; brak globalnego kasowania.
 
-CAS obejmujecommunity/walletroot nawet jeśli nie istnieją, zwiększaepoch/mutationRevision, a serwer wiąże każdą mutację z rewizją korzeniaaktora, aby spóźniony zapis nie odtworzył postępu. Ten sam resetreceipt zwraca dawny wynik przed dotknięciem nowego postępu. Nadal wymagane nowyodebranydeploy/API,uprawnienia,prywatne3kopie,blokada zapisów klienta i minimum10min propagacji. Żadnego resetu chmurowego jeszcze nie wykonano; nowe wyspy mają18osób przedintro/19po prezencie. [AktualnyGO](v32/GO-PREPROD-RULESET-RESET.md).
+CAS obejmujecommunity/walletroot nawet jeśli nie istnieją, zwiększaepoch/mutationRevision, a serwer wiąże każdą mutację z rewizją korzeniaaktora, aby spóźniony zapis nie odtworzył postępu. Ten sam resetreceipt zwraca dawny wynik przed dotknięciem nowego postępu. Nowe wdrożenie, aktywneAPI i trzy odczyty zalogowanych kont są potwierdzone; prywatne3kopie istnieją. Właścicielski grant zgłoszono jako zastosowany, bez niezależnego odczytuIAM. Nadal wymagane blokada zapisów klienta, minimum10min propagacji i wykonanie chronionego resetu. Żadnego resetu chmurowego jeszcze nie wykonano; nowe wyspy mają18osób przedintro/19po prezencie. [AktualnyGO](v32/GO-PREPROD-RULESET-RESET.md).
 
 
-Kod API kont, wersjonowania wysp, kodów promocyjnych i wygaszania świata jest przygotowany. Samo wdrożenie obrazu nie włącza dostępu do bazy. Domyślna flaga pozostaje wyłączona; API zwraca wtedy `503 account_api_disabled`, a aplikacja nie tworzy awaryjnej lokalnej wyspy.
+Kod API kont, wersjonowania wysp, kodów promocyjnych i wygaszania świata jest przygotowany. Samo wdrożenie obrazu nie włącza dostępu do bazy. Na bieżącym PRE-PROD flaga jest włączona i odczytowo potwierdzona. Przy jawnym wyłączeniu API zwraca `503 account_api_disabled`, a aplikacja nie tworzy awaryjnej lokalnej wyspy.
 
 ## Środowiska i konfiguracja
 
 DEV oznacza pracę lokalną. Techniczny projekt PRE-PROD nadal ma ID `harborlight-dev`, usługę `harborlight-api-dev` i region `europe-central2`. PROD używa `harborlight-prod` / `harborlight-api-prod` w tym samym regionie. Nie zmieniamy identyfikatorów WIF ani nazw istniejących workflow.
 
-`runtime-config.py` generuje wyłącznie niesekretne zmienne wdrożenia. Zawsze wiąże środowisko i pełny SHA wydania. Dopiero jawna wartość `HARBORLIGHT_ACCOUNT_API_ENABLED=true` w odpowiednim środowisku GitHub dodaje:
+`runtime-config.py` generuje wyłącznie niesekretne zmienne wdrożenia. Zawsze wiąże środowisko i pełny SHA wydania. Wartość `HARBORLIGHT_ACCOUNT_API_ENABLED=true` w odpowiednim środowisku GitHub dodaje poniższe zmienne; bieżący workflow PRE-PROD używa też jawnego domyślnego `true` dla autoryzowanej aktywacji API/resetu:
 
 ```text
 HARBORLIGHT_ACCOUNT_API=1

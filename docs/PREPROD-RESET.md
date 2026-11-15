@@ -2,9 +2,9 @@
 
 ## Bieżący reset0.15.0.1 — dodatkowy zakres i bramki
 
-Status:PENDING rzeczywistegoCI/wdrożenia/resetu; lokalny frontend1410,backend155 i resetPython20PASS. Użytkownik autoryzował reset3PRE-PROD z zachowaniem loginów,haseł iUID. NoweAPI musi ogłaszać `resetFence: community-profile-v1`. Oprócz wysp reset atomowo czyści własne gameplaydescendantscommunity i tylko kwalifikowanyzerowy mechaniczny charityWalletroot, zachowując tożsamość,handle,name,preferences,blocked/muted. Każde powiązanie sharedseason/alliance/team/score/globaldonation/financial/externaltrade blokuje reset; brak globalnego kasowania.
+Status: własny CI43766275390 i PRE-PROD43768861718 źródła86 SUCCESS; kontoAPI=true i resetFence potwierdzone, reset **NOT_EXECUTED**. Lokalny frontend1410, backend155 i resetPython20 PASS. Użytkownik autoryzował reset3PRE-PROD z zachowaniem loginów,haseł iUID. NoweAPI musi ogłaszać `resetFence: community-profile-v1`. Oprócz wysp reset atomowo czyści własne gameplaydescendantscommunity i tylko kwalifikowanyzerowy mechaniczny charityWalletroot, zachowując tożsamość,handle,name,preferences,blocked/muted. Każde powiązanie sharedseason/alliance/team/score/globaldonation/financial/externaltrade blokuje reset; brak globalnego kasowania.
 
-CAS obejmujecommunity/walletroot nawet jeśli nie istnieją, zwiększaepoch/mutationRevision, a serwer wiąże każdą mutację z rewizją korzeniaaktora, aby spóźniony zapis nie odtworzył postępu. Ten sam resetreceipt zwraca dawny wynik przed dotknięciem nowego postępu. Nadal wymagane nowyodebranydeploy/API,uprawnienia,prywatne3kopie,blokada zapisów klienta i minimum10min propagacji. Żadnego resetu chmurowego jeszcze nie wykonano; nowe wyspy mają18osób przedintro/19po prezencie. [AktualnyGO](v32/GO-PREPROD-RULESET-RESET.md).
+CAS obejmujecommunity/walletroot nawet jeśli nie istnieją, zwiększaepoch/mutationRevision, a serwer wiąże każdą mutację z rewizją korzeniaaktora, aby spóźniony zapis nie odtworzył postępu. Ten sam resetreceipt zwraca dawny wynik przed dotknięciem nowego postępu. Nowe wdrożenie, aktywneAPI i trzy odczyty zalogowanych kont są potwierdzone; prywatne3kopie istnieją. Właścicielski grant zgłoszono jako zastosowany, bez niezależnego odczytuIAM. Nadal wymagane blokada zapisów klienta, minimum10min propagacji i wykonanie chronionego resetu. Żadnego resetu chmurowego jeszcze nie wykonano; nowe wyspy mają18osób przedintro/19po prezencie. [AktualnyGO](v32/GO-PREPROD-RULESET-RESET.md).
 
 
 Dyspozycja GO z 31 października 2026 obejmuje wyzerowanie **admin1, admin2 i admin3 dopiero po udanej promocji nowego wydania do PRE-PROD**. Obejmuje także admin1 i zastępuje wcześniejsze polecenie zachowania jego postępu. Nie jest resetem kont produkcyjnych ani usunięciem tożsamości użytkowników. Samo dodanie tego narzędzia nie oznacza wykonania resetu; aktualny stan i dowody są w [ENVIRONMENT-STATUS.md](ENVIRONMENT-STATUS.md).
@@ -19,7 +19,7 @@ Zachowuje Firebase Authentication: UID, loginy, adresy, hasła i aktywność to�
 
 Usuwa obie wyspy każdego profilu, samouczek, zasoby, kufry, nagrody, historię reklam/ekspedycji/płatności testowych, stan bez reklam, zwiększenie pojemności statku, transporty, zapisane postępy konta i całą historię rozgrywki pod `accounts/{uid}`. Usuwa własne oferty `playerTradeOffers`, skrzynki zwrotów, potwierdzenia żądań i użycia kodów przypisane do tych trzech UID. Towary w ich otwartych ofertach przepadają razem z resetowanym światem; nie są przyznawane ponownie. Historyczna oferta łącząca te konta z obcym UID zatrzymuje reset zamiast naruszać dane innego gracza. Oferty należące do innych UID, globalne definicje kodów promocyjnych i ich globalne liczniki pozostają; reset profilu nie odnawia globalnego limitu kodu.
 
-Nie tworzy nowej wyspy w imieniu gracza. Serwer tworzy ją dopiero podczas pierwszego wejścia: 12 mieszkańców, po 100 sześciu zasobów, Ratusz i Magazyn 1, brak przydziałów pracowników, podstawowy statek 1000, wprowadzenie przed samouczkiem. Zegar świata pozostaje zatrzymany do zakończenia lub zamknięcia oprowadzania. Dzięki usunięciu `islandAccountProgress` nowa wyspa nie dziedziczy nagród i zakupów testowych starego świata.
+Nie tworzy nowej wyspy w imieniu gracza. Serwer tworzy ją dopiero podczas pierwszego wejścia: reguły32/schema9, 18 mieszkańców przed oprowadzaniem (19 po jednorazowym prezencie), po 100 sześciu zasobów, Ratusz i Magazyn 1, brak przydziałów pracowników, podstawowy statek 1000, wprowadzenie przed samouczkiem. Zegar świata pozostaje zatrzymany do zakończenia lub zamknięcia oprowadzania. Dzięki usunięciu `islandAccountProgress` nowa wyspa nie dziedziczy nagród i zakupów testowych starego świata.
 
 ## Warunki blokujące reset
 
@@ -32,11 +32,29 @@ Przed jakąkolwiek zmianą narzędzie potwierdza:
 5. Istniejące udokumentowane `roles/datastore.user` dla `harborlight-runtime@harborlight-dev.iam.gserviceaccount.com`. Skrypt nie nadaje ról. Inne braki uprawnień/API zatrzymują operację z komunikatem bez drukowania prywatnej zawartości odpowiedzi.
 6. Deny-all Firestore dla klientów i co najmniej 10 minut od czasu publikacji tych reguł odczytanego z Google. Stary bezpośredni zapis Firestore nie sprawdza generacji: bez tej blokady stara karta mogłaby przywrócić usunięty świat.
 
-Włączenie API przed promocją opisuje [RUNTIME-ACCOUNTS.md](RUNTIME-ACCOUNTS.md). W środowisku GitHub `google-cloud-dev` musi być ustawione `HARBORLIGHT_ACCOUNT_API_ENABLED=true`, a runtime musi mieć wskazany dostęp do istniejącej bazy. Wymaga to nowego, poprawnego wdrożenia; zmienna ustawiona po starym przebiegu nie zmienia tamtego wydania.
+Włączenie API przed promocją opisuje [RUNTIME-ACCOUNTS.md](RUNTIME-ACCOUNTS.md). Bieżący workflow PRE-PROD ustawia jawnie `HARBORLIGHT_ACCOUNT_API_ENABLED=true`; runtime wymaga wskazanego dostępu do istniejącej bazy. Udane wdrożenie43768861718 potwierdziło aktywne API i wymagany resetFence.
 
 **Po tym resecie API musi pozostać włączone.** Nie wracać do reguł i klienta umożliwiających bezpośredni zapis Firestore. Reguły API-only zawierają trwały znacznik `HARBORLIGHT PRE-PROD API-only v1`; `prepare-dev-users.py` odmawia zastąpienia ich historycznymi uprawnieniami klientów. Kolejne odbiory hostingu mają sprawdzać dane przez API kont, a odmowę bezpośredniego dostępu traktować jako oczekiwaną izolację. Backend runtime przez IAM nadal ma dostęp do bazy.
 
 ## Wykonanie po zielonej promocji
+
+Zweryfikowane wydanie: run43768861718/próba1, SHA86eb8d9, receipt artifact14183069464, oryginalny ZIP616bajtów, SHA256b4543fe4… . Wewnętrzny receiptv2 rzeczywiście odczytano, wszystkie4 checks=true i weryfikacja z wymaganym accountAPI PASS. Poniższe polecenie jest gotowe dla właściciela zalogowanego w CloudShell; **nie zostało wykonane** w tej sesji. Zachowuje wszystkie bramki narzędzia, prywatne kopie, atomowy reset trzech UID i oczekiwanie na propagację. Uruchom cały blok w zalogowanym Cloud Shell. Korzysta z istniejącego repozytorium `~/harborlight-infra` i tworzy osobny checkout zatwierdzonego SHA:
+
+```sh
+(
+set -e
+cd ~/harborlight-infra
+git fetch origin 86eb8d9a40dab073c17a1b0f96dca38f1a15e24c
+git show 86eb8d9a40dab073c17a1b0f96dca38f1a15e24c:infra/google-cloud/reset-preprod-verified.sh > /tmp/harborlight-reset-43768861718.sh
+bash /tmp/harborlight-reset-43768861718.sh \
+  43768861718 \
+  86eb8d9a40dab073c17a1b0f96dca38f1a15e24c \
+  14183069464 616 \
+  b4543fe43c26b5d7ee44423c95ef6bd8aec280f88fc121034dd1f749255fc348
+)
+```
+
+Nie przechowuj ZIP-ów ani kopii zapisów w repozytorium. Rzeczywisty sukces resetu i nowe generacje wymagają późniejszego odczytu z Google; sukces wdrożenia tego nie zastępuje.
 
 Właściciel może użyć launchera `infra/google-cloud/reset-preprod-verified.sh` z pięcioma zweryfikowanymi wartościami: ID nowego udanego wdrożenia, pełny SHA, ID artefaktu receipt, rozmiar oryginalnego ZIP i jego SHA256. Launcher pobiera oryginalny ZIP, sprawdza jego rozmiar i hash, uruchamia narzędzie z odizolowanego checkoutu właściwego SHA oraz automatycznie ponawia tę samą operację po wymaganej propagacji reguł. W czasie oczekiwania wypisuje stan co najwyżej co30sekund. Inne błędy zatrzymują wykonanie; wszystkie bramki oryginalnego narzędzia pozostają aktywne. Nie uruchamiaj go z danymi starego wydania bez API lub bez resetFence.
 

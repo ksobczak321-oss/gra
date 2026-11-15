@@ -1,15 +1,15 @@
 {
   "scope": "Fix official-cloud legacy ruleset activation, then separately reset exactly three PRE-PROD accounts; PROD/domain postponed",
-  "status": "cache11_required_local_checks_passed_own_CI_deployment_reset_pending",
+  "status": "DEV_and_PREPROD_published_own_CI_and_live_functional_acceptance_SUCCESS_reset_NOT_EXECUTED",
   "version": "0.15.0.1",
   "cache": "frontend-v32-11",
   "source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
-  "publication_commit": null,
-  "ci_run_id": null,
-  "ci_conclusion": "pending_own_run",
-  "deployment_run_id": null,
-  "deployment_conclusion": "pending_own_run",
-  "reset_result": "PENDING_NOT_EXECUTED",
+  "publication_commit": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+  "ci_run_id": 43766275390,
+  "ci_conclusion": "success",
+  "deployment_run_id": 43768861718,
+  "deployment_conclusion": "success",
+  "reset_result": "NOT_EXECUTED_OWNER_CLOUDSHELL_REQUIRED_NO_LOCAL_ADC",
   "previous_release": {
     "source": "e0aa2ff3f60edeb6a55190ea8b16f0329692b303",
     "file_deployment": "SUCCESS",
@@ -154,15 +154,15 @@
     "separate_from_automatic_migration": true
   },
   "required_reset_gates": {
-    "new_matching_CI_deployment_receipt": "PENDING",
-    "account_API_enabled": "PENDING",
+    "new_matching_CI_deployment_receipt": "PASS_EXACT_86_CI43766275390_DEPLOY43768861718_RECEIPT_V2_VALID",
+    "account_API_enabled": "PASS_PUBLIC_CONFIG_200_AND_THREE_AUTHENTICATED_API_READS",
     "runtime_roles_datastore_user": "OWNER_REPORTED_APPLIED_NOT_INDEPENDENTLY_READ_BACK",
     "client_writes_denied": "PENDING",
     "minimum_propagation_seconds": 600,
     "propagation_wait_completed": false,
     "guarded_reset_executed": false,
     "post_reset_read_verification": "PENDING",
-    "deployed_resetFence_attestation": "PENDING_REQUIRED_community-profile-v1"
+    "deployed_resetFence_attestation": "PASS_PUBLIC_CONFIG_community-profile-v1"
   },
   "configuration": {
     "PREPROD_project": "harborlight-dev",
@@ -176,7 +176,11 @@
     "role_grant_independent_IAM_readback": false,
     "role_grant_reported_output": "Updated IAM policy for project [harborlight-dev].",
     "role_grant_role": "roles/datastore.user",
-    "role_grant_condition": "None"
+    "role_grant_condition": "None",
+    "current_PREPROD_account_API_enabled": true,
+    "current_PREPROD_account_API_config_HTTP_status": 200,
+    "current_PREPROD_resetFence": "community-profile-v1",
+    "effective_runtime_data_access": "PASS_three_authenticated_API_reads_no_island_writes"
   },
   "PROD": {
     "user_postponed": true,
@@ -195,7 +199,7 @@
   },
   "manual_execution": "NOT_RUN",
   "local_checkpoint_sha": "c6c4f401dd3bda605578e05efb7529cbbf6da102",
-  "source_status": "application_committed_required_frozen_browser_acceptance_passed_optional_UI_gap_recorded",
+  "source_status": "application_committed_published_and_live_preprod_verified",
   "local_checkpoint_workbook": {
     "application_source_sha": "c6c4f401dd3bda605578e05efb7529cbbf6da102",
     "sha256": "fdfb5e1d7e48ba2b235495455578288ccb63d4bed9f1f751c0f987b95f5e232a",
@@ -317,26 +321,21 @@
     "version": "0.15.0.1",
     "cache": "frontend-v32-11",
     "source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
-    "publication_commit": null,
-    "CI": "pending_new_own_run",
-    "deployment": "pending",
-    "reset": "pending",
-    "accepted_tag_created": false
+    "publication_commit": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "CI": "success_43766275390",
+    "deployment": "success_43768861718",
+    "reset": "NOT_EXECUTED_OWNER_CLOUDSHELL_REQUIRED",
+    "accepted_tag_created": true,
+    "accepted_DEV_tag_created": true,
+    "accepted_PREPROD_tag_created": true
   },
-  "local_check_results_scope": "1410 frontend/155 backend/20 reset and previous browser results are prior checkpoints; cache11 frozen-package browser results remain pending",
-  "latest_deployed_observation": {
-    "source_sha": "e0aa2ff3f60edeb6a55190ea8b16f0329692b303",
-    "version": "0.15.0.0",
-    "API_config_status": 503,
-    "independent_TLS_read": true,
-    "new_deployment_or_reset": false
-  },
+  "local_check_results_scope": "1410 frontend/155 backend/20 reset are prior local checkpoints; exact86 own full CI passed including46 frontend browser programs and DEV/cloud browser group. Optional latefood UI test remains incomplete.",
   "new_regression_investigation": {
-    "status": "in_progress_not_final_acceptance",
+    "status": "implemented_required_regressions_and_own_CI_passed_optional_UI_gap_retained",
     "legacy31_tutorial_and_loyalty_promises": "saved chest food25 and claimed history must remain immutable; no reroll/requote",
     "UI": "render actual food/flour reward keys independently, refresh warehouse priority guide, retain pending expedition cashout",
-    "new_targeted_checkpoint_passed": 92,
-    "strengthening_pending_at_root_report": true
+    "new_targeted_checkpoint_passed": 93,
+    "strengthening_pending_at_root_report": false
   },
   "current_candidate_local_checks": {
     "source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
@@ -408,10 +407,179 @@
     "uses_same_guarded_reset_tool": true,
     "automatic_retry_after_minimum_propagation_minutes": 10,
     "malformed_arguments_rejected_before_network": "PASS",
-    "CI_bash_n_check": "added; own CI pending",
+    "CI_bash_n_check": "PASS_own_CI43766275390",
     "actual_cloud_reset_executed": false
   },
   "optional_verification_gaps": [
     "late legacy-food tile/reload UI incomplete; model claim/receipt passed; not claimed as desktop/mobile UI coverage"
-  ]
+  ],
+  "accepted_DEV_source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+  "pages_run_id": 43766275430,
+  "pages_conclusion": "success",
+  "own_CI": {
+    "run_id": 43766275390,
+    "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "job_id": 132971962773,
+    "conclusion": "success",
+    "started_at": "2026-11-15T21:54:37Z",
+    "completed_at": "2026-11-15T22:20:54Z",
+    "duration": "26m17s",
+    "successful_steps": 32,
+    "failed_steps": 0,
+    "skipped_steps": 2,
+    "skipped_reason": "failure diagnostic uploads unnecessary on success",
+    "frontend_browser": {
+      "programs": 46,
+      "duration": "18m17s",
+      "result": "PASS"
+    },
+    "DEV_cloud_browser": {
+      "duration": "4m17s",
+      "result": "PASS"
+    }
+  },
+  "DEV_publication": {
+    "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "application_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
+    "main_and_dev_0_15_0_1_remote_verified": true,
+    "pages_run_id": 43766275430,
+    "pages_conclusion": "success",
+    "pages_duration": "18s",
+    "tag": {
+      "name": "dev-0.15.0.1-20261115",
+      "annotated_object": "1d7997a0074f0f34229807f0092aec808e716783",
+      "target": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "remote_verified": true
+    }
+  },
+  "PREPROD_candidate": {
+    "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "run_id": 43768861718,
+    "created_at": "2026-11-15T22:21:43Z",
+    "dispatch_count": 1,
+    "status": "completed",
+    "source_confirmed": true,
+    "receipt_hosted_and_functional_proofs": "PASS_ACTUAL_ZIP_RECEIPT_NATIVE_AUTH_UI_API_AND_HOSTING_SMOKE",
+    "conclusion": "success",
+    "run_attempt": 1,
+    "gate_duration_seconds": 8,
+    "deploy_started_at": "2026-11-15T22:21:58Z",
+    "deploy_completed_at": "2026-11-15T22:24:10Z",
+    "deploy_duration_seconds": 132,
+    "successful_deploy_steps": 31,
+    "failed_deploy_steps": 0,
+    "skipped_diagnostic_steps": 1,
+    "tag": {
+      "name": "preprod-0.15.0.1-20261115",
+      "annotated_object": "446347dab79ebc3e8c088d6d257adbdcd0f5f6e4",
+      "target": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "published": true,
+      "remote_verified": true
+    },
+    "full_public_HTTPS_hash_audit": {
+      "status": "PASS",
+      "tls_verified": true,
+      "content_files": 108,
+      "content_bytes": 30754604,
+      "including_manifest_files": 109,
+      "all_live_bytes_equal_immutable_archive": true,
+      "all_content_equal_release_and_application_source": true,
+      "manifest_sha256": "735e6317fa7691e37a2147676ff495a5ad47a4c7b6154feaee7a5f74d4e4d171",
+      "evidence": "docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json"
+    },
+    "native_hosted_browser": {
+      "result": "PASS",
+      "duration_seconds": 26,
+      "real_authentication": true,
+      "exact_asset_hashes": 108,
+      "ruleset": 32,
+      "map_functions": 20,
+      "new_building_markers": 7,
+      "art_patches": 4,
+      "building_cards": 19,
+      "administration_cards": 9,
+      "economy_cards": 10,
+      "product_icons": 21,
+      "native_Theatre": true,
+      "dark_aligned_UI": true,
+      "ship_visible": true
+    },
+    "accounts_acceptance": {
+      "result": "PASS",
+      "existing_accounts": 3,
+      "nonempty_saved_islands": 3,
+      "empty_saved_islands": 0,
+      "foreign_access_denied": 6,
+      "anonymous_direct_access_denied": 3,
+      "authenticated_API_reads": 3,
+      "anonymous_API_401": 3,
+      "island_writes": 0
+    }
+  },
+  "reset_execution_access": {
+    "user_authorized": true,
+    "owner_CloudShell_required": true,
+    "local_owner_ADC_available": false,
+    "qualified_five_argument_command": "bash infra/google-cloud/reset-preprod-verified.sh \\\n  43768861718 \\\n  86eb8d9a40dab073c17a1b0f96dca38f1a15e24c \\\n  14183069464 616 \\\n  b4543fe43c26b5d7ee44423c95ef6bd8aec280f88fc121034dd1f749255fc348",
+    "actual_reset_executed": false,
+    "proof_values_verified": true,
+    "original_receipt_artifact_id": 14183069464,
+    "original_receipt_ZIP_bytes": 616,
+    "original_receipt_ZIP_sha256": "b4543fe43c26b5d7ee44423c95ef6bd8aec280f88fc121034dd1f749255fc348",
+    "promotion_gate_readonly": "PASS_actual_verify_promotion_no_GCP_private_IAM_rules_or_data_operations"
+  },
+  "functional_acceptance": "SUCCESS_NATIVE_HOSTED_AUTHENTICATED_RULES32",
+  "previous_deployed_observation": {
+    "source_sha": "e0aa2ff3f60edeb6a55190ea8b16f0329692b303",
+    "version": "0.15.0.0",
+    "API_config_status": 503,
+    "independent_TLS_read": true,
+    "new_deployment_or_reset": false
+  },
+  "latest_deployed_observation": {
+    "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "application_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
+    "version": "0.15.0.1",
+    "cache": "frontend-v32-11",
+    "API_config_status": 200,
+    "account_API_enabled": true,
+    "resetFence": "community-profile-v1",
+    "independent_TLS_read": true,
+    "actual_reset_executed": false
+  },
+  "verified_PREPROD_artifacts": {
+    "original_ZIPs_downloaded_and_verified": true,
+    "actual_inner_receipt_read": true,
+    "receipt_validation": "PASS",
+    "receipt_schema_version": 2,
+    "receipt_checks": {
+      "ci": true,
+      "dev_smoke": true,
+      "frontend_smoke": true,
+      "account_api": true
+    },
+    "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "image_digest": "sha256:4cbb39a369df75aca9c4a3991c4c837966d934b941e858a5bd6558f0ad80e840",
+    "frontend_archive_sha256": "fa51937cc56f16d5d59b69638f7521d3864567e031e390979096caf6974b0061",
+    "frontend_manifest_sha256": "735e6317fa7691e37a2147676ff495a5ad47a4c7b6154feaee7a5f74d4e4d171",
+    "archive_file_count": 109,
+    "archive_total_bytes": 30767904,
+    "strict_frontend_verifier": "PASS",
+    "artifacts": [
+      {
+        "id": 14183427928,
+        "name": "harborlight-dev-frontend-43768861718-1",
+        "size_in_bytes": 28095527,
+        "zip_sha256": "c5305f6c01ccd355f59d8fbde765729caec1033fe9cabaa1bcf284bf663d4bc9"
+      },
+      {
+        "id": 14183069464,
+        "name": "harborlight-dev-release-43768861718-1",
+        "size_in_bytes": 616,
+        "zip_sha256": "b4543fe43c26b5d7ee44423c95ef6bd8aec280f88fc121034dd1f749255fc348"
+      }
+    ],
+    "evidence_directory": "/workspace/work/preprod-cache11-20261115",
+    "committable_safe_audit": "docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json"
+  }
 }

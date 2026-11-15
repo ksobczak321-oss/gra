@@ -1,0 +1,127 @@
+{
+  "scope": "Sanitized actual PRE-PROD86 artifact receipts; no private account data or HTTP headers",
+  "deployment_run_id": 43768861718,
+  "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+  "provenance": {
+    "run": {
+      "id": 43768861718,
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "head_branch": "main",
+      "path": ".github/workflows/google-cloud-dev.yml",
+      "event": "workflow_dispatch",
+      "repository": {
+        "id": 1428128759,
+        "full_name": "ksobczak321-oss/gra"
+      },
+      "head_repository": {
+        "id": 1428128759,
+        "full_name": "ksobczak321-oss/gra"
+      }
+    },
+    "ci": {
+      "id": 43766275390,
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "head_branch": "main",
+      "path": ".github/workflows/ci.yml",
+      "event": "push",
+      "repository": {
+        "id": 1428128759,
+        "full_name": "ksobczak321-oss/gra"
+      },
+      "head_repository": {
+        "id": 1428128759,
+        "full_name": "ksobczak321-oss/gra"
+      }
+    }
+  },
+  "artifacts": [
+    {
+      "id": 14183427928,
+      "name": "harborlight-dev-frontend-43768861718-1",
+      "size_in_bytes": 28095527,
+      "zip_sha256": "c5305f6c01ccd355f59d8fbde765729caec1033fe9cabaa1bcf284bf663d4bc9"
+    },
+    {
+      "id": 14183069464,
+      "name": "harborlight-dev-release-43768861718-1",
+      "size_in_bytes": 616,
+      "zip_sha256": "b4543fe43c26b5d7ee44423c95ef6bd8aec280f88fc121034dd1f749255fc348"
+    }
+  ],
+  "inner_receipt": {
+    "schema_version": 2,
+    "repository": "ksobczak321-oss/gra",
+    "repository_id": 1428128759,
+    "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "ci": {
+      "run_id": 43766275390,
+      "run_attempt": 1
+    },
+    "dev": {
+      "run_id": 43768861718,
+      "run_attempt": 1
+    },
+    "image": {
+      "uri": "europe-central2-docker.pkg.dev/harborlight-dev/harborlight/api@sha256:4cbb39a369df75aca9c4a3991c4c837966d934b941e858a5bd6558f0ad80e840",
+      "digest": "sha256:4cbb39a369df75aca9c4a3991c4c837966d934b941e858a5bd6558f0ad80e840"
+    },
+    "frontend": {
+      "artifact_name": "harborlight-dev-frontend-43768861718-1",
+      "archive_sha256": "fa51937cc56f16d5d59b69638f7521d3864567e031e390979096caf6974b0061",
+      "manifest_sha256": "735e6317fa7691e37a2147676ff495a5ad47a4c7b6154feaee7a5f74d4e4d171",
+      "site": "harborlight-dev",
+      "url": "https://harborlight-dev.web.app"
+    },
+    "checks": {
+      "ci": true,
+      "dev_smoke": true,
+      "frontend_smoke": true,
+      "account_api": true
+    }
+  },
+  "receipt_validation": {
+    "valid": true,
+    "require_account_api": true,
+    "sourceSha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "sourceImage": "europe-central2-docker.pkg.dev/harborlight-dev/harborlight/api@sha256:4cbb39a369df75aca9c4a3991c4c837966d934b941e858a5bd6558f0ad80e840",
+    "imageDigest": "sha256:4cbb39a369df75aca9c4a3991c4c837966d934b941e858a5bd6558f0ad80e840",
+    "ciRunId": 43766275390,
+    "ciRunAttempt": 1,
+    "frontendArtifactName": "harborlight-dev-frontend-43768861718-1",
+    "frontendArchiveSha256": "fa51937cc56f16d5d59b69638f7521d3864567e031e390979096caf6974b0061",
+    "frontendManifestSha256": "735e6317fa7691e37a2147676ff495a5ad47a4c7b6154feaee7a5f74d4e4d171"
+  },
+  "frontend_verification": {
+    "archive_sha256": "fa51937cc56f16d5d59b69638f7521d3864567e031e390979096caf6974b0061",
+    "commit": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "file_count": 109,
+    "manifest_sha256": "735e6317fa7691e37a2147676ff495a5ad47a4c7b6154feaee7a5f74d4e4d171",
+    "total_bytes": 30767904
+  },
+  "full_public_HTTPS_hash_audit": {
+    "status": "PASS",
+    "tls_verified": true,
+    "content_files": 108,
+    "content_bytes": 30754604,
+    "including_manifest_files": 109,
+    "all_live_bytes_equal_immutable_archive": true,
+    "all_content_equal_release_and_application_source": true,
+    "manifest_sha256": "735e6317fa7691e37a2147676ff495a5ad47a4c7b6154feaee7a5f74d4e4d171",
+    "evidence": "docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json"
+  },
+  "actual_reset_executed": false,
+  "PREPROD_tag": {
+    "name": "preprod-0.15.0.1-20261115",
+    "annotated_object": "446347dab79ebc3e8c088d6d257adbdcd0f5f6e4",
+    "target": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "published": true,
+    "remote_verified": true
+  },
+  "committable_full_audit": "docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json"
+}

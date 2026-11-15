@@ -9,9 +9,9 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `published_pages_2dd923d_verified` |
-| CI | `pending_final_metadata_commit` |
-| PRE-PROD | `e0_files_deployed_functional_acceptance_reopened` |
+| DEV | `published_source_86eb8d9` |
+| CI | `passed_source_86eb8d9` |
+| PRE-PROD | `deployed_source_86eb8d9` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -37,13 +37,15 @@ Data pierwotnej wiadomości: 2026-11-15. Zatwierdzony pakiet z załączonej rozm
 
 ## Dowody
 
-- **Dokumenty:** [docs/v32/DEV-READY.md](../../v32/DEV-READY.md), [docs/v32/VISUAL-REVIEW.md](../../v32/VISUAL-REVIEW.md), [docs/v32/PENDING-NOTES.md](../../v32/PENDING-NOTES.md)
+- **Dokumenty:** [docs/v32/DEV-READY.md](../../v32/DEV-READY.md), [docs/v32/VISUAL-REVIEW.md](../../v32/VISUAL-REVIEW.md), [docs/v32/PENDING-NOTES.md](../../v32/PENDING-NOTES.md), [docs/v32/PREPROD-RULESET-RESET-EVIDENCE.json](../../v32/PREPROD-RULESET-RESET-EVIDENCE.json), [docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json](../../v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json)
 - **Kod:** [harborlight-v1-development-ui.js](../../../harborlight-v1-development-ui.js), [harborlight-v1-development.css](../../../harborlight-v1-development.css), [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-play.css](../../../harborlight-v1-play.css), [assets/harborlight-v1-approved.png](../../../assets/harborlight-v1-approved.png)
 - **Scenariusze automatyczne:** [tests/harborlight-building-access-v32-smoke.py](../../../tests/harborlight-building-access-v32-smoke.py), [tests/harborlight-native-map-v32-smoke.py](../../../tests/harborlight-native-map-v32-smoke.py)
-- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/43757897657.
+- **Kod dowodowy:** `86eb8d9a40dab073c17a1b0f96dca38f1a15e24c`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/43766275390.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/43768861718.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Lokalne testy14ciemnychpaneli,7identycznychramek,blokadRatusz1/2/4na1440/390orazodczytpoziomówtrzechkontPASS. KońcoweCIiPageswymagająwłasnegoźródła;PRE-PROD/PRODnot_deployed.
+PRE-PROD86/0.15.0.1/cache11: własnyCI43766275390 SUCCESS26m17s, Pages43766275430 SUCCESS18s, standardowydeploy43768861718/1 SUCCESS2m12s. Natywna zalogowana gra32 PASS26s:108hashy,20funkcji,7markerów,4nakładki,19kart(9+10),21ikon,natywnyTeatr,ciemne wyrównaneUI,statek odsłonięty.3istniejące konta/3niepuste zapisy,0pustych;6obcych+3anon odmowy,3APIreads+3anonAPI401,0islandwrites. OryginalneZIP-y/innerreceiptv2/strict109verifierPASS;accountAPI=true/resetFence potwierdzone. Reset NOT_EXECUTED; wymagany CloudShell właściciela. PełnyTLS108plików+manifest/109archiwalnych PASS; tagpreprod-0.15.0.1-20261115 obiekt446347dab79ebc3e8c088d6d257adbdcd0f5f6e4→86 opublikowany/zdalniepotwierdzony. E0REOPENED,b268FAILURE i opcjonalnylatefoodINCOMPLETE pozostają historią; manualNOT_RUN,PROD/DNSodłożone.
 
 ## Relacje
 
