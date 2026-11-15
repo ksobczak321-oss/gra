@@ -14,10 +14,10 @@ Rejestr nie publikuje prywatnych kwot Billing ani danych osobistych związanych 
 
 ## Bieżące środowiska
 
-- Nowy DEV **0.15.0.0**: `full_go_locally_verified; publication_pending`; CI `pending_final_full_go_source`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
+- Nowy DEV **0.15.0.0**: `published_pages_verified; final_metadata_ci_requires_own_result`; CI `pending_final_metadata_commit`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
 - Odebrany PRE-PROD **0.14.0.0**: źródło `7e81a1a436770f57fd8abf390b6af8022e3300f6`; [deploy 41909268052](https://github.com/ksobczak321-oss/gra/actions/runs/41909268052), próba 1.
 - PRE-PROD tej wcześniejszej wersji nie oznacza promocji nowych kart. PROD oraz pełny reset kont: bez nowej operacji.
-DEV0.15.0.0/v32 obejmuje 47 zatwierdzonych odpowiedzi i pełne późniejsze GO: tutorial V5/56, Teatr z wyborem widzów i Wyślij wszystkich, trzy sekcje Magazynu, ciemne panele i wspólny limit 40 000 na poziomie 1. Lokalny admin1 ma Ratusz5 bez resetu. Bieżący cache5 i własne CI/Pages końcowego źródła wymagają odczytu; poprzedni cache4/fc2e87e ma odrębne sukcesy. Lokalny runtime nie jest kopią infrastruktury Firebase1:1, a publiczny Pages pozostaje podglądem bez kont i trwałego zapisu. PRE-PROD nadal7e81a1a, bez nowego deployu i mutacji kont chmurowych. Hasła=loginy admin1/admin2/admin3: lokalnie ustawione, PRE-PROD auth-only3/3PASS już wcześniej. Ręczny odbiór użytkownika NOT_RUN.
+DEV0.15.0.0/v32 obejmuje 47 zatwierdzonych odpowiedzi i pełne późniejsze GO: tutorial V5/56, Teatr z wyborem widzów i Wyślij wszystkich, trzy sekcje Magazynu, ciemne panele i wspólny limit 40 000 na poziomie 1. Lokalny admin1 ma Ratusz5 bez resetu. Cache5 ma Pages43720459381SUCCESS, zgodne hashe9plików i uruchomienie hostowanych bajtów1440/390PASS. Pełny CI końcowego commitu metadanych wymaga osobnego wyniku; poprzedni cache4/fc2e87e ma odrębne sukcesy. Lokalny runtime nie jest kopią infrastruktury Firebase1:1, a publiczny Pages pozostaje podglądem bez kont i trwałego zapisu. PRE-PROD nadal7e81a1a, bez nowego deployu i mutacji kont chmurowych. Hasła=loginy admin1/admin2/admin3: lokalnie ustawione, PRE-PROD auth-only3/3PASS już wcześniej. Ręczny odbiór użytkownika NOT_RUN.
 
 ## Historyczny punkt odniesienia ewidencji
 
@@ -161,8 +161,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1134 — Planowanie spektaklu i ogród działają przy zachowanej produkcji](changes/HL-CHG-1134.md) | Story | `accepted` | `verified_locally_dev_only` | `not_deployed` |
 | [HL-CHG-1138 — Formularze i grafiki budynków są spójne na komputerze i telefonie](changes/HL-CHG-1138.md) | Story | `accepted` | `verified_locally_dev_only` | `not_deployed` |
 | [HL-CHG-1139 — Nowe funkcje wykorzystują istniejące budynki; Teatr i Targ otrzymują wskazane miejsca](changes/HL-CHG-1139.md) | Story | `accepted` | `verified_locally_dev_only` | `not_deployed` |
-| [HL-CHG-1140 — Nowe menu są ciemne, ramki spójne, a blokada wyświetla warunek odblokowania](changes/HL-CHG-1140.md) | Story | `accepted` | `verified_locally_dev_only` | `not_deployed` |
-| [HL-CHG-1141 — Tutorial V5/56, wybór widzów Teatru i sekcje Magazynu ze wspólną pojemnością 40 000](changes/HL-CHG-1141.md) | Story | `accepted` | `verified_locally_dev_only` | `not_deployed` |
+| [HL-CHG-1140 — Nowe menu są ciemne, ramki spójne, a blokada wyświetla warunek odblokowania](changes/HL-CHG-1140.md) | Story | `accepted` | `published_pages_2dd923d_verified` | `not_deployed` |
+| [HL-CHG-1141 — Tutorial V5/56, wybór widzów Teatru i sekcje Magazynu ze wspólną pojemnością 40 000](changes/HL-CHG-1141.md) | Story | `accepted` | `published_pages_2dd923d_verified` | `not_deployed` |
 
 <a id="hl-epic-tut"></a>
 

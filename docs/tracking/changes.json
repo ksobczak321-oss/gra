@@ -28054,8 +28054,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_dev_only",
-        "ci": "not_run_for_final_source",
+        "dev": "published_pages_2dd923d_verified",
+        "ci": "pending_final_metadata_commit",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -28128,8 +28128,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "verified_locally_dev_only",
-        "ci": "not_run_for_final_source",
+        "dev": "published_pages_2dd923d_verified",
+        "ci": "pending_final_metadata_commit",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -28210,7 +28210,7 @@
     "preprod_status": "verified_deployment_and_artifacts",
     "prod_status": "not_authorized",
     "full_test_account_reset": "not_performed",
-    "note": "DEV0.15.0.0/v32 obejmuje 47 zatwierdzonych odpowiedzi i pełne późniejsze GO: tutorial V5/56, Teatr z wyborem widzów i Wyślij wszystkich, trzy sekcje Magazynu, ciemne panele i wspólny limit 40 000 na poziomie 1. Lokalny admin1 ma Ratusz5 bez resetu. Bieżący cache5 i własne CI/Pages końcowego źródła wymagają odczytu; poprzedni cache4/fc2e87e ma odrębne sukcesy. Lokalny runtime nie jest kopią infrastruktury Firebase1:1, a publiczny Pages pozostaje podglądem bez kont i trwałego zapisu. PRE-PROD nadal7e81a1a, bez nowego deployu i mutacji kont chmurowych. Hasła=loginy admin1/admin2/admin3: lokalnie ustawione, PRE-PROD auth-only3/3PASS już wcześniej. Ręczny odbiór użytkownika NOT_RUN.",
+    "note": "DEV0.15.0.0/v32 obejmuje 47 zatwierdzonych odpowiedzi i pełne późniejsze GO: tutorial V5/56, Teatr z wyborem widzów i Wyślij wszystkich, trzy sekcje Magazynu, ciemne panele i wspólny limit 40 000 na poziomie 1. Lokalny admin1 ma Ratusz5 bez resetu. Cache5 ma Pages43720459381SUCCESS, zgodne hashe9plików i uruchomienie hostowanych bajtów1440/390PASS. Pełny CI końcowego commitu metadanych wymaga osobnego wyniku; poprzedni cache4/fc2e87e ma odrębne sukcesy. Lokalny runtime nie jest kopią infrastruktury Firebase1:1, a publiczny Pages pozostaje podglądem bez kont i trwałego zapisu. PRE-PROD nadal7e81a1a, bez nowego deployu i mutacji kont chmurowych. Hasła=loginy admin1/admin2/admin3: lokalnie ustawione, PRE-PROD auth-only3/3PASS już wcześniej. Ręczny odbiór użytkownika NOT_RUN.",
     "previous_accepted_dev": {
       "as_of": "2026-11-04",
       "dev_application_version": "0.14.0.0",
@@ -28329,13 +28329,13 @@
     "preprod_bridge_duration": "13s",
     "preprod_deployment_duration": "2m12s",
     "dev_application_version": "0.15.0.0",
-    "dev_status": "full_go_locally_verified; publication_pending",
-    "dev_ci": "pending_final_full_go_source",
-    "dev_source_sha": null,
-    "dev_implementation_source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
+    "dev_status": "published_pages_verified; final_metadata_ci_requires_own_result",
+    "dev_ci": "pending_final_metadata_commit",
+    "dev_source_sha": "2dd923da9b830b755d490aceef3a446472795e33",
+    "dev_implementation_source_sha": "e59726a81d84cf8ddd04e3f45072fdd00d688a63",
     "dev_ci_run_id": null,
-    "dev_pages_run_id": null,
-    "dev_pages_conclusion": "pending",
+    "dev_pages_run_id": 43720459381,
+    "dev_pages_conclusion": "success",
     "dev_tag": null,
     "dev_cache": "frontend-v32-5",
     "previous_accepted_v32": {
@@ -28345,6 +28345,10 @@
       "ci_conclusion": "success",
       "pages_run_id": 43703967803,
       "pages_conclusion": "success"
-    }
+    },
+    "frontend_archive_sha256": "268ffe2ebc467a7f2104047c2648815d6cb3ebbf26a08f0c590be9946257b510",
+    "frontend_manifest_sha256": "6b30a24cb6fe7f70c20ac165ffb5aedc24fbd4f028418f36df23836b19da67d8",
+    "frontend_file_count": 100,
+    "frontend_total_bytes": 20240963
   }
 }

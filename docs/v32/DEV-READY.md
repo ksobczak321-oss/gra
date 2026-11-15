@@ -2,6 +2,12 @@
 
 Gałąź: `dev/0.15.0.0`. Punkt wyjścia: odebrane PRE-PROD `7e81a1a436770f57fd8abf390b6af8022e3300f6` / 0.14.0.0. Użytkownik potwierdził wdrożenie całego uzgodnionego zakresu z obecną redakcją; teksty będą poprawiane później na DEV.
 
+## Opublikowany pełny pakiet GO — cache5
+
+[Nowy link DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-5) jest opublikowany. Źródło aplikacji `e59726a81d84cf8ddd04e3f45072fdd00d688a63`, commit publikacji `2dd923da9b830b755d490aceef3a446472795e33`, [Pages43720459381](https://github.com/ksobczak321-oss/gra/actions/runs/43720459381) SUCCESS. Odczyt dziewięciu plików przez HTTPS potwierdził dokładne SHA256 nowego kodu i niezmienionej planszy. Faktycznie hostowane bajty uruchomiono w Chromium1440/390:18/36 osób,7 nowych budynków, polskie wprowadzenie, bez błędów JS/HTTP, żądań API i zapisu gry w przeglądarce. Transport z zachowaną weryfikacją TLS opisano w [dowodach](GO-PREVIEW-EVIDENCE.json).
+
+Excel DEV ma teraz5622wiersze/17arkuszy i dokładnie3kolumny; C pozostaje całkiem pusta. Archiwum100plików zweryfikowano i rozpakowano. Ta późniejsza aktualizacja dowodów nie zmienia plików aplikacji; pełny własny CI końcowego commitu wymaga odrębnego sukcesu. Pages jest podglądem bez kont i trwałego postępu; admin1 na lokalnym runtime ma Ratusz5, a PRE-PROD pozostaje7e81a1a.
+
 ## Publiczny link roboczy
 
 [Otwórz podgląd DEV 0.15.0.0](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-5). To ten sam hosting GitHub Pages, który był używany w poprzedniej rozmowie. Bieżące własne wykonanie Pages i odczyt hostowanych bajtów muszą potwierdzić nową wersję; dawny link z parametrem v31 nie jest dowodem wdrożenia v32.

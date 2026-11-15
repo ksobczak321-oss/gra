@@ -1,0 +1,127 @@
+{
+  "url": "https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-5",
+  "source_sha": "e59726a81d84cf8ddd04e3f45072fdd00d688a63",
+  "transport": "actual HTTPS-hosted files fetched with Python system CA trust; fulfilled into real-origin Chromium to avoid changing certificate validation",
+  "downloaded_urls": 89,
+  "screens": [
+    {
+      "width": 1440,
+      "status": 200,
+      "new_buildings": 7,
+      "population": "18 / 36",
+      "tutorial": "PL",
+      "page_errors": [],
+      "failed_http": [],
+      "api_requests": []
+    },
+    {
+      "width": 390,
+      "status": 200,
+      "new_buildings": 7,
+      "population": "18 / 36",
+      "tutorial": "PL",
+      "page_errors": [],
+      "failed_http": [],
+      "api_requests": []
+    }
+  ],
+  "scope": "DEV only; no new PRE-PROD/PROD deployment",
+  "publication_commit": "2dd923da9b830b755d490aceef3a446472795e33",
+  "pages_run_id": 43720459381,
+  "pages_conclusion": "success",
+  "public_files": [
+    {
+      "file": "harborlight-v1-layered.html",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "2b095707f3ff90fb59fda5b9aad45673fa86b5211f0c652c4e8feaf1f686fb46",
+      "bytes": 9319
+    },
+    {
+      "file": "harborlight-v1-play.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "d93f717596c6771fcd12e78a1e5927733c815865e2f64732e89e8406692b8232",
+      "bytes": 414822
+    },
+    {
+      "file": "harborlight-v1-development-ui.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "fea21e108a4e8b932b5f040e70cd4f2df60366494e0ef6c9f1bec3a50a1f45fe",
+      "bytes": 47475
+    },
+    {
+      "file": "harborlight-v1-development.css",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "50310902bf76c77cc8d7ea4a0a4488b321423d340fe9836dbf402ae09fb5a23d",
+      "bytes": 12134
+    },
+    {
+      "file": "harborlight-v1-play.css",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "7a7c04768ecc1322883ceeac91cd0b0c13564016a5770349bde9dda5dc0bc9b7",
+      "bytes": 103704
+    },
+    {
+      "file": "harborlight-v1-approved-copy.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "b697bc3fcd94e8d73e147b479f428bddeb834efa4d5e613e7ce5eaa4e29c2b7d",
+      "bytes": 68512
+    },
+    {
+      "file": "harborlight-v1-economy.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "5f86662231d084dda32ebee42670d24db665c39888f170c15fd21e9a6576675c",
+      "bytes": 7492
+    },
+    {
+      "file": "harborlight-v1-archipelago.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "d03163f58bc22739a83d02d6710463dfcd1c4ef3cdfba5ce52453429ed336e77",
+      "bytes": 49813
+    },
+    {
+      "file": "assets/harborlight-v1-approved.png",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "4063f003002f95dd7b00f77a8d6d610b04f134766e52afc97e8a10712fd6d823",
+      "bytes": 3315500
+    }
+  ],
+  "editorial": {
+    "rows": 5622,
+    "sheets": 17,
+    "columns": 3,
+    "C_all_blank": true,
+    "source_fingerprints_match": true
+  },
+  "full_ci": "Final metadata commit needs its own CI result; not reported as success.",
+  "local_account_readback": {
+    "admin1": {
+      "townhall": 5,
+      "population": 26
+    },
+    "admin2": {
+      "townhall": 1,
+      "population": 18
+    },
+    "admin3": {
+      "townhall": 1,
+      "population": 18
+    }
+  },
+  "archive": {
+    "archive": "/workspace/output/HARBORLIGHT_DEV_0.15.0.0_frontend.tar.gz",
+    "archive_sha256": "268ffe2ebc467a7f2104047c2648815d6cb3ebbf26a08f0c590be9946257b510",
+    "commit": "e59726a81d84cf8ddd04e3f45072fdd00d688a63",
+    "file_count": 100,
+    "manifest_sha256": "6b30a24cb6fe7f70c20ac165ffb5aedc24fbd4f028418f36df23836b19da67d8",
+    "total_bytes": 20240963
+  }
+}
