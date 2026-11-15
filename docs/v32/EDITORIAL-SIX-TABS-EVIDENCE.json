@@ -1,0 +1,227 @@
+{
+  "scope": "DEV-only Polish text import from exactly six selected workbook sheets; preserve accepted cache8 front and resident directory",
+  "status": "local_acceptance_passed_publication_pending",
+  "application_version": "0.15.0.0",
+  "cache": "frontend-v32-9",
+  "url": "https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5&v=frontend-v32-9",
+  "source_baseline_sha": "485f46664c35643813c37506a1561cecf84986de",
+  "source_sha": null,
+  "publication_commit": null,
+  "ci_run_id": null,
+  "ci_status": "pending_own_run",
+  "ci_conclusion": null,
+  "pages_run_id": null,
+  "pages_conclusion": "pending_own_run",
+  "input": {
+    "workbook_name": "HARBORLIGHT_teksty_do_redakcji_ABC.xlsx",
+    "workbook_sha256": "0c3d0c17b095f479b5dd9d4b6ec4c3d63ea1244f04462a47812db1373845239e",
+    "allowed_extract": "selected-workbook.json",
+    "selected_sheets": [
+      "Tutorial",
+      "Budynki — opisy",
+      "Budynki — informacje",
+      "Dolny pasek",
+      "Komunikaty",
+      "Przyciski"
+    ],
+    "unselected_sheet_contents_read": false,
+    "unselected_sheet_contents_eligible_for_import": false,
+    "selected_rows": 413,
+    "nonempty_C": 87,
+    "C_differs_from_B": 85,
+    "nonempty_C_unchanged_from_B": 2,
+    "formulas_in_selected_sheets": 0,
+    "sheet_stats": [
+      {
+        "sheet": "Tutorial",
+        "rows": 55,
+        "nonempty_C": 15,
+        "C_differs_from_B": 15
+      },
+      {
+        "sheet": "Budynki — opisy",
+        "rows": 24,
+        "nonempty_C": 6,
+        "C_differs_from_B": 6
+      },
+      {
+        "sheet": "Budynki — informacje",
+        "rows": 30,
+        "nonempty_C": 17,
+        "C_differs_from_B": 15
+      },
+      {
+        "sheet": "Dolny pasek",
+        "rows": 24,
+        "nonempty_C": 4,
+        "C_differs_from_B": 4
+      },
+      {
+        "sheet": "Komunikaty",
+        "rows": 215,
+        "nonempty_C": 40,
+        "C_differs_from_B": 40
+      },
+      {
+        "sheet": "Przyciski",
+        "rows": 65,
+        "nonempty_C": 5,
+        "C_differs_from_B": 5
+      }
+    ]
+  },
+  "import_policy": {
+    "nonempty_C_wins": true,
+    "empty_C_fallback": "B",
+    "A_is_context": true,
+    "instructional_notes_as_literal_UI_text": false,
+    "model_changes_implied_by_copy_edit": false,
+    "copy_is_not_evidence_of_API_or_provider_activation": true
+  },
+  "pending_model_decisions": [
+    {
+      "id": "cheese_to_dairy",
+      "status": "awaiting_user_reply",
+      "approved": null,
+      "implemented_by_this_import": false
+    },
+    {
+      "id": "ads_every_level",
+      "status": "awaiting_user_reply",
+      "approved": null,
+      "implemented_by_this_import": false
+    }
+  ],
+  "local_checks": [
+    {
+      "name": "targeted_copy_models",
+      "result": "PASS",
+      "tests": 186
+    },
+    {
+      "name": "actual_56_step_tutorial",
+      "result": "PASS",
+      "widths": [
+        1440,
+        390
+      ],
+      "steps_each": 56
+    },
+    {
+      "name": "common_menu_geometry",
+      "result": "PASS",
+      "widths": [
+        1440,
+        390
+      ]
+    },
+    {
+      "name": "warehouse_controls",
+      "result": "PASS",
+      "widths": [
+        1440,
+        390
+      ]
+    },
+    {
+      "name": "six_sheet_editorial_ui",
+      "result": "PASS",
+      "widths": [
+        1672,
+        1366,
+        390
+      ],
+      "reachable_building_information_each": 20,
+      "editorial_notes_and_placeholders_absent": true,
+      "unchanged_tour_world": true
+    },
+    {
+      "name": "six_sheet_export_dry_run",
+      "result": "PASS",
+      "rows": 413,
+      "sheets": 6,
+      "C_all_blank": true
+    },
+    {
+      "name": "change_registry_and_manual_checklist",
+      "result": "PASS",
+      "cards": 479
+    },
+    {
+      "name": "unselected_catalog_scope",
+      "result": "PASS",
+      "unselected_catalog_text_changes": 0,
+      "image_changes": 0
+    }
+  ],
+  "row_mapping_report": "docs/v32/EDITORIAL-SIX-TABS-MERGE.json",
+  "hosted_checks": [],
+  "manual_execution": "NOT_RUN",
+  "preserved_state_requirements": [
+    "resident UID",
+    "building identity",
+    "assignments",
+    "saved progress",
+    "accepted map artwork and placements",
+    "occupation labels and grouping"
+  ],
+  "previous_accepted_dev": {
+    "cache": "frontend-v32-8",
+    "application_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+    "publication_commit": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+    "ci_run_id": 43740930893,
+    "ci_conclusion": "success",
+    "pages_run_id": 43740930892,
+    "pages_conclusion": "success",
+    "immutable_tag": "dev-0.15.0.0-cache8-20261115"
+  },
+  "production_promotion": {
+    "scope_of_current_import": "DEV only",
+    "separate_request_status": "blocked",
+    "receipt_account_api": false,
+    "current_verifier_file_contract": 108,
+    "receipt_file_contract": 85,
+    "production_workflow_changed_by_this_task": false,
+    "blocker_observed_against_baseline_sha": "485f46664c35643813c37506a1561cecf84986de"
+  },
+  "preprod": {
+    "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+    "new_deployment_by_this_import": false,
+    "account_reset": false
+  },
+  "prod": {
+    "new_deployment_by_this_import": false
+  },
+  "remaining_verification": [
+    "own source commit",
+    "final workbook export and fingerprints",
+    "own CI and Pages",
+    "hosted cache9 verification",
+    "two optional gameplay decisions remain pending"
+  ],
+  "output_workbook": {
+    "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+    "status": "planned_pending_export_and_validation",
+    "sheets": [
+      "Tutorial",
+      "Budynki — opisy",
+      "Budynki — informacje",
+      "Dolny pasek",
+      "Komunikaty",
+      "Przyciski"
+    ],
+    "rows": 413,
+    "columns": [
+      "A",
+      "B",
+      "C"
+    ],
+    "A": "context and per-row resolution metadata",
+    "B": "effective merged runtime text after resolving editorial notes",
+    "C": "blank for future user edits",
+    "historical_full_workbook": "docs/arkusze/HARBORLIGHT15-teksty-DEV.xlsx",
+    "historical_full_workbook_changed": false,
+    "current_validation_report": "docs/arkusze/HARBORLIGHT15-walidacja.json",
+    "validation_result": "pending"
+  }
+}

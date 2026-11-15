@@ -1,4 +1,4 @@
-import { developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js';
+import { developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-9';
 // Approved presentation copy only. No world state, timers or rewards are mutated.
 // User revision: 2026-11-15. Native PL/EN share stable game IDs.
 // Numeric legacy tour positions migrate once through the retained stable IDs.
@@ -1045,6 +1045,13 @@ export function getTourCopy(id, language = 'pl', options = {}) {
       else if (Number(options.state.buildings?.farm?.level) >= 2) copy.text = developmentText('TOUR-10-L2');
     }
     if (id === 'building-leatherworks' && Number(options.state?.buildings?.academy?.level) > 0) copy.text = developmentText('TOUR-20-SZATY');
+    if (id === 'charity') {
+      // The workbook keeps this conditional suffix beside the shared body.
+      // Its editorial label is never part of the player-facing message.
+      const marker = /\n\s*Dopisek na kontach testowych:\s*/;
+      const [body, simulation] = copy.text.split(marker);
+      copy.text = body + (options.simulatedCharity === true && simulation ? `\n\n${simulation.trim()}` : '');
+    }
     if (id === 'home' && options.firstIntroduction) copy.text += `\n\n${developmentText('TOUR-STOP')}`;
     if (id === 'home' && options.firstIntroduction === false) copy.text += `\n\n${developmentText('TOUR-REPLAY-RUNNING')}`;
   }

@@ -1,7 +1,8 @@
-import { adventureChoices, ADVENTURE_CATALOG, pipePorts, adventureMessage } from './harborlight-v1-adventures.js?v=frontend-v32-8';
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-8';
-import { adventureArt, cargoArt, mapTileArt, shipDrawing, planeDrawing } from './harborlight-v1-adventures-art.js?v=frontend-v32-8';
-import { createExpandedAdventureScene } from './harborlight-v1-adventures-expanded-ui.js?v=frontend-v32-8';
+import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-9';
+import { adventureChoices, ADVENTURE_CATALOG, pipePorts, adventureMessage } from './harborlight-v1-adventures.js?v=frontend-v32-9';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-9';
+import { adventureArt, cargoArt, mapTileArt, shipDrawing, planeDrawing } from './harborlight-v1-adventures-art.js?v=frontend-v32-9';
+import { createExpandedAdventureScene } from './harborlight-v1-adventures-expanded-ui.js?v=frontend-v32-9';
 
 const pick = (lang, pl, en) => lang === 'en' ? en : pl;
 const text = (lang, value) => typeof value === 'string' ? value : value?.[lang === 'en' ? 'en' : 'pl'] || value?.pl || '';
@@ -21,7 +22,7 @@ function svg(tag, attributes = {}) { const result = document.createElementNS(NS,
 function setText(element, value) { if (element.textContent !== String(value)) element.textContent = String(value); }
 function stylesheet() {
   if (document.querySelector('[data-adventures-css]')) return;
-  document.head.append(node('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-adventures.css?v=frontend-v32-8', import.meta.url).href, 'data-adventures-css': '' }));
+  document.head.append(node('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-adventures.css?v=frontend-v32-9', import.meta.url).href, 'data-adventures-css': '' }));
 }
 const BUILDINGS = {
   farm: ['Gospodarstwo', 'Farm'], lumber: ['Drwale', 'Lumber camp'], quarry: ['Kamieniołom', 'Quarry'], windmill: ['Młyn', 'Mill'], sawmill: ['Tartak', 'Sawmill'],
@@ -88,7 +89,7 @@ export function createAdventuresPanel({ state: initialState, language = 'pl', on
     const root = node('div', { class: 'adv-active', 'data-adventure-kind': adventure.kind, 'data-adventure-stage': adventure.stage });
     root.append(node('div', { class: 'adv-active-header' }, node('div', {}, node('span', { class: 'adv-label' }, t('Twoja przygoda', 'Your adventure')), node('h4', {}, expandedTitle || text(lang, spec.title) || t('Przygoda na wyspie', 'Island adventure'))), button(t('Wróć na wyspę', 'Return to island'), async()=>{await dispatch({type:'adventureSuspend'});onClose();}, { class: 'adv-quiet', 'data-adventure-close': '' })));
     root.append(node('p', { class: 'adv-stage-help' }, description));
-    if(adventure.data.classicAttempt){if(!document.querySelector('[data-original-puzzle-css]'))document.head.append(node('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-8',import.meta.url).href,'data-original-puzzle-css':''}));root.append(node('div',{class:'adv-classic-time','data-classic-time':''}),node('div',{class:'adv-v32-time-offer','data-classic-time-offer':'',hidden:true}));}
+    if(adventure.data.classicAttempt){if(!document.querySelector('[data-original-puzzle-css]'))document.head.append(node('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-9',import.meta.url).href,'data-original-puzzle-css':''}));root.append(node('div',{class:'adv-classic-time','data-classic-time':''}),node('div',{class:'adv-v32-time-offer','data-classic-time-offer':'',hidden:true}));}
     return root;
   }
   function progressLine(current, total) { const line = node('div', { class: 'adv-progress-track' }, node('span', { style: `width:${Math.max(0, Math.min(100, current / total * 100))}%` })); line.setAttribute('role', 'progressbar'); line.setAttribute('aria-valuenow', current); line.setAttribute('aria-valuemin', 0); line.setAttribute('aria-valuemax', total); return line; }
@@ -172,7 +173,7 @@ export function createAdventuresPanel({ state: initialState, language = 'pl', on
   function mapScene(adventure) {
     const data = adventure.data;
     const descriptions = {
-      pieces: t('W ekspedycji „Znajdź trójki” odkrywasz fragmenty mapy. Zbierz cztery różne części, a potem ułóż drogę do skarbu.', 'Matching triples in an expedition reveals map fragments. Collect four different pieces, then put together a route to the treasure.'),
+      pieces: t(developmentText('MSG-CARDS-MAP'), 'Matching triples in an expedition reveals map fragments. Collect four different pieces, then put together a route to the treasure.'),
       arrange: t('Połącz fragmenty mapy w całość. Kliknij dwa pola, aby zamienić je miejscami. Rzeka i droga muszą do siebie pasować.', 'Join the map fragments. Select two tiles to swap them. Match the river and the trail across their edges.'),
       search: t('Mapa jest gotowa! Przeczytaj wskazówkę i odszukaj właściwe miejsce na wyspie.', 'The map is complete! Read its clue and find the right place on your island.'),
     };
@@ -193,7 +194,7 @@ export function createAdventuresPanel({ state: initialState, language = 'pl', on
     return root;
   }
   function cannonScene(adventure) {
-    const root = standardScene(adventure, t('Pirackie łodzie zablokowały kupca. Każda wygrana runda labiryntu daje jedną kulę. Wyceluj, strzel i otwórz drogę do portu.', 'Pirate boats are blocking a merchant. Each marble maze round you win earns a cannonball. Aim, fire and clear the route to port.'));
+    const root = standardScene(adventure, t('Pirackie łodzie zablokowały kupca. Każda wygrana runda labiryntu daje jedną kulę. '+developmentText('MSG-CANNONBALLS'), 'Pirate boats are blocking a merchant. Each marble maze round you win earns a cannonball. Aim, fire and clear the route to port.'));
     const { board, drawing } = sceneBoard(t('Zatoka piratów', 'Pirate bay'), { viewBox: '0 0 100 100', aspect: '1.4' });
     drawing.innerHTML = '<rect width="100" height="100" fill="#174c61"/><path d="M0 85q25-14 45 4t55-2v13H0Z" fill="#66956e"/><path d="M0 15q10-5 20 0t20 0 20 0 20 0 20 0M0 48q10-5 20 0t20 0 20 0 20 0 20 0" fill="none" stroke="#83bfb6" stroke-width=".5" opacity=".5"/>';
     const actors = svg('g'), aim = svg('line', { x1: 50, y1: 94, x2: 50, y2: 40, stroke: '#f3d99a', 'stroke-width': .8, 'stroke-dasharray': '2 2' }); drawing.append(aim, actors);

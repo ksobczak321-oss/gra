@@ -66,7 +66,7 @@ with sync_playwright() as p:
         page.wait_for_timeout(1200)
         expect(limit).to_have_value('25')
         expect(controls.locator('[data-warehouse-section-toggle="feeding"]')).to_have_attribute('aria-expanded','true')
-        controls.get_by_role('button',name='Zapisz wyżywienie',exact=True).click()
+        controls.get_by_role('button',name='Zapisz ustawienia',exact=True).click()
         expect(page.locator('[data-warehouse-section-toggle="feeding"]')).to_have_attribute('aria-expanded','true')
         assert page.evaluate('window.__HARBORLIGHT_DEV_STATE__.provisions.foodSettings.limits.vegetables')==25
         controls=page.locator('[data-warehouse-controls]')

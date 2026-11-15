@@ -1,5 +1,11 @@
 # Zasady pracy nad HARBORLIGHT
 
+## GO DEV — redakcja z sześciu arkuszy, cache9
+
+Najnowsze zadanie dotyczy importu polskich tekstów z przekazanego Excela wyłącznie z arkuszy: `Tutorial`, `Budynki — opisy`, `Budynki — informacje`, `Dolny pasek`, `Komunikaty`, `Przyciski`. Dozwolonym wyciągiem jest `/workspace/work/editorial-six-tabs/selected-workbook.json`; nie czytaj treści pozostałych arkuszy. KolumnaC ma pierwszeństwo, a przy pustejC obowiązujeB. Wyciąg obejmuje413wierszy,87niepustychC, w tym85różniących się odB i2bez zmiany. Notatki będące poleceniami redakcyjnymi stosuj do właściwego tekstu, nie wyświetlaj ich dosłownie jako komunikat gry. [Zakres](docs/v32/GO-EDITORIAL-SIX-TABS.md), [dowody](docs/v32/EDITORIAL-SIX-TABS-EVIDENCE.json), kartaHL-CHG-1150.
+
+Gra0.15.0.0, nowy cache `frontend-v32-9`; wdrożenie wyłącznieDEV, z zachowaniem zaakceptowanego frontu i katalogu mieszkańców cache8. Dwie możliwe zmiany modelu — ser doMleczarni oraz reklamy na każdym poziomie — wymagają oczekujących odpowiedzi użytkownika; do tego czasu redakcja musi zgodnie opisywać bieżącą logikę. Nie importuj bez takiej odpowiedzi modeli sera lub otrębów/paszy z osobnego roboczego drzewa. NowySHA, testy, CI iPagescache9 mają własne wyniki, na początkuPENDING. Odrębna promocjaPROD pozostaje zablokowana zgodnościąreceipt (`account_api:false`, kontrakt108vs85plików); to zadanie nie zmieniaworkflowPROD, kont ani postępu.
+
 ## GO DEV — nazwy i grupy mieszkańców, cache8
 
 Po zgłoszeniu numerów „Mieszkaniec1…X” w Akademii użytkownik wskazał także Koszary i polecił wdrożyć po poprawce naDEV. Nowy cache `frontend-v32-8` zachowuje cały zaakceptowany front cache7 i dodaje wyłącznie prezentację mieszkańców według zajęcia w listach, wyborach, kursach, nauczycielach, trasach i wyprawach Akademii/Koszar oraz pozostałych spisach Teatru, Królestwa i klasycznych paneli. [Zakres](docs/v32/GO-DIRECTORY.md) i [dowody](docs/v32/DIRECTORY-EVIDENCE.json). Profesor1/2 jest profesorem także podczas tymczasowego zajęcia; żołnierze i oficerowie mają osobne nazwy oraz numerację. Grupy obejmują m.in. Wolni wDomu, pracowników poszczególnych budynków i role zawodowe.

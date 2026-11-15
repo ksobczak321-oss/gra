@@ -43,16 +43,16 @@ with sync_playwright() as p:
   errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.goto(BASE+'/labels.html',wait_until='networkidle');page.wait_for_function('window.ready===true')
   expected=page.evaluate('expected')
-  enrollment=page.get_by_role('button',name='Rozpocznij naukę',exact=True).locator('xpath=ancestor::form')
+  enrollment=page.get_by_role('button',name='Zapisz na kurs',exact=True).locator('xpath=ancestor::form')
   selects=enrollment.locator('select')
   assert selects.nth(1).locator('optgroup').count()>=1
   assert selects.nth(1).locator('option:not([value=""])').all_text_contents()==['Profesor 1','Profesor 2']
   assert all('Mieszkaniec' not in x for x in page.locator('[data-v32-academy] input[type=checkbox]').locator('xpath=ancestor::label').all_text_contents())
   selects.nth(0).select_option(expected['student']);selects.nth(1).select_option(expected['teacher'])
-  enrollment.get_by_role('button',name='Rozpocznij naukę',exact=True).click()
+  enrollment.get_by_role('button',name='Zapisz na kurs',exact=True).click()
   assert page.evaluate('s.education.courses[0].studentUid')==expected['student']
   assert page.evaluate('s.education.courses[0].teacherUid')==expected['teacher']
-  remaining_teacher=page.get_by_role('button',name='Rozpocznij naukę',exact=True).locator('xpath=ancestor::form').locator('select').nth(1)
+  remaining_teacher=page.get_by_role('button',name='Zapisz na kurs',exact=True).locator('xpath=ancestor::form').locator('select').nth(1)
   assert remaining_teacher.locator('option:not([value=""])').all_text_contents()==['Profesor 2'],'filtering busy teachers must not renumber Profesor2'
   assert 'Adept 1' in page.locator('[data-v32-academy] .v32-card>strong').all_text_contents()
   assert page.evaluate('s.residents.find(p=>p.personUid===expected.teacher).name')=='Mieszkaniec 39','presentation must not rename the saved person'
@@ -62,12 +62,12 @@ with sync_playwright() as p:
   research.get_by_role('button',name='Rozpocznij badanie',exact=True).click()
   assert page.evaluate('s.education.researches[0].professorUids')==[expected['researcher']]
   page.evaluate('mount("barracks")')
-  recruitment=page.get_by_role('button',name='Rozpocznij szkolenie',exact=True).locator('xpath=ancestor::form')
+  recruitment=page.get_by_role('button',name='Rozpocznij szkolenie rekruta',exact=True).locator('xpath=ancestor::form')
   assert recruitment.locator('select').nth(0).locator('optgroup').count()>=1
   instructor_names=recruitment.locator('select').nth(1).locator('option:not([value=""])').all_text_contents()
   assert any(x.startswith('Żołnierz ') for x in instructor_names) and any(x.startswith('Oficer ') for x in instructor_names),instructor_names
   recruitment.locator('select').nth(0).select_option(expected['recruit']);recruitment.locator('select').nth(1).select_option(expected['instructor'])
-  recruitment.get_by_role('button',name='Rozpocznij szkolenie',exact=True).click()
+  recruitment.get_by_role('button',name='Rozpocznij szkolenie rekruta',exact=True).click()
   assert page.evaluate('s.military.courses[0].studentUid')==expected['recruit']
   assert page.evaluate('s.military.courses[0].instructorUid')==expected['instructor']
   page.evaluate('mount("theatre")')

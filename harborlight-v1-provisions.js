@@ -1,3 +1,4 @@
+import { developmentText, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-9';
 // DEV v32 provisions. No browser, network, wall-clock or world-state imports.
 // The host owns production and transport; this module owns their recipes,
 // protected food, individual meal history, milk batches and civilian clothing.
@@ -266,7 +267,7 @@ export function feedResidents(state, seconds, context={}) {
   // different rule: only when that food is the sole remaining edible stock.
   if(remaining>EPS)for(const id of order){if(p.foodSettings.enabled[id]!==false)continue;const limit=p.foodSettings.limits[id],max=limit===null||limit===undefined?remainingStock[id]:Math.min(remainingStock[id],finite(limit));const q=Math.min(max,remaining/GOODS[id].satiety);if(q>EPS){mix[id]=finite(mix[id])+q;remainingStock[id]-=q;remaining-=q*GOODS[id].satiety;}}
   const sole=FOOD_IDS.filter(id=>remainingStock[id]>EPS);
-  if(remaining>EPS&&sole.length===1){const id=sole[0],q=Math.min(remainingStock[id],remaining/GOODS[id].satiety);if(q>EPS){mix[id]=finite(mix[id])+q;remaining-=q*GOODS[id].satiety;notify(state,'food-limit-override',`${GOODS[id].name} to jedyne dostępne jedzenie. Przekroczono jednorazowy limit wydania.`,context);}}
+  if(remaining>EPS&&sole.length===1){const id=sole[0],q=Math.min(remainingStock[id],remaining/GOODS[id].satiety);if(q>EPS){mix[id]=finite(mix[id])+q;remaining-=q*GOODS[id].satiety;notify(state,'food-limit-override',developmentText('MSG-EMERGENCY-FEEDING',{produkt:GOODS[id].name}),context);}}
   const supplied=required-Math.max(0,remaining),coverage=Math.max(0,Math.min(1,supplied/required));
   for(const [id,q]of Object.entries(mix)){consume(state,id,q,context);if(p.foodSettings.limits[id]!==null&&p.foodSettings.limits[id]!==undefined)p.foodSettings.limits[id]=Math.max(0,finite(p.foodSettings.limits[id])-q);}
   for(let i=0;i<people.length;i++){
@@ -293,7 +294,7 @@ function advanceMilk(state,seconds,context={}) {
   syncMilkLots(state);let soured=0;for(const lot of state.provisions.milkLots){lot.centralSeconds+=seconds;if(lot.centralSeconds>=3*DAY-EPS){soured+=lot.amount;lot.amount=0;}}
   if(soured<=EPS)return;state.provisions.milkLots=state.provisions.milkLots.filter(l=>l.amount>EPS);state.resources.rawMilk=Math.max(0,state.resources.rawMilk-soured);
   const room=typeof context.stockRoom==='function'?finite(context.stockRoom('sourMilk')):Math.max(0,finite(context.perResourceLimit,MAX)-finite(state.resources.sourMilk));const stored=Math.min(soured,room);state.resources.sourMilk=finite(state.resources.sourMilk)+stored;
-  notify(state,'milk-soured',`${soured} porcji surowego mleka skwaśniało.${stored+EPS<soured?' Nadmiar kwaśnego mleka nie zmieścił się w Magazynie i przepadł.':''}`,context);
+  notify(state,'milk-soured',developmentText('MSG-TURNED-SOUR',{liczba:soured})+(stored+EPS<soured?' '+developmentText('MSG-SOUR-MILK-OVERFLOW',{liczba:Math.round((soured-stored)*100)/100}):''),context);
 }
 export function nextProvisionsEvent(state,context={}) {
   const p=ensure(state,context),now=nowOf(state,context);let next=60;
@@ -326,11 +327,11 @@ export function quoteExchange(state,from,to,amount,context={}) {
   return result(true,'Wymiana według wartości, z prowizją 10%.',{from,to,amount,receive,inputValue,outputValue:receive*GOODS[to].price});
 }
 export function quoteConstructionFood(state,foodUnits,mix=null,context={}) {
-  ensure(state,context);if(!Number.isFinite(foodUnits)||foodUnits<0||foodUnits*6>MAX)return result(false,'Nieprawidłowy koszt wyżywienia budowy.');const required=finite(foodUnits)*6,reserved=foodReservePlan(state,context).materials,available=Object.fromEntries(FOOD_IDS.map(id=>[id,Math.max(0,rawAvailable(state,id,context)-finite(reserved[id]))]));let materials={};
-  if(mix!==null){if(!object(mix))return result(false,'Wybierz produkty na wyżywienie budowy.');for(const[id,q]of Object.entries(mix)){if(!FOOD_IDS.includes(id)||!Number.isSafeInteger(q)||q<0)return result(false,'Wybierz jadalne produkty i pełne liczby sztuk.');if(q>available[id]+EPS)return result(false,'Wybrany zestaw narusza chronioną rezerwę jedzenia.');if(q>0)materials[id]=q;}}
+  ensure(state,context);if(!Number.isFinite(foodUnits)||foodUnits<0||foodUnits*6>MAX)return result(false,'Nieprawidłowy koszt jedzenia na budowę.');const required=finite(foodUnits)*6,reserved=foodReservePlan(state,context).materials,available=Object.fromEntries(FOOD_IDS.map(id=>[id,Math.max(0,rawAvailable(state,id,context)-finite(reserved[id]))]));let materials={};
+  if(mix!==null){if(!object(mix))return result(false,'Wybierz jedzenie na budowę.');for(const[id,q]of Object.entries(mix)){if(!FOOD_IDS.includes(id)||!Number.isSafeInteger(q)||q<0)return result(false,'Wybierz jadalne produkty i pełne liczby sztuk.');if(q>available[id]+EPS)return result(false,developmentText('MSG-PROTECTED-RESERVE'));if(q>0)materials[id]=q;}}
   else{let remaining=required;for(const id of cheapFoods()){const q=Math.min(Math.floor(available[id]+EPS),Math.ceil(Math.max(0,remaining)/GOODS[id].satiety-EPS));if(q>0){materials[id]=q;remaining-=q*GOODS[id].satiety;}if(remaining<=EPS)break;}}
   const provided=Object.entries(materials).reduce((s,[id,q])=>s+q*GOODS[id].satiety,0);
-  return result(provided+EPS>=required,provided+EPS>=required?'Zestaw jedzenia na budowę jest gotowy.':'Brakuje jedzenia ponad chronioną rezerwę.',{materials,satietyRequired:required,satietyProvided:provided,missingSatiety:Math.max(0,required-provided)});
+  return result(provided+EPS>=required,provided+EPS>=required?'Zestaw jedzenia na budowę jest gotowy.':developmentText('MSG-MEAL-COST-MISSING',{brak:Math.round(Math.max(0,required-provided)*100)/100}),{materials,satietyRequired:required,satietyProvided:provided,missingSatiety:Math.max(0,required-provided)});
 }
 export function provisionsAction(state,action,context={}) {
   if(!action||typeof action.type!=='string'||!action.type.startsWith('provisions'))return null;
@@ -339,7 +340,7 @@ export function provisionsAction(state,action,context={}) {
     if(action.priorities!==undefined&&(!Array.isArray(action.priorities)||action.priorities.some(id=>!FOOD_IDS.includes(id))))return result(false,'Wybierz prawidłowe produkty żywnościowe.');
     if(action.limits!==undefined&&(!object(action.limits)||Object.entries(action.limits).some(([id,n])=>!FOOD_IDS.includes(id)||n!==null&&(!Number.isFinite(n)||n<0))))return result(false,'Ilości do wydania muszą być nieujemne.');
     if(action.enabled!==undefined&&(!object(action.enabled)||Object.entries(action.enabled).some(([id,v])=>!FOOD_IDS.includes(id)||typeof v!=='boolean')))return result(false,'Nieprawidłowy wybór produktów do wydania.');
-    if(action.priorities)p.foodSettings.priorities=[...new Set([...action.priorities,...FOOD_IDS])];Object.assign(p.foodSettings.limits,action.limits||{});Object.assign(p.foodSettings.enabled,action.enabled||{});return result(true,'Zapisano priorytety i jednorazowe ilości jedzenia do wydania.');
+    if(action.priorities)p.foodSettings.priorities=[...new Set([...action.priorities,...FOOD_IDS])];Object.assign(p.foodSettings.limits,action.limits||{});Object.assign(p.foodSettings.enabled,action.enabled||{});return result(true,developmentText('MSG-FOOD-SETTINGS-SAVED'));
   }
   if(action.type==='provisionsSetWorkers'){
     const building=action.building,recipes=availableRecipes(state,building,context),cap=crewCapacity(state,building,context),id=action.recipeId;
@@ -367,7 +368,7 @@ export function recipeBatchQuote(state, recipeId, batches=1, context={}) {
   if(Object.entries(inputs).some(([id,n])=>finite(local[id])+EPS<n))return result(false,'Brakuje świeżych ryb w magazynie przy Rybaku.');
  } else if(Object.entries(inputs).some(([id,n])=>availableForSpending(state,id,context)+EPS<n))return result(false,'Brakuje składników ponad chronioną rezerwę jedzenia.');
  const consumedLocal=r.localInputs?Object.values(inputs).reduce((a,b)=>a+b,0):0;
- if(status.used-consumedLocal+outTotal>status.total+EPS||Object.entries(outputs).some(([id,n])=>finite(local[id])-(r.localInputs?finite(inputs[id]):0)+n>status.perProduct+EPS))return result(false,'Brakuje miejsca w magazynie przy budynku.');
+ if(status.used-consumedLocal+outTotal>status.total+EPS||Object.entries(outputs).some(([id,n])=>finite(local[id])-(r.localInputs?finite(inputs[id]):0)+n>status.perProduct+EPS))return result(false,developmentText('MSG-LOCAL-TOTAL-FULL'));
  return result(true,'Można wykonać recepturę.',{recipeId,building:r.building,batches,inputs,outputs,...(r.localInputs?{localInputs:true}:{})});
 }
 export function produceRecipeBatch(state,recipeId,batches=1,context={}) {

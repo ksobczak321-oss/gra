@@ -1,4 +1,5 @@
-import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-8';
+import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-9';
+import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-9';
 
 // Account-level DEV model. Persistence and authorization belong to the adapter.
 // Random outcomes are sampled once and saved; opening a panel never rerolls them.
@@ -222,7 +223,7 @@ function applyHappinessDebt(state, points, ctx, at, reason) {
     if(world.lighthouseRemaining>EPS){k.deferredPenalties.push({id:nextId(k,state,ctx,'deferred-penalty'),worldId:world.islandId||'island-1',residentIds:ids,points,reason,createdAt:at,dueAt:at+world.lighthouseRemaining*1000,status:'waiting'});continue;}
     for(const id of ids)k.financialOffsets[id]=positive(k.financialOffsets[id])+points;
   }
-  emit(state,ctx,'kingdom-financial-penalty','Niepokryta należność',`Brakujące środki obniżają szczęście o ${Math.round(points*100)/100} punktów. Aktywne błogosławieństwo Latarni odracza tę karę.`,at);
+  emit(state,ctx,'kingdom-financial-penalty','Niepokryta należność',developmentText('MSG-HAPPINESS-SHORTFALL',{brak:Math.round(points*200),punkty:Math.round(points*100)/100}),at);
 }
 function collect(state,value,ctx,at,reason){
   let remaining=money(value);const initial=remaining,coinTake=Math.min(remaining,getCoins(state,ctx));
@@ -238,12 +239,12 @@ function normalPenalty(state,task,ctx,at){
   if(task.normalPenaltyResolved)return;task.normalPenaltyResolved=true;task.penalties={};
   if(task.penaltyRoll>=.2)return;
   const req=outstandingRequirements(task),value=money(requirementsValue(req,task.personValues,{goodsValue:id=>task.goodsValues[id]||kingdomGoodsValue(id,ctx)})*.1);
-  for(const id of task.participants||[identity(state,ctx)]){const member=memberState(state,id,ctx);if(!member){task.penalties[id]={pending:true,value,at};continue;}const k=normalizeKingdom(member.state);if(k.lastPenaltyAt!==null&&at-k.lastPenaltyAt<72*HOUR){task.penalties[id]={skipped:'cooldown'};continue;}k.lastPenaltyAt=at;task.penalties[id]=collect(member.state,value,member.context,at,'normal-tax');emit(member.state,member.context,'kingdom-tax','Dodatkowy podatek',`Królestwo nałożyło podatek o wartości ${value} monet.`,at);}
+  for(const id of task.participants||[identity(state,ctx)]){const member=memberState(state,id,ctx);if(!member){task.penalties[id]={pending:true,value,at};continue;}const k=normalizeKingdom(member.state);if(k.lastPenaltyAt!==null&&at-k.lastPenaltyAt<72*HOUR){task.penalties[id]={skipped:'cooldown'};continue;}k.lastPenaltyAt=at;task.penalties[id]=collect(member.state,value,member.context,at,'normal-tax');emit(member.state,member.context,'kingdom-tax','Dodatkowy podatek',developmentText('MSG-TAX-IMPOSED',{wartość:value}),at);}
 }
 function accrueLoan(loan,at){if(!loan||loan.status!=='active')return;const until=Math.max(loan.lastAccruedAt,Math.min(at,loan.dueAt));loan.interestAccrued+=loan.principalOutstanding*.05*(until-loan.lastAccruedAt)/DAY;loan.lastAccruedAt=until;}
 function closeLoan(state,loan,status,ctx,at){
   const k=normalizeKingdom(state);loan.status=status;loan.closedAt=at;
-  if(status==='forgiven'){k.forgivenessSkipPending=true;k.lastForgivenPrincipal=loan.initialPrincipal;k.borrowedCoins=0;emit(state,ctx,'kingdom-forgiveness','Królewski gest łaski!','Cała pozostała kwota pożyczki została umorzona.',at);}
+  if(status==='forgiven'){k.forgivenessSkipPending=true;k.lastForgivenPrincipal=loan.initialPrincipal;k.borrowedCoins=0;emit(state,ctx,'kingdom-forgiveness','Królewski gest łaski!',developmentText('MSG-LOAN-FORGIVEN'),at);}
   if(status==='repaid'&&!loan.forgivenessEligible&&k.forgivenessSkipPending){const cfg=balance(ctx),threshold=Math.max(1,money(k.lastForgivenPrincipal*cfg.forgivenessSkipPrincipalShare));if(loan.initialPrincipal>=threshold&&at-loan.issuedAt>=cfg.forgivenessSkipMinimumElapsedHours*HOUR)k.forgivenessSkipPending=false;}
   k.loanHistory.push(clone(loan));k.loanHistory=k.loanHistory.slice(-100);k.loan=null;
 }
@@ -254,14 +255,14 @@ function repayLoan(state,amount,ctx,at){
   if(!spendCoins(state,pay,ctx,{kind:'kingdom-repayment'}))return bad('Brakuje monet na tę spłatę.','kingdom-insufficient-coins');
   const interestPaid=Math.min(loan.interestAccrued,pay);loan.interestAccrued-=interestPaid;loan.principalOutstanding=Math.max(0,loan.principalOutstanding-(pay-interestPaid));loan.paidCoins+=pay;
   if(loan.principalOutstanding+loan.interestAccrued<=EPS)closeLoan(state,loan,'repaid',ctx,at);
-  return ok(k.loan?'Część pożyczki została spłacona. Dalsze odsetki naliczamy od pozostałego kapitału.':'Pożyczka została spłacona.',{paid:pay,remaining:k.loan?money(k.loan.principalOutstanding+k.loan.interestAccrued):0});
+  return ok(k.loan?'Część pożyczki została spłacona. Dalsze odsetki naliczamy od pozostałego kapitału.':developmentText('MSG-LOAN-REPAID'),{paid:pay,remaining:k.loan?money(k.loan.principalOutstanding+k.loan.interestAccrued):0});
 }
 function loanDiscovery(state,ctx){if(typeof ctx.hasLoanDiscovery==='function')return worldsOf(state,ctx).some(w=>ctx.hasLoanDiscovery(w));return worldsOf(state,ctx).some(w=>['royal-credit','kingdom-loans','royalCredit'].some(id=>w.education?.discoveries?.[id]||w.education?.research?.[id]?.level>0||w.education?.researches?.[id]?.completed));}
 export function kingdomLoanQuote(state,action={},ctx={}){
   const k=normalizeKingdom(state),at=atOf(state,ctx),level=maxTownhall(state,ctx),wealth=getCoins(state,ctx)+worldsOf(state,ctx).reduce((sum,w)=>sum+Object.entries(w.resources).filter(([id])=>id!=='coins').reduce((s,[id,n])=>s+positive(n)*kingdomGoodsValue(id,ctx),0),0);
   const limit=Math.min(level*2000,Math.floor(wealth*2)),amount=integer(action.amount),days=integer(action.days);
   const eligibility=level<5?'Pożyczka wymaga Ratusza na poziomie 5.':!loanDiscovery(state,ctx)?'Pożyczka wymaga odpowiedniego odkrycia w Akademii.':k.loan?'Na koncie może być tylko jedna zaciągnięta pożyczka.':at<k.loanBannedUntil?'Po niespłaceniu pożyczki obowiązuje 28-dniowa przerwa.':at<k.loanNextAttemptAt?'Po odmowie kolejny wniosek można złożyć po 24 godzinach.':null;
-  return {ok:!eligibility&&amount>0&&amount<=limit&&days>=1&&days<=28,message:eligibility||(!(amount>0&&amount<=limit)?`Dostępna kwota: od 1 do ${limit} monet.`:days<1||days>28?'Wybierz termin od 1 do 28 pełnych dni.':'Warunki pożyczki gotowe.'),limit,amount,days,interest:money(amount*.05*days),total:money(amount*(1+.05*days)),dueAt:at+days*DAY,approvalProbability:.7,forgivenessEligible:!k.forgivenessSkipPending,nextAttemptAt:k.loanNextAttemptAt,bannedUntil:k.loanBannedUntil};
+  return {ok:!eligibility&&amount>0&&amount<=limit&&days>=1&&days<=28,message:eligibility||(!(amount>0&&amount<=limit)?developmentText('MSG-LOAN-LIMIT',{limit}):days<1||days>28?'Wybierz termin od 1 do 28 pełnych dni.':'Warunki pożyczki gotowe.'),limit,amount,days,interest:money(amount*.05*days),total:money(amount*(1+.05*days)),dueAt:at+days*DAY,approvalProbability:.7,forgivenessEligible:!k.forgivenessSkipPending,nextAttemptAt:k.loanNextAttemptAt,bannedUntil:k.loanBannedUntil};
 }
 function eventList(state,ctx){
   const k=normalizeKingdom(state),events=[];
@@ -288,10 +289,10 @@ function settleEvent(state,e,ctx,at){
   } else if(e.kind==='loan'&&k.loan===e.item&&e.item.status==='active'){
     const l=e.item;accrueLoan(l,at);const due=money(l.principalOutstanding+l.interestAccrued);
     if(getCoins(state,ctx)>=due){spendCoins(state,due,ctx,{kind:'kingdom-auto-repayment'});l.paidCoins+=due;l.principalOutstanding=0;l.interestAccrued=0;closeLoan(state,l,'repaid',ctx,at);}
-    else {l.collection=collect(state,due*1.5,ctx,at,'loan-default');k.loanBannedUntil=at+28*DAY;closeLoan(state,l,'defaulted',ctx,at);emit(state,ctx,'kingdom-loan-default','Pożyczka niespłacona w terminie','Należność rozliczono z dopłatą 50%. Nowe pożyczki są zablokowane na 28 dni.',at);}
+    else {l.collection=collect(state,due*1.5,ctx,at,'loan-default');k.loanBannedUntil=at+28*DAY;closeLoan(state,l,'defaulted',ctx,at);emit(state,ctx,'kingdom-loan-default','Pożyczka niespłacona w terminie',developmentText('MSG-LOAN-OVERDUE'),at);}
   } else if(e.kind==='deferred'&&e.item.status==='waiting'){
     e.item.status='applied';e.item.appliedAt=at;for(const id of e.item.residentIds)k.financialOffsets[id]=positive(k.financialOffsets[id])+e.item.points;
-    emit(state,ctx,'kingdom-deferred-penalty','Ochrona Latarni dobiegła końca',`Odroczona kara finansowa obniża szczęście o ${Math.round(e.item.points*100)/100} punktów.`,at);
+    emit(state,ctx,'kingdom-deferred-penalty','Ochrona Latarni dobiegła końca',developmentText('MSG-PENALTY-DEFERRED-APPLIED',{punkty:Math.round(e.item.points*100)/100}),at);
   }
 }
 export function advanceKingdom(state,elapsedSeconds,ctx={}){
@@ -321,7 +322,7 @@ function performAction(state,action,ctx,at){
   if(type==='kingdomClaimRewards'){advanceKingdom(state,0,{...ctx,now:at,online:false});return ok('Sprawdzono należne nagrody i zwroty.');}
   if(type==='kingdomAccept'||type==='kingdomDeposit'){
     const offer=k.offers.find(o=>o.id===action.offerId);if(!offer||offer.status!=='offered'||offer.expiresAt<=at)return bad('Ta oferta nie jest już dostępna.','kingdom-offer-unavailable');
-    if(offer.kind==='lending'&&pendingLending(state,ctx).length>=3)return bad('Masz już trzy pożyczki dla Królestwa oczekujące na zwrot.','kingdom-lending-limit');
+    if(offer.kind==='lending'&&pendingLending(state,ctx).length>=3)return bad(developmentText('MSG-LEND-PENDING-LIMIT'),'kingdom-lending-limit');
     const task={...clone(offer),id:nextId(k,state,ctx,'royal-task'),offerId:offer.id,status:'active',acceptedAt:at,deadline:at+Math.max(offer.executionSeconds,preparationSeconds(state,offer.requirements,ctx)*2)*1000,ownerId:self,participants:[self],contributions:{},pendingPayouts:{},allianceId:null};
     if(task.kind==='lending')task.lendingReturnAt=at+task.lendingHours*HOUR;
     if(task.kind==='deposit'){
@@ -337,11 +338,11 @@ function performAction(state,action,ctx,at){
   if(!task||task.status!=='active'||!task.participants.includes(self))return bad('To zadanie nie jest aktywne lub nie należysz do jego uczestników.','kingdom-task-unavailable');
   if(type==='kingdomAbandon'){if(task.kind==='deposit'){settleEvent(state,{kind:'deposit',item:task},ctx,at);return ok('Depozyt został rozliczony wcześniej. Braki rozliczono z dopłatą 50%.');}task.status='abandoned';task.abandonedAt=at;normalPenalty(state,task,ctx,at);return ok('Zadanie zostało przerwane. Wpłacone towary nie wracają.');}
   if(type==='kingdomInviteAlliance'){
-    if(!task.allianceAllowed)return bad('To zadanie jest indywidualne.','kingdom-individual-only');if(task.allianceId)return bad('Sojusz już uczestniczy w tym zadaniu.');if(at-task.acceptedAt>2*HOUR)return bad('Sojusz można zaprosić tylko przez pierwsze dwie godziny.','kingdom-invitation-expired');
+    if(!task.allianceAllowed)return bad(developmentText('MSG-SOLO-ONLY'),'kingdom-individual-only');if(task.allianceId)return bad('Sojusz już uczestniczy w tym zadaniu.');if(at-task.acceptedAt>2*HOUR)return bad(developmentText('MSG-INVITE-WINDOW'),'kingdom-invitation-expired');
     const ids=[...new Set((ctx.alliance?.members||ctx.alliance?.memberIds||[]).map(m=>String(typeof m==='object'?m.id:m)))];if(!ctx.alliance?.id||!ids.includes(self)||!ids.length||ids.length>5)return bad('Potrzebujesz sojuszu liczącego najwyżej pięć osób.','kingdom-alliance-required');
     const active=sharedTaskList(state,ctx).filter(t=>t.status==='active'&&t.allianceId===ctx.alliance.id).length;if(active>=ids.length)return bad('Sojusz wykorzystuje limit wspólnych zadań.','kingdom-alliance-task-limit');
     if(task.kind==='lending'&&ids.some(id=>{const m=memberState(state,id,ctx);return m&&pendingLending(m.state,m.context).length>=3;}))return bad('Jeden z uczestników ma już trzy pożyczki oczekujące na zwrot.','kingdom-lending-limit');
-    if(possessionValue(state,task,ctx)+contributedValue(task,{goodsValue:id=>task.goodsValues[id]||kingdomGoodsValue(id,ctx)})>task.value*.5+EPS)return bad('Posiadane i już wpłacone dobra przekraczają połowę wartości wymagań.','kingdom-invitation-value');
+    if(possessionValue(state,task,ctx)+contributedValue(task,{goodsValue:id=>task.goodsValues[id]||kingdomGoodsValue(id,ctx)})>task.value*.5+EPS)return bad(developmentText('MSG-INVITE-VALUE'),'kingdom-invitation-value');
     task.participants=ids;task.allianceId=ctx.alliance.id;task.deadline=at+Math.max(0,task.deadline-at)/ids.length;shareTask(task,ctx);return ok('Cały sojusz dołączył do zadania. Każdy otrzyma pełną nagrodę lub karę.',{taskId:task.id,deadline:task.deadline,participants:ids});
   }
   const req=outstandingRequirements(task),world=action.worldId?worldsOf(state,ctx).find(w=>w.islandId===action.worldId):state;
@@ -352,20 +353,20 @@ function performAction(state,action,ctx,at){
     const coins=type==='kingdomLend'?integer(req.coins):integer(action.coins);
     if(coins>positive(req.coins)||!coins&&!Object.keys(goods).length)return bad('Brak prawidłowej wpłaty.');
     if(Object.entries(goods).some(([id,n])=>n>available(world,id,ctx)))return bad('Brakuje dostępnych towarów ponad chronioną rezerwę.','kingdom-insufficient-goods');
-    if(coins>getCoins(state,ctx)||(task.kind==='lending'&&coins>getCoins(state,ctx)-Math.min(k.borrowedCoins,getCoins(state,ctx))))return bad(task.kind==='lending'?'Pożyczonych monet nie można bezpośrednio pożyczać Królestwu. Kupione za nie towary można przekazywać w misjach.':'Brakuje monet.','kingdom-insufficient-own-coins');
+    if(coins>getCoins(state,ctx)||(task.kind==='lending'&&coins>getCoins(state,ctx)-Math.min(k.borrowedCoins,getCoins(state,ctx))))return bad(task.kind==='lending'?developmentText('MSG-BORROWED-FUNDS-BLOCKED'):'Brakuje monet.','kingdom-insufficient-own-coins');
     if(task.kind==='lending'&&task.lendingReturnAt<=at)return bad('Termin zwrotu tej pożyczki już minął.');
-    if(task.kind==='lending'&&task.participants.some(id=>{const m=memberState(state,id,ctx);return m&&pendingLending(m.state,m.context).length>=3;}))return bad('Osiągnięto limit trzech pożyczek oczekujących na zwrot.','kingdom-lending-limit');
+    if(task.kind==='lending'&&task.participants.some(id=>{const m=memberState(state,id,ctx);return m&&pendingLending(m.state,m.context).length>=3;}))return bad(developmentText('MSG-LEND-PENDING-LIMIT'),'kingdom-lending-limit');
     const borrowedBefore=k.borrowedCoins;
     if(coins&&!spendCoins(state,coins,ctx,{ownOnly:task.kind==='lending',kind:'kingdom-contribution'}))return bad('Nie udało się pobrać monet.');
     if(!spendGoods(world,goods,ctx,{kind:'kingdom-contribution',taskId:task.id})){if(coins)grantCoins(state,coins,ctx);k.borrowedCoins=borrowedBefore;return bad('Nie udało się pobrać towarów.');}
-    addContribution(task,self,{coins,goods});if(completed(outstandingRequirements(task)))completeTask(state,task,ctx,at);return ok(task.status==='completed'?'Pełna dostawa została przekazana. Zadanie wykonane.':'Wkład został zapisany.',{taskId:task.id});
+    addContribution(task,self,{coins,goods});if(completed(outstandingRequirements(task)))completeTask(state,task,ctx,at);return ok(task.status==='completed'?developmentText('MSG-SUPPLY-COMPLETE'):'Wkład został zapisany.',{taskId:task.id});
   }
   if(type==='kingdomDispatchArmy'){
     if(task.kind!=='army')return bad('To zadanie nie wymaga wysłania oddziału.');if(!Array.isArray(action.ids)||!action.ids.length||new Set(action.ids).size!==action.ids.length||action.ids.length>req.soldiers)return bad(`Wybierz od 1 do ${req.soldiers} gotowych żołnierzy.`);
     if(typeof ctx.sendSquad!=='function')return bad('Wysyłanie oddziałów nie jest dostępne.','kingdom-military-unavailable');const r=ctx.sendSquad(world,{ids:action.ids,taskId:task.id,requestId:action.requestId});if(r===false||r?.ok===false)return r?.message?r:bad('Wybrany oddział nie jest gotowy.');addContribution(task,self,{soldiers:action.ids.length});if(completed(outstandingRequirements(task)))completeTask(state,task,ctx,at);return ok(task.status==='completed'?'Oddział wyruszył. Zadanie zostało wykonane; jego powrót rozliczymy osobno.':'Część oddziału wyruszyła. Do wykonania zadania potrzebni są pozostali żołnierze.');
   }
   if(type==='kingdomHandOverProfessor'){
-    if(task.kind!=='professor')return bad('To zadanie nie wymaga profesora.');const record=world.education?.people?.[action.personId];if(record?.rescueGift)return bad('Ratunkowego profesora nie można przekazać za nagrodę.');if(typeof ctx.handOverProfessor!=='function')return bad('Przekazywanie profesorów nie jest dostępne.');const r=ctx.handOverProfessor(world,{personId:action.personId,taskId:task.id});if(r===false||r?.ok===false)return r?.message?r:bad('Nie można przekazać wybranego profesora.');addContribution(task,self,{professors:1});completeTask(state,task,ctx,at);return ok('Profesor dołączył do królewskiej szkoły i opuścił Twoją wyspę na stałe.');
+    if(task.kind!=='professor')return bad('To zadanie nie wymaga profesora.');const record=world.education?.people?.[action.personId];if(record?.rescueGift)return bad(developmentText('MSG-RESCUE-PROFESSOR-GIVE-BLOCKED'));if(typeof ctx.handOverProfessor!=='function')return bad('Przekazywanie profesorów nie jest dostępne.');const r=ctx.handOverProfessor(world,{personId:action.personId,taskId:task.id});if(r===false||r?.ok===false)return r?.message?r:bad('Nie można przekazać wybranego profesora.');addContribution(task,self,{professors:1});completeTask(state,task,ctx,at);return ok('Profesor dołączył do królewskiej szkoły i opuścił Twoją wyspę na stałe.');
   }
   if(type==='kingdomCompleteDevelopment'){
     if(!['development','officerTraining'].includes(task.kind))return bad('To nie jest zadanie rozwoju wojska.');const kind=task.kind==='officerTraining'?'officer':'soldier',needed=positive(task.requirements[kind==='officer'?'officers':'soldiers']),count=worldsOf(state,ctx).reduce((sum,w)=>sum+militaryCount(w,kind,ctx),0);if(count<needed)return bad(`Potrzebujesz ${needed} osób odpowiedniego stopnia na swoich wyspach. Osób na wyprawach nie wliczamy.`);task.contributions[self]={[kind==='officer'?'officers':'soldiers']:needed,goods:{}};completeTask(state,task,ctx,at);return ok('Cel rozwoju wojska został osiągnięty.');

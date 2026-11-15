@@ -1,5 +1,11 @@
 # HARBORLIGHT — stan środowisk
 
+## Bieżące zadanie DEV — redakcja sześciu arkuszy, cache9
+
+Użytkownik zlecił import tekstów tylko zTutoriala, opisów i informacji budynków, dolnego paska, komunikatów i przycisków. [Zakres](v32/GO-EDITORIAL-SIX-TABS.md), [dowody](v32/EDITORIAL-SIX-TABS-EVIDENCE.json):413wierszy,87niepustychC,85różnychodB; niepustaC ma pierwszeństwo, pustaC oznaczaB. Wyciąg obejmuje wyłącznie sześć wskazanych arkuszy; pozostałe treści nie są odczytywane. Instrukcje redakcyjne nie stają się dosłownymi tekstamiUI.
+
+**Import, testy, końcowySHA, CI i publikacja cache9 sąPENDING.** Aktualny odebranyDEV nadal stanowi cache8/fa34c9e/06db93a opisany niżej. Dwie decyzje o modelu — ser doMleczarni i reklamy na każdym poziomie — oczekują odpowiedzi użytkownika; do tego czasu teksty muszą odpowiadać bieżącej logice. Zaakceptowany front, grupy mieszkańców,UID i postęp zachowane. Nowe zadanie dotyczy wyłącznieDEV; odrębna promocjaPROD pozostaje zablokowana zgodnościąreceipt (`account_api:false`,108vs85plików). WorkflowPROD i konta bez zmian w ramach importu.
+
 ## Bieżące GO DEV — nazwy mieszkańców i grupy zajęć, cache8
 
 Użytkownik zgłosił w Akademii etykiety „Mieszkaniec1…X”, wskazał także Koszary i polecił wdrożenie po poprawce. [Zakres cache8](v32/GO-DIRECTORY.md) obejmuje wspólne nazwy ról, osobną numerację profesorów/żołnierzy/oficerów i grupy zajęć w listach i wyborach Akademii, Koszar, Teatru, Królestwa oraz klasycznych paneli. Zaakceptowane grafiki, przypisania20funkcji i prawa krawędź menu1664 z cache7 pozostają zachowane. To prezentacjaUI bez zmiany UID, zapisów, uprawnień wyboru, przydziałów lub postępu. Modele sera i otrębów/paszy nadal wyłączone.

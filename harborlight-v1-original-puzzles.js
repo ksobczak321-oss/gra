@@ -1,4 +1,5 @@
-import { normalizeExpeditionHour, allocateExpeditionAttemptId, reserveExpeditionDifficulty, recordExpeditionOutcome, expeditionHourStatus, cappedExpeditionReward } from './harborlight-v1-expedition-hour.js?v=frontend-v32-8';
+import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-9';
+import { normalizeExpeditionHour, allocateExpeditionAttemptId, reserveExpeditionDifficulty, recordExpeditionOutcome, expeditionHourStatus, cappedExpeditionReward } from './harborlight-v1-expedition-hour.js?v=frontend-v32-9';
 
 export const ORIGINAL_PUZZLE_VERSION = 1;
 export const originalPuzzleCatalog = Object.freeze([
@@ -200,11 +201,11 @@ export function originalPuzzleAction(state,action={},context={}) {
   if(!variants.has(variant))return bad('Wybierz dostępną minigrę.');
   const at=finite(context.now,nowOf(state));let attempt=ledger.attempts[variant];
   if(action.type==='originalPuzzleStart'||action.type==='originalPuzzleEasier') {
-    if(attempt?.status==='active')return bad('Ta odmiana ma już aktywną próbę.','active-round-exists');
+    if(attempt?.status==='active')return bad(developmentText('MSG-ACTIVE-VARIANT-LIMIT'),'active-round-exists');
     const easier=action.type==='originalPuzzleEasier';
     if(easier&&ledger.failures[variant]<3)return bad('Łatwiejsza odmiana jest dostępna po trzech porażkach.');
     ledger.sequence++;const id=allocateExpeditionAttemptId(state,variant);
-    let difficulty;try{difficulty=reserveExpeditionDifficulty(state,id,variant);}catch(e){return bad('Ta odmiana ma już aktywną próbę.',e.code);}
+    let difficulty;try{difficulty=reserveExpeditionDifficulty(state,id,variant);}catch(e){return bad(developmentText('MSG-ACTIVE-VARIANT-LIMIT'),e.code);}
     ledger.seed=(Math.imul(ledger.seed,1664525)+1013904223)>>>0;
     const highestTownhall=Math.max(1,integer(context.highestTownhall,state.buildings?.townhall?.level||1));
     attempt=createOriginalAttempt(variant,{id,seed:ledger.seed,difficulty,now:at,highestTownhall,easier});ledger.attempts[variant]=attempt;if(easier)context.onEasier?.(attempt);

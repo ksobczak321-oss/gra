@@ -1,2 +1,2 @@
 // One browser-compatible rule module is shared with the authenticated API.
-export * from './backend/league-rules.mjs?v=frontend-v32-8';
+export * from './backend/league-rules.mjs?v=frontend-v32-9';

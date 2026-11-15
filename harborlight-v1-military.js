@@ -1,6 +1,7 @@
+import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-9';
 // DEV v32 military training, housing and deterministic expedition lifecycle.
 // Public status never exposes a squad's hidden return time or outcome draws.
-import { personKey, educationRecord, isGraduate, educationBusy, addSpecialistResident, ensureFoundingProfessors, normalizeEducation, townhallBuildSeconds } from './harborlight-v1-education.js?v=frontend-v32-8';
+import { personKey, educationRecord, isGraduate, educationBusy, addSpecialistResident, ensureFoundingProfessors, normalizeEducation, townhallBuildSeconds } from './harborlight-v1-education.js?v=frontend-v32-9';
 const HOUR=3600,DAY=86400,EPS=1e-8;
 const finite=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 const integer=(v,d=0,max=Number.MAX_SAFE_INTEGER)=>Math.min(max,Math.max(0,Math.floor(finite(v,d))));
@@ -55,7 +56,7 @@ function admit(s,q,time,c){if(!canAdmit(s,q))return false;const m=ensure(s),retu
   if(q.nominationUid&&m.people[q.nominationUid]){m.people[q.nominationUid].rank='officer';m.festiveUntil=time+6*HOUR*1000;notify(s,{...c,now:time},'Nominacja oficerska','Żołnierz otrzymał nominację oficerską. Wyspa świętuje: +10 punktów szczęścia przez sześć godzin.');}
   notify(s,{...c,now:time},q.lostUids.length?'Część oddziału wróciła':'Oddział wrócił',`Powróciło ${returning.length} z ${q.people.length} żołnierzy. Rozpoczynają 24 godziny odpoczynku.`);
  }return true;}
-function resolveSquad(s,q,time,c){removeLostRecords(s,q);if(!q.returningUids.length){q.stage='lost';q.settled=true;notify(s,{...c,now:time},'Wieści o wyprawie','Żaden z wysłanych żołnierzy nie wrócił.');return;}
+function resolveSquad(s,q,time,c){removeLostRecords(s,q);if(!q.returningUids.length){q.stage='lost';q.settled=true;notify(s,{...c,now:time},'Wieści o wyprawie',developmentText('MSG-RETURN-NONE'));return;}
  if(!admit(s,q,time,c))beginWaiting(s,q,time,c);
 }
 function updateWaiting(s,q,time,c){const w=q.waiting,need=waitingRequirements(s,q),hall=level(s,'townhall');
@@ -65,7 +66,7 @@ function updateWaiting(s,q,time,c){const w=q.waiting,need=waitingRequirements(s,
  if(w.townhallDeadline&&time>=w.townhallDeadline||w.upgradeDeadline&&time>=w.upgradeDeadline)return abandon(s,q,time,c);
  if(canAdmit(s,q))admit(s,q,time,c);
 }
-function abandon(s,q,time,c){q.stage='departed';q.departedPermanentlyAt=time;for(const p of q.people)delete ensure(s).people[personKey(p)];q.waiting=null;q.settled=true;notify(s,{...c,now:time},'Żołnierze odeszli','Nie zapewniono miejsca w terminie. Oczekujący żołnierze odeszli na stałe.');}
+function abandon(s,q,time,c){q.stage='departed';q.departedPermanentlyAt=time;for(const p of q.people)delete ensure(s).people[personKey(p)];q.waiting=null;q.settled=true;notify(s,{...c,now:time},'Żołnierze odeszli',developmentText('MSG-MISSED-DEADLINE'));}
 export function militaryAction(s,action,context={}){
  const type=action?.type;if(!['militaryAccelerate','militaryCancelCourse','militaryClaimReturn','militaryFreeBarracksUpgrade','militaryRecall','militaryRecruit','militaryOfficerTrain','militaryReplaceInstructor','militaryDispatch'].includes(type))return null;const m=ensure(s),now=at(s,context);
  if(type==='militaryAccelerate'){const quote=militaryAccelerationQuote(s,action.id||action.courseId,context);if(!quote.ok)return quote;const job=m.courses.find(c=>c.id===quote.id);if(action.method==='ad'){job.remainingWork=Math.max(0,job.remainingWork-quote.advertSeconds*courseRate(s,job,context));return result(true,'Reklama skróciła szkolenie.',{reducedSeconds:quote.advertSeconds});}if(action.method!=='coins')return result(false,'Wybierz monetę lub reklamę.');if(!spend(s,{coins:quote.cost},context))return result(false,'Brakuje monet.');job.remainingWork=0;advanceMilitary(s,0,context);return result(true,'Szkolenie ukończone.',{cost:quote.cost});}
@@ -85,13 +86,13 @@ export function militaryAction(s,action,context={}){
  if(type==='militaryRecruit'||type==='militaryOfficerTrain'||type==='militaryReplaceInstructor'){
   const existing=type==='militaryReplaceInstructor'?m.courses.find(c=>c.id===action.courseId):null;
   if(type==='militaryReplaceInstructor'&&!existing)return result(false,'Nie znaleziono szkolenia.');
-  const teacher=find(s,action.instructorUid||action.officerUid);if(!teacher||!ready(s,teacher,context,existing))return result(false,'Wybierz gotowego instruktora zakwaterowanego w Koszarach.');
-  const kind=existing?.kind||(type==='militaryOfficerTrain'?'officer':'recruit');if(kind==='officer'&&militaryRecord(s,teacher)?.rank!=='officer')return result(false,'Szkolenie oficerskie musi prowadzić oficer.');
+  const teacher=find(s,action.instructorUid||action.officerUid);if(!teacher||!ready(s,teacher,context,existing))return result(false,developmentText('MSG-NO-INSTRUCTOR'));
+  const kind=existing?.kind||(type==='militaryOfficerTrain'?'officer':'recruit');if(kind==='officer'&&militaryRecord(s,teacher)?.rank!=='officer')return result(false,developmentText('MSG-OFFICER-INSTRUCTOR'));
   if(existing){if(personKey(teacher)===existing.studentUid)return result(false,'Instruktor nie może szkolić samego siebie.');existing.instructorUid=personKey(teacher);existing.paused=false;return result(true,'Przydzielono zastępczego instruktora.');}
   const student=find(s,action.recruitUid||action.soldierUid||action.studentUid),key=personKey(student);
   if(!student||student===teacher||militaryBusy(s,student)||educationBusy(s,student))return result(false,'Ta osoba nie jest dostępna do szkolenia.');
   if(kind==='recruit'&&(!idle(student)||militaryRecord(s,student)||isGraduate(s,student)||educationRecord(s,student)?.profession==='professor'))return result(false,'Rekrut musi być wolnym mieszkańcem Domu bez ukończonej Akademii.');
-  if(kind==='officer'&&(!ready(s,student,context)||militaryRecord(s,student)?.rank!=='soldier'))return result(false,'Wybierz gotowego żołnierza po podstawowym szkoleniu.');
+  if(kind==='officer'&&(!ready(s,student,context)||militaryRecord(s,student)?.rank!=='soldier'))return result(false,developmentText('MSG-OFFICER-CANDIDATE'));
   const cost=kind==='recruit'?{militaryClothes:3}:{militaryClothes:8,coins:250+50*Math.max(0,level(s,'townhall')-4)};
   if(!spend(s,cost,context))return result(false,'Brakuje strojów wojskowych lub monet na szkolenie.');
   const base=townhallBuildSeconds(s,context),work=kind==='recruit'?Math.max(1,base/3):Math.max(4*HOUR,Math.min(72*HOUR,base*3)),course={id:`military-course-${++m.sequence}`,kind,studentUid:key,instructorUid:personKey(teacher),initialWork:work,remainingWork:work,cost,startedAt:now,paused:false};m.courses.push(course);
@@ -117,7 +118,7 @@ export function advanceMilitary(s,elapsed,context={}){
  for(const c of [...m.courses]){
   const student=find(s,c.studentUid);if(!student){m.courses=m.courses.filter(x=>x!==c);continue;}
   const rate=courseRate(s,c,context),completedAt=Math.min(end,at(s,context)+(rate>0?c.remainingWork/rate:seconds)*1000);c.paused=rate<=0;c.remainingWork=Math.max(0,c.remainingWork-seconds*rate);
-  if(c.remainingWork<=EPS&&rate>0){const old=m.people[c.studentUid];m.people[c.studentUid]={rank:c.kind==='officer'?'officer':'soldier',trainedAt:completedAt,restUntil:old?.restUntil||0,rescueGift:old?.rescueGift===true};s.housingRevision=(s.housingRevision||0)+1;student.happiness=100;m.courses=m.courses.filter(x=>x!==c);notify(s,{...context,now:completedAt},c.kind==='officer'?'Oficer gotowy':'Nowy żołnierz','Szkolenie ukończone. Sprawdź zakwaterowanie i dostępne zajęcia.');}
+  if(c.remainingWork<=EPS&&rate>0){const old=m.people[c.studentUid];m.people[c.studentUid]={rank:c.kind==='officer'?'officer':'soldier',trainedAt:completedAt,restUntil:old?.restUntil||0,rescueGift:old?.rescueGift===true};s.housingRevision=(s.housingRevision||0)+1;student.happiness=100;m.courses=m.courses.filter(x=>x!==c);notify(s,{...context,now:completedAt},c.kind==='officer'?'Oficer gotowy':'Nowy żołnierz',c.kind==='officer'?developmentText('MSG-TRAINING-COMPLETE').replace('Nowy żołnierz','Nowy oficer'):developmentText('MSG-TRAINING-COMPLETE'));}
  }
  for(const q of [...m.squads]){
   if(q.stage==='away'&&q.returnAt<=end)resolveSquad(s,q,q.returnAt,{...context,now:q.returnAt});
@@ -153,11 +154,11 @@ export function ensureRescueSpecialist(s,kind,context={}){
  const people=allAccountPeople(s,context);
  if(kind==='professor'){
   if(!level(s,'academy')||people.some(x=>x.education?.profession==='professor'||integer(x.education?.rounds)>0))return null;
-  const p=addSpecialistResident(s,{name:'Profesor z Królestwa'},context);if(!s.education?.courses)normalizeEducation(s,s);s.education.people[personKey(p)]={profession:'professor',rounds:1,protectedUntil:at(s,context)+7*DAY*1000,rescueGift:true,appointedAt:at(s,context)};notify(s,context,'Pomoc Królestwa','Przybył wyposażony profesor, aby pomóc odbudować kadrę.');return p;
+  const p=addSpecialistResident(s,{name:'Profesor z Królestwa'},context);if(!s.education?.courses)normalizeEducation(s,s);s.education.people[personKey(p)]={profession:'professor',rounds:1,protectedUntil:at(s,context)+7*DAY*1000,rescueGift:true,appointedAt:at(s,context)};notify(s,context,'Pomoc Królestwa',developmentText('MSG-RESCUE-PROFESSOR'));return p;
  }
  if(kind==='soldier'){
   if(!level(s,'barracks')||people.some(x=>['soldier','officer'].includes(x.military?.rank)))return null;
-  const p=addSpecialistResident(s,{name:'Żołnierz z Królestwa'},context);ensure(s).people[personKey(p)]={rank:'soldier',trainedAt:at(s,context),restUntil:0,rescueGift:true};ensure(s).rescueGrants++;notify(s,context,'Pomoc Królestwa','Przybył wyposażony żołnierz, aby umożliwić odbudowę wojska.');return p;
+  const p=addSpecialistResident(s,{name:'Żołnierz z Królestwa'},context);ensure(s).people[personKey(p)]={rank:'soldier',trainedAt:at(s,context),restUntil:0,rescueGift:true};ensure(s).rescueGrants++;notify(s,context,'Pomoc Królestwa',developmentText('MSG-RESCUE-SOLDIER'));return p;
  }return null;
 }
 

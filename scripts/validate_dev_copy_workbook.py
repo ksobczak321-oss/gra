@@ -18,6 +18,13 @@ def main():
     workbook_path = (ROOT / evidence['file']).resolve()
     assert workbook_path.is_relative_to(ROOT / 'docs/arkusze')
     assert hashlib.sha256(workbook_path.read_bytes()).hexdigest() == evidence['sha256'], 'Editorial workbook bytes differ from reviewed artifact'
+    if evidence.get('merge_evidence'):
+        merge_path = (ROOT / evidence['merge_evidence']).resolve()
+        assert merge_path.is_relative_to(ROOT / 'docs/v32')
+        assert hashlib.sha256(merge_path.read_bytes()).hexdigest() == evidence['merge_evidence_sha256'], 'Reviewed six-sheet merge evidence changed'
+        merge = json.loads(merge_path.read_text())
+        assert merge['unselected_sheet_contents_read'] is False
+        assert merge['selected_sheets'] == evidence['selected_sheets']
     for name, expected in evidence['source_sha256'].items():
         source = (ROOT / name).resolve()
         assert source.is_relative_to(ROOT), name

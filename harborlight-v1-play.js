@@ -1,53 +1,53 @@
-import { resourceGraphic } from './harborlight-v1-goods-art.js?v=frontend-v32-8';
-import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-8';
-import { mapRegionFor, mapFootprintFor, buildingArtwork, createAcceptedMapLayer } from './harborlight-v1-map-art.js?v=frontend-v32-8';
-import { createRequestedDevPreview, DEV_LEVEL_FIVE_PREVIEW } from './harborlight-v1-dev-preview.js?v=frontend-v32-8';
-import * as DevelopmentLogistics from './harborlight-v1-development-logistics.js?v=frontend-v32-8';
-import * as Development from './harborlight-v1-development.js?v=frontend-v32-8';
-import { createDevelopmentUI, developmentBuildingArt, DEVELOPMENT_BUILDINGS, renderDevelopmentBuildingPanel, renderProductionControls, renderFoodControls, renderConstructionFoodMix, renderTransportControls, renderTheatreControls } from './harborlight-v1-development-ui.js?v=frontend-v32-8';
-import { DEVELOPMENT_NAMES, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-8';
-import { createKingdomPanel } from './harborlight-v1-kingdom-ui.js?v=frontend-v32-8';
-import { kingdomServiceAction, giftServiceAction } from './harborlight-v1-kingdom-client.js?v=frontend-v32-8';
-import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-8';
-import { BUILDINGS as LEGACY_BUILDINGS, RESOURCES as LEGACY_RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRateForState, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS as LEGACY_WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v32-8';
-import { MATERIAL_IDS as LEGACY_MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v32-8';
-import * as State from './harborlight-v1-state.js?v=frontend-v32-8';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v32-8';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v32-8';
-import * as Missions from './harborlight-v1-missions.js?v=frontend-v32-8';
-import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v32-8';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v32-8';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v32-8';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v32-8';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v32-8';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v32-8';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v32-8';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v32-8';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v32-8';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v32-8';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v32-8';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-8';
-import { createDevCloud, createDevTimeController, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-8';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v32-8';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v32-8';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-8';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-8';
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-8';
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-8';
-import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-8';
-import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-8';
-import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-8';
-import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-8';
-import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-8';
-import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v32-8';
-import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-8';
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-8';
-import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v32-8';
-import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v32-8';
-import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v32-8';
-import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-8';
-import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v32-8';
-import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v32-8';
+import { resourceGraphic } from './harborlight-v1-goods-art.js?v=frontend-v32-9';
+import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-9';
+import { mapRegionFor, mapFootprintFor, buildingArtwork, createAcceptedMapLayer } from './harborlight-v1-map-art.js?v=frontend-v32-9';
+import { createRequestedDevPreview, DEV_LEVEL_FIVE_PREVIEW } from './harborlight-v1-dev-preview.js?v=frontend-v32-9';
+import * as DevelopmentLogistics from './harborlight-v1-development-logistics.js?v=frontend-v32-9';
+import * as Development from './harborlight-v1-development.js?v=frontend-v32-9';
+import { createDevelopmentUI, developmentBuildingArt, DEVELOPMENT_BUILDINGS, renderDevelopmentBuildingPanel, renderProductionControls, renderFoodControls, renderConstructionFoodMix, renderTransportControls, renderTheatreControls } from './harborlight-v1-development-ui.js?v=frontend-v32-9';
+import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingInformation } from './harborlight-v1-development-copy.js?v=frontend-v32-9';
+import { createKingdomPanel } from './harborlight-v1-kingdom-ui.js?v=frontend-v32-9';
+import { kingdomServiceAction, giftServiceAction } from './harborlight-v1-kingdom-client.js?v=frontend-v32-9';
+import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-9';
+import { BUILDINGS as LEGACY_BUILDINGS, RESOURCES as LEGACY_RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRateForState, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS as LEGACY_WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v32-9';
+import { MATERIAL_IDS as LEGACY_MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v32-9';
+import * as State from './harborlight-v1-state.js?v=frontend-v32-9';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v32-9';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v32-9';
+import * as Missions from './harborlight-v1-missions.js?v=frontend-v32-9';
+import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v32-9';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v32-9';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v32-9';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v32-9';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v32-9';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v32-9';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v32-9';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v32-9';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v32-9';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v32-9';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v32-9';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-9';
+import { createDevCloud, createDevTimeController, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-9';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v32-9';
+import { buildingPurpose, buildingMenuCopy, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v32-9';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-9';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-9';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-9';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-9';
+import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-9';
+import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-9';
+import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-9';
+import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-9';
+import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-9';
+import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v32-9';
+import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-9';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-9';
+import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v32-9';
+import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v32-9';
+import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v32-9';
+import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-9';
+import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v32-9';
+import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v32-9';
 
 I18n.registerTranslations(Theatre.THEATRE_TRANSLATIONS || {});
 I18n.registerTranslations(Adventures.ADVENTURE_TRANSLATIONS || {});
@@ -355,12 +355,12 @@ function restoreLiveDevelopmentActivities(snapshots) {
 }
 function civilianRescuePanel() {
   const status=Development.civilianRescueStatus(state,developmentModelContext(state));
-  const root=card(el('h3',{},'Uratowani mieszkańcy'),note(`Za udaną wyprawę ratunkową możesz ocalić ${status.reward} osób. Czekają bezterminowo, aż wybierzesz wyspę i przygotujesz miejsce w limicie Ratusza. Wyprawa nie wymaga reklamy.`),button('Rozpocznij ratunek',()=>performDevelopment({type:'civilianRescueStart'}),{disabled:!status.available,'data-v32-rescue-start':''}));
+  const root=card(el('h3',{},'Uratowani mieszkańcy'),note(developmentText('MSG-RESCUE-OFFER',{liczba:status.reward})),note(developmentText('MSG-RESCUE-WAIT')),button('Rozpocznij ratunek',()=>performDevelopment({type:'civilianRescueStart'}),{disabled:!status.available,'data-v32-rescue-start':''}));
   if(!status.groups.length)root.append(note('Nie ma oczekujących grup.'));
   for(const group of status.groups.filter(g=>g.remaining>0)){
-    const destination=el('select',{'aria-label':'Wyspa przyjęcia'},Object.entries(archipelago.worlds).map(([id,world])=>el('option',{value:id},`${islandNameFor(id)} · wolne miejsca: ${Math.max(0,world.buildings.townhall.level*36-world.population)}`)));
+    const destination=el('select',{'aria-label':developmentText('UI-046')},Object.entries(archipelago.worlds).map(([id,world])=>el('option',{value:id},`${islandNameFor(id)} · wolne miejsca: ${Math.max(0,world.buildings.townhall.level*36-world.population)}`)));
     const amount=el('input',{type:'number',min:1,max:group.remaining,step:1,value:Math.min(group.remaining,Math.max(1,state.buildings.townhall.level*36-state.population)),'aria-label':'Liczba przyjmowanych osób'});
-    root.append(el('form',{class:'v32-form','data-v32-rescue-group':group.id,onsubmit:event=>{event.preventDefault();void performDevelopment({type:'civilianRescueClaim',groupId:group.id,islandId:destination.value,amount:Number(amount.value)});}},el('p',{},`Oczekuje ${group.remaining} uratowanych osób.`),el('label',{},'Wyspa',destination),el('label',{},'Osoby',amount),el('button',{type:'submit',class:'action'},'Przyjmij mieszkańców')));
+    root.append(el('form',{class:'v32-form','data-v32-rescue-group':group.id,onsubmit:event=>{event.preventDefault();void performDevelopment({type:'civilianRescueClaim',groupId:group.id,islandId:destination.value,amount:Number(amount.value)});}},el('p',{},`Oczekuje ${group.remaining} uratowanych osób.`),el('label',{},'Wyspa',destination),el('label',{},'Osoby',amount),el('button',{type:'submit',class:'action'},developmentText('UI-047'))));
   }
   return root;
 }
@@ -766,7 +766,7 @@ const BUILDING_DOCK_GROUPS = {
 const buildingDock = el('nav', { class: 'building-dock-cards', 'aria-label': 'Buildings', 'data-building-dock': '' });
 for (const id of BUILDING_DOCK_ORDER) {
   if (DEVELOPMENT_BUILDINGS[id]) {
-    const control=button('',()=>openPanel('building',id),{id:`hit-dock-${id}`,class:'building-dock-card','data-dock-building':id,'aria-label':titleOf(id)});
+    const control=button('',()=>openPanel('building',id),{id:`hit-dock-${id}`,class:'building-dock-card','data-dock-building':id,'aria-label':titleOf(id),title:buildingMenuCopy(id,language(),state)});
     control.append(el('small',{class:'building-dock-level','data-dock-level':id},`Lv. ${state.buildings[id]?.level||0}`),developmentBuildingArt(id),el('span',{class:'building-dock-name'},titleOf(id)));
     if(WORKPLACE_IDS.includes(id))control.append(el('span',{class:'building-dock-workers','data-dock-workers':id}));
     buildingDock.append(control);continue;
@@ -777,7 +777,7 @@ for (const id of BUILDING_DOCK_ORDER) {
   const offsetX = x * scale + (w * scale - frameWidth) / 2;
   const offsetY = y * scale + (h * scale - frameHeight) * (id === 'lighthouse' ? .2 : .5);
   const picture = Development.isDevelopment(state) ? buildingArtwork(id) : el('span', { class: 'building-dock-picture', 'aria-hidden': 'true', style: { backgroundImage: 'url("assets/harborlight-v1-approved.png")', backgroundSize: `${1672 * scale}px ${941 * scale}px`, backgroundPosition: `${-offsetX}px ${-offsetY}px`, width: `${frameWidth}px`, height: `${frameHeight}px` } });
-  const control = button('', () => openPanel('building', id), { id: `hit-dock-${id}`, class: 'building-dock-card', 'data-dock-building': id, 'aria-label': `${titleOf(id)} — construction and upgrades` });
+  const control = button('', () => openPanel('building', id), { id: `hit-dock-${id}`, class: 'building-dock-card', 'data-dock-building': id, 'aria-label': `${titleOf(id)} — construction and upgrades`, title:buildingMenuCopy(id,language(),state) });
   control.append(el('small', { class: 'building-dock-level', 'data-dock-level': id }, `Lv. ${state.buildings[id].level}`), picture, el('span', { class: 'building-dock-name' }, titleOf(id)));
   if (WORKPLACE_IDS.includes(id)) control.append(el('span', { class: 'building-dock-workers', 'data-dock-workers': id }));
   buildingDock.append(control);
@@ -1306,7 +1306,7 @@ function lockedBuildingPanel(id) {
   const required = buildingUnlockLevel(id);
   return el('section', { class: 'info-card building-locked-message', 'data-building-locked': id, 'data-i18n-ignore': '' },
     el('h3', {}, uiCopy('Building locked', 'Budynek zablokowany')),
-    el('p', {}, uiCopy(`${titleOf(id)} unlocks when your Town Hall reaches level ${required}.`, `${titleOf(id)} odblokuje się, gdy Ratusz osiągnie poziom ${required}.`)),
+    el('p', {}, uiCopy(`${titleOf(id)} unlocks when your Town Hall reaches level ${required}.`, developmentText('MSG-LOCKED-NO-RESEARCH',{poziom:required}))),
     el('p', { class: 'notice' }, uiCopy(`Current Town Hall level: ${state.buildings.townhall.level}.`, `Obecny poziom Ratusza: ${state.buildings.townhall.level}.`)));
 }
 function openPanel(kind, id) {
@@ -1761,6 +1761,10 @@ function buildingPanel(id) {
         note('Przed zmianą produktu zmniejsz dotychczasowy przydział, a następnie przydziel wolne osoby do nowego produktu.')));
     }
     if (id !== 'warehouse') { const transport=renderTransportControls(id,developmentPanelOptions()); if(transport)main.append(transport); }
+  }
+  if(Development.isDevelopment(state)&&language()==='pl'){
+    const paragraphs=developmentBuildingInformation(id,state);
+    if(paragraphs.length)upgrades.append(el('details',{class:'v32-info info-card','data-building-information':id},el('summary',{},'Informacje o budynku'),...paragraphs.map(value=>el('p',{},value))));
   }
   content.append(el('div', { class: 'building-layout' }, main, upgrades));
   if (id === 'warehouse' && Development.isDevelopment(state)) content.append(warehouseControlSections());
@@ -2458,6 +2462,11 @@ function islandShippingPanel() {
     }), el('button', { type: 'submit', class: 'action', 'data-send-island-transfer': '' }, uiCopy('Send ship — free', 'Wyślij statek — bezpłatnie')));
   section.append(form);
   const passengerAmount = el('input', { type: 'number', min: '1', max: '100', step: '1', value: '1', 'aria-label': uiCopy('Passenger count', 'Liczba pasażerów'), 'data-island-passenger-amount': '' });
+  const passengerConfirmation=Development.isDevelopment(state)?el('p',{'data-v32-passenger-confirm':'','data-i18n-ignore':''}):null;
+  if(passengerConfirmation){
+    const updatePassengerConfirmation=()=>{passengerConfirmation.textContent=developmentText('MSG-PASSENGERS-CONFIRM',{liczba:count(Number(passengerAmount.value)||0),wyspa:islandNameFor(destination.value)});};
+    passengerAmount.addEventListener('input',updatePassengerConfirmation);destination.addEventListener('change',updatePassengerConfirmation);updatePassengerConfirmation();
+  }
   section.append(card(el('h4', {}, uiCopy('Passenger voyage', 'Rejs pasażerski')),
     note(uiCopy('To the destination selected above: up to 100 residents actually at Home, 30 real minutes, no coins. Normal meals are prepared at departure: 0.5 Food for each passenger with a bed and 1 Food for each passenger without one. The mother keeps at least 12 residents, a daughter 6; the destination needs free Town Hall population places. Its House provides beds separately. The shared ship carries people or goods.', 'Do wybranego powyżej celu możesz wysłać do 100 osób obecnych w Domu. Rejs trwa 30 rzeczywistych minut i nie kosztuje monet. Przy wypłynięciu przygotowujesz posiłki: po 0,5 jednostki żywności dla pasażera mającego łóżko i po 1 jednostce dla osoby bez łóżka. Na wyspie macierzystej zostaje minimum 12 mieszkańców, na córce — 6. U celu potrzeba wolnych miejsc w limicie Ratusza; liczbę łóżek określa osobno Dom. Wspólny statek przewozi ludzi albo towary.')),
     el('form', { 'data-island-passenger-form': '', onsubmit: event => {
@@ -2465,7 +2474,7 @@ function islandShippingPanel() {
       const result = Archipelago.sendPassengerTransfer(archipelago, { fromIslandId: archipelago.activeIslandId, toIslandId: destination.value, amount: Number(passengerAmount.value) }, Date.now());
       if (!result.ok) { toast(text(result.message)); return; }
       void save(true); renderHUD(); if (dialog.open) renderPanel();
-    } }, passengerAmount, el('button', { type: 'submit', class: 'action', 'data-send-island-passengers': '' }, uiCopy('Send passengers — 30 minutes', 'Wyślij pasażerów — 30 minut')))));
+    } }, passengerAmount, passengerConfirmation, el('button', { type: 'submit', class: 'action', 'data-send-island-passengers': '' }, uiCopy('Send passengers — 30 minutes', 'Wyślij pasażerów — 30 minut')))));
   for (const transfer of archipelago.transfers || []) {
     if (transfer.status === 'complete') continue;
     const remaining = Math.max(0, ((transfer.arrivesAt ?? transfer.arrivalAt ?? Date.now()) - Date.now()) / 1000);
@@ -2640,6 +2649,14 @@ function refreshResidentRosters() {
       const housingBadge = row.querySelector('[data-resident-housing]');
       housingBadge.dataset.residentHousing = housed ? 'housed' : 'unhoused';
       housingBadge.textContent = housed ? uiCopy('Has a bed', 'Ma łóżko') : uiCopy('No bed · work ×0.5 · food ×2 · no House points', 'Bez łóżka · praca ×0,5 · jedzenie ×2 · bez punktów Domu');
+      if(Development.isDevelopment(state)&&language()==='pl'){
+        const meal=Development.Provisions.mealStatus(state,resident,developmentModelContext(state)),diet=meal.people[0]?.diet;
+        const notes=[];
+        if(meal.coverage<1)notes.push(developmentText('MSG-RATION-SHORT',{procent:Math.round(meal.coverage*100),tempo:Math.round(meal.multiplier*100)}));
+        if(diet?.penalty>0)notes.push(developmentText('MSG-DIET-SHORT',{liczba:Math.max(0,diet.requiredTypes-diet.types),kara:diet.penalty}));
+        if(!housed)notes.push(developmentText('MSG-NO-BED'));
+        row.title=notes.join(' ');
+      }
       row.querySelector('[data-resident-value]').textContent = happinessPercent(value);
       row.querySelector('[data-resident-job]').textContent = resident.visitGroup ? 'Visiting the Lighthouse' : resident.arrivalRemaining > 0 ? `Walking to ${titleOf(resident.workplace)} · ${durationText(resident.arrivalRemaining)}` : resident.workplace ? titleOf(resident.workplace) : resident.returnRemaining > 0 ? `Returning home · ${durationText(resident.returnRemaining)}` : 'At home';
       row.querySelector('[data-resident-rate]').textContent = state.lighthouseRemaining > 0 || resident.visitHappinessRemaining > 0 ? uiCopy('100 happiness points maintained', 'Utrzymywane 100 punktów szczęścia') : `${roundedRate > 0 ? '+' : roundedRate < 0 ? '−' : ''}${Math.abs(roundedRate)} points/h`;
@@ -3048,7 +3065,11 @@ function performScene(action, context) {
   return result;
 }
 function theatrePanel() {
-  if(Development.isDevelopment(state)) { const host=el('div',{'data-v32-theatre':''},renderTheatreControls(developmentPanelOptions()));host.append(button('Dekoracje Teatru',()=>openPanel('theatre-garden'),{class:'action secondary'}));return host; }
+  if(Development.isDevelopment(state)) {
+    const host=el('div',{'data-v32-theatre':''},renderTheatreControls(developmentPanelOptions()));
+    if(language()==='pl')host.querySelector('[data-v32-column="secondary"]')?.append(el('details',{class:'v32-info','data-building-information':'theatre'},el('summary',{},'Informacje o budynku'),...developmentBuildingInformation('theatre',state).map(value=>el('p',{},value))));
+    host.append(button('Dekoracje Teatru',()=>openPanel('theatre-garden'),{class:'action secondary'}));return host;
+  }
   return theatreGardenPanel();
 }
 function theatreGardenPanel() {
@@ -3588,6 +3609,7 @@ function nextResidentText() {
   return `${rate < 0 ? '−1 · ' : '+1 · '}${compact}`;
 }
 function refreshDockBadges() {
+  buildingDock.querySelectorAll('[data-dock-building]').forEach(node=>{node.title=buildingMenuCopy(node.dataset.dockBuilding,language(),state);});
   buildingDock.querySelectorAll('[data-dock-level]').forEach(node => { node.textContent = `Lv. ${state.buildings[node.dataset.dockLevel].level}`; });
   buildingDock.querySelectorAll('[data-dock-workers]').forEach(node => {
     const id = node.dataset.dockWorkers;
@@ -3840,7 +3862,7 @@ function renderMobileDock(force = false) {
     for (const source of buildingDock.children) {
       if (source.hidden) continue;
       const id = source.dataset.dockBuilding;
-      const control = button('', () => openPanel('building', id), { class: 'building-dock-card', 'data-mobile-building': id, 'aria-label': titleOf(id) });
+      const control = button('', () => openPanel('building', id), { class: 'building-dock-card', 'data-mobile-building': id, 'aria-label': titleOf(id), title:buildingMenuCopy(id,language(),state) });
       for (const attribute of source.attributes) if (attribute.name.startsWith('data-')) control.setAttribute(attribute.name, attribute.value);
       control.append(...[...source.children].map(node => node.cloneNode(true))); cards.append(control);
     }
@@ -3943,6 +3965,7 @@ function onboardingSteps() {
   const targetMenu = () => visible('[data-mobile-control="menu"]', '.mobile-island-menu', '#hit-menu');
   const currentCopy = id => getTourCopy(id, language(), {
     firstIntroduction: State.onboardingStatus(state).pending, cloudAccount: !!devAccount, state,
+    simulatedCharity: LOCAL_PREVIEW || Commerce.runtimeCapabilities().environment === 'preprod' || devCloud.local === true,
     resourceExample: { resource: 'stone', local: Math.floor(state.buildings.quarry.ready || 0), central: Math.floor(state.resources.stone || 0),
       inTransit: Math.floor(resourceInTransit('stone')), hourlyBalance: State.resourceRates(state).stone.net }
   });

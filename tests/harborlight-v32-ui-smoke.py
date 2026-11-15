@@ -70,21 +70,21 @@ with sync_playwright() as playwright:
     building(page,'warehouse')
     page.locator('[data-warehouse-section-toggle="feeding"]').click()
     page.locator('[data-v32-food="vegetables"] input[type=number]').fill('25')
-    page.get_by_role('button',name='Zapisz wyżywienie',exact=True).click()
+    page.get_by_role('button',name='Zapisz ustawienia',exact=True).click()
     assert state(page,'provisions.foodSettings.limits.vegetables')==25
     page.locator('[data-upgrade-building="warehouse"]').click()
     assert page.locator('[data-v32-construction="warehouse"]').count()==1
     page.locator('#development-construction').press('Escape')
     close(page)
     building(page,'academy')
-    form=page.get_by_role('button',name='Rozpocznij naukę',exact=True).locator('xpath=ancestor::form')
+    form=page.get_by_role('button',name='Zapisz na kurs',exact=True).locator('xpath=ancestor::form')
     form.locator('select').nth(0).select_option(index=1);form.locator('select').nth(1).select_option(index=1)
     form.get_by_role('button').click()
     assert state(page,'education.courses.length')==1
     assert page.get_by_role('button',name='Zbadaj trasę',exact=True).count()==1
     close(page)
     building(page,'barracks')
-    form=page.get_by_role('button',name='Rozpocznij szkolenie',exact=True).locator('xpath=ancestor::form')
+    form=page.get_by_role('button',name='Rozpocznij szkolenie rekruta',exact=True).locator('xpath=ancestor::form')
     form.locator('select').nth(0).select_option(index=1);form.locator('select').nth(1).select_option(index=1)
     form.get_by_role('button').click()
     assert state(page,'military.courses.length')==1

@@ -55,7 +55,7 @@ test('new lesson presentation updates all 25 native descriptions without changin
 test('housing copy distinguishes Town Hall population, House points and personal work/meal consequences', () => {
   for (const language of ['pl','en']) {
     const text = getTourCopy('building-house',language).text;
-    assert.match(text,language==='pl'?/Każdy poziom daje 36 miejsc/:/Town Hall.*population limit.*House.*housing/);
+    assert.match(text,language==='pl'?/Każdy poziom daje 36 łóżek/:/Town Hall.*population limit.*House.*housing/);
     assert.match(text,language==='pl'?/połową wydajności.*dwa razy więcej/:/half speed.*twice as much/);
   }
   assert.match(residentsPurpose('pl'),/Brak łóżek nie obniża szczęścia całej wyspy/);

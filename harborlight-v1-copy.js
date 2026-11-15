@@ -1,5 +1,5 @@
-import { developmentBuildingCopy } from './harborlight-v1-development-copy.js';
-import { getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-8';
+import { developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-9';
+import { getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-9';
 
 // Presentation only: descriptions and level names never affect saved mechanics.
 const purposes = {
@@ -146,6 +146,7 @@ Legacy of the light|Dziedzictwo światła
 
 const localized = (pair, language) => pair[language === 'pl' ? 1 : 0];
 export const buildingPurpose = (id, language = 'en', state = {}) => language === 'pl' ? developmentBuildingCopy(id, state) || localized(purposes[id] || ['', ''], language) : localized(purposes[id] || ['', ''], language);
+export const buildingMenuCopy = (id, language = 'en', state = {}) => language === 'pl' ? developmentBuildingCopy(id, state, 'MENU') || buildingPurpose(id, language, state) : buildingPurpose(id, language, state);
 export const gameGoal = (language = 'en') => ({ title: localized(goal.title, language), description: localized(goal.description, language) });
 export const residentsPurpose = (language = 'en', state = {}) => language === 'pl' && state.ruleset === 32 ? 'Dbaj o jedzenie, mieszkanie i pracę mieszkańców. Każdy poziom Ratusza pozwala przyjąć 36 osób, a każdy poziom Domu zapewnia 36 łóżek. Mieszkańcy bez łóżka pracują i uczą się z połową wydajności oraz jedzą dwa razy więcej; brak łóżek nie obniża szczęścia całej wyspy. Przydzielaj wolnych cywilów do pracy lub nauki. Profesorowie i żołnierze mają własne miejsca mieszkalne w Akademii i Koszarach. O kierunku zmian populacji decyduje średnie szczęście, a przewidywany czas przybycia zobaczysz na wyspie.' : localized(residents, language);
 export const warehousePurpose = (language = 'en') => language === 'pl' ? developmentBuildingCopy('warehouse', {}, 'INFO') : localized(warehouse, language);

@@ -1,3 +1,4 @@
+import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-9';
 // DEV v32. Pure education/research model; all persistent identity is keyed by personUid.
 // This module never advances the world's clock or calls a network service.
 const HOUR = 3600, DAY = 86400, EPS = 1e-8;
@@ -96,7 +97,7 @@ export function canDelegateProfessor(state,person){
   return e.researches.every(r=>!r.professorUids.includes(key)||r.professorUids.length>1);
 }
 export function releaseProfessorResearch(state,person){
-  if(!canDelegateProfessor(state,person))return result(false,'Ostatni profesor musi pozostać przy badaniu. Najpierw anuluj badanie.');
+  if(!canDelegateProfessor(state,person))return result(false,developmentText('MSG-LAST-RESEARCHER'));
   const key=personKey(person);for(const r of ensure(state).researches)r.professorUids=r.professorUids.filter(k=>k!==key);return result(true,'Profesor został oddelegowany.');
 }
 const idlePerson=p=>!!p&&!p.workplace&&!p.pendingRelease&&!(p.arrivalRemaining>EPS)&&!(p.returnRemaining>EPS)&&!p.visitGroup&&!p.visiting&&!(p.prayerRemaining>EPS);
@@ -152,7 +153,7 @@ export function researchQuote(state,topic,context={},route=null) {
   if(def.minimumTownhall&&level(state,'townhall')<def.minimumTownhall||Object.entries(def.minimumBuilding||{}).some(([id,v])=>level(state,id)<v))return result(false,'Nie spełniono wymagań budynków tego odkrycia.');
   if(def.kind!=='repeat'&&e.discoveries[topic])return result(false,'To odkrycie zostało już ukończone.');
   next=def.kind==='repeat'?integer(e.researchLevels[topic])+1:def.kind==='route'?Object.keys(e.discoveries).filter(k=>k.startsWith('route:')).length+1:1;
-  if(def.kind==='repeat'&&next>l)return result(false,'Ten stopień badania wymaga wyższego poziomu Akademii.');
+  if(def.kind==='repeat'&&next>l)return result(false,developmentText('MSG-RESEARCH-LEVEL-LOCKED',{poziom:next}));
   const cost=Object.fromEntries(Object.entries(def.firstCost).map(([id,n])=>[id,Math.ceil(n*next*next)]));
   return result(true,'Warunki badania.',{topic,definition:def,level:def.kind==='repeat'?next:1,sequence:next,cost,work:RESEARCH_TIME_SECONDS[Math.min(19,next-1)],route});
 }
@@ -189,20 +190,20 @@ export function educationAction(state,action,context={}) {
       existing.teacherUid=personKey(teacher);existing.paused=false;return result(true,'Przydzielono zastępczego profesora. Postęp kursu zachowany.');
     }
     const student=find(state,action.studentUid),key=personKey(student);
-    if(!student||student===teacher||!idlePerson(student)&&!(professor(state,student)&&atAcademy(student))||educationBusy(state,student))return result(false,'Wybierz wolnego mieszkańca w Domu.');
-    if(state.military?.people?.[key]?.rank)return result(false,'Osoby na ścieżce wojskowej nie mogą studiować w Akademii.');
+    if(!student||student===teacher||!idlePerson(student)&&!(professor(state,student)&&atAcademy(student))||educationBusy(state,student))return result(false,developmentText('MSG-CANDIDATE-BUSY'));
+    if(state.military?.people?.[key]?.rank)return result(false,developmentText('MSG-MILITARY-PATH'));
     const record=educationRecord(state,student,true),round=syncRound(state),next=record.rounds+1;
     if(next>round.number)return result(false,'Najpierw ukończ bieżącą rundę całej grupy.');
     const cost=10*academyLevel;if(!spend(state,{coins:cost},context))return result(false,'Brakuje monet na kurs.');
     const work=Math.max(1,townhallBuildSeconds(state,context)/3),c={id:`edu-${++e.sequence}`,studentUid:key,teacherUid:personKey(teacher),round:next,initialWork:work,remainingWork:work,cost,startedAt:now,paused:false};e.courses.push(c);
-    return result(true,'Rozpoczęto kurs mieszkańca.',{courseId:c.id,cost,remainingSeconds:work/courseRate(state,c,context)});
+    return result(true,developmentText('MSG-COURSE-STARTED'),{courseId:c.id,cost,remainingSeconds:work/courseRate(state,c,context)});
   }
   if(type==='educationAppoint') {
     const person=find(state,action.personUid),p=educationRecord(state,person);
     if(!person||!idlePerson(person)||!p?.rounds||state.military?.people?.[personKey(person)]?.rank)return result(false,'Mianować można wolnego absolwenta przebywającego w Domu.');
     if(p.profession==='professor')return result(false,'Ta osoba jest już profesorem.');
     const count=(state.residents||[]).filter(p=>e.people[personKey(p)]?.profession==='professor').length;
-    if(count>=3+academyLevel)return result(false,'Nie ma wolnego stanowiska profesorskiego.');
+    if(count>=3+academyLevel)return result(false,developmentText('MSG-PROFESSOR-LIMIT',{limit:3+academyLevel}));
     if(!spend(state,{professorRobes:1},context))return result(false,'Potrzebujesz jednej szaty profesorskiej.');
     p.profession='professor';p.appointedAt=now;state.housingRevision=(state.housingRevision||0)+1;return result(true,'Mianowano nowego profesora.');
   }
@@ -216,7 +217,7 @@ export function educationAction(state,action,context={}) {
     const existing=type==='educationResearchAssign'?e.researches.find(r=>r.id===action.researchId):null;
     if(type==='educationResearchAssign'&&!existing)return result(false,'Nie znaleziono badania.');
     const selected=ids(action.professorUids||action.researcherUids),people=selected.map(key=>find(state,key));
-    if(!selected.length)return result(false,'Każde badanie musi mieć co najmniej jednego profesora.');
+    if(!selected.length)return result(false,developmentText('MSG-LAST-RESEARCHER'));
     if(people.some(p=>!p||!professor(state,p)||!atAcademy(p)||educationBusy(state,p)&&!existing?.professorUids.includes(personKey(p))))return result(false,'Wybierz wolnych profesorów obecnych w Akademii.');
     if(existing){existing.professorUids=selected;existing.paused=false;return result(true,'Zmieniono obsadę badania; materiały i postęp zachowane.');}
     if(e.researches.some(r=>r.topic===action.topic))return result(false,'To badanie już trwa.');
@@ -236,7 +237,7 @@ export function advanceEducation(state,elapsed,context={}) {
     const rate=courseRate(state,c,context),completedAt=Math.min(end,at(state,context)+(rate>0?c.remainingWork/rate:seconds)*1000);c.paused=rate<=0;c.remainingWork=Math.max(0,c.remainingWork-seconds*rate);
     if(c.remainingWork<=EPS&&rate>0){
       const p=educationRecord(state,student,true);p.rounds=Math.max(p.rounds,c.round);p.protectedUntil=completedAt+7*DAY*1000;student.happiness=100;
-      e.courses=e.courses.filter(x=>x!==c);notify(state,{...context,now:completedAt},'Kurs ukończony',`${student.name||student.nickname||'Mieszkaniec'} otrzymuje 100 punktów szczęścia na siedem dni i trwałą premię pracy.`);
+      e.courses=e.courses.filter(x=>x!==c);notify(state,{...context,now:completedAt},'Kurs ukończony',developmentText('MSG-COURSE-COMPLETE',{imię:student.name||student.nickname||'Mieszkaniec'}));
     }
   }
   for(const r of [...e.researches]) {
@@ -246,7 +247,7 @@ export function advanceEducation(state,elapsed,context={}) {
       const def=RESEARCH_CATALOG.find(x=>x.id===r.topic);
       if(def?.kind==='repeat')e.researchLevels[r.topic]=Math.max(integer(e.researchLevels[r.topic]),r.level);else e.discoveries[r.topic]=true;
       if(r.route){e.discoveries[r.topic]=true;e.routes ||= {};e.routes[r.topic]={...r.route};}
-      e.researches=e.researches.filter(x=>x!==r);notify(state,{...context,now:end},'Odkrycie ukończone',def?.name||'Bezpośrednia trasa jest gotowa.');
+      e.researches=e.researches.filter(x=>x!==r);notify(state,{...context,now:end},'Odkrycie ukończone',developmentText('MSG-RESEARCH-COMPLETE',{badanie:def?.name||'Bezpośrednia trasa',efekt:def?.effect||'Bezpośrednia trasa jest gotowa.'}));
     }
   }
 }
