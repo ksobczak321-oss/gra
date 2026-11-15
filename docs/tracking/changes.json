@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "as_of": "2026-11-15",
-  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu. Jawne zlecenie promocji0.13.1.0napreprod ma odrębną kartę1082:PENDINGdo własnegoCI nowegoSHA i rzeczywistegoSUCCESSGCP.411kart/147ręcznychNOTRUN,bez resetu iPROD. GO DEV0.14.0.0/v31 z4listopada2026 zatwierdza paczkę po audycie ścieżek i plan50dni, karty1083–1120 i ręczneTC0148–0179. Implementacja i własna walidacja końcowego źródła pozostają w toku; PRE-PROD0.13.1.0/68e9bcd bez nowej promocji.449kart/179ręcznychNOTRUN; bez resetu,PROD i realnychoperatorów. Cel20w50dni/150godzin nie jest wynikiem testu. Nowe GO z14–15listopada2026 obejmuje pełny uzgodniony pakietv32/0.15.0.0 naDEV,47odpowiedzi z formularzy i poprawki UI. Karty1122–1138 mapują regułyR01–R59 z audytu. Nowe implementacje są lokalnie zweryfikowane, ale nowe CI i publiczny podgląd muszą mieć własny dowód; bez promocji PRE-PROD/PROD i bez resetu kont. Odłożone niepełne przepisy/sieć skórzana i niezatwierdzone parametry balansu zachowują odrębne ograniczenia. GO z15listopada po akceptacji statycznego frontu obejmuje wyłącznie DEV0.15.0.0/cachefrontend-v32-7: zachowane zaakceptowane grafiki, przypisania funkcji budynków bez zamiany identyfikatorów zapisów, zgodne miniatury i wyrównanie dolnego menu do prawej krawędzi1664. KartyHL-CHG-1144–1146 mają własny odbiór; osobny pakiet sera, otrębów/paszy i nazw mieszkańców pozostaje poza tą publikacją.",
+  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu. Jawne zlecenie promocji0.13.1.0napreprod ma odrębną kartę1082:PENDINGdo własnegoCI nowegoSHA i rzeczywistegoSUCCESSGCP.411kart/147ręcznychNOTRUN,bez resetu iPROD. GO DEV0.14.0.0/v31 z4listopada2026 zatwierdza paczkę po audycie ścieżek i plan50dni, karty1083–1120 i ręczneTC0148–0179. Implementacja i własna walidacja końcowego źródła pozostają w toku; PRE-PROD0.13.1.0/68e9bcd bez nowej promocji.449kart/179ręcznychNOTRUN; bez resetu,PROD i realnychoperatorów. Cel20w50dni/150godzin nie jest wynikiem testu. Nowe GO z14–15listopada2026 obejmuje pełny uzgodniony pakietv32/0.15.0.0 naDEV,47odpowiedzi z formularzy i poprawki UI. Karty1122–1138 mapują regułyR01–R59 z audytu. Nowe implementacje są lokalnie zweryfikowane, ale nowe CI i publiczny podgląd muszą mieć własny dowód; bez promocji PRE-PROD/PROD i bez resetu kont. Odłożone niepełne przepisy/sieć skórzana i niezatwierdzone parametry balansu zachowują odrębne ograniczenia. GO z15listopada po akceptacji statycznego frontu obejmuje wyłącznie DEV0.15.0.0/cachefrontend-v32-7: zachowane zaakceptowane grafiki, przypisania funkcji budynków bez zamiany identyfikatorów zapisów, zgodne miniatury i wyrównanie dolnego menu do prawej krawędzi1664. KartyHL-CHG-1144–1146 mają własny odbiór; osobny pakiet sera, otrębów/paszy i nazw mieszkańców pozostaje poza tą publikacją. PóźniejszeGOcache8 po zgłoszeniu Akademii iKoszar autoryzuje wyłącznie nazwy mieszkańców według zajęcia, numeracjęról i grupy we wszystkich listach/wyborachUI, z zachowaniemfrontucache7,UID,zapisów,uprawnień i postępu; modele sera,otrębów/paszy nadal wyłączone. KartyHL-CHG-1147–1148 wymagają własnego odbioru. Responsive120: cache8 zawiera także minimalną poprawkęUI poFAILURECI43738724605; próg20px i reguły modelu pozostają niezmienione. KartaHL-CHG-1149 zachowuje dawną awarię i odrębny odbiór nowego kodu.",
   "environment_baseline": {
     "application_source_sha": "092e75226fbb14cab09826f313e11d10891966d8",
     "ci_run_id": 41221965032,
@@ -28354,8 +28354,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_acceptance_passed_publication_pending",
-        "ci": "pending_own_run",
+        "dev": "published_pages_d2af52a_17_hashes_verified",
+        "ci": "failed_v17_delayed_resize_43738724605",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -28383,12 +28383,15 @@
         "manual_execution": "NOT_RUN",
         "source_baseline_sha": "e3affdc89752228c849588f45352414019bbf8cd",
         "source_sha": "0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3",
-        "release_note": "Odebrany lokalnie front cache7: nowe przypisania i miniatury, wyrównane krawędzie1664, zachowany postęp. Wszystkie kierunkowe testy przeglądarkowe PASS; pełna trasa56kroków i wymiana elementuDOM PASS. Node1390PASS/1timeout przy obciążeniu oraz ten sam przypadek96h osobno1PASS bez zmiany limitu10s. Excel17arkuszy/5646wierszy/ABC/Cpusta PASS. CI i Pages wymagają własnych wyników."
+        "release_note": "Cache7: źródło0bc7af0, publikacjad2af52a, Pages43738724545SUCCESS i17zgodnychhashyHTTPS/TLS. WłasnyCI43738724605FAILURE po zaliczonych etapach modelu/backendu/Excela: v17/opóźnionyresize/120kart dał16.328px wobec20px. Bezpośredni publiczny Chromium nadalBLOCKEDmanagedTLS, niePASS. Cache8 ma własną poprawkęUI i wymaga własnegoCI; poprzedniFAILURE zachowany.",
+        "publication_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43738724605"
       },
       "notes": [
         "Wyłącznie publikacja zatwierdzonego frontu na DEV/GitHub Pages; bez nowej promocji PRE-PROD/PROD, operacji kont lub resetu.",
         "Roboczy pakiet sera, otrębów/paszy i nazw mieszkańców jest zachowany w osobnym drzewie i wyłączony z tej publikacji.",
-        "Publiczny scenariusz preview=admin1-level5 pozostaje oznaczonym podglądem w pamięci karty, bez uwierzytelnienia lub trwałego zapisu."
+        "Publiczny scenariusz preview=admin1-level5 pozostaje oznaczonym podglądem w pamięci karty, bez uwierzytelnienia lub trwałego zapisu.",
+        "Późniejsze GOcache8 autoryzuje prezentację nazw i grup mieszkańców, która była wyłączona z historycznej publikacji cache7; modele sera i otrębów/paszy pozostają wyłączone."
       ],
       "tags": [
         "v32",
@@ -28429,8 +28432,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_acceptance_passed_publication_pending",
-        "ci": "pending_own_run",
+        "dev": "published_pages_d2af52a_17_hashes_verified",
+        "ci": "failed_v17_delayed_resize_43738724605",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -28458,12 +28461,15 @@
         "manual_execution": "NOT_RUN",
         "source_baseline_sha": "e3affdc89752228c849588f45352414019bbf8cd",
         "source_sha": "0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3",
-        "release_note": "Odebrany lokalnie front cache7: nowe przypisania i miniatury, wyrównane krawędzie1664, zachowany postęp. Wszystkie kierunkowe testy przeglądarkowe PASS; pełna trasa56kroków i wymiana elementuDOM PASS. Node1390PASS/1timeout przy obciążeniu oraz ten sam przypadek96h osobno1PASS bez zmiany limitu10s. Excel17arkuszy/5646wierszy/ABC/Cpusta PASS. CI i Pages wymagają własnych wyników."
+        "release_note": "Cache7: źródło0bc7af0, publikacjad2af52a, Pages43738724545SUCCESS i17zgodnychhashyHTTPS/TLS. WłasnyCI43738724605FAILURE po zaliczonych etapach modelu/backendu/Excela: v17/opóźnionyresize/120kart dał16.328px wobec20px. Bezpośredni publiczny Chromium nadalBLOCKEDmanagedTLS, niePASS. Cache8 ma własną poprawkęUI i wymaga własnegoCI; poprzedniFAILURE zachowany.",
+        "publication_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43738724605"
       },
       "notes": [
         "Wyłącznie publikacja zatwierdzonego frontu na DEV/GitHub Pages; bez nowej promocji PRE-PROD/PROD, operacji kont lub resetu.",
         "Roboczy pakiet sera, otrębów/paszy i nazw mieszkańców jest zachowany w osobnym drzewie i wyłączony z tej publikacji.",
-        "Publiczny scenariusz preview=admin1-level5 pozostaje oznaczonym podglądem w pamięci karty, bez uwierzytelnienia lub trwałego zapisu."
+        "Publiczny scenariusz preview=admin1-level5 pozostaje oznaczonym podglądem w pamięci karty, bez uwierzytelnienia lub trwałego zapisu.",
+        "Późniejsze GOcache8 autoryzuje prezentację nazw i grup mieszkańców, która była wyłączona z historycznej publikacji cache7; modele sera i otrębów/paszy pozostają wyłączone."
       ],
       "tags": [
         "v32",
@@ -28504,8 +28510,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_acceptance_passed_publication_pending",
-        "ci": "pending_own_run",
+        "dev": "published_pages_d2af52a_17_hashes_verified",
+        "ci": "failed_v17_delayed_resize_43738724605",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -28539,12 +28545,15 @@
         "manual_execution": "NOT_RUN",
         "source_baseline_sha": "e3affdc89752228c849588f45352414019bbf8cd",
         "source_sha": "0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3",
-        "release_note": "Odebrany lokalnie front cache7: nowe przypisania i miniatury, wyrównane krawędzie1664, zachowany postęp. Wszystkie kierunkowe testy przeglądarkowe PASS; pełna trasa56kroków i wymiana elementuDOM PASS. Node1390PASS/1timeout przy obciążeniu oraz ten sam przypadek96h osobno1PASS bez zmiany limitu10s. Excel17arkuszy/5646wierszy/ABC/Cpusta PASS. CI i Pages wymagają własnych wyników."
+        "release_note": "Cache7: źródło0bc7af0, publikacjad2af52a, Pages43738724545SUCCESS i17zgodnychhashyHTTPS/TLS. WłasnyCI43738724605FAILURE po zaliczonych etapach modelu/backendu/Excela: v17/opóźnionyresize/120kart dał16.328px wobec20px. Bezpośredni publiczny Chromium nadalBLOCKEDmanagedTLS, niePASS. Cache8 ma własną poprawkęUI i wymaga własnegoCI; poprzedniFAILURE zachowany.",
+        "publication_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43738724605"
       },
       "notes": [
         "Wyłącznie publikacja zatwierdzonego frontu na DEV/GitHub Pages; bez nowej promocji PRE-PROD/PROD, operacji kont lub resetu.",
         "Roboczy pakiet sera, otrębów/paszy i nazw mieszkańców jest zachowany w osobnym drzewie i wyłączony z tej publikacji.",
-        "Publiczny scenariusz preview=admin1-level5 pozostaje oznaczonym podglądem w pamięci karty, bez uwierzytelnienia lub trwałego zapisu."
+        "Publiczny scenariusz preview=admin1-level5 pozostaje oznaczonym podglądem w pamięci karty, bez uwierzytelnienia lub trwałego zapisu.",
+        "Późniejsze GOcache8 autoryzuje prezentację nazw i grup mieszkańców, która była wyłączona z historycznej publikacji cache7; modele sera i otrębów/paszy pozostają wyłączone."
       ],
       "tags": [
         "v32",
@@ -28574,6 +28583,232 @@
         "HL-CHG-1144",
         "HL-CHG-1145",
         "HL-CHG-1142"
+      ]
+    },
+    {
+      "epic": "HL-EPIC-UI",
+      "type": "Story",
+      "source": {
+        "kind": "user_go_resident_directory",
+        "date": "2026-11-15",
+        "date_note": "Bieżące zgłoszenie Akademii, doprecyzowanie Koszar i GO DEV po poprawce; data sesji UTC.",
+        "summary": "Użytkownik wskazał Mieszkaniec1…X zamiast nazw i grup zajęć w Akademii, objął tym także Koszary i polecił wdrożyć po poprawce naDEV.",
+        "reference": "chat:GO:academy-barracks-resident-role-directory"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_acceptance_passed_publication_pending",
+        "ci": "pending_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "supersedes": [],
+      "superseded_by": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-DIRECTORY.md",
+          "docs/v32/DIRECTORY-EVIDENCE.json"
+        ],
+        "code": [
+          "harborlight-v1-resident-labels.js",
+          "harborlight-v1-development-ui.js",
+          "harborlight-v1-kingdom-ui.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-resident-labels.test.mjs",
+          "tests/harborlight-resident-labels-ui-v32-smoke.py",
+          "tests/harborlight-kingdom-resident-labels-v32-smoke.py",
+          "tests/harborlight-legacy-resident-labels-v32-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
+        "source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+        "release_note": "Cache8 odebrany lokalnie: helper11NodePASS; Akademia/Koszary/badania/Teatr100osób i Królestwo oraz Dom/modlitwa/Latarnia na1440/390PASS; działania zachowująUID i zapisaneimiona. RegresjaTeatru100PASS, ENProfessor1/2PASS;112polskichwidokówPASS. Ścisłyv17/120kart/heldresizePASS bez zmianyprogu20px. Publikacja i własnyCI cache8 oczekują."
+      },
+      "notes": [
+        "Wyłącznie prezentacjaUI i publikacjaDEV/GitHubPages; bez zmian UID,uprawnień wyboru,modeli,zapisów,przydziałów i postępu.",
+        "Zaakceptowany front cache7 zachowany; modele sera i otrębów/paszy nadal wyłączone.",
+        "Brak nowej promocjiPRE-PROD/PROD, resetu lub mutacji kont."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "frontend",
+        "release-0-15-0-0"
+      ],
+      "id": "HL-CHG-1147",
+      "area": "Nazwy ról i grupy mieszkańców",
+      "title": "Wspólna prezentacja mieszkańców według zajęcia i osobna numeracja ról",
+      "acceptance": [
+        "W listach i polach wyboru zamiast globalnego Mieszkaniec1…X widać rolę oraz numer w obrębie roli; własne imiona pozostają rozpoznawalne.",
+        "Wspólny katalog pełnej wyspy zapewnia tej samej osobie tę samą etykietę w różnych filtrowanych wyborach.",
+        "Trwała kariera profesora ma pierwszeństwo przed tymczasowym zajęciem; Profesor1/2 nie jest zastępowany globalnym numerem mieszkańca.",
+        "Żołnierze i oficerowie mają odrębne nazwy, grupy i liczniki numeracji.",
+        "Grupy obejmują Wolni wDomu, pracowników właściwych budynków i kariery, bez zmiany miejsca pracy lub przyznawania nowej roli.",
+        "Wartości opcji i akcje zachowują kanonicznyUID; nazwa, numer i sortowanie nie modyfikują zapisów ani postępu."
+      ],
+      "rules": [
+        "UI:resident-occupation-labels",
+        "UI:full-island-role-ordinals",
+        "UI:permanent-professor-career",
+        "SAVE:person-uid-preserved"
+      ],
+      "related_changes": [
+        "HL-CHG-1148",
+        "HL-CHG-1142",
+        "HL-CHG-1146"
+      ]
+    },
+    {
+      "epic": "HL-EPIC-UI",
+      "type": "Story",
+      "source": {
+        "kind": "user_go_resident_directory",
+        "date": "2026-11-15",
+        "date_note": "Bieżące zgłoszenie Akademii, doprecyzowanie Koszar i GO DEV po poprawce; data sesji UTC.",
+        "summary": "Użytkownik wskazał Mieszkaniec1…X zamiast nazw i grup zajęć w Akademii, objął tym także Koszary i polecił wdrożyć po poprawce naDEV.",
+        "reference": "chat:GO:academy-barracks-resident-role-directory"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_acceptance_passed_publication_pending",
+        "ci": "pending_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "supersedes": [],
+      "superseded_by": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-DIRECTORY.md",
+          "docs/v32/DIRECTORY-EVIDENCE.json"
+        ],
+        "code": [
+          "harborlight-v1-resident-labels.js",
+          "harborlight-v1-development-ui.js",
+          "harborlight-v1-kingdom-ui.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-resident-labels.test.mjs",
+          "tests/harborlight-resident-labels-ui-v32-smoke.py",
+          "tests/harborlight-kingdom-resident-labels-v32-smoke.py",
+          "tests/harborlight-legacy-resident-labels-v32-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
+        "source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+        "release_note": "Cache8 odebrany lokalnie: helper11NodePASS; Akademia/Koszary/badania/Teatr100osób i Królestwo oraz Dom/modlitwa/Latarnia na1440/390PASS; działania zachowująUID i zapisaneimiona. RegresjaTeatru100PASS, ENProfessor1/2PASS;112polskichwidokówPASS. Ścisłyv17/120kart/heldresizePASS bez zmianyprogu20px. Publikacja i własnyCI cache8 oczekują."
+      },
+      "notes": [
+        "Wyłącznie prezentacjaUI i publikacjaDEV/GitHubPages; bez zmian UID,uprawnień wyboru,modeli,zapisów,przydziałów i postępu.",
+        "Zaakceptowany front cache7 zachowany; modele sera i otrębów/paszy nadal wyłączone.",
+        "Brak nowej promocjiPRE-PROD/PROD, resetu lub mutacji kont."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "frontend",
+        "release-0-15-0-0"
+      ],
+      "id": "HL-CHG-1148",
+      "area": "Listy Akademii, Koszar i pozostałych paneli",
+      "title": "Nazwy i grupy zajęć w Akademii, Koszarach, Teatrze, Królestwie i klasycznych wyborach",
+      "acceptance": [
+        "Akademia korzysta ze wspólnego katalogu w listach profesorów, nauczycieli, uczestników nauki/kursów/badań i osób aktywnych.",
+        "Koszary korzystają z nazw i grup przy szkoleniu, rekrutacji, wojskowych wyborach, trasach i wyprawach.",
+        "Ten sam wzorzec obejmuje Teatr, Królestwo oraz klasyczne spisy mieszkańców, modlitwę, Latarnię i wybory pracy.",
+        "Warunki uprawnień, limity i dostępność pozostają istniejącymi regułami gry; grupowanie nie pozwala wybrać osoby wcześniej niedostępnej.",
+        "Rzeczywista akcja dotyczy wybranegoUID; roboczy wybór nie zmienia osoby i nie znika przy zwykłym odświeżeniu.",
+        "Komputer i telefon zachowują czytelność oraz obsługę pól; zaakceptowane grafiki,20funkcji mapy i krawędźmenu1664 pozostają bez zmian.",
+        "Cache8 ma własny odbiór lokalny, SHA, CI,Pages i odczyt hostowanych plików; publiczny scenariuszpoziomu5 pozostaje nietrwałym podglądem bez konta."
+      ],
+      "rules": [
+        "UI:academy-resident-groups",
+        "UI:barracks-resident-groups",
+        "UI:all-roster-directory",
+        "UI:draft-person-selection-preserved"
+      ],
+      "related_changes": [
+        "HL-CHG-1147",
+        "HL-CHG-1142",
+        "HL-CHG-1146"
+      ]
+    },
+    {
+      "epic": "HL-EPIC-UI",
+      "type": "Bug",
+      "source": {
+        "kind": "own_ci_regression",
+        "date": "2026-11-15",
+        "date_note": "Regresja własnegoCI publikacji cache7 w trakcie autoryzowanego odbioruDEV.",
+        "summary": "WłasnyCI43738724605/d2af52a odtworzył v17: przy120kartach i opóźnionym resize szerokość spadała do16.328px poniżej niezmienionego minimum20px. Minimalna naprawaUI jest potrzebna do odbioru kolejnej publikacjiDEV.",
+        "reference": "ci:43738724605:v17-memory120-held-resize"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_acceptance_passed_publication_pending",
+        "ci": "pending_own_run",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "supersedes": [],
+      "superseded_by": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-DIRECTORY.md",
+          "docs/v32/DIRECTORY-EVIDENCE.json"
+        ],
+        "code": [
+          "harborlight-v1-minigame-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-frontend-v17-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
+        "source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+        "release_note": "Cache8 odebrany lokalnie: helper11NodePASS; Akademia/Koszary/badania/Teatr100osób i Królestwo oraz Dom/modlitwa/Latarnia na1440/390PASS; działania zachowująUID i zapisaneimiona. RegresjaTeatru100PASS, ENProfessor1/2PASS;112polskichwidokówPASS. Ścisłyv17/120kart/heldresizePASS bez zmianyprogu20px. Publikacja i własnyCI cache8 oczekują."
+      },
+      "notes": [
+        "Poprawka konieczna w ramach autoryzowanego wdrożeniaDEV; brak zmiany modeli,shaderów lub danych kont.",
+        "DawnyCI pozostajeFAILURE mimo lokalnego odbioru nowej poprawki."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "frontend",
+        "release-0-15-0-0"
+      ],
+      "id": "HL-CHG-1149",
+      "area": "Responsywny układ minigry pamięci",
+      "title": "Plansza pamięci120kart zachowuje minimum20px po opóźnionym resize",
+      "acceptance": [
+        "Kompaktowy układ planszy pamięci120kart zachowuje czytelny rozmiar kart po resize z opóźnionym ResizeObserver.",
+        "Minimalna poprawka dotyczy prezentacji wminigame-ui i nie zmienia reguł modelu, liczby kart lub nagród.",
+        "Kryterium minimum20px pozostaje bez zmiany; test nie zostaje osłabiony.",
+        "Pełny ścisłyv17 i wymuszony opóźniony ResizeObserver przechodzą lokalnie.",
+        "CI43738724605/d2af52a pozostajeFAILURE; cache8 potrzebuje własnegoSHA,CI iPages."
+      ],
+      "rules": [
+        "UI:memory120-delayed-resize",
+        "UI:card-minimum20px-unchanged",
+        "CI:prior-failure-preserved"
+      ],
+      "related_changes": [
+        "HL-CHG-1146",
+        "HL-CHG-1147",
+        "HL-CHG-1148"
       ]
     }
   ],
@@ -28706,15 +28941,15 @@
     "preprod_bridge_duration": "13s",
     "preprod_deployment_duration": "2m12s",
     "dev_application_version": "0.15.0.0",
-    "dev_status": "public_preview_verified_level5; final_metadata_ci_requires_own_result",
-    "dev_ci": "pending_final_metadata_commit",
-    "dev_source_sha": "739b5dd837bf43e54675a221e3987d8cb2670947",
-    "dev_implementation_source_sha": "8a30d70885d99c30d584b74e1030a62e98edaa30",
-    "dev_ci_run_id": null,
-    "dev_pages_run_id": 43725299560,
+    "dev_status": "cache7_pages_published_17_https_hashes_verified; cache8_resident_directory_pending",
+    "dev_ci": "failure",
+    "dev_source_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
+    "dev_implementation_source_sha": "0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3",
+    "dev_ci_run_id": 43738724605,
+    "dev_pages_run_id": 43738724545,
     "dev_pages_conclusion": "success",
     "dev_tag": null,
-    "dev_cache": "frontend-v32-6",
+    "dev_cache": "frontend-v32-7",
     "previous_accepted_v32": {
       "source_sha": "fc2e87eec57c0388a16fb9b15a7d80ea0bc9c67c",
       "cache": "frontend-v32-4",
@@ -28723,10 +28958,10 @@
       "pages_run_id": 43703967803,
       "pages_conclusion": "success"
     },
-    "frontend_archive_sha256": "c036a32f5323211cb5ea21a8e19784746f023ad7b536d9db463e7cb6b0cfce95",
-    "frontend_manifest_sha256": "f9496063cf61638bdd7b674bf980c2af3bae70d61ce50a29c4b05045b8771dfe",
-    "frontend_file_count": 101,
-    "frontend_total_bytes": 20264067,
+    "frontend_archive_sha256": "ee205c359951fccd47fdbf63a20f4f87692b185be2bec643f98c802fbe1d8dbb",
+    "frontend_manifest_sha256": "5f1aecd3bd05e66ae6ebb7e826831dd4fca58895703c4458d1aa8bfd8a719082",
+    "frontend_file_count": 107,
+    "frontend_total_bytes": 30728266,
     "previous_published_v32_cache5": {
       "dev_application_version": "0.15.0.0",
       "dev_status": "published_pages_verified; final_metadata_ci_requires_own_result",
@@ -28744,6 +28979,43 @@
       "frontend_total_bytes": 20240963,
       "ci_failure_reason": "Stale final tour ID settings in legacy learning-flow browser test; fixed to actual last TOUR_IDS[-1] for cache6."
     },
-    "public_level5_preview_verified": true
+    "public_level5_preview_verified": false,
+    "previous_published_v32_cache6": {
+      "dev_application_version": "0.15.0.0",
+      "dev_status": "public_preview_verified_level5; final_metadata_ci_requires_own_result",
+      "dev_ci": "pending_final_metadata_commit",
+      "dev_source_sha": "739b5dd837bf43e54675a221e3987d8cb2670947",
+      "dev_implementation_source_sha": "8a30d70885d99c30d584b74e1030a62e98edaa30",
+      "dev_ci_run_id": null,
+      "dev_pages_run_id": 43725299560,
+      "dev_pages_conclusion": "success",
+      "dev_tag": null,
+      "dev_cache": "frontend-v32-6",
+      "frontend_archive_sha256": "c036a32f5323211cb5ea21a8e19784746f023ad7b536d9db463e7cb6b0cfce95",
+      "frontend_manifest_sha256": "f9496063cf61638bdd7b674bf980c2af3bae70d61ce50a29c4b05045b8771dfe",
+      "frontend_file_count": 101,
+      "frontend_total_bytes": 20264067,
+      "public_level5_preview_verified": true,
+      "last_metadata_source_sha": "e3affdc89752228c849588f45352414019bbf8cd",
+      "last_metadata_ci_run_id": 43725629409,
+      "last_metadata_ci_conclusion": "failure",
+      "last_metadata_pages_run_id": 43725629445,
+      "last_metadata_pages_conclusion": "success"
+    },
+    "public_level5_preview_verification": "Cache7 implemented and tested locally;17hostedfilehashesverified viaHTTPS/TLS. Direct public Chromium render blocked by managedTLS, notPASS.",
+    "next_dev_scope": {
+      "cache": "frontend-v32-8",
+      "status": "targeted_local_directory_and_responsive_checks_passed_remaining_acceptance_pending",
+      "scope": "resident occupation labels and groups only; preserve cache7front",
+      "source_sha": null,
+      "ci_run_id": null,
+      "pages_run_id": null,
+      "excluded_models": [
+        "cheese_to_dairy",
+        "bran_and_feed"
+      ],
+      "responsive_memory120_fix": true
+    },
+    "dev_ci_failure_reason": "v17 delayed memory-board resize with120cards produced16.328px card width below unchanged20px minimum"
   }
 }

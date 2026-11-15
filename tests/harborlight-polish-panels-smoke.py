@@ -203,7 +203,14 @@ def scenario(browser, mobile, records, failures):
         route(page, mobile, 'residents')
         page.locator('[data-resident-roster] > summary').click()
         expect(page.locator('[data-resident-list] [data-resident-id]')).to_have_count(44)
-        for person, job, name, group in [('1', 'Drwale', 'Drwal 1', 'workplace:lumber'), ('2', 'Magazyn', 'Tragarz 1', 'workplace:warehouse'), ('3', 'Młyn', 'Młynarz 1', 'workplace:windmill'), ('10', 'W domu', 'Wolny w Domu 1', 'home')]:
+        # Six earlier Home residents founded the daughter island; resident 10
+        # is now the first free person on this island, while UIDs stay intact.
+        for person, job, name, group in [
+            ('1', 'Drwale', 'Drwal 1', 'workplace:lumber'),
+            ('2', 'Magazyn', 'Tragarz 1', 'workplace:warehouse'),
+            ('3', 'Młyn', 'Młynarz 1', 'workplace:windmill'),
+            ('10', 'W domu', 'Wolny w Domu 1', 'home'),
+        ]:
             row = page.locator('[data-resident-id="%s"]' % person)
             expect(row.locator('[data-resident-name]')).to_have_text(name)
             expect(row.locator('xpath=ancestor::*[@data-resident-group][1]')).to_have_attribute('data-resident-group',group)

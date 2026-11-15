@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `local_acceptance_passed_publication_pending` |
-| CI | `pending_own_run` |
+| DEV | `published_pages_d2af52a_17_hashes_verified` |
+| CI | `failed_v17_delayed_resize_43738724605` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -44,9 +44,10 @@ Data pierwotnej wiadomości: 2026-11-15. Bieżące GO użytkownika po akceptacji
 - **Kod:** [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-play.css](../../../harborlight-v1-play.css), [harborlight-v1-development-ui.js](../../../harborlight-v1-development-ui.js), [harborlight-v1-map-art.js](../../../harborlight-v1-map-art.js), [harborlight-v1-goods-art.js](../../../harborlight-v1-goods-art.js), [assets/harborlight-goods-v32.png](../../../assets/harborlight-goods-v32.png), [harborlight-v1-onboarding-ui.js](../../../harborlight-v1-onboarding-ui.js)
 - **Scenariusze automatyczne:** [tests/harborlight-native-map-v32-smoke.py](../../../tests/harborlight-native-map-v32-smoke.py), [tests/harborlight-tour-route-v5-smoke.py](../../../tests/harborlight-tour-route-v5-smoke.py), [tests/harborlight-accepted-front-v32-smoke.py](../../../tests/harborlight-accepted-front-v32-smoke.py), [tests/harborlight-resource-icons-v32-smoke.py](../../../tests/harborlight-resource-icons-v32-smoke.py), [tests/harborlight-onboarding-target-replacement-v32-smoke.py](../../../tests/harborlight-onboarding-target-replacement-v32-smoke.py), [tests/harborlight-frontend-v17-smoke.py](../../../tests/harborlight-frontend-v17-smoke.py)
 - **Kod dowodowy:** `0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/43738724605.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Odebrany lokalnie front cache7: nowe przypisania i miniatury, wyrównane krawędzie1664, zachowany postęp. Wszystkie kierunkowe testy przeglądarkowe PASS; pełna trasa56kroków i wymiana elementuDOM PASS. Node1390PASS/1timeout przy obciążeniu oraz ten sam przypadek96h osobno1PASS bez zmiany limitu10s. Excel17arkuszy/5646wierszy/ABC/Cpusta PASS. CI i Pages wymagają własnych wyników.
+Cache7: źródło0bc7af0, publikacjad2af52a, Pages43738724545SUCCESS i17zgodnychhashyHTTPS/TLS. WłasnyCI43738724605FAILURE po zaliczonych etapach modelu/backendu/Excela: v17/opóźnionyresize/120kart dał16.328px wobec20px. Bezpośredni publiczny Chromium nadalBLOCKEDmanagedTLS, niePASS. Cache8 ma własną poprawkęUI i wymaga własnegoCI; poprzedniFAILURE zachowany.
 
 ## Relacje
 
@@ -59,6 +60,7 @@ Odebrany lokalnie front cache7: nowe przypisania i miniatury, wyrównane krawęd
 - Wyłącznie publikacja zatwierdzonego frontu na DEV/GitHub Pages; bez nowej promocji PRE-PROD/PROD, operacji kont lub resetu.
 - Roboczy pakiet sera, otrębów/paszy i nazw mieszkańców jest zachowany w osobnym drzewie i wyłączony z tej publikacji.
 - Publiczny scenariusz preview=admin1-level5 pozostaje oznaczonym podglądem w pamięci karty, bez uwierzytelnienia lub trwałego zapisu.
+- Późniejsze GOcache8 autoryzuje prezentację nazw i grup mieszkańców, która była wyłączona z historycznej publikacji cache7; modele sera i otrębów/paszy pozostają wyłączone.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

@@ -1,6 +1,6 @@
 # GO DEV — zaakceptowany front wyspy
 
-Status: **lokalne testy nowego frontu przeszły; pełny odbiór i publikacja nowego źródła oczekują**. Wersja0.15.0.0, cache `frontend-v32-7`. [Maszynowy zapis dowodów](ACCEPTED-FRONT-EVIDENCE.json) musi otrzymać rzeczywiste SHA i wyniki przed oznaczeniem wdrożenia jako odebranego. Karty zakresu: HL-CHG-1144–1146.
+Status: **front opublikowany na Pages, zgodność17hostowanychplików potwierdzona; pełny CI zakończył sięFAILURE w responsywnym v17/120kartach**. Wersja0.15.0.0, cache `frontend-v32-7`; źródło aplikacji `0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3`, publikacja `d2af52a9f7d6a8221d888ca47c5c014727993e23`, Pages43738724545SUCCESS, CI43738724605FAILURE. [Maszynowy zapis dowodów](ACCEPTED-FRONT-EVIDENCE.json). Karty zakresu: HL-CHG-1144–1146. Późniejszy zakres nazw mieszkańców i poprawki responsywnej [cache8](GO-DIRECTORY.md) zachowuje ten front i wymaga własnegoCI.
 
 Użytkownik zaakceptował podglądy Gospodarstwa, chaty leśnika/Drwali, Rzeźni i pomniejszonego, przesuniętego Tartaku. Następnie wskazał zmianę funkcji istniejących budynków przy zachowaniu ich grafik, zatwierdził dawny Zakład skórzany jako dekorację i poprosił o miniatury zgodne z obecnym wyglądem. Końcowe polecenie: „prawa krawędz dolnego menu musi być w lini z menu po prawej wiec ciut jeszcze przesuń, wrzuć na DEV”.
 
@@ -45,7 +45,7 @@ Pełny CI i Pages nowego SHA mają własny wynik. Dotychczasowy Pages43725629445
 
 `tests/harborlight-accepted-front-v32-smoke.py` przeszedł na1672/1440/390:20funkcji,8fizycznych kliknięć w każdym wariancie,19zgodnych kadrów miniatur,5zakładek, prawe krawędzie1664, odsłonięty statek i zachowany postęp. Zaktualizowany `tests/harborlight-native-map-v32-smoke.py` przeszedł na1440/390. Testy pakietu frontendowego:12PASS. Preflight potwierdził107plików o łącznym rozmiarze30727097bajtów, poniżej32MiB; zaakceptowane PNG zachowują identyczne bajty.
 
-Pozostałe testy lokalne, pełny CI i odbiór opublikowanego źródła nadal wymagają odrębnych wyników. Powyższe sprawdzenia nie zmieniają historycznego FAILURE ani statusów PRE-PROD/PROD.
+Publikacja cache7: Pages43738724545SUCCESS,17hostowanychhashyHTTPS zgodnych przy normalnej weryfikacjiTLS. CI43738724605 zakończył sięFAILURE po zaliczonych kontrolach modelu, backendu i Excela: opóźniony resize planszy pamięci120kart w v17 dał16.328px zamiast wymaganych20px. Cache8 zawiera minimalną poprawkęUI z lokalnym pełnym v17 i wymuszonym opóźnionym ResizeObserverPASS przy niezmienionym progu20px; ten wynik nie zmieniaCIcache7. Próba bezpośredniego publicznego renderu Chromium pozostała zablokowana przez zarządzaneTLS mimo próby poprawnego zaufania certyfikatowi; nie oznaczono jej jakoPASS. Zgodne hashe nie zastępują takiego renderu. PRE-PROD/PROD pozostają bez nowej promocji.
 
 Kontrola regresji wykryła dwa błędy prezentacji. Przegląd wyspy na ekranie laptopa mieści teraz pełną nawigację bez przewijania, zachowując przyciski minimum44px; ścisły test v17 przeszedł. Oprowadzanie ponownie odnajduje przycisk, gdy mobilny pasek wymieni jego element DOM; pełna trasa56kroków i deterministyczna wymiana oraz ponowna zmiana rozmiaru elementu przeszły na komputerze i telefonie. To poprawki frontu bez zmiany mechanik i stanu gry.
 

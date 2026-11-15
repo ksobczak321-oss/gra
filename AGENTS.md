@@ -1,5 +1,13 @@
 # Zasady pracy nad HARBORLIGHT
 
+## GO DEV — nazwy i grupy mieszkańców, cache8
+
+Po zgłoszeniu numerów „Mieszkaniec1…X” w Akademii użytkownik wskazał także Koszary i polecił wdrożyć po poprawce naDEV. Nowy cache `frontend-v32-8` zachowuje cały zaakceptowany front cache7 i dodaje wyłącznie prezentację mieszkańców według zajęcia w listach, wyborach, kursach, nauczycielach, trasach i wyprawach Akademii/Koszar oraz pozostałych spisach Teatru, Królestwa i klasycznych paneli. [Zakres](docs/v32/GO-DIRECTORY.md) i [dowody](docs/v32/DIRECTORY-EVIDENCE.json). Profesor1/2 jest profesorem także podczas tymczasowego zajęcia; żołnierze i oficerowie mają osobne nazwy oraz numerację. Grupy obejmują m.in. Wolni wDomu, pracowników poszczególnych budynków i role zawodowe.
+
+To czysta warstwaUI: UID, identyfikatory zapisów, uprawnienia wyboru, przydziały, poziomy i postęp pozostają zachowane. Pakiet nazw mieszkańców jest teraz autoryzowany; modele sera oraz otrębów/paszy pozostają poza tą publikacją, w dotychczasowym osobnym drzewie roboczym. Nie zmieniaj zaakceptowanych grafik i przypisań mapy. Do cache8 należy także konieczna poprawka responsywnego układu planszy pamięci120kart po opóźnionym resize; warunek20px i reguły modelu pozostają bez zmiany. Wersja0.15.0.0, tylkoDEV/Git/CI/Pages, bez nowegoPRE-PROD/PROD, resetu lub mutacji kont.
+
+Poprzedni cache7 opublikowano jako `d2af52a9f7d6a8221d888ca47c5c014727993e23`: Pages43738724545SUCCESS,17hashyHTTPS zgodnych z weryfikacjąTLS. CI43738724605 zakończył sięFAILURE po zaliczonych kontrolach modelu, backendu i Excela: w v17 przy120kartach i opóźnionym resize szerokość wyniosła16.328px zamiast co najmniej20px. Nowa poprawkaUI przeszła lokalnie pełny v17 i wymuszony opóźniony ResizeObserver z niezmienionym progiem20px; dawnyCI nadalFAILURE. Bezpośredniego publicznego renderu Chromium nie potwierdzono z powodu zarządzanej blokadyTLS; hashe nie są jego substytutem. Cache8 wymaga własnych dowodów.
+
 ## GO DEV — zaakceptowany front wyspy, cache7
 
 Użytkownik zaakceptował statyczny front i polecił „prawa krawędz dolnego menu musi być w lini z menu po prawej wiec ciut jeszcze przesuń, wrzuć na DEV”. To autoryzuje wdrożenie zatwierdzonych grafik, przypisań funkcji budynków i miniatur oraz wyrównania dolnego menu: `left474 + width1190 = right1664`, zgodnie z panelem `left1401 + width263 = right1664`. Wersja pozostaje0.15.0.0, nowy cache `frontend-v32-7`. [Dokładny zakres](docs/v32/GO-ACCEPTED-FRONT.md) i [dowody odbioru](docs/v32/ACCEPTED-FRONT-EVIDENCE.json) rozdzielają podgląd graficzny, lokalne testy, Git, CI i opublikowany DEV.

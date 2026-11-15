@@ -23,6 +23,7 @@ const now=Date.now(),s=createState(now,{ruleset:32});
 for(const building of Object.values(s.buildings))building.level=Math.max(1,building.level);
 for(const id of ['townhall','house','warehouse','lighthouse','chapel'])s.buildings[id].level=5;
 s.population=100;s.capacity=180;synchronizeResidents(s);
+// This fixed 100-person scenario already received its one-time starter gifts.
 s.education.foundingGranted=true;s.military.foundingGranted=true;
 s.welcomeWorkers.claimedDays=[warsawDayKey(now)];s.welcomeWorkers.granted=1;s.welcomeWorkers.pending=[];
 s.islandName='Przystań Zawodów';s.settings.language='pl';s.tutorial.autoOpenDisabled=true;

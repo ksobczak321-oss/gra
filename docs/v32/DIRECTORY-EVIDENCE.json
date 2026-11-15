@@ -1,0 +1,204 @@
+{
+  "scope": "DEV-only resident role labels and occupation groups plus necessary120-card responsive UI fix; preserve accepted cache7 front; exclude cheese/bran/feed models",
+  "status": "local_acceptance_passed_publication_pending",
+  "application_version": "0.15.0.0",
+  "cache": "frontend-v32-8",
+  "url": "https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5&v=frontend-v32-8",
+  "source_baseline_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
+  "source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+  "publication_commit": null,
+  "ci_run_id": null,
+  "ci_status": "pending_own_run",
+  "ci_conclusion": null,
+  "pages_run_id": null,
+  "pages_conclusion": "pending_own_run",
+  "local_checks": [
+    {
+      "test": "tests/harborlight-resident-labels.test.mjs",
+      "result": "PASS",
+      "passed": 11
+    },
+    {
+      "test": "tests/harborlight-resident-labels-ui-v32-smoke.py",
+      "result": "PASS",
+      "people": 100,
+      "viewports": [
+        1440,
+        390
+      ],
+      "real_actions": 4,
+      "verified": [
+        "Academy and Barracks role groups",
+        "research and teacher selections",
+        "Theatre labels",
+        "canonical UIDs preserved in actual actions"
+      ]
+    },
+    {
+      "test": "tests/harborlight-theatre-selection-v32-smoke.py",
+      "result": "PASS",
+      "people": 100,
+      "viewports": [
+        1440,
+        390
+      ]
+    },
+    {
+      "test": "tests/harborlight-kingdom-resident-labels-v32-smoke.py",
+      "result": "PASS",
+      "viewports": [
+        1440,
+        390
+      ],
+      "verified": [
+        "draft selections retained",
+        "actual action UIDs preserved",
+        "island switch UID identities preserved"
+      ]
+    },
+    {
+      "test": "focused English resident helper case",
+      "result": "PASS",
+      "focused_cases": 1
+    },
+    {
+      "test": "actual English Academy rendering",
+      "result": "PASS",
+      "verified": [
+        "Professor 1 and Professor 2",
+        "Professors group",
+        "Free at Home group"
+      ]
+    },
+    {
+      "test": "tests/harborlight-frontend-v17-smoke.py full strict suite",
+      "result": "PASS"
+    },
+    {
+      "test": "120-card layout with held ResizeObserver callback",
+      "result": "PASS",
+      "minimum_card_width_px": 20,
+      "threshold_changed": false
+    },
+    {
+      "name": "legacy_roster_prayer_lighthouse_actual_game",
+      "status": "PASS",
+      "viewports": [
+        1440,
+        390
+      ],
+      "people": 100,
+      "actions_preserve_numeric_ids_and_uids": true,
+      "saved_names_unchanged": true
+    },
+    {
+      "name": "full_polish_panels_regression",
+      "status": "PASS",
+      "actual_views": 112,
+      "role_labels_and_jobs_happiness_checked": true
+    },
+    {
+      "name": "editorial_workbook",
+      "status": "PASS",
+      "sheets": 17,
+      "rows": 5677,
+      "C_all_blank": true,
+      "source_fingerprints_match": true
+    },
+    {
+      "name": "packaged_front_and_resident_lists",
+      "status": "PASS",
+      "suites": [
+        "harborlight-resident-labels-ui-v32-smoke.py",
+        "harborlight-legacy-resident-labels-v32-smoke.py",
+        "harborlight-accepted-front-v32-smoke.py"
+      ],
+      "source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+      "public_files_including_manifest": 108
+    }
+  ],
+  "hosted_checks": [],
+  "presentation_requirements": [
+    "one shared role label and occupation grouping per canonical person UID",
+    "role ordinals based on full island rather than filtered selector",
+    "permanent professor career takes precedence over temporary job",
+    "separate soldier and officer roles and numbering",
+    "Academy and Barracks courses, teacher choices, routes and expeditions",
+    "Theatre, Kingdom and legacy resident rosters and selectors"
+  ],
+  "preserved_game_state": [
+    "canonical UID",
+    "save identity",
+    "eligibility rules",
+    "assignments",
+    "production and research models",
+    "account progress"
+  ],
+  "accepted_front_preserved": {
+    "cache": "frontend-v32-7",
+    "functions": 20,
+    "dock_right": 1664,
+    "artwork_redrawn": false
+  },
+  "excluded_paused_work": [
+    "cheese_to_dairy",
+    "bran_and_feed"
+  ],
+  "public_preview": {
+    "account_authenticated": false,
+    "persistent_world_save": false,
+    "townhall_level": 5
+  },
+  "manual_execution": "NOT_RUN",
+  "preprod": {
+    "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+    "new_deployment": false,
+    "account_reset": false
+  },
+  "prod": {
+    "new_deployment": false
+  },
+  "previous_cache7": {
+    "source_sha": "0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3",
+    "publication_commit": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
+    "pages_run_id": 43738724545,
+    "pages_conclusion": "success",
+    "hosted_hashes_verified": 17,
+    "tls_verification": true,
+    "ci_run_id": 43738724605,
+    "ci_status_at_observation": "completed",
+    "passed_ci_stages_at_observation": [
+      "game model",
+      "backend",
+      "editorial workbook"
+    ],
+    "direct_hosted_browser": "blocked_by_managed_TLS_despite_certificate_trust_attempt; not_PASS",
+    "ci_conclusion": "failure",
+    "ci_failure_reason": "v17 delayed memory-board resize with120cards produced16.328px card width below unchanged20px minimum"
+  },
+  "remaining_verification": [
+    "tests/harborlight-legacy-resident-labels-v32-smoke.py",
+    "own final source commit",
+    "own complete CI",
+    "own Pages publication",
+    "hosted cache8 source checks"
+  ],
+  "responsive_fix": {
+    "module": "harborlight-v1-minigame-ui.js",
+    "trigger": "delayed ResizeObserver while compact120-card memory board is resized",
+    "prior_cache7_ci_failure": "v17 delayed memory-board resize with120cards produced16.328px card width below unchanged20px minimum",
+    "minimum_card_width_px": 20,
+    "threshold_changed": false,
+    "game_rules_changed": false,
+    "local_full_v17": "PASS",
+    "local_held_resize_observer": "PASS"
+  },
+  "local_bundle": {
+    "archive": "/workspace/work/front-v32-8/frontend.tar.gz",
+    "archive_sha256": "1c6b5524f2904067605d2bc57a788072d2cf36fa3627e4ba61654eecd4408213",
+    "commit": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+    "file_count": 108,
+    "manifest_sha256": "e52935b4dbf0ca0681d4aadf6aed06b8a1d1c1db79c11cbc25e050cce00c8f0a",
+    "total_bytes": 30742668
+  }
+}
