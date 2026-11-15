@@ -33,6 +33,7 @@ class FakeCloud:
         self.api = "1"
         self.foreign_offer = False
         self.concurrent_write = False
+        self.concurrent_community = False
         self.created_revision = "ready-revision"
         self.ready_status = "True"
         self.iam_ready = True
@@ -79,6 +80,12 @@ class FakeCloud:
             reset.validate_writes(body["writes"])
             if self.concurrent_write:
                 self.docs["islands/" + reset.UIDS[0]]["updateTime"] = "2026-10-31T01:00:00Z"
+            if self.concurrent_community:
+                uid = reset.UIDS[0]
+                profile = community(uid, mutationRevision=9)
+                self.docs["communityPlayers/" + uid] = doc("communityPlayers/" + uid, profile, "2026-10-31T01:00:00Z")
+                self.docs[f"communityPlayers/{uid}/requests/concurrent_apply"] = doc(f"communityPlayers/{uid}/requests/concurrent_apply", {"result": {"pending": True}})
+                self.docs["communityAlliances/a_" + "3" * 24] = doc("communityAlliances/a_" + "3" * 24, {"captainUid": "unrelated", "members": [], "pending": [{"uid": uid}]})
             # Check every condition before applying any write.
             for write in body["writes"]:
                 name = write.get("delete") or write["update"]["name"]
@@ -111,6 +118,12 @@ class FakeCloud:
 
 def options(**changes):
     return SimpleNamespace(**{"deployment_run_id": 123, "commit": SHA, "receipt_archive": Path("unused.zip"), "apply": False, "lock_client_writes": False, "backup_dir": None, **changes})
+
+
+def community(uid, **changes):
+    return {"uid": uid, "id": "u_" + hashlib.sha256(("harborlight-community\0" + uid).encode()).hexdigest()[:24],
+            "name": "Testowa tożsamość", "createdAt": 1, "source": "dev-island", "blocked": ["u_" + "9" * 24],
+            "muted": ["direct_test"], "allianceId": None, "epoch": 2, "mutationRevision": 8, **changes}
 
 
 class ResetSafety(unittest.TestCase):
@@ -218,6 +231,106 @@ class ResetSafety(unittest.TestCase):
         with self.assertRaisesRegex(reset.Error, "innym graczem"): self.execute(cloud, options(apply=True))
         self.assertEqual(cloud.commits, [])
 
+    def test_community_progress_and_mechanical_wallet_clear_but_identity_handles_preferences_and_legal_stay(self):
+        cloud = FakeCloud(); uid = reset.UIDS[0]
+        profile = community(uid, activeAttemptId="attempt_old", sentAt=[123], oldGameReward={"coins": 500})
+        cloud.docs[f"communityPlayers/{uid}"] = doc(f"communityPlayers/{uid}", profile)
+        for suffix in ("attempts/attempt_old", "requests/old_request", "leagueCounters/season_day", "leagueAwards/2026-11", "futureGame/a/deeper/item"):
+            path = f"communityPlayers/{uid}/{suffix}"; cloud.docs[path] = doc(path, {"private": "PRIVATE COMMUNITY PROGRESS"})
+        cloud.docs[f"charityWallets/{uid}"] = doc(f"charityWallets/{uid}", {"schema": 1, "qualified": 0, "unqualified": 55, "revision": 3, "qualificationInvalidationReason": "unverified-island-save"})
+        for path, value in (("communityHandles/" + profile["id"], {"uid": uid}), ("communityDirectory/catalog", {"players": [{"id": profile["id"], "name": profile["name"]}], "alliances": []}), ("communityPlayers/unrelated", {"untouched": True}), ("communityPlayers/unrelated/attempts/foreign", {"untouched": True}), ("charityWallets/unrelated", {"lastDonation": "foreign"})):
+            cloud.docs[path] = doc(path, value)
+        preserved = {path: copy.deepcopy(value) for path, value in cloud.docs.items() if path.startswith("communityHandles/") or path.startswith("communityDirectory/") or "unrelated" in path}
+        with tempfile.TemporaryDirectory() as directory:
+            receipt = self.execute(cloud, options(apply=True, backup_dir=Path(directory)))
+            backup = json.loads(next(Path(directory).glob("*.json")).read_text())
+            self.assertIn(f"charityWallets/{uid}", backup["snapshot"]["roots"])
+            self.assertIn("PRIVATE COMMUNITY PROGRESS", json.dumps(backup))
+        fresh = reset.fields(cloud.docs[f"communityPlayers/{uid}"]["fields"])
+        for key in reset.COMMUNITY_IDENTITY_FIELDS: self.assertEqual(fresh.get(key), profile.get(key))
+        self.assertEqual(fresh["epoch"], 3); self.assertEqual(fresh["mutationRevision"], 9); self.assertIsNone(fresh["allianceId"])
+        for key in ("activeAttemptId", "sentAt", "oldGameReward"): self.assertNotIn(key, fresh)
+        self.assertFalse(any(path.startswith(f"communityPlayers/{uid}/") for path in cloud.docs))
+        self.assertNotIn(f"charityWallets/{uid}", cloud.docs)
+        for path, value in preserved.items(): self.assertEqual(cloud.docs[path], value)
+        self.assertEqual(receipt["resetCommunityProfiles"], 1); self.assertEqual(receipt["deletedMechanicalWallets"], 1)
+
+    def test_scans_shared_league_alliance_donation_and_external_trade_links_without_deleting_them(self):
+        uid = reset.UIDS[0]
+        cases = (
+            ("communityAlliances/a_" + "3" * 24, {"captainUid": uid, "members": [], "pending": []}),
+            ("communityAlliances/a_" + "3" * 24, {"captainUid": "unrelated", "members": [{"uid": uid}], "pending": []}),
+            ("communityAlliances/a_" + "3" * 24, {"captainUid": "unrelated", "members": [], "pending": [{"uid": uid}]}),
+            (f"communitySeasons/2026-11/players/{uid}", {"teamId": "a_" + "3" * 24}),
+            ("communitySeasons/2026-11/teams/a_" + "3" * 24, {"roster": [{"uid": uid}]}),
+            ("communitySeasons/2026-11/teams/a_" + "3" * 24, {"roster": [], "scores": {uid: {"1": {"logic": {"score": 100}}}}}),
+            ("communitySeasons/2026-11/teams/a_" + "3" * 24, {"roster": [], "playoffScores": {"final": {"0": {uid: {"arcade": {"score": 100}}}}}}),
+            ("charityDonations/charity_" + "4" * 40, {"uid": uid, "mode": "real", "status": "reserved"}),
+            ("playerTradeOffers/trade_" + "2" * 40, {"ownerUid": "unrelated", "acceptedBy": uid, "status": "accepted"}),
+        )
+        for path, value in cases:
+            with self.subTest(path=path, value=value):
+                cloud = FakeCloud(); cloud.docs[path] = doc(path, value); before = copy.deepcopy(cloud.docs)
+                with self.assertRaises(reset.Error): self.execute(cloud, options(apply=True))
+                self.assertEqual(cloud.docs, before); self.assertEqual(cloud.commits, [])
+
+    def test_financial_wallet_events_donations_cooldowns_unknown_schema_and_qualified_balance_block_reset(self):
+        uid = reset.UIDS[0]
+        base = {"schema": 1, "qualified": 0, "unqualified": 100, "revision": 1}
+        for patch in ({"lastDonation": {"id": "old"}}, {"lastCharityRewardAt": 1}, {"charityDonationIds": []}, {"unknownFinancial": True}, {"qualified": 1}, {"schema": 2}, {"qualificationInvalidationReason": "trusted-credit"}):
+            with self.subTest(patch=patch):
+                cloud = FakeCloud(); cloud.docs[f"charityWallets/{uid}"] = doc(f"charityWallets/{uid}", {**base, **patch})
+                with self.assertRaises(reset.Error): self.execute(cloud, options(apply=True))
+                self.assertEqual(cloud.commits, [])
+        cloud = FakeCloud(); path = f"charityWallets/{uid}/events/credit_123"; cloud.docs[path] = doc(path, {"amount": 1000})
+        with self.assertRaises(reset.Error): self.execute(cloud, options(apply=True))
+        self.assertEqual(cloud.commits, [])
+
+    def test_new_or_existing_community_mutation_after_scan_aborts_whole_reset(self):
+        for existing in (False, True):
+            with self.subTest(existing=existing):
+                cloud = FakeCloud(); cloud.concurrent_community = True; uid = reset.UIDS[0]
+                if existing: cloud.docs[f"communityPlayers/{uid}"] = doc(f"communityPlayers/{uid}", community(uid))
+                with tempfile.TemporaryDirectory() as directory:
+                    with self.assertRaisesRegex(reset.Error, "CAS"): self.execute(cloud, options(apply=True, backup_dir=Path(directory)))
+                self.assertEqual(cloud.commits, []); self.assertIn(f"communityPlayers/{uid}/requests/concurrent_apply", cloud.docs)
+                self.assertIn("islands/" + uid, cloud.docs); self.assertIn(f"accounts/{uid}/redemptions/TEST", cloud.docs)
+
+    def test_same_receipt_never_resets_new_community_gameplay_or_rechecks_new_shared_links(self):
+        cloud = FakeCloud(); uid = reset.UIDS[0]
+        with tempfile.TemporaryDirectory() as directory: self.execute(cloud, options(apply=True, backup_dir=Path(directory)))
+        cloud.docs[f"communityPlayers/{uid}"] = doc(f"communityPlayers/{uid}", community(uid, allianceId="a_" + "3" * 24))
+        path = f"communityPlayers/{uid}/attempts/new_game"; cloud.docs[path] = doc(path, {"progress": 123})
+        before = copy.deepcopy(cloud.docs); self.execute(cloud, options(apply=True))
+        self.assertEqual(cloud.docs, before); self.assertEqual(len(cloud.commits), 1)
+
+    def test_unrelated_shared_records_are_read_only_and_not_copied_as_private_game_data(self):
+        cloud = FakeCloud()
+        foreign = {
+            "communityAlliances/a_" + "3" * 24: {"captainUid": "unrelated", "members": [{"uid": "unrelated"}], "pending": [], "private": "PRIVATE FOREIGN CHAT"},
+            "communitySeasons/2026-11": {"teams": ["a_" + "3" * 24]},
+            "communitySeasons/2026-11/players/unrelated": {"teamId": "a_" + "3" * 24},
+            "communitySeasons/2026-11/teams/a_" + "3" * 24: {"roster": [{"uid": "unrelated"}], "scores": {"unrelated": {"score": 100}}, "private": "PRIVATE FOREIGN LEAGUE"},
+            "charityDonations/charity_" + "4" * 40: {"uid": "unrelated", "private": "PRIVATE FOREIGN FINANCE"},
+        }
+        for path, value in foreign.items(): cloud.docs[path] = doc(path, value)
+        before = {path: copy.deepcopy(cloud.docs[path]) for path in foreign}
+        with tempfile.TemporaryDirectory() as directory:
+            self.execute(cloud, options(apply=True, backup_dir=Path(directory)))
+            raw = next(Path(directory).glob("*.json")).read_text()
+            self.assertNotIn("PRIVATE FOREIGN", raw)
+        for path, value in before.items(): self.assertEqual(cloud.docs[path], value)
+
+    def test_global_scan_and_new_scope_stay_bounded_and_never_allow_shared_or_financial_deletes(self):
+        cloud = FakeCloud()
+        for index in range(reset.MAX_DOCUMENTS + 1):
+            path = "communityAlliances/a_" + f"{index:024x}"
+            cloud.docs[path] = doc(path, {"captainUid": "unrelated", "members": [], "pending": []})
+        with self.assertRaises(reset.Error): self.execute(cloud, options(apply=True))
+        self.assertEqual(cloud.commits, [])
+        for path in ("communityPlayers/unrelated", "charityWallets/unrelated", "charityWallets/dev-admin1/events/credit_123", "communitySeasons/2026-11/players/dev-admin1", "communityAlliances/a_" + "3" * 24, "communityHandles/u_" + "3" * 24, "charityDonations/charity_" + "4" * 40):
+            with self.subTest(path=path), self.assertRaises(reset.Error): reset.validate_writes([{"delete": reset.DOCS + "/" + path, "currentDocument": {"exists": False}}])
+
     def test_rejects_oversize_atomic_plan_wrong_project_legal_and_duplicate_writes(self):
         for name in (reset.DOCS.replace(reset.PROJECT, "harborlight-prod") + "/islands/dev-admin1", reset.DOCS + "/accounts/unrelated", reset.DOCS + "/accounts/dev-admin1/legalAcceptances/v1", reset.DOCS + "/accounts/dev-admin1/../secret"):
             with self.subTest(name=name), self.assertRaises(reset.Error): reset.validate_writes([{"delete": name, "currentDocument": {"exists": False}}])
@@ -246,7 +359,7 @@ class PromotionProof(unittest.TestCase):
         def run(identifier, workflow, event):
             return {"id": identifier, "run_attempt": 1, "path": ".github/workflows/" + workflow, "event": event, "head_branch": "main", "head_sha": SHA, "status": "completed", "conclusion": "success", **{key: {"id": reset.REPO_ID, "full_name": reset.REPO} for key in ("repository", "head_repository")}}
         responses = {"/runs/123": run(123, "google-cloud-dev.yml", "workflow_dispatch"), "/runs/120": run(120, "ci.yml", "push"), "/runs/123/artifacts?per_page=100&page=1": {"artifacts": [{"name": "harborlight-dev-release-123-1", "expired": False, "digest": "sha256:" + hashlib.sha256(raw).hexdigest()}]}}
-        config = {"accountApi": True, "projectId": reset.PROJECT, "environment": "preprod"}
+        config = {"accountApi": True, "projectId": reset.PROJECT, "environment": "preprod", "resetFence": "community-profile-v1"}
         def fetch(url):
             if url.endswith("/api/v1/config"): return copy.deepcopy(config)
             return copy.deepcopy(responses[url.split("/actions", 1)[1]])
@@ -262,6 +375,9 @@ class PromotionProof(unittest.TestCase):
                 raw, responses, config, manifest, fetch = self.fixture()
                 mutation()
                 with self.assertRaises(reset.Error): reset.verify_promotion(123, SHA, archive, fetch_json=fetch, fetch_bytes=lambda _: manifest)
+            raw, responses, config, manifest, fetch = self.fixture()
+            config.pop("resetFence")
+            with self.assertRaisesRegex(reset.Error, "mutacji społeczności"): reset.verify_promotion(123, SHA, archive, fetch_json=fetch, fetch_bytes=lambda _: manifest)
             raw, responses, config, manifest, fetch = self.fixture()
             with self.assertRaises(reset.Error): reset.verify_promotion(123, SHA, archive, fetch_json=fetch, fetch_bytes=lambda _: manifest + b" ")
             archive.write_bytes(raw + b"tampered")

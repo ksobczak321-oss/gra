@@ -181,3 +181,84 @@ test('late-slot attempt exposes the true deadline and can settle accepted goals 
   const result=await f.call('one','attemptFinish',{attemptId:a.attemptId});assert.equal(result.score,16);
   assert.equal((await f.call('one','leagueRead')).groups[0][0].rounds[0],8,'missing arcade remains zero in the daily average');
 });
+
+test('a shared-alliance application advances the actor root so a reset cannot miss a new request',async()=>{
+  const f=await fixture(),a=await ally(f),key='communityPlayers/two';
+  const before=structuredClone(f.store.records.get(key)),captain=structuredClone(f.store.records.get('communityPlayers/one'));
+  await f.call('two','allianceApply',{allianceId:a.id});
+  assert.deepEqual(f.store.records.get(key),{...before,mutationRevision:before.mutationRevision+1},'even a global-only application must change the actor root compared by reset CAS');
+  assert.deepEqual(f.store.records.get('communityPlayers/one'),captain,'the actor fence must not alter the other alliance owner');
+  assert.equal((await f.service.snapshot({uid:'one'})).alliance.pending[0].id,f.ids.two);
+  assert.equal([...f.store.records.keys()].filter(path=>path.startsWith(key+'/requests/')).length,2,'profile creation and the new application are both durable requests');
+});
+
+test('the mutation fence preserves staged profile edits and ignores caller-selected revisions',async()=>{
+  const f=await fixture(),key='communityPlayers/one',before=f.store.records.get(key);
+  await f.call('one','profile',{name:'Nowa przystań',mutationRevision:9000});
+  const renamed=structuredClone(f.store.records.get(key));
+  assert.equal(renamed.name,'Nowa przystań');assert.equal(renamed.mutationRevision,before.mutationRevision+1);
+  const a=await ally(f),allied=structuredClone(f.store.records.get(key));
+  assert.equal(allied.allianceId,a.id);assert.equal(allied.epoch,renamed.epoch+1);
+  assert.equal(allied.mutationRevision,renamed.mutationRevision+1);
+  await join(f,a.id);
+  assert.equal(f.store.records.get(key).mutationRevision,allied.mutationRevision+1,'the captain approval advances once even when it updates another player');
+  const member=f.store.records.get('communityPlayers/two');
+  assert.equal(member.allianceId,a.id);assert.equal(member.epoch,1,'the other staged profile update is retained');
+});
+
+test('ranked enrollment and in-place attempt actions also fence the actor root',async()=>{
+  const f=await fixture(),key='communityPlayers/one';await ally(f);
+  let before=structuredClone(f.store.records.get(key));await f.call('one','leagueEnroll');
+  assert.deepEqual(f.store.records.get(key),{...before,mutationRevision:before.mutationRevision+1});
+  f.time(Date.parse('2026-11-15T18:00:00Z'));
+  const attempt=await f.call('one','attemptStart',{kind:'logic'});
+  before=structuredClone(f.store.records.get(key));
+  assert.equal(before.activeAttemptId,attempt.attemptId);
+  await f.call('one','attemptAction',{attemptId:attempt.attemptId,sequence:0,action:{type:'load',batch:0}});
+  assert.deepEqual(f.store.records.get(key),{...before,mutationRevision:before.mutationRevision+1},'changing only attempt progress and its request receipt still changes the reset fence');
+  f.advance(1001);await f.call('one','attemptFinish',{attemptId:attempt.attemptId});
+  assert.equal(f.store.records.get(key).activeAttemptId,null);
+  assert.equal(f.store.records.get(key).mutationRevision,before.mutationRevision+2);
+});
+
+test('initialized read commands and idempotent receipt replay leave all stored bytes unchanged',async()=>{
+  const f=await fixture(),attempt=await f.call('one','attemptStart',{kind:'logic',practice:true});
+  const message={requestId:'fence_replay_123',channel:'direct',targetId:f.ids.two,text:'Tylko raz'};
+  await f.call('one','chatSend',message);
+  const before=structuredClone(f.store.records);
+  await f.service.snapshot({uid:'one'});
+  await f.call('one','chatRead',{channel:'direct',targetId:f.ids.two});
+  await f.call('one','leagueRead');await f.call('one','attemptRead',{attemptId:attempt.attemptId});
+  assert.equal((await f.call('one','chatSend',message)).alreadyApplied,true);
+  assert.deepEqual(f.store.records,before,'no-op replay and reads must not rewrite the fence or create receipts');
+});
+
+test('legacy mutation revisions default to zero while invalid or exhausted fences roll back every staged write',async()=>{
+  const f=await fixture(),a=await ally(f),key='communityPlayers/two';
+  delete f.store.records.get(key).mutationRevision;
+  await f.call('two','allianceApply',{allianceId:a.id});
+  assert.equal(f.store.records.get(key).mutationRevision,1);
+  for(const mutationRevision of [null,-1,0.5,Number.MAX_SAFE_INTEGER,Number.MAX_SAFE_INTEGER+1]) {
+    f.store.records.get(key).mutationRevision=mutationRevision;
+    const before=structuredClone(f.store.records);
+    await rejects(f.call('two','allianceApply',{allianceId:a.id}),'community-invalid-mutation-revision');
+    assert.deepEqual(f.store.records,before,'an invalid fence cannot leave a global mutation or request receipt behind');
+  }
+  await f.call('new_profile','profile',{name:'Nowy profil',mutationRevision:123});
+  assert.equal(f.store.records.get('communityPlayers/new_profile').mutationRevision,1);
+});
+
+test('concurrent dispatches keep their actor fences separate and retain both actors staged edits',async()=>{
+  const f=await fixture(),one=f.store.records.get('communityPlayers/one').mutationRevision,two=f.store.records.get('communityPlayers/two').mutationRevision;
+  await Promise.all(['one','two'].map(uid=>f.call(uid,'playerBlock',{playerId:f.ids.three})));
+  for(const [uid,previous] of [['one',one],['two',two]]) {
+    const profile=f.store.records.get('communityPlayers/'+uid);
+    assert.equal(profile.mutationRevision,previous+1);assert.deepEqual(profile.blocked,[f.ids.three]);
+  }
+  assert.equal(f.store.records.get('communityPlayers/three').mutationRevision,1);
+  await Promise.all([f.call('one','profile',{name:'Pierwsza przystań'}),f.call('two','profile',{name:'Druga przystań'})]);
+  assert.equal(f.store.records.get('communityPlayers/one').name,'Pierwsza przystań');
+  assert.equal(f.store.records.get('communityPlayers/two').name,'Druga przystań');
+  assert.equal(f.store.records.get('communityPlayers/one').mutationRevision,one+2);
+  assert.equal(f.store.records.get('communityPlayers/two').mutationRevision,two+2);
+});

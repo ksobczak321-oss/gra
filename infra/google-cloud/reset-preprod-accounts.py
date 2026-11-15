@@ -10,6 +10,7 @@ import hashlib
 import importlib.util
 import io
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -49,6 +50,8 @@ RULE_PROPAGATION_SECONDS = 600
 # Legal acceptance is an identity record, not a game reward. All other
 # account-owned collections are erased, including future gameplay histories.
 PRESERVE_COLLECTIONS = frozenset(("legalAcceptances",))
+COMMUNITY_IDENTITY_FIELDS = frozenset(("uid", "id", "name", "createdAt", "source", "blocked", "muted"))
+MECHANICAL_WALLET_FIELDS = frozenset(("schema", "qualified", "unqualified", "revision", "updatedAt", "qualificationInvalidatedAt", "qualificationInvalidationReason"))
 
 
 def positive(value):
@@ -65,7 +68,7 @@ def scoped_document(name):
     parts = name[len(DOCS) + 1:].split("/")
     if len(parts) % 2 or not all(safe_path(part) for part in parts):
         return False
-    return ((parts[0] in ("accounts", "islands") and parts[1] in UIDS) or
+    return ((parts[0] in ("accounts", "islands", "communityPlayers", "charityWallets") and parts[1] in UIDS) or
             (len(parts) == 2 and parts[0] == "playerTradeOffers" and re.fullmatch(r"trade_[a-f0-9]{40}", parts[1]) is not None) or
             (len(parts) == 2 and parts[0] == "adminOperations" and re.fullmatch(r"preprod-reset-[1-9][0-9]*-[1-9][0-9]*", parts[1]) is not None))
 
@@ -173,6 +176,7 @@ def verify_promotion(run_id, commit, archive, fetch_json=public_json, fetch_byte
             hashlib.sha256(manifest_raw).hexdigest() == frontend.get("manifest_sha256"), "Aktualny Hosting nie jest tym samym odebranym wydaniem.")
     config = fetch_json(SITE + "/api/v1/config")
     require(config.get("accountApi") is True and config.get("projectId") == PROJECT and config.get("environment") == "preprod", "API kont PRE-PROD nie jest aktywne.")
+    require(config.get("resetFence") == "community-profile-v1", "Wdrożone API nie potwierdza atomowej blokady mutacji społeczności wymaganej do pełnego resetu.")
     return {"runId": run_id, "runAttempt": run["run_attempt"], "commit": commit, "manifestSha256": hashlib.sha256(manifest_raw).hexdigest(),
             "artifactSha256": hashlib.sha256(raw).hexdigest(), "ciRunId": ci["run_id"], "imageUri": image["uri"]}
 
@@ -224,6 +228,7 @@ def validate_writes(writes):
         require(scoped_document(name) and name not in seen and valid_condition and set(write) in ({"delete", "currentDocument"}, {"update", "currentDocument"}), "Plan zapisu wychodzi poza trzy konta lub nie ma CAS.")
         parts = name[len(DOCS) + 1:].split("/")
         require(not (parts[0] == "accounts" and len(parts) > 2 and parts[2] in PRESERVE_COLLECTIONS), "Nie wolno usuwać zgód prawnych.")
+        require(not (parts[0] == "charityWallets" and len(parts) != 2), "Nie wolno usuwać historii finansowej portfela.")
         seen.add(name)
 
 
@@ -277,13 +282,14 @@ def document(cloud, path):
     return result
 
 
-def collection(cloud, parent, collection_id):
+def collection(cloud, parent, collection_id, field_paths=None):
     require(safe_path(collection_id) and "/" not in collection_id, "Nieprawidłowa kolekcja.")
     base, token, results = DOCS + ("/" + parent if parent else ""), None, []
     while True:
         query = {"pageSize": "100", "showMissing": "true"}
+        if field_paths: query["mask.fieldPaths"] = list(field_paths)
         if token: query["pageToken"] = token
-        response = cloud.request("GET", FS + base + "/" + collection_id + "?" + urllib.parse.urlencode(query))
+        response = cloud.request("GET", FS + base + "/" + collection_id + "?" + urllib.parse.urlencode(query, doseq=True))
         require(isinstance(response, dict), "Nie można odczytać kolekcji.")
         for item in response.get("documents", []):
             require(item.get("name", "").startswith(base + "/" + collection_id + "/") and len(item["name"][len(base) + len(collection_id) + 2:].split("/")) == 1, "Nieprawidłowa ścieżka w kolekcji.")
@@ -312,24 +318,79 @@ def descendants(cloud, path, depth=0):
         if not token: return results
 
 
+def references_reset_uid(value):
+    if isinstance(value, str): return value in UIDS
+    if isinstance(value, list): return any(references_reset_uid(item) for item in value)
+    if isinstance(value, dict): return any(key in UIDS or references_reset_uid(item) for key, item in value.items())
+    return False
+
+
+def community_identity(data, uid):
+    expected = "u_" + hashlib.sha256(("harborlight-community\0" + uid).encode()).hexdigest()[:24]
+    require(data.get("uid") == uid and data.get("id") == expected and isinstance(data.get("name"), str), "Niespójna tożsamość społeczności; reset zatrzymany.")
+    require(not data.get("allianceId"), "Konto należy do wspólnej załogi; reset wymaga osobnego planu.")
+    for key in ("epoch", "mutationRevision"):
+        require(type(data.get(key, 0)) is int and 0 <= data.get(key, 0) < 2**53 - 1, "Niespójny licznik społeczności; reset zatrzymany.")
+    return {**{key: data[key] for key in COMMUNITY_IDENTITY_FIELDS if key in data}, "allianceId": None,
+            "epoch": data.get("epoch", 0) + 1, "mutationRevision": data.get("mutationRevision", 0) + 1}
+
+
+def guard_external_progress(cloud):
+    """Read masked global links; never erase shared teams, chats or finances."""
+    reads = []
+    def observed(item):
+        reads.append({key: item[key] for key in ("name", "updateTime") if key in item})
+        require(len(reads) <= MAX_DOCUMENTS, "Za dużo wspólnych powiązań do bezpiecznego sprawdzenia resetu.")
+    for alliance in collection(cloud, "", "communityAlliances", ("captainUid", "members", "pending")):
+        observed(alliance)
+        require(not references_reset_uid(fields(alliance.get("fields", {}))), "Załoga lub zaproszenie łączy resetowane konto z danymi wspólnymi; wymagany osobny plan.")
+    for season in collection(cloud, "", "communitySeasons", ("teams",)):
+        observed(season)
+        path = season["name"][len(DOCS) + 1:]
+        require(re.fullmatch(r"communitySeasons/[0-9]{4}-(?:0[1-9]|1[0-2])", path) is not None, "Nieznany schemat sezonu; reset zatrzymany.")
+        for participant in collection(cloud, path, "players", ("teamId",)):
+            observed(participant)
+            require(participant["name"].rsplit("/", 1)[-1] not in UIDS, "Pozostał udział resetowanego konta w sezonie; wymagany osobny plan.")
+        for team in collection(cloud, path, "teams", ("roster", "scores", "playoffScores")):
+            observed(team)
+            require(not references_reset_uid(fields(team.get("fields", {}))), "Pozostały wspólne wyniki lub skład ligi; wymagany osobny plan.")
+    for donation in collection(cloud, "", "charityDonations", ("uid",)):
+        observed(donation)
+        require(fields(donation.get("fields", {})).get("uid") not in UIDS, "Istnieje historia darowizn resetowanego konta; nie wolno usuwać jej w resecie gry.")
+    return reads
+
+
 def snapshot(cloud, operation_id):
+    operation = document(cloud, "adminOperations/" + operation_id)
+    # An acknowledged operation must never scan or erase newly played progress.
+    if operation: return {"roots": {}, "children": [], "offers": [], "operation": operation, "guardReads": []}
     roots, children = {}, []
     for uid in UIDS:
-        for kind in ("accounts", "islands"):
+        for kind in ("accounts", "islands", "communityPlayers", "charityWallets"):
             path = kind + "/" + uid
             roots[path] = document(cloud, path)
-            children.extend(descendants(cloud, path))
+            nested = descendants(cloud, path)
+            if kind == "communityPlayers" and roots[path]: community_identity(fields(roots[path].get("fields", {})), uid)
+            if kind == "charityWallets":
+                data = fields(roots[path].get("fields", {})) if roots[path] else {}
+                require(not nested and (not roots[path] or set(data) <= MECHANICAL_WALLET_FIELDS and data.get("schema") == 1 and
+                    type(data.get("qualified")) in (int, float) and data["qualified"] == 0 and
+                    type(data.get("unqualified")) in (int, float) and math.isfinite(data["unqualified"]) and 0 <= data["unqualified"] < 2**53 and
+                    data.get("qualificationInvalidationReason") in (None, "unverified-island-save")),
+                    "Portfel zawiera zdarzenia lub nieznaną historię finansową; reset wymaga osobnego planu.")
+            else: children.extend(nested)
     offers = []
     for offer in collection(cloud, "", "playerTradeOffers"):
         if not offer.get("updateTime"): continue
         data = fields(offer.get("fields", {}))
         # Keep unrelated offers and their owners completely untouched.
-        if data.get("ownerUid") not in UIDS: continue
+        if data.get("ownerUid") not in UIDS:
+            require(data.get("acceptedBy") not in UIDS, "Oferta innego gracza ma resetowane konto jako kupującego; wymagany osobny plan.")
+            continue
         require(data.get("acceptedBy") is None or data["acceptedBy"] in UIDS, "Oferta łączy resetowane konto z innym graczem; wymaga osobnego rozliczenia.")
         require(scoped_document(offer["name"]), "Nieprawidłowa oferta resetowanego konta.")
         offers.append(offer)
-    operation = document(cloud, "adminOperations/" + operation_id)
-    return {"roots": roots, "children": children, "offers": offers, "operation": operation}
+    return {"roots": roots, "children": children, "offers": offers, "operation": operation, "guardReads": guard_external_progress(cloud)}
 
 
 def precondition(doc): return {"updateTime": doc["updateTime"]} if doc else {"exists": False}
@@ -355,12 +416,25 @@ def reset_plan(snap, proof, at):
         writes.append({"update": {"name": DOCS + "/accounts/" + uid, "fields": {**{key: encode(value) for key, value in fresh.items()}, **({"legalAcceptance": account["fields"]["legalAcceptance"]} if "legalAcceptance" in account_fields else {})}}, "currentDocument": precondition(account)})
         # exists:false also fences a concurrently created first world.
         writes.append({"delete": DOCS + "/islands/" + uid, "currentDocument": precondition(island)})
+        community = snap["roots"].get("communityPlayers/" + uid)
+        if community:
+            identity = community_identity(fields(community.get("fields", {})), uid)
+            identity_fields = {key: community["fields"][key] for key in COMMUNITY_IDENTITY_FIELDS if key in community.get("fields", {})}
+            identity_fields.update({key: encode(identity[key]) for key in ("allianceId", "epoch", "mutationRevision")})
+            writes.append({"update": {"name": DOCS + "/communityPlayers/" + uid, "fields": identity_fields}, "currentDocument": precondition(community)})
+        else:
+            # Every community mutation touches this root; absence is fenced too.
+            writes.append({"delete": DOCS + "/communityPlayers/" + uid, "currentDocument": {"exists": False}})
+        wallet = snap["roots"].get("charityWallets/" + uid)
+        writes.append({"delete": DOCS + "/charityWallets/" + uid, "currentDocument": precondition(wallet)})
     for doc in snap["children"] + snap["offers"]:
         writes.append({"delete": doc["name"], "currentDocument": precondition(doc)})
     receipt = {"schemaVersion": 1, "status": "completed", "project": PROJECT, "uids": list(UIDS), "at": at,
                "commit": proof["commit"], "deploymentRunId": proof["runId"], "deploymentRunAttempt": proof["runAttempt"],
                "manifestSha256": proof["manifestSha256"], "artifactSha256": proof["artifactSha256"], "generations": generations,
-               "deletedHistoryDocuments": len(snap["children"]), "deletedOffers": len(snap["offers"])}
+               "deletedHistoryDocuments": len(snap["children"]), "deletedOffers": len(snap["offers"]),
+               "resetCommunityProfiles": sum(bool(snap["roots"].get("communityPlayers/" + uid)) for uid in UIDS),
+               "deletedMechanicalWallets": sum(bool(snap["roots"].get("charityWallets/" + uid)) for uid in UIDS)}
     writes.append({"update": {"name": DOCS + "/adminOperations/" + operation_id, "fields": {key: encode(value) for key, value in receipt.items()}}, "currentDocument": {"exists": False}})
     validate_writes(writes)
     require(len(json_bytes({"writes": writes})) < 9_000_000, "Plan jest za duży dla atomowego commit.")
@@ -423,8 +497,8 @@ def execute(args, cloud=None, emit=print, verifier=verify_promotion):
     if not locked_rules(rules):
         lock_rules(cloud)
         # Refresh under the new rules. CAS protects API mutations during the
-        # scan/commit; no game mutation can create a receipt without changing
-        # the root island/account that this commit also compares.
+        # scan/commit; world/finance mutations change an island/account/wallet,
+        # and every community mutation touches its CAS-fenced community root.
         snap = snapshot(cloud, operation_id)
         plan = reset_plan(snap, proof, int(time.time() * 1000))
         path, digest = backup(snap, proof, rules, args.backup_dir)

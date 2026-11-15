@@ -103,7 +103,7 @@ test('service errors do not reveal credentials or upstream response bodies', asy
 test('public runtime configuration exposes no secrets and PRE-PROD rejects unknown OAuth identities', async t => {
   const denied = await fixture(t, { environment: 'preprod', accountProjectId: 'harborlight-dev' });
   const config = await denied.request('/api/v1/config', 'GET', undefined, null);
-  assert.equal(config.status, 200); assert.deepEqual(config.body, { accountApi: true, projectId: 'harborlight-dev', environment: 'preprod' });
+  assert.equal(config.status, 200); assert.deepEqual(config.body, { accountApi: true, projectId: 'harborlight-dev', environment: 'preprod', resetFence: 'community-profile-v1' });
   assert.equal((await denied.request('/api/v1/island')).status, 403); assert.equal(denied.calls.length, 0);
   const permitted = await fixture(t, { environment: 'preprod', accountProjectId: 'harborlight-dev', verifyIdentityToken: async () => ({ uid: 'dev-admin1' }) });
   assert.equal((await permitted.request('/api/v1/island')).status, 200);

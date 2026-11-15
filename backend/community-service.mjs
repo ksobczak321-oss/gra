@@ -35,11 +35,25 @@ export function createCommunityService({ store, now = () => Date.now(), environm
   store = createCharityLedgerStore(createIslandDocumentStore(store), { now });
   const autoDevProfiles = ['development', 'dev', 'preprod'].includes(environment);
   const clock = () => { const value = now(); if (!Number.isSafeInteger(value) || value < 0) fail('invalid-server-clock', 500); return value; };
-  async function transaction(work) {
+  async function transaction(work, mutationUid = null) {
     return store.runTransaction(async tx => {
       const reads = new Map(), writes = new Map();
       const ctx = { get: async path => { if (!reads.has(path)) reads.set(path, await tx.get(path)); return structuredClone(reads.get(path)); }, put: (path, value) => writes.set(path, structuredClone(value)) };
       const result = await work(ctx);
+      if (mutationUid && writes.size) {
+        // A guarded profile reset compares this root's updateTime. Community
+        // commands can otherwise create requests or alter shared documents
+        // without touching the island/account that the reset already fences.
+        // Keep the actor local to this transaction and preserve staged profile
+        // changes; all reads still finish before the first durable write.
+        const path = ppath(mutationUid), previous = await ctx.get(path);
+        const current = writes.get(path) || previous;
+        if (!current || current.uid !== mutationUid) fail('community-profile-required');
+        const revision = previous?.mutationRevision === undefined ? 0 : previous.mutationRevision;
+        if (!Number.isSafeInteger(revision) || revision < 0 || revision >= Number.MAX_SAFE_INTEGER)
+          fail('community-invalid-mutation-revision', 503);
+        writes.set(path, { ...current, mutationRevision: revision + 1 });
+      }
       // The Firestore adapter forbids reads after its first write and requires
       // a prior read even for creating a root document.
       for (const path of writes.keys()) if (!reads.has(path)) await ctx.get(path);
@@ -64,7 +78,7 @@ export function createCommunityService({ store, now = () => Date.now(), environm
     const name = supplied.length >= 2 && supplied.length <= 40 && !/[\u0000-\u001f\u007f@]/.test(supplied) ? supplied : uid.slice(4);
     if (catalog.players.length >= DIRECTORY_LIMIT) return null;
     const id = publicId(uid);
-    p = { uid, id, name, allianceId: null, epoch: 0, blocked: [], muted: [], createdAt: at, source: 'dev-island' };
+    p = { uid, id, name, allianceId: null, epoch: 0, mutationRevision: 0, blocked: [], muted: [], createdAt: at, source: 'dev-island' };
     catalog.players = [...catalog.players.filter(player => player.id !== id), { id, name }];
     await tx.get(hpath(id));
     tx.put(hpath(id), { uid }); tx.put(ppath(uid), p); tx.put('communityDirectory/catalog', catalog);
@@ -358,7 +372,7 @@ export function createCommunityService({ store, now = () => Date.now(), environm
         tx.put(key, recorded); return finish({ awards: recorded, ...(islandUpdate ? { islandUpdate } : {}) });
       }
       fail('community-unknown-command', 400);
-    });
+    }, ['chatRead', 'leagueRead', 'attemptRead'].includes(command) ? null : uid);
   }
   return { snapshot, dispatch, ensureProfile };
 }

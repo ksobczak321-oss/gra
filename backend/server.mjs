@@ -103,7 +103,7 @@ export function createServer({
     if (!accountApi) { send(503, { error: 'account_api_disabled' }); return; }
     if (!routes[path].includes(request.method)) { response.setHeader('Allow', routes[path].join(', ')); send(405, { error: 'method_not_allowed' }); return; }
     if (!readiness.ready) { send(503, { error: 'draining' }); return; }
-    if (path === '/api/v1/config') { send(200, { accountApi: true, projectId: runtimeProjectId, environment: runtimeEnvironment }); return; }
+    if (path === '/api/v1/config') { send(200, { accountApi: true, projectId: runtimeProjectId, environment: runtimeEnvironment, ...(runtimeEnvironment === 'preprod' ? { resetFence: 'community-profile-v1' } : {}) }); return; }
     try {
       const token = /^Bearer ([^\s]{1,16000})$/.exec(request.headers.authorization || '')?.[1];
       if (!token) { response.setHeader('WWW-Authenticate', 'Bearer'); throw new AccountServiceError('auth-required', 401); }

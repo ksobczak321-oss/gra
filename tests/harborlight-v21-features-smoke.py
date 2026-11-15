@@ -21,13 +21,14 @@ UID = 'dev-admin2'
 START = int(cloud.NOW.timestamp() * 1000)
 
 
-def world(mode='copy', population=12):
+def world(mode='copy', population=None):
+    population = (24 if mode == 'archipelago' else 12) if population is None else population
     script = '''
       import {createState,normalizeState,recordVisit} from './harborlight-v1-state.js';
       import * as Progression from './harborlight-v1-progression.js';
       import {act} from './harborlight-v1-state.js';
       import {missionStoryIntro} from './harborlight-v1-missions.js';
-      let s=createState(%d);
+      let s=createState(%d,{ruleset:32});
       recordVisit(s,s.worldTimeMs); // These population fixtures describe a day whose real welcome login has already been processed.
       s.islandName='Port Zachowanego Postępu';
       s.tutorial={...s.tutorial,version:3,autoOpenDisabled:true,completed:{},claimed:{},chests:{}};
@@ -38,18 +39,30 @@ def world(mode='copy', population=12):
       s.buildings.townhall.level=%d;
       s.buildings.house.level=3;s.buildings.warehouse.level=3;s.buildings.chapel.level=3;
       s.population=%d;
-      s.resources={coins:1000000,wood:1000,stone:537,grain:500,food:1000,planks:1000};
+      s.resources={...s.resources,coins:1000000,wood:1000,stone:537,grain:500,food:1000,planks:1000};
       if(['gate','archipelago'].includes(%s)){
-        s.resources={coins:1000000,wood:100000,stone:100000,grain:100000,food:100000,planks:100000};
+        s.resources={...s.resources,coins:1000000,wood:100000,stone:100000,grain:100000,food:100000,planks:100000};
         s.bonusMaterials={wood:99000,stone:99000,grain:99000,food:99000,planks:99000};
       }
       s.statistics.expeditions=7;s.statistics.traded=3;
       s=normalizeState(s,%d);
+      if(%s==='archipelago'){
+        // The requested population includes the four real professors and four
+        // soldiers awarded by normalization, rather than another eight people.
+        if(s.population!==%d||Object.values(s.education.people).filter(p=>p.profession==='professor').length!==4||Object.keys(s.military.people).length!==4)
+          throw Error('The founded-island fixture lost its resident or specialist contract');
+        // This older island has finished welcome protection. With ordinary
+        // residents at -50, immigration cannot add a UID during these voyages.
+        s.welcome={startedAt:s.worldTimeMs-73*3600000,until:s.worldTimeMs-3600000};
+        s.residents.forEach(p=>{if(!s.education.people[p.personUid]&&!s.military.people[p.personUid])p.happiness=-50;});
+        s=normalizeState(s,s.worldTimeMs);
+      }
       const intro=missionStoryIntro(s);
       if(intro.available){const seen=act(s,{type:'missionIntroSeen',chapterId:intro.chapterId},s.worldTimeMs);if(!seen.ok)throw Error(seen.message);}
       console.log(JSON.stringify(s));
     ''' % (START, 6 if mode == 'peer' else 10 if mode == 'archipelago' else 3,
-           24 if mode == 'archipelago' and population == 12 else population, json.dumps(mode), START)
+           population - 8 if mode == 'archipelago' else population, json.dumps(mode), START,
+           json.dumps(mode), population)
     return acknowledge_daily_offer(json.loads(subprocess.run(['node', '--input-type=module', '-e', script], cwd=SOURCE,
                                      capture_output=True, text=True, check=True).stdout))
 
@@ -134,7 +147,12 @@ def house_and_chapel(browser):
     assert cloud.cloud_state(UID)['buildings']['farm']['workers'] == 1
     assignments.get_by_role('button', name='Mieszkańcy i szczęście', exact=True).click()
     guide = page.locator('.residents-panel')
-    for text in ['Gdy średnie szczęście jest dodatnie', 'gdy spada poniżej zera', 'Przy szczęściu 0 punktów', 'co najmniej 12 osób', 'wyspie córce — 6', 'ratusz', 'łóżka']:
+    for text in ['Dodatnie przyciąga mieszkańców', 'ujemne powoduje odejścia',
+                 'Przy szczęściu równym 0 punktów populacja się nie zmienia',
+                 'Na matce pozostaje minimum 12 osób, na córce 6.',
+                 'Każdy poziom Ratusza pozwala przyjąć 36 osób',
+                 'każdy poziom Domu zapewnia 36 łóżek',
+                 'Mieszkańcy bez łóżka pracują i uczą się z połową wydajności oraz jedzą dwa razy więcej']:
         expect(guide).to_contain_text(text)
     expect(guide).to_contain_text('Mieszkaniec zaczyna pracę po dwóch minutach drogi z Domu.')
     expect(guide).not_to_contain_text(re.compile(r'(?:5|pięć|pięciu) minut(?:ach|y)? (?:drogi|z domu)', re.I))
@@ -161,23 +179,27 @@ def house_and_chapel(browser):
 
 
 def townhall_population_gate(browser):
-    context, page = enter(browser, world('gate', population=53))
+    context, page = enter(browser, world('gate', population=80))
     building(page, 'townhall')
-    expect(page.locator('[data-townhall-population-prerequisite]')).to_contain_text('54')
+    expect(page.locator('[data-townhall-population-prerequisite]')).to_contain_text('81')
     expect(page.locator('[data-upgrade-building="townhall"]')).to_be_disabled()
     building(page, 'quarry')
     expect(page.locator('[data-upgrade-building="quarry"]')).to_be_enabled()
     context.close()
-    context, page = enter(browser, world('gate', population=54))
+    context, page = enter(browser, world('gate', population=81))
     building(page, 'townhall')
     expect(page.locator('[data-upgrade-building="townhall"]')).to_be_enabled()
     page.locator('[data-upgrade-building="townhall"]').click()
+    meals = page.locator('[data-v32-construction="townhall"]')
+    expect(meals).to_contain_text('9000 punktów sytości')
+    expect(meals.locator('[data-v32-build-food="food"]')).to_have_value('1500')
+    meals.get_by_role('button', name='Zatwierdź rozbudowę', exact=True).click()
     expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
     assert cloud.cloud_state(UID)['constructionProjects'][0]['building'] == 'townhall'
     exact_history()
     cloud.no_island_cache(page)
     context.close()
-    print('PASS21 Town Hall3→4 requires54 of72 residents; the population rule does not block another building', flush=True)
+    print('PASS21 Town Hall3→4 requires81 of108 residents; 80 is blocked,81 starts construction and the population rule does not block another building', flush=True)
 
 
 def peer_market_gate(browser):
@@ -224,9 +246,7 @@ def archipelago_cloud_and_shipping(browser):
     expect(page.locator('[data-create-second-island-confirm]')).to_have_count(0)
     context.close()
 
-    short = world('archipelago')
-    short['population'] = 12
-    short['residents'] = short['residents'][:12]
+    short = world('archipelago', population=17)
     context, page = enter(browser, short)
     open_archipelago(page)
     expect(page.locator('[data-archipelago-panel]')).to_contain_text('Założenie wymaga 18 mieszkańców na matce')
@@ -288,7 +308,7 @@ def archipelago_cloud_and_shipping(browser):
     assert voyage['capacityAtDeparture'] == 1000
     assert sent['resources']['wood'] == original['resources']['wood'] - 21000 - 100
     assert sent['archipelago']['islands']['island-2']['resources']['wood'] == 0
-    assert sent['resources']['coins'] == original['resources']['coins'] - 21000
+    assert sent['resources']['coins'] == original['resources']['coins'] - 21000 + sent['statistics']['taxCollected'] - original['statistics']['taxCollected']
     expect(page.locator('[data-island-voyage-status]')).to_contain_text('Rejs')
     page.clock.fast_forward(599000)
     expect(page.locator('[data-island-voyage-status]')).to_contain_text('1 s')
@@ -307,7 +327,7 @@ def archipelago_cloud_and_shipping(browser):
     open_archipelago(page)
     assert cloud.cloud_state(UID)['archipelago']['islands']['island-2']['resources']['wood'] == 100
     expect(page.locator('[data-ship-capacity]')).to_have_text('1000')
-    # Coin services are paid by the active island; buy on the funded mother.
+    # Coin services debit the shared account wallet; initiate on the mother.
     page.locator('[data-switch-island="island-1"]').click()
     confirmed_island(page, 'island-1')
     page.locator('[data-ship-capacity-units]').fill('1000')
@@ -322,7 +342,8 @@ def archipelago_cloud_and_shipping(browser):
     assert len(paid['archipelago']['capacityReceipts']) == 1
     assert paid['archipelago']['capacityReceipts'][0]['coins'] == 50
     assert paid['commerce']['capacityPurchases'][-1]['kind'] == 'ship-capacity-coins'
-    assert paid['resources']['coins'] == original['resources']['coins'] - 21000 - 50
+    assert paid['resources']['coins'] == original['resources']['coins'] - 21000 - 50 + paid['statistics']['taxCollected'] - original['statistics']['taxCollected']
+    assert paid['archipelago']['sharedWallet']['coins'] == paid['resources']['coins']
     assert paid['archipelago']['islands']['island-2']['resources']['coins'] == 0
     page.locator('[data-switch-island="island-2"]').click()
     confirmed_island(page, 'island-2')
@@ -354,7 +375,8 @@ def archipelago_cloud_and_shipping(browser):
     assert arrived['archipelago']['islands']['island-2']['population'] == 8
     identities = [person['personUid'] for person in arrived['residents']] + [person['personUid'] for person in arrived['archipelago']['islands']['island-2']['residents']]
     assert len(identities) == len(set(identities)) == 24
-    assert arrived['resources']['coins'] == original['resources']['coins'] - 21000 - 50
+    assert set(identities) == {person['personUid'] for person in original['residents']}
+    assert arrived['resources']['coins'] == original['resources']['coins'] - 21000 - 50 + arrived['statistics']['taxCollected'] - original['statistics']['taxCollected']
     exact_history()
     cloud.no_island_cache(page)
     context.close()
