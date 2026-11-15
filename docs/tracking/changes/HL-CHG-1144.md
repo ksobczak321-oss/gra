@@ -9,7 +9,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `targeted_local_front_verified_publication_pending` |
+| DEV | `local_acceptance_passed_publication_pending` |
 | CI | `pending_own_run` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
@@ -40,9 +40,10 @@ Data pierwotnej wiadomości: 2026-11-15. Bieżące GO użytkownika po akceptacji
 - **Dokumenty:** [docs/v32/GO-ACCEPTED-FRONT.md](../../v32/GO-ACCEPTED-FRONT.md), [docs/v32/ACCEPTED-FRONT-EVIDENCE.json](../../v32/ACCEPTED-FRONT-EVIDENCE.json)
 - **Kod:** [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-play.css](../../../harborlight-v1-play.css), [harborlight-v1-development-ui.js](../../../harborlight-v1-development-ui.js), [harborlight-v1-map-art.js](../../../harborlight-v1-map-art.js)
 - **Scenariusze automatyczne:** [tests/harborlight-native-map-v32-smoke.py](../../../tests/harborlight-native-map-v32-smoke.py), [tests/harborlight-tour-route-v5-smoke.py](../../../tests/harborlight-tour-route-v5-smoke.py), [tests/harborlight-accepted-front-v32-smoke.py](../../../tests/harborlight-accepted-front-v32-smoke.py)
+- **Kod dowodowy:** `0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3`.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Lokalny nowy front PASS1672/1440/390:20funkcji,8fizycznychkliknięć na wariant,19kadrów,5zakładek, krawędzie1664, odsłonięty statek i zachowany postęp. Starszy native-map PASS1440/390; pakiet frontendowy12PASS, preflight107plików/30727097bajtów, zaakceptowanePNG identyczne. Pozostałe testy lokalne, końcowySHA, pełnyCI,Pages i odczyt hostowanego widoku oczekują własnych wyników; ręczny odbiórNOT_RUN.
+Odebrany lokalnie front cache7: nowe przypisania i miniatury, wyrównane krawędzie1664, zachowany postęp. Wszystkie kierunkowe testy przeglądarkowe PASS; pełna trasa56kroków i wymiana elementuDOM PASS. Node1390PASS/1timeout przy obciążeniu oraz ten sam przypadek96h osobno1PASS bez zmiany limitu10s. Excel17arkuszy/5646wierszy/ABC/Cpusta PASS. CI i Pages wymagają własnych wyników.
 
 ## Relacje
 

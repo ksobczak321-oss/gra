@@ -167,9 +167,9 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1141 — Tutorial V5/56, wybór widzów Teatru i sekcje Magazynu ze wspólną pojemnością 40 000](changes/HL-CHG-1141.md) | Story | `accepted` | `published_pages_2dd923d_verified` | `not_deployed` |
 | [HL-CHG-1142 — Spójne menu, nieruchome komunikaty i publiczny scenariusz poziomu5](changes/HL-CHG-1142.md) | Story | `accepted` | `published_pages_739b5dd_verified` | `not_deployed` |
 | [HL-CHG-1143 — Ryba wędzona i przetwory rybne IIIkategorii z lokalnego połowu](changes/HL-CHG-1143.md) | Story | `accepted` | `published_pages_739b5dd_verified` | `not_deployed` |
-| [HL-CHG-1144 — Zaakceptowane małe budynki Gospodarstwa, Drwali, Rzeźni i dawnego Tartaku](changes/HL-CHG-1144.md) | Story | `accepted` | `targeted_local_front_verified_publication_pending` | `not_deployed` |
-| [HL-CHG-1145 — Jednoznaczne20funkcji na nowych miejscach i dawny Zakład skórzany jako dekoracja](changes/HL-CHG-1145.md) | Story | `accepted` | `targeted_local_front_verified_publication_pending` | `not_deployed` |
-| [HL-CHG-1146 — Miniatury zgodne z wyglądem oraz wspólna prawa krawędź dolnego menu i panelu misji](changes/HL-CHG-1146.md) | Story | `accepted` | `targeted_local_front_verified_publication_pending` | `not_deployed` |
+| [HL-CHG-1144 — Zaakceptowane małe budynki Gospodarstwa, Drwali, Rzeźni i dawnego Tartaku](changes/HL-CHG-1144.md) | Story | `accepted` | `local_acceptance_passed_publication_pending` | `not_deployed` |
+| [HL-CHG-1145 — Jednoznaczne20funkcji na nowych miejscach i dawny Zakład skórzany jako dekoracja](changes/HL-CHG-1145.md) | Story | `accepted` | `local_acceptance_passed_publication_pending` | `not_deployed` |
+| [HL-CHG-1146 — Miniatury zgodne z wyglądem oraz wspólna prawa krawędź dolnego menu i panelu misji](changes/HL-CHG-1146.md) | Story | `accepted` | `local_acceptance_passed_publication_pending` | `not_deployed` |
 
 <a id="hl-epic-tut"></a>
 
