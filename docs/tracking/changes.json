@@ -28170,12 +28170,12 @@
     "preprod_deployment_duration": "2m12s",
     "dev_application_version": "0.15.0.0",
     "dev_status": "native_map_verified_local_dev_only; publication_pending",
-    "dev_ci": "first_attempt_failed_historical_excel_validation",
-    "dev_source_sha": "990dd60137afeb50813a9655c22f8ee6232de11d",
+    "dev_ci": "pending_final_native_map_source",
+    "dev_source_sha": "b6776d53fe4ec23dd5c3386eb610565fd5ba3f7e",
     "dev_implementation_source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
-    "dev_ci_run_id": 43698899840,
-    "dev_pages_run_id": 43698899831,
-    "dev_pages_conclusion": "success",
+    "dev_ci_run_id": null,
+    "dev_pages_run_id": null,
+    "dev_pages_conclusion": "pending_final_native_map_source",
     "dev_tag": null,
     "dev_cache": "frontend-v32-4"
   }

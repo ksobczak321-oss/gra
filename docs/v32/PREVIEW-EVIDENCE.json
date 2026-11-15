@@ -102,5 +102,29 @@
     "accounts_checked": 3,
     "api_config_status_observed": 503
   },
-  "manual_user_acceptance": "NOT_RUN"
+  "manual_user_acceptance": "NOT_RUN",
+  "second_ci": {
+    "run_id": 43699799468,
+    "source_sha": "9428cb91f63cb410a2dc60836ae7e0d0401a47d4",
+    "conclusion": "failure",
+    "scope": "Model/backend/configuration and both editorial gates passed. Historical browser checks still expected old 34-step tour or replaced text/version; migrated while preserving mechanics and persistence assertions."
+  },
+  "native_map_update": {
+    "source_sha": "b6776d53fe4ec23dd5c3386eb610565fd5ba3f7e",
+    "cache": "frontend-v32-4",
+    "public_island_sha256": "4063f003002f95dd7b00f77a8d6d610b04f134766e52afc97e8a10712fd6d823",
+    "native_building_clicks_per_viewport": 9,
+    "viewports": [
+      1440,
+      390
+    ],
+    "map_overlay_art": false,
+    "labels": "hover or keyboard focus only",
+    "theatre": "former native Market building",
+    "market": "adjacent striped stall",
+    "old_theatre_removed": true,
+    "js_errors": 0,
+    "horizontal_overflow": false,
+    "publication": "pending exact final commit"
+  }
 }

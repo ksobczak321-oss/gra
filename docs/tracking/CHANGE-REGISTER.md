@@ -14,7 +14,7 @@ Rejestr nie publikuje prywatnych kwot Billing ani danych osobistych związanych 
 
 ## Bieżące środowiska
 
-- Nowy DEV **0.15.0.0**: `native_map_verified_local_dev_only; publication_pending`; CI `first_attempt_failed_historical_excel_validation`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
+- Nowy DEV **0.15.0.0**: `native_map_verified_local_dev_only; publication_pending`; CI `pending_final_native_map_source`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
 - Odebrany PRE-PROD **0.14.0.0**: źródło `7e81a1a436770f57fd8abf390b6af8022e3300f6`; [deploy 41909268052](https://github.com/ksobczak321-oss/gra/actions/runs/41909268052), próba 1.
 - PRE-PROD tej wcześniejszej wersji nie oznacza promocji nowych kart. PROD oraz pełny reset kont: bez nowej operacji.
 DEV0.15.0.0/v32 obejmuje zatwierdzone 47 odpowiedzi i bieżące poprawki wyłącznie na DEV. Kod bazuje na odebranym PRE-PROD0.14.0.0/7e81a1a; usług nie sklonowano1:1: lokalny runtime i osobne pliki zapisu zastępują Firebase/Cloud Run. Publiczny statyczny podgląd GitHub Pages jest przygotowywany; CI/Pages końcowego źródła pozostają PENDING. Nie jest dowodem trwałych kont ani wieloosobowego API w publicznym podglądzie. Nowych kart nie wdrożono na PRE-PROD/PROD; dotychczasowy kod PRE-PROD pozostaje7e81a1a. Hasło=login admin1/admin2/admin3: lokalnie wprowadzone, PRE-PROD auth-only3/3PASS — już było zgodne, bez mutacji kont/postępu. Dotychczasowe179ręczne wyniki pozostająNOT_RUN; odbiór użytkownika nie został wykonany.
