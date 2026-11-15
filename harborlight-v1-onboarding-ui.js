@@ -1,5 +1,5 @@
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v32-6';
-import { introCopy, APPROVED_TOUR_VERSION, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v32-6';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v32-7';
+import { introCopy, APPROVED_TOUR_VERSION, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v32-7';
 
 const pick = (language, pl, en) => language === 'pl' ? pl : en;
 const valueFor = (value, language) => {
@@ -188,6 +188,18 @@ export function createIslandOnboarding(options = {}) {
   function position() {
     frame = 0;
     if (!active || destroyed || current.stage !== 'tour') return;
+    // The mobile dock can replace its buttons while this step stays active.
+    // Follow the current real control instead of retaining its detached copy.
+    if (!target?.isConnected) {
+      const step = steps[current.index];
+      try {
+        target = typeof step?.target === 'function' ? step.target() : typeof step?.target === 'string' ? document.querySelector(step.target) : step?.target;
+      } catch (error) { target = null; onError(error); }
+      resizeObserver?.disconnect();
+      if (target instanceof Element && typeof ResizeObserver === 'function') {
+        resizeObserver = new ResizeObserver(schedulePosition); resizeObserver.observe(target);
+      }
+    }
     const viewportWidth = document.documentElement.clientWidth, viewportHeight = window.innerHeight;
     const gap = 16, safe = 12;
     let rect = target?.isConnected && target.getClientRects().length ? target.getBoundingClientRect() : null;

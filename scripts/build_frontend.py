@@ -20,6 +20,8 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_FILES = (
+    "harborlight-v1-map-art.js",
+    "harborlight-v1-goods-art.js",
     "harborlight-v1-dev-preview.js",
     "harborlight-v1-save-packing.js",
     "harborlight-v1-development.js",
@@ -39,6 +41,10 @@ PUBLIC_FILES = (
 
     "assets/harborlight-inhabitants-clean.png",
     "assets/harborlight-v1-approved.png",
+    "assets/harborlight-farm-forest-approved-v32.png",
+    "assets/harborlight-harbor-approved-v32.png",
+    "assets/harborlight-ocean-approved-v32.png",
+    "assets/harborlight-goods-v32.png",
     "assets/harborlight-windmill-clean.png",
     "assets/paynow-wordmark.svg",
     "assets/theatre-building-v30.png",

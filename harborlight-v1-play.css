@@ -936,3 +936,30 @@ body.reduce-motion .world-hotspot.tutorial-map-target{animation:none!important}
  #island-dialog .hl-kingdom-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
  #island-dialog .hl-kingdom-actions>button{flex:1 1 140px}
 }
+
+/* Accepted island front: one right edge with the activity panel at x1664. */
+@media(min-width:901px) and (min-height:501px){
+ body[data-ruleset="32"] :is(.dock-tabs,.building-dock-cards,.resource-dock-cards){left:474px;width:1190px}
+ body[data-ruleset="32"] .building-dock-cards{gap:8px;padding:9px 9px 10px}
+ body[data-ruleset="32"] .building-dock-card{padding:25px 5px 6px;gap:3px;overflow:hidden;font-size:13.5px}
+ body[data-ruleset="32"] .building-dock-name{flex:0 0 34px;min-height:34px;width:100%;line-height:1.2}
+ body[data-ruleset="32"] .building-dock-workers{flex-wrap:nowrap;font-size:11.5px;margin-top:auto;min-height:14px}
+ body[data-ruleset="32"] .building-dock-card [data-map-building-art]{display:block;width:100%;height:74px;flex:0 0 74px;min-width:0;border-radius:5px;overflow:hidden}
+}
+.building-dock-card{isolation:isolate}
+.building-dock-card .building-dock-level{z-index:3;pointer-events:none}
+.building-dock-card :is(.building-dock-picture,.v32-building-art){position:relative;z-index:0}
+
+/* Cohesive resource illustrations reuse the reviewed transparent atlas. */
+.resource-dock-illustration.goods-icon{display:flex;align-items:center;justify-content:center;flex:0 0 auto;overflow:visible;filter:none;pointer-events:none}
+.resource-dock-card>.resource-dock-active{z-index:2}
+.goods-icon>.goods-icon-sprite{display:block;flex:0 0 auto;height:100%;width:auto;max-width:100%;aspect-ratio:1;background-image:url("assets/harborlight-goods-v32.png");background-size:600% 400%;background-repeat:no-repeat}
+.goods-icon>.goods-icon-fallback{display:grid;place-items:center;aspect-ratio:1;height:80%;color:#ffe0a0;font-size:28px;font-weight:800;border:1px solid #67889877;border-radius:50%;background:#153b4d}
+
+/* Keep the full island overview visible on ordinary laptop screens. */
+@media(min-width:1100px) and (min-height:650px){
+ #island-dialog[data-panel-kind="home"] .dialog-body>div>.notice:first-child{grid-column:1/span 2}
+ #island-dialog[data-panel-kind="home"] .dialog-body>div>.stat{grid-column:3}
+ #island-dialog[data-panel-kind="home"] .social-menu-entries{grid-template-rows:auto auto auto;gap:8px}
+ #island-dialog[data-panel-kind="home"] .social-menu-entries .info-card{padding:6px}
+}

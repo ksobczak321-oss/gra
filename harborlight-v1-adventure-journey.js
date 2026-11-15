@@ -1,14 +1,14 @@
 // Connected, optional island stories. The account coordinator owns the shared
 // reward budget; these models own play, proof, saved rooms and one-use receipts.
-import { allocateExpeditionAttemptId,reserveExpeditionDifficulty,recordExpeditionOutcome,expeditionHourStatus } from './harborlight-v1-expedition-hour.js?v=frontend-v32-6';
-import { advanceOriginalAttempt } from './harborlight-v1-original-puzzles.js?v=frontend-v32-6';
-import { miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v32-6';
-import { ISLAND_PUZZLE_CATALOG, STORY_CATALOG, storyById, puzzleById, storyRoomKinds } from './harborlight-v1-story-catalog.js?v=frontend-v32-6';
-import { createIslandPuzzle, normalizeIslandPuzzle, applyIslandPuzzle, recordIslandPuzzleTick, resetIslandPuzzle, getIslandPuzzleView, islandPuzzleProof } from './harborlight-v1-island-puzzles.js?v=frontend-v32-6';
-import { adventureRewardStatus } from './harborlight-v1-adventure-budget.js?v=frontend-v32-6';
-export { adventureRewardStatus } from './harborlight-v1-adventure-budget.js?v=frontend-v32-6';
-export { ISLAND_PUZZLE_CATALOG, STORY_CATALOG, getStoryCatalog } from './harborlight-v1-story-catalog.js?v=frontend-v32-6';
-export { getIslandPuzzleView } from './harborlight-v1-island-puzzles.js?v=frontend-v32-6';
+import { allocateExpeditionAttemptId,reserveExpeditionDifficulty,recordExpeditionOutcome,expeditionHourStatus } from './harborlight-v1-expedition-hour.js?v=frontend-v32-7';
+import { advanceOriginalAttempt } from './harborlight-v1-original-puzzles.js?v=frontend-v32-7';
+import { miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v32-7';
+import { ISLAND_PUZZLE_CATALOG, STORY_CATALOG, storyById, puzzleById, storyRoomKinds } from './harborlight-v1-story-catalog.js?v=frontend-v32-7';
+import { createIslandPuzzle, normalizeIslandPuzzle, applyIslandPuzzle, recordIslandPuzzleTick, resetIslandPuzzle, getIslandPuzzleView, islandPuzzleProof } from './harborlight-v1-island-puzzles.js?v=frontend-v32-7';
+import { adventureRewardStatus } from './harborlight-v1-adventure-budget.js?v=frontend-v32-7';
+export { adventureRewardStatus } from './harborlight-v1-adventure-budget.js?v=frontend-v32-7';
+export { ISLAND_PUZZLE_CATALOG, STORY_CATALOG, getStoryCatalog } from './harborlight-v1-story-catalog.js?v=frontend-v32-7';
+export { getIslandPuzzleView } from './harborlight-v1-island-puzzles.js?v=frontend-v32-7';
 const clone=x=>JSON.parse(JSON.stringify(x));
 const plain=x=>!!x&&typeof x==='object'&&!Array.isArray(x);
 const whole=(x,f=0,max=Number.MAX_SAFE_INTEGER)=>Number.isSafeInteger(x)&&x>=0&&x<=max?x:f;

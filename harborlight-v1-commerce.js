@@ -1,7 +1,7 @@
 // Optional storefront and rewarded-ad commands. Real money/provider receipts
 // must be verified by a server. The browser can simulate only outside PROD.
-import { MATERIAL_IDS, receiveMaterials } from './harborlight-v1-logistics.js?v=frontend-v32-6';
-import { engagementOfferStatus, completeEngagementOffer, claimInitialPremiumBonus } from './harborlight-v1-engagement.js?v=frontend-v32-6';
+import { MATERIAL_IDS, receiveMaterials } from './harborlight-v1-logistics.js?v=frontend-v32-7';
+import { engagementOfferStatus, completeEngagementOffer, claimInitialPremiumBonus } from './harborlight-v1-engagement.js?v=frontend-v32-7';
 
 const DAY = 86400000;
 const clock = state => Number.isFinite(state.worldTimeMs) ? state.worldTimeMs : Date.now();

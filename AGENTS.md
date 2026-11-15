@@ -1,5 +1,11 @@
 # Zasady pracy nad HARBORLIGHT
 
+## GO DEV — zaakceptowany front wyspy, cache7
+
+Użytkownik zaakceptował statyczny front i polecił „prawa krawędz dolnego menu musi być w lini z menu po prawej wiec ciut jeszcze przesuń, wrzuć na DEV”. To autoryzuje wdrożenie zatwierdzonych grafik, przypisań funkcji budynków i miniatur oraz wyrównania dolnego menu: `left474 + width1190 = right1664`, zgodnie z panelem `left1401 + width263 = right1664`. Wersja pozostaje0.15.0.0, nowy cache `frontend-v32-7`. [Dokładny zakres](docs/v32/GO-ACCEPTED-FRONT.md) i [dowody odbioru](docs/v32/ACCEPTED-FRONT-EVIDENCE.json) rozdzielają podgląd graficzny, lokalne testy, Git, CI i opublikowany DEV.
+
+Publikacja obejmuje wyłącznie zaakceptowany front. Kopiuj grafiki bez przerysowania; bazowy PNG, identyfikatory modeli, zapisy, postęp i konta pozostają zachowane. Dawny Zakład skórzany jest dekoracją bez menu. Roboczy pakiet sera, otrębów/paszy i nazw mieszkańców w osobnym brudnym drzewie `/workspace/gra` nie należy do tej publikacji. Brak nowego PRE-PROD/PROD, resetu, mutacji Authentication/Firebase lub markera promocji. Publiczny Pages nadal jest oznaczonym, nietrwałym scenariuszem DEV poziomu5, a nie logowaniem na konto admin1. Nowe wdrożenie i pełny CI wymagają własnych wyników; wcześniejszy CI43725629409/e3affdc zachowuje FAILURE.
+
 ## Nowe GO po pełnym przeglądzie menu — cache6
 
 Użytkownik polecił „dobra wrzucaj do DEV + pamiętaj aby uruchomić admin1 na 5 poziomie chce sprawdzić dostępne budynki”. To zatwierdza wszystkie późniejsze notatki o spójności logicznej i wizualnej menu, nieruchomych komunikatach przy przydziale pracowników, zbędnym „Więcej o budynku”, nowych przetworach rybnych oraz działającym linku testowym z poziomem5. Szczegóły: [zakres GO](docs/v32/GO-MENU-FISH-LEVEL5.md). Aktualna paczka pozostaje0.15.0.0, cache `frontend-v32-6`.

@@ -1,10 +1,9 @@
-"""The seven new functions reuse native island buildings and hover-only labels."""
+"""Seven map functions keep hover-only labels and their accepted native art."""
 import hashlib
 import json
 import mimetypes
 import os
 from pathlib import Path
-import re
 import subprocess
 from urllib.parse import unquote, urlsplit
 
@@ -16,9 +15,16 @@ BASE = 'http://127.0.0.1:47434'
 assert hashlib.sha256((ROOT / 'assets/harborlight-v1-approved.png').read_bytes()).hexdigest() == '4063f003002f95dd7b00f77a8d6d610b04f134766e52afc97e8a10712fd6d823', 'Approved island artwork changed'
 POSITIONS = {
     'bakery': [651, 289, 107, 80], 'dairy': [447, 300, 96, 81],
-    'slaughterhouse': [351, 260, 52, 46], 'fisher': [1197, 383, 91, 86],
-    'leatherworks': [498, 475, 60, 60], 'academy': [439, 506, 98, 79],
-    'barracks': [1295, 162, 87, 92],
+    'slaughterhouse': [315, 258, 69, 51], 'fisher': [335, 525, 136, 112],
+    'leatherworks': [1197, 383, 91, 86], 'academy': [439, 506, 98, 79],
+    'barracks': [412, 406, 133, 116],
+}
+ART_SOURCES = {
+    'bakery':'harborlight-v1-approved.png','dairy':'harborlight-v1-approved.png',
+    'slaughterhouse':'harborlight-farm-forest-approved-v32.png',
+    'fisher':'harborlight-harbor-approved-v32.png',
+    'leatherworks':'harborlight-v1-approved.png','academy':'harborlight-harbor-approved-v32.png',
+    'barracks':'harborlight-v1-approved.png',
 }
 fixture = json.loads(subprocess.check_output(['node', '--input-type=module', '-e', """
 import { createState } from './harborlight-v1-state.js';
@@ -52,6 +58,7 @@ with sync_playwright() as p:
         page.locator('[data-v32-building]').first.wait_for()
         assert page.locator('[data-v32-building]').count()==7
         assert page.locator('[data-v32-building] .v32-building-art,[data-v32-building] img,.v32-map-label').count()==0
+        assert page.locator('[data-accepted-artwork]').count()==4
         assert page.locator('[data-theatre-map]').count()==0, 'The native Theatre must replace the added map scene'
         for key, region in POSITIONS.items():
             marker=page.locator(f'[data-v32-building="{key}"]')
@@ -74,7 +81,8 @@ with sync_playwright() as p:
             panel.wait_for(state='visible')
             thumbnail=panel.locator('[data-native-building-art]')
             expect(thumbnail).to_have_attribute('data-native-building-art',key)
-            expect(thumbnail).to_have_css('background-image', re.compile(r'.*harborlight-v1-approved\.png.*'))
+            expect(thumbnail.locator('svg image')).to_have_attribute('href','assets/'+ART_SOURCES[key])
+            expect(thumbnail.locator('svg')).to_have_attribute('preserveAspectRatio','xMidYMid slice')
             page.locator('#island-dialog .dialog-close').click()
         for key, region, title in [('theatre',[634,360,112,66],'Teatr'),('market',[747,345,80,67],'Targ')]:
             marker=page.locator('#hit-world-'+key)
@@ -87,8 +95,8 @@ with sync_playwright() as p:
             page.locator('#island-dialog .dialog-close').click()
         assert not errors,errors
         assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),width
-        report.append({'width':width,'native_buildings':7,'transparent_map_targets':True,'clicks':9,'native_theatre_and_market':True,'hover_labels':not touch,'errors':errors})
+        report.append({'width':width,'native_buildings':7,'accepted_art_patches':4,'transparent_map_targets':True,'clicks':9,'native_theatre_and_market':True,'hover_labels':not touch,'errors':errors})
         context.close()
     browser.close()
 print(json.dumps(report,ensure_ascii=False))
-print('PASS native island buildings: seven exact targets, no added map art, hover-only names, native dock/header crops; desktop/mobile.')
+print('PASS native island buildings: seven reassigned targets, four accepted art patches, hover-only names, matching dock/header crops; desktop/mobile.')

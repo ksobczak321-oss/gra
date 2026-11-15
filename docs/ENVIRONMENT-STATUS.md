@@ -1,5 +1,11 @@
 # HARBORLIGHT — stan środowisk
 
+## Nowe GO DEV — zaakceptowany front, cache7
+
+Użytkownik zatwierdził front i zlecił dalsze przesunięcie dolnego menu do prawej krawędzi panelu misji oraz wdrożenie na DEV. [Zakres](v32/GO-ACCEPTED-FRONT.md): zaakceptowane grafiki czterech budynków, nowe przypisania funkcji bez zmiany zapisów, dawny Zakład skórzany jako dekoracja, zgodne miniatury Administracji/Gospodarki i wspólna krawędź1664 (`474+1190`, `1401+263`). Aplikacja0.15.0.0, cache `frontend-v32-7`.
+
+**Lokalny nowy front przeszedł1672/1440/390, starszy native-map1440/390 i12testów pakietu; pozostały odbiór, Git, pełny CI i publikacja cache7 wymagają własnych dowodów.** Preflight:107plików/30727097bajtów, kopie PNG identyczne. [Zapis odbioru](v32/ACCEPTED-FRONT-EVIDENCE.json) nie przypisuje im historycznych sukcesów. Dotychczasowy `e3affdc` ma Pages43725629445SUCCESS i CI43725629409FAILURE. Publiczny scenariusz poziomu5 pozostaje nietrwałym podglądem bez kont; lokalne zapisy i konta zachowane. Zasoby mają atlas21aktywnych produktów, a osłona bezczynności chroni podgląd bez konta przed błędnym logowaniem. Wcześniejszy osobny roboczy pakiet sera, otrębów/paszy i nazw mieszkańców nie wchodzi do tej publikacji. PRE-PROD7e81a1a, PROD, Authentication/Firebase i postęp kont bez nowej mutacji.
+
 ## Bieżąca paczka po odbiorze — cache6
 
 [Podgląd DEV na poziomie5](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5&v=frontend-v32-6) jest opublikowany i sprawdzony. Źródło aplikacji `8a30d70885d99c30d584b74e1030a62e98edaa30`, commit publikacji `739b5dd837bf43e54675a221e3987d8cb2670947`, [Pages43725299560](https://github.com/ksobczak321-oss/gra/actions/runs/43725299560) SUCCESS. Odczyt15plików potwierdził zgodne SHA256; hostowane bajty wykonane na1440/390 pokazały poziom5, limit180 i9dostępnych budynków bez intro, błędówJS/HTTP, żądańAPI i zapisu świata w przeglądarce. [Dowody publikacji](v32/MENU-FISH-LEVEL5-EVIDENCE.json).

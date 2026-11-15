@@ -1,0 +1,152 @@
+{
+  "scope": "DEV-only accepted island front; no new PRE-PROD/PROD deployment",
+  "status": "targeted_local_front_checks_passed_publication_pending",
+  "application_version": "0.15.0.0",
+  "cache": "frontend-v32-7",
+  "url": "https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5&v=frontend-v32-7",
+  "source_baseline_sha": "e3affdc89752228c849588f45352414019bbf8cd",
+  "source_sha": null,
+  "publication_commit": null,
+  "ci_run_id": null,
+  "ci_conclusion": "pending_own_run",
+  "pages_run_id": null,
+  "pages_conclusion": "pending_own_run",
+  "local_checks": [
+    {
+      "test": "tests/harborlight-accepted-front-v32-smoke.py",
+      "result": "PASS",
+      "viewports": [
+        1672,
+        1440,
+        390
+      ],
+      "verified": [
+        "20 canonical map functions",
+        "8 physical clicks per viewport",
+        "19 matching building crops",
+        "5 category tabs",
+        "right edges at1664logicalpixels",
+        "ship unobscured",
+        "progress invariant"
+      ]
+    },
+    {
+      "test": "tests/harborlight-native-map-v32-smoke.py",
+      "result": "PASS",
+      "viewports": [
+        1440,
+        390
+      ]
+    },
+    {
+      "test": "frontend bundle tests",
+      "result": "PASS",
+      "passed": 12
+    },
+    {
+      "test": "frontend package preflight",
+      "result": "PASS",
+      "files": 107,
+      "total_bytes": 30727097,
+      "maximum_bytes": 33554432
+    }
+  ],
+  "hosted_checks": [],
+  "artifact_hashes": [
+    {
+      "file": "assets/harborlight-v1-approved.png",
+      "sha256": "4063f003002f95dd7b00f77a8d6d610b04f134766e52afc97e8a10712fd6d823",
+      "bytes": 3315500,
+      "byte_identical_to_approved_reference": true
+    },
+    {
+      "file": "assets/harborlight-farm-forest-approved-v32.png",
+      "sha256": "39d6fcca12cb136a307a41665172a11835aaa85adbeaa99504e7357e9ba7b7bf",
+      "bytes": 2877034,
+      "byte_identical_to_approved_reference": true
+    },
+    {
+      "file": "assets/harborlight-harbor-approved-v32.png",
+      "sha256": "8a5209b6b6ae98fa9b7059758c85a1bf71e82ceb3d208882fbf96d581fdf6752",
+      "bytes": 2887859,
+      "byte_identical_to_approved_reference": true
+    },
+    {
+      "file": "assets/harborlight-ocean-approved-v32.png",
+      "sha256": "8f22f7a16160d0bd5cab69e8ba94245c183b92d905b5189fcc70c6112d58c558",
+      "bytes": 1775689,
+      "byte_identical_to_approved_reference": true
+    },
+    {
+      "file": "assets/harborlight-goods-v32.png",
+      "sha256": "0c48421274f8c810f5452668195242e5aadc284be9a3621b095d19451cbc2e20",
+      "bytes": 2909709,
+      "byte_identical_to_approved_reference": true
+    }
+  ],
+  "layout": {
+    "canvas": [
+      1672,
+      941
+    ],
+    "dock_left": 474,
+    "dock_width": 1190,
+    "dock_right": 1664,
+    "right_panel_left": 1401,
+    "right_panel_width": 263,
+    "right_panel_right": 1664
+  },
+  "function_assignments": {
+    "old_townhall": "sawmill",
+    "old_sawmill": "fisher",
+    "old_warehouse": "barracks",
+    "old_fisher": "leatherworks",
+    "old_barracks": "chapel",
+    "old_chapel": "townhall",
+    "waterfront_canopy": "warehouse",
+    "old_leatherworks": "decoration_without_menu"
+  },
+  "accepted_artwork_policy": "Copy accepted PNG files unchanged. Preserve the original base map, existing ship and building graphics; reuse the approved four local patches and a separate ocean-only fill.",
+  "preserved_game_state": "Canonical building IDs, levels, assignments, production, research, account progress and saves remain unchanged by spatial remapping.",
+  "excluded_paused_work": [
+    "cheese_to_dairy",
+    "bran_and_feed",
+    "resident_role_labels"
+  ],
+  "public_preview": {
+    "account_authenticated": false,
+    "persistent_world_save": false,
+    "townhall_level": 5,
+    "idle_guard": "PAGES_PREVIEW && !devAccount; no false account login after guest inactivity"
+  },
+  "manual_execution": "NOT_RUN",
+  "preprod": {
+    "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+    "new_deployment": false,
+    "account_reset": false
+  },
+  "prod": {
+    "new_deployment": false
+  },
+  "previous_baseline_runs": {
+    "source_sha": "e3affdc89752228c849588f45352414019bbf8cd",
+    "ci_run_id": 43725629409,
+    "ci_conclusion": "failure",
+    "pages_run_id": 43725629445,
+    "pages_conclusion": "success"
+  },
+  "resource_art": {
+    "module": "harborlight-v1-goods-art.js",
+    "atlas": "assets/harborlight-goods-v32.png",
+    "active_goods": 21,
+    "baseline_goods": 19,
+    "existing_fish_processing_goods": 2,
+    "bran_and_feed_tiles_active": false
+  },
+  "remaining_verification": [
+    "remaining local checks",
+    "own complete CI",
+    "own Pages publication",
+    "hosted source bytes and browser view"
+  ]
+}

@@ -1,17 +1,12 @@
-import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-6';
-import { NEW_BUILDINGS } from './harborlight-v1-provisions.js?v=frontend-v32-6';
+import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-7';
+import { NEW_BUILDINGS } from './harborlight-v1-provisions.js?v=frontend-v32-7';
+import { mapRegionFor, mapFootprintFor, buildingArtwork } from './harborlight-v1-map-art.js?v=frontend-v32-7';
 
-// Reuse the previously unused buildings painted into the approved island.
-// Coordinates refer to its original 1672 × 941 canvas; no new artwork overlays it.
-export const DEVELOPMENT_BUILDINGS = Object.freeze({
-  bakery:{name:'Piekarnia',x:651,y:289,width:107,height:80,footprint:'polygon(7% 41%,28% 13%,76% 3%,96% 48%,87% 84%,13% 85%)'},
-  dairy:{name:'Mleczarnia',x:447,y:300,width:96,height:81,footprint:'polygon(4% 46%,27% 14%,81% 10%,98% 47%,90% 93%,13% 100%)'},
-  slaughterhouse:{name:'Rzeźnia',x:351,y:260,width:52,height:46,footprint:'polygon(9% 37%,44% 9%,89% 29%,96% 81%,29% 100%,8% 78%)'},
-  fisher:{name:'Rybak',x:1197,y:383,width:91,height:86,footprint:'polygon(8% 42%,36% 10%,78% 20%,96% 53%,85% 93%,16% 98%)'},
-  leatherworks:{name:'Zakład skórzany',x:498,y:475,width:60,height:60,footprint:'polygon(8% 42%,34% 10%,79% 22%,97% 59%,81% 96%,30% 93%)'},
-  academy:{name:'Akademia',x:439,y:506,width:98,height:79,footprint:'polygon(3% 37%,20% 8%,53% 2%,91% 43%,90% 88%,34% 98%,8% 78%)'},
-  barracks:{name:'Koszary',x:1295,y:162,width:87,height:92,footprint:'polygon(9% 38%,35% 6%,72% 16%,96% 44%,88% 91%,18% 100%)'}
-});
+// All views share the approved presentation mapping; model IDs stay unchanged.
+export const DEVELOPMENT_BUILDINGS = Object.freeze(Object.fromEntries(Object.entries({
+  bakery:'Piekarnia',dairy:'Mleczarnia',slaughterhouse:'Rzeźnia',fisher:'Rybak',
+  leatherworks:'Zakład skórzany',academy:'Akademia',barracks:'Koszary'
+}).map(([id,name])=>{const [x,y,width,height]=mapRegionFor(id);return [id,Object.freeze({name,x,y,width,height,footprint:mapFootprintFor(id)})]})));
 const RECIPE_LABELS={farmGrain:'Zboże',farmVegetables:'Warzywa',farmLivestock:'Żywiec',farmMilk:'Surowe mleko',farmCheese:'Ser',wood:'Drewno',stone:'Kamień',flour:'Mąka',planks:'Deski',bread:'Chleb',cake:'Ciasto',pasteurizedMilk:'Mleko pasteryzowane',meat:'Mięso',leather:'Skóry',fish:'Ryby',smokedFish:'Ryba wędzona',fishPreserves:'Przetwory rybne',civilianClothes:'Ubrania cywilne',militaryClothes:'Stroje wojskowe',professorRobes:'Szaty profesorskie'};
 const FALLBACK_RECIPES={farm:['farmGrain','farmVegetables','farmLivestock','farmMilk','farmCheese'],windmill:['flour'],bakery:['bread','cake'],dairy:['pasteurizedMilk'],slaughterhouse:['meat','leather'],fisher:['fish','smokedFish','fishPreserves'],leatherworks:['civilianClothes','militaryClothes','professorRobes'],lumber:['wood'],quarry:['stone'],sawmill:['planks']};
 const RECIPE_INPUTS={flour:{grain:4},bread:{flour:4},cake:{flour:4,rawMilk:2},pasteurizedMilk:{rawMilk:4},meat:{livestock:2},leather:{livestock:2},farmCheese:{sourMilk:4},civilianClothes:{leather:4},militaryClothes:{leather:8},professorRobes:{leather:8},planks:{wood:2},smokedFish:{fish:4},fishPreserves:{fish:6}};
@@ -49,12 +44,8 @@ function controlColumns(root,secondaryNodes=[]){
 
 /** The same native building, cropped with CSS for its dock and panel thumbnail. */
 export function developmentBuildingArt(id){
-  const config=DEVELOPMENT_BUILDINGS[id]||DEVELOPMENT_BUILDINGS.bakery;
-  const size=Math.max(config.width,config.height)+12;
-  const x=config.x+(config.width-size)/2,y=config.y+(config.height-size)/2;
-  const wrapper=node('span',{class:'v32-building-art v32-building-art--native','aria-hidden':'true','data-native-building-art':id});
-  wrapper.style.backgroundSize=`${1672/size*100}% ${941/size*100}%`;
-  wrapper.style.backgroundPosition=`${x/(1672-size)*100}% ${y/(941-size)*100}%`;
+  const wrapper=buildingArtwork(id,{className:'v32-building-art v32-building-art--native'});
+  wrapper.dataset.nativeBuildingArt=id;
   return wrapper;
 }
 
