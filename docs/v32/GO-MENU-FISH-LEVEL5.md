@@ -1,6 +1,6 @@
 # GO DEV — spójne menu, przetwory rybne i poziom5
 
-Status: zaakceptowane do implementacji na DEV. Własne testy, publikacja cache `frontend-v32-6` i faktyczny odczyt hostowanego poziomu5 wymagają osobnych wyników. Dotychczasowy cache5 nie potwierdza tej paczki. Aplikacja pozostaje0.15.0.0; PRE-PROD0.14.0.0 / `7e81a1a436770f57fd8abf390b6af8022e3300f6` bez nowej promocji.
+Status: wdrożone wyłącznie na DEV i publicznym cache6. Pages43725299560SUCCESS;15zgodnychSHA256 i poziom5/9dostępnychbudynków na1440/390PASS. Źródło aplikacji8a30d70, commit publikacji739b5dd. [Dowody](MENU-FISH-LEVEL5-EVIDENCE.json). Własny pełny CI końcowego commitu pozostaje osobnym wynikiem. Aplikacja0.15.0.0; PRE-PROD0.14/7e81a1a bez nowej promocji.
 
 ## Spójność menu
 

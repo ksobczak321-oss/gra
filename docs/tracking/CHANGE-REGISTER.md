@@ -14,10 +14,10 @@ Rejestr nie publikuje prywatnych kwot Billing ani danych osobistych związanych 
 
 ## Bieżące środowiska
 
-- Nowy DEV **0.15.0.0**: `implemented_and_locally_tested; final_publication_pending`; CI `not_run_for_final_source`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
+- Nowy DEV **0.15.0.0**: `public_preview_verified_level5; final_metadata_ci_requires_own_result`; CI `pending_final_metadata_commit`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
 - Odebrany PRE-PROD **0.14.0.0**: źródło `7e81a1a436770f57fd8abf390b6af8022e3300f6`; [deploy 41909268052](https://github.com/ksobczak321-oss/gra/actions/runs/41909268052), próba 1.
 - PRE-PROD tej wcześniejszej wersji nie oznacza promocji nowych kart. PROD oraz pełny reset kont: bez nowej operacji.
-DEV0.15.0.0/cache6 realizuje najnowszeGO: spójne logicznie i wizualnie menu, stabilny komunikat przy nazwie budynku bez przesuwania+/−, usunięte puste szczegóły, lokalne przetwory rybne IIIkategorii odbadaniaRybaka5 oraz faktyczny publiczny scenariusz preview=admin1-level5. Konto lokalneadmin1 zachowuje odrębny Ratusz5 bez resetu; Pages nadal jest podglądem w pamięci bez uwierzytelnionego konta. Nowe źródło, testy,CIiPages wymagają dowodów. Poprzedni cache5/77a774c ma Pages43720686137SUCCESS, lecz nie jest odbiorem cache6. PRE-PROD7e81a1a/PROD/Firebase bez zmian.
+Cache6 wdrożony tylko DEV:spójne menu, stały komunikat nagłówka/18kliknięćbezprzesunięć, lokalne przetwory rybne IIIkategorii poRybaku5 i rzeczywisty podglądadmin1poziom5. Pages43725299560SUCCESS,15zgodnychhaszy i uruchomienie9budynków1440/390PASS. Lokalnyadmin1Ratusz5/26osób zachowany; pozostali1/18. Publiczny podgląd bez kont i trwałego zapisu, lokalnyruntime odrębnyodFirebase.1390+1NodePASS; własnyCI końcowego commitu wymaga osobnego wyniku. PRE-PROD7e81a1a bez nowejpromocji,bezresetuiPROD. Ręcznyodbiór użytkownika NOT_RUN.
 
 ## Historyczny punkt odniesienia ewidencji
 
@@ -163,8 +163,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1139 — Nowe funkcje wykorzystują istniejące budynki; Teatr i Targ otrzymują wskazane miejsca](changes/HL-CHG-1139.md) | Story | `accepted` | `verified_locally_dev_only` | `not_deployed` |
 | [HL-CHG-1140 — Nowe menu są ciemne, ramki spójne, a blokada wyświetla warunek odblokowania](changes/HL-CHG-1140.md) | Story | `accepted` | `published_pages_2dd923d_verified` | `not_deployed` |
 | [HL-CHG-1141 — Tutorial V5/56, wybór widzów Teatru i sekcje Magazynu ze wspólną pojemnością 40 000](changes/HL-CHG-1141.md) | Story | `accepted` | `published_pages_2dd923d_verified` | `not_deployed` |
-| [HL-CHG-1142 — Spójne menu, nieruchome komunikaty i publiczny scenariusz poziomu5](changes/HL-CHG-1142.md) | Story | `accepted` | `implemented_locally_tested; publication_pending` | `not_deployed` |
-| [HL-CHG-1143 — Ryba wędzona i przetwory rybne IIIkategorii z lokalnego połowu](changes/HL-CHG-1143.md) | Story | `accepted` | `implemented_locally_tested; publication_pending` | `not_deployed` |
+| [HL-CHG-1142 — Spójne menu, nieruchome komunikaty i publiczny scenariusz poziomu5](changes/HL-CHG-1142.md) | Story | `accepted` | `published_pages_739b5dd_verified` | `not_deployed` |
+| [HL-CHG-1143 — Ryba wędzona i przetwory rybne IIIkategorii z lokalnego połowu](changes/HL-CHG-1143.md) | Story | `accepted` | `published_pages_739b5dd_verified` | `not_deployed` |
 
 <a id="hl-epic-tut"></a>
 

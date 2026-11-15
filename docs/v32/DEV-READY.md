@@ -4,11 +4,9 @@ Gałąź: `dev/0.15.0.0`. Punkt wyjścia: odebrane PRE-PROD `7e81a1a436770f57fd8
 
 ## Bieżąca paczka po odbiorze — cache6
 
-[Podgląd DEV na poziomie5](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?preview=admin1-level5&v=frontend-v32-6) jest docelowym linkiem tej paczki. Wdrożenie i odczyt faktycznie hostowanego poziomu5 wymagają nowego dowodu; poprzedni link cache5 startujący na poziomie1 nie spełniał tego zlecenia. Publiczny scenariusz ma jawne oznaczenie DEV i działa w pamięci karty, bez uwierzytelnionego konta lub trwałego zapisu. Lokalny `admin1/admin1` pozostaje osobnym kontem z Ratuszem5 i zachowanym postępem.
+[Podgląd DEV na poziomie5](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5&v=frontend-v32-6) jest opublikowany i sprawdzony. Źródło aplikacji `8a30d70885d99c30d584b74e1030a62e98edaa30`, commit publikacji `739b5dd837bf43e54675a221e3987d8cb2670947`, [Pages43725299560](https://github.com/ksobczak321-oss/gra/actions/runs/43725299560) SUCCESS. Odczyt15plików potwierdził zgodne SHA256; hostowane bajty wykonane na1440/390 pokazały poziom5, limit180 i9dostępnych budynków bez intro, błędówJS/HTTP, żądańAPI i zapisu świata w przeglądarce. [Dowody publikacji](MENU-FISH-LEVEL5-EVIDENCE.json).
 
-Zakres: spójne logicznie i wizualnie menu, karty w obu kolumnach,44pxpola/przyciski, nieruchomy komunikat przy nazwie budynku, zachowanie trzech szybkich kliknięć+/−, usunięcie pustego „Więcej o budynku”, lokalna ryba wędzona i przetwory rybne IIIkategorii po badaniu od Rybaka5. Pojemność kolejnych poziomów Magazynu nadal liczy się analogicznie z koszyka+40%, w dół do10000. [Szczegółowy zakres](GO-MENU-FISH-LEVEL5.md).
-
-Nowe CI/Pages oraz końcowy SHA pozostają do potwierdzenia. Poprzedni opublikowany cache5 ma osobny odczyt Pages43720686137SUCCESS dla `77a774c82f7cce85982be56aabdf166fc2078a34`; jego pełny CI nie jest tu uznawany za sukces. PRE-PROD7e81a1a i PROD bez nowego wdrożenia.
+Publiczny scenariusz jest wyraźnie oznaczonym podglądem DEV w pamięci karty, bez uwierzytelnionego konta lub trwałego zapisu. Lokalny admin1/admin1 ma rzeczywisty Ratusz5 i26osób bez resetu. Lokalnie1390+1NodePASS,6przypadków/18prawdziwychkliknięć bez przesuwania,14nowychpaneli,16spójności i26klasycznychwidokówPASS; starszy samouczekPL/ENdesktop/mobilePASS. Excel5643/17/3 i pustaC, pakiet101plików verify/extractPASS. Późniejszy commit metadanych nie zmienia aplikacji; pełny własny CI końcowego commitu pozostaje osobnym wynikiem. PRE-PROD7e81a1a iPROD bez nowego wdrożenia.
 
 ## Opublikowany pełny pakiet GO — cache5
 

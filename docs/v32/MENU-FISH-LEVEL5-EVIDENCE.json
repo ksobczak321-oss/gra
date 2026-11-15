@@ -1,0 +1,214 @@
+{
+  "scope": "DEV only; no new PRE-PROD/PROD deployment",
+  "url": "https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5&v=frontend-v32-6",
+  "source_sha": "8a30d70885d99c30d584b74e1030a62e98edaa30",
+  "publication_commit": "739b5dd837bf43e54675a221e3987d8cb2670947",
+  "pages_run_id": 43725299560,
+  "pages_conclusion": "success",
+  "cache": "frontend-v32-6",
+  "transport": "Actual HTTPS-hosted bytes fetched with normal Python system CA verification and executed at their real origin in Chromium. TLS verification was not disabled.",
+  "public_files": [
+    {
+      "file": "harborlight-v1-layered.html",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "91aacb23065bc64b44cd28635497eda2d2b78889fa32b27a3329c988202dcc93",
+      "bytes": 9319
+    },
+    {
+      "file": "harborlight-v1-play.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "8402586a69ae423c395cedd8ef66ec402839278f3b1a83c0becbaaa12d607090",
+      "bytes": 417711
+    },
+    {
+      "file": "harborlight-v1-dev-preview.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "92c065990d53f653dc77de60e761c41efb636031f06d7bfebd399758242c5222",
+      "bytes": 2340
+    },
+    {
+      "file": "harborlight-v1-development-ui.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "69098dd2209d2b49b299f0090e0791376e4170580bee8e849186ad1790a1de02",
+      "bytes": 50192
+    },
+    {
+      "file": "harborlight-v1-development.css",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "790f23a9efe83269f460c81f452353220314a3c991ddfa604bd7d062cf7d8d8d",
+      "bytes": 16730
+    },
+    {
+      "file": "harborlight-v1-play.css",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "b16bc44f4e0265a20d33007bdaebee7a6b03ea63cedf216588c90acacf2ab6e7",
+      "bytes": 111302
+    },
+    {
+      "file": "harborlight-v1-approved-copy.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "b697bc3fcd94e8d73e147b479f428bddeb834efa4d5e613e7ce5eaa4e29c2b7d",
+      "bytes": 68512
+    },
+    {
+      "file": "harborlight-v1-economy.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "384c52e6913e452a01dbeb4e5551c9027aa198655122298e07a44aaafc2ee2cf",
+      "bytes": 7492
+    },
+    {
+      "file": "harborlight-v1-archipelago.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "7aae999aca371188438308d1a1cde36d12b1f0960f6f950955e4d7091ccab7df",
+      "bytes": 49813
+    },
+    {
+      "file": "harborlight-v1-provisions.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "e9a2e47be29509d20f774c4f31ea65b35180db577cb23bed0318b365b9f84aef",
+      "bytes": 42002
+    },
+    {
+      "file": "harborlight-v1-education.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "a0145c4b7ae1071ce13e7cb4edcb3f8f370afdc71d5aa378f028e006eafaa1f9",
+      "bytes": 28412
+    },
+    {
+      "file": "harborlight-v1-development-logistics.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "4f768740d76deec5204308c7d5a87c8a992dc9dd34c076e02708a4bfa4ee6875",
+      "bytes": 12742
+    },
+    {
+      "file": "harborlight-v1-development-copy.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "94111fdd5dbb87df799a93202d3fb035fa300e947dd5e252522a8a6824639317",
+      "bytes": 69408
+    },
+    {
+      "file": "harborlight-v1-progression.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "6369c414fffc7143f498feac33339b5d905832142ad979ebd4a62328ce0c3547",
+      "bytes": 104318
+    },
+    {
+      "file": "assets/harborlight-v1-approved.png",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "sha256": "4063f003002f95dd7b00f77a8d6d610b04f134766e52afc97e8a10712fd6d823",
+      "bytes": 3315500
+    }
+  ],
+  "screens": [
+    {
+      "width": 1440,
+      "level": 5,
+      "capacity": 180,
+      "available_buildings_checked": [
+        "bakery",
+        "dairy",
+        "slaughterhouse",
+        "fisher",
+        "leatherworks",
+        "academy",
+        "barracks",
+        "market",
+        "dock"
+      ],
+      "intro_pending": false,
+      "page_errors": [],
+      "failed_http": [],
+      "api_requests": [],
+      "saved_world": false
+    },
+    {
+      "width": 390,
+      "level": 5,
+      "capacity": 180,
+      "available_buildings_checked": [
+        "bakery",
+        "dairy",
+        "slaughterhouse",
+        "fisher",
+        "leatherworks",
+        "academy",
+        "barracks",
+        "market",
+        "dock"
+      ],
+      "intro_pending": false,
+      "page_errors": [],
+      "failed_http": [],
+      "api_requests": [],
+      "saved_world": false
+    }
+  ],
+  "downloaded_urls": 91,
+  "local_validation": {
+    "node_main": 1390,
+    "node_offline_96h": 1,
+    "node_all_passed": true,
+    "worker_mouse_clicks": 18,
+    "worker_cases": 6,
+    "new_building_views": 14,
+    "menu_consistency_views": 16,
+    "legacy_building_views": 26,
+    "legacy_priority_routes": 4,
+    "learning_flow_pl_en_desktop_mobile": 4,
+    "full_v32_interface": "PASS",
+    "fish_model_suite": 76
+  },
+  "editorial": {
+    "rows": 5643,
+    "sheets": 17,
+    "columns": 3,
+    "C_all_blank": true,
+    "source_fingerprints_match": true
+  },
+  "archive": {
+    "archive": "/workspace/output/HARBORLIGHT_DEV_0.15.0.0_frontend.tar.gz",
+    "archive_sha256": "c036a32f5323211cb5ea21a8e19784746f023ad7b536d9db463e7cb6b0cfce95",
+    "commit": "8a30d70885d99c30d584b74e1030a62e98edaa30",
+    "file_count": 101,
+    "manifest_sha256": "f9496063cf61638bdd7b674bf980c2af3bae70d61ce50a29c4b05045b8771dfe",
+    "total_bytes": 20264067
+  },
+  "local_accounts": [
+    {
+      "account": "admin1",
+      "townhall": 5,
+      "population": 26
+    },
+    {
+      "account": "admin2",
+      "townhall": 1,
+      "population": 18
+    },
+    {
+      "account": "admin3",
+      "townhall": 1,
+      "population": 18
+    }
+  ],
+  "ci_status": "Final metadata commit requires its own CI result; not reported as success.",
+  "previous_cache5_ci": {
+    "run_id": 43720686129,
+    "conclusion": "failure",
+    "reason": "Legacy test expected final tourID settings; fixed to real last TOUR_IDS[-1] and PL/EN desktop/mobile regression passed."
+  }
+}

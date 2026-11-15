@@ -28214,8 +28214,8 @@
       },
       "status": {
         "implementation": "in_progress",
-        "dev": "implemented_locally_tested; publication_pending",
-        "ci": "not_run_for_final_source",
+        "dev": "published_pages_739b5dd_verified",
+        "ci": "pending_final_metadata_commit",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -28287,8 +28287,8 @@
       },
       "status": {
         "implementation": "in_progress",
-        "dev": "implemented_locally_tested; publication_pending",
-        "ci": "not_run_for_final_source",
+        "dev": "published_pages_739b5dd_verified",
+        "ci": "pending_final_metadata_commit",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -28353,7 +28353,7 @@
     "preprod_status": "verified_deployment_and_artifacts",
     "prod_status": "not_authorized",
     "full_test_account_reset": "not_performed",
-    "note": "DEV0.15.0.0/cache6 realizuje najnowszeGO: spójne logicznie i wizualnie menu, stabilny komunikat przy nazwie budynku bez przesuwania+/−, usunięte puste szczegóły, lokalne przetwory rybne IIIkategorii odbadaniaRybaka5 oraz faktyczny publiczny scenariusz preview=admin1-level5. Konto lokalneadmin1 zachowuje odrębny Ratusz5 bez resetu; Pages nadal jest podglądem w pamięci bez uwierzytelnionego konta. Nowe źródło, testy,CIiPages wymagają dowodów. Poprzedni cache5/77a774c ma Pages43720686137SUCCESS, lecz nie jest odbiorem cache6. PRE-PROD7e81a1a/PROD/Firebase bez zmian.",
+    "note": "Cache6 wdrożony tylko DEV:spójne menu, stały komunikat nagłówka/18kliknięćbezprzesunięć, lokalne przetwory rybne IIIkategorii poRybaku5 i rzeczywisty podglądadmin1poziom5. Pages43725299560SUCCESS,15zgodnychhaszy i uruchomienie9budynków1440/390PASS. Lokalnyadmin1Ratusz5/26osób zachowany; pozostali1/18. Publiczny podgląd bez kont i trwałego zapisu, lokalnyruntime odrębnyodFirebase.1390+1NodePASS; własnyCI końcowego commitu wymaga osobnego wyniku. PRE-PROD7e81a1a bez nowejpromocji,bezresetuiPROD. Ręcznyodbiór użytkownika NOT_RUN.",
     "previous_accepted_dev": {
       "as_of": "2026-11-04",
       "dev_application_version": "0.14.0.0",
@@ -28472,13 +28472,13 @@
     "preprod_bridge_duration": "13s",
     "preprod_deployment_duration": "2m12s",
     "dev_application_version": "0.15.0.0",
-    "dev_status": "implemented_and_locally_tested; final_publication_pending",
-    "dev_ci": "not_run_for_final_source",
-    "dev_source_sha": null,
-    "dev_implementation_source_sha": null,
+    "dev_status": "public_preview_verified_level5; final_metadata_ci_requires_own_result",
+    "dev_ci": "pending_final_metadata_commit",
+    "dev_source_sha": "739b5dd837bf43e54675a221e3987d8cb2670947",
+    "dev_implementation_source_sha": "8a30d70885d99c30d584b74e1030a62e98edaa30",
     "dev_ci_run_id": null,
-    "dev_pages_run_id": null,
-    "dev_pages_conclusion": "pending",
+    "dev_pages_run_id": 43725299560,
+    "dev_pages_conclusion": "success",
     "dev_tag": null,
     "dev_cache": "frontend-v32-6",
     "previous_accepted_v32": {
@@ -28489,10 +28489,10 @@
       "pages_run_id": 43703967803,
       "pages_conclusion": "success"
     },
-    "frontend_archive_sha256": "268ffe2ebc467a7f2104047c2648815d6cb3ebbf26a08f0c590be9946257b510",
-    "frontend_manifest_sha256": "6b30a24cb6fe7f70c20ac165ffb5aedc24fbd4f028418f36df23836b19da67d8",
-    "frontend_file_count": 100,
-    "frontend_total_bytes": 20240963,
+    "frontend_archive_sha256": "c036a32f5323211cb5ea21a8e19784746f023ad7b536d9db463e7cb6b0cfce95",
+    "frontend_manifest_sha256": "f9496063cf61638bdd7b674bf980c2af3bae70d61ce50a29c4b05045b8771dfe",
+    "frontend_file_count": 101,
+    "frontend_total_bytes": 20264067,
     "previous_published_v32_cache5": {
       "dev_application_version": "0.15.0.0",
       "dev_status": "published_pages_verified; final_metadata_ci_requires_own_result",
@@ -28509,6 +28509,7 @@
       "frontend_file_count": 100,
       "frontend_total_bytes": 20240963,
       "ci_failure_reason": "Stale final tour ID settings in legacy learning-flow browser test; fixed to actual last TOUR_IDS[-1] for cache6."
-    }
+    },
+    "public_level5_preview_verified": true
   }
 }

@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `in_progress` |
-| DEV | `implemented_locally_tested; publication_pending` |
-| CI | `not_run_for_final_source` |
+| DEV | `published_pages_739b5dd_verified` |
+| CI | `pending_final_metadata_commit` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
