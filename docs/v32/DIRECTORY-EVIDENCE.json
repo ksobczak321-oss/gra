@@ -1,17 +1,17 @@
 {
   "scope": "DEV-only resident role labels and occupation groups plus necessary120-card responsive UI fix; preserve accepted cache7 front; exclude cheese/bran/feed models",
-  "status": "local_acceptance_passed_publication_pending",
+  "status": "accepted_dev_own_ci_pages_and_immutable_tag_verified",
   "application_version": "0.15.0.0",
   "cache": "frontend-v32-8",
-  "url": "https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5&v=frontend-v32-8",
+  "url": "https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5&v=frontend-v32-8&source=06db93ada1c5cbd3071709ab84fc959f9674e5a1",
   "source_baseline_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
   "source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
-  "publication_commit": null,
-  "ci_run_id": null,
-  "ci_status": "pending_own_run",
-  "ci_conclusion": null,
-  "pages_run_id": null,
-  "pages_conclusion": "pending_own_run",
+  "publication_commit": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+  "ci_run_id": 43740930893,
+  "ci_status": "completed",
+  "ci_conclusion": "success",
+  "pages_run_id": 43740930892,
+  "pages_conclusion": "success",
   "local_checks": [
     {
       "test": "tests/harborlight-resident-labels.test.mjs",
@@ -115,9 +115,69 @@
       ],
       "source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
       "public_files_including_manifest": 108
+    },
+    {
+      "test": "three acceptance suites against published frontend package",
+      "result": "PASS",
+      "publication_commit": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+      "files": 108,
+      "bytes": 30742668,
+      "suites": [
+        "tests/harborlight-resident-labels-ui-v32-smoke.py",
+        "tests/harborlight-legacy-resident-labels-v32-smoke.py",
+        "tests/harborlight-accepted-front-v32-smoke.py"
+      ]
+    },
+    {
+      "test": "current DEV editorial workbook",
+      "result": "PASS",
+      "rows": 5677,
+      "sheets": 17,
+      "columns": [
+        "A",
+        "B",
+        "C"
+      ],
+      "correction_column_C_empty": true,
+      "source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c"
     }
   ],
-  "hosted_checks": [],
+  "hosted_checks": [
+    {
+      "check": "18 targeted public file hashes",
+      "result": "PASS",
+      "count": 18,
+      "tls_verified": true,
+      "all_source_hashes_match": true
+    },
+    {
+      "check": "all PUBLIC_FILES HTTPS SHA256 verification",
+      "result": "PASS",
+      "count": 106,
+      "bytes": 30728747,
+      "tls_errors_ignored": false,
+      "includes_generated_index_or_release": false
+    },
+    {
+      "check": "TLS-verified public bytes rendered locally",
+      "result": "PASS",
+      "viewports": [
+        1672,
+        390
+      ],
+      "real_content_type": true,
+      "fake_world_injected": false,
+      "fake_api_injected": false,
+      "accounts_used": false,
+      "receipt": "docs/v32/DIRECTORY-PUBLIC-RECEIPTS.json"
+    },
+    {
+      "check": "native browser HTTPS navigation",
+      "result": "BLOCKED_CERT_AUTHORITY",
+      "tls_errors_ignored": false,
+      "not_counted_as_direct_host_render_pass": true
+    }
+  ],
   "presentation_requirements": [
     "one shared role label and occupation grouping per canonical person UID",
     "role ordinals based on full island rather than filtered selector",
@@ -177,11 +237,8 @@
     "ci_failure_reason": "v17 delayed memory-board resize with120cards produced16.328px card width below unchanged20px minimum"
   },
   "remaining_verification": [
-    "tests/harborlight-legacy-resident-labels-v32-smoke.py",
-    "own final source commit",
-    "own complete CI",
-    "own Pages publication",
-    "hosted cache8 source checks"
+    "manual user acceptance",
+    "native browser HTTPS navigation remains blocked by managed certificate authority; TLS-verified public-byte local render already passed"
   ],
   "responsive_fix": {
     "module": "harborlight-v1-minigame-ui.js",
@@ -200,5 +257,65 @@
     "file_count": 108,
     "manifest_sha256": "e52935b4dbf0ca0681d4aadf6aed06b8a1d1c1db79c11cbc25e050cce00c8f0a",
     "total_bytes": 30742668
+  },
+  "ci_progress": {
+    "run_id": 43740930893,
+    "head_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+    "status": "completed",
+    "conclusion": "success",
+    "job_id": 132893708888,
+    "job_started_at": "2026-11-15T17:24:32Z",
+    "job_completed_at": "2026-11-15T17:42:30Z",
+    "job_duration_seconds": 1078,
+    "job_duration": "17m58s",
+    "successful_steps": 31,
+    "failed_steps": 0,
+    "includes": [
+      "frontend packaged Chromium acceptance",
+      "DEV login and cloud-save Chromium acceptance"
+    ],
+    "complete_ci_pass": true
+  },
+  "published_bundle": {
+    "archive": "/workspace/work/front-v32-8/published-frontend.tar.gz",
+    "archive_sha256": "ef537dd45191158c2488845ec8b390f43f92dfae85155de4c9199391976eafd2",
+    "commit": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+    "file_count": 108,
+    "manifest_sha256": "726e947044253b4e5759d5da9b8a6f3f1a97962909089cd359281faf341431e2",
+    "total_bytes": 30742668
+  },
+  "model_identity": {
+    "normalized_query_namespace_only": true,
+    "unchanged_modules": [
+      "harborlight-v1-state.js",
+      "harborlight-v1-provisions.js",
+      "harborlight-v1-education.js",
+      "harborlight-v1-military.js",
+      "harborlight-v1-housing.js",
+      "harborlight-v1-development-logistics.js",
+      "harborlight-v1-logistics.js",
+      "harborlight-v1-residents.js",
+      "harborlight-v1-kingdom.js",
+      "harborlight-v1-theatre.js"
+    ],
+    "paused_original_worktree_preserved": true
+  },
+  "public_render_mode": "TLS-verified downloaded public bytes rendered locally using actual Content-Type; native browser HTTPS remains BLOCKED_CERT_AUTHORITY; no TLS-ignore flag",
+  "immutable_tag": {
+    "name": "dev-0.15.0.0-cache8-20261115",
+    "annotated_object": "d9455d2657c523fc505b26d973311744ff56f11e",
+    "peeled_target_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+    "published": true,
+    "remote_verified": true,
+    "immutable": true
+  },
+  "metadata_only_followup": {
+    "status": "documentation_prepared_locally",
+    "public_file_count": 106,
+    "public_files_changed": false,
+    "accepted_application_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+    "accepted_publication_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+    "moves_accepted_tag": false,
+    "own_ci_is_separate": true
   }
 }

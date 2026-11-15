@@ -1,0 +1,1077 @@
+{
+  "scope": "Sanitized public asset and local-render receipts; no response headers, account data or credentials",
+  "publication_commit": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+  "app_source": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+  "cache": "frontend-v32-8",
+  "public_url": "https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5&v=frontend-v32-8&source=06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+  "mode": "TLS-verified downloaded public assets rendered locally; native browser TLS blocked",
+  "native_browser_https_status": "BLOCKED_CERT_AUTHORITY",
+  "tls_errors_ignored": false,
+  "accounts_used": false,
+  "fake_state_injected": false,
+  "root_targeted_hash_check": {
+    "count": 18,
+    "all_source_hashes_match": true
+  },
+  "public_assets": {
+    "count": 106,
+    "bytes": 30728747,
+    "all_sha256_match": true,
+    "includes_generated_index_or_release": false,
+    "files": [
+      {
+        "file": "assets/harborlight-farm-forest-approved-v32.png",
+        "status": 200,
+        "bytes": 2877034,
+        "content_type": "image/png",
+        "sha256": "39d6fcca12cb136a307a41665172a11835aaa85adbeaa99504e7357e9ba7b7bf",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "assets/harborlight-goods-v32.png",
+        "status": 200,
+        "bytes": 2909709,
+        "content_type": "image/png",
+        "sha256": "0c48421274f8c810f5452668195242e5aadc284be9a3621b095d19451cbc2e20",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "assets/harborlight-harbor-approved-v32.png",
+        "status": 200,
+        "bytes": 2887859,
+        "content_type": "image/png",
+        "sha256": "8a5209b6b6ae98fa9b7059758c85a1bf71e82ceb3d208882fbf96d581fdf6752",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "assets/harborlight-inhabitants-clean.png",
+        "status": 200,
+        "bytes": 3019604,
+        "content_type": "image/png",
+        "sha256": "480d967c7323d5987b711d9d71de9589bb8e5807216f980054413c8fe100d105",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "assets/harborlight-ocean-approved-v32.png",
+        "status": 200,
+        "bytes": 1775689,
+        "content_type": "image/png",
+        "sha256": "8f22f7a16160d0bd5cab69e8ba94245c183b92d905b5189fcc70c6112d58c558",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "assets/harborlight-v1-approved.png",
+        "status": 200,
+        "bytes": 3315500,
+        "content_type": "image/png",
+        "sha256": "4063f003002f95dd7b00f77a8d6d610b04f134766e52afc97e8a10712fd6d823",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "assets/harborlight-windmill-clean.png",
+        "status": 200,
+        "bytes": 3133527,
+        "content_type": "image/png",
+        "sha256": "b52435067f75fb37500df4b3de5506cd55646e4e16c840164e007ed7fb362bbc",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "assets/paynow-wordmark.svg",
+        "status": 200,
+        "bytes": 355,
+        "content_type": "image/svg+xml",
+        "sha256": "39e5de3318c00471dd9b0d43c5aff0b5508d6513d6d3253c086e02fbc4d1313f",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "assets/theatre-building-v30.png",
+        "status": 200,
+        "bytes": 1878638,
+        "content_type": "image/png",
+        "sha256": "b83c1977061a872d173c54c4af340cf2736dfb1acb673ab43cfb53132b474bbd",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "assets/theatre-courtyard-v30.png",
+        "status": 200,
+        "bytes": 3733415,
+        "content_type": "image/png",
+        "sha256": "ca050faf691e8f97253891d1c12ec8336940390fd83e89b6cc13783cd6916d9d",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "assets/theatre-decor-atlas-v30.png",
+        "status": 200,
+        "bytes": 2202716,
+        "content_type": "image/png",
+        "sha256": "66cac2d5c133643595a37962086d7c2c98ec73273cb7b236640f9cdc8ab6b674",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "backend/island-name.mjs",
+        "status": 200,
+        "bytes": 2821,
+        "content_type": "text/javascript; charset=utf-8",
+        "sha256": "d84d85d93a922017a4d160ae98adcced18a7b455cc4e44e0606fc36695c2efb1",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "backend/league-rules.mjs",
+        "status": 200,
+        "bytes": 13616,
+        "content_type": "text/javascript; charset=utf-8",
+        "sha256": "b8b81f16e12fc9b981e3b310efd049460e83dbef31ae58b533d3f1b8ebbe592c",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-auth-providers.js",
+        "status": 200,
+        "bytes": 6927,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "e510f211d07f36b22cc08c6c71bba3ac60a583bb02f2bf8a6a8a43b008dbe891",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-auth.css",
+        "status": 200,
+        "bytes": 12188,
+        "content_type": "text/css; charset=utf-8",
+        "sha256": "84454fea75712d1401ad4b42f5bd0618e5a7b5925517048b49a84fd6c8dff80b",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-auth.html",
+        "status": 200,
+        "bytes": 11390,
+        "content_type": "text/html; charset=utf-8",
+        "sha256": "fa838bcf83163c73c1f1d1fcffea5c15d3b2e05976557ca0a256262fdd8839b8",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-auth.js",
+        "status": 200,
+        "bytes": 32554,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "ee98b731adee8c2fa6376bc5639fe1c4982eda77246323e2b6ba9277051b8ba2",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-dev-cloud.js",
+        "status": 200,
+        "bytes": 56874,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "74ea990d85d760e8b63e6a006a9286e3f6e19391b6c1738a65e9ff62a5dd240f",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-dev-sync.js",
+        "status": 200,
+        "bytes": 9663,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "9fbcac6b3cce05d557790fa5fafaa3421e554158bff436ee46214473fb382ad4",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-legal.css",
+        "status": 200,
+        "bytes": 1163,
+        "content_type": "text/css; charset=utf-8",
+        "sha256": "a6b5a9da1854b452acc425b428b82ca21f43b35fb587f15eb065ac3c19a973eb",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-legal.js",
+        "status": 200,
+        "bytes": 990,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "01d0ea0bc136047c55f08f90bf762ff2f58499b04376ced6b3718fda7a98fb27",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-privacy.html",
+        "status": 200,
+        "bytes": 16108,
+        "content_type": "text/html; charset=utf-8",
+        "sha256": "3eb28df7f07e2f543c4b9ed2067a198a60c6b969625f29bb4770d95fcb12f6e0",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-terms.html",
+        "status": 200,
+        "bytes": 22220,
+        "content_type": "text/html; charset=utf-8",
+        "sha256": "9c37c3a277816cc722476108f804ce4e27111ac99bebaf2244c711774293c95c",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-activities.js",
+        "status": 200,
+        "bytes": 79629,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "ca62c5fab0b3a01fd5a1a8bc37667f2fa78042b1dc70f6303033abe032e5977e",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-adventure-budget.js",
+        "status": 200,
+        "bytes": 4577,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "88a0717713c83e62ea31bd036549725b7bd65b4663d1297e687520a8d4a634a1",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-adventure-journey.js",
+        "status": 200,
+        "bytes": 30590,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "558131b585afe57944cc13a679fdaed0f2735b3a344be6a60ed2df9ccc74398d",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-adventure-puzzles.js",
+        "status": 200,
+        "bytes": 6617,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "c6f415ce50df8534357cf1d2c698b3ff436fa68f33ef80b918e79740922d7071",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-adventures-art.js",
+        "status": 200,
+        "bytes": 18738,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "026e7e889edcb29b0528c8628ef0ec7a9c5e83f12791e9e56358cb29165df9c5",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-adventures-expanded-ui.js",
+        "status": 200,
+        "bytes": 26303,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "31e9801a1982a8630bb41f62ae00ae9bdad2c81a8c06914a1e9b9dd8fde0b9c4",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-adventures-ui.js",
+        "status": 200,
+        "bytes": 63465,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "6e7fe64297dc29a4008d3bb5e8a609db295b8e05130843688489363310a60754",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-adventures.css",
+        "status": 200,
+        "bytes": 27855,
+        "content_type": "text/css; charset=utf-8",
+        "sha256": "c4ed19b36ccbfd0a71bd80c15c99f8dba904090ce55c2b4e4de637f1c48ae8b0",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-adventures.js",
+        "status": 200,
+        "bytes": 62412,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "b26c2ec9203517e9fa7ae77f622bcf5337dfb78999f311bce6e1bd741be3d6ba",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-ambient.js",
+        "status": 200,
+        "bytes": 12599,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "45e84e057e880a3dbc1ccbfa2bbae3e3ea979a10c0b7f6a1eefc98eacb22d724",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-approved-copy.js",
+        "status": 200,
+        "bytes": 68512,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "b697bc3fcd94e8d73e147b479f428bddeb834efa4d5e613e7ce5eaa4e29c2b7d",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-archipelago.js",
+        "status": 200,
+        "bytes": 49813,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "e6f6b7057118a67317cf8758e7de7d06e43a401fc51f2729066eec2bbc98e8b4",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-calendar.js",
+        "status": 200,
+        "bytes": 2286,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "bb0314ecc83345212200b91854622e2eee1b9d5c5ace0a915bb1a102c05f2d10",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-campaign.js",
+        "status": 200,
+        "bytes": 42673,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "15ebf1b882f652412299227d2240e3aef1c7e5f37309841bdf2c877d1f8129d3",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-charity.js",
+        "status": 200,
+        "bytes": 28890,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "800b9c602db6ad78987368fb894f48bea584ea0fbd26247a2aa126abcab44c7d",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-commerce.js",
+        "status": 200,
+        "bytes": 13944,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "c1e2a443b6e21c3859d145b143ef736abf9ee3664e7aec2aca20e0cbc5ec98d4",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-community-client.js",
+        "status": 200,
+        "bytes": 12707,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "c887fcef0182dc01d192ec689b94e088636a893395615541bd66685e54cb987a",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-community-ui.js",
+        "status": 200,
+        "bytes": 40967,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "2ba0ef929b007fe9447ccdceedad380be11e02269b40ca0f7afa12b9a9f52c04",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-copy.js",
+        "status": 200,
+        "bytes": 14669,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "7a56b3c766a695e4a36070876e7c2882de8d57ed513e93d80a675655c115fa30",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-dev-preview.js",
+        "status": 200,
+        "bytes": 2340,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "92c065990d53f653dc77de60e761c41efb636031f06d7bfebd399758242c5222",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-development-copy.js",
+        "status": 200,
+        "bytes": 69408,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "94111fdd5dbb87df799a93202d3fb035fa300e947dd5e252522a8a6824639317",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-development-logistics.js",
+        "status": 200,
+        "bytes": 12742,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "2631b2305544d0dd8de29e2cf12eb99aa61452e2ee3b5efaca11f04f00691e67",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-development-ui.js",
+        "status": 200,
+        "bytes": 47777,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "cbbbce2a56dd2f1d94df873599089b209963dbbf1bbc6456e308b892445ee8f1",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-development.css",
+        "status": 200,
+        "bytes": 16730,
+        "content_type": "text/css; charset=utf-8",
+        "sha256": "543384aa659f2ff9dab53f88fc7b29c100b2ca96e9b3b8a390f082a588b90edc",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-development.js",
+        "status": 200,
+        "bytes": 11537,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "f017a6d56f81f3cbc17aae4413bdc30028fe208d8bc91868a26ba1d5b839332b",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-economy.js",
+        "status": 200,
+        "bytes": 7492,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "ec53b1f1352d265e59879408cc6244275286a7efa29a34a5b6123dd29fe58e46",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-education.js",
+        "status": 200,
+        "bytes": 28412,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "a0145c4b7ae1071ce13e7cb4edcb3f8f370afdc71d5aa378f028e006eafaa1f9",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-effects.js",
+        "status": 200,
+        "bytes": 22166,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "30ea85048f677c33119b84418b6d17928682497dbb928a11867257d6a05ddc82",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-engagement.js",
+        "status": 200,
+        "bytes": 9411,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "e94d94399fa12d01947e4154b1215ac0b872a00e962409688a1b270f7d892899",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-events.js",
+        "status": 200,
+        "bytes": 21349,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "5a9fcee2a2158007a02d3b7b8bc94f87f8f3bedab076a45820d1d0878b4cab5a",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-expedition-hour.js",
+        "status": 200,
+        "bytes": 6981,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "bc3782d63bb2f0d4f396ba63282a75a7c0d2de0a06b80ffefb3eb25d7f24495c",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-goods-art.js",
+        "status": 200,
+        "bytes": 2203,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "26b81718f50f9366c79f9f7ca0abac7a6fe2194ca0b34a0d4c85dd9f0625871a",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-housing.js",
+        "status": 200,
+        "bytes": 7112,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "23041ce48ced9e5a8278f9a27ce0f10d5fbdfd6d5ba3fc07f243c240373a4d76",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-i18n.js",
+        "status": 200,
+        "bytes": 241206,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "4a0d8177886fe919b031a2b177c131a657cce50f1050f806baefd6b502d6f8a7",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-inhabitants.js",
+        "status": 200,
+        "bytes": 1898,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "d2cd1ad2b22c948ed9056f521afdfed98e5f89f0749be0e461d5b6e42bcb5835",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-interruption.js",
+        "status": 200,
+        "bytes": 7068,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "1b3ca599a451158f69d6a8dbd99fd6917e1d7c56d983a2874f2848366ba368ee",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-inventory.js",
+        "status": 200,
+        "bytes": 6743,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "8940484ab4a5582815e6492b409b5afc140da4b6158585b85e4bc5e346bcae29",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-island-puzzles.js",
+        "status": 200,
+        "bytes": 49145,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "d76ed8e125daca71f7966ab2da703d06adc0e285e434b375f20a01acbe8a47ce",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-kingdom-client.js",
+        "status": 200,
+        "bytes": 3210,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "5d8e4194c2cdb5eca278ef2c666844179a44b900260c8bdfbf4bbb65f3361f54",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-kingdom-ui.js",
+        "status": 200,
+        "bytes": 23975,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "3726779998d8516db52caadd50f3ed49dbeca2d68af0857032a8314567271d79",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-kingdom.js",
+        "status": 200,
+        "bytes": 49180,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "485dfd8efa194984815c09bc6a03530834f2b0cd17c022cbdcc1f3add0b3a356",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-layered.html",
+        "status": 200,
+        "bytes": 9319,
+        "content_type": "text/html; charset=utf-8",
+        "sha256": "407b6ff6051a71ea4e03ba06dc9514eec092d044702b6b0cd9ec1ad969063ca0",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-league.js",
+        "status": 200,
+        "bytes": 137,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "e44ce8c59a6090720761c1bb59064bd33dd50a626b5b5cb61cfb06f9fc6ab526",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-learning-feedback.css",
+        "status": 200,
+        "bytes": 3145,
+        "content_type": "text/css; charset=utf-8",
+        "sha256": "af42a024c1129dd841553e25e3a62fff78bf5b98a215844b83291298bc35cbcc",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-learning-feedback.js",
+        "status": 200,
+        "bytes": 15057,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "3d42e06cd85cd772edeb1d0a51f8027da8dec0c6cd0b632d7a68c3d4a773cfac",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-leisure.js",
+        "status": 200,
+        "bytes": 18489,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "a800c7e3e406a0e4cef6b5d9a2be829c5f7b2ad54872e84d46a782aa414a31e9",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-life.js",
+        "status": 200,
+        "bytes": 16871,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "af51b2c40670ee3954ce4dad84cb2f600d9d3bb0fc5400e5ea43fd8c542e9b35",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-logistics.js",
+        "status": 200,
+        "bytes": 119390,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "6e99cc3eecb7e7b45b7521755650aadf12b53b6de217faf16f3a93e5fff59af2",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-map-art.js",
+        "status": 200,
+        "bytes": 7365,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "04ebe0cd65e4f634195d1c217dc79123fbc364d0a8d7261fd6389148de0ac0bd",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-military.js",
+        "status": 200,
+        "bytes": 25406,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "4b7bd45df607cc4ce4ed8226bbcd3bc478cd9e196202d0bd5cad6394d3bc2aae",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-minigame-ui.js",
+        "status": 200,
+        "bytes": 37414,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "0cf2de305893813acd14af0351e1af4d94396e0addf91305708d1d0b8338f3e5",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-minigame.css",
+        "status": 200,
+        "bytes": 22092,
+        "content_type": "text/css; charset=utf-8",
+        "sha256": "66818e8ac815ccdb341a0cbb7cd0e483a6099060fc3c3aa3a27c2e58574c3519",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-minigames.js",
+        "status": 200,
+        "bytes": 15130,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "6811531afb1e2ba6a803792d6646741b4f890ebd7700561c7a97a453b3cbfb8b",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-missions-ui.js",
+        "status": 200,
+        "bytes": 26113,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "1004edef905641197573a2910195e74f1cddb92210c44ecb237e33a67780b26b",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-missions.js",
+        "status": 200,
+        "bytes": 86094,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "7e07b7b236647272a8c3e38af5bd711c405b39049a9250571674d707b924b61b",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-notification-copy.js",
+        "status": 200,
+        "bytes": 4697,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "a9a72bab2d1f5d0fea3463b9d4ee43bba791e1482819707d84fc1bece55224ed",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-onboarding-ui.js",
+        "status": 200,
+        "bytes": 21665,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "7e76ef2142e582eea002db32e4f56fb2dea5a0a80cbc4d3d82b56875537eb12a",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-onboarding.css",
+        "status": 200,
+        "bytes": 6048,
+        "content_type": "text/css; charset=utf-8",
+        "sha256": "dfe7ad6c679efc43298a3db0195f3328fd24949343f0363d767d18a15b7d73eb",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-original-puzzles-ui.js",
+        "status": 200,
+        "bytes": 14452,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "0d9d84f63ad72e94b11cd3cb2d782ef77858fc2a164e042b3e30a5368654d736",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-original-puzzles.css",
+        "status": 200,
+        "bytes": 7188,
+        "content_type": "text/css; charset=utf-8",
+        "sha256": "f6108fa66be8a605c8e7e5f10675cc2ca9b719e59de4284e5c696377df3a81a1",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-original-puzzles.js",
+        "status": 200,
+        "bytes": 23175,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "4fd03bad8ee3f6773e5d1612151c15c422bb8a068f88f99da813ffa3ffcb4c73",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-play.css",
+        "status": 200,
+        "bytes": 114675,
+        "content_type": "text/css; charset=utf-8",
+        "sha256": "79c860dbd63be523c07d1a8848042dde501d64555927a8f2ce9fef30924d71c8",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-play.js",
+        "status": 200,
+        "bytes": 421119,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "8f1b4c9fb438b36b57d006c259eb6a426f9b98cca8b1fe54ff8e3cefaef4eff0",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-profile.js",
+        "status": 200,
+        "bytes": 4590,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "6cf838a33c7e404174b197254b74d2c001f2a951634e1bc0373f32ef8c18a18c",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-progression.js",
+        "status": 200,
+        "bytes": 104318,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "c82d26f9117b815ec342e0b189bc022f6d3909fb130e2892447fce3d9b369ee4",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-provisions.js",
+        "status": 200,
+        "bytes": 42002,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "e9a2e47be29509d20f774c4f31ea65b35180db577cb23bed0318b365b9f84aef",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-resident-labels.js",
+        "status": 200,
+        "bytes": 11664,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "42e2f019755d66d4abe9c57aadb15fe67b9e08cb678458ff7444ad157922f552",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-residents.js",
+        "status": 200,
+        "bytes": 47838,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "fa55ed0be082a3ea28797bc2c2b105f7dc2b3df2693b0ed53d47a7c94434c573",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-save-packing.js",
+        "status": 200,
+        "bytes": 7720,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "44d6c2d63ec44fca4b4b263ca283722a1ff21193c9100def76c46a4c409fd56c",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-smoke.js",
+        "status": 200,
+        "bytes": 3532,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "e6666bc51b535a411aea21ad03fe78d515470216b7f23a51e1c67424d1b3163f",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-state.js",
+        "status": 200,
+        "bytes": 104236,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "086ff65b3a535fd443c3f9e38cc810d70544d201a09609df43ead3951712a58a",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-story-catalog.js",
+        "status": 200,
+        "bytes": 11120,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "e2b4c43e345735c8b169e3e34ca130d58f3ea9598f10a54680fb548ddcb43ec4",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-theatre-art.js",
+        "status": 200,
+        "bytes": 15402,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "19ee1185dd7658ebafda8bb8dbeebaf897500bd2807880b125d7d6d6bb5dc911",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-theatre-scene.css",
+        "status": 200,
+        "bytes": 1578,
+        "content_type": "text/css; charset=utf-8",
+        "sha256": "5abf7b50f6eeaff40d869cff7daa04ffcf799a88b16825b97018ec91cabb0f96",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-theatre-ui.js",
+        "status": 200,
+        "bytes": 47212,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "bc63829a44f0751706641337c6bbe050db1aaa9dc7d00e2b515d6892f238e9c1",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-theatre.css",
+        "status": 200,
+        "bytes": 22506,
+        "content_type": "text/css; charset=utf-8",
+        "sha256": "d65b15688e8af2da48c2f7e6cde89cb5dae6139bbfaaf1f6cb229a3361eb4323",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-theatre.js",
+        "status": 200,
+        "bytes": 39257,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "9af363390a61f04ddd22eec55a094289f74bdb6a409d19945d56069b1183ee23",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-tutorial-ui.js",
+        "status": 200,
+        "bytes": 28882,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "504cec582268dbf99c2f5523caeb9e6b62cbfca5b2e1d7b5e01e85870dc11257",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-tutorial.css",
+        "status": 200,
+        "bytes": 8773,
+        "content_type": "text/css; charset=utf-8",
+        "sha256": "5410a3b88103cbda5e3b258dcdd0badc7a98fe2fb7db38b14abe0b95ecb0c63c",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-v16-copy.js",
+        "status": 200,
+        "bytes": 18595,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "66bc3e87090d97ee2dc840861d9677c8abbeddf7eee71a62ec3bc93d2e67ca14",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-water.js",
+        "status": 200,
+        "bytes": 14886,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "897c6e4fc26366eb6704600c64dea91eb5eaedb66fb2d34672699c525a296720",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-v1-welcome.js",
+        "status": 200,
+        "bytes": 3508,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "31e09a1df329e8e6913042d34d1adb458917e0bf6b94ade703bf4ddc6480b297",
+        "matches_expected_sha256": true
+      },
+      {
+        "file": "harborlight-version.js",
+        "status": 200,
+        "bytes": 196,
+        "content_type": "application/javascript; charset=utf-8",
+        "sha256": "d77f115eb0f1ecf154b47df3f2d48f4fbc57627533127bef534eb2922f1ddb71",
+        "matches_expected_sha256": true
+      }
+    ]
+  },
+  "local_render": {
+    "result": "PASS",
+    "viewports": [
+      {
+        "width": 1672,
+        "guest_level": 5,
+        "map_functions": 20,
+        "accepted_art_patches": 4,
+        "academy": {
+          "student_group": [
+            "Wolni w Domu"
+          ],
+          "free_at_home_count": 19,
+          "professor_labels": [
+            "Profesor 1",
+            "Profesor 2",
+            "Profesor 3",
+            "Profesor 4"
+          ],
+          "teacher_groups": [
+            "Profesorowie"
+          ]
+        },
+        "barracks": {
+          "recruit_groups": [
+            "Wolni w Domu"
+          ],
+          "free_at_home_count": 19,
+          "instructor_groups": [
+            "Żołnierze"
+          ],
+          "soldier_labels": [
+            "Żołnierz 1",
+            "Żołnierz 2",
+            "Żołnierz 3",
+            "Żołnierz 4"
+          ]
+        },
+        "roster": {
+          "people": 27,
+          "groups": [
+            {
+              "key": "home",
+              "title": "Wolni w Domu (19)"
+            },
+            {
+              "key": "professors",
+              "title": "Profesorowie (4)"
+            },
+            {
+              "key": "soldiers",
+              "title": "Żołnierze (4)"
+            }
+          ],
+          "no_generic_resident_labels": true
+        },
+        "categories": [
+          "administration",
+          "economy",
+          "resources",
+          "decorations",
+          "paths"
+        ],
+        "cards": {
+          "administration": 9,
+          "economy": 10
+        },
+        "edges": {
+          "dock_right": 1664,
+          "right_panel_right": 1664,
+          "dock_left": 474,
+          "ship_right": 434
+        },
+        "rendered_verified_assets": 94,
+        "page_errors": [],
+        "denied_unverified_requests": []
+      },
+      {
+        "width": 390,
+        "guest_level": 5,
+        "map_functions": 20,
+        "accepted_art_patches": 4,
+        "academy": {
+          "student_group": [
+            "Wolni w Domu"
+          ],
+          "free_at_home_count": 19,
+          "professor_labels": [
+            "Profesor 1",
+            "Profesor 2",
+            "Profesor 3",
+            "Profesor 4"
+          ],
+          "teacher_groups": [
+            "Profesorowie"
+          ]
+        },
+        "barracks": {
+          "recruit_groups": [
+            "Wolni w Domu"
+          ],
+          "free_at_home_count": 19,
+          "instructor_groups": [
+            "Żołnierze"
+          ],
+          "soldier_labels": [
+            "Żołnierz 1",
+            "Żołnierz 2",
+            "Żołnierz 3",
+            "Żołnierz 4"
+          ]
+        },
+        "roster": {
+          "people": 27,
+          "groups": [
+            {
+              "key": "home",
+              "title": "Wolni w Domu (19)"
+            },
+            {
+              "key": "professors",
+              "title": "Profesorowie (4)"
+            },
+            {
+              "key": "soldiers",
+              "title": "Żołnierze (4)"
+            }
+          ],
+          "no_generic_resident_labels": true
+        },
+        "categories": [
+          "administration",
+          "economy",
+          "resources",
+          "decorations",
+          "paths"
+        ],
+        "cards": {
+          "administration": 9,
+          "economy": 10
+        },
+        "edges": null,
+        "rendered_verified_assets": 94,
+        "page_errors": [],
+        "denied_unverified_requests": []
+      }
+    ]
+  },
+  "package": {
+    "archive_sha256": "ef537dd45191158c2488845ec8b390f43f92dfae85155de4c9199391976eafd2",
+    "commit": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+    "file_count": 108,
+    "manifest_sha256": "726e947044253b4e5759d5da9b8a6f3f1a97962909089cd359281faf341431e2",
+    "total_bytes": 30742668
+  },
+  "model_identity": {
+    "normalization": "query namespace only",
+    "unchanged_modules": [
+      "harborlight-v1-state.js",
+      "harborlight-v1-provisions.js",
+      "harborlight-v1-education.js",
+      "harborlight-v1-military.js",
+      "harborlight-v1-housing.js",
+      "harborlight-v1-development-logistics.js",
+      "harborlight-v1-logistics.js",
+      "harborlight-v1-residents.js",
+      "harborlight-v1-kingdom.js",
+      "harborlight-v1-theatre.js"
+    ],
+    "paused_original_worktree_preserved": true
+  },
+  "ci": {
+    "run_id": 43740930893,
+    "head_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+    "status": "completed",
+    "conclusion": "success",
+    "job_id": 132893708888,
+    "job_started_at": "2026-11-15T17:24:32Z",
+    "job_completed_at": "2026-11-15T17:42:30Z",
+    "job_duration_seconds": 1078,
+    "job_duration": "17m58s",
+    "successful_steps": 31,
+    "failed_steps": 0,
+    "includes": [
+      "frontend packaged Chromium acceptance",
+      "DEV login and cloud-save Chromium acceptance"
+    ]
+  },
+  "immutable_tag": {
+    "name": "dev-0.15.0.0-cache8-20261115",
+    "annotated_object": "d9455d2657c523fc505b26d973311744ff56f11e",
+    "peeled_target_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+    "published": true,
+    "remote_verified": true,
+    "immutable": true
+  },
+  "metadata_only_followup": {
+    "status": "documentation_prepared_locally",
+    "public_file_count": 106,
+    "public_files_changed": false,
+    "accepted_application_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+    "accepted_publication_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+    "moves_accepted_tag": false,
+    "own_ci_is_separate": true
+  }
+}

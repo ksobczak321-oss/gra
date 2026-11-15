@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `local_acceptance_passed_publication_pending` |
-| CI | `pending_own_run` |
+| DEV | `deployed_source_06db93a` |
+| CI | `success_source_06db93a` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -39,13 +39,14 @@ Data pierwotnej wiadomości: 2026-11-15. Bieżące zgłoszenie Akademii, doprecy
 
 ## Dowody
 
-- **Dokumenty:** [docs/v32/GO-DIRECTORY.md](../../v32/GO-DIRECTORY.md), [docs/v32/DIRECTORY-EVIDENCE.json](../../v32/DIRECTORY-EVIDENCE.json)
+- **Dokumenty:** [docs/v32/GO-DIRECTORY.md](../../v32/GO-DIRECTORY.md), [docs/v32/DIRECTORY-EVIDENCE.json](../../v32/DIRECTORY-EVIDENCE.json), [docs/v32/DIRECTORY-PUBLIC-RECEIPTS.json](../../v32/DIRECTORY-PUBLIC-RECEIPTS.json)
 - **Kod:** [harborlight-v1-resident-labels.js](../../../harborlight-v1-resident-labels.js), [harborlight-v1-development-ui.js](../../../harborlight-v1-development-ui.js), [harborlight-v1-kingdom-ui.js](../../../harborlight-v1-kingdom-ui.js), [harborlight-v1-play.js](../../../harborlight-v1-play.js)
 - **Scenariusze automatyczne:** [tests/harborlight-resident-labels.test.mjs](../../../tests/harborlight-resident-labels.test.mjs), [tests/harborlight-resident-labels-ui-v32-smoke.py](../../../tests/harborlight-resident-labels-ui-v32-smoke.py), [tests/harborlight-kingdom-resident-labels-v32-smoke.py](../../../tests/harborlight-kingdom-resident-labels-v32-smoke.py), [tests/harborlight-legacy-resident-labels-v32-smoke.py](../../../tests/harborlight-legacy-resident-labels-v32-smoke.py)
-- **Kod dowodowy:** `fa34c9e379b2425529ef96552d43e66568f14b2c`.
+- **Kod dowodowy:** `06db93ada1c5cbd3071709ab84fc959f9674e5a1`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/43740930893.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Cache8 odebrany lokalnie: helper11NodePASS; Akademia/Koszary/badania/Teatr100osób i Królestwo oraz Dom/modlitwa/Latarnia na1440/390PASS; działania zachowująUID i zapisaneimiona. RegresjaTeatru100PASS, ENProfessor1/2PASS;112polskichwidokówPASS. Ścisłyv17/120kart/heldresizePASS bez zmianyprogu20px. Publikacja i własnyCI cache8 oczekują.
+Cache8 odebranywyłącznieDEV: aplikacjafa34c9e, publikacja06db93a, własnyCI43740930893SUCCESS iPages43740930892SUCCESS dokładnie tegoSHA. Job132893708888:17m58s,31krokówSUCCESS/0failed, pełneChromium aplikacji i logowań/zapisówDEV.18ukierunkowanychhashyHTTPS i106PUBLIC_FILES/30728747bajtów zgodneSHA256/TLS; render1672/390PASS oznacza publiczne bajty wykonane lokalnie z rzeczywistymContent-Type, bez fikcyjnegoświata/API/konta. NatywneHTTPSChromiumBLOCKED_CERT_AUTHORITY bez ignorowaniaTLS. Adnotowanytagdev-0.15.0.0-cache8-20261115 opublikowany i potwierdzonyzdalnie na06db93a. StaryCIcache7FAILURE zachowany; ręcznyodbiórNOT_RUN. Późniejszycommitmetadanych nie zmienia106publicznychplików ani tagu.
 
 ## Relacje
 

@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `published_pages_d2af52a_17_hashes_verified` |
-| CI | `failed_v17_delayed_resize_43738724605` |
+| DEV | `deployed_source_06db93a` |
+| CI | `success_source_06db93a` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -37,14 +37,14 @@ Data pierwotnej wiadomości: 2026-11-15. Bieżące GO użytkownika po akceptacji
 
 ## Dowody
 
-- **Dokumenty:** [docs/v32/GO-ACCEPTED-FRONT.md](../../v32/GO-ACCEPTED-FRONT.md), [docs/v32/ACCEPTED-FRONT-EVIDENCE.json](../../v32/ACCEPTED-FRONT-EVIDENCE.json)
+- **Dokumenty:** [docs/v32/GO-ACCEPTED-FRONT.md](../../v32/GO-ACCEPTED-FRONT.md), [docs/v32/ACCEPTED-FRONT-EVIDENCE.json](../../v32/ACCEPTED-FRONT-EVIDENCE.json), [docs/v32/DIRECTORY-EVIDENCE.json](../../v32/DIRECTORY-EVIDENCE.json), [docs/v32/DIRECTORY-PUBLIC-RECEIPTS.json](../../v32/DIRECTORY-PUBLIC-RECEIPTS.json)
 - **Kod:** [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-play.css](../../../harborlight-v1-play.css), [harborlight-v1-development-ui.js](../../../harborlight-v1-development-ui.js), [harborlight-v1-map-art.js](../../../harborlight-v1-map-art.js)
 - **Scenariusze automatyczne:** [tests/harborlight-native-map-v32-smoke.py](../../../tests/harborlight-native-map-v32-smoke.py), [tests/harborlight-tour-route-v5-smoke.py](../../../tests/harborlight-tour-route-v5-smoke.py), [tests/harborlight-accepted-front-v32-smoke.py](../../../tests/harborlight-accepted-front-v32-smoke.py)
-- **Kod dowodowy:** `0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3`.
-- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/43738724605.
+- **Kod dowodowy:** `06db93ada1c5cbd3071709ab84fc959f9674e5a1`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/43740930893.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Cache7: źródło0bc7af0, publikacjad2af52a, Pages43738724545SUCCESS i17zgodnychhashyHTTPS/TLS. WłasnyCI43738724605FAILURE po zaliczonych etapach modelu/backendu/Excela: v17/opóźnionyresize/120kart dał16.328px wobec20px. Bezpośredni publiczny Chromium nadalBLOCKEDmanagedTLS, niePASS. Cache8 ma własną poprawkęUI i wymaga własnegoCI; poprzedniFAILURE zachowany.
+Cache8 odebranywyłącznieDEV: aplikacjafa34c9e, publikacja06db93a, własnyCI43740930893SUCCESS iPages43740930892SUCCESS dokładnie tegoSHA. Job132893708888:17m58s,31krokówSUCCESS/0failed, pełneChromium aplikacji i logowań/zapisówDEV.18ukierunkowanychhashyHTTPS i106PUBLIC_FILES/30728747bajtów zgodneSHA256/TLS; render1672/390PASS oznacza publiczne bajty wykonane lokalnie z rzeczywistymContent-Type, bez fikcyjnegoświata/API/konta. NatywneHTTPSChromiumBLOCKED_CERT_AUTHORITY bez ignorowaniaTLS. Adnotowanytagdev-0.15.0.0-cache8-20261115 opublikowany i potwierdzonyzdalnie na06db93a. StaryCIcache7FAILURE zachowany; ręcznyodbiórNOT_RUN. Późniejszycommitmetadanych nie zmienia106publicznychplików ani tagu.
 
 ## Relacje
 
@@ -58,6 +58,7 @@ Cache7: źródło0bc7af0, publikacjad2af52a, Pages43738724545SUCCESS i17zgodnych
 - Roboczy pakiet sera, otrębów/paszy i nazw mieszkańców jest zachowany w osobnym drzewie i wyłączony z tej publikacji.
 - Publiczny scenariusz preview=admin1-level5 pozostaje oznaczonym podglądem w pamięci karty, bez uwierzytelnienia lub trwałego zapisu.
 - Późniejsze GOcache8 autoryzuje prezentację nazw i grup mieszkańców, która była wyłączona z historycznej publikacji cache7; modele sera i otrębów/paszy pozostają wyłączone.
+- Zaakceptowany front cache7 przeniesiono bez zmiany grafik i przypisań do opublikowanego cache8; historycznyCIcache7 pozostajeFAILURE.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

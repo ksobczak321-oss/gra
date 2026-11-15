@@ -28354,8 +28354,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "published_pages_d2af52a_17_hashes_verified",
-        "ci": "failed_v17_delayed_resize_43738724605",
+        "dev": "deployed_source_06db93a",
+        "ci": "success_source_06db93a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -28367,7 +28367,9 @@
       "evidence": {
         "documents": [
           "docs/v32/GO-ACCEPTED-FRONT.md",
-          "docs/v32/ACCEPTED-FRONT-EVIDENCE.json"
+          "docs/v32/ACCEPTED-FRONT-EVIDENCE.json",
+          "docs/v32/DIRECTORY-EVIDENCE.json",
+          "docs/v32/DIRECTORY-PUBLIC-RECEIPTS.json"
         ],
         "code": [
           "harborlight-v1-play.js",
@@ -28382,16 +28384,22 @@
         ],
         "manual_execution": "NOT_RUN",
         "source_baseline_sha": "e3affdc89752228c849588f45352414019bbf8cd",
-        "source_sha": "0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3",
-        "release_note": "Cache7: źródło0bc7af0, publikacjad2af52a, Pages43738724545SUCCESS i17zgodnychhashyHTTPS/TLS. WłasnyCI43738724605FAILURE po zaliczonych etapach modelu/backendu/Excela: v17/opóźnionyresize/120kart dał16.328px wobec20px. Bezpośredni publiczny Chromium nadalBLOCKEDmanagedTLS, niePASS. Cache8 ma własną poprawkęUI i wymaga własnegoCI; poprzedniFAILURE zachowany.",
-        "publication_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43738724605"
+        "source_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+        "release_note": "Cache8 odebranywyłącznieDEV: aplikacjafa34c9e, publikacja06db93a, własnyCI43740930893SUCCESS iPages43740930892SUCCESS dokładnie tegoSHA. Job132893708888:17m58s,31krokówSUCCESS/0failed, pełneChromium aplikacji i logowań/zapisówDEV.18ukierunkowanychhashyHTTPS i106PUBLIC_FILES/30728747bajtów zgodneSHA256/TLS; render1672/390PASS oznacza publiczne bajty wykonane lokalnie z rzeczywistymContent-Type, bez fikcyjnegoświata/API/konta. NatywneHTTPSChromiumBLOCKED_CERT_AUTHORITY bez ignorowaniaTLS. Adnotowanytagdev-0.15.0.0-cache8-20261115 opublikowany i potwierdzonyzdalnie na06db93a. StaryCIcache7FAILURE zachowany; ręcznyodbiórNOT_RUN. Późniejszycommitmetadanych nie zmienia106publicznychplików ani tagu.",
+        "publication_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43740930893",
+        "previous_evidence_source_sha": "0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3",
+        "current_application_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+        "dev_tag": "dev-0.15.0.0-cache8-20261115",
+        "dev_tag_annotated_object": "d9455d2657c523fc505b26d973311744ff56f11e",
+        "dev_tag_remote_verified": true
       },
       "notes": [
         "Wyłącznie publikacja zatwierdzonego frontu na DEV/GitHub Pages; bez nowej promocji PRE-PROD/PROD, operacji kont lub resetu.",
         "Roboczy pakiet sera, otrębów/paszy i nazw mieszkańców jest zachowany w osobnym drzewie i wyłączony z tej publikacji.",
         "Publiczny scenariusz preview=admin1-level5 pozostaje oznaczonym podglądem w pamięci karty, bez uwierzytelnienia lub trwałego zapisu.",
-        "Późniejsze GOcache8 autoryzuje prezentację nazw i grup mieszkańców, która była wyłączona z historycznej publikacji cache7; modele sera i otrębów/paszy pozostają wyłączone."
+        "Późniejsze GOcache8 autoryzuje prezentację nazw i grup mieszkańców, która była wyłączona z historycznej publikacji cache7; modele sera i otrębów/paszy pozostają wyłączone.",
+        "Zaakceptowany front cache7 przeniesiono bez zmiany grafik i przypisań do opublikowanego cache8; historycznyCIcache7 pozostajeFAILURE."
       ],
       "tags": [
         "v32",
@@ -28432,8 +28440,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "published_pages_d2af52a_17_hashes_verified",
-        "ci": "failed_v17_delayed_resize_43738724605",
+        "dev": "deployed_source_06db93a",
+        "ci": "success_source_06db93a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -28445,7 +28453,9 @@
       "evidence": {
         "documents": [
           "docs/v32/GO-ACCEPTED-FRONT.md",
-          "docs/v32/ACCEPTED-FRONT-EVIDENCE.json"
+          "docs/v32/ACCEPTED-FRONT-EVIDENCE.json",
+          "docs/v32/DIRECTORY-EVIDENCE.json",
+          "docs/v32/DIRECTORY-PUBLIC-RECEIPTS.json"
         ],
         "code": [
           "harborlight-v1-play.js",
@@ -28460,16 +28470,22 @@
         ],
         "manual_execution": "NOT_RUN",
         "source_baseline_sha": "e3affdc89752228c849588f45352414019bbf8cd",
-        "source_sha": "0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3",
-        "release_note": "Cache7: źródło0bc7af0, publikacjad2af52a, Pages43738724545SUCCESS i17zgodnychhashyHTTPS/TLS. WłasnyCI43738724605FAILURE po zaliczonych etapach modelu/backendu/Excela: v17/opóźnionyresize/120kart dał16.328px wobec20px. Bezpośredni publiczny Chromium nadalBLOCKEDmanagedTLS, niePASS. Cache8 ma własną poprawkęUI i wymaga własnegoCI; poprzedniFAILURE zachowany.",
-        "publication_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43738724605"
+        "source_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+        "release_note": "Cache8 odebranywyłącznieDEV: aplikacjafa34c9e, publikacja06db93a, własnyCI43740930893SUCCESS iPages43740930892SUCCESS dokładnie tegoSHA. Job132893708888:17m58s,31krokówSUCCESS/0failed, pełneChromium aplikacji i logowań/zapisówDEV.18ukierunkowanychhashyHTTPS i106PUBLIC_FILES/30728747bajtów zgodneSHA256/TLS; render1672/390PASS oznacza publiczne bajty wykonane lokalnie z rzeczywistymContent-Type, bez fikcyjnegoświata/API/konta. NatywneHTTPSChromiumBLOCKED_CERT_AUTHORITY bez ignorowaniaTLS. Adnotowanytagdev-0.15.0.0-cache8-20261115 opublikowany i potwierdzonyzdalnie na06db93a. StaryCIcache7FAILURE zachowany; ręcznyodbiórNOT_RUN. Późniejszycommitmetadanych nie zmienia106publicznychplików ani tagu.",
+        "publication_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43740930893",
+        "previous_evidence_source_sha": "0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3",
+        "current_application_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+        "dev_tag": "dev-0.15.0.0-cache8-20261115",
+        "dev_tag_annotated_object": "d9455d2657c523fc505b26d973311744ff56f11e",
+        "dev_tag_remote_verified": true
       },
       "notes": [
         "Wyłącznie publikacja zatwierdzonego frontu na DEV/GitHub Pages; bez nowej promocji PRE-PROD/PROD, operacji kont lub resetu.",
         "Roboczy pakiet sera, otrębów/paszy i nazw mieszkańców jest zachowany w osobnym drzewie i wyłączony z tej publikacji.",
         "Publiczny scenariusz preview=admin1-level5 pozostaje oznaczonym podglądem w pamięci karty, bez uwierzytelnienia lub trwałego zapisu.",
-        "Późniejsze GOcache8 autoryzuje prezentację nazw i grup mieszkańców, która była wyłączona z historycznej publikacji cache7; modele sera i otrębów/paszy pozostają wyłączone."
+        "Późniejsze GOcache8 autoryzuje prezentację nazw i grup mieszkańców, która była wyłączona z historycznej publikacji cache7; modele sera i otrębów/paszy pozostają wyłączone.",
+        "Zaakceptowany front cache7 przeniesiono bez zmiany grafik i przypisań do opublikowanego cache8; historycznyCIcache7 pozostajeFAILURE."
       ],
       "tags": [
         "v32",
@@ -28510,8 +28526,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "published_pages_d2af52a_17_hashes_verified",
-        "ci": "failed_v17_delayed_resize_43738724605",
+        "dev": "deployed_source_06db93a",
+        "ci": "success_source_06db93a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -28523,7 +28539,9 @@
       "evidence": {
         "documents": [
           "docs/v32/GO-ACCEPTED-FRONT.md",
-          "docs/v32/ACCEPTED-FRONT-EVIDENCE.json"
+          "docs/v32/ACCEPTED-FRONT-EVIDENCE.json",
+          "docs/v32/DIRECTORY-EVIDENCE.json",
+          "docs/v32/DIRECTORY-PUBLIC-RECEIPTS.json"
         ],
         "code": [
           "harborlight-v1-play.js",
@@ -28544,16 +28562,22 @@
         ],
         "manual_execution": "NOT_RUN",
         "source_baseline_sha": "e3affdc89752228c849588f45352414019bbf8cd",
-        "source_sha": "0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3",
-        "release_note": "Cache7: źródło0bc7af0, publikacjad2af52a, Pages43738724545SUCCESS i17zgodnychhashyHTTPS/TLS. WłasnyCI43738724605FAILURE po zaliczonych etapach modelu/backendu/Excela: v17/opóźnionyresize/120kart dał16.328px wobec20px. Bezpośredni publiczny Chromium nadalBLOCKEDmanagedTLS, niePASS. Cache8 ma własną poprawkęUI i wymaga własnegoCI; poprzedniFAILURE zachowany.",
-        "publication_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43738724605"
+        "source_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+        "release_note": "Cache8 odebranywyłącznieDEV: aplikacjafa34c9e, publikacja06db93a, własnyCI43740930893SUCCESS iPages43740930892SUCCESS dokładnie tegoSHA. Job132893708888:17m58s,31krokówSUCCESS/0failed, pełneChromium aplikacji i logowań/zapisówDEV.18ukierunkowanychhashyHTTPS i106PUBLIC_FILES/30728747bajtów zgodneSHA256/TLS; render1672/390PASS oznacza publiczne bajty wykonane lokalnie z rzeczywistymContent-Type, bez fikcyjnegoświata/API/konta. NatywneHTTPSChromiumBLOCKED_CERT_AUTHORITY bez ignorowaniaTLS. Adnotowanytagdev-0.15.0.0-cache8-20261115 opublikowany i potwierdzonyzdalnie na06db93a. StaryCIcache7FAILURE zachowany; ręcznyodbiórNOT_RUN. Późniejszycommitmetadanych nie zmienia106publicznychplików ani tagu.",
+        "publication_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43740930893",
+        "previous_evidence_source_sha": "0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3",
+        "current_application_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+        "dev_tag": "dev-0.15.0.0-cache8-20261115",
+        "dev_tag_annotated_object": "d9455d2657c523fc505b26d973311744ff56f11e",
+        "dev_tag_remote_verified": true
       },
       "notes": [
         "Wyłącznie publikacja zatwierdzonego frontu na DEV/GitHub Pages; bez nowej promocji PRE-PROD/PROD, operacji kont lub resetu.",
         "Roboczy pakiet sera, otrębów/paszy i nazw mieszkańców jest zachowany w osobnym drzewie i wyłączony z tej publikacji.",
         "Publiczny scenariusz preview=admin1-level5 pozostaje oznaczonym podglądem w pamięci karty, bez uwierzytelnienia lub trwałego zapisu.",
-        "Późniejsze GOcache8 autoryzuje prezentację nazw i grup mieszkańców, która była wyłączona z historycznej publikacji cache7; modele sera i otrębów/paszy pozostają wyłączone."
+        "Późniejsze GOcache8 autoryzuje prezentację nazw i grup mieszkańców, która była wyłączona z historycznej publikacji cache7; modele sera i otrębów/paszy pozostają wyłączone.",
+        "Zaakceptowany front cache7 przeniesiono bez zmiany grafik i przypisań do opublikowanego cache8; historycznyCIcache7 pozostajeFAILURE."
       ],
       "tags": [
         "v32",
@@ -28597,8 +28621,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_acceptance_passed_publication_pending",
-        "ci": "pending_own_run",
+        "dev": "deployed_source_06db93a",
+        "ci": "success_source_06db93a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -28610,7 +28634,8 @@
       "evidence": {
         "documents": [
           "docs/v32/GO-DIRECTORY.md",
-          "docs/v32/DIRECTORY-EVIDENCE.json"
+          "docs/v32/DIRECTORY-EVIDENCE.json",
+          "docs/v32/DIRECTORY-PUBLIC-RECEIPTS.json"
         ],
         "code": [
           "harborlight-v1-resident-labels.js",
@@ -28626,8 +28651,15 @@
         ],
         "manual_execution": "NOT_RUN",
         "source_baseline_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
-        "source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
-        "release_note": "Cache8 odebrany lokalnie: helper11NodePASS; Akademia/Koszary/badania/Teatr100osób i Królestwo oraz Dom/modlitwa/Latarnia na1440/390PASS; działania zachowująUID i zapisaneimiona. RegresjaTeatru100PASS, ENProfessor1/2PASS;112polskichwidokówPASS. Ścisłyv17/120kart/heldresizePASS bez zmianyprogu20px. Publikacja i własnyCI cache8 oczekują."
+        "source_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+        "release_note": "Cache8 odebranywyłącznieDEV: aplikacjafa34c9e, publikacja06db93a, własnyCI43740930893SUCCESS iPages43740930892SUCCESS dokładnie tegoSHA. Job132893708888:17m58s,31krokówSUCCESS/0failed, pełneChromium aplikacji i logowań/zapisówDEV.18ukierunkowanychhashyHTTPS i106PUBLIC_FILES/30728747bajtów zgodneSHA256/TLS; render1672/390PASS oznacza publiczne bajty wykonane lokalnie z rzeczywistymContent-Type, bez fikcyjnegoświata/API/konta. NatywneHTTPSChromiumBLOCKED_CERT_AUTHORITY bez ignorowaniaTLS. Adnotowanytagdev-0.15.0.0-cache8-20261115 opublikowany i potwierdzonyzdalnie na06db93a. StaryCIcache7FAILURE zachowany; ręcznyodbiórNOT_RUN. Późniejszycommitmetadanych nie zmienia106publicznychplików ani tagu.",
+        "previous_evidence_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+        "current_application_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+        "publication_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43740930893",
+        "dev_tag": "dev-0.15.0.0-cache8-20261115",
+        "dev_tag_annotated_object": "d9455d2657c523fc505b26d973311744ff56f11e",
+        "dev_tag_remote_verified": true
       },
       "notes": [
         "Wyłącznie prezentacjaUI i publikacjaDEV/GitHubPages; bez zmian UID,uprawnień wyboru,modeli,zapisów,przydziałów i postępu.",
@@ -28675,8 +28707,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_acceptance_passed_publication_pending",
-        "ci": "pending_own_run",
+        "dev": "deployed_source_06db93a",
+        "ci": "success_source_06db93a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -28688,7 +28720,8 @@
       "evidence": {
         "documents": [
           "docs/v32/GO-DIRECTORY.md",
-          "docs/v32/DIRECTORY-EVIDENCE.json"
+          "docs/v32/DIRECTORY-EVIDENCE.json",
+          "docs/v32/DIRECTORY-PUBLIC-RECEIPTS.json"
         ],
         "code": [
           "harborlight-v1-resident-labels.js",
@@ -28704,8 +28737,15 @@
         ],
         "manual_execution": "NOT_RUN",
         "source_baseline_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
-        "source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
-        "release_note": "Cache8 odebrany lokalnie: helper11NodePASS; Akademia/Koszary/badania/Teatr100osób i Królestwo oraz Dom/modlitwa/Latarnia na1440/390PASS; działania zachowująUID i zapisaneimiona. RegresjaTeatru100PASS, ENProfessor1/2PASS;112polskichwidokówPASS. Ścisłyv17/120kart/heldresizePASS bez zmianyprogu20px. Publikacja i własnyCI cache8 oczekują."
+        "source_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+        "release_note": "Cache8 odebranywyłącznieDEV: aplikacjafa34c9e, publikacja06db93a, własnyCI43740930893SUCCESS iPages43740930892SUCCESS dokładnie tegoSHA. Job132893708888:17m58s,31krokówSUCCESS/0failed, pełneChromium aplikacji i logowań/zapisówDEV.18ukierunkowanychhashyHTTPS i106PUBLIC_FILES/30728747bajtów zgodneSHA256/TLS; render1672/390PASS oznacza publiczne bajty wykonane lokalnie z rzeczywistymContent-Type, bez fikcyjnegoświata/API/konta. NatywneHTTPSChromiumBLOCKED_CERT_AUTHORITY bez ignorowaniaTLS. Adnotowanytagdev-0.15.0.0-cache8-20261115 opublikowany i potwierdzonyzdalnie na06db93a. StaryCIcache7FAILURE zachowany; ręcznyodbiórNOT_RUN. Późniejszycommitmetadanych nie zmienia106publicznychplików ani tagu.",
+        "previous_evidence_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+        "current_application_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+        "publication_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43740930893",
+        "dev_tag": "dev-0.15.0.0-cache8-20261115",
+        "dev_tag_annotated_object": "d9455d2657c523fc505b26d973311744ff56f11e",
+        "dev_tag_remote_verified": true
       },
       "notes": [
         "Wyłącznie prezentacjaUI i publikacjaDEV/GitHubPages; bez zmian UID,uprawnień wyboru,modeli,zapisów,przydziałów i postępu.",
@@ -28754,8 +28794,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_acceptance_passed_publication_pending",
-        "ci": "pending_own_run",
+        "dev": "deployed_source_06db93a",
+        "ci": "success_source_06db93a",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -28767,7 +28807,8 @@
       "evidence": {
         "documents": [
           "docs/v32/GO-DIRECTORY.md",
-          "docs/v32/DIRECTORY-EVIDENCE.json"
+          "docs/v32/DIRECTORY-EVIDENCE.json",
+          "docs/v32/DIRECTORY-PUBLIC-RECEIPTS.json"
         ],
         "code": [
           "harborlight-v1-minigame-ui.js"
@@ -28777,8 +28818,15 @@
         ],
         "manual_execution": "NOT_RUN",
         "source_baseline_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
-        "source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
-        "release_note": "Cache8 odebrany lokalnie: helper11NodePASS; Akademia/Koszary/badania/Teatr100osób i Królestwo oraz Dom/modlitwa/Latarnia na1440/390PASS; działania zachowująUID i zapisaneimiona. RegresjaTeatru100PASS, ENProfessor1/2PASS;112polskichwidokówPASS. Ścisłyv17/120kart/heldresizePASS bez zmianyprogu20px. Publikacja i własnyCI cache8 oczekują."
+        "source_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+        "release_note": "Cache8 odebranywyłącznieDEV: aplikacjafa34c9e, publikacja06db93a, własnyCI43740930893SUCCESS iPages43740930892SUCCESS dokładnie tegoSHA. Job132893708888:17m58s,31krokówSUCCESS/0failed, pełneChromium aplikacji i logowań/zapisówDEV.18ukierunkowanychhashyHTTPS i106PUBLIC_FILES/30728747bajtów zgodneSHA256/TLS; render1672/390PASS oznacza publiczne bajty wykonane lokalnie z rzeczywistymContent-Type, bez fikcyjnegoświata/API/konta. NatywneHTTPSChromiumBLOCKED_CERT_AUTHORITY bez ignorowaniaTLS. Adnotowanytagdev-0.15.0.0-cache8-20261115 opublikowany i potwierdzonyzdalnie na06db93a. StaryCIcache7FAILURE zachowany; ręcznyodbiórNOT_RUN. Późniejszycommitmetadanych nie zmienia106publicznychplików ani tagu.",
+        "previous_evidence_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+        "current_application_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+        "publication_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43740930893",
+        "dev_tag": "dev-0.15.0.0-cache8-20261115",
+        "dev_tag_annotated_object": "d9455d2657c523fc505b26d973311744ff56f11e",
+        "dev_tag_remote_verified": true
       },
       "notes": [
         "Poprawka konieczna w ramach autoryzowanego wdrożeniaDEV; brak zmiany modeli,shaderów lub danych kont.",
@@ -28941,15 +28989,15 @@
     "preprod_bridge_duration": "13s",
     "preprod_deployment_duration": "2m12s",
     "dev_application_version": "0.15.0.0",
-    "dev_status": "cache7_pages_published_17_https_hashes_verified; cache8_resident_directory_pending",
-    "dev_ci": "failure",
-    "dev_source_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
-    "dev_implementation_source_sha": "0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3",
-    "dev_ci_run_id": 43738724605,
-    "dev_pages_run_id": 43738724545,
+    "dev_status": "cache8_accepted_own_ci_pages_immutable_tag_and_tls_public_byte_local_render_verified",
+    "dev_ci": "success",
+    "dev_source_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+    "dev_implementation_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+    "dev_ci_run_id": 43740930893,
+    "dev_pages_run_id": 43740930892,
     "dev_pages_conclusion": "success",
-    "dev_tag": null,
-    "dev_cache": "frontend-v32-7",
+    "dev_tag": "dev-0.15.0.0-cache8-20261115",
+    "dev_cache": "frontend-v32-8",
     "previous_accepted_v32": {
       "source_sha": "fc2e87eec57c0388a16fb9b15a7d80ea0bc9c67c",
       "cache": "frontend-v32-4",
@@ -28958,10 +29006,10 @@
       "pages_run_id": 43703967803,
       "pages_conclusion": "success"
     },
-    "frontend_archive_sha256": "ee205c359951fccd47fdbf63a20f4f87692b185be2bec643f98c802fbe1d8dbb",
-    "frontend_manifest_sha256": "5f1aecd3bd05e66ae6ebb7e826831dd4fca58895703c4458d1aa8bfd8a719082",
-    "frontend_file_count": 107,
-    "frontend_total_bytes": 30728266,
+    "frontend_archive_sha256": "ef537dd45191158c2488845ec8b390f43f92dfae85155de4c9199391976eafd2",
+    "frontend_manifest_sha256": "726e947044253b4e5759d5da9b8a6f3f1a97962909089cd359281faf341431e2",
+    "frontend_file_count": 108,
+    "frontend_total_bytes": 30742668,
     "previous_published_v32_cache5": {
       "dev_application_version": "0.15.0.0",
       "dev_status": "published_pages_verified; final_metadata_ci_requires_own_result",
@@ -29002,20 +29050,55 @@
       "last_metadata_pages_run_id": 43725629445,
       "last_metadata_pages_conclusion": "success"
     },
-    "public_level5_preview_verification": "Cache7 implemented and tested locally;17hostedfilehashesverified viaHTTPS/TLS. Direct public Chromium render blocked by managedTLS, notPASS.",
-    "next_dev_scope": {
+    "public_level5_preview_verification": "TLS-verified downloaded public bytes rendered locallyPASS1672/390 with actual Content-Type, nofakeworld/API/account. Native browser HTTPSBLOCKED_CERT_AUTHORITY; notdirecthostrenderPASS.",
+    "previous_published_v32_cache7": {
+      "dev_application_version": "0.15.0.0",
+      "dev_status": "cache7_pages_published_17_https_hashes_verified; cache8_resident_directory_pending",
+      "dev_ci": "failure",
+      "dev_source_sha": "d2af52a9f7d6a8221d888ca47c5c014727993e23",
+      "dev_implementation_source_sha": "0bc7af0cad1acdc0e541ef9bd5e3a633a87655b3",
+      "dev_ci_run_id": 43738724605,
+      "dev_pages_run_id": 43738724545,
+      "dev_pages_conclusion": "success",
+      "dev_tag": null,
+      "dev_cache": "frontend-v32-7",
+      "frontend_archive_sha256": "ee205c359951fccd47fdbf63a20f4f87692b185be2bec643f98c802fbe1d8dbb",
+      "frontend_manifest_sha256": "5f1aecd3bd05e66ae6ebb7e826831dd4fca58895703c4458d1aa8bfd8a719082",
+      "frontend_file_count": 107,
+      "frontend_total_bytes": 30728266,
+      "public_level5_preview_verified": false,
+      "public_level5_preview_verification": "Cache7 implemented and tested locally;17hostedfilehashesverified viaHTTPS/TLS. Direct public Chromium render blocked by managedTLS, notPASS.",
+      "dev_ci_failure_reason": "v17 delayed memory-board resize with120cards produced16.328px card width below unchanged20px minimum"
+    },
+    "public_asset_file_count": 106,
+    "public_asset_total_bytes": 30728747,
+    "current_directory_scope": {
       "cache": "frontend-v32-8",
-      "status": "targeted_local_directory_and_responsive_checks_passed_remaining_acceptance_pending",
-      "scope": "resident occupation labels and groups only; preserve cache7front",
-      "source_sha": null,
-      "ci_run_id": null,
-      "pages_run_id": null,
+      "status": "accepted_dev_own_ci_pages_tag_verified",
+      "scope": "UIresident role labels/groups and necessaryresponsive120cardfix; preserveacceptedcache7front",
+      "source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+      "publication_commit": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+      "ci_run_id": 43740930893,
+      "pages_run_id": 43740930892,
       "excluded_models": [
         "cheese_to_dairy",
         "bran_and_feed"
-      ],
-      "responsive_memory120_fix": true
+      ]
     },
-    "dev_ci_failure_reason": "v17 delayed memory-board resize with120cards produced16.328px card width below unchanged20px minimum"
+    "dev_tag_remote_object": "d9455d2657c523fc505b26d973311744ff56f11e",
+    "dev_tag_remote_verified": true,
+    "dev_ci_completed_at": "2026-11-15T17:42:30Z",
+    "dev_ci_duration": "17m58s",
+    "dev_ci_successful_steps": 31,
+    "dev_ci_failed_steps": 0,
+    "metadata_only_followup": {
+      "status": "documentation_prepared_locally",
+      "public_file_count": 106,
+      "public_files_changed": false,
+      "accepted_application_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+      "accepted_publication_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+      "moves_accepted_tag": false,
+      "own_ci_is_separate": true
+    }
   }
 }
