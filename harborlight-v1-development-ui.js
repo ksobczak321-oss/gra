@@ -1,6 +1,7 @@
-import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-7';
-import { NEW_BUILDINGS } from './harborlight-v1-provisions.js?v=frontend-v32-7';
-import { mapRegionFor, mapFootprintFor, buildingArtwork } from './harborlight-v1-map-art.js?v=frontend-v32-7';
+import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-8';
+import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-8';
+import { NEW_BUILDINGS } from './harborlight-v1-provisions.js?v=frontend-v32-8';
+import { mapRegionFor, mapFootprintFor, buildingArtwork } from './harborlight-v1-map-art.js?v=frontend-v32-8';
 
 // All views share the approved presentation mapping; model IDs stay unchanged.
 export const DEVELOPMENT_BUILDINGS = Object.freeze(Object.fromEntries(Object.entries({
@@ -16,7 +17,6 @@ const num=value=>Number.isFinite(Number(value))?Number(value):0;
 const whole=value=>Math.max(0,Math.floor(num(value)));
 const label=id=>GOODS_NAMES[id]||RECIPE_LABELS[id]||DEVELOPMENT_NAMES[id]||id;
 const uid=person=>String(person?.personUid??person?.uid??person?.id??'');
-const name=person=>person?.name||`Mieszkaniec ${person?.id??''}`;
 const format=value=>new Intl.NumberFormat('pl-PL',{maximumFractionDigits:2}).format(num(value));
 const duration=seconds=>{const n=Math.max(0,Math.ceil(num(seconds)));return n>=3600?`${Math.floor(n/3600)} godz. ${Math.ceil(n%3600/60)} min`:`${Math.ceil(n/60)} min`;};
 function node(tag,attrs={},...children){const e=document.createElement(tag);for(const [key,value] of Object.entries(attrs)){if(value==null)continue;if(key==='class')e.className=value;else if(key==='text')e.textContent=value;else if(key.startsWith('on'))e.addEventListener(key.slice(2).toLowerCase(),value);else if(key in e&&!key.startsWith('aria')&&!key.startsWith('data'))e[key]=value;else e.setAttribute(key,String(value));}for(const child of children.flat(Infinity)){if(child==null)continue;e.append(child instanceof Node?child:document.createTextNode(String(child)));}return e;}
@@ -25,7 +25,11 @@ const btn=(text,action,attrs={})=>node('button',{type:'button',class:'v32-button
 function section(title,...children){return node('section',{class:'v32-section'},node('h3',{text:title}),...children);}
 function field(title,input){const item=node('label',{class:'v32-field'},node('span',{text:title}),input);return item;}
 function integerInput(value=0,max,attrs={}){return node('input',{type:'number',min:0,step:1,inputMode:'numeric',value:whole(value),...(max==null?{}:{max:whole(max)}),...attrs});}
-function selectPeople(people,placeholder='Wybierz mieszkańca'){return node('select',{},node('option',{value:'',text:placeholder}),...people.map(person=>node('option',{value:uid(person),text:name(person)})));}
+function selectPeople(people,placeholder,directory){
+  return node('select',{'data-v32-people-select':''},node('option',{value:'',text:placeholder||'Wybierz osobę'}),
+    ...directory.groups(people).map(group=>node('optgroup',{label:group.label},
+      ...group.people.map(entry=>node('option',{value:uid(entry.person),text:entry.label})))));
+}
 function stateOf(options){return options.getState?.()||options.state||{};}
 function api(options,key){return options.context?.[key]||options[key]||{};}
 function call(options,key,method,...args){const handler=api(options,key)[method]||options.context?.[method];return typeof handler==='function'?handler(...args):undefined;}
@@ -124,31 +128,35 @@ function accelerationControls(options,kind,id){
   return node('div',{class:'v32-form'},btn(`Ukończ za ${format(quote.cost)} monet`,()=>act(options,`${kind}Accelerate`,{id,method:'coins'})),options.context?.requestRewardedAd?btn(`Reklama: krócej o ${duration(quote.advertSeconds)}`,()=>options.context.requestRewardedAd({type:`${kind}Accelerate`,id,method:'ad'})):null);
 }
 export function renderAcademyControls(options={}){
-  const state=stateOf(options),s=educationState(options),root=node('div',{'data-v32-academy':''});
+  const state=stateOf(options),s=educationState(options),directory=createResidentDirectory(state,{language:options.language||'pl'}),root=node('div',{'data-v32-academy':''});
   if(!s.unlocked){root.append(p('Akademia jest dostępna od 4. poziomu Ratusza.'));return root;}
   root.append(section('Profesorowie i nauka',p(`Profesorowie: ${s.professors?.length||0} / ${s.professorLimit??3+num(s.level)}. Runda nauki: ${s.round?.number||1}. Każdy profesor uczy jedną osobę albo prowadzi badania.`)));
   const professors=s.professors||[],candidates=(s.candidates||[]).filter(person=>!(s.professors||[]).some(professor=>uid(person)===uid(professor)));
-  const teacher=selectPeople(professors.filter(person=>!person.busy&&person.present!==false),'Wybierz wolnego profesora'),student=selectPeople(candidates,'Wybierz adepta');teacher.required=true;student.required=true;
+  const teacher=selectPeople(professors.filter(person=>!person.busy&&person.present!==false),'Wybierz wolnego profesora',directory),student=selectPeople(candidates,'Wybierz adepta',directory);teacher.required=true;student.required=true;
   root.append(section('Rozpocznij naukę',p(`Opłata: ${format(10*num(s.level))} monet. Uczestnik musi być wolnym cywilem zakwaterowanym w Domu.`),form(()=>act(options,'educationEnroll',{studentUid:student.value,teacherUid:teacher.value}),field('Adept',student),field('Profesor',teacher),submit('Rozpocznij naukę'))));
   const courseList=section('Trwające zajęcia');
   if(!s.courses?.length)courseList.append(p('Nie trwa żaden kurs.','v32-muted'));
-  for(const course of s.courses||[]){const title=course.studentName||name((state.residents||[]).find(person=>uid(person)===String(course.studentUid)));const item=node('article',{class:'v32-card'},node('strong',{text:title}),p(course.paused?'Nauka wstrzymana. Opłata i postęp są zachowane.':`Pozostało około ${duration(course.remainingSeconds??course.remainingWork)}`));if(course.paused){const replacement=selectPeople(professors.filter(person=>!person.busy&&person.present!==false),'Wybierz nowego profesora');replacement.required=true;item.append(form(()=>act(options,'educationReplaceTeacher',{courseId:course.id,teacherUid:replacement.value}),field('Profesor',replacement),submit('Wznów naukę')));}const confirmation=node('input',{type:'checkbox',required:true});item.append(form(()=>act(options,'educationCancelCourse',{courseId:course.id}),field('Potwierdzam utratę opłaty i postępu',confirmation),submit('Przerwij kurs')));const speed=accelerationControls(options,'education',course.id);if(speed)item.append(speed);courseList.append(item);}
+  for(const course of s.courses||[]){const title=directory.label(course.studentUid);const item=node('article',{class:'v32-card'},node('strong',{text:title}),p(course.paused?'Nauka wstrzymana. Opłata i postęp są zachowane.':`Pozostało około ${duration(course.remainingSeconds??course.remainingWork)}`));if(course.paused){const replacement=selectPeople(professors.filter(person=>!person.busy&&person.present!==false),'Wybierz nowego profesora',directory);replacement.required=true;item.append(form(()=>act(options,'educationReplaceTeacher',{courseId:course.id,teacherUid:replacement.value}),field('Profesor',replacement),submit('Wznów naukę')));}const confirmation=node('input',{type:'checkbox',required:true});item.append(form(()=>act(options,'educationCancelCourse',{courseId:course.id}),field('Potwierdzam utratę opłaty i postępu',confirmation),submit('Przerwij kurs')));const speed=accelerationControls(options,'education',course.id);if(speed)item.append(speed);courseList.append(item);}
   root.append(courseList);
-  const graduates=candidates.filter(person=>person.graduate||person.rounds>0||state.education?.people?.[uid(person)]?.rounds>0),appointment=selectPeople(graduates,'Wybierz absolwenta');appointment.required=true;
+  const graduates=candidates.filter(person=>person.graduate||person.rounds>0||state.education?.people?.[uid(person)]?.rounds>0),appointment=selectPeople(graduates,'Wybierz absolwenta',directory);appointment.required=true;
   root.append(section('Mianowanie profesora',p('Mianowanie zużywa jedną szatę profesorską. Profesor zajmuje miejsce i łóżko Akademii. Poza Akademią pracuje z połową wydajności niewykształconego mieszkańca.'),form(()=>act(options,'educationAppoint',{personUid:appointment.value}),field('Absolwent',appointment),submit('Mianuj profesora'))));
   const professorList=section('Zespół Akademii');
-  for(const professor of professors){professorList.append(node('div',{class:'v32-list-row'},node('span',{text:`${name(professor)}${professor.present===false?' · poza Akademią':professor.busy?' · zajęty':' · wolny'}`}),btn('Powrót do Akademii',()=>act(options,'educationReturnProfessor',{personUid:uid(professor)}),{disabled:Boolean(professor.busy)||professor.present!==false})));}
+  const professorGroups=directory.groups(professors),professorViews=new Map(professors.map(person=>[uid(person),person]));
+  for(const group of professorGroups){
+    if(professorGroups.length>1)professorList.append(node('h4',{class:'v32-person-group-heading',text:group.label}));
+    for(const entry of group.people){const professor=professorViews.get(uid(entry.person));professorList.append(node('div',{class:'v32-list-row'},node('span',{text:`${entry.label}${professor.present===false?' · poza Akademią':professor.busy?' · zajęty':' · wolny'}`}),btn('Powrót do Akademii',()=>act(options,'educationReturnProfessor',{personUid:uid(professor)}),{disabled:Boolean(professor.busy)||professor.present!==false})));}
+  }
   if(professors.length)root.append(professorList);
-  const research=renderResearchControls(options,s);root.append(research);
+  const research=renderResearchControls(options,s,directory);root.append(research);
   root.append(section('Kolejna runda',p('Kolejna runda obejmuje mieszkańców aktualnie należących do wyspy. Przyrost wydajności z ukończonych rund pozostaje przy danej osobie.'),btn('Rozpocznij następną rundę',()=>act(options,'educationStartRound'),{'data-v32-next-round':''})));
   return controlColumns(root,[research]);
 }
 
-export function renderResearchControls(options={},provided){
-  const s=provided||educationState(options),root=section('Badania i odkrycia');
+export function renderResearchControls(options={},provided,providedDirectory){
+  const state=stateOf(options),directory=providedDirectory||createResidentDirectory(state,{language:options.language||'pl'}),s=provided||educationState(options),root=section('Badania i odkrycia');
   const catalog=Array.isArray(s.researchCatalog)?s.researchCatalog:Object.entries(s.researchCatalog||{}).map(([id,item])=>({id,...item}));
   const topic=node('select',{},node('option',{value:'',text:'Wybierz badanie'}),...catalog.map(item=>node('option',{value:item.id||item.topic,text:`${item.name||item.title||item.id||item.topic}${item.quote?.ok===false&&item.minimumBuilding?` · ${Object.entries(item.minimumBuilding).map(([id,n])=>`${DEVELOPMENT_NAMES[id]||id}: poziom ${n}`).join(', ')}`:''}`,disabled:item.available===false||item.quote?.ok===false})));topic.required=true;
-  const selectProfessors=(selected=[])=>{const checks=new Map(),box=node('fieldset',{class:'v32-check-list'},node('legend',{text:'Profesorowie'}));for(const professor of s.professors||[]){const key=uid(professor),checkbox=node('input',{type:'checkbox',value:key,checked:selected.includes(key),disabled:professor.present===false||Boolean(professor.busy&&!selected.includes(key))});checks.set(key,checkbox);box.append(field(name(professor),checkbox));}return {element:box,values:()=>[...checks].filter(([,c])=>c.checked).map(([id])=>id)};};
+  const selectProfessors=(selected=[])=>{const checks=new Map(),box=node('fieldset',{class:'v32-check-list'},node('legend',{text:'Profesorowie'}));for(const professor of s.professors||[]){const key=uid(professor),checkbox=node('input',{type:'checkbox',value:key,checked:selected.includes(key),disabled:professor.present===false||Boolean(professor.busy&&!selected.includes(key))});checks.set(key,checkbox);box.append(field(directory.label(professor),checkbox));}return {element:box,values:()=>[...checks].filter(([,c])=>c.checked).map(([id])=>id)};};
   const staff=selectProfessors(),quoteInfo=p('Wybierz temat, aby zobaczyć koszt i bazowy czas.','v32-status');topic.addEventListener('change',()=>{const selected=catalog.find(item=>(item.id||item.topic)===topic.value),quote=selected?.quote;quoteInfo.textContent=quote?.ok?`${selected.effect||''} Koszt: ${Object.entries(quote.cost||{}).map(([id,n])=>`${format(n)} ${label(id)}`).join(', ')}. Bazowy czas jednego profesora: ${duration(quote.work)}.`:quote?.message||'Wybierz temat, aby zobaczyć koszt i bazowy czas.';});root.append(form(()=>{if(!staff.values().length){announce(options,'Wybierz co najmniej jednego profesora.',false);return;}act(options,'educationResearchStart',{topic:topic.value,professorUids:staff.values()});},field('Temat',topic),quoteInfo,staff.element,submit('Rozpocznij badanie')));
   for(const research of s.researches||[]){const speed=accelerationControls(options,'education',research.id);if(speed)root.append(speed);const staffEdit=selectProfessors(research.professorUids||[]);root.append(node('article',{class:'v32-card'},node('strong',{text:research.name||catalog.find(item=>(item.id||item.topic)===research.topic)?.name||research.topic}),p(`${research.paused?'Badanie wstrzymane. ':''}Pozostało około ${duration(research.remainingSeconds??research.remainingWork)}. Koszt opłacony: ${typeof research.cost==='object'?Object.entries(research.cost).map(([id,n])=>`${format(n)} ${label(id)}`).join(', '):`${format(research.cost)} monet`}.`),form(()=>act(options,'educationResearchAssign',{researchId:research.id,professorUids:staffEdit.values()}),staffEdit.element,submit('Zmień zespół')),btn('Anuluj badanie',()=>{const confirm=node('input',{type:'checkbox',required:true});const panel=node('div',{class:'v32-confirm'},p('Anulowanie usuwa postęp i opłatę.'),form(()=>act(options,'educationResearchCancel',{researchId:research.id}),field('Potwierdzam anulowanie',confirm),submit('Potwierdź anulowanie')));root.append(panel);})));}
   if(num(stateOf(options).buildings?.warehouse?.level)>=5){
@@ -160,17 +168,17 @@ export function renderResearchControls(options={},provided){
 }
 
 export function renderBarracksControls(options={}){
-  const state=stateOf(options),s=call(options,'military','militaryStatus',state,options.context)||{unlocked:num(state.buildings?.townhall?.level)>=4,level:num(state.buildings?.barracks?.level),beds:4+2*num(state.buildings?.barracks?.level),soldiers:[],candidates:[],courses:state.military?.courses||[],squads:state.military?.squads||[],waiting:[]};
+  const state=stateOf(options),directory=createResidentDirectory(state,{language:options.language||'pl'}),s=call(options,'military','militaryStatus',state,options.context)||{unlocked:num(state.buildings?.townhall?.level)>=4,level:num(state.buildings?.barracks?.level),beds:4+2*num(state.buildings?.barracks?.level),soldiers:[],candidates:[],courses:state.military?.courses||[],squads:state.military?.squads||[],waiting:[]};
   const root=node('div',{'data-v32-barracks':''});if(!s.unlocked){root.append(p('Koszary są dostępne od 4. poziomu Ratusza.'));return root;}
   const soldiers=s.soldiers||[],ready=soldiers.filter(person=>person.ready&&person.housed&&!person.busy);
   root.append(section('Załoga Koszar',p(`Żołnierze na wyspie: ${soldiers.length}. Łóżka w Koszarach: ${s.beds}. Osoby na wyprawie lub oczekujące poza wyspą nie zajmują miejsca w Ratuszu.`)));
-  const recruit=selectPeople(s.candidates||[],'Wybierz rekruta'),instructor=selectPeople(ready,'Wybierz instruktora');recruit.required=true;instructor.required=true;
+  const recruit=selectPeople(s.candidates||[],'Wybierz rekruta',directory),instructor=selectPeople(ready,'Wybierz instruktora',directory);recruit.required=true;instructor.required=true;
   root.append(section('Rekrutacja',p('Szkolenie kosztuje 3 stroje wojskowe. Gotowy instruktor zakwaterowany w Koszarach szkoli jednego rekruta.'),form(()=>act(options,'militaryRecruit',{recruitUid:recruit.value,instructorUid:instructor.value}),field('Rekrut',recruit),field('Instruktor',instructor),submit('Rozpocznij szkolenie'))));
-  const officerCandidate=selectPeople(ready.filter(person=>person.rank!=='officer'),'Wybierz żołnierza'),officer=selectPeople(ready.filter(person=>person.rank==='officer'),'Wybierz oficera');officerCandidate.required=true;officer.required=true;
+  const officerCandidate=selectPeople(ready.filter(person=>person.rank!=='officer'),'Wybierz żołnierza',directory),officer=selectPeople(ready.filter(person=>person.rank==='officer'),'Wybierz oficera',directory);officerCandidate.required=true;officer.required=true;
   root.append(section('Szkolenie oficerskie',p('Potrzeba 8 dodatkowych strojów wojskowych oraz 250 monet i po 50 monet za każdy poziom Ratusza ponad 4. Szkolenie trwa od 4 do 72 godzin.'),form(()=>act(options,'militaryOfficerTrain',{soldierUid:officerCandidate.value,officerUid:officer.value}),field('Kandydat',officerCandidate),field('Oficer szkolący',officer),submit('Szkol na oficera'))));
-  const courses=section('Trwające szkolenia');if(!s.courses?.length)courses.append(p('Nie trwa żadne szkolenie.','v32-muted'));for(const course of s.courses||[]){const row=node('article',{class:'v32-card'},node('strong',{text:course.name||`${course.kind==='officer'?'Szkolenie oficera':'Szkolenie rekruta'}`}),p(course.paused?'Szkolenie wstrzymane; opłata i postęp są zachowane.':`Pozostało około ${duration(course.remainingSeconds??course.remainingWork)}`));if(course.paused){const replacement=selectPeople(ready,'Wybierz instruktora');replacement.required=true;row.append(form(()=>act(options,'militaryReplaceInstructor',{courseId:course.id,instructorUid:replacement.value}),field('Instruktor',replacement),submit('Wznów szkolenie')));}const confirmation=node('input',{type:'checkbox',required:true});row.append(form(()=>act(options,'militaryCancelCourse',{courseId:course.id}),field('Potwierdzam utratę opłaty i postępu',confirmation),submit('Przerwij szkolenie')));const speed=accelerationControls(options,'military',course.id);if(speed)row.append(speed);courses.append(row);}root.append(courses);
+  const courses=section('Trwające szkolenia');if(!s.courses?.length)courses.append(p('Nie trwa żadne szkolenie.','v32-muted'));for(const course of s.courses||[]){const row=node('article',{class:'v32-card'},node('strong',{text:`${course.kind==='officer'?'Szkolenie oficerskie':'Szkolenie rekruta'} · ${directory.label(course.studentUid)}`}),p(course.paused?'Szkolenie wstrzymane; opłata i postęp są zachowane.':`Pozostało około ${duration(course.remainingSeconds??course.remainingWork)}`));if(course.paused){const replacement=selectPeople(ready,'Wybierz instruktora',directory);replacement.required=true;row.append(form(()=>act(options,'militaryReplaceInstructor',{courseId:course.id,instructorUid:replacement.value}),field('Instruktor',replacement),submit('Wznów szkolenie')));}const confirmation=node('input',{type:'checkbox',required:true});row.append(form(()=>act(options,'militaryCancelCourse',{courseId:course.id}),field('Potwierdzam utratę opłaty i postępu',confirmation),submit('Przerwij szkolenie')));const speed=accelerationControls(options,'military',course.id);if(speed)row.append(speed);courses.append(row);}root.append(courses);
   const checks=new Map(),expedition=section('Wyprawa oddziału',p('Wybierz gotowych żołnierzy. W czasie wyprawy nie zajmują miejsc na wyspie. Po przyjęciu z powrotem odpoczywają przez 24 godziny.'));
-  for(const soldier of soldiers){const c=node('input',{type:'checkbox',disabled:!soldier.ready||!soldier.housed||soldier.busy});checks.set(uid(soldier),c);expedition.append(node('div',{class:'v32-list-row'},field(`${name(soldier)} · ${soldier.rank==='officer'?'oficer':'żołnierz'}${!soldier.ready?' · odpoczynek lub szkolenie':''}`,c),!soldier.housed?btn('Powrót do Koszar',()=>act(options,'militaryRecall',{personUid:uid(soldier)}),{disabled:Boolean(soldier.busy)}):null));}
+  for(const soldier of soldiers){const c=node('input',{type:'checkbox',disabled:!soldier.ready||!soldier.housed||soldier.busy});checks.set(uid(soldier),c);expedition.append(node('div',{class:'v32-list-row'},field(`${directory.label(soldier)}${!soldier.ready?' · odpoczynek lub szkolenie':''}`,c),!soldier.housed?btn('Powrót do Koszar',()=>act(options,'militaryRecall',{personUid:uid(soldier)}),{disabled:Boolean(soldier.busy)}):null));}
   expedition.append(btn('Wyślij wybrany oddział',()=>{const selected=[...checks].filter(([,input])=>input.checked).map(([id])=>id);if(!selected.length){announce(options,'Wybierz co najmniej jednego gotowego żołnierza.',false);return;}act(options,'militaryDispatch',{personUids:selected});}));root.append(expedition);
   const away=section('Oddziały i powroty');if(!s.squads?.length&&!s.waiting?.length)away.append(p('Żaden oddział nie oczekuje na powrót.','v32-muted'));
   const squads=[...(s.squads||[]).filter(item=>!item.stage||['away','waiting'].includes(item.stage)),...(s.waiting||[])].filter((item,index,all)=>all.findIndex(other=>other.id===item.id)===index);
@@ -182,32 +190,14 @@ export function renderBarracksControls(options={}){
 // nor browser storage, and a new island generation receives a separate draft.
 const theatreSelectionDrafts=new Map();
 const theatrePersonUid=person=>person?.personUid||(Number.isSafeInteger(person?.id)?`resident:${person.id}`:uid(person));
-const theatreOccupationNames={townhall:'Ratusz',house:'Bez przydziału',farm:'Rolnicy',windmill:'Młynarze',lumber:'Drwale',sawmill:'Tartacznicy',quarry:'Kamieniarze',warehouse:'Tragarze',bakery:'Piekarze',dairy:'Mleczarze',slaughterhouse:'Pracownicy Rzeźni',fisher:'Rybacy',leatherworks:'Pracownicy Zakładu skórzanego',chapel:'Pracownicy Kaplicy',lighthouse:'Pracownicy Latarni',market:'Pracownicy Targu',dock:'Pracownicy Portu'};
-function theatreAudienceGroups(state,status,options){
-  const residents=new Map((state.residents||[]).map(person=>[theatrePersonUid(person),person]));
-  const education=call(options,'education','educationStatus',state,options.context)||{},military=call(options,'military','militaryStatus',state,options.context)||{};
-  const professors=new Set((education.professors||[]).map(uid)),soldiers=new Map((military.soldiers||[]).map(person=>[uid(person),person]));
-  const students=new Set((education.courses||state.education?.courses||[]).map(course=>course.studentUid));
-  const recruits=new Set((military.courses||state.military?.courses||[]).map(course=>course.studentUid));
-  const candidates=Array.isArray(status.audienceCandidates)?status.audienceCandidates:(state.residents||[]).filter(person=>!person.pendingRelease&&!person.shipId&&!person.atSea).map(person=>({...person,personUid:theatrePersonUid(person)}));
-  const groups=new Map(),seen=new Set(),collator=new Intl.Collator('pl',{numeric:true,sensitivity:'base'});
-  for(const candidate of candidates){
-    const key=theatrePersonUid(candidate);if(!key||seen.has(key))continue;seen.add(key);
-    const person=residents.get(key)||candidate,profession=state.education?.people?.[key]?.profession,isProfessor=professors.has(key)||profession==='professor',rank=soldiers.get(key)?.rank||state.military?.people?.[key]?.rank;
-    let group=theatreOccupationNames[person.workplace];
-    if(students.has(key))group='Studenci';else if(recruits.has(key))group='Rekruci';
-    else if(person.workplace==='academy')group=isProfessor?'Profesorowie':'Pracownicy Akademii';
-    else if(person.workplace==='barracks')group=rank==='officer'?'Oficerowie':'Żołnierze';
-    else if(!person.workplace){if(isProfessor)group='Profesorowie';else if(rank)group=rank==='officer'?'Oficerowie':'Żołnierze';else if(person.visitGroup)group='Zwiedzający Latarnię';else if(person.prayerRemaining>0)group='Modlący się mieszkańcy';}
-    group||=person.workplace?(DEVELOPMENT_NAMES[person.workplace]||person.workplace):'Bez przydziału';
-    if(!groups.has(group))groups.set(group,[]);groups.get(group).push({...candidate,personUid:key,name:candidate.name||person.name||person.nickname||name(person)});
-  }
-  return [...groups].sort(([a],[b])=>collator.compare(a,b)).map(([label,people])=>({label,people:people.sort((a,b)=>collator.compare(a.name,b.name))}));
+function theatreAudienceGroups(state,status,directory){
+  const candidates=Array.isArray(status.audienceCandidates)?status.audienceCandidates:(state.residents||[]).filter(person=>!person.pendingRelease&&!person.shipId&&!person.atSea);
+  return directory.groups(candidates).map(group=>({label:group.label,people:group.people.map(entry=>({...entry.person,personUid:theatrePersonUid(entry.person),name:entry.label}))}));
 }
 export function renderTheatreControls(options={}){
-  const state=stateOf(options),s=options.context?.theatreStatus?.(state)||state.theatre||{};
+  const state=stateOf(options),directory=createResidentDirectory(state,{language:options.language||'pl'}),s=options.context?.theatreStatus?.(state)||state.theatre||{};
   const root=section('Przedstawienia',p('Zaplanuj przedstawienie co najmniej 45 minut wcześniej. Trwa 10 minut i kosztuje 2 monety za osobę. Zaproszeni nadal pracują, studiują i prowadzą badania. Udział daje +10 punktów szczęścia na 6 godzin.'));
-  const groups=theatreAudienceGroups(state,s,options),available=groups.flatMap(group=>group.people),availableUids=new Set(available.map(theatrePersonUid));
+  const groups=theatreAudienceGroups(state,s,directory),available=groups.flatMap(group=>group.people),availableUids=new Set(available.map(theatrePersonUid));
   const draftKey=JSON.stringify([options.context?.accountId||'preview',state.islandId||'island-1',state.islandGeneration||1]);
   if(!theatreSelectionDrafts.has(draftKey)){
     if(theatreSelectionDrafts.size>=64)theatreSelectionDrafts.delete(theatreSelectionDrafts.keys().next().value);

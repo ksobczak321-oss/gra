@@ -144,7 +144,7 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
   const cleanup = [];
   let updateBoard = () => {}, drawBoard = () => {}, fitLayout = () => {}, lossAt = null, previousState = '';
   const timeOffer=element('div',{class:'minigame-v32-time-offer',hidden:true,'data-expedition-time-offer':''});root.append(timeOffer);
-  if(!document.querySelector('[data-original-puzzle-css]')){const link=element('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-7',import.meta.url).href,'data-original-puzzle-css':''});document.head.append(link);}
+  if(!document.querySelector('[data-original-puzzle-css]')){const link=element('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-8',import.meta.url).href,'data-original-puzzle-css':''});document.head.append(link);}
   const v32Help=element('div',{class:'minigame-v32-help','data-expedition-v32-help':''});root.append(v32Help);let helpKey='';
   function renderHelp(){const key=`${run.id}:${run.status}:${status.canUseHelp}:${status.hintUsed}:${status.hint}`;if(key===helpKey)return;helpKey=key;v32Help.replaceChildren();if(status.canUseHelp){if(run.status==='active'&&!status.hintUsed){const b=element('button',{type:'button'},language==='en'?'Free hint':'Darmowa podpowiedź');b.addEventListener('click',()=>onAction?.({type:'expeditionHint',runId:run.id}));v32Help.append(b);}if(run.status==='lost'){const b=element('button',{type:'button'},language==='en'?'Easier attempt · 50% reward':'Łatwiejsza próba · 50% nagrody');b.addEventListener('click',()=>onAction?.({type:'expeditionRestartEasier',runId:run.id}));v32Help.append(b);}}if(status.hint)v32Help.append(element('p',{role:'status'},status.hint));}
   let offerKey='';
@@ -372,7 +372,13 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
       const availableHeight = Math.max(40, wrapper.clientHeight - verticalPadding);
       const gap = innerWidth <= 520 ? 3 : 4;
       let best = { columns: 1, tile: 0, rows: game.cards.length };
-      for (let columns = 1; columns <= game.cards.length; columns++) {
+      // Compact viewports can lose height before resize observers or animation
+      // frames are delivered (for example when the browser toolbar expands).
+      // Keep the game's native horizontal layout as the mobile fallback;
+      // fitting a taller grid here would make CSS shrink otherwise readable
+      // cards during that interval. Card identities and order stay unchanged.
+      const minimumColumns = innerWidth <= 520 ? Math.min(game.columns, game.cards.length) : 1;
+      for (let columns = minimumColumns; columns <= game.cards.length; columns++) {
         const rows = Math.ceil(game.cards.length / columns);
         const tile = Math.floor(Math.min((availableWidth - (columns - 1) * gap) / columns,
           (availableHeight - (rows - 1) * gap) / rows));

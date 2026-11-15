@@ -1,52 +1,53 @@
-import { resourceGraphic } from './harborlight-v1-goods-art.js?v=frontend-v32-7';
-import { mapRegionFor, mapFootprintFor, buildingArtwork, createAcceptedMapLayer } from './harborlight-v1-map-art.js?v=frontend-v32-7';
-import { createRequestedDevPreview, DEV_LEVEL_FIVE_PREVIEW } from './harborlight-v1-dev-preview.js?v=frontend-v32-7';
-import * as DevelopmentLogistics from './harborlight-v1-development-logistics.js?v=frontend-v32-7';
-import * as Development from './harborlight-v1-development.js?v=frontend-v32-7';
-import { createDevelopmentUI, developmentBuildingArt, DEVELOPMENT_BUILDINGS, renderDevelopmentBuildingPanel, renderProductionControls, renderFoodControls, renderConstructionFoodMix, renderTransportControls, renderTheatreControls } from './harborlight-v1-development-ui.js?v=frontend-v32-7';
-import { DEVELOPMENT_NAMES, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-7';
-import { createKingdomPanel } from './harborlight-v1-kingdom-ui.js?v=frontend-v32-7';
-import { kingdomServiceAction, giftServiceAction } from './harborlight-v1-kingdom-client.js?v=frontend-v32-7';
-import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-7';
-import { BUILDINGS as LEGACY_BUILDINGS, RESOURCES as LEGACY_RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRateForState, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS as LEGACY_WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v32-7';
-import { MATERIAL_IDS as LEGACY_MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v32-7';
-import * as State from './harborlight-v1-state.js?v=frontend-v32-7';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v32-7';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v32-7';
-import * as Missions from './harborlight-v1-missions.js?v=frontend-v32-7';
-import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v32-7';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v32-7';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v32-7';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v32-7';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v32-7';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v32-7';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v32-7';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v32-7';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v32-7';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v32-7';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v32-7';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-7';
-import { createDevCloud, createDevTimeController, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-7';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v32-7';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v32-7';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-7';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-7';
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-7';
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-7';
-import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-7';
-import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-7';
-import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-7';
-import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-7';
-import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-7';
-import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v32-7';
-import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-7';
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-7';
-import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v32-7';
-import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v32-7';
-import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v32-7';
-import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-7';
-import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v32-7';
-import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v32-7';
+import { resourceGraphic } from './harborlight-v1-goods-art.js?v=frontend-v32-8';
+import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-8';
+import { mapRegionFor, mapFootprintFor, buildingArtwork, createAcceptedMapLayer } from './harborlight-v1-map-art.js?v=frontend-v32-8';
+import { createRequestedDevPreview, DEV_LEVEL_FIVE_PREVIEW } from './harborlight-v1-dev-preview.js?v=frontend-v32-8';
+import * as DevelopmentLogistics from './harborlight-v1-development-logistics.js?v=frontend-v32-8';
+import * as Development from './harborlight-v1-development.js?v=frontend-v32-8';
+import { createDevelopmentUI, developmentBuildingArt, DEVELOPMENT_BUILDINGS, renderDevelopmentBuildingPanel, renderProductionControls, renderFoodControls, renderConstructionFoodMix, renderTransportControls, renderTheatreControls } from './harborlight-v1-development-ui.js?v=frontend-v32-8';
+import { DEVELOPMENT_NAMES, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-8';
+import { createKingdomPanel } from './harborlight-v1-kingdom-ui.js?v=frontend-v32-8';
+import { kingdomServiceAction, giftServiceAction } from './harborlight-v1-kingdom-client.js?v=frontend-v32-8';
+import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-8';
+import { BUILDINGS as LEGACY_BUILDINGS, RESOURCES as LEGACY_RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRateForState, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS as LEGACY_WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v32-8';
+import { MATERIAL_IDS as LEGACY_MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v32-8';
+import * as State from './harborlight-v1-state.js?v=frontend-v32-8';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v32-8';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v32-8';
+import * as Missions from './harborlight-v1-missions.js?v=frontend-v32-8';
+import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v32-8';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v32-8';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v32-8';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v32-8';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v32-8';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v32-8';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v32-8';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v32-8';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v32-8';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v32-8';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v32-8';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-8';
+import { createDevCloud, createDevTimeController, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-8';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v32-8';
+import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v32-8';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-8';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-8';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-8';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-8';
+import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-8';
+import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-8';
+import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-8';
+import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-8';
+import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-8';
+import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v32-8';
+import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-8';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-8';
+import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v32-8';
+import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v32-8';
+import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v32-8';
+import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-8';
+import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v32-8';
+import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v32-8';
 
 I18n.registerTranslations(Theatre.THEATRE_TRANSLATIONS || {});
 I18n.registerTranslations(Adventures.ADVENTURE_TRANSLATIONS || {});
@@ -394,7 +395,7 @@ function developmentModelContext(world=state,extra={}) {
   return Development.developmentContext(world,{worlds,highestTownhall:Math.max(...worlds.map(w=>w.buildings?.townhall?.level||1)),highestAcademyLevel:Math.max(...worlds.map(w=>w.buildings?.academy?.level||0)),accountId:devAccount?.uid||'preview',serverKingdom:devCloud.local===true,online:!document.hidden&&document.hasFocus(),allowAdSimulation:Commerce.runtimeCapabilities().simulatedAds===true,...extra});
 }
 function developmentPanelOptions({withoutBuildingControls=false}={}) {
-  return {getState:()=>state,onAction:performDevelopment,onFeedback:(text,ok)=>{if(text)toast(text);},onRefresh:()=>{renderHUD();if(panel&&dialog.open&&!['original-puzzle','kingdom'].includes(panel.kind))renderPanel();},context:{
+  return {getState:()=>state,language:language(),onAction:performDevelopment,onFeedback:(text,ok)=>{if(text)toast(text);},onRefresh:()=>{renderHUD();if(panel&&dialog.open&&!['original-puzzle','kingdom'].includes(panel.kind))renderPanel();},context:{
     ...developmentModelContext(state),provisions:Development.Provisions,education:Development.Education,military:Development.Military,
     ...(!withoutBuildingControls?{buildingControls:developmentBuildingControls,workerControls:id=>workerStat(id)}:{}),
     constructionQuote:id=>{const cost=buildingCost(state,id);return {foodUnits:cost.foodUnits||cost.food||0,...Development.Provisions.quoteConstructionFood(state,cost.foodUnits||cost.food||0,null,developmentModelContext(state))};},
@@ -1203,9 +1204,10 @@ function refreshLivePanel() {
     const days = dialog.querySelector('[data-house-days]'); if (days) days.textContent = `${status.storedDays} / 7`;
     const preview = dialog.querySelector('[data-house-allocation-preview]'); if (preview) preview.textContent = uiCopy(`${status.eligible} residents can receive up to ${status.perResident} points each.`, `Uprawnionych mieszkańców: ${status.eligible}. Na osobę: ${I18n.formatHappinessPoints(status.perResident, 'pl')}.`);
   }
+  const prayerPeople = dialog.querySelector('[data-prayer-active]') ? createResidentDirectory(state,{language:language()}) : null;
   dialog.querySelectorAll('[data-prayer-active]').forEach(node => {
     const person = state.residents.find(person => person.id === Number(node.dataset.prayerActive));
-    node.textContent = person?.prayerRemaining > 0 ? uiCopy(`Resident #${person.id}: ${durationText(person.prayerRemaining)} remaining`, `Mieszkaniec #${person.id}: pozostało ${durationText(person.prayerRemaining)}`) : uiCopy('Prayer completed; the happiness bonus is active.', 'Modlitwa zakończona; premia szczęścia jest aktywna.');
+    node.textContent = person?.prayerRemaining > 0 ? uiCopy(`${prayerPeople.label(person.id)}: ${durationText(person.prayerRemaining)} remaining`, `${prayerPeople.label(person.id)}: pozostało ${durationText(person.prayerRemaining)}`) : uiCopy('Prayer completed; the happiness bonus is active.', 'Modlitwa zakończona; premia szczęścia jest aktywna.');
   });
   dialog.querySelectorAll('button').forEach(node => { if (node._quoted) refreshQuoteButton(node); });
   dialog.querySelectorAll('[data-task-reward]').forEach(node => { const task = (state.lighthouseTasks || []).find(t => taskId(t) === node.dataset.taskReward); if (task) node.textContent = `Reward: ${costText(rewardForTask(task))}`; });
@@ -1969,9 +1971,9 @@ function deliveryPlace(id, row) {
   return id === 'house' ? 'Home' : titleOf(id);
 }
 function refreshCarrierJobs(node) {
-  const rows = carrierJobRows();
+  const rows = carrierJobRows(), people = createResidentDirectory(state,{language:language()});
   node.replaceChildren(...rows.map(row => {
-    const name = row.residentId == null ? 'Cargo in transit' : `Resident #${row.residentId}`;
+    const name = row.residentId == null ? 'Cargo in transit' : people.label(row.residentId);
     const status = row.status === 'walking' ? 'Walking to Warehouse' : row.status === 'delivering' ? 'Delivering' : 'Waiting for a delivery';
     return el('div', { class: `carrier-job carrier-job-${row.status}`, 'data-carrier-status': row.status, 'data-carrier-resident': row.residentId ?? '', 'data-carrier-resource': row.resource || '' },
       el('div', { class: 'carrier-job-person' }, el('strong', {}, name), el('span', {}, status)),
@@ -2118,12 +2120,18 @@ function activeEffectsPanel() {
   return node;
 }
 function refreshActiveEffects(root = dialog) {
+  if (!root.querySelector('[data-active-effects]')) return;
+  let people = null;
   const eventRows = new Map((WorldEvents.worldEventRows?.(state, language()) || []).map(row => [row.id, row]));
   const rows = Effects.activeEffects(state).map(effect => {
     const event = eventRows.get(effect.id);
     if (event) return { ...effect, title: event.title, effect: event.description, explain: uiCopy('This event keeps its own timer. Lighthouse protection maintains 100 happiness points but does not return lost people or materials.', 'Wydarzenie ma własny czas działania. Ochrona Latarniana utrzymuje 100 punktów szczęścia, ale nie zwraca utraconych ludzi ani materiałów.'), scope: uiCopy('Island', 'Wyspa') };
     if (effect.id === 'active-play') return { ...effect, effect: uiCopy('Production and transport speed ×2', 'Produkcja i szybkość transportu ×2') };
     if (effect.id === 'long-absence') return { ...effect, effect: uiCopy('Production and transport speed ×0.5', 'Produkcja i szybkość transportu ×0,5') };
+    if (effect.residentIds?.length === 1 && /^Resident #\d+$/.test(effect.scope || '')) {
+      people ||= createResidentDirectory(state,{language:language()});
+      return {...effect,scope:people.label(effect.residentIds[0])};
+    }
     return effect;
   });
   root.querySelectorAll('[data-active-effects]').forEach(node => {
@@ -2600,9 +2608,9 @@ function residentRoster() {
   details.addEventListener('toggle', () => { if (details.open) refreshResidentRosters(); });
   return details;
 }
-function residentRow(resident) {
+function residentRow(resident, displayName) {
   return el('li', { class: 'resident-happiness-row', 'data-resident-id': resident.id },
-    el('div', { class: 'resident-summary' }, el('strong', {}, `Resident #${resident.id}`), el('strong', { 'data-resident-value': '' })),
+    el('div', { class: 'resident-summary' }, el('strong', { 'data-resident-name': '', 'data-i18n-ignore': '' }, displayName), el('strong', { 'data-resident-value': '' })),
     el('div', { class: 'resident-status' }, el('span', { 'data-resident-job': '' }), el('span', { 'data-resident-rate': '' }), el('span', { 'data-resident-housing': '', 'data-i18n-ignore': '' })),
     el('small', { 'data-resident-timers': '' }));
 }
@@ -2612,9 +2620,15 @@ function refreshResidentRosters() {
     if (!details.open) return;
     const residents = new Map(state.residents.map(resident => [String(resident.id), resident]));
     const list = details.querySelector('[data-resident-list]');
-    const signature = state.residents.map(resident => resident.id).join(',');
+    const people = createResidentDirectory(state,{language:language()});
+    const groups = people.groups(state.residents);
+    const signature = JSON.stringify(groups.map(group => [group.key,group.people.map(entry => [entry.uid,entry.label])]));
     if (list.dataset.residentSignature !== signature) {
-      list.replaceChildren(...state.residents.map(residentRow));
+      const scroll = list.scrollTop;
+      list.replaceChildren(...groups.map(group => el('li', {class:'resident-role-group','data-resident-group':group.key},
+        el('h4', {class:'resident-role-heading','data-i18n-ignore':''}, `${group.label} (${group.people.length})`),
+        el('ul', {class:'resident-role-members'}, group.people.map(entry => residentRow(entry.person,entry.label))))));
+      list.scrollTop = scroll;
       list.dataset.residentSignature = signature;
     }
     list.querySelectorAll('[data-resident-id]').forEach(row => {
@@ -2937,7 +2951,9 @@ function prayerPanel() {
   const available = state.residents.filter(person => Residents.availableResidentCount ? Residents.canPrayResident?.(state, person) : false);
   const selection = el('select', { 'aria-label': uiCopy('Resident to send to prayer', 'Mieszkaniec do wysłania na modlitwę'), 'data-prayer-resident': '' });
   const candidates = status.availableResidents || available;
-  for (const person of candidates) selection.append(el('option', { value: person.id ?? person }, uiCopy(`Resident #${person.id ?? person}`, `Mieszkaniec #${person.id ?? person}`)));
+  const people = createResidentDirectory(state,{language:language()});
+  for (const group of people.groups(candidates)) selection.append(el('optgroup', {label:group.label}, group.people.map(entry =>
+    el('option', {value:entry.person.id,'data-i18n-ignore':''},entry.label))));
   const quote = () => Residents.residentPrayerQuote?.(state, [Number(selection.value)]);
   const details = el('p', { 'data-prayer-quote': '', 'data-i18n-ignore': '' });
   const control = button(uiCopy('Send to prayer', 'Wyślij na modlitwę'), () => perform({ type: 'prayResident', residentId: Number(selection.value) }), { 'data-prayer-start': '' });
@@ -2947,7 +2963,7 @@ function prayerPanel() {
   };
   selection.addEventListener('change', update); update();
   return card(el('h3', {}, uiCopy('Individual prayer', 'Indywidualna modlitwa')), note(uiCopy('Choose a resident who is at Home. The total time is ten minutes per Town Hall level. The resident keeps eating, and prayer does not count as unemployment. On returning Home, they receive 50 happiness points for six hours. The Chapel level sets the number of simultaneous places.', 'Wybierz mieszkańca, który jest w Domu. Łączny czas wynosi 10 minut za każdy poziom Ratusza. Mieszkaniec nadal je, a modlitwa nie jest traktowana jako bezrobocie. Po powrocie do Domu otrzyma 50 punktów szczęścia na sześć godzin. Poziom Kaplicy określa liczbę równoczesnych miejsc.')), selection, details, control,
-    ...(status.active || []).map(person => el('p', { class: 'notice', 'data-prayer-active': person.id, 'data-i18n-ignore': '' }, uiCopy(`Resident #${person.id}: ${durationText(person.remaining)} remaining`, `Mieszkaniec #${person.id}: pozostało ${durationText(person.remaining)}`))));
+    ...(status.active || []).map(person => el('p', { class: 'notice', 'data-prayer-active': person.id, 'data-i18n-ignore': '' }, uiCopy(`${people.label(person.id)}: ${durationText(person.remaining)} remaining`, `${people.label(person.id)}: pozostało ${durationText(person.remaining)}`))));
 }
 function visitsPanel() {
   if (!state.buildings.lighthouse.level) return card(el('h3', {}, 'Lighthouse visits'), note('Restore the Lighthouse to welcome visitors.'));
@@ -2961,12 +2977,20 @@ function visitsPanel() {
     el('div', { class: 'stat-grid' }, stat('Places occupied', `${occupied} / ${capacity}`), stat('Available at home', choices.length)),
     note('Visits last 4 hours, with no travel time and no early return. Rewards start when the group returns home: each visitor has 100 happiness points for 24 hours and must wait those 24 hours before another visit. Each returning group adds +10 happiness points to everyone for 6 hours; separate groups stack.'));
   const list = el('div', { class: 'visit-resident-picker' });
-  for (const person of choices) {
-    const input = el('input', { type: 'checkbox', value: person.id, 'aria-label': `Send resident ${person.id} to Lighthouse`, onchange: event => {
+  const people = createResidentDirectory(state,{language:language()});
+  for (const group of people.groups(choices)) {
+    const members = el('div',{class:'resident-option-group-members'});
+    const groupBox = el('fieldset',{class:'resident-option-group','data-resident-choice-group':group.key},
+      el('legend',{'data-i18n-ignore':''},`${group.label} (${group.people.length})`),members);
+    for (const entry of group.people) {
+      const person = entry.person;
+    const input = el('input', { type: 'checkbox', value: person.id, 'aria-label': uiCopy(`Send ${entry.label} to Lighthouse`, `Wyślij: ${entry.label} do Latarni`), onchange: event => {
       if (event.target.checked) selection.add(person.id); else selection.delete(person.id);
       summary.textContent = `${selection.size} selected / ${Math.max(0, capacity - occupied)} free places`;
     } });
-    list.append(el('label', {}, input, el('span', {}, `Resident #${person.id}`), el('strong', {}, happinessPercent(residentHappiness(state, person)))));
+      members.append(el('label', {}, input, el('span', {'data-i18n-ignore':''}, entry.label), el('strong', {}, happinessPercent(residentHappiness(state, person)))));
+    }
+    list.append(groupBox);
   }
   const summary = el('p', { class: 'visit-selection-summary' }, `0 selected / ${Math.max(0, capacity - occupied)} free places`);
   if (quota) content.append(note(`Rolling 24-hour entries: ${quota.freeRemaining} free + ${quota.paidRemaining} paid. Free entries: ${quota.limit} per 24 hours; ${quota.packagesRemaining} extra packages remain.`));

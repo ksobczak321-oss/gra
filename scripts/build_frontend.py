@@ -20,6 +20,7 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_FILES = (
+    "harborlight-v1-resident-labels.js",
     "harborlight-v1-map-art.js",
     "harborlight-v1-goods-art.js",
     "harborlight-v1-dev-preview.js",

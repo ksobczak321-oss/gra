@@ -1,4 +1,5 @@
-import { kingdomStatus, kingdomLoanQuote } from './harborlight-v1-kingdom.js?v=frontend-v32-7';
+import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-8';
+import { kingdomStatus, kingdomLoanQuote } from './harborlight-v1-kingdom.js?v=frontend-v32-8';
 
 const LABELS={wood:'drewno',stone:'kamień',grain:'zboże',vegetables:'warzywa',livestock:'żywiec',rawMilk:'surowe mleko',sourMilk:'kwaśne mleko',fish:'ryby',flour:'mąka',pasteurizedMilk:'mleko pasteryzowane',meat:'mięso',leather:'skóry',bread:'chleb',cake:'ciasto',cheese:'ser',civilianClothes:'stroje cywilne',militaryClothes:'stroje wojskowe',professorRobes:'szaty profesorskie',planks:'deski',food:'żywność'};
 const KIND={supply:'Dostawa',mixed:'Dostawa i monety',coins:'Wsparcie monetami',lending:'Pożyczka dla Królestwa',deposit:'Depozyt',army:'Wysłanie oddziału',development:'Własne wojsko',officerTraining:'Szkolenie oficerów',professor:'Przekazanie profesora'};
@@ -39,9 +40,39 @@ export function createKingdomPanel(options={}){
   function worldPicker(parent){const c=context(),s=current(),provided=typeof c.worlds==='function'?c.worlds():c.worlds,worlds=Array.isArray(provided)?provided:provided?Object.values(provided):[s];if(worlds.length<=1)return()=>s;
     const label=element('label','Wyspa wpłacająca'),select=element('select');for(const world of worlds){const option=element('option',world.islandName||world.islandId);option.value=world.islandId;select.append(option);}select.value=s.islandId;remember(select,`${parent.dataset.draftScope||'task'}:world`);label.append(select);parent.append(label);return()=>worlds.find(w=>w.islandId===select.value)||s;
   }
-  function personPicker(parent,kind,getWorld){const selected=new Set(),wrap=element('fieldset');wrap.append(element('legend',kind==='professor'?'Wybierz profesora':'Wybierz gotowych żołnierzy'));
-    function refresh(){wrap.querySelectorAll('label,p').forEach(n=>n.remove());selected.clear();const world=getWorld(),c=context(),people=typeof c.eligiblePeople==='function'?c.eligiblePeople(world,kind):(world.residents||[]).filter(p=>kind==='professor'?world.education?.people?.[p.personUid]?.profession==='professor'&&!world.education.people[p.personUid].rescueGift:world.military?.people?.[p.personUid]?.rank);
-      if(!people.length)line(wrap,'Nie ma dostępnych osób. Przygotuj je w Akademii lub Koszarach.','hl-kingdom-muted');for(const p of people){const id=typeof p==='string'?p:p.personUid||p.id,label=element('label'),input=element('input');input.type=kind==='professor'?'radio':'checkbox';input.name=`${panelId}-${kind}`;input.value=String(id);remember(input,`${parent.dataset.draftScope||'task'}:person:${id}`);if(input.checked)selected.add(String(id));input.addEventListener('change',()=>{if(kind==='professor'){selected.clear();for(const key of drafts.keys())if(key.startsWith(`${parent.dataset.draftScope||'task'}:person:`))drafts.set(key,false);drafts.set(input.dataset.draftKey,input.checked);}if(input.checked)selected.add(String(id));else selected.delete(String(id));});label.append(input,document.createTextNode(typeof p==='string'?p:p.name||p.nickname||`Mieszkaniec ${p.id}`));wrap.append(label);}}
+  function personPicker(parent,kind,getWorld){
+    const selected=new Set(),wrap=element('fieldset');
+    const legend=element('legend',kind==='professor'?'Wybierz profesora':'Wybierz gotowych żołnierzy');
+    wrap.dataset.kingdomPersonPicker=kind;
+    function refresh(){
+      wrap.replaceChildren(legend);selected.clear();
+      const world=getWorld(),c=context();
+      const people=typeof c.eligiblePeople==='function'?c.eligiblePeople(world,kind):(world.residents||[]).filter(p=>kind==='professor'?world.education?.people?.[p.personUid]?.profession==='professor'&&!world.education.people[p.personUid].rescueGift:world.military?.people?.[p.personUid]?.rank);
+      const directory=createResidentDirectory(world,{language:options.language||'pl'});
+      if(!people.length)line(wrap,'Nie ma dostępnych osób. Przygotuj je w Akademii lub Koszarach.','hl-kingdom-muted');
+      for(const group of directory.groups(people)){
+        const section=element('div',undefined,'hl-kingdom-person-group');
+        section.dataset.residentGroup=group.key;
+        section.append(element('h4',group.label));
+        for(const person of group.people){
+          const id=person.uid,label=element('label'),input=element('input');
+          label.dataset.personUid=id;
+          input.type=kind==='professor'?'radio':'checkbox';input.name=`${panelId}-${kind}`;input.value=id;
+          remember(input,`${parent.dataset.draftScope||'task'}:person:${id}`);
+          if(input.checked)selected.add(id);
+          input.addEventListener('change',()=>{
+            if(kind==='professor'){
+              selected.clear();
+              for(const key of drafts.keys())if(key.startsWith(`${parent.dataset.draftScope||'task'}:person:`))drafts.set(key,false);
+              drafts.set(input.dataset.draftKey,input.checked);
+            }
+            if(input.checked)selected.add(id);else selected.delete(id);
+          });
+          label.append(input,document.createTextNode(person.label));section.append(label);
+        }
+        wrap.append(section);
+      }
+    }
     parent.append(wrap);parent.querySelector('select')?.addEventListener('change',refresh);refresh();return()=>[...selected];
   }
   function taskCard(t,status){const node=card(t.title,`${KIND[t.kind]} · ${STATUS[t.status]||t.status}${t.allianceId?' · Zadanie całego sojuszu':''}`);node.dataset.cardId=t.id;line(node,`Termin: ${date(t.deadline)} (Warszawa).`);line(node,`Do przekazania: ${requirements(t.remaining)}.`);if(t.allianceId)line(node,`Uczestników: ${t.participants.length}. Każdemu przysługuje pełna nagroda ${count(t.reward.coins)} monet lub osobna pełna kara. Skład jest zablokowany do zakończenia wszystkich zobowiązań.`);

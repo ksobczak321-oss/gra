@@ -950,6 +950,19 @@ body.reduce-motion .world-hotspot.tutorial-map-target{animation:none!important}
 .building-dock-card .building-dock-level{z-index:3;pointer-events:none}
 .building-dock-card :is(.building-dock-picture,.v32-building-art){position:relative;z-index:0}
 
+/* Every person list uses the same occupational groups and names. */
+#island-dialog .resident-role-group{list-style:none;margin:0 0 12px;padding:0;min-width:0}
+#island-dialog .resident-role-heading{margin:0;padding:9px 5px;color:#ffe0a0;font-size:13px;border-bottom:1px solid #67889877}
+#island-dialog .resident-role-members{list-style:none;margin:0;padding:0;min-width:0}
+#island-dialog .resident-role-members .resident-happiness-row{min-width:0}
+#island-dialog .resident-summary>[data-resident-name]{min-width:0;overflow-wrap:anywhere}
+#island-dialog .resident-option-group{grid-column:1/-1;margin:0;min-width:0;padding:8px;border:1px solid #67889877;border-radius:8px}
+#island-dialog .resident-option-group>legend{padding:0 5px;color:#ffe0a0;font-size:12px;font-weight:700}
+#island-dialog .resident-option-group-members{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+#island-dialog .resident-option-group-members>label{min-width:0}
+#island-dialog .resident-option-group-members>label>span{min-width:0;overflow-wrap:anywhere}
+@media(max-width:600px){#island-dialog .resident-option-group-members{grid-template-columns:minmax(0,1fr)}}
+
 /* Cohesive resource illustrations reuse the reviewed transparent atlas. */
 .resource-dock-illustration.goods-icon{display:flex;align-items:center;justify-content:center;flex:0 0 auto;overflow:visible;filter:none;pointer-events:none}
 .resource-dock-card>.resource-dock-active{z-index:2}

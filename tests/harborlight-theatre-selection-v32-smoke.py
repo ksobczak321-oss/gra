@@ -48,12 +48,12 @@ with sync_playwright() as playwright:
         people = page.locator('[data-v32-theatre-person]')
         assert people.count() == 100, 'The model excludes both people at sea'
         groups = page.locator('[data-v32-theatre-group]').evaluate_all('(els)=>els.map(e=>e.dataset.v32TheatreGroup)')
-        assert {'Rolnicy', 'Piekarze', 'Tragarze', 'Profesorowie', 'Żołnierze', 'Bez przydziału'}.issubset(groups), groups
-        assert page.evaluate('(a)=>JSON.stringify(a)===JSON.stringify([...a].sort(new Intl.Collator("pl",{numeric:true,sensitivity:"base"}).compare))', groups)
+        assert {'Pracownicy Gospodarstwa', 'Pracownicy Piekarni', 'Tragarze', 'Profesorowie', 'Żołnierze', 'Wolni w Domu'}.issubset(groups), groups
+        assert groups == ['Wolni w Domu','Pracownicy Gospodarstwa','Tragarze','Pracownicy Piekarni','Profesorowie','Żołnierze'], groups
         expect(picker).not_to_have_attribute('open', '')
         picker.locator('summary').click()
-        page.locator('[data-v32-theatre-group="Rolnicy"] [data-v32-theatre-person]').first.check()
-        page.locator('[data-v32-theatre-group="Piekarze"] [data-v32-theatre-person]').first.check()
+        page.locator('[data-v32-theatre-group="Pracownicy Gospodarstwa"] [data-v32-theatre-person]').first.check()
+        page.locator('[data-v32-theatre-group="Pracownicy Piekarni"] [data-v32-theatre-person]').first.check()
         page.locator('[data-v32-theatre-time]').fill('2026-11-15T14:30')
         expect(page.locator('[data-v32-theatre-cost]')).to_contain_text('Zaproszeni: 2 · pełny koszt: 4 monet')
         selected = people.evaluate_all('(els)=>els.filter(e=>e.checked).map(e=>e.dataset.v32TheatrePerson)')
@@ -88,8 +88,8 @@ with sync_playwright() as playwright:
         assert page.evaluate('s.theatre.shows.length') == 0
         assert page.evaluate('s.resources.coins') == 199
         picker.locator('summary').click()
-        page.locator('[data-v32-theatre-group="Rolnicy"] [data-v32-theatre-person]').first.check()
-        page.locator('[data-v32-theatre-group="Piekarze"] [data-v32-theatre-person]').first.check()
+        page.locator('[data-v32-theatre-group="Pracownicy Gospodarstwa"] [data-v32-theatre-person]').first.check()
+        page.locator('[data-v32-theatre-group="Pracownicy Piekarni"] [data-v32-theatre-person]').first.check()
         page.get_by_role('button', name='Zaplanuj przedstawienie', exact=True).click()
         assert page.evaluate('s.theatre.shows[0].personUids.length') == 2
         assert page.evaluate('s.resources.coins') == 195

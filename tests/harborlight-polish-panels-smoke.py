@@ -203,9 +203,10 @@ def scenario(browser, mobile, records, failures):
         route(page, mobile, 'residents')
         page.locator('[data-resident-roster] > summary').click()
         expect(page.locator('[data-resident-list] [data-resident-id]')).to_have_count(44)
-        for person, job in [('1', 'Drwale'), ('2', 'Magazyn'), ('3', 'Młyn'), ('10', 'W domu')]:
+        for person, job, name, group in [('1', 'Drwale', 'Drwal 1', 'workplace:lumber'), ('2', 'Magazyn', 'Tragarz 1', 'workplace:warehouse'), ('3', 'Młyn', 'Młynarz 1', 'workplace:windmill'), ('10', 'W domu', 'Wolny w Domu 1', 'home')]:
             row = page.locator('[data-resident-id="%s"]' % person)
-            expect(row.locator('.resident-summary').get_by_text('Mieszkaniec #'+person, exact=True)).to_be_visible()
+            expect(row.locator('[data-resident-name]')).to_have_text(name)
+            expect(row.locator('xpath=ancestor::*[@data-resident-group][1]')).to_have_attribute('data-resident-group',group)
             expect(row.locator('[data-resident-job]')).to_have_text(job)
         worker = page.locator('[data-resident-id="2"]')
         expect(worker.locator('[data-resident-timers]')).to_contain_text('Najedzony')

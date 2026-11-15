@@ -1,4 +1,4 @@
-import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-7';
+import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-8';
 
 // Account-level DEV model. Persistence and authorization belong to the adapter.
 // Random outcomes are sampled once and saved; opening a panel never rerolls them.

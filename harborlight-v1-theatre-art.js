@@ -1,8 +1,8 @@
 // Theatre presentation: the map has one village building; the private garden
 // uses illustrated game art and an owned collection. Rendering never mutates it.
-import { THEATRE_STYLES, theatrePosition } from './harborlight-v1-theatre.js?v=frontend-v32-7';
+import { THEATRE_STYLES, theatrePosition } from './harborlight-v1-theatre.js?v=frontend-v32-8';
 
-const asset = name => new URL(`./assets/${name}?v=frontend-v32-7`, import.meta.url).href;
+const asset = name => new URL(`./assets/${name}?v=frontend-v32-8`, import.meta.url).href;
 export const THEATRE_ART_ASSETS = Object.freeze({
   building: asset('theatre-building-v30.png'),
   courtyard: asset('theatre-courtyard-v30.png'),
