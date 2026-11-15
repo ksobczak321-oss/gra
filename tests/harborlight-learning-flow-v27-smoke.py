@@ -445,7 +445,7 @@ def run():
     if recovery_only:
         print('PASS8 replay navigation/restart lost-ACK scenarios: confirmed cloud cursor adopted without duplicate writes or changed practical history; PL/EN desktop/mobile')
     else:
-        print('PASS integrated v27 learning: Help has two entries, overview excludes them,48 current tour steps with live resource-dock counts and chat, saved resume/restart and lost-ACK readback, read-only practical review, actual construction countdown, receipt-before-effect arrows; PL/EN desktop/mobile')
+        print('PASS integrated v27 learning: Help has two entries, overview excludes them,56 current tour steps with live resource-dock counts and chat, saved resume/restart and lost-ACK readback, read-only practical review, actual construction countdown, receipt-before-effect arrows; PL/EN desktop/mobile')
 
 
 if __name__ == '__main__':
