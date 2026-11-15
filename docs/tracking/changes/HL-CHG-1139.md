@@ -11,7 +11,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Implementacja | `implemented` |
 | DEV | `verified_locally_dev_only` |
 | CI | `not_run_for_final_source` |
-| PRE-PROD | `not_deployed` |
+| PRE-PROD | `e0_files_deployed_functional_acceptance_reopened` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -40,6 +40,7 @@ Data pierwotnej wiadomości: 2026-11-15. Zatwierdzony pakiet z załączonej rozm
 - **Dokumenty:** [docs/FRONTEND-V32-REQUIREMENTS.md](../../FRONTEND-V32-REQUIREMENTS.md), [docs/v32/IMPLEMENTATION-AUDIT.md](../../v32/IMPLEMENTATION-AUDIT.md), [docs/v32/USER-DECISIONS.json](../../v32/USER-DECISIONS.json), [docs/v32/DEV-READY.md](../../v32/DEV-READY.md), [docs/v32/VISUAL-REVIEW.md](../../v32/VISUAL-REVIEW.md)
 - **Kod:** [harborlight-v1-development-ui.js](../../../harborlight-v1-development-ui.js), [harborlight-v1-development.css](../../../harborlight-v1-development.css), [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-play.css](../../../harborlight-v1-play.css), [assets/harborlight-v1-approved.png](../../../assets/harborlight-v1-approved.png)
 - **Scenariusze automatyczne:** [tests/harborlight-native-map-v32-smoke.py](../../../tests/harborlight-native-map-v32-smoke.py), [tests/harborlight-pages-dev-v32-smoke.py](../../../tests/harborlight-pages-dev-v32-smoke.py)
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/43757897657.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Lokalny test1440/390: po9rzeczywistychkliknięć, hover-only, brak dodatkowych grafik i staregoTeatru, natywne miniatury, JS0 i brak overflow. Końcowe źródło, CI i Pages po aktualizacji cache wymagają własnego odczytu. Ręczny odbiór użytkownika NOT_RUN.

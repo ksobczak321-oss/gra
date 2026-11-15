@@ -1,6 +1,6 @@
 # Najpierw obecny PRE-PROD doPROD, potem DEV doPRE-PROD
 
-Status: **pierwsza promocjaBLOCKED konfiguracją i dostępem właścicielskim; nowej publikacjiPROD nie potwierdzono**. Użytkownik ustalił kolejność: obecnyPRE-PROD → PROD, a dopiero po potwierdzeniuPROD aktualnyDEV → PRE-PROD. KartaOpsHL-CHG-1151, [zapis dowodów](PROD-FIRST-20261115-EVIDENCE.json). To kolejność operacji, nie zgoda na pominięcie istniejących bramek.
+Status historyczny: **ZASTĄPIONE późniejszymGO użytkownika**. Użytkownik odłożyłPROD i domenę, zlecił bezpośrednieDEV → PRE-PROD, a następnie naprawęUI i reset trzech kont z zachowaniem loginów/haseł. Dawny warunek „PROD najpierw” nie obowiązuje. [Aktualny zakres](v32/GO-PREPROD-RULESET-RESET.md). Poniższe obserwacje i plan pozostają zapisem poprzedniego stanu, bez przepisywania historycznych faktów.
 
 ## Źródła i stwierdzone fakty
 

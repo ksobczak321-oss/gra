@@ -1,6 +1,18 @@
 # Zasady pracy nad HARBORLIGHT
 
-## Bieżące GO — najpierw obecny PRE-PROD doPROD, potem DEV doPRE-PROD
+## Bieżące GO — naprawa starego UI na PRE-PROD i osobny reset trzech kont
+
+Użytkownik odłożyłPROD i domenę, polecił wdrożyćDEV naPRE-PROD, a po zgłoszeniu staregoUI zażądał naprawy i resetu wszystkich trzech kontPRE-PROD z zachowaniem loginów, haseł iUID. Starsza kolejność „PROD najpierw” jest zastąpiona. [Zakres](docs/v32/GO-PREPROD-RULESET-RESET.md), [dowody](docs/v32/PREPROD-RULESET-RESET-EVIDENCE.json), BugHL-CHG-1152 iOpsHL-CHG-1153. Nowa poprawka0.15.0.1/cachefrontend-v32-10 ma własne oczekująceCI,wdrożenie i reset; nie przenoś na nią dawnych sukcesów.
+
+E0/0.15.0.0 rzeczywiście wdrożono naPRE-PROD: pliki, obraz, CI i artefakty potwierdzone, lecz odbiór funkcjonalny jestREOPENED_USER_REPORT. Istniejące lub tworzone w chmurze światy zruleset<=31 uruchamiały stary warunekUI; podstawowy smoke logowania tego nie wykrył. Lokalne testy starego31 wykazałyRED przed poprawką iGREEN po niej wFirestoreCAS orazAPI:20funkcji,19kart,natywnyTeatr i markery. Migracja ma zachować istniejące dane; nie wolno automatycznie resetować przy odczycie. Dodatkowa fabryka daje18osób przedintro/19po jednorazowym prezencie, ruleset32/schema9, pojemność36, bank18 i2zapasowe ubrania; dotychczasowyPOST istniejącej wyspy pozostaje409. Backend138, pakiet2 i kierunkowe50 lokalniePASS; to nieCI,wdrożenie lub reset.
+
+Trzy konta i trzy niepuste zapisy istnieją; trzy prywatne kopie są zabezpieczone przed resetem. Reset jest odrębną jużautoryzowaną operacją dopiero po nowym odebranym wdrożeniu, aktywnymAPI, uprawnieniu runtime roles/datastore.user, zablokowaniu bezpośrednich zapisów klienta i co najmniej10minutach propagacji. NowyworkflowPRE-PROD ma utrzymywaćAPI włączone także po resecie; odczyt zmiennychGHenv403 nie oznacza wykonanego przełączenia. Właściciel zgłosił zastosowanie minimalnego grantu:OWNER_REPORTED_APPLIED, bez niezależnego odczytuIAM i bez lokalnegoGCPADC. Do faktycznych dowodów CI/deploy/API/grant/lock/wait/reset wszystkie te etapy mająPENDING. Zachowaj tagiE0 jako historyczne źródła/artefakty; nie deklaruj ukończonego odbioruv32 dla dawnych zapisów. Nie zmieniajPROD/DNS ani plikówMERGE/Excel/fingerprintów w tej aktualizacji dokumentów.
+
+Dalsza konieczna zgodnośćAPI obejmuje istniejący wspólny portfelmatki: statek,kupony,Pomagam i nagrody ligi oraz odmowę zakupu statku przez córkę i trwałość po przeładowaniu. Poprawiane są też etykiety pojemności32=36 i limituobsady zależnego od produktów. c6c4f40 pozostaje historycznym checkpointem. Końcowe źródło aplikacji1f1904587608f87ffbd2c7eed20d7749106dfc1f ma backend149,pakiet2+canonical3JSstage i lokalne sprawdzenia portfela/handluPASS; v21browser jeszczePENDING. OdświeżonyExcel6/413/Cpusta maSHA b9d6e1d… i źródło1f. Publikacja,pełnyCI,wdrożenie i reset nadalPENDING.
+
+Końcowycore/reset `af8989f21598ee9df98bcc46e391132ecf22b12b` ma lokalniefrontend1410/1410,backend155/155,resetPython20/20,pakietDocker2 i wszystkiecloudbrowser wtym v21PASS. Frontend iExcel pozostajązeźródła1f. Reset obejmuje tylko perUIDcommunity/mechanicalzero-wallet z zachowaniem tożsamości/blocked/muted; każdy shared/global/financial/externaltrade link blokuje operację. Epoch/mutationRevision/CAS oraz deployed `resetFence:community-profile-v1` są wymagane; idempotentny ten sam receipt nie dotyka nowego postępu. RzeczywistyCI/deploy/reset nadalPENDING,0resetwrites.
+
+## Historyczne GO, zastąpione — najpierw obecny PRE-PROD doPROD, potem DEV doPRE-PROD
 
 Użytkownik jawnie ustalił kolejność: **1) obecnyPRE-PROD0.14.0.0/7e81a1a → PROD, 2) dopiero po potwierdzeniuPROD aktualnyDEV → PRE-PROD**. Nie wdrażaj nowszegoDEV naPRE-PROD przed wykonaniem pierwszego kroku. [Plan i blokady](docs/PROD-FIRST-20261115.md), [dowody](docs/PROD-FIRST-20261115-EVIDENCE.json), OpsHL-CHG-1151. To noweGO zachowuje historię niższych zakresówDEV.
 

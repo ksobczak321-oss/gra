@@ -11,7 +11,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Implementacja | `implemented` |
 | DEV | `published_pages_2dd923d_verified` |
 | CI | `pending_final_metadata_commit` |
-| PRE-PROD | `not_deployed` |
+| PRE-PROD | `e0_files_deployed_functional_acceptance_reopened` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -43,6 +43,7 @@ Data pierwotnej wiadomości: 2026-11-15. Zatwierdzony pakiet z załączonej rozm
 - **Dokumenty:** [docs/v32/PENDING-NOTES.md](../../v32/PENDING-NOTES.md), [docs/v32/CURRENT-TUTORIAL-ORDER.md](../../v32/CURRENT-TUTORIAL-ORDER.md), [docs/v32/VISUAL-REVIEW.md](../../v32/VISUAL-REVIEW.md), [docs/v32/DEV-BALANCE.md](../../v32/DEV-BALANCE.md), [docs/v32/TEST-CHEATSHEET.md](../../v32/TEST-CHEATSHEET.md)
 - **Kod:** [harborlight-v1-approved-copy.js](../../../harborlight-v1-approved-copy.js), [harborlight-v1-development-ui.js](../../../harborlight-v1-development-ui.js), [harborlight-v1-development.css](../../../harborlight-v1-development.css), [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-play.css](../../../harborlight-v1-play.css), [harborlight-v1-economy.js](../../../harborlight-v1-economy.js)
 - **Scenariusze automatyczne:** [tests/harborlight-tour-route-v5.test.mjs](../../../tests/harborlight-tour-route-v5.test.mjs), [tests/harborlight-tour-route-v5-smoke.py](../../../tests/harborlight-tour-route-v5-smoke.py), [tests/harborlight-theatre-selection-v32-smoke.py](../../../tests/harborlight-theatre-selection-v32-smoke.py), [tests/harborlight-warehouse-sections-v32-smoke.py](../../../tests/harborlight-warehouse-sections-v32-smoke.py), [tests/harborlight-warehouse-capacity-v32.test.mjs](../../../tests/harborlight-warehouse-capacity-v32.test.mjs), [tests/harborlight-v32-progression.test.mjs](../../../tests/harborlight-v32-progression.test.mjs)
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/43757897657.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Lokalnie PASS: 56 podświetleń i migracja oprowadzania; Teatr 100 dostępnych osób/200 monet oraz para/4 monety; trzy sekcje Magazynu i równe kolumny na 1440/390; nowy koszyk 40 000 i zachowanie starego nadmiaru oraz pełne 25 praktycznych lekcji. Końcowe CI i Pages nowego SHA wymagają osobnego potwierdzenia; ręczny odbiór NOT_RUN. Poprzednie fc2e87e/cache4 ma własne CI43703967814 i Pages43703967803 SUCCESS.

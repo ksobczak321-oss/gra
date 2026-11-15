@@ -11,7 +11,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Implementacja | `in_progress` |
 | DEV | `published_pages_739b5dd_verified` |
 | CI | `pending_final_metadata_commit` |
-| PRE-PROD | `not_deployed` |
+| PRE-PROD | `e0_files_deployed_functional_acceptance_reopened` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -41,6 +41,7 @@ Data pierwotnej wiadomości: 2026-11-15. Zatwierdzony pakiet z załączonej rozm
 - **Dokumenty:** [docs/v32/GO-MENU-FISH-LEVEL5.md](../../v32/GO-MENU-FISH-LEVEL5.md), [docs/v32/TEST-CHEATSHEET.md](../../v32/TEST-CHEATSHEET.md), [docs/v32/DEV-READY.md](../../v32/DEV-READY.md)
 - **Kod:** [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-play.css](../../../harborlight-v1-play.css), [harborlight-v1-development-ui.js](../../../harborlight-v1-development-ui.js), [harborlight-v1-development.css](../../../harborlight-v1-development.css), [harborlight-v1-profile.js](../../../harborlight-v1-profile.js), [harborlight-v1-dev-preview.js](../../../harborlight-v1-dev-preview.js)
 - **Scenariusze automatyczne:** nie przypisano.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/43757897657.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Zakres zaakceptowany; dowody nowej implementacji, własnegoCI iPagescache6 oczekują na rzeczywiste wyniki. Przegląd sprzed poprawki obejmował96widoków głównych i24szczegółów; nie jest dowodem naprawy.

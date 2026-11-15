@@ -12,8 +12,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | DEV | `cache9_awaiting_third_own_full_green_CI` |
 | CI | `historical_compatibility_26_passed_locally_full_acceptance_pending` |
 | PRE-PROD | `current_7e_account_API_disabled` |
-| PROD | `blocked_no_new_deployment_confirmed` |
-| Decyzja | `accepted_order` |
+| PROD | `postponed_no_game_deployment` |
+| Decyzja | `superseded_by_user_postponed_PROD_and_direct_PREPROD_fix_reset` |
 
 **Tagi:** `v32`, `ops`, `promotion`, `prod-first`.
 
@@ -49,7 +49,7 @@ BLOCKEDkonfiguracją/dostępem: oryginalnyreceiptaccount_api:false, świeżyAPIc
 ## Relacje
 
 - **Zastępuje:** Brak.
-- **Zastąpione lub ograniczone przez:** Brak.
+- **Zastąpione lub ograniczone przez:** [HL-CHG-1153](HL-CHG-1153.md)
 - **Powiązane:** [HL-CHG-1150](HL-CHG-1150.md)
 
 ## Uwagi

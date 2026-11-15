@@ -1,6 +1,14 @@
 # HARBORLIGHT — stan środowisk
 
-## Bieżąca kolejność promocji — obecny PRE-PROD doPROD przed DEV doPRE-PROD
+## Bieżący stan — PRE-PROD E0 wdrożony, funkcje ponownie w odbiorze; naprawa i reset oczekują
+
+Użytkownik odłożyłPROD/domenę i zastąpił kolejność „PROD najpierw” bezpośrednimDEV → PRE-PROD. E0/0.15.0.0 faktycznie wdrożono: własnyCI43755386000SUCCESS18m30s, Pages43755385998SUCCESS19s, standardowyPRE-PROD43757897657/1SUCCESS2m24s/31kroków. Root potwierdziłHTTPS107plików/30742948bajtów, manifest i rzeczywiste artefakty; trzy konta/trzy niepuste zapisy oraz odczytowe smoke bez zapisówPASS. [Raport zakresu tych dowodów](PREPROD-V32-PROMOTION.md).
+
+**Odbiór funkcjonalnyE0 jestREOPENED_USER_REPORT**: stare światy lub nowe chmurowe stany zruleset<=31 pozostawały w dawnymUI; pierwotny smoke logowania nie sprawdzał20funkcji/19kart/Teatru/markerów. TagiE0 zachowują prawdziwą historię plików i artefaktów, nie są dowodem naprawienia tej luki. Nowa poprawka0.15.0.1/cache10 jest lokalnie potwierdzona na obu wejściachFirestoreCAS/API, ale noweCI, wdrożenie i reset nadalPENDING. [Zakres i warunki](v32/GO-PREPROD-RULESET-RESET.md), [dowody](v32/PREPROD-RULESET-RESET-EVIDENCE.json).
+
+Użytkownik jawnie zlecił reset wszystkich trzech kontPRE-PROD z zachowaniem loginów,haseł iUID. Są trzy istniejące zapisy i trzy prywatne kopie. Warunki: nowe odebrane wdrożenie, aktywneAPI, runtime roles/datastore.user, blokada zapisów klienta, minimum10min propagacji i chroniony reset. Grant ma statusOWNER_REPORTED_APPLIED bez niezależnego odczytuIAM; wszystkie pozostałe operacje chmurowe nowej poprawki oczekują; GHenv403 nie jest dowodem włączeniaAPI. Fabryka daje18osób przedintro/19po prezencie. PROD/DNS odłożone, bez nowego wdrożenia gryPROD; nie resetowano kont w ramach samych testów lub dokumentacji.
+
+## Historyczna kolejność, zastąpiona — obecny PRE-PROD doPROD przed DEV doPRE-PROD
 
 Użytkownik jawnie ustalił kolejność: **obecnyPRE-PROD0.14/7e81a1a → PROD, dopiero po potwierdzeniuPROD aktualnyDEV → PRE-PROD**. [Plan](PROD-FIRST-20261115.md), [dowody blokad](PROD-FIRST-20261115-EVIDENCE.json), OpsHL-CHG-1151. Pierwszy krok jestBLOCKED: oryginalnyreceipt41909268052 maaccount_api:false, świeżyCloudRunhealth200 potwierdza7e, readinessaccounts:false/persistence:false i config503account_api_disabled. Nie omijamy bramkiAPI i nie wgrywamy nowszegoDEV naPRE-PROD przedPROD.
 

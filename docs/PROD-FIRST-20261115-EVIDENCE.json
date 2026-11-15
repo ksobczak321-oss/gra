@@ -1,6 +1,6 @@
 {
   "scope": "Ordered promotion: current PRE-PROD to PROD first; only after confirmed PROD, DEV to PRE-PROD",
-  "status": "blocked_configuration_access_and_account_API_disabled",
+  "status": "SUPERSEDED_USER_POSTPONED_PROD_AND_AUTHORIZED_DIRECT_DEV_PREPROD_FIX_RESET",
   "change_card": "HL-CHG-1151",
   "requested_sequence": [
     "current_PREPROD_0.14_source7e_to_PROD",
@@ -112,5 +112,7 @@
     "promotion_image_reader_check": "historical check 23 not confirmed",
     "prod_hosting_and_domain_activation": "no completed historical confirmation",
     "account_api_activation": "not historically confirmed and currently disabled"
-  }
+  },
+  "historical_status_before_supersession": "blocked_configuration_access_and_account_API_disabled",
+  "current_GO": "docs/v32/GO-PREPROD-RULESET-RESET.md"
 }

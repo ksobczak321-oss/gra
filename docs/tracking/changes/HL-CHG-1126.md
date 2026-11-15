@@ -11,7 +11,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Implementacja | `implemented` |
 | DEV | `verified_locally_dev_only` |
 | CI | `not_run_for_final_source` |
-| PRE-PROD | `not_deployed` |
+| PRE-PROD | `e0_files_deployed_functional_acceptance_reopened` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -38,6 +38,7 @@ Data pierwotnej wiadomości: 2026-11-14. Zatwierdzony pakiet z załączonej rozm
 - **Kod:** [harborlight-v1-development-logistics.js](../../../harborlight-v1-development-logistics.js), [harborlight-v1-logistics.js](../../../harborlight-v1-logistics.js), [harborlight-v1-inventory.js](../../../harborlight-v1-inventory.js), [harborlight-v1-economy.js](../../../harborlight-v1-economy.js)
 - **Scenariusze automatyczne:** [tests/harborlight-v32-logistics.test.mjs](../../../tests/harborlight-v32-logistics.test.mjs), [tests/harborlight-v32-world-integration.test.mjs](../../../tests/harborlight-v32-world-integration.test.mjs)
 - **Kod dowodowy:** `5ca548096139299a99990fc8f9a80b5cbbc07746`.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/43757897657.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika.

@@ -11,7 +11,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Implementacja | `implemented` |
 | DEV | `first_cache9_published_b1_hashes_and_local_public_render_verified` |
 | CI | `failed_stale_copy_43752880913_new_candidate_pending` |
-| PRE-PROD | `not_deployed` |
+| PRE-PROD | `e0_files_deployed_functional_acceptance_reopened` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -44,6 +44,7 @@ Data pierwotnej wiadomości: 2026-11-15. Bieżące polecenie użytkownika dotycz
 - **Scenariusze automatyczne:** nie przypisano.
 - **Kod dowodowy:** `0b41a9b819127416d92836f42ccc812c2bec960d`.
 - **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/43752880913.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/43757897657.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Pierwsza publikacjab1a929d aplikacji0b41a9b: Pages43752880924SUCCESS20s,106publicznychplików/30742201bajtów zgodneHTTPS/TLS/SHA; renderpublicznychbajtówlokalnie1672/390PASS, bez fikcyjnegoświata/API/konta. NatywneHTTPS nadalBLOCKEDmanagedTLS, bez ignorowania. NowyExcel413/6/ABC/Cpusta/źródło0b41a9bPASS; historyczny pełnyExcel zachowany.186testówkierunkowych,56kroków1440/390,menu/Magazyn1440/390 i20info×1672/1366/390PASS lokalnie. CI43752880913FAILURE:1401/1402PASS, stare „przy przypłynięciu” zamiast jawnegoC „po przypłynięciu”; browserCI_SKIPPED. Wąska poprawka testu zachowuje4/6,ładunek i czas,106plików bez zmian; nowySHA/CI/PagesPENDING. Dwie decyzje modelowe nadal oczekują. Poprawka learning-v29 lokalnie13/13PASS, zachowane4/6,ładunek,czas; selektor staregoUI testu wskazuje submit własnegoformularza zamiast nazwyPrzydziel. PublicznyExcel i raportwalidacjiHTTP200/TLS/SHAzgodne, bez zmiany runtime.

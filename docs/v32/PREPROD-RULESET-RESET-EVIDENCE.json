@@ -1,0 +1,285 @@
+{
+  "scope": "Fix official-cloud legacy ruleset activation, then separately reset exactly three PRE-PROD accounts; PROD/domain postponed",
+  "status": "local_final_checks_passed_actual_CI_deployment_reset_pending",
+  "version": "0.15.0.1",
+  "cache": "frontend-v32-10",
+  "source_sha": "af8989f21598ee9df98bcc46e391132ecf22b12b",
+  "publication_commit": null,
+  "ci_run_id": null,
+  "ci_conclusion": "pending_own_run",
+  "deployment_run_id": null,
+  "deployment_conclusion": "pending_own_run",
+  "reset_result": "PENDING_NOT_EXECUTED",
+  "previous_release": {
+    "source": "e0aa2ff3f60edeb6a55190ea8b16f0329692b303",
+    "file_deployment": "SUCCESS",
+    "functional_acceptance": "REOPENED_USER_REPORT",
+    "evidence": "docs/PREPROD-V32-EVIDENCE.json"
+  },
+  "local_checks": [
+    {
+      "check": "legacy31 official cloud resume",
+      "before_fix": "RED",
+      "after_fix": "GREEN",
+      "paths": [
+        "FirestoreCAS",
+        "API"
+      ],
+      "verified": [
+        "20 map functions",
+        "19 building cards",
+        "native Theatre",
+        "all markers"
+      ],
+      "preserves_existing_data": true
+    },
+    {
+      "check": "backend suite",
+      "result": "PASS",
+      "passed": 149,
+      "includes_actual_v32_trade_cases": 3
+    },
+    {
+      "check": "isolated backend Docker package",
+      "result": "PASS",
+      "passed": 2,
+      "canonical_three_JS_stage_check": "PASS"
+    },
+    {
+      "check": "migration logistics and world integration",
+      "result": "PASS",
+      "passed": 50
+    },
+    {
+      "check": "API wallet compatibility checkpoint",
+      "result": "PASS",
+      "backend_checkpoint_passed": 146,
+      "superseded_by_full_backend149": true
+    },
+    {
+      "check": "actual isolated ship browser",
+      "result": "PASS",
+      "passed": 4,
+      "verified": [
+        "lost acknowledgement and retry",
+        "HUD1250 shared wallet"
+      ]
+    },
+    {
+      "check": "actual v32 trade backend cases",
+      "result": "PASS",
+      "passed": 3,
+      "verified": [
+        "new clothes sale exactly once",
+        "daughter shared-wallet debit",
+        "raw milk age value86400 preserved"
+      ]
+    },
+    {
+      "check": "cloud dev-game browser",
+      "result": "PASS",
+      "population_before_intro": 18,
+      "population_after_named_welcome": 19
+    },
+    {
+      "check": "legacy settings browser fixture",
+      "result": "PASS",
+      "initial_people": 12,
+      "current_expected_people": 21,
+      "founding_people_preserved": true
+    },
+    {
+      "check": "onboarding browser",
+      "result": "PASS",
+      "verified": [
+        "exact initial resources",
+        "zeroed other goods",
+        "grain feeding"
+      ]
+    },
+    {
+      "check": "housing acceptance",
+      "result": "PASS",
+      "passed": 9
+    }
+  ],
+  "fresh_factory": {
+    "schema": 9,
+    "ruleset": 32,
+    "population_before_intro": 18,
+    "population_after_once_only_named_tour_gift": 19,
+    "capacity": 36,
+    "happiness": 20,
+    "initial_100_each": [
+      "coins",
+      "wood",
+      "stone",
+      "grain",
+      "planks",
+      "vegetables"
+    ],
+    "legacy_food": 0,
+    "house_bank": 18,
+    "spare_civilian_outfits": 2,
+    "intro_frozen": true,
+    "tour_route": 5,
+    "specialists_before_unlock": false,
+    "existing_world_POST": 409,
+    "official_projects_only": true
+  },
+  "locked_level0_storage_guard": {
+    "full_storage_warning": false,
+    "undefined_warning": false,
+    "legitimate_full_bakery_warning_count": 1,
+    "local_targeted_result": "PASS"
+  },
+  "existing_accounts_and_saves": {
+    "accounts": 3,
+    "saved_islands": 3,
+    "private_backup_count_before_reset": 3,
+    "empty_or_zero_account_claim": false
+  },
+  "reset_authorization": {
+    "authorized_by_user": true,
+    "accounts": [
+      "admin1",
+      "admin2",
+      "admin3"
+    ],
+    "preserve": [
+      "login",
+      "password",
+      "UID"
+    ],
+    "separate_from_automatic_migration": true
+  },
+  "required_reset_gates": {
+    "new_matching_CI_deployment_receipt": "PENDING",
+    "account_API_enabled": "PENDING",
+    "runtime_roles_datastore_user": "OWNER_REPORTED_APPLIED_NOT_INDEPENDENTLY_READ_BACK",
+    "client_writes_denied": "PENDING",
+    "minimum_propagation_seconds": 600,
+    "propagation_wait_completed": false,
+    "guarded_reset_executed": false,
+    "post_reset_read_verification": "PENDING",
+    "deployed_resetFence_attestation": "PENDING_REQUIRED_community-profile-v1"
+  },
+  "configuration": {
+    "PREPROD_project": "harborlight-dev",
+    "GitHub_env_variables_read": "403 integration access",
+    "next_PREPROD_workflow_API_default": true,
+    "API_remains_enabled_after_reset": true,
+    "role_grant_requested": true,
+    "local_GCP_ADC_available": false,
+    "role_grant_status": "OWNER_REPORTED_APPLIED",
+    "role_grant_owner_reported_applied": true,
+    "role_grant_independent_IAM_readback": false,
+    "role_grant_reported_output": "Updated IAM policy for project [harborlight-dev].",
+    "role_grant_role": "roles/datastore.user",
+    "role_grant_condition": "None"
+  },
+  "PROD": {
+    "user_postponed": true,
+    "game_published": false,
+    "bootstrap_crossreader_checks_passed": 23,
+    "Firebase_project_and_site_ready": true,
+    "site": "harborlight-prod",
+    "domain_bound": true,
+    "DNS_edited": false,
+    "existing_A": "85.128.245.188",
+    "latest_reported_domain_states": "HOSTMISMATCH / OWNERSHIPMISSING / CERTVALIDATING"
+  },
+  "unpublished_hosting_fix": {
+    "paused": true,
+    "part_of_e0_release": false
+  },
+  "manual_execution": "NOT_RUN",
+  "local_checkpoint_sha": "c6c4f401dd3bda605578e05efb7529cbbf6da102",
+  "source_status": "core_and_reset_committed_metadata_candidate_CI_deploy_reset_pending",
+  "local_checkpoint_workbook": {
+    "application_source_sha": "c6c4f401dd3bda605578e05efb7529cbbf6da102",
+    "sha256": "fdfb5e1d7e48ba2b235495455578288ccb63d4bed9f1f751c0f987b95f5e232a",
+    "source_fingerprints_verified": 96,
+    "workbook_modified_by_documentation_agent": false,
+    "final_for_next_candidate": false,
+    "regeneration_required_after_final_app_commit": true
+  },
+  "additional_required_compatibility": {
+    "status": "integrated_and_locally_verified_in_final_application",
+    "scope": "preserve existing v32 mother shared wallet when API is enabled",
+    "actions": [
+      "mother ship capacity purchase persists after reload",
+      "daughter ship capacity purchase refused",
+      "promo grants",
+      "charity donation credit refund",
+      "community league rewards"
+    ],
+    "legacy_behavior_preserved": true,
+    "UI": [
+      "rules32 resident capacity copy36 rather than old24",
+      "workforce limit summary reflects products"
+    ],
+    "runtime_not_forced_to_legacy_for_tests": true
+  },
+  "current_six_sheet_workbook": {
+    "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+    "source_sha": "1f1904587608f87ffbd2c7eed20d7749106dfc1f",
+    "sha256": "b9d6e1d308bea38f30750c8a86300584c706e944fe5ebbd0b5ea12fcaa0b21ea",
+    "rows": 413,
+    "sheets": 6,
+    "C_all_blank": true,
+    "reported_source_fingerprint_prefix": "1cc30fff",
+    "workbook_modified_by_documentation_agent": false
+  },
+  "remaining_local_checks": [],
+  "frontend_application_source_sha": "1f1904587608f87ffbd2c7eed20d7749106dfc1f",
+  "local_final_checks": {
+    "frontend": {
+      "passed": 1410,
+      "total": 1410,
+      "result": "PASS"
+    },
+    "backend": {
+      "passed": 155,
+      "total": 155,
+      "result": "PASS",
+      "community_mutation_fence_cases": 6
+    },
+    "reset_Python": {
+      "passed": 20,
+      "total": 20,
+      "result": "PASS"
+    },
+    "isolated_Docker_package": {
+      "passed": 2,
+      "result": "PASS"
+    },
+    "v21_browser": {
+      "result": "PASS",
+      "verified": [
+        "exact80/81 gate",
+        "17<18 boundary",
+        "24 people with4+4 founders",
+        "all24UIDs",
+        "6colonists",
+        "transport",
+        "costs and taxes"
+      ]
+    },
+    "all_assigned_cloud_browser_targets": "PASS"
+  },
+  "reset_cleanup_scope": {
+    "capability_required": {
+      "resetFence": "community-profile-v1"
+    },
+    "owned_community_gameplay_descendants": "clear perUID atomically",
+    "community_identity_root": "preserve UID/publichandle/name/preferences/blocked/muted; remove only gameplay state",
+    "mechanical_charity_wallet": "clear only zero-qualified mechanical root",
+    "shared_global_or_financial_links": "abort on any shared season/alliance/pending/team/score/global donation/financial or external-trade counterpart; bounded masked guards",
+    "global_shared_data_deletion": false,
+    "revision_fences": "advance epoch and mutationRevision; include community and wallet roots inCAS even if absent; backend per-dispatch actor-root revision rejects late racing writes",
+    "idempotency": "same reset receipt returns prior result before touching new progress",
+    "tool_tests": "20/20 PASS",
+    "actual_cloud_reset_writes": 0
+  }
+}

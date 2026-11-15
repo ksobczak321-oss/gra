@@ -11,7 +11,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Implementacja | `implemented` |
 | DEV | `deployed_source_06db93a` |
 | CI | `success_source_06db93a` |
-| PRE-PROD | `not_deployed` |
+| PRE-PROD | `e0_files_deployed_functional_acceptance_reopened` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -42,6 +42,7 @@ Data pierwotnej wiadomości: 2026-11-15. Bieżące GO użytkownika po akceptacji
 - **Scenariusze automatyczne:** [tests/harborlight-native-map-v32-smoke.py](../../../tests/harborlight-native-map-v32-smoke.py), [tests/harborlight-tour-route-v5-smoke.py](../../../tests/harborlight-tour-route-v5-smoke.py), [tests/harborlight-accepted-front-v32-smoke.py](../../../tests/harborlight-accepted-front-v32-smoke.py)
 - **Kod dowodowy:** `06db93ada1c5cbd3071709ab84fc959f9674e5a1`.
 - **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/43740930893.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/43757897657.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Cache8 odebranywyłącznieDEV: aplikacjafa34c9e, publikacja06db93a, własnyCI43740930893SUCCESS iPages43740930892SUCCESS dokładnie tegoSHA. Job132893708888:17m58s,31krokówSUCCESS/0failed, pełneChromium aplikacji i logowań/zapisówDEV.18ukierunkowanychhashyHTTPS i106PUBLIC_FILES/30728747bajtów zgodneSHA256/TLS; render1672/390PASS oznacza publiczne bajty wykonane lokalnie z rzeczywistymContent-Type, bez fikcyjnegoświata/API/konta. NatywneHTTPSChromiumBLOCKED_CERT_AUTHORITY bez ignorowaniaTLS. Adnotowanytagdev-0.15.0.0-cache8-20261115 opublikowany i potwierdzonyzdalnie na06db93a. StaryCIcache7FAILURE zachowany; ręcznyodbiórNOT_RUN. Późniejszycommitmetadanych nie zmienia106publicznychplików ani tagu.

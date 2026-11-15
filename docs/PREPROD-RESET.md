@@ -1,5 +1,12 @@
 # Jednorazowe wyzerowanie trzech profili PRE-PROD
 
+## Bieżący reset0.15.0.1 — dodatkowy zakres i bramki
+
+Status:PENDING rzeczywistegoCI/wdrożenia/resetu; lokalny frontend1410,backend155 i resetPython20PASS. Użytkownik autoryzował reset3PRE-PROD z zachowaniem loginów,haseł iUID. NoweAPI musi ogłaszać `resetFence: community-profile-v1`. Oprócz wysp reset atomowo czyści własne gameplaydescendantscommunity i tylko kwalifikowanyzerowy mechaniczny charityWalletroot, zachowując tożsamość,handle,name,preferences,blocked/muted. Każde powiązanie sharedseason/alliance/team/score/globaldonation/financial/externaltrade blokuje reset; brak globalnego kasowania.
+
+CAS obejmujecommunity/walletroot nawet jeśli nie istnieją, zwiększaepoch/mutationRevision, a serwer wiąże każdą mutację z rewizją korzeniaaktora, aby spóźniony zapis nie odtworzył postępu. Ten sam resetreceipt zwraca dawny wynik przed dotknięciem nowego postępu. Nadal wymagane nowyodebranydeploy/API,uprawnienia,prywatne3kopie,blokada zapisów klienta i minimum10min propagacji. Żadnego resetu chmurowego jeszcze nie wykonano; nowe wyspy mają18osób przedintro/19po prezencie. [AktualnyGO](v32/GO-PREPROD-RULESET-RESET.md).
+
+
 Dyspozycja GO z 31 października 2026 obejmuje wyzerowanie **admin1, admin2 i admin3 dopiero po udanej promocji nowego wydania do PRE-PROD**. Obejmuje także admin1 i zastępuje wcześniejsze polecenie zachowania jego postępu. Nie jest resetem kont produkcyjnych ani usunięciem tożsamości użytkowników. Samo dodanie tego narzędzia nie oznacza wykonania resetu; aktualny stan i dowody są w [ENVIRONMENT-STATUS.md](ENVIRONMENT-STATUS.md).
 
 Narzędzie: `infra/google-cloud/reset-preprod-accounts.py`. Domyślnie wykonuje odczyt i wypisuje plan; modyfikuje zasoby wyłącznie z `--apply`. W tej sesji nie ma poświadczeń GCP, więc rzeczywisty reset musi wykonać właściciel w swoim zalogowanym Cloud Shell. Nie przekazuje haseł, tokenów ani kluczy do czatu.

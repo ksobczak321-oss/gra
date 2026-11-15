@@ -11,7 +11,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Implementacja | `implemented` |
 | DEV | `published_pages_2dd923d_verified` |
 | CI | `pending_final_metadata_commit` |
-| PRE-PROD | `not_deployed` |
+| PRE-PROD | `e0_files_deployed_functional_acceptance_reopened` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
 
@@ -40,6 +40,7 @@ Data pierwotnej wiadomości: 2026-11-15. Zatwierdzony pakiet z załączonej rozm
 - **Dokumenty:** [docs/v32/DEV-READY.md](../../v32/DEV-READY.md), [docs/v32/VISUAL-REVIEW.md](../../v32/VISUAL-REVIEW.md), [docs/v32/PENDING-NOTES.md](../../v32/PENDING-NOTES.md)
 - **Kod:** [harborlight-v1-development-ui.js](../../../harborlight-v1-development-ui.js), [harborlight-v1-development.css](../../../harborlight-v1-development.css), [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-play.css](../../../harborlight-v1-play.css), [assets/harborlight-v1-approved.png](../../../assets/harborlight-v1-approved.png)
 - **Scenariusze automatyczne:** [tests/harborlight-building-access-v32-smoke.py](../../../tests/harborlight-building-access-v32-smoke.py), [tests/harborlight-native-map-v32-smoke.py](../../../tests/harborlight-native-map-v32-smoke.py)
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/43757897657.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Lokalne testy14ciemnychpaneli,7identycznychramek,blokadRatusz1/2/4na1440/390orazodczytpoziomówtrzechkontPASS. KońcoweCIiPageswymagająwłasnegoźródła;PRE-PROD/PRODnot_deployed.

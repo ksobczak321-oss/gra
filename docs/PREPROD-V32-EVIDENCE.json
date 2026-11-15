@@ -1,0 +1,83 @@
+{
+  "source_sha": "e0aa2ff3f60edeb6a55190ea8b16f0329692b303",
+  "version": "0.15.0.0",
+  "file_deployment": "SUCCESS",
+  "functional_acceptance": "REOPENED_USER_REPORT_CONFIRMED_LEGACY_RULESET_GATE",
+  "source_ci": {
+    "run_id": 43755386000,
+    "conclusion": "success",
+    "duration": "18m30s",
+    "steps": 31
+  },
+  "pages": {
+    "run_id": 43755385998,
+    "conclusion": "success",
+    "duration": "19s"
+  },
+  "deployment": {
+    "run_id": 43757897657,
+    "attempt": 1,
+    "conclusion": "success",
+    "gate_seconds": 7,
+    "deploy_job_id": 132945967090,
+    "started_at": "2026-11-15T20:24:42Z",
+    "completed_at": "2026-11-15T20:27:06Z",
+    "duration_seconds": 144,
+    "steps_success": 31,
+    "steps_failed": 0
+  },
+  "receipt_account_api": false,
+  "authenticated_read_checks": {
+    "existing_saved_islands": 3,
+    "accounts": 3,
+    "foreign_denials403": 6,
+    "anonymous_denials403": 3,
+    "game_writes": 0,
+    "coverage_limit": "basic login/render smoke did not assert v32 activation for old ruleset saves"
+  },
+  "public_verification": {
+    "content_files": 107,
+    "content_bytes": 30742948,
+    "manifest_bytes": 13174,
+    "archive_files": 108,
+    "archive_content_bytes": 30756122,
+    "all_106_public_files_match_DEV_e0": true,
+    "TLS_verified": true,
+    "actual_inner_receipt_read": true,
+    "current_archive_verifier_108": "PASS",
+    "all_archive_bytes_match_root_HTTPS_bodies": true
+  },
+  "image_digest": "sha256:c54a9432096ce95f3501273f6eeb31c63a3dd414370ef2f8c8969854a5c272a6",
+  "archive_sha256": "cc73e21285c77e909cd4365ff61b37a136f4b7f38dca118b1a4545a586dffa9d",
+  "manifest_sha256": "a628e99e1a2f7fb4c4603f51481945ebd2ed2017bb628ded6d4207b634436210",
+  "artifacts": [
+    {
+      "kind": "frontend",
+      "id": 14178489674,
+      "zip_sha256": "45a9ed01c339e6b8d83ecf9b52a34b7cff278d2ced6a18b2b0947d94c8d9183d"
+    },
+    {
+      "kind": "receipt",
+      "id": 14179048100,
+      "zip_sha256": "8cf962840b4e7842ac1b9c0fcab00d2b0a942b4d1ae716898ab48bf357b5c852"
+    }
+  ],
+  "tags": [
+    {
+      "name": "dev-0.15.0.0-cache9-20261115",
+      "object": "a77cd16277c3c8279acac084d8fc32a5230a67bc",
+      "target": "e0aa2ff3f60edeb6a55190ea8b16f0329692b303",
+      "remote_verified": true
+    },
+    {
+      "name": "preprod-0.15.0.0-20261115",
+      "object": "f3e63aaa66356d4e963076fb2068a04695f4c655",
+      "target": "e0aa2ff3f60edeb6a55190ea8b16f0329692b303",
+      "remote_verified": true
+    }
+  ],
+  "tag_scope": "historical source and artifact verification; not proof of v32 activation for old saved worlds",
+  "account_reset": false,
+  "password_changes": false,
+  "manual_execution": "NOT_RUN"
+}
