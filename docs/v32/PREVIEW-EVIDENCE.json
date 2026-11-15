@@ -1,0 +1,106 @@
+{
+  "version": "0.15.0.0",
+  "scope": "DEV only; no new PRE-PROD/PROD deployment",
+  "source_sha": "990dd60137afeb50813a9655c22f8ee6232de11d",
+  "cache": "frontend-v32-3",
+  "pages": {
+    "run_id": 43698899831,
+    "conclusion": "success",
+    "url": "https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-3"
+  },
+  "public_files": [
+    {
+      "file": "harborlight-v1-layered.html",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "bytes": 9319
+    },
+    {
+      "file": "harborlight-v1-play.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "bytes": 409739
+    },
+    {
+      "file": "harborlight-auth.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "bytes": 32554
+    },
+    {
+      "file": "harborlight-version.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "bytes": 196
+    },
+    {
+      "file": "harborlight-v1-save-packing.js",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "bytes": 7720
+    },
+    {
+      "file": "assets/harborlight-development-buildings-v32.png",
+      "http_status": 200,
+      "same_sha256_as_source": true,
+      "bytes": 1862936
+    }
+  ],
+  "browser": {
+    "url": "https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-3",
+    "source_sha": "990dd60137afeb50813a9655c22f8ee6232de11d",
+    "transport": "actual HTTPS-hosted files fetched with Python system CA trust; fulfilled into real-origin Chromium to avoid changing certificate validation",
+    "downloaded_urls": 90,
+    "screens": [
+      {
+        "width": 1440,
+        "status": 200,
+        "new_buildings": 7,
+        "population": "18 / 36",
+        "tutorial": "PL",
+        "page_errors": [],
+        "failed_http": [],
+        "api_requests": []
+      },
+      {
+        "width": 390,
+        "status": 200,
+        "new_buildings": 7,
+        "population": "18 / 36",
+        "tutorial": "PL",
+        "page_errors": [],
+        "failed_http": [],
+        "api_requests": []
+      }
+    ]
+  },
+  "local_tests": {
+    "frontend_node": {
+      "pass": 1372,
+      "fail": 0
+    },
+    "backend": {
+      "pass": 134,
+      "fail": 0
+    },
+    "password_runtime": {
+      "pass": 46,
+      "fail": 0
+    }
+  },
+  "first_ci": {
+    "run_id": 43698899840,
+    "conclusion": "failure",
+    "failed_step": "Verify Excel 14 against current rules and preserved historical worksheets",
+    "cause": "Historical 0.14.0.0 workbook was being validated with current 0.15.0.0 modules. All preceding source/backend/configuration checks passed.",
+    "fix": "Validate frozen immutable source 7e81a1a for historical Excel 14; validate current DEV editorial workbook separately."
+  },
+  "preprod": {
+    "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+    "new_deployment": false,
+    "authentication_only_passwords_match_logins": true,
+    "accounts_checked": 3,
+    "api_config_status_observed": 503
+  },
+  "manual_user_acceptance": "NOT_RUN"
+}

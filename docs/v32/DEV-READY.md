@@ -35,3 +35,11 @@ Excel do dalszej redakcji: `/workspace/output/HARBORLIGHT_teksty_DEV_ABC.xlsx`. 
 ## Weryfikacja dostępu 15 listopada 2026
 
 Zmiana lokalnych haseł:46/46 ukierunkowanych testów runtime/cloud PASS oraz faktyczne logowanie wszystkich trzech kont w Chromium390 PASS, bez błędów JavaScript. Poprzednie wspólne hasło i hasła pozostałych kont są odrzucane. Nie resetowano wysp. Odczyt repozytorium i żywego PRE-PROD potwierdza tę samą bazę7e81a1a. Kod korzysta z dotychczasowych modułów i wzorców stanu, ale lokalny runtime zastępuje Firebase i nie jest klonem infrastruktury Google Cloud1:1.
+
+## Publikacja roboczego DEV — 15 listopada 2026
+
+Źródło aplikacji `990dd60137afeb50813a9655c22f8ee6232de11d`, cache `frontend-v32-3`. [Pages43698899831](https://github.com/ksobczak321-oss/gra/actions/runs/43698899831) zakończone SUCCESS. Sześć kluczowych opublikowanych plików (HTML, play, auth, wersja, zapis i atlas budynków) ma dokładnie te same SHA256 co źródło. Hostowane bajty pobrane z weryfikacją TLS przez systemowy klient HTTPS wykonano w Chromium1440/390:18/36,7nowychbudynków,PLwprowadzenie,zeroJS/HTTPbłędów,zeroAPIizapisówgrywprzeglądarce. Transport opisano jawnie w [dowodach JSON](PREVIEW-EVIDENCE.json).
+
+Pełny lokalny zestaw1372Node i134backend PASS. Pierwszy własny CI43698899840 przeszedł model i backend, lecz zatrzymał się na próbie walidacji historycznego Excela14 przeciw nowym modułom0.15. Poprawka zachowuje wszystkie asercje i sprawdza go przeciw oryginalnemu7e81a1a; nowy [Excel15 — teksty DEV](../arkusze/HARBORLIGHT15-teksty-DEV.xlsx) ma osobną kontrolę5595wierszy,17arkuszy,3kolumn i pustejC oraz odcisków rzeczywistych źródeł. Nowy CI tej poprawki pozostaje osobnym wynikiem.
+
+Ściągawka odbioru: [lista zmian do sprawdzenia](TEST-CHEATSHEET.md) oraz [klikalna lista w przeglądarce](https://ksobczak321-oss.github.io/gra/docs/testing/dev-v32-checklist.html). Żaden checkbox nie jest automatycznie oznaczony jako ręczny PASS.

@@ -89,10 +89,15 @@ jobs:
       - name: Verify generated legal documents match their reviewed drafts
         run: python3 scripts/build_legal_pages.py --check
 
-      - name: Verify Excel 14 against current rules and preserved historical worksheets
+      - name: Verify historical Excel 14 against accepted 0.14.0.0 source
         run: |
           python3 -m pip install --disable-pip-version-check openpyxl==3.1.5 lxml==6.1.1
-          python3 scripts/build_workbook_v14.py --validate-only
+          git fetch --no-tags --depth=1 origin 7e81a1a436770f57fd8abf390b6af8022e3300f6
+          python3 scripts/build_workbook_v14.py --validate-only --source-ref 7e81a1a436770f57fd8abf390b6af8022e3300f6
+          python3 tests/harborlight-workbook-v14-source.test.py
+
+      - name: Verify current DEV editorial Excel and empty correction column
+        run: python3 scripts/validate_dev_copy_workbook.py
 
       - name: Install browser acceptance dependencies
         shell: bash

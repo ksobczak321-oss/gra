@@ -4,14 +4,21 @@
 Reads actual JavaScript exports. Formula values are independently cached; raw
 historical OOXML, comments, styles and previous caches are copied unchanged.
 This is rule/catalog validation, not a50-day playthrough or measured150h test.
+Use --validate-only --source-ref FULL_COMMIT_SHA for a historical release:
+only its modules run in a temporary snapshot; workbooks and report stay unchanged.
 """
 from __future__ import annotations
 import argparse
+from contextlib import contextmanager
 import hashlib
+import io
 import json
 import math
 from pathlib import Path
+import re
 import subprocess
+import tarfile
+from tempfile import TemporaryDirectory
 from zipfile import ZipFile, ZIP_DEFLATED
 from lxml import etree as E
 from openpyxl import load_workbook
@@ -47,7 +54,38 @@ def sheet(name, title, note, columns, widths, hidden=False):
     return Sheet(name, title, note, columns, widths, hidden=hidden)
 
 
-def game_facts():
+@contextmanager
+def frozen_source(source_ref):
+    """Read immutable JavaScript without checking out or changing the worktree."""
+    if not re.fullmatch(r'[0-9a-f]{40}', source_ref):
+        raise ValueError('--source-ref must be a full 40-character Git commit SHA')
+    commit = subprocess.run(['git', 'rev-parse', '--verify', source_ref + '^{commit}'],
+                            cwd=ROOT, capture_output=True, text=True, check=True,
+                            timeout=30).stdout.strip()
+    if commit != source_ref:
+        raise ValueError('--source-ref must identify a commit directly')
+    names = subprocess.run(['git', 'ls-tree', '-r', '--name-only', source_ref],
+                           cwd=ROOT, capture_output=True, text=True, check=True,
+                           timeout=30).stdout.splitlines()
+    modules = [name for name in names if name.endswith(('.js', '.mjs')) or Path(name).name == 'package.json']
+    archive = subprocess.run(['git', 'archive', '--format=tar', source_ref, '--', *modules],
+                             cwd=ROOT, capture_output=True, check=True, timeout=30).stdout
+    with TemporaryDirectory(prefix='harborlight-v14-source-') as directory:
+        snapshot = Path(directory)
+        with tarfile.open(fileobj=io.BytesIO(archive)) as source:
+            for member in source:
+                if member.isdir():
+                    continue
+                path = Path(member.name)
+                if not member.isfile() or path.is_absolute() or '..' in path.parts:
+                    raise ValueError('Git source snapshot contains an unsupported file')
+                target = snapshot / path
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(source.extractfile(member).read())
+        yield snapshot
+
+
+def game_facts(cwd=ROOT):
     source = r"""
       import * as S from './harborlight-v1-state.js';
       import * as E from './harborlight-v1-economy.js';
@@ -131,7 +169,7 @@ def game_facts():
         activityRules:A.ADVENTURE_RULES,budgetRules:Budget.ADVENTURE_BUDGET_RULES,budgetSamples,tour:Copy.APPROVED_TOUR_IDS.map(id=>({id,...Copy.getTourCopy(id,'pl',{cloudAccount:true})})),
         lessons:P.TUTORIAL_LESSONS.map(row=>({id:row.id,...Copy.lessonCopy(row.id,'pl',{curriculum:P.TUTORIAL_VERSION})}))}));
     """
-    process = subprocess.run(['node', '--input-type=module', '-e', source], cwd=ROOT,
+    process = subprocess.run(['node', '--input-type=module', '-e', source], cwd=cwd,
                              capture_output=True, text=True, check=True, timeout=90)
     facts = json.loads(process.stdout)
     assert facts['version'] == '0.14.0.0', 'Finalize version before creating or validating release Excel 14'
@@ -381,7 +419,7 @@ def build(facts,cases):
         for name,value in entries.items(): target.writestr(name,value)
 
 
-def validate(facts,cases):
+def validate(facts,cases,*,write_report=True):
     assert digest(BASE)==SOURCE_SHA256
     sheets=prepare(facts,cases);mutable={'xl/workbook.xml','xl/_rels/workbook.xml.rels','[Content_Types].xml','docProps/core.xml'};parts=0
     with ZipFile(BASE) as source,ZipFile(OUTPUT) as target:
@@ -437,14 +475,26 @@ def validate(facts,cases):
       'hour_counter_survives_reload':True,'new_round_reward_cap':facts['hourRules']['maximumRoundReward'],'theatre_free_position_and_save_proof':facts['theatreProof'],
       'manual_scenarios':len(cases),'manual_results':'NOT RUN','full_50_day_simulation':False,'measured_150_hours_play':False,
       'cache_method':'Historical OOXML byte-for-byte; new formulas independently evaluated; noLibreOffice recalculation claimed','validation':'PASS'}
-    REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps(report,ensure_ascii=False,indent=2));return report
+    if write_report:
+        REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+    print(json.dumps(report,ensure_ascii=False,indent=2));return report
 
 
-def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--validate-only',action='store_true');args=parser.parse_args()
-    facts,cases=game_facts(),manual_cases()
+def main(argv=None):
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--validate-only',action='store_true')
+    parser.add_argument('--source-ref',help='Validate against an immutable full Git commit SHA; requires --validate-only')
+    args=parser.parse_args(argv)
+    if args.source_ref is not None and (not args.validate_only or not re.fullmatch(r'[0-9a-f]{40}',args.source_ref)):
+        parser.error('--source-ref requires --validate-only and a full 40-character Git commit SHA')
+    if args.source_ref is not None:
+        with frozen_source(args.source_ref) as snapshot:
+            facts=game_facts(cwd=snapshot)
+    else:
+        facts=game_facts()
+    cases=manual_cases()
     if not args.validate_only:build(facts,cases)
-    validate(facts,cases)
+    validate(facts,cases,write_report=not args.validate_only)
 
 
 if __name__=='__main__':main()

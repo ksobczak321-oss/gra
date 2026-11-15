@@ -4,6 +4,8 @@
 
 **[Publiczny podgląd DEV do testów](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-3)** — publikacja i odbiór bieżącego źródła są ewidencjonowane osobno w [statusie DEV](docs/v32/DEV-READY.md). Podgląd działa bez konta, w pamięci bieżącej karty; odświeżenie zaczyna nową próbę. Trwałe konta i współdzielone usługi wymagają lokalnego serwera DEV.
 
+[Ściągawka zmian do testów](docs/v32/TEST-CHEATSHEET.md) · [Lista z checkboxami](https://ksobczak321-oss.github.io/gra/docs/testing/dev-v32-checklist.html) · [Excel15 — teksty do redakcji](docs/arkusze/HARBORLIGHT15-teksty-DEV.xlsx).
+
 Lokalny DEV: `node scripts/serve-dev.mjs`, `http://localhost:3000/harborlight-auth.html`; pary login/hasło `admin1/admin1`, `admin2/admin2`, `admin3/admin3`. Zapis znajduje się na serwerze DEV, poza repozytorium. [Zakres i dostęp](docs/v32/DEV-READY.md) · [Audyt reguł](docs/v32/IMPLEMENTATION-AUDIT.md) · [Interfejs](docs/v32/VISUAL-REVIEW.md) · [Balans](docs/v32/DEV-BALANCE.md).
 
 15 listopada 2026 potwierdzono osobno rzeczywiste logowanie Firebase PRE-PROD trzema parami `adminN/adminN`; hasła już były zgodne, nie zmieniano kont ani zapisów. Kod PRE-PROD nadal wskazuje `7e81a1a`; bieżący odczyt `/api/v1/config` zwracał 503 i nie stanowi odbioru działania usług.
