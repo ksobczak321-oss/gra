@@ -25,7 +25,7 @@ try:
         # Only shorten the heartbeat in the harness, preserving actual model clocks.
         page.add_init_script('localStorage.setItem("harborlight-language","pl");const original=setInterval;window.setInterval=(fn,delay,...args)=>original(fn,delay===60000?1800:delay,...args);')
         page.goto(address+'/harborlight-auth.html',wait_until='networkidle')
-        page.locator('#email').fill('admin3');page.locator('#password').fill('harborlight-local-dev');page.locator('#account-submit').click()
+        page.locator('#email').fill('admin3');page.locator('#password').fill('admin3');page.locator('#account-submit').click()
         page.wait_for_url('**/harborlight-v1-layered.html**')
         page.locator('[data-onboarding-next]').click();page.locator('[data-onboarding-name]').fill('Live CAS Harbor')
         page.locator('[data-onboarding-next]').click();page.locator('[data-onboarding-exit]').click()

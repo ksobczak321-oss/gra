@@ -4,7 +4,7 @@ import http from 'node:http';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { createLocalDevRuntime, LOCAL_DEV_PASSWORD, LOCAL_DEV_PROJECT } from '../backend/dev-runtime.mjs';
+import { createLocalDevRuntime, LOCAL_DEV_PASSWORDS, LOCAL_DEV_PROJECT } from '../backend/dev-runtime.mjs';
 import { accountSaveKey, createDevCloud, createDevTimeController, LOCAL_DEV_SESSION_KEY, SESSION_KEY, PROD_SESSION_KEY } from '../harborlight-dev-cloud.js';
 import { createState } from '../harborlight-v1-state.js';
 import { normalizeKingdom } from '../harborlight-v1-kingdom.js';
@@ -33,7 +33,7 @@ async function fixture(t, options = {}) {
   return { ...runtime, base, client, raw };
 }
 async function enter(cloud, login) {
-  assert.equal((await cloud.signIn(login, LOCAL_DEV_PASSWORD)).login, login);
+  assert.equal((await cloud.signIn(login, LOCAL_DEV_PASSWORDS[login])).login, login);
   return await cloud.loadIsland() || await cloud.createIsland();
 }
 const forbidden = code => error => error.code === code;
@@ -70,7 +70,7 @@ test('localhost bootstrap needs the server handshake before sending a password',
   const cloud = createDevCloud({ hostname: 'localhost', localDevelopment: true, storage: new MetadataStorage(), fetch: async (path, init) => {
     calls.push({ path, init }); return Response.json({ localDev: true, accountApi: true, projectId: 'harborlight-dev', environment: 'preprod' });
   } });
-  await assert.rejects(cloud.signIn('admin1', LOCAL_DEV_PASSWORD), forbidden('configuration'));
+  await assert.rejects(cloud.signIn('admin1', LOCAL_DEV_PASSWORDS.admin1), forbidden('configuration'));
   assert.deepEqual(calls.map(row => row.path), ['/api/dev/config']);
   assert.ok(calls.every(row => !row.init.body));
 });
@@ -114,8 +114,16 @@ test('parallel accounts, CAS conflicts and browser reload preserve server data w
 
 test('local authentication rejects unknown accounts, forgery and revoked sessions', async t => {
   const f = await fixture(t), storage = new MetadataStorage(), cloud = f.client(storage);
-  await assert.rejects(cloud.signIn('admin4', LOCAL_DEV_PASSWORD), forbidden('invalid-login'));
+  await assert.rejects(cloud.signIn('admin4', 'admin4'), forbidden('invalid-login'));
   await assert.rejects(cloud.signIn('admin1', 'wrong'), forbidden('invalid-credentials'));
+  for (const login of Object.keys(LOCAL_DEV_PASSWORDS)) {
+    for (const otherPassword of [...Object.values(LOCAL_DEV_PASSWORDS).filter(value => value !== login), 'harborlight-local-dev']) {
+      await assert.rejects(cloud.signIn(login, otherPassword), forbidden('invalid-credentials'));
+    }
+    const account = await cloud.signIn(login, login);
+    assert.equal(account.login, login); assert.equal(account.uid, `dev-${login}`);
+    await cloud.signOut();
+  }
   assert.equal((await f.raw('/api/v1/island')).status, 401);
   assert.equal((await f.raw('/api/v1/island', { headers: { Authorization: 'Bearer hl-local.' + 'a'.repeat(43) } })).status, 401);
   await enter(cloud, 'admin1');
@@ -155,7 +163,7 @@ test('the local server refuses foreign Host/Origin and serves only the public bu
     request.once('error', reject);
   });
   assert.equal(foreignHostStatus, 403);
-  assert.equal((await f.raw('/api/dev/sign-in', { method: 'POST', headers: { Origin: 'https://attacker.invalid' }, body: JSON.stringify({ login: 'admin1', password: LOCAL_DEV_PASSWORD }) })).status, 403);
+  assert.equal((await f.raw('/api/dev/sign-in', { method: 'POST', headers: { Origin: 'https://attacker.invalid' }, body: JSON.stringify({ login: 'admin1', password: LOCAL_DEV_PASSWORDS.admin1 }) })).status, 403);
   await assert.rejects(f.listen(0, '0.0.0.0'), /loopback/);
 });
 
@@ -223,9 +231,9 @@ test('local DEV restarts restore durable progress and never restore authenticati
   await first.close();
   const second = await fixture(t, { dataFile, ephemeral: false }), restored = second.client(storage);
   assert.equal(await restored.restoreSession(), null);
-  await restored.signIn('admin1', LOCAL_DEV_PASSWORD);
+  await restored.signIn('admin1', LOCAL_DEV_PASSWORDS.admin1);
   assert.equal(JSON.parse((await restored.loadIsland()).payload).resources.coins, 321);
-  const cRestored = second.client(); await cRestored.signIn('admin3', LOCAL_DEV_PASSWORD);
+  const cRestored = second.client(); await cRestored.signIn('admin3', LOCAL_DEV_PASSWORDS.admin3);
   assert.equal((await createDevTimeController(cRestored).status()).offsetSeconds, 3600);
   assert.equal((await createDevTimeController(cRestored).advance(3600, 'durable_clock_request')).advancedSeconds, 0);
   assert.equal((await second.raw('/api/dev/config')).body.persistence, 'local-dev-file');
@@ -266,7 +274,7 @@ test('Kingdom API atomically shares tasks, locks departure and rewards both acco
 });
 
 test('Kingdom client flushes pending gameplay and adopts the API revision before another save', async t => {
-  const f = await fixture(t), cloud = f.client(), account = await cloud.signIn('admin1', LOCAL_DEV_PASSWORD);
+  const f = await fixture(t), cloud = f.client(), account = await cloud.signIn('admin1', LOCAL_DEV_PASSWORDS.admin1);
   const coordinator = createDevSync({ cloud, account, saveKey: accountSaveKey(account.uid, cloud.projectId) });
   t.after(() => coordinator.dispose());
   let payload = await coordinator.open(JSON.stringify(createState()));

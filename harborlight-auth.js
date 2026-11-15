@@ -207,9 +207,10 @@ registerTranslations({
       document.getElementById('social-availability').textContent = pl ? 'To osobne konta lokalne. Dane Firebase i PRE-PROD pozostają bez zmian.' : 'These are separate local accounts. Firebase and PRE-PROD data are unchanged.';
       document.querySelector('label[for="email"]').textContent = 'Login';
       email.placeholder = 'admin1, admin2, admin3';
+      password.minLength = 6;
       const hint = document.getElementById('password-hint');
       hint.hidden = false;
-      hint.textContent = pl ? 'Hasło tylko do lokalnego DEV: harborlight-local-dev' : 'Local DEV password: harborlight-local-dev';
+      hint.textContent = pl ? 'Hasło jest takie samo jak login: admin1, admin2 lub admin3.' : 'Your password matches your login: admin1, admin2 or admin3.';
     }
   }
 

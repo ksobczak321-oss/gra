@@ -4,7 +4,7 @@ Gałąź: `dev/0.15.0.0`. Punkt wyjścia: odebrane PRE-PROD `7e81a1a436770f57fd8
 
 ## Uruchomienie
 
-W katalogu projektu: `node scripts/serve-dev.mjs` (Node24). Adres: `http://localhost:3000/harborlight-auth.html`. Lokalne konta: `admin1`, `admin2`, `admin3`; hasło wyłącznie tego środowiska: `harborlight-local-dev`. Zapis jest trwały w `/workspace/work/dev-runtime/state-v32.json`; kolejne uruchomienie nie tworzy kont od nowa. Zmiana portu przez `PORT`.
+W katalogu projektu: `node scripts/serve-dev.mjs` (Node24). Adres: `http://localhost:3000/harborlight-auth.html`. Lokalne pary login/hasło: `admin1/admin1`, `admin2/admin2`, `admin3/admin3`. Zapis jest trwały w `/workspace/work/dev-runtime/state-v32.json`; kolejne uruchomienie nie tworzy kont od nowa. Zmiana portu przez `PORT`.
 
 DEV to lokalne środowisko robocze, projekt `harborlight-local-dev`. Nie wykonano publikacji, promocji PRE-PROD/PROD, resetu Firebase ani zmiany chmurowych loginów i haseł. Konta lokalne są osobnymi kontami testowymi. Admin3 ma izolowane przyspieszanie własnej symulacji. Wspólne zobowiązania Królestwa i dary korzystają z zegara serwera.
 

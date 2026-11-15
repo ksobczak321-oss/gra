@@ -21,7 +21,7 @@ import { warehouseCapacityForLevel } from '../harborlight-v1-economy.js';
 import { consumeMaterial, ordinaryStock, ordinaryWarehouseUsed, bonusStock, grantBonusMaterials } from '../harborlight-v1-inventory.js';
 
 export const LOCAL_DEV_PROJECT = 'harborlight-local-dev';
-export const LOCAL_DEV_PASSWORD = 'harborlight-local-dev';
+export const LOCAL_DEV_PASSWORDS = Object.freeze({ admin1: 'admin1', admin2: 'admin2', admin3: 'admin3' });
 export const LOCAL_DEV_ACCOUNTS = Object.freeze(['admin1', 'admin2', 'admin3'].map(login => Object.freeze({ login, uid: `dev-${login}` })));
 const SESSION_MS = 30 * 60_000 + 30_000;
 const TOKEN_MS = 60 * 60_000;
@@ -372,7 +372,7 @@ export function createDevKingdomHandler({ store, availableGoods, spendGoods, goo
   });
 }
 
-export async function createLocalDevRuntime({ root = ROOT, now = () => Date.now(), password = LOCAL_DEV_PASSWORD, release = '0.15.0.0-dev', starter = at => {
+export async function createLocalDevRuntime({ root = ROOT, now = () => Date.now(), passwords = LOCAL_DEV_PASSWORDS, release = '0.15.0.0-dev', starter = at => {
   const state = createState(at, { onboarding: true, ruleset: 32 });
   state.settings.language = 'pl';
   return serializeDevState(state);
@@ -477,7 +477,7 @@ export async function createLocalDevRuntime({ root = ROOT, now = () => Date.now(
       if (path === '/api/dev/sign-in') {
         if (request.method !== 'POST') throw fault('method-not-allowed', 405);
         const body = await requestJson(request, 4096), account = LOCAL_DEV_ACCOUNTS.find(user => user.login === body.login);
-        const supplied = Buffer.from(typeof body.password === 'string' ? body.password : ''), expected = Buffer.from(password);
+        const supplied = Buffer.from(typeof body.password === 'string' ? body.password : ''), expected = Buffer.from(account ? passwords[account.login] : '');
         if (!account || supplied.length !== expected.length || !timingSafeEqual(supplied, expected)) throw fault('invalid-credentials', 401);
         const token = 'hl-local.' + randomBytes(32).toString('base64url'), at = now();
         const session = { ...account, expiresAt: at + TOKEN_MS, lastActivityAt: at };

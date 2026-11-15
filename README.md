@@ -1,6 +1,6 @@
 # HARBORLIGHT
 
-**Lokalny DEV 0.15.0.0 / v32.** Cały uzgodniony zakres działa na osobnym środowisku roboczym, z obecną wersją tekstów do dalszej redakcji. Uruchomienie: `node scripts/serve-dev.mjs`, adres `http://localhost:3000/harborlight-auth.html`. [Zakres i wejście](docs/v32/DEV-READY.md) · [Audyt reguł](docs/v32/IMPLEMENTATION-AUDIT.md) · [Przegląd interfejsu](docs/v32/VISUAL-REVIEW.md) · [Balans DEV](docs/v32/DEV-BALANCE.md). Źródłem bazowym jest odebrane PRE-PROD0.14.0.0 na7e81a1a. W tej pracy nie wykonano publikacji, promocji ani resetu kont chmurowych.
+**Lokalny DEV 0.15.0.0 / v32.** Cały uzgodniony zakres działa na osobnym środowisku roboczym, z obecną wersją tekstów do dalszej redakcji. Uruchomienie: `node scripts/serve-dev.mjs`, adres `http://localhost:3000/harborlight-auth.html`. Lokalne pary login/hasło: `admin1/admin1`, `admin2/admin2`, `admin3/admin3`. [Zakres i wejście](docs/v32/DEV-READY.md) · [Audyt reguł](docs/v32/IMPLEMENTATION-AUDIT.md) · [Przegląd interfejsu](docs/v32/VISUAL-REVIEW.md) · [Balans DEV](docs/v32/DEV-BALANCE.md). Źródłem bazowym jest odebrane PRE-PROD0.14.0.0 na7e81a1a. W tej pracy nie wykonano publikacji, promocji ani resetu kont chmurowych.
 
 Poniższe wpisy zachowują historię wcześniejszych wydań i ich ówczesny stan publikacji.
 

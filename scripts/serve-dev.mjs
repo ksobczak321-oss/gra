@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { createLocalDevRuntime, LOCAL_DEV_PASSWORD, LOCAL_DEV_PROJECT } from '../backend/dev-runtime.mjs';
+import { createLocalDevRuntime, LOCAL_DEV_PROJECT } from '../backend/dev-runtime.mjs';
 import { resolve } from 'node:path';
 
 const port = Number(process.env.PORT || 3000);
@@ -10,7 +10,7 @@ const runtime = await createLocalDevRuntime({ dataFile: resolve(dataFile), ephem
 await runtime.listen(port);
 console.log(`HARBORLIGHT local DEV: http://localhost:${port}/harborlight-auth.html`);
 console.log(`Local DEV process PID: ${process.pid}`);
-console.log(`Project: ${LOCAL_DEV_PROJECT}; accounts: admin1, admin2, admin3; dedicated local password: ${LOCAL_DEV_PASSWORD}`);
+console.log(`Project: ${LOCAL_DEV_PROJECT}; local login/password pairs: admin1/admin1, admin2/admin2, admin3/admin3`);
 console.log(ephemeral ? 'Ephemeral local fixtures. Saves live only in this server process.' : `Local DEV saves persist atomically in ${resolve(dataFile)}.`);
 console.log('Firebase/PRE-PROD/PROD are not contacted.');
 console.log(ephemeral ? 'Restart clears these explicitly ephemeral fixtures.' : 'Server restart requires local sign-in again; saved progress remains.');
