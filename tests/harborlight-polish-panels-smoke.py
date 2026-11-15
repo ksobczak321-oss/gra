@@ -24,7 +24,7 @@ BUILDINGS = {
     'townhall': 'Ratusz', 'house': 'Dom', 'farm': 'Gospodarstwo',
     'windmill': 'Młyn', 'quarry': 'Kamieniołom', 'lumber': 'Drwale',
     'sawmill': 'Tartak', 'warehouse': 'Magazyn', 'market': 'Targ',
-    'dock': 'Port', 'chapel': 'Kaplica', 'lighthouse': 'Latarnia morska',
+    'dock': 'Port', 'chapel': 'Kaplica', 'lighthouse': 'Latarnia',
 }
 HOME_ROUTES = ['rules', 'objective', 'buildings', 'expeditions', 'tasks',
                'residents', 'resources', 'trade', 'archipelago', 'map',

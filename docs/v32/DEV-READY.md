@@ -4,7 +4,7 @@ Gałąź: `dev/0.15.0.0`. Punkt wyjścia: odebrane PRE-PROD `7e81a1a436770f57fd8
 
 ## Publiczny link roboczy
 
-[Otwórz podgląd DEV 0.15.0.0](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-3). To ten sam hosting GitHub Pages, który był używany w poprzedniej rozmowie. Bieżące własne wykonanie Pages i odczyt hostowanych bajtów muszą potwierdzić nową wersję; dawny link z parametrem v31 nie jest dowodem wdrożenia v32.
+[Otwórz podgląd DEV 0.15.0.0](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-4). To ten sam hosting GitHub Pages, który był używany w poprzedniej rozmowie. Bieżące własne wykonanie Pages i odczyt hostowanych bajtów muszą potwierdzić nową wersję; dawny link z parametrem v31 nie jest dowodem wdrożenia v32.
 
 Podgląd jest bez konta, a postęp istnieje tylko w pamięci otwartej karty. Odświeżenie zaczyna nowy podgląd. Pełne trzy konta z zapisem, handel między kontami i pozostałe współdzielone usługi działają na lokalnym serwerze DEV opisanym poniżej. Nie podłączono go publicznie do Pages ani do Firebase PRE-PROD.
 
@@ -43,3 +43,7 @@ Zmiana lokalnych haseł:46/46 ukierunkowanych testów runtime/cloud PASS oraz fa
 Pełny lokalny zestaw1372Node i134backend PASS. Pierwszy własny CI43698899840 przeszedł model i backend, lecz zatrzymał się na próbie walidacji historycznego Excela14 przeciw nowym modułom0.15. Poprawka zachowuje wszystkie asercje i sprawdza go przeciw oryginalnemu7e81a1a; nowy [Excel15 — teksty DEV](../arkusze/HARBORLIGHT15-teksty-DEV.xlsx) ma osobną kontrolę5595wierszy,17arkuszy,3kolumn i pustejC oraz odcisków rzeczywistych źródeł. Nowy CI tej poprawki pozostaje osobnym wynikiem.
 
 Ściągawka odbioru: [lista zmian do sprawdzenia](TEST-CHEATSHEET.md) oraz [klikalna lista w przeglądarce](https://ksobczak321-oss.github.io/gra/docs/testing/dev-v32-checklist.html). Żaden checkbox nie jest automatycznie oznaczony jako ręczny PASS.
+
+## Korekta planszy po odbiorze użytkownika
+
+15listopada2026 zastąpiono dodane ilustracje funkcjami przypisanymi do istniejących budynków zgodnie z oznaczeniamiM/P/R/A/K. Teatr przeniesiono do dawnego Targu, a Targ na pasiasty stragan obok. Budynek nad Teatrem pozostał Piekarnią; dawnyTeatr spodKamieniołomu usunięto. Stałe nazwy i poziomy z planszy usunięto — są dostępne po najechaniu/fokusie. BazowePNGnie zmienione. Native-map1440/390:po9realnychkliknięćPASS,bezJSerrors; szczegóły w [przeglądzie](VISUAL-REVIEW.md). Bieżącycache4 wymaga nowej publikacji; wcześniejszydowódcache3jesthistoriią,niepotwierdzeniemtejpoprawki.

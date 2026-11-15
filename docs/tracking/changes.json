@@ -27917,10 +27917,12 @@
       },
       "acceptance": [
         "Pola „Osoby” i przyciski „Przydziel” mają wspólne osie i rozmiary; przegląd obejmuje formularze, magazyn, Teatr, Królestwo i minigry na szerokościach 1440/390.",
-        "Nowe własne ilustracje siedmiu budynków zastępują słabe miniatury, kontrast i wielkości przycisków poprawiono; okna czasu minigier mieszczą się na telefonie."
+        "Poprawiono kontrast, wielkości przycisków i okna minigier. Pierwsza propozycja nowych ilustracji została zastąpiona poleceniem wykorzystania istniejących budynków planszy — szczegóły HL-CHG-1139."
       ],
       "supersedes": [],
-      "superseded_by": [],
+      "superseded_by": [
+        "HL-CHG-1139"
+      ],
       "related_changes": [],
       "issue_url": null,
       "published_to_github_issues": false,
@@ -27935,7 +27937,7 @@
         "code": [
           "harborlight-v1-development-ui.js",
           "harborlight-v1-play.css",
-          "assets/harborlight-development-buildings-v32.png"
+          "assets/harborlight-v1-approved.png"
         ],
         "automated_tests": [
           "tests/harborlight-v32-ui-smoke.py",
@@ -27948,7 +27950,8 @@
         "release_note": "Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. WłasneCI i publikacjaPages końcowego źródła pozostają PENDING; nie przypisano sukcesu CI 0.14 do nowych kart. Brak nowego wdrożenia PRE-PROD/PROD, resetu kont i ręcznego odbioru użytkownika."
       },
       "notes": [
-        "Automatyczny przegląd geometrii nie zastępuje ręcznego odbioru wyglądu przez użytkownika."
+        "Automatyczny przegląd geometrii nie zastępuje ręcznego odbioru wyglądu przez użytkownika.",
+        "Zastąpiono wyłącznie pierwszą propozycję grafiki mapy; zaakceptowane wyrównanie formularzy i kontrolki pozostają."
       ],
       "tags": [
         "v32",
@@ -27958,6 +27961,82 @@
       "rules": [
         "UI:Osoby-Przydziel",
         "lewy-górny-róg"
+      ]
+    },
+    {
+      "id": "HL-CHG-1139",
+      "epic": "HL-EPIC-UI",
+      "area": "Natywna plansza i podpisy po najechaniu",
+      "type": "Story",
+      "title": "Nowe funkcje wykorzystują istniejące budynki; Teatr i Targ otrzymują wskazane miejsca",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-15",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik odrzucił dodane grafiki i wskazał wolne budynki planszy M/Mleczarnia, P/Piekarnia, R/Rybak, A/Akademia, K/Koszary. Następnie wybrał Teatr w obecnym Targu i Targ na sąsiednim straganie; budynek nad nimi ma pozostać. Podpisy tylko po najechaniu, jak dotychczas.",
+        "reference": "chat:DEV:2026-11-15:native-map-and-theatre-market"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Siedem funkcji używa obiektów namalowanych na oryginalnej planszy; M/P/R/A/K trafiają w pięć miejsc wskazanych przez użytkownika. Nie dodaje się nowych domków ani bitmap na mapie.",
+        "Teatr działa w dawnym budynku Targu; Targ na pasiastym straganie po prawej. Budynek nad Teatrem pozostaje Piekarnią. Dawny Teatr spod Kamieniołomu jest usunięty w DEV v32.",
+        "Na planszy nie ma stałych podpisów ani plakietek poziomów; podpis pojawia się po najechaniu myszką lub fokusie klawiatury. Na telefonie dotknięcie otwiera właściwy budynek.",
+        "Miniatury w panelach i doku są wycinkami tej samej oryginalnej planszy. Bazowy PNG ma niezmieniony SHA256.",
+        "Rzeczywiste kliknięcia siedmiu nowych budynków oraz Teatru i Targu przechodzą na komputerze i telefonie; obszary są zgodne z natywną grafiką."
+      ],
+      "supersedes": [
+        "HL-CHG-1138"
+      ],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1138"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/FRONTEND-V32-REQUIREMENTS.md",
+          "docs/v32/IMPLEMENTATION-AUDIT.md",
+          "docs/v32/USER-DECISIONS.json",
+          "docs/v32/DEV-READY.md",
+          "docs/v32/VISUAL-REVIEW.md"
+        ],
+        "code": [
+          "harborlight-v1-development-ui.js",
+          "harborlight-v1-development.css",
+          "harborlight-v1-play.js",
+          "harborlight-v1-play.css",
+          "assets/harborlight-v1-approved.png"
+        ],
+        "automated_tests": [
+          "tests/harborlight-native-map-v32-smoke.py",
+          "tests/harborlight-pages-dev-v32-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": null,
+        "release_note": "Lokalny test1440/390: po9rzeczywistychkliknięć, hover-only, brak dodatkowych grafik i staregoTeatru, natywne miniatury, JS0 i brak overflow. Końcowe źródło, CI i Pages po aktualizacji cache wymagają własnego odczytu. Ręczny odbiór użytkownika NOT_RUN."
+      },
+      "notes": [
+        "Zastępuje część graficzną pierwotnej propozycji1138; nie wycofuje wyrównania formularzy.",
+        "Zmiana wyłącznie DEV; bez nowej promocji PRE-PROD i bez zmiany logiki Teatru lub Targu."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "UI:native-buildings",
+        "UI:hover-only-labels",
+        "UI:theatre-market-native"
       ]
     }
   ],
@@ -28090,7 +28169,7 @@
     "preprod_bridge_duration": "13s",
     "preprod_deployment_duration": "2m12s",
     "dev_application_version": "0.15.0.0",
-    "dev_status": "published_pages_dev_only; local_1372_node_134_backend_pass; CI_fix_pending",
+    "dev_status": "native_map_verified_local_dev_only; publication_pending",
     "dev_ci": "first_attempt_failed_historical_excel_validation",
     "dev_source_sha": "990dd60137afeb50813a9655c22f8ee6232de11d",
     "dev_implementation_source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
@@ -28098,6 +28177,6 @@
     "dev_pages_run_id": 43698899831,
     "dev_pages_conclusion": "success",
     "dev_tag": null,
-    "dev_cache": "frontend-v32-3"
+    "dev_cache": "frontend-v32-4"
   }
 }

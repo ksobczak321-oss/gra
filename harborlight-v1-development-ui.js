@@ -1,14 +1,15 @@
 import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js';
 
-// These overlays add the new places without rewriting the approved island image.
+// Reuse the previously unused buildings painted into the approved island.
+// Coordinates refer to its original 1672 × 941 canvas; no new artwork overlays it.
 export const DEVELOPMENT_BUILDINGS = Object.freeze({
-  bakery:{name:'Piekarnia',x:606,y:278,color:'#bd6d43',symbol:'bread'},
-  dairy:{name:'Mleczarnia',x:347,y:373,color:'#5c8c8b',symbol:'milk'},
-  slaughterhouse:{name:'Rzeźnia',x:249,y:466,color:'#925953',symbol:'hide'},
-  fisher:{name:'Rybak',x:1280,y:429,color:'#468a9b',symbol:'fish'},
-  leatherworks:{name:'Zakład skórzany',x:796,y:365,color:'#a37b43',symbol:'hide'},
-  academy:{name:'Akademia',x:1172,y:247,color:'#596f9b',symbol:'book'},
-  barracks:{name:'Koszary',x:722,y:581,color:'#637a70',symbol:'shield'}
+  bakery:{name:'Piekarnia',x:651,y:289,width:107,height:80,footprint:'polygon(7% 41%,28% 13%,76% 3%,96% 48%,87% 84%,13% 85%)'},
+  dairy:{name:'Mleczarnia',x:447,y:300,width:96,height:81,footprint:'polygon(4% 46%,27% 14%,81% 10%,98% 47%,90% 93%,13% 100%)'},
+  slaughterhouse:{name:'Rzeźnia',x:351,y:260,width:52,height:46,footprint:'polygon(9% 37%,44% 9%,89% 29%,96% 81%,29% 100%,8% 78%)'},
+  fisher:{name:'Rybak',x:1197,y:383,width:91,height:86,footprint:'polygon(8% 42%,36% 10%,78% 20%,96% 53%,85% 93%,16% 98%)'},
+  leatherworks:{name:'Zakład skórzany',x:498,y:475,width:60,height:60,footprint:'polygon(8% 42%,34% 10%,79% 22%,97% 59%,81% 96%,30% 93%)'},
+  academy:{name:'Akademia',x:439,y:506,width:98,height:79,footprint:'polygon(3% 37%,20% 8%,53% 2%,91% 43%,90% 88%,34% 98%,8% 78%)'},
+  barracks:{name:'Koszary',x:1295,y:162,width:87,height:92,footprint:'polygon(9% 38%,35% 6%,72% 16%,96% 44%,88% 91%,18% 100%)'}
 });
 const RECIPE_LABELS={farmGrain:'Zboże',farmVegetables:'Warzywa',farmLivestock:'Żywiec',farmMilk:'Surowe mleko',farmCheese:'Ser',wood:'Drewno',stone:'Kamień',flour:'Mąka',planks:'Deski',bread:'Chleb',cake:'Ciasto',pasteurizedMilk:'Mleko pasteryzowane',meat:'Mięso',leather:'Skóry',fish:'Ryby',civilianClothes:'Ubrania cywilne',militaryClothes:'Stroje wojskowe',professorRobes:'Szaty profesorskie'};
 const FALLBACK_RECIPES={farm:['farmGrain','farmVegetables','farmLivestock','farmMilk','farmCheese'],windmill:['flour'],bakery:['bread','cake'],dairy:['pasteurizedMilk'],slaughterhouse:['meat','leather'],fisher:['fish'],leatherworks:['civilianClothes','militaryClothes','professorRobes'],lumber:['wood'],quarry:['stone'],sawmill:['planks']};
@@ -37,12 +38,14 @@ async function act(options,type,payload={}){try{const result=await options.onAct
 function submit(text,handler){return node('button',{type:'submit',class:'v32-button v32-primary',text,onClick:event=>{if(!event.currentTarget.form){event.preventDefault();handler(event);}}});}
 function form(handler,...children){return node('form',{class:'v32-form',onSubmit:event=>{event.preventDefault();if(event.currentTarget.reportValidity())handler(event);}},...children);}
 
-/** Original small harbor buildings. No third-party game graphics are embedded. */
+/** The same native building, cropped with CSS for its dock and panel thumbnail. */
 export function developmentBuildingArt(id){
-  const atlasOrder=['bakery','dairy','slaughterhouse','fisher','leatherworks','academy','barracks'];
-  const index=Math.max(0,atlasOrder.indexOf(id));
-  const wrapper=node('span',{class:'v32-building-art v32-building-art--painted','aria-hidden':'true'});
-  wrapper.style.backgroundPosition=`${(index%3)*50}% ${Math.floor(index/3)*50}%`;
+  const config=DEVELOPMENT_BUILDINGS[id]||DEVELOPMENT_BUILDINGS.bakery;
+  const size=Math.max(config.width,config.height)+12;
+  const x=config.x+(config.width-size)/2,y=config.y+(config.height-size)/2;
+  const wrapper=node('span',{class:'v32-building-art v32-building-art--native','aria-hidden':'true','data-native-building-art':id});
+  wrapper.style.backgroundSize=`${1672/size*100}% ${941/size*100}%`;
+  wrapper.style.backgroundPosition=`${x/(1672-size)*100}% ${y/(941-size)*100}%`;
   return wrapper;
 }
 
@@ -218,7 +221,7 @@ export function createDevelopmentUI(options={}){
   function open(id){if(disposed)return;if(options.openPanel&&options.context?.useExistingPanel){options.openPanel(id);return;}previousFocus=document.activeElement;activeId=id;if(!dialog){const closeButton=btn('Zamknij',close,{class:'v32-button v32-close','aria-label':'Zamknij okno budynku'});dialog=node('div',{class:'v32-modal-backdrop',onClick:event=>{if(event.target===event.currentTarget)close();}},node('section',{class:'v32-modal',role:'dialog','aria-modal':'true','aria-label':DEVELOPMENT_BUILDINGS[id]?.name||DEVELOPMENT_NAMES[id]||id},closeButton,node('div',{'data-v32-dialog-body':''}),message));element.append(dialog);queueMicrotask(()=>closeButton.focus());}renderOpen();}
   const mapButtons=new Map(),dockButtons=new Map();
   for(const [id,config]of Object.entries(DEVELOPMENT_BUILDINGS)){
-    const marker=node('button',{type:'button',class:'v32-map-building',style:`left:${config.x}px;top:${config.y}px`,'data-v32-building':id,'aria-label':config.name,onClick:()=>open(id)},developmentBuildingArt(id),node('span',{class:'v32-map-label',text:config.name}));
+    const marker=node('button',{type:'button',class:'island-hotspot world-hotspot v32-map-building',style:`left:${config.x}px;top:${config.y}px;width:${config.width}px;height:${config.height}px`,'data-v32-building':id,'data-label':config.name,'aria-label':config.name,onClick:()=>open(id)},node('span',{class:'v32-native-hit','aria-hidden':'true',style:`clip-path:${config.footprint}`}));
     const card=node('button',{type:'button',class:'v32-dock-building','data-v32-dock-building':id,'aria-label':config.name,onClick:()=>open(id)},developmentBuildingArt(id),node('span',{text:config.name}),node('small',{'data-v32-building-level':''}));
     mapButtons.set(id,marker);dockButtons.set(id,card);mapLayer.append(marker);dock.append(card);
   }

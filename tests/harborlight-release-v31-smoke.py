@@ -16,6 +16,13 @@ spec = importlib.util.spec_from_file_location('release_v31_base', SOURCE / 'test
 base = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(base)
 SCREENSHOTS = Path(os.environ.get('HARBORLIGHT_SCREENSHOT_DIR', '/tmp/harborlight-v31-map'))
+APPROVED_TOUR = json.loads(subprocess.check_output(
+    ['node', '--input-type=module', '-e',
+     'import {APPROVED_TOUR_IDS,getTourCopy} from %s; import {buildingPurpose} from %s; console.log(JSON.stringify({ids:APPROVED_TOUR_IDS,market:Object.fromEntries(["pl","en"].map(language=>[language,getTourCopy("building-market",language)])),lighthouse:Object.fromEntries(["pl","en"].map(language=>[language,buildingPurpose("lighthouse",language)]))}));' %
+     (json.dumps((base.ROOT / 'harborlight-v1-approved-copy.js').as_uri()),
+      json.dumps((base.ROOT / 'harborlight-v1-copy.js').as_uri()))],
+    cwd=SOURCE, text=True))
+TOUR_IDS = APPROVED_TOUR['ids']
 
 
 def screen(page, name):
@@ -30,13 +37,20 @@ def menu_item(page, mobile, label):
 
 def next_to(page, step):
     tour = page.locator('[data-island-onboarding]')
-    for _ in range(35):
-        if tour.get_attribute('data-onboarding-step') == step:
+    target = TOUR_IDS.index(step)
+    for _ in range(len(TOUR_IDS) + 1):
+        current = TOUR_IDS.index(tour.get_attribute('data-onboarding-step'))
+        if current == target:
             # The fixture clock is paused; allow real layout/camera frames.
             page.clock.run_for(200)
             return tour
-        tour.locator('[data-onboarding-next]').click()
+        # Approved routes can reorder stable IDs. Navigate backwards through
+        # the real tour controls when a later assertion revisits an earlier ID.
+        direction = -1 if target < current else 1
+        control = '[data-onboarding-previous]' if direction < 0 else '[data-onboarding-next]'
+        tour.locator(control).click()
         page.clock.run_for(100)
+        expect(tour).to_have_attribute('data-onboarding-step', TOUR_IDS[current + direction])
     raise AssertionError('Tour did not reach ' + step)
 
 
@@ -242,11 +256,11 @@ def scenario(browser, language, mobile):
                              card_box['y'] + card_box['height'] <= face_box['y']), {'face': face_box, 'card': card_box}
         screen(page, label + '-farm-face')
         next_to(page, 'building-market')
-        if language == 'pl':
-            expect(tour).to_contain_text('Od 6 poziomu Ratusza')
-            assert 'Od 6. poziomu' not in tour.inner_text()
-        else:
-            expect(tour).to_contain_text('From Town Hall level 6')
+        market_copy = APPROVED_TOUR['market'][language]
+        expect(tour.locator('[data-onboarding-title]')).to_have_text(market_copy['title'])
+        description = tour.locator('#island-onboarding-description')
+        expect(description).to_have_text(market_copy['text'])
+        expect(description).to_contain_text('Od 6. poziomu Ratusza' if language == 'pl' else 'From Town Hall level 6')
         tour.locator('[data-onboarding-exit]').click()
         page.locator('[data-close-tutorial-exit-reminder]').click()
         expect(page.locator('body')).not_to_have_attribute('data-tour-storage-demo', 'true')
@@ -263,10 +277,7 @@ def scenario(browser, language, mobile):
 
         base.building(page, language, mobile, 'lighthouse')
         purpose = page.locator('[data-building-panel="lighthouse"] [data-building-purpose="lighthouse"]')
-        if language == 'pl':
-            expect(purpose).to_contain_text('po powrocie ze zwiedzania otrzymają premię szczęścia')
-        else:
-            expect(purpose).to_contain_text('happiness')
+        expect(purpose).to_have_text(APPROVED_TOUR['lighthouse'][language])
 
         # All residents at100 may keep House points instead of a dead-end lesson.
         base.building(page, language, mobile, 'house')

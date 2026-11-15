@@ -57,7 +57,19 @@ def close_tour(page):
     page.locator('[data-close-tutorial-exit-reminder]').click()
 
 
-def scenario(browser, language, mobile):
+def approved_tour_route():
+    code = """import {APPROVED_TOUR_IDS} from './harborlight-v1-approved-copy.js';
+      console.log(JSON.stringify(APPROVED_TOUR_IDS));"""
+    result = subprocess.run(['node', '--input-type=module', '-e', code], cwd=SOURCE,
+                            text=True, capture_output=True, check=True)
+    route = json.loads(result.stdout)
+    assert len(route) == len(set(route)), route
+    assert route[0] == 'home' and 'building-theatre' in route, route
+    assert route[route.index('building-farm') + 1] == 'producer-storage', route
+    return route
+
+
+def scenario(browser, language, mobile, route):
     context, page, errors, external = base.new_page(browser, fixture(), language, mobile)
     label = '%s-%s' % (language, 'mobile' if mobile else 'desktop')
     try:
@@ -73,39 +85,42 @@ def scenario(browser, language, mobile):
         screenshot(page, label + '-aligned-help')
         panel.locator('[data-help-tour-from-start]').click()
         tour = page.locator('[data-island-onboarding]')
-        expect(tour.locator('[data-onboarding-counter]')).to_contain_text('1 z 34' if language == 'pl' else '1 of 34')
+        expect(tour.locator('[data-onboarding-counter]')).to_contain_text(
+            ('1 z %d' if language == 'pl' else '1 of %d') % len(route))
         # Skip through the actual tour to the Farm, and show its full-store
         # explanation only on the dedicated following step.
         visited = []
-        for _ in range(34):
-            identity = tour.get_attribute('data-onboarding-step')
+        storage_index = route.index('producer-storage')
+        for identity in route[:storage_index]:
+            expect(tour).to_have_attribute('data-onboarding-step', identity)
             visited.append(identity)
             if identity == 'building-farm':
                 body = tour.locator('#island-onboarding-description')
                 expect(body).not_to_contain_text('smutna buźka' if language == 'pl' else 'sad face')
-                tour.locator('[data-onboarding-next]').click()
-                expect(tour).to_have_attribute('data-onboarding-step', 'producer-storage')
-                expect(tour.locator('#island-onboarding-description')).to_contain_text('lekcję 11' if language == 'pl' else 'lesson 11')
-                sad = page.locator('[data-production-penalty="farm"]')
-                expect(sad).to_be_visible()
-                screenshot(page, label + '-single-farm-storage')
-                tour.locator('[data-onboarding-next]').click()
-                expect(tour).to_have_attribute('data-onboarding-step', 'building-windmill')
-                expect(sad).to_have_count(0)
-                break
+                expect(page.locator('[data-production-penalty="farm"]')).to_have_count(0)
             tour.locator('[data-onboarding-next]').click()
-        assert 'building-theatre' in visited, visited
+        expect(tour).to_have_attribute('data-onboarding-step', 'producer-storage')
+        visited.append('producer-storage')
+        expect(tour.locator('#island-onboarding-description')).to_contain_text(
+            re.compile(r'\blekcj[ęi]\s+11\b') if language == 'pl' else 'lesson 11')
+        sad = page.locator('[data-production-penalty="farm"]')
+        expect(sad).to_have_count(1)
+        expect(sad).to_be_visible()
+        screenshot(page, label + '-single-farm-storage')
+        tour.locator('[data-onboarding-next]').click()
+        resume_step = route[storage_index + 1]
+        expect(tour).to_have_attribute('data-onboarding-step', resume_step)
+        expect(sad).to_have_count(0)
         close_tour(page)
         expect(page.locator('[data-mobile-control="tutorial"]' if mobile else '#hit-tutorial')).to_have_class(re.compile('learning-help-highlight'))
         # Saved pause is restored exactly and completing the resumed tour
         # returns to practical work, not an idle island with the course hidden.
         panel = open_help(page, mobile)
         panel.locator('[data-help-return-tour]').click()
-        expect(tour).to_have_attribute('data-onboarding-step', 'building-windmill')
-        for _ in range(34):
-            identity = tour.get_attribute('data-onboarding-step')
-            if identity == 'menu':
-                break
+        expect(tour).to_have_attribute('data-onboarding-step', resume_step)
+        for identity in route[storage_index + 1:]:
+            expect(tour).to_have_attribute('data-onboarding-step', identity)
+            visited.append(identity)
             if identity == 'building-dock':
                 page.clock.run_for(32)  # Let the actual spotlight position its new target.
                 highlight = page.locator('[data-onboarding-highlight]')
@@ -114,9 +129,9 @@ def scenario(browser, language, mobile):
                 rect, nav = highlight.bounding_box(), admin.bounding_box()
                 assert rect and nav and rect['y'] + rect['height'] <= nav['y'], (rect, nav)
             tour.locator('[data-onboarding-next]').click()
-        expect(tour).to_have_attribute('data-onboarding-step', 'menu')
-        tour.locator('[data-onboarding-next]').click()
         expect(tour).to_have_count(0)
+        assert visited == route and len(visited) == len(set(visited)), visited
+        assert 'building-theatre' in visited, visited
         expect(page.locator('[data-tutorial-current="island-map"]')).to_be_visible()
         expect(page.locator('[data-tutorial-assignment-progress]')).to_contain_text('0 / 3')
         current = base.state_of(page)
@@ -144,15 +159,16 @@ def real_course():
 
 def run():
     real_course()
+    route = approved_tour_route()
     with sync_playwright() as pw:
         browser = pw.chromium.launch(executable_path=os.environ.get('HARBORLIGHT_CHROMIUM', '/usr/bin/chromium'), headless=True, args=['--no-sandbox'])
         try:
             for language in ['pl', 'en']:
                 for mobile in [False, True]:
-                    scenario(browser, language, mobile)
+                    scenario(browser, language, mobile, route)
         finally:
             browser.close()
-    print('PASS v29 learning: Help button edges, 3x question mark, 34-step route, single Farm storage demonstration, Theatre, saved resume and automatic practical course; PL/EN desktop/mobile')
+    print('PASS v29 learning: Help button edges, 3x question mark, %d-step approved route without duplicates, single Farm storage demonstration, Theatre, saved resume and automatic practical course; PL/EN desktop/mobile' % len(route))
 
 
 if __name__ == '__main__':

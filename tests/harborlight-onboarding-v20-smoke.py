@@ -17,11 +17,19 @@ cloud = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(cloud)
 UID = 'dev-admin2'
 START = int(cloud.NOW.timestamp() * 1000)
-BUILDINGS = ['townhall', 'house', 'farm', 'windmill', 'quarry', 'lumber', 'sawmill', 'warehouse', 'market', 'dock', 'chapel', 'lighthouse']
+def starter(*, ruleset=None):
+    options = {'onboarding': True}
+    if ruleset is not None:
+        options['ruleset'] = ruleset
+    source = "import {createState} from './harborlight-v1-state.js'; console.log(JSON.stringify(createState(%d,%s)));" % (START, json.dumps(options))
+    return json.loads(subprocess.run(['node', '--input-type=module', '-e', source], cwd=SOURCE,
+                                    capture_output=True, text=True, check=True).stdout)
 
 
-def starter():
-    source = "import {createState} from './harborlight-v1-state.js'; console.log(JSON.stringify(createState(%d,{onboarding:true})));" % START
+def current_tour():
+    source = """import {APPROVED_TOUR_IDS} from './harborlight-v1-approved-copy.js';
+      import {ALL_BUILDINGS} from './harborlight-v1-state.js';
+      console.log(JSON.stringify({ids:APPROVED_TOUR_IDS,buildings:Object.keys(ALL_BUILDINGS)}));"""
     return json.loads(subprocess.run(['node', '--input-type=module', '-e', source], cwd=SOURCE,
                                     capture_output=True, text=True, check=True).stdout)
 
@@ -56,7 +64,7 @@ def frozen(value, original):
     assert value['worldTimeMs'] == original['worldTimeMs'], 'Island world time advanced before the tour finished'
     assert value['lastSimulatedAt'] == original['lastSimulatedAt']
     assert value['resources'] == original['resources'], 'Food/stock changed before play began'
-    assert value['population'] == original['population'] == 12
+    assert value['population'] == original['population'] == (18 if original.get('ruleset') == 32 else 12)
     assert value['welcome'] == original['welcome'], 'Welcome protection was consumed during onboarding'
     assert value['tutorial']['completed'] == {}, 'A tour explanation must not complete a tutorial action'
     assert value['engagementSchedule']['activeSeconds'] == 0, 'Forced activity scheduling started too soon'
@@ -341,7 +349,11 @@ def persisted_tour_and_skip(browser):
 
 
 def complete_mobile_tour(browser):
-    seed(starter())
+    # The current route explains the seven development buildings as well as
+    # the legacy island. Keep the other recovery fixtures on their old rules.
+    original = starter(ruleset=32)
+    expected = current_tour()
+    seed(original)
     context, page = enter(browser, language='en', mobile=True)
     guide = name_island(page, 'Harbor Breeze')
     ids = []
@@ -349,6 +361,7 @@ def complete_mobile_tour(browser):
         step_id = guide.get_attribute('data-onboarding-step')
         assert step_id and step_id not in ids, 'The walkthrough repeated a step instead of finishing'
         ids.append(step_id)
+        assert step_id == expected['ids'][len(ids) - 1], ids
         page.clock.run_for(32)
         for selector in ['[data-onboarding-card]', '[data-onboarding-highlight]', '[data-onboarding-next]', '[data-onboarding-previous]', '[data-onboarding-exit]']:
             bounded(page, page.locator(selector))
@@ -360,6 +373,7 @@ def complete_mobile_tour(browser):
         assert page.locator('[data-onboarding-title]').inner_text().strip()
         assert page.locator('[data-onboarding-card]').evaluate('(n)=>n.scrollWidth <= n.clientWidth + 1')
         assert not page.locator('[data-tutorial-current]').count()
+        frozen(saved(page), original)
         final_step = page.locator('[data-onboarding-next]').inner_text().startswith('Start playing')
         page.locator('[data-onboarding-next]').click()
         if final_step:
@@ -368,13 +382,14 @@ def complete_mobile_tour(browser):
         expect(guide).not_to_have_attribute('data-onboarding-step', step_id)
     else:
         raise AssertionError('The complete walkthrough did not finish in100 steps')
-    assert len(ids) == 34, ids
-    assert ids[:8] == ['home', 'level', 'happiness', 'coins', 'working', 'arrival', 'points', 'population'], ids[:8]
-    assert ids.index('chat') + 1 == ids.index('notifications'), ids
-    for building in BUILDINGS:
-        assert any(building in step_id for step_id in ids), (building, ids)
-    for expected in ['home', 'level', 'happiness', 'coins', 'population', 'working', 'arrival', 'points', 'administration', 'economy', 'resources', 'decorations', 'paths', 'settings', 'tutorial']:
-        assert any(expected in step_id for step_id in ids), (expected, ids)
+    assert ids == expected['ids'], ids
+    for building in expected['buildings']:
+        target = 'level' if building == 'townhall' else 'building-' + building
+        assert target in ids, (building, ids)
+    for target in ['home', 'level', 'happiness', 'coins', 'working', 'arrival', 'food', 'clothing',
+                   'transport', 'construction', 'education', 'research', 'kingdom', 'archipelago',
+                   'chat', 'league', 'charity', 'category-decorations', 'category-paths', 'settings', 'tutorial']:
+        assert target in ids, (target, ids)
     assert cloud.cloud_state(UID)['onboarding']['stage'] == 'complete'
     expect(page.locator('[data-tutorial-current]')).to_be_visible()
     cloud.no_island_cache(page)

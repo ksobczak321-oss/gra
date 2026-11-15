@@ -4,6 +4,8 @@ Firebase REST is isolated; the game, world timers, model actions and UI are real
 Construction fixtures are earned through the actual course helper, including
 resource deliveries, the Lighthouse task and the solved/cashed-out minigame.
 No account, world, reward or construction-completion flags are fabricated.
+Historical course fixtures are retained; screen-guide navigation follows the
+current accepted v4 route and its 48 stable steps.
 """
 from datetime import datetime, timezone
 import importlib.util
@@ -21,6 +23,11 @@ spec = importlib.util.spec_from_file_location('learning_v27_cloud', SOURCE / 'te
 cloud = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(cloud)
 UID = 'dev-admin2'
+TOUR_IDS = json.loads(subprocess.check_output([
+    'node', '--input-type=module', '-e',
+    "import {APPROVED_TOUR_IDS} from './harborlight-v1-approved-copy.js';console.log(JSON.stringify(APPROVED_TOUR_IDS))",
+], cwd=SOURCE, text=True))
+assert len(TOUR_IDS) == 48, 'The accepted v32 guide has 48 steps'
 
 
 def world(*, through=0, resource_tour=False):
@@ -36,7 +43,7 @@ def world(*, through=0, resource_tour=False):
         run({type:'assign',building:'quarry',delta:1});
         advanceTo(state,state.worldTimeMs+120000);
         run({type:'dismissTutorial'});
-        run({type:'learningUpdate',patch:{tour:{index:APPROVED_TOUR_IDS.indexOf('category-economy'),active:false,paused:true},adsNotBeforeActiveSeconds:100000}});
+        run({type:'learningUpdate',patch:{tour:{index:APPROVED_TOUR_IDS.indexOf('building-farm'),active:false,paused:true},adsNotBeforeActiveSeconds:100000}});
       }else{
         run({type:'learningUpdate',patch:{adsNotBeforeActiveSeconds:100000}});
       }
@@ -103,12 +110,16 @@ def tour_and_help(browser, language, mobile):
         overview = page.locator('#island-dialog')
         expect(overview.get_by_role('button', name=re.compile(r'^(Pomoc|Help|Samouczek|Tutorial)$'))).to_have_count(0)
         overview.locator('.dialog-close').click()
+        # Keep the real resource dock open behind the guide. The accepted v4
+        # copy replaces category-resources with producer-storage; live counts
+        # remain in the resource dock rather than in the short guide paragraph.
+        page.locator('[data-mobile-category="resources"]' if mobile else '#hit-category-resources').click()
         help_panel(page, mobile).locator('[data-help-return-tour]').click()
         tour = page.locator('[data-island-onboarding]')
-        expect(tour).to_have_attribute('data-onboarding-step', 'category-economy')
-        expect(tour.locator('[data-onboarding-counter]')).to_contain_text('34')
-        # The tour was created before production below. T27 must resolve live
-        # numbers when entered, while this already-started world keeps running.
+        expect(tour).to_have_attribute('data-onboarding-step', 'building-farm')
+        expect(tour.locator('[data-onboarding-counter]')).to_contain_text(str(len(TOUR_IDS)))
+        # The tour was created before production below. Its live resource
+        # controls must advance while this already-started world keeps running.
         page.clock.run_for(240_000)
         no_offer(page)
         running = saved(page)
@@ -117,25 +128,28 @@ def tour_and_help(browser, language, mobile):
         assert local > int(initial['buildings']['quarry'].get('ready', 0)), 'Actual quarry production did not advance'
         central = int(running['resources']['stone'])
         tour.locator('[data-onboarding-next]').click()
-        expect(tour).to_have_attribute('data-onboarding-step', 'category-resources')
-        expect(page.locator('#island-onboarding-description')).to_contain_text(
-            ('Kamień' if language == 'pl' else 'Stone') + f' {local} / {central} (0)')
-        # All later steps, including the added chat explanation, are reachable.
-        sequence = ['category-decorations', 'category-paths', 'tutorial', 'chat', 'notifications', 'settings', 'menu']
+        expect(tour).to_have_attribute('data-onboarding-step', 'producer-storage')
+        stone = page.locator('[data-mobile-resource="stone"]' if mobile else '[data-resource-dock] [data-dock-resource="stone"]')
+        expect(stone).to_be_visible()
+        expect(stone.locator('[data-dock-local="stone"]')).to_have_text(str(local))
+        expect(stone.locator('[data-dock-central="stone"]')).to_have_text(str(central))
+        expect(stone.locator('[data-dock-transit="stone"]')).to_have_text('0')
+        # Every later stable ID, including new buildings and chat, is reachable.
+        sequence = TOUR_IDS[TOUR_IDS.index('producer-storage') + 1:]
         for step in sequence:
             tour.locator('[data-onboarding-next]').click()
             expect(tour).to_have_attribute('data-onboarding-step', step)
             if step == 'chat':
                 expect(page.locator('#island-onboarding-description')).to_contain_text(
-                    'rozmawiać online z innymi graczami' if language == 'pl' else 'chat online with other players')
+                    'innymi graczami' if language == 'pl' else 'chat online with other players')
         close_tour(page, language)
         paused = saved(page)
-        assert paused['learning']['tour']['paused'] and paused['learning']['tour']['index'] == 33
+        assert paused['learning']['tour']['paused'] and paused['learning']['tour']['index'] == len(TOUR_IDS) - 1
         assert lesson_history(paused) == before, 'Screen explanations changed practical lesson rewards'
         page.reload()
         page.wait_for_function('document.getElementById("loading").hidden')
         help_panel(page, mobile).locator('[data-help-return-tour]').click()
-        expect(tour).to_have_attribute('data-onboarding-step', 'menu')
+        expect(tour).to_have_attribute('data-onboarding-step', 'settings')
         tour.locator('[data-onboarding-restart]').click()
         expect(tour).to_have_attribute('data-onboarding-step', 'home')
         assert saved(page)['learning']['tour']['index'] == 0
@@ -431,7 +445,7 @@ def run():
     if recovery_only:
         print('PASS8 replay navigation/restart lost-ACK scenarios: confirmed cloud cursor adopted without duplicate writes or changed practical history; PL/EN desktop/mobile')
     else:
-        print('PASS integrated v27 learning: Help has two entries, overview excludes them,34 tour steps with live resources and chat, saved resume/restart and lost-ACK readback, read-only practical review, actual construction countdown, receipt-before-effect arrows; PL/EN desktop/mobile')
+        print('PASS integrated v27 learning: Help has two entries, overview excludes them,48 current tour steps with live resource-dock counts and chat, saved resume/restart and lost-ACK readback, read-only practical review, actual construction countdown, receipt-before-effect arrows; PL/EN desktop/mobile')
 
 
 if __name__ == '__main__':

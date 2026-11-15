@@ -2,7 +2,7 @@
 
 ## DEV 0.15.0.0 / v32 — tylko DEV, 15 listopada 2026
 
-Aktualna gałąź rozwojowa to `dev/0.15.0.0`; publikacja na dotychczasowym GitHub Pages jest autoryzowana i nie uruchamia promocji PRE-PROD. Kod v32 bazuje dokładnie na wdrożonym `7e81a1a`, a późniejsze metadane odbioru 0.14.0.0 z `b2227d5` zachowano przez scalanie historii. [Publiczny podgląd DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-3) · [bieżący stan dostępu i testów](v32/DEV-READY.md).
+Aktualna gałąź rozwojowa to `dev/0.15.0.0`; publikacja na dotychczasowym GitHub Pages jest autoryzowana i nie uruchamia promocji PRE-PROD. Kod v32 bazuje dokładnie na wdrożonym `7e81a1a`, a późniejsze metadane odbioru 0.14.0.0 z `b2227d5` zachowano przez scalanie historii. [Publiczny podgląd DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-4) · [bieżący stan dostępu i testów](v32/DEV-READY.md).
 
 Podgląd Pages jest bez kont, z postępem tylko w pamięci karty. Lokalny serwer DEV na porcie3000 ma oddzielne, trwałe wyspy i pary login/hasło `admin1/admin1`, `admin2/admin2`, `admin3/admin3`. Nowych zapisów nie przeniesiono do Firebase. Własny CI i Pages bieżącego SHA wymagają osobnego wyniku; wcześniejsze sukcesy 0.14.0.0 go nie zastępują.
 

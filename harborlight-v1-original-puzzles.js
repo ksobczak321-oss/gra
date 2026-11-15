@@ -1,4 +1,4 @@
-import { normalizeExpeditionHour, allocateExpeditionAttemptId, reserveExpeditionDifficulty, recordExpeditionOutcome, expeditionHourStatus, cappedExpeditionReward } from './harborlight-v1-expedition-hour.js?v=frontend-v32-3';
+import { normalizeExpeditionHour, allocateExpeditionAttemptId, reserveExpeditionDifficulty, recordExpeditionOutcome, expeditionHourStatus, cappedExpeditionReward } from './harborlight-v1-expedition-hour.js?v=frontend-v32-4';
 
 export const ORIGINAL_PUZZLE_VERSION = 1;
 export const originalPuzzleCatalog = Object.freeze([

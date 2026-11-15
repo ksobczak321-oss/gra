@@ -2,7 +2,7 @@
 
 To ściągawka do ręcznego sprawdzenia zmian DEV 0.15.0.0 / v32. Zaznaczaj punkt dopiero po własnej próbie. PRE-PROD nie otrzymał tego wydania.
 
-[Otwórz grę na DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-3) · [Otwórz klikaną listę](../testing/dev-v32-checklist.html)
+[Otwórz grę na DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-4) · [Otwórz klikaną listę](../testing/dev-v32-checklist.html)
 
 Podgląd GitHub Pages działa bez logowania i trzyma postęp tylko w otwartej karcie. Odświeżenie lub zamknięcie zaczyna nowy podgląd. Zaznaczenia na osobnej liście nie są zapisem gry. Na szybki pierwszy przegląd wybierz punkty z etykietą „Szybki test”; procesy wielogodzinne wygodniej sprawdzać na lokalnym DEV z zegarem admin3.
 
@@ -92,7 +92,7 @@ Wszystkie punkty poniżej czekają na Twój ręczny odbiór. Wyniki testów auto
 
 - [ ] **DEV-20 — Teatr i dekoracje** (Dłuższy test)
   Sprawdź: Zaplanuj przedstawienie, obejrzyj listę widzów i koszt; sprawdź plac oraz ulepszanie ozdób.
-  Wynik: Plan trwa 45 minut, pokaz 10 minut, koszt wynosi 2 monety na widza, premia +10 punktów szczęścia na 6 godzin. Produkcja i nauka trwają dalej. Plac ma 20 miejsc, 10 typów ozdób i dalsze poziomy; wymagania reklam są widoczne co trzeci poziom.
+  Wynik: Plan trwa 45 minut, pokaz 10 minut, koszt wynosi 2 monety na widza, premia +10 punktów szczęścia na 6 godzin. Produkcja i nauka trwają dalej. Na mapie Teatr zajmuje dawny budynek Targu, a Targ sąsiedni stragan. Plac ma 20 miejsc, 10 typów ozdób i dalsze poziomy; wymagania reklam są widoczne co trzeci poziom.
 
 - [ ] **DEV-21 — Dwie nowe minigry i ich trudność** (Szybki test)
   Sprawdź: Uruchom „Sieć latarnika” i „Konwoje na redzie”; porównaj sterowanie myszą i dotykiem.
@@ -104,7 +104,7 @@ Wszystkie punkty poniżej czekają na Twój ręczny odbiór. Wyniki testów auto
 
 - [ ] **DEV-23 — Przygody, interfejs i teksty** (Szybki test)
   Sprawdź: Sprawdź kolejność etapów, zdobyte przedmioty, nagrody, opisy „i” i układ na telefonie.
-  Wynik: Przedmioty i wskazówki mają sens w swoich przygodach, nagrody odbiera się raz. „Osoby” i „Przydziel” są wyrównane, nowe budynki mają spójne ilustracje; okna i przyciski mieszczą się na telefonie. Teksty są bieżącą wersją do redakcji — kolumna C nowego Excela pozostaje pusta.
+  Wynik: Przedmioty i wskazówki mają sens w swoich przygodach, nagrody odbiera się raz. „Osoby” i „Przydziel” są wyrównane, nowe funkcje używają istniejących budynków planszy; podpisy pojawiają się po najechaniu; okna i przyciski mieszczą się na telefonie. Teksty są bieżącą wersją do redakcji — kolumna C nowego Excela pozostaje pusta.
 
 ## Osobno: testy wymagające serwera i kont DEV
 

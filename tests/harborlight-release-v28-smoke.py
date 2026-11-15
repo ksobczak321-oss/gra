@@ -5,7 +5,7 @@ advertising provider. The story fixture earns all 25 lessons through the real
 course commands. A fresh context round-trip tests persisted offer markers; it
 does not claim to test real cloud deployment or cloud autosave.
 """
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import argparse
 import json
 import mimetypes
@@ -67,7 +67,9 @@ def new_page(browser, state, language, mobile):
     page.set_default_timeout(10000)
     page.on('pageerror', lambda error: errors.append(str(error)))
     now = datetime.fromtimestamp(state['worldTimeMs'] / 1000, tz=timezone.utc)
-    page.clock.install(time=now)
+    # Pause the empty document at the fixture's exact time before navigation.
+    # Leave setup headroom so a busy browser cannot make pause_at go backwards.
+    page.clock.install(time=now - timedelta(minutes=1))
     page.clock.pause_at(now)
     assert page.goto(ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
     page.wait_for_function('window.__HARBORLIGHT_DEV_STATE__ !== undefined && document.getElementById("loading").hidden')
@@ -141,7 +143,7 @@ def ui_scenario(browser, language, mobile):
         screenshot(page, label + '-help')
         help_panel.locator('[data-help-tour-from-start]').click()
         tour = page.locator('[data-island-onboarding]')
-        expect(tour.locator('[data-onboarding-counter]')).to_contain_text('1 z 34' if language == 'pl' else '1 of 34')
+        expect(tour.locator('[data-onboarding-counter]')).to_contain_text('1 z 48' if language == 'pl' else '1 of 48')
         expect(tour).to_have_attribute('data-onboarding-step', 'home')
         tour.locator('[data-onboarding-next]').click()
         expect(tour).to_have_attribute('data-onboarding-step', 'level')

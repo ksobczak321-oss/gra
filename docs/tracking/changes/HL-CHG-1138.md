@@ -22,7 +22,7 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 ## Zakres i odbiór
 
 - Pola „Osoby” i przyciski „Przydziel” mają wspólne osie i rozmiary; przegląd obejmuje formularze, magazyn, Teatr, Królestwo i minigry na szerokościach 1440/390.
-- Nowe własne ilustracje siedmiu budynków zastępują słabe miniatury, kontrast i wielkości przycisków poprawiono; okna czasu minigier mieszczą się na telefonie.
+- Poprawiono kontrast, wielkości przycisków i okna minigier. Pierwsza propozycja nowych ilustracji została zastąpiona poleceniem wykorzystania istniejących budynków planszy — szczegóły HL-CHG-1139.
 
 ## Źródło
 
@@ -35,7 +35,7 @@ Data pierwotnej wiadomości: 2026-11-15. Zatwierdzony pakiet z załączonej rozm
 ## Dowody
 
 - **Dokumenty:** [docs/FRONTEND-V32-REQUIREMENTS.md](../../FRONTEND-V32-REQUIREMENTS.md), [docs/v32/IMPLEMENTATION-AUDIT.md](../../v32/IMPLEMENTATION-AUDIT.md), [docs/v32/USER-DECISIONS.json](../../v32/USER-DECISIONS.json), [docs/v32/DEV-READY.md](../../v32/DEV-READY.md), [docs/v32/VISUAL-REVIEW.md](../../v32/VISUAL-REVIEW.md)
-- **Kod:** [harborlight-v1-development-ui.js](../../../harborlight-v1-development-ui.js), [harborlight-v1-play.css](../../../harborlight-v1-play.css), [assets/harborlight-development-buildings-v32.png](../../../assets/harborlight-development-buildings-v32.png)
+- **Kod:** [harborlight-v1-development-ui.js](../../../harborlight-v1-development-ui.js), [harborlight-v1-play.css](../../../harborlight-v1-play.css), [assets/harborlight-v1-approved.png](../../../assets/harborlight-v1-approved.png)
 - **Scenariusze automatyczne:** [tests/harborlight-v32-ui-smoke.py](../../../tests/harborlight-v32-ui-smoke.py), [tests/harborlight-minigame-layout-v32-smoke.py](../../../tests/harborlight-minigame-layout-v32-smoke.py), [tests/harborlight-minigame-actual-layout-v32-smoke.py](../../../tests/harborlight-minigame-actual-layout-v32-smoke.py)
 - **Kod dowodowy:** `5ca548096139299a99990fc8f9a80b5cbbc07746`.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
@@ -45,12 +45,13 @@ Kod i automatyczne kontrole zweryfikowano lokalnie naDEV 0.15.0.0 / v32. Własne
 ## Relacje
 
 - **Zastępuje:** Brak.
-- **Zastąpione lub ograniczone przez:** Brak.
+- **Zastąpione lub ograniczone przez:** [HL-CHG-1139](HL-CHG-1139.md)
 - **Powiązane:** Brak.
 
 ## Uwagi
 
 - Automatyczny przegląd geometrii nie zastępuje ręcznego odbioru wyglądu przez użytkownika.
+- Zastąpiono wyłącznie pierwszą propozycję grafiki mapy; zaakceptowane wyrównanie formularzy i kontrolki pozostają.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

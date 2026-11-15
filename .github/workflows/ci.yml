@@ -17,9 +17,10 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    # The full campaign and 43 browser suites are sequential; browser setup
-    # took over nine minutes on a fresh runner in the previous attempt.
-    timeout-minutes: 35
+    # The campaign, expanded 48-step tour and browser suites are sequential.
+    # Keep their existing per-test watchdogs; allow time for the larger suite
+    # and browser installation on a fresh runner.
+    timeout-minutes: 50
     steps:
       - name: Checkout exact source commit
         uses: actions/checkout@v4
@@ -137,7 +138,7 @@ jobs:
           import subprocess
           import sys
 
-          for test in ('tests/harborlight-pages-dev-v32-smoke.py', 'tests/harborlight-save-packing-v32-smoke.py', 'tests/harborlight-original-puzzles-v32-smoke.py'):
+          for test in ('tests/harborlight-pages-dev-v32-smoke.py', 'tests/harborlight-native-map-v32-smoke.py', 'tests/harborlight-save-packing-v32-smoke.py', 'tests/harborlight-original-puzzles-v32-smoke.py'):
               print('Starting DEV v32 browser acceptance: ' + test, flush=True)
               status = subprocess.call([sys.executable, '-u', test])
               if status:

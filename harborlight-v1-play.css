@@ -10,7 +10,6 @@ body.world-paused .lighthouse-beam{animation-play-state:paused}
 .island-hotspot::after{content:attr(data-label);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);max-width:240px;width:max-content;padding:8px 12px;border:1px solid #bd9957;border-radius:8px;background:#102a3bf5;color:#fff0c8;font:600 15px/1.25 Inter,system-ui,sans-serif;box-shadow:0 4px 14px #00152566;opacity:0;visibility:hidden;pointer-events:none;z-index:15;transition:opacity .12s}
 .island-hotspot:hover::after,.island-hotspot:focus-visible::after{opacity:1;visibility:visible}
 .island-hotspot[data-label=""]::after{display:none}
-.world-level{position:absolute;right:6px;bottom:6px;pointer-events:none;display:grid;place-items:center;min-width:29px;min-height:25px;padding:2px 7px;border:1px solid #edcb83;border-radius:8px;background:#123245ed;box-shadow:0 2px 7px #00162299;font:700 13px/1.2 Inter,system-ui,sans-serif;color:#ffdf9d}
 .live-resource,.live-clock,.live-objective,.control-state,.category-label{position:absolute;pointer-events:none;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-variant-numeric:tabular-nums}
 .live-resource{height:32px;min-width:58px;background:linear-gradient(#173c56,#0c283c);color:#fff;font-size:18px;font-weight:750;letter-spacing:.2px;text-shadow:0 1px 2px #00131f}
 .live-clock{background:linear-gradient(#143349,#10283a);color:#fff;font-size:14px;line-height:1.35;font-weight:700;white-space:pre-line;text-align:center;border-radius:5px}
