@@ -1,5 +1,13 @@
 # HARBORLIGHT — stan środowisk
 
+## Bieżąca kolejność promocji — obecny PRE-PROD doPROD przed DEV doPRE-PROD
+
+Użytkownik jawnie ustalił kolejność: **obecnyPRE-PROD0.14/7e81a1a → PROD, dopiero po potwierdzeniuPROD aktualnyDEV → PRE-PROD**. [Plan](PROD-FIRST-20261115.md), [dowody blokad](PROD-FIRST-20261115-EVIDENCE.json), OpsHL-CHG-1151. Pierwszy krok jestBLOCKED: oryginalnyreceipt41909268052 maaccount_api:false, świeżyCloudRunhealth200 potwierdza7e, readinessaccounts:false/persistence:false i config503account_api_disabled. Nie omijamy bramkiAPI i nie wgrywamy nowszegoDEV naPRE-PROD przedPROD.
+
+Profil85plików związany dokładnie z7e/hashamiarchiwum i manifestu ma lokalnie26testówPASS i usuwa tylko niezgodność historycznej walidacji; domyślny kontrakt108 i wymaganieAPI zachowane. Do konfiguracji brakuje ustalonego dostępu właścicielskiegoGCP/domeny: brak tożsamości/manifestu/ADC w tej sesji; GHenv404 i FirebasePRODversion/config404 nie dowodzą nieistnienia zasobów. harborlight.pl nadal maA85.128.245.188/nazwa.pl i legacy404. Pytanie dotyczy miejsca skonfigurowanego dostępu, nie sekretów wczacie. NowegoPROD ani resetu kont nie potwierdzono. Samego staregoreceipt nie modyfikujemy; ten sam obraz7e wymaga prawdziwej konfiguracjiAPI, odczytowego odbioru i nowego potwierdzenia.
+
+DEVcache9 czeka na kolejny pełny własnyCI po dwóchFAILURE starych oczekiwańcopy. Drugi kandydatcd61dae przeszedł1402Node/backend/Python/Excel i noweUI6arkuszy, lecz zawiódł starszy test opisu odblokowania.106publicznychplików pozostaje bez zmiany w poprawkach testów. Akceptowany tagcache9 nie powstaje przed pełnym zielonymCI; to nie zmienia wyżej ustalonej kolejności promocji.
+
 ## Bieżące zadanie DEV — redakcja sześciu arkuszy, cache9
 
 Użytkownik zlecił import tekstów tylko zTutoriala, opisów i informacji budynków, dolnego paska, komunikatów i przycisków. [Zakres](v32/GO-EDITORIAL-SIX-TABS.md), [dowody](v32/EDITORIAL-SIX-TABS-EVIDENCE.json):413wierszy,87niepustychC,85różnychodB; niepustaC ma pierwszeństwo, pustaC oznaczaB. Wyciąg obejmuje wyłącznie sześć wskazanych arkuszy; pozostałe treści nie są odczytywane. Instrukcje redakcyjne nie stają się dosłownymi tekstamiUI.

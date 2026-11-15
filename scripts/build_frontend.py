@@ -130,6 +130,11 @@ PUBLIC_FILES = (
 )
 CONTENT_FILES = frozenset((*PUBLIC_FILES, "index.html"))
 ARCHIVE_FILES = CONTENT_FILES | {"release.json"}
+# Only current-main-reviewed profiles can select a historical public file set.
+# The caller cannot supply a profile path, allowlist or unpinned archive digest.
+VERIFICATION_PROFILES = {
+    "preprod-0.14.0.0-20261104": ROOT / "infra/google-cloud/frontend-profiles/preprod-0.14.0.0-20261104.json",
+}
 MAX_BYTES = 32 * 1024 * 1024
 MAX_MEMBERS = 128
 MAX_TAR_BYTES = MAX_BYTES + MAX_MEMBERS * 1024
@@ -176,6 +181,44 @@ def validate_commit(commit):
     return commit
 
 
+def load_verification_profile(name):
+    require(name in VERIFICATION_PROFILES, "Unknown trusted frontend verification profile.")
+    path = VERIFICATION_PROFILES[name]
+    require(path.is_file() and not path.is_symlink(), "Trusted frontend profile must be a regular file.")
+    try:
+        profile = json.loads(path.read_bytes())
+    except (ValueError, UnicodeError) as error:
+        raise BundleError("Invalid trusted frontend verification profile.") from error
+    require(isinstance(profile, dict) and set(profile) == {
+        "schema_version", "name", "commit", "archive_sha256", "manifest_sha256",
+        "file_count", "total_bytes", "content_files",
+    }, "Invalid trusted frontend verification profile fields.")
+    require(type(profile["schema_version"]) is int and profile["schema_version"] == 1
+            and profile["name"] == name, "Unsupported trusted frontend verification profile.")
+    validate_commit(profile["commit"])
+    for key in ("archive_sha256", "manifest_sha256"):
+        require(isinstance(profile[key], str) and DIGEST.fullmatch(profile[key]),
+                "Trusted frontend profile has an invalid pinned digest.")
+    names = profile["content_files"]
+    require(isinstance(names, list) and all(isinstance(item, str) for item in names)
+            and names == sorted(set(names)) and "index.html" in names and "release.json" not in names,
+            "Trusted frontend profile must list unique public content files.")
+    for name in names:
+        require(name and not PurePosixPath(name).is_absolute()
+                and not any(part in ("", ".", "..") for part in name.split("/"))
+                and "\\" not in name, "Trusted frontend profile contains an unsafe public path.")
+    require(type(profile["file_count"]) is int and profile["file_count"] == len(names) + 1
+            and 1 < profile["file_count"] <= MAX_MEMBERS,
+            "Trusted frontend profile has an invalid file count.")
+    require(type(profile["total_bytes"]) is int and 0 < profile["total_bytes"] <= MAX_BYTES,
+            "Trusted frontend profile has an invalid release size.")
+    return {**profile, "content_files": frozenset(names), "archive_files": frozenset((*names, "release.json"))}
+
+
+def public_file_sets(profile=None):
+    return (profile["content_files"], profile["archive_files"]) if profile else (CONTENT_FILES, ARCHIVE_FILES)
+
+
 def canonical_json(value):
     return (json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False) + "\n").encode("utf-8")
 
@@ -202,9 +245,16 @@ def make_manifest(files, commit):
     }
 
 
-def validate_files(files, commit):
-    require(set(files) == ARCHIVE_FILES, "Archive does not contain the exact public frontend file set.")
+def validate_files(files, commit, *, profile=None):
+    content_files, archive_files = public_file_sets(profile)
+    require(set(files) == archive_files, "Archive does not contain the exact public frontend file set.")
     require(sum(map(len, files.values())) <= MAX_BYTES, "Frontend exceeds the public release size limit.")
+    if profile:
+        require(commit == profile["commit"], "Historical frontend profile belongs to another source commit.")
+        require(sha256(files["release.json"]) == profile["manifest_sha256"],
+                "Frontend manifest does not match the trusted historical profile.")
+        require(len(files) == profile["file_count"] and sum(map(len, files.values())) == profile["total_bytes"],
+                "Frontend size does not match the trusted historical profile.")
     try:
         manifest = json.loads(files["release.json"])
     except (ValueError, UnicodeError) as error:
@@ -212,8 +262,8 @@ def validate_files(files, commit):
     require(isinstance(manifest, dict) and manifest.get("schema_version") == 1, "Unsupported frontend manifest.")
     require(manifest.get("commit") == validate_commit(commit), "Frontend manifest belongs to another source commit.")
     expected = manifest.get("files")
-    require(isinstance(expected, dict) and set(expected) == CONTENT_FILES, "Manifest does not list the exact public file set.")
-    for name in sorted(CONTENT_FILES):
+    require(isinstance(expected, dict) and set(expected) == content_files, "Manifest does not list the exact public file set.")
+    for name in sorted(content_files):
         entry = expected[name]
         require(isinstance(entry, dict) and set(entry) == {"sha256", "size"}, f"Invalid manifest entry: {name}")
         require(isinstance(entry["sha256"], str) and DIGEST.fullmatch(entry["sha256"]), f"Invalid file digest: {name}")
@@ -239,7 +289,7 @@ def archive_bytes(files):
     return value
 
 
-def existing_output_is_managed(destination):
+def existing_output_is_managed(destination, *, profile=None):
     require(not destination.is_symlink(), "Output directory must not be a symbolic link.")
     if not destination.exists():
         return
@@ -249,18 +299,19 @@ def existing_output_is_managed(destination):
     regular = {path.relative_to(destination).as_posix(): path for path in paths if path.is_file()}
     if not paths:
         return
-    require(set(regular) == ARCHIVE_FILES, "Refusing to overwrite an output directory with unknown files.")
+    _, archive_files = public_file_sets(profile)
+    require(set(regular) == archive_files, "Refusing to overwrite an output directory with unknown files.")
     try:
         manifest = json.loads(regular["release.json"].read_bytes())
         commit = manifest.get("commit")
     except (ValueError, AttributeError) as error:
         raise BundleError("Refusing to overwrite an unmanaged output directory.") from error
-    validate_files({name: path.read_bytes() for name, path in regular.items()}, commit)
+    validate_files({name: path.read_bytes() for name, path in regular.items()}, commit, profile=profile)
 
 
-def write_output(files, destination):
+def write_output(files, destination, *, profile=None):
     destination = Path(destination)
-    existing_output_is_managed(destination)
+    existing_output_is_managed(destination, profile=profile)
     destination.parent.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix=".harborlight-frontend-", dir=destination.parent))
     try:
@@ -303,8 +354,14 @@ def build(commit, output, archive, source_root=ROOT):
     return metadata(files, commit, archive, compressed)
 
 
-def verify_archive(archive, commit, expected_sha256, extract_to):
+def verify_archive(archive, commit, expected_sha256, extract_to, *, verification_profile=None):
     validate_commit(commit)
+    profile = load_verification_profile(verification_profile) if verification_profile is not None else None
+    _, archive_files = public_file_sets(profile)
+    if profile:
+        require(commit == profile["commit"], "Historical frontend profile belongs to another source commit.")
+        require(expected_sha256 == profile["archive_sha256"],
+                "DEV receipt archive does not match the trusted historical profile.")
     require(isinstance(expected_sha256, str) and DIGEST.fullmatch(expected_sha256), "Expected archive SHA-256 must have 64 lowercase hex digits.")
     archive = Path(archive)
     require(archive.is_file() and not archive.is_symlink(), "Frontend archive must be a regular file.")
@@ -321,9 +378,11 @@ def verify_archive(archive, commit, expected_sha256, extract_to):
                 require(len(files) < MAX_MEMBERS, "Archive contains too many entries.")
                 path = PurePosixPath(member.name)
                 require(not path.is_absolute() and not any(part in (".", "..") for part in member.name.split("/"))
-                        and "\\" not in member.name and member.name in ARCHIVE_FILES,
+                        and "\\" not in member.name and member.name in archive_files,
                         "Archive contains a path outside the public file set.")
                 require(member.isfile() and not member.pax_headers, "Archive contains links or unsupported metadata.")
+                require(not profile or member.type in (tarfile.REGTYPE, tarfile.AREGTYPE) and not member.sparse,
+                        "Historical archive contains a non-regular file or sparse metadata.")
                 require(member.name not in files, "Archive contains duplicate files.")
                 require(0 <= member.size <= MAX_BYTES, "Archive member exceeds the release size limit.")
                 require(sum(map(len, files.values())) + member.size <= MAX_BYTES,
@@ -334,9 +393,12 @@ def verify_archive(archive, commit, expected_sha256, extract_to):
                 require(len(files[member.name]) == member.size, "Archive member is truncated.")
     except (tarfile.TarError, OSError, EOFError) as error:
         raise BundleError("Frontend archive is not a valid bounded tar.gz release.") from error
-    validate_files(files, commit)
-    write_output(files, extract_to)
-    return metadata(files, commit, archive, compressed)
+    validate_files(files, commit, profile=profile)
+    write_output(files, extract_to, profile=profile)
+    result = metadata(files, commit, archive, compressed)
+    if profile:
+        result["verification_profile"] = verification_profile
+    return result
 
 
 def main():
@@ -347,13 +409,17 @@ def main():
     parser.add_argument("--verify-archive", type=Path)
     parser.add_argument("--expected-sha256")
     parser.add_argument("--extract-to", type=Path)
+    parser.add_argument("--verification-profile", choices=tuple(VERIFICATION_PROFILES),
+                        help="Use an explicitly trusted, digest-pinned historical profile for verification only.")
     args = parser.parse_args()
     try:
         if args.verify_archive:
             require(args.expected_sha256 and args.extract_to, "Verification requires --expected-sha256 and --extract-to.")
-            result = verify_archive(args.verify_archive, args.commit, args.expected_sha256, args.extract_to)
+            result = verify_archive(args.verify_archive, args.commit, args.expected_sha256, args.extract_to,
+                                    verification_profile=args.verification_profile)
         else:
-            require(not args.expected_sha256 and not args.extract_to, "Verification options require --verify-archive.")
+            require(not args.expected_sha256 and not args.extract_to and args.verification_profile is None,
+                    "Verification options require --verify-archive.")
             result = build(args.commit, args.output, args.archive)
         print(json.dumps(result, sort_keys=True))
     except (BundleError, OSError) as error:

@@ -1,5 +1,13 @@
 # Zasady pracy nad HARBORLIGHT
 
+## Bieżące GO — najpierw obecny PRE-PROD doPROD, potem DEV doPRE-PROD
+
+Użytkownik jawnie ustalił kolejność: **1) obecnyPRE-PROD0.14.0.0/7e81a1a → PROD, 2) dopiero po potwierdzeniuPROD aktualnyDEV → PRE-PROD**. Nie wdrażaj nowszegoDEV naPRE-PROD przed wykonaniem pierwszego kroku. [Plan i blokady](docs/PROD-FIRST-20261115.md), [dowody](docs/PROD-FIRST-20261115-EVIDENCE.json), OpsHL-CHG-1151. To noweGO zachowuje historię niższych zakresówDEV.
+
+Pierwszy krok jestBLOCKED konfiguracją: oryginalnyreceipt run41909268052/7e81a1a maaccount_api:false; świeżyCloudRunhealth200 potwierdza7e, readiness pokazujeaccounts:false/persistence:false, a/api/v1/config503account_api_disabled. Nie omijaj bramkiAPI i nie promujPROD z wyłączonymAPI. Lokalna zgodnośćhistorycznego pakietu85plików jest poprawiona wąskim profilem7e+hasharchiwum+hashmanifestu,26testówPASS; nie usuwa to blokadyAPI/dostępu i nie osłabia domyślnego kontraktu108.
+
+W tej sesji nie ma skonfigurowanej tożsamościGCP/manifestu/ADC. MetadataGHenv404 nie rozstrzyga braku ani niedostępności środowiska. Pytanie do użytkownika dotyczy miejsca skonfigurowanego dostępuGCP i właściciela domeny, nie przesłania sekretów wczacie. harborlight.pl ma istniejącyA85.128.245.188/nazwa.pl i legacy404; FirebasePRODversion/config404 pozostawia stan konfiguracji nieustalony. Nie deklaruj nowegoPROD ani resetu kont. Ten sam obraz7e może otrzymać konfiguracjęAPI na obecnymPRE-PROD, odczytowy odbiór i nowyreceipt; staryreceipt pozostaje niezmienny. Cache9 nadal czeka na pełny zielony własnyCI po drugimFAILcd61 starego oczekiwania copy; nie twórz zaakceptowanego tagu przed tym wynikiem.
+
 ## GO DEV — redakcja z sześciu arkuszy, cache9
 
 Najnowsze zadanie dotyczy importu polskich tekstów z przekazanego Excela wyłącznie z arkuszy: `Tutorial`, `Budynki — opisy`, `Budynki — informacje`, `Dolny pasek`, `Komunikaty`, `Przyciski`. Dozwolonym wyciągiem jest `/workspace/work/editorial-six-tabs/selected-workbook.json`; nie czytaj treści pozostałych arkuszy. KolumnaC ma pierwszeństwo, a przy pustejC obowiązujeB. Wyciąg obejmuje413wierszy,87niepustychC, w tym85różniących się odB i2bez zmiany. Notatki będące poleceniami redakcyjnymi stosuj do właściwego tekstu, nie wyświetlaj ich dosłownie jako komunikat gry. [Zakres](docs/v32/GO-EDITORIAL-SIX-TABS.md), [dowody](docs/v32/EDITORIAL-SIX-TABS-EVIDENCE.json), kartaHL-CHG-1150.

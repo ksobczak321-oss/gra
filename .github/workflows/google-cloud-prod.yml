@@ -167,11 +167,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          verification_profile=()
+          if [[ "$HARBORLIGHT_SOURCE_SHA" == '7e81a1a436770f57fd8abf390b6af8022e3300f6' ]]; then
+            verification_profile=(--verification-profile preprod-0.14.0.0-20261104)
+          fi
           python3 scripts/build_frontend.py \
             --verify-archive "$RUNNER_TEMP/harborlight-dev-frontend/harborlight-frontend.tar.gz" \
             --commit "$HARBORLIGHT_SOURCE_SHA" \
             --expected-sha256 "$HARBORLIGHT_FRONTEND_ARCHIVE_SHA256" \
-            --extract-to build/frontend > "$RUNNER_TEMP/harborlight-frontend-verified.json"
+            --extract-to build/frontend "${verification_profile[@]}" > "$RUNNER_TEMP/harborlight-frontend-verified.json"
           node --input-type=module - "$RUNNER_TEMP/harborlight-frontend-verified.json" <<'JS'
           import { readFileSync } from 'node:fs';
           const metadata = JSON.parse(readFileSync(process.argv[2], 'utf8'));

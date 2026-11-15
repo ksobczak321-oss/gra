@@ -314,7 +314,7 @@
     }
   },
   "next_test_fixed_candidate": {
-    "status": "test_only_correction_pending_own_pipeline",
+    "status": "awaiting_third_own_complete_CI_success",
     "source_sha": null,
     "publication_commit": null,
     "ci_run_id": null,
@@ -343,7 +343,8 @@
         "status": "updated_to_own_form_submit_for_approved_recipe_labels",
         "runtime_changed": false
       }
-    ]
+    ],
+    "previous_failed_candidate_sha": "cd61dae9a1485dbae1a085c4ae65e7e048a62571"
   },
   "published_workbook_checks": [
     {
@@ -365,5 +366,21 @@
     "compared_to": "b1a929dc1f2e0c470166a0086ab74f61e828b4f0",
     "public_files": 106,
     "all_bytes_equal": true
-  }
+  },
+  "second_test_candidate": {
+    "source_sha": "cd61dae9a1485dbae1a085c4ae65e7e048a62571",
+    "ci_run_id": null,
+    "ci_conclusion": "failure",
+    "failure_reason": "second stale legacy building-unlock copy expectation differs from approved C",
+    "known_passes": {
+      "Node_tests": 1402,
+      "backend": true,
+      "Python": true,
+      "Excel": true,
+      "new_six_sheet_UI_QA": true
+    },
+    "runtime_public_files_changed": false
+  },
+  "accepted_cache9_tag_created": false,
+  "promotion_sequence": "currentPREPROD7e_to_PROD_first_then_DEV_to_PREPROD_after_confirmed_PROD"
 }

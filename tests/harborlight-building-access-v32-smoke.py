@@ -55,7 +55,7 @@ with sync_playwright() as p:
                     if level<required:
                         message=page.locator('[data-building-locked="'+building+'"]')
                         expect(message).to_be_visible()
-                        expect(message).to_contain_text(f'Ratusz osiągnie poziom {required}.')
+                        expect(message).to_contain_text(f'Aby rozbudować ten budynek potrzebujesz Ratusza na poziomie {required}.')
                         expect(message).to_contain_text(f'Obecny poziom Ratusza: {level}.')
                         expect(page.locator('[data-v32-panel],[data-building-panel]')).to_have_count(0)
                         expect(page.locator('#island-dialog .dialog-body input,#island-dialog .dialog-body select,#island-dialog .dialog-body button')).to_have_count(0)

@@ -12,6 +12,7 @@ import sys
 import tarfile
 import tempfile
 import unittest
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -213,6 +214,189 @@ class FrontendBundleTests(unittest.TestCase):
         for environment in ["dev", "prod"]:
             project = "harborlight-" + environment
             self.assertEqual(targets[project]["hosting"]["game"], [project])
+
+
+class HistoricalFrontendProfileTests(unittest.TestCase):
+    """Exercise each parser guard after a synthetic trusted archive pin matches.
+
+    Production only accepts profiles in current main. The isolated fixture adds
+    a temporary in-process registry entry so a tampered archive can reach the
+    structural and manifest checks rather than only failing its outer digest.
+    """
+
+    PROFILE = "test-trusted-historical-release"
+
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory(prefix="harborlight-historical-profile-")
+        self.addCleanup(temporary.cleanup)
+        self.directory = Path(temporary.name)
+        self.archive = self.directory / "frontend.tar.gz"
+        self.output = self.directory / "extracted"
+        self.profile_path = self.directory / "trusted-profile.json"
+        content = {"index.html": b"historical index", "harborlight-v1-play.js": b"historical game"}
+        self.files = {**content, "release.json": BUNDLE.canonical_json(BUNDLE.make_manifest(content, SHA))}
+        self.original_archive = BUNDLE.archive_bytes(self.files)
+        self.profile = {
+            "schema_version": 1, "name": self.PROFILE, "commit": SHA,
+            "archive_sha256": BUNDLE.sha256(self.original_archive),
+            "manifest_sha256": BUNDLE.sha256(self.files["release.json"]),
+            "file_count": len(self.files), "total_bytes": sum(map(len, self.files.values())),
+            "content_files": sorted(content),
+        }
+        registry = patch.dict(BUNDLE.VERIFICATION_PROFILES, {self.PROFILE: self.profile_path})
+        registry.start()
+        self.addCleanup(registry.stop)
+        self.pin(self.original_archive)
+
+    def pin(self, compressed):
+        self.archive.write_bytes(compressed)
+        self.profile["archive_sha256"] = BUNDLE.sha256(compressed)
+        self.profile_path.write_text(json.dumps(self.profile))
+
+    def verify(self, *, commit=SHA, digest=None, name=PROFILE):
+        return BUNDLE.verify_archive(self.archive, commit, digest or BUNDLE.sha256(self.archive.read_bytes()),
+                                     self.output, verification_profile=name)
+
+    def reject(self, pattern=None, **kwargs):
+        with self.assertRaisesRegex(BUNDLE.BundleError, pattern or ".+"):
+            self.verify(**kwargs)
+        self.assertFalse(self.output.exists(), "Rejected data must never reach extraction")
+
+    def custom_archive(self, replacement=None, extra=None, duplicate=False):
+        destination = io.BytesIO()
+        with gzip.GzipFile(fileobj=destination, mode="wb", mtime=0) as zipped:
+            with tarfile.open(fileobj=zipped, mode="w|", format=tarfile.PAX_FORMAT) as archive:
+                for name, data in sorted(self.files.items()):
+                    info = replacement if replacement is not None and replacement.name == name else tarfile.TarInfo(name)
+                    if info.isreg():
+                        info.size = len(data)
+                    archive.addfile(info, io.BytesIO(data) if info.isreg() else None)
+                    if duplicate and name == "index.html":
+                        archive.addfile(info, io.BytesIO(data))
+                if extra is not None:
+                    extra.size = 0
+                    archive.addfile(extra, io.BytesIO(b""))
+        return destination.getvalue()
+
+    def test_reviewed_production_profile_pins_exact_014_release(self):
+        profile = BUNDLE.load_verification_profile("preprod-0.14.0.0-20261104")
+        self.assertEqual(profile["commit"], "7e81a1a436770f57fd8abf390b6af8022e3300f6")
+        self.assertEqual(profile["archive_sha256"], "b43a736f4c30e8db9d2704b50219e0e6c1cf06c32660640ef66f1861cc412196")
+        self.assertEqual(profile["manifest_sha256"], "2dea4d8563fadaf38dcd8103dc9ee66088e69e34ba8cc74b544aaea4bf3bc54e")
+        self.assertEqual((len(profile["content_files"]), len(profile["archive_files"])), (84, 85))
+        self.assertEqual(profile["total_bytes"], 19682273)
+        self.assertNotEqual(profile["archive_files"], BUNDLE.ARCHIVE_FILES)
+
+    def test_explicit_profile_verifies_old_bytes_and_reextracts_idempotently(self):
+        first = self.verify()
+        self.assertEqual(first["verification_profile"], self.PROFILE)
+        self.assertEqual(first["file_count"], len(self.files))
+        self.assertEqual(first["archive_sha256"], BUNDLE.sha256(self.original_archive))
+        extracted = {p.relative_to(self.output).as_posix(): p.read_bytes()
+                     for p in self.output.rglob("*") if p.is_file()}
+        self.assertEqual(extracted, self.files)
+        self.assertEqual(self.verify(), first)
+        self.assertEqual(self.archive.read_bytes(), self.original_archive)
+
+    def test_no_profile_keeps_default_current_allowlist_strict(self):
+        self.reject(name=None)
+        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 108)
+
+    def test_unknown_or_path_supplied_profile_is_rejected(self):
+        for name in ("unknown", "../trusted-profile.json", str(self.profile_path)):
+            with self.subTest(name=name):
+                self.reject("Unknown trusted", name=name)
+
+    def test_wrong_commit_and_receipt_pin_fail_before_archive_processing(self):
+        self.reject("another source commit", commit="b" * 40)
+        self.reject("receipt archive", digest="0" * 64)
+        # A matching caller digest cannot replace the profile's trusted pin.
+        self.archive.write_bytes(self.original_archive + b"changed")
+        self.reject("receipt archive")
+
+    def test_altered_manifest_raw_bytes_and_content_digest_are_rejected(self):
+        changed_manifest = dict(self.files, **{"release.json": self.files["release.json"] + b" "})
+        self.pin(BUNDLE.archive_bytes(changed_manifest))
+        self.reject("manifest does not match")
+        changed_content = dict(self.files, **{"harborlight-v1-play.js": b"X" * len(self.files["harborlight-v1-play.js"])})
+        self.pin(BUNDLE.archive_bytes(changed_content))
+        self.reject("does not match its manifest")
+
+    def test_missing_and_extra_members_are_rejected_after_outer_pin_matches(self):
+        missing = dict(self.files)
+        del missing["harborlight-v1-play.js"]
+        self.pin(BUNDLE.archive_bytes(missing))
+        self.reject("exact public frontend file set")
+        for name in ("private.txt", "harborlight-v1-dev-preview.js"):
+            with self.subTest(name=name):
+                self.pin(BUNDLE.archive_bytes({**self.files, name: b"extra"}))
+                self.reject("outside the public file set")
+
+    def test_traversal_and_absolute_paths_are_rejected_after_outer_pin_matches(self):
+        for name in ("../outside", "/tmp/outside", "assets/../../outside", "assets\\outside", "./index.html"):
+            with self.subTest(name=name):
+                self.pin(self.custom_archive(extra=tarfile.TarInfo(name)))
+                self.reject("outside the public file set")
+
+    def test_symlinks_hardlinks_and_nonregular_types_are_rejected(self):
+        for kind in (tarfile.SYMTYPE, tarfile.LNKTYPE, tarfile.DIRTYPE, tarfile.FIFOTYPE, tarfile.CONTTYPE):
+            with self.subTest(type=kind):
+                member = tarfile.TarInfo("index.html")
+                member.type, member.linkname = kind, "../../outside"
+                self.pin(self.custom_archive(replacement=member))
+                self.reject("unsupported metadata|non-regular")
+
+    def test_duplicate_and_pax_metadata_are_rejected(self):
+        self.pin(self.custom_archive(duplicate=True))
+        self.reject("duplicate")
+        member = tarfile.TarInfo("index.html")
+        member.pax_headers = {"comment": "unsupported extension"}
+        self.pin(self.custom_archive(replacement=member))
+        self.reject("unsupported metadata")
+
+    def test_expansion_and_declared_profile_size_are_bounded(self):
+        self.pin(gzip.compress(b"\0" * (BUNDLE.MAX_TAR_BYTES + 1), mtime=0))
+        self.reject("Expanded archive")
+        self.pin(self.original_archive)
+        self.profile["total_bytes"] += 1
+        self.profile_path.write_text(json.dumps(self.profile))
+        self.reject("size does not match")
+
+    def test_profile_schema_duplicate_paths_and_file_count_are_rejected(self):
+        original = dict(self.profile)
+        for change in ({"file_count": 108}, {"content_files": ["index.html", "index.html"]},
+                       {"content_files": ["../private", "index.html"]}, {"extra_unreviewed_field": True}):
+            with self.subTest(change=change):
+                self.profile_path.write_text(json.dumps({**original, **change}))
+                self.reject("profile")
+
+    def test_unmanaged_destination_and_symlink_are_preserved(self):
+        self.output.mkdir()
+        keep = self.output / "keep.txt"
+        keep.write_text("preserve")
+        with self.assertRaisesRegex(BUNDLE.BundleError, "unknown files"):
+            self.verify()
+        self.assertEqual(keep.read_text(), "preserve")
+        keep.unlink()
+        self.output.rmdir()
+        outside = self.directory / "outside"
+        outside.mkdir()
+        self.output.symlink_to(outside, target_is_directory=True)
+        with self.assertRaisesRegex(BUNDLE.BundleError, "symbolic link"):
+            self.verify()
+        self.assertTrue(self.output.is_symlink())
+        self.assertEqual(list(outside.iterdir()), [])
+
+    def test_cli_never_builds_using_a_historical_verification_profile(self):
+        result = subprocess.run([
+            sys.executable, str(ROOT / "scripts/build_frontend.py"), "--commit", SHA,
+            "--verification-profile", "preprod-0.14.0.0-20261104",
+            "--output", str(self.output), "--archive", str(self.directory / "not-built.tar.gz"),
+        ], text=True, capture_output=True, timeout=10, check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("Verification options require --verify-archive", result.stderr)
+        self.assertFalse(self.output.exists())
+        self.assertFalse((self.directory / "not-built.tar.gz").exists())
 
 
 if __name__ == "__main__":

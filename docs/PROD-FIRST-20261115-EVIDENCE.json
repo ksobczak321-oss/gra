@@ -1,0 +1,116 @@
+{
+  "scope": "Ordered promotion: current PRE-PROD to PROD first; only after confirmed PROD, DEV to PRE-PROD",
+  "status": "blocked_configuration_access_and_account_API_disabled",
+  "change_card": "HL-CHG-1151",
+  "requested_sequence": [
+    "current_PREPROD_0.14_source7e_to_PROD",
+    "after_confirmed_PROD_current_DEV_to_PREPROD"
+  ],
+  "newer_DEV_deploy_before_PROD_allowed": false,
+  "current_preprod": {
+    "version": "0.14.0.0",
+    "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+    "original_deployment_run_id": 41909268052,
+    "original_receipt_account_api": false,
+    "fresh_direct_cloud_run": {
+      "health_status": 200,
+      "health_source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+      "ready_accounts": false,
+      "ready_persistence": false,
+      "config_status": 503,
+      "config_error": "account_api_disabled"
+    },
+    "PROD_frontend_requires_account_API": true,
+    "original_receipt_mutated": false
+  },
+  "historical_profile": {
+    "name": "preprod-0.14.0.0-20261104",
+    "path": "infra/google-cloud/frontend-profiles/preprod-0.14.0.0-20261104.json",
+    "source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+    "archive_sha256": "b43a736f4c30e8db9d2704b50219e0e6c1cf06c32660640ef66f1861cc412196",
+    "manifest_sha256": "2dea4d8563fadaf38dcd8103dc9ee66088e69e34ba8cc74b544aaea4bf3bc54e",
+    "file_count": 85,
+    "total_bytes": 19682273,
+    "local_compatibility_tests": {
+      "passed": 26,
+      "result": "PASS"
+    },
+    "integration_status": "root_integration_in_progress_separate_from_configuration_changes",
+    "default_file_contract": 108,
+    "default_contract_changed": false,
+    "account_API_gate_removed": false,
+    "solves": "historical package verification compatibility only",
+    "does_not_solve": [
+      "account API disabled",
+      "missing owner configuration access",
+      "unknown PROD and domain configuration"
+    ]
+  },
+  "access_observations": {
+    "configured_GCP_identity": false,
+    "ADC_available": false,
+    "GitHub_environment_metadata_status": 404,
+    "GitHub_environment_existence": "unknown_inaccessible_or_absent",
+    "user_question": "pending reply identifying where GCP and domain-owner access is configured",
+    "secrets_requested_in_chat": false,
+    "configured_GCP_access_manifest": false
+  },
+  "domain_observations": {
+    "name": "harborlight.pl",
+    "A": "85.128.245.188",
+    "existing_provider": "nazwa.pl",
+    "legacy_HTTP_status": 404,
+    "new_PROD_game_confirmed": false,
+    "Firebase_PROD_version_config_status": 404,
+    "Firebase_PROD_setup_existence": "unknown_not_inferred_from404"
+  },
+  "required_next_steps": [
+    "locate configured owner access",
+    "configure account API and persistence on same old PRE-PROD image7e",
+    "read-only health readiness config and authenticated-read acceptance",
+    "obtain new truthful receipt without mutating original",
+    "promote exact accepted7e image and85-file package through existing PROD gates",
+    "verify real PROD and provider-supplied domain settings",
+    "only then promote exact green-CI DEV source to PRE-PROD"
+  ],
+  "DEV_copy_candidate": {
+    "cache": "frontend-v32-9",
+    "second_failed_candidate_sha": "cd61dae9a1485dbae1a085c4ae65e7e048a62571",
+    "second_ci_result": "failure",
+    "second_ci_failure_reason": "stale legacy building-unlock copy expectation differs from approved C",
+    "second_ci_known_passes": {
+      "Node_tests": 1402,
+      "backend": true,
+      "Python": true,
+      "Excel": true,
+      "new_six_sheet_UI_acceptance": true
+    },
+    "runtime_public_files_changed_by_test_fixes": false,
+    "public_files": 106,
+    "accepted_cache9_tag_created": false,
+    "accepted_tag_status": "awaiting_third_own_complete_CI_success"
+  },
+  "execution": {
+    "new_PROD_deployment_confirmed": false,
+    "newer_DEV_to_PREPROD_performed": false,
+    "account_reset": false,
+    "configuration_gate_bypassed": false,
+    "workflow_edits_by_documentation_agent": false
+  },
+  "manual_execution": "NOT_RUN",
+  "owner_cloudshell_confirmation": {
+    "source": "user screenshot 2026-11-15",
+    "project_id": "harborlight-prod",
+    "project_number": "992911312434",
+    "lifecycle_state": "ACTIVE",
+    "agent_has_direct_gcp_credentials": false,
+    "bootstrap_readonly_verification_requested": true
+  },
+  "history_recovered": {
+    "setup": "Cloud Shell plus GitHub Workload Identity Federation, no exported key",
+    "projects_and_bootstrap": "historical 22 checks passed, zero failures",
+    "promotion_image_reader_check": "historical check 23 not confirmed",
+    "prod_hosting_and_domain_activation": "no completed historical confirmation",
+    "account_api_activation": "not historically confirmed and currently disabled"
+  }
+}
