@@ -5,7 +5,7 @@
   "cache": "frontend-v32-9",
   "url": "https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5&v=frontend-v32-9",
   "source_baseline_sha": "485f46664c35643813c37506a1561cecf84986de",
-  "source_sha": null,
+  "source_sha": "0b41a9b819127416d92836f42ccc812c2bec960d",
   "publication_commit": null,
   "ci_run_id": null,
   "ci_status": "pending_own_run",
@@ -152,6 +152,14 @@
       "result": "PASS",
       "unselected_catalog_text_changes": 0,
       "image_changes": 0
+    },
+    {
+      "name": "final_six_sheet_workbook",
+      "result": "PASS",
+      "rows": 413,
+      "sheets": 6,
+      "C_all_blank": true,
+      "exact_source_commit": "0b41a9b819127416d92836f42ccc812c2bec960d"
     }
   ],
   "row_mapping_report": "docs/v32/EDITORIAL-SIX-TABS-MERGE.json",
@@ -193,15 +201,13 @@
     "new_deployment_by_this_import": false
   },
   "remaining_verification": [
-    "own source commit",
-    "final workbook export and fingerprints",
     "own CI and Pages",
     "hosted cache9 verification",
     "two optional gameplay decisions remain pending"
   ],
   "output_workbook": {
     "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
-    "status": "planned_pending_export_and_validation",
+    "status": "exported_and_validated",
     "sheets": [
       "Tutorial",
       "Budynki — opisy",
@@ -222,6 +228,8 @@
     "historical_full_workbook": "docs/arkusze/HARBORLIGHT15-teksty-DEV.xlsx",
     "historical_full_workbook_changed": false,
     "current_validation_report": "docs/arkusze/HARBORLIGHT15-walidacja.json",
-    "validation_result": "pending"
+    "validation_result": "PASS",
+    "sha256": "517a6d98f35e7eba07a437de3f1b28f9069ddb13920403dbf8ca868e726c4096",
+    "source_fingerprints_match": true
   }
 }
