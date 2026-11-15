@@ -14,6 +14,16 @@ function island() {
 function crew(s,id,n,start=0) {for(const p of s.residents)if(p.workplace===id)p.workplace=null;for(const p of s.residents.slice(start,start+n))p.workplace=id;s.buildings[id].workers=n;}
 function reload(s){const raw=structuredClone(s),out=structuredClone(raw);L.normalizeLogisticsState(out,raw);return out;}
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-5,`${a} != ${b}`);
+test('locked level-zero producers have no full-storage warnings while an unlocked full producer still warns once',()=>{
+ const s=island();s.buildings.townhall.level=1;
+ for(const id of ['bakery','dairy','leatherworks']){s.buildings[id].level=0;s.provisions.localStock[id]={bread:0};}
+ s.notifications=[];L.updateStorageStatus(s);
+ for(const id of ['bakery','dairy','leatherworks']){assert.equal(s.buildings[id].storageFull,false,id);assert.equal(s.buildings[id].productionBlocked,false,id);assert.equal(s.buildings[id].fullSeconds,0,id);assert.equal(L.storagePenalty(s,id),0,id);}
+ assert.equal(s.notifications.filter(n=>n.kind==='storage-full').length,0);assert.equal(s.notifications.some(n=>`${n.title} ${n.message}`.includes('undefined')),false);
+ s.buildings.townhall.level=2;s.buildings.bakery.level=1;s.provisions.localStock.bakery={bread:200};L.updateStorageStatus(s);
+ assert.equal(s.buildings.bakery.storageFull,true);assert.equal(s.notifications.filter(n=>n.kind==='storage-full').length,1);assert.equal(s.notifications[0].title,'Piekarnia: storage is full');assert.equal(s.notifications[0].message.includes('undefined'),false);
+ L.updateStorageStatus(s);assert.equal(s.notifications.filter(n=>n.kind==='storage-full').length,1);
+});
 test('legacy material list remains five while32inventoryandpendingcapacity count every good',()=>{
  const s=island();assert.equal(L.MATERIAL_IDS.length,5);assert.equal(L.materialIds(s).length,22);s.resources.cheese=500;s.resources.professorRobes=400;assert.equal(L.ordinaryWarehouseUsed(s),900);assert.equal(L.warehouseUsed(s),900);
  const limits=L.warehouseLimits(s);s.resources.cheese=limits.perResource;const before=s.resources.cheese;L.receiveMaterials(s,{cheese:100});assert.equal(s.resources.cheese,before);assert.equal(s.pendingDeliveries.cheese,100);s.resources.cheese-=100;L.flushPendingDeliveries(s);assert.equal(s.resources.cheese,before);assert.equal(s.pendingDeliveries.cheese,0);

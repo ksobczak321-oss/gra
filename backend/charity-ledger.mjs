@@ -10,6 +10,32 @@ const copy = value => value === undefined ? undefined : structuredClone(value);
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const fail = code => { throw new AccountServiceError(code, 409); };
 export const coinRound = value => Math.round(value * 1e6) / 1e6;
+// Persisted v32 daughters contain zero coins; the mother and shared-wallet
+// metadata hold the same account balance. Legacy worlds retain local purses.
+// Call before a trusted mutation, then synchronize after changing its balance.
+export function coinMutationWorld(state, selectedWorld = state) {
+  if (state?.ruleset !== 32) return selectedWorld;
+  const group = state.archipelago;
+  if (!group) return state;
+  const entries = [...worldsById(state).values()], valid = value => Number.isFinite(value) && value >= 0 && value <= Number.MAX_SAFE_INTEGER;
+  if (!entries.every(world => valid(world?.resources?.coins))) fail('invalid-shared-wallet');
+  if (group.sharedWallet !== undefined) {
+    if (!object(group.sharedWallet) || !valid(group.sharedWallet.coins) || state.resources.coins !== group.sharedWallet.coins || entries.slice(1).some(world => world.resources.coins !== 0)) fail('invalid-shared-wallet');
+  } else {
+    // The pre-wallet v32 shape has literal per-island balances. Consolidating
+    // them preserves their sum exactly once, as the normal frontend restore does.
+    const total = coinRound(entries.reduce((sum, world) => sum + world.resources.coins, 0));
+    if (!valid(total)) fail('invalid-shared-wallet');
+    state.resources.coins = total;
+    syncSharedCoinWallet(state);
+  }
+  return state;
+}
+export function syncSharedCoinWallet(state) {
+  if (state?.ruleset !== 32 || !state.archipelago) return;
+  state.archipelago.sharedWallet = { ...(object(state.archipelago.sharedWallet) ? state.archipelago.sharedWallet : {}), coins: state.resources.coins };
+  for (const [id, world] of worldsById(state)) if (id !== 'island-1') world.resources.coins = 0;
+}
 const worldsById = state => new Map([['island-1', state], ...(state?.archipelago?.version === 2 && object(state.archipelago.islands) ? Object.entries(state.archipelago.islands) : state?.archipelago?.secondIsland ? [['island-2', state.archipelago.secondIsland]] : [])]);
 const worldAnchor = world => world?.islandStartedAt ?? world?.onboarding?.worldStartedAt ?? null;
 export function walletPath(uid) {

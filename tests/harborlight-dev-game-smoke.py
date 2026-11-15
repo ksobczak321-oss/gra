@@ -349,13 +349,17 @@ def run():
         # New permanent identity receives the normal starter exactly once.
         third, new_page = context(browser, 'dev-admin3', mobile=True)
         visit(new_page)
+        assert cloud_state('dev-admin3')['ruleset'] == 32
+        assert cloud_state('dev-admin3')['population'] == 18
+        assert len(cloud_state('dev-admin3')['residents']) == 18
         finish_onboarding(new_page)
         settings(new_page)
         save_cloud(new_page)
         assert DOCUMENTS['dev-admin3']['revision'] >= 1
         fresh = cloud_state('dev-admin3')
         assert fresh['resources']['coins'] == fresh['resources']['wood'] == 100
-        assert fresh['population'] == 13
+        assert fresh['ruleset'] == 32
+        assert fresh['population'] == 19, 'The current 18-person starter receives one welcome resident'
         assert fresh['welcomeWorkers']['granted'] == 1
         assert len(fresh['welcomeWorkers']['claimedDays']) == 1
         assert fresh['happiness'] >= 20
@@ -365,7 +369,8 @@ def run():
         new_page.wait_for_selector('[data-hud="working"]', state='attached')
         assert cloud_state('dev-admin3')['welcome']['startedAt'] == fresh['welcome']['startedAt']
         assert cloud_state('dev-admin3')['resources']['coins'] == 100
-        assert cloud_state('dev-admin3')['population'] == 13, 'Reload cannot grant another welcome resident'
+        assert cloud_state('dev-admin3')['ruleset'] == 32
+        assert cloud_state('dev-admin3')['population'] == 19, 'Reload cannot grant another welcome resident'
         assert cloud_state('dev-admin3')['welcomeWorkers']['granted'] == 1
         no_island_cache(new_page)
         third.close()

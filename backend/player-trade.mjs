@@ -121,8 +121,8 @@ function offerPublic(offer, uid, at, v32) {
 export function createPlayerTradeService({ store, now = () => Date.now(), environment = 'production', v32 = null } = {}) {
   if (!store || typeof store.runTransaction !== 'function') throw new TypeError('A durable transactional trade store is required.');
   store = createCharityLedgerStore(createIslandDocumentStore(store), { now });
-  // Local v32 injects its pure rules. The existing standalone API image has no
-  // frontend imports and keeps its verified legacy contract until promoted.
+  // Both local and cloud runtimes inject the same pure canonical v32 rules.
+  // Calls without the adapter retain the historical legacy-only contract.
   if (v32 && (!object(v32.goods) || !['availableGoods', 'withdrawMilk', 'depositMilk', 'warehouseCapacityForLevel', 'compactDietHistories'].every(key => typeof v32[key] === 'function'))) throw new TypeError('Complete v32 trade rules are required.');
   const room = (world, id) => inventoryRoom(world, id, v32);
   const spend = (world, id, value, milkLots = null) => spendStock(world, id, value, milkLots, v32);

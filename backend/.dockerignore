@@ -3,6 +3,10 @@
 !package.json
 !server.mjs
 !starter-island.mjs
+!trade-rules-v32.mjs
+!harborlight-v1-provisions.js
+!harborlight-v1-economy.js
+!harborlight-v1-development-copy.js
 !account-service.mjs
 !island-name.mjs
 !firebase-auth.mjs

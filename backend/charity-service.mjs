@@ -4,7 +4,7 @@
 import { createHash } from 'node:crypto';
 import { AccountServiceError } from './account-service.mjs';
 import { createIslandDocumentStore, worldSnapshot } from './island-document-store.mjs';
-import { createCharityLedgerStore, coinTotalFromIslandDocument, coinRound, normalizedWallet, walletPath } from './charity-ledger.mjs';
+import { createCharityLedgerStore, coinTotalFromIslandDocument, coinRound, normalizedWallet, walletPath, coinMutationWorld, syncSharedCoinWallet } from './charity-ledger.mjs';
 
 const DAY = 86400000, HOUR = 3600000;
 const digest = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
@@ -48,6 +48,7 @@ export function createCharityService({ store: baseStore, environment = 'producti
   }
   const islandChanged = (island, state, at) => ({ ...island, payload: JSON.stringify(state), revision: island.revision + 1, updatedAt: at });
   async function writeWalletAndIsland(tx, uid, wallet, island, state, at) {
+    syncSharedCoinWallet(state);
     wallet.revision += 1; wallet.updatedAt = at;
     await tx.set(walletPath(uid), wallet);
     await tx.set(`islands/${uid}`, islandChanged(island, state, at));
@@ -89,7 +90,7 @@ export function createCharityService({ store: baseStore, environment = 'producti
         if (previous.fingerprint !== digest({ credit, islandId })) fail('charity-request-reused');
         return { alreadyApplied: true, amount: previous.amount, qualified: previous.qualified };
       }
-      const world = chooseWorld(state, islandId);
+      const world = coinMutationWorld(state, chooseWorld(state, islandId));
       if (world.resources.coins + credit.amount > Number.MAX_SAFE_INTEGER || wallet.qualified + wallet.unqualified + credit.amount > Number.MAX_SAFE_INTEGER) fail('charity-invalid-wallet');
       world.resources.coins = coinRound(world.resources.coins + credit.amount);
       wallet[credit.qualified ? 'qualified' : 'unqualified'] = coinRound(wallet[credit.qualified ? 'qualified' : 'unqualified'] + credit.amount);
@@ -130,7 +131,7 @@ export function createCharityService({ store: baseStore, environment = 'producti
         if (previous.islandId !== islandId || previous.mode !== mode || previous.coins !== amount) fail('charity-request-reused');
         return { donation: publicDonation(previous), alreadyApplied: true };
       }
-      const world = chooseWorld(state, islandId), last = wallet.lastDonation;
+      const world = coinMutationWorld(state, chooseWorld(state, islandId)), last = wallet.lastDonation;
       if (!campaign || campaign.mode !== mode || !campaign.active) fail('charity-campaign-unavailable');
       if (!eligibility.eligible) fail('charity-account-ineligible');
       if (available(campaign) < operatorCents) fail('charity-fund-exhausted');
@@ -180,6 +181,7 @@ export function createCharityService({ store: baseStore, environment = 'producti
       if (donation.status !== 'transferred') fail('charity-reward-awaits-transfer');
       if (donation.generation !== (island.generation ?? 1)) fail('charity-world-changed');
       if (wallet.lastCharityRewardAt && at - wallet.lastCharityRewardAt < 30 * DAY) fail('charity-reward-cooldown');
+      coinMutationWorld(state);
       const world = chooseWorld(state, islandId);
       if (world.charityReward?.expiresAt > at) fail('charity-reward-already-active');
       const reward = { id: donation.id, islandId, generation: island.generation ?? 1, claimedAt: at, expiresAt: at + 6 * HOUR,
@@ -201,7 +203,7 @@ export function createCharityService({ store: baseStore, environment = 'producti
       if (donation.status === 'cancelled') return { donation: publicDonation(donation), alreadyApplied: true };
       if (donation.status !== 'reserved' || !campaign || campaign.reservedCents < donation.operatorCents) fail('charity-donation-closed');
       if (donation.generation !== (island.generation ?? 1)) fail('charity-world-changed');
-      const world = chooseWorld(state, donation.islandId);
+      const world = coinMutationWorld(state, chooseWorld(state, donation.islandId));
       world.resources.coins = coinRound(world.resources.coins + donation.coins); wallet.qualified = coinRound(wallet.qualified + donation.coins);
       campaign.reservedCents -= donation.operatorCents; donation.status = 'cancelled'; donation.cancelledAt = at;
       await tx.set(campaignPath(donation.month), campaign); await tx.set(donationPath(donationId), donation);

@@ -110,7 +110,9 @@ jobs:
 
       - name: Test API infrastructure endpoints
         shell: bash
-        run: node --test backend/test/*.test.mjs
+        run: |
+          python3 scripts/stage_backend_trade_rules.py --check
+          node --test backend/test/*.test.mjs
 
       - name: Build the exact frontend release bundle
         shell: bash

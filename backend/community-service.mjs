@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { AccountServiceError } from './account-service.mjs';
 import { createIslandDocumentStore } from './island-document-store.mjs';
-import { createCharityLedgerStore, normalizedWallet, coinTotalFromIslandDocument, walletPath } from './charity-ledger.mjs';
+import { createCharityLedgerStore, normalizedWallet, coinTotalFromIslandDocument, walletPath, coinMutationWorld, syncSharedCoinWallet } from './charity-ledger.mjs';
 import { leaguePostseason, seasonParticipation, SEASON_REWARD_COINS } from './league-season.mjs';
 import { LEAGUE_RULES, leagueCalendar, createLeagueChallenge, emptyLeagueProgress, applyLeagueAction, leagueAttemptScore, leagueTeamScore } from './league-rules.mjs';
 
@@ -348,8 +348,10 @@ export function createCommunityService({ store, now = () => Date.now(), environm
         if (recorded.coins > 0) {
           const island = await tx.get(`islands/${uid}`); if (!island?.payload) fail('league-island-required');
           const state = JSON.parse(island.payload), ledgerKey = walletPath(uid), wallet = normalizedWallet(await tx.get(ledgerKey), coinTotalFromIslandDocument(island), at);
-          if (!Number.isFinite(state.resources?.coins) || state.resources.coins + recorded.coins > Number.MAX_SAFE_INTEGER) fail('league-invalid-balance');
-          state.resources.coins += recorded.coins; wallet.unqualified += recorded.coins; wallet.revision++; wallet.updatedAt = at;
+          const world = coinMutationWorld(state);
+          if (!Number.isFinite(world.resources?.coins) || world.resources.coins + recorded.coins > Number.MAX_SAFE_INTEGER) fail('league-invalid-balance');
+          world.resources.coins += recorded.coins; syncSharedCoinWallet(state);
+          wallet.unqualified += recorded.coins; wallet.revision++; wallet.updatedAt = at;
           islandUpdate = { ...island, payload: JSON.stringify(state), revision: island.revision + 1, updatedAt: at };
           tx.put(ledgerKey, wallet); tx.put(`islands/${uid}`, islandUpdate);
         }

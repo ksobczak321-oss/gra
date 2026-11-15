@@ -14,15 +14,18 @@ spec = importlib.util.spec_from_file_location('cloud_game_fixture', ROOT / 'test
 fixture = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(fixture)
 UID = 'dev-admin1'
+ORIGINAL_PEOPLE = []
 
 
 def seed():
+    global ORIGINAL_PEOPLE
     saved = fixture.starter(777, 'Port admin1')
     for building in ['townhall', 'house', 'warehouse']:
         saved['buildings'][building]['level'] = 4
     saved['buildings']['farm']['ready'] = 17
     saved['statistics']['expeditions'] = 7
     saved['statistics']['upgrades'] = 12
+    ORIGINAL_PEOPLE = [(person['id'], person['personUid'], person.get('name'), person.get('workplace')) for person in saved['residents']]
     fixture.DOCUMENTS[UID] = {'payload': json.dumps(saved), 'revision': 5, 'updateTime': fixture.timestamp()}
 
 
@@ -31,10 +34,19 @@ def assert_history(*, welcome_claimed=False):
     assert saved['version'] == 9, 'Public game version must not replace the saved-world schema'
     assert saved['resources']['coins'] == 777
     assert saved['islandName'] == 'Port admin1'
-    assert saved['population'] == (13 if welcome_claimed else 12), 'The pending welcome resident is persisted only after acknowledgement'
+    assert saved['population'] == (21 if welcome_claimed else 12), 'The acknowledged v32 migration adds eight founding specialists and one welcome resident; an unacknowledged write preserves the original 12'
+    people = [(person['id'], person['personUid'], person.get('name'), person.get('workplace')) for person in saved['residents']]
+    assert all(person in people for person in ORIGINAL_PEOPLE), 'Logout must not replace, rename or reassign an existing resident'
+    assert len(people) == saved['population'] and len({person[1] for person in people}) == len(people)
     assert saved['welcomeWorkers']['granted'] == (1 if welcome_claimed else 0)
     assert saved['buildings']['townhall']['level'] == 4
-    assert saved['buildings']['farm']['ready'] == 17
+    if welcome_claimed:
+        assert saved['ruleset'] == 32
+        assert saved['education']['foundingGranted'] is True and saved['military']['foundingGranted'] is True
+        assert saved['buildings']['farm']['ready'] == 17, 'The historical ready field remains preserved for compatibility'
+        assert saved['provisions']['localStock']['farm']['grain'] == 17, 'All 17 legacy harvested grain must remain in the current local inventory'
+    else:
+        assert saved['buildings']['farm']['ready'] == 17
     assert saved['statistics']['expeditions'] == 7
     assert saved['statistics']['upgrades'] == 12
 

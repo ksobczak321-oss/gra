@@ -2,7 +2,7 @@
 // No default in-memory production store and no external calls are made here.
 // Payload economy remains the current client-calculated model; provider payment
 // verification is deliberately outside this service and cannot be faked by it.
-import { createCharityLedgerStore, coinTotalFromIslandDocument, normalizedWallet, spendWallet, walletPath } from './charity-ledger.mjs';
+import { createCharityLedgerStore, coinTotalFromIslandDocument, normalizedWallet, spendWallet, walletPath, coinMutationWorld, syncSharedCoinWallet } from './charity-ledger.mjs';
 import { createIslandDocumentStore, MAX_ARCHIPELAGO_BYTES } from './island-document-store.mjs';
 import { validateIslandName, validateStoredIslandName } from './island-name.mjs';
 const DAY = 86400000;
@@ -344,14 +344,16 @@ export function createAccountService({ store, now = () => Date.now(), environmen
       if (island.revision !== expectedRevision) fail('island-conflict', 409);
       if (!positive(island.revision) || island.revision >= Number.MAX_SAFE_INTEGER) fail('invalid-revision', 409);
       if (islandId !== group.activeIslandId) fail('ship-capacity-active-island-changed', 409);
-      const payer = islandId === 'island-1' ? state : children[islandId];
-      if (!payer) fail('ship-capacity-invalid-island', 400);
+      const selectedPayer = islandId === 'island-1' ? state : children[islandId];
+      if (!selectedPayer) fail('ship-capacity-invalid-island', 400);
+      const payer = coinMutationWorld(state, selectedPayer);
       const coins = units * 50, additionalCapacity = units * 1000;
       if (receipts.length >= 10000 || !Number.isSafeInteger(group.shipCapacity + additionalCapacity)) fail('ship-capacity-limit', 409);
       if (payer.resources.coins < coins) fail('ship-capacity-insufficient-coins', 409);
       const wallet = normalizedWallet(await tx.get(walletPath(uid)), coinTotalFromIslandDocument(island), at);
       spendWallet(wallet, coins); wallet.revision += 1; wallet.updatedAt = at;
       payer.resources.coins -= coins;
+      syncSharedCoinWallet(state);
       const receipt = { id: requestId, kind: 'ship-capacity-coins', units, coins, payerIslandId: islandId, at };
       group.capacityReceipts.push(receipt); group.shipCapacity += additionalCapacity;
       state.commerce = { ...(object(state.commerce) ? state.commerce : {}), capacityPurchases: [...purchases, receipt] };
@@ -388,6 +390,7 @@ export function createAccountService({ store, now = () => Date.now(), environmen
       if (claimedCount >= promotion.maxClaims) fail('promotion-exhausted', 409);
       if (!positive(island.revision) || island.revision >= Number.MAX_SAFE_INTEGER) fail('invalid-revision', 409);
       const reward = rewardValue(promotion.reward), state = islandPayload(island.payload);
+      if (reward.coins) coinMutationWorld(state);
       state.bonusMaterials = object(state.bonusMaterials) ? { ...state.bonusMaterials } : {};
       for (const [id, amount] of Object.entries(reward)) {
         if (state.resources[id] + amount > Number.MAX_SAFE_INTEGER) fail('inventory-overflow', 409);
@@ -396,6 +399,7 @@ export function createAccountService({ store, now = () => Date.now(), environmen
         if (MATERIALS.includes(id)) state.bonusMaterials[id] = previousBonus + amount;
       }
       state.bonusInventoryVersion = 1;
+      if (reward.coins) syncSharedCoinWallet(state);
       const claim = { code: normalized, reward, claimedNumber: claimedCount + 1, at, generation };
       const nextPayload = JSON.stringify(state);
       if (Buffer.byteLength(nextPayload, 'utf8') > MAX_PAYLOAD_BYTES) fail('invalid-island', 409);

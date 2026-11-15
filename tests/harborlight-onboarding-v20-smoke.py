@@ -63,7 +63,15 @@ def bounded(page, locator):
 def frozen(value, original):
     assert value['worldTimeMs'] == original['worldTimeMs'], 'Island world time advanced before the tour finished'
     assert value['lastSimulatedAt'] == original['lastSimulatedAt']
-    assert value['resources'] == original['resources'], 'Food/stock changed before play began'
+    # Official-cloud migration adds the current goods without another starter grant.
+    expected_resources = {
+        **dict.fromkeys(('vegetables', 'livestock', 'rawMilk', 'sourMilk', 'fish',
+                         'flour', 'pasteurizedMilk', 'meat', 'leather', 'bread',
+                         'cake', 'cheese', 'smokedFish', 'fishPreserves',
+                         'civilianClothes', 'militaryClothes', 'professorRobes'), 0),
+        **original['resources'],
+    }
+    assert value['resources'] == expected_resources, 'Food/stock changed before play began'
     assert value['population'] == original['population'] == (18 if original.get('ruleset') == 32 else 12)
     assert value['welcome'] == original['welcome'], 'Welcome protection was consumed during onboarding'
     assert value['tutorial']['completed'] == {}, 'A tour explanation must not complete a tutorial action'
@@ -341,7 +349,8 @@ def persisted_tour_and_skip(browser):
     page.clock.run_for(31000)
     progressed = cloud.cloud_state(UID)
     assert progressed['worldTimeMs'] >= now + 28000
-    assert progressed['resources']['food'] < original['resources']['food']
+    assert progressed['resources']['grain'] < original['resources']['grain']
+    assert progressed['resources']['food'] == original['resources']['food']
     assert progressed['onboarding']['worldStartedAt'] == now
     cloud.no_island_cache(page)
     context.close()
@@ -506,7 +515,8 @@ def passive_autosave(browser):
     confirmed = cloud.cloud_state(UID)
     assert cloud.DOCUMENTS[UID]['revision'] >= revision + 1
     assert confirmed['worldTimeMs'] >= START + 30000
-    assert confirmed['resources']['food'] < 100
+    assert confirmed['resources']['grain'] < 100
+    assert confirmed['resources']['food'] == 100
     assert confirmed['resources']['coins'] == 333
     assert page.locator('[data-cloud-save-now],[data-cloud-reload],[data-dev-account]').count() == 0
     cloud.no_island_cache(page)

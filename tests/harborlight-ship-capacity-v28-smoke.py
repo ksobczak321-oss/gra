@@ -7,6 +7,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 from urllib.parse import urlsplit
 
@@ -134,7 +135,10 @@ def scenario(browser, *, mobile=False, block_reload=False):
             first_request = api.capacity_calls[0]
             committed = api.state()
             assert committed['archipelago']['shipCapacity'] == 2000
-            assert committed['archipelago']['islands']['island-2']['resources']['coins'] == 950
+            assert committed['ruleset'] == 32
+            assert committed['resources']['coins'] == 1250
+            assert committed['archipelago']['sharedWallet']['coins'] == 1250
+            assert committed['archipelago']['islands']['island-2']['resources']['coins'] == 0
             page.locator('#ship-capacity-checkout').get_by_role('button', name='Zamknij', exact=True).click()
             page.locator('#island-dialog .dialog-close').click()
             api.fail_reads = False
@@ -156,12 +160,15 @@ def scenario(browser, *, mobile=False, block_reload=False):
         expect(page.locator('body')).to_have_attribute('data-active-island', 'island-2')
         confirmed = api.state()
         assert confirmed['archipelago']['shipCapacity'] == 2000
-        assert confirmed['resources']['coins'] == 300
-        assert confirmed['archipelago']['islands']['island-2']['resources']['coins'] == 950
+        assert confirmed['ruleset'] == 32
+        assert confirmed['resources']['coins'] == 1250
+        assert confirmed['archipelago']['sharedWallet']['coins'] == 1250
+        assert confirmed['archipelago']['islands']['island-2']['resources']['coins'] == 0
         receipts = confirmed['commerce']['capacityPurchases']
         assert len(receipts) == 1 and receipts[0]['coins'] == 50 and receipts[0]['units'] == 1
         assert confirmed['archipelago']['capacityReceipts'] == receipts
         assert not confirmed['commerce']['receipts'], 'Coin capacity must not mint Paynow/no-ad receipts'
+        expect(page.locator('[data-mobile-hud="coins"]' if mobile else '[data-hud="coins"]')).to_have_text(re.compile(r'1\s*250'))
         cloud.no_island_cache(page)
         assert not cloud.ERRORS, cloud.ERRORS
         print('PASS capacity lost ACK: %s, reload %s, one receipt /50 coins /+1000 cargo' %

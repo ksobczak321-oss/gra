@@ -9,6 +9,7 @@ import { createCharityService } from './charity-service.mjs';
 import { createCharityLedgerStore } from './charity-ledger.mjs';
 import { createIslandDocumentStore } from './island-document-store.mjs';
 import { createCurrentStarterIsland } from './starter-island.mjs';
+import { CURRENT_TRADE_RULES } from './trade-rules-v32.mjs';
 export { createCurrentStarterIsland } from './starter-island.mjs';
 
 export function parsePort(value = '8080') {
@@ -36,7 +37,7 @@ function configuredAccountApi(environment) {
   const serviceEnvironment = projectId === 'harborlight-dev' ? 'preprod' : projectId === 'harborlight-prod' || ['prod','production'].includes(environment) ? 'production' : 'preprod';
   const store = createCharityLedgerStore(createIslandDocumentStore(createFirestoreStore({ projectId, databaseId: process.env.HARBORLIGHT_DATABASE_ID || '(default)' })),
     { allowSimulation: serviceEnvironment === 'preprod' });
-  return { service: createAccountService({ store, environment: serviceEnvironment }), trade: createPlayerTradeService({ store, environment: serviceEnvironment }), community: createCommunityService({ store, environment: serviceEnvironment }), charity: createCharityService({ store, environment: serviceEnvironment }), verify: createFirebaseIdentityVerifier({ projectId }), projectId };
+  return { service: createAccountService({ store, environment: serviceEnvironment }), trade: createPlayerTradeService({ store, environment: serviceEnvironment, v32: CURRENT_TRADE_RULES }), community: createCommunityService({ store, environment: serviceEnvironment }), charity: createCharityService({ store, environment: serviceEnvironment }), verify: createFirebaseIdentityVerifier({ projectId }), projectId };
 }
 function requestJson(request, maximumBytes = 1_500_000) {
   return new Promise((resolve, reject) => {

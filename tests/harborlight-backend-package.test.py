@@ -48,6 +48,8 @@ class BackendPackageTests(unittest.TestCase):
     def test_context_excludes_tests_and_private_files(self):
         context = context_files()
         self.assertTrue(context <= {'Dockerfile', 'package.json', 'server.mjs', 'starter-island.mjs',
+                                   'trade-rules-v32.mjs', 'harborlight-v1-provisions.js',
+                                   'harborlight-v1-economy.js', 'harborlight-v1-development-copy.js',
                                    'account-service.mjs', 'island-name.mjs', 'firebase-auth.mjs',
                                    'firestore-store.mjs', 'retention.mjs', 'player-trade.mjs',
                                    'island-document-store.mjs', 'community-service.mjs', 'league-rules.mjs', 'league-season.mjs',
@@ -67,7 +69,7 @@ class BackendPackageTests(unittest.TestCase):
                 import { readdirSync } from 'node:fs';
                 const localFetch = globalThis.fetch;
                 globalThis.fetch = () => { throw new Error('Cloud requests are disabled'); };
-                for (const file of readdirSync('.').filter(file => file.endsWith('.mjs'))) {
+                for (const file of readdirSync('.').filter(file => /[.](?:mjs|js)$/.test(file))) {
                   await import('./' + file);
                 }
                 const { createServer, createCurrentStarterIsland } = await import('./server.mjs');
@@ -75,6 +77,9 @@ class BackendPackageTests(unittest.TestCase):
                 assert.equal(starter.ruleset, 32);
                 assert.equal(starter.population, 18);
                 assert.equal(starter.residents.length, 18);
+                const { CURRENT_TRADE_RULES } = await import('./trade-rules-v32.mjs');
+                assert.equal(CURRENT_TRADE_RULES.goods.bread.name, 'Chleb');
+                assert.equal(typeof CURRENT_TRADE_RULES.availableGoods, 'function');
                 const { validateIslandName } = await import('./island-name.mjs');
                 assert.equal(validateIslandName('Żółwia Zatoka').ok, true);
                 assert.equal(validateIslandName('Kurwa Bay').reason, 'profanity');

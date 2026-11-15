@@ -37,6 +37,10 @@ function world() {
   bundle.activeIslandId = 'island-2';
   return Arch.serializeArchipelago(bundle);
 }
+function sharedWorld() {
+  const state = world(); state.ruleset = 32; state.archipelago.islands['island-2'].ruleset = 32;
+  return Arch.serializeArchipelago(Arch.restoreArchipelago(state, ADAPTERS, NOW));
+}
 function fixture(state = world(), environment = 'production') {
   const store = new Store(); let at = NOW;
   store.put('accounts/person', { createdAt: NOW - 20 * 86400000, islandGeneration: 1, lastPlayedAt: NOW });
@@ -49,6 +53,33 @@ function fixture(state = world(), environment = 'production') {
   return { store, service, buy, read, time: value => { at = value; } };
 }
 const rejects = (action, code) => assert.rejects(action, error => error.code === code);
+
+test('v32 ship capacity spends one shared balance from either active island and survives repeated restore/retry', async () => {
+  for (const islandId of ['island-1', 'island-2']) {
+    const state = sharedWorld(); state.archipelago.activeIslandId = islandId; const f = fixture(state);
+    const bought = await f.buy({ islandId }); assert.equal(bought.ok, true); assert.equal(bought.coins, 50);
+    const saved = await f.read(); assert.equal(saved.resources.coins, 1250); assert.equal(saved.archipelago.sharedWallet.coins, 1250); assert.equal(saved.archipelago.islands['island-2'].resources.coins, 0);
+    assert.equal(saved.archipelago.shipCapacity, 2000); assert.equal(saved.commerce.capacityPurchases.length, 1); assert.equal(saved.commerce.capacityPurchases[0].payerIslandId, islandId);
+    let restored = Arch.restoreArchipelago(saved, { ...ADAPTERS, environment: 'production' }, NOW);
+    for (let i = 0; i < 3; i++) { assert.equal(restored.primary.resources.coins, 1250); assert.equal(restored.secondary.resources.coins, 1250); restored = Arch.restoreArchipelago(Arch.serializeArchipelago(restored), { ...ADAPTERS, environment: 'production' }, NOW); }
+    const repeated = await f.buy({ islandId }); assert.equal(repeated.duplicate, true); assert.equal((await f.read()).resources.coins, 1250); assert.equal(f.store.get('charityWallets/person').qualified + f.store.get('charityWallets/person').unqualified, 1250);
+  }
+});
+test('v32 pre-wallet balances consolidate once; inconsistent present wallets and insufficient account funds roll back atomically', async () => {
+  const withoutWallet = sharedWorld(); delete withoutWallet.archipelago.sharedWallet; withoutWallet.resources.coins = 300; withoutWallet.archipelago.islands['island-2'].resources.coins = 1000;
+  const f = fixture(withoutWallet); await f.buy(); const saved = await f.read(); assert.equal(saved.resources.coins, 1250); assert.equal(saved.archipelago.sharedWallet.coins, 1250); assert.equal(saved.archipelago.islands['island-2'].resources.coins, 0);
+  for (const alter of [s => s.archipelago.sharedWallet.coins++, s => s.archipelago.islands['island-2'].resources.coins = 1, s => { s.resources.coins = s.archipelago.sharedWallet.coins = 49; }]) {
+    const raw = sharedWorld(); alter(raw); const broken = fixture(raw), before = structuredClone(broken.store.records);
+    await rejects(broken.buy(), raw.resources.coins === 49 ? 'ship-capacity-insufficient-coins' : 'invalid-shared-wallet'); assert.deepEqual(broken.store.records, before);
+  }
+});
+test('v32 promotional coin rewards synchronize the shared balance exactly once and remain after normal restore', async () => {
+  const f = fixture(sharedWorld()); f.store.put('promotions/LAUNCH32', { enabled: true, maxClaims: 10, claimedCount: 0, reward: { coins: 25, wood: 3 } });
+  const first = await f.service.redeemCode({ uid: 'person', code: 'LAUNCH32', generation: 1 }); assert.equal(first.alreadyRedeemed, false);
+  const saved = await f.read(); assert.equal(saved.resources.coins, 1325); assert.equal(saved.archipelago.sharedWallet.coins, 1325); assert.equal(saved.archipelago.islands['island-2'].resources.coins, 0);
+  const restored = Arch.restoreArchipelago(saved, ADAPTERS, NOW); assert.equal(restored.secondary.resources.coins, 1325);
+  assert.equal((await f.service.redeemCode({ uid: 'person', code: 'LAUNCH32', generation: 1 })).alreadyRedeemed, true); assert.equal((await f.read()).resources.coins, 1325); assert.equal(f.store.get('promotions/LAUNCH32').claimedCount, 1);
+});
 
 test('trusted capacity command debits the saved active island and returns an immediately restorable canonical receipt', async () => {
   const f = fixture(), result = await f.buy({ units: 2 });
