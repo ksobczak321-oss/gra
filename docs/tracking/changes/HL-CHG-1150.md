@@ -8,9 +8,9 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `in_progress` |
-| DEV | `pending_local_copy_acceptance_and_publication` |
-| CI | `pending_own_run` |
+| Implementacja | `implemented` |
+| DEV | `first_cache9_published_b1_hashes_and_local_public_render_verified` |
+| CI | `failed_stale_copy_43752880913_new_candidate_pending` |
 | PRE-PROD | `not_deployed` |
 | PROD | `not_deployed` |
 | Decyzja | `accepted` |
@@ -39,12 +39,14 @@ Data pierwotnej wiadomości: 2026-11-15. Bieżące polecenie użytkownika dotycz
 
 ## Dowody
 
-- **Dokumenty:** [docs/v32/GO-EDITORIAL-SIX-TABS.md](../../v32/GO-EDITORIAL-SIX-TABS.md), [docs/v32/EDITORIAL-SIX-TABS-EVIDENCE.json](../../v32/EDITORIAL-SIX-TABS-EVIDENCE.json)
+- **Dokumenty:** [docs/v32/GO-EDITORIAL-SIX-TABS.md](../../v32/GO-EDITORIAL-SIX-TABS.md), [docs/v32/EDITORIAL-SIX-TABS-EVIDENCE.json](../../v32/EDITORIAL-SIX-TABS-EVIDENCE.json), [docs/v32/EDITORIAL-SIX-TABS-PUBLIC-RECEIPTS.json](../../v32/EDITORIAL-SIX-TABS-PUBLIC-RECEIPTS.json)
 - **Kod:** [harborlight-v1-approved-copy.js](../../../harborlight-v1-approved-copy.js), [harborlight-v1-copy.js](../../../harborlight-v1-copy.js), [harborlight-v1-development-copy.js](../../../harborlight-v1-development-copy.js), [harborlight-v1-play.js](../../../harborlight-v1-play.js)
 - **Scenariusze automatyczne:** nie przypisano.
+- **Kod dowodowy:** `0b41a9b819127416d92836f42ccc812c2bec960d`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/43752880913.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Import sześciu arkuszy przyjęty doDEVcache9; nowy tekst,mapowanie,testy,wynikowyExcel,SHA,CI,Pages i hostowany odbiór oczekują rzeczywistych wyników. Potwierdzone są wyłącznie metadane dozwolonego wyciągu:413wierszy,87C,85C≠B,2C=B i brak odczytu pozostałych treści. To nie liczba wdrożonych literałów lub reguł.
+Pierwsza publikacjab1a929d aplikacji0b41a9b: Pages43752880924SUCCESS20s,106publicznychplików/30742201bajtów zgodneHTTPS/TLS/SHA; renderpublicznychbajtówlokalnie1672/390PASS, bez fikcyjnegoświata/API/konta. NatywneHTTPS nadalBLOCKEDmanagedTLS, bez ignorowania. NowyExcel413/6/ABC/Cpusta/źródło0b41a9bPASS; historyczny pełnyExcel zachowany.186testówkierunkowych,56kroków1440/390,menu/Magazyn1440/390 i20info×1672/1366/390PASS lokalnie. CI43752880913FAILURE:1401/1402PASS, stare „przy przypłynięciu” zamiast jawnegoC „po przypłynięciu”; browserCI_SKIPPED. Wąska poprawka testu zachowuje4/6,ładunek i czas,106plików bez zmian; nowySHA/CI/PagesPENDING. Dwie decyzje modelowe nadal oczekują. Poprawka learning-v29 lokalnie13/13PASS, zachowane4/6,ładunek,czas; selektor staregoUI testu wskazuje submit własnegoformularza zamiast nazwyPrzydziel. PublicznyExcel i raportwalidacjiHTTP200/TLS/SHAzgodne, bez zmiany runtime.
 
 ## Relacje
 

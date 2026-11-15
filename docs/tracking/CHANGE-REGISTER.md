@@ -14,7 +14,7 @@ Rejestr nie publikuje prywatnych kwot Billing ani danych osobistych związanych 
 
 ## Bieżące środowiska
 
-- Nowy DEV **0.15.0.0**: `cache8_accepted_own_ci_pages_immutable_tag_and_tls_public_byte_local_render_verified`; CI `success`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
+- Nowy DEV **0.15.0.0**: `cache9_first_publication_live; own_ci_failed_stale_copy; test_fixed_candidate_pending`; CI `failure`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
 - Odebrany PRE-PROD **0.14.0.0**: źródło `7e81a1a436770f57fd8abf390b6af8022e3300f6`; [deploy 41909268052](https://github.com/ksobczak321-oss/gra/actions/runs/41909268052), próba 1.
 - PRE-PROD tej wcześniejszej wersji nie oznacza promocji nowych kart. PROD oraz pełny reset kont: bez nowej operacji.
 Cache6 wdrożony tylko DEV:spójne menu, stały komunikat nagłówka/18kliknięćbezprzesunięć, lokalne przetwory rybne IIIkategorii poRybaku5 i rzeczywisty podglądadmin1poziom5. Pages43725299560SUCCESS,15zgodnychhaszy i uruchomienie9budynków1440/390PASS. Lokalnyadmin1Ratusz5/26osób zachowany; pozostali1/18. Publiczny podgląd bez kont i trwałego zapisu, lokalnyruntime odrębnyodFirebase.1390+1NodePASS; własnyCI końcowego commitu wymaga osobnego wyniku. PRE-PROD7e81a1a bez nowejpromocji,bezresetuiPROD. Ręcznyodbiór użytkownika NOT_RUN.
@@ -175,7 +175,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1147 — Wspólna prezentacja mieszkańców według zajęcia i osobna numeracja ról](changes/HL-CHG-1147.md) | Story | `accepted` | `deployed_source_06db93a` | `not_deployed` |
 | [HL-CHG-1148 — Nazwy i grupy zajęć w Akademii, Koszarach, Teatrze, Królestwie i klasycznych wyborach](changes/HL-CHG-1148.md) | Story | `accepted` | `deployed_source_06db93a` | `not_deployed` |
 | [HL-CHG-1149 — Plansza pamięci120kart zachowuje minimum20px po opóźnionym resize](changes/HL-CHG-1149.md) | Bug | `accepted` | `deployed_source_06db93a` | `not_deployed` |
-| [HL-CHG-1150 — Import zatwierdzonej redakcjiPL z sześciu arkuszy z pierwszeństwemC i zachowaniem prawdziwej logiki](changes/HL-CHG-1150.md) | Story | `accepted` | `pending_local_copy_acceptance_and_publication` | `not_deployed` |
+| [HL-CHG-1150 — Import zatwierdzonej redakcjiPL z sześciu arkuszy z pierwszeństwemC i zachowaniem prawdziwej logiki](changes/HL-CHG-1150.md) | Story | `accepted` | `first_cache9_published_b1_hashes_and_local_public_render_verified` | `not_deployed` |
 
 <a id="hl-epic-tut"></a>
 

@@ -66,7 +66,7 @@ test('the tour keeps storage after the Farm, clothing with the House and food wi
   assert.ok(APPROVED_TOUR_IDS.indexOf('building-theatre') > APPROVED_TOUR_IDS.indexOf('military-officers'));
   assert.ok(!APPROVED_TOUR_IDS.includes('ship'));
   const body = getTourCopy('building-dock','pl').text;
-  assert.match(body, /4 poziomu.*6 poziomu.*towary lub pasażerów.*przy przypłynięciu/);
+  assert.match(body, /4 poziomu.*6 poziomu.*towary lub pasażerów.*po przypłynięciu/);
   assert.match(getTourCopy('building-theatre','pl').text, /odpoczynku i integracji.*45-minutowym.*10 minut.*2 monety.*bez zatrzymywania/);
   assert.doesNotMatch(getTourCopy('happiness','pl').text, /czasu Warszawy/);
   assert.match(getTourCopy('category-economy','pl').text, /do magazynu centralnego/);

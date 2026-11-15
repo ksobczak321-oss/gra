@@ -28873,9 +28873,9 @@
         "reference": "user-upload:HARBORLIGHT_teksty_do_redakcji_ABC.xlsx:selected-six-tabs"
       },
       "status": {
-        "implementation": "in_progress",
-        "dev": "pending_local_copy_acceptance_and_publication",
-        "ci": "pending_own_run",
+        "implementation": "implemented",
+        "dev": "first_cache9_published_b1_hashes_and_local_public_render_verified",
+        "ci": "failed_stale_copy_43752880913_new_candidate_pending",
         "preprod": "not_deployed",
         "prod": "not_deployed",
         "decision": "accepted"
@@ -28902,7 +28902,8 @@
       "evidence": {
         "documents": [
           "docs/v32/GO-EDITORIAL-SIX-TABS.md",
-          "docs/v32/EDITORIAL-SIX-TABS-EVIDENCE.json"
+          "docs/v32/EDITORIAL-SIX-TABS-EVIDENCE.json",
+          "docs/v32/EDITORIAL-SIX-TABS-PUBLIC-RECEIPTS.json"
         ],
         "code": [
           "harborlight-v1-approved-copy.js",
@@ -28913,8 +28914,11 @@
         "automated_tests": [],
         "manual_execution": "NOT_RUN",
         "source_baseline_sha": "485f46664c35643813c37506a1561cecf84986de",
-        "source_sha": null,
-        "release_note": "Import sześciu arkuszy przyjęty doDEVcache9; nowy tekst,mapowanie,testy,wynikowyExcel,SHA,CI,Pages i hostowany odbiór oczekują rzeczywistych wyników. Potwierdzone są wyłącznie metadane dozwolonego wyciągu:413wierszy,87C,85C≠B,2C=B i brak odczytu pozostałych treści. To nie liczba wdrożonych literałów lub reguł."
+        "source_sha": "0b41a9b819127416d92836f42ccc812c2bec960d",
+        "release_note": "Pierwsza publikacjab1a929d aplikacji0b41a9b: Pages43752880924SUCCESS20s,106publicznychplików/30742201bajtów zgodneHTTPS/TLS/SHA; renderpublicznychbajtówlokalnie1672/390PASS, bez fikcyjnegoświata/API/konta. NatywneHTTPS nadalBLOCKEDmanagedTLS, bez ignorowania. NowyExcel413/6/ABC/Cpusta/źródło0b41a9bPASS; historyczny pełnyExcel zachowany.186testówkierunkowych,56kroków1440/390,menu/Magazyn1440/390 i20info×1672/1366/390PASS lokalnie. CI43752880913FAILURE:1401/1402PASS, stare „przy przypłynięciu” zamiast jawnegoC „po przypłynięciu”; browserCI_SKIPPED. Wąska poprawka testu zachowuje4/6,ładunek i czas,106plików bez zmian; nowySHA/CI/PagesPENDING. Dwie decyzje modelowe nadal oczekują. Poprawka learning-v29 lokalnie13/13PASS, zachowane4/6,ładunek,czas; selektor staregoUI testu wskazuje submit własnegoformularza zamiast nazwyPrzydziel. PublicznyExcel i raportwalidacjiHTTP200/TLS/SHAzgodne, bez zmiany runtime.",
+        "first_publication_sha": "b1a929dc1f2e0c470166a0086ab74f61e828b4f0",
+        "publication_sha": null,
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43752880913"
       },
       "notes": [
         "Bez odczytu treści niewybranych arkuszy przesłanego pliku i bez modyfikowania źródłowego lub historycznego pełnego Excela przez tę dokumentację.",
@@ -29065,15 +29069,15 @@
     "preprod_bridge_duration": "13s",
     "preprod_deployment_duration": "2m12s",
     "dev_application_version": "0.15.0.0",
-    "dev_status": "cache8_accepted_own_ci_pages_immutable_tag_and_tls_public_byte_local_render_verified",
-    "dev_ci": "success",
-    "dev_source_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
-    "dev_implementation_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
-    "dev_ci_run_id": 43740930893,
-    "dev_pages_run_id": 43740930892,
+    "dev_status": "cache9_first_publication_live; own_ci_failed_stale_copy; test_fixed_candidate_pending",
+    "dev_ci": "failure",
+    "dev_source_sha": "b1a929dc1f2e0c470166a0086ab74f61e828b4f0",
+    "dev_implementation_source_sha": "0b41a9b819127416d92836f42ccc812c2bec960d",
+    "dev_ci_run_id": 43752880913,
+    "dev_pages_run_id": 43752880924,
     "dev_pages_conclusion": "success",
-    "dev_tag": "dev-0.15.0.0-cache8-20261115",
-    "dev_cache": "frontend-v32-8",
+    "dev_tag": null,
+    "dev_cache": "frontend-v32-9",
     "previous_accepted_v32": {
       "source_sha": "fc2e87eec57c0388a16fb9b15a7d80ea0bc9c67c",
       "cache": "frontend-v32-4",
@@ -29082,10 +29086,10 @@
       "pages_run_id": 43703967803,
       "pages_conclusion": "success"
     },
-    "frontend_archive_sha256": "ef537dd45191158c2488845ec8b390f43f92dfae85155de4c9199391976eafd2",
-    "frontend_manifest_sha256": "726e947044253b4e5759d5da9b8a6f3f1a97962909089cd359281faf341431e2",
-    "frontend_file_count": 108,
-    "frontend_total_bytes": 30742668,
+    "frontend_archive_sha256": null,
+    "frontend_manifest_sha256": null,
+    "frontend_file_count": null,
+    "frontend_total_bytes": null,
     "previous_published_v32_cache5": {
       "dev_application_version": "0.15.0.0",
       "dev_status": "published_pages_verified; final_metadata_ci_requires_own_result",
@@ -29126,7 +29130,7 @@
       "last_metadata_pages_run_id": 43725629445,
       "last_metadata_pages_conclusion": "success"
     },
-    "public_level5_preview_verification": "TLS-verified downloaded public bytes rendered locallyPASS1672/390 with actual Content-Type, nofakeworld/API/account. Native browser HTTPSBLOCKED_CERT_AUTHORITY; notdirecthostrenderPASS.",
+    "public_level5_preview_verification": "Cache9 first-publication TLS-verified public bytes rendered locallyPASS1672/390 withactualContent-Type,nofakeworld/API/account; nativeHTTPSmanagedTLSblocked,notdirecthostPASS.",
     "previous_published_v32_cache7": {
       "dev_application_version": "0.15.0.0",
       "dev_status": "cache7_pages_published_17_https_hashes_verified; cache8_resident_directory_pending",
@@ -29147,7 +29151,7 @@
       "dev_ci_failure_reason": "v17 delayed memory-board resize with120cards produced16.328px card width below unchanged20px minimum"
     },
     "public_asset_file_count": 106,
-    "public_asset_total_bytes": 30728747,
+    "public_asset_total_bytes": 30742201,
     "current_directory_scope": {
       "cache": "frontend-v32-8",
       "status": "accepted_dev_own_ci_pages_tag_verified",
@@ -29177,26 +29181,81 @@
       "own_ci_is_separate": true
     },
     "next_dev_scope": {
-      "cache": "frontend-v32-9",
-      "status": "six_sheet_copy_import_pending",
-      "source_baseline_sha": "485f46664c35643813c37506a1561cecf84986de",
+      "status": "test_only_correction_pending_own_pipeline",
       "source_sha": null,
+      "publication_commit": null,
       "ci_run_id": null,
+      "ci_status": "pending_own_run",
       "pages_run_id": null,
-      "selected_sheets": [
-        "Tutorial",
-        "Budynki — opisy",
-        "Budynki — informacje",
-        "Dolny pasek",
-        "Komunikaty",
-        "Przyciski"
+      "pages_conclusion": "pending_own_run",
+      "runtime_public_files_changed": false,
+      "preserved_assertions": [
+        "4/6",
+        "cargo requirement",
+        "timing requirement"
       ],
-      "selected_rows": 413,
+      "local_checks": [
+        {
+          "test": "learning-v29 expected-copy fix",
+          "result": "PASS",
+          "passed": 13,
+          "preserved_requirements": [
+            "4/6",
+            "cargo",
+            "timing"
+          ]
+        },
+        {
+          "change": "legacy v32 UI assignment selector",
+          "status": "updated_to_own_form_submit_for_approved_recipe_labels",
+          "runtime_changed": false
+        }
+      ],
+      "cache": "frontend-v32-9",
+      "application_source_sha": "0b41a9b819127416d92836f42ccc812c2bec960d",
       "pending_model_decisions": [
         "cheese_to_dairy",
         "ads_every_level"
-      ],
-      "separate_production_promotion": "blocked_by_receipt_contract"
+      ]
+    },
+    "previous_accepted_dev_cache8": {
+      "dev_application_version": "0.15.0.0",
+      "dev_status": "cache8_accepted_own_ci_pages_immutable_tag_and_tls_public_byte_local_render_verified",
+      "dev_ci": "success",
+      "dev_source_sha": "06db93ada1c5cbd3071709ab84fc959f9674e5a1",
+      "dev_implementation_source_sha": "fa34c9e379b2425529ef96552d43e66568f14b2c",
+      "dev_ci_run_id": 43740930893,
+      "dev_pages_run_id": 43740930892,
+      "dev_pages_conclusion": "success",
+      "dev_tag": "dev-0.15.0.0-cache8-20261115",
+      "dev_cache": "frontend-v32-8",
+      "frontend_archive_sha256": "ef537dd45191158c2488845ec8b390f43f92dfae85155de4c9199391976eafd2",
+      "frontend_manifest_sha256": "726e947044253b4e5759d5da9b8a6f3f1a97962909089cd359281faf341431e2",
+      "frontend_file_count": 108,
+      "frontend_total_bytes": 30742668,
+      "public_level5_preview_verified": false,
+      "public_level5_preview_verification": "TLS-verified downloaded public bytes rendered locallyPASS1672/390 with actual Content-Type, nofakeworld/API/account. Native browser HTTPSBLOCKED_CERT_AUTHORITY; notdirecthostrenderPASS.",
+      "public_asset_file_count": 106,
+      "public_asset_total_bytes": 30728747,
+      "dev_tag_remote_object": "d9455d2657c523fc505b26d973311744ff56f11e",
+      "dev_tag_remote_verified": true,
+      "dev_ci_completed_at": "2026-11-15T17:42:30Z",
+      "dev_ci_duration": "17m58s",
+      "dev_ci_successful_steps": 31,
+      "dev_ci_failed_steps": 0
+    },
+    "dev_ci_failure_reason": {
+      "run_id": 43752880913,
+      "head_sha": "b1a929dc1f2e0c470166a0086ab74f61e828b4f0",
+      "status": "completed",
+      "conclusion": "failure",
+      "tests": 1402,
+      "passed": 1401,
+      "failed": 1,
+      "failure_test": "tests/harborlight-learning-v29.test.mjs:69",
+      "stale_expected_phrase": "przy przypłynięciu",
+      "approved_C_phrase": "po przypłynięciu",
+      "browser_steps": "skipped_in_this_failed_run"
     }
   }
 }

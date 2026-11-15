@@ -1202,3 +1202,17 @@ Wersja pozostaje0.15.0.0, planowany cachefrontend-v32-9. Baseline485f466 zachowu
 KartaHL-CHG-1150 i [zakres](v32/GO-EDITORIAL-SIX-TABS.md) mają własne oczekujące dowody mapowania, testów, nowegoSHA,CI,Pages i hostowanych tekstów. Żadnych wyników nowego importu nie zadeklarowano jakoPASS przed ich wykonaniem; wejściowego lub wygenerowanego Excela ta aktualizacja dokumentacji nie zmienia.
 
 Plan wyniku redakcyjnego: historyczny pełnyHARBORLIGHT15-teksty-DEV.xlsx zachowany, nowyHARBORLIGHT15-redakcja-6-zakladek.xlsx wyłącznie6arkuszy/413wierszyABC, B jako scalony tekst faktycznegoUI, C pusta, A z kontekstem i rozstrzygnięciem notatki. AktualnyHARBORLIGHT15-walidacja.json ma wskazywać nowy plik i odciski źródeł. Eksport/walidacja pozostająPENDING; same opisy nie stanowią aktywacjiAPI/usług ani zatwierdzenia oczekujących modeli.
+
+### Publikacja redakcji cache9 — DEV
+
+Źródło aplikacji `0b41a9b819127416d92836f42ccc812c2bec960d`, publikacja `b1a929dc1f2e0c470166a0086ab74f61e828b4f0` potwierdzona na remote main i dev/0.15.0.0. Pages43752880924SUCCESS20s/job132930513223; własnyCI43752880913 nadal w toku. Lokalnie186testówPASS,56kroków oprowadzania1440/390PASS, układmenu iMagazyn1440/390PASS,20informacjibudynków na1672/1366/390PASS.
+
+WygenerowanyExcelHARBORLIGHT15-redakcja-6-zakladek.xlsx ma413wierszy/6arkuszyABC/Ccałkowiępustą i walidacjęPASS dla źródła0b41a9b; SHA256 `517a6d98f35e7eba07a437de3f1b28f9069ddb13920403dbf8ca868e726c4096`. Historyczny pełnyExcel bez zmiany. Dowodymapowania, raportwalidacji i odciski nie są modyfikowane tą aktualizacją dokumentacji.
+
+106PUBLIC_FILES/30742201bajtów z rzeczywistegoHTTPS zgodneSHA256 przy włączonymTLS. Render1672/390PASS jest wykonaniem tych publicznych bajtów lokalnie z rzeczywistymContent-Type, bez fikcyjnego świata,API lub konta; potwierdził informacjeAkademii poC, role,20funkcji i5zakładek. NatywneHTTPSChromium nadal blokowane przez zarządzaneTLS, bez jego ignorowania. [Dowody](v32/EDITORIAL-SIX-TABS-EVIDENCE.json), [publiczne dane bez nagłówków](v32/EDITORIAL-SIX-TABS-PUBLIC-RECEIPTS.json). PełnyCI nadalPENDING, modele sera/reklam bez nowych odpowiedzi i wdrożenia, osobna promocjaPROD nadal zablokowana bramkami.
+
+### Pierwszy CIcache9 — stare oczekiwanie tekstu
+
+CI43752880913/b1a929d zakończył sięFAILURE:1402testy,1401PASS/1FAIL; etapyprzeglądarkowe wtymCI pominięte. Testlearning-v29:69 wymagał „przy przypłynięciu”, a użytkownik wC jawnie przyjął „po przypłynięciu”. Minimalna korekta oczekiwania zachowuje4/6,ładunek i czas, bez zmiany kodu gry lub106publicznychplików. Lokalny odbiór rzeczywistegoUI i publicznych bajtów pozostajePASS jako odrębny dowód, nie wynik pominiętych etapówCI. Nowy kandydat testowy oczekuje własnegoSHA/CI/Pages; pierwszyPagesSUCCESS iCIFAILURE pozostają historią tego samegob1a929d.
+
+Korekta oczekiwania learning-v29 przeszła lokalnie13/13 z zachowaniem4/6,ładunku i czasu. Selektor starszego testuUI wskazuje submit własnego formularza zgodnie z zaakceptowanymi nazwami przycisków; runtime bez zmiany. PublicznyExcel i raportwalidacji mająHTTP200, normalnie zweryfikowaneTLS i zgodneSHA256; szczegóły w dowodach. Nowy kandydat nadal wymaga własnegoCI/Pages.

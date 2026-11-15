@@ -64,7 +64,7 @@ with sync_playwright() as playwright:
         control=page.locator('[data-v32-workers="'+recipe+'"]');control.fill(amount)
         page.wait_for_timeout(1200)
         assert control.input_value()==amount, (recipe,'production draft changed during live tick')
-        control.locator('xpath=ancestor::form').get_by_role('button',name='Przydziel',exact=True).click()
+        control.locator('xpath=ancestor::form').locator('button[type="submit"]').click()
     assert state(page,'provisions.assignments.bakery.cake')==1, {'building':state(page,'buildings.bakery'),'assignments':state(page,'provisions.assignments.bakery'),'feedback':page.locator('#island-toast').inner_text()}
     close(page)
     building(page,'warehouse')

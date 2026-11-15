@@ -1,6 +1,6 @@
 {
   "scope": "DEV-only Polish text import from exactly six selected workbook sheets; preserve accepted cache8 front and resident directory",
-  "status": "local_acceptance_passed_publication_pending",
+  "status": "first_publication_live_own_ci_failed_waiting_test_fixed_candidate",
   "application_version": "0.15.0.0",
   "cache": "frontend-v32-9",
   "url": "https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5&v=frontend-v32-9",
@@ -8,10 +8,10 @@
   "source_sha": "0b41a9b819127416d92836f42ccc812c2bec960d",
   "publication_commit": null,
   "ci_run_id": null,
-  "ci_status": "pending_own_run",
+  "ci_status": "pending_test_fixed_candidate",
   "ci_conclusion": null,
   "pages_run_id": null,
-  "pages_conclusion": "pending_own_run",
+  "pages_conclusion": "pending_new_candidate",
   "input": {
     "workbook_name": "HARBORLIGHT_teksty_do_redakcji_ABC.xlsx",
     "workbook_sha256": "0c3d0c17b095f479b5dd9d4b6ec4c3d63ea1244f04462a47812db1373845239e",
@@ -160,10 +160,62 @@
       "sheets": 6,
       "C_all_blank": true,
       "exact_source_commit": "0b41a9b819127416d92836f42ccc812c2bec960d"
+    },
+    {
+      "name": "v32_real_interface_actions",
+      "result": "PASS",
+      "fixture": "static loopback server, no remote account",
+      "coverage": [
+        "desktop/mobile panels",
+        "production assignments",
+        "food settings",
+        "construction food mix",
+        "Academy",
+        "Barracks",
+        "Theatre",
+        "Kingdom",
+        "minigames"
+      ]
     }
   ],
   "row_mapping_report": "docs/v32/EDITORIAL-SIX-TABS-MERGE.json",
-  "hosted_checks": [],
+  "hosted_checks": [
+    {
+      "check": "all106PUBLIC_FILES HTTPS SHA256",
+      "result": "PASS",
+      "source_sha": "b1a929dc1f2e0c470166a0086ab74f61e828b4f0",
+      "count": 106,
+      "bytes": 30742201,
+      "tls_errors_ignored": false,
+      "includes_generated_index_or_release": false
+    },
+    {
+      "check": "TLS-verified public bytes rendered locally",
+      "result": "PASS",
+      "source_sha": "b1a929dc1f2e0c470166a0086ab74f61e828b4f0",
+      "widths": [
+        1672,
+        390
+      ],
+      "actual_content_type": true,
+      "fake_world_injected": false,
+      "fake_api_injected": false,
+      "accounts_used": false,
+      "verified": [
+        "Academy merged C information",
+        "occupation role labels retained",
+        "20 map functions",
+        "5 category tabs"
+      ],
+      "receipt": "docs/v32/EDITORIAL-SIX-TABS-PUBLIC-RECEIPTS.json"
+    },
+    {
+      "check": "native browser HTTPS navigation",
+      "result": "blocked_by_managed_TLS",
+      "not_counted_as_direct_host_pass": true,
+      "tls_errors_ignored": false
+    }
+  ],
   "manual_execution": "NOT_RUN",
   "preserved_state_requirements": [
     "resident UID",
@@ -201,9 +253,11 @@
     "new_deployment_by_this_import": false
   },
   "remaining_verification": [
-    "own CI and Pages",
-    "hosted cache9 verification",
-    "two optional gameplay decisions remain pending"
+    "test-only wording correction preserving4/6/cargo/timing",
+    "new candidate source and publication SHA",
+    "own complete new CI and Pages",
+    "two optional gameplay decisions remain pending",
+    "manual user acceptance"
   ],
   "output_workbook": {
     "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
@@ -230,6 +284,86 @@
     "current_validation_report": "docs/arkusze/HARBORLIGHT15-walidacja.json",
     "validation_result": "PASS",
     "sha256": "517a6d98f35e7eba07a437de3f1b28f9069ddb13920403dbf8ca868e726c4096",
-    "source_fingerprints_match": true
+    "source_fingerprints_match": true,
+    "source_commit": "0b41a9b819127416d92836f42ccc812c2bec960d"
+  },
+  "current_live_publication_commit": "b1a929dc1f2e0c470166a0086ab74f61e828b4f0",
+  "first_publication": {
+    "application_source_sha": "0b41a9b819127416d92836f42ccc812c2bec960d",
+    "publication_commit": "b1a929dc1f2e0c470166a0086ab74f61e828b4f0",
+    "remote_refs": {
+      "main": "b1a929dc1f2e0c470166a0086ab74f61e828b4f0",
+      "dev/0.15.0.0": "b1a929dc1f2e0c470166a0086ab74f61e828b4f0"
+    },
+    "pages_run_id": 43752880924,
+    "pages_job_id": 132930513223,
+    "pages_conclusion": "success",
+    "pages_duration_seconds": 20,
+    "ci": {
+      "run_id": 43752880913,
+      "head_sha": "b1a929dc1f2e0c470166a0086ab74f61e828b4f0",
+      "status": "completed",
+      "conclusion": "failure",
+      "tests": 1402,
+      "passed": 1401,
+      "failed": 1,
+      "failure_test": "tests/harborlight-learning-v29.test.mjs:69",
+      "stale_expected_phrase": "przy przypłynięciu",
+      "approved_C_phrase": "po przypłynięciu",
+      "browser_steps": "skipped_in_this_failed_run"
+    }
+  },
+  "next_test_fixed_candidate": {
+    "status": "test_only_correction_pending_own_pipeline",
+    "source_sha": null,
+    "publication_commit": null,
+    "ci_run_id": null,
+    "ci_status": "pending_own_run",
+    "pages_run_id": null,
+    "pages_conclusion": "pending_own_run",
+    "runtime_public_files_changed": false,
+    "preserved_assertions": [
+      "4/6",
+      "cargo requirement",
+      "timing requirement"
+    ],
+    "local_checks": [
+      {
+        "test": "learning-v29 expected-copy fix",
+        "result": "PASS",
+        "passed": 13,
+        "preserved_requirements": [
+          "4/6",
+          "cargo",
+          "timing"
+        ]
+      },
+      {
+        "change": "legacy v32 UI assignment selector",
+        "status": "updated_to_own_form_submit_for_approved_recipe_labels",
+        "runtime_changed": false
+      }
+    ]
+  },
+  "published_workbook_checks": [
+    {
+      "file": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+      "http_status": 200,
+      "tls_verified": true,
+      "sha256": "517a6d98f35e7eba07a437de3f1b28f9069ddb13920403dbf8ca868e726c4096",
+      "matches_source": true
+    },
+    {
+      "file": "docs/arkusze/HARBORLIGHT15-walidacja.json",
+      "http_status": 200,
+      "tls_verified": true,
+      "sha256": "eea41f47d07a90704850634b352b883b99c6447fb70a0856e9cdab3e8a86521b",
+      "matches_source": true
+    }
+  ],
+  "test_fix_public_files_unchanged": {
+    "compared_to": "b1a929dc1f2e0c470166a0086ab74f61e828b4f0",
+    "public_files": 106,
+    "all_bytes_equal": true
   }
 }
