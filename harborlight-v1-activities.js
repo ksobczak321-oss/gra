@@ -1,5 +1,5 @@
-import { normalizeExpeditionHour, allocateExpeditionAttemptId, reserveExpeditionDifficulty, recordExpeditionOutcome, expeditionHourStatus, cappedExpeditionReward } from './harborlight-v1-expedition-hour.js?v=frontend-v32-10';
-export { expeditionHourStatus } from './harborlight-v1-expedition-hour.js?v=frontend-v32-10';
+import { normalizeExpeditionHour, allocateExpeditionAttemptId, reserveExpeditionDifficulty, recordExpeditionOutcome, expeditionHourStatus, cappedExpeditionReward } from './harborlight-v1-expedition-hour.js?v=frontend-v32-11';
+export { expeditionHourStatus } from './harborlight-v1-expedition-hour.js?v=frontend-v32-11';
 // Agreed activities and coin services. Timers are elapsed world seconds, including offline time.
 // No network integrations. The approved task-achievement click bonus is local;
 // other community rewards remain unavailable until their integrations exist.
@@ -7,14 +7,14 @@ import {
   MATERIAL_IDS, stockRoom, receiveMaterials, notify,
   quoteInstantTransport, instantTransport, estimateMaterialsSeconds, availableGoods, haulCapacity,
   townhallPopulationRequirement, plannedLevel
-} from './harborlight-v1-logistics.js?v=frontend-v32-10';
-import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v32-10';
-import { secondsUntilWarsawMidnight } from './harborlight-v1-calendar.js?v=frontend-v32-10';
-import { tutorialTaskStatus } from './harborlight-v1-progression.js?v=frontend-v32-10';
-import { affordableTaskRequirements, missionFeasibility, fitTaskRewardToRequirements } from './harborlight-v1-missions.js?v=frontend-v32-10';
+} from './harborlight-v1-logistics.js?v=frontend-v32-11';
+import { consumeMaterial } from './harborlight-v1-inventory.js?v=frontend-v32-11';
+import { secondsUntilWarsawMidnight } from './harborlight-v1-calendar.js?v=frontend-v32-11';
+import { tutorialTaskStatus } from './harborlight-v1-progression.js?v=frontend-v32-11';
+import { affordableTaskRequirements, missionFeasibility, fitTaskRewardToRequirements } from './harborlight-v1-missions.js?v=frontend-v32-11';
 import { MINI_GAME_RULES, miniGameRoundRules, createMiniGame, normalizeMiniGame,
-  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v32-10';
-export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v32-10';
+  setMiniGameTilt, revealMiniGameCard, advanceMiniGame } from './harborlight-v1-minigames.js?v=frontend-v32-11';
+export { MINI_GAME_RULES, miniGameRoundRules } from './harborlight-v1-minigames.js?v=frontend-v32-11';
 
 const HOUR = 3600;
 const QUEST_LIFE = 6 * HOUR;

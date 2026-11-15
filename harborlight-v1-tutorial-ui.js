@@ -1,4 +1,5 @@
-import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v32-10';
+import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v32-11';
+import { GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-11';
 
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const MATERIAL_NAMES = { en: ['Wood', 'Stone', 'Grain', 'Food', 'Planks'], pl: ['Drewno', 'Kamień', 'Zboże', 'Żywność', 'Deski'] };
@@ -195,6 +196,13 @@ export function showTutorialAchievement({ achievement, row, language = 'en', onS
   const copy = row ? lessonCopy(row, language) : { title: achievement.title };
   const balanced = row?.balanced === true;
   const finalLesson = row?.subject === 'finish-tutorial';
+  const reward = achievement.reward || row?.reward || {};
+  const rewardMaterials = ['coins', ...Object.keys(reward).filter(id => id !== 'coins')]
+    .filter(id => Number.isFinite(reward[id]) && reward[id] > 0);
+  const rewardName = id => id === 'coins' ? pick(language, 'Coins', 'Monety')
+    : id === 'food' ? pick(language, 'Food', 'Żywność')
+    : language === 'pl' ? GOODS_NAMES[id] || MATERIAL_NAMES.pl[MATERIALS.indexOf(id)] || id
+    : id.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, letter => letter.toUpperCase());
   const popup = node('dialog', { class: 'tutorial-v16-celebration', 'data-tutorial-achievement': id, 'data-i18n-ignore': '', 'aria-labelledby': 'tutorial-success-title' });
   const animated = animations && !globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   if (animated) {
@@ -205,7 +213,7 @@ export function showTutorialAchievement({ achievement, row, language = 'en', onS
   const content = node('div', { class: 'tutorial-v16-celebration-content' },
     node('p', { class: 'tutorial-v16-eyebrow' }, pick(language, 'Lesson complete', 'Lekcja ukończona')), node('h2', { id: 'tutorial-success-title' }, finalLesson ? pick(language, 'Practical tutorial complete!', 'Samouczek ukończony!') : pick(language, 'Well done!', 'Brawo!')), node('p', { class: 'tutorial-success-lesson' }, copy.title), balanced ? node('span', { class: 'tutorial-v16-finished-mark', 'aria-hidden': 'true' }, '✓') : chestPicture(),
     node('strong', { class: 'tutorial-success-received' }, pick(language, 'Your reward is already yours', 'Nagroda jest już Twoja')),
-    node('div', { class: 'tutorial-chest-materials' }, ...(balanced ? ['coins', ...MATERIALS].filter(id => (achievement.reward?.[id] || row?.reward?.[id] || 0) > 0) : MATERIALS).map(material => node('div', { 'data-tutorial-reward-material': material }, node('span', {}, material === 'coins' ? pick(language, 'Coins', 'Monety') : MATERIAL_NAMES[language === 'pl' ? 'pl' : 'en'][MATERIALS.indexOf(material)]), node('strong', { 'data-tutorial-reward-quantity': material }, achievement.reward?.[material] || row?.reward?.[material] || 0)))),
+    node('div', { class: 'tutorial-chest-materials' }, ...rewardMaterials.map(material => node('div', { 'data-tutorial-reward-material': material }, node('span', {}, rewardName(material)), node('strong', { 'data-tutorial-reward-quantity': material }, reward[material])))),
     node('p', { class: 'tutorial-double-description' }, balanced ? pick(language, 'The reward has been added to your resources. Select “Continue” to move to the next lesson.', 'Nagroda została dodana do Twoich zasobów. Kliknij „Dalej”, aby przejść do kolejnej lekcji.') : pick(language, 'Share your success to receive exactly the same resources once more.', 'Pochwal się sukcesem i odbierz dokładnie te same zasoby jeszcze raz.')),
     finalLesson ? node('p', { class: 'tutorial-complete-description', 'data-tutorial-completion-message': '' }, pick(language, 'You know the basics. Now you decide how your island develops: expand the settlement, care for your residents and take on the next Lighthouse missions.', 'Znasz już podstawy. Teraz Ty wyznaczasz kierunek rozwoju wyspy — rozbudowuj osadę, dbaj o mieszkańców i realizuj kolejne misje Latarni.')) : null);
   let disposed = false, busy = false;

@@ -1,10 +1,10 @@
-import { warehouseCapacityForLevel } from './harborlight-v1-economy.js?v=frontend-v32-10';
-import { lessonCopy as approvedLessonCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-10';
+import { warehouseCapacityForLevel } from './harborlight-v1-economy.js?v=frontend-v32-11';
+import { lessonCopy as approvedLessonCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-11';
 // Persistent learning, meaningful activity and future verified social hooks.
 // No DOM, network requests or account creation happen in this module.
-import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v32-10';
-import { foodReservePlan, MATERIAL_IDS as DEV_MATERIAL_IDS } from './harborlight-v1-provisions.js?v=frontend-v32-10';
-import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v32-10';
+import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v32-11';
+import { foodReservePlan, MATERIAL_IDS as DEV_MATERIAL_IDS } from './harborlight-v1-provisions.js?v=frontend-v32-11';
+import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v32-11';
 
 export const ACTIVE_PLAY_SECONDS = 300;
 export const ABANDONED_PLAY_SECONDS = 48 * 3600;
@@ -15,6 +15,11 @@ const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const materialsFor=state=>state.ruleset===32?['wood','stone','grain','flour','planks']:MATERIALS;
 const loyaltyResourcesFor=state=>['coins',...materialsFor(state)];
 function rewardForState(state,reward){if(state.ruleset!==32||!plain(reward)||!Object.hasOwn(reward,'food'))return reward;const converted={...reward,flour:nonnegative(reward.flour)+nonnegative(reward.food)};delete converted.food;return converted;}
+// Saved receipts and explicit promised draws retain their original goods.
+// Only newly generated v32 rewards use the flour-based material set above.
+const savedMaterialsFor=state=>state.ruleset===32?[...new Set([...materialsFor(state),...MATERIALS])]:MATERIALS;
+const legacySavedReward=(state,reward)=>state.ruleset===32&&plain(reward)&&Object.hasOwn(reward,'food');
+const savedMaterialPromise=(state,reward)=>state.ruleset===32&&plain(reward)&&savedMaterialsFor(state).some(id=>Object.hasOwn(reward,id));
 function tutorialBuildingCost(state,building,context){
   const cost=context.buildingCost?.(state,building);if(state.ruleset!==32||!plain(cost))return cost;
   const foodUnits=nonnegative(cost.foodUnits,nonnegative(cost.food));if(!foodUnits)return rewardForState(state,cost);
@@ -299,12 +304,12 @@ function normalizeTutorial(state, tutorial, now) {
     delete state.tutorial.skippedLessons[item.id];
     if (claimed[item.id]) completed[item.id] = true;
     const source = modern && plain(tutorial.chests?.[item.id]) ? tutorial.chests[item.id] : null;
-    const savedReward=rewardForState(state,source?.reward);
     if (!source) continue;
-    const reward = curriculum !== 3 ? Object.fromEntries(['coins', ...materialsFor(state)].filter(id => finite(savedReward?.[id]) && source.reward[id] >= 0 && source.reward[id] <= Number.MAX_SAFE_INTEGER).map(id => [id, savedReward[id]])) :
-      Object.fromEntries(materialsFor(state).filter(id => Number.isInteger(savedReward?.[id]) && source.reward[id] >= TUTORIAL_CHEST_MIN && source.reward[id] <= TUTORIAL_CHEST_MAX).map(id => [id, savedReward[id]]));
-    if (curriculum === 3 && Object.keys(reward).length !== materialsFor(state).length) continue;
-    state.tutorial.chests[item.id] = { reward, quotePending: curriculum !== 3 && source.quotePending === true, claimed: claimed[item.id] === true, shared: source.shared === true && claimed[item.id] === true,
+    const savedReward=source.reward, required=legacySavedReward(state,savedReward)?MATERIALS:materialsFor(state);
+    const reward = curriculum !== 3 ? Object.fromEntries(['coins', ...savedMaterialsFor(state)].filter(id => finite(savedReward?.[id]) && savedReward[id] >= 0 && savedReward[id] <= Number.MAX_SAFE_INTEGER).map(id => [id, savedReward[id]])) :
+      Object.fromEntries(savedMaterialsFor(state).filter(id => Number.isInteger(savedReward?.[id]) && savedReward[id] >= TUTORIAL_CHEST_MIN && savedReward[id] <= TUTORIAL_CHEST_MAX).map(id => [id, savedReward[id]]));
+    if (curriculum === 3 && !required.every(id=>Object.hasOwn(reward,id))) continue;
+    state.tutorial.chests[item.id] = { reward, quotePending: curriculum !== 3 && source.quotePending === true && !savedMaterialPromise(state,reward), claimed: claimed[item.id] === true, shared: source.shared === true && claimed[item.id] === true,
       skipped: source.skipped === true && source.shared !== true && claimed[item.id] === true, seen: source.seen === true };
   }
   if (modern && tutorial.version && ledger.version !== 1 && !state.tutorial.rewardDisabled && !introductionPending(state)) migrateKnownTutorialActions(state);
@@ -346,10 +351,10 @@ function ensure(state) {
 }
 
 function normalizeLoyaltyReward(state,value) {
-  value=rewardForState(state,value);
   if (!plain(value)) return null;
-  if (!loyaltyResourcesFor(state).every(id => Number.isInteger(value[id]) && value[id] >= LOYALTY_REWARD_MIN && value[id] <= LOYALTY_REWARD_MAX)) return null;
-  return Object.fromEntries(loyaltyResourcesFor(state).map(id => [id, value[id]]));
+  const required=['coins',...(legacySavedReward(state,value)?MATERIALS:materialsFor(state))], valid=id=>Number.isInteger(value[id])&&value[id]>=LOYALTY_REWARD_MIN&&value[id]<=LOYALTY_REWARD_MAX;
+  if (!required.every(valid)) return null;
+  return Object.fromEntries(['coins',...savedMaterialsFor(state)].filter(valid).map(id=>[id,value[id]]));
 }
 function loyaltyReward(state) {
   const loyalty = state.loyalty;
@@ -711,12 +716,13 @@ function balancedReward(state, item, context) {
   requested.coins = Math.max(100, Math.ceil((budget ? budget.coins : nonnegative(cost.coins) + 100) - nonnegative(state.resources.coins)));
   return fitOrdinaryReward(state, requested);
 }
-function awardOrdinary(state, reward) {
-  reward=rewardForState(state,reward);
-  if (!plain(reward) || Object.entries(reward).some(([id, value]) => !['coins', ...materialsFor(state)].includes(id) || !finite(value) || value < 0 || nonnegative(state.resources?.[id]) + value > Number.MAX_SAFE_INTEGER)) return false;
+function awardOrdinary(state, reward, {preserveSaved=false}={}) {
+  if(!preserveSaved)reward=rewardForState(state,reward);
+  const materials=preserveSaved?savedMaterialsFor(state):materialsFor(state);
+  if (!plain(reward) || Object.entries(reward).some(([id, value]) => !['coins', ...materials].includes(id) || !finite(value) || value < 0 || nonnegative(state.resources?.[id]) + value > Number.MAX_SAFE_INTEGER)) return false;
   const limits = ordinaryLimits(state);
-  const materialAdded = materialsFor(state).reduce((sum, id) => sum + nonnegative(reward[id]), 0);
-  if (materialsFor(state).some(id => nonnegative(reward[id]) > EPS && ordinaryStock(state, id) + nonnegative(reward[id]) > limits.perResource + EPS) || materialAdded > EPS && ordinaryWarehouseUsed(state) + materialAdded > limits.total + EPS) return false;
+  const materialAdded = materials.reduce((sum, id) => sum + nonnegative(reward[id]), 0);
+  if (materials.some(id => nonnegative(reward[id]) > EPS && ordinaryStock(state, id) + nonnegative(reward[id]) > limits.perResource + EPS) || materialAdded > EPS && ordinaryWarehouseUsed(state) + materialAdded > limits.total + EPS) return false;
   for (const [id, value] of Object.entries(reward)) state.resources[id] = nonnegative(state.resources[id]) + value;
   return true;
 }
@@ -752,16 +758,16 @@ export function tutorialSettlementStatus(state) {
   return { ...result, eligible: remaining <= EPS||basicFull, reward, ...(state.ruleset===32?{target:'basic-materials',materials:materialsFor(state)}:{}) };
 }
 
-function canAward(state,reward, context) {
-  reward=rewardForState(state,reward);
-  return !materialsFor(state).some(resource => reward[resource] > 0) || typeof context.receiveMaterials === 'function';
+function canAward(state,reward, context, {preserveSaved=false}={}) {
+  if(!preserveSaved)reward=rewardForState(state,reward);
+  return !(preserveSaved?savedMaterialsFor(state):materialsFor(state)).some(resource => reward[resource] > 0) || typeof context.receiveMaterials === 'function';
 }
-function award(state, reward, context) {
-  reward=rewardForState(state,reward);
-  if (!canAward(state,reward, context)) return false;
+function award(state, reward, context, {preserveSaved=false}={}) {
+  if(!preserveSaved)reward=rewardForState(state,reward);
+  if (!canAward(state,reward, context,{preserveSaved})) return false;
   if (!Number.isSafeInteger(whole(state.resources.coins) + whole(reward.coins))) return false;
-  const materials = Object.fromEntries(materialsFor(state).filter(resource => reward[resource] > 0).map(resource => [resource, whole(reward[resource])]));
-  if (Object.keys(materials).length) context.receiveMaterials(state, materials);
+  const materials = Object.fromEntries((preserveSaved?savedMaterialsFor(state):materialsFor(state)).filter(resource => reward[resource] > 0).map(resource => [resource, whole(reward[resource])]));
+  if (Object.keys(materials).length) context.receiveMaterials(state, materials, ...(preserveSaved?[{bonus:false}]:[]));
   state.resources.coins = Math.min(Number.MAX_SAFE_INTEGER, nonnegative(state.resources.coins) + whole(reward.coins));
   return true;
 }
@@ -1010,14 +1016,15 @@ export function progressionAction(state, action, context = {}) {
     if (action.type === 'tutorialObserve') return bad('Complete this lesson through its gameplay action.');
     const chest = state.tutorial.chests[item.id];
     if (!chest) return bad(row.claimed ? 'This tutorial reward was already claimed.' : 'Complete this lesson before opening its reward chest.');
+    const preserveSaved=legacySavedReward(state,chest.reward);
     if (action.type === 'seeTutorialReward') {
       chest.seen = true;
       return good('Tutorial success viewed.');
     }
     if (action.type === 'claimTutorial') {
       if (!row.canClaim) return bad(row.claimed ? 'This tutorial reward was already claimed.' : row.rewardBlocked ? 'Spend stored materials before opening or doubling another tutorial chest.' : 'Complete this lesson before claiming its reward.');
-      const received = balancedCourse(state) && chest.quotePending ? balancedReward(state, item, context) : chest.reward;
-      if (!received || (balancedCourse(state) ? !awardOrdinary(state, received) : !award(state, received, context))) return bad('Material reward delivery is not available.');
+      const received = balancedCourse(state) && chest.quotePending && !savedMaterialPromise(state,chest.reward) ? balancedReward(state, item, context) : chest.reward;
+      if (!received || (balancedCourse(state) ? !awardOrdinary(state, received,{preserveSaved}) : !award(state, received, context,{preserveSaved}))) return bad('Material reward delivery is not available.');
       chest.reward = { ...received }; chest.quotePending = false;
       state.tutorial.claimed[item.id] = true; chest.claimed = true;
       emit(state, 'tutorial-reward', balancedCourse(state) ? 'Tutorial reward received' : 'Tutorial chest opened', balancedCourse(state) ? `${item.title}: the immediate reward is in your Warehouse and wallet.` : `${item.title}: a chest containing 100–300 of each material has been received.`);
@@ -1026,7 +1033,7 @@ export function progressionAction(state, action, context = {}) {
     if (!row.canShare && action.type !== 'skipTutorialShare') return bad(tutorialWarehouseOverfull(state) ? 'Spend stored materials before opening or doubling another tutorial chest.' : 'This tutorial sharing decision has already been resolved or its chest has not been opened.');
     if (action.type === 'skipTutorialShare' && (!row.claimed || chest.shared || chest.skipped)) return bad('This tutorial sharing decision has already been resolved or its chest has not been opened.');
     if (action.type === 'shareTutorialReward') {
-      if (!award(state, chest.reward, context)) return bad('Material reward delivery is not available.');
+      if (!award(state, chest.reward, context,{preserveSaved})) return bad('Material reward delivery is not available.');
       chest.shared = true; chest.seen = true;
       emit(state, 'tutorial-sharing-bonus', 'Tutorial chest doubled', 'The same chest resources were granted once more for choosing to share. Facebook publishing is not connected yet.');
       return good('Tutorial chest doubled.', { lessonId: item.id, reward: { ...chest.reward } });
@@ -1040,7 +1047,7 @@ export function progressionAction(state, action, context = {}) {
   settleLoyaltyClosure(state);
   const loyalty = loyaltyStatus(state);
   if (!loyalty.eligible) return bad(loyalty.closed ? 'The introductory loyalty programme has ended.' : 'The daily loyalty reward is not available or has already been received.');
-  if (!award(state, loyalty.reward, context)) return bad('Material reward delivery is not available.');
+  if (!award(state, loyalty.reward, context,{preserveSaved:legacySavedReward(state,loyalty.reward)})) return bad('Material reward delivery is not available.');
   const index = Array.from({ length: 10 }, (_, i) => i + 1).find(day => !state.loyalty.claimedDays.includes(day));
   state.loyalty.claimedDays.push(index);
   state.loyalty.claimedDays.sort((a, b) => a - b);

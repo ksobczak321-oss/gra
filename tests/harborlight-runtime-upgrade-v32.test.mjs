@@ -6,6 +6,7 @@ import * as P from '../harborlight-v1-provisions.js';
 import { packAdventureSave, unpackAdventureSave } from '../harborlight-v1-save-packing.js';
 import { prepareRuntimeUpgrade, normalizeRuntimeWorld } from '../harborlight-v1-runtime-upgrade.js';
 import { claimAdventureBudget } from '../harborlight-v1-adventure-budget.js';
+import { loyaltyStatus, tutorialRows } from '../harborlight-v1-progression.js';
 const NOW = Date.parse('2026-11-15T12:00:00Z'), copy = value => structuredClone(value);
 const upgrade = (raw, now = NOW) => normalizeRuntimeWorld(raw, now, { upgradeRules: true, normalizeState: State.normalizeState });
 const adapters = { createState: (now, options) => State.createState(now, { ...options, ruleset: 32 }), normalizeState: upgrade, advanceTo: State.advanceTo };
@@ -116,4 +117,53 @@ test('runtime policy leaves historical fixtures and existing v32 balances unchan
   let restored = upgrade(packed); assert.deepEqual(restored.adventureBudget, upgrade(unpackAdventureSave(packed)).adventureBudget); assert.equal(claimAdventureBudget(restored, { receiptId: 'migration-paid-reward', reward: { coins: 17 } }).duplicate, true);
   restored = Arch.restoreArchipelago(Arch.serializeArchipelago(Arch.restoreArchipelago(restored, adapters, NOW)), adapters, NOW).primary; assert.equal(claimAdventureBudget(restored, { receiptId: 'migration-paid-reward', reward: { coins: 17 } }).duplicate, true);
   const damaged = copy(packed); damaged.adventuresPacked.data = 'AAAA'; assert.throws(() => upgrade(damaged), { code: 'invalid-cloud-data' });
+});
+test('claimed legacy tutorial receipts keep their exact food and coin history through migration and repeated saves', () => {
+  const raw = legacy({ level: 1, population: 12, crews: {} }), reward = { wood: 25, stone: 25, grain: 25, food: 25, planks: 25, coins: 100 };
+  raw.tutorial.curriculum = 4; raw.tutorial.completed = { 'rules-read': true, 'island-map': true }; raw.tutorial.claimed = { 'rules-read': true, 'island-map': true };
+  raw.tutorial.chests = Object.fromEntries(['rules-read', 'island-map'].map(id => [id, { reward: copy(reward), quotePending: false, claimed: true, shared: false, skipped: true, seen: true }]));
+  let state = upgrade(raw); const before = copy(state.resources);
+  for (let i = 0; i < 3; i++) { assert.deepEqual(state.tutorial.chests, raw.tutorial.chests); assert.deepEqual(state.tutorial.claimed, raw.tutorial.claimed); assert.deepEqual(state.tutorial.completed, raw.tutorial.completed); state = upgrade(JSON.parse(JSON.stringify(state))); }
+  assert.deepEqual(state.resources, before); assert.equal(State.act(state, { type: 'claimTutorial', taskId: 'island-map' }, state.worldTimeMs).ok, false);
+});
+test('unopened explicit legacy balanced reward is not requoted into flour and pays the exact promised goods once', () => {
+  const raw = legacy({ level: 1, population: 12, crews: {} }), reward = { coins: 100, wood: 25, stone: 25, grain: 25, food: 25, planks: 25 };
+  raw.tutorial.curriculum = 4; raw.tutorial.completed = { 'rules-read': true }; raw.tutorial.claimed = {};
+  raw.tutorial.chests = { 'rules-read': { reward: copy(reward), quotePending: true, claimed: false, shared: false, skipped: false, seen: true } };
+  let state = upgrade(raw); assert.deepEqual(state.tutorial.chests['rules-read'].reward, reward); assert.equal(state.tutorial.chests['rules-read'].quotePending, false);
+  state = upgrade(JSON.parse(JSON.stringify(state))); assert.deepEqual(tutorialRows(state).find(row => row.id === 'rules-read').reward, reward);
+  const before = copy(state.resources), result = State.act(state, { type: 'claimTutorial', taskId: 'rules-read' }, state.worldTimeMs); assert.equal(result.ok, true, result.message); assert.deepEqual(result.reward, reward);
+  for (const [id, count] of Object.entries(reward)) assert.equal(state.resources[id], before[id] + count, id); assert.equal(state.resources.flour, before.flour);
+  assert.equal(State.act(state, { type: 'claimTutorial', taskId: 'rules-read' }, state.worldTimeMs).ok, false);
+  const restored = upgrade(JSON.parse(JSON.stringify(state))); assert.deepEqual(restored.tutorial.chests['rules-read'].reward, reward); assert.deepEqual(restored.resources, state.resources);
+});
+test('curriculum-three legacy five-material chest remains fixed and its original food doubles at most once', () => {
+  const raw = legacy({ level: 1, population: 12, crews: {} }), reward = { wood: 125, stone: 150, grain: 175, food: 200, planks: 225 };
+  raw.tutorial.curriculum = 3; raw.tutorial.completed = { 'rules-read': true }; raw.tutorial.claimed = {};
+  raw.tutorial.chests = { 'rules-read': { reward: copy(reward), claimed: false, shared: false, skipped: false, seen: false } };
+  let state = upgrade(raw); assert.deepEqual(state.tutorial.chests['rules-read'].reward, reward); const before = copy(state.resources);
+  assert.equal(State.act(state, { type: 'claimTutorial', taskId: 'rules-read' }, state.worldTimeMs).ok, true);
+  state = upgrade(JSON.parse(JSON.stringify(state))); assert.deepEqual(state.tutorial.chests['rules-read'].reward, reward);
+  assert.equal(State.act(state, { type: 'shareTutorialReward', taskId: 'rules-read' }, state.worldTimeMs).ok, true);
+  for (const [id, count] of Object.entries(reward)) assert.equal(state.resources[id], before[id] + 2 * count, id); assert.equal(state.resources.flour, before.flour);
+  state = upgrade(JSON.parse(JSON.stringify(state))); assert.equal(State.act(state, { type: 'shareTutorialReward', taskId: 'rules-read' }, state.worldTimeMs).ok, false);
+  assert.deepEqual(state.tutorial.chests['rules-read'].reward, reward);
+});
+test('an explicit current flour promise stays fixed while fresh coin-only placeholders retain their quote', () => {
+  const raw = State.createState(NOW, { ruleset: 32, onboarding: false }), reward = { coins: 77, flour: 37, wood: 11 };
+  raw.tutorial.curriculum = 4; raw.tutorial.completed = { 'rules-read': true }; raw.tutorial.claimed = {};
+  raw.tutorial.chests = { 'rules-read': { reward: copy(reward), quotePending: true, claimed: false, shared: false, skipped: false, seen: true } };
+  const state = upgrade(raw), before = copy(state.resources); assert.deepEqual(state.tutorial.chests['rules-read'].reward, reward); assert.equal(state.tutorial.chests['rules-read'].quotePending, false);
+  const claimed = State.act(state, { type: 'claimTutorial', taskId: 'rules-read' }, NOW); assert.equal(claimed.ok, true, claimed.message); assert.deepEqual(claimed.reward, reward); assert.equal(state.resources.flour, before.flour + 37); assert.equal(state.resources.food, 0);
+  raw.tutorial.chests['rules-read'].reward = { coins: 100 }; const placeholder = upgrade(raw); assert.equal(placeholder.tutorial.chests['rules-read'].quotePending, true);
+});
+test('saved pending loyalty draw and already received legacy food rewards retain their types and pay once', () => {
+  const raw = legacy({ level: 1, population: 12, crews: {} }), reward = { coins: 101, wood: 102, stone: 103, grain: 104, food: 105, planks: 106 }, history = { coins: 120, wood: 121, stone: 122, grain: 123, food: 124, planks: 125 };
+  raw.worldTimeMs = raw.savedAt = raw.lastSimulatedAt = NOW;
+  Object.assign(raw.loyalty, { closed: false, claimedDays: [1], streak: 2, lastClaimedDay: '2026-11-14', pendingDay: '2026-11-15', pendingReward: copy(reward), receivedRewards: { '2026-11-14': copy(history) } });
+  let state = upgrade(raw); assert.deepEqual(loyaltyStatus(state).reward, reward); assert.deepEqual(state.loyalty.receivedRewards['2026-11-14'], history);
+  state = upgrade(JSON.parse(JSON.stringify(state))); const before = copy(state.resources);
+  const result = State.act(state, { type: 'claimLoyalty' }, NOW); assert.equal(result.ok, true, result.message); assert.deepEqual(result.reward, reward);
+  for (const [id, count] of Object.entries(reward)) assert.equal(state.resources[id], before[id] + count, id); assert.equal(state.resources.flour, before.flour);
+  state = upgrade(JSON.parse(JSON.stringify(state))); assert.deepEqual(state.loyalty.receivedRewards['2026-11-14'], history); assert.deepEqual(state.loyalty.receivedRewards['2026-11-15'], reward); assert.equal(State.act(state, { type: 'claimLoyalty' }, NOW).ok, false);
 });
