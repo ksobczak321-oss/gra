@@ -59,10 +59,10 @@ test('welcome wording explicitly promises the seven daily residents separately f
   assert.match(welcomeWorkerCopy('pl').text, /Ratuszu.*Domu/);
 });
 
-test('the tour explains storage once after the Farm, introduces food and clothing after the House, and merges ship/Port', () => {
+test('the tour keeps storage after the Farm, clothing with the House and food with the Warehouse', () => {
   assert.equal(APPROVED_TOUR_IDS[APPROVED_TOUR_IDS.indexOf('building-farm') + 1], 'producer-storage');
-  assert.equal(APPROVED_TOUR_IDS[APPROVED_TOUR_IDS.indexOf('building-house') + 1], 'food');
-  assert.equal(APPROVED_TOUR_IDS[APPROVED_TOUR_IDS.indexOf('building-house') + 2], 'clothing');
+  assert.equal(APPROVED_TOUR_IDS[APPROVED_TOUR_IDS.indexOf('building-house') + 1], 'clothing');
+  assert.equal(APPROVED_TOUR_IDS[APPROVED_TOUR_IDS.indexOf('building-warehouse') + 1], 'food');
   assert.ok(APPROVED_TOUR_IDS.indexOf('building-theatre') > APPROVED_TOUR_IDS.indexOf('military-officers'));
   assert.ok(!APPROVED_TOUR_IDS.includes('ship'));
   const body = getTourCopy('building-dock','pl').text;

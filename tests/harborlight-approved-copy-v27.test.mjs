@@ -5,11 +5,11 @@ import { TUTORIAL_LESSONS, V4_TUTORIAL_LESSONS } from '../harborlight-v1-progres
 import { buildingPurpose, gameGoal, residentsPurpose } from '../harborlight-v1-copy.js';
 import { translate } from '../harborlight-v1-i18n.js';
 
-test('approved 48-step route covers the current island systems with stable IDs', () => {
-  assert.equal(APPROVED_TOUR_IDS.length, 48);
-  assert.equal(new Set(APPROVED_TOUR_IDS).size, 48);
-  assert.deepEqual(APPROVED_TOUR_IDS.slice(0, 8), ['home','level','happiness','coins','working','building-house','food','clothing']);
-  assert.deepEqual(APPROVED_TOUR_IDS.slice(-5), ['league','charity','category-paths','tutorial','settings']);
+test('approved 56-step route groups the complete interface with stable IDs', () => {
+  assert.equal(APPROVED_TOUR_IDS.length, 56);
+  assert.equal(new Set(APPROVED_TOUR_IDS).size, 56);
+  assert.deepEqual(APPROVED_TOUR_IDS.slice(0, 8), ['home','level','happiness','coins','working','arrival','points','population']);
+  assert.deepEqual(APPROVED_TOUR_IDS.slice(-5), ['category-administration','category-economy','category-resources','category-decorations','category-paths']);
   for(const id of ['building-bakery','building-dairy','building-slaughterhouse','building-fisher','building-leatherworks','building-academy','building-barracks','kingdom','research','minigame-rules'])assert.ok(APPROVED_TOUR_IDS.includes(id));
   for (const id of APPROVED_TOUR_IDS) for (const language of ['pl','en']) {
     const copy = getTourCopy(id, language, { cloudAccount:true, firstIntroduction:true });

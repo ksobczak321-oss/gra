@@ -2,7 +2,7 @@
 
 **DEV 0.15.0.0 / v32 — zmiany wyłącznie na DEV.** Bazą jest dokładny kod odebranego PRE-PROD `7e81a1a436770f57fd8abf390b6af8022e3300f6` / 0.14.0.0. Zintegrowano uzgodnienia z załączonej rozmowy i 47 odpowiedzi. PRE-PROD i PROD nie otrzymują tego wydania.
 
-**[Publiczny podgląd DEV do testów](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-4)** — publikacja i odbiór bieżącego źródła są ewidencjonowane osobno w [statusie DEV](docs/v32/DEV-READY.md). Podgląd działa bez konta, w pamięci bieżącej karty; odświeżenie zaczyna nową próbę. Trwałe konta i współdzielone usługi wymagają lokalnego serwera DEV.
+**[Publiczny podgląd DEV do testów](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-5)** — publikacja i odbiór bieżącego źródła są ewidencjonowane osobno w [statusie DEV](docs/v32/DEV-READY.md). Podgląd działa bez konta, w pamięci bieżącej karty; odświeżenie zaczyna nową próbę. Trwałe konta i współdzielone usługi wymagają lokalnego serwera DEV.
 
 [Ściągawka zmian do testów](docs/v32/TEST-CHEATSHEET.md) · [Lista z checkboxami](https://ksobczak321-oss.github.io/gra/docs/testing/dev-v32-checklist.html) · [Excel15 — teksty do redakcji](docs/arkusze/HARBORLIGHT15-teksty-DEV.xlsx).
 

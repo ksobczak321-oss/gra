@@ -27,7 +27,7 @@ TOUR_IDS = json.loads(subprocess.check_output([
     'node', '--input-type=module', '-e',
     "import {APPROVED_TOUR_IDS} from './harborlight-v1-approved-copy.js';console.log(JSON.stringify(APPROVED_TOUR_IDS))",
 ], cwd=SOURCE, text=True))
-assert len(TOUR_IDS) == 48, 'The accepted v32 guide has 48 steps'
+assert len(TOUR_IDS) == 56, 'The accepted v5 guide has 56 steps'
 
 
 def world(*, through=0, resource_tour=False):

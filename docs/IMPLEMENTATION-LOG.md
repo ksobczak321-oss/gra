@@ -1136,3 +1136,12 @@ Tagi DEV iPRE-PROD0.14.0.0-20261104 opublikowano i zdalnie potwierdzono na7e81a1
 - Na polecenie użytkownika lokalne pary haseł zmieniono na admin1/admin1, admin2/admin2, admin3/admin3 (a5ee972).46testów PASS, trzy rzeczywiste logowania Chromium PASS, brak JSerrors. Bez resetu.
 - PRE-PROD auth-only potwierdził3/3 identyczne hasła i właściwe UID. Hasła już były zgodne, więc nie zmieniano Authentication. Publiczny release nadal7e81a1a; config503 odnotowano oddzielnie, bez operacji naprawczych i bez deployu.
 - W załączonej rozmowie odszukano dotychczasowy roboczy podglądGitHubPages ks...github.io/gra/harborlight-v1-layered.html. Użytkownik potwierdził jego aktualizację: 'ok dajesz'. Nowa publikacja ma obejmować tylkoDEV; szczegółowy aktualny dostęp i wynik odbioru w docs/v32/DEV-READY.md.
+
+
+## DEV 0.15.0.0 — pełne GO po odbiorze, 15 listopada 2026
+
+Cache `frontend-v32-5`: spójne ciemne menu i ramki nowych budynków, informacja o wymaganym poziomie zamiast zablokowanego menu, wyrównane karty i formularze; Teatr ma grupy zajęć, wybór widzów oraz Wyślij wszystkich. Oprowadzanie V5 ma 56 podświetleń (góra → budynki z Teatrem → pięć dolnych zakładek), Ubrani i samą buźkę magazynu lokalnego. Magazyn ma trzy zamknięte sekcje i wspólny limit z koszyka potrzeb +40%, w dół do 10000: poziom1=40000, bez usuwania starych nadwyżek.
+
+Lokalne testy wszystkich nowych przepływów na 1440/390 PASS; pełne 25 praktycznych lekcji i regresje pojemności PASS; osobny96h offline PASS. Pełny początkowy Node:1378/1379PASS, nieaktualny fixture dostaw poprawiono i recovery8/8PASS. Dodatkowa naprawa atomowej zapłaty faktycznym jedzeniem przy kolonizacji ma38/38PASS obejmujące archipelag i recovery. Aktualny końcowy CI i publikacja wymagają własnych odczytów, poprzednie fc2e87e ma własneSUCCESS.
+
+Ręcznie ustawiono lokalny admin1 na Ratusz5 bez resetu starych zasobów i mieszkańców; normalne przyznanie Akademii/Koszar daje26osób. Odczyt po restarcie: admin1=5/26osób, admin2/admin3=1/18osób. To lokalny trwały runtime; Pages pozostaje nietrwałym podglądem bez kont. PRE-PROD7e81a1a i PROD bez nowego wdrożenia.

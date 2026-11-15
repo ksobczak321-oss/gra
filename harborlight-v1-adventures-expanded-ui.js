@@ -1,7 +1,7 @@
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-4';
-import { puzzleSceneArt, puzzleTokenArt } from './harborlight-v1-adventures-art.js?v=frontend-v32-4';
-import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-4';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-4';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-5';
+import { puzzleSceneArt, puzzleTokenArt } from './harborlight-v1-adventures-art.js?v=frontend-v32-5';
+import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-5';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-5';
 
 const words = (language, pl, en) => language === 'en' ? en : pl;
 const line = (value, language) => typeof value === 'string' ? value : value?.[language] || value?.pl || '';
@@ -27,7 +27,7 @@ export function createExpandedAdventureScene({ getState, getRun, language = 'pl'
   const t = (pl, en) => words(language, pl, en);
   const initial = getRun(), storyMode = initial.kind === 'escapeStory';
   const timed=getState()?.ruleset===32;const root=standardScene(initial,timed?t('Rozglądaj się, porównuj wskazówki i eksperymentuj. Każdy etap ma własny limit czasu. Wyjście kończy bieżącą próbę, zachowując wcześniejsze odkrycia.','Look around, compare clues and experiment. Every stage has its own timer. Leaving ends this attempt and keeps earlier discoveries.'):t('Rozglądaj się, porównuj wskazówki i eksperymentuj. Każdy ruch możesz przemyśleć — ta zagadka nie ma limitu czasu.','Look around, compare the clues and experiment. Take your time: this puzzle has no deadline.'));
-  if(!document.querySelector('[data-original-puzzle-css]'))document.head.append(element('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-4',import.meta.url).href,'data-original-puzzle-css':''}));
+  if(!document.querySelector('[data-original-puzzle-css]'))document.head.append(element('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-5',import.meta.url).href,'data-original-puzzle-css':''}));
   root.classList.add('adv-expanded'); root.dataset.expandedAdventure = initial.kind;
   const story = element('section', { class: 'adv-story-heading', 'data-puzzle-story': '' });
   const hero = element('div', { class: 'adv-puzzle-hero' });
@@ -214,7 +214,7 @@ export function createExpandedAdventureScene({ getState, getRun, language = 'pl'
       if(!originalController||originalKey!==key){originalController?.dispose();originalKey=key;originalController=mountOriginalPuzzle({host:minigame,variant:run.data.puzzle.kind,getStatus:status,embedded:true,allowAdSimulation,onAction:action=>{if(action.type==='originalPuzzleInput'){const i=action.input;return move(i.kind==='node'?{type:'node',id:i.node}:i.kind==='convoy'?{type:'convoy',id:i.id}:{type:i.kind});}if(action.type==='originalPuzzleTimeChoice')return send('puzzleTimeChoice',{method:action.method});if(action.type==='originalPuzzleExtend')return send('puzzleAdComplete',{receipt:action.receipt,completed:action.completed});}});}else originalController.update();
     }else if (view.miniGame) {
       originalController?.dispose();originalController=null;
-      if (!document.querySelector('[data-adventure-minigame-css]')) document.head.append(element('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-minigame.css?v=frontend-v32-4', import.meta.url).href, 'data-adventure-minigame-css': '' }));
+      if (!document.querySelector('[data-adventure-minigame-css]')) document.head.append(element('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-minigame.css?v=frontend-v32-5', import.meta.url).href, 'data-adventure-minigame-css': '' }));
       minigame.hidden = false;
       const mini = { id: run.id, miniGame: view.miniGame, status: view.solved ? 'won' : failed?'lost':'active', level: run.data.puzzle.difficulty || 1, roundStartedAt: run.startedAt || 0 };
       const status = { elapsed:attempt?attempt.initialDuration-attempt.remaining:0, remaining:attempt?.remaining||0,adPaused:!!attempt?.timeOffer };

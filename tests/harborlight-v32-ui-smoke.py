@@ -62,10 +62,13 @@ with sync_playwright() as playwright:
     page.locator('[data-worker-building="bakery"][data-worker-delta="1"]').click()
     for recipe,amount in [('bread','0'),('cake','1')]:
         control=page.locator('[data-v32-workers="'+recipe+'"]');control.fill(amount)
+        page.wait_for_timeout(1200)
+        assert control.input_value()==amount, (recipe,'production draft changed during live tick')
         control.locator('xpath=ancestor::form').get_by_role('button',name='Przydziel',exact=True).click()
     assert state(page,'provisions.assignments.bakery.cake')==1, {'building':state(page,'buildings.bakery'),'assignments':state(page,'provisions.assignments.bakery'),'feedback':page.locator('#island-toast').inner_text()}
     close(page)
     building(page,'warehouse')
+    page.locator('[data-warehouse-section-toggle="feeding"]').click()
     page.locator('[data-v32-food="vegetables"] input[type=number]').fill('25')
     page.get_by_role('button',name='Zapisz wyżywienie',exact=True).click()
     assert state(page,'provisions.foodSettings.limits.vegetables')==25
@@ -88,7 +91,9 @@ with sync_playwright() as playwright:
     close(page)
     building(page,'theatre')
     form=page.get_by_role('button',name='Zaplanuj przedstawienie',exact=True).locator('xpath=ancestor::form')
-    form.locator('input[type=checkbox]').nth(1).check();form.get_by_role('button').click()
+    form.locator('[data-v32-theatre-audience] summary').click()
+    form.locator('[data-v32-theatre-person]').first.check()
+    form.get_by_role('button',name='Zaplanuj przedstawienie',exact=True).click()
     assert state(page,'theatre.shows.length')==1
     assert state(page,'theatre.shows[0].coins')==2
     page.get_by_role('button',name='Anuluj przedstawienie',exact=True).click()

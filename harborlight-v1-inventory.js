@@ -1,6 +1,6 @@
 // Physical central stock includes pledged goods until their carrier picks up.
 // The provisions module is a pure leaf; this import introduces no state cycle.
-import { MATERIAL_IDS as DEVELOPMENT_MATERIALS, foodReservePlan, quoteConstructionFood, withdrawMilk } from './harborlight-v1-provisions.js?v=frontend-v32-4';
+import { MATERIAL_IDS as DEVELOPMENT_MATERIALS, foodReservePlan, quoteConstructionFood, withdrawMilk } from './harborlight-v1-provisions.js?v=frontend-v32-5';
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 export const inventoryMaterialIds = state => state?.ruleset === 32 ? DEVELOPMENT_MATERIALS : MATERIALS;
 const amount = value => Number.isFinite(value) ? Math.max(0, value) : 0;

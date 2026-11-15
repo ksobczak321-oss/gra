@@ -1,5 +1,9 @@
 # Zasady pracy nad HARBORLIGHT
 
+## Aktualne pełne GO po odbiorze UI
+
+Późniejsze „GO zrób wszystko powyżej” i „zrób DEV Go” rozszerzyły bieżącą paczkę o wybór widzów Teatru i Wyślijwszystkich, tutorialV5/56 w grupach z Teatrem i pięcioma dolnymi zakładkami, tytułUbrani i ramkę na buźce, trzy zamknięte sekcje Magazynu oraz wyrównanie kolumn. Zachowano wcześniej zatwierdzone ciemne menu, ramki hover i informację zamiast zablokowanego menu. LokalnyDEVadmin1 ma ręcznyRatusz5,bezresetu. Użytkownik wyraźnie polecił wspólną pojemnośćMagazynu liczyć z koszyka potrzeb+40%,zaokrąglając w dół do pełnych10000: L1=40000. Nie mnożyć globalnego koszyka przez20typówtowaru. Pełne notatki [PENDING-NOTES.md](docs/v32/PENDING-NOTES.md) są już objęte tymGO. NadaltylkoDEV/Git/CI/Pages; brak nowejpromocji PRE-PROD/PROD i brak chmurowychzmianpoziomów.
+
 ## Uzupełnienie GO DEV — 15 listopada 2026
 
 Użytkownik polecił opublikować aktualny roboczy podgląd przez dotychczasowe GitHub Pages, zaktualizować Git i oznaczyć zmiany jako wdrożone na razie tylko na DEV. Dopuszczone są push do repozytorium, własne CI i Pages; bez nowej promocji Google Cloud PRE-PROD/PROD. Brak markera promocji w nowych commitach. Publiczny podgląd jest nietrwały, bez kont i zapisu świata w przeglądarce; serwerowe konta lokalnego DEV pozostają odrębne od Firebase. Nie nazywać lokalnego API kopią usług chmurowych 1:1. Polecono hasła takie same jak istniejące loginy `admin1`, `admin2`, `admin3`; na lokalnym DEV należy je ustawić. PRE-PROD ma już te hasła, co potwierdzono auth-only 3/3; nie potrzeba mutacji kont. Zakaz resetu postępu i operacji PROD pozostaje. Źródło PRE-PROD nadal `7e81a1a436770f57fd8abf390b6af8022e3300f6`.

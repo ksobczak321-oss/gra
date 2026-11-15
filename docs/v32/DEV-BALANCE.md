@@ -1,23 +1,23 @@
 # HARBORLIGHT v32 — analiza balansu DEV
 
-Wynik: reguły dają wykonalne podstawowe racje, a 40% bufor Magazynu mieści przyjętą konserwatywną pulę. Finanse pozostają silnym źródłem nowych monet. Propozycja #30 utrudnia symboliczne obejście umorzenia, lecz sama nie równoważy gospodarki. To materiał do oceny przed PRE-PROD; podane nowe współczynniki DEV nie oznaczają akceptacji użytkownika.
+Wynik: reguły dają wykonalne podstawowe racje. Magazyn korzysta ze wspólnego koszyka i zatwierdzonego zaokrąglenia do10000. Finanse pozostają silnym źródłem nowych monet. Propozycja #30 utrudnia symboliczne obejście umorzenia, lecz sama nie równoważy gospodarki. To materiał do oceny przed PRE-PROD; podane nowe współczynniki DEV nie oznaczają akceptacji użytkownika.
 
-Dowód: `node scripts/simulate-v32-balance.mjs`. Dane: [DEV-BALANCE.json](DEV-BALANCE.json). Stały seed 851112245, 100000 matematycznych wniosków i 1000 wniosków przez rzeczywisty silnik; 18 rzeczywistych pojedynczych procesów produkcji i 4 scenariusze żywienia przez 1440 minut. Dwa przebiegi dały identyczne bajty JSON: SHA-256 `79e6296f04b2ffea1ea1eebccfb931ae5b69b055d400698de9eac99f0f408402`.
+Dowód: `node scripts/simulate-v32-balance.mjs`. Dane: [DEV-BALANCE.json](DEV-BALANCE.json). Stały seed 851112245, 100000 matematycznych wniosków i 1000 wniosków przez rzeczywisty silnik; 18 rzeczywistych pojedynczych procesów produkcji i 4 scenariusze żywienia przez 1440 minut. Dwa przebiegi dały identyczne bajty JSON: SHA-256 `e3b1084d98f53392d22efbf4571af0873690449332e126d7467a51fce913c678`.
 
 Nie jest to 50 dni rozgrywki ani 150 godzin ludzkiego odbioru. Pojedyncze procesy sprawdzają rzeczywisty model przy gotowych składnikach lokalnych; nie dowodzą wydajności całego łańcucha z dostawami, kolejkami, dojazdem i równoczesną budową. Matematyka łańcuchów pomija te opóźnienia i jest górnym ograniczeniem wydajności.
 
 ## Magazyn, populacja i żywność
 
-18 osób na starcie, limit 36 osób/poziom Ratusza, 6 punktów sytości/osobę/h przy łóżku i 12 bez łóżka. Dla Magazynu poziomu L kod liczy etap L+1: największa rozbudowa 550×etap×7, misja 500×etap×7 (zwykłe zboże oraz 6 punktów sytości za dawną jednostkę żywności), zapas surowego jedzenia 36×etap×6×24; następnie całość mnoży przez 1,4 i zaokrągla w górę. Wspólna pojemność to 20×limit pojedynczego towaru. Pula jest celowo konserwatywna: nalicza zapas żywności także w limicie towarów niebędących jedzeniem i nie zakłada gęstszych potraw.
+18 osób na starcie,36miejsc/poziomRatusza,6punktówsytości/osobę/h przy łóżku i12bezłóżka. Użytkownik zatwierdził40%bufora, a następnie wyraźnie polecił zaokrąglanie wspólnej pojemności w dół do10000. Liczymy raz globalny koszyk czterech podstawowych materiałów i sześciu jednostek surowego jedzenia za dawną żywność: największa rozbudowa550×etap×10, misja500×etap×10, jedzenie36×etap×6×24, gdzieetap=L+1. Następnie×1,4 i zaokrąglenie w dół do10000. NaL1:11000+10000+10368=31368;×1,4=43915,2; po zaokrągleniu40000. Bufor40% jest stosowany przed zaokrągleniem. Nie powielamy całej puli dla każdego z20towarów. Osobny limit jednego towaru zachowuje dotychczasową ochronę koncentracji i nie przekracza globalnego.
 
-| Magazyn | Limit jednego towaru | Wspólny limit 20 towarów | Pula surowego jedzenia na 24 h etapu |
+| Magazyn | Limit jednego towaru | Wspólny limit | Jedzenie na24h etapu |
 | --- | ---: | ---: | ---: |
-|1|17456|349120|10368|
-|2|26183|523660|15552|
-|3|34911|698220|20736|
-|5|52366|1047320|31104|
-|8|78549|1570980|46656|
-|10|96004|1920080|57024|
+|1|35096|40000|10368|
+|2|52643|60000|15552|
+|3|70191|80000|20736|
+|5|105286|130000|31104|
+|8|157929|190000|46656|
+|10|193024|240000|57024|
 
 | Populacja | Z łóżkiem | Sytość/h | Surowe jedzenie/24 h | Chleb/24 h | Całkowita liczba rolników/rybaków 40 szt./h tylko na surowe jedzenie |
 | --- | ---: | ---: | ---: | ---: | ---: |

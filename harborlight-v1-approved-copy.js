@@ -1,12 +1,30 @@
 import { developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js';
 // Approved presentation copy only. No world state, timers or rewards are mutated.
-// User revision: 2026-11-03. Native PL/EN share stable game IDs.
+// User revision: 2026-11-15. Native PL/EN share stable game IDs.
 // Numeric legacy tour positions migrate once through the retained stable IDs.
-export const APPROVED_TOUR_VERSION = 4;
+export const APPROVED_TOUR_VERSION = 5;
 export const LEGACY_TOUR_IDS = Object.freeze(["home", "level", "happiness", "coins", "working", "arrival", "points", "population", "clock", "tasks", "expeditions", "building-townhall", "building-house", "building-farm", "building-windmill", "building-quarry", "building-lumber", "building-sawmill", "building-warehouse", "building-market", "building-dock", "building-chapel", "building-lighthouse", "ship", "category-administration", "category-economy", "category-resources", "category-decorations", "category-paths", "tutorial", "chat", "notifications", "settings", "menu"]);
 export const V2_TOUR_IDS = Object.freeze(["home", "level", "happiness", "coins", "working", "arrival", "points", "population", "tasks", "expeditions", "building-townhall", "building-house", "building-farm", "building-windmill", "building-quarry", "building-lumber", "building-sawmill", "building-warehouse", "building-market", "building-dock", "building-chapel", "building-lighthouse", "ship", "category-administration", "category-economy", "category-resources", "category-decorations", "category-paths", "tutorial", "chat", "notifications", "settings", "menu"]);
 export const V3_TOUR_IDS = Object.freeze(["home", "level", "happiness", "coins", "working", "arrival", "points", "population", "tasks", "expeditions", "building-townhall", "building-house", "building-theatre", "building-farm", "producer-storage", "building-windmill", "building-quarry", "building-lumber", "building-sawmill", "building-warehouse", "building-market", "building-dock", "building-chapel", "building-lighthouse", "category-administration", "category-economy", "category-resources", "category-decorations", "category-paths", "tutorial", "chat", "notifications", "settings", "menu"]);
-export const APPROVED_TOUR_IDS = Object.freeze(["home", "level", "happiness", "coins", "working", "building-house", "food", "clothing", "arrival", "building-farm", "producer-storage", "building-lumber", "building-quarry", "building-windmill", "building-sawmill", "building-bakery", "building-dairy", "building-slaughterhouse", "building-fisher", "building-leatherworks", "building-warehouse", "transport", "construction", "building-academy", "education", "research", "building-barracks", "military-officers", "building-chapel", "building-lighthouse", "tasks", "kingdom", "kingdom-lending", "kingdom-loans", "kingdom-storage", "building-theatre", "category-decorations", "expeditions", "minigame-rules", "building-dock", "building-market", "archipelago", "chat", "league", "charity", "category-paths", "tutorial", "settings"]);
+export const V4_TOUR_IDS = Object.freeze(["home", "level", "happiness", "coins", "working", "building-house", "food", "clothing", "arrival", "building-farm", "producer-storage", "building-lumber", "building-quarry", "building-windmill", "building-sawmill", "building-bakery", "building-dairy", "building-slaughterhouse", "building-fisher", "building-leatherworks", "building-warehouse", "transport", "construction", "building-academy", "education", "research", "building-barracks", "military-officers", "building-chapel", "building-lighthouse", "tasks", "kingdom", "kingdom-lending", "kingdom-loans", "kingdom-storage", "building-theatre", "category-decorations", "expeditions", "minigame-rules", "building-dock", "building-market", "archipelago", "chat", "league", "charity", "category-paths", "tutorial", "settings"]);
+// Keep interface regions together: top controls, native buildings, bottom tabs.
+// V4_TOUR_IDS also owns the reviewed TOUR-01…48 copy keys; their text must
+// never move to a different stable ID when this presentation order changes.
+export const APPROVED_TOUR_IDS = Object.freeze([
+  'home', 'level', 'happiness', 'coins', 'working', 'arrival', 'points', 'population',
+  'tutorial', 'settings', 'menu', 'kingdom', 'kingdom-lending', 'kingdom-loans',
+  'kingdom-storage', 'expeditions', 'minigame-rules', 'archipelago', 'charity',
+  'chat', 'league', 'notifications',
+  'building-townhall', 'construction', 'building-house', 'clothing',
+  'building-farm', 'producer-storage', 'building-lumber', 'building-quarry',
+  'building-windmill', 'building-sawmill', 'building-fisher', 'building-slaughterhouse',
+  'building-dairy', 'building-bakery', 'building-leatherworks', 'building-warehouse',
+  'food', 'transport', 'building-academy', 'education', 'research', 'building-barracks',
+  'military-officers', 'building-chapel', 'building-lighthouse', 'tasks',
+  'building-theatre', 'building-market', 'building-dock',
+  'category-administration', 'category-economy', 'category-resources',
+  'category-decorations', 'category-paths'
+]);
 const PREVIOUS_TOUR_COPY = Object.freeze({
   "home": {
     "pl": {
@@ -957,10 +975,10 @@ export const UI_COPY = Object.freeze({
 export function normalizeTourProgressIndex(index = 0, routeVersion = 1) {
   const safeIndex = Number.isSafeInteger(index) && index >= 0 ? index : 0;
   if (routeVersion >= APPROVED_TOUR_VERSION) return Math.min(safeIndex, APPROVED_TOUR_IDS.length - 1);
-  const source = routeVersion === 3 ? V3_TOUR_IDS : routeVersion === 2 ? V2_TOUR_IDS : LEGACY_TOUR_IDS;
+  const source = routeVersion === 4 ? V4_TOUR_IDS : routeVersion === 3 ? V3_TOUR_IDS : routeVersion === 2 ? V2_TOUR_IDS : LEGACY_TOUR_IDS;
   const sourceIndex = Math.min(safeIndex, source.length - 1);
   for (let i = sourceIndex; i < source.length; i++) {
-    const stableId = source[i] === 'ship' ? 'building-dock' : source[i] === 'building-townhall' ? 'level' : source[i];
+    const stableId = source[i] === 'ship' ? 'building-dock' : source[i];
     const currentIndex = APPROVED_TOUR_IDS.indexOf(stableId);
     if (currentIndex >= 0) return currentIndex;
   }
@@ -968,10 +986,10 @@ export function normalizeTourProgressIndex(index = 0, routeVersion = 1) {
 }
 
 
-const V32_TOUR_TITLES = ["Twoja wyspa", "Ratusz i poziom wyspy", "Szczęście mieszkańców", "Monety", "Praca mieszkańców", "Dom i łóżka", "Posiłki i różnorodność", "Ubrania cywilne", "Nowi mieszkańcy", "Gospodarstwo", "Magazyny lokalne", "Drwale", "Kamieniołom", "Młyn", "Tartak", "Piekarnia", "Mleczarnia", "Rzeźnia", "Rybak", "Zakład skórzany", "Magazyn", "Transport towarów", "Rozbudowa", "Akademia", "Nauka mieszkańców", "Badania i odkrycia", "Koszary", "Oficerowie i wyprawy", "Kaplica", "Latarnia", "Zadania Latarni", "Zadania Królestwa", "Pożyczki dla Królestwa", "Pożyczki od Królestwa", "Depozyty Królestwa", "Teatr", "Dekoracje i atrakcje", "Ekspedycje", "Zasady minigier", "Port", "Targ", "Archipelag", "Czat i sojusze", "Liga", "Pomagam", "Ścieżki", "Tutorial i samouczek", "Ustawienia"];
+const V32_TOUR_TITLES = ["Twoja wyspa", "Ratusz i poziom wyspy", "Szczęście mieszkańców", "Monety", "Praca mieszkańców", "Dom i łóżka", "Posiłki i różnorodność", "Ubrani", "Nowi mieszkańcy", "Gospodarstwo", "Magazyny lokalne", "Drwale", "Kamieniołom", "Młyn", "Tartak", "Piekarnia", "Mleczarnia", "Rzeźnia", "Rybak", "Zakład skórzany", "Magazyn", "Transport towarów", "Rozbudowa", "Akademia", "Nauka mieszkańców", "Badania i odkrycia", "Koszary", "Oficerowie i wyprawy", "Kaplica", "Latarnia", "Zadania Latarni", "Zadania Królestwa", "Pożyczki dla Królestwa", "Pożyczki od Królestwa", "Depozyty Królestwa", "Teatr", "Dekoracje i atrakcje", "Ekspedycje", "Zasady minigier", "Port", "Targ", "Archipelag", "Czat i sojusze", "Liga", "Pomagam", "Ścieżki", "Tutorial i samouczek", "Ustawienia"];
 export const TOUR_COPY = Object.freeze({
   ...PREVIOUS_TOUR_COPY,
-  ...Object.fromEntries(APPROVED_TOUR_IDS.map((id,index) => [id, {
+  ...Object.fromEntries(V4_TOUR_IDS.map((id,index) => [id, {
     pl: {title:V32_TOUR_TITLES[index],text:developmentText(`TOUR-${String(index+1).padStart(2,'0')}`)},
     en: PREVIOUS_TOUR_COPY[id]?.en || {title:V32_TOUR_TITLES[index],text:developmentText(`TOUR-${String(index+1).padStart(2,'0')}`)}
   }]))
@@ -1021,6 +1039,7 @@ export function getTourCopy(id, language = 'pl', options = {}) {
   if (!selected) return { title: '', text: '' };
   const copy = { ...selected };
   if (languageId === 'pl') {
+    if (id === 'building-townhall') copy.text = developmentBuildingCopy('townhall', options.state);
     if (id === 'building-farm' && options.state) {
       if (Number(options.state.buildings?.farm?.level) >= 6 && options.state.education?.discoveries?.cheese) copy.text = developmentText('TOUR-10-SER');
       else if (Number(options.state.buildings?.farm?.level) >= 2) copy.text = developmentText('TOUR-10-L2');

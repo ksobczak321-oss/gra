@@ -4,7 +4,7 @@ Gałąź: `dev/0.15.0.0`. Punkt wyjścia: odebrane PRE-PROD `7e81a1a436770f57fd8
 
 ## Publiczny link roboczy
 
-[Otwórz podgląd DEV 0.15.0.0](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-4). To ten sam hosting GitHub Pages, który był używany w poprzedniej rozmowie. Bieżące własne wykonanie Pages i odczyt hostowanych bajtów muszą potwierdzić nową wersję; dawny link z parametrem v31 nie jest dowodem wdrożenia v32.
+[Otwórz podgląd DEV 0.15.0.0](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-5). To ten sam hosting GitHub Pages, który był używany w poprzedniej rozmowie. Bieżące własne wykonanie Pages i odczyt hostowanych bajtów muszą potwierdzić nową wersję; dawny link z parametrem v31 nie jest dowodem wdrożenia v32.
 
 Podgląd jest bez konta, a postęp istnieje tylko w pamięci otwartej karty. Odświeżenie zaczyna nowy podgląd. Pełne trzy konta z zapisem, handel między kontami i pozostałe współdzielone usługi działają na lokalnym serwerze DEV opisanym poniżej. Nie podłączono go publicznie do Pages ani do Firebase PRE-PROD.
 
@@ -16,7 +16,7 @@ DEV to lokalne środowisko robocze, projekt `harborlight-local-dev`. Publikacja 
 
 ## Zakres
 
-Zintegrowane z rzeczywistą grą: siedem nowych budynków, produkcja i fizyczne dostawy wielu produktów, sytość i dieta, mleko i ubrania, zmienione limity populacji/mieszkań i budowy, Akademia i badania, Koszary i wyprawy, Królestwo/finanse/sojusze, portfel archipelagu, przewóz osób i dary, ratunek cywilów, Teatr i dekoracje, tutorial48 oraz25 praktycznych lekcji, samodzielne minigry i przygody. Nowy samouczek przeszedł pełne25 lekcji oraz pierwsze misje bez tworzenia dawnej ogólnej żywności; nagrody bazowe są dostosowane do nowych produktów. Nowe plansze i oprawa są autorskie. Po przeglądzie użytkownika poprawiono też wyrównanie, formularze, układ telefonu i ilustracje budynków; szczegóły w [VISUAL-REVIEW.md](VISUAL-REVIEW.md).
+Zintegrowane z rzeczywistą grą: siedem nowych budynków, produkcja i fizyczne dostawy wielu produktów, sytość i dieta, mleko i ubrania, zmienione limity populacji/mieszkań i budowy, Akademia i badania, Koszary i wyprawy, Królestwo/finanse/sojusze, portfel archipelagu, przewóz osób i dary, ratunek cywilów, Teatr i dekoracje, tutorial56 oraz25 praktycznych lekcji, samodzielne minigry i przygody. Nowy samouczek przeszedł pełne25 lekcji oraz pierwsze misje bez tworzenia dawnej ogólnej żywności; nagrody bazowe są dostosowane do nowych produktów. Nowe plansze i oprawa są autorskie. Po przeglądzie użytkownika poprawiono też wyrównanie, formularze, układ telefonu i ilustracje budynków; szczegóły w [VISUAL-REVIEW.md](VISUAL-REVIEW.md).
 
 Pełna mapa wymagań i dowodów: [IMPLEMENTATION-AUDIT.md](IMPLEMENTATION-AUDIT.md). Sieć wzmacniana skórą oraz przyszłe nieopisane wypieki pozostają odłożone zgodnie z odpowiedzią13; nie wymyślono ich kosztów i skutków.
 
@@ -26,7 +26,7 @@ Zapis zachowuje ułamki jadalnych zapasów oraz skumulowany czas mleka w central
 
 Potwierdzone przepływy: rejestracja lokalnych fixtures/logowanie/reload trzech kont, CAS i wyścigi kupujących, współdzielone zadania, dary, zapis oraz restart czasu admin3 bez zmiany admin1, desktop1440/mobile390, realne dotknięcie i klawiatura minigier, zachowanie aktywnej próby przy żywym potwierdzeniu serwera oraz przegrana po rzeczywistym wyjściu/odświeżeniu. Dokumenty o limitach zapisu obejmują3600 mieszkańców i100 przygód z435 ukończonymi pokojami oraz300 przygód na trzech wyspach.
 
-Testy jednostkowe i integracyjne: `node --test --test-concurrency=4 --test-skip-pattern='96-hour offline full-storage' tests/*.test.mjs`. Test z niezmienionym limitem10s wykonuje się osobno bez równoległego Chromium: `node --test --test-name-pattern='96-hour offline full-storage' tests/harborlight-agreed-state.test.mjs`. Backend: `node --test --test-concurrency=2 backend/test/*.test.mjs`. Scenariusze przeglądarkowe: `tests/harborlight-v32-ui-smoke.py`, `tests/harborlight-v32-live-cas-smoke.py`, `tests/harborlight-original-puzzles-v32-smoke.py` oraz dotychczasowe przygody v31.
+Testy jednostkowe i integracyjne: `node --test --test-concurrency=1 --test-isolation=none --test-skip-pattern='96-hour offline full-storage' tests/*.test.mjs`. Test z niezmienionym limitem10s wykonuje się osobno bez równoległego Chromium: `node --test --test-name-pattern='96-hour offline full-storage' tests/harborlight-agreed-state.test.mjs`. Backend: `node --test --test-concurrency=2 backend/test/*.test.mjs`. Scenariusze przeglądarkowe: `tests/harborlight-v32-ui-smoke.py`, `tests/harborlight-v32-live-cas-smoke.py`, `tests/harborlight-original-puzzles-v32-smoke.py` oraz dotychczasowe przygody v31.
 
 Scenariusze zasilane zasobami testowymi i przyspieszony zegar nie są50 dniami ręcznego odbioru ani150 godzinami gry. Szczegóły balansu i jego granice: [DEV-BALANCE.md](DEV-BALANCE.md). Współczynniki oznaczone jako propozycje DEV, w tym progi odpowiedzi30, wymagają oceny przed PRE-PROD. Reguły umorzenia i pełnych nagród sojuszu zachowano; analiza pokazuje ich wpływ na podaż monet.
 
@@ -46,4 +46,13 @@ Pełny lokalny zestaw1372Node i134backend PASS. Pierwszy własny CI43698899840 p
 
 ## Korekta planszy po odbiorze użytkownika
 
-15listopada2026 zastąpiono dodane ilustracje funkcjami przypisanymi do istniejących budynków zgodnie z oznaczeniamiM/P/R/A/K. Teatr przeniesiono do dawnego Targu, a Targ na pasiasty stragan obok. Budynek nad Teatrem pozostał Piekarnią; dawnyTeatr spodKamieniołomu usunięto. Stałe nazwy i poziomy z planszy usunięto — są dostępne po najechaniu/fokusie. BazowePNGnie zmienione. Native-map1440/390:po9realnychkliknięćPASS,bezJSerrors; szczegóły w [przeglądzie](VISUAL-REVIEW.md). Bieżącycache4 wymaga nowej publikacji; wcześniejszydowódcache3jesthistoriią,niepotwierdzeniemtejpoprawki.
+15listopada2026 zastąpiono dodane ilustracje funkcjami przypisanymi do istniejących budynków zgodnie z oznaczeniamiM/P/R/A/K. Teatr przeniesiono do dawnego Targu, a Targ na pasiasty stragan obok. Budynek nad Teatrem pozostał Piekarnią; dawnyTeatr spodKamieniołomu usunięto. Stałe nazwy i poziomy z planszy usunięto — są dostępne po najechaniu/fokusie. BazowePNGnie zmienione. Native-map1440/390:po9realnychkliknięćPASS,bezJSerrors; szczegóły w [przeglądzie](VISUAL-REVIEW.md). Poprawkę cache4 opublikowano ze źródła `fc2e87eec57c0388a16fb9b15a7d80ea0bc9c67c`: CI43703967814 i Pages43703967803 SUCCESS. Wyniki cache3 pozostają historią wcześniejszej paczki.
+
+
+## Pełne GO po odbiorze menu — cache5
+
+Bieżąca paczka obejmuje ciemne panele i zgodne ramki, informację o progu odblokowania, Teatr z „Wyślij wszystkich” i wyborem według zajęcia, oprowadzanie V5/56 z Teatrem i pięcioma dolnymi zakładkami, „Ubrani”, ramkę niezadowolonej buźki oraz trzy początkowo zamknięte sekcje Magazynu. Poprawiono szerokości kart w kolumnach i ciemne sekcje produkcji także w starych budynkach. Wspólną pojemność liczy się z koszyka potrzeb +40%, zaokrąglając w dół do pełnych 10 000: bazowo 40 000 na poziomie 1. Stare zapasy ponad limit nie są usuwane. [Pełna kolejność](CURRENT-TUTORIAL-ORDER.md), [wzór i tabela](DEV-BALANCE.md).
+
+Lokalne admin1 ma ręcznie ustawiony Ratusz 5 bez resetu dotychczasowych osób i zasobów; standardowe odblokowania dodały pierwszych specjalistów. Odczyt API po operacji: admin1=5, admin2=1, admin3=1. Dotyczy to wyłącznie serwera lokalnego DEV, a publiczny Pages pozostaje podglądem bez kont.
+
+Nowe testy Chromium dla 56 podświetleń, Teatru ze 100 widzami, trzech sekcji Magazynu oraz blokad budynków przeszły na 1440/390. Testy Node potwierdzają migrację oprowadzania i limit 40 000 z zachowaniem starych nadmiarowych zapasów. Końcowe CI, Pages i odczyt publikacji cache5 pozostają do własnego potwierdzenia. Poprzedni cache4 ma sukcesy przypisane do `fc2e87e`, a nie do nowej paczki. PRE-PROD pozostaje 0.14.0.0 / `7e81a1a`.

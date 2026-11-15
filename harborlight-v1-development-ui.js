@@ -1,4 +1,5 @@
 import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js';
+import { NEW_BUILDINGS } from './harborlight-v1-provisions.js?v=frontend-v32-5';
 
 // Reuse the previously unused buildings painted into the approved island.
 // Coordinates refer to its original 1672 × 941 canvas; no new artwork overlays it.
@@ -176,16 +177,72 @@ export function renderBarracksControls(options={}){
   root.append(away);return root;
 }
 
+// Only the unfinished UI choice is retained here. It is neither a game save
+// nor browser storage, and a new island generation receives a separate draft.
+const theatreSelectionDrafts=new Map();
+const theatrePersonUid=person=>person?.personUid||(Number.isSafeInteger(person?.id)?`resident:${person.id}`:uid(person));
+const theatreOccupationNames={townhall:'Ratusz',house:'Bez przydziału',farm:'Rolnicy',windmill:'Młynarze',lumber:'Drwale',sawmill:'Tartacznicy',quarry:'Kamieniarze',warehouse:'Tragarze',bakery:'Piekarze',dairy:'Mleczarze',slaughterhouse:'Pracownicy Rzeźni',fisher:'Rybacy',leatherworks:'Pracownicy Zakładu skórzanego',chapel:'Pracownicy Kaplicy',lighthouse:'Pracownicy Latarni',market:'Pracownicy Targu',dock:'Pracownicy Portu'};
+function theatreAudienceGroups(state,status,options){
+  const residents=new Map((state.residents||[]).map(person=>[theatrePersonUid(person),person]));
+  const education=call(options,'education','educationStatus',state,options.context)||{},military=call(options,'military','militaryStatus',state,options.context)||{};
+  const professors=new Set((education.professors||[]).map(uid)),soldiers=new Map((military.soldiers||[]).map(person=>[uid(person),person]));
+  const students=new Set((education.courses||state.education?.courses||[]).map(course=>course.studentUid));
+  const recruits=new Set((military.courses||state.military?.courses||[]).map(course=>course.studentUid));
+  const candidates=Array.isArray(status.audienceCandidates)?status.audienceCandidates:(state.residents||[]).filter(person=>!person.pendingRelease&&!person.shipId&&!person.atSea).map(person=>({...person,personUid:theatrePersonUid(person)}));
+  const groups=new Map(),seen=new Set(),collator=new Intl.Collator('pl',{numeric:true,sensitivity:'base'});
+  for(const candidate of candidates){
+    const key=theatrePersonUid(candidate);if(!key||seen.has(key))continue;seen.add(key);
+    const person=residents.get(key)||candidate,profession=state.education?.people?.[key]?.profession,isProfessor=professors.has(key)||profession==='professor',rank=soldiers.get(key)?.rank||state.military?.people?.[key]?.rank;
+    let group=theatreOccupationNames[person.workplace];
+    if(students.has(key))group='Studenci';else if(recruits.has(key))group='Rekruci';
+    else if(person.workplace==='academy')group=isProfessor?'Profesorowie':'Pracownicy Akademii';
+    else if(person.workplace==='barracks')group=rank==='officer'?'Oficerowie':'Żołnierze';
+    else if(!person.workplace){if(isProfessor)group='Profesorowie';else if(rank)group=rank==='officer'?'Oficerowie':'Żołnierze';else if(person.visitGroup)group='Zwiedzający Latarnię';else if(person.prayerRemaining>0)group='Modlący się mieszkańcy';}
+    group||=person.workplace?(DEVELOPMENT_NAMES[person.workplace]||person.workplace):'Bez przydziału';
+    if(!groups.has(group))groups.set(group,[]);groups.get(group).push({...candidate,personUid:key,name:candidate.name||person.name||person.nickname||name(person)});
+  }
+  return [...groups].sort(([a],[b])=>collator.compare(a,b)).map(([label,people])=>({label,people:people.sort((a,b)=>collator.compare(a.name,b.name))}));
+}
 export function renderTheatreControls(options={}){
   const state=stateOf(options),s=options.context?.theatreStatus?.(state)||state.theatre||{};
   const root=section('Przedstawienia',p('Zaplanuj przedstawienie co najmniej 45 minut wcześniej. Trwa 10 minut i kosztuje 2 monety za osobę. Zaproszeni nadal pracują, studiują i prowadzą badania. Udział daje +10 punktów szczęścia na 6 godzin.'));
-  const selected=new Set((s.audience||[]).map(item=>typeof item==='object'?uid(item):String(item))),checks=new Map();
-  const audience=node('fieldset',{class:'v32-check-list'},node('legend',{text:'Zaproszeni mieszkańcy'}));for(const person of state.residents||[]){const checkbox=node('input',{type:'checkbox',checked:selected.has(uid(person))});checks.set(uid(person),checkbox);audience.append(field(name(person),checkbox));}
-  const all=node('input',{type:'checkbox',onChange:event=>{for(const c of checks.values())c.checked=event.target.checked;updateCost();}});audience.prepend(field('Zaznacz wszystkich',all));
-  const now=num(state.worldTimeMs)||Date.now(),earliest=new Date(Math.ceil((now+45*60000)/60000)*60000),toLocal=date=>new Date(date.getTime()-date.getTimezoneOffset()*60000).toISOString().slice(0,16);
-  const time=node('input',{type:'datetime-local',required:true,value:toLocal(earliest),min:toLocal(earliest),'data-v32-theatre-time':''});
-  const cost=p('','v32-status'),updateCost=()=>{const n=[...checks.values()].filter(c=>c.checked).length;cost.textContent=`Zaproszeni: ${n} · pełny koszt: ${n*2} monet`;};audience.addEventListener('change',updateCost);updateCost();
-  root.append(form(()=>{const personUids=[...checks].filter(([,c])=>c.checked).map(([id])=>id);if(!personUids.length){announce(options,'Wybierz widzów przedstawienia.',false);return;}const startsAt=new Date(time.value).getTime();if(startsAt<(num(stateOf(options).worldTimeMs)||Date.now())+45*60000){announce(options,'Wybierz termin co najmniej 45 minut od teraz.',false);return;}act(options,options.context?.theatreScheduleActionType||'theatreSchedule',{personUids,audience:personUids,startsAt,startAt:startsAt,audienceScope:'island'});},field('Początek przedstawienia',time),audience,cost,p('Przy zatwierdzeniu utrwalamy listę widzów oraz pełną opłatę. Późniejsza zmiana pracy mieszkańca nie zmienia rezerwacji.','v32-muted'),submit('Zaplanuj przedstawienie')));
+  const groups=theatreAudienceGroups(state,s,options),available=groups.flatMap(group=>group.people),availableUids=new Set(available.map(theatrePersonUid));
+  const draftKey=JSON.stringify([options.context?.accountId||'preview',state.islandId||'island-1',state.islandGeneration||1]);
+  if(!theatreSelectionDrafts.has(draftKey)){
+    if(theatreSelectionDrafts.size>=64)theatreSelectionDrafts.delete(theatreSelectionDrafts.keys().next().value);
+    theatreSelectionDrafts.set(draftKey,{selected:new Set((s.audience||[]).map(item=>typeof item==='object'?theatrePersonUid(item):String(item))),open:false,timeValue:'',timeTouched:false});
+  }
+  const draft=theatreSelectionDrafts.get(draftKey);draft.selected=new Set([...draft.selected].filter(key=>availableUids.has(key)));
+  const now=num(state.worldTimeMs)||Date.now(),earliest=new Date(Math.ceil((now+45*60000)/60000)*60000),toLocal=date=>new Date(date.getTime()-date.getTimezoneOffset()*60000).toISOString().slice(0,16),minimumTime=toLocal(earliest);
+  if(!draft.timeValue||!draft.timeTouched&&draft.timeValue<minimumTime)draft.timeValue=minimumTime;
+  const time=node('input',{type:'datetime-local',required:true,value:draft.timeValue,min:minimumTime,'data-v32-theatre-time':''});
+  const checks=new Map(),summary=node('summary',{'data-v32-theatre-audience-summary':''}),audience=node('details',{class:'v32-audience-picker',open:draft.open,'data-v32-theatre-audience':'',onToggle:event=>{draft.open=event.currentTarget.open;}},summary),list=node('div',{class:'v32-audience-options'});
+  for(const group of groups){const box=node('fieldset',{class:'v32-audience-group','data-v32-theatre-group':group.label},node('legend',{text:`${group.label} (${group.people.length})`}));for(const person of group.people){const key=theatrePersonUid(person),checkbox=node('input',{type:'checkbox',checked:draft.selected.has(key),'data-v32-theatre-person':key,onChange:event=>{if(event.target.checked)draft.selected.add(key);else draft.selected.delete(key);updateCost();}});checks.set(key,checkbox);box.append(field(person.name,checkbox));}list.append(box);}
+  if(!available.length)list.append(p('Na wyspie nie ma obecnie dostępnych widzów.','v32-muted'));audience.append(list);
+  const cost=p('','v32-status'),allCost=p('','v32-muted');cost.dataset.v32TheatreCost='';allCost.dataset.v32TheatreAllCost='';
+  let scheduling=false;
+  const actionFor=personUids=>{const startsAt=new Date(time.value).getTime();return {personUids,audience:personUids,startsAt,startAt:startsAt,audienceScope:'island'};};
+  const quoteFor=personUids=>call(options,'theatre','theatreShowQuote',stateOf(options),actionFor(personUids),options.context);
+  async function schedule(personUids){
+    if(scheduling)return;if(!personUids.length){announce(options,'Wybierz widzów przedstawienia.',false);return;}
+    if(!time.reportValidity())return;const action=actionFor(personUids),quote=quoteFor(personUids);
+    if(!Number.isFinite(action.startsAt)||action.startsAt<(num(stateOf(options).worldTimeMs)||Date.now())+45*60000){announce(options,'Wybierz termin co najmniej 45 minut od teraz.',false);return;}
+    if(quote?.ok===false||quote?.affordable===false){announce(options,quote?.ok===false?quote.message||'Nie można zaplanować przedstawienia.':'Brakuje monet na przedstawienie.',false);return;}
+    scheduling=true;updateCost();try{return await act(options,options.context?.theatreScheduleActionType||'theatreSchedule',action);}finally{scheduling=false;updateCost();}
+  }
+  const sendAll=btn('Wyślij wszystkich',()=>schedule([...availableUids]),{class:'v32-button v32-primary','data-v32-theatre-send-all':''});
+  const submitSelected=submit('Zaplanuj przedstawienie');
+  function updateCost(){
+    const selected=[...draft.selected].filter(key=>availableUids.has(key)),quote=quoteFor(selected),allQuote=quoteFor([...availableUids]);
+    summary.textContent=`Wybierz widzów według zajęcia · wybrano ${selected.length} z ${available.length}`;
+    cost.textContent=`Zaproszeni: ${selected.length} · pełny koszt: ${format(quote?.coins??selected.length*2)} monet${quote?.ok===false&&selected.length?` · ${quote.message}`:quote?.affordable===false?' · brakuje monet':''}`;
+    cost.dataset.kind=quote?.ok===false&&selected.length||quote?.affordable===false?'error':'info';
+    allCost.textContent=`Wszyscy dostępni: ${available.length} osób · pełny koszt: ${format(allQuote?.coins??available.length*2)} monet${allQuote?.ok===false?` · ${allQuote.message}`:allQuote?.affordable===false?' · brakuje monet':''}`;
+    sendAll.disabled=scheduling||!available.length||allQuote?.ok===false||allQuote?.affordable===false;
+    submitSelected.disabled=scheduling||!selected.length||quote?.ok===false||quote?.affordable===false;
+  }
+  time.addEventListener('input',()=>{draft.timeValue=time.value;draft.timeTouched=true;updateCost();});
+  root.append(form(()=>schedule([...draft.selected].filter(key=>availableUids.has(key))),field('Początek przedstawienia',time),node('div',{class:'v32-audience-all'},sendAll,allCost),p('„Wyślij wszystkich” od razu planuje przedstawienie dla wszystkich dostępnych osób w wybranym terminie. Aby zaprosić część mieszkańców, rozwiń listę poniżej.','v32-muted'),audience,cost,p('Przy zatwierdzeniu utrwalamy listę widzów oraz pełną opłatę. Późniejsza zmiana pracy mieszkańca nie zmienia rezerwacji.','v32-muted'),submitSelected));updateCost();
   const shows=s.shows||s.scheduled||s.performances||[];for(const show of shows){root.append(node('article',{class:'v32-card'},node('strong',{text:show.active||show.status==='running'?'Przedstawienie trwa':show.status==='completed'?'Zakończone przedstawienie':show.status==='cancelled'?'Odwołane przedstawienie':'Zaplanowane przedstawienie'}),p(`${new Date(show.startAt??show.startsAt).toLocaleString('pl-PL')} · ${show.audience?.length??show.personUids?.length??show.viewers??0} widzów · opłata ${format(show.cost??show.coins)} monet`),show.stage==='planned'||show.status==='planned'?btn('Anuluj przedstawienie',()=>act(options,'theatreCancelShow',{showId:show.id})):null));}
   return root;
 }
@@ -225,7 +282,7 @@ export function createDevelopmentUI(options={}){
     const card=node('button',{type:'button',class:'v32-dock-building','data-v32-dock-building':id,'aria-label':config.name,onClick:()=>open(id)},developmentBuildingArt(id),node('span',{text:config.name}),node('small',{'data-v32-building-level':''}));
     mapButtons.set(id,marker);dockButtons.set(id,card);mapLayer.append(marker);dock.append(card);
   }
-  function update(){const state=stateOf(options);for(const [id,button]of mapButtons){const level=whole(state.buildings?.[id]?.level),unlocked=state.buildings?.[id]?.unlocked!==false&&(id!=='academy'&&id!=='barracks'||num(state.buildings?.townhall?.level)>=4);button.dataset.locked=String(!unlocked);button.dataset.level=String(level);button.setAttribute('aria-label',`${DEVELOPMENT_BUILDINGS[id].name}, ${unlocked?`poziom ${level}`:'zablokowany'}`);const card=dockButtons.get(id);card.dataset.locked=String(!unlocked);card.querySelector('[data-v32-building-level]').textContent=unlocked?`Poz. ${level}`:'Ratusz 4';}if(dialog){const active=document.activeElement;if(active&&dialog.contains(active)&&/^(INPUT|SELECT)$/.test(active.tagName))return;renderOpen();}}
+  function update(){const state=stateOf(options);for(const [id,button]of mapButtons){const level=whole(state.buildings?.[id]?.level),requiredLevel=NEW_BUILDINGS[id].unlockLevel,unlocked=num(state.buildings?.townhall?.level)>=requiredLevel;button.dataset.locked=String(!unlocked);button.dataset.level=String(level);button.dataset.label=`${DEVELOPMENT_BUILDINGS[id].name} — ${unlocked?`Poziom ${level}`:`Ratusz ${requiredLevel}`}`;button.setAttribute('aria-label',`${DEVELOPMENT_BUILDINGS[id].name}, ${unlocked?`poziom ${level}`:`odblokowanie na poziomie Ratusza ${requiredLevel}`}`);const card=dockButtons.get(id);card.dataset.locked=String(!unlocked);card.querySelector('[data-v32-building-level]').textContent=unlocked?`Poz. ${level}`:`Ratusz ${requiredLevel}`;}if(dialog){const active=document.activeElement;if(active&&dialog.contains(active)&&/^(INPUT|SELECT)$/.test(active.tagName))return;renderOpen();}}
   document.addEventListener('keydown',keydown);update();
   return {element,mapLayer,dock,open,close,update,renderBuildingPanel:id=>renderDevelopmentBuildingPanel(id,fullOptions),destroy(){disposed=true;close();document.removeEventListener('keydown',keydown);element.remove();mapLayer.remove();dock.remove();}};
 }

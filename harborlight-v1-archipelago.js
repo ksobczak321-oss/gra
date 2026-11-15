@@ -1,17 +1,17 @@
-import { packAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-4';
-import { reconcileExpeditionOutcomes } from './harborlight-v1-expedition-hour.js?v=frontend-v32-4';
-import * as Provisions from './harborlight-v1-provisions.js?v=frontend-v32-4';
-import * as Education from './harborlight-v1-education.js?v=frontend-v32-4';
-import * as Military from './harborlight-v1-military.js?v=frontend-v32-4';
+import { packAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-5';
+import { reconcileExpeditionOutcomes } from './harborlight-v1-expedition-hour.js?v=frontend-v32-5';
+import * as Provisions from './harborlight-v1-provisions.js?v=frontend-v32-5';
+import * as Education from './harborlight-v1-education.js?v=frontend-v32-5';
+import * as Military from './harborlight-v1-military.js?v=frontend-v32-5';
 // The client snapshot keeps a mother-root account revision with up to twenty
 // worlds. Cloud adapters persist bounded per-world documents atomically.
 // Simulation is injected: this module does not import the state coordinator.
-import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v32-4';
-import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v32-4';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v32-4';
-import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v32-4';
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v32-4';
-import { residentFoodMultiplier } from './harborlight-v1-housing.js?v=frontend-v32-4';
+import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v32-5';
+import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable, quoteMaterialSpend, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-5';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v32-5';
+import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v32-5';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v32-5';
+import { residentFoodMultiplier } from './harborlight-v1-housing.js?v=frontend-v32-5';
 
 export const ISLAND_IDS = Object.freeze(Array.from({ length: 20 }, (_, index) => `island-${index + 1}`));
 export const ARCHIPELAGO_RULES = Object.freeze({ version: 2, secondIslandLevel: 10, maximumIslands: 20, islandLevelStep: 3, colonists: 6,
@@ -282,7 +282,9 @@ export function quoteNextIsland(bundle, { name = '' } = {}, now = Date.now()) {
   if (count >= ARCHIPELAGO_RULES.maximumIslands) return { ...bad('Your archipelago already has the maximum of 20 islands.'), ...details };
   if (bundle.primary.buildings.townhall.level < requiredLevel) return { ...bad(`Reach Town Hall level ${requiredLevel} on your mother island first.`), ...details };
   if (bundle.primary.population < 18 || bundle.primary.residents.filter(residentAtHome).length < 6) return { ...bad('Founding requires 18 residents on the mother island, including six actually at Home; twelve must remain.'), ...details };
-  if (Object.entries(cost).some(([id, value]) => (id === 'coins' ? bundle.primary.resources.coins : availableGoods(bundle.primary,id)) < value)) return { ...bad('Founding requires the displayed cumulative cost in available coins and all five materials, above protected Food.'), ...details };
+  const affordable = bundle.primary.ruleset === 32 ? quoteMaterialSpend(bundle.primary,cost).ok :
+    Object.entries(cost).every(([id, value]) => (id === 'coins' ? bundle.primary.resources.coins : availableGoods(bundle.primary,id)) >= value);
+  if (!affordable) return { ...bad('Founding requires the displayed cumulative cost in available coins and all five materials, above protected Food.'), ...details };
   if (name) {
     const chosen = validateIslandName(name);
     if (!chosen.ok) return { ...bad(chosen.message), ...details };
@@ -300,7 +302,11 @@ export function createNextIsland(bundle, { name = '' } = {}, now = Date.now()) {
   fresh.buildings.townhall.level = bundle.primary.buildings.townhall.level;
   fresh.buildings.warehouse.level = bundle.primary.buildings.warehouse.level;
   const colonists = bundle.primary.residents.filter(residentAtHome).slice(0, 6);
-  for (const [id,value] of Object.entries(quote.cost)) consumeMaterial(bundle.primary,id,value);
+  // v32 prices Food in satiety, paid from actual meals above the reserve.
+  // Quote and debit the complete cost together so grain cannot fund both lines.
+  if (bundle.primary.ruleset === 32) {
+    if (!spendMaterials(bundle.primary,quote.cost)) return bad('Founding requires the displayed cumulative cost in available coins and all five materials, above protected Food.');
+  } else for (const [id,value] of Object.entries(quote.cost)) consumeMaterial(bundle.primary,id,value);
   const colonistRecords = colonists.map(p=>capturePerson(bundle.primary,p));
   const transferredIds = new Set(colonists.map(person => person.personUid));
   bundle.primary.residents = bundle.primary.residents.filter(person => !transferredIds.has(person.personUid));

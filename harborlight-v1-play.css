@@ -594,6 +594,16 @@ body.portrait-world .dock-tabs{display:none!important}
 #island-dialog .building-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
 #island-dialog .building-main,#island-dialog .building-upgrade-column{display:flex;min-width:0;flex-direction:column;gap:12px}
 #island-dialog .building-main>* ,#island-dialog .building-upgrade-column>*{margin-block:0}
+#island-dialog .building-layout,#island-dialog .building-main,#island-dialog .building-upgrade-column{box-sizing:border-box;max-width:100%}
+#island-dialog .building-main>*,#island-dialog .building-upgrade-column>*{box-sizing:border-box;min-width:0;max-width:100%;width:100%}
+#island-dialog .warehouse-control-sections{box-sizing:border-box;min-width:0;max-width:100%;margin-top:16px}
+#island-dialog .warehouse-section-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:10px}
+#island-dialog .warehouse-section-toggle{box-sizing:border-box;min-width:0;min-height:44px;width:100%;margin:0;padding:10px 12px;white-space:normal;overflow-wrap:anywhere;line-height:1.35}
+#island-dialog .warehouse-section-toggle[aria-expanded=true]{border-color:#edcd88;background:#234759;color:#ffe0a0}
+#island-dialog .warehouse-section-content{display:grid;gap:12px;min-width:0;max-width:100%;margin-top:12px}
+#island-dialog .warehouse-section-content[hidden]{display:none!important}
+#island-dialog .warehouse-section-content>*,#island-dialog .warehouse-section-content .v32-section{box-sizing:border-box;min-width:0;max-width:100%;margin-block:0}
+@media(max-width:600px){#island-dialog .warehouse-section-nav{gap:6px}#island-dialog .warehouse-section-toggle{padding:9px 6px;font-size:12px}}
 #island-dialog .building-panel .producer-summary{grid-template-areas:"level storage" "workers workers"}
 #island-dialog .building-quick-actions,#island-dialog .compact-premium-actions{display:flex;flex-wrap:wrap;gap:8px}
 #island-dialog .building-quick-actions>.action,#island-dialog .compact-premium-actions>.action{flex:1 1 140px;min-width:0;margin:0}
@@ -849,3 +859,6 @@ body.reduce-motion .world-hotspot.tutorial-map-target{animation:none!important}
 
 /* Keep the storage demonstration above the Farm roof and highlight frame. */
 [data-production-penalty="farm"]{top:-62px}
+
+/* Warehouse section toggles retain full touch targets in compact building panels. */
+#island-dialog button.action.warehouse-section-toggle{min-height:44px;margin:0;box-sizing:border-box}

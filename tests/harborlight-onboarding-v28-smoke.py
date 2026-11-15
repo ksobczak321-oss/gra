@@ -64,11 +64,11 @@ def scenario(page, language):
     }''', language)
     catalog = page.evaluate('({ids:fixture.copy.APPROVED_TOUR_IDS,version:fixture.copy.APPROVED_TOUR_VERSION,legacy:fixture.copy.LEGACY_TOUR_IDS})')
     route, version = catalog['ids'], catalog['version']
-    # The old numeric position named Economy, which was merged away. Its next
-    # retained stable ID is Decorations; removed categories must not shift a
-    # saved position to an unrelated numeric slot in the larger current route.
+    # The old numeric position named Economy. This category has its own step
+    # again in v5, so migration retains its topic instead of falling forward
+    # to Decorations as it did while Economy was absent in v4.
     assert catalog['legacy'][25] == 'category-economy'
-    resume_step = 'category-decorations'
+    resume_step = 'category-economy'
     resume_index = route.index(resume_step)
     next_step, next_index = route[resume_index + 1], resume_index + 1
     tour = page.locator('[data-island-onboarding]')

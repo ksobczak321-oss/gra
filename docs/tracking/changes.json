@@ -28038,6 +28038,166 @@
         "UI:hover-only-labels",
         "UI:theatre-market-native"
       ]
+    },
+    {
+      "id": "HL-CHG-1140",
+      "epic": "HL-EPIC-UI",
+      "area": "Odbiór menu nowych budynków",
+      "type": "Story",
+      "title": "Nowe menu są ciemne, ramki spójne, a blokada wyświetla warunek odblokowania",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-15",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "GO użytkownika obejmuje zapisane poprawki ramek, ciemnych paneli, informacji o odblokowaniu oraz ręczny poziom5lokalnegoDEVadmin1. Późniejsze zmiany Teatru i tutoriala czekają na osobne GO.",
+        "reference": "chat:GO:dev-ui-and-admin1-level5"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Ramki siedmiu nowych budynków po najechaniu są identyczne ze starą Kaplicą.",
+        "Wnętrza wszystkich siedmiu nowych paneli, karty, pola i teksty mają ciemny czytelny styl starych budynków.",
+        "Zablokowany budynek otwiera tylko informację z rzeczywistym poziomem Ratusza potrzebnym do odblokowania, bez standardowego menu i jego działań.",
+        "Lokalne admin1 maRatusz5, wcześniejszych mieszkańców i zasoby zachowano; admin2/admin3 oraz PRE-PROD bez zmiany poziomu.",
+        "Zakres pierwotnego GO tej karty obejmował menu i lokalny awans. Późniejsze pełne GO dla Teatru, oprowadzania i Magazynu jest przyjęte i opisane w HL-CHG-1141."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1139",
+        "HL-CHG-1141"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/DEV-READY.md",
+          "docs/v32/VISUAL-REVIEW.md",
+          "docs/v32/PENDING-NOTES.md"
+        ],
+        "code": [
+          "harborlight-v1-development-ui.js",
+          "harborlight-v1-development.css",
+          "harborlight-v1-play.js",
+          "harborlight-v1-play.css",
+          "assets/harborlight-v1-approved.png"
+        ],
+        "automated_tests": [
+          "tests/harborlight-building-access-v32-smoke.py",
+          "tests/harborlight-native-map-v32-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": null,
+        "release_note": "Lokalne testy14ciemnychpaneli,7identycznychramek,blokadRatusz1/2/4na1440/390orazodczytpoziomówtrzechkontPASS. KońcoweCIiPageswymagająwłasnegoźródła;PRE-PROD/PRODnot_deployed."
+      },
+      "notes": [
+        "Wniosek o poziom5dotyczy serwerowego lokalnegoDEV; publicznyPagesnie ma kont.",
+        "Wcześniejsze odłożenie kolejności tutoriala i selektora Teatru zastąpiło późniejsze pełne GO zapisane w HL-CHG-1141."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "UI:matching-hover-frames",
+        "UI:dark-new-building-panels",
+        "UI:locked-information-only",
+        "OPS:local-admin1-townhall5"
+      ]
+    },
+    {
+      "id": "HL-CHG-1141",
+      "epic": "HL-EPIC-UI",
+      "area": "Pełne GO: oprowadzanie, Teatr i Magazyn",
+      "type": "Story",
+      "title": "Tutorial V5/56, wybór widzów Teatru i sekcje Magazynu ze wspólną pojemnością 40 000",
+      "source": {
+        "kind": "user_go_dev_v32",
+        "date": "2026-11-15",
+        "date_note": "Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.",
+        "summary": "Użytkownik zatwierdził wszystkie zebrane wcześniej poprawki: GO zrób wszystko powyżej, potem zrób DEV Go i daj link. Wskazał trzy osobne przyciski Magazynu i nierówne ramki. Dla koszyka potrzeb +40% wybrał zaokrąglenie w dół do pełnych dziesiątek tysięcy, na poziomie 1: 40k.",
+        "reference": "chat:GO:dev-tour-theatre-warehouse-40k"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "verified_locally_dev_only",
+        "ci": "not_run_for_final_source",
+        "preprod": "not_deployed",
+        "prod": "not_deployed",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Oprowadzanie V5 ma 56 kroków w kolejności: górne kontrolki i powiązane funkcje, budynki z Teatrem, wszystkie pięć dolnych zakładek. Tytuł Ubrani; lokalny magazyn wskazuje niezadowoloną buźkę.",
+        "Migracja zachowuje stabilne identyfikatory, ukończenie oprowadzania, postęp 25 praktycznych lekcji i odebrane nagrody.",
+        "Teatr ma bezpośredni przycisk Wyślij wszystkich i rozwijany wielokrotny wybór pogrupowany według zajęcia. Przed planowaniem widać liczbę widzów i pełny koszt; nieobecni nie są doliczani.",
+        "Zachowane są czasy planowania 45 minut i pokazu 10 minut, cena 2 monety za osobę i zamrożony skład opłaconego przedstawienia. Roboczy wybór pozostaje po odświeżeniu bieżącego stanu.",
+        "Magazyn ma początkowo zamknięte sekcje Przegląd Magazynu, Wyżywienie i Priorytety transportu, rozwijane oddzielnymi przyciskami. Wpis i otwarta sekcja przetrwają zwykłe odświeżenie panelu.",
+        "Karty nie wystają poza kolumny na komputerze i telefonie. Sekcje nowych produktów również w starym Młynie mają ciemny styl.",
+        "Wspólną pojemność wylicza się z koszyka potrzeb +40% i zaokrągla w dół do pełnych 10 000; poziom 1 ma 40 000 bez mnożenia globalnego koszyka przez 20 towarów. Stare zapasy ponad limit pozostają, a nowe przyjęcia wymagają miejsca.",
+        "Zmiana obejmuje wyłącznie DEV/Git/CI/Pages. PRE-PROD/PROD, Firebase i dotychczasowe konta chmurowe pozostają bez zmian."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1140",
+        "HL-CHG-1139"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/PENDING-NOTES.md",
+          "docs/v32/CURRENT-TUTORIAL-ORDER.md",
+          "docs/v32/VISUAL-REVIEW.md",
+          "docs/v32/DEV-BALANCE.md",
+          "docs/v32/TEST-CHEATSHEET.md"
+        ],
+        "code": [
+          "harborlight-v1-approved-copy.js",
+          "harborlight-v1-development-ui.js",
+          "harborlight-v1-development.css",
+          "harborlight-v1-play.js",
+          "harborlight-v1-play.css",
+          "harborlight-v1-economy.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-tour-route-v5.test.mjs",
+          "tests/harborlight-tour-route-v5-smoke.py",
+          "tests/harborlight-theatre-selection-v32-smoke.py",
+          "tests/harborlight-warehouse-sections-v32-smoke.py",
+          "tests/harborlight-warehouse-capacity-v32.test.mjs",
+          "tests/harborlight-v32-progression.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+        "source_sha": null,
+        "release_note": "Lokalnie PASS: 56 podświetleń i migracja oprowadzania; Teatr 100 dostępnych osób/200 monet oraz para/4 monety; trzy sekcje Magazynu i równe kolumny na 1440/390; nowy koszyk 40 000 i zachowanie starego nadmiaru oraz pełne 25 praktycznych lekcji. Końcowe CI i Pages nowego SHA wymagają osobnego potwierdzenia; ręczny odbiór NOT_RUN. Poprzednie fc2e87e/cache4 ma własne CI43703967814 i Pages43703967803 SUCCESS."
+      },
+      "notes": [
+        "Pełne GO zastępuje wcześniejsze oczekiwanie z notatek, bez nowej promocji PRE-PROD/PROD.",
+        "Wartości zaokrąglenia 10 000 i 40 000 na poziomie 1 wynikają z ostatniej jawnej odpowiedzi użytkownika.",
+        "Publiczny podgląd Pages nie daje dostępu do lokalnego admin1; lokalny awans do Ratusza 5 udokumentowano w HL-CHG-1140."
+      ],
+      "tags": [
+        "v32",
+        "dev-only",
+        "release-0-15-0-0"
+      ],
+      "rules": [
+        "UI:tour-v5-grouped-56",
+        "UI:theatre-grouped-audience-send-all",
+        "UI:warehouse-three-collapsed-sections",
+        "UI:bounded-dark-building-columns",
+        "ECON:shared-warehouse-needs-basket-plus40-floor10000"
+      ]
     }
   ],
   "current_environment": {
@@ -28050,7 +28210,7 @@
     "preprod_status": "verified_deployment_and_artifacts",
     "prod_status": "not_authorized",
     "full_test_account_reset": "not_performed",
-    "note": "DEV0.15.0.0/v32 obejmuje zatwierdzone 47 odpowiedzi i bieżące poprawki wyłącznie na DEV. Kod bazuje na odebranym PRE-PROD0.14.0.0/7e81a1a; usług nie sklonowano1:1: lokalny runtime i osobne pliki zapisu zastępują Firebase/Cloud Run. Publiczny statyczny podgląd GitHub Pages jest przygotowywany; CI/Pages końcowego źródła pozostają PENDING. Nie jest dowodem trwałych kont ani wieloosobowego API w publicznym podglądzie. Nowych kart nie wdrożono na PRE-PROD/PROD; dotychczasowy kod PRE-PROD pozostaje7e81a1a. Hasło=login admin1/admin2/admin3: lokalnie wprowadzone, PRE-PROD auth-only3/3PASS — już było zgodne, bez mutacji kont/postępu. Dotychczasowe179ręczne wyniki pozostająNOT_RUN; odbiór użytkownika nie został wykonany.",
+    "note": "DEV0.15.0.0/v32 obejmuje 47 zatwierdzonych odpowiedzi i pełne późniejsze GO: tutorial V5/56, Teatr z wyborem widzów i Wyślij wszystkich, trzy sekcje Magazynu, ciemne panele i wspólny limit 40 000 na poziomie 1. Lokalny admin1 ma Ratusz5 bez resetu. Bieżący cache5 i własne CI/Pages końcowego źródła wymagają odczytu; poprzedni cache4/fc2e87e ma odrębne sukcesy. Lokalny runtime nie jest kopią infrastruktury Firebase1:1, a publiczny Pages pozostaje podglądem bez kont i trwałego zapisu. PRE-PROD nadal7e81a1a, bez nowego deployu i mutacji kont chmurowych. Hasła=loginy admin1/admin2/admin3: lokalnie ustawione, PRE-PROD auth-only3/3PASS już wcześniej. Ręczny odbiór użytkownika NOT_RUN.",
     "previous_accepted_dev": {
       "as_of": "2026-11-04",
       "dev_application_version": "0.14.0.0",
@@ -28169,14 +28329,22 @@
     "preprod_bridge_duration": "13s",
     "preprod_deployment_duration": "2m12s",
     "dev_application_version": "0.15.0.0",
-    "dev_status": "native_map_verified_local_dev_only; publication_pending",
-    "dev_ci": "pending_final_native_map_source",
-    "dev_source_sha": "b6776d53fe4ec23dd5c3386eb610565fd5ba3f7e",
+    "dev_status": "full_go_locally_verified; publication_pending",
+    "dev_ci": "pending_final_full_go_source",
+    "dev_source_sha": null,
     "dev_implementation_source_sha": "5ca548096139299a99990fc8f9a80b5cbbc07746",
     "dev_ci_run_id": null,
     "dev_pages_run_id": null,
-    "dev_pages_conclusion": "pending_final_native_map_source",
+    "dev_pages_conclusion": "pending",
     "dev_tag": null,
-    "dev_cache": "frontend-v32-4"
+    "dev_cache": "frontend-v32-5",
+    "previous_accepted_v32": {
+      "source_sha": "fc2e87eec57c0388a16fb9b15a7d80ea0bc9c67c",
+      "cache": "frontend-v32-4",
+      "ci_run_id": 43703967814,
+      "ci_conclusion": "success",
+      "pages_run_id": 43703967803,
+      "pages_conclusion": "success"
+    }
   }
 }

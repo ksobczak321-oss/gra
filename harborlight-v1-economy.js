@@ -1,4 +1,4 @@
-import { MATERIAL_IDS as NEW_MATERIALS } from './harborlight-v1-provisions.js?v=frontend-v32-4';
+import { MATERIAL_IDS as NEW_MATERIALS } from './harborlight-v1-provisions.js?v=frontend-v32-5';
 // DEV v29 economy parameters. Pure functions: no clocks, random numbers or saves.
 export const ECONOMY_RULES = Object.freeze({
   version: 1, firstLevelSeconds: 45, maximumSeconds: 86400,
@@ -43,8 +43,14 @@ export function warehouseCapacityPlan(level, options = {}) {
     // Conservative raw-food envelope: one type can support the entire population
     // for24h. Variety and cheaper dense foods reduce actual space, never this cap.
     const foodReserve=36*stage*6*24;
-    const perResource=Math.min(100000000,Math.ceil((largestUpgrade+mission+foodReserve)*1.4));
-    return {level:current,stage,largestUpgrade,mission,foodReserve,buffer:1.4,perResource,total:perResource*NEW_MATERIALS.length,materialCount:NEW_MATERIALS.length,devCalibration:true};
+    const largestUpgradeTotal=Math.ceil(550*stage)*10, missionTotal=500*stage*10;
+    // Four ordinary materials and six raw-food units for the former Food cost
+    // share one pool. The 20 supported goods do not each need a duplicate pool.
+    const needsTotal=largestUpgradeTotal+missionTotal+foodReserve;
+    const unroundedTotal=Math.ceil(needsTotal*1.4), roundingUnit=10000;
+    const total=Math.floor(unroundedTotal/roundingUnit)*roundingUnit;
+    const perResource=Math.min(total,100000000,Math.ceil((largestUpgrade+mission+foodReserve)*1.4));
+    return {level:current,stage,largestUpgrade,mission,foodReserve,largestUpgradeTotal,missionTotal,needsTotal,unroundedTotal,roundingUnit,buffer:1.4,perResource,total,materialCount:NEW_MATERIALS.length,devCalibration:true};
   }
   const current = Math.min(24, Math.max(0, Math.floor(Number(level) || 0)));
   if (!current) return { level: 0, stage: 0, largestUpgrade: 0, mission: 0, foodReserve: 0, buffer: 1.25, perResource: 0, total: 0 };

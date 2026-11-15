@@ -1,0 +1,64 @@
+# HL-CHG-1141 — Tutorial V5/56, wybór widzów Teatru i sekcje Magazynu ze wspólną pojemnością 40 000
+
+**Typ:** Story · **Obszar:** Pełne GO: oprowadzanie, Teatr i Magazyn · **Epik:** `HL-EPIC-UI`
+
+Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natywne GitHub Issue** (`issue_url: null`).
+
+## Status
+
+| Warstwa | Stan |
+|---|---|
+| Implementacja | `implemented` |
+| DEV | `verified_locally_dev_only` |
+| CI | `not_run_for_final_source` |
+| PRE-PROD | `not_deployed` |
+| PROD | `not_deployed` |
+| Decyzja | `accepted` |
+
+**Tagi:** `v32`, `dev-only`, `release-0-15-0-0`.
+
+Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
+
+## Zakres i odbiór
+
+- Oprowadzanie V5 ma 56 kroków w kolejności: górne kontrolki i powiązane funkcje, budynki z Teatrem, wszystkie pięć dolnych zakładek. Tytuł Ubrani; lokalny magazyn wskazuje niezadowoloną buźkę.
+- Migracja zachowuje stabilne identyfikatory, ukończenie oprowadzania, postęp 25 praktycznych lekcji i odebrane nagrody.
+- Teatr ma bezpośredni przycisk Wyślij wszystkich i rozwijany wielokrotny wybór pogrupowany według zajęcia. Przed planowaniem widać liczbę widzów i pełny koszt; nieobecni nie są doliczani.
+- Zachowane są czasy planowania 45 minut i pokazu 10 minut, cena 2 monety za osobę i zamrożony skład opłaconego przedstawienia. Roboczy wybór pozostaje po odświeżeniu bieżącego stanu.
+- Magazyn ma początkowo zamknięte sekcje Przegląd Magazynu, Wyżywienie i Priorytety transportu, rozwijane oddzielnymi przyciskami. Wpis i otwarta sekcja przetrwają zwykłe odświeżenie panelu.
+- Karty nie wystają poza kolumny na komputerze i telefonie. Sekcje nowych produktów również w starym Młynie mają ciemny styl.
+- Wspólną pojemność wylicza się z koszyka potrzeb +40% i zaokrągla w dół do pełnych 10 000; poziom 1 ma 40 000 bez mnożenia globalnego koszyka przez 20 towarów. Stare zapasy ponad limit pozostają, a nowe przyjęcia wymagają miejsca.
+- Zmiana obejmuje wyłącznie DEV/Git/CI/Pages. PRE-PROD/PROD, Firebase i dotychczasowe konta chmurowe pozostają bez zmian.
+
+## Źródło
+
+Użytkownik zatwierdził wszystkie zebrane wcześniej poprawki: GO zrób wszystko powyżej, potem zrób DEV Go i daj link. Wskazał trzy osobne przyciski Magazynu i nierówne ramki. Dla koszyka potrzeb +40% wybrał zaokrąglenie w dół do pełnych dziesiątek tysięcy, na poziomie 1: 40k.
+
+Odniesienie: `chat:GO:dev-tour-theatre-warehouse-40k`.
+
+Data pierwotnej wiadomości: 2026-11-15. Zatwierdzony pakiet z załączonej rozmowy,47 odpowiedzi i bieżące GO wyłącznie DEV; Europe/Warsaw.
+
+## Dowody
+
+- **Dokumenty:** [docs/v32/PENDING-NOTES.md](../../v32/PENDING-NOTES.md), [docs/v32/CURRENT-TUTORIAL-ORDER.md](../../v32/CURRENT-TUTORIAL-ORDER.md), [docs/v32/VISUAL-REVIEW.md](../../v32/VISUAL-REVIEW.md), [docs/v32/DEV-BALANCE.md](../../v32/DEV-BALANCE.md), [docs/v32/TEST-CHEATSHEET.md](../../v32/TEST-CHEATSHEET.md)
+- **Kod:** [harborlight-v1-approved-copy.js](../../../harborlight-v1-approved-copy.js), [harborlight-v1-development-ui.js](../../../harborlight-v1-development-ui.js), [harborlight-v1-development.css](../../../harborlight-v1-development.css), [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-play.css](../../../harborlight-v1-play.css), [harborlight-v1-economy.js](../../../harborlight-v1-economy.js)
+- **Scenariusze automatyczne:** [tests/harborlight-tour-route-v5.test.mjs](../../../tests/harborlight-tour-route-v5.test.mjs), [tests/harborlight-tour-route-v5-smoke.py](../../../tests/harborlight-tour-route-v5-smoke.py), [tests/harborlight-theatre-selection-v32-smoke.py](../../../tests/harborlight-theatre-selection-v32-smoke.py), [tests/harborlight-warehouse-sections-v32-smoke.py](../../../tests/harborlight-warehouse-sections-v32-smoke.py), [tests/harborlight-warehouse-capacity-v32.test.mjs](../../../tests/harborlight-warehouse-capacity-v32.test.mjs), [tests/harborlight-v32-progression.test.mjs](../../../tests/harborlight-v32-progression.test.mjs)
+- **Ręczne wykonanie przypadku:** `NOT_RUN`.
+
+Lokalnie PASS: 56 podświetleń i migracja oprowadzania; Teatr 100 dostępnych osób/200 monet oraz para/4 monety; trzy sekcje Magazynu i równe kolumny na 1440/390; nowy koszyk 40 000 i zachowanie starego nadmiaru oraz pełne 25 praktycznych lekcji. Końcowe CI i Pages nowego SHA wymagają osobnego potwierdzenia; ręczny odbiór NOT_RUN. Poprzednie fc2e87e/cache4 ma własne CI43703967814 i Pages43703967803 SUCCESS.
+
+## Relacje
+
+- **Zastępuje:** Brak.
+- **Zastąpione lub ograniczone przez:** Brak.
+- **Powiązane:** [HL-CHG-1140](HL-CHG-1140.md), [HL-CHG-1139](HL-CHG-1139.md)
+
+## Uwagi
+
+- Pełne GO zastępuje wcześniejsze oczekiwanie z notatek, bez nowej promocji PRE-PROD/PROD.
+- Wartości zaokrąglenia 10 000 i 40 000 na poziomie 1 wynikają z ostatniej jawnej odpowiedzi użytkownika.
+- Publiczny podgląd Pages nie daje dostępu do lokalnego admin1; lokalny awans do Ratusza 5 udokumentowano w HL-CHG-1140.
+
+[Wróć do rejestru](../CHANGE-REGISTER.md).
+
+<!-- Generated by scripts/build_change_register.py from docs/tracking/changes.json. -->

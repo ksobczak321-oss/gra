@@ -18,7 +18,7 @@ function nameIsland(state, at = NOW) {
 
 test('first-time introduction keeps the starter world and all clocks frozen', () => {
   const state = starter(), before = json(state);
-  assert.equal(APPROVED_TOUR_IDS.length,48);
+  assert.equal(APPROVED_TOUR_IDS.length,56);
   assert.deepEqual(onboardingStatus(state), { pending: true, stage: 'intro', index: 0, routeVersion: APPROVED_TOUR_VERSION, worldStartedAt: null, completedAt: null });
   tick(state, 100 * HOUR / 1000);
   assert.equal(advanceTo(state, NOW + 100 * HOUR), 0);

@@ -2,7 +2,7 @@
 
 To ściągawka do ręcznego sprawdzenia zmian DEV 0.15.0.0 / v32. Zaznaczaj punkt dopiero po własnej próbie. PRE-PROD nie otrzymał tego wydania.
 
-[Otwórz grę na DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-4) · [Otwórz klikaną listę](../testing/dev-v32-checklist.html)
+[Otwórz grę na DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-5) · [Otwórz klikaną listę](../testing/dev-v32-checklist.html)
 
 Podgląd GitHub Pages działa bez logowania i trzyma postęp tylko w otwartej karcie. Odświeżenie lub zamknięcie zaczyna nowy podgląd. Zaznaczenia na osobnej liście nie są zapisem gry. Na szybki pierwszy przegląd wybierz punkty z etykietą „Szybki test”; procesy wielogodzinne wygodniej sprawdzać na lokalnym DEV z zegarem admin3.
 
@@ -16,7 +16,7 @@ Wszystkie punkty poniżej czekają na Twój ręczny odbiór. Wyniki testów auto
 
 - [ ] **DEV-02 — Wprowadzenie i samouczek** (Szybki test)
   Sprawdź: Przejdź pierwsze ekrany, otwieraj wskazane panele i wykonuj lekcje.
-  Wynik: Przewodnik ma 48 kroków, samouczek 25 praktycznych lekcji. Wskazania prowadzą do rzeczywistych przycisków; końcowe podstawowe materiały to drewno, kamień, zboże, mąka i deski.
+  Wynik: Przewodnik ma 56 kroków, samouczek 25 praktycznych lekcji. Oprowadzanie grupuje górne kontrolki, budynki z Teatrem i wszystkie pięć dolnych zakładek. Wskazania prowadzą do rzeczywistych przycisków; końcowe podstawowe materiały to drewno, kamień, zboże, mąka i deski.
 
 - [ ] **DEV-03 — Siedem nowych budynków** (Rozwój wyspy)
   Sprawdź: Kliknij nowe obiekty na mapie i porównaj ich opisy oraz wymagania.
@@ -110,7 +110,7 @@ Wszystkie punkty poniżej czekają na Twój ręczny odbiór. Wyniki testów auto
 
 - [ ] **DEV-24 — Logowanie, zapis i izolacja trzech kont** (Serwer DEV)
   Sprawdź: Na uruchomionym serwerze DEV zaloguj się kolejno jako admin1, admin2 i admin3, wykonaj zmianę i odśwież.
-  Wynik: Hasło jest takie samo jak login. Każde konto wczytuje własny postęp; odświeżenie i restart serwera zachowują zapis. Przez pierwsze 7 dni logowanie może przyznać po jednym powitalnym mieszkańcu dziennie; przy pełnym Ratuszu oczekuje on do 24 godzin na ukończony awans. Pages nie udostępnia tych kont ani trwałego zapisu.
+  Wynik: Hasło jest takie samo jak login. Lokalne admin1 ma Ratusz 5 po ręcznym awansie bez resetu, a admin2 i admin3 pozostały na poziomie 1. Każde konto wczytuje własny postęp; odświeżenie i restart serwera zachowują zapis. Przez pierwsze 7 dni logowanie może przyznać po jednym powitalnym mieszkańcu dziennie; przy pełnym Ratuszu oczekuje on do 24 godzin na ukończony awans. Pages nie udostępnia tych kont ani trwałego zapisu.
 
 - [ ] **DEV-25 — Zegar admin3 i dłuższe procesy** (Serwer DEV)
   Sprawdź: Na lokalnym DEV użyj przyspieszenia czasu na admin3, potem porównaj admin1.
@@ -127,6 +127,30 @@ Wszystkie punkty poniżej czekają na Twój ręczny odbiór. Wyniki testów auto
 - [ ] **DEV-28 — Dary dla sojusznika** (Serwer DEV)
   Sprawdź: Od Ratusza 6 wyślij towary na inne konto tego samego sojuszu i sprawdź pełny magazyn odbiorcy.
   Wynik: Dar mieści się na wspólnym statku, wysyła się go raz na 24 godziny i odbiera automatycznie. Nadmiar wraca; zwrot nie odnawia limitu. Chroniona rezerwa jedzenia pozostaje na wyspie.
+
+## Ostatnie GO: poprawki do ponownego sprawdzenia
+
+- [ ] **DEV-29 — Ramki, ciemne menu i blokady** (Szybki test)
+  Sprawdź: Najedź na nowy budynek i Kaplicę. Porównaj wnętrza paneli, a potem kliknij budynek zablokowany przez poziom Ratusza.
+  Wynik: Nowe ramki mają ten sam złoty styl co stare. Nowe menu i sekcje produkcji Młyna są ciemne. Zablokowany budynek pokazuje tylko wymagany i obecny poziom Ratusza; nie otwiera pełnego menu.
+
+- [ ] **DEV-30 — Kolejność 56 podświetleń** (Szybki test)
+  Sprawdź: Przejdź oprowadzanie, zwracając uwagę na powrót między górą, budynkami i dolnymi zakładkami.
+  Wynik: Kolejność: górne kontrolki i ich funkcje, budynki wraz z Teatrem, następnie Administracja, Gospodarka, Zasoby, Dekoracje i Ścieżki. Tytuł brzmi „Ubrani”. Magazyn lokalny podświetla niezadowoloną buźkę. Stary postęp i nagrody pozostają zachowane.
+
+- [ ] **DEV-31 — Teatr: wszyscy lub wybrane zajęcia** (Rozwój wyspy)
+  Sprawdź: Rozwiń wybór widzów, zaznacz osoby z kilku grup i porównaj koszt z przyciskiem „Wyślij wszystkich”.
+  Wynik: Mieszkańcy są pogrupowani według zajęcia. Rozwijana lista pozwala zaznaczyć wybrane osoby, a „Wyślij wszystkich” planuje pokaz dla wszystkich dostępnych. Liczba widzów i pełny koszt są widoczne przed wysłaniem; 100 dostępnych osób kosztuje 200 monet. Nieobecni nie są doliczani.
+
+- [ ] **DEV-32 — Magazyn: trzy osobne przyciski** (Szybki test)
+  Sprawdź: Otwórz Magazyn i klikaj kolejno „Przegląd Magazynu”, „Wyżywienie” oraz „Priorytety transportu”. Sprawdź też krawędzie kart Młyna.
+  Wynik: Wszystkie trzy sekcje są początkowo zamknięte; treść rozwija się dopiero po kliknięciu. Otwarta sekcja i wpisywane wartości nie znikają przy zwykłym odświeżeniu panelu. Karty mieszczą się w swoich kolumnach na komputerze i telefonie.
+
+- [ ] **DEV-33 — Magazyn 1: wspólne 40 000** (Szybki test)
+  Sprawdź: W Przeglądzie Magazynu sprawdź wspólną pojemność na poziomie 1 i opis następnego poziomu; uwzględnij ewentualną premię badania.
+  Wynik: Bazowa wspólna pojemność poziomu 1 wynosi 40 000. Koszyk potrzeb powiększa się o 40%, następnie zaokrągla w dół do pełnych 10 000. To jeden wspólny limit, bez mnożenia przez liczbę towarów. Stare zapasy ponad nowy limit nie są kasowane; nowe dostawy czekają na wolne miejsce.
+
+Pełna kolejność podświetleń: [CURRENT-TUTORIAL-ORDER.md](CURRENT-TUTORIAL-ORDER.md).
 
 ## Dostęp i granice testu
 

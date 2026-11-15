@@ -154,7 +154,10 @@ test('real world wrapping, daughter creation, game commands and serializer round
   const initial=State.createState(NOW,{ruleset:32});initial.islandName='Dom';
   initial.buildings.townhall.level = 10; initial.buildings.warehouse.level = 9;
   initial.population = 18; initial.resources.coins = 100000;
-  grantBonusMaterials(initial,{wood:100000,stone:100000,grain:100000,food:100000,planks:100000});
+  // This fixture starts with already delivered goods: v32 rewards first join
+  // the delivery queue, whose shared capacity must not decide this account test.
+  // Flour supplies actual satiety; legacy Food is no longer a physical good.
+  Object.assign(initial.resources,{wood:30000,stone:30000,grain:30000,flour:30000,planks:30000});
   const adapters = {createState:State.createState,normalizeState:State.normalizeState,advanceTo:State.advanceTo};
   let bundle = Arch.restoreArchipelago(initial,adapters,NOW);
   assert.equal(Arch.createNextIsland(bundle,{name:'Przystań'},NOW).ok,true);

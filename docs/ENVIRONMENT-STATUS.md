@@ -2,11 +2,13 @@
 
 ## DEV 0.15.0.0 / v32 — tylko DEV, 15 listopada 2026
 
-Aktualna gałąź rozwojowa to `dev/0.15.0.0`; publikacja na dotychczasowym GitHub Pages jest autoryzowana i nie uruchamia promocji PRE-PROD. Kod v32 bazuje dokładnie na wdrożonym `7e81a1a`, a późniejsze metadane odbioru 0.14.0.0 z `b2227d5` zachowano przez scalanie historii. [Publiczny podgląd DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-4) · [bieżący stan dostępu i testów](v32/DEV-READY.md).
+Aktualna gałąź rozwojowa to `dev/0.15.0.0`; publikacja na dotychczasowym GitHub Pages jest autoryzowana i nie uruchamia promocji PRE-PROD. Kod v32 bazuje dokładnie na wdrożonym `7e81a1a`, a późniejsze metadane odbioru 0.14.0.0 z `b2227d5` zachowano przez scalanie historii. [Publiczny podgląd DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-5) · [bieżący stan dostępu i testów](v32/DEV-READY.md).
 
 Podgląd Pages jest bez kont, z postępem tylko w pamięci karty. Lokalny serwer DEV na porcie3000 ma oddzielne, trwałe wyspy i pary login/hasło `admin1/admin1`, `admin2/admin2`, `admin3/admin3`. Nowych zapisów nie przeniesiono do Firebase. Własny CI i Pages bieżącego SHA wymagają osobnego wyniku; wcześniejsze sukcesy 0.14.0.0 go nie zastępują.
 
 PRE-PROD `https://harborlight-dev.web.app/release.json` odczytany15listopada nadal wskazuje `7e81a1a436770f57fd8abf390b6af8022e3300f6`. Potwierdzono auth-only3/3: `adminN/adminN` zwraca właściwe `dev-adminN`; hasła już były zgodne, bez zmiany użytkowników i postępu. `/api/v1/config` zwracał503; nie zmieniano jego konfiguracji. Nie wykonywano nowego deployu PRE-PROD lub PROD.
+
+Bieżące pełne GO / cache `frontend-v32-5` obejmuje oprowadzanie V5/56, Teatr z wyborem widzów według zajęcia i „Wyślij wszystkich”, trzy zamknięte sekcje Magazynu, ciemne wyrównane panele i spójne ramki oraz wspólną pojemność 40 000 na poziomie 1 (koszyk +40%, w dół do 10 000). Lokalny admin1 ma Ratusz 5 bez resetu; admin2/admin3 pozostały na poziomie 1. Nowe ukierunkowane testy przeszły lokalnie; końcowe CI i publikacja nowego SHA wymagają własnego odczytu. Poprzedni cache4 / `fc2e87eec57c0388a16fb9b15a7d80ea0bc9c67c` ma CI43703967814 i Pages43703967803 SUCCESS. Szczegółowe dowody i ręczna ściągawka: [przegląd](v32/VISUAL-REVIEW.md), [lista](v32/TEST-CHEATSHEET.md).
 
 ## Odbiór poprzedniego DEV i obecnego źródła PRE-PROD 0.14.0.0 — 4 listopada 2026
 

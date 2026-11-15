@@ -1,49 +1,49 @@
-import * as DevelopmentLogistics from './harborlight-v1-development-logistics.js?v=frontend-v32-4';
-import * as Development from './harborlight-v1-development.js?v=frontend-v32-4';
-import { createDevelopmentUI, developmentBuildingArt, DEVELOPMENT_BUILDINGS, renderDevelopmentBuildingPanel, renderProductionControls, renderFoodControls, renderConstructionFoodMix, renderTransportControls, renderTheatreControls } from './harborlight-v1-development-ui.js?v=frontend-v32-4';
-import { DEVELOPMENT_NAMES, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-4';
-import { createKingdomPanel } from './harborlight-v1-kingdom-ui.js?v=frontend-v32-4';
-import { kingdomServiceAction, giftServiceAction } from './harborlight-v1-kingdom-client.js?v=frontend-v32-4';
-import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-4';
-import { BUILDINGS as LEGACY_BUILDINGS, RESOURCES as LEGACY_RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRateForState, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS as LEGACY_WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v32-4';
-import { MATERIAL_IDS as LEGACY_MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v32-4';
-import * as State from './harborlight-v1-state.js?v=frontend-v32-4';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v32-4';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v32-4';
-import * as Missions from './harborlight-v1-missions.js?v=frontend-v32-4';
-import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v32-4';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v32-4';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v32-4';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v32-4';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v32-4';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v32-4';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v32-4';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v32-4';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v32-4';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v32-4';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v32-4';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-4';
-import { createDevCloud, createDevTimeController, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-4';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v32-4';
-import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v32-4';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-4';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-4';
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-4';
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-4';
-import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-4';
-import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-4';
-import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-4';
-import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-4';
-import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-4';
-import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v32-4';
-import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-4';
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-4';
-import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v32-4';
-import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v32-4';
-import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v32-4';
-import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-4';
-import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v32-4';
-import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v32-4';
+import * as DevelopmentLogistics from './harborlight-v1-development-logistics.js?v=frontend-v32-5';
+import * as Development from './harborlight-v1-development.js?v=frontend-v32-5';
+import { createDevelopmentUI, developmentBuildingArt, DEVELOPMENT_BUILDINGS, renderDevelopmentBuildingPanel, renderProductionControls, renderFoodControls, renderConstructionFoodMix, renderTransportControls, renderTheatreControls } from './harborlight-v1-development-ui.js?v=frontend-v32-5';
+import { DEVELOPMENT_NAMES, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-5';
+import { createKingdomPanel } from './harborlight-v1-kingdom-ui.js?v=frontend-v32-5';
+import { kingdomServiceAction, giftServiceAction } from './harborlight-v1-kingdom-client.js?v=frontend-v32-5';
+import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-5';
+import { BUILDINGS as LEGACY_BUILDINGS, RESOURCES as LEGACY_RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRateForState, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS as LEGACY_WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v32-5';
+import { MATERIAL_IDS as LEGACY_MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v32-5';
+import * as State from './harborlight-v1-state.js?v=frontend-v32-5';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v32-5';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v32-5';
+import * as Missions from './harborlight-v1-missions.js?v=frontend-v32-5';
+import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v32-5';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v32-5';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v32-5';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v32-5';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v32-5';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v32-5';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v32-5';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v32-5';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v32-5';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v32-5';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v32-5';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-5';
+import { createDevCloud, createDevTimeController, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-5';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v32-5';
+import { buildingPurpose, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v32-5';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-5';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-5';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-5';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-5';
+import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-5';
+import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-5';
+import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-5';
+import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-5';
+import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-5';
+import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v32-5';
+import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-5';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-5';
+import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v32-5';
+import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v32-5';
+import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v32-5';
+import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-5';
+import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v32-5';
+import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v32-5';
 
 I18n.registerTranslations(Theatre.THEATRE_TRANSLATIONS || {});
 I18n.registerTranslations(Adventures.ADVENTURE_TRANSLATIONS || {});
@@ -392,7 +392,7 @@ function developmentPanelOptions({withoutBuildingControls=false}={}) {
     constructionQuote:id=>{const cost=buildingCost(state,id);return {foodUnits:cost.foodUnits||cost.food||0,...Development.Provisions.quoteConstructionFood(state,cost.foodUnits||cost.food||0,null,developmentModelContext(state))};},
     constructionSubmit:(id,mix)=>{perform({type:state.buildings[id].level?'upgrade':'build',building:id,foodMix:mix,mix});return lastPerformedResult;},
     requestRewardedAd:action=>{if(!Commerce.runtimeCapabilities().simulatedAds){showAdUnavailable();return;}simulateRewardedAd({title:'Przyspieszenie zajęć — symulacja DEV',onCancel:()=>{},onComplete:()=>performDevelopment(action)});},
-    theatreStatus:()=>Theatre.theatreStatus(state,developmentModelContext(state)),theatreScheduleActionType:'theatrePlanShow',
+    theatreStatus:()=>Theatre.theatreStatus(state,developmentModelContext(state)),theatreShowQuote:(world,action)=>Theatre.theatreShowQuote(world,action,developmentModelContext(world)),theatreScheduleActionType:'theatrePlanShow',
     transportStatus:id=>{const routes=DevelopmentLogistics.directRouteCatalog(state).filter(route=>id==='warehouse'||route.source===id).map(route=>({...route,resource:route.product,destination:route.target}));return routes.length?{direct:true,routes,freeCarriers:Math.max(0,(state.buildings.warehouse?.workers||0)-1)}:null;}
   }};
 }
@@ -792,10 +792,10 @@ let activeDockCategory = 'administration';
 let leisureDockSignature = '';
 const leisureDock = el('div', { class: 'resource-dock-cards leisure-dock-cards', 'data-leisure-dock': '', hidden: true, 'aria-label': 'Island attractions and paths' });
 layer.append(leisureDock);
-function setDockCategory(id) {
+function setDockCategory(id, { recordVisit = true } = {}) {
   if (!dockCategories.some(([category]) => category === id)) return;
   activeDockCategory = id;
-  if (tutorialReady) { act(state, { type: 'tutorialVisit', subject: id }); save(); }
+  if (tutorialReady && recordVisit) { act(state, { type: 'tutorialVisit', subject: id }); save(); }
   resourceDock.hidden = id !== 'resources';
   leisureDock.hidden = !['decorations', 'paths'].includes(id);
   const group = BUILDING_DOCK_GROUPS[id];
@@ -1026,7 +1026,7 @@ function renderHUD() {
     let sadFace = node.querySelector('[data-production-penalty]');
     const localFull = !!PRODUCTION_RECIPES[id] && producerCapacity(state, id) > 0 && value.ready >= producerCapacity(state, id);
     if (localFull || productionPenalties.has(id) || id === 'farm' && document.body.dataset.tourStorageDemo === 'true') {
-      if (!sadFace) { sadFace = el('span', { class: 'world-production-penalty', 'data-production-penalty': id, role: 'img' }, '☹'); node.append(sadFace); }
+      if (!sadFace) { sadFace = el('span', { id: `world-production-penalty-${id}`, class: 'world-production-penalty', 'data-production-penalty': id, role: 'img' }, '☹'); node.append(sadFace); }
       if (productionPenalties.has(id)) sadFace.setAttribute('data-world-penalty', id); else sadFace.removeAttribute('data-world-penalty');
       sadFace.dataset.localStorageFull = String(localFull);
       const explanation = localFull ? uiCopy('Local storage is full. Carriers must collect the goods.', 'Lokalny magazyn jest pełny. Tragarze muszą odebrać towary.') : uiCopy('Production has stopped. Check the building.', 'Produkcja stoi. Sprawdź budynek.');
@@ -1270,7 +1270,21 @@ function suspendJourneyOnLeave() {
   pendingJourneySuspension = { islandId: state.islandId, id: run.id, seed: run.seed };
   if (act(state, { type: 'adventureSuspend' }).ok) { pendingJourneySuspension = null; void save(true); }
 }
+function buildingUnlockLevel(id) {
+  return Development.Provisions.NEW_BUILDINGS[id]?.unlockLevel ?? (id === 'market' ? 2 : id === 'dock' ? 4 : 1);
+}
+function buildingLocked(id) {
+  return Development.isDevelopment(state) && Number(state.buildings.townhall.level) < buildingUnlockLevel(id);
+}
+function lockedBuildingPanel(id) {
+  const required = buildingUnlockLevel(id);
+  return el('section', { class: 'info-card building-locked-message', 'data-building-locked': id, 'data-i18n-ignore': '' },
+    el('h3', {}, uiCopy('Building locked', 'Budynek zablokowany')),
+    el('p', {}, uiCopy(`${titleOf(id)} unlocks when your Town Hall reaches level ${required}.`, `${titleOf(id)} odblokuje się, gdy Ratusz osiągnie poziom ${required}.`)),
+    el('p', { class: 'notice' }, uiCopy(`Current Town Hall level: ${state.buildings.townhall.level}.`, `Obecny poziom Ratusza: ${state.buildings.townhall.level}.`)));
+}
 function openPanel(kind, id) {
+  if (['building', 'building-details'].includes(kind) && buildingLocked(id)) kind = 'building-locked';
   if (panel?.kind==='original-puzzle' && (kind!=='original-puzzle'||id!==panel.id)) exitOriginalPuzzle();
   if (expeditionSession() && !['puzzle', 'expeditions'].includes(kind) && dialog.open) { requestExpeditionExit(() => openPanel(kind, id)); return; }
   if (placement) cancelPlacement();
@@ -1282,7 +1296,7 @@ function openPanel(kind, id) {
   }
   else if (!restoringPanel && panel && panel.kind !== 'puzzle' && (panel.kind !== kind || panel.id !== id)) panelHistory.push({ ...panel, scroll: dialog.scrollTop || 0, bodyScroll: dialog.querySelector('.dialog-body')?.scrollTop || 0 });
   panel = { kind, id };
-  if (!['tutorial', 'puzzle', 'expeditions'].includes(kind)) {
+  if (!['tutorial', 'puzzle', 'expeditions', 'building-locked'].includes(kind)) {
     act(state, { type: 'tutorialVisit', subject: ['building', 'building-details'].includes(kind) ? id : kind === 'menu' ? 'home' : kind });
     save();
   }
@@ -1638,7 +1652,12 @@ function producerSummary(id) {
 }
 
 function buildingPanel(id) {
-  if (Development.isDevelopment(state) && DEVELOPMENT_BUILDINGS[id]) return renderDevelopmentBuildingPanel(id, developmentPanelOptions());
+  if (Development.isDevelopment(state) && DEVELOPMENT_BUILDINGS[id]) {
+    const content = renderDevelopmentBuildingPanel(id, developmentPanelOptions());
+    const current = state.buildings[id];
+    content.dataset.buildingSignature = `${current.level}:${(current.construction || current.premiumService)?.stage || ''}`;
+    return content;
+  }
   if (id === 'theatre') return theatrePanel();
   const data = BUILDINGS[id];
   const value = state.buildings[id];
@@ -1693,9 +1712,10 @@ function buildingPanel(id) {
   if (project?.stage === 'building' && !project.premiumService) upgrades.append(el('div', { class: 'compact-project-actions' }, (Activities.quoteAccelerationOptions?.(state, project.order) || []).map(({ percent }) => quotedButton(percent === 100 ? 'Finish construction now' : `Shorten building time by ${percent}%`, () => Activities.quoteAcceleration?.(state, project.order, percent), { type: 'premiumAccelerate', project: project.order, percent }, { class: 'action secondary', 'data-premium-percent': percent }))));
   else if (project?.stage === 'transport') upgrades.append(premiumTransportButton({ route: 'construction', project: project.order }));
   if (premiumActive(state) && !canAfford(state, cost)) upgrades.append(quotedButton('Schedule expected deliveries', () => Activities.quoteForecastPlan?.(state, id, { buildingCost }), { type: 'forecastPlan', building: id }, { class: 'action secondary', 'data-premium-forecast': id }));
-  if(Development.isDevelopment(state)){ const production=renderProductionControls(id,developmentPanelOptions({withoutBuildingControls:true}));if(production)main.append(production);if(id==='warehouse')main.append(renderFoodControls(developmentPanelOptions()));const transport=renderTransportControls(id,developmentPanelOptions());if(transport)main.append(transport); }
-  content.append(el('div', { class: 'building-layout' }, main, upgrades),
-    el('footer', { class: 'building-navigation' }, button('More building details', () => openPanel('building-details', id), { class: 'action secondary', 'data-building-more': id })));
+  if(Development.isDevelopment(state)){ const production=renderProductionControls(id,developmentPanelOptions({withoutBuildingControls:true}));if(production)main.append(production);if(id!=='warehouse'){const transport=renderTransportControls(id,developmentPanelOptions());if(transport)main.append(transport);} }
+  content.append(el('div', { class: 'building-layout' }, main, upgrades));
+  if (id === 'warehouse' && Development.isDevelopment(state)) content.append(warehouseControlSections());
+  content.append(el('footer', { class: 'building-navigation' }, button('More building details', () => openPanel('building-details', id), { class: 'action secondary', 'data-building-more': id })));
   return content;
 }
 function compactBuildingPremium(id) {
@@ -1723,7 +1743,10 @@ function buildingDetailsPanel(id) {
   const content = el('div', { class: 'building-details-panel', 'data-building-details': id, 'data-building-signature': `${building.level}:${(building.construction || building.premiumService)?.stage || ''}` }, el('p', { class: 'building-purpose' }, buildingPurpose(id,language(),state)));
   if (id === 'townhall') content.append(levelSharePanel(), worldEventsPanel(), activeEffectsPanel(), el('p', { class: 'notice', 'data-construction-summary': '' }, constructionSummary()), button('Construction and queue', () => openPanel('construction'), { class: 'action secondary' }));
   if (id === 'house') content.append(residentPurchasePanel(), rules('Lighthouse visits', visitsPanel()), residentRoster());
-  if (id === 'warehouse') content.append(carrierJobsPanel(), warehouseOverview(), el('p', { class: 'notice', 'data-i18n-ignore': '', 'data-warehouse-dispatch-summary': '' }, warehouseDispatchSummary()), transportPriorityPanel());
+  if (id === 'warehouse') {
+    if (Development.isDevelopment(state)) content.append(warehouseControlSections());
+    else content.append(carrierJobsPanel(), warehouseOverview(), el('p', { class: 'notice', 'data-i18n-ignore': '', 'data-warehouse-dispatch-summary': '' }, warehouseDispatchSummary()), transportPriorityPanel());
+  }
   if (id === 'market') content.append(marketPanel());
   if (id === 'dock') content.append(button('Open Harbor orders', () => openPanel('trade')), note('Harbor workers carry goods between central storage, Harbor storage and the ship.'));
   if (id === 'chapel') content.append(blessingPanel());
@@ -1754,17 +1777,18 @@ function buildingsPanel() {
     el('div', { class: 'panel-grid' }, BUILDING_DOCK_ORDER.map(id => card(el('h3', {}, titleOf(id)), el('p', { 'data-building-purpose': id }, buildingPurpose(id,language(),state)), el('p', {}, `Level ${state.buildings[id].level} / ${buildingLevelLimit(state, id)}`), button('Details and upgrades', () => openPanel('building', id))))));
 }
 function resourcesPanel(selected) {
-  return el('div', {}, note(warehousePurpose()), resourceNotationPanel(), selected === 'food' ? feedingPanel() : null, selected ? note(`${nameOf(selected)} — stock in the ${selected === 'coins' ? 'treasury' : 'central warehouse'}: ${count(state.resources[selected])}.`) : null,
+  const development = Development.isDevelopment(state);
+  return el('div', {}, note(warehousePurpose()), resourceNotationPanel(), selected === 'food' && !development ? feedingPanel() : null, selected ? note(`${nameOf(selected)} — stock in the ${selected === 'coins' ? 'treasury' : 'central warehouse'}: ${count(state.resources[selected])}.`) : null,
     selected === 'coins' ? card(el('h3', {}, 'Treasury'),
       stat('Coins', el('span', { 'data-stock': 'coins' }, count(state.resources.coins))),
       note('Coins are stored separately and do not use goods storage.'),
       treasuryIncomeDescription(),
       button('Open House', () => openPanel('building', 'house'), { class: 'action secondary' })) : null,
-    warehouseOverview(),
+    development ? warehouseControlSections() : warehouseOverview(),
     button('Trade at the harbor', () => openPanel('trade')), button('Warehouse and carriers', () => openPanel('building', 'warehouse'), { class: 'action secondary' }),
     el('h3', {}, 'Production and transport'),
     note(Development.isDevelopment(state)?'Gospodarstwo dostarcza zboże, warzywa, a od poziomu 2 również żywiec i surowe mleko. Młyn przerabia zboże na mąkę, Piekarnia wypieka chleb i ciasto, a pozostałe zakłady mają własne receptury. Tragarze wożą składniki i gotowe wyroby między magazynami.':'Farm → grain → Windmill → food. Lumber Camp → wood → Sawmill → planks. Quarry → stone. Carriers deliver finished goods from buildings to the warehouse.'),
-    el('div', { class: 'panel-grid' }, productionBuildings.map(id => productionCard(id, true))), transportPriorityPanel());
+    el('div', { class: 'panel-grid' }, productionBuildings.map(id => productionCard(id, true))), development ? null : transportPriorityPanel());
 }
 function resourceNotationPanel() {
   return card(el('h3', {}, uiCopy('Reading resource cards', 'Jak czytać karty zasobów')),
@@ -1824,9 +1848,54 @@ function productionDescription(id) {
 function centralStockText(id, limits = warehouseLimits(state)) {
   return uiCopy(`${count(state.resources[id])} available`, `${count(state.resources[id])} dostępne`);
 }
+// UI state only: do not put world data or forms in browser storage. Keep the
+// selected section across model acknowledgements that rebuild the dialog.
+const warehouseSectionSelection = new Map();
+function warehouseControlSections() {
+  const key = `${devAccount?.uid || 'preview'}:${state.islandId || 'island-1'}:${state.islandGeneration || 1}`;
+  const selected = warehouseSectionSelection.get(key) || null;
+  const root = el('section', { class: 'warehouse-control-sections', 'data-warehouse-controls': '' });
+  const navigation = el('div', { class: 'warehouse-section-nav', 'aria-label': uiCopy('Warehouse sections', 'Sekcje Magazynu') });
+  const buttons = new Map(), contents = new Map();
+  const definitions = [
+    ['overview', uiCopy('Warehouse overview', 'Przegląd Magazynu')],
+    ['feeding', uiCopy('Feeding', 'Wyżywienie')],
+    ['priorities', uiCopy('Transport priorities', 'Priorytety transportu')]
+  ];
+  function populate(id, content) {
+    if (content.childElementCount) return;
+    if (id === 'overview') content.append(warehouseOverview(), carrierJobsPanel(), el('p', { class: 'notice', 'data-i18n-ignore': '', 'data-warehouse-dispatch-summary': '' }, warehouseDispatchSummary()));
+    else if (id === 'feeding') content.append(renderFoodControls(developmentPanelOptions()));
+    else {
+      content.append(transportPriorityPanel());
+      const direct = renderTransportControls('warehouse', developmentPanelOptions());
+      if (direct) content.append(direct);
+    }
+    localize(content);
+  }
+  function select(id) {
+    const next = warehouseSectionSelection.get(key) === id ? null : id;
+    warehouseSectionSelection.set(key, next);
+    for (const [section, content] of contents) {
+      const open = section === next;
+      content.hidden = !open;
+      buttons.get(section).setAttribute('aria-expanded', String(open));
+      if (open) populate(section, content);
+    }
+  }
+  root.append(navigation);
+  for (const [id, label] of definitions) {
+    const content = el('div', { id: `warehouse-section-${id}`, class: 'warehouse-section-content', 'data-warehouse-section': id, hidden: selected !== id });
+    const toggle = button(label, () => select(id), { class: 'action secondary warehouse-section-toggle', 'data-warehouse-section-toggle': id, 'aria-controls': content.id, 'aria-expanded': String(selected === id) });
+    buttons.set(id, toggle); contents.set(id, content);
+    navigation.append(toggle); root.append(content);
+    if (selected === id) populate(id, content);
+  }
+  return root;
+}
 function warehouseOverview() {
   const limits = warehouseLimits(state);
-  const firstLevel = warehouseLimits({ buildings: { warehouse: { level: 1 } } });
+  const firstLevel = warehouseLimits({ ruleset: state.ruleset, buildings: { warehouse: { level: 1 } } });
   return card(informationHeading('central-warehouse', 'Central warehouse',
       uiCopy('All listed materials can be spent immediately. Ordinary deliveries use storage capacity; rewards do not. This is why the available amount can exceed the stated capacity. Coins are stored separately.', 'Wszystkie pokazane materiały możesz od razu wydać. Zwykłe dostawy zajmują miejsce w magazynie, a nagrody nie. Dlatego dostępny zapas może przekraczać podaną pojemność. Monety są przechowywane osobno.'),
       uiCopy(`Level 1 holds ${count(firstLevel.total)} ordinary items in total, up to ${count(firstLevel.perResource)} per material. Each level has fixed limits allowing for upgrades, a mission, meals and a buffer. Carriers collect goods and supply construction according to your priorities.`, `Na poziomie 1 magazyn mieści łącznie ${count(firstLevel.total)} sztuk ze zwykłych dostaw, do ${count(firstLevel.perResource)} każdego materiału. Każdy poziom ma stałą pojemność uwzględniającą rozbudowę, misję, jedzenie i bufor. Tragarze odbierają towary i zaopatrują budowy zgodnie z ustawionymi priorytetami.`),
@@ -3294,6 +3363,7 @@ function renderPanel() {
   let title = titles[panel.kind] || titleOf(panel.id);
   let body;
   switch (panel.kind) {
+    case 'building-locked': body = buildingLocked(panel.id) ? lockedBuildingPanel(panel.id) : buildingPanel(panel.id); break;
     case 'building': body = buildingPanel(panel.id); break;
     case 'gifts':title='Darowizna sojusznikowi';body=giftsPanel();break;
     case 'kingdom': title='Królestwo'; kingdomController=createKingdomPanel({state,getState:()=>state,getStatus:()=>devCloud.local?serverKingdomStatus:null,onAction:performDevelopment,context:()=>developmentModelContext(state),language:language()});body=kingdomController.element;break;
@@ -3775,6 +3845,7 @@ function onboardingSteps() {
     return rect.right > 0 && rect.left < innerWidth && rect.bottom > 0 && rect.top < innerHeight;
   });
   const targetHud = id => () => visible(`[data-mobile-control="${id}"]`, `[data-mobile-hud="${id}"]`, `#hit-${id === 'coins' ? 'resource-coins' : id}`);
+  const targetMenu = () => visible('[data-mobile-control="menu"]', '.mobile-island-menu', '#hit-menu');
   const currentCopy = id => getTourCopy(id, language(), {
     firstIntroduction: State.onboardingStatus(state).pending, cloudAccount: !!devAccount, state,
     resourceExample: { resource: 'stone', local: Math.floor(state.buildings.quarry.ready || 0), central: Math.floor(state.resources.stone || 0),
@@ -3783,6 +3854,8 @@ function onboardingSteps() {
   return APPROVED_TOUR_IDS.map(id => {
     let target = targetHud(id), prepare;
     const resetDemo = () => { if (document.body.dataset.tourStorageDemo) { delete document.body.dataset.tourStorageDemo; renderHUD(); } };
+    const buildingTarget = building => () => visible(`[data-mobile-building="${building}"]`, `[data-v32-building="${building}"]`, building === 'dock' ? '#tour-port-region' : `#hit-world-${building}`);
+    const focusBuilding = building => { resetDemo(); window.dispatchEvent(new CustomEvent('island-tour-focus', { detail: { region: buildingRegionFor(building) } })); };
     prepare = resetDemo;
     if (id.startsWith('building-')) {
       const building = id.slice(9);
@@ -3791,19 +3864,20 @@ function onboardingSteps() {
     } else if (id.startsWith('category-')) {
       const category = id.slice(9);
       target = () => visible(`[data-mobile-category="${category}"]`, `#hit-category-${category}`);
-      prepare = () => { resetDemo(); setDockCategory(category); };
+      prepare = () => { resetDemo(); setDockCategory(category, { recordVisit: false }); };
     } else if (id === 'producer-storage') {
-      target = () => document.getElementById('hit-world-farm');
+      target = () => visible('#hit-world-farm [data-production-penalty="farm"]');
       prepare = () => { document.body.dataset.tourStorageDemo = 'true'; renderHUD(); window.dispatchEvent(new CustomEvent('island-tour-focus', { detail: { region: buildingRegions.farm } })); };
-    } else if (id === 'tasks') target = () => visible('.mobile-activities', '.island-activity-stack .activity-section-heading .activity-link');
-    else if (id === 'expeditions') target = () => visible('.island-activity-stack .activity-expedition', '.mobile-island-menu');
+    } else if (id === 'tasks') { target = buildingTarget('lighthouse'); prepare = () => focusBuilding('lighthouse'); }
+    else if (id === 'expeditions') target = targetMenu;
     else if (id === 'ship') { target = () => document.getElementById('hit-boat'); prepare = () => window.dispatchEvent(new CustomEvent('island-tour-focus', { detail: { region: [215, 635, 219, 137] } })); }
-    else if (['food','transport','construction'].includes(id)) target=()=>visible('[data-mobile-building="warehouse"]','#hit-world-warehouse');
-    else if(id==='clothing')target=()=>visible('[data-mobile-building="leatherworks"]','[data-v32-building="leatherworks"]','#hit-world-house');
-    else if(['education','research'].includes(id))target=()=>visible('[data-mobile-building="academy"]','[data-v32-building="academy"]');
-    else if(id==='military-officers')target=()=>visible('[data-mobile-building="barracks"]','[data-v32-building="barracks"]');
-    else if(id.startsWith('kingdom')||['archipelago','league','charity','minigame-rules'].includes(id))target=()=>visible('.mobile-island-menu','#hit-menu');
-    else if (id === 'menu') target = () => visible('.mobile-island-menu', '#hit-menu');
+    else if (['food','transport'].includes(id)) { target = buildingTarget('warehouse'); prepare = () => focusBuilding('warehouse'); }
+    else if (id === 'construction') { target = buildingTarget('townhall'); prepare = () => focusBuilding('townhall'); }
+    else if (id === 'clothing') { target = buildingTarget('house'); prepare = () => focusBuilding('house'); }
+    else if (['education','research'].includes(id)) { target = buildingTarget('academy'); prepare = () => focusBuilding('academy'); }
+    else if (id === 'military-officers') { target = buildingTarget('barracks'); prepare = () => focusBuilding('barracks'); }
+    else if (id === 'league') target = targetHud('chat');
+    else if (id.startsWith('kingdom') || ['archipelago','charity','minigame-rules','menu'].includes(id)) target = targetMenu;
     return { id, title: () => currentCopy(id).title, text: () => currentCopy(id).text, target, prepare };
   });
 }
