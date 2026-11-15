@@ -2,6 +2,7 @@
 !Dockerfile
 !package.json
 !server.mjs
+!starter-island.mjs
 !account-service.mjs
 !island-name.mjs
 !firebase-auth.mjs

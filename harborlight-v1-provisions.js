@@ -1,4 +1,4 @@
-import { developmentText, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-9';
+import { developmentText, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-10';
 // DEV v32 provisions. No browser, network, wall-clock or world-state imports.
 // The host owns production and transport; this module owns their recipes,
 // protected food, individual meal history, milk batches and civilian clothing.
@@ -55,8 +55,25 @@ export function availableRecipes(state, building, context = {}) {
   return Object.entries(RECIPE_CATALOG).filter(([, r]) => r.building === building && level >= r.level && (!r.discovery || hasResearch(state, r.discovery, context)) && (!r.academy || th >= 4 && finite(state.buildings?.academy?.level) > 0)).map(([id, r]) => ({ id, ...r }));
 }
 export function crewCapacity(state, building, context = {}) {
-  const level = whole(state.buildings?.[building]?.level), count = availableRecipes(state, building, context).length;
-  return { perProduct: 12 * level, total: count ? 12 * level * (1 + .5 * (count - 1)) : 0, products: count };
+  const level = whole(state.buildings?.[building]?.level), recipes = availableRecipes(state, building, context), count = recipes.length;
+  const base = 12 * level, capacity = { perProduct: base, total: count ? base * (1 + .5 * (count - 1)) : 0, products: count };
+  // An upgraded legacy island may already employ more people than the new
+  // product limits. Retain those existing jobs, without creating hiring room:
+  // reducing a crew or product allocation permanently consumes its allowance.
+  const saved = state.provisions?.legacyCrewAllowances?.[building];
+  if (object(saved)) {
+    const workers = whole(state.buildings?.[building]?.workers), selected = state.provisions?.assignments?.[building] || {};
+    saved.workers = Math.min(whole(saved.workers), workers);
+    capacity.total = Math.max(capacity.total, saved.workers);
+    const perRecipe = {};
+    for (const r of recipes) {
+      const allowed = Math.min(whole(saved.recipes?.[r.id]), workers, whole(selected[r.id]));
+      if (saved.recipes) saved.recipes[r.id] = allowed;
+      perRecipe[r.id] = Math.max(base, allowed);
+    }
+    capacity.perRecipe = perRecipe;
+  }
+  return capacity;
 }
 export function localStorageStatus(state, building, local = null) {
   const level = whole(state.buildings?.[building]?.level), stock = local || state.provisions?.localStock?.[building] || state.buildings?.[building]?.stock || {};
@@ -72,7 +89,7 @@ export function productionAssignments(state, building, context = {}) {
   let left = crew;
   return recipes.map((r, index) => {
     const requested = Object.keys(selected).length ? whole(selected[r.id]) : left;
-    const workers = Math.min(left, cap.perProduct, requested); left -= workers;
+    const workers = Math.min(left, cap.perRecipe?.[r.id] ?? cap.perProduct, requested); left -= workers;
     return { recipeId: r.id, building, workers, inputs: { ...r.inputs }, outputs: { ...r.outputs }, ratePerWorkerHour: recipeRatePerWorkerHour(state, r.id) };
   });
 }
@@ -126,7 +143,15 @@ export function normalizeProvisions(state, raw = state, context = {}) {
   if (required > oldRequired) for (const p of Object.values(people)) p.dietGraceUntil = Math.max(p.dietGraceUntil, now + DAY * 1000);
   const assignments = {};
   for (const [building, values] of Object.entries(source.assignments || {})) if (object(values)) assignments[building] = Object.fromEntries(Object.entries(values).filter(([id]) => RECIPE_CATALOG[id]?.building === building).map(([id, n]) => [id, whole(n)]));
+  const legacyCrewAllowances = {};
+  for (const [building, allowance] of Object.entries(source.legacyCrewAllowances || {})) {
+    if (!object(allowance) || !state.buildings?.[building]) continue;
+    const workers = Math.min(24 * whole(state.buildings[building].level), whole(state.buildings[building].workers), whole(allowance.workers));
+    const recipes = Object.fromEntries(Object.entries(allowance.recipes || {}).filter(([id]) => RECIPE_CATALOG[id]?.building === building).map(([id, n]) => [id, Math.min(workers, whole(n), whole(assignments[building]?.[id]))]));
+    if (workers) legacyCrewAllowances[building] = { workers, recipes };
+  }
   state.provisions = { version: 1, clockMs: Number.isFinite(source.clockMs) ? source.clockMs : now, feedClockMs: Number.isFinite(source.feedClockMs) ? source.feedClockMs : now, foodSettings: { priorities, enabled, limits }, people, requiredTypes: required, assignments,
+    ...(Object.keys(legacyCrewAllowances).length ? { legacyCrewAllowances } : {}),
     milkLots: (Array.isArray(source.milkLots) ? source.milkLots : []).filter(l => finite(l.amount) > EPS).map(l => ({ id: String(l.id || ''), amount: finite(l.amount), centralSeconds: Math.min(3 * DAY, finite(l.centralSeconds)) })), milkSequence: whole(source.milkSequence), localStock: object(source.localStock) ? source.localStock : {}, notices: (Array.isArray(source.notices) ? source.notices : []).slice(-100),
     ...(object(source.productionProgress)?{productionProgress:source.productionProgress}:{}),...(object(source.localMilkLots)?{localMilkLots:source.localMilkLots}:{}),...(object(source.routeAssignments)?{routeAssignments:source.routeAssignments}:{}),routeSequence:whole(source.routeSequence),pendingMilkLots:(Array.isArray(source.pendingMilkLots)?source.pendingMilkLots:[]).filter(l=>finite(l.amount)>EPS).map(l=>({amount:finite(l.amount),centralSeconds:Math.min(3*DAY,finite(l.centralSeconds))})) };
   syncMilkLots(state);
@@ -344,10 +369,10 @@ export function provisionsAction(state,action,context={}) {
   }
   if(action.type==='provisionsSetWorkers'){
     const building=action.building,recipes=availableRecipes(state,building,context),cap=crewCapacity(state,building,context),id=action.recipeId;
-    if(!recipes.some(r=>r.id===id)||!Number.isSafeInteger(action.workers)||action.workers<0||action.workers>cap.perProduct)return result(false,'Wybierz odblokowany kierunek i prawidłową liczbę pracowników.');
+    if(!recipes.some(r=>r.id===id)||!Number.isSafeInteger(action.workers)||action.workers<0||action.workers>(cap.perRecipe?.[id]??cap.perProduct))return result(false,'Wybierz odblokowany kierunek i prawidłową liczbę pracowników.');
     const existing={...(p.assignments[building]||{})},current=productionAssignments(state,building,context);if(!Object.keys(existing).length)for(const row of current)existing[row.recipeId]=row.workers;existing[id]=action.workers;
     if(Object.values(existing).reduce((a,b)=>a+finite(b),0)>Math.min(whole(state.buildings?.[building]?.workers),cap.total))return result(false,'Nie masz tylu przydzielonych pracowników. Najpierw zmniejsz inną obsadę lub przydziel mieszkańców do budynku.');
-    p.assignments[building]=existing;return result(true,'Zmieniono podział pracowników między produkty.');
+    p.assignments[building]=existing;crewCapacity(state,building,context);return result(true,'Zmieniono podział pracowników między produkty.');
   }
   if(action.type==='provisionsConstructionQuote'||action.type==='provisionsConstructionSpend'){
     const quote=quoteConstructionFood(state,action.foodUnits,action.mix??null,context);if(quote.ok&&action.type==='provisionsConstructionSpend')for(const[id,n]of Object.entries(quote.materials))consume(state,id,n,context);return quote;

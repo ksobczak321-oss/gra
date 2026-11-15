@@ -63,6 +63,14 @@ def sha256(data):
     return hashlib.sha256(data).hexdigest()
 
 
+def application_version():
+    source = (ROOT / "harborlight-version.js").read_text(encoding="utf-8")
+    match = re.search(r"export const GAME_VERSION\s*=\s*['\"]([0-9]+(?:\.[0-9]+){3})['\"]", source)
+    if not match:
+        raise ValueError("Cannot establish the current application version")
+    return match.group(1)
+
+
 def repo_path(path):
     path = Path(path).resolve()
     if not path.is_relative_to(ROOT):
@@ -286,7 +294,7 @@ def main():
     report = {
         "file": output_name,
         "sha256": sha256(args.output.read_bytes()),
-        "version": "DEV 0.15.0.0 / v32 — redakcja sześciu zakładek",
+        "version": f"DEV {application_version()} / v32 — redakcja sześciu zakładek",
         "base_git_commit": evidence.get("base_git_commit"),
         "source_git_commit": head,
         "source_fingerprint": sha256(json.dumps(hashes, sort_keys=True).encode()),

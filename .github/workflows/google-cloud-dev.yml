@@ -63,7 +63,9 @@ jobs:
       HARBORLIGHT_VERIFIED_SHA: ${{ needs.gate.outputs.source_sha }}
       HARBORLIGHT_CI_RUN_ID: ${{ needs.gate.outputs.ci_run_id }}
       HARBORLIGHT_CI_RUN_ATTEMPT: ${{ needs.gate.outputs.ci_run_attempt }}
-      HARBORLIGHT_ACCOUNT_API_ENABLED: ${{ vars.HARBORLIGHT_ACCOUNT_API_ENABLED || 'false' }}
+      # PRE-PROD reset GO requires generation-checked API saves permanently;
+      # an old environment variable must not restore direct client writes.
+      HARBORLIGHT_ACCOUNT_API_ENABLED: 'true'
       HARBORLIGHT_FRONTEND_URL: https://harborlight-dev.web.app
     steps:
       - name: Checkout exact source commit

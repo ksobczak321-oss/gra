@@ -1,5 +1,5 @@
-import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-9';
-import { normalizeExpeditionHour, allocateExpeditionAttemptId, reserveExpeditionDifficulty, recordExpeditionOutcome, expeditionHourStatus, cappedExpeditionReward } from './harborlight-v1-expedition-hour.js?v=frontend-v32-9';
+import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-10';
+import { normalizeExpeditionHour, allocateExpeditionAttemptId, reserveExpeditionDifficulty, recordExpeditionOutcome, expeditionHourStatus, cappedExpeditionReward } from './harborlight-v1-expedition-hour.js?v=frontend-v32-10';
 
 export const ORIGINAL_PUZZLE_VERSION = 1;
 export const originalPuzzleCatalog = Object.freeze([

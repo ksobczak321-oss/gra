@@ -8,6 +8,8 @@ import { createCommunityService } from './community-service.mjs';
 import { createCharityService } from './charity-service.mjs';
 import { createCharityLedgerStore } from './charity-ledger.mjs';
 import { createIslandDocumentStore } from './island-document-store.mjs';
+import { createCurrentStarterIsland } from './starter-island.mjs';
+export { createCurrentStarterIsland } from './starter-island.mjs';
 
 export function parsePort(value = '8080') {
   if (!/^\d+$/.test(String(value))) throw new Error('PORT must be an integer between 1 and 65535.');
@@ -59,7 +61,7 @@ export function createServer({
   environment = process.env.HARBORLIGHT_ENV || 'development',
   release = process.env.HARBORLIGHT_RELEASE || 'local',
   readiness = { ready: true }, accountService = null, verifyIdentityToken = null, playerTradeService = null, communityService = null, charityService = null,
-  now = () => Date.now(), starter = createStarterIsland, accountProjectId = null
+  now = () => Date.now(), starter = null, accountProjectId = null
 } = {}) {
   let configured;
   if (!accountService && !verifyIdentityToken) {
@@ -72,6 +74,7 @@ export function createServer({
   const accountApi = !!accountService && typeof verifyIdentityToken === 'function';
   const runtimeProjectId = configured?.projectId || accountProjectId || process.env.HARBORLIGHT_PROJECT_ID || (['prod','production'].includes(environment) ? 'harborlight-prod' : ['dev','preprod'].includes(environment) ? 'harborlight-dev' : null);
   const runtimeEnvironment = runtimeProjectId === 'harborlight-dev' ? 'preprod' : runtimeProjectId === 'harborlight-prod' ? 'production' : ['dev','preprod'].includes(environment) ? 'preprod' : ['prod','production'].includes(environment) ? 'production' : 'development';
+  const starterFactory = starter || (['harborlight-dev', 'harborlight-prod'].includes(runtimeProjectId) ? createCurrentStarterIsland : createStarterIsland);
   const server = http.createServer(async (request, response) => {
     response.setHeader('Content-Type', 'application/json; charset=utf-8');
     response.setHeader('Cache-Control', 'no-store');
@@ -150,7 +153,7 @@ export function createServer({
       }
       if (path === '/api/v1/island' && request.method === 'POST') {
         if (Object.keys(body).length) throw new AccountServiceError('starter-is-server-owned', 400);
-        await accountService.startIsland({ uid, payload: starter(now()) });
+        await accountService.startIsland({ uid, payload: starterFactory(now()) });
         if (typeof communityService?.ensureProfile === 'function') await communityService.ensureProfile({ uid }).catch(() => null);
         send(201, await accountService.readIsland({ uid })); return;
       }

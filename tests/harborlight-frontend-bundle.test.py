@@ -300,7 +300,8 @@ class HistoricalFrontendProfileTests(unittest.TestCase):
 
     def test_no_profile_keeps_default_current_allowlist_strict(self):
         self.reject(name=None)
-        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 108)
+        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 109)
+        self.assertIn("harborlight-v1-runtime-upgrade.js", BUNDLE.CONTENT_FILES)
 
     def test_unknown_or_path_supplied_profile_is_rejected(self):
         for name in ("unknown", "../trusted-profile.json", str(self.profile_path)):

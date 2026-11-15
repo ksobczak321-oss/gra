@@ -1,7 +1,7 @@
-import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-9';
-import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy, developmentBuildingInformation } from './harborlight-v1-development-copy.js?v=frontend-v32-9';
-import { NEW_BUILDINGS } from './harborlight-v1-provisions.js?v=frontend-v32-9';
-import { mapRegionFor, mapFootprintFor, buildingArtwork } from './harborlight-v1-map-art.js?v=frontend-v32-9';
+import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-10';
+import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy, developmentBuildingInformation } from './harborlight-v1-development-copy.js?v=frontend-v32-10';
+import { NEW_BUILDINGS } from './harborlight-v1-provisions.js?v=frontend-v32-10';
+import { mapRegionFor, mapFootprintFor, buildingArtwork } from './harborlight-v1-map-art.js?v=frontend-v32-10';
 
 // All views share the approved presentation mapping; model IDs stay unchanged.
 export const DEVELOPMENT_BUILDINGS = Object.freeze(Object.fromEntries(Object.entries({

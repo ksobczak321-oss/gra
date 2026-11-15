@@ -47,7 +47,7 @@ def application_files(context):
 class BackendPackageTests(unittest.TestCase):
     def test_context_excludes_tests_and_private_files(self):
         context = context_files()
-        self.assertTrue(context <= {'Dockerfile', 'package.json', 'server.mjs',
+        self.assertTrue(context <= {'Dockerfile', 'package.json', 'server.mjs', 'starter-island.mjs',
                                    'account-service.mjs', 'island-name.mjs', 'firebase-auth.mjs',
                                    'firestore-store.mjs', 'retention.mjs', 'player-trade.mjs',
                                    'island-document-store.mjs', 'community-service.mjs', 'league-rules.mjs', 'league-season.mjs',
@@ -70,7 +70,11 @@ class BackendPackageTests(unittest.TestCase):
                 for (const file of readdirSync('.').filter(file => file.endsWith('.mjs'))) {
                   await import('./' + file);
                 }
-                const { createServer } = await import('./server.mjs');
+                const { createServer, createCurrentStarterIsland } = await import('./server.mjs');
+                const starter = JSON.parse(createCurrentStarterIsland(1794744000000));
+                assert.equal(starter.ruleset, 32);
+                assert.equal(starter.population, 18);
+                assert.equal(starter.residents.length, 18);
                 const { validateIslandName } = await import('./island-name.mjs');
                 assert.equal(validateIslandName('Żółwia Zatoka').ok, true);
                 assert.equal(validateIslandName('Kurwa Bay').reason, 'profanity');

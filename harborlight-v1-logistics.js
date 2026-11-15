@@ -1,16 +1,16 @@
 // Physical goods and event-based logistics. Durations are real elapsed seconds,
 // including catch-up after the browser is closed.
-import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v32-9';
-import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v32-9';
-import { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, normalizeBonusMaterials, grantBonusMaterials, consumeMaterial, spendMaterials, centralUnreserved, materialReward } from './harborlight-v1-inventory.js?v=frontend-v32-9';
-import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v32-9';
-import { eventTransportMultiplier, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v32-9';
-import { residentWorkMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v32-9';
-import { theatrePorterCanStart } from './harborlight-v1-theatre.js?v=frontend-v32-9';
-import { MATERIAL_IDS as DEVELOPMENT_MATERIAL_IDS, GOODS, foodReservePlan, normalizeProvisions, quoteGoods, availableRecipes, productionAssignments } from './harborlight-v1-provisions.js?v=frontend-v32-9';
-import { normalizeDevelopmentLogistics, developmentProducerIds, developmentProductionBlocked, developmentProductionJobs, progressDevelopmentJob, completeDevelopmentJob, developmentWarehouseSources, takeLocalGoods, putLocalGoods, directRouteWorkers, directRouteSource, developmentLogisticsAction, milkCargoFromCentral, milkCargoToCentral } from './harborlight-v1-development-logistics.js?v=frontend-v32-9';
-import { constructionTiming, normalizeConstructionTiming, warehouseCapacityForLevel, productionPerWorkerHour } from './harborlight-v1-economy.js?v=frontend-v32-9';
-export { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, grantBonusMaterials, consumeMaterial, spendMaterials, centralUnreserved, quoteMaterialSpend } from './harborlight-v1-inventory.js?v=frontend-v32-9';
+import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v32-10';
+import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v32-10';
+import { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, normalizeBonusMaterials, grantBonusMaterials, consumeMaterial, spendMaterials, centralUnreserved, materialReward } from './harborlight-v1-inventory.js?v=frontend-v32-10';
+import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v32-10';
+import { eventTransportMultiplier, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v32-10';
+import { residentWorkMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v32-10';
+import { theatrePorterCanStart } from './harborlight-v1-theatre.js?v=frontend-v32-10';
+import { MATERIAL_IDS as DEVELOPMENT_MATERIAL_IDS, GOODS, foodReservePlan, normalizeProvisions, quoteGoods, availableRecipes, productionAssignments } from './harborlight-v1-provisions.js?v=frontend-v32-10';
+import { normalizeDevelopmentLogistics, developmentProducerIds, developmentProductionBlocked, developmentProductionJobs, progressDevelopmentJob, completeDevelopmentJob, developmentWarehouseSources, takeLocalGoods, putLocalGoods, directRouteWorkers, directRouteSource, developmentLogisticsAction, milkCargoFromCentral, milkCargoToCentral } from './harborlight-v1-development-logistics.js?v=frontend-v32-10';
+import { constructionTiming, normalizeConstructionTiming, warehouseCapacityForLevel, productionPerWorkerHour } from './harborlight-v1-economy.js?v=frontend-v32-10';
+export { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, grantBonusMaterials, consumeMaterial, spendMaterials, centralUnreserved, quoteMaterialSpend } from './harborlight-v1-inventory.js?v=frontend-v32-10';
 export const workerEfficiency = productionMultiplier;
 // Paths improve cargo courses, independently of production and resident walks.
 export const transportEfficiency = (state, efficiency = workerEfficiency(state)) => efficiency * roadSpeedMultiplier(state) * activePlayMultiplier(state) * eventTransportMultiplier(state);
@@ -560,8 +560,8 @@ export function updateStorageStatus(state,elapsed=0) {
   const limits=warehouseLimits(state);
   const producers=state.ruleset === 32 ? developmentProducerIds(state).map(id=>[id,{output:'towarów'}]) : Object.entries(PRODUCTION_RECIPES);
   for(const [id,r] of producers) {
-    const b=state.buildings[id],local=state.provisions?.localStock?.[id]||{},full=state.ruleset === 32 ? Object.values(local).reduce((s,n)=>s+n,0)>=300*b.level || Object.values(local).some(n=>n>=200*b.level) : b.ready>=producerCapacity(state,id),blocked=productionBlocked(state,id);
-    if(full&&!b.storageFull)notify(state,'storage-full',`${buildingNames[id]}: storage is full`,`Storage full: ${materialNames[r.output]}. Production is waiting for transport.`);
+    const b=state.buildings[id],local=state.provisions?.localStock?.[id]||{},full=b.level>0&&(state.ruleset === 32 ? Object.values(local).reduce((s,n)=>s+n,0)>=300*b.level || Object.values(local).some(n=>n>=200*b.level) : b.ready>=producerCapacity(state,id)),blocked=productionBlocked(state,id);
+    if(full&&!b.storageFull)notify(state,'storage-full',`${buildingNames[id]}: storage is full`,`Storage full: ${materialNames[r.output]||GOODS[r.output]?.name||r.output}. Production is waiting for transport.`);
     b.fullSeconds=blocked?Math.min(432000,(b.productionBlocked?b.fullSeconds||0:0)+elapsed):0;
     b.productionBlocked=blocked;b.storageFull=full;
   }

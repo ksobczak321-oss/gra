@@ -55,6 +55,99 @@ def verify_assets(http, base, manifest_bytes):
     return len(expected['files'])
 
 
+def package_app_version(frontend, manifest):
+    """Read the version only from bytes covered by the verified manifest."""
+    name = 'harborlight-version.js'
+    metadata = manifest.get('files', {}).get(name)
+    assert isinstance(metadata, dict), 'The verified release must include its application version module'
+    data = (Path(frontend) / name).read_bytes()
+    assert len(data) == metadata.get('size') and hashlib.sha256(data).hexdigest() == metadata.get('sha256'), 'Local application version differs from the verified release manifest'
+    versions = re.findall(r'''^\s*export\s+const\s+GAME_VERSION\s*=\s*['"](\d+\.\d+\.\d+\.\d+)['"]\s*;\s*$''', data.decode('utf-8'), re.M)
+    assert len(versions) == 1, 'The verified release has no unique valid GAME_VERSION export'
+    return versions[0]
+
+
+def assert_modern_hosted_front(page, manifest, expected_version):
+    """Inspect the real signed-in DOM without clicks, state injection or writes.
+
+    The retained 0.14 release has its historical smoke contract. Every 0.15+
+    release must render the accepted v32 front even for a low-level island.
+    Locked buildings remain map functions and dock entries.
+    """
+    assert isinstance(expected_version, str) and re.fullmatch(r'\d+\.\d+\.\d+\.\d+', expected_version), 'A valid verified application version is required for hosted UI acceptance'
+    version = tuple(int(part) for part in expected_version.split('.'))
+    if version[:2] == (0, 14):
+        return {'required': False, 'app_version': expected_version, 'reason': 'historical-0.14-release'}
+    assert version >= (0, 15, 0, 0), 'Unsupported application version for hosted UI acceptance'
+    assert isinstance(manifest.get('files'), dict), 'The verified release manifest is required for hosted UI acceptance'
+    assert page.locator('body').get_attribute('data-ruleset') == '32', 'The actual authenticated island rendered the old UI instead of the current v32 front'
+    page.wait_for_function('''()=>document.querySelectorAll('[data-accepted-artwork]').length===4&&
+      [...document.querySelectorAll('[data-accepted-map-art] img')].every(image=>image.complete&&image.naturalWidth>0)''', timeout=30000)
+    snapshot = page.evaluate('''()=>{
+      const all=selector=>[...document.querySelectorAll(selector)];
+      const region=node=>[node.style.left,node.style.top,node.style.width,node.style.height].map(parseFloat);
+      const box=node=>{if(!node)return null;const r=node.getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height,right:r.right};};
+      const surface=selector=>{const node=document.querySelector(selector);if(!node)return{selector,missing:true};const style=getComputedStyle(node);return{selector,background:style.backgroundImage+' '+style.backgroundColor,color:style.color,colorScheme:style.colorScheme};};
+      const dock=document.querySelector('[data-building-dock]');
+      return{
+        functions:all('.world-hotspot[id^="hit-world-"]').map(node=>({id:node.id.slice(10),region:region(node)})),
+        markers:all('[data-v32-building]').map(node=>({id:node.dataset.v32Building,hit:node.querySelectorAll('.v32-native-hit').length})),
+        acceptedLayers:all('[data-accepted-map-art]').length,
+        acceptedPatches:all('[data-accepted-artwork]').map(node=>node.dataset.acceptedArtwork),
+        acceptedOcean:all('[data-accepted-ocean]').length,
+        oldTheatreScenes:all('[data-theatre-map]').length,
+        dockCategory:dock?.dataset.buildingDock,
+        dockCards:all('[data-building-dock] [data-dock-building]').map(node=>({id:node.dataset.dockBuilding,hidden:node.hidden,art:node.querySelector('[data-map-building-art]')?.dataset.mapBuildingArt})),
+        tabs:all('.dock-tabs [data-dock-category]').map(node=>node.dataset.dockCategory),
+        dock:box(document.querySelector('.dock-tabs')),
+        boat:box(document.querySelector('#hit-boat')),
+        activity:box(document.querySelector('.island-activity-stack')),
+        logicalDock:document.querySelector('.dock-tabs')?{left:parseFloat(getComputedStyle(document.querySelector('.dock-tabs')).left),width:parseFloat(getComputedStyle(document.querySelector('.dock-tabs')).width)}:null,
+        surfaces:['#island-dialog','.island-topbar','.island-activity-stack','.dock-tabs','[data-building-dock] .building-dock-card'].map(surface),
+        resources:all('[data-resource-dock] [data-dock-resource]').map(node=>{const icon=node.querySelector('[data-resource-icon]'),sprite=icon?.querySelector('.goods-icon-sprite'),style=sprite?getComputedStyle(sprite):null;return{id:node.dataset.dockResource,icon:icon?.dataset.resourceIcon,role:icon?.getAttribute('role'),label:icon?.getAttribute('aria-label'),background:style?.backgroundImage,position:style?.backgroundPosition,fallback:!!node.querySelector('[data-resource-icon-fallback]'),oldSvg:!!node.querySelector('svg.resource-dock-illustration')};})
+      };
+    }''')
+    functions = {'townhall','house','farm','lumber','quarry','windmill','sawmill','warehouse','bakery','dairy','slaughterhouse','fisher','leatherworks','academy','barracks','chapel','lighthouse','theatre','market','dock'}
+    actual = [item['id'] for item in snapshot['functions']]
+    assert len(actual) == 20 and set(actual) == functions, ('Authenticated v32 map must retain all 20 functions regardless of locks', actual)
+    markers = [item['id'] for item in snapshot['markers']]
+    assert len(markers) == 7 and set(markers) == {'bakery','dairy','slaughterhouse','fisher','leatherworks','academy','barracks'}, ('Authenticated v32 map is missing its seven new building markers', markers)
+    assert all(item['hit'] == 1 for item in snapshot['markers']), 'Each new map marker must retain its native hit target'
+    assert snapshot['acceptedLayers'] == 1 and snapshot['acceptedOcean'] == 1, 'Authenticated v32 map lacks the accepted artwork and ocean layers'
+    assert len(snapshot['acceptedPatches']) == 4 and set(snapshot['acceptedPatches']) == {'farm','lumber','slaughterhouse','fisher'}, ('Authenticated v32 map lacks the four accepted art patches', snapshot['acceptedPatches'])
+    theatre = next(item for item in snapshot['functions'] if item['id'] == 'theatre')
+    assert theatre['region'] == [634,360,112,66] and snapshot['oldTheatreScenes'] == 0, ('Authenticated Theatre must use its accepted native region', theatre)
+    groups = {
+        'administration': {'townhall','house','warehouse','market','dock','chapel','lighthouse','academy','barracks'},
+        'economy': {'farm','windmill','quarry','lumber','sawmill','bakery','dairy','slaughterhouse','fisher','leatherworks'},
+    }
+    cards = snapshot['dockCards']
+    assert len(cards) == 19 and {item['id'] for item in cards} == groups['administration'] | groups['economy'], ('Authenticated dock must retain nine Administration and ten Economy entries regardless of locks', cards)
+    assert all(item['art'] == item['id'] for item in cards), 'Authenticated dock thumbnails must show their accepted building artwork'
+    assert snapshot['tabs'] == ['administration','economy','resources','decorations','paths'], ('Authenticated v32 dock must retain all five categories', snapshot['tabs'])
+    active = snapshot['dockCategory']
+    assert active in groups and {item['id'] for item in cards if not item['hidden']} == groups[active], ('Authenticated dock must show its complete selected building group', active, cards)
+    assert snapshot['logicalDock'] == {'left':474,'width':1190}, ('Authenticated dock lost its accepted logical position', snapshot['logicalDock'])
+    dock, activity = snapshot['dock'], snapshot['activity']
+    assert dock and activity and dock['width'] > 0 and activity['width'] > 0 and abs(dock['right'] - activity['right']) <= 1, ('Authenticated dock and activity panel right edges must align', dock, activity)
+    boat = snapshot['boat']
+    assert boat and boat['width'] > 0 and boat['right'] + 1 < dock['x'], ('Authenticated dock must leave the ship clear', boat, dock)
+    for surface in snapshot['surfaces']:
+        colors = re.findall(r'rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)', surface.get('background',''))
+        assert 'gradient(' in surface.get('background','') and colors and all(.2126*int(r)+.7152*int(g)+.0722*int(b) < 110 for r,g,b in colors), ('Authenticated UI lost its dark surface', surface)
+    assert snapshot['surfaces'][0]['colorScheme'] == 'dark', 'Authenticated dialogs must retain the dark control theme'
+    resources = snapshot['resources']
+    products = {'wood','stone','grain','planks','vegetables','livestock','rawMilk','sourMilk','fish','flour','pasteurizedMilk','meat','leather','bread','cake','cheese','civilianClothes','militaryClothes','professorRobes','smokedFish','fishPreserves'}
+    actual_resources = [item['id'] for item in resources]
+    # Historical food stock remains visible until used; it must use the same
+    # current atlas, while all 21 current products are always represented.
+    assert len(actual_resources) == len(set(actual_resources)) and products <= set(actual_resources) and set(actual_resources) - products <= {'food'}, ('Authenticated resource dock lacks the current product icons', actual_resources)
+    for item in resources:
+        assert item['icon'] == item['id'] and item['role'] == 'img' and item['label'] and 'harborlight-goods-v32.png' in (item['background'] or '') and not item['fallback'] and not item['oldSvg'], ('Authenticated resource dock must use the current labeled product atlas', item)
+    assert len({item['position'] for item in resources}) == len(resources), 'Authenticated resource dock must use distinct product atlas tiles'
+    return {'required': True, 'app_version': expected_version, 'map_functions':20,'new_markers':7,'accepted_art_patches':4,'administration_entries':9,'economy_entries':10,'native_theatre':True,'dock_right_edge_aligned':True,'ship_clear':True,'dark_ui':True,'current_product_icons':len(products)}
+
+
 def existing_identity(http, base, project, config, api_enabled=False):
     if project == 'harborlight-dev':
         candidates = [(login, login + '@dev.harborlight.pl', login) for login in ('admin1','admin2','admin3')]
@@ -115,6 +208,8 @@ def run():
     project = origin_project(base)
     frontend = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT',str(ROOT/'build/frontend')))
     manifest_bytes = (frontend/'release.json').read_bytes()
+    manifest = json.loads(manifest_bytes)
+    expected_version = package_app_version(frontend, manifest)
     enabled = os.environ.get('HARBORLIGHT_ACCOUNT_API_ENABLED','false').lower() in ('true','1')
     errors, blocked_writes, island_reads, api_reads = [], [], [], []
     with sync_playwright() as pw:
@@ -173,9 +268,10 @@ def run():
             assert urlsplit(page.url).path == '/harborlight-v1-layered.html', 'Authenticated game redirected away from its island'
             assert page.evaluate('typeof window.__HARBORLIGHT_SET_DEV_STATE__ === "undefined"'), 'Hosted QA fixture injection is not allowed'
             assert page.evaluate('!Object.keys(localStorage).some(k=>/^(harborlight-(?:dev|prod)-island-|harborlight-v1-(?:interactive|new-player)-save)/.test(k))'), 'Game progress must not be written to browser storage'
+            modern_front = assert_modern_hosted_front(page, manifest, expected_version)
             assert not errors, 'Hosted browser raised an unexpected application error'
             context.close()
-            evidence = {'project':project,'commit':json.loads(manifest_bytes)['commit'],'account_api':enabled,'authenticated_island_render':True,'hosted_assets':count}
+            evidence = {'project':project,'commit':manifest['commit'],'app_version':expected_version,'account_api':enabled,'authenticated_island_render':True,'hosted_assets':count,'modern_front':modern_front}
             evidence_path = os.environ.get('HARBORLIGHT_HOSTED_EVIDENCE_PATH')
             if evidence_path:
                 Path(evidence_path).write_text(json.dumps(evidence)+'\n',encoding='utf-8')
