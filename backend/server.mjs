@@ -37,7 +37,7 @@ function configuredAccountApi(environment) {
   const serviceEnvironment = projectId === 'harborlight-dev' ? 'preprod' : projectId === 'harborlight-prod' || ['prod','production'].includes(environment) ? 'production' : 'preprod';
   const store = createCharityLedgerStore(createIslandDocumentStore(createFirestoreStore({ projectId, databaseId: process.env.HARBORLIGHT_DATABASE_ID || '(default)' })),
     { allowSimulation: serviceEnvironment === 'preprod' });
-  return { service: createAccountService({ store, environment: serviceEnvironment }), trade: createPlayerTradeService({ store, environment: serviceEnvironment, v32: CURRENT_TRADE_RULES }), community: createCommunityService({ store, environment: serviceEnvironment }), charity: createCharityService({ store, environment: serviceEnvironment }), verify: createFirebaseIdentityVerifier({ projectId }), projectId };
+  return { service: createAccountService({ store, environment: serviceEnvironment, projectId }), trade: createPlayerTradeService({ store, environment: serviceEnvironment, v32: CURRENT_TRADE_RULES }), community: createCommunityService({ store, environment: serviceEnvironment }), charity: createCharityService({ store, environment: serviceEnvironment }), verify: createFirebaseIdentityVerifier({ projectId }), projectId };
 }
 function requestJson(request, maximumBytes = 1_500_000) {
   return new Promise((resolve, reject) => {
@@ -75,6 +75,7 @@ export function createServer({
   const accountApi = !!accountService && typeof verifyIdentityToken === 'function';
   const runtimeProjectId = configured?.projectId || accountProjectId || process.env.HARBORLIGHT_PROJECT_ID || (['prod','production'].includes(environment) ? 'harborlight-prod' : ['dev','preprod'].includes(environment) ? 'harborlight-dev' : null);
   const runtimeEnvironment = runtimeProjectId === 'harborlight-dev' ? 'preprod' : runtimeProjectId === 'harborlight-prod' ? 'production' : ['dev','preprod'].includes(environment) ? 'preprod' : ['prod','production'].includes(environment) ? 'production' : 'development';
+  const devTimeControl = runtimeProjectId === 'harborlight-dev' && runtimeEnvironment === 'preprod' && typeof accountService?.readDevClock === 'function' && typeof accountService?.setDevClock === 'function';
   const starterFactory = starter || (['harborlight-dev', 'harborlight-prod'].includes(runtimeProjectId) ? createCurrentStarterIsland : createStarterIsland);
   const server = http.createServer(async (request, response) => {
     response.setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -95,7 +96,7 @@ export function createServer({
         ...(isReadiness ? { scope: 'infrastructure', features: { accounts: accountApi, persistence: accountApi, gameApi: false } } : {}) });
       return;
     }
-    const routes = { '/api/v1/config': ['GET'], '/api/v1/island': ['GET','POST','PUT'], '/api/v1/activity': ['POST'], '/api/v1/ship-capacity': ['POST'], '/api/v1/promotions/redeem': ['POST'], '/api/v1/legal': ['GET','POST'], '/api/v1/trade/offers': ['GET','POST'], '/api/v1/trade/inbox': ['GET'], '/api/v1/community': ['GET','POST'], '/api/v1/charity': ['GET','POST'] };
+    const routes = { '/api/v1/config': ['GET'], '/api/v1/island': ['GET','POST','PUT'], '/api/v1/activity': ['POST'], '/api/v1/ship-capacity': ['POST'], '/api/v1/promotions/redeem': ['POST'], '/api/v1/legal': ['GET','POST'], '/api/v1/trade/offers': ['GET','POST'], '/api/v1/trade/inbox': ['GET'], '/api/v1/community': ['GET','POST'], '/api/v1/charity': ['GET','POST'], '/api/v1/dev-time': ['GET','POST'] };
     const offerCommand = /^\/api\/v1\/trade\/offers\/(trade_[a-f0-9]{40})\/(accept|cancel)$/.exec(path || '');
     const inboxCommand = /^\/api\/v1\/trade\/inbox\/(trade_[a-f0-9]{40})\/claim$/.exec(path || '');
     if (offerCommand || inboxCommand) routes[path] = ['POST'];
@@ -103,7 +104,7 @@ export function createServer({
     if (!accountApi) { send(503, { error: 'account_api_disabled' }); return; }
     if (!routes[path].includes(request.method)) { response.setHeader('Allow', routes[path].join(', ')); send(405, { error: 'method_not_allowed' }); return; }
     if (!readiness.ready) { send(503, { error: 'draining' }); return; }
-    if (path === '/api/v1/config') { send(200, { accountApi: true, projectId: runtimeProjectId, environment: runtimeEnvironment, ...(runtimeEnvironment === 'preprod' ? { resetFence: 'community-profile-v1' } : {}) }); return; }
+    if (path === '/api/v1/config') { send(200, { accountApi: true, projectId: runtimeProjectId, environment: runtimeEnvironment, ...(runtimeEnvironment === 'preprod' ? { resetFence: 'community-profile-v1' } : {}), ...(devTimeControl ? { devTimeControl: { account: 'admin3', rates: [1, 2, 6] } } : {}) }); return; }
     try {
       const token = /^Bearer ([^\s]{1,16000})$/.exec(request.headers.authorization || '')?.[1];
       if (!token) { response.setHeader('WWW-Authenticate', 'Bearer'); throw new AccountServiceError('auth-required', 401); }
@@ -111,6 +112,12 @@ export function createServer({
       if (!identity?.uid) throw new AccountServiceError('auth-required', 401);
       const uid = identity.uid;
       if (runtimeEnvironment === 'preprod' && !['dev-admin1','dev-admin2','dev-admin3'].includes(uid)) throw new AccountServiceError('permission', 403);
+      if (path === '/api/v1/dev-time') {
+        if (!devTimeControl || uid !== 'dev-admin3') throw new AccountServiceError('permission', 403);
+        if (request.method === 'GET') { send(200, await accountService.readDevClock({ uid })); return; }
+        const body = await requestJson(request, 4096);
+        send(200, await accountService.setDevClock({ uid, rate: body.rate, requestId: body.requestId, generation: body.generation })); return;
+      }
       if (path === '/api/v1/community') {
         if (!communityService) throw new AccountServiceError('community-api-unavailable', 503);
         if (request.method === 'GET') { send(200, await communityService.snapshot({ uid })); return; }

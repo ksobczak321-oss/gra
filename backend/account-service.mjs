@@ -5,6 +5,7 @@
 import { createCharityLedgerStore, coinTotalFromIslandDocument, normalizedWallet, spendWallet, walletPath, coinMutationWorld, syncSharedCoinWallet } from './charity-ledger.mjs';
 import { createIslandDocumentStore, MAX_ARCHIPELAGO_BYTES } from './island-document-store.mjs';
 import { validateIslandName, validateStoredIslandName } from './island-name.mjs';
+import { changeDevAccountClock, devAccountClockStatus } from './dev-account-clock.mjs';
 const DAY = 86400000;
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const RESOURCES = ['coins', ...MATERIALS];
@@ -143,7 +144,7 @@ export function threeMonthDeadline(lastPlayedAt) {
   return candidates.filter(candidate => wallTime(candidate) > target).sort((a, b) => wallTime(a) - wallTime(b) || a - b)[0];
 }
 
-export function createAccountService({ store, now = () => Date.now(), environment = 'production', exemptUids = environment === 'production' ? [] : PREPROD_USERS } = {}) {
+export function createAccountService({ store, now = () => Date.now(), environment = 'production', projectId = null, exemptUids = environment === 'production' ? [] : PREPROD_USERS } = {}) {
   if (!store || typeof store.runTransaction !== 'function') throw new TypeError('A durable transactional account store is required.');
   store = createCharityLedgerStore(createIslandDocumentStore(store), { now,
     allowSimulation: environment === 'development' || environment === 'preprod' });
@@ -153,6 +154,14 @@ export function createAccountService({ store, now = () => Date.now(), environmen
   // transaction callback would roll back the tombstone and preserve the world.
   const mutation = work => store.runTransaction(work).then(result => result === expiredMutation ? fail('island-expired', 410) : result);
   const serverTime = () => clockValue(now());
+  const clockReads = new Map();
+  const requireDevClock = uid => {
+    if (projectId !== 'harborlight-dev' || environment !== 'preprod' || uid !== 'dev-admin3') fail('permission', 403);
+  };
+  const clockAt = key => {
+    const at = Math.max(serverTime(), clockReads.get(key) || 0);
+    clockReads.set(key, at); return at;
+  };
   const assertGeneration = (account, island, generation) => {
     if (generationValue(generation) !== currentGeneration(account) || island && (island.generation ?? 1) !== generation || account?.islandExpiredAt && !island) fail('island-expired', 410);
   };
@@ -225,6 +234,38 @@ export function createAccountService({ store, now = () => Date.now(), environmen
         activePlayDays: activityDays(account?.activePlayDays, at), islandGeneration: currentGeneration(account), lastPlayedAt: at };
       await tx.set(key, next);
       return { lastPlayedAt: at, expiresAt: threeMonthDeadline(at), generation: next.islandGeneration };
+    });
+  }
+
+  async function readDevClock({ uid }) {
+    requireDevClock(uid);
+    return store.runTransaction(async tx => {
+      const account = await tx.get(accountPath(uid)), island = await tx.get(islandPath(uid));
+      const generation = currentGeneration(account || { islandGeneration: island?.generation }), key = `${accountPath(uid)}/devClock/${generation}`;
+      if (island && (island.generation ?? 1) !== generation) fail('island-expired', 410);
+      const saved = await tx.get(key);
+      return { enabled: true, canAdvance: false, canSetRate: true, generation, ...devAccountClockStatus(saved, clockAt(key)) };
+    });
+  }
+
+  async function setDevClock({ uid, rate, requestId, generation }) {
+    requireDevClock(uid);
+    return store.runTransaction(async tx => {
+      const account = await tx.get(accountPath(uid)), island = await tx.get(islandPath(uid));
+      assertGeneration(account, island, generation);
+      if (!island) fail('island-not-initialized', 409);
+      const key = `${accountPath(uid)}/devClock/${generation}`, saved = await tx.get(key), at = clockAt(key);
+      const changed = changeDevAccountClock(saved, { rate, requestId }, at);
+      if (!changed.alreadyApplied) {
+        const revision = account?.devClockMutationRevision ?? 0;
+        if (!Number.isSafeInteger(revision) || revision < 0 || !Number.isSafeInteger(revision + 1)) fail('invalid-state', 400);
+        // The account root is the reset fence even when this is the first clock
+        // document. A concurrent generation reset cannot miss this new child.
+        await tx.set(accountPath(uid), { ...account, devClockMutationRevision: revision + 1 });
+        await tx.set(key, changed.clock);
+      }
+      return { enabled: true, canAdvance: false, canSetRate: true, generation,
+        ...devAccountClockStatus(changed.clock, at), alreadyApplied: changed.alreadyApplied };
     });
   }
 
@@ -436,5 +477,5 @@ export function createAccountService({ store, now = () => Date.now(), environmen
     return { results, cursor: page.cursor ?? null };
   }
 
-  return { readIsland, recordActivity, saveIsland, startIsland, purchaseShipCapacity, redeemCode, expireIsland, sweepExpired, readLegalStatus, acceptLegal };
+  return { readIsland, recordActivity, saveIsland, startIsland, purchaseShipCapacity, redeemCode, expireIsland, sweepExpired, readLegalStatus, acceptLegal, readDevClock, setDevClock };
 }

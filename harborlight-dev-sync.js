@@ -1,13 +1,13 @@
 // Cloud-only island persistence. Authentication storage is separate; this
 // coordinator never reads or writes an island in browser storage.
-import { accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-11';
+import { accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-12';
 
 export const CLOUD_AUTOSAVE_MS = 30_000;
 const RETRY_MIN_MS = 5_000, RETRY_MAX_MS = 30_000;
 const recoverable = code => ['offline', 'rate-limited', 'conflict'].includes(code);
 const sameVersion = (a, b) => a === b || !!a && !!b && a.revision === b.revision && a.updateTime === b.updateTime;
 
-export function createDevSync({ cloud, account, saveKey, onStatus = () => {}, onRestore = () => {},
+export function createDevSync({ cloud, account, saveKey, onStatus = () => {}, onRestore = () => {}, beforeRecover = async () => {},
   schedule = (callback, delay) => setTimeout(callback, delay), cancel = handle => clearTimeout(handle),
   delay = CLOUD_AUTOSAVE_MS } = {}) {
   if (!account?.uid || !cloud || saveKey !== accountSaveKey(account.uid, cloud.projectId)) throw new Error('An authenticated account and its own save key are required.');
@@ -117,6 +117,13 @@ export function createDevSync({ cloud, account, saveKey, onStatus = () => {}, on
     recovering = Promise.resolve().then(async () => {
       if (inFlight) await inFlight;
       try {
+        if (disposed) return false;
+        // Private clocks and other server-owned prerequisites must be adopted
+        // before either reading a world or retrying an uncertain write. Keep
+        // this inside the shared recovery promise so timer/manual retries
+        // cannot bypass it or execute the prerequisite concurrently.
+        if (await beforeRecover() === false) throw Object.assign(new Error('Recovery prerequisite is unavailable.'), { code: 'offline' });
+        if (disposed) return false;
         const remote = await cloud.loadIsland();
         if (disposed) return false;
         if (!remote) throw Object.assign(new Error('The existing cloud island is missing.'), { code: cloud.accountStatus?.expired ? 'island-expired' : 'missing-save' });
@@ -161,16 +168,24 @@ export function createDevSync({ cloud, account, saveKey, onStatus = () => {}, on
     return recovering;
   }
   async function reloadCloud() {
+    const disposedError = () => Object.assign(new Error('The cloud coordinator was disposed.'), { code: 'auth-required' });
+    if (disposed) throw disposedError();
     if (recovering) await recovering;
     if (inFlight) await inFlight;
+    if (disposed) throw disposedError();
     clearTimer(); emit('loading');
     try {
+      // Explicit reloads (for example after a community reward) must satisfy
+      // the same authoritative-clock prerequisite as automatic recovery.
+      if (await beforeRecover() === false) throw Object.assign(new Error('Recovery prerequisite is unavailable.'), { code: 'offline' });
+      if (disposed) throw disposedError();
       const remote = await cloud.loadIsland();
+      if (disposed) throw disposedError();
       if (!remote) throw Object.assign(new Error('Nie znaleziono zapisu w chmurze.'), { code: cloud.accountStatus?.expired ? 'island-expired' : 'missing-save' });
       version = remote.version; pending = null; failedSnapshot = null; savedPayload = remote.payload;
       reloadConfirmedRequested = false;
       stopped = false; retryDelay = RETRY_MIN_MS; emit('saved'); return savedPayload;
-    } catch (error) { stop(error); throw error; }
+    } catch (error) { if (!disposed) stop(error); throw error; }
   }
   return { open, queue, flush, recover, reloadCloud,
     get version() { return version ? { ...version } : null; },

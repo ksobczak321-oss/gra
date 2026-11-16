@@ -8,6 +8,7 @@
 !harborlight-v1-economy.js
 !harborlight-v1-development-copy.js
 !account-service.mjs
+!dev-account-clock.mjs
 !island-name.mjs
 !firebase-auth.mjs
 !firestore-store.mjs

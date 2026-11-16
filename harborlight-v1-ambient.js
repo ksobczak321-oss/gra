@@ -272,6 +272,9 @@ export function createAmbientScene(stage, getState) {
     plate = makeWindmillPlate(values[1]);
     inhabitants = createInhabitantsBackground(values[2]);
     size();
+    // size() paints synchronously, including in a background tab. A lost
+    // context cannot count as a ready clean frame over the reference image.
+    if (!frames || contextLost || !ctx || ctx.isContextLost?.()) throw new Error('Island canvas unavailable.');
     surface.dataset.ready = 'true';
     resume();
   }).catch(error => { surface.dataset.mode = 'error'; surface.remove(); throw error; });

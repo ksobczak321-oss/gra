@@ -1,6 +1,6 @@
 // Firebase owns credentials and verifies access to the UID-scoped documents.
 // Hosting selects the isolated project; runtime Firebase config never contains secrets.
-import { validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v32-11';
+import { validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v32-12';
 import { LEGAL_DOCUMENTS, validLegalAcceptance } from './harborlight-legal.js?v=legal-v4';
 export const DEV_PROJECT = 'harborlight-dev';
 export const PROD_PROJECT = 'harborlight-prod';
@@ -567,7 +567,7 @@ export function createDevCloud({
     return result.body;
   }
   async function requestGameService(path, body = null) {
-    if (typeof path !== 'string' || !/^\/api\/v1\/(?:(?:community|charity)(?:\/[A-Za-z0-9_-]+)*(?:\?[A-Za-z0-9_=&%.-]*)?|ship-capacity)$/.test(path)) throw fail('invalid-state');
+    if (typeof path !== 'string' || !/^\/api\/v1\/(?:(?:community|charity)(?:\/[A-Za-z0-9_-]+)*(?:\?[A-Za-z0-9_=&%.-]*)?|ship-capacity|dev-time)$/.test(path)) throw fail('invalid-state');
     return tradeRequest(path, body, path === '/api/v1/ship-capacity' ? 'ship-capacity-api-unavailable' : 'trade-api-unavailable');
   }
   function tradeId(value) {
@@ -855,13 +855,47 @@ function createLocalDevCloud({ fetcher, storage, now }) {
     get accountStatus() { return accountStatus ? { ...accountStatus } : null; } };
 }
 
-export function createDevTimeController(cloud) {
-  const requireLocal = () => { if (!cloud?.local || cloud.projectId !== LOCAL_DEV_PROJECT) throw fail('permission'); };
+export function createDevTimeController(cloud, { now = () => Date.now(), monotonic = () => globalThis.performance?.now?.() ?? Date.now() } = {}) {
+  const local = cloud?.local === true && cloud.projectId === LOCAL_DEV_PROJECT;
+  const preprod = cloud?.preprod === true && cloud.projectId === DEV_PROJECT && cloud.local !== true;
+  const requireScope = () => { if (!local && !preprod) throw fail('permission'); };
+  const path = local ? '/api/dev/time' : '/api/v1/dev-time';
+  let current = null, anchorTime = 0, anchorMonotonic = 0, lastNow = 0;
+  const projectedNow = () => {
+    const value = current ? anchorTime + Math.floor(Math.max(0, monotonic() - anchorMonotonic)) * current.rate : now();
+    lastNow = Math.max(lastNow, value);
+    return lastNow;
+  };
+  const observe = value => {
+    const rate = value?.rate ?? 1, clockRevision = value?.clockRevision ?? 0;
+    const realNow = value?.realNow ?? value?.now - (Number(value?.offsetSeconds) || 0) * 1000;
+    if (!value || !Number.isSafeInteger(value.now) || !Number.isSafeInteger(realNow) || ![1, 2, 6].includes(rate) || !Number.isSafeInteger(clockRevision) || clockRevision < 0 || typeof value.canAdvance !== 'boolean' || preprod && (!Number.isSafeInteger(value.generation) || value.generation < 1)) throw fail('invalid-cloud-data');
+    // Concurrent GET/rate requests may arrive out of order. An older response
+    // cannot replace a newer server revision or rewind the private clock.
+    if (current && (Number.isSafeInteger(value.generation) && Number.isSafeInteger(current.generation) && value.generation < current.generation || value.generation === current.generation && (clockRevision < current.clockRevision || clockRevision === current.clockRevision && realNow < current.realNow))) return { ...value, ...current };
+    const newGeneration = current && Number.isSafeInteger(value.generation) && value.generation > current.generation;
+    const previousNow = current && !newGeneration ? projectedNow() : value.now;
+    if (newGeneration) lastNow = value.now;
+    current = { ...value, rate, clockRevision, realNow };
+    anchorTime = Math.max(previousNow, value.now);
+    anchorMonotonic = monotonic();
+    lastNow = Math.max(lastNow, anchorTime);
+    return { ...value, rate, clockRevision, realNow };
+  };
+  const status = async () => { requireScope(); return observe(await cloud.requestGameService(path)); };
   return Object.freeze({
-    async status() { requireLocal(); return cloud.requestGameService('/api/dev/time'); },
+    status,
+    async setRate(rate, requestId = globalThis.crypto?.randomUUID?.()) {
+      requireScope();
+      if (![1, 2, 6].includes(rate)) throw fail('invalid-state');
+      if (preprod && !Number.isSafeInteger(current?.generation)) await status();
+      return observe(await cloud.requestGameService(path, { rate, requestId, ...(preprod ? { generation: current.generation } : {}) }));
+    },
     async advance(seconds, requestId = globalThis.crypto?.randomUUID?.()) {
-      requireLocal();
-      return cloud.requestGameService('/api/dev/time', { seconds, requestId });
-    }
+      requireScope(); if (!local) throw fail('permission');
+      return observe(await cloud.requestGameService('/api/dev/time', { seconds, requestId }));
+    },
+    now() { requireScope(); return projectedNow(); },
+    snapshot() { return current ? { ...current } : null; }
   });
 }

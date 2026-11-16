@@ -10,6 +10,7 @@ import { createAccountService, AccountServiceError } from './account-service.mjs
 import { createCommunityService } from './community-service.mjs';
 import { createPlayerTradeService } from './player-trade.mjs';
 import { createCharityService } from './charity-service.mjs';
+import { changeDevAccountClock, devAccountClockStatus, normalizeDevAccountClock } from './dev-account-clock.mjs';
 import { createState } from '../harborlight-v1-state.js';
 import { createIslandDocumentStore } from './island-document-store.mjs';
 import { createCharityLedgerStore } from './charity-ledger.mjs';
@@ -381,12 +382,11 @@ export async function createLocalDevRuntime({ root = ROOT, now = () => Date.now(
   if (typeof store.load === 'function') await store.load();
   const persistence = store.dataFile ? 'local-dev-file' : 'server-process-memory';
   const allowed = await publicAllowlist(root), rootReal = await realpath(root);
-  const sessions = new Map(), timeOffsets = new Map();
+  const sessions = new Map(), accountClocks = new Map(), accountClockReads = new Map();
   for (const account of LOCAL_DEV_ACCOUNTS) {
     const saved = await store.runTransaction(tx => tx.get(`localDevTime/${account.uid}`));
     if (saved) {
-      if (!Number.isSafeInteger(saved.offsetSeconds) || saved.offsetSeconds < 0) throw Error('Invalid saved local DEV clock.');
-      timeOffsets.set(account.uid, saved.offsetSeconds);
+      accountClocks.set(account.uid, normalizeDevAccountClock(saved, now()));
     }
   }
   const accountService = createAccountService({ store, environment: 'development', now });
@@ -445,10 +445,12 @@ export async function createLocalDevRuntime({ root = ROOT, now = () => Date.now(
   const api = createServer({ environment: 'development', release, readiness, accountService, communityService, playerTradeService, charityService,
     verifyIdentityToken: async token => identity(token), accountProjectId: LOCAL_DEV_PROJECT, starter, now });
   const publicSession = (token, session) => ({ projectId: LOCAL_DEV_PROJECT, uid: session.uid, login: session.login, idToken: token,
-    expiresAt: session.expiresAt, lastActivityAt: session.lastActivityAt, capabilities: { advanceTime: session.login === 'admin3' } });
+    expiresAt: session.expiresAt, lastActivityAt: session.lastActivityAt, capabilities: { advanceTime: session.login === 'admin3', setTimeRate: session.login === 'admin3' } });
   const timeStatus = session => {
-    const offsetSeconds = timeOffsets.get(session.uid) || 0;
-    return { enabled: true, canAdvance: session.login === 'admin3', offsetSeconds, now: now() + offsetSeconds * 1000 };
+    const canAdvance = session.login === 'admin3' && session.uid === 'dev-admin3';
+    const at = Math.max(now(), accountClockReads.get(session.uid) || 0);
+    accountClockReads.set(session.uid, at);
+    return { enabled: true, canAdvance, canSetRate: canAdvance, ...devAccountClockStatus(canAdvance ? accountClocks.get(session.uid) : null, at) };
   };
   const localConfig = () => ({ localDev: true, accountApi: true, projectId: LOCAL_DEV_PROJECT, environment: 'development', persistence,
     accounts: LOCAL_DEV_ACCOUNTS.map(({ login }) => ({ login })), capabilities: { timeControlAccount: 'admin3', kingdom: !!kingdomHandler, gifts: true }, giftRules: DEV_GIFT_RULES });
@@ -497,28 +499,16 @@ export async function createLocalDevRuntime({ root = ROOT, now = () => Date.now(
         const { session } = bearer(request);
         if (request.method === 'GET') { send(response, 200, timeStatus(session)); return; }
         if (request.method !== 'POST') throw fault('method-not-allowed', 405);
-        if (session.login !== 'admin3') throw fault('permission', 403);
+        if (session.login !== 'admin3' || session.uid !== 'dev-admin3') throw fault('permission', 403);
         const body = await requestJson(request, 4096);
-        if (!Number.isSafeInteger(body.seconds) || body.seconds < 1 || body.seconds > 31 * 86400 || typeof body.requestId !== 'string' || !/^[A-Za-z0-9_-]{8,100}$/.test(body.requestId)) throw fault('invalid-state');
-        const clock = await store.runTransaction(async tx => {
-          const key = `localDevTime/${session.uid}`, saved = await tx.get(key) || { offsetSeconds: 0, receipts: {} };
-          saved.receipts = Object.assign(Object.create(null), saved.receipts);
-          const previous = saved.receipts[body.requestId];
-          if (previous) {
-            if (previous.seconds !== body.seconds) throw fault('request-reused', 409);
-            return { offsetSeconds: saved.offsetSeconds, alreadyApplied: true };
-          }
-          const offsetSeconds = saved.offsetSeconds + body.seconds;
-          if (!Number.isSafeInteger(now() + offsetSeconds * 1000)) throw fault('invalid-state');
-          saved.offsetSeconds = offsetSeconds;
-          saved.receipts[body.requestId] = { seconds: body.seconds, at: now() };
-          const ids = Object.keys(saved.receipts);
-          for (const id of ids.slice(0, Math.max(0, ids.length - 1000))) delete saved.receipts[id];
-          await tx.set(key, saved);
-          return { offsetSeconds, alreadyApplied: false };
+        const changed = await store.runTransaction(async tx => {
+          const key = `localDevTime/${session.uid}`, saved = await tx.get(key);
+          const result = changeDevAccountClock(saved, body, Math.max(now(), accountClockReads.get(session.uid) || 0));
+          if (!result.alreadyApplied) await tx.set(key, result.clock);
+          return result;
         });
-        timeOffsets.set(session.uid, clock.offsetSeconds);
-        send(response, 200, { ...timeStatus(session), advancedSeconds: clock.alreadyApplied ? 0 : body.seconds, alreadyApplied: clock.alreadyApplied }); return;
+        accountClocks.set(session.uid, changed.clock);
+        send(response, 200, { ...timeStatus(session), advancedSeconds: changed.advancedSeconds, alreadyApplied: changed.alreadyApplied }); return;
       }
       if (path === '/api/v1/kingdom') {
         const { session } = bearer(request);

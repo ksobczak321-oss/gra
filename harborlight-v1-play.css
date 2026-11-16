@@ -800,6 +800,11 @@ body[data-active-island="island-2"] .topbar-brand,body[data-active-island="islan
 #island-dialog [data-v32-dev-time-submit]{min-height:44px;vertical-align:middle;margin-bottom:12px}
 #island-dialog select[data-v32-dev-time],#island-dialog button[data-v32-dev-time-submit]{height:44px;min-height:44px;vertical-align:top;margin-bottom:12px}
 #island-dialog button[data-v32-dev-time-submit]{margin-top:0}
+[data-v32-speed-controls]{position:fixed;left:max(8px,env(safe-area-inset-left));bottom:max(8px,env(safe-area-inset-bottom));z-index:100000;display:flex;align-items:center;gap:6px;max-width:calc(100vw - 16px);padding:6px 8px;border:1px solid #d4b26b;border-radius:6px;background:#092637f5;color:#ffe1a7;font:600 13px/1.3 system-ui,sans-serif;box-shadow:0 2px 8px #0008}
+[data-v32-speed-controls] button{flex:none;min-width:38px;min-height:36px;padding:4px 7px;border:1px solid #d4b26b;border-radius:4px;background:#1d465a;color:#ffe1a7;font:700 19px/1 system-ui,sans-serif;cursor:pointer}
+[data-v32-speed-controls] button:disabled{opacity:.45;cursor:default}
+[data-v32-speed-controls] strong{min-width:24px}
+[data-v32-speed-feedback]:not(:empty){max-width:240px;color:#ffd0c5;font-size:11px}
 #island-dialog [data-v32-rescue-group]{display:grid;grid-template-columns:minmax(0,1fr) minmax(90px,.4fr) auto;align-items:end;gap:12px}
 #island-dialog [data-v32-rescue-group]>p{grid-column:1/-1;margin:0}
 #island-dialog [data-v32-rescue-group]>label{display:flex;flex-direction:column;align-items:stretch;gap:7px;min-width:0;margin:0;font-size:13px;line-height:1.4}
