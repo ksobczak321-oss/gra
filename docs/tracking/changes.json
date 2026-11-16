@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "as_of": "2026-11-16",
-  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu. Jawne zlecenie promocji0.13.1.0napreprod ma odrębną kartę1082:PENDINGdo własnegoCI nowegoSHA i rzeczywistegoSUCCESSGCP.411kart/147ręcznychNOTRUN,bez resetu iPROD. GO DEV0.14.0.0/v31 z4listopada2026 zatwierdza paczkę po audycie ścieżek i plan50dni, karty1083–1120 i ręczneTC0148–0179. Implementacja i własna walidacja końcowego źródła pozostają w toku; PRE-PROD0.13.1.0/68e9bcd bez nowej promocji.449kart/179ręcznychNOTRUN; bez resetu,PROD i realnychoperatorów. Cel20w50dni/150godzin nie jest wynikiem testu. Nowe GO z14–15listopada2026 obejmuje pełny uzgodniony pakietv32/0.15.0.0 naDEV,47odpowiedzi z formularzy i poprawki UI. Karty1122–1138 mapują regułyR01–R59 z audytu. Nowe implementacje są lokalnie zweryfikowane, ale nowe CI i publiczny podgląd muszą mieć własny dowód; bez promocji PRE-PROD/PROD i bez resetu kont. Odłożone niepełne przepisy/sieć skórzana i niezatwierdzone parametry balansu zachowują odrębne ograniczenia. GO z15listopada po akceptacji statycznego frontu obejmuje wyłącznie DEV0.15.0.0/cachefrontend-v32-7: zachowane zaakceptowane grafiki, przypisania funkcji budynków bez zamiany identyfikatorów zapisów, zgodne miniatury i wyrównanie dolnego menu do prawej krawędzi1664. KartyHL-CHG-1144–1146 mają własny odbiór; osobny pakiet sera, otrębów/paszy i nazw mieszkańców pozostaje poza tą publikacją. PóźniejszeGOcache8 po zgłoszeniu Akademii iKoszar autoryzuje wyłącznie nazwy mieszkańców według zajęcia, numeracjęról i grupy we wszystkich listach/wyborachUI, z zachowaniemfrontucache7,UID,zapisów,uprawnień i postępu; modele sera,otrębów/paszy nadal wyłączone. KartyHL-CHG-1147–1148 wymagają własnego odbioru. Responsive120: cache8 zawiera także minimalną poprawkęUI poFAILURECI43738724605; próg20px i reguły modelu pozostają niezmienione. KartaHL-CHG-1149 zachowuje dawną awarię i odrębny odbiór nowego kodu. NajnowszeGOcache9 omezuje importPL na šest vybraných arkuszy Excela (413wierszy,87niepustychC,85zmianwC), z zasadąC→B i rozstrzyganiem notatek redakcyjnych. Pozostałe treści arkuszy nie są czytane; ser doMleczarni i reklamy na każdympoziomie oczekują decyzji. Nowy wynikowyExcel ma6arkuszy413ABC/Bscalone/Cpuste przy zachowaniu historycznego pełnegoarkusza. KartaHL-CHG-1150 ma własne oczekujące wynikiDEV; oddzielna zablokowana promocjaPROD pozostaje poza tym importem. Najnowsze jawneGO użytkownika ustala kolejność obecnyPRE-PROD0.14/7e→PROD, dopiero po potwierdzeniuPROD aktualnyDEV→PRE-PROD. OpsHL-CHG-1151 zapisujeBLOCKED wyłączonymAPI i brakiem ustalonego dostępu; wąski profil85plików nie znosi bramkiAPI ani domyślnego108. Cache9 wymaga trzeciego pełnego własnego zielonegoCI przed zaakceptowanym tagiem. NajnowszeGO:PROD/domenaodłożone; naprawa starych chmurowychreguł0.15.0.1/cache10 i osobny reset3PRE-PROD z zachowaniemloginów/haseł/UID poAPI,datastore.user,blokadziezapisów i10min. E0wdrożoneplikiSUCCESS, funkcjeREOPENED_USER_REPORT; noweCI/deploy/resetPENDING. Bug1152/Ops1153. Bieżące0.15.0.1/cache11: DEV/PRE-PROD86 oraz własnyCI i rzeczywisty zalogowanyUI32 SUCCESS; osobnyreset3NOT_EXECUTED/właścicielskiCloudShell. E0REOPENED/b268FAILURE historyczne;PROD/DNSodłożone. GO16listopada2026: Bug1154 usuwa przebłysk staregoPNG/HUD przy starcie, najpierwDEV0.15.0.2/cache12. NoweCI/publikacjaPENDING; reset właściciel zgłosił jako uruchomiony, wynikNOT_CONFIRMED, nowa promocjaPRE-PROD czeka na zakończenie. GO16listopada: admin3-only▶1×/⏩2×/6× naDEV iPRE-PROD, karta1155. WłaścicielskiRESET PASS43768861718/generacje2/2/2; niezależny odczytPENDING. Reset43768861718 jest niezależnie potwierdzony16listopadaTLS:3UID/generacje2/expiredfalse/islandnull,3ownFirestore403/APItrue,0zapisów; bez ponowienia. Nowyappcache12 nadalPENDING,QA nie tworzy nowychświatów.",
+  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu. Jawne zlecenie promocji0.13.1.0napreprod ma odrębną kartę1082:PENDINGdo własnegoCI nowegoSHA i rzeczywistegoSUCCESSGCP.411kart/147ręcznychNOTRUN,bez resetu iPROD. GO DEV0.14.0.0/v31 z4listopada2026 zatwierdza paczkę po audycie ścieżek i plan50dni, karty1083–1120 i ręczneTC0148–0179. Implementacja i własna walidacja końcowego źródła pozostają w toku; PRE-PROD0.13.1.0/68e9bcd bez nowej promocji.449kart/179ręcznychNOTRUN; bez resetu,PROD i realnychoperatorów. Cel20w50dni/150godzin nie jest wynikiem testu. Nowe GO z14–15listopada2026 obejmuje pełny uzgodniony pakietv32/0.15.0.0 naDEV,47odpowiedzi z formularzy i poprawki UI. Karty1122–1138 mapują regułyR01–R59 z audytu. Nowe implementacje są lokalnie zweryfikowane, ale nowe CI i publiczny podgląd muszą mieć własny dowód; bez promocji PRE-PROD/PROD i bez resetu kont. Odłożone niepełne przepisy/sieć skórzana i niezatwierdzone parametry balansu zachowują odrębne ograniczenia. GO z15listopada po akceptacji statycznego frontu obejmuje wyłącznie DEV0.15.0.0/cachefrontend-v32-7: zachowane zaakceptowane grafiki, przypisania funkcji budynków bez zamiany identyfikatorów zapisów, zgodne miniatury i wyrównanie dolnego menu do prawej krawędzi1664. KartyHL-CHG-1144–1146 mają własny odbiór; osobny pakiet sera, otrębów/paszy i nazw mieszkańców pozostaje poza tą publikacją. PóźniejszeGOcache8 po zgłoszeniu Akademii iKoszar autoryzuje wyłącznie nazwy mieszkańców według zajęcia, numeracjęról i grupy we wszystkich listach/wyborachUI, z zachowaniemfrontucache7,UID,zapisów,uprawnień i postępu; modele sera,otrębów/paszy nadal wyłączone. KartyHL-CHG-1147–1148 wymagają własnego odbioru. Responsive120: cache8 zawiera także minimalną poprawkęUI poFAILURECI43738724605; próg20px i reguły modelu pozostają niezmienione. KartaHL-CHG-1149 zachowuje dawną awarię i odrębny odbiór nowego kodu. NajnowszeGOcache9 omezuje importPL na šest vybraných arkuszy Excela (413wierszy,87niepustychC,85zmianwC), z zasadąC→B i rozstrzyganiem notatek redakcyjnych. Pozostałe treści arkuszy nie są czytane; ser doMleczarni i reklamy na każdympoziomie oczekują decyzji. Nowy wynikowyExcel ma6arkuszy413ABC/Bscalone/Cpuste przy zachowaniu historycznego pełnegoarkusza. KartaHL-CHG-1150 ma własne oczekujące wynikiDEV; oddzielna zablokowana promocjaPROD pozostaje poza tym importem. Najnowsze jawneGO użytkownika ustala kolejność obecnyPRE-PROD0.14/7e→PROD, dopiero po potwierdzeniuPROD aktualnyDEV→PRE-PROD. OpsHL-CHG-1151 zapisujeBLOCKED wyłączonymAPI i brakiem ustalonego dostępu; wąski profil85plików nie znosi bramkiAPI ani domyślnego108. Cache9 wymaga trzeciego pełnego własnego zielonegoCI przed zaakceptowanym tagiem. NajnowszeGO:PROD/domenaodłożone; naprawa starych chmurowychreguł0.15.0.1/cache10 i osobny reset3PRE-PROD z zachowaniemloginów/haseł/UID poAPI,datastore.user,blokadziezapisów i10min. E0wdrożoneplikiSUCCESS, funkcjeREOPENED_USER_REPORT; noweCI/deploy/resetPENDING. Bug1152/Ops1153. Bieżące0.15.0.1/cache11: DEV/PRE-PROD86 oraz własnyCI i rzeczywisty zalogowanyUI32 SUCCESS; osobnyreset3NOT_EXECUTED/właścicielskiCloudShell. E0REOPENED/b268FAILURE historyczne;PROD/DNSodłożone. GO16listopada2026: Bug1154 usuwa przebłysk staregoPNG/HUD przy starcie, najpierwDEV0.15.0.2/cache12. NoweCI/publikacjaPENDING; reset właściciel zgłosił jako uruchomiony, wynikNOT_CONFIRMED, nowa promocjaPRE-PROD czeka na zakończenie. GO16listopada: admin3-only▶1×/⏩2×/6× naDEV iPRE-PROD, karta1155. WłaścicielskiRESET PASS43768861718/generacje2/2/2; niezależny odczytPENDING. Reset43768861718 jest niezależnie potwierdzony16listopadaTLS:3UID/generacje2/expiredfalse/islandnull,3ownFirestore403/APItrue,0zapisów; bez ponowienia. Nowyappcache12 nadalPENDING,QA nie tworzy nowychświatów. Zadanie z 16 listopada: pełny MASTER 15 ze źródeł e23b jest gotowy; archiwum 14 zachowane, bieżące zasady, teksty, scenariusze i symulacje 24/24/72 h zwalidowane PASS. Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions. Gra, redakcyjny Excel z sześcioma zakładkami, konta i wdrożenia bez zmian.",
   "environment_baseline": {
     "application_source_sha": "092e75226fbb14cab09826f313e11d10891966d8",
     "ci_run_id": 41221965032,
@@ -29765,6 +29765,88 @@
         "DEV:speed1-2-6",
         "OPS:DEV-before-PREPROD"
       ]
+    },
+    {
+      "id": "HL-CHG-1156",
+      "epic": "HL-EPIC-OPS",
+      "area": "MASTER Excel zasad i źródeł",
+      "type": "Ops",
+      "title": "Pełny MASTER 15 łączy bieżące zasady, teksty, produkcję, minigry i symulacje z archiwum 14",
+      "source": {
+        "kind": "user_full_master_workbook_update",
+        "date": "2026-11-16",
+        "date_note": "Aktualizacja pełnego mastera bez zmiany gry.",
+        "summary": "Użytkownik chce pełny Excel logiki gry, tekstów i tutoriali, czasów produkcji, minigier oraz symulacji rozwoju. Autoryzuje odczyt repozytoryjnych źródeł i mastera. Niewybrane zakładki oryginalnego uploadu redakcyjnego pozostają poza zakresem.",
+        "reference": "chat:GO:full-master-rules-workbook15"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "artifact_ready_local_build_and_fresh_validation_PASS",
+        "ci": "local_validation_PASS_new_publication_CI_not_yet_run",
+        "preprod": "not_applicable_document_only_game_unchanged",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "HARBORLIGHT15-zasady.xlsx i osobny raport odpowiadają zamrożonym źródłom v32 z pełnym pochodzeniem danych. Gotowy plik ma 156 arkuszy, 61 262 bieżące wiersze i potwierdzony SHA-256.",
+        "Niezmieniony HARBORLIGHT14-zasady.xlsx jest archiwum. Nowy plik zachowuje jego 100 arkuszy, 220 części ZIP, 48 komentarzy i 4982 wcześniejsze wyniki formuł.",
+        "Bieżące tabele obejmują logikę, teksty warunkowe, 56 kroków oprowadzania, 25 lekcji, produkcję i czasy, budynki, minigry oraz kalkulator z 12 nowymi formułami i zapisanymi wynikami.",
+        "Raport rozróżnia rzeczywiste 24 h bezczynności, 24 h produkcji i 72 h rozwoju od referencyjnego planu 50 dni. Nie deklaruje pomiaru 150 h ludzkiej zabawy lub optymalnego gracza. W 72 h osiągnięto 64 osoby przy 36 łóżkach; 22 ze 143 prób punktów Domu prawidłowo odrzucono.",
+        "Katalog 120 układów zawiera 115 sprawdzonych solverem i 5 układów kulki sprawdzonych strukturalnie. Zakres weryfikacji i ograniczenia dowodów historycznych są jawne.",
+        "Ser nadal powstaje w Gospodarstwie od poziomu 6; otręby i pasza nie są zaimplementowane. Arkusz opisuje te luki i nie wdraża modeli.",
+        "Gra, zaakceptowane źródła i tagi, konta, runtime, wdrożenia oraz redakcyjny Excel z sześcioma zakładkami, MERGE i jego odciski pozostają bez zmian. Niewybrane zakładki oryginalnego uploadu nie są czytane.",
+        "Budowa i świeże --validate-only przeszły PASS po ponownym wykonaniu rzeczywistych eksportów modeli i tekstów. Sprawdzono 114 źródeł, odciski eksporterów i generatora, ślad AST, limity UTF-16 oraz 160 próbek formuł wobec kodu. Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1142",
+        "HL-CHG-1150"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-MASTER-WORKBOOK15.md",
+          "docs/v32/MASTER-WORKBOOK15-EVIDENCE.json",
+          "docs/arkusze/README.md",
+          "docs/arkusze/HARBORLIGHT15-zasady-walidacja.json",
+          "docs/design/WORKBOOK-V32-SIMULATION.json"
+        ],
+        "code": [
+          "scripts/build_workbook_v15.py",
+          "scripts/export_workbook_v15_facts.mjs",
+          "scripts/export_workbook_v15_texts.mjs",
+          "scripts/export_workbook_v15_scenarios.mjs"
+        ],
+        "automated_tests": [],
+        "manual_execution": "NOT_RUN",
+        "source_sha": "e23b713ddbaef3ea6b0507c56a466f23c1f0aa92",
+        "accepted_game_application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+        "accepted_game_publication_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+        "release_note": "MASTER 15 ze źródła e23b ma 156 arkuszy: 100 archiwalnych i 56 bieżących (51 widocznych, 5 ukrytych), 61 262 bieżące wiersze oraz 7 581 368 bajtów. SHA-256: b45a9f67ebcc1653ce2fc5413e5dbd9a42b32c103a52b4eda06db647b5dd1f11. Budowa i świeża walidacja PASS ponownie wykonały eksporty modeli i tekstów; 114 źródeł, odciski trzech eksporterów i generatora, AST oraz limity UTF-16 są sprawdzone. Zachowano 100 arkuszy, 220 części ZIP, 48 komentarzy i 4982 wcześniejsze wyniki formuł; dodano 12 formuł i 160 porównań do kodu. Symulacje obejmują 24/24/72 h. W 72 h: Ratusz 2, Magazyn 2, 64 osoby, 55 pracowników, 2371 monet, 6 rozbudów i 36 łóżek; 22 prawidłowe odmowy punktów Domu w 143 próbach. Bez twierdzenia o symulacji 50 dni, pomiarze 150 h lub optymalnym graczu. Niedokończona próba 7 dni wyłączona. Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions. Gra 37061c/c4, konta, wdrożenia, redakcyjny Excel/MERGE/odciski i archiwum 14 pozostają bez zmian.",
+        "output_sha256": "b45a9f67ebcc1653ce2fc5413e5dbd9a42b32c103a52b4eda06db647b5dd1f11",
+        "output_bytes": 7581368,
+        "current_rows": 61262,
+        "final_sheets": 156,
+        "final_current_sheets": 56,
+        "report_path": "docs/arkusze/HARBORLIGHT15-zasady-walidacja.json"
+      },
+      "notes": [
+        "Źródło eksportu e23b jest repozytoryjnym punktem odniesienia, a nie nową publikacją gry. Dokumentacja nie edytuje skoroszytów, raportów ani oryginalnego uploadu.",
+        "Końcowe liczby i SHA-256 pochodzą z raportu PASS. Świeża walidacja ponawia rzeczywiste eksporty modeli i tekstów. Nowy CI należy sprawdzić w Actions po publikacji w Git. Zadanie nie wdraża gry."
+      ],
+      "tags": [
+        "v32",
+        "master-workbook15",
+        "documentation-only"
+      ],
+      "rules": [
+        "DOC:master-v32-with-archive14",
+        "DOC:actual-simulation-scope",
+        "DOC:no-game-or-account-changes",
+        "COPY:unselected-original-upload-tabs-excluded"
+      ]
     }
   ],
   "current_environment": {
@@ -32112,6 +32194,684 @@
       "edited_by_documentation_agent": false
     },
     "PROD": "postponed_by_user",
-    "manual_user_acceptance": "NOT_RUN"
+    "manual_user_acceptance": "NOT_RUN",
+    "master_workbook15_task": {
+      "scope": "New repository MASTER rules workbook15 with preserved archive14 and current v32 facts/text/scenarios/simulations",
+      "as_of": "2026-11-16",
+      "status": "MASTER_WORKBOOK_GENERATED_BUILD_AND_FRESH_VALIDATE_PASS_GIT_PUBLICATION_AND_OWN_CI_PENDING",
+      "source_freeze_sha": "e23b713ddbaef3ea6b0507c56a466f23c1f0aa92",
+      "accepted_game_application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+      "accepted_game_publication_deployment_source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+      "accepted_game_version": "0.15.0.2",
+      "accepted_game_cache": "frontend-v32-13",
+      "output_workbook": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
+      "output_validation_report": "docs/arkusze/HARBORLIGHT15-zasady-walidacja.json",
+      "output_sha256": "b45a9f67ebcc1653ce2fc5413e5dbd9a42b32c103a52b4eda06db647b5dd1f11",
+      "final_sheet_count": 156,
+      "final_row_count": 61262,
+      "final_validation": "PASS_BUILD_AND_FRESH_VALIDATE_ONLY_REEXPORTED_REAL_MODEL_AND_TEXT",
+      "archive14": {
+        "path": "docs/arkusze/HARBORLIGHT14-zasady.xlsx",
+        "source_version": "0.14.0.0/v31",
+        "sheets": 100,
+        "sha256": "7f7ae4918964309b8e2b391edf8999d366dbbd0dcfa2676692984853e10962b6",
+        "source_file_must_remain_unchanged": true,
+        "all100_archival_sheets_OOXML_byte_preservation_required": true,
+        "final_preservation_validation": "PASS",
+        "historical_sheets_unchanged": 100,
+        "historical_ZIP_parts_unchanged": 220,
+        "historical_comments_unchanged": 48,
+        "historical_cached_formulas_unchanged": 4982
+      },
+      "component_exports": {
+        "facts": {
+          "tables": 14,
+          "rows": 6980
+        },
+        "texts": {
+          "tables": 15,
+          "tour_steps": 56,
+          "lessons": 25,
+          "catalog_items": 480,
+          "translation_rows": 2525,
+          "conditional_text_rows": 10504,
+          "full_source_code_entries": 114
+        },
+        "scenarios": {
+          "tables": 20,
+          "puzzle_layouts": 120,
+          "solver_checked_layouts": 115,
+          "marble_layout_only": 5,
+          "story_variants": 100,
+          "story_rooms": 560,
+          "campaign_steps": 152,
+          "reference_plan_days": 50
+        }
+      },
+      "actual_v32_simulations": {
+        "idle_hours": 24,
+        "production_hours": 24,
+        "development_hours": 72,
+        "fixed_seed": true,
+        "assumed_active_hours_per_day": 3,
+        "cheats": false,
+        "real_accounts": false,
+        "development72h": {
+          "townhall": 2,
+          "warehouse": 2,
+          "population": 64,
+          "workers": 55,
+          "coins": 2371,
+          "accepted_upgrades": 6,
+          "beds": 36,
+          "house_point_attempts": 143,
+          "legitimate_house_point_refusals": 22,
+          "optimal_player_claim": false
+        },
+        "is_50_day_simulation": false,
+        "is_150_hours_human_play_measurement": false,
+        "old_v31_35_of50_report": "historical_only",
+        "raw_snapshot": "docs/design/WORKBOOK-V32-SIMULATION.json",
+        "snapshot_sha256": "f0e4dbc3c1739950387ef2f5b9ca543ea097c271234d18a4e5aac01cca7a582b",
+        "cached_snapshot_has_source_and_exporter_fingerprints": true,
+        "unfinished_seven_day_exploration_included": false
+      },
+      "current_code_gaps": {
+        "cheese": "still farm level6",
+        "bran_and_feed": "not implemented",
+        "implemented_by_workbook_task": false
+      },
+      "interactive_calculator": {
+        "cached_formula_results_required": true,
+        "final_validation": "PASS",
+        "new_cached_formulas": 12,
+        "formula_samples_against_code": 160,
+        "independent_evaluator": true,
+        "LibreOffice_recalculation_claimed": false
+      },
+      "read_scope": {
+        "full_repository_master_rules_source_authorized": true,
+        "unselected_original_uploaded_editorial_sheets_read": false
+      },
+      "unchanged": {
+        "game_source": true,
+        "runtime": true,
+        "account_or_game_data": true,
+        "deployment": true,
+        "editorial_six_sheet_XLSX": true,
+        "editorial_MERGE_and_fingerprints": true
+      },
+      "new_CI_or_deployment_claimed": false,
+      "new_reset_executed": false,
+      "PROD_and_DNS": "POSTPONED_NO_ACTION",
+      "manual_user_acceptance": "NOT_RUN",
+      "initial_component_checkpoint": {
+        "facts": {
+          "tables": 14,
+          "rows": 6980
+        },
+        "texts": {
+          "tables": 15,
+          "tour_steps": 56,
+          "lessons": 25,
+          "catalog_items": 480,
+          "translation_rows": 2525,
+          "conditional_text_rows": 10504,
+          "full_source_code_entries": 114
+        },
+        "scenarios": {
+          "tables": 20,
+          "puzzle_layouts": 120,
+          "solver_checked_layouts": 115,
+          "marble_layout_only": 5,
+          "story_variants": 100,
+          "story_rooms": 560,
+          "campaign_steps": 152,
+          "reference_plan_days": 50
+        }
+      },
+      "output_bytes": 7581368,
+      "final_current_sheet_count": 56,
+      "final_visible_current_sheets": 51,
+      "final_hidden_current_sheets": 5,
+      "final_row_count_scope": "current56sheets only; historical100sheets excluded",
+      "report_path": "docs/arkusze/HARBORLIGHT15-zasady-walidacja.json",
+      "validation_report_sha256": "8917b889575a704b86f35f38863b66cd990f05ee6b776b67800f0575ad9b8175",
+      "source_validation": {
+        "result": "PASS",
+        "source_files": 114,
+        "source_git_commit": "e23b713ddbaef3ea6b0507c56a466f23c1f0aa92",
+        "frozen_and_current_file_hashes_verified": true,
+        "source_hashes": {
+          "backend/account-service.mjs": "c4228c6edc974d3c01184007b9ce06c78a3ec743e0c90341aaad4fcf77dac21a",
+          "backend/charity-ledger.mjs": "abd5cdd11bb317f090b50f9d037dac86f87697688f17de913537563189bd6e1a",
+          "backend/charity-service.mjs": "5791566b4773c750ffdc8feb7cc7e57ff81ae463b2423aa8fb571bc7d8a8c7e2",
+          "backend/community-service.mjs": "6581bc66fa20a7ab19348b5cadff165b5eda54519d31d07723856bfb3a3ab901",
+          "backend/dev-account-clock.mjs": "b7b66867566aaa8c8271285643b29973d8d244b0c3547e55b88397c38924e06b",
+          "backend/dev-runtime.mjs": "da724def53afbc0633ef26293108bc104640c0452c25a6743cf1bd5493be3521",
+          "backend/firebase-auth.mjs": "6df0625f6b3c1631c024a944bc01badd43f2db63e609d11fdff65955cebbe14b",
+          "backend/firestore-store.mjs": "1858b83d67761237d7f4f65b877909512756248e3c4378326ec6ecc2104b6811",
+          "backend/harborlight-v1-development-copy.js": "935abf8dde98ff58e9281d9e5f8ab7c889209b2b63c585beb0b348c723b88579",
+          "backend/harborlight-v1-economy.js": "ab825f0298cf97d02d0cc5f30b577c5566d8b00277519aaf4c0a5edce66070cc",
+          "backend/harborlight-v1-provisions.js": "26afea9c23a111e9474374278192a9c265a407d545234360b57ae05069e15009",
+          "backend/island-document-store.mjs": "87821dfde7428fa7300c5aa636840ac8dd515534b7835a90651b2780e5fce47b",
+          "backend/island-name.mjs": "d84d85d93a922017a4d160ae98adcced18a7b455cc4e44e0606fc36695c2efb1",
+          "backend/league-rules.mjs": "b8b81f16e12fc9b981e3b310efd049460e83dbef31ae58b533d3f1b8ebbe592c",
+          "backend/league-season.mjs": "840022bd789bab7073022fe3d2113f464c3435b34161dfffc26a630b364f7091",
+          "backend/player-trade.mjs": "9ce30ce473eae8c8fe411ea01710f03af57e89750786fec656e275e0975333a8",
+          "backend/retention.mjs": "7ac4e4a9b67c8a4f284dcee6888c828622985ec48a3e45f0c3c66e46ff45e572",
+          "backend/server.mjs": "f8999d4fdffe5452fa9ccd89723dd5f389c3d54cd25af3b07a6783b9a6bd44de",
+          "backend/starter-island.mjs": "90d78d608634633b0fb2b44e30d90d0c774d3c61c3c4ba186be79c307033688f",
+          "backend/trade-rules-v32.mjs": "eb5b6aaa4711126d38c9208cc7478aa8b763992deaef7fa9811d4f94bf0370d5",
+          "harborlight-auth-providers.js": "9ee861e1ac10a4a2d14c86f1d726d8775663abb65f838ed3567c5ffc7a13b143",
+          "harborlight-auth.js": "8a4e39c93bfbc8db506744ce02dff53c7c223f1cb6db2f3affe10df6fe38a91a",
+          "harborlight-dev-cloud.js": "012bd533d118c5b23c366fa2daef0db3fd3f53086e10796233a7ea6065d40283",
+          "harborlight-dev-sync.js": "77cd40e428bb11314b478fdbf66e40e1e4badbd3cfc8897b171813fdabd88233",
+          "harborlight-legal.js": "01d0ea0bc136047c55f08f90bf762ff2f58499b04376ced6b3718fda7a98fb27",
+          "harborlight-v01.js": "b7132acaa8bb01e2d6b1347b91d96325d0b2ef3931b5b0948dfbc2cc64884975",
+          "harborlight-v02-loader.js": "ec94da91a92d7930a1662871908333fbe3f49161f644ffb7c02b4c2af7853f8e",
+          "harborlight-v02.js": "f565f195b88abd2f25e888f6309c4132a08b752584aefa30a3f8973338f52f0f",
+          "harborlight-v021-loader.js": "dd6450a139892f5f56b3b7800fd7febbf7d9ddb0441d7db8cc4754846172ac53",
+          "harborlight-v05-map.js": "39377bdddcde40fec29fcb63545e2d82553061ae02853ec2b89c2a287e6c2ebd",
+          "harborlight-v1-activities.js": "355edd287dad9ecd7cf2042c307a4ae9d4bdbb84999c1cde91f010e8c79afc74",
+          "harborlight-v1-adventure-budget.js": "a106156367faff6c05add4c71f23774a82c3e4dc936b441f0f65cca1dee5d13e",
+          "harborlight-v1-adventure-journey.js": "035e3021cd38cb3f9a2048526f378037818d177a097328225d3362d01d986e6c",
+          "harborlight-v1-adventure-puzzles.js": "c6f415ce50df8534357cf1d2c698b3ff436fa68f33ef80b918e79740922d7071",
+          "harborlight-v1-adventures-art.js": "026e7e889edcb29b0528c8628ef0ec7a9c5e83f12791e9e56358cb29165df9c5",
+          "harborlight-v1-adventures-expanded-ui.js": "ccea90082a584cf395d927bbe571622a6be2a8f88a2df2cc9eddf565775982ad",
+          "harborlight-v1-adventures-ui.js": "be8794b97ba602b5ce919ef11d39a347b9678f3a9f8aaf683f48c4b936ffc3f0",
+          "harborlight-v1-adventures.js": "0a88438e4ff1c251ad8131392a0f2d1ca552cd3745202bdf1aab747400d8f88b",
+          "harborlight-v1-ambient.js": "f927a5d5487f34b490f83fb5d3651b78b1bbd1b01d29dac392e74afa80210193",
+          "harborlight-v1-approved-copy.js": "4f5b7aa1cc8ac106901861e8442ca7cd1a4c7637b5368e0a8324a66a1ec6af4e",
+          "harborlight-v1-archipelago.js": "50c8e07f64e4d13c57f82dfedf26c7b46b81176dd59775c1cfec8aeda6560e79",
+          "harborlight-v1-calendar.js": "bb0314ecc83345212200b91854622e2eee1b9d5c5ace0a915bb1a102c05f2d10",
+          "harborlight-v1-campaign.js": "15ebf1b882f652412299227d2240e3aef1c7e5f37309841bdf2c877d1f8129d3",
+          "harborlight-v1-charity.js": "800b9c602db6ad78987368fb894f48bea584ea0fbd26247a2aa126abcab44c7d",
+          "harborlight-v1-commerce.js": "f71cab1e5ac24a35dd041bc2843e439b3730b973473247dca8b02ff055a96ed9",
+          "harborlight-v1-community-client.js": "1d43eb4616b35b66b7ff4ecf526c0b31353ab74b306e9f9d9aa922876ee65ed1",
+          "harborlight-v1-community-ui.js": "e751ee09bf03838ec99941a7981c4a251f47d4db852baf0bfb7aaf96fbe04d99",
+          "harborlight-v1-copy.js": "c71fac016812d4028788e24e62ed4d5a9bd18c0fd931eb7afe311b3a4e91b06e",
+          "harborlight-v1-dev-preview.js": "92c065990d53f653dc77de60e761c41efb636031f06d7bfebd399758242c5222",
+          "harborlight-v1-development-copy.js": "935abf8dde98ff58e9281d9e5f8ab7c889209b2b63c585beb0b348c723b88579",
+          "harborlight-v1-development-logistics.js": "a18ffb32befaabc6ed458cd5e92a8d219b7f89557016d429e3eafd395bf92fe8",
+          "harborlight-v1-development-ui.js": "132305c419dd0246748b9cb607e79d24de162ac7a9d6d98409e0d9f65a7540a6",
+          "harborlight-v1-development.js": "2536e905c3d529c583a75b6f0b540e613f23bcc1d3b44d7240bdaea1e4e9ec77",
+          "harborlight-v1-economy.js": "ab825f0298cf97d02d0cc5f30b577c5566d8b00277519aaf4c0a5edce66070cc",
+          "harborlight-v1-education.js": "1c8281745c5c207aea92df3f0ac1dca9df5f2d61eefa9d286c228d47a2869f27",
+          "harborlight-v1-effects.js": "da2ed87a3c9441c32bffc269ed94202aa4bf2aabf265a848b5e76c6caef6fba4",
+          "harborlight-v1-engagement.js": "e94d94399fa12d01947e4154b1215ac0b872a00e962409688a1b270f7d892899",
+          "harborlight-v1-events.js": "dddc76f0fee97abb174d15b7ab3f770ffd9201883f88200a909ccb86ee89ce13",
+          "harborlight-v1-expedition-hour.js": "bc3782d63bb2f0d4f396ba63282a75a7c0d2de0a06b80ffefb3eb25d7f24495c",
+          "harborlight-v1-goods-art.js": "26b81718f50f9366c79f9f7ca0abac7a6fe2194ca0b34a0d4c85dd9f0625871a",
+          "harborlight-v1-housing.js": "0ff3d039a7d6cf1e7290d5f423b47d17bb8c17ffb65a5d0898e54b56cfd2de7d",
+          "harborlight-v1-i18n.js": "83663bf161a6aaa38e0dd150a8e1f3cf0312ef96b13bfa4ed662b47723794402",
+          "harborlight-v1-inhabitants.js": "d2cd1ad2b22c948ed9056f521afdfed98e5f89f0749be0e461d5b6e42bcb5835",
+          "harborlight-v1-interruption.js": "f1680ed3026002e50f1a504d52cb533f242a6cd489c38a3d87b18de43a0ca86b",
+          "harborlight-v1-inventory.js": "f49ab18510db07df54a63afa0b504ebdec9c08045888c9d68e4eb1f709a10c14",
+          "harborlight-v1-island-puzzles.js": "b52afc01ef2ccbff251b90ed7c03b6749bace13e09e775f9e767911593d67453",
+          "harborlight-v1-kingdom-client.js": "5d8e4194c2cdb5eca278ef2c666844179a44b900260c8bdfbf4bbb65f3361f54",
+          "harborlight-v1-kingdom-ui.js": "f5ee76dd03ba8603367436274cb3c44966c9fa68cf3b9baa5eb974f83a9e5d12",
+          "harborlight-v1-kingdom.js": "a702dd1e13884c92aae772b2c90af13a8fbd2a37a6f1f8b0c731b79a48a23db9",
+          "harborlight-v1-league.js": "613eec66eea538e0d5c13c0368050f9768f0dfde2e212ab3cff13b9fc9cf86f0",
+          "harborlight-v1-learning-feedback.js": "3d42e06cd85cd772edeb1d0a51f8027da8dec0c6cd0b632d7a68c3d4a773cfac",
+          "harborlight-v1-leisure.js": "78fc40e8d94b8731d9b8496ee6bd8c8b0f7f440b2b3fc46797212f3aab408c29",
+          "harborlight-v1-life.js": "af51b2c40670ee3954ce4dad84cb2f600d9d3bb0fc5400e5ea43fd8c542e9b35",
+          "harborlight-v1-logistics.js": "a8ffd055ec9ae19dd0a9f42a6978eddcb5570989118fd4cc1bf111bfbd7d7950",
+          "harborlight-v1-map-art.js": "04ebe0cd65e4f634195d1c217dc79123fbc364d0a8d7261fd6389148de0ac0bd",
+          "harborlight-v1-military.js": "629382b481d4d02c179146e7001cb5e6e8864dbbf845014421c7151349c95d30",
+          "harborlight-v1-minigame-ui.js": "715a8a46bce8e930a70fa8c22aa22e5eb7db92e461e46a471bce61fd5b274a8e",
+          "harborlight-v1-minigames.js": "6811531afb1e2ba6a803792d6646741b4f890ebd7700561c7a97a453b3cbfb8b",
+          "harborlight-v1-missions-ui.js": "f37796028c8f27ec645dac26233b45f4b9b9afa7cc3091ada29210b591d0b320",
+          "harborlight-v1-missions.js": "944eea66308f895597b17d4b62c43f048ce6f561f184ab9a128311fc128ab0df",
+          "harborlight-v1-notification-copy.js": "47090eee71de75265baf9ce50c2e9f103d85deaef7cb2b9c929916f5d1ab717f",
+          "harborlight-v1-onboarding-ui.js": "49fd39f42c886eacd3492fb2bdcb239d8ef97b4c990dd406f4c42642fa2458ca",
+          "harborlight-v1-original-puzzles-ui.js": "0d84f4aa50308270fb5eda2fdbdc365273550d75df4a6d7382c3422bd660a252",
+          "harborlight-v1-original-puzzles.js": "59901f94e35d0197783ee8adddc4f3b574056db8dca16f99006529aa4dda38ec",
+          "harborlight-v1-play.js": "5ef31ad160a08bfbb6191473f26e1ff5bc7a1b9eaf8e433f8f1061d96401d5c5",
+          "harborlight-v1-profile.js": "ca173b44c1da8856dc9aa4861fde9dc7e49cf16277ac64c2416b7d13c4748e6d",
+          "harborlight-v1-progression.js": "cab84894a5cc141540c2efd5919435dfd5dbf416ab7c8db98fc8ff7689aca782",
+          "harborlight-v1-provisions.js": "26afea9c23a111e9474374278192a9c265a407d545234360b57ae05069e15009",
+          "harborlight-v1-resident-labels.js": "42e2f019755d66d4abe9c57aadb15fe67b9e08cb678458ff7444ad157922f552",
+          "harborlight-v1-residents.js": "2ad8baa04cb7485bcb3b2dce7bc4fa02bedb6b263d0cc2fb622ba268dcbc614b",
+          "harborlight-v1-runtime-upgrade.js": "6489ab96444e2c78a4450664e0fef64995c8113d9f24e0aa9bf99bcd8ad61384",
+          "harborlight-v1-save-packing.js": "44d6c2d63ec44fca4b4b263ca283722a1ff21193c9100def76c46a4c409fd56c",
+          "harborlight-v1-smoke.js": "e6666bc51b535a411aea21ad03fe78d515470216b7f23a51e1c67424d1b3163f",
+          "harborlight-v1-state.js": "1aa6bfe774aba13dcbb4b47c4c070a463182fdab814d04d77bfe408c7857e731",
+          "harborlight-v1-story-catalog.js": "e2b4c43e345735c8b169e3e34ca130d58f3ea9598f10a54680fb548ddcb43ec4",
+          "harborlight-v1-theatre-art.js": "1b79846bf8a407d19175ca98c6b9f672bab22b844d95072795689b8fff03dcfa",
+          "harborlight-v1-theatre-ui.js": "808d4f873f2393d1b1998a7ca0859acaff0f39e8d17f93ef2dacd4a0fe40afc4",
+          "harborlight-v1-theatre.js": "9af363390a61f04ddd22eec55a094289f74bdb6a409d19945d56069b1183ee23",
+          "harborlight-v1-tutorial-ui.js": "12d04967a652c2d7fd9ae6eba642f48380cfbebb2d19c201678eaf6190644ce2",
+          "harborlight-v1-v16-copy.js": "340729871e9a8833104f499f2ce37069956f52d8c898a373da5b4afe6456cc61",
+          "harborlight-v1-water.js": "897c6e4fc26366eb6704600c64dea91eb5eaedb66fb2d34672699c525a296720",
+          "harborlight-v1-welcome.js": "1d22ad877bcbbcf2e3d592b5d6f231d67c941cbfc4da97102b0022b6322d5df6",
+          "harborlight-version.js": "85d63e4598715f88d3e9f8da4e1a6499d5e5ea603eecd82cc6de2781ec0a40f2",
+          "game.js": "48acb2d8cd6a115cb10c5657cd5dacf241bff7574375f085f0c44fdb59ff1939",
+          "harborlight-auth.html": "ca7bb0cecf185e660ab637b84f4fbedaf8ed9f5ea5e857ddf209edba2b56e0d3",
+          "harborlight-privacy.html": "3eb28df7f07e2f543c4b9ed2067a198a60c6b969625f29bb4770d95fcb12f6e0",
+          "harborlight-terms.html": "9c37c3a277816cc722476108f804ce4e27111ac99bebaf2244c711774293c95c",
+          "harborlight-v04.html": "d659fbd4ab9c7e033d05d150cb515dda3cced401a48215d66a9ee60d4816b323",
+          "harborlight-v05.html": "c988d41127ab0076e36cd2c08eda1e0224aa80280ecde193abc8c459e9dad71d",
+          "harborlight-v1-layered.html": "375b8eb3681a95b5415d42223a087adf759912a130bb49c36b9c6b0ee5f137f8",
+          "harborlight-v1-screen.html": "ccd6e4460adb4f93830eee29aac0b9af7a23eac60b0c9695f580248a2d6d43b5",
+          "harborlight.html": "0430cbbf3df4119408218e7665926c26a340533b610ed597cecfd77a7016bf60",
+          "index.html": "8476977fc9ece6afe26f6987f0e5c97e17aa3b0e6124792ee9c6b85133c610f4",
+          "panic-pets.js": "e9f17e2298b87b54f5d0a6bba351ab66cb4fbb0cbcba3221a68ec104370573dc"
+        },
+        "exporter_hashes": {
+          "facts": "2784fff4bfc4377f29561fa01dcdf63cb733e3615aa310fe35933866aaf28c80",
+          "texts": "af7570ef073eeff6c1e10b61f6f09f239a7ccdaf8aa4de2246dc9cd10f5df343",
+          "scenarios": "b2f3bf707d990935b5510246c1dc5a8fd27eefe60ced6419ba5f9e95816bdc7f"
+        },
+        "builder_sha256": "cc02f041399f1072d050e3e8c8e282ee9c876bfcdb5d9d0766538925a8b32749",
+        "export_payload_hashes": {
+          "facts": "7dd281700e510898ef51e6eba94b558dab6271a931d30de248a9e2df0379612a",
+          "texts": "045b0fdeaa36722d0a477eb14f70a6e2ff2b30347161dde4e9934f3431c46e42",
+          "scenarios": "09dd77240945260e5272bbdf91d96a53f6ffffba7877c6d74847b85adb975e2b"
+        },
+        "AST_and_full_source_trace": true,
+        "Excel_UTF16_cell_limit_verified": true,
+        "fresh_validate_reran_actual_model_and_text_exports": true,
+        "not_only_self_comparison": true
+      },
+      "final_tables": [
+        {
+          "id": "readme",
+          "sheet": "Przeczytaj v15",
+          "rows": 10,
+          "hidden": false
+        },
+        {
+          "id": "contents",
+          "sheet": "Spis treści v15",
+          "rows": 56,
+          "hidden": false
+        },
+        {
+          "id": "initial-state",
+          "sheet": "Start gry v15",
+          "rows": 83,
+          "hidden": false
+        },
+        {
+          "id": "levels",
+          "sheet": "Poziomy 1–100 v15",
+          "rows": 100,
+          "hidden": false
+        },
+        {
+          "id": "building-levels",
+          "sheet": "Budynki i poziomy v15",
+          "rows": 1901,
+          "hidden": false
+        },
+        {
+          "id": "products",
+          "sheet": "Produkty v15",
+          "rows": 22,
+          "hidden": false
+        },
+        {
+          "id": "recipe-levels",
+          "sheet": "Receptury i wydajność v15",
+          "rows": 2000,
+          "hidden": false
+        },
+        {
+          "id": "research",
+          "sheet": "Badania i odkrycia v15",
+          "rows": 19,
+          "hidden": false
+        },
+        {
+          "id": "research-levels",
+          "sheet": "Badania — poziomy v15",
+          "rows": 1603,
+          "hidden": false
+        },
+        {
+          "id": "direct-routes",
+          "sheet": "Transport bezpośredni v15",
+          "rows": 7,
+          "hidden": false
+        },
+        {
+          "id": "study-and-military",
+          "sheet": "Kursy i szkolenia v15",
+          "rows": 97,
+          "hidden": false
+        },
+        {
+          "id": "military-outcomes",
+          "sheet": "Wyprawy wojskowe — próby v15",
+          "rows": 36,
+          "hidden": false
+        },
+        {
+          "id": "roads",
+          "sheet": "Ścieżki i transport v15",
+          "rows": 6,
+          "hidden": false
+        },
+        {
+          "id": "population",
+          "sheet": "Przyrost i odpływ v15",
+          "rows": 201,
+          "hidden": false
+        },
+        {
+          "id": "conditional-rules",
+          "sheet": "Reguły warunkowe v15",
+          "rows": 24,
+          "hidden": false
+        },
+        {
+          "id": "parameters",
+          "sheet": "Parametry i limity v15",
+          "rows": 941,
+          "hidden": false
+        },
+        {
+          "id": "validated-examples",
+          "sheet": "Sprawdzone przykłady v15",
+          "rows": 23,
+          "hidden": false
+        },
+        {
+          "id": "intro_texts",
+          "sheet": "Wprowadzenie v15",
+          "rows": 3,
+          "hidden": false
+        },
+        {
+          "id": "tutorial_tour",
+          "sheet": "Tutorial — 56 kroków v15",
+          "rows": 56,
+          "hidden": false
+        },
+        {
+          "id": "tutorial_tour_variants",
+          "sheet": "Tutorial — warunki v15",
+          "rows": 6,
+          "hidden": false
+        },
+        {
+          "id": "tutorial_lessons",
+          "sheet": "Samouczek — 25 lekcji v15",
+          "rows": 25,
+          "hidden": false
+        },
+        {
+          "id": "development_copy",
+          "sheet": "Teksty — katalog v15",
+          "rows": 480,
+          "hidden": false
+        },
+        {
+          "id": "building_copy",
+          "sheet": "Budynki — wszystkie opisy v15",
+          "rows": 22,
+          "hidden": false
+        },
+        {
+          "id": "copy_labels",
+          "sheet": "Nazwy i słowniki v15",
+          "rows": 200,
+          "hidden": false
+        },
+        {
+          "id": "translations",
+          "sheet": "Tłumaczenia PL v15",
+          "rows": 2525,
+          "hidden": false
+        },
+        {
+          "id": "conditional_ui_texts",
+          "sheet": "Teksty warunkowe — kod v15",
+          "rows": 10507,
+          "hidden": false
+        },
+        {
+          "id": "static_html_texts",
+          "sheet": "Ekrany HTML v15",
+          "rows": 381,
+          "hidden": false
+        },
+        {
+          "id": "source_files",
+          "sheet": "Spis źródeł tekstów v15",
+          "rows": 114,
+          "hidden": false
+        },
+        {
+          "id": "scenario_rules",
+          "sheet": "Zasady minigier i przygód v15",
+          "rows": 130,
+          "hidden": false
+        },
+        {
+          "id": "scenario_conditions",
+          "sheet": "Warunki i rozgałęzienia v15",
+          "rows": 17,
+          "hidden": false
+        },
+        {
+          "id": "minigame_rounds",
+          "sheet": "Ekspedycje  trudność i nagr v15",
+          "rows": 48,
+          "hidden": false
+        },
+        {
+          "id": "original_puzzle_rounds",
+          "sheet": "Sieć i konwoje v15",
+          "rows": 36,
+          "hidden": false
+        },
+        {
+          "id": "island_puzzles",
+          "sheet": "Katalog24 mechanik v15",
+          "rows": 24,
+          "hidden": false
+        },
+        {
+          "id": "story_variants",
+          "sheet": "Opowieści i100 wariantów v15",
+          "rows": 100,
+          "hidden": false
+        },
+        {
+          "id": "story_rooms",
+          "sheet": "Wszystkie sale opowieści v15",
+          "rows": 560,
+          "hidden": false
+        },
+        {
+          "id": "campaign_chapters",
+          "sheet": "Kampania  rozdziały v15",
+          "rows": 19,
+          "hidden": false
+        },
+        {
+          "id": "campaign_steps",
+          "sheet": "Kampania 152 etapy v15",
+          "rows": 152,
+          "hidden": false
+        },
+        {
+          "id": "campaign_days",
+          "sheet": "Plan odniesienia50 dni v15",
+          "rows": 50,
+          "hidden": false
+        },
+        {
+          "id": "classic_expedition_maps",
+          "sheet": "Dawne mapy wypraw v15",
+          "rows": 3,
+          "hidden": false
+        },
+        {
+          "id": "adventure_catalog",
+          "sheet": "Przygody  katalog klasyczny v15",
+          "rows": 9,
+          "hidden": false
+        },
+        {
+          "id": "theatre_prices",
+          "sheet": "Teatr  ceny i poziomy v15",
+          "rows": 1030,
+          "hidden": false
+        },
+        {
+          "id": "theatre_shows",
+          "sheet": "Teatr  wyceny i warunki spe v15",
+          "rows": 10,
+          "hidden": false
+        },
+        {
+          "id": "theatre_styles",
+          "sheet": "Teatr  style i otoczenie v15",
+          "rows": 11,
+          "hidden": false
+        },
+        {
+          "id": "solver_checks",
+          "sheet": "Przykłady generatorów i sol v15",
+          "rows": 120,
+          "hidden": false
+        },
+        {
+          "id": "development_simulation_assumptions",
+          "sheet": "Symulacja  założenia v15",
+          "rows": 3,
+          "hidden": false
+        },
+        {
+          "id": "development_simulation_checkpoints",
+          "sheet": "Symulacja  rozwój i zasoby v15",
+          "rows": 123,
+          "hidden": false
+        },
+        {
+          "id": "development_simulation_commands",
+          "sheet": "Symulacja  ślad poleceń v15",
+          "rows": 187,
+          "hidden": false
+        },
+        {
+          "id": "historical_simulation_limits",
+          "sheet": "Historyczne dowody rozwoju v15",
+          "rows": 2,
+          "hidden": false
+        },
+        {
+          "id": "pending",
+          "sheet": "Stan i zaległości v15",
+          "rows": 3,
+          "hidden": false
+        },
+        {
+          "id": "calculator",
+          "sheet": "Kalkulator v15",
+          "rows": 24,
+          "hidden": false
+        },
+        {
+          "id": "source_functions",
+          "sheet": "Funkcje — indeks v15",
+          "rows": 6790,
+          "hidden": true
+        },
+        {
+          "id": "source_constants",
+          "sheet": "Stałe — indeks v15",
+          "rows": 9226,
+          "hidden": true
+        },
+        {
+          "id": "source_conditions",
+          "sheet": "Warunki — indeks v15",
+          "rows": 18703,
+          "hidden": true
+        },
+        {
+          "id": "source_code",
+          "sheet": "Kod — pełny zapis v15",
+          "rows": 320,
+          "hidden": true
+        },
+        {
+          "id": "calculator-data",
+          "sheet": "Kalkulator dane v15",
+          "rows": 2000,
+          "hidden": true
+        },
+        {
+          "id": "provenance",
+          "sheet": "Kontrola źródeł v15",
+          "rows": 114,
+          "hidden": false
+        }
+      ],
+      "final_facts_checks": {
+        "passed": true,
+        "physicalRecipeExamples": 20,
+        "numericExamples": 23,
+        "buildingLevelRows": 1901,
+        "recipeLevelRows": 2000,
+        "researchLevelRows": 1603,
+        "directRouteRows": 7,
+        "trainingQuoteRows": 97,
+        "militaryLifecycleCases": 36,
+        "sourceConditionRows": 24
+      },
+      "final_scenario_checks": {
+        "puzzleExamples": 120,
+        "solverSolved": 115,
+        "layoutsValidated": 120,
+        "storyVariants": 100,
+        "storyRooms": 560,
+        "campaignSteps": 152,
+        "theatrePricePoints": 1030,
+        "theatreShowCases": 10,
+        "currentSimulationProfiles": 3,
+        "allSimulationsCanonicalStart": true,
+        "noInjectedResourcesOrLevels": true
+      },
+      "final_text_coverage": {
+        "tourSteps": 56,
+        "tourVariants": 6,
+        "lessons": 25,
+        "developmentCopy": 480,
+        "buildingIds": 20,
+        "buildingVariants": 22,
+        "labels": 200,
+        "translationRows": 2525,
+        "conditionalTextCandidates": 10504,
+        "staticHtmlTexts": 381,
+        "applicationFiles": 114,
+        "astNodes": 447400,
+        "functions": 6790,
+        "constants": 9211,
+        "conditionBranches": 18703,
+        "sourceChunks": 200
+      },
+      "validation_logs": [
+        "/workspace/work/master-v15-build.log",
+        "/workspace/work/master-v15-validate-fresh.log"
+      ],
+      "new_own_CI": {
+        "status": "NOT_YET_RUN_FOR_NEW_GIT_PUBLICATION",
+        "run_id": null,
+        "conclusion": null,
+        "immutable_source_validation_step_added": true,
+        "step_fetches_report_source_sha": "e23b713ddbaef3ea6b0507c56a466f23c1f0aa92"
+      },
+      "Git_publication": {
+        "status": "PENDING",
+        "commit": null
+      },
+      "game_or_cloud_changes": false,
+      "publication_wording": "Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions."
+    }
   }
 }

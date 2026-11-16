@@ -105,6 +105,22 @@ jobs:
       - name: Verify current DEV editorial Excel and empty correction column
         run: python3 scripts/validate_dev_copy_workbook.py
 
+      - name: Verify full current master Excel and preserved historical rules
+        shell: bash
+        run: |
+          set -euo pipefail
+          workbook_source_sha="$(python3 - <<'PY'
+          import json
+          import re
+          from pathlib import Path
+          source = json.loads(Path('docs/arkusze/HARBORLIGHT15-zasady-walidacja.json').read_text())['source_git_commit']
+          assert re.fullmatch(r'[a-f0-9]{40}', source)
+          print(source)
+          PY
+          )"
+          git fetch --no-tags --depth=1 origin "$workbook_source_sha"
+          python3 scripts/build_workbook_v15.py --validate-only
+
       - name: Install browser acceptance dependencies
         shell: bash
         run: |

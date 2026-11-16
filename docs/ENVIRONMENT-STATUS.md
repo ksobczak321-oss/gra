@@ -1,5 +1,19 @@
 # HARBORLIGHT — stan środowisk
 
+## MASTER Excel 15 — gotowy artefakt, gra bez zmian
+
+**MASTER Excel 15 jest gotowy i przeszedł budowę oraz świeżą walidację PASS.** Ma 156 arkuszy: 100 archiwalnych i 56 bieżących (51 widocznych, 5 ukrytych), 61 262 bieżące wiersze oraz 7 581 368 bajtów. SHA-256: `b45a9f67ebcc1653ce2fc5413e5dbd9a42b32c103a52b4eda06db647b5dd1f11`. Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions.
+
+Eksport jest przypięty do źródła `e23b713ddbaef3ea6b0507c56a466f23c1f0aa92`. Zachowano 100 arkuszy archiwum, 220 części ZIP, 48 komentarzy i 4982 dotychczasowe wyniki formuł. Sprawdzono 114 plików, odciski trzech eksporterów i generatora, ślad AST, pełny kod oraz limity UTF-16 komórek. Świeże `--validate-only` ponownie wykonało eksporty modeli i tekstów. Kalkulator ma 12 nowych formuł z zapisanymi wynikami i 160 porównań do kodu.
+
+Rzeczywiste symulacje obejmują 24 h bezczynności, 24 h produkcji i 72 h rozwoju. W próbie rozwoju osiągnięto Ratusz 2, Magazyn 2, 64 osoby, 55 pracowników, 2371 monet i 6 przyjętych rozbudów, przy 36 łóżkach. Odnotowano 22 prawidłowe odmowy punktów Domu w 143 próbach. To wynik jawnej strategii z założeniem 3 h aktywności dziennie, bez twierdzenia o optymalnym graczu, symulacji 50 dni lub pomiarze 150 h ludzkiej zabawy. Niedokończona próba 7 dni nie została dołączona.
+
+Gra, konta, wdrożenia, archiwum 14 i redakcyjny Excel z sześcioma zakładkami pozostają bez zmian. Ser nadal powstaje w Gospodarstwie od poziomu 6; otręby i pasza nie są zaimplementowane. Zadanie obejmuje pełne repozytoryjne źródła mastera; nie obejmuje niewybranych zakładek oryginalnego uploadu redakcyjnego. Odebrana aplikacja to nadal 37061c, publikacja c4 i cache13. Ręczny odbiór użytkownika: NOT_RUN. PROD i DNS są odłożone.
+
+[MASTER 15](arkusze/HARBORLIGHT15-zasady.xlsx) · [Raport](arkusze/HARBORLIGHT15-zasady-walidacja.json) · [Dowody](v32/MASTER-WORKBOOK15-EVIDENCE.json).
+
+## Odebrane środowiska i historia wcześniejszych prac
+
 ## Odebrane DEV i PRE-PROD0.15.0.2 — 16listopada2026
 
 **DEV i PRE-PROD0.15.0.2/cache `frontend-v32-13` są odebrane.** Aplikacja `37061c43139f32dfba61e4d837b133ed9d2d7da8`, źródło publikacji i wdrożenia `c4f752142c0421aad1dc0490a2f5139c277e6ee5`. Usunięto przebłysk starej mapy/HUD przy starcie oraz wdrożono tempo1×/2×/6× wyłącznie dlaadmin3. Własny CI43850690541 **SUCCESS24m31s**:1437frontend+170backend+7physical=1614Node,166Python oraz **66 programówChromium (48+18)**, obie grupyPASS. Liczba65 pomijała osobnyLiveCAS i nie jest końcowym wynikiem.

@@ -1,5 +1,40 @@
 # Arkusz zasad HARBORLIGHT
 
+Bieżący pełny master to **[HARBORLIGHT15-zasady.xlsx](HARBORLIGHT15-zasady.xlsx)**, obejmujący zasady v32 gry 0.15.0.2 ze źródła `e23b713ddbaef3ea6b0507c56a466f23c1f0aa92`. Budowa i świeża walidacja: **PASS**. Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions. [Raport walidacji](HARBORLIGHT15-zasady-walidacja.json) · [Dokładne dowody](../v32/MASTER-WORKBOOK15-EVIDENCE.json).
+
+Plik ma **156 arkuszy: 100 archiwalnych i 56 bieżących (51 widocznych, 5 ukrytych)**, 61 262 bieżące wiersze oraz 7 581 368 bajtów. SHA-256: `b45a9f67ebcc1653ce2fc5413e5dbd9a42b32c103a52b4eda06db647b5dd1f11`.
+
+| Grupa zakładek v15 | Zawartość |
+|---|---|
+| Start, poziomy, budynki i gospodarka | Parametry startowe, poziomy 1–100, 1901 wierszy budynków, 2000 receptur i wydajności, 1603 wiersze poziomów badań, produkcja i czasy |
+| Transport, mieszkańcy, kursy i wojsko | Trasy, ścieżki, przyrost i odpływ ludności, szkolenia, wyprawy, warunki, limity i sprawdzone przykłady |
+| Tutorial, samouczek i teksty | 56 kroków i ich warianty, 25 lekcji, 480 pozycji katalogu, 2525 tłumaczeń, opisy budynków, teksty HTML i teksty warunkowe ze źródłami |
+| Minigry, przygody i kampania | 24 mechaniki, 120 układów (115 sprawdzonych solverem i 5 układów kulki sprawdzonych strukturalnie), 100 wariantów i 560 sal opowieści, 152 etapy, plan odniesienia na 50 dni, Teatr |
+| Symulacje i ich ślad | Rzeczywiste 24 h bezczynności, 24 h produkcji i 72 h rozwoju, założenia, zasoby, polecenia oraz odrębne dowody historyczne |
+| Kalkulator i kontrola źródeł | 12 nowych formuł z zapisanymi wynikami, 160 porównań do kodu, 114 źródeł i ich odciski |
+| Pięć ukrytych bieżących indeksów | Funkcje, stałe, warunki, pełny kod i dane kalkulatora; można odkryć je w Excelu |
+| Archiwum 14 | 100 arkuszy, 220 części ZIP, 48 komentarzy i 4982 wcześniejsze wyniki formuł zachowane bez zmian |
+
+**[HARBORLIGHT14-zasady.xlsx](HARBORLIGHT14-zasady.xlsx)** pozostaje niezmienionym archiwum 0.14/v31. SHA-256: `7f7ae4918964309b8e2b391edf8999d366dbbd0dcfa2676692984853e10962b6`. Osobny **[Excel do redakcji sześciu wybranych zakładek](HARBORLIGHT15-redakcja-6-zakladek.xlsx)** ma 413 wierszy w kolumnach A/B/C, z pustą kolumną C; nie zmieniano go w tym zadaniu.
+
+Symulacja 72 h kończy się na Ratuszu 2 i Magazynie 2, z 64 osobami, 55 pracownikami, 2371 monetami i 6 przyjętymi rozbudowami, przy 36 łóżkach. W 22 ze 143 prób prawidłowo odmówiono punktów Domu. Założenie 3 h aktywności dziennie i stały seed są jawne. To wynik jednej strategii, bez twierdzenia o symulacji 50 dni, optymalnym graczu lub pomiarze 150 h ludzkiej zabawy. Niedokończona próba 7 dni nie została włączona. [Surowa symulacja](../design/WORKBOOK-V32-SIMULATION.json) zawiera odciski źródeł i eksportera.
+
+Pełne źródła, ślad AST i limity UTF-16 są kontrolowane. Świeże `--validate-only` ponownie wykonuje rzeczywiste eksporty modeli i tekstów. Kalkulator ma wyniki niezależnego ewaluatora; nie deklarujemy przeliczenia przez LibreOffice.
+
+Regenerowanie i sprawdzanie wymagają Pythona (`openpyxl`, `lxml`) oraz Node.js:
+
+```sh
+python3 scripts/build_workbook_v15.py
+python3 scripts/build_workbook_v15.py --validate-only
+python3 scripts/build_workbook_v15.py --refresh-simulations
+```
+
+Pierwsze polecenie buduje skoroszyt z bieżących eksportów i przypiętego snapshotu symulacji; drugie go sprawdza. `--refresh-simulations` ponownie uruchamia modele i aktualizuje snapshot oraz artefakty. Może zająć kilka minut pracy CPU; nie jest kontrolą tylko do odczytu.
+
+Ser nadal powstaje w Gospodarstwie od poziomu 6; otręby i pasza nie są wdrożone. Master pokazuje rzeczywisty kod i zaległości. Zadanie nie zmienia gry, publicznych plików, backendu, redakcyjnego Excela/MERGE/odcisków, kont ani wdrożeń. Odebrane DEV/PRE-PROD pozostaje 37061c/c4/cache13. Nie wykonano nowego resetu ani działań PROD/DNS. Niewybrane zakładki oryginalnego uploadu redakcyjnego pozostają poza zakresem. Ręczny odbiór użytkownika: NOT_RUN.
+
+## Historyczny opis Excela14
+
 Bieżący plik: **[HARBORLIGHT14-zasady.xlsx](HARBORLIGHT14-zasady.xlsx)** — aktualne zasady kodu DEV **0.14.0.0 / v31**, odczytane z rzeczywistych eksportów modułów gry.
 
 [Pobierz Excel 14](https://github.com/ksobczak321-oss/gra/raw/refs/heads/main/docs/arkusze/HARBORLIGHT14-zasady.xlsx). Jeśli GitHub pokazuje stronę pliku, wybierz **Download raw file**. Plik otworzysz w Excelu, LibreOffice Calc lub Arkuszach Google.

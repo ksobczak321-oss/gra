@@ -2,9 +2,11 @@
 
 **DEV i PRE-PROD0.15.0.2/cache13 odebrane — 16listopada2026.** Aplikacja37061c, publikacja/wdrożenie `c4f752142c0421aad1dc0490a2f5139c277e6ee5`. WłasnyCI43850690541 SUCCESS24m31s (1614Node,166Python,66programówChromium), Pages43850690456 SUCCESS22s i PRE-PROD43854387444/1 SUCCESS2m22s. Start bez starej mapy/HUD; tempo1×/2×/6× tylkoadmin3. Natywny odbiór zalogowanej istniejącej wyspy i wszystkie109bajtowo zgodne plikiTLS PASS. TagiDEV/PRE-PROD0.15.0.2 opublikowane i zdalnie potwierdzone na c4.
 
-[Graj w PRE-PROD](https://harborlight-dev.web.app/harborlight-auth.html?mode=login&v=frontend-v32-13) · [Podgląd DEV bez konta](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-13) · [Dowody odbioru](docs/v32/CACHE13-ACCEPTANCE.json) · [Teksty6arkuszy do redakcji](docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx).
+[Graj w PRE-PROD](https://harborlight-dev.web.app/harborlight-auth.html?mode=login&v=frontend-v32-13) · [Podgląd DEV bez konta](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-13) · [Dowody odbioru](docs/v32/CACHE13-ACCEPTANCE.json) · [MASTER 15 — pełne zasady](docs/arkusze/HARBORLIGHT15-zasady.xlsx) · [Teksty6arkuszy do redakcji](docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx).
 
 Wcześniejszy reset zakończony; nowe wdrożenie zachowało generacje2,1istniejącą wyspę i2puste, bez zapisów audytowych. Ręczny odbiór użytkownika NOT_RUN. PROD i DNS odłożone. Kolejny commit metadanych nie zmienia odebranego źródła c4 ani tagów.
+
+**MASTER Excel 15** zawiera 156 arkuszy (100 archiwalnych i 56 bieżących), 61 262 bieżące wiersze i przeszedł świeżą walidację PASS. Obejmuje zasady, teksty i warunki, produkcję, minigry oraz rzeczywiste próby 24/24/72 h; 50 dni pozostaje planem. [Opis i regenerowanie](docs/arkusze/README.md) · [Raport](docs/arkusze/HARBORLIGHT15-zasady-walidacja.json). Gra i wdrożenia bez zmian. Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions.
 
 ## Historia wcześniejszych wydań i checkpointów
 

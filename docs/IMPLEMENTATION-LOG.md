@@ -1354,3 +1354,15 @@ Oba oryginalneZIP-y zweryfikowano po rozmiarze/SHA256. Rzeczywisty receiptv2 ma 
 **To wdrożenie nie resetowało kont.** Wcześniejszy reset pozostaje zakończony i niezależnie potwierdzony; nie wolno go powtarzać. Historyczny8087/cache12/CI43848428119FAILURE pozostaje w dowodach. Excel6/413/ABC/pustaC zachowuje źródło37061c iSHA256 `95f415d0748d5b5e389f92e28df2aef18e71b13968c74ac5a0e54835c7d4be8d`; pliki publiczne, wejściowy zakres sześciu arkuszy, MERGE i fingerprinty bez zmiany tą aktualizacją. **Ręczny odbiór użytkownika NOT_RUN. PROD/DNS odłożone.** Kolejny commit samych metadanych nie zastępuje aplikacji37061c, publikacji c4 ani tych tagów.
 
 [Dowody](v32/CACHE13-ACCEPTANCE.json).
+
+## 2026-11-16 — MASTER Excel 15: budowa i świeża walidacja PASS
+
+**MASTER Excel 15 jest gotowy i przeszedł budowę oraz świeżą walidację PASS.** Ma 156 arkuszy: 100 archiwalnych i 56 bieżących (51 widocznych, 5 ukrytych), 61 262 bieżące wiersze oraz 7 581 368 bajtów. SHA-256: `b45a9f67ebcc1653ce2fc5413e5dbd9a42b32c103a52b4eda06db647b5dd1f11`. Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions.
+
+Eksport jest przypięty do źródła `e23b713ddbaef3ea6b0507c56a466f23c1f0aa92`. Zachowano 100 arkuszy archiwum, 220 części ZIP, 48 komentarzy i 4982 dotychczasowe wyniki formuł. Sprawdzono 114 plików, odciski trzech eksporterów i generatora, ślad AST, pełny kod oraz limity UTF-16 komórek. Świeże `--validate-only` ponownie wykonało eksporty modeli i tekstów. Kalkulator ma 12 nowych formuł z zapisanymi wynikami i 160 porównań do kodu.
+
+Rzeczywiste symulacje obejmują 24 h bezczynności, 24 h produkcji i 72 h rozwoju. W próbie rozwoju osiągnięto Ratusz 2, Magazyn 2, 64 osoby, 55 pracowników, 2371 monet i 6 przyjętych rozbudów, przy 36 łóżkach. Odnotowano 22 prawidłowe odmowy punktów Domu w 143 próbach. To wynik jawnej strategii z założeniem 3 h aktywności dziennie, bez twierdzenia o optymalnym graczu, symulacji 50 dni lub pomiarze 150 h ludzkiej zabawy. Niedokończona próba 7 dni nie została dołączona.
+
+Gra, konta, wdrożenia, archiwum 14 i redakcyjny Excel z sześcioma zakładkami pozostają bez zmian. Ser nadal powstaje w Gospodarstwie od poziomu 6; otręby i pasza nie są zaimplementowane. Zadanie obejmuje pełne repozytoryjne źródła mastera; nie obejmuje niewybranych zakładek oryginalnego uploadu redakcyjnego. Odebrana aplikacja to nadal 37061c, publikacja c4 i cache13. Ręczny odbiór użytkownika: NOT_RUN. PROD i DNS są odłożone.
+
+[Dowody](v32/MASTER-WORKBOOK15-EVIDENCE.json) · [Raport](arkusze/HARBORLIGHT15-zasady-walidacja.json).
