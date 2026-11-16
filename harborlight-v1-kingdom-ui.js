@@ -1,6 +1,6 @@
-import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-12';
-import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-12';
-import { kingdomStatus, kingdomLoanQuote } from './harborlight-v1-kingdom.js?v=frontend-v32-12';
+import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-13';
+import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-13';
+import { kingdomStatus, kingdomLoanQuote } from './harborlight-v1-kingdom.js?v=frontend-v32-13';
 
 const LABELS={wood:'drewno',stone:'kamień',grain:'zboże',vegetables:'warzywa',livestock:'żywiec',rawMilk:'surowe mleko',sourMilk:'kwaśne mleko',fish:'ryby',flour:'mąka',pasteurizedMilk:'mleko pasteryzowane',meat:'mięso',leather:'skóry',bread:'chleb',cake:'ciasto',cheese:'ser',civilianClothes:'stroje cywilne',militaryClothes:'stroje wojskowe',professorRobes:'szaty profesorskie',planks:'deski',food:'żywność'};
 const KIND={supply:'Dostawa',mixed:'Dostawa i monety',coins:'Wsparcie monetami',lending:'Pożyczka dla Królestwa',deposit:'Depozyt',army:'Wysłanie oddziału',development:'Własne wojsko',officerTraining:'Szkolenie oficerów',professor:'Przekazanie profesora'};

@@ -1,5 +1,5 @@
-import { developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-12';
-import { getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-12';
+import { developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-13';
+import { getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-13';
 
 // Presentation only: descriptions and level names never affect saved mechanics.
 const purposes = {
