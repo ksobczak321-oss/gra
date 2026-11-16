@@ -9,9 +9,9 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `cache13_source37061c_local_targeted_PASS_new_publication_pending` |
-| CI | `pending_new_source37061c_previous8087_failed43848428119` |
-| PRE-PROD | `pending_new_own_DEV_acceptance_standard_deployment_native_UI_proof` |
+| DEV | `accepted_source_c4f7521_own_CI_Pages_tag` |
+| CI | `passed_source_c4f7521_run43850690541` |
+| PRE-PROD | `deployed_and_accepted_source_c4f7521_run43854387444` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
 
@@ -37,14 +37,15 @@ Data pierwotnej wiadomości: 2026-11-16. Użytkownik zatwierdził admin3-only na
 
 ## Dowody
 
-- **Dokumenty:** [docs/v32/GO-ADMIN3-SPEED.md](../../v32/GO-ADMIN3-SPEED.md), [docs/v32/ADMIN3-SPEED-EVIDENCE.json](../../v32/ADMIN3-SPEED-EVIDENCE.json), [docs/v32/PREPROD-RESET-INDEPENDENT-READ.json](../../v32/PREPROD-RESET-INDEPENDENT-READ.json), [docs/v32/CACHE12-LOCAL-VALIDATION.json](../../v32/CACHE12-LOCAL-VALIDATION.json), [docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json](../../v32/PREPROD-OWNER-FIRST-GAME-READ.json), [docs/v32/CACHE12-PUBLICATION-EVIDENCE.json](../../v32/CACHE12-PUBLICATION-EVIDENCE.json), [docs/v32/CACHE13-LOCAL-VALIDATION.json](../../v32/CACHE13-LOCAL-VALIDATION.json)
+- **Dokumenty:** [docs/v32/GO-ADMIN3-SPEED.md](../../v32/GO-ADMIN3-SPEED.md), [docs/v32/ADMIN3-SPEED-EVIDENCE.json](../../v32/ADMIN3-SPEED-EVIDENCE.json), [docs/v32/PREPROD-RESET-INDEPENDENT-READ.json](../../v32/PREPROD-RESET-INDEPENDENT-READ.json), [docs/v32/CACHE12-LOCAL-VALIDATION.json](../../v32/CACHE12-LOCAL-VALIDATION.json), [docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json](../../v32/PREPROD-OWNER-FIRST-GAME-READ.json), [docs/v32/CACHE12-PUBLICATION-EVIDENCE.json](../../v32/CACHE12-PUBLICATION-EVIDENCE.json), [docs/v32/CACHE13-LOCAL-VALIDATION.json](../../v32/CACHE13-LOCAL-VALIDATION.json), [docs/v32/CACHE13-ACCEPTANCE.json](../../v32/CACHE13-ACCEPTANCE.json), [docs/v32/CACHE13-PREPROD-ARTIFACT-TLS-AUDIT.json](../../v32/CACHE13-PREPROD-ARTIFACT-TLS-AUDIT.json), [docs/v32/CACHE13-LIVE-CLOCK-ACCOUNT-AUDIT.json](../../v32/CACHE13-LIVE-CLOCK-ACCOUNT-AUDIT.json), [docs/v32/CACHE13-DEPLOY-SUMMARY.json](../../v32/CACHE13-DEPLOY-SUMMARY.json), [docs/v32/CACHE13-CI-SUMMARY.json](../../v32/CACHE13-CI-SUMMARY.json)
 - **Kod:** [backend/dev-account-clock.mjs](../../../backend/dev-account-clock.mjs), [backend/account-service.mjs](../../../backend/account-service.mjs), [backend/server.mjs](../../../backend/server.mjs), [backend/dev-runtime.mjs](../../../backend/dev-runtime.mjs), [harborlight-dev-cloud.js](../../../harborlight-dev-cloud.js), [harborlight-dev-sync.js](../../../harborlight-dev-sync.js), [harborlight-v1-play.js](../../../harborlight-v1-play.js)
 - **Scenariusze automatyczne:** [tests/harborlight-dev-account-clock.test.mjs](../../../tests/harborlight-dev-account-clock.test.mjs), [backend/test/dev-time-api.test.mjs](../../../backend/test/dev-time-api.test.mjs)
 - **Kod dowodowy:** `37061c43139f32dfba61e4d837b133ed9d2d7da8`.
-- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/43848428119.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/43850690541.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/43854387444.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Bieżący37061c/.15.0.2/cache13: UIDdev-admin3 clientinitgate+56cachequery,serwerbez zmian. CloudrulesFirestore/API134.56sPASS bez zmian testu/asercji;speed6/6PASS0auto-clockrequestsadmin1/admin2obaśrodowiska,zachowaneadmin3;package2/stage3PASS. NoweCI/Pages/PREFPENDING. Historyczny8087cache12CIFAILURE43848428119/PagesSUCCESS43848428111 bez tagu/PREF zachowany. Reset/ownerworldpotwierdzone,bezQAcreate/PROD.
+Odebrane37061c→c4/.15.0.2/cache13:ownCI43850690541SUCCESS24m31s1614Node/166Python/66Chromium(48+18);Pages43850690456SUCCESS22s/TLS108/renderpobranychbajtówlocal1440/390PASS,bezDEVnativeHTTPSclaim. PREPROD43854387444/1SUCCESS2m22s:actualsignedexistingUI108hashy/blockedwrites,3Auth/3API/1world+2null/isolationPASS. Actualreceiptv2/ZIPsizeSHA/strict109/TLSall10930781978bytesPASS. LiveclockGET403/403/200admin3rate1canSettruecanAdvancefalse,allgen2,0gameclockwrites/initializations. Bothimmutabletagsremoteverifiedc4. Earlierresetnotrepeated,8087FAILhistory/manualNOTRUN/PRODpostponed.
 
 ## Relacje
 

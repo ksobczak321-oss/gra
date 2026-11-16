@@ -1,0 +1,53 @@
+{
+  "run_id": 43854387444,
+  "conclusion": "success",
+  "head_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+  "duration_seconds": 142.0,
+  "jobs": [
+    {
+      "id": 133254792440,
+      "name": "gate",
+      "status": "completed",
+      "conclusion": "success",
+      "duration_seconds": 12.0,
+      "active_steps": [],
+      "failed_steps": [],
+      "completed_step_count": 7
+    },
+    {
+      "id": 133254914412,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "success",
+      "duration_seconds": 123.0,
+      "active_steps": [],
+      "failed_steps": [],
+      "completed_step_count": 32
+    }
+  ],
+  "hosted_native_ui": {
+    "job_id": 133254914412,
+    "step_conclusion": "success",
+    "exact_asset_hashes": 108,
+    "authenticated_existing_island_render": true,
+    "all_browser_writes_blocked": true
+  },
+  "account_isolation": {
+    "job_id": 133254914412,
+    "step_conclusion": "success"
+  },
+  "successful_artifact_publication": [
+    {
+      "name": "Publish the exact successful DEV frontend bundle",
+      "conclusion": "success"
+    },
+    {
+      "name": "Publish successful DEV release receipt",
+      "conclusion": "success"
+    }
+  ],
+  "safe_log_evidence": [
+    "deploy\tTest the actual hosted game in Chromium\t2026-11-16T11:06:01.7182535Z PASS hosted: 108 exact asset hashes, anonymous Auth entry, isolated runtime/API routing, actual existing signed-in island render; all browser writes blocked; no gameplay claims/upgrades/resets performed",
+    "deploy\tVerify permanent DEV accounts and cloud save isolation\t2026-11-16T11:06:06.0642676Z PASS — 3 permanent DEV accounts; 1 existing saves; 2 empty islands; 6 foreign and 3 anonymous reads denied. 3 API reads; 3 owned direct reads and 3 anonymous API reads denied. No island writes performed."
+  ]
+}

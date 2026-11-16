@@ -14,10 +14,10 @@ Rejestr nie publikuje prywatnych kwot Billing ani danych osobistych związanych 
 
 ## Bieżące środowiska
 
-- Nowy DEV **0.15.0.2**: `Pages_published_TLS_bytes_and_local_downloaded_render_PASS_own_CI_FAILURE_not_accepted`; CI `failure`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
-- Odebrany PRE-PROD **0.15.0.1**: źródło `86eb8d9a40dab073c17a1b0f96dca38f1a15e24c`; [deploy 43768861718](https://github.com/ksobczak321-oss/gra/actions/runs/43768861718), próba 1.
+- Nowy DEV **0.15.0.2**: `accepted_own_CI_Pages_TLS_public_bytes_transport_replay_and_remote_tag`; CI `success`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
+- Odebrany PRE-PROD **0.15.0.2**: źródło `c4f752142c0421aad1dc0490a2f5139c277e6ee5`; [deploy 43854387444](https://github.com/ksobczak321-oss/gra/actions/runs/43854387444), próba 1.
 - PRE-PROD tej wcześniejszej wersji nie oznacza promocji nowych kart. PROD oraz pełny reset kont: bez nowej operacji.
-Kandydat37061c/.15.0.2/cache13committed; cloudrulesFirestore/API134.56sPASS bez zmianasercji,speed6/6PASS z0auto-clockrequestsadmin1/admin2,package2/stage3PASS. NoweCI/Pages/PREFpending; publicznyDEV8087cache12PagesSUCCESS/CIFAILUREhistoryczne. PREF86/cache11/reset/ownerworldpotwierdzone,PRODodłożony.
+DEV/PRE-PROD0.15.0.2/cache13 acceptedc4 app37061c:CI43850690541SUCCESS24m31s/1614Node/166Python/66Chromium(48+18),Pages43850690456SUCCESS22s,PREF43854387444/1SUCCESS2m22s;nativeexistingUI/receiptv2/strict109/all109TLS30781978bytesPASS. LiveclockGETonlyrole403/403/200rate1canSettruecanAdvancefalse,gen2/1world+2nullpreserved,0gameclockwrites/initializations. Bothimmutabletagsremoteverified. Earlierresetnotrepeated;8087FAILhistory/manualNOTRUN/PRODpostponed.
 
 ## Historyczny punkt odniesienia ewidencji
 
@@ -192,8 +192,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1148 — Nazwy i grupy zajęć w Akademii, Koszarach, Teatrze, Królestwie i klasycznych wyborach](changes/HL-CHG-1148.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1149 — Plansza pamięci120kart zachowuje minimum20px po opóźnionym resize](changes/HL-CHG-1149.md) | Bug | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1150 — Import zatwierdzonej redakcjiPL z sześciu arkuszy z pierwszeństwemC i zachowaniem prawdziwej logiki](changes/HL-CHG-1150.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
-| [HL-CHG-1154 — Start pokazuje ekran ładowania zamiast starej mapy referencyjnej i HUD](changes/HL-CHG-1154.md) | Bug | `accepted` | `cache13_source37061c_local_targeted_PASS_new_publication_pending` | `pending_new_own_DEV_acceptance_standard_deployment_native_UI_proof` |
-| [HL-CHG-1155 — Admin3 steruje rzeczywistym tempem1×/2×/6× na DEV i PRE-PROD](changes/HL-CHG-1155.md) | Story | `accepted` | `cache13_source37061c_local_targeted_PASS_new_publication_pending` | `pending_new_own_DEV_acceptance_standard_deployment_native_UI_proof` |
+| [HL-CHG-1154 — Start pokazuje ekran ładowania zamiast starej mapy referencyjnej i HUD](changes/HL-CHG-1154.md) | Bug | `accepted` | `accepted_source_c4f7521_own_CI_Pages_tag` | `deployed_and_accepted_source_c4f7521_run43854387444` |
+| [HL-CHG-1155 — Admin3 steruje rzeczywistym tempem1×/2×/6× na DEV i PRE-PROD](changes/HL-CHG-1155.md) | Story | `accepted` | `accepted_source_c4f7521_own_CI_Pages_tag` | `deployed_and_accepted_source_c4f7521_run43854387444` |
 
 <a id="hl-epic-tut"></a>
 

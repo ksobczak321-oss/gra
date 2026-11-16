@@ -29484,9 +29484,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "cache13_source37061c_local_targeted_PASS_new_publication_pending",
-        "ci": "pending_new_source37061c_previous8087_failed43848428119",
-        "preprod": "pending_new_own_DEV_acceptance_standard_deployment_native_UI_proof",
+        "dev": "accepted_source_c4f7521_own_CI_Pages_tag",
+        "ci": "passed_source_c4f7521_run43850690541",
+        "preprod": "deployed_and_accepted_source_c4f7521_run43854387444",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -29513,7 +29513,12 @@
           "docs/v32/CACHE12-LOCAL-VALIDATION.json",
           "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json",
           "docs/v32/CACHE12-PUBLICATION-EVIDENCE.json",
-          "docs/v32/CACHE13-LOCAL-VALIDATION.json"
+          "docs/v32/CACHE13-LOCAL-VALIDATION.json",
+          "docs/v32/CACHE13-ACCEPTANCE.json",
+          "docs/v32/CACHE13-PREPROD-ARTIFACT-TLS-AUDIT.json",
+          "docs/v32/CACHE13-LIVE-CLOCK-ACCOUNT-AUDIT.json",
+          "docs/v32/CACHE13-DEPLOY-SUMMARY.json",
+          "docs/v32/CACHE13-CI-SUMMARY.json"
         ],
         "code": [
           "harborlight-v1-layered.html",
@@ -29527,11 +29532,11 @@
         "manual_execution": "NOT_RUN",
         "source_baseline_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
         "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
-        "release_note": "Bieżący37061c/.15.0.2/cache13: UIDdev-admin3 clientinitgate+56cachequery,serwerbez zmian. CloudrulesFirestore/API134.56sPASS bez zmian testu/asercji;speed6/6PASS0auto-clockrequestsadmin1/admin2obaśrodowiska,zachowaneadmin3;package2/stage3PASS. NoweCI/Pages/PREFPENDING. Historyczny8087cache12CIFAILURE43848428119/PagesSUCCESS43848428111 bez tagu/PREF zachowany. Reset/ownerworldpotwierdzone,bezQAcreate/PROD.",
+        "release_note": "Odebrane37061c→c4/.15.0.2/cache13:ownCI43850690541SUCCESS24m31s1614Node/166Python/66Chromium(48+18);Pages43850690456SUCCESS22s/TLS108/renderpobranychbajtówlocal1440/390PASS,bezDEVnativeHTTPSclaim. PREPROD43854387444/1SUCCESS2m22s:actualsignedexistingUI108hashy/blockedwrites,3Auth/3API/1world+2null/isolationPASS. Actualreceiptv2/ZIPsizeSHA/strict109/TLSall10930781978bytesPASS. LiveclockGET403/403/200admin3rate1canSettruecanAdvancefalse,allgen2,0gameclockwrites/initializations. Bothimmutabletagsremoteverifiedc4. Earlierresetnotrepeated,8087FAILhistory/manualNOTRUN/PRODpostponed.",
         "application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
-        "publication_sha": null,
+        "publication_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
         "previous_application_checkpoint_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43848428119",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43850690541",
         "cache12_publication": {
           "version": "0.15.0.2",
           "cache": "frontend-v32-12",
@@ -29588,17 +29593,13 @@
           "new_PREPROD_deployment": false
         },
         "planned_next_candidate": {
-          "version": "0.15.0.2",
-          "cache": "frontend-v32-13",
+          "status": "completed_accepted",
           "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
-          "publication_commit": null,
-          "status": "APPLICATION_COMMITTED_TARGETED_PASS_NEW_OWN_CI_PAGES_PREPROD_PENDING",
-          "fix": "Only authenticated UIDdev-admin3 initializes client /dev-time requests; server remains unchanged",
-          "targeted_cloud_rules_and_six_scope_UI": "PASS",
-          "own_CI": "PENDING_NEW_RUN",
-          "Pages": "PENDING_NEW_RUN",
-          "PREPROD": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_NATIVE_UI_PROOF"
-        }
+          "publication_commit": "c4f752142c0421aad1dc0490a2f5139c277e6ee5"
+        },
+        "accepted_release": "docs/v32/CACHE13-ACCEPTANCE.json",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43850690456",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43854387444"
       },
       "notes": [
         "Odebrany DEV/PRE-PROD86/0.15.0.1/cache11 zachowuje historyczne dowody i niezmienne tagi; nie przypisujemy jego sukcesów nowemu kodowi."
@@ -29629,9 +29630,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "cache13_source37061c_local_targeted_PASS_new_publication_pending",
-        "ci": "pending_new_source37061c_previous8087_failed43848428119",
-        "preprod": "pending_new_own_DEV_acceptance_standard_deployment_native_UI_proof",
+        "dev": "accepted_source_c4f7521_own_CI_Pages_tag",
+        "ci": "passed_source_c4f7521_run43850690541",
+        "preprod": "deployed_and_accepted_source_c4f7521_run43854387444",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -29658,7 +29659,12 @@
           "docs/v32/CACHE12-LOCAL-VALIDATION.json",
           "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json",
           "docs/v32/CACHE12-PUBLICATION-EVIDENCE.json",
-          "docs/v32/CACHE13-LOCAL-VALIDATION.json"
+          "docs/v32/CACHE13-LOCAL-VALIDATION.json",
+          "docs/v32/CACHE13-ACCEPTANCE.json",
+          "docs/v32/CACHE13-PREPROD-ARTIFACT-TLS-AUDIT.json",
+          "docs/v32/CACHE13-LIVE-CLOCK-ACCOUNT-AUDIT.json",
+          "docs/v32/CACHE13-DEPLOY-SUMMARY.json",
+          "docs/v32/CACHE13-CI-SUMMARY.json"
         ],
         "code": [
           "backend/dev-account-clock.mjs",
@@ -29676,11 +29682,11 @@
         "manual_execution": "NOT_RUN",
         "source_baseline_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
         "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
-        "release_note": "Bieżący37061c/.15.0.2/cache13: UIDdev-admin3 clientinitgate+56cachequery,serwerbez zmian. CloudrulesFirestore/API134.56sPASS bez zmian testu/asercji;speed6/6PASS0auto-clockrequestsadmin1/admin2obaśrodowiska,zachowaneadmin3;package2/stage3PASS. NoweCI/Pages/PREFPENDING. Historyczny8087cache12CIFAILURE43848428119/PagesSUCCESS43848428111 bez tagu/PREF zachowany. Reset/ownerworldpotwierdzone,bezQAcreate/PROD.",
+        "release_note": "Odebrane37061c→c4/.15.0.2/cache13:ownCI43850690541SUCCESS24m31s1614Node/166Python/66Chromium(48+18);Pages43850690456SUCCESS22s/TLS108/renderpobranychbajtówlocal1440/390PASS,bezDEVnativeHTTPSclaim. PREPROD43854387444/1SUCCESS2m22s:actualsignedexistingUI108hashy/blockedwrites,3Auth/3API/1world+2null/isolationPASS. Actualreceiptv2/ZIPsizeSHA/strict109/TLSall10930781978bytesPASS. LiveclockGET403/403/200admin3rate1canSettruecanAdvancefalse,allgen2,0gameclockwrites/initializations. Bothimmutabletagsremoteverifiedc4. Earlierresetnotrepeated,8087FAILhistory/manualNOTRUN/PRODpostponed.",
         "application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
-        "publication_sha": null,
+        "publication_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
         "previous_application_checkpoint_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43848428119",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43850690541",
         "cache12_publication": {
           "version": "0.15.0.2",
           "cache": "frontend-v32-12",
@@ -29737,17 +29743,13 @@
           "new_PREPROD_deployment": false
         },
         "planned_next_candidate": {
-          "version": "0.15.0.2",
-          "cache": "frontend-v32-13",
+          "status": "completed_accepted",
           "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
-          "publication_commit": null,
-          "status": "APPLICATION_COMMITTED_TARGETED_PASS_NEW_OWN_CI_PAGES_PREPROD_PENDING",
-          "fix": "Only authenticated UIDdev-admin3 initializes client /dev-time requests; server remains unchanged",
-          "targeted_cloud_rules_and_six_scope_UI": "PASS",
-          "own_CI": "PENDING_NEW_RUN",
-          "Pages": "PENDING_NEW_RUN",
-          "PREPROD": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_NATIVE_UI_PROOF"
-        }
+          "publication_commit": "c4f752142c0421aad1dc0490a2f5139c277e6ee5"
+        },
+        "accepted_release": "docs/v32/CACHE13-ACCEPTANCE.json",
+        "pages_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43850690456",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43854387444"
       },
       "notes": [
         "Nie łączyć uprawnienia admin3 z samą nazwą wpisaną wUI lub adresemURL; kontrola musi dotyczyć właściwego uwierzytelnionego konta."
@@ -29767,15 +29769,15 @@
   ],
   "current_environment": {
     "as_of": "2026-11-16",
-    "preprod_application_version": "0.15.0.1",
-    "preprod_source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-    "preprod_ci_run_id": 43766275390,
-    "preprod_deployment_run_id": 43768861718,
+    "preprod_application_version": "0.15.0.2",
+    "preprod_source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+    "preprod_ci_run_id": 43850690541,
+    "preprod_deployment_run_id": 43854387444,
     "preprod_deployment_attempt": 1,
-    "preprod_status": "deployed_source_86eb8d9_native_authenticated_rules32_functional_acceptance_SUCCESS_reset_NOT_EXECUTED",
+    "preprod_status": "accepted_c4_native_authenticated_existing_UI_receipt_archive_live_TLS_and_readonly_clock_accounts_PASS",
     "prod_status": "postponed_by_user",
-    "full_test_account_reset": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
-    "note": "Kandydat37061c/.15.0.2/cache13committed; cloudrulesFirestore/API134.56sPASS bez zmianasercji,speed6/6PASS z0auto-clockrequestsadmin1/admin2,package2/stage3PASS. NoweCI/Pages/PREFpending; publicznyDEV8087cache12PagesSUCCESS/CIFAILUREhistoryczne. PREF86/cache11/reset/ownerworldpotwierdzone,PRODodłożony.",
+    "full_test_account_reset": "earlier_RESET_SUCCESS_INDEPENDENTLY_VERIFIED_not_repeated_by_this_deployment",
+    "note": "DEV/PRE-PROD0.15.0.2/cache13 acceptedc4 app37061c:CI43850690541SUCCESS24m31s/1614Node/166Python/66Chromium(48+18),Pages43850690456SUCCESS22s,PREF43854387444/1SUCCESS2m22s;nativeexistingUI/receiptv2/strict109/all109TLS30781978bytesPASS. LiveclockGETonlyrole403/403/200rate1canSettruecanAdvancefalse,gen2/1world+2nullpreserved,0gameclockwrites/initializations. Bothimmutabletagsremoteverified. Earlierresetnotrepeated;8087FAILhistory/manualNOTRUN/PRODpostponed.",
     "previous_accepted_dev": {
       "as_of": "2026-11-04",
       "dev_application_version": "0.14.0.0",
@@ -29802,8 +29804,8 @@
         "dev_tag": "dev-0.13.0.0-20261103"
       }
     },
-    "preprod_promotion_status": "completed_success_source_86eb8d9",
-    "preprod_promotion_target": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "preprod_promotion_status": "completed_success_source_c4f7521",
+    "preprod_promotion_target": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
     "previous_accepted_preprod": {
       "preprod_application_version": "0.12.0.0",
       "preprod_source_sha": "d9e2940b9a00755d979c159ec0fb62e290dd7ff1",
@@ -29812,22 +29814,22 @@
       "preprod_deployment_attempt": 1,
       "preprod_status": "previous_release_verified"
     },
-    "preprod_pages_run_id": 43766275430,
+    "preprod_pages_run_id": 43850690456,
     "preprod_bridge_run_id": null,
-    "preprod_tag": "preprod-0.15.0.1-20261115",
-    "preprod_tag_remote_object": "446347dab79ebc3e8c088d6d257adbdcd0f5f6e4",
+    "preprod_tag": "preprod-0.15.0.2-20261116",
+    "preprod_tag_remote_object": "9ff02b5d158485dfb955572e6a7d8b6e29d34cf2",
     "preprod_artifacts": [
       {
-        "id": 14183427928,
-        "name": "harborlight-dev-frontend-43768861718-1",
-        "size_in_bytes": 28095527,
-        "zip_sha256": "c5305f6c01ccd355f59d8fbde765729caec1033fe9cabaa1bcf284bf663d4bc9"
+        "kind": "receipt",
+        "id": 14220521501,
+        "size_in_bytes": 616,
+        "zip_sha256": "0e91395fdd711d61f9f0ab937bc60ffdd584621fa2e10a0e2304ce35655f01b4"
       },
       {
-        "id": 14183069464,
-        "name": "harborlight-dev-release-43768861718-1",
-        "size_in_bytes": 616,
-        "zip_sha256": "b4543fe43c26b5d7ee44423c95ef6bd8aec280f88fc121034dd1f749255fc348"
+        "kind": "frontend",
+        "id": 14220896005,
+        "size_in_bytes": 28099629,
+        "zip_sha256": "f87e8637002821848c6e8990207d8a31f0fe80a657fbb6cbea17ad45b4fa5fea"
       }
     ],
     "previous_accepted_dev_v30": {
@@ -29890,17 +29892,17 @@
       ]
     },
     "preprod_bridge_duration": null,
-    "preprod_deployment_duration": "2m12s",
+    "preprod_deployment_duration": "2m22s_total;2m03s_deploy_job",
     "dev_application_version": "0.15.0.2",
-    "dev_status": "Pages_published_TLS_bytes_and_local_downloaded_render_PASS_own_CI_FAILURE_not_accepted",
-    "dev_ci": "failure",
-    "dev_source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
-    "dev_implementation_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
-    "dev_ci_run_id": 43848428119,
-    "dev_pages_run_id": 43848428111,
+    "dev_status": "accepted_own_CI_Pages_TLS_public_bytes_transport_replay_and_remote_tag",
+    "dev_ci": "success",
+    "dev_source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+    "dev_implementation_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+    "dev_ci_run_id": 43850690541,
+    "dev_pages_run_id": 43850690456,
     "dev_pages_conclusion": "success",
-    "dev_tag": null,
-    "dev_cache": "frontend-v32-12",
+    "dev_tag": "dev-0.15.0.2-20261116",
+    "dev_cache": "frontend-v32-13",
     "previous_accepted_v32": {
       "source_sha": "fc2e87eec57c0388a16fb9b15a7d80ea0bc9c67c",
       "cache": "frontend-v32-4",
@@ -29909,10 +29911,10 @@
       "pages_run_id": 43703967803,
       "pages_conclusion": "success"
     },
-    "frontend_archive_sha256": "fa51937cc56f16d5d59b69638f7521d3864567e031e390979096caf6974b0061",
-    "frontend_manifest_sha256": "735e6317fa7691e37a2147676ff495a5ad47a4c7b6154feaee7a5f74d4e4d171",
+    "frontend_archive_sha256": "859d5899ee1fd08c1c3f993436776471c7858a6fba6d0e1afde4d0b409072685",
+    "frontend_manifest_sha256": "595b487c6edf3cdac8b723ba581aa0958bbaa687bba72f66c2292eb419beb9f3",
     "frontend_file_count": 109,
-    "frontend_total_bytes": 30767904,
+    "frontend_total_bytes": 30781978,
     "previous_published_v32_cache5": {
       "dev_application_version": "0.15.0.0",
       "dev_status": "published_pages_verified; final_metadata_ci_requires_own_result",
@@ -29973,8 +29975,8 @@
       "public_level5_preview_verification": "Cache7 implemented and tested locally;17hostedfilehashesverified viaHTTPS/TLS. Direct public Chromium render blocked by managedTLS, notPASS.",
       "dev_ci_failure_reason": "v17 delayed memory-board resize with120cards produced16.328px card width below unchanged20px minimum"
     },
-    "public_asset_file_count": 106,
-    "public_asset_total_bytes": 30742201,
+    "public_asset_file_count": 108,
+    "public_asset_total_bytes": 30774724,
     "current_directory_scope": {
       "cache": "frontend-v32-8",
       "status": "accepted_dev_own_ci_pages_tag_verified",
@@ -29988,10 +29990,10 @@
         "bran_and_feed"
       ]
     },
-    "dev_tag_remote_object": null,
-    "dev_tag_remote_verified": false,
+    "dev_tag_remote_object": "9b07b4dd74f2e4dabda6e4eaf361832f411cb506",
+    "dev_tag_remote_verified": true,
     "dev_ci_completed_at": "2026-11-15T22:20:54Z",
-    "dev_ci_duration": "26m17s",
+    "dev_ci_duration": "24m31s",
     "dev_ci_successful_steps": 32,
     "dev_ci_failed_steps": 0,
     "metadata_only_followup": {
@@ -30004,431 +30006,8 @@
       "own_ci_is_separate": true
     },
     "next_dev_scope": {
-      "scope": "Remove startup flash of old reference PNG/HUD; DEV first, PRE-PROD after confirmed completion of already-running reset",
-      "as_of": "2026-11-16",
-      "version": "0.15.0.2",
-      "cache": "frontend-v32-13",
-      "status": "APPLICATION_COMMITTED_TARGETED_PASS_NEW_OWN_CI_PAGES_PREPROD_PENDING",
-      "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
-      "publication_commit": null,
-      "accepted_baseline": {
-        "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-        "version": "0.15.0.1",
-        "cache": "frontend-v32-11",
-        "evidence": "docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json"
-      },
-      "required_behavior": [
-        "No reference map or old HUD visible before actual scene readiness",
-        "Loading screen visible during preparation",
-        "Unready game elements do not accept input",
-        "Actual island and current UI remain correct after startup"
-      ],
-      "local_checks": {
-        "status": "PASS_FINAL_CACHE12_STARTUP20",
-        "evidence": "docs/v32/CACHE12-LOCAL-VALIDATION.json",
-        "startup": {
-          "result": "PASS",
-          "passed": 20,
-          "total": 20,
-          "widths": [
-            1440,
-            390
-          ],
-          "sampled_frames": 2581,
-          "delayed_barriers": [
-            "module",
-            "auth",
-            "cloud",
-            "accepted art",
-            "ambient",
-            "css"
-          ],
-          "asset_failure_cases_per_width": 5,
-          "contextlost_before_ambient_ready": "PASS_accessible_error_and_retry_recovers_current_game",
-          "intro_complete_art_and_reachable": "PASS",
-          "cloud_retry_identity_preserved": "PASS",
-          "anonymous_real_auth_redirect": "PASS",
-          "source_application_sha": "96c211fd39826cf804ff286faeff219ac846827c",
-          "tested_startup_HTML_and_ambient_bytes_identical_to_current_source": true,
-          "latest_clock_delta_does_not_change_startup_behavior": true
-        }
-      },
-      "own_CI": {
-        "run_id": null,
-        "conclusion": null,
-        "status": "PENDING_NEW_RUN; previous8087FAILURE_preserved_in_history"
-      },
-      "DEV_publication": {
-        "status": "cache12_source8087_published_Pages_SUCCESS_own_CI_FAILURE; cache13_pending",
-        "last_published_cache": "frontend-v32-12",
-        "publication_source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
-        "run_id": 43848428111,
-        "conclusion": "success",
-        "public_bytes_and_startup_browser": "PASS_TLS_bytes_rendered_locally_no_nativeHTTPS_claim"
-      },
-      "PREPROD": {
-        "authorization": "DEV_then_PREPROD",
-        "status": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_AND_NATIVE_UI_PROOF",
-        "run_id": null,
-        "conclusion": null,
-        "real_saved_world_UI_prerequisite": "PASS_OWNER_CREATED_WORLD_INDEPENDENT_READ; new deployedUI acceptance still required",
-        "owner_latest_read": {
-          "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
-          "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
-          "host": "https://harborlight-dev.web.app",
-          "account": "admin1",
-          "TLS_verified": true,
-          "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
-          "auth_http_status": 200,
-          "expected_UID_matches": true,
-          "island_GET_HTTP_status": 200,
-          "account_generation": 2,
-          "account_expired": false,
-          "island_present": true,
-          "island_generation": 2,
-          "island_revision": 12,
-          "schema": 9,
-          "ruleset": 32,
-          "population": 19,
-          "onboarding": "complete",
-          "onboarding_pending": false,
-          "initialization_paused": false,
-          "writes": 0,
-          "existing_world_prerequisite_satisfied": true,
-          "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-          "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
-        },
-        "QA_may_create_island": false,
-        "receipt_or_empty_world_must_not_bypass_native_UI_acceptance": true,
-        "owner_first_game_read": {
-          "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
-          "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
-          "host": "https://harborlight-dev.web.app",
-          "account": "admin1",
-          "TLS_verified": true,
-          "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
-          "auth_http_status": 200,
-          "expected_UID_matches": true,
-          "island_GET_HTTP_status": 200,
-          "account_generation": 2,
-          "account_expired": false,
-          "island_present": true,
-          "island_generation": 2,
-          "island_revision": 12,
-          "schema": 9,
-          "ruleset": 32,
-          "population": 19,
-          "onboarding": "complete",
-          "onboarding_pending": false,
-          "initialization_paused": false,
-          "writes": 0,
-          "existing_world_prerequisite_satisfied": true,
-          "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-          "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
-        }
-      },
-      "reset_dependency": {
-        "pinned_source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-        "pinned_deployment_run_id": 43768861718,
-        "owner_reported_launcher_running": false,
-        "execution_result": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
-        "generations_verified": true,
-        "post_reset_read_verified": true,
-        "new_PREPROD_promotion_must_wait": false,
-        "repeat_reset_requested": false,
-        "owner_reported_success": {
-          "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
-          "deployment_run_id": 43768861718,
-          "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-          "owner_reported_output": "RESET PRE-PROD PASS",
-          "reported_generations": {
-            "admin1": 2,
-            "admin2": 2,
-            "admin3": 2
-          },
-          "independent_post_reset_read": "PASS",
-          "independent_generation_verification": true,
-          "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
-          "three_islands_null": true,
-          "three_accounts_expired": false,
-          "direct_own_Firestore_denied": 3,
-          "audit_writes": 0,
-          "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
-          "repeat_reset_requested": false
-        },
-        "new_PREPROD_promotion_must_wait_for_reset": false,
-        "independent_read_evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json"
-      },
-      "PROD_and_domain": "POSTPONED_NO_ACTION",
-      "models_or_gameplay_changes": false,
-      "uploaded_workbook_input_scope_unchanged": true,
-      "manual_execution": "NOT_RUN",
-      "workbook": {
-        "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
-        "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
-        "sheets": 6,
-        "rows": 413,
-        "columns": [
-          "A",
-          "B",
-          "C"
-        ],
-        "C_all_blank": true,
-        "validation": "PASS",
-        "sha256": "95f415d0748d5b5e389f92e28df2aef18e71b13968c74ac5a0e54835c7d4be8d",
-        "source_fingerprint": "7e9f4bf97b7f0d22674bd1eef8832dd44e23142997f4a3082b1bf17c7d160310",
-        "selected_six_sheet_read_and_merge_scope_preserved": true,
-        "edited_by_documentation_agent": false
-      },
-      "previous_application_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
-      "owner_first_game_read_evidence": "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json",
-      "previous_candidate_snapshot": {
-        "scope": "Remove startup flash of old reference PNG/HUD; DEV first, PRE-PROD after confirmed completion of already-running reset",
-        "as_of": "2026-11-16",
-        "version": "0.15.0.2",
-        "cache": "frontend-v32-12",
-        "status": "APPLICATION96c_COMMITTED_STARTUP20_PASS_CI_PUBLICATION_PENDING",
-        "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
-        "publication_commit": null,
-        "accepted_baseline": {
-          "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-          "version": "0.15.0.1",
-          "cache": "frontend-v32-11",
-          "evidence": "docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json"
-        },
-        "required_behavior": [
-          "No reference map or old HUD visible before actual scene readiness",
-          "Loading screen visible during preparation",
-          "Unready game elements do not accept input",
-          "Actual island and current UI remain correct after startup"
-        ],
-        "local_checks": {
-          "status": "PASS_FINAL_CACHE12_STARTUP20",
-          "evidence": "docs/v32/CACHE12-LOCAL-VALIDATION.json",
-          "startup": {
-            "result": "PASS",
-            "passed": 20,
-            "total": 20,
-            "widths": [
-              1440,
-              390
-            ],
-            "sampled_frames": 2581,
-            "delayed_barriers": [
-              "module",
-              "auth",
-              "cloud",
-              "accepted art",
-              "ambient",
-              "css"
-            ],
-            "asset_failure_cases_per_width": 5,
-            "contextlost_before_ambient_ready": "PASS_accessible_error_and_retry_recovers_current_game",
-            "intro_complete_art_and_reachable": "PASS",
-            "cloud_retry_identity_preserved": "PASS",
-            "anonymous_real_auth_redirect": "PASS",
-            "source_application_sha": "96c211fd39826cf804ff286faeff219ac846827c",
-            "tested_startup_HTML_and_ambient_bytes_identical_to_current_source": true,
-            "latest_clock_delta_does_not_change_startup_behavior": true
-          }
-        },
-        "own_CI": {
-          "run_id": null,
-          "conclusion": null
-        },
-        "DEV_publication": {
-          "run_id": null,
-          "conclusion": null,
-          "public_bytes_and_startup_browser": "PENDING"
-        },
-        "PREPROD": {
-          "authorization": "DEV_then_PREPROD",
-          "status": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_AND_NATIVE_UI_PROOF",
-          "run_id": null,
-          "conclusion": null,
-          "real_saved_world_UI_prerequisite": "PASS_OWNER_CREATED_WORLD_INDEPENDENT_READ; new deployedUI acceptance still required",
-          "owner_latest_read": {
-            "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
-            "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
-            "host": "https://harborlight-dev.web.app",
-            "account": "admin1",
-            "TLS_verified": true,
-            "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
-            "auth_http_status": 200,
-            "expected_UID_matches": true,
-            "island_GET_HTTP_status": 200,
-            "account_generation": 2,
-            "account_expired": false,
-            "island_present": true,
-            "island_generation": 2,
-            "island_revision": 12,
-            "schema": 9,
-            "ruleset": 32,
-            "population": 19,
-            "onboarding": "complete",
-            "onboarding_pending": false,
-            "initialization_paused": false,
-            "writes": 0,
-            "existing_world_prerequisite_satisfied": true,
-            "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-            "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
-          },
-          "QA_may_create_island": false,
-          "receipt_or_empty_world_must_not_bypass_native_UI_acceptance": true,
-          "owner_first_game_read": {
-            "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
-            "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
-            "host": "https://harborlight-dev.web.app",
-            "account": "admin1",
-            "TLS_verified": true,
-            "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
-            "auth_http_status": 200,
-            "expected_UID_matches": true,
-            "island_GET_HTTP_status": 200,
-            "account_generation": 2,
-            "account_expired": false,
-            "island_present": true,
-            "island_generation": 2,
-            "island_revision": 12,
-            "schema": 9,
-            "ruleset": 32,
-            "population": 19,
-            "onboarding": "complete",
-            "onboarding_pending": false,
-            "initialization_paused": false,
-            "writes": 0,
-            "existing_world_prerequisite_satisfied": true,
-            "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-            "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
-          }
-        },
-        "reset_dependency": {
-          "pinned_source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-          "pinned_deployment_run_id": 43768861718,
-          "owner_reported_launcher_running": false,
-          "execution_result": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
-          "generations_verified": true,
-          "post_reset_read_verified": true,
-          "new_PREPROD_promotion_must_wait": false,
-          "repeat_reset_requested": false,
-          "owner_reported_success": {
-            "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
-            "deployment_run_id": 43768861718,
-            "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-            "owner_reported_output": "RESET PRE-PROD PASS",
-            "reported_generations": {
-              "admin1": 2,
-              "admin2": 2,
-              "admin3": 2
-            },
-            "independent_post_reset_read": "PASS",
-            "independent_generation_verification": true,
-            "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
-            "three_islands_null": true,
-            "three_accounts_expired": false,
-            "direct_own_Firestore_denied": 3,
-            "audit_writes": 0,
-            "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
-            "repeat_reset_requested": false
-          },
-          "new_PREPROD_promotion_must_wait_for_reset": false,
-          "independent_read_evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json"
-        },
-        "PROD_and_domain": "POSTPONED_NO_ACTION",
-        "models_or_gameplay_changes": false,
-        "uploaded_workbook_input_scope_unchanged": true,
-        "manual_execution": "NOT_RUN",
-        "workbook": {
-          "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
-          "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
-          "sheets": 6,
-          "rows": 413,
-          "columns": [
-            "A",
-            "B",
-            "C"
-          ],
-          "C_all_blank": true,
-          "validation": "PASS",
-          "sha256": "90943adac77e35ee97899165dfa4e4ae541074b62258323fae27ffab2a158e60",
-          "source_fingerprint": "f7d82a10f46673098129486a911132ae30e0739e0fc27e4a5d64aa9669589771",
-          "selected_six_sheet_read_and_merge_scope_preserved": true,
-          "edited_by_documentation_agent": false
-        },
-        "previous_application_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
-        "owner_first_game_read_evidence": "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json"
-      },
-      "planned_next_candidate": {
-        "version": "0.15.0.2",
-        "cache": "frontend-v32-13",
-        "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
-        "publication_commit": null,
-        "status": "APPLICATION_COMMITTED_TARGETED_PASS_NEW_OWN_CI_PAGES_PREPROD_PENDING",
-        "fix": "Only authenticated UIDdev-admin3 initializes client /dev-time requests; server remains unchanged",
-        "targeted_cloud_rules_and_six_scope_UI": "PASS",
-        "own_CI": "PENDING_NEW_RUN",
-        "Pages": "PENDING_NEW_RUN",
-        "PREPROD": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_NATIVE_UI_PROOF"
-      },
-      "last_published_candidate": {
-        "version": "0.15.0.2",
-        "cache": "frontend-v32-12",
-        "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
-        "publication_source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
-        "own_CI": {
-          "run_id": 43848428119,
-          "job_id": 133234457802,
-          "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
-          "conclusion": "failure",
-          "duration_seconds": 450,
-          "failed_step": 27,
-          "failure": "cloud-rules-v32 strict transport rejected unnecessary GET /dev-time on admin1",
-          "completed_before_failure": {
-            "frontend_passed": 1437,
-            "frontend_total": 1437,
-            "backend_passed": 170,
-            "backend_total": 170,
-            "Python_passed": 166,
-            "startup_browser": "20/20 PASS",
-            "speed_browser": "6/6 PASS"
-          },
-          "later_remaining_browser_checks": "NOT_RUN"
-        },
-        "Pages": {
-          "run_id": 43848428111,
-          "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
-          "conclusion": "success",
-          "job_duration_seconds": 17,
-          "whole_run_duration_seconds": 23
-        },
-        "public_bytes": {
-          "status": "PASS",
-          "TLS_verified": true,
-          "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
-          "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
-          "file_count": 108,
-          "total_bytes": 30774686,
-          "all_exact_source_bytes": true,
-          "game_API_or_account_writes": 0,
-          "evidence_path": "/workspace/work/cache12-release-20261116/pages-tls-audit.json"
-        },
-        "public_bytes_browser": {
-          "result": "PASS",
-          "widths": [
-            1440,
-            390
-          ],
-          "mode": "TLS-verified public bytes downloaded then rendered in Chrome locally",
-          "native_HTTPS_browser_acceptance_claimed": false,
-          "evidence_path": "/workspace/work/cache12-release-20261116/pages-downloaded-bytes-browser.log"
-        },
-        "accepted_tag_created": false,
-        "new_PREPROD_deployment": false
-      },
-      "current_local_validation": {
-        "result": "PASS_CLOUD_RULES_AND_SIX_SPEED_SCOPES_PACKAGE_STAGE",
-        "evidence": "docs/v32/CACHE13-LOCAL-VALIDATION.json"
-      }
+      "status": "completed_accepted_cache13",
+      "evidence": "docs/v32/CACHE13-ACCEPTANCE.json"
     },
     "previous_accepted_dev_cache8": {
       "dev_application_version": "0.15.0.0",
@@ -30490,6 +30069,954 @@
     },
     "preprod_account_API_enabled": true,
     "current_preprod_fix": {
+      "status": "ACCEPTED_DEV_AND_PREPROD_0_15_0_2_CACHE13",
+      "as_of": "2026-11-16",
+      "application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+      "publication_deployment_source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+      "version": "0.15.0.2",
+      "cache": "frontend-v32-13",
+      "own_CI": {
+        "run_id": 43850690541,
+        "source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+        "conclusion": "success",
+        "duration": "24m31s",
+        "duration_seconds": 1471,
+        "frontend_Node": 1437,
+        "backend_Node": 170,
+        "physical_Node": 7,
+        "total_Node": 1614,
+        "Python": 166,
+        "Chromium_programs": 66,
+        "Chromium_stages": [
+          48,
+          18
+        ],
+        "both_browser_stages": "PASS",
+        "count_note": "66 actual program invocations;65 omitted standaloneLiveCAS"
+      },
+      "DEV": {
+        "source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+        "application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+        "version": "0.15.0.2",
+        "cache": "frontend-v32-13",
+        "run_id": 43850690456,
+        "conclusion": "success",
+        "duration_seconds": 22,
+        "job_duration_seconds": 17,
+        "TLS_source_entry_files": 108,
+        "TLS_source_entry_bytes": 30774724,
+        "all_exact_source_bytes": true,
+        "downloaded_public_bytes_Chrome": {
+          "result": "PASS",
+          "widths": [
+            1440,
+            390
+          ],
+          "mode": "TLS-verified downloaded public bytes rendered locally as transport replay",
+          "native_HTTPS_DEV_browser_claimed": false
+        },
+        "tag": {
+          "name": "dev-0.15.0.2-20261116",
+          "annotated_object": "9b07b4dd74f2e4dabda6e4eaf361832f411cb506",
+          "target": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+          "published": true,
+          "remote_verified": true,
+          "immutable": true
+        }
+      },
+      "PREPROD": {
+        "source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+        "application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+        "version": "0.15.0.2",
+        "cache": "frontend-v32-13",
+        "run_id": 43854387444,
+        "run_attempt": 1,
+        "conclusion": "success",
+        "duration_seconds": 142,
+        "gate": {
+          "job_id": 133254792440,
+          "duration_seconds": 12,
+          "successful_steps": 7
+        },
+        "deploy": {
+          "job_id": 133254914412,
+          "duration_seconds": 123,
+          "successful_steps": 31,
+          "skipped_diagnostic_steps": 1
+        },
+        "native_hosted_UI": {
+          "result": "PASS",
+          "actual_existing_authenticated_island": true,
+          "exact_asset_hashes": 108,
+          "all_browser_writes_blocked": true
+        },
+        "account_checks": {
+          "Auth_successes": 3,
+          "API_reads": 3,
+          "existing_saved_islands": 1,
+          "empty_islands": 2,
+          "foreign_denied": 6,
+          "anonymous_Firestore_denied": 3,
+          "own_direct_Firestore_403": 3,
+          "anonymous_API_denied": 3,
+          "island_writes": 0
+        },
+        "live_clock_read": {
+          "result": "PASS",
+          "normal_TLS": true,
+          "checked_at_utc": "2026-11-16T11:07:27.363840+00:00",
+          "admin1_clock_GET": 403,
+          "admin2_clock_GET": 403,
+          "admin3_clock_GET": 200,
+          "admin3_canSetRate": true,
+          "admin3_canAdvance": false,
+          "admin3_rate": 1,
+          "all_generations_preserved": 2,
+          "game_or_clock_writes": 0,
+          "empty_islands_initialized": 0,
+          "evidence": "docs/v32/CACHE13-LIVE-CLOCK-ACCOUNT-AUDIT.json"
+        },
+        "tag": {
+          "name": "preprod-0.15.0.2-20261116",
+          "annotated_object": "9ff02b5d158485dfb955572e6a7d8b6e29d34cf2",
+          "target": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+          "published": true,
+          "remote_verified": true,
+          "immutable": true
+        }
+      },
+      "artifacts": {
+        "original_ZIPs_downloaded_and_verified": true,
+        "actual_inner_receipt_read": true,
+        "receipt_schema_version": 2,
+        "receipt_validation": "PASS",
+        "receipt_checks": {
+          "ci": true,
+          "dev_smoke": true,
+          "frontend_smoke": true,
+          "account_api": true
+        },
+        "image_digest": "sha256:164fcb1ea3e3554786dbd427fdf0b720f7d008023115ab968080c47adb7ff5d4",
+        "frontend_TAR_sha256": "859d5899ee1fd08c1c3f993436776471c7858a6fba6d0e1afde4d0b409072685",
+        "frontend_manifest_sha256": "595b487c6edf3cdac8b723ba581aa0958bbaa687bba72f66c2292eb419beb9f3",
+        "strict_archive_verifier": {
+          "result": "PASS",
+          "files": 109
+        },
+        "original_GitHub_ZIPs": [
+          {
+            "kind": "receipt",
+            "id": 14220521501,
+            "size_in_bytes": 616,
+            "zip_sha256": "0e91395fdd711d61f9f0ab937bc60ffdd584621fa2e10a0e2304ce35655f01b4"
+          },
+          {
+            "kind": "frontend",
+            "id": 14220896005,
+            "size_in_bytes": 28099629,
+            "zip_sha256": "f87e8637002821848c6e8990207d8a31f0fe80a657fbb6cbea17ad45b4fa5fea"
+          }
+        ],
+        "live_original_archive_source_byte_identity": {
+          "result": "PASS",
+          "normal_TLS": true,
+          "checked_at_utc": "2026-11-16T11:09:16.480896+00:00",
+          "files": 109,
+          "bytes": 30781978,
+          "evidence": "docs/v32/CACHE13-PREPROD-ARTIFACT-TLS-AUDIT.json"
+        }
+      },
+      "workbook_unchanged": {
+        "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+        "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+        "sheets": 6,
+        "rows": 413,
+        "columns": [
+          "A",
+          "B",
+          "C"
+        ],
+        "C_all_blank": true,
+        "validation": "PASS",
+        "sha256": "95f415d0748d5b5e389f92e28df2aef18e71b13968c74ac5a0e54835c7d4be8d",
+        "source_fingerprint": "7e9f4bf97b7f0d22674bd1eef8832dd44e23142997f4a3082b1bf17c7d160310",
+        "selected_six_sheet_read_and_merge_scope_preserved": true,
+        "edited_by_documentation_agent": false
+      },
+      "prior_failed_publication": "docs/v32/CACHE12-PUBLICATION-EVIDENCE.json",
+      "reset": {
+        "earlier_operation_completed": true,
+        "repeated_by_this_deployment": false,
+        "generation_preserved": 2,
+        "existing_islands": 1,
+        "empty_islands": 2,
+        "initializations_or_game_clock_writes": 0,
+        "prior_proof": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json"
+      },
+      "manual_user_acceptance": "NOT_RUN",
+      "PROD_and_DNS": "POSTPONED_NO_ACTION",
+      "subsequent_metadata_commit": "Does not redefine application source,accepted publication,immutable tags,public files or fingerprints"
+    },
+    "pending_next_source": {
+      "version": "0.15.0.1",
+      "cache": "frontend-v32-11",
+      "application_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
+      "publication_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "CI": "SUCCESS43766275390",
+      "deployment": "IN_PROGRESS43768861718",
+      "reset": "NOT_EXECUTED_OWNER_CLOUDSHELL_REQUIRED",
+      "local_checkpoint_sha": "c6c4f401dd3bda605578e05efb7529cbbf6da102",
+      "frontend_application_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914"
+    },
+    "previous_accepted_preprod_v31": {
+      "preprod_application_version": "0.14.0.0",
+      "preprod_source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
+      "preprod_ci_run_id": 41906515746,
+      "preprod_deployment_run_id": 41909268052,
+      "preprod_deployment_attempt": 1,
+      "preprod_status": "verified_deployment_and_artifacts",
+      "preprod_promotion_status": "not_authorized_for_v32",
+      "preprod_promotion_target": null,
+      "preprod_pages_run_id": 41906515747,
+      "preprod_bridge_run_id": 41909239074,
+      "preprod_tag": "preprod-0.14.0.0-20261104",
+      "preprod_tag_remote_object": "1b32f383eed957b03120c1616cbb50435e19c19f",
+      "preprod_artifacts": [
+        {
+          "kind": "frontend",
+          "name": "harborlight-dev-frontend-41909268052-1",
+          "id": 13362655258,
+          "zip_sha256": "703190f7cbdcb5c958e43ca13b9eb0ba0329f62916fb3aab8b19fb068d66e18b",
+          "attempt": 1
+        },
+        {
+          "kind": "release",
+          "name": "harborlight-dev-release-41909268052-1",
+          "id": 13361328096,
+          "zip_sha256": "2a13c37f0180e310ba11c545737a48a19ee16bd057ac823836a74d8c359fd01e",
+          "attempt": 1
+        }
+      ],
+      "preprod_bridge_duration": "13s",
+      "preprod_deployment_duration": "2m12s"
+    },
+    "preprod_tag_scope": "immutable_accepted_publication_c4",
+    "dev_tag_scope": "immutable_accepted_publication_c4",
+    "latest_fix_candidate_failure": {
+      "source_sha": "b268bd6d2a4bb7e91c615370bca273e3873dba8f",
+      "version": "0.15.0.1",
+      "cache": "frontend-v32-10",
+      "ci": {
+        "run_id": 43763863333,
+        "conclusion": "failure",
+        "started_at": "2026-11-15T21:28:24Z",
+        "completed_at": "2026-11-15T21:37:18Z",
+        "duration_seconds": 534,
+        "duration": "8m54s",
+        "first_steps_passed": 26,
+        "failed_step": 27,
+        "failed_test": "tutorial-v22 reward_grid",
+        "expected_tiles": 6,
+        "actual_tiles": 5,
+        "reason": "fresh flour tile hidden",
+        "step28_DEV_cloud_browsers": "skipped"
+      },
+      "pages": {
+        "run_id": 43763863357,
+        "conclusion": "success",
+        "source_sha": "b268bd6d2a4bb7e91c615370bca273e3873dba8f"
+      },
+      "new_GCP_deployment": false,
+      "actual_account_reset": false,
+      "accepted_tag_created": false
+    },
+    "PREPROD_pending_candidate": null,
+    "previous_preprod_e0_reopened": {
+      "preprod_application_version": "0.15.0.0",
+      "preprod_source_sha": "e0aa2ff3f60edeb6a55190ea8b16f0329692b303",
+      "preprod_ci_run_id": 43755386000,
+      "preprod_deployment_run_id": 43757897657,
+      "preprod_deployment_attempt": 1,
+      "preprod_status": "e0_files_and_artifacts_verified_functional_acceptance_REOPENED_USER_REPORT",
+      "preprod_promotion_status": "not_authorized_for_v32",
+      "preprod_pages_run_id": 41906515747,
+      "preprod_bridge_run_id": 41909239074,
+      "preprod_tag": "preprod-0.15.0.0-20261115",
+      "preprod_tag_remote_object": "f3e63aaa66356d4e963076fb2068a04695f4c655",
+      "preprod_artifacts": [
+        {
+          "kind": "frontend",
+          "id": 14178489674,
+          "zip_sha256": "45a9ed01c339e6b8d83ecf9b52a34b7cff278d2ced6a18b2b0947d94c8d9183d"
+        },
+        {
+          "kind": "receipt",
+          "id": 14179048100,
+          "zip_sha256": "8cf962840b4e7842ac1b9c0fcab00d2b0a942b4d1ae716898ab48bf357b5c852"
+        }
+      ],
+      "preprod_bridge_duration": "13s",
+      "preprod_deployment_duration": "2m12s",
+      "preprod_account_API_enabled": false,
+      "preprod_tag_scope": "historical source and artifact verification; functional acceptance reopened"
+    },
+    "preprod_application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+    "preprod_gate_duration": "12s",
+    "preprod_tag_remote_verified": true,
+    "preprod_public_content_files": 108,
+    "preprod_public_content_bytes": 30774724,
+    "preprod_public_including_manifest_files": 109,
+    "preprod_public_HTTPS_hash_audit": {
+      "result": "PASS",
+      "normal_TLS": true,
+      "checked_at_utc": "2026-11-16T11:09:16.480896+00:00",
+      "files": 109,
+      "bytes": 30781978,
+      "evidence": "docs/v32/CACHE13-PREPROD-ARTIFACT-TLS-AUDIT.json"
+    },
+    "preprod_next_promotion_status": "none_pending_current_requested_release_completed",
+    "owner_reset_report": {
+      "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+      "deployment_run_id": 43768861718,
+      "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "owner_reported_output": "RESET PRE-PROD PASS",
+      "reported_generations": {
+        "admin1": 2,
+        "admin2": 2,
+        "admin3": 2
+      },
+      "independent_post_reset_read": "PASS",
+      "independent_generation_verification": true,
+      "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
+      "three_islands_null": true,
+      "three_accounts_expired": false,
+      "direct_own_Firestore_denied": 3,
+      "audit_writes": 0,
+      "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+      "repeat_reset_requested": false
+    },
+    "admin3_speed_scope": {
+      "scope": "Admin3-only authorized game speed UI and effective clock on DEV and PRE-PROD",
+      "as_of": "2026-11-16",
+      "status": "ACCEPTED_DEV_AND_PREPROD_SOURCEc4_CACHE13",
+      "version": "0.15.0.2",
+      "cache": "frontend-v32-13",
+      "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+      "publication_commit": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+      "authorized_account": "admin3",
+      "authorized_environments": [
+        "DEV",
+        "PRE-PROD"
+      ],
+      "controls": {
+        "play": {
+          "label": "▶",
+          "multiplier": 1
+        },
+        "fast_forward": {
+          "label": "⏩",
+          "first_press_multiplier": 2,
+          "second_press_multiplier": 6
+        }
+      },
+      "account_authorization_required": true,
+      "effective_API_clock_required": true,
+      "other_accounts_not_authorized": true,
+      "local_checks": {
+        "status": "PASS_FINAL96c_LOCAL_AND_ISOLATED_PREPROD_API",
+        "scopes": 6,
+        "backend_passed": 170,
+        "clock_frontend_passed": 66,
+        "coordinator_passed": 57,
+        "payload_passed": 2,
+        "evidence": "docs/v32/CACHE12-LOCAL-VALIDATION.json",
+        "public_PREPROD_speed_accepted": false,
+        "previous_six_scope_result_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
+        "final_clock_focus_coordinator": "51/51 PASS source96c",
+        "final_local_cloud_adapters": "58/58 PASS source96c",
+        "final_six_scope_speed_rerun": "6/6 PASS source96c",
+        "final_LiveCAS_rerun": "PASS source96c"
+      },
+      "own_CI": {
+        "run_id": 43850690541,
+        "source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+        "conclusion": "success",
+        "duration": "24m31s",
+        "duration_seconds": 1471,
+        "frontend_Node": 1437,
+        "backend_Node": 170,
+        "physical_Node": 7,
+        "total_Node": 1614,
+        "Python": 166,
+        "Chromium_programs": 66,
+        "Chromium_stages": [
+          48,
+          18
+        ],
+        "both_browser_stages": "PASS",
+        "count_note": "66 actual program invocations;65 omitted standaloneLiveCAS"
+      },
+      "DEV_publication": {
+        "source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+        "application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+        "version": "0.15.0.2",
+        "cache": "frontend-v32-13",
+        "run_id": 43850690456,
+        "conclusion": "success",
+        "duration_seconds": 22,
+        "job_duration_seconds": 17,
+        "TLS_source_entry_files": 108,
+        "TLS_source_entry_bytes": 30774724,
+        "all_exact_source_bytes": true,
+        "downloaded_public_bytes_Chrome": {
+          "result": "PASS",
+          "widths": [
+            1440,
+            390
+          ],
+          "mode": "TLS-verified downloaded public bytes rendered locally as transport replay",
+          "native_HTTPS_DEV_browser_claimed": false
+        },
+        "tag": {
+          "name": "dev-0.15.0.2-20261116",
+          "annotated_object": "9b07b4dd74f2e4dabda6e4eaf361832f411cb506",
+          "target": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+          "published": true,
+          "remote_verified": true,
+          "immutable": true
+        }
+      },
+      "PREPROD": {
+        "source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+        "application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+        "version": "0.15.0.2",
+        "cache": "frontend-v32-13",
+        "run_id": 43854387444,
+        "run_attempt": 1,
+        "conclusion": "success",
+        "duration_seconds": 142,
+        "gate": {
+          "job_id": 133254792440,
+          "duration_seconds": 12,
+          "successful_steps": 7
+        },
+        "deploy": {
+          "job_id": 133254914412,
+          "duration_seconds": 123,
+          "successful_steps": 31,
+          "skipped_diagnostic_steps": 1
+        },
+        "native_hosted_UI": {
+          "result": "PASS",
+          "actual_existing_authenticated_island": true,
+          "exact_asset_hashes": 108,
+          "all_browser_writes_blocked": true
+        },
+        "account_checks": {
+          "Auth_successes": 3,
+          "API_reads": 3,
+          "existing_saved_islands": 1,
+          "empty_islands": 2,
+          "foreign_denied": 6,
+          "anonymous_Firestore_denied": 3,
+          "own_direct_Firestore_403": 3,
+          "anonymous_API_denied": 3,
+          "island_writes": 0
+        },
+        "live_clock_read": {
+          "result": "PASS",
+          "normal_TLS": true,
+          "checked_at_utc": "2026-11-16T11:07:27.363840+00:00",
+          "admin1_clock_GET": 403,
+          "admin2_clock_GET": 403,
+          "admin3_clock_GET": 200,
+          "admin3_canSetRate": true,
+          "admin3_canAdvance": false,
+          "admin3_rate": 1,
+          "all_generations_preserved": 2,
+          "game_or_clock_writes": 0,
+          "empty_islands_initialized": 0,
+          "evidence": "docs/v32/CACHE13-LIVE-CLOCK-ACCOUNT-AUDIT.json"
+        },
+        "tag": {
+          "name": "preprod-0.15.0.2-20261116",
+          "annotated_object": "9ff02b5d158485dfb955572e6a7d8b6e29d34cf2",
+          "target": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+          "published": true,
+          "remote_verified": true,
+          "immutable": true
+        }
+      },
+      "reset_report": {
+        "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+        "deployment_run_id": 43768861718,
+        "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+        "owner_reported_output": "RESET PRE-PROD PASS",
+        "reported_generations": {
+          "admin1": 2,
+          "admin2": 2,
+          "admin3": 2
+        },
+        "independent_post_reset_read": "PASS",
+        "independent_generation_verification": true,
+        "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
+        "three_islands_null": true,
+        "three_accounts_expired": false,
+        "direct_own_Firestore_denied": 3,
+        "audit_writes": 0,
+        "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+        "repeat_reset_requested": false
+      },
+      "new_reset_required": false,
+      "PROD_and_domain": "POSTPONED_NO_ACTION",
+      "manual_execution": "NOT_RUN",
+      "workbook": {
+        "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+        "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+        "sheets": 6,
+        "rows": 413,
+        "columns": [
+          "A",
+          "B",
+          "C"
+        ],
+        "C_all_blank": true,
+        "validation": "PASS",
+        "sha256": "95f415d0748d5b5e389f92e28df2aef18e71b13968c74ac5a0e54835c7d4be8d",
+        "source_fingerprint": "7e9f4bf97b7f0d22674bd1eef8832dd44e23142997f4a3082b1bf17c7d160310",
+        "selected_six_sheet_read_and_merge_scope_preserved": true,
+        "edited_by_documentation_agent": false
+      },
+      "previous_application_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
+      "owner_first_game_read_evidence": "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json",
+      "previous_candidate_snapshot": {
+        "scope": "Admin3-only authorized game speed UI and effective clock on DEV and PRE-PROD",
+        "as_of": "2026-11-16",
+        "status": "APPLICATION96c_COMMITTED_FINAL_LOCAL_ISOLATED_API_ACCEPTANCE_PASS_CI_PUBLICATION_PENDING",
+        "version": "0.15.0.2",
+        "cache": "frontend-v32-12",
+        "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+        "publication_commit": null,
+        "authorized_account": "admin3",
+        "authorized_environments": [
+          "DEV",
+          "PRE-PROD"
+        ],
+        "controls": {
+          "play": {
+            "label": "▶",
+            "multiplier": 1
+          },
+          "fast_forward": {
+            "label": "⏩",
+            "first_press_multiplier": 2,
+            "second_press_multiplier": 6
+          }
+        },
+        "account_authorization_required": true,
+        "effective_API_clock_required": true,
+        "other_accounts_not_authorized": true,
+        "local_checks": {
+          "status": "PASS_FINAL96c_LOCAL_AND_ISOLATED_PREPROD_API",
+          "scopes": 6,
+          "backend_passed": 170,
+          "clock_frontend_passed": 66,
+          "coordinator_passed": 57,
+          "payload_passed": 2,
+          "evidence": "docs/v32/CACHE12-LOCAL-VALIDATION.json",
+          "public_PREPROD_speed_accepted": false,
+          "previous_six_scope_result_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
+          "final_clock_focus_coordinator": "51/51 PASS source96c",
+          "final_local_cloud_adapters": "58/58 PASS source96c",
+          "final_six_scope_speed_rerun": "6/6 PASS source96c",
+          "final_LiveCAS_rerun": "PASS source96c"
+        },
+        "own_CI": {
+          "run_id": null,
+          "conclusion": null
+        },
+        "DEV_publication": {
+          "run_id": null,
+          "conclusion": null
+        },
+        "PREPROD": {
+          "status": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_AND_NATIVE_UI_PROOF",
+          "run_id": null,
+          "conclusion": null,
+          "real_saved_world_UI_prerequisite": "PASS_OWNER_CREATED_WORLD_INDEPENDENT_READ; new deployedUI acceptance still required",
+          "owner_latest_read": {
+            "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+            "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+            "host": "https://harborlight-dev.web.app",
+            "account": "admin1",
+            "TLS_verified": true,
+            "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+            "auth_http_status": 200,
+            "expected_UID_matches": true,
+            "island_GET_HTTP_status": 200,
+            "account_generation": 2,
+            "account_expired": false,
+            "island_present": true,
+            "island_generation": 2,
+            "island_revision": 12,
+            "schema": 9,
+            "ruleset": 32,
+            "population": 19,
+            "onboarding": "complete",
+            "onboarding_pending": false,
+            "initialization_paused": false,
+            "writes": 0,
+            "existing_world_prerequisite_satisfied": true,
+            "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+            "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+          },
+          "QA_may_create_island": false,
+          "receipt_or_empty_world_must_not_bypass_native_UI_acceptance": true,
+          "owner_first_game_read": {
+            "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+            "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+            "host": "https://harborlight-dev.web.app",
+            "account": "admin1",
+            "TLS_verified": true,
+            "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+            "auth_http_status": 200,
+            "expected_UID_matches": true,
+            "island_GET_HTTP_status": 200,
+            "account_generation": 2,
+            "account_expired": false,
+            "island_present": true,
+            "island_generation": 2,
+            "island_revision": 12,
+            "schema": 9,
+            "ruleset": 32,
+            "population": 19,
+            "onboarding": "complete",
+            "onboarding_pending": false,
+            "initialization_paused": false,
+            "writes": 0,
+            "existing_world_prerequisite_satisfied": true,
+            "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+            "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+          }
+        },
+        "reset_report": {
+          "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+          "deployment_run_id": 43768861718,
+          "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+          "owner_reported_output": "RESET PRE-PROD PASS",
+          "reported_generations": {
+            "admin1": 2,
+            "admin2": 2,
+            "admin3": 2
+          },
+          "independent_post_reset_read": "PASS",
+          "independent_generation_verification": true,
+          "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
+          "three_islands_null": true,
+          "three_accounts_expired": false,
+          "direct_own_Firestore_denied": 3,
+          "audit_writes": 0,
+          "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+          "repeat_reset_requested": false
+        },
+        "new_reset_required": false,
+        "PROD_and_domain": "POSTPONED_NO_ACTION",
+        "manual_execution": "NOT_RUN",
+        "workbook": {
+          "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+          "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+          "sheets": 6,
+          "rows": 413,
+          "columns": [
+            "A",
+            "B",
+            "C"
+          ],
+          "C_all_blank": true,
+          "validation": "PASS",
+          "sha256": "90943adac77e35ee97899165dfa4e4ae541074b62258323fae27ffab2a158e60",
+          "source_fingerprint": "f7d82a10f46673098129486a911132ae30e0739e0fc27e4a5d64aa9669589771",
+          "selected_six_sheet_read_and_merge_scope_preserved": true,
+          "edited_by_documentation_agent": false
+        },
+        "previous_application_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
+        "owner_first_game_read_evidence": "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json"
+      },
+      "planned_next_candidate": {
+        "status": "COMPLETED_ACCEPTED",
+        "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+        "publication_commit": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+        "cache": "frontend-v32-13"
+      },
+      "last_published_candidate": {
+        "version": "0.15.0.2",
+        "cache": "frontend-v32-12",
+        "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+        "publication_source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
+        "own_CI": {
+          "run_id": 43848428119,
+          "job_id": 133234457802,
+          "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
+          "conclusion": "failure",
+          "duration_seconds": 450,
+          "failed_step": 27,
+          "failure": "cloud-rules-v32 strict transport rejected unnecessary GET /dev-time on admin1",
+          "completed_before_failure": {
+            "frontend_passed": 1437,
+            "frontend_total": 1437,
+            "backend_passed": 170,
+            "backend_total": 170,
+            "Python_passed": 166,
+            "startup_browser": "20/20 PASS",
+            "speed_browser": "6/6 PASS"
+          },
+          "later_remaining_browser_checks": "NOT_RUN"
+        },
+        "Pages": {
+          "run_id": 43848428111,
+          "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
+          "conclusion": "success",
+          "job_duration_seconds": 17,
+          "whole_run_duration_seconds": 23
+        },
+        "public_bytes": {
+          "status": "PASS",
+          "TLS_verified": true,
+          "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
+          "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+          "file_count": 108,
+          "total_bytes": 30774686,
+          "all_exact_source_bytes": true,
+          "game_API_or_account_writes": 0,
+          "evidence_path": "/workspace/work/cache12-release-20261116/pages-tls-audit.json"
+        },
+        "public_bytes_browser": {
+          "result": "PASS",
+          "widths": [
+            1440,
+            390
+          ],
+          "mode": "TLS-verified public bytes downloaded then rendered in Chrome locally",
+          "native_HTTPS_browser_acceptance_claimed": false,
+          "evidence_path": "/workspace/work/cache12-release-20261116/pages-downloaded-bytes-browser.log"
+        },
+        "accepted_tag_created": false,
+        "new_PREPROD_deployment": false
+      },
+      "current_local_validation": {
+        "result": "PASS_CLOUD_RULES_AND_SIX_SPEED_SCOPES_PACKAGE_STAGE",
+        "evidence": "docs/v32/CACHE13-LOCAL-VALIDATION.json"
+      },
+      "accepted_release": "docs/v32/CACHE13-ACCEPTANCE.json",
+      "verified_artifacts": {
+        "original_ZIPs_downloaded_and_verified": true,
+        "actual_inner_receipt_read": true,
+        "receipt_schema_version": 2,
+        "receipt_validation": "PASS",
+        "receipt_checks": {
+          "ci": true,
+          "dev_smoke": true,
+          "frontend_smoke": true,
+          "account_api": true
+        },
+        "image_digest": "sha256:164fcb1ea3e3554786dbd427fdf0b720f7d008023115ab968080c47adb7ff5d4",
+        "frontend_TAR_sha256": "859d5899ee1fd08c1c3f993436776471c7858a6fba6d0e1afde4d0b409072685",
+        "frontend_manifest_sha256": "595b487c6edf3cdac8b723ba581aa0958bbaa687bba72f66c2292eb419beb9f3",
+        "strict_archive_verifier": {
+          "result": "PASS",
+          "files": 109
+        },
+        "original_GitHub_ZIPs": [
+          {
+            "kind": "receipt",
+            "id": 14220521501,
+            "size_in_bytes": 616,
+            "zip_sha256": "0e91395fdd711d61f9f0ab937bc60ffdd584621fa2e10a0e2304ce35655f01b4"
+          },
+          {
+            "kind": "frontend",
+            "id": 14220896005,
+            "size_in_bytes": 28099629,
+            "zip_sha256": "f87e8637002821848c6e8990207d8a31f0fe80a657fbb6cbea17ad45b4fa5fea"
+          }
+        ],
+        "live_original_archive_source_byte_identity": {
+          "result": "PASS",
+          "normal_TLS": true,
+          "checked_at_utc": "2026-11-16T11:09:16.480896+00:00",
+          "files": 109,
+          "bytes": 30781978,
+          "evidence": "docs/v32/CACHE13-PREPROD-ARTIFACT-TLS-AUDIT.json"
+        }
+      }
+    },
+    "post_reset_saved_worlds": {
+      "generation": 2,
+      "accounts": 3,
+      "null_islands": 3,
+      "QA_worlds_created": 0,
+      "native_UI_prerequisite": "owner_first_new_game"
+    },
+    "next_application_source_sha": null,
+    "next_application_version": null,
+    "next_cache": null,
+    "next_local_validation": null,
+    "next_workbook": null,
+    "owner_latest_empty_island_observation": {
+      "checked_at_utc": "2026-11-16T10:07:30.741542+00:00",
+      "account": "admin1",
+      "generation": 2,
+      "island_present": false,
+      "TLS_verified": true,
+      "read_only_no_island_mutations": true
+    },
+    "owner_first_game_read": {
+      "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+      "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+      "host": "https://harborlight-dev.web.app",
+      "account": "admin1",
+      "TLS_verified": true,
+      "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+      "auth_http_status": 200,
+      "expected_UID_matches": true,
+      "island_GET_HTTP_status": 200,
+      "account_generation": 2,
+      "account_expired": false,
+      "island_present": true,
+      "island_generation": 2,
+      "island_revision": 12,
+      "schema": 9,
+      "ruleset": 32,
+      "population": 19,
+      "onboarding": "complete",
+      "onboarding_pending": false,
+      "initialization_paused": false,
+      "writes": 0,
+      "existing_world_prerequisite_satisfied": true,
+      "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+    },
+    "previous_accepted_dev_cache11": {
+      "dev_source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "dev_implementation_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
+      "dev_ci_run_id": 43766275390,
+      "dev_pages_run_id": 43766275430,
+      "dev_tag": "dev-0.15.0.1-20261115",
+      "dev_cache": "frontend-v32-11",
+      "dev_tag_remote_object": "1d7997a0074f0f34229807f0092aec808e716783"
+    },
+    "last_cache12_publication": {
+      "version": "0.15.0.2",
+      "cache": "frontend-v32-12",
+      "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+      "publication_source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
+      "own_CI": {
+        "run_id": 43848428119,
+        "job_id": 133234457802,
+        "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
+        "conclusion": "failure",
+        "duration_seconds": 450,
+        "failed_step": 27,
+        "failure": "cloud-rules-v32 strict transport rejected unnecessary GET /dev-time on admin1",
+        "completed_before_failure": {
+          "frontend_passed": 1437,
+          "frontend_total": 1437,
+          "backend_passed": 170,
+          "backend_total": 170,
+          "Python_passed": 166,
+          "startup_browser": "20/20 PASS",
+          "speed_browser": "6/6 PASS"
+        },
+        "later_remaining_browser_checks": "NOT_RUN"
+      },
+      "Pages": {
+        "run_id": 43848428111,
+        "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
+        "conclusion": "success",
+        "job_duration_seconds": 17,
+        "whole_run_duration_seconds": 23
+      },
+      "public_bytes": {
+        "status": "PASS",
+        "TLS_verified": true,
+        "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
+        "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+        "file_count": 108,
+        "total_bytes": 30774686,
+        "all_exact_source_bytes": true,
+        "game_API_or_account_writes": 0,
+        "evidence_path": "/workspace/work/cache12-release-20261116/pages-tls-audit.json"
+      },
+      "public_bytes_browser": {
+        "result": "PASS",
+        "widths": [
+          1440,
+          390
+        ],
+        "mode": "TLS-verified public bytes downloaded then rendered in Chrome locally",
+        "native_HTTPS_browser_acceptance_claimed": false,
+        "evidence_path": "/workspace/work/cache12-release-20261116/pages-downloaded-bytes-browser.log"
+      },
+      "accepted_tag_created": false,
+      "new_PREPROD_deployment": false
+    },
+    "planned_next_candidate": {
+      "status": "completed_accepted",
+      "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+      "publication_commit": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+      "cache": "frontend-v32-13"
+    },
+    "previous_preprod_cache11": {
+      "preprod_application_version": "0.15.0.1",
+      "preprod_source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "preprod_ci_run_id": 43766275390,
+      "preprod_deployment_run_id": 43768861718,
+      "preprod_deployment_attempt": 1,
+      "preprod_status": "deployed_source_86eb8d9_native_authenticated_rules32_functional_acceptance_SUCCESS_reset_NOT_EXECUTED",
+      "preprod_promotion_status": "completed_success_source_86eb8d9",
+      "preprod_promotion_target": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "preprod_pages_run_id": 43766275430,
+      "preprod_bridge_run_id": null,
+      "preprod_tag": "preprod-0.15.0.1-20261115",
+      "preprod_tag_remote_object": "446347dab79ebc3e8c088d6d257adbdcd0f5f6e4",
+      "preprod_artifacts": [
+        {
+          "id": 14183427928,
+          "name": "harborlight-dev-frontend-43768861718-1",
+          "size_in_bytes": 28095527,
+          "zip_sha256": "c5305f6c01ccd355f59d8fbde765729caec1033fe9cabaa1bcf284bf663d4bc9"
+        },
+        {
+          "id": 14183069464,
+          "name": "harborlight-dev-release-43768861718-1",
+          "size_in_bytes": 616,
+          "zip_sha256": "b4543fe43c26b5d7ee44423c95ef6bd8aec280f88fc121034dd1f749255fc348"
+        }
+      ],
+      "preprod_bridge_duration": null,
+      "preprod_deployment_duration": "2m12s",
+      "preprod_account_API_enabled": true,
+      "preprod_tag_scope": "accepted_PREPROD0.15.0.1_exact86_full_CI_native_authenticated_UI_and_immutable_artifacts_live_TLS",
+      "preprod_application_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
+      "preprod_gate_duration": "8s",
+      "preprod_tag_remote_verified": true,
+      "preprod_public_content_files": 108,
+      "preprod_public_content_bytes": 30754604,
+      "preprod_public_including_manifest_files": 109,
+      "preprod_public_HTTPS_hash_audit": {
+        "status": "PASS",
+        "tls_verified": true,
+        "content_files": 108,
+        "content_bytes": 30754604,
+        "including_manifest_files": 109,
+        "all_live_bytes_equal_immutable_archive": true,
+        "all_content_equal_release_and_application_source": true,
+        "manifest_sha256": "735e6317fa7691e37a2147676ff495a5ad47a4c7b6154feaee7a5f74d4e4d171",
+        "evidence": "docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json"
+      },
+      "preprod_next_promotion_status": "PENDING_NEW_OWN_DEV_ACCEPTANCE_AND_STANDARD_DEPLOYMENT_NATIVE_UI_PROOF"
+    },
+    "previous_preprod_ruleset_reset_fix": {
       "scope": "Fix official-cloud legacy ruleset activation, then separately reset exactly three PRE-PROD accounts; PROD/domain postponed",
       "status": "DEV_and_PREPROD86_accepted_owner_reset_SUCCESS_independently_read_verified",
       "version": "0.15.0.1",
@@ -31140,286 +31667,220 @@
         "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
       }
     },
-    "pending_next_source": {
-      "version": "0.15.0.1",
-      "cache": "frontend-v32-11",
-      "application_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
-      "publication_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-      "CI": "SUCCESS43766275390",
-      "deployment": "IN_PROGRESS43768861718",
-      "reset": "NOT_EXECUTED_OWNER_CLOUDSHELL_REQUIRED",
-      "local_checkpoint_sha": "c6c4f401dd3bda605578e05efb7529cbbf6da102",
-      "frontend_application_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914"
-    },
-    "previous_accepted_preprod_v31": {
-      "preprod_application_version": "0.14.0.0",
-      "preprod_source_sha": "7e81a1a436770f57fd8abf390b6af8022e3300f6",
-      "preprod_ci_run_id": 41906515746,
-      "preprod_deployment_run_id": 41909268052,
-      "preprod_deployment_attempt": 1,
-      "preprod_status": "verified_deployment_and_artifacts",
-      "preprod_promotion_status": "not_authorized_for_v32",
-      "preprod_promotion_target": null,
-      "preprod_pages_run_id": 41906515747,
-      "preprod_bridge_run_id": 41909239074,
-      "preprod_tag": "preprod-0.14.0.0-20261104",
-      "preprod_tag_remote_object": "1b32f383eed957b03120c1616cbb50435e19c19f",
-      "preprod_artifacts": [
-        {
-          "kind": "frontend",
-          "name": "harborlight-dev-frontend-41909268052-1",
-          "id": 13362655258,
-          "zip_sha256": "703190f7cbdcb5c958e43ca13b9eb0ba0329f62916fb3aab8b19fb068d66e18b",
-          "attempt": 1
-        },
-        {
-          "kind": "release",
-          "name": "harborlight-dev-release-41909268052-1",
-          "id": 13361328096,
-          "zip_sha256": "2a13c37f0180e310ba11c545737a48a19ee16bd057ac823836a74d8c359fd01e",
-          "attempt": 1
-        }
-      ],
-      "preprod_bridge_duration": "13s",
-      "preprod_deployment_duration": "2m12s"
-    },
-    "preprod_tag_scope": "accepted_PREPROD0.15.0.1_exact86_full_CI_native_authenticated_UI_and_immutable_artifacts_live_TLS",
-    "dev_tag_scope": "accepted_DEV0.15.0.1_exact86_own_CI_Pages",
-    "latest_fix_candidate_failure": {
-      "source_sha": "b268bd6d2a4bb7e91c615370bca273e3873dba8f",
-      "version": "0.15.0.1",
-      "cache": "frontend-v32-10",
-      "ci": {
-        "run_id": 43763863333,
+    "previous_failed_dev_cache12": {
+      "version": "0.15.0.2",
+      "cache": "frontend-v32-12",
+      "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+      "publication_source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
+      "own_CI": {
+        "run_id": 43848428119,
+        "job_id": 133234457802,
+        "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
         "conclusion": "failure",
-        "started_at": "2026-11-15T21:28:24Z",
-        "completed_at": "2026-11-15T21:37:18Z",
-        "duration_seconds": 534,
-        "duration": "8m54s",
-        "first_steps_passed": 26,
+        "duration_seconds": 450,
         "failed_step": 27,
-        "failed_test": "tutorial-v22 reward_grid",
-        "expected_tiles": 6,
-        "actual_tiles": 5,
-        "reason": "fresh flour tile hidden",
-        "step28_DEV_cloud_browsers": "skipped"
-      },
-      "pages": {
-        "run_id": 43763863357,
-        "conclusion": "success",
-        "source_sha": "b268bd6d2a4bb7e91c615370bca273e3873dba8f"
-      },
-      "new_GCP_deployment": false,
-      "actual_account_reset": false,
-      "accepted_tag_created": false
-    },
-    "PREPROD_pending_candidate": null,
-    "previous_preprod_e0_reopened": {
-      "preprod_application_version": "0.15.0.0",
-      "preprod_source_sha": "e0aa2ff3f60edeb6a55190ea8b16f0329692b303",
-      "preprod_ci_run_id": 43755386000,
-      "preprod_deployment_run_id": 43757897657,
-      "preprod_deployment_attempt": 1,
-      "preprod_status": "e0_files_and_artifacts_verified_functional_acceptance_REOPENED_USER_REPORT",
-      "preprod_promotion_status": "not_authorized_for_v32",
-      "preprod_pages_run_id": 41906515747,
-      "preprod_bridge_run_id": 41909239074,
-      "preprod_tag": "preprod-0.15.0.0-20261115",
-      "preprod_tag_remote_object": "f3e63aaa66356d4e963076fb2068a04695f4c655",
-      "preprod_artifacts": [
-        {
-          "kind": "frontend",
-          "id": 14178489674,
-          "zip_sha256": "45a9ed01c339e6b8d83ecf9b52a34b7cff278d2ced6a18b2b0947d94c8d9183d"
+        "failure": "cloud-rules-v32 strict transport rejected unnecessary GET /dev-time on admin1",
+        "completed_before_failure": {
+          "frontend_passed": 1437,
+          "frontend_total": 1437,
+          "backend_passed": 170,
+          "backend_total": 170,
+          "Python_passed": 166,
+          "startup_browser": "20/20 PASS",
+          "speed_browser": "6/6 PASS"
         },
-        {
-          "kind": "receipt",
-          "id": 14179048100,
-          "zip_sha256": "8cf962840b4e7842ac1b9c0fcab00d2b0a942b4d1ae716898ab48bf357b5c852"
-        }
-      ],
-      "preprod_bridge_duration": "13s",
-      "preprod_deployment_duration": "2m12s",
-      "preprod_account_API_enabled": false,
-      "preprod_tag_scope": "historical source and artifact verification; functional acceptance reopened"
-    },
-    "preprod_application_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
-    "preprod_gate_duration": "8s",
-    "preprod_tag_remote_verified": true,
-    "preprod_public_content_files": 108,
-    "preprod_public_content_bytes": 30754604,
-    "preprod_public_including_manifest_files": 109,
-    "preprod_public_HTTPS_hash_audit": {
-      "status": "PASS",
-      "tls_verified": true,
-      "content_files": 108,
-      "content_bytes": 30754604,
-      "including_manifest_files": 109,
-      "all_live_bytes_equal_immutable_archive": true,
-      "all_content_equal_release_and_application_source": true,
-      "manifest_sha256": "735e6317fa7691e37a2147676ff495a5ad47a4c7b6154feaee7a5f74d4e4d171",
-      "evidence": "docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json"
-    },
-    "preprod_next_promotion_status": "PENDING_NEW_OWN_DEV_ACCEPTANCE_AND_STANDARD_DEPLOYMENT_NATIVE_UI_PROOF",
-    "owner_reset_report": {
-      "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
-      "deployment_run_id": 43768861718,
-      "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-      "owner_reported_output": "RESET PRE-PROD PASS",
-      "reported_generations": {
-        "admin1": 2,
-        "admin2": 2,
-        "admin3": 2
+        "later_remaining_browser_checks": "NOT_RUN"
       },
-      "independent_post_reset_read": "PASS",
-      "independent_generation_verification": true,
-      "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
-      "three_islands_null": true,
-      "three_accounts_expired": false,
-      "direct_own_Firestore_denied": 3,
-      "audit_writes": 0,
-      "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
-      "repeat_reset_requested": false
+      "Pages": {
+        "run_id": 43848428111,
+        "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
+        "conclusion": "success",
+        "job_duration_seconds": 17,
+        "whole_run_duration_seconds": 23
+      },
+      "public_bytes": {
+        "status": "PASS",
+        "TLS_verified": true,
+        "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
+        "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+        "file_count": 108,
+        "total_bytes": 30774686,
+        "all_exact_source_bytes": true,
+        "game_API_or_account_writes": 0,
+        "evidence_path": "/workspace/work/cache12-release-20261116/pages-tls-audit.json"
+      },
+      "public_bytes_browser": {
+        "result": "PASS",
+        "widths": [
+          1440,
+          390
+        ],
+        "mode": "TLS-verified public bytes downloaded then rendered in Chrome locally",
+        "native_HTTPS_browser_acceptance_claimed": false,
+        "evidence_path": "/workspace/work/cache12-release-20261116/pages-downloaded-bytes-browser.log"
+      },
+      "accepted_tag_created": false,
+      "new_PREPROD_deployment": false
     },
-    "admin3_speed_scope": {
-      "scope": "Admin3-only authorized game speed UI and effective clock on DEV and PRE-PROD",
+    "current_cache13_acceptance": {
+      "status": "ACCEPTED_DEV_AND_PREPROD_0_15_0_2_CACHE13",
       "as_of": "2026-11-16",
-      "status": "APPLICATION_COMMITTED_TARGETED_PASS_NEW_OWN_CI_PAGES_PREPROD_PENDING",
+      "application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+      "publication_deployment_source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
       "version": "0.15.0.2",
       "cache": "frontend-v32-13",
-      "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
-      "publication_commit": null,
-      "authorized_account": "admin3",
-      "authorized_environments": [
-        "DEV",
-        "PRE-PROD"
-      ],
-      "controls": {
-        "play": {
-          "label": "▶",
-          "multiplier": 1
-        },
-        "fast_forward": {
-          "label": "⏩",
-          "first_press_multiplier": 2,
-          "second_press_multiplier": 6
-        }
-      },
-      "account_authorization_required": true,
-      "effective_API_clock_required": true,
-      "other_accounts_not_authorized": true,
-      "local_checks": {
-        "status": "PASS_FINAL96c_LOCAL_AND_ISOLATED_PREPROD_API",
-        "scopes": 6,
-        "backend_passed": 170,
-        "clock_frontend_passed": 66,
-        "coordinator_passed": 57,
-        "payload_passed": 2,
-        "evidence": "docs/v32/CACHE12-LOCAL-VALIDATION.json",
-        "public_PREPROD_speed_accepted": false,
-        "previous_six_scope_result_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
-        "final_clock_focus_coordinator": "51/51 PASS source96c",
-        "final_local_cloud_adapters": "58/58 PASS source96c",
-        "final_six_scope_speed_rerun": "6/6 PASS source96c",
-        "final_LiveCAS_rerun": "PASS source96c"
-      },
       "own_CI": {
-        "run_id": null,
-        "conclusion": null,
-        "status": "PENDING_NEW_RUN; previous8087FAILURE_preserved_in_history"
-      },
-      "DEV_publication": {
-        "status": "cache12_source8087_published_Pages_SUCCESS_own_CI_FAILURE; cache13_pending",
-        "last_published_cache": "frontend-v32-12",
-        "publication_source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
-        "run_id": 43848428111,
+        "run_id": 43850690541,
+        "source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
         "conclusion": "success",
-        "public_bytes_and_startup_browser": "PASS_TLS_bytes_rendered_locally_no_nativeHTTPS_claim"
+        "duration": "24m31s",
+        "duration_seconds": 1471,
+        "frontend_Node": 1437,
+        "backend_Node": 170,
+        "physical_Node": 7,
+        "total_Node": 1614,
+        "Python": 166,
+        "Chromium_programs": 66,
+        "Chromium_stages": [
+          48,
+          18
+        ],
+        "both_browser_stages": "PASS",
+        "count_note": "66 actual program invocations;65 omitted standaloneLiveCAS"
+      },
+      "DEV": {
+        "source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+        "application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+        "version": "0.15.0.2",
+        "cache": "frontend-v32-13",
+        "run_id": 43850690456,
+        "conclusion": "success",
+        "duration_seconds": 22,
+        "job_duration_seconds": 17,
+        "TLS_source_entry_files": 108,
+        "TLS_source_entry_bytes": 30774724,
+        "all_exact_source_bytes": true,
+        "downloaded_public_bytes_Chrome": {
+          "result": "PASS",
+          "widths": [
+            1440,
+            390
+          ],
+          "mode": "TLS-verified downloaded public bytes rendered locally as transport replay",
+          "native_HTTPS_DEV_browser_claimed": false
+        },
+        "tag": {
+          "name": "dev-0.15.0.2-20261116",
+          "annotated_object": "9b07b4dd74f2e4dabda6e4eaf361832f411cb506",
+          "target": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+          "published": true,
+          "remote_verified": true,
+          "immutable": true
+        }
       },
       "PREPROD": {
-        "status": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_AND_NATIVE_UI_PROOF",
-        "run_id": null,
-        "conclusion": null,
-        "real_saved_world_UI_prerequisite": "PASS_OWNER_CREATED_WORLD_INDEPENDENT_READ; new deployedUI acceptance still required",
-        "owner_latest_read": {
-          "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
-          "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
-          "host": "https://harborlight-dev.web.app",
-          "account": "admin1",
-          "TLS_verified": true,
-          "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
-          "auth_http_status": 200,
-          "expected_UID_matches": true,
-          "island_GET_HTTP_status": 200,
-          "account_generation": 2,
-          "account_expired": false,
-          "island_present": true,
-          "island_generation": 2,
-          "island_revision": 12,
-          "schema": 9,
-          "ruleset": 32,
-          "population": 19,
-          "onboarding": "complete",
-          "onboarding_pending": false,
-          "initialization_paused": false,
-          "writes": 0,
-          "existing_world_prerequisite_satisfied": true,
-          "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-          "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+        "source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+        "application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+        "version": "0.15.0.2",
+        "cache": "frontend-v32-13",
+        "run_id": 43854387444,
+        "run_attempt": 1,
+        "conclusion": "success",
+        "duration_seconds": 142,
+        "gate": {
+          "job_id": 133254792440,
+          "duration_seconds": 12,
+          "successful_steps": 7
         },
-        "QA_may_create_island": false,
-        "receipt_or_empty_world_must_not_bypass_native_UI_acceptance": true,
-        "owner_first_game_read": {
-          "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
-          "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
-          "host": "https://harborlight-dev.web.app",
-          "account": "admin1",
-          "TLS_verified": true,
-          "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
-          "auth_http_status": 200,
-          "expected_UID_matches": true,
-          "island_GET_HTTP_status": 200,
-          "account_generation": 2,
-          "account_expired": false,
-          "island_present": true,
-          "island_generation": 2,
-          "island_revision": 12,
-          "schema": 9,
-          "ruleset": 32,
-          "population": 19,
-          "onboarding": "complete",
-          "onboarding_pending": false,
-          "initialization_paused": false,
-          "writes": 0,
-          "existing_world_prerequisite_satisfied": true,
-          "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-          "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+        "deploy": {
+          "job_id": 133254914412,
+          "duration_seconds": 123,
+          "successful_steps": 31,
+          "skipped_diagnostic_steps": 1
+        },
+        "native_hosted_UI": {
+          "result": "PASS",
+          "actual_existing_authenticated_island": true,
+          "exact_asset_hashes": 108,
+          "all_browser_writes_blocked": true
+        },
+        "account_checks": {
+          "Auth_successes": 3,
+          "API_reads": 3,
+          "existing_saved_islands": 1,
+          "empty_islands": 2,
+          "foreign_denied": 6,
+          "anonymous_Firestore_denied": 3,
+          "own_direct_Firestore_403": 3,
+          "anonymous_API_denied": 3,
+          "island_writes": 0
+        },
+        "live_clock_read": {
+          "result": "PASS",
+          "normal_TLS": true,
+          "checked_at_utc": "2026-11-16T11:07:27.363840+00:00",
+          "admin1_clock_GET": 403,
+          "admin2_clock_GET": 403,
+          "admin3_clock_GET": 200,
+          "admin3_canSetRate": true,
+          "admin3_canAdvance": false,
+          "admin3_rate": 1,
+          "all_generations_preserved": 2,
+          "game_or_clock_writes": 0,
+          "empty_islands_initialized": 0,
+          "evidence": "docs/v32/CACHE13-LIVE-CLOCK-ACCOUNT-AUDIT.json"
+        },
+        "tag": {
+          "name": "preprod-0.15.0.2-20261116",
+          "annotated_object": "9ff02b5d158485dfb955572e6a7d8b6e29d34cf2",
+          "target": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+          "published": true,
+          "remote_verified": true,
+          "immutable": true
         }
       },
-      "reset_report": {
-        "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
-        "deployment_run_id": 43768861718,
-        "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-        "owner_reported_output": "RESET PRE-PROD PASS",
-        "reported_generations": {
-          "admin1": 2,
-          "admin2": 2,
-          "admin3": 2
+      "artifacts": {
+        "original_ZIPs_downloaded_and_verified": true,
+        "actual_inner_receipt_read": true,
+        "receipt_schema_version": 2,
+        "receipt_validation": "PASS",
+        "receipt_checks": {
+          "ci": true,
+          "dev_smoke": true,
+          "frontend_smoke": true,
+          "account_api": true
         },
-        "independent_post_reset_read": "PASS",
-        "independent_generation_verification": true,
-        "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
-        "three_islands_null": true,
-        "three_accounts_expired": false,
-        "direct_own_Firestore_denied": 3,
-        "audit_writes": 0,
-        "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
-        "repeat_reset_requested": false
+        "image_digest": "sha256:164fcb1ea3e3554786dbd427fdf0b720f7d008023115ab968080c47adb7ff5d4",
+        "frontend_TAR_sha256": "859d5899ee1fd08c1c3f993436776471c7858a6fba6d0e1afde4d0b409072685",
+        "frontend_manifest_sha256": "595b487c6edf3cdac8b723ba581aa0958bbaa687bba72f66c2292eb419beb9f3",
+        "strict_archive_verifier": {
+          "result": "PASS",
+          "files": 109
+        },
+        "original_GitHub_ZIPs": [
+          {
+            "kind": "receipt",
+            "id": 14220521501,
+            "size_in_bytes": 616,
+            "zip_sha256": "0e91395fdd711d61f9f0ab937bc60ffdd584621fa2e10a0e2304ce35655f01b4"
+          },
+          {
+            "kind": "frontend",
+            "id": 14220896005,
+            "size_in_bytes": 28099629,
+            "zip_sha256": "f87e8637002821848c6e8990207d8a31f0fe80a657fbb6cbea17ad45b4fa5fea"
+          }
+        ],
+        "live_original_archive_source_byte_identity": {
+          "result": "PASS",
+          "normal_TLS": true,
+          "checked_at_utc": "2026-11-16T11:09:16.480896+00:00",
+          "files": 109,
+          "bytes": 30781978,
+          "evidence": "docs/v32/CACHE13-PREPROD-ARTIFACT-TLS-AUDIT.json"
+        }
       },
-      "new_reset_required": false,
-      "PROD_and_domain": "POSTPONED_NO_ACTION",
-      "manual_execution": "NOT_RUN",
-      "workbook": {
+      "workbook_unchanged": {
         "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
         "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
         "sheets": 6,
@@ -31436,244 +31897,21 @@
         "selected_six_sheet_read_and_merge_scope_preserved": true,
         "edited_by_documentation_agent": false
       },
-      "previous_application_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
-      "owner_first_game_read_evidence": "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json",
-      "previous_candidate_snapshot": {
-        "scope": "Admin3-only authorized game speed UI and effective clock on DEV and PRE-PROD",
-        "as_of": "2026-11-16",
-        "status": "APPLICATION96c_COMMITTED_FINAL_LOCAL_ISOLATED_API_ACCEPTANCE_PASS_CI_PUBLICATION_PENDING",
-        "version": "0.15.0.2",
-        "cache": "frontend-v32-12",
-        "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
-        "publication_commit": null,
-        "authorized_account": "admin3",
-        "authorized_environments": [
-          "DEV",
-          "PRE-PROD"
-        ],
-        "controls": {
-          "play": {
-            "label": "▶",
-            "multiplier": 1
-          },
-          "fast_forward": {
-            "label": "⏩",
-            "first_press_multiplier": 2,
-            "second_press_multiplier": 6
-          }
-        },
-        "account_authorization_required": true,
-        "effective_API_clock_required": true,
-        "other_accounts_not_authorized": true,
-        "local_checks": {
-          "status": "PASS_FINAL96c_LOCAL_AND_ISOLATED_PREPROD_API",
-          "scopes": 6,
-          "backend_passed": 170,
-          "clock_frontend_passed": 66,
-          "coordinator_passed": 57,
-          "payload_passed": 2,
-          "evidence": "docs/v32/CACHE12-LOCAL-VALIDATION.json",
-          "public_PREPROD_speed_accepted": false,
-          "previous_six_scope_result_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
-          "final_clock_focus_coordinator": "51/51 PASS source96c",
-          "final_local_cloud_adapters": "58/58 PASS source96c",
-          "final_six_scope_speed_rerun": "6/6 PASS source96c",
-          "final_LiveCAS_rerun": "PASS source96c"
-        },
-        "own_CI": {
-          "run_id": null,
-          "conclusion": null
-        },
-        "DEV_publication": {
-          "run_id": null,
-          "conclusion": null
-        },
-        "PREPROD": {
-          "status": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_AND_NATIVE_UI_PROOF",
-          "run_id": null,
-          "conclusion": null,
-          "real_saved_world_UI_prerequisite": "PASS_OWNER_CREATED_WORLD_INDEPENDENT_READ; new deployedUI acceptance still required",
-          "owner_latest_read": {
-            "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
-            "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
-            "host": "https://harborlight-dev.web.app",
-            "account": "admin1",
-            "TLS_verified": true,
-            "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
-            "auth_http_status": 200,
-            "expected_UID_matches": true,
-            "island_GET_HTTP_status": 200,
-            "account_generation": 2,
-            "account_expired": false,
-            "island_present": true,
-            "island_generation": 2,
-            "island_revision": 12,
-            "schema": 9,
-            "ruleset": 32,
-            "population": 19,
-            "onboarding": "complete",
-            "onboarding_pending": false,
-            "initialization_paused": false,
-            "writes": 0,
-            "existing_world_prerequisite_satisfied": true,
-            "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-            "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
-          },
-          "QA_may_create_island": false,
-          "receipt_or_empty_world_must_not_bypass_native_UI_acceptance": true,
-          "owner_first_game_read": {
-            "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
-            "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
-            "host": "https://harborlight-dev.web.app",
-            "account": "admin1",
-            "TLS_verified": true,
-            "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
-            "auth_http_status": 200,
-            "expected_UID_matches": true,
-            "island_GET_HTTP_status": 200,
-            "account_generation": 2,
-            "account_expired": false,
-            "island_present": true,
-            "island_generation": 2,
-            "island_revision": 12,
-            "schema": 9,
-            "ruleset": 32,
-            "population": 19,
-            "onboarding": "complete",
-            "onboarding_pending": false,
-            "initialization_paused": false,
-            "writes": 0,
-            "existing_world_prerequisite_satisfied": true,
-            "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-            "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
-          }
-        },
-        "reset_report": {
-          "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
-          "deployment_run_id": 43768861718,
-          "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-          "owner_reported_output": "RESET PRE-PROD PASS",
-          "reported_generations": {
-            "admin1": 2,
-            "admin2": 2,
-            "admin3": 2
-          },
-          "independent_post_reset_read": "PASS",
-          "independent_generation_verification": true,
-          "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
-          "three_islands_null": true,
-          "three_accounts_expired": false,
-          "direct_own_Firestore_denied": 3,
-          "audit_writes": 0,
-          "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
-          "repeat_reset_requested": false
-        },
-        "new_reset_required": false,
-        "PROD_and_domain": "POSTPONED_NO_ACTION",
-        "manual_execution": "NOT_RUN",
-        "workbook": {
-          "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
-          "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
-          "sheets": 6,
-          "rows": 413,
-          "columns": [
-            "A",
-            "B",
-            "C"
-          ],
-          "C_all_blank": true,
-          "validation": "PASS",
-          "sha256": "90943adac77e35ee97899165dfa4e4ae541074b62258323fae27ffab2a158e60",
-          "source_fingerprint": "f7d82a10f46673098129486a911132ae30e0739e0fc27e4a5d64aa9669589771",
-          "selected_six_sheet_read_and_merge_scope_preserved": true,
-          "edited_by_documentation_agent": false
-        },
-        "previous_application_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
-        "owner_first_game_read_evidence": "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json"
+      "prior_failed_publication": "docs/v32/CACHE12-PUBLICATION-EVIDENCE.json",
+      "reset": {
+        "earlier_operation_completed": true,
+        "repeated_by_this_deployment": false,
+        "generation_preserved": 2,
+        "existing_islands": 1,
+        "empty_islands": 2,
+        "initializations_or_game_clock_writes": 0,
+        "prior_proof": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json"
       },
-      "planned_next_candidate": {
-        "version": "0.15.0.2",
-        "cache": "frontend-v32-13",
-        "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
-        "publication_commit": null,
-        "status": "APPLICATION_COMMITTED_TARGETED_PASS_NEW_OWN_CI_PAGES_PREPROD_PENDING",
-        "fix": "Only authenticated UIDdev-admin3 initializes client /dev-time requests; server remains unchanged",
-        "targeted_cloud_rules_and_six_scope_UI": "PASS",
-        "own_CI": "PENDING_NEW_RUN",
-        "Pages": "PENDING_NEW_RUN",
-        "PREPROD": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_NATIVE_UI_PROOF"
-      },
-      "last_published_candidate": {
-        "version": "0.15.0.2",
-        "cache": "frontend-v32-12",
-        "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
-        "publication_source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
-        "own_CI": {
-          "run_id": 43848428119,
-          "job_id": 133234457802,
-          "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
-          "conclusion": "failure",
-          "duration_seconds": 450,
-          "failed_step": 27,
-          "failure": "cloud-rules-v32 strict transport rejected unnecessary GET /dev-time on admin1",
-          "completed_before_failure": {
-            "frontend_passed": 1437,
-            "frontend_total": 1437,
-            "backend_passed": 170,
-            "backend_total": 170,
-            "Python_passed": 166,
-            "startup_browser": "20/20 PASS",
-            "speed_browser": "6/6 PASS"
-          },
-          "later_remaining_browser_checks": "NOT_RUN"
-        },
-        "Pages": {
-          "run_id": 43848428111,
-          "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
-          "conclusion": "success",
-          "job_duration_seconds": 17,
-          "whole_run_duration_seconds": 23
-        },
-        "public_bytes": {
-          "status": "PASS",
-          "TLS_verified": true,
-          "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
-          "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
-          "file_count": 108,
-          "total_bytes": 30774686,
-          "all_exact_source_bytes": true,
-          "game_API_or_account_writes": 0,
-          "evidence_path": "/workspace/work/cache12-release-20261116/pages-tls-audit.json"
-        },
-        "public_bytes_browser": {
-          "result": "PASS",
-          "widths": [
-            1440,
-            390
-          ],
-          "mode": "TLS-verified public bytes downloaded then rendered in Chrome locally",
-          "native_HTTPS_browser_acceptance_claimed": false,
-          "evidence_path": "/workspace/work/cache12-release-20261116/pages-downloaded-bytes-browser.log"
-        },
-        "accepted_tag_created": false,
-        "new_PREPROD_deployment": false
-      },
-      "current_local_validation": {
-        "result": "PASS_CLOUD_RULES_AND_SIX_SPEED_SCOPES_PACKAGE_STAGE",
-        "evidence": "docs/v32/CACHE13-LOCAL-VALIDATION.json"
-      }
+      "manual_user_acceptance": "NOT_RUN",
+      "PROD_and_DNS": "POSTPONED_NO_ACTION",
+      "subsequent_metadata_commit": "Does not redefine application source,accepted publication,immutable tags,public files or fingerprints"
     },
-    "post_reset_saved_worlds": {
-      "generation": 2,
-      "accounts": 3,
-      "null_islands": 3,
-      "QA_worlds_created": 0,
-      "native_UI_prerequisite": "owner_first_new_game"
-    },
-    "next_application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
-    "next_application_version": "0.15.0.2",
-    "next_cache": "frontend-v32-13",
-    "next_local_validation": {
+    "latest_local_validation": {
       "scope": "Frozen cache13 UID gate correction; local evidence only, new own CI/Pages/PRE-PROD pending",
       "application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
       "version": "0.15.0.2",
@@ -31856,7 +32094,7 @@
       "PREPROD": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_NATIVE_UI_PROOF",
       "manual_execution": "NOT_RUN"
     },
-    "next_workbook": {
+    "current_workbook": {
       "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
       "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
       "sheets": 6,
@@ -31873,115 +32111,7 @@
       "selected_six_sheet_read_and_merge_scope_preserved": true,
       "edited_by_documentation_agent": false
     },
-    "owner_latest_empty_island_observation": {
-      "checked_at_utc": "2026-11-16T10:07:30.741542+00:00",
-      "account": "admin1",
-      "generation": 2,
-      "island_present": false,
-      "TLS_verified": true,
-      "read_only_no_island_mutations": true
-    },
-    "owner_first_game_read": {
-      "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
-      "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
-      "host": "https://harborlight-dev.web.app",
-      "account": "admin1",
-      "TLS_verified": true,
-      "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
-      "auth_http_status": 200,
-      "expected_UID_matches": true,
-      "island_GET_HTTP_status": 200,
-      "account_generation": 2,
-      "account_expired": false,
-      "island_present": true,
-      "island_generation": 2,
-      "island_revision": 12,
-      "schema": 9,
-      "ruleset": 32,
-      "population": 19,
-      "onboarding": "complete",
-      "onboarding_pending": false,
-      "initialization_paused": false,
-      "writes": 0,
-      "existing_world_prerequisite_satisfied": true,
-      "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-      "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
-    },
-    "previous_accepted_dev_cache11": {
-      "dev_source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-      "dev_implementation_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
-      "dev_ci_run_id": 43766275390,
-      "dev_pages_run_id": 43766275430,
-      "dev_tag": "dev-0.15.0.1-20261115",
-      "dev_cache": "frontend-v32-11",
-      "dev_tag_remote_object": "1d7997a0074f0f34229807f0092aec808e716783"
-    },
-    "last_cache12_publication": {
-      "version": "0.15.0.2",
-      "cache": "frontend-v32-12",
-      "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
-      "publication_source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
-      "own_CI": {
-        "run_id": 43848428119,
-        "job_id": 133234457802,
-        "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
-        "conclusion": "failure",
-        "duration_seconds": 450,
-        "failed_step": 27,
-        "failure": "cloud-rules-v32 strict transport rejected unnecessary GET /dev-time on admin1",
-        "completed_before_failure": {
-          "frontend_passed": 1437,
-          "frontend_total": 1437,
-          "backend_passed": 170,
-          "backend_total": 170,
-          "Python_passed": 166,
-          "startup_browser": "20/20 PASS",
-          "speed_browser": "6/6 PASS"
-        },
-        "later_remaining_browser_checks": "NOT_RUN"
-      },
-      "Pages": {
-        "run_id": 43848428111,
-        "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
-        "conclusion": "success",
-        "job_duration_seconds": 17,
-        "whole_run_duration_seconds": 23
-      },
-      "public_bytes": {
-        "status": "PASS",
-        "TLS_verified": true,
-        "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
-        "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
-        "file_count": 108,
-        "total_bytes": 30774686,
-        "all_exact_source_bytes": true,
-        "game_API_or_account_writes": 0,
-        "evidence_path": "/workspace/work/cache12-release-20261116/pages-tls-audit.json"
-      },
-      "public_bytes_browser": {
-        "result": "PASS",
-        "widths": [
-          1440,
-          390
-        ],
-        "mode": "TLS-verified public bytes downloaded then rendered in Chrome locally",
-        "native_HTTPS_browser_acceptance_claimed": false,
-        "evidence_path": "/workspace/work/cache12-release-20261116/pages-downloaded-bytes-browser.log"
-      },
-      "accepted_tag_created": false,
-      "new_PREPROD_deployment": false
-    },
-    "planned_next_candidate": {
-      "version": "0.15.0.2",
-      "cache": "frontend-v32-13",
-      "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
-      "publication_commit": null,
-      "status": "APPLICATION_COMMITTED_TARGETED_PASS_NEW_OWN_CI_PAGES_PREPROD_PENDING",
-      "fix": "Only authenticated UIDdev-admin3 initializes client /dev-time requests; server remains unchanged",
-      "targeted_cloud_rules_and_six_scope_UI": "PASS",
-      "own_CI": "PENDING_NEW_RUN",
-      "Pages": "PENDING_NEW_RUN",
-      "PREPROD": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_NATIVE_UI_PROOF"
-    }
+    "PROD": "postponed_by_user",
+    "manual_user_acceptance": "NOT_RUN"
   }
 }

@@ -1,0 +1,121 @@
+{
+  "run_id": 43850690541,
+  "conclusion": "success",
+  "head_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+  "duration_seconds": 1471.0,
+  "test_count_summaries": [
+    {
+      "job_id": 133242121659,
+      "kind": "tests",
+      "count": 1437
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "pass",
+      "count": 1437
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "fail",
+      "count": 0
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "tests",
+      "count": 170
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "pass",
+      "count": 170
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "fail",
+      "count": 0
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "tests",
+      "count": 7
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "pass",
+      "count": 7
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "fail",
+      "count": 0
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "python_tests",
+      "count": 2
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "python_tests",
+      "count": 12
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "python_tests",
+      "count": 10
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "python_tests",
+      "count": 26
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "python_tests",
+      "count": 17
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "python_tests",
+      "count": 23
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "python_tests",
+      "count": 20
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "python_tests",
+      "count": 12
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "python_tests",
+      "count": 8
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "python_tests",
+      "count": 14
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "python_tests",
+      "count": 18
+    },
+    {
+      "job_id": 133242121659,
+      "kind": "python_tests",
+      "count": 4
+    }
+  ],
+  "browser_script_invocations": 66,
+  "browser_step_invocations": [
+    48,
+    18
+  ],
+  "browser_count_note": "65 counts loop entries only; standalone live-CAS acceptance adds one, actual total66.",
+  "node_tests_passed": 1614,
+  "python_tests_passed": 166
+}

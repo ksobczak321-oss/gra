@@ -1,5 +1,21 @@
 # Zasady pracy nad HARBORLIGHT
 
+## Odebrane DEV i PRE-PROD0.15.0.2 — 16listopada2026
+
+**DEV i PRE-PROD0.15.0.2/cache `frontend-v32-13` są odebrane.** Aplikacja `37061c43139f32dfba61e4d837b133ed9d2d7da8`, źródło publikacji i wdrożenia `c4f752142c0421aad1dc0490a2f5139c277e6ee5`. Usunięto przebłysk starej mapy/HUD przy starcie oraz wdrożono tempo1×/2×/6× wyłącznie dlaadmin3. Własny CI43850690541 **SUCCESS24m31s**:1437frontend+170backend+7physical=1614Node,166Python oraz **66 programówChromium (48+18)**, obie grupyPASS. Liczba65 pomijała osobnyLiveCAS i nie jest końcowym wynikiem.
+
+Pages43850690456 SUCCESS22s/job17s;108plików wejścia/źródeł i30 774 724bajty zgodne przezHTTPS/TLS. Pobrane publiczne bajty uruchomiono lokalnie wChrome1440/390 PASS jako odtworzenie transportu; nie deklarujemy natywnego odbioruHTTPS wprzeglądarceDEV. StandardowyPRE-PROD43854387444/próba1 **SUCCESS2m22s**: gate12s/7kroków, deploy2m03s/31SUCCESS+1pominięta diagnostyka. Natywny odbiór rzeczywistej zalogowanej istniejącej wyspy PASS108dokładnychhashy; wszystkie zapisy przeglądarkowe zablokowane.
+
+Odczyt kont:3Auth/3API,1istniejąca wyspa i2puste,6obcych+3anonimoweFirestore odmowy,3własne bezpośrednieFirestore403 i3anonimoweAPI odmowy. Niezależny audyt zegara11:07UTC z normalnymTLS potwierdził admin1/admin2 GETclock403 oraz admin3 GET200/rate1/generation2/canSetRate=true/canAdvance=false. Zachowano generacje2 i świat schema9/rules32; nie zmieniano tempa lub gry i nie inicjalizowano pustych wysp. Sekwencję1×/2×/6× sprawdzono wcześniej na rzeczywistym lokalnym runtime i izolowanymAPI; audyt publiczny był wyłącznie odczytowy.
+
+Oba oryginalneZIP-y zweryfikowano po rozmiarze/SHA256. Rzeczywisty receiptv2 ma walidacjęPASS i wszystkie4checks=true; rygorystyczne archiwum109PASS. NiezależnyTLS o11:09UTC potwierdził wszystkie109plików/30 781 978bajtów identyczne z oryginalnym archiwum i źródłem. Oba niezmienne tagi są opublikowane i zdalnie potwierdzone na c4: DEV `dev-0.15.0.2-20261116`, obiekt `9b07b4dd74f2e4dabda6e4eaf361832f411cb506`; PRE-PROD `preprod-0.15.0.2-20261116`, obiekt `9ff02b5d158485dfb955572e6a7d8b6e29d34cf2`.
+
+**To wdrożenie nie resetowało kont.** Wcześniejszy reset pozostaje zakończony i niezależnie potwierdzony; nie wolno go powtarzać. Historyczny8087/cache12/CI43848428119FAILURE pozostaje w dowodach. Excel6/413/ABC/pustaC zachowuje źródło37061c iSHA256 `95f415d0748d5b5e389f92e28df2aef18e71b13968c74ac5a0e54835c7d4be8d`; pliki publiczne, wejściowy zakres sześciu arkuszy, MERGE i fingerprinty bez zmiany tą aktualizacją. **Ręczny odbiór użytkownika NOT_RUN. PROD/DNS odłożone.** Kolejny commit samych metadanych nie zastępuje aplikacji37061c, publikacji c4 ani tych tagów.
+
+[Pełne dowody odbioru](docs/v32/CACHE13-ACCEPTANCE.json).
+
+## Historia przygotowania i wcześniejszych statusów
+
 ## Końcowe źródłocache13 — noweCI i publikacje oczekują
 
 Bieżący kandydat **0.15.0.2 / frontend-v32-13** ma zacommitowane źródło **`37061c43139f32dfba61e4d837b133ed9d2d7da8`**. Zmiana względem nieudanegocache12 obejmuje wyłącznie bramkę inicjalizacji zegara klienta dlaUIDdev-admin3 i56publicznych ciągówcache13; serwer pozostaje bez zmiany.

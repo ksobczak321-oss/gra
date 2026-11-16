@@ -1,0 +1,464 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-11-16T11:09:16.480896+00:00",
+  "origin": "https://harborlight-dev.web.app/",
+  "publication_source": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+  "application_source": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+  "normal_tls": true,
+  "file_count": 109,
+  "total_bytes": 30781978,
+  "all_hosted_bytes_match_verified_original_archive": true,
+  "source_public_files_match": true,
+  "original_frontend_artifact_id": 14220896005,
+  "original_frontend_zip_sha256": "f87e8637002821848c6e8990207d8a31f0fe80a657fbb6cbea17ad45b4fa5fea",
+  "original_receipt_artifact_id": 14220521501,
+  "original_receipt_zip_sha256": "0e91395fdd711d61f9f0ab937bc60ffdd584621fa2e10a0e2304ce35655f01b4",
+  "archive_sha256": "859d5899ee1fd08c1c3f993436776471c7858a6fba6d0e1afde4d0b409072685",
+  "manifest_sha256": "595b487c6edf3cdac8b723ba581aa0958bbaa687bba72f66c2292eb419beb9f3",
+  "image_digest": "sha256:164fcb1ea3e3554786dbd427fdf0b720f7d008023115ab968080c47adb7ff5d4",
+  "checks": {
+    "ci": true,
+    "dev_smoke": true,
+    "frontend_smoke": true,
+    "account_api": true
+  },
+  "files": {
+    "assets/harborlight-farm-forest-approved-v32.png": {
+      "sha256": "39d6fcca12cb136a307a41665172a11835aaa85adbeaa99504e7357e9ba7b7bf",
+      "size": 2877034
+    },
+    "assets/harborlight-goods-v32.png": {
+      "sha256": "0c48421274f8c810f5452668195242e5aadc284be9a3621b095d19451cbc2e20",
+      "size": 2909709
+    },
+    "assets/harborlight-harbor-approved-v32.png": {
+      "sha256": "8a5209b6b6ae98fa9b7059758c85a1bf71e82ceb3d208882fbf96d581fdf6752",
+      "size": 2887859
+    },
+    "assets/harborlight-inhabitants-clean.png": {
+      "sha256": "480d967c7323d5987b711d9d71de9589bb8e5807216f980054413c8fe100d105",
+      "size": 3019604
+    },
+    "assets/harborlight-ocean-approved-v32.png": {
+      "sha256": "8f22f7a16160d0bd5cab69e8ba94245c183b92d905b5189fcc70c6112d58c558",
+      "size": 1775689
+    },
+    "assets/harborlight-v1-approved.png": {
+      "sha256": "4063f003002f95dd7b00f77a8d6d610b04f134766e52afc97e8a10712fd6d823",
+      "size": 3315500
+    },
+    "assets/harborlight-windmill-clean.png": {
+      "sha256": "b52435067f75fb37500df4b3de5506cd55646e4e16c840164e007ed7fb362bbc",
+      "size": 3133527
+    },
+    "assets/paynow-wordmark.svg": {
+      "sha256": "39e5de3318c00471dd9b0d43c5aff0b5508d6513d6d3253c086e02fbc4d1313f",
+      "size": 355
+    },
+    "assets/theatre-building-v30.png": {
+      "sha256": "b83c1977061a872d173c54c4af340cf2736dfb1acb673ab43cfb53132b474bbd",
+      "size": 1878638
+    },
+    "assets/theatre-courtyard-v30.png": {
+      "sha256": "ca050faf691e8f97253891d1c12ec8336940390fd83e89b6cc13783cd6916d9d",
+      "size": 3733415
+    },
+    "assets/theatre-decor-atlas-v30.png": {
+      "sha256": "66cac2d5c133643595a37962086d7c2c98ec73273cb7b236640f9cdc8ab6b674",
+      "size": 2202716
+    },
+    "backend/island-name.mjs": {
+      "sha256": "d84d85d93a922017a4d160ae98adcced18a7b455cc4e44e0606fc36695c2efb1",
+      "size": 2821
+    },
+    "backend/league-rules.mjs": {
+      "sha256": "b8b81f16e12fc9b981e3b310efd049460e83dbef31ae58b533d3f1b8ebbe592c",
+      "size": 13616
+    },
+    "harborlight-auth-providers.js": {
+      "sha256": "9ee861e1ac10a4a2d14c86f1d726d8775663abb65f838ed3567c5ffc7a13b143",
+      "size": 6929
+    },
+    "harborlight-auth.css": {
+      "sha256": "84454fea75712d1401ad4b42f5bd0618e5a7b5925517048b49a84fd6c8dff80b",
+      "size": 12188
+    },
+    "harborlight-auth.html": {
+      "sha256": "ca7bb0cecf185e660ab637b84f4fbedaf8ed9f5ea5e857ddf209edba2b56e0d3",
+      "size": 11392
+    },
+    "harborlight-auth.js": {
+      "sha256": "8a4e39c93bfbc8db506744ce02dff53c7c223f1cb6db2f3affe10df6fe38a91a",
+      "size": 32558
+    },
+    "harborlight-dev-cloud.js": {
+      "sha256": "012bd533d118c5b23c366fa2daef0db3fd3f53086e10796233a7ea6065d40283",
+      "size": 59658
+    },
+    "harborlight-dev-sync.js": {
+      "sha256": "77cd40e428bb11314b478fdbf66e40e1e4badbd3cfc8897b171813fdabd88233",
+      "size": 11365
+    },
+    "harborlight-legal.css": {
+      "sha256": "a6b5a9da1854b452acc425b428b82ca21f43b35fb587f15eb065ac3c19a973eb",
+      "size": 1163
+    },
+    "harborlight-legal.js": {
+      "sha256": "01d0ea0bc136047c55f08f90bf762ff2f58499b04376ced6b3718fda7a98fb27",
+      "size": 990
+    },
+    "harborlight-privacy.html": {
+      "sha256": "3eb28df7f07e2f543c4b9ed2067a198a60c6b969625f29bb4770d95fcb12f6e0",
+      "size": 16108
+    },
+    "harborlight-terms.html": {
+      "sha256": "9c37c3a277816cc722476108f804ce4e27111ac99bebaf2244c711774293c95c",
+      "size": 22220
+    },
+    "harborlight-v1-activities.js": {
+      "sha256": "355edd287dad9ecd7cf2042c307a4ae9d4bdbb84999c1cde91f010e8c79afc74",
+      "size": 79638
+    },
+    "harborlight-v1-adventure-budget.js": {
+      "sha256": "a106156367faff6c05add4c71f23774a82c3e4dc936b441f0f65cca1dee5d13e",
+      "size": 4578
+    },
+    "harborlight-v1-adventure-journey.js": {
+      "sha256": "035e3021cd38cb3f9a2048526f378037818d177a097328225d3362d01d986e6c",
+      "size": 30599
+    },
+    "harborlight-v1-adventure-puzzles.js": {
+      "sha256": "c6f415ce50df8534357cf1d2c698b3ff436fa68f33ef80b918e79740922d7071",
+      "size": 6617
+    },
+    "harborlight-v1-adventures-art.js": {
+      "sha256": "026e7e889edcb29b0528c8628ef0ec7a9c5e83f12791e9e56358cb29165df9c5",
+      "size": 18738
+    },
+    "harborlight-v1-adventures-expanded-ui.js": {
+      "sha256": "ccea90082a584cf395d927bbe571622a6be2a8f88a2df2cc9eddf565775982ad",
+      "size": 26309
+    },
+    "harborlight-v1-adventures-ui.js": {
+      "sha256": "be8794b97ba602b5ce919ef11d39a347b9678f3a9f8aaf683f48c4b936ffc3f0",
+      "size": 63458
+    },
+    "harborlight-v1-adventures.css": {
+      "sha256": "c4ed19b36ccbfd0a71bd80c15c99f8dba904090ce55c2b4e4de637f1c48ae8b0",
+      "size": 27855
+    },
+    "harborlight-v1-adventures.js": {
+      "sha256": "0a88438e4ff1c251ad8131392a0f2d1ca552cd3745202bdf1aab747400d8f88b",
+      "size": 62420
+    },
+    "harborlight-v1-ambient.js": {
+      "sha256": "f927a5d5487f34b490f83fb5d3651b78b1bbd1b01d29dac392e74afa80210193",
+      "size": 12862
+    },
+    "harborlight-v1-approved-copy.js": {
+      "sha256": "4f5b7aa1cc8ac106901861e8442ca7cd1a4c7637b5368e0a8324a66a1ec6af4e",
+      "size": 68943
+    },
+    "harborlight-v1-archipelago.js": {
+      "sha256": "50c8e07f64e4d13c57f82dfedf26c7b46b81176dd59775c1cfec8aeda6560e79",
+      "size": 49824
+    },
+    "harborlight-v1-calendar.js": {
+      "sha256": "bb0314ecc83345212200b91854622e2eee1b9d5c5ace0a915bb1a102c05f2d10",
+      "size": 2286
+    },
+    "harborlight-v1-campaign.js": {
+      "sha256": "15ebf1b882f652412299227d2240e3aef1c7e5f37309841bdf2c877d1f8129d3",
+      "size": 42673
+    },
+    "harborlight-v1-charity.js": {
+      "sha256": "800b9c602db6ad78987368fb894f48bea584ea0fbd26247a2aa126abcab44c7d",
+      "size": 28890
+    },
+    "harborlight-v1-commerce.js": {
+      "sha256": "f71cab1e5ac24a35dd041bc2843e439b3730b973473247dca8b02ff055a96ed9",
+      "size": 13946
+    },
+    "harborlight-v1-community-client.js": {
+      "sha256": "1d43eb4616b35b66b7ff4ecf526c0b31353ab74b306e9f9d9aa922876ee65ed1",
+      "size": 12708
+    },
+    "harborlight-v1-community-ui.js": {
+      "sha256": "e751ee09bf03838ec99941a7981c4a251f47d4db852baf0bfb7aaf96fbe04d99",
+      "size": 40968
+    },
+    "harborlight-v1-copy.js": {
+      "sha256": "c71fac016812d4028788e24e62ed4d5a9bd18c0fd931eb7afe311b3a4e91b06e",
+      "size": 14900
+    },
+    "harborlight-v1-dev-preview.js": {
+      "sha256": "92c065990d53f653dc77de60e761c41efb636031f06d7bfebd399758242c5222",
+      "size": 2340
+    },
+    "harborlight-v1-development-copy.js": {
+      "sha256": "935abf8dde98ff58e9281d9e5f8ab7c889209b2b63c585beb0b348c723b88579",
+      "size": 77870
+    },
+    "harborlight-v1-development-logistics.js": {
+      "sha256": "a18ffb32befaabc6ed458cd5e92a8d219b7f89557016d429e3eafd395bf92fe8",
+      "size": 12743
+    },
+    "harborlight-v1-development-ui.js": {
+      "sha256": "132305c419dd0246748b9cb607e79d24de162ac7a9d6d98409e0d9f65a7540a6",
+      "size": 49513
+    },
+    "harborlight-v1-development.css": {
+      "sha256": "6a320cb9159dd7f7eca097546c6aea24a4453e0608227c5a7a9b5c116734ffe4",
+      "size": 16846
+    },
+    "harborlight-v1-development.js": {
+      "sha256": "2536e905c3d529c583a75b6f0b540e613f23bcc1d3b44d7240bdaea1e4e9ec77",
+      "size": 11546
+    },
+    "harborlight-v1-economy.js": {
+      "sha256": "ab825f0298cf97d02d0cc5f30b577c5566d8b00277519aaf4c0a5edce66070cc",
+      "size": 7493
+    },
+    "harborlight-v1-education.js": {
+      "sha256": "1c8281745c5c207aea92df3f0ac1dca9df5f2d61eefa9d286c228d47a2869f27",
+      "size": 28505
+    },
+    "harborlight-v1-effects.js": {
+      "sha256": "da2ed87a3c9441c32bffc269ed94202aa4bf2aabf265a848b5e76c6caef6fba4",
+      "size": 22172
+    },
+    "harborlight-v1-engagement.js": {
+      "sha256": "e94d94399fa12d01947e4154b1215ac0b872a00e962409688a1b270f7d892899",
+      "size": 9411
+    },
+    "harborlight-v1-events.js": {
+      "sha256": "dddc76f0fee97abb174d15b7ab3f770ffd9201883f88200a909ccb86ee89ce13",
+      "size": 21350
+    },
+    "harborlight-v1-expedition-hour.js": {
+      "sha256": "bc3782d63bb2f0d4f396ba63282a75a7c0d2de0a06b80ffefb3eb25d7f24495c",
+      "size": 6981
+    },
+    "harborlight-v1-goods-art.js": {
+      "sha256": "26b81718f50f9366c79f9f7ca0abac7a6fe2194ca0b34a0d4c85dd9f0625871a",
+      "size": 2203
+    },
+    "harborlight-v1-housing.js": {
+      "sha256": "0ff3d039a7d6cf1e7290d5f423b47d17bb8c17ffb65a5d0898e54b56cfd2de7d",
+      "size": 7115
+    },
+    "harborlight-v1-i18n.js": {
+      "sha256": "83663bf161a6aaa38e0dd150a8e1f3cf0312ef96b13bfa4ed662b47723794402",
+      "size": 241208
+    },
+    "harborlight-v1-inhabitants.js": {
+      "sha256": "d2cd1ad2b22c948ed9056f521afdfed98e5f89f0749be0e461d5b6e42bcb5835",
+      "size": 1898
+    },
+    "harborlight-v1-interruption.js": {
+      "sha256": "f1680ed3026002e50f1a504d52cb533f242a6cd489c38a3d87b18de43a0ca86b",
+      "size": 7069
+    },
+    "harborlight-v1-inventory.js": {
+      "sha256": "f49ab18510db07df54a63afa0b504ebdec9c08045888c9d68e4eb1f709a10c14",
+      "size": 6744
+    },
+    "harborlight-v1-island-puzzles.js": {
+      "sha256": "b52afc01ef2ccbff251b90ed7c03b6749bace13e09e775f9e767911593d67453",
+      "size": 49148
+    },
+    "harborlight-v1-kingdom-client.js": {
+      "sha256": "5d8e4194c2cdb5eca278ef2c666844179a44b900260c8bdfbf4bbb65f3361f54",
+      "size": 3210
+    },
+    "harborlight-v1-kingdom-ui.js": {
+      "sha256": "f5ee76dd03ba8603367436274cb3c44966c9fa68cf3b9baa5eb974f83a9e5d12",
+      "size": 23867
+    },
+    "harborlight-v1-kingdom.js": {
+      "sha256": "a702dd1e13884c92aae772b2c90af13a8fbd2a37a6f1f8b0c731b79a48a23db9",
+      "size": 48954
+    },
+    "harborlight-v1-layered.html": {
+      "sha256": "375b8eb3681a95b5415d42223a087adf759912a130bb49c36b9c6b0ee5f137f8",
+      "size": 13127
+    },
+    "harborlight-v1-league.js": {
+      "sha256": "613eec66eea538e0d5c13c0368050f9768f0dfde2e212ab3cff13b9fc9cf86f0",
+      "size": 138
+    },
+    "harborlight-v1-learning-feedback.css": {
+      "sha256": "af42a024c1129dd841553e25e3a62fff78bf5b98a215844b83291298bc35cbcc",
+      "size": 3145
+    },
+    "harborlight-v1-learning-feedback.js": {
+      "sha256": "3d42e06cd85cd772edeb1d0a51f8027da8dec0c6cd0b632d7a68c3d4a773cfac",
+      "size": 15057
+    },
+    "harborlight-v1-leisure.js": {
+      "sha256": "78fc40e8d94b8731d9b8496ee6bd8c8b0f7f440b2b3fc46797212f3aab408c29",
+      "size": 18491
+    },
+    "harborlight-v1-life.js": {
+      "sha256": "af51b2c40670ee3954ce4dad84cb2f600d9d3bb0fc5400e5ea43fd8c542e9b35",
+      "size": 16871
+    },
+    "harborlight-v1-logistics.js": {
+      "sha256": "a8ffd055ec9ae19dd0a9f42a6978eddcb5570989118fd4cc1bf111bfbd7d7950",
+      "size": 119447
+    },
+    "harborlight-v1-map-art.js": {
+      "sha256": "04ebe0cd65e4f634195d1c217dc79123fbc364d0a8d7261fd6389148de0ac0bd",
+      "size": 7365
+    },
+    "harborlight-v1-military.js": {
+      "sha256": "629382b481d4d02c179146e7001cb5e6e8864dbbf845014421c7151349c95d30",
+      "size": 25417
+    },
+    "harborlight-v1-minigame-ui.js": {
+      "sha256": "715a8a46bce8e930a70fa8c22aa22e5eb7db92e461e46a471bce61fd5b274a8e",
+      "size": 37569
+    },
+    "harborlight-v1-minigame.css": {
+      "sha256": "66818e8ac815ccdb341a0cbb7cd0e483a6099060fc3c3aa3a27c2e58574c3519",
+      "size": 22092
+    },
+    "harborlight-v1-minigames.js": {
+      "sha256": "6811531afb1e2ba6a803792d6646741b4f890ebd7700561c7a97a453b3cbfb8b",
+      "size": 15130
+    },
+    "harborlight-v1-missions-ui.js": {
+      "sha256": "f37796028c8f27ec645dac26233b45f4b9b9afa7cc3091ada29210b591d0b320",
+      "size": 26115
+    },
+    "harborlight-v1-missions.js": {
+      "sha256": "944eea66308f895597b17d4b62c43f048ce6f561f184ab9a128311fc128ab0df",
+      "size": 86100
+    },
+    "harborlight-v1-notification-copy.js": {
+      "sha256": "47090eee71de75265baf9ce50c2e9f103d85deaef7cb2b9c929916f5d1ab717f",
+      "size": 4698
+    },
+    "harborlight-v1-onboarding-ui.js": {
+      "sha256": "49fd39f42c886eacd3492fb2bdcb239d8ef97b4c990dd406f4c42642fa2458ca",
+      "size": 21667
+    },
+    "harborlight-v1-onboarding.css": {
+      "sha256": "dfe7ad6c679efc43298a3db0195f3328fd24949343f0363d767d18a15b7d73eb",
+      "size": 6048
+    },
+    "harborlight-v1-original-puzzles-ui.js": {
+      "sha256": "0d84f4aa50308270fb5eda2fdbdc365273550d75df4a6d7382c3422bd660a252",
+      "size": 14657
+    },
+    "harborlight-v1-original-puzzles.css": {
+      "sha256": "f6108fa66be8a605c8e7e5f10675cc2ca9b719e59de4284e5c696377df3a81a1",
+      "size": 7188
+    },
+    "harborlight-v1-original-puzzles.js": {
+      "sha256": "59901f94e35d0197783ee8adddc4f3b574056db8dca16f99006529aa4dda38ec",
+      "size": 23276
+    },
+    "harborlight-v1-play.css": {
+      "sha256": "cf47eed19ec38b66f259bf17a0cb28c448721c606d8f3bcda688909dd3f9fdc8",
+      "size": 115467
+    },
+    "harborlight-v1-play.js": {
+      "sha256": "5ef31ad160a08bfbb6191473f26e1ff5bc7a1b9eaf8e433f8f1061d96401d5c5",
+      "size": 429557
+    },
+    "harborlight-v1-profile.js": {
+      "sha256": "ca173b44c1da8856dc9aa4861fde9dc7e49cf16277ac64c2416b7d13c4748e6d",
+      "size": 4591
+    },
+    "harborlight-v1-progression.js": {
+      "sha256": "cab84894a5cc141540c2efd5919435dfd5dbf416ab7c8db98fc8ff7689aca782",
+      "size": 105507
+    },
+    "harborlight-v1-provisions.js": {
+      "sha256": "26afea9c23a111e9474374278192a9c265a407d545234360b57ae05069e15009",
+      "size": 43846
+    },
+    "harborlight-v1-resident-labels.js": {
+      "sha256": "42e2f019755d66d4abe9c57aadb15fe67b9e08cb678458ff7444ad157922f552",
+      "size": 11664
+    },
+    "harborlight-v1-residents.js": {
+      "sha256": "2ad8baa04cb7485bcb3b2dce7bc4fa02bedb6b263d0cc2fb622ba268dcbc614b",
+      "size": 47849
+    },
+    "harborlight-v1-runtime-upgrade.js": {
+      "sha256": "6489ab96444e2c78a4450664e0fef64995c8113d9f24e0aa9bf99bcd8ad61384",
+      "size": 6597
+    },
+    "harborlight-v1-save-packing.js": {
+      "sha256": "44d6c2d63ec44fca4b4b263ca283722a1ff21193c9100def76c46a4c409fd56c",
+      "size": 7720
+    },
+    "harborlight-v1-smoke.js": {
+      "sha256": "e6666bc51b535a411aea21ad03fe78d515470216b7f23a51e1c67424d1b3163f",
+      "size": 3532
+    },
+    "harborlight-v1-state.js": {
+      "sha256": "1aa6bfe774aba13dcbb4b47c4c070a463182fdab814d04d77bfe408c7857e731",
+      "size": 104268
+    },
+    "harborlight-v1-story-catalog.js": {
+      "sha256": "e2b4c43e345735c8b169e3e34ca130d58f3ea9598f10a54680fb548ddcb43ec4",
+      "size": 11120
+    },
+    "harborlight-v1-theatre-art.js": {
+      "sha256": "1b79846bf8a407d19175ca98c6b9f672bab22b844d95072795689b8fff03dcfa",
+      "size": 15404
+    },
+    "harborlight-v1-theatre-scene.css": {
+      "sha256": "5abf7b50f6eeaff40d869cff7daa04ffcf799a88b16825b97018ec91cabb0f96",
+      "size": 1578
+    },
+    "harborlight-v1-theatre-ui.js": {
+      "sha256": "808d4f873f2393d1b1998a7ca0859acaff0f39e8d17f93ef2dacd4a0fe40afc4",
+      "size": 47216
+    },
+    "harborlight-v1-theatre.css": {
+      "sha256": "d65b15688e8af2da48c2f7e6cde89cb5dae6139bbfaaf1f6cb229a3361eb4323",
+      "size": 22506
+    },
+    "harborlight-v1-theatre.js": {
+      "sha256": "9af363390a61f04ddd22eec55a094289f74bdb6a409d19945d56069b1183ee23",
+      "size": 39257
+    },
+    "harborlight-v1-tutorial-ui.js": {
+      "sha256": "12d04967a652c2d7fd9ae6eba642f48380cfbebb2d19c201678eaf6190644ce2",
+      "size": 29238
+    },
+    "harborlight-v1-tutorial.css": {
+      "sha256": "5410a3b88103cbda5e3b258dcdd0badc7a98fe2fb7db38b14abe0b95ecb0c63c",
+      "size": 8773
+    },
+    "harborlight-v1-v16-copy.js": {
+      "sha256": "340729871e9a8833104f499f2ce37069956f52d8c898a373da5b4afe6456cc61",
+      "size": 18597
+    },
+    "harborlight-v1-water.js": {
+      "sha256": "897c6e4fc26366eb6704600c64dea91eb5eaedb66fb2d34672699c525a296720",
+      "size": 14886
+    },
+    "harborlight-v1-welcome.js": {
+      "sha256": "1d22ad877bcbbcf2e3d592b5d6f231d67c941cbfc4da97102b0022b6322d5df6",
+      "size": 3510
+    },
+    "harborlight-version.js": {
+      "sha256": "85d63e4598715f88d3e9f8da4e1a6499d5e5ea603eecd82cc6de2781ec0a40f2",
+      "size": 196
+    },
+    "index.html": {
+      "sha256": "c1747b739e1e44833aec10e59b7d3feb768c4689ad630ee752dc120f9cdfb31b",
+      "size": 747
+    },
+    "release.json": {
+      "size": 13302,
+      "sha256": "595b487c6edf3cdac8b723ba581aa0958bbaa687bba72f66c2292eb419beb9f3"
+    }
+  },
+  "game_or_clock_writes": 0
+}

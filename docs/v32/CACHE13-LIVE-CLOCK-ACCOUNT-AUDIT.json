@@ -1,0 +1,93 @@
+{
+  "checked_at_utc": "2026-11-16T11:07:27.363840+00:00",
+  "host": "https://harborlight-dev.web.app",
+  "tls_verified": true,
+  "game_or_clock_mutations": 0,
+  "empty_islands_initialized": 0,
+  "accounts": [
+    {
+      "expected_uid": "dev-admin1",
+      "auth_status": 200,
+      "uid_matches": true,
+      "island_get_status": 200,
+      "generation": 2,
+      "hasIsland": true,
+      "island_generation": 2,
+      "schema": 9,
+      "rules": 32,
+      "clock": {
+        "status": 403,
+        "generation": null,
+        "rate": null,
+        "canSetRate": null,
+        "canAdvance": null
+      },
+      "account_preserved": true,
+      "clock_permission_verified": true
+    },
+    {
+      "expected_uid": "dev-admin2",
+      "auth_status": 200,
+      "uid_matches": true,
+      "island_get_status": 200,
+      "generation": 2,
+      "hasIsland": false,
+      "island_generation": null,
+      "schema": null,
+      "rules": null,
+      "clock": {
+        "status": 403,
+        "generation": null,
+        "rate": null,
+        "canSetRate": null,
+        "canAdvance": null
+      },
+      "account_preserved": true,
+      "clock_permission_verified": true
+    },
+    {
+      "expected_uid": "dev-admin3",
+      "auth_status": 200,
+      "uid_matches": true,
+      "island_get_status": 200,
+      "generation": 2,
+      "hasIsland": false,
+      "island_generation": null,
+      "schema": null,
+      "rules": null,
+      "clock": {
+        "status": 200,
+        "generation": 2,
+        "rate": 1,
+        "canSetRate": true,
+        "canAdvance": false
+      },
+      "account_preserved": true,
+      "clock_permission_verified": true
+    }
+  ],
+  "firebase_config_status": 200,
+  "runtime_config": {
+    "status": 200,
+    "accountApi": true,
+    "projectId": "harborlight-dev",
+    "environment": "preprod",
+    "resetFence": "community-profile-v1",
+    "devTimeControl": {
+      "account": "admin3",
+      "rates": [
+        1,
+        2,
+        6
+      ]
+    }
+  },
+  "summary": {
+    "accounts_checked": 3,
+    "accounts_preserved": 3,
+    "existing_islands": 1,
+    "empty_islands": 2,
+    "clock_permissions_verified": 3
+  },
+  "verified": true
+}

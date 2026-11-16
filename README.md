@@ -1,5 +1,13 @@
 # HARBORLIGHT
 
+**DEV i PRE-PROD0.15.0.2/cache13 odebrane — 16listopada2026.** Aplikacja37061c, publikacja/wdrożenie `c4f752142c0421aad1dc0490a2f5139c277e6ee5`. WłasnyCI43850690541 SUCCESS24m31s (1614Node,166Python,66programówChromium), Pages43850690456 SUCCESS22s i PRE-PROD43854387444/1 SUCCESS2m22s. Start bez starej mapy/HUD; tempo1×/2×/6× tylkoadmin3. Natywny odbiór zalogowanej istniejącej wyspy i wszystkie109bajtowo zgodne plikiTLS PASS. TagiDEV/PRE-PROD0.15.0.2 opublikowane i zdalnie potwierdzone na c4.
+
+[Graj w PRE-PROD](https://harborlight-dev.web.app/harborlight-auth.html?mode=login&v=frontend-v32-13) · [Podgląd DEV bez konta](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-13) · [Dowody odbioru](docs/v32/CACHE13-ACCEPTANCE.json) · [Teksty6arkuszy do redakcji](docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx).
+
+Wcześniejszy reset zakończony; nowe wdrożenie zachowało generacje2,1istniejącą wyspę i2puste, bez zapisów audytowych. Ręczny odbiór użytkownika NOT_RUN. PROD i DNS odłożone. Kolejny commit metadanych nie zmienia odebranego źródła c4 ani tagów.
+
+## Historia wcześniejszych wydań i checkpointów
+
 **DEV 0.15.0.0 / v32 — zmiany wyłącznie na DEV.** Bazą jest dokładny kod odebranego PRE-PROD `7e81a1a436770f57fd8abf390b6af8022e3300f6` / 0.14.0.0. Zintegrowano uzgodnienia z załączonej rozmowy i 47 odpowiedzi. PRE-PROD i PROD nie otrzymują tego wydania.
 
 **[DEV — podgląd admin1 na poziomie5](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5&v=frontend-v32-6)** — publikacja i odbiór bieżącego źródła są ewidencjonowane osobno w [statusie DEV](docs/v32/DEV-READY.md). Podgląd działa bez konta, w pamięci bieżącej karty; odświeżenie zaczyna nową próbę. Trwałe konta i współdzielone usługi wymagają lokalnego serwera DEV.
@@ -44,8 +52,8 @@ Historyczny pakiet v29 miał34kroki tutoriala,25lekcji programu7, nową krzywą 
 
 | Miejsce | Potwierdzony stan |
 |---|---|
-| DEV | **0.14.0.0**, `7e81a1a436770f57fd8abf390b6af8022e3300f6`, cache `frontend-v31-2`; CI41906515746 SUCCESS17m12s, Pages41906515747 SUCCESS50s; tag `dev-0.14.0.0-20261104` potwierdzony. |
-| PRE-PROD `harborlight-dev` | **0.14.0.0**, `7e81a1a436770f57fd8abf390b6af8022e3300f6`; deploy41909268052/próba1 SUCCESS2m12s. API/Hosting/gra/izolacja kont PASS; tag `preprod-0.14.0.0-20261104` potwierdzony. |
+| DEV | **0.15.0.2/cache13**, źródło `c4f752142c0421aad1dc0490a2f5139c277e6ee5`; CI43850690541 SUCCESS24m31s, Pages43850690456 SUCCESS22s; tag `dev-0.15.0.2-20261116` potwierdzony. |
+| PRE-PROD `harborlight-dev` | **0.15.0.2/cache13**, źródło `c4f752142c0421aad1dc0490a2f5139c277e6ee5`; deploy43854387444/1 SUCCESS2m22s, natywne UI i109plikówTLS PASS; tag `preprod-0.15.0.2-20261116` potwierdzony. |
 | PROD `harborlight-prod` | Bez nowej promocji i potwierdzenia uruchomienia domeny. |
 
 **Historyczny lokalny odbiór0.12:**1128Node (991frontend +130backend +7planszówka),141Python i32ChromiumPASS. **Historyczna promocja0.13.1.0:**1221Node (1080frontend +134backend +7planszówka),18testów rejestru i generatory/Excel13PASS. Własny CI poprawionego źródła zaliczył obie grupy przeglądarkowe, więc dawny wynik pierwszego pakietu nie zastępuje już bieżącego odbioru. Kierunkowe regresje obejmują dodatkowo 132 wymuszone próby przewijania PL/EN na telefonie, 4 warianty UI, 7 nowych testów prognozy i zestaw 144 testów powiązanych.
@@ -56,7 +64,7 @@ Nie porównano niezależnie hostowanych bajtów Pages w tej sesji; wcześniejszy
 
 ## Wcześniejsza pilna poprawka 0.9.1.2
 
-[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Poprawka przeszła własne CI i promocję PRE-PROD; dowody zapisano w rejestrze środowisk. Nie resetowano kont. Tamten zakres miał 251 zmian i 46 ręcznych przypadków; bieżąca ewidencja DEV ma **351 zmian i 96 przypadków**, w tym nowe HL-TC-0071–0096 dla v28.
+[Zakres v23.1](docs/FRONTEND-V23-1-REQUIREMENTS.md) obejmuje wyłącznie wybór języka PL/EN na pierwszym wprowadzeniu i przy nazwie wyspy. Zmiana ma zachować wpisaną nazwę, etap, zatrzymany czas i postęp. Poprawka przeszła własne CI i promocję PRE-PROD; dowody zapisano w rejestrze środowisk. Nie resetowano kont. Tamten zakres miał 251 zmian i 46 ręcznych przypadków; historyczna ewidencja tego odbioru miała **351 zmian i 96 przypadków**, w tym nowe HL-TC-0071–0096 dla v28.
 
 ## Poprzedni zakres DEV 0.9.1.1
 

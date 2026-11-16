@@ -1,0 +1,189 @@
+{
+  "status": "ACCEPTED_DEV_AND_PREPROD_0_15_0_2_CACHE13",
+  "as_of": "2026-11-16",
+  "application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+  "publication_deployment_source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+  "version": "0.15.0.2",
+  "cache": "frontend-v32-13",
+  "own_CI": {
+    "run_id": 43850690541,
+    "source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+    "conclusion": "success",
+    "duration": "24m31s",
+    "duration_seconds": 1471,
+    "frontend_Node": 1437,
+    "backend_Node": 170,
+    "physical_Node": 7,
+    "total_Node": 1614,
+    "Python": 166,
+    "Chromium_programs": 66,
+    "Chromium_stages": [
+      48,
+      18
+    ],
+    "both_browser_stages": "PASS",
+    "count_note": "66 actual program invocations;65 omitted standaloneLiveCAS"
+  },
+  "DEV": {
+    "source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+    "application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+    "version": "0.15.0.2",
+    "cache": "frontend-v32-13",
+    "run_id": 43850690456,
+    "conclusion": "success",
+    "duration_seconds": 22,
+    "job_duration_seconds": 17,
+    "TLS_source_entry_files": 108,
+    "TLS_source_entry_bytes": 30774724,
+    "all_exact_source_bytes": true,
+    "downloaded_public_bytes_Chrome": {
+      "result": "PASS",
+      "widths": [
+        1440,
+        390
+      ],
+      "mode": "TLS-verified downloaded public bytes rendered locally as transport replay",
+      "native_HTTPS_DEV_browser_claimed": false
+    },
+    "tag": {
+      "name": "dev-0.15.0.2-20261116",
+      "annotated_object": "9b07b4dd74f2e4dabda6e4eaf361832f411cb506",
+      "target": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+      "published": true,
+      "remote_verified": true,
+      "immutable": true
+    }
+  },
+  "PREPROD": {
+    "source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+    "application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+    "version": "0.15.0.2",
+    "cache": "frontend-v32-13",
+    "run_id": 43854387444,
+    "run_attempt": 1,
+    "conclusion": "success",
+    "duration_seconds": 142,
+    "gate": {
+      "job_id": 133254792440,
+      "duration_seconds": 12,
+      "successful_steps": 7
+    },
+    "deploy": {
+      "job_id": 133254914412,
+      "duration_seconds": 123,
+      "successful_steps": 31,
+      "skipped_diagnostic_steps": 1
+    },
+    "native_hosted_UI": {
+      "result": "PASS",
+      "actual_existing_authenticated_island": true,
+      "exact_asset_hashes": 108,
+      "all_browser_writes_blocked": true
+    },
+    "account_checks": {
+      "Auth_successes": 3,
+      "API_reads": 3,
+      "existing_saved_islands": 1,
+      "empty_islands": 2,
+      "foreign_denied": 6,
+      "anonymous_Firestore_denied": 3,
+      "own_direct_Firestore_403": 3,
+      "anonymous_API_denied": 3,
+      "island_writes": 0
+    },
+    "live_clock_read": {
+      "result": "PASS",
+      "normal_TLS": true,
+      "checked_at_utc": "2026-11-16T11:07:27.363840+00:00",
+      "admin1_clock_GET": 403,
+      "admin2_clock_GET": 403,
+      "admin3_clock_GET": 200,
+      "admin3_canSetRate": true,
+      "admin3_canAdvance": false,
+      "admin3_rate": 1,
+      "all_generations_preserved": 2,
+      "game_or_clock_writes": 0,
+      "empty_islands_initialized": 0,
+      "evidence": "docs/v32/CACHE13-LIVE-CLOCK-ACCOUNT-AUDIT.json"
+    },
+    "tag": {
+      "name": "preprod-0.15.0.2-20261116",
+      "annotated_object": "9ff02b5d158485dfb955572e6a7d8b6e29d34cf2",
+      "target": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+      "published": true,
+      "remote_verified": true,
+      "immutable": true
+    }
+  },
+  "artifacts": {
+    "original_ZIPs_downloaded_and_verified": true,
+    "actual_inner_receipt_read": true,
+    "receipt_schema_version": 2,
+    "receipt_validation": "PASS",
+    "receipt_checks": {
+      "ci": true,
+      "dev_smoke": true,
+      "frontend_smoke": true,
+      "account_api": true
+    },
+    "image_digest": "sha256:164fcb1ea3e3554786dbd427fdf0b720f7d008023115ab968080c47adb7ff5d4",
+    "frontend_TAR_sha256": "859d5899ee1fd08c1c3f993436776471c7858a6fba6d0e1afde4d0b409072685",
+    "frontend_manifest_sha256": "595b487c6edf3cdac8b723ba581aa0958bbaa687bba72f66c2292eb419beb9f3",
+    "strict_archive_verifier": {
+      "result": "PASS",
+      "files": 109
+    },
+    "original_GitHub_ZIPs": [
+      {
+        "kind": "receipt",
+        "id": 14220521501,
+        "size_in_bytes": 616,
+        "zip_sha256": "0e91395fdd711d61f9f0ab937bc60ffdd584621fa2e10a0e2304ce35655f01b4"
+      },
+      {
+        "kind": "frontend",
+        "id": 14220896005,
+        "size_in_bytes": 28099629,
+        "zip_sha256": "f87e8637002821848c6e8990207d8a31f0fe80a657fbb6cbea17ad45b4fa5fea"
+      }
+    ],
+    "live_original_archive_source_byte_identity": {
+      "result": "PASS",
+      "normal_TLS": true,
+      "checked_at_utc": "2026-11-16T11:09:16.480896+00:00",
+      "files": 109,
+      "bytes": 30781978,
+      "evidence": "docs/v32/CACHE13-PREPROD-ARTIFACT-TLS-AUDIT.json"
+    }
+  },
+  "workbook_unchanged": {
+    "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+    "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+    "sheets": 6,
+    "rows": 413,
+    "columns": [
+      "A",
+      "B",
+      "C"
+    ],
+    "C_all_blank": true,
+    "validation": "PASS",
+    "sha256": "95f415d0748d5b5e389f92e28df2aef18e71b13968c74ac5a0e54835c7d4be8d",
+    "source_fingerprint": "7e9f4bf97b7f0d22674bd1eef8832dd44e23142997f4a3082b1bf17c7d160310",
+    "selected_six_sheet_read_and_merge_scope_preserved": true,
+    "edited_by_documentation_agent": false
+  },
+  "prior_failed_publication": "docs/v32/CACHE12-PUBLICATION-EVIDENCE.json",
+  "reset": {
+    "earlier_operation_completed": true,
+    "repeated_by_this_deployment": false,
+    "generation_preserved": 2,
+    "existing_islands": 1,
+    "empty_islands": 2,
+    "initializations_or_game_clock_writes": 0,
+    "prior_proof": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json"
+  },
+  "manual_user_acceptance": "NOT_RUN",
+  "PROD_and_DNS": "POSTPONED_NO_ACTION",
+  "subsequent_metadata_commit": "Does not redefine application source,accepted publication,immutable tags,public files or fingerprints"
+}
