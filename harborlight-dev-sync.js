@@ -7,7 +7,7 @@ const RETRY_MIN_MS = 5_000, RETRY_MAX_MS = 30_000;
 const recoverable = code => ['offline', 'rate-limited', 'conflict'].includes(code);
 const sameVersion = (a, b) => a === b || !!a && !!b && a.revision === b.revision && a.updateTime === b.updateTime;
 
-export function createDevSync({ cloud, account, saveKey, onStatus = () => {}, onRestore = () => {}, beforeRecover = async () => {},
+export function createDevSync({ cloud, account, saveKey, onStatus = () => {}, onRestore = () => {}, beforeRecover = null,
   schedule = (callback, delay) => setTimeout(callback, delay), cancel = handle => clearTimeout(handle),
   delay = CLOUD_AUTOSAVE_MS } = {}) {
   if (!account?.uid || !cloud || saveKey !== accountSaveKey(account.uid, cloud.projectId)) throw new Error('An authenticated account and its own save key are required.');
@@ -63,12 +63,13 @@ export function createDevSync({ cloud, account, saveKey, onStatus = () => {}, on
     else { if (status !== 'saving') emit('pending'); later(); }
     return true;
   }
-  async function flush() {
-    if (disposed || stopped || recovering) return false;
+  const flush = () => flushPending(false);
+  async function flushPending(duringRecovery) {
+    if (disposed || stopped || recovering && !duringRecovery) return false;
     if (inFlight) {
       await inFlight;
       if (disposed || stopped) return false;
-      return pending === null ? true : flush();
+      return pending === null ? true : flushPending(duringRecovery);
     }
     if (pending === null) return true;
     clearTimer();
@@ -110,8 +111,8 @@ export function createDevSync({ cloud, account, saveKey, onStatus = () => {}, on
       clearTimer();
     }
     if (recovering) return recovering;
-    if (!stopped) return flush();
-    if (!reloadConfirmedRequested && !recoverable(status)) return false;
+    if (!stopped && !beforeRecover) return flush();
+    if (stopped && !reloadConfirmedRequested && !recoverable(status)) return false;
     clearTimer();
     if (reloadConfirmedRequested) emit('loading');
     recovering = Promise.resolve().then(async () => {
@@ -122,8 +123,15 @@ export function createDevSync({ cloud, account, saveKey, onStatus = () => {}, on
         // before either reading a world or retrying an uncertain write. Keep
         // this inside the shared recovery promise so timer/manual retries
         // cannot bypass it or execute the prerequisite concurrently.
-        if (await beforeRecover() === false) throw Object.assign(new Error('Recovery prerequisite is unavailable.'), { code: 'offline' });
+        if (beforeRecover && await beforeRecover() === false) throw Object.assign(new Error('Recovery prerequisite is unavailable.'), { code: 'offline' });
         if (disposed) return false;
+        if (!stopped && !reloadConfirmedRequested) {
+          // A healthy focus/visibility refresh only adopts prerequisites and
+          // flushes pending input. Reloading the world here would interrupt a
+          // running minigame or replace other live client-only activity.
+          const flushed = await flushPending(true);
+          if (!reloadConfirmedRequested) return flushed;
+        }
         const remote = await cloud.loadIsland();
         if (disposed) return false;
         if (!remote) throw Object.assign(new Error('The existing cloud island is missing.'), { code: cloud.accountStatus?.expired ? 'island-expired' : 'missing-save' });
@@ -177,7 +185,7 @@ export function createDevSync({ cloud, account, saveKey, onStatus = () => {}, on
     try {
       // Explicit reloads (for example after a community reward) must satisfy
       // the same authoritative-clock prerequisite as automatic recovery.
-      if (await beforeRecover() === false) throw Object.assign(new Error('Recovery prerequisite is unavailable.'), { code: 'offline' });
+      if (beforeRecover && await beforeRecover() === false) throw Object.assign(new Error('Recovery prerequisite is unavailable.'), { code: 'offline' });
       if (disposed) throw disposedError();
       const remote = await cloud.loadIsland();
       if (disposed) throw disposedError();

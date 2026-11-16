@@ -874,12 +874,13 @@ export function createDevTimeController(cloud, { now = () => Date.now(), monoton
     // cannot replace a newer server revision or rewind the private clock.
     if (current && (Number.isSafeInteger(value.generation) && Number.isSafeInteger(current.generation) && value.generation < current.generation || value.generation === current.generation && (clockRevision < current.clockRevision || clockRevision === current.clockRevision && realNow < current.realNow))) return { ...value, ...current };
     const newGeneration = current && Number.isSafeInteger(value.generation) && value.generation > current.generation;
-    const previousNow = current && !newGeneration ? projectedNow() : value.now;
-    if (newGeneration) lastNow = value.now;
+    if (newGeneration) lastNow = 0;
     current = { ...value, rate, clockRevision, realNow };
-    anchorTime = Math.max(previousNow, value.now);
+    // Preserve timestamps actually exposed to the simulation. Do not invent
+    // elapsed time at an obsolete rate while adopting a newer server anchor:
+    // another window may have returned the account to x1 hours ago.
+    anchorTime = Math.max(lastNow, value.now);
     anchorMonotonic = monotonic();
-    lastNow = Math.max(lastNow, anchorTime);
     return { ...value, rate, clockRevision, realNow };
   };
   const status = async () => { requireScope(); return observe(await cloud.requestGameService(path)); };

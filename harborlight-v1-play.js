@@ -245,13 +245,11 @@ async function waitForCloudRetry(error) {
 }
 if (devAccount) {
   devSync = createDevSync({ cloud: devCloud, account: devAccount, saveKey: SAVE_KEY,
-    beforeRecover: async () => {
-      if (devTimeStatus?.canSetRate) {
-        devTimeStatus = await devTimeController.status();
-        devTimeOffsetSeconds = Number(devTimeStatus.offsetSeconds) || 0;
-        refreshDevelopmentSpeedControls();
-      }
-    },
+    beforeRecover: devTimeStatus?.canSetRate ? async () => {
+      devTimeStatus = await devTimeController.status();
+      devTimeOffsetSeconds = Number(devTimeStatus.offsetSeconds) || 0;
+      refreshDevelopmentSpeedControls();
+    } : undefined,
     onRestore: (payload, metadata) => restoreSyncedIsland(payload, metadata),
     onStatus: status => { captureForegroundInterruption(status); devSyncStatus = status; if (devCloudUiReady) updateDevCloudStatus(); } });
   for (;;) {
