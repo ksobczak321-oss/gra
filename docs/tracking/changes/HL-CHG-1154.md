@@ -9,9 +9,9 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `local_implementation_source_96c211f_publication_pending` |
-| CI | `not_run_for_final_source` |
-| PRE-PROD | `pending_new_DEV_acceptance_standard_deployment_native_UI_proof_existing_world_ready` |
+| DEV | `cache13_source37061c_local_targeted_PASS_new_publication_pending` |
+| CI | `pending_new_source37061c_previous8087_failed43848428119` |
+| PRE-PROD | `pending_new_own_DEV_acceptance_standard_deployment_native_UI_proof` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
 
@@ -37,13 +37,14 @@ Data pierwotnej wiadomości: 2026-11-16. GO po zgłoszeniu starej mapy/HUD przed
 
 ## Dowody
 
-- **Dokumenty:** [docs/v32/GO-STARTUP-LOADING.md](../../v32/GO-STARTUP-LOADING.md), [docs/v32/STARTUP-LOADING-EVIDENCE.json](../../v32/STARTUP-LOADING-EVIDENCE.json), [docs/v32/PREPROD-RESET-INDEPENDENT-READ.json](../../v32/PREPROD-RESET-INDEPENDENT-READ.json), [docs/v32/CACHE12-LOCAL-VALIDATION.json](../../v32/CACHE12-LOCAL-VALIDATION.json), [docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json](../../v32/PREPROD-OWNER-FIRST-GAME-READ.json)
+- **Dokumenty:** [docs/v32/GO-STARTUP-LOADING.md](../../v32/GO-STARTUP-LOADING.md), [docs/v32/STARTUP-LOADING-EVIDENCE.json](../../v32/STARTUP-LOADING-EVIDENCE.json), [docs/v32/PREPROD-RESET-INDEPENDENT-READ.json](../../v32/PREPROD-RESET-INDEPENDENT-READ.json), [docs/v32/CACHE12-LOCAL-VALIDATION.json](../../v32/CACHE12-LOCAL-VALIDATION.json), [docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json](../../v32/PREPROD-OWNER-FIRST-GAME-READ.json), [docs/v32/CACHE12-PUBLICATION-EVIDENCE.json](../../v32/CACHE12-PUBLICATION-EVIDENCE.json), [docs/v32/CACHE13-LOCAL-VALIDATION.json](../../v32/CACHE13-LOCAL-VALIDATION.json)
 - **Kod:** [harborlight-v1-layered.html](../../../harborlight-v1-layered.html), [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-play.css](../../../harborlight-v1-play.css), [harborlight-v1-ambient.js](../../../harborlight-v1-ambient.js)
 - **Scenariusze automatyczne:** [tests/harborlight-startup-no-flash-v32-smoke.py](../../../tests/harborlight-startup-no-flash-v32-smoke.py)
-- **Kod dowodowy:** `96c211fd39826cf804ff286faeff219ac846827c`.
+- **Kod dowodowy:** `37061c43139f32dfba61e4d837b133ed9d2d7da8`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/43848428119.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Źródło96c/0.15.0.2/cache12 committed. Startup20/20/2581framesPASS;focusclock51/51+adapter58/58+finalspeed6/6+LiveCASPASS. Speed to lokalnyruntime/izolowanyPREPROD-API,niepublicznyPREF. Pełnyfrontendcheckpoint1425/1426timeout iretry1/1 nie zastępują własnegoCI. NoweCI/DEV/PREFPENDING. Owneradmin1world potwierdzony10:21:40/rules32/pop19/gen2/rev12;0zapisówQA,natywnyodbiórnowegoPREF nadalwymagany. Resetniepowtarzany,PRODodłożony.
+Bieżący37061c/.15.0.2/cache13: UIDdev-admin3 clientinitgate+56cachequery,serwerbez zmian. CloudrulesFirestore/API134.56sPASS bez zmian testu/asercji;speed6/6PASS0auto-clockrequestsadmin1/admin2obaśrodowiska,zachowaneadmin3;package2/stage3PASS. NoweCI/Pages/PREFPENDING. Historyczny8087cache12CIFAILURE43848428119/PagesSUCCESS43848428111 bez tagu/PREF zachowany. Reset/ownerworldpotwierdzone,bezQAcreate/PROD.
 
 ## Relacje
 

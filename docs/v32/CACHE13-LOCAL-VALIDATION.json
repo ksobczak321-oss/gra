@@ -1,0 +1,183 @@
+{
+  "scope": "Frozen cache13 UID gate correction; local evidence only, new own CI/Pages/PRE-PROD pending",
+  "application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+  "version": "0.15.0.2",
+  "cache": "frontend-v32-13",
+  "source_delta": "Only authenticated UIDdev-admin3 client clock initialization gate and56publiccachequeries13; server unchanged",
+  "cloud_rules": {
+    "result": "PASS",
+    "seconds": 134.56,
+    "paths": [
+      "Firestore",
+      "Account API"
+    ],
+    "assertions_or_test_changes": false,
+    "proof": {
+      "test": "tests/harborlight-cloud-rules-v32-smoke.py",
+      "frontend_root": "/workspace/gra-front-dev",
+      "status": "PASS",
+      "exit_code": 0,
+      "seconds": 134.56,
+      "log": "/workspace/work/cloud-rules-v32/uid-gate-qa/cloud-rules.log",
+      "scenarios": "/workspace/work/cloud-rules-v32/uid-gate-qa/scenarios",
+      "scope": "existing strict Firestore+Account API regression after admin3-only client clock gate; no source or assertion changes"
+    }
+  },
+  "speed_browser": {
+    "result": "PASS",
+    "passed": 6,
+    "total": 6,
+    "mode": "real local runtime and locally isolated preprod/API; not public PRE-PROD",
+    "admin1_admin2_automatic_clock_requests_each_environment": 0,
+    "admin3_prior_behavior_retained": true,
+    "report": [
+      {
+        "scope": "local",
+        "account": "admin1",
+        "controls_absent": true,
+        "automatic_clock_requests": 0,
+        "api_cannot_set_rate": true
+      },
+      {
+        "scope": "local",
+        "account": "admin2",
+        "controls_absent": true,
+        "automatic_clock_requests": 0,
+        "api_cannot_set_rate": true
+      },
+      {
+        "scope": "local",
+        "account": "admin3",
+        "rates": [
+          1,
+          2,
+          6,
+          1
+        ],
+        "clock_measures": [
+          {
+            "rate": 1,
+            "real_delta_ms": 606,
+            "game_delta_ms": 606
+          },
+          {
+            "rate": 2,
+            "real_delta_ms": 615,
+            "game_delta_ms": 1230
+          },
+          {
+            "rate": 6,
+            "real_delta_ms": 609,
+            "game_delta_ms": 3654
+          },
+          {
+            "rate": 1,
+            "real_delta_ms": 612,
+            "game_delta_ms": 612
+          }
+        ],
+        "monotonic_transitions": true,
+        "persisted_reload": [
+          6,
+          1
+        ],
+        "actual_saved_world_advanced_faster": {
+          "real_elapsed_ms": 3412.495470000067,
+          "world_elapsed_ms": 23748
+        },
+        "intro_and_building_modal_access": true,
+        "mobile_in_viewport": true,
+        "no_game_fixture_or_setter": true,
+        "js_errors": []
+      },
+      {
+        "scope": "preprod",
+        "account": "admin1",
+        "controls_absent": true,
+        "automatic_clock_requests": 0,
+        "api_cannot_set_rate": true
+      },
+      {
+        "scope": "preprod",
+        "account": "admin2",
+        "controls_absent": true,
+        "automatic_clock_requests": 0,
+        "api_cannot_set_rate": true
+      },
+      {
+        "scope": "preprod",
+        "account": "admin3",
+        "rates": [
+          1,
+          2,
+          6,
+          1
+        ],
+        "clock_measures": [
+          {
+            "rate": 1,
+            "real_delta_ms": 621,
+            "game_delta_ms": 621
+          },
+          {
+            "rate": 2,
+            "real_delta_ms": 617,
+            "game_delta_ms": 1234
+          },
+          {
+            "rate": 6,
+            "real_delta_ms": 626,
+            "game_delta_ms": 3756
+          },
+          {
+            "rate": 1,
+            "real_delta_ms": 615,
+            "game_delta_ms": 615
+          }
+        ],
+        "monotonic_transitions": true,
+        "persisted_reload": [
+          6,
+          1
+        ],
+        "actual_saved_world_advanced_faster": {
+          "real_elapsed_ms": 2907.238456000414,
+          "world_elapsed_ms": 21252
+        },
+        "intro_and_building_modal_access": true,
+        "mobile_in_viewport": true,
+        "no_game_fixture_or_setter": true,
+        "js_errors": []
+      }
+    ]
+  },
+  "backend_package": {
+    "passed": 2,
+    "total": 2,
+    "result": "PASS"
+  },
+  "canonical_three_JS_stage_check": "PASS",
+  "prior_local_checkpoint": "docs/v32/CACHE12-LOCAL-VALIDATION.json",
+  "previous_failed_publication": "docs/v32/CACHE12-PUBLICATION-EVIDENCE.json",
+  "current_six_sheet_workbook": {
+    "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+    "source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+    "sheets": 6,
+    "rows": 413,
+    "columns": [
+      "A",
+      "B",
+      "C"
+    ],
+    "C_all_blank": true,
+    "validation": "PASS",
+    "sha256": "95f415d0748d5b5e389f92e28df2aef18e71b13968c74ac5a0e54835c7d4be8d",
+    "source_fingerprint": "7e9f4bf97b7f0d22674bd1eef8832dd44e23142997f4a3082b1bf17c7d160310",
+    "selected_six_sheet_read_and_merge_scope_preserved": true,
+    "edited_by_documentation_agent": false
+  },
+  "own_CI": "PENDING_NEW_RUN_FOR_NEW_PUBLICATION_SHA",
+  "Pages": "PENDING_NEW_PUBLICATION",
+  "PREPROD": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_NATIVE_UI_PROOF",
+  "manual_execution": "NOT_RUN"
+}

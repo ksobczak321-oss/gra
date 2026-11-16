@@ -1318,3 +1318,25 @@ Końcowe powtórzenia **speed6/6 i LiveCAS dla96c PASS**; sprawdzenie tempa nada
 Startup20/20 ma2581próbkowanychklatek na końcowymcache12. Reset jest niezależnie potwierdzony i nie jest ponawiany. Właściciel utworzył grę admin1; niezależny odczyt16listopada10:21:40UTC PASS z normalnymTLS potwierdził właściweUID, generację2, rewizję12, schema9/rules32,19osób, ukończonewprowadzenie i zegar niezatrzymany. Warunek istnienia świata jest spełniony; dawnyisland=null10:07:30 jest historycznym checkpointem. **Nowy PRE-PROD wymaga jeszcze odebranego nowegoDEV, standardowego wdrożenia i natywnego odbioru tej istniejącej wyspy. QA nie tworzył ani nie zapisywał świata.** PROD/domena bez działań.
 
 [Dowód istniejącej gry](v32/PREPROD-OWNER-FIRST-GAME-READ.json). Publikacja i własnyCI0.15.0.2/cache12 nadalPENDING.
+
+## 2026-11-16 — CI8087 FAILURE, PagesSUCCESS, poprawka bramkiUID
+
+Pierwsza publikacja **0.15.0.2/cache12**, aplikacja96c, źródło `8087dc826cb10ee391619d88d9f99fe696f7d036`, ma **CI43848428119 FAILURE450s** (job133234457802). Krok27 cloud-rules-v32 odrzucił zbędnyGET/dev-time wysłany przez admin1. Przed awarią przeszły frontend1437/1437, backend170/170, Python166 oraz startup20/20 i speed6/6; pozostałe późniejsze przeglądarki nie zostały wykonane. Serwer odmawiał niedozwolonej roli403; poprawka ogranicza także inicjalizację klienta do właściwegoUIDdev-admin3. Nowy wynik wymaga własnego źródła i pełnegoCI.
+
+**Pages43848428111 SUCCESS**: job17s, cały przebieg23s. NiezależnyHTTPS/TLS potwierdził108plików/30 774 686bajtów identycznych ze źródłem8087. Te rzeczywiste publiczne bajty pobrano i uruchomiono lokalnie wChrome1440/390 PASS; nie deklarujemy natywnego odbioru HTTPS wprzeglądarceDEV. Nie utworzono zaakceptowanego tagu8087 i nie wdrożono go naPRE-PROD. PRE-PROD pozostaje86/0.15.0.1/cache11, reset niezależnie potwierdzony, istniejąca graadmin1 odczytowo potwierdzona.
+
+Bieżący następny kandydat: **0.15.0.2 / frontend-v32-13**, źródło jeszczePENDING. Poprawka bramkiUID klienta jest przygotowywana; kierunkowe cloud-rules i sześć zakresówUI są w toku. WłasnyCI, nowePages, publikacja/PRE-PROD i natywny odbiór nowej gry pozostająPENDING. Sukcesy częściowe8087 ani jego Pages nie oznaczają pełnego zielonegoCI nowego źródła. PROD i domena pozostają odłożone.
+
+[Dowody](v32/CACHE12-PUBLICATION-EVIDENCE.json).
+
+## 2026-11-16 — końcowe źródłocache13 i ścisły odbiór bramkiUID
+
+Bieżący kandydat **0.15.0.2 / frontend-v32-13** ma zacommitowane źródło **`37061c43139f32dfba61e4d837b133ed9d2d7da8`**. Zmiana względem nieudanegocache12 obejmuje wyłącznie bramkę inicjalizacji zegara klienta dlaUIDdev-admin3 i56publicznych ciągówcache13; serwer pozostaje bez zmiany.
+
+Kierunkowy cloud-rules naFirestore iAccountAPI **PASS134.56s**, bez zmiany testu lub asercji. Speed **6/6 PASS** na rzeczywistym lokalnym runtime i izolowanym lokalnie trybie PRE-PROD/API: admin1/admin2 w obu środowiskach mają **0 automatycznych żądań zegara**, bez przycisków i bez uprawnieniaAPI; admin3 zachowuje pełną sekwencję1×/2×/6×/1×, tempo zapisanej gry, trwałość i ponowne wejście. Pakiet2/2 i stagingtrzechJS PASS po zmianiecache13. To dowody lokalne, nie odbiór opublikowanego PRE-PROD.
+
+Arkusz6/413/ABC/pustaC ma walidacjęPASS ze źródła37061c, SHA256 `95f415d0748d5b5e389f92e28df2aef18e71b13968c74ac5a0e54835c7d4be8d`, fingerprint `7e9f4bf97b7f0d22674bd1eef8832dd44e23142997f4a3082b1bf17c7d160310`. Odczyt/scalenie nadal ograniczone do sześciu wybranych zakładek; dokumentacja nie zmienia pliku lub raportu odcisków.
+
+**Nowy własnyCI, nowePages, promocja i natywny odbiór PRE-PROD pozostająPENDING.** Historyczny8087/cache12 zachowujeCIFAILURE43848428119 i PagesSUCCESS43848428111, bez zaakceptowanego tagu lub promocji. PRE-PROD nadal86/cache11; reset i istniejąca graadmin1 są niezależnie potwierdzone, bez ich ponawiania lub tworzenia świata przezQA. PROD/domena odłożone.
+
+[Dowody](v32/CACHE13-LOCAL-VALIDATION.json).

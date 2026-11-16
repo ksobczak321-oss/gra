@@ -14,10 +14,10 @@ Rejestr nie publikuje prywatnych kwot Billing ani danych osobistych związanych 
 
 ## Bieżące środowiska
 
-- Nowy DEV **0.15.0.1**: `published_source86_own_CI_Pages_tag_verified`; CI `success`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
+- Nowy DEV **0.15.0.2**: `Pages_published_TLS_bytes_and_local_downloaded_render_PASS_own_CI_FAILURE_not_accepted`; CI `failure`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
 - Odebrany PRE-PROD **0.15.0.1**: źródło `86eb8d9a40dab073c17a1b0f96dca38f1a15e24c`; [deploy 43768861718](https://github.com/ksobczak321-oss/gra/actions/runs/43768861718), próba 1.
 - PRE-PROD tej wcześniejszej wersji nie oznacza promocji nowych kart. PROD oraz pełny reset kont: bez nowej operacji.
-OpublikowaneDEV/PRE-PROD nadal86/cache11. Źródło96c/0.15.0.2/cache12 committed:startup20/20/2581frames,focusclock51/51,adapter58/58,speed6/6 iLiveCASPASS. Pełnyfrontendcheckpoint1425/1426timeout/retry1/1 nie jest pełnymCIpass. NoweCI/publikacjePENDING. Resetpotwierdzony; właściciel utworzyładmin1,odczyt10:21:40schema9/rules32/pop19/gen2/rev12PASS,0zapisówQA. NowyPREF wymaga własnegoDEV/standardowegodeploy/natywnegoUI;PRODodłożony.
+Kandydat37061c/.15.0.2/cache13committed; cloudrulesFirestore/API134.56sPASS bez zmianasercji,speed6/6PASS z0auto-clockrequestsadmin1/admin2,package2/stage3PASS. NoweCI/Pages/PREFpending; publicznyDEV8087cache12PagesSUCCESS/CIFAILUREhistoryczne. PREF86/cache11/reset/ownerworldpotwierdzone,PRODodłożony.
 
 ## Historyczny punkt odniesienia ewidencji
 
@@ -192,8 +192,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1148 — Nazwy i grupy zajęć w Akademii, Koszarach, Teatrze, Królestwie i klasycznych wyborach](changes/HL-CHG-1148.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1149 — Plansza pamięci120kart zachowuje minimum20px po opóźnionym resize](changes/HL-CHG-1149.md) | Bug | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1150 — Import zatwierdzonej redakcjiPL z sześciu arkuszy z pierwszeństwemC i zachowaniem prawdziwej logiki](changes/HL-CHG-1150.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
-| [HL-CHG-1154 — Start pokazuje ekran ładowania zamiast starej mapy referencyjnej i HUD](changes/HL-CHG-1154.md) | Bug | `accepted` | `local_implementation_source_96c211f_publication_pending` | `pending_new_DEV_acceptance_standard_deployment_native_UI_proof_existing_world_ready` |
-| [HL-CHG-1155 — Admin3 steruje rzeczywistym tempem1×/2×/6× na DEV i PRE-PROD](changes/HL-CHG-1155.md) | Story | `accepted` | `local_implementation_source_96c211f_publication_pending` | `pending_new_DEV_acceptance_standard_deployment_native_UI_proof_existing_world_ready` |
+| [HL-CHG-1154 — Start pokazuje ekran ładowania zamiast starej mapy referencyjnej i HUD](changes/HL-CHG-1154.md) | Bug | `accepted` | `cache13_source37061c_local_targeted_PASS_new_publication_pending` | `pending_new_own_DEV_acceptance_standard_deployment_native_UI_proof` |
+| [HL-CHG-1155 — Admin3 steruje rzeczywistym tempem1×/2×/6× na DEV i PRE-PROD](changes/HL-CHG-1155.md) | Story | `accepted` | `cache13_source37061c_local_targeted_PASS_new_publication_pending` | `pending_new_own_DEV_acceptance_standard_deployment_native_UI_proof` |
 
 <a id="hl-epic-tut"></a>
 

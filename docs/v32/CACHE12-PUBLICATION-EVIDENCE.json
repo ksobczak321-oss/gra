@@ -1,0 +1,55 @@
+{
+  "version": "0.15.0.2",
+  "cache": "frontend-v32-12",
+  "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+  "publication_source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
+  "own_CI": {
+    "run_id": 43848428119,
+    "job_id": 133234457802,
+    "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
+    "conclusion": "failure",
+    "duration_seconds": 450,
+    "failed_step": 27,
+    "failure": "cloud-rules-v32 strict transport rejected unnecessary GET /dev-time on admin1",
+    "completed_before_failure": {
+      "frontend_passed": 1437,
+      "frontend_total": 1437,
+      "backend_passed": 170,
+      "backend_total": 170,
+      "Python_passed": 166,
+      "startup_browser": "20/20 PASS",
+      "speed_browser": "6/6 PASS"
+    },
+    "later_remaining_browser_checks": "NOT_RUN"
+  },
+  "Pages": {
+    "run_id": 43848428111,
+    "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
+    "conclusion": "success",
+    "job_duration_seconds": 17,
+    "whole_run_duration_seconds": 23
+  },
+  "public_bytes": {
+    "status": "PASS",
+    "TLS_verified": true,
+    "source_sha": "8087dc826cb10ee391619d88d9f99fe696f7d036",
+    "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+    "file_count": 108,
+    "total_bytes": 30774686,
+    "all_exact_source_bytes": true,
+    "game_API_or_account_writes": 0,
+    "evidence_path": "/workspace/work/cache12-release-20261116/pages-tls-audit.json"
+  },
+  "public_bytes_browser": {
+    "result": "PASS",
+    "widths": [
+      1440,
+      390
+    ],
+    "mode": "TLS-verified public bytes downloaded then rendered in Chrome locally",
+    "native_HTTPS_browser_acceptance_claimed": false,
+    "evidence_path": "/workspace/work/cache12-release-20261116/pages-downloaded-bytes-browser.log"
+  },
+  "accepted_tag_created": false,
+  "new_PREPROD_deployment": false
+}

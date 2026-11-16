@@ -172,18 +172,24 @@ try:
                 context.add_init_script('localStorage.setItem("harborlight-language","pl")')
                 page = context.new_page();page.set_default_timeout(15000)
                 errors = [];page.on('pageerror', lambda error: errors.append(str(error)))
+                clock_requests = []
+                page.on('request', lambda request: clock_requests.append(request.url)
+                    if urlsplit(request.url).path in ['/api/dev/time', '/api/v1/dev-time'] else None)
                 login(page, address, account)
                 if account != 'admin3':
                     assert page.locator('[data-v32-speed-controls]').count() == 0
                     finish_introduction(page, 'Speed QA ' + account)
                     assert page.locator('[data-v32-speed-controls]').count() == 0
+                    # Ordinary accounts must never probe the privileged clock.
+                    # The deliberate API permission check below is separate.
+                    assert clock_requests == [], (scope, account, 'automatic clock request', clock_requests)
                     response = api(page, scope, '/api/dev/time' if scope == 'local' else '/api/v1/dev-time')
                     if scope == 'local':
                         assert response['status'] == 200 and not response['body'].get('canSetRate'), response
                     else:
                         assert response['status'] == 403, response
                     assert not errors, errors
-                    REPORT.append({'scope': scope, 'account': account, 'controls_absent': True, 'api_cannot_set_rate': True})
+                    REPORT.append({'scope': scope, 'account': account, 'controls_absent': True, 'automatic_clock_requests': 0, 'api_cannot_set_rate': True})
                     context.close();continue
                 controls = page.locator('[data-v32-speed-controls]')
                 expect(controls).to_be_visible();rate(page, 1)
