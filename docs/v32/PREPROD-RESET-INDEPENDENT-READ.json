@@ -1,0 +1,103 @@
+{
+  "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+  "deployment_run_id": 43768861718,
+  "pinned_source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+  "owner_reported_reset_result": "RESET PRE-PROD PASS",
+  "audit_scope": "Read-only verification after owner reset; reset_executed=false inside the original read report means the auditor did not execute the reset",
+  "independent_read": {
+    "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
+    "host": "https://harborlight-dev.web.app",
+    "purpose": "Independent read-only verification after reported reset run 43768861718",
+    "tls_verification": true,
+    "island_mutations": 0,
+    "firestore_mutations": 0,
+    "reset_executed": false,
+    "checks": [
+      {
+        "login": "admin1",
+        "expected_uid": "dev-admin1",
+        "auth_http_status": 200,
+        "uid_matches": true,
+        "island_get_http_status": 200,
+        "account_generation": 2,
+        "account_expired": false,
+        "island_null": true,
+        "response_keys": [
+          "account",
+          "island"
+        ],
+        "own_firestore_get_http_status": 403,
+        "own_firestore_error_status": "PERMISSION_DENIED",
+        "generation2_verified": true,
+        "own_firestore_denied": true
+      },
+      {
+        "login": "admin2",
+        "expected_uid": "dev-admin2",
+        "auth_http_status": 200,
+        "uid_matches": true,
+        "island_get_http_status": 200,
+        "account_generation": 2,
+        "account_expired": false,
+        "island_null": true,
+        "response_keys": [
+          "account",
+          "island"
+        ],
+        "own_firestore_get_http_status": 403,
+        "own_firestore_error_status": "PERMISSION_DENIED",
+        "generation2_verified": true,
+        "own_firestore_denied": true
+      },
+      {
+        "login": "admin3",
+        "expected_uid": "dev-admin3",
+        "auth_http_status": 200,
+        "uid_matches": true,
+        "island_get_http_status": 200,
+        "account_generation": 2,
+        "account_expired": false,
+        "island_null": true,
+        "response_keys": [
+          "account",
+          "island"
+        ],
+        "own_firestore_get_http_status": 403,
+        "own_firestore_error_status": "PERMISSION_DENIED",
+        "generation2_verified": true,
+        "own_firestore_denied": true
+      }
+    ],
+    "public_firebase_config": {
+      "http_status": 200,
+      "project_id": "harborlight-dev",
+      "has_public_api_key": true
+    },
+    "runtime_config": {
+      "http_status": 200,
+      "accountApi": true,
+      "projectId": "harborlight-dev",
+      "environment": "preprod",
+      "resetFence": "community-profile-v1",
+      "response_keys": [
+        "accountApi",
+        "environment",
+        "projectId",
+        "resetFence"
+      ]
+    },
+    "summary": {
+      "accounts_checked": 3,
+      "auth_successes": 3,
+      "generation2_verified": 3,
+      "null_islands": 3,
+      "own_firestore_denied": 3,
+      "api_enabled": true,
+      "resetFence_observed": true
+    },
+    "verification_pass": true
+  },
+  "independent_reset_effect_verified": true,
+  "auditor_island_or_Firestore_writes": 0,
+  "new_islands_created_by_QA": 0
+}

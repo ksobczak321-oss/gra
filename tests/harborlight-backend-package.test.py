@@ -50,7 +50,7 @@ class BackendPackageTests(unittest.TestCase):
         self.assertTrue(context <= {'Dockerfile', 'package.json', 'server.mjs', 'starter-island.mjs',
                                    'trade-rules-v32.mjs', 'harborlight-v1-provisions.js',
                                    'harborlight-v1-economy.js', 'harborlight-v1-development-copy.js',
-                                   'account-service.mjs', 'island-name.mjs', 'firebase-auth.mjs',
+                                   'account-service.mjs', 'dev-account-clock.mjs', 'island-name.mjs', 'firebase-auth.mjs',
                                    'firestore-store.mjs', 'retention.mjs', 'player-trade.mjs',
                                    'island-document-store.mjs', 'community-service.mjs', 'league-rules.mjs', 'league-season.mjs',
                                    'charity-ledger.mjs', 'charity-service.mjs'})

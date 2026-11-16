@@ -1260,3 +1260,61 @@ Natywny odbiór hostowanej gry z rzeczywistym logowaniem PASS26s: 108 dokładnyc
 Oba oryginalne ZIP-y pobrano i sprawdzono względem rozmiaru/SHA256 GitHub. Rzeczywisty wewnętrzny receiptv2 odczytano i zwalidowano: wszystkie4 checks=true; rygorystyczny weryfikator archiwum109 plików PASS. Pełny niezależny audyt HTTPS/TLS PASS: 108 plików treści/30 754 604 bajty oraz manifest, łącznie109 plików, są identyczne z niezmiennym archiwum; treść odpowiada źródłu86 i aplikacji27f. Tag `preprod-0.15.0.1-20261115` jest opublikowany i zdalnie potwierdzony: obiekt `446347dab79ebc3e8c088d6d257adbdcd0f5f6e4` →86. Bezpieczny raport: [audyt artefaktów i hostingu](v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json). TagDEV `dev-0.15.0.1-20261115` jest opublikowany i zdalnie potwierdzony: obiekt `1d7997a0074f0f34229807f0092aec808e716783` →86.
 
 **Reset admin1–3 pozostaje NOT_EXECUTED.** Zachowano loginy, hasła, UID i dotychczasowy postęp. W tej sesji brak właścicielskiego GCPADC; chroniony reset wymaga zalogowanego CloudShell właściciela, blokady bezpośrednich zapisów i minimum10min propagacji. Dokładne polecenie z pięcioma zweryfikowanymi argumentami jest w [procedurze resetu](PREPROD-RESET.md). Grant runtime ma status OWNER_REPORTED_APPLIED bez niezależnego odczytu IAM; skuteczne odczyty API potwierdzono osobno. PROD i domena pozostają odłożone. Historyczne E0 REOPENED_USER_REPORT, nieudany b268 oraz opcjonalny late-food UI INCOMPLETE pozostają zapisane; ręczny odbiór użytkownika NOT_RUN.
+
+## 2026-11-16 — GO: brak starej mapy i HUD podczas startu
+
+Użytkownik zgłosił, że podczas uruchamiania przez chwilę widać stary obraz referencyjny wyspy i dawny HUD, zanim pojawi się właściwa gra. GO z16listopada2026 obejmuje usunięcie tego przebłysku: najpierw DEV, następnie PRE-PROD. Planowana poprawka **0.15.0.2 / frontend-v32-12** ma własne oczekujące źródło, testy, CI i publikację; wcześniejsze sukcesy86 nie są jej odbiorem.
+
+Przed gotowością właściwej sceny ma być widoczny spójny ekran ładowania. Referencyjna mapa, stary HUD i niegotowe elementy gry nie mogą pojawiać się ani przyjmować kliknięć w pierwszych klatkach. Odbiór powinien objąć pierwsze renderowanie oraz opóźnione ładowanie, a następnie zachowanie właściwej wyspy i działającego interfejsu po zakończeniu startu. Szczegóły implementacji i dowody testów pozostają PENDING.
+
+Właściciel zgłosił uruchomienie resetu trzech kont z receipt przypiętym do **86eb8d9**. Jego wynik jest **NOT_CONFIRMED**; brak dowodu zakończenia, nowych generacji i odczytu końcowego. Prace i publikacja DEV mogą postępować niezależnie. **Nowa promocja PRE-PROD musi zaczekać na potwierdzone zakończenie resetu**, aby nie unieważnić źródła i receipt w wykonywanej operacji. Nie uruchamiać kolejnego resetu na podstawie samego zgłoszenia.
+
+PROD i domena pozostają odłożone. Ten zakres nie zmienia reguł gry, kont ani zapisanego postępu i nie obejmuje oczekujących modeli sera, otrębów/paszy lub zmian reklam. Zawartość wejściowych arkuszy i ustalony zakres sześciu zakładek pozostają bez zmiany. Ręczny odbiór użytkownika nowej poprawki NOT_RUN.
+
+## 2026-11-16 — właścicielski wynik resetu i GO tempa admin3
+
+Właściciel dostarczył wynik **RESET PRE-PROD PASS** dla run43768861718, przypiętego do **86eb8d9**, z generacją2 każdego konta admin1/admin2/admin3. Status to **OWNER_REPORTED_SUCCESS_PENDING_INDEPENDENT_READ**: wynik właścicielski jest zgłoszony, niezależny odczyt trzech generacji i stanu po resecie jeszcze oczekuje. Nie powtarzać resetu. DEV może postępować niezależnie; nowa promocja PRE-PROD wymaga odebranego nowegoDEV i zamknięcia odczytowej weryfikacji resetu.
+
+Użytkownik zatwierdził sterowanie prędkością **wyłącznie dla admin3** na **DEV i PRE-PROD**: przycisk **▶ =1×**, pierwsze naciśnięcie **⏩ =2×**, drugie **⏩ =6×**. To odrębna funkcja testowa w planowanej0.15.0.2/cache12, kartaHL-CHG-1155. Widoczność i uprawnienie zmiany tempa mają być związane z właściwym uwierzytelnionym kontem, a rzeczywisty zegar gry ma odpowiadać wybranej wartości; samo przyspieszenie wyświetlanego licznika nie wystarcza. Szczegółowe źródło, implementacja, testy i oba wdrożenia pozostają PENDING. Nie przypisywać kontroli admin1/admin2 ani kontom produkcyjnym.
+
+## 2026-11-16 — odczyt po resecie PASS, bez zapisów
+
+Reset właścicielski dla run43768861718/źródła **86eb8d9** jest **RESET_SUCCESS_INDEPENDENTLY_VERIFIED**. Niezależny odczyt16listopada09:41:42UTC z normalną weryfikacjąTLS potwierdził3 logowania z właściwymi UID, generację2 każdego konta, expired=false i island=null; trzy bezpośrednie odczyty własnegoFirestore odmówione403. ConfigAPI200 potwierdza accountAPI=true, projectharborlight-dev, environmentpreprod i resetFencecommunity-profile-v1. Audyt nie zapisał danych ani nie tworzył wysp. Nie powtarzać resetu. Przeszkoda trwającego resetu jest zamknięta; nowy PRE-PROD nadal wymaga odebranego nowegoDEV i własnych dowodów. Wszystkie3 wyspy są puste po resecie: przyszły natywny odbiór istniejącego świata wymaga najpierw utworzenia nowej gry przez właściciela, bez tworzenia świata przezQA.
+
+[Bezpieczny dowód](v32/PREPROD-RESET-INDEPENDENT-READ.json). Nowe0.15.0.2/cache12 nadal w przygotowaniu; ten odczyt nie stanowi odbioru jego kodu,CI ani wdrożenia.
+
+## 2026-11-16 — zamrożone źródło0.15.0.2/cache12 i lokalny odbiór
+
+Źródło aplikacji **`9ee793d6a24e83057529eaffccd363f6b5abeaef`** jest zamrożone i zacommitowane: **0.15.0.2 / frontend-v32-12**. Publikacja, własny CI i nowe wdrożenie PRE-PROD pozostają **PENDING**; odebrane wcześniej86/cache11 pozostaje bieżącym opublikowanym źródłem.
+
+Lokalnie PASS: backend170/170, clock/frontend66, coordinator57/57 (sync37+local20), payload2 i pięć dotychczasowych cloudsmokes. Tempo admin3 sprawdzono na sześciu zakresach konto/środowisko w rzeczywistym lokalnym runtime i odizolowanym lokalnie trybie PRE-PROD/API: admin1/admin2 bez przycisków i bez uprawnieniaAPI; admin3 sekwencja1×→2×→6×→1×, rzeczywisty zegar/zapis/ponowne wejście, stabilne przejścia, dostępność na telefonie i brak błędówJS. To nie jest odbiór opublikowanego PRE-PROD.
+
+Checkpoint startu przeszedł18scenariuszy/2195klatek przy poprzednich ciągachcache; odbiór utraty kontekstu na końcowymcache12 jest jeszcze PENDING. Pierwszy pełny frontend zakończył się **1425/1426**, z jednym timeoutem10s niezmienionego96-godzinnego watchdog podczas współbieżnego obciążeniaCPU. Dokładny test powtórzony przy spokojnym środowisku przeszedł1/1 w8.8s; nie zastępuje to pełnego zielonego wyniku ani własnegoCI.
+
+Arkusz6/413/ABC/pustaC odświeżony ze źródła9ee maSHA256 `9eabc1fa2e4d957dd28594f2b429c7999128a4c9789a9476a47742e9d60e7fe9`, fingerprint `a07bfd2bf20ba27257f74ac6496a081374703d3352219baae6498bd510170eb3`. Zachowano odczyt i scalanie tylko sześciu wybranych zakładek; dokumentacja nie edytuje arkusza ani raportu odcisków.
+
+Odczyt właścicielski16listopada10:07:30UTC nadal potwierdza admin1/generację2/island=null, bez zapisów. **Nie promować nowego PRE-PROD przed pierwszą grą właściciela i natywnym odbiorem istniejącej wyspy; QA nie tworzy świata i nie zastępuje tego odbioru pustym stanem.** Reset pozostaje niezależnie potwierdzony i nie jest ponawiany. PROD/domena bez działań.
+
+[Dowody](v32/CACHE12-LOCAL-VALIDATION.json).
+
+## 2026-11-16 — końcowe źródło96c i startup20/20
+
+Końcowe źródło aplikacji **`96c211fd39826cf804ff286faeff219ac846827c`** jest zacommitowane: **0.15.0.2 / frontend-v32-12**. Publikacja, własny CI i nowe wdrożenie PRE-PROD nadal **PENDING**. Checkpoint9ee zachowano w dowodach i historii; po nim zmieniono wyłącznie kontroler zegara, koordynator i opcję beforeRecover wplay.
+
+Końcowy odbiór startu **20/20 PASS** na1440/390 obejmuje6 opóźnianych barier,5 awarii zasobów na szerokość, utratę kontekstu przed gotowością grafiki, czytelny błąd i odzyskanie po ponowieniu, wprowadzenie oraz prawdziwe przekierowanie logowania. BajtyHTML iambient odpowiadają źródłu96c, ostatnia poprawka zegara nie zmienia startu. Nowe testy zegara/focus/koordynatora **51/51 PASS**, w tym4 przypadki healthyfocus; adaptery lokalnej chmury **58/58 PASS**. Końcowe powtórzenia speed6 iLiveCAS dla96c jeszcze oczekują.
+
+Wcześniejszy checkpoint9ee zachowuje backend170, clock/frontend66, coordinator57,payload2,bundle26,pakiet2 i sześć rzeczywistych lokalnych/izolowanych zakresów speedPASS. Nie jest to publiczny odbiór PRE-PROD. Pierwszy pełny frontend miał **1425/1426**, timeout10s starego96-godzinnego watchdog przy obciążeniuCPU; dokładny retry1/1 PASS8.8s nie zastępuje pełnego zielonegoCI.
+
+Arkusz6/413/ABC/pustaC ze źródła96c ma walidacjęPASS, SHA256 `90943adac77e35ee97899165dfa4e4ae541074b62258323fae27ffab2a158e60`, fingerprint `f7d82a10f46673098129486a911132ae30e0739e0fc27e4a5d64aa9669589771`. Tylko sześć wybranych zakładek; dokumentacja nie zmienia arkusza ani raportu odcisków.
+
+Reset jest niezależnie potwierdzony i nie jest ponawiany. Admin1 nadal miałisland=null/generację2 w odczycie16listopada10:07:30UTC. **Nowy PRE-PROD czeka na pierwszą grę właściciela, odebrany nowyDEV i natywny odbiór istniejącej wyspy; QA nie tworzy świata i nie zastępuje tego pustym stanem.** PROD/domena bez działań.
+
+[Dowody](v32/CACHE12-LOCAL-VALIDATION.json).
+
+## 2026-11-16 — końcowe speed6/LiveCAS i pierwsza gra właściciela
+
+Końcowe powtórzenia **speed6/6 i LiveCAS dla96c PASS**; sprawdzenie tempa nadal dotyczy rzeczywistego lokalnego runtime i izolowanego trybu PRE-PROD/API, nie publicznej usługi.
+
+Startup20/20 ma2581próbkowanychklatek na końcowymcache12. Reset jest niezależnie potwierdzony i nie jest ponawiany. Właściciel utworzył grę admin1; niezależny odczyt16listopada10:21:40UTC PASS z normalnymTLS potwierdził właściweUID, generację2, rewizję12, schema9/rules32,19osób, ukończonewprowadzenie i zegar niezatrzymany. Warunek istnienia świata jest spełniony; dawnyisland=null10:07:30 jest historycznym checkpointem. **Nowy PRE-PROD wymaga jeszcze odebranego nowegoDEV, standardowego wdrożenia i natywnego odbioru tej istniejącej wyspy. QA nie tworzył ani nie zapisywał świata.** PROD/domena bez działań.
+
+[Dowód istniejącej gry](v32/PREPROD-OWNER-FIRST-GAME-READ.json). Publikacja i własnyCI0.15.0.2/cache12 nadalPENDING.

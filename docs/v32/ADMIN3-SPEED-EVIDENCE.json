@@ -1,0 +1,153 @@
+{
+  "scope": "Admin3-only authorized game speed UI and effective clock on DEV and PRE-PROD",
+  "as_of": "2026-11-16",
+  "status": "APPLICATION96c_COMMITTED_FINAL_LOCAL_ISOLATED_API_ACCEPTANCE_PASS_CI_PUBLICATION_PENDING",
+  "version": "0.15.0.2",
+  "cache": "frontend-v32-12",
+  "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+  "publication_commit": null,
+  "authorized_account": "admin3",
+  "authorized_environments": [
+    "DEV",
+    "PRE-PROD"
+  ],
+  "controls": {
+    "play": {
+      "label": "▶",
+      "multiplier": 1
+    },
+    "fast_forward": {
+      "label": "⏩",
+      "first_press_multiplier": 2,
+      "second_press_multiplier": 6
+    }
+  },
+  "account_authorization_required": true,
+  "effective_API_clock_required": true,
+  "other_accounts_not_authorized": true,
+  "local_checks": {
+    "status": "PASS_FINAL96c_LOCAL_AND_ISOLATED_PREPROD_API",
+    "scopes": 6,
+    "backend_passed": 170,
+    "clock_frontend_passed": 66,
+    "coordinator_passed": 57,
+    "payload_passed": 2,
+    "evidence": "docs/v32/CACHE12-LOCAL-VALIDATION.json",
+    "public_PREPROD_speed_accepted": false,
+    "previous_six_scope_result_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
+    "final_clock_focus_coordinator": "51/51 PASS source96c",
+    "final_local_cloud_adapters": "58/58 PASS source96c",
+    "final_six_scope_speed_rerun": "6/6 PASS source96c",
+    "final_LiveCAS_rerun": "PASS source96c"
+  },
+  "own_CI": {
+    "run_id": null,
+    "conclusion": null
+  },
+  "DEV_publication": {
+    "run_id": null,
+    "conclusion": null
+  },
+  "PREPROD": {
+    "status": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_AND_NATIVE_UI_PROOF",
+    "run_id": null,
+    "conclusion": null,
+    "real_saved_world_UI_prerequisite": "PASS_OWNER_CREATED_WORLD_INDEPENDENT_READ; new deployedUI acceptance still required",
+    "owner_latest_read": {
+      "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+      "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+      "host": "https://harborlight-dev.web.app",
+      "account": "admin1",
+      "TLS_verified": true,
+      "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+      "auth_http_status": 200,
+      "expected_UID_matches": true,
+      "island_GET_HTTP_status": 200,
+      "account_generation": 2,
+      "account_expired": false,
+      "island_present": true,
+      "island_generation": 2,
+      "island_revision": 12,
+      "schema": 9,
+      "ruleset": 32,
+      "population": 19,
+      "onboarding": "complete",
+      "onboarding_pending": false,
+      "initialization_paused": false,
+      "writes": 0,
+      "existing_world_prerequisite_satisfied": true,
+      "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+    },
+    "QA_may_create_island": false,
+    "receipt_or_empty_world_must_not_bypass_native_UI_acceptance": true,
+    "owner_first_game_read": {
+      "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+      "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+      "host": "https://harborlight-dev.web.app",
+      "account": "admin1",
+      "TLS_verified": true,
+      "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+      "auth_http_status": 200,
+      "expected_UID_matches": true,
+      "island_GET_HTTP_status": 200,
+      "account_generation": 2,
+      "account_expired": false,
+      "island_present": true,
+      "island_generation": 2,
+      "island_revision": 12,
+      "schema": 9,
+      "ruleset": 32,
+      "population": 19,
+      "onboarding": "complete",
+      "onboarding_pending": false,
+      "initialization_paused": false,
+      "writes": 0,
+      "existing_world_prerequisite_satisfied": true,
+      "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+    }
+  },
+  "reset_report": {
+    "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+    "deployment_run_id": 43768861718,
+    "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "owner_reported_output": "RESET PRE-PROD PASS",
+    "reported_generations": {
+      "admin1": 2,
+      "admin2": 2,
+      "admin3": 2
+    },
+    "independent_post_reset_read": "PASS",
+    "independent_generation_verification": true,
+    "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
+    "three_islands_null": true,
+    "three_accounts_expired": false,
+    "direct_own_Firestore_denied": 3,
+    "audit_writes": 0,
+    "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+    "repeat_reset_requested": false
+  },
+  "new_reset_required": false,
+  "PROD_and_domain": "POSTPONED_NO_ACTION",
+  "manual_execution": "NOT_RUN",
+  "workbook": {
+    "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+    "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+    "sheets": 6,
+    "rows": 413,
+    "columns": [
+      "A",
+      "B",
+      "C"
+    ],
+    "C_all_blank": true,
+    "validation": "PASS",
+    "sha256": "90943adac77e35ee97899165dfa4e4ae541074b62258323fae27ffab2a158e60",
+    "source_fingerprint": "f7d82a10f46673098129486a911132ae30e0739e0fc27e4a5d64aa9669589771",
+    "selected_six_sheet_read_and_merge_scope_preserved": true,
+    "edited_by_documentation_agent": false
+  },
+  "previous_application_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
+  "owner_first_game_read_evidence": "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json"
+}

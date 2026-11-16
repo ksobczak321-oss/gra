@@ -1,0 +1,176 @@
+{
+  "scope": "Remove startup flash of old reference PNG/HUD; DEV first, PRE-PROD after confirmed completion of already-running reset",
+  "as_of": "2026-11-16",
+  "version": "0.15.0.2",
+  "cache": "frontend-v32-12",
+  "status": "APPLICATION96c_COMMITTED_STARTUP20_PASS_CI_PUBLICATION_PENDING",
+  "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+  "publication_commit": null,
+  "accepted_baseline": {
+    "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "version": "0.15.0.1",
+    "cache": "frontend-v32-11",
+    "evidence": "docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json"
+  },
+  "required_behavior": [
+    "No reference map or old HUD visible before actual scene readiness",
+    "Loading screen visible during preparation",
+    "Unready game elements do not accept input",
+    "Actual island and current UI remain correct after startup"
+  ],
+  "local_checks": {
+    "status": "PASS_FINAL_CACHE12_STARTUP20",
+    "evidence": "docs/v32/CACHE12-LOCAL-VALIDATION.json",
+    "startup": {
+      "result": "PASS",
+      "passed": 20,
+      "total": 20,
+      "widths": [
+        1440,
+        390
+      ],
+      "sampled_frames": 2581,
+      "delayed_barriers": [
+        "module",
+        "auth",
+        "cloud",
+        "accepted art",
+        "ambient",
+        "css"
+      ],
+      "asset_failure_cases_per_width": 5,
+      "contextlost_before_ambient_ready": "PASS_accessible_error_and_retry_recovers_current_game",
+      "intro_complete_art_and_reachable": "PASS",
+      "cloud_retry_identity_preserved": "PASS",
+      "anonymous_real_auth_redirect": "PASS",
+      "source_application_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+      "tested_startup_HTML_and_ambient_bytes_identical_to_current_source": true,
+      "latest_clock_delta_does_not_change_startup_behavior": true
+    }
+  },
+  "own_CI": {
+    "run_id": null,
+    "conclusion": null
+  },
+  "DEV_publication": {
+    "run_id": null,
+    "conclusion": null,
+    "public_bytes_and_startup_browser": "PENDING"
+  },
+  "PREPROD": {
+    "authorization": "DEV_then_PREPROD",
+    "status": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_AND_NATIVE_UI_PROOF",
+    "run_id": null,
+    "conclusion": null,
+    "real_saved_world_UI_prerequisite": "PASS_OWNER_CREATED_WORLD_INDEPENDENT_READ; new deployedUI acceptance still required",
+    "owner_latest_read": {
+      "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+      "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+      "host": "https://harborlight-dev.web.app",
+      "account": "admin1",
+      "TLS_verified": true,
+      "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+      "auth_http_status": 200,
+      "expected_UID_matches": true,
+      "island_GET_HTTP_status": 200,
+      "account_generation": 2,
+      "account_expired": false,
+      "island_present": true,
+      "island_generation": 2,
+      "island_revision": 12,
+      "schema": 9,
+      "ruleset": 32,
+      "population": 19,
+      "onboarding": "complete",
+      "onboarding_pending": false,
+      "initialization_paused": false,
+      "writes": 0,
+      "existing_world_prerequisite_satisfied": true,
+      "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+    },
+    "QA_may_create_island": false,
+    "receipt_or_empty_world_must_not_bypass_native_UI_acceptance": true,
+    "owner_first_game_read": {
+      "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+      "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+      "host": "https://harborlight-dev.web.app",
+      "account": "admin1",
+      "TLS_verified": true,
+      "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+      "auth_http_status": 200,
+      "expected_UID_matches": true,
+      "island_GET_HTTP_status": 200,
+      "account_generation": 2,
+      "account_expired": false,
+      "island_present": true,
+      "island_generation": 2,
+      "island_revision": 12,
+      "schema": 9,
+      "ruleset": 32,
+      "population": 19,
+      "onboarding": "complete",
+      "onboarding_pending": false,
+      "initialization_paused": false,
+      "writes": 0,
+      "existing_world_prerequisite_satisfied": true,
+      "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+    }
+  },
+  "reset_dependency": {
+    "pinned_source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "pinned_deployment_run_id": 43768861718,
+    "owner_reported_launcher_running": false,
+    "execution_result": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+    "generations_verified": true,
+    "post_reset_read_verified": true,
+    "new_PREPROD_promotion_must_wait": false,
+    "repeat_reset_requested": false,
+    "owner_reported_success": {
+      "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+      "deployment_run_id": 43768861718,
+      "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "owner_reported_output": "RESET PRE-PROD PASS",
+      "reported_generations": {
+        "admin1": 2,
+        "admin2": 2,
+        "admin3": 2
+      },
+      "independent_post_reset_read": "PASS",
+      "independent_generation_verification": true,
+      "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
+      "three_islands_null": true,
+      "three_accounts_expired": false,
+      "direct_own_Firestore_denied": 3,
+      "audit_writes": 0,
+      "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+      "repeat_reset_requested": false
+    },
+    "new_PREPROD_promotion_must_wait_for_reset": false,
+    "independent_read_evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json"
+  },
+  "PROD_and_domain": "POSTPONED_NO_ACTION",
+  "models_or_gameplay_changes": false,
+  "uploaded_workbook_input_scope_unchanged": true,
+  "manual_execution": "NOT_RUN",
+  "workbook": {
+    "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+    "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+    "sheets": 6,
+    "rows": 413,
+    "columns": [
+      "A",
+      "B",
+      "C"
+    ],
+    "C_all_blank": true,
+    "validation": "PASS",
+    "sha256": "90943adac77e35ee97899165dfa4e4ae541074b62258323fae27ffab2a158e60",
+    "source_fingerprint": "f7d82a10f46673098129486a911132ae30e0739e0fc27e4a5d64aa9669589771",
+    "selected_six_sheet_read_and_merge_scope_preserved": true,
+    "edited_by_documentation_agent": false
+  },
+  "previous_application_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
+  "owner_first_game_read_evidence": "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json"
+}

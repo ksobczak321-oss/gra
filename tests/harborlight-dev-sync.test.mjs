@@ -5,10 +5,10 @@ const account = { uid: 'dev-admin1', login: 'admin1' }, key = 'harborlight-dev-i
 const V1 = { revision: 1, updateTime: '2026-10-30T12:00:00.000001Z' };
 const V2 = { revision: 2, updateTime: '2026-10-30T12:00:01.000002Z' };
 const json = coins => JSON.stringify({resources:{coins}});
-function fixture({remote={payload:json(100),version:V1},save,load}={}) {
+function fixture({remote={payload:json(100),version:V1},save,load,beforeRecover}={}) {
   const statuses=[],writes=[],restores=[],delays=[],timers=new Map(); let seq=0;
   const storage={getItem(){throw Error('Island storage must never be read')},setItem(){throw Error('Island storage must never be written')}};
-  const sync=createDevSync({account,saveKey:key,storage,onStatus:s=>statuses.push(s),onRestore:(payload,context)=>restores.push({payload,...context}),schedule:(fn,delay)=>{delays.push(delay);timers.set(++seq,fn);return seq},cancel:id=>timers.delete(id),cloud:{loadIsland:load||(async()=>remote),saveIsland:save||(async(payload,version)=>{writes.push({payload,version});return version?V2:V1})}});
+  const sync=createDevSync({account,saveKey:key,storage,beforeRecover,onStatus:s=>statuses.push(s),onRestore:(payload,context)=>restores.push({payload,...context}),schedule:(fn,delay)=>{delays.push(delay);timers.set(++seq,fn);return seq},cancel:id=>timers.delete(id),cloud:{loadIsland:load||(async()=>remote),saveIsland:save||(async(payload,version)=>{writes.push({payload,version});return version?V2:V1})}});
   return {sync,statuses,writes,timers,delays,restores};
 }
 test('cloud-only new island is confirmed before opening, without importing any browser cache',async()=>{
@@ -149,4 +149,70 @@ test('signing out while a cloud save is in flight cannot restore or reopen the d
   await f.sync.open(json(100));f.sync.queue(json(90));const writing=f.sync.flush();await Promise.resolve();
   f.sync.dispose();release();assert.equal(await writing,false);assert.equal(f.sync.writable,false);
   assert.equal(await f.sync.recover(),false);assert.equal(f.restores.length,0);
+});
+
+test('lost clock acknowledgement blocks automatic world recovery until server clock read succeeds',async()=>{
+  const operations=[];let clockOnline=false,rate=2;
+  const f=fixture({load:async()=>{operations.push(`load-at-rate-${rate}`);return{payload:json(100),version:V1}},beforeRecover:async()=>{
+    operations.push('clock-read');if(!clockOnline)throw Object.assign(Error('clock offline'),{code:'offline'});rate=6;
+  }});
+  await f.sync.open(json(100));operations.length=0;
+  // The speed POST committed x6, but both its ACK and the immediate status
+  // read were lost. Recovery may not expose the world using the old x2 clock.
+  f.sync.pause('offline');
+  const fire=()=>{const[id,callback]=[...f.timers][0];f.timers.delete(id);callback();};
+  fire();await new Promise(resolve=>setImmediate(resolve));
+  assert.deepEqual(operations,['clock-read']);assert.equal(f.sync.writable,false);
+  assert.equal(f.sync.status,'offline');assert.equal(f.restores.length,0);assert.equal(f.writes.length,0);
+  assert.equal(f.sync.queue(json(80)),false);assert.equal(f.timers.size,1,'failed prerequisite retains bounded automatic retry');
+  clockOnline=true;fire();await new Promise(resolve=>setImmediate(resolve));
+  assert.deepEqual(operations,['clock-read','clock-read','load-at-rate-6']);
+  assert.deepEqual(f.restores,[{payload:json(100),reason:'recovered'}]);assert.equal(f.sync.writable,true);
+});
+
+test('concurrent recoveries share one async prerequisite before any load, retry or restore',async()=>{
+  let release,hooks=0,reads=0,writes=0;const operations=[];
+  const f=fixture({load:async()=>{reads++;operations.push('read');return{payload:json(100),version:V1}},save:async()=>{
+    operations.push('write');if(++writes===1)throw Object.assign(Error('offline'),{code:'offline'});return V2;
+  },beforeRecover:async()=>{hooks++;operations.push('clock-start');await new Promise(resolve=>release=resolve);operations.push('clock-ready')}});
+  await f.sync.open(json(100));f.sync.queue(json(90));await f.sync.flush();operations.length=0;
+  const first=f.sync.recover(),second=f.sync.recover();await Promise.resolve();
+  assert.equal(hooks,1);assert.equal(reads,1);assert.equal(writes,1);assert.equal(f.sync.writable,false);
+  assert.deepEqual(operations,['clock-start']);release();
+  assert.deepEqual(await Promise.all([first,second]),[true,true]);
+  assert.deepEqual(operations,['clock-start','clock-ready','read','write']);assert.equal(hooks,1);
+  assert.deepEqual(f.restores,[{payload:json(90),reason:'recovered'}]);
+});
+
+test('an explicit failed recovery prerequisite and disposal cannot read or restore a world',async()=>{
+  let allowed=false,reads=0;
+  const f=fixture({load:async()=>{reads++;return{payload:json(100),version:V1}},beforeRecover:async()=>allowed});
+  await f.sync.open(json(100));f.sync.pause('offline');
+  assert.equal(await f.sync.recover({reloadConfirmed:true}),false);
+  assert.equal(reads,1);assert.equal(f.restores.length,0);assert.equal(f.sync.writable,false);
+  f.sync.dispose();allowed=true;assert.equal(await f.sync.recover(),false);assert.equal(reads,1);
+});
+
+test('explicit cloud reload cannot bypass a failed clock prerequisite or unlock stale-rate gameplay',async()=>{
+  let online=false,rate=2;const operations=[];
+  const f=fixture({load:async()=>{operations.push(`read-at-rate-${rate}`);return{payload:json(100),version:V1}},beforeRecover:async()=>{
+    operations.push('clock-read');if(!online)throw Object.assign(Error('clock offline'),{code:'offline'});rate=6;
+  }});
+  await f.sync.open(json(100));operations.length=0;f.sync.pause('offline');
+  await assert.rejects(f.sync.reloadCloud(),error=>error.code==='offline');
+  assert.deepEqual(operations,['clock-read']);assert.equal(f.sync.writable,false);assert.equal(f.sync.status,'offline');
+  assert.equal(f.sync.queue(json(80)),false);assert.equal(f.writes.length,0);assert.equal(f.restores.length,0);
+  online=true;assert.equal(await f.sync.reloadCloud(),json(100));
+  assert.deepEqual(operations,['clock-read','clock-read','read-at-rate-6']);assert.equal(f.sync.writable,true);
+});
+
+test('disposal during an explicit reload prerequisite cannot read or adopt the signed-out account',async()=>{
+  let release,reads=0;
+  const f=fixture({load:async()=>{reads++;return{payload:json(100),version:V1}},beforeRecover:()=>new Promise(resolve=>release=resolve)});
+  await f.sync.open(json(100));f.sync.pause('offline');
+  const reloading=f.sync.reloadCloud();await Promise.resolve();assert.equal(f.sync.writable,false);
+  f.sync.dispose();release();
+  await assert.rejects(reloading,error=>error.code==='auth-required');
+  assert.equal(reads,1);assert.equal(f.restores.length,0);assert.equal(f.sync.writable,false);
+  await assert.rejects(f.sync.reloadCloud(),error=>error.code==='auth-required');assert.equal(reads,1);
 });

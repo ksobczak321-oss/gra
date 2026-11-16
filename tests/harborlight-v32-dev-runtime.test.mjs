@@ -182,6 +182,63 @@ test('only admin3 has idempotent DEV time control and other accounts keep their 
   await assert.rejects(prodClock.advance(3600), forbidden('permission'));
 });
 
+test('admin3 continuous rates are server-scoped and leave every other account on real time', async t => {
+  let at = 1_800_000_000_000;
+  const f = await fixture(t, { now: () => at }), clients = [f.client(), f.client(), f.client()];
+  for (let i = 0; i < clients.length; i++) await enter(clients[i], `admin${i + 1}`);
+  const clocks = clients.map(cloud => createDevTimeController(cloud));
+  for (const clock of clocks.slice(0, 2)) {
+    assert.equal((await clock.status()).canSetRate, false);
+    await assert.rejects(clock.setRate(6, 'forbidden_rate_request'), forbidden('permission'));
+  }
+  await assert.rejects(clients[0].requestGameService('/api/dev/time', { rate: 6, requestId: 'forged_uid_request', uid: 'dev-admin3', login: 'admin3' }), forbidden('permission'));
+  assert.equal((await clocks[2].setRate(2, 'rate_two_request')).rate, 2);
+  at += 10000;
+  assert.equal((await clocks[2].status()).now, 1_800_000_020_000);
+  const six = await clocks[2].setRate(6, 'rate_six_request');
+  assert.equal(six.now, 1_800_000_020_000);
+  at += 5000;
+  assert.equal((await clocks[2].status()).now, 1_800_000_050_000);
+  const play = await clocks[2].setRate(1, 'rate_one_request');
+  assert.equal(play.now, 1_800_000_050_000);
+  assert.equal((await clocks[2].setRate(1, 'rate_one_request')).alreadyApplied, true);
+  at += 5000;
+  assert.equal((await clocks[2].status()).now, 1_800_000_055_000);
+  for (const clock of clocks.slice(0, 2)) {
+    const status = await clock.status();
+    assert.equal(status.now, at); assert.equal(status.offsetSeconds, 0); assert.equal(status.rate, 1);
+  }
+  await assert.rejects(clocks[2].setRate(3, 'invalid_rate_request'), forbidden('invalid-state'));
+  await assert.rejects(clients[2].requestGameService('/api/dev/time', { rate: 6, seconds: 10, requestId: 'ambiguous_clock_request' }), forbidden('invalid-state'));
+});
+
+test('private acceleration does not accelerate authentication or suppress real idle expiry', async t => {
+  let at = 1_800_000_000_000;
+  const f = await fixture(t, { now: () => at }), cloud = f.client(); await enter(cloud, 'admin3');
+  const clock = createDevTimeController(cloud); await clock.setRate(6, 'idle_rate_six');
+  at += 5 * 60000;
+  assert.equal((await clock.status()).now, 1_800_001_800_000);
+  assert.equal((await cloud.getProfile()).login, 'admin3');
+  at += 31 * 60000;
+  await assert.rejects(clock.status(), forbidden('auth-required'));
+});
+
+test('continuous admin3 rate persists across a durable server restart with no session reuse', async t => {
+  let at = 1_800_000_000_000;
+  const directory = await mkdtemp(join(tmpdir(), 'harborlight-dev-rate-')), dataFile = join(directory, 'state-v32.json');
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const first = await fixture(t, { dataFile, ephemeral: false, now: () => at }), cloud = first.client();
+  await enter(cloud, 'admin3');
+  await createDevTimeController(cloud).setRate(6, 'durable_rate_six'); await first.close();
+  at += 10000;
+  const second = await fixture(t, { dataFile, ephemeral: false, now: () => at }), reloaded = second.client();
+  await reloaded.signIn('admin3', 'admin3');
+  const clock = createDevTimeController(reloaded), status = await clock.status();
+  assert.equal(status.rate, 6); assert.equal(status.now, 1_800_000_060_000);
+  const play = await clock.setRate(1, 'durable_rate_one'); assert.equal(play.now, status.now);
+  at += 10000; assert.equal((await clock.status()).now, 1_800_000_070_000);
+});
+
 test('community chat uses real independent DEV accounts and deduplicates one request', async t => {
   const f = await fixture(t), a = f.client(), b = f.client();
   await Promise.all([enter(a, 'admin1'), enter(b, 'admin2')]);

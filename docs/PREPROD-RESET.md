@@ -1,5 +1,11 @@
 # Jednorazowe wyzerowanie trzech profili PRE-PROD
 
+## Aktualizacja16listopada — reset niezależnie potwierdzony
+
+Reset właścicielski dla run43768861718/źródła **86eb8d9** jest **RESET_SUCCESS_INDEPENDENTLY_VERIFIED**. Niezależny odczyt16listopada09:41:42UTC z normalną weryfikacjąTLS potwierdził3 logowania z właściwymi UID, generację2 każdego konta, expired=false i island=null; trzy bezpośrednie odczyty własnegoFirestore odmówione403. ConfigAPI200 potwierdza accountAPI=true, projectharborlight-dev, environmentpreprod i resetFencecommunity-profile-v1. Audyt nie zapisał danych ani nie tworzył wysp. Nie powtarzać resetu. Przeszkoda trwającego resetu jest zamknięta; nowy PRE-PROD nadal wymaga odebranego nowegoDEV i własnych dowodów. Bezpośrednio po resecie3wyspy były puste; obecnie admin1 ma grę utworzoną przez właściciela i niezależnie potwierdzoną10:21:40UTC. Warunek istnienia świata jest spełniony, nowy natywny odbiór wdrożonegoUI pozostaje oczekujący, bez tworzenia świata przezQA.
+
+[Bezpieczny dowód odczytu](v32/PREPROD-RESET-INDEPENDENT-READ.json). Poniższa procedura i wcześniejsze statusy są historią przygotowania; nie uruchamiać jej ponownie dla kolejnego resetu świeżego postępu.
+
 ## Bieżący reset0.15.0.1 — dodatkowy zakres i bramki
 
 Status: własny CI43766275390 i PRE-PROD43768861718 źródła86 SUCCESS; kontoAPI=true i resetFence potwierdzone, reset **NOT_EXECUTED**. Lokalny frontend1410, backend155 i resetPython20 PASS. Użytkownik autoryzował reset3PRE-PROD z zachowaniem loginów,haseł iUID. NoweAPI musi ogłaszać `resetFence: community-profile-v1`. Oprócz wysp reset atomowo czyści własne gameplaydescendantscommunity i tylko kwalifikowanyzerowy mechaniczny charityWalletroot, zachowując tożsamość,handle,name,preferences,blocked/muted. Każde powiązanie sharedseason/alliance/team/score/globaldonation/financial/externaltrade blokuje reset; brak globalnego kasowania.

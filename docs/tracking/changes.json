@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "as_of": "2026-11-15",
-  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu. Jawne zlecenie promocji0.13.1.0napreprod ma odrębną kartę1082:PENDINGdo własnegoCI nowegoSHA i rzeczywistegoSUCCESSGCP.411kart/147ręcznychNOTRUN,bez resetu iPROD. GO DEV0.14.0.0/v31 z4listopada2026 zatwierdza paczkę po audycie ścieżek i plan50dni, karty1083–1120 i ręczneTC0148–0179. Implementacja i własna walidacja końcowego źródła pozostają w toku; PRE-PROD0.13.1.0/68e9bcd bez nowej promocji.449kart/179ręcznychNOTRUN; bez resetu,PROD i realnychoperatorów. Cel20w50dni/150godzin nie jest wynikiem testu. Nowe GO z14–15listopada2026 obejmuje pełny uzgodniony pakietv32/0.15.0.0 naDEV,47odpowiedzi z formularzy i poprawki UI. Karty1122–1138 mapują regułyR01–R59 z audytu. Nowe implementacje są lokalnie zweryfikowane, ale nowe CI i publiczny podgląd muszą mieć własny dowód; bez promocji PRE-PROD/PROD i bez resetu kont. Odłożone niepełne przepisy/sieć skórzana i niezatwierdzone parametry balansu zachowują odrębne ograniczenia. GO z15listopada po akceptacji statycznego frontu obejmuje wyłącznie DEV0.15.0.0/cachefrontend-v32-7: zachowane zaakceptowane grafiki, przypisania funkcji budynków bez zamiany identyfikatorów zapisów, zgodne miniatury i wyrównanie dolnego menu do prawej krawędzi1664. KartyHL-CHG-1144–1146 mają własny odbiór; osobny pakiet sera, otrębów/paszy i nazw mieszkańców pozostaje poza tą publikacją. PóźniejszeGOcache8 po zgłoszeniu Akademii iKoszar autoryzuje wyłącznie nazwy mieszkańców według zajęcia, numeracjęról i grupy we wszystkich listach/wyborachUI, z zachowaniemfrontucache7,UID,zapisów,uprawnień i postępu; modele sera,otrębów/paszy nadal wyłączone. KartyHL-CHG-1147–1148 wymagają własnego odbioru. Responsive120: cache8 zawiera także minimalną poprawkęUI poFAILURECI43738724605; próg20px i reguły modelu pozostają niezmienione. KartaHL-CHG-1149 zachowuje dawną awarię i odrębny odbiór nowego kodu. NajnowszeGOcache9 omezuje importPL na šest vybraných arkuszy Excela (413wierszy,87niepustychC,85zmianwC), z zasadąC→B i rozstrzyganiem notatek redakcyjnych. Pozostałe treści arkuszy nie są czytane; ser doMleczarni i reklamy na każdympoziomie oczekują decyzji. Nowy wynikowyExcel ma6arkuszy413ABC/Bscalone/Cpuste przy zachowaniu historycznego pełnegoarkusza. KartaHL-CHG-1150 ma własne oczekujące wynikiDEV; oddzielna zablokowana promocjaPROD pozostaje poza tym importem. Najnowsze jawneGO użytkownika ustala kolejność obecnyPRE-PROD0.14/7e→PROD, dopiero po potwierdzeniuPROD aktualnyDEV→PRE-PROD. OpsHL-CHG-1151 zapisujeBLOCKED wyłączonymAPI i brakiem ustalonego dostępu; wąski profil85plików nie znosi bramkiAPI ani domyślnego108. Cache9 wymaga trzeciego pełnego własnego zielonegoCI przed zaakceptowanym tagiem. NajnowszeGO:PROD/domenaodłożone; naprawa starych chmurowychreguł0.15.0.1/cache10 i osobny reset3PRE-PROD z zachowaniemloginów/haseł/UID poAPI,datastore.user,blokadziezapisów i10min. E0wdrożoneplikiSUCCESS, funkcjeREOPENED_USER_REPORT; noweCI/deploy/resetPENDING. Bug1152/Ops1153. Bieżące0.15.0.1/cache11: DEV/PRE-PROD86 oraz własnyCI i rzeczywisty zalogowanyUI32 SUCCESS; osobnyreset3NOT_EXECUTED/właścicielskiCloudShell. E0REOPENED/b268FAILURE historyczne;PROD/DNSodłożone.",
+  "as_of": "2026-11-16",
+  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu. Jawne zlecenie promocji0.13.1.0napreprod ma odrębną kartę1082:PENDINGdo własnegoCI nowegoSHA i rzeczywistegoSUCCESSGCP.411kart/147ręcznychNOTRUN,bez resetu iPROD. GO DEV0.14.0.0/v31 z4listopada2026 zatwierdza paczkę po audycie ścieżek i plan50dni, karty1083–1120 i ręczneTC0148–0179. Implementacja i własna walidacja końcowego źródła pozostają w toku; PRE-PROD0.13.1.0/68e9bcd bez nowej promocji.449kart/179ręcznychNOTRUN; bez resetu,PROD i realnychoperatorów. Cel20w50dni/150godzin nie jest wynikiem testu. Nowe GO z14–15listopada2026 obejmuje pełny uzgodniony pakietv32/0.15.0.0 naDEV,47odpowiedzi z formularzy i poprawki UI. Karty1122–1138 mapują regułyR01–R59 z audytu. Nowe implementacje są lokalnie zweryfikowane, ale nowe CI i publiczny podgląd muszą mieć własny dowód; bez promocji PRE-PROD/PROD i bez resetu kont. Odłożone niepełne przepisy/sieć skórzana i niezatwierdzone parametry balansu zachowują odrębne ograniczenia. GO z15listopada po akceptacji statycznego frontu obejmuje wyłącznie DEV0.15.0.0/cachefrontend-v32-7: zachowane zaakceptowane grafiki, przypisania funkcji budynków bez zamiany identyfikatorów zapisów, zgodne miniatury i wyrównanie dolnego menu do prawej krawędzi1664. KartyHL-CHG-1144–1146 mają własny odbiór; osobny pakiet sera, otrębów/paszy i nazw mieszkańców pozostaje poza tą publikacją. PóźniejszeGOcache8 po zgłoszeniu Akademii iKoszar autoryzuje wyłącznie nazwy mieszkańców według zajęcia, numeracjęról i grupy we wszystkich listach/wyborachUI, z zachowaniemfrontucache7,UID,zapisów,uprawnień i postępu; modele sera,otrębów/paszy nadal wyłączone. KartyHL-CHG-1147–1148 wymagają własnego odbioru. Responsive120: cache8 zawiera także minimalną poprawkęUI poFAILURECI43738724605; próg20px i reguły modelu pozostają niezmienione. KartaHL-CHG-1149 zachowuje dawną awarię i odrębny odbiór nowego kodu. NajnowszeGOcache9 omezuje importPL na šest vybraných arkuszy Excela (413wierszy,87niepustychC,85zmianwC), z zasadąC→B i rozstrzyganiem notatek redakcyjnych. Pozostałe treści arkuszy nie są czytane; ser doMleczarni i reklamy na każdympoziomie oczekują decyzji. Nowy wynikowyExcel ma6arkuszy413ABC/Bscalone/Cpuste przy zachowaniu historycznego pełnegoarkusza. KartaHL-CHG-1150 ma własne oczekujące wynikiDEV; oddzielna zablokowana promocjaPROD pozostaje poza tym importem. Najnowsze jawneGO użytkownika ustala kolejność obecnyPRE-PROD0.14/7e→PROD, dopiero po potwierdzeniuPROD aktualnyDEV→PRE-PROD. OpsHL-CHG-1151 zapisujeBLOCKED wyłączonymAPI i brakiem ustalonego dostępu; wąski profil85plików nie znosi bramkiAPI ani domyślnego108. Cache9 wymaga trzeciego pełnego własnego zielonegoCI przed zaakceptowanym tagiem. NajnowszeGO:PROD/domenaodłożone; naprawa starych chmurowychreguł0.15.0.1/cache10 i osobny reset3PRE-PROD z zachowaniemloginów/haseł/UID poAPI,datastore.user,blokadziezapisów i10min. E0wdrożoneplikiSUCCESS, funkcjeREOPENED_USER_REPORT; noweCI/deploy/resetPENDING. Bug1152/Ops1153. Bieżące0.15.0.1/cache11: DEV/PRE-PROD86 oraz własnyCI i rzeczywisty zalogowanyUI32 SUCCESS; osobnyreset3NOT_EXECUTED/właścicielskiCloudShell. E0REOPENED/b268FAILURE historyczne;PROD/DNSodłożone. GO16listopada2026: Bug1154 usuwa przebłysk staregoPNG/HUD przy starcie, najpierwDEV0.15.0.2/cache12. NoweCI/publikacjaPENDING; reset właściciel zgłosił jako uruchomiony, wynikNOT_CONFIRMED, nowa promocjaPRE-PROD czeka na zakończenie. GO16listopada: admin3-only▶1×/⏩2×/6× naDEV iPRE-PROD, karta1155. WłaścicielskiRESET PASS43768861718/generacje2/2/2; niezależny odczytPENDING. Reset43768861718 jest niezależnie potwierdzony16listopadaTLS:3UID/generacje2/expiredfalse/islandnull,3ownFirestore403/APItrue,0zapisów; bez ponowienia. Nowyappcache12 nadalPENDING,QA nie tworzy nowychświatów.",
   "environment_baseline": {
     "application_source_sha": "092e75226fbb14cab09826f313e11d10891966d8",
     "ci_run_id": 41221965032,
@@ -29331,7 +29331,8 @@
           "docs/v32/PREPROD-RULESET-RESET-EVIDENCE.json",
           "docs/PREPROD-V32-PROMOTION.md",
           "docs/PREPROD-V32-EVIDENCE.json",
-          "docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json"
+          "docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json",
+          "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json"
         ],
         "code": [
           "infra/google-cloud/reset-preprod-accounts.py",
@@ -29346,19 +29347,89 @@
         "manual_execution": "NOT_RUN",
         "source_baseline_sha": "e0aa2ff3f60edeb6a55190ea8b16f0329692b303",
         "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
-        "release_note": "PRE-PROD86/0.15.0.1/cache11: własnyCI43766275390 SUCCESS26m17s, Pages43766275430 SUCCESS18s, standardowydeploy43768861718/1 SUCCESS2m12s. Natywna zalogowana gra32 PASS26s:108hashy,20funkcji,7markerów,4nakładki,19kart(9+10),21ikon,natywnyTeatr,ciemne wyrównaneUI,statek odsłonięty.3istniejące konta/3niepuste zapisy,0pustych;6obcych+3anon odmowy,3APIreads+3anonAPI401,0islandwrites. OryginalneZIP-y/innerreceiptv2/strict109verifierPASS;accountAPI=true/resetFence potwierdzone. Reset NOT_EXECUTED; wymagany CloudShell właściciela. PełnyTLS108plików+manifest/109archiwalnych PASS; tagpreprod-0.15.0.1-20261115 obiekt446347dab79ebc3e8c088d6d257adbdcd0f5f6e4→86 opublikowany/zdalniepotwierdzony. E0REOPENED,b268FAILURE i opcjonalnylatefoodINCOMPLETE pozostają historią; manualNOT_RUN,PROD/DNSodłożone.",
+        "release_note": "PRE-PROD86/0.15.0.1/cache11: własnyCI43766275390 SUCCESS26m17s, Pages43766275430 SUCCESS18s, standardowydeploy43768861718/1 SUCCESS2m12s. Natywna zalogowana gra32 PASS26s:108hashy,20funkcji,7markerów,4nakładki,19kart(9+10),21ikon,natywnyTeatr,ciemne wyrównaneUI,statek odsłonięty.3istniejące konta/3niepuste zapisy,0pustych;6obcych+3anon odmowy,3APIreads+3anonAPI401,0islandwrites. OryginalneZIP-y/innerreceiptv2/strict109verifierPASS;accountAPI=true/resetFence potwierdzone. Reset NOT_EXECUTED; wymagany CloudShell właściciela. PełnyTLS108plików+manifest/109archiwalnych PASS; tagpreprod-0.15.0.1-20261115 obiekt446347dab79ebc3e8c088d6d257adbdcd0f5f6e4→86 opublikowany/zdalniepotwierdzony. E0REOPENED,b268FAILURE i opcjonalnylatefoodINCOMPLETE pozostają historią; manualNOT_RUN,PROD/DNSodłożone. Aktualizacja16listopada: właścicielski RESET PASS43768861718/generacje2/2/2; niezależny odczyt oczekuje, nie jest to wynik niezależnego wykonania przez agenta. Niezależnyodczyt16listopada09:41:42UTC PASS normalTLS:3właściweUID/generacja2/expiredfalse/islandnull,3ownFirestore403,APItrue/resetFence,0zapisów; reset ukończony,bezpowtarzania. Nowychwysp nie tworzono; świeżyUI wymaga pierwszejgry właściciela.",
         "local_checkpoint_sha": "c6c4f401dd3bda605578e05efb7529cbbf6da102",
         "frontend_application_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
         "application_source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
         "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43766275390",
-        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43768861718"
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/43768861718",
+        "owner_reset_report": {
+          "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+          "deployment_run_id": 43768861718,
+          "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+          "owner_reported_output": "RESET PRE-PROD PASS",
+          "reported_generations": {
+            "admin1": 2,
+            "admin2": 2,
+            "admin3": 2
+          },
+          "independent_post_reset_read": "PASS",
+          "independent_generation_verification": true,
+          "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
+          "three_islands_null": true,
+          "three_accounts_expired": false,
+          "direct_own_Firestore_denied": 3,
+          "audit_writes": 0,
+          "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+          "repeat_reset_requested": false
+        },
+        "independent_reset_read": {
+          "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+          "deployment_run_id": 43768861718,
+          "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+          "owner_reported_output": "RESET PRE-PROD PASS",
+          "reported_generations": {
+            "admin1": 2,
+            "admin2": 2,
+            "admin3": 2
+          },
+          "independent_post_reset_read": "PASS",
+          "independent_generation_verification": true,
+          "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
+          "three_islands_null": true,
+          "three_accounts_expired": false,
+          "direct_own_Firestore_denied": 3,
+          "audit_writes": 0,
+          "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+          "repeat_reset_requested": false
+        },
+        "owner_first_game_after_reset": {
+          "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+          "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+          "host": "https://harborlight-dev.web.app",
+          "account": "admin1",
+          "TLS_verified": true,
+          "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+          "auth_http_status": 200,
+          "expected_UID_matches": true,
+          "island_GET_HTTP_status": 200,
+          "account_generation": 2,
+          "account_expired": false,
+          "island_present": true,
+          "island_generation": 2,
+          "island_revision": 12,
+          "schema": 9,
+          "ruleset": 32,
+          "population": 19,
+          "onboarding": "complete",
+          "onboarding_pending": false,
+          "initialization_paused": false,
+          "writes": 0,
+          "existing_world_prerequisite_satisfied": true,
+          "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+          "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+        }
       },
       "notes": [
         "Migracja przy odczycie zachowuje istniejący stan; osobny reset jest jawną autoryzowaną operacją po bramkach.",
         "TagiE0 pozostają historycznymi odniesieniami plików/artefaktów, nie ukończonym odbiorem funkcji starych zapisów.",
         "Właściciel zgłosiłSUCCESS minimalnego roles/datastore.user dla runtimePRE-PROD:OWNER_REPORTED_APPLIED. Nie wykonano niezależnego odczytuIAM; pozostałe bramkiAPI/deploy/lock/600s/reset pozostająPENDING.",
         "b268/cache10 własnyCI43763863333FAILURE8m54s:26pierwszychkrokówPASS,step27tutorial-v22reward_grid6oczekiwane/5widoczne,step28cloudSKIPPED; Pages43763863357SUCCESS. Beznowegodeploy/resetu, brak zaakceptowanego tagu. Następnycache11/0.15.0.1 potrzebuje własnegoCI;1410/155/20 są wcześniejszymi checkpointami.",
-        "Aktualizacja po wdrożeniu86:API/receipt/resetFence i3odczytyAPI potwierdzone. Grant nadal OWNER_REPORTED_APPLIED bez odczytuIAM; blokada/600s/reset pozostają niewykonane. Szczegółowe argumenty launchera w docs/PREPROD-RESET.md."
+        "Aktualizacja po wdrożeniu86:API/receipt/resetFence i3odczytyAPI potwierdzone. Grant nadal OWNER_REPORTED_APPLIED bez odczytuIAM; blokada/600s/reset pozostają niewykonane. Szczegółowe argumenty launchera w docs/PREPROD-RESET.md.",
+        "16listopada: właściciel zgłosił uruchomienie launchera przypiętego do86/43768861718. Brak wyniku/generacji/odczytu końcowego; reset NOT_CONFIRMED. Nowa promocja PRE-PROD czeka, DEV może postępować niezależnie.",
+        "16listopada: właściciel podał RESET PRE-PROD PASS run43768861718/generacjeadmin1=2,admin2=2,admin3=2. OWNER_REPORTED_SUCCESS; niezależny odczyt jeszcze PENDING, bez ponownego resetu.",
+        "Wcześniejsze NOT_EXECUTED/OWNER_REPORTED były checkpointami; niezależny odczyt potwierdził skutki resetu. Nie oznacza stworzenia3nowychświatów ani wykonaniaQAgry; wszystkie3wyspy sąnull.",
+        "Po resecie właściciel utworzyładmin1; niezależnyread10:21:40rules32/pop19/gen2/rev12PASS. QA nie tworzyłświata. Dawne3null dotycząodczytu09:41:42,nieobecnegoadmin1."
       ],
       "tags": [
         "v32",
@@ -29370,10 +29441,10 @@
       "area": "Chroniony reset trzech kont PRE-PROD",
       "title": "Reset admin1–3 po naprawie i bramkach API zachowuje loginy,hasła iUID",
       "status": {
-        "implementation": "authorized_guarded_operation_pending",
+        "implementation": "completed",
         "dev": "published_source_86eb8d9",
         "ci": "passed_source_86eb8d9",
-        "preprod": "reset_NOT_EXECUTED_owner_CloudShell_required_deployment_source_86eb8d9_verified",
+        "preprod": "reset_SUCCESS_independently_verified_generations2_null_islands",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -29397,10 +29468,165 @@
         "OPS:preserve-identities",
         "OPS:reset-after-API-role-lock-and-600s"
       ]
+    },
+    {
+      "id": "HL-CHG-1154",
+      "epic": "HL-EPIC-UI",
+      "area": "Pierwsze klatki uruchamiania gry",
+      "type": "Bug",
+      "title": "Start pokazuje ekran ładowania zamiast starej mapy referencyjnej i HUD",
+      "source": {
+        "kind": "user_startup_flash_fix",
+        "date": "2026-11-16",
+        "date_note": "GO po zgłoszeniu starej mapy/HUD przed właściwą grą; kolejność DEV, następnie PRE-PROD.",
+        "summary": "Użytkownik polecił usunąć przebłysk dawnego podglądu podczas uruchamiania. Właściciel równolegle uruchomił reset poprzedniego odebranego PRE-PROD; nowa promocja czeka na jego wynik.",
+        "reference": "chat:GO:startup-no-old-reference-map-HUD"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_implementation_source_96c211f_publication_pending",
+        "ci": "not_run_for_final_source",
+        "preprod": "pending_new_DEV_acceptance_standard_deployment_native_UI_proof_existing_world_ready",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Stara referencyjna mapa i dawnyHUD nie pojawiają się w pierwszych klatkach przed właściwą sceną.",
+        "Spójny ekran ładowania zasłania przygotowywaną grę; niegotowy interfejs nie przyjmuje kliknięć.",
+        "Sprawdzenie obejmuje pierwszy render oraz opóźnione ładowanie, po czym pokazuje właściwą wyspę i bieżącyUI.",
+        "Najpierw własny odbiór/CI/publikacjaDEV0.15.0.2/cache12, następnie standardowyPRE-PROD po potwierdzonym zakończeniu uruchomionego resetu przypiętego do86.",
+        "Zmiana nie resetuje danych i nie włącza oczekujących modeli lubPROD/domeny."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1152",
+        "HL-CHG-1153"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-STARTUP-LOADING.md",
+          "docs/v32/STARTUP-LOADING-EVIDENCE.json",
+          "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+          "docs/v32/CACHE12-LOCAL-VALIDATION.json",
+          "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json"
+        ],
+        "code": [
+          "harborlight-v1-layered.html",
+          "harborlight-v1-play.js",
+          "harborlight-v1-play.css",
+          "harborlight-v1-ambient.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-startup-no-flash-v32-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+        "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+        "release_note": "Źródło96c/0.15.0.2/cache12 committed. Startup20/20/2581framesPASS;focusclock51/51+adapter58/58+finalspeed6/6+LiveCASPASS. Speed to lokalnyruntime/izolowanyPREPROD-API,niepublicznyPREF. Pełnyfrontendcheckpoint1425/1426timeout iretry1/1 nie zastępują własnegoCI. NoweCI/DEV/PREFPENDING. Owneradmin1world potwierdzony10:21:40/rules32/pop19/gen2/rev12;0zapisówQA,natywnyodbiórnowegoPREF nadalwymagany. Resetniepowtarzany,PRODodłożony.",
+        "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+        "publication_sha": null,
+        "previous_application_checkpoint_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef"
+      },
+      "notes": [
+        "Odebrany DEV/PRE-PROD86/0.15.0.1/cache11 zachowuje historyczne dowody i niezmienne tagi; nie przypisujemy jego sukcesów nowemu kodowi."
+      ],
+      "tags": [
+        "v32",
+        "startup",
+        "release-0-15-0-2"
+      ],
+      "rules": [
+        "UI:no-old-reference-flash",
+        "OPS:DEV-before-PREPROD",
+        "OPS:PREPROD-after-pinned-reset-completion"
+      ]
+    },
+    {
+      "id": "HL-CHG-1155",
+      "epic": "HL-EPIC-UI",
+      "area": "Testowe tempo gry admin3",
+      "type": "Story",
+      "title": "Admin3 steruje rzeczywistym tempem1×/2×/6× na DEV i PRE-PROD",
+      "source": {
+        "kind": "user_admin3_speed_controls",
+        "date": "2026-11-16",
+        "date_note": "Użytkownik zatwierdził admin3-only naDEV iPRE-PROD.",
+        "summary": "Przycisk ▶ ustawia1×, pierwsze naciśnięcie⏩ ustawia2×, drugie6×. Dostęp tylko dlaadmin3, z rzeczywistym zegaremgry.",
+        "reference": "chat:GO:admin3-speed-DEV-and-PREPROD"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_implementation_source_96c211f_publication_pending",
+        "ci": "not_run_for_final_source",
+        "preprod": "pending_new_DEV_acceptance_standard_deployment_native_UI_proof_existing_world_ready",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "NaDEV iPRE-PROD sterowanie tempem jest dostępne wyłącznie uwierzytelnionemu admin3.",
+        "▶ ustawia normalne1×; kolejne dwa naciśnięcia⏩ ustawiają2× i6×.",
+        "Wybrana wartość steruje rzeczywistym czasemgry, w tym ścieżkąAPI, zamiast tylko licznikiemUI.",
+        "Admin1/admin2 i pozostali użytkownicy nie otrzymują uprawnienia do zmiany tempa.",
+        "Nowe własne testy/CI/DEV poprzedzają promocjęPRE-PROD; reset86 jest niezależnie potwierdzony i nie wymaga ponownego wykonania."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1153",
+        "HL-CHG-1154"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-ADMIN3-SPEED.md",
+          "docs/v32/ADMIN3-SPEED-EVIDENCE.json",
+          "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+          "docs/v32/CACHE12-LOCAL-VALIDATION.json",
+          "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json"
+        ],
+        "code": [
+          "backend/dev-account-clock.mjs",
+          "backend/account-service.mjs",
+          "backend/server.mjs",
+          "backend/dev-runtime.mjs",
+          "harborlight-dev-cloud.js",
+          "harborlight-dev-sync.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-dev-account-clock.test.mjs",
+          "backend/test/dev-time-api.test.mjs"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_baseline_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+        "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+        "release_note": "Źródło96c/0.15.0.2/cache12 committed. Startup20/20/2581framesPASS;focusclock51/51+adapter58/58+finalspeed6/6+LiveCASPASS. Speed to lokalnyruntime/izolowanyPREPROD-API,niepublicznyPREF. Pełnyfrontendcheckpoint1425/1426timeout iretry1/1 nie zastępują własnegoCI. NoweCI/DEV/PREFPENDING. Owneradmin1world potwierdzony10:21:40/rules32/pop19/gen2/rev12;0zapisówQA,natywnyodbiórnowegoPREF nadalwymagany. Resetniepowtarzany,PRODodłożony.",
+        "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+        "publication_sha": null,
+        "previous_application_checkpoint_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef"
+      },
+      "notes": [
+        "Nie łączyć uprawnienia admin3 z samą nazwą wpisaną wUI lub adresemURL; kontrola musi dotyczyć właściwego uwierzytelnionego konta."
+      ],
+      "tags": [
+        "v32",
+        "admin3",
+        "speed-controls",
+        "release-0-15-0-2"
+      ],
+      "rules": [
+        "DEV:admin3-only-speed",
+        "DEV:speed1-2-6",
+        "OPS:DEV-before-PREPROD"
+      ]
     }
   ],
   "current_environment": {
-    "as_of": "2026-11-15",
+    "as_of": "2026-11-16",
     "preprod_application_version": "0.15.0.1",
     "preprod_source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
     "preprod_ci_run_id": 43766275390,
@@ -29408,8 +29634,8 @@
     "preprod_deployment_attempt": 1,
     "preprod_status": "deployed_source_86eb8d9_native_authenticated_rules32_functional_acceptance_SUCCESS_reset_NOT_EXECUTED",
     "prod_status": "postponed_by_user",
-    "full_test_account_reset": "NOT_EXECUTED_OWNER_CLOUDSHELL_REQUIRED_NO_LOCAL_ADC",
-    "note": "DEV i PRE-PROD86/0.15.0.1/cache11 odebrane: własnyCI/Pages, natywny zalogowanyUI32, oryginalneZIP-y/receiptv2, archiwum109 i liveTLS108+manifest PASS. Oba niezmienne tagi86 opublikowane/zdalnie potwierdzone. Reset admin1–3 NOT_EXECUTED; właścicielski CloudShell wymagany. PROD/DNS odłożone, ręczne testy NOT_RUN.",
+    "full_test_account_reset": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+    "note": "OpublikowaneDEV/PRE-PROD nadal86/cache11. Źródło96c/0.15.0.2/cache12 committed:startup20/20/2581frames,focusclock51/51,adapter58/58,speed6/6 iLiveCASPASS. Pełnyfrontendcheckpoint1425/1426timeout/retry1/1 nie jest pełnymCIpass. NoweCI/publikacjePENDING. Resetpotwierdzony; właściciel utworzyładmin1,odczyt10:21:40schema9/rules32/pop19/gen2/rev12PASS,0zapisówQA. NowyPREF wymaga własnegoDEV/standardowegodeploy/natywnegoUI;PRODodłożony.",
     "previous_accepted_dev": {
       "as_of": "2026-11-04",
       "dev_application_version": "0.14.0.0",
@@ -29638,43 +29864,180 @@
       "own_ci_is_separate": true
     },
     "next_dev_scope": {
-      "status": "awaiting_third_own_complete_CI_success_before_accepted_cache9_tag",
-      "source_sha": null,
+      "scope": "Remove startup flash of old reference PNG/HUD; DEV first, PRE-PROD after confirmed completion of already-running reset",
+      "as_of": "2026-11-16",
+      "version": "0.15.0.2",
+      "cache": "frontend-v32-12",
+      "status": "APPLICATION96c_COMMITTED_STARTUP20_PASS_CI_PUBLICATION_PENDING",
+      "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
       "publication_commit": null,
-      "ci_run_id": null,
-      "ci_status": "pending_own_run",
-      "pages_run_id": null,
-      "pages_conclusion": "pending_own_run",
-      "runtime_public_files_changed": false,
-      "preserved_assertions": [
-        "4/6",
-        "cargo requirement",
-        "timing requirement"
+      "accepted_baseline": {
+        "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+        "version": "0.15.0.1",
+        "cache": "frontend-v32-11",
+        "evidence": "docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json"
+      },
+      "required_behavior": [
+        "No reference map or old HUD visible before actual scene readiness",
+        "Loading screen visible during preparation",
+        "Unready game elements do not accept input",
+        "Actual island and current UI remain correct after startup"
       ],
-      "local_checks": [
-        {
-          "test": "learning-v29 expected-copy fix",
+      "local_checks": {
+        "status": "PASS_FINAL_CACHE12_STARTUP20",
+        "evidence": "docs/v32/CACHE12-LOCAL-VALIDATION.json",
+        "startup": {
           "result": "PASS",
-          "passed": 13,
-          "preserved_requirements": [
-            "4/6",
-            "cargo",
-            "timing"
-          ]
-        },
-        {
-          "change": "legacy v32 UI assignment selector",
-          "status": "updated_to_own_form_submit_for_approved_recipe_labels",
-          "runtime_changed": false
+          "passed": 20,
+          "total": 20,
+          "widths": [
+            1440,
+            390
+          ],
+          "sampled_frames": 2581,
+          "delayed_barriers": [
+            "module",
+            "auth",
+            "cloud",
+            "accepted art",
+            "ambient",
+            "css"
+          ],
+          "asset_failure_cases_per_width": 5,
+          "contextlost_before_ambient_ready": "PASS_accessible_error_and_retry_recovers_current_game",
+          "intro_complete_art_and_reachable": "PASS",
+          "cloud_retry_identity_preserved": "PASS",
+          "anonymous_real_auth_redirect": "PASS",
+          "source_application_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+          "tested_startup_HTML_and_ambient_bytes_identical_to_current_source": true,
+          "latest_clock_delta_does_not_change_startup_behavior": true
         }
-      ],
-      "cache": "frontend-v32-9",
-      "application_source_sha": "0b41a9b819127416d92836f42ccc812c2bec960d",
-      "pending_model_decisions": [
-        "cheese_to_dairy",
-        "ads_every_level"
-      ],
-      "previous_failed_candidate_sha": "cd61dae9a1485dbae1a085c4ae65e7e048a62571"
+      },
+      "own_CI": {
+        "run_id": null,
+        "conclusion": null
+      },
+      "DEV_publication": {
+        "run_id": null,
+        "conclusion": null,
+        "public_bytes_and_startup_browser": "PENDING"
+      },
+      "PREPROD": {
+        "authorization": "DEV_then_PREPROD",
+        "status": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_AND_NATIVE_UI_PROOF",
+        "run_id": null,
+        "conclusion": null,
+        "real_saved_world_UI_prerequisite": "PASS_OWNER_CREATED_WORLD_INDEPENDENT_READ; new deployedUI acceptance still required",
+        "owner_latest_read": {
+          "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+          "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+          "host": "https://harborlight-dev.web.app",
+          "account": "admin1",
+          "TLS_verified": true,
+          "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+          "auth_http_status": 200,
+          "expected_UID_matches": true,
+          "island_GET_HTTP_status": 200,
+          "account_generation": 2,
+          "account_expired": false,
+          "island_present": true,
+          "island_generation": 2,
+          "island_revision": 12,
+          "schema": 9,
+          "ruleset": 32,
+          "population": 19,
+          "onboarding": "complete",
+          "onboarding_pending": false,
+          "initialization_paused": false,
+          "writes": 0,
+          "existing_world_prerequisite_satisfied": true,
+          "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+          "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+        },
+        "QA_may_create_island": false,
+        "receipt_or_empty_world_must_not_bypass_native_UI_acceptance": true,
+        "owner_first_game_read": {
+          "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+          "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+          "host": "https://harborlight-dev.web.app",
+          "account": "admin1",
+          "TLS_verified": true,
+          "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+          "auth_http_status": 200,
+          "expected_UID_matches": true,
+          "island_GET_HTTP_status": 200,
+          "account_generation": 2,
+          "account_expired": false,
+          "island_present": true,
+          "island_generation": 2,
+          "island_revision": 12,
+          "schema": 9,
+          "ruleset": 32,
+          "population": 19,
+          "onboarding": "complete",
+          "onboarding_pending": false,
+          "initialization_paused": false,
+          "writes": 0,
+          "existing_world_prerequisite_satisfied": true,
+          "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+          "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+        }
+      },
+      "reset_dependency": {
+        "pinned_source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+        "pinned_deployment_run_id": 43768861718,
+        "owner_reported_launcher_running": false,
+        "execution_result": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+        "generations_verified": true,
+        "post_reset_read_verified": true,
+        "new_PREPROD_promotion_must_wait": false,
+        "repeat_reset_requested": false,
+        "owner_reported_success": {
+          "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+          "deployment_run_id": 43768861718,
+          "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+          "owner_reported_output": "RESET PRE-PROD PASS",
+          "reported_generations": {
+            "admin1": 2,
+            "admin2": 2,
+            "admin3": 2
+          },
+          "independent_post_reset_read": "PASS",
+          "independent_generation_verification": true,
+          "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
+          "three_islands_null": true,
+          "three_accounts_expired": false,
+          "direct_own_Firestore_denied": 3,
+          "audit_writes": 0,
+          "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+          "repeat_reset_requested": false
+        },
+        "new_PREPROD_promotion_must_wait_for_reset": false,
+        "independent_read_evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json"
+      },
+      "PROD_and_domain": "POSTPONED_NO_ACTION",
+      "models_or_gameplay_changes": false,
+      "uploaded_workbook_input_scope_unchanged": true,
+      "manual_execution": "NOT_RUN",
+      "workbook": {
+        "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+        "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+        "sheets": 6,
+        "rows": 413,
+        "columns": [
+          "A",
+          "B",
+          "C"
+        ],
+        "C_all_blank": true,
+        "validation": "PASS",
+        "sha256": "90943adac77e35ee97899165dfa4e4ae541074b62258323fae27ffab2a158e60",
+        "source_fingerprint": "f7d82a10f46673098129486a911132ae30e0739e0fc27e4a5d64aa9669589771",
+        "selected_six_sheet_read_and_merge_scope_preserved": true,
+        "edited_by_documentation_agent": false
+      },
+      "previous_application_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
+      "owner_first_game_read_evidence": "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json"
     },
     "previous_accepted_dev_cache8": {
       "dev_application_version": "0.15.0.0",
@@ -29737,7 +30100,7 @@
     "preprod_account_API_enabled": true,
     "current_preprod_fix": {
       "scope": "Fix official-cloud legacy ruleset activation, then separately reset exactly three PRE-PROD accounts; PROD/domain postponed",
-      "status": "DEV_and_PREPROD_published_own_CI_and_live_functional_acceptance_SUCCESS_reset_NOT_EXECUTED",
+      "status": "DEV_and_PREPROD86_accepted_owner_reset_SUCCESS_independently_read_verified",
       "version": "0.15.0.1",
       "cache": "frontend-v32-11",
       "source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
@@ -29746,7 +30109,7 @@
       "ci_conclusion": "success",
       "deployment_run_id": 43768861718,
       "deployment_conclusion": "success",
-      "reset_result": "NOT_EXECUTED_OWNER_CLOUDSHELL_REQUIRED_NO_LOCAL_ADC",
+      "reset_result": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
       "previous_release": {
         "source": "e0aa2ff3f60edeb6a55190ea8b16f0329692b303",
         "file_deployment": "SUCCESS",
@@ -29894,11 +30257,11 @@
         "new_matching_CI_deployment_receipt": "PASS_EXACT_86_CI43766275390_DEPLOY43768861718_RECEIPT_V2_VALID",
         "account_API_enabled": "PASS_PUBLIC_CONFIG_200_AND_THREE_AUTHENTICATED_API_READS",
         "runtime_roles_datastore_user": "OWNER_REPORTED_APPLIED_NOT_INDEPENDENTLY_READ_BACK",
-        "client_writes_denied": "PENDING",
+        "client_writes_denied": "OWNER_GUARDED_RESET_PASS; independent audit verified three direct GET403 responses and performed no write attempts",
         "minimum_propagation_seconds": 600,
-        "propagation_wait_completed": false,
-        "guarded_reset_executed": false,
-        "post_reset_read_verification": "PENDING",
+        "propagation_wait_completed": "GUARDED_RESET_OWNER_REPORTED_SUCCESS; elapsed propagation not independently timed by read audit",
+        "guarded_reset_executed": "OWNER_REPORTED_SUCCESS_INDEPENDENT_EFFECT_VERIFIED",
+        "post_reset_read_verification": "PASS_THREE_GENERATION2_NULL_ISLANDS_AUTH_UID_AND_API",
         "deployed_resetFence_attestation": "PASS_PUBLIC_CONFIG_community-profile-v1"
       },
       "configuration": {
@@ -30022,7 +30385,7 @@
         "revision_fences": "advance epoch and mutationRevision; include community and wallet roots inCAS even if absent; backend per-dispatch actor-root revision rejects late racing writes",
         "idempotency": "same reset receipt returns prior result before touching new progress",
         "tool_tests": "20/20 PASS",
-        "actual_cloud_reset_writes": 0
+        "actual_cloud_reset_writes_by_this_agent": 0
       },
       "candidate_history": [
         {
@@ -30138,14 +30501,14 @@
       },
       "owner_reset_launcher": {
         "path": "infra/google-cloud/reset-preprod-verified.sh",
-        "status": "added_not_executed_for_real_reset",
+        "status": "OWNER_EXECUTED_SUCCESS_EFFECT_INDEPENDENTLY_VERIFIED",
         "proof_arguments": "exact frozen source/worktree SHA plus original artifact ZIP digests and sizes required",
         "countdown_seconds": 30,
         "uses_same_guarded_reset_tool": true,
         "automatic_retry_after_minimum_propagation_minutes": 10,
         "malformed_arguments_rejected_before_network": "PASS",
         "CI_bash_n_check": "PASS_own_CI43766275390",
-        "actual_cloud_reset_executed": false
+        "actual_cloud_reset_executed": "OWNER_REPORTED_SUCCESS_INDEPENDENT_EFFECT_VERIFIED"
       },
       "optional_verification_gaps": [
         "late legacy-food tile/reload UI incomplete; model claim/receipt passed; not claimed as desktop/mobile UI coverage"
@@ -30258,12 +30621,14 @@
         "owner_CloudShell_required": true,
         "local_owner_ADC_available": false,
         "qualified_five_argument_command": "bash infra/google-cloud/reset-preprod-verified.sh \\\n  43768861718 \\\n  86eb8d9a40dab073c17a1b0f96dca38f1a15e24c \\\n  14183069464 616 \\\n  b4543fe43c26b5d7ee44423c95ef6bd8aec280f88fc121034dd1f749255fc348",
-        "actual_reset_executed": false,
         "proof_values_verified": true,
         "original_receipt_artifact_id": 14183069464,
         "original_receipt_ZIP_bytes": 616,
         "original_receipt_ZIP_sha256": "b4543fe43c26b5d7ee44423c95ef6bd8aec280f88fc121034dd1f749255fc348",
-        "promotion_gate_readonly": "PASS_actual_verify_promotion_no_GCP_private_IAM_rules_or_data_operations"
+        "promotion_gate_readonly": "PASS_actual_verify_promotion_no_GCP_private_IAM_rules_or_data_operations",
+        "owner_reported_success": true,
+        "actual_reset_executed_by_this_agent": false,
+        "independent_result_verified": true
       },
       "functional_acceptance": "SUCCESS_NATIVE_HOSTED_AUTHENTICATED_RULES32",
       "previous_deployed_observation": {
@@ -30318,6 +30683,70 @@
         ],
         "evidence_directory": "/workspace/work/preprod-cache11-20261115",
         "committable_safe_audit": "docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json"
+      },
+      "owner_reset_report": {
+        "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+        "deployment_run_id": 43768861718,
+        "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+        "owner_reported_output": "RESET PRE-PROD PASS",
+        "reported_generations": {
+          "admin1": 2,
+          "admin2": 2,
+          "admin3": 2
+        },
+        "independent_post_reset_read": "PASS",
+        "independent_generation_verification": true,
+        "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
+        "three_islands_null": true,
+        "three_accounts_expired": false,
+        "direct_own_Firestore_denied": 3,
+        "audit_writes": 0,
+        "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+        "repeat_reset_requested": false
+      },
+      "reset_independent_read": {
+        "result": "PASS",
+        "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+        "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
+        "islands_null": 3,
+        "account_generation2": 3,
+        "island_or_Firestore_writes": 0
+      },
+      "post_reset_world_acceptance": {
+        "accounts": 3,
+        "islands_null": 3,
+        "new_worlds_created_by_QA": 0,
+        "actual_fresh_world_UI_acceptance": "PENDING_NEW_DEPLOYED_UI_PROOF",
+        "generation_verified": 2,
+        "no_repeat_reset": true,
+        "first_owner_created_world": "admin1 independently verified19people/rules32/generation2",
+        "first_owner_world_read_evidence": "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json"
+      },
+      "owner_first_game_after_reset": {
+        "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+        "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+        "host": "https://harborlight-dev.web.app",
+        "account": "admin1",
+        "TLS_verified": true,
+        "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+        "auth_http_status": 200,
+        "expected_UID_matches": true,
+        "island_GET_HTTP_status": 200,
+        "account_generation": 2,
+        "account_expired": false,
+        "island_present": true,
+        "island_generation": 2,
+        "island_revision": 12,
+        "schema": 9,
+        "ruleset": 32,
+        "population": 19,
+        "onboarding": "complete",
+        "onboarding_pending": false,
+        "initialization_paused": false,
+        "writes": 0,
+        "existing_world_prerequisite_satisfied": true,
+        "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+        "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
       }
     },
     "pending_next_source": {
@@ -30439,6 +30868,980 @@
       "all_content_equal_release_and_application_source": true,
       "manifest_sha256": "735e6317fa7691e37a2147676ff495a5ad47a4c7b6154feaee7a5f74d4e4d171",
       "evidence": "docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json"
+    },
+    "preprod_next_promotion_status": "PENDING_NEW_OWN_DEV_ACCEPTANCE_AND_STANDARD_DEPLOYMENT_NATIVE_UI_PROOF",
+    "owner_reset_report": {
+      "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+      "deployment_run_id": 43768861718,
+      "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "owner_reported_output": "RESET PRE-PROD PASS",
+      "reported_generations": {
+        "admin1": 2,
+        "admin2": 2,
+        "admin3": 2
+      },
+      "independent_post_reset_read": "PASS",
+      "independent_generation_verification": true,
+      "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
+      "three_islands_null": true,
+      "three_accounts_expired": false,
+      "direct_own_Firestore_denied": 3,
+      "audit_writes": 0,
+      "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+      "repeat_reset_requested": false
+    },
+    "admin3_speed_scope": {
+      "scope": "Admin3-only authorized game speed UI and effective clock on DEV and PRE-PROD",
+      "as_of": "2026-11-16",
+      "status": "APPLICATION96c_COMMITTED_FINAL_LOCAL_ISOLATED_API_ACCEPTANCE_PASS_CI_PUBLICATION_PENDING",
+      "version": "0.15.0.2",
+      "cache": "frontend-v32-12",
+      "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+      "publication_commit": null,
+      "authorized_account": "admin3",
+      "authorized_environments": [
+        "DEV",
+        "PRE-PROD"
+      ],
+      "controls": {
+        "play": {
+          "label": "▶",
+          "multiplier": 1
+        },
+        "fast_forward": {
+          "label": "⏩",
+          "first_press_multiplier": 2,
+          "second_press_multiplier": 6
+        }
+      },
+      "account_authorization_required": true,
+      "effective_API_clock_required": true,
+      "other_accounts_not_authorized": true,
+      "local_checks": {
+        "status": "PASS_FINAL96c_LOCAL_AND_ISOLATED_PREPROD_API",
+        "scopes": 6,
+        "backend_passed": 170,
+        "clock_frontend_passed": 66,
+        "coordinator_passed": 57,
+        "payload_passed": 2,
+        "evidence": "docs/v32/CACHE12-LOCAL-VALIDATION.json",
+        "public_PREPROD_speed_accepted": false,
+        "previous_six_scope_result_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
+        "final_clock_focus_coordinator": "51/51 PASS source96c",
+        "final_local_cloud_adapters": "58/58 PASS source96c",
+        "final_six_scope_speed_rerun": "6/6 PASS source96c",
+        "final_LiveCAS_rerun": "PASS source96c"
+      },
+      "own_CI": {
+        "run_id": null,
+        "conclusion": null
+      },
+      "DEV_publication": {
+        "run_id": null,
+        "conclusion": null
+      },
+      "PREPROD": {
+        "status": "PENDING_NEW_OWN_DEV_ACCEPTANCE_STANDARD_DEPLOYMENT_AND_NATIVE_UI_PROOF",
+        "run_id": null,
+        "conclusion": null,
+        "real_saved_world_UI_prerequisite": "PASS_OWNER_CREATED_WORLD_INDEPENDENT_READ; new deployedUI acceptance still required",
+        "owner_latest_read": {
+          "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+          "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+          "host": "https://harborlight-dev.web.app",
+          "account": "admin1",
+          "TLS_verified": true,
+          "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+          "auth_http_status": 200,
+          "expected_UID_matches": true,
+          "island_GET_HTTP_status": 200,
+          "account_generation": 2,
+          "account_expired": false,
+          "island_present": true,
+          "island_generation": 2,
+          "island_revision": 12,
+          "schema": 9,
+          "ruleset": 32,
+          "population": 19,
+          "onboarding": "complete",
+          "onboarding_pending": false,
+          "initialization_paused": false,
+          "writes": 0,
+          "existing_world_prerequisite_satisfied": true,
+          "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+          "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+        },
+        "QA_may_create_island": false,
+        "receipt_or_empty_world_must_not_bypass_native_UI_acceptance": true,
+        "owner_first_game_read": {
+          "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+          "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+          "host": "https://harborlight-dev.web.app",
+          "account": "admin1",
+          "TLS_verified": true,
+          "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+          "auth_http_status": 200,
+          "expected_UID_matches": true,
+          "island_GET_HTTP_status": 200,
+          "account_generation": 2,
+          "account_expired": false,
+          "island_present": true,
+          "island_generation": 2,
+          "island_revision": 12,
+          "schema": 9,
+          "ruleset": 32,
+          "population": 19,
+          "onboarding": "complete",
+          "onboarding_pending": false,
+          "initialization_paused": false,
+          "writes": 0,
+          "existing_world_prerequisite_satisfied": true,
+          "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+          "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+        }
+      },
+      "reset_report": {
+        "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+        "deployment_run_id": 43768861718,
+        "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+        "owner_reported_output": "RESET PRE-PROD PASS",
+        "reported_generations": {
+          "admin1": 2,
+          "admin2": 2,
+          "admin3": 2
+        },
+        "independent_post_reset_read": "PASS",
+        "independent_generation_verification": true,
+        "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
+        "three_islands_null": true,
+        "three_accounts_expired": false,
+        "direct_own_Firestore_denied": 3,
+        "audit_writes": 0,
+        "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+        "repeat_reset_requested": false
+      },
+      "new_reset_required": false,
+      "PROD_and_domain": "POSTPONED_NO_ACTION",
+      "manual_execution": "NOT_RUN",
+      "workbook": {
+        "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+        "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+        "sheets": 6,
+        "rows": 413,
+        "columns": [
+          "A",
+          "B",
+          "C"
+        ],
+        "C_all_blank": true,
+        "validation": "PASS",
+        "sha256": "90943adac77e35ee97899165dfa4e4ae541074b62258323fae27ffab2a158e60",
+        "source_fingerprint": "f7d82a10f46673098129486a911132ae30e0739e0fc27e4a5d64aa9669589771",
+        "selected_six_sheet_read_and_merge_scope_preserved": true,
+        "edited_by_documentation_agent": false
+      },
+      "previous_application_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
+      "owner_first_game_read_evidence": "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json"
+    },
+    "post_reset_saved_worlds": {
+      "generation": 2,
+      "accounts": 3,
+      "null_islands": 3,
+      "QA_worlds_created": 0,
+      "native_UI_prerequisite": "owner_first_new_game"
+    },
+    "next_application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+    "next_application_version": "0.15.0.2",
+    "next_cache": "frontend-v32-12",
+    "next_local_validation": {
+      "scope": "Local validation checkpoints for committed0.15.0.2/cache12; not own CI or deployment",
+      "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+      "version": "0.15.0.2",
+      "cache": "frontend-v32-12",
+      "backend": {
+        "passed": 170,
+        "total": 170,
+        "result": "PASS",
+        "duration_seconds": 6.7
+      },
+      "clock_frontend": {
+        "passed": 66,
+        "result": "PASS"
+      },
+      "coordinator": {
+        "passed": 57,
+        "total": 57,
+        "sync": 37,
+        "local": 20,
+        "result": "PASS"
+      },
+      "payload": {
+        "passed": 2,
+        "result": "PASS"
+      },
+      "startup_browser_checkpoint": {
+        "result": "PASS",
+        "passed": 20,
+        "total": 20,
+        "widths": [
+          1440,
+          390
+        ],
+        "sampled_frames": 2581,
+        "delayed_barriers": [
+          "module",
+          "auth",
+          "cloud",
+          "accepted art",
+          "ambient",
+          "css"
+        ],
+        "asset_failure_cases_per_width": 5,
+        "contextlost_before_ambient_ready": "PASS_accessible_error_and_retry_recovers_current_game",
+        "intro_complete_art_and_reachable": "PASS",
+        "cloud_retry_identity_preserved": "PASS",
+        "anonymous_real_auth_redirect": "PASS",
+        "source_application_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+        "tested_startup_HTML_and_ambient_bytes_identical_to_current_source": true,
+        "latest_clock_delta_does_not_change_startup_behavior": true,
+        "report": [
+          {
+            "width": 1440,
+            "delayed_phases": [
+              "module",
+              "auth",
+              "cloud",
+              "accepted",
+              "ambient",
+              "css"
+            ],
+            "no_exposed_pre_ready_frames": true,
+            "functional_current_game": true,
+            "sampled_frames": 332
+          },
+          {
+            "width": 1440,
+            "intro_waits_for_complete_art": true,
+            "intro_reachable_after_reveal": true
+          },
+          {
+            "width": 1440,
+            "canvas_presentation_event": "contextlost before ambient assets ready",
+            "accessible_error": true,
+            "retry_recovers_current_game": true,
+            "sampled_frames": 226
+          },
+          {
+            "width": 1440,
+            "failed_asset": "harborlight-v1-play.js",
+            "accessible_error": true,
+            "retry_recovers_current_game": true,
+            "sampled_frames": 124
+          },
+          {
+            "width": 1440,
+            "failed_asset": "harborlight-v1-approved.png",
+            "accessible_error": true,
+            "retry_recovers_current_game": true,
+            "sampled_frames": 182
+          },
+          {
+            "width": 1440,
+            "failed_asset": "harborlight-farm-forest-approved-v32.png",
+            "accessible_error": true,
+            "retry_recovers_current_game": true,
+            "sampled_frames": 166
+          },
+          {
+            "width": 1440,
+            "failed_asset": "harborlight-windmill-clean.png",
+            "accessible_error": true,
+            "retry_recovers_current_game": true,
+            "sampled_frames": 194
+          },
+          {
+            "width": 1440,
+            "failed_asset": "harborlight-v1-play.css",
+            "accessible_error": true,
+            "retry_recovers_current_game": true,
+            "sampled_frames": 219
+          },
+          {
+            "width": 1440,
+            "cloud_retry_accessible": true,
+            "cloud_retry_preserves_identity": true
+          },
+          {
+            "width": 1440,
+            "anonymous_redirects_to_real_auth": true
+          },
+          {
+            "width": 390,
+            "delayed_phases": [
+              "module",
+              "auth",
+              "cloud",
+              "accepted",
+              "ambient",
+              "css"
+            ],
+            "no_exposed_pre_ready_frames": true,
+            "functional_current_game": true,
+            "sampled_frames": 166
+          },
+          {
+            "width": 390,
+            "intro_waits_for_complete_art": true,
+            "intro_reachable_after_reveal": true
+          },
+          {
+            "width": 390,
+            "canvas_presentation_event": "contextlost before ambient assets ready",
+            "accessible_error": true,
+            "retry_recovers_current_game": true,
+            "sampled_frames": 188
+          },
+          {
+            "width": 390,
+            "failed_asset": "harborlight-v1-play.js",
+            "accessible_error": true,
+            "retry_recovers_current_game": true,
+            "sampled_frames": 109
+          },
+          {
+            "width": 390,
+            "failed_asset": "harborlight-v1-approved.png",
+            "accessible_error": true,
+            "retry_recovers_current_game": true,
+            "sampled_frames": 166
+          },
+          {
+            "width": 390,
+            "failed_asset": "harborlight-farm-forest-approved-v32.png",
+            "accessible_error": true,
+            "retry_recovers_current_game": true,
+            "sampled_frames": 171
+          },
+          {
+            "width": 390,
+            "failed_asset": "harborlight-windmill-clean.png",
+            "accessible_error": true,
+            "retry_recovers_current_game": true,
+            "sampled_frames": 158
+          },
+          {
+            "width": 390,
+            "failed_asset": "harborlight-v1-play.css",
+            "accessible_error": true,
+            "retry_recovers_current_game": true,
+            "sampled_frames": 180
+          },
+          {
+            "width": 390,
+            "cloud_retry_accessible": true,
+            "cloud_retry_preserves_identity": true
+          },
+          {
+            "width": 390,
+            "anonymous_redirects_to_real_auth": true
+          }
+        ]
+      },
+      "speed_browser": {
+        "scopes_checked": 6,
+        "result": "PASS",
+        "execution_mode": "actual local runtime and locally isolated PRE-PROD/API mode; not the publicly hosted PRE-PROD service",
+        "real_saved_worlds_and_API_clock": true,
+        "no_game_fixture_or_setter": true,
+        "report": [
+          {
+            "scope": "local",
+            "account": "admin1",
+            "controls_absent": true,
+            "api_cannot_set_rate": true
+          },
+          {
+            "scope": "local",
+            "account": "admin2",
+            "controls_absent": true,
+            "api_cannot_set_rate": true
+          },
+          {
+            "scope": "local",
+            "account": "admin3",
+            "rates": [
+              1,
+              2,
+              6,
+              1
+            ],
+            "clock_measures": [
+              {
+                "rate": 1,
+                "real_delta_ms": 608,
+                "game_delta_ms": 608
+              },
+              {
+                "rate": 2,
+                "real_delta_ms": 608,
+                "game_delta_ms": 1216
+              },
+              {
+                "rate": 6,
+                "real_delta_ms": 613,
+                "game_delta_ms": 3678
+              },
+              {
+                "rate": 1,
+                "real_delta_ms": 611,
+                "game_delta_ms": 611
+              }
+            ],
+            "monotonic_transitions": true,
+            "persisted_reload": [
+              6,
+              1
+            ],
+            "actual_saved_world_advanced_faster": {
+              "real_elapsed_ms": 3169.4883850000224,
+              "world_elapsed_ms": 22830
+            },
+            "intro_and_building_modal_access": true,
+            "mobile_in_viewport": true,
+            "no_game_fixture_or_setter": true,
+            "js_errors": []
+          },
+          {
+            "scope": "preprod",
+            "account": "admin1",
+            "controls_absent": true,
+            "api_cannot_set_rate": true
+          },
+          {
+            "scope": "preprod",
+            "account": "admin2",
+            "controls_absent": true,
+            "api_cannot_set_rate": true
+          },
+          {
+            "scope": "preprod",
+            "account": "admin3",
+            "rates": [
+              1,
+              2,
+              6,
+              1
+            ],
+            "clock_measures": [
+              {
+                "rate": 1,
+                "real_delta_ms": 612,
+                "game_delta_ms": 612
+              },
+              {
+                "rate": 2,
+                "real_delta_ms": 614,
+                "game_delta_ms": 1228
+              },
+              {
+                "rate": 6,
+                "real_delta_ms": 617,
+                "game_delta_ms": 3702
+              },
+              {
+                "rate": 1,
+                "real_delta_ms": 629,
+                "game_delta_ms": 629
+              }
+            ],
+            "monotonic_transitions": true,
+            "persisted_reload": [
+              6,
+              1
+            ],
+            "actual_saved_world_advanced_faster": {
+              "real_elapsed_ms": 4687.082137999823,
+              "world_elapsed_ms": 31374
+            },
+            "intro_and_building_modal_access": true,
+            "mobile_in_viewport": true,
+            "no_game_fixture_or_setter": true,
+            "js_errors": []
+          }
+        ],
+        "private_or_public_cloud_account_mutations": false
+      },
+      "full_frontend_initial": {
+        "passed": 1425,
+        "total": 1426,
+        "failed": 1,
+        "result": "FAILED_ONE_TIMEOUT",
+        "target": "unchanged96h offline watchdog",
+        "error": "ETIMEDOUT at10seconds during concurrent CPU load",
+        "full_suite_passed": false
+      },
+      "exact_timeout_target_retry": {
+        "passed": 1,
+        "total": 1,
+        "result": "PASS",
+        "duration_seconds": 8.8,
+        "condition": "quiet execution",
+        "does_not_replace_full_suite_result": true
+      },
+      "legacy_cloud_smokes": {
+        "passed": 5,
+        "result": "PASS",
+        "scope": "unchanged after proper API clock gate and sync ambient readiness"
+      },
+      "own_CI": "PENDING_NEW_RUN",
+      "DEV_publication": "PENDING",
+      "PREPROD_deployment": "PENDING_NEW_DEV_ACCEPTANCE_AND_STANDARD_DEPLOYMENT_WITH_NATIVE_EXISTING_WORLD_UI_PROOF",
+      "manual_execution": "NOT_RUN",
+      "isolated_backend_package": {
+        "passed": 2,
+        "total": 2,
+        "result": "PASS"
+      },
+      "frontend_bundle": {
+        "passed": 26,
+        "total": 26,
+        "result": "PASS",
+        "duration_seconds": 2.4
+      },
+      "canonical_three_JS_stage_check": "PASS",
+      "local_results_base_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
+      "previous_application_checkpoint": {
+        "scope": "Local validation checkpoints for committed0.15.0.2/cache12; not own CI or deployment",
+        "application_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
+        "version": "0.15.0.2",
+        "cache": "frontend-v32-12",
+        "backend": {
+          "passed": 170,
+          "total": 170,
+          "result": "PASS",
+          "duration_seconds": 6.7
+        },
+        "clock_frontend": {
+          "passed": 66,
+          "result": "PASS"
+        },
+        "coordinator": {
+          "passed": 57,
+          "total": 57,
+          "sync": 37,
+          "local": 20,
+          "result": "PASS"
+        },
+        "payload": {
+          "passed": 2,
+          "result": "PASS"
+        },
+        "startup_browser_checkpoint": {
+          "scenarios": 18,
+          "frames": 2195,
+          "result": "PASS",
+          "cache_scope": "previous cache strings; finalcache12 context-loss acceptance PENDING",
+          "full_current_frozen_browser_acceptance": "PENDING"
+        },
+        "speed_browser": {
+          "scopes_checked": 6,
+          "result": "PASS",
+          "execution_mode": "actual local runtime and locally isolated PRE-PROD/API mode; not the publicly hosted PRE-PROD service",
+          "real_saved_worlds_and_API_clock": true,
+          "no_game_fixture_or_setter": true,
+          "report": [
+            {
+              "scope": "local",
+              "account": "admin1",
+              "controls_absent": true,
+              "api_cannot_set_rate": true
+            },
+            {
+              "scope": "local",
+              "account": "admin2",
+              "controls_absent": true,
+              "api_cannot_set_rate": true
+            },
+            {
+              "scope": "local",
+              "account": "admin3",
+              "rates": [
+                1,
+                2,
+                6,
+                1
+              ],
+              "clock_measures": [
+                {
+                  "rate": 1,
+                  "real_delta_ms": 608,
+                  "game_delta_ms": 608
+                },
+                {
+                  "rate": 2,
+                  "real_delta_ms": 608,
+                  "game_delta_ms": 1216
+                },
+                {
+                  "rate": 6,
+                  "real_delta_ms": 613,
+                  "game_delta_ms": 3678
+                },
+                {
+                  "rate": 1,
+                  "real_delta_ms": 611,
+                  "game_delta_ms": 611
+                }
+              ],
+              "monotonic_transitions": true,
+              "persisted_reload": [
+                6,
+                1
+              ],
+              "actual_saved_world_advanced_faster": {
+                "real_elapsed_ms": 3169.4883850000224,
+                "world_elapsed_ms": 22830
+              },
+              "intro_and_building_modal_access": true,
+              "mobile_in_viewport": true,
+              "no_game_fixture_or_setter": true,
+              "js_errors": []
+            },
+            {
+              "scope": "preprod",
+              "account": "admin1",
+              "controls_absent": true,
+              "api_cannot_set_rate": true
+            },
+            {
+              "scope": "preprod",
+              "account": "admin2",
+              "controls_absent": true,
+              "api_cannot_set_rate": true
+            },
+            {
+              "scope": "preprod",
+              "account": "admin3",
+              "rates": [
+                1,
+                2,
+                6,
+                1
+              ],
+              "clock_measures": [
+                {
+                  "rate": 1,
+                  "real_delta_ms": 612,
+                  "game_delta_ms": 612
+                },
+                {
+                  "rate": 2,
+                  "real_delta_ms": 614,
+                  "game_delta_ms": 1228
+                },
+                {
+                  "rate": 6,
+                  "real_delta_ms": 617,
+                  "game_delta_ms": 3702
+                },
+                {
+                  "rate": 1,
+                  "real_delta_ms": 629,
+                  "game_delta_ms": 629
+                }
+              ],
+              "monotonic_transitions": true,
+              "persisted_reload": [
+                6,
+                1
+              ],
+              "actual_saved_world_advanced_faster": {
+                "real_elapsed_ms": 4687.082137999823,
+                "world_elapsed_ms": 31374
+              },
+              "intro_and_building_modal_access": true,
+              "mobile_in_viewport": true,
+              "no_game_fixture_or_setter": true,
+              "js_errors": []
+            }
+          ],
+          "private_or_public_cloud_account_mutations": false
+        },
+        "full_frontend_initial": {
+          "passed": 1425,
+          "total": 1426,
+          "failed": 1,
+          "result": "FAILED_ONE_TIMEOUT",
+          "target": "unchanged96h offline watchdog",
+          "error": "ETIMEDOUT at10seconds during concurrent CPU load",
+          "full_suite_passed": false
+        },
+        "exact_timeout_target_retry": {
+          "passed": 1,
+          "total": 1,
+          "result": "PASS",
+          "duration_seconds": 8.8,
+          "condition": "quiet execution",
+          "does_not_replace_full_suite_result": true
+        },
+        "legacy_cloud_smokes": {
+          "passed": 5,
+          "result": "PASS",
+          "scope": "unchanged after proper API clock gate and sync ambient readiness"
+        },
+        "own_CI": "PENDING_NEW_RUN",
+        "DEV_publication": "PENDING",
+        "PREPROD_deployment": "PENDING_OWNER_FIRST_GAME_AND_NATIVE_EXISTING_WORLD_ACCEPTANCE",
+        "manual_execution": "NOT_RUN",
+        "isolated_backend_package": {
+          "passed": 2,
+          "total": 2,
+          "result": "PASS"
+        },
+        "frontend_bundle": {
+          "passed": 26,
+          "total": 26,
+          "result": "PASS",
+          "duration_seconds": 2.4
+        },
+        "canonical_three_JS_stage_check": "PASS"
+      },
+      "source_delta_after_9ee": "clock controller/coordinator and play beforeRecover option only; startup HTML/ambient bytes identical",
+      "final_clock_focus_coordinator": {
+        "passed": 51,
+        "total": 51,
+        "result": "PASS",
+        "new_healthy_focus_cases": 4,
+        "source_sha": "96c211fd39826cf804ff286faeff219ac846827c"
+      },
+      "final_local_cloud_adapters": {
+        "passed": 58,
+        "total": 58,
+        "result": "PASS",
+        "source_sha": "96c211fd39826cf804ff286faeff219ac846827c"
+      },
+      "current_six_sheet_workbook": {
+        "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+        "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+        "sheets": 6,
+        "rows": 413,
+        "columns": [
+          "A",
+          "B",
+          "C"
+        ],
+        "C_all_blank": true,
+        "validation": "PASS",
+        "sha256": "90943adac77e35ee97899165dfa4e4ae541074b62258323fae27ffab2a158e60",
+        "source_fingerprint": "f7d82a10f46673098129486a911132ae30e0739e0fc27e4a5d64aa9669589771",
+        "selected_six_sheet_read_and_merge_scope_preserved": true,
+        "edited_by_documentation_agent": false
+      },
+      "final_six_scope_speed_rerun": {
+        "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+        "result": "PASS",
+        "passed": 6,
+        "total": 6,
+        "execution_mode": "real local runtime plus locally isolated preprod/API; not public PRE-PROD",
+        "report": [
+          {
+            "scope": "local",
+            "account": "admin1",
+            "controls_absent": true,
+            "api_cannot_set_rate": true
+          },
+          {
+            "scope": "local",
+            "account": "admin2",
+            "controls_absent": true,
+            "api_cannot_set_rate": true
+          },
+          {
+            "scope": "local",
+            "account": "admin3",
+            "rates": [
+              1,
+              2,
+              6,
+              1
+            ],
+            "clock_measures": [
+              {
+                "rate": 1,
+                "real_delta_ms": 608,
+                "game_delta_ms": 608
+              },
+              {
+                "rate": 2,
+                "real_delta_ms": 607,
+                "game_delta_ms": 1214
+              },
+              {
+                "rate": 6,
+                "real_delta_ms": 606,
+                "game_delta_ms": 3636
+              },
+              {
+                "rate": 1,
+                "real_delta_ms": 604,
+                "game_delta_ms": 604
+              }
+            ],
+            "monotonic_transitions": true,
+            "persisted_reload": [
+              6,
+              1
+            ],
+            "actual_saved_world_advanced_faster": {
+              "real_elapsed_ms": 1993.9216960001431,
+              "world_elapsed_ms": 15678
+            },
+            "intro_and_building_modal_access": true,
+            "mobile_in_viewport": true,
+            "no_game_fixture_or_setter": true,
+            "js_errors": []
+          },
+          {
+            "scope": "preprod",
+            "account": "admin1",
+            "controls_absent": true,
+            "api_cannot_set_rate": true
+          },
+          {
+            "scope": "preprod",
+            "account": "admin2",
+            "controls_absent": true,
+            "api_cannot_set_rate": true
+          },
+          {
+            "scope": "preprod",
+            "account": "admin3",
+            "rates": [
+              1,
+              2,
+              6,
+              1
+            ],
+            "clock_measures": [
+              {
+                "rate": 1,
+                "real_delta_ms": 616,
+                "game_delta_ms": 616
+              },
+              {
+                "rate": 2,
+                "real_delta_ms": 614,
+                "game_delta_ms": 1228
+              },
+              {
+                "rate": 6,
+                "real_delta_ms": 611,
+                "game_delta_ms": 3666
+              },
+              {
+                "rate": 1,
+                "real_delta_ms": 611,
+                "game_delta_ms": 611
+              }
+            ],
+            "monotonic_transitions": true,
+            "persisted_reload": [
+              6,
+              1
+            ],
+            "actual_saved_world_advanced_faster": {
+              "real_elapsed_ms": 2907.8702030001295,
+              "world_elapsed_ms": 21174
+            },
+            "intro_and_building_modal_access": true,
+            "mobile_in_viewport": true,
+            "no_game_fixture_or_setter": true,
+            "js_errors": []
+          }
+        ]
+      },
+      "final_LiveCAS_rerun": {
+        "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+        "result": "PASS",
+        "source_logs": "/workspace/work/admin3-speed-browser-final/*-final.log"
+      },
+      "owner_first_game_read": {
+        "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+        "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+        "host": "https://harborlight-dev.web.app",
+        "account": "admin1",
+        "TLS_verified": true,
+        "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+        "auth_http_status": 200,
+        "expected_UID_matches": true,
+        "island_GET_HTTP_status": 200,
+        "account_generation": 2,
+        "account_expired": false,
+        "island_present": true,
+        "island_generation": 2,
+        "island_revision": 12,
+        "schema": 9,
+        "ruleset": 32,
+        "population": 19,
+        "onboarding": "complete",
+        "onboarding_pending": false,
+        "initialization_paused": false,
+        "writes": 0,
+        "existing_world_prerequisite_satisfied": true,
+        "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+        "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+      }
+    },
+    "next_workbook": {
+      "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+      "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+      "sheets": 6,
+      "rows": 413,
+      "columns": [
+        "A",
+        "B",
+        "C"
+      ],
+      "C_all_blank": true,
+      "validation": "PASS",
+      "sha256": "90943adac77e35ee97899165dfa4e4ae541074b62258323fae27ffab2a158e60",
+      "source_fingerprint": "f7d82a10f46673098129486a911132ae30e0739e0fc27e4a5d64aa9669589771",
+      "selected_six_sheet_read_and_merge_scope_preserved": true,
+      "edited_by_documentation_agent": false
+    },
+    "owner_latest_empty_island_observation": {
+      "checked_at_utc": "2026-11-16T10:07:30.741542+00:00",
+      "account": "admin1",
+      "generation": 2,
+      "island_present": false,
+      "TLS_verified": true,
+      "read_only_no_island_mutations": true
+    },
+    "owner_first_game_read": {
+      "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+      "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+      "host": "https://harborlight-dev.web.app",
+      "account": "admin1",
+      "TLS_verified": true,
+      "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+      "auth_http_status": 200,
+      "expected_UID_matches": true,
+      "island_GET_HTTP_status": 200,
+      "account_generation": 2,
+      "account_expired": false,
+      "island_present": true,
+      "island_generation": 2,
+      "island_revision": 12,
+      "schema": 9,
+      "ruleset": 32,
+      "population": 19,
+      "onboarding": "complete",
+      "onboarding_pending": false,
+      "initialization_paused": false,
+      "writes": 0,
+      "existing_world_prerequisite_satisfied": true,
+      "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+      "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
     }
   }
 }

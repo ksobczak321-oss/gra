@@ -27,7 +27,7 @@ try:
     page.goto(base+'/harborlight-v1-layered.html',wait_until='networkidle');page.wait_for_function('window.__HARBORLIGHT_DEV_STATE__?.ruleset===32')
     for _ in range(7):
      external=page.locator('dialog[open]:not(#island-dialog)')
-     if external.count():external.last.locator('button').last.click();page.wait_for_timeout(80)
+     if external.count():external.last.locator('button:not([data-v32-speed-normal]):not([data-v32-speed-fast])').last.click();page.wait_for_timeout(80)
      elif page.locator('#island-dialog[open]').count():page.locator('#island-dialog .dialog-close').click();page.wait_for_timeout(80)
      else:break
     page.locator('#hit-menu').evaluate('(e)=>e.click()')

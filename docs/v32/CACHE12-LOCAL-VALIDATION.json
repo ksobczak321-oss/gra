@@ -1,0 +1,739 @@
+{
+  "scope": "Local validation checkpoints for committed0.15.0.2/cache12; not own CI or deployment",
+  "application_source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+  "version": "0.15.0.2",
+  "cache": "frontend-v32-12",
+  "backend": {
+    "passed": 170,
+    "total": 170,
+    "result": "PASS",
+    "duration_seconds": 6.7
+  },
+  "clock_frontend": {
+    "passed": 66,
+    "result": "PASS"
+  },
+  "coordinator": {
+    "passed": 57,
+    "total": 57,
+    "sync": 37,
+    "local": 20,
+    "result": "PASS"
+  },
+  "payload": {
+    "passed": 2,
+    "result": "PASS"
+  },
+  "startup_browser_checkpoint": {
+    "result": "PASS",
+    "passed": 20,
+    "total": 20,
+    "widths": [
+      1440,
+      390
+    ],
+    "sampled_frames": 2581,
+    "delayed_barriers": [
+      "module",
+      "auth",
+      "cloud",
+      "accepted art",
+      "ambient",
+      "css"
+    ],
+    "asset_failure_cases_per_width": 5,
+    "contextlost_before_ambient_ready": "PASS_accessible_error_and_retry_recovers_current_game",
+    "intro_complete_art_and_reachable": "PASS",
+    "cloud_retry_identity_preserved": "PASS",
+    "anonymous_real_auth_redirect": "PASS",
+    "source_application_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+    "tested_startup_HTML_and_ambient_bytes_identical_to_current_source": true,
+    "latest_clock_delta_does_not_change_startup_behavior": true,
+    "report": [
+      {
+        "width": 1440,
+        "delayed_phases": [
+          "module",
+          "auth",
+          "cloud",
+          "accepted",
+          "ambient",
+          "css"
+        ],
+        "no_exposed_pre_ready_frames": true,
+        "functional_current_game": true,
+        "sampled_frames": 332
+      },
+      {
+        "width": 1440,
+        "intro_waits_for_complete_art": true,
+        "intro_reachable_after_reveal": true
+      },
+      {
+        "width": 1440,
+        "canvas_presentation_event": "contextlost before ambient assets ready",
+        "accessible_error": true,
+        "retry_recovers_current_game": true,
+        "sampled_frames": 226
+      },
+      {
+        "width": 1440,
+        "failed_asset": "harborlight-v1-play.js",
+        "accessible_error": true,
+        "retry_recovers_current_game": true,
+        "sampled_frames": 124
+      },
+      {
+        "width": 1440,
+        "failed_asset": "harborlight-v1-approved.png",
+        "accessible_error": true,
+        "retry_recovers_current_game": true,
+        "sampled_frames": 182
+      },
+      {
+        "width": 1440,
+        "failed_asset": "harborlight-farm-forest-approved-v32.png",
+        "accessible_error": true,
+        "retry_recovers_current_game": true,
+        "sampled_frames": 166
+      },
+      {
+        "width": 1440,
+        "failed_asset": "harborlight-windmill-clean.png",
+        "accessible_error": true,
+        "retry_recovers_current_game": true,
+        "sampled_frames": 194
+      },
+      {
+        "width": 1440,
+        "failed_asset": "harborlight-v1-play.css",
+        "accessible_error": true,
+        "retry_recovers_current_game": true,
+        "sampled_frames": 219
+      },
+      {
+        "width": 1440,
+        "cloud_retry_accessible": true,
+        "cloud_retry_preserves_identity": true
+      },
+      {
+        "width": 1440,
+        "anonymous_redirects_to_real_auth": true
+      },
+      {
+        "width": 390,
+        "delayed_phases": [
+          "module",
+          "auth",
+          "cloud",
+          "accepted",
+          "ambient",
+          "css"
+        ],
+        "no_exposed_pre_ready_frames": true,
+        "functional_current_game": true,
+        "sampled_frames": 166
+      },
+      {
+        "width": 390,
+        "intro_waits_for_complete_art": true,
+        "intro_reachable_after_reveal": true
+      },
+      {
+        "width": 390,
+        "canvas_presentation_event": "contextlost before ambient assets ready",
+        "accessible_error": true,
+        "retry_recovers_current_game": true,
+        "sampled_frames": 188
+      },
+      {
+        "width": 390,
+        "failed_asset": "harborlight-v1-play.js",
+        "accessible_error": true,
+        "retry_recovers_current_game": true,
+        "sampled_frames": 109
+      },
+      {
+        "width": 390,
+        "failed_asset": "harborlight-v1-approved.png",
+        "accessible_error": true,
+        "retry_recovers_current_game": true,
+        "sampled_frames": 166
+      },
+      {
+        "width": 390,
+        "failed_asset": "harborlight-farm-forest-approved-v32.png",
+        "accessible_error": true,
+        "retry_recovers_current_game": true,
+        "sampled_frames": 171
+      },
+      {
+        "width": 390,
+        "failed_asset": "harborlight-windmill-clean.png",
+        "accessible_error": true,
+        "retry_recovers_current_game": true,
+        "sampled_frames": 158
+      },
+      {
+        "width": 390,
+        "failed_asset": "harborlight-v1-play.css",
+        "accessible_error": true,
+        "retry_recovers_current_game": true,
+        "sampled_frames": 180
+      },
+      {
+        "width": 390,
+        "cloud_retry_accessible": true,
+        "cloud_retry_preserves_identity": true
+      },
+      {
+        "width": 390,
+        "anonymous_redirects_to_real_auth": true
+      }
+    ]
+  },
+  "speed_browser": {
+    "scopes_checked": 6,
+    "result": "PASS",
+    "execution_mode": "actual local runtime and locally isolated PRE-PROD/API mode; not the publicly hosted PRE-PROD service",
+    "real_saved_worlds_and_API_clock": true,
+    "no_game_fixture_or_setter": true,
+    "report": [
+      {
+        "scope": "local",
+        "account": "admin1",
+        "controls_absent": true,
+        "api_cannot_set_rate": true
+      },
+      {
+        "scope": "local",
+        "account": "admin2",
+        "controls_absent": true,
+        "api_cannot_set_rate": true
+      },
+      {
+        "scope": "local",
+        "account": "admin3",
+        "rates": [
+          1,
+          2,
+          6,
+          1
+        ],
+        "clock_measures": [
+          {
+            "rate": 1,
+            "real_delta_ms": 608,
+            "game_delta_ms": 608
+          },
+          {
+            "rate": 2,
+            "real_delta_ms": 608,
+            "game_delta_ms": 1216
+          },
+          {
+            "rate": 6,
+            "real_delta_ms": 613,
+            "game_delta_ms": 3678
+          },
+          {
+            "rate": 1,
+            "real_delta_ms": 611,
+            "game_delta_ms": 611
+          }
+        ],
+        "monotonic_transitions": true,
+        "persisted_reload": [
+          6,
+          1
+        ],
+        "actual_saved_world_advanced_faster": {
+          "real_elapsed_ms": 3169.4883850000224,
+          "world_elapsed_ms": 22830
+        },
+        "intro_and_building_modal_access": true,
+        "mobile_in_viewport": true,
+        "no_game_fixture_or_setter": true,
+        "js_errors": []
+      },
+      {
+        "scope": "preprod",
+        "account": "admin1",
+        "controls_absent": true,
+        "api_cannot_set_rate": true
+      },
+      {
+        "scope": "preprod",
+        "account": "admin2",
+        "controls_absent": true,
+        "api_cannot_set_rate": true
+      },
+      {
+        "scope": "preprod",
+        "account": "admin3",
+        "rates": [
+          1,
+          2,
+          6,
+          1
+        ],
+        "clock_measures": [
+          {
+            "rate": 1,
+            "real_delta_ms": 612,
+            "game_delta_ms": 612
+          },
+          {
+            "rate": 2,
+            "real_delta_ms": 614,
+            "game_delta_ms": 1228
+          },
+          {
+            "rate": 6,
+            "real_delta_ms": 617,
+            "game_delta_ms": 3702
+          },
+          {
+            "rate": 1,
+            "real_delta_ms": 629,
+            "game_delta_ms": 629
+          }
+        ],
+        "monotonic_transitions": true,
+        "persisted_reload": [
+          6,
+          1
+        ],
+        "actual_saved_world_advanced_faster": {
+          "real_elapsed_ms": 4687.082137999823,
+          "world_elapsed_ms": 31374
+        },
+        "intro_and_building_modal_access": true,
+        "mobile_in_viewport": true,
+        "no_game_fixture_or_setter": true,
+        "js_errors": []
+      }
+    ],
+    "private_or_public_cloud_account_mutations": false
+  },
+  "full_frontend_initial": {
+    "passed": 1425,
+    "total": 1426,
+    "failed": 1,
+    "result": "FAILED_ONE_TIMEOUT",
+    "target": "unchanged96h offline watchdog",
+    "error": "ETIMEDOUT at10seconds during concurrent CPU load",
+    "full_suite_passed": false
+  },
+  "exact_timeout_target_retry": {
+    "passed": 1,
+    "total": 1,
+    "result": "PASS",
+    "duration_seconds": 8.8,
+    "condition": "quiet execution",
+    "does_not_replace_full_suite_result": true
+  },
+  "legacy_cloud_smokes": {
+    "passed": 5,
+    "result": "PASS",
+    "scope": "unchanged after proper API clock gate and sync ambient readiness"
+  },
+  "own_CI": "PENDING_NEW_RUN",
+  "DEV_publication": "PENDING",
+  "PREPROD_deployment": "PENDING_NEW_DEV_ACCEPTANCE_AND_STANDARD_DEPLOYMENT_WITH_NATIVE_EXISTING_WORLD_UI_PROOF",
+  "manual_execution": "NOT_RUN",
+  "isolated_backend_package": {
+    "passed": 2,
+    "total": 2,
+    "result": "PASS"
+  },
+  "frontend_bundle": {
+    "passed": 26,
+    "total": 26,
+    "result": "PASS",
+    "duration_seconds": 2.4
+  },
+  "canonical_three_JS_stage_check": "PASS",
+  "local_results_base_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
+  "previous_application_checkpoint": {
+    "scope": "Local validation checkpoints for committed0.15.0.2/cache12; not own CI or deployment",
+    "application_source_sha": "9ee793d6a24e83057529eaffccd363f6b5abeaef",
+    "version": "0.15.0.2",
+    "cache": "frontend-v32-12",
+    "backend": {
+      "passed": 170,
+      "total": 170,
+      "result": "PASS",
+      "duration_seconds": 6.7
+    },
+    "clock_frontend": {
+      "passed": 66,
+      "result": "PASS"
+    },
+    "coordinator": {
+      "passed": 57,
+      "total": 57,
+      "sync": 37,
+      "local": 20,
+      "result": "PASS"
+    },
+    "payload": {
+      "passed": 2,
+      "result": "PASS"
+    },
+    "startup_browser_checkpoint": {
+      "scenarios": 18,
+      "frames": 2195,
+      "result": "PASS",
+      "cache_scope": "previous cache strings; finalcache12 context-loss acceptance PENDING",
+      "full_current_frozen_browser_acceptance": "PENDING"
+    },
+    "speed_browser": {
+      "scopes_checked": 6,
+      "result": "PASS",
+      "execution_mode": "actual local runtime and locally isolated PRE-PROD/API mode; not the publicly hosted PRE-PROD service",
+      "real_saved_worlds_and_API_clock": true,
+      "no_game_fixture_or_setter": true,
+      "report": [
+        {
+          "scope": "local",
+          "account": "admin1",
+          "controls_absent": true,
+          "api_cannot_set_rate": true
+        },
+        {
+          "scope": "local",
+          "account": "admin2",
+          "controls_absent": true,
+          "api_cannot_set_rate": true
+        },
+        {
+          "scope": "local",
+          "account": "admin3",
+          "rates": [
+            1,
+            2,
+            6,
+            1
+          ],
+          "clock_measures": [
+            {
+              "rate": 1,
+              "real_delta_ms": 608,
+              "game_delta_ms": 608
+            },
+            {
+              "rate": 2,
+              "real_delta_ms": 608,
+              "game_delta_ms": 1216
+            },
+            {
+              "rate": 6,
+              "real_delta_ms": 613,
+              "game_delta_ms": 3678
+            },
+            {
+              "rate": 1,
+              "real_delta_ms": 611,
+              "game_delta_ms": 611
+            }
+          ],
+          "monotonic_transitions": true,
+          "persisted_reload": [
+            6,
+            1
+          ],
+          "actual_saved_world_advanced_faster": {
+            "real_elapsed_ms": 3169.4883850000224,
+            "world_elapsed_ms": 22830
+          },
+          "intro_and_building_modal_access": true,
+          "mobile_in_viewport": true,
+          "no_game_fixture_or_setter": true,
+          "js_errors": []
+        },
+        {
+          "scope": "preprod",
+          "account": "admin1",
+          "controls_absent": true,
+          "api_cannot_set_rate": true
+        },
+        {
+          "scope": "preprod",
+          "account": "admin2",
+          "controls_absent": true,
+          "api_cannot_set_rate": true
+        },
+        {
+          "scope": "preprod",
+          "account": "admin3",
+          "rates": [
+            1,
+            2,
+            6,
+            1
+          ],
+          "clock_measures": [
+            {
+              "rate": 1,
+              "real_delta_ms": 612,
+              "game_delta_ms": 612
+            },
+            {
+              "rate": 2,
+              "real_delta_ms": 614,
+              "game_delta_ms": 1228
+            },
+            {
+              "rate": 6,
+              "real_delta_ms": 617,
+              "game_delta_ms": 3702
+            },
+            {
+              "rate": 1,
+              "real_delta_ms": 629,
+              "game_delta_ms": 629
+            }
+          ],
+          "monotonic_transitions": true,
+          "persisted_reload": [
+            6,
+            1
+          ],
+          "actual_saved_world_advanced_faster": {
+            "real_elapsed_ms": 4687.082137999823,
+            "world_elapsed_ms": 31374
+          },
+          "intro_and_building_modal_access": true,
+          "mobile_in_viewport": true,
+          "no_game_fixture_or_setter": true,
+          "js_errors": []
+        }
+      ],
+      "private_or_public_cloud_account_mutations": false
+    },
+    "full_frontend_initial": {
+      "passed": 1425,
+      "total": 1426,
+      "failed": 1,
+      "result": "FAILED_ONE_TIMEOUT",
+      "target": "unchanged96h offline watchdog",
+      "error": "ETIMEDOUT at10seconds during concurrent CPU load",
+      "full_suite_passed": false
+    },
+    "exact_timeout_target_retry": {
+      "passed": 1,
+      "total": 1,
+      "result": "PASS",
+      "duration_seconds": 8.8,
+      "condition": "quiet execution",
+      "does_not_replace_full_suite_result": true
+    },
+    "legacy_cloud_smokes": {
+      "passed": 5,
+      "result": "PASS",
+      "scope": "unchanged after proper API clock gate and sync ambient readiness"
+    },
+    "own_CI": "PENDING_NEW_RUN",
+    "DEV_publication": "PENDING",
+    "PREPROD_deployment": "PENDING_OWNER_FIRST_GAME_AND_NATIVE_EXISTING_WORLD_ACCEPTANCE",
+    "manual_execution": "NOT_RUN",
+    "isolated_backend_package": {
+      "passed": 2,
+      "total": 2,
+      "result": "PASS"
+    },
+    "frontend_bundle": {
+      "passed": 26,
+      "total": 26,
+      "result": "PASS",
+      "duration_seconds": 2.4
+    },
+    "canonical_three_JS_stage_check": "PASS"
+  },
+  "source_delta_after_9ee": "clock controller/coordinator and play beforeRecover option only; startup HTML/ambient bytes identical",
+  "final_clock_focus_coordinator": {
+    "passed": 51,
+    "total": 51,
+    "result": "PASS",
+    "new_healthy_focus_cases": 4,
+    "source_sha": "96c211fd39826cf804ff286faeff219ac846827c"
+  },
+  "final_local_cloud_adapters": {
+    "passed": 58,
+    "total": 58,
+    "result": "PASS",
+    "source_sha": "96c211fd39826cf804ff286faeff219ac846827c"
+  },
+  "current_six_sheet_workbook": {
+    "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+    "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+    "sheets": 6,
+    "rows": 413,
+    "columns": [
+      "A",
+      "B",
+      "C"
+    ],
+    "C_all_blank": true,
+    "validation": "PASS",
+    "sha256": "90943adac77e35ee97899165dfa4e4ae541074b62258323fae27ffab2a158e60",
+    "source_fingerprint": "f7d82a10f46673098129486a911132ae30e0739e0fc27e4a5d64aa9669589771",
+    "selected_six_sheet_read_and_merge_scope_preserved": true,
+    "edited_by_documentation_agent": false
+  },
+  "final_six_scope_speed_rerun": {
+    "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+    "result": "PASS",
+    "passed": 6,
+    "total": 6,
+    "execution_mode": "real local runtime plus locally isolated preprod/API; not public PRE-PROD",
+    "report": [
+      {
+        "scope": "local",
+        "account": "admin1",
+        "controls_absent": true,
+        "api_cannot_set_rate": true
+      },
+      {
+        "scope": "local",
+        "account": "admin2",
+        "controls_absent": true,
+        "api_cannot_set_rate": true
+      },
+      {
+        "scope": "local",
+        "account": "admin3",
+        "rates": [
+          1,
+          2,
+          6,
+          1
+        ],
+        "clock_measures": [
+          {
+            "rate": 1,
+            "real_delta_ms": 608,
+            "game_delta_ms": 608
+          },
+          {
+            "rate": 2,
+            "real_delta_ms": 607,
+            "game_delta_ms": 1214
+          },
+          {
+            "rate": 6,
+            "real_delta_ms": 606,
+            "game_delta_ms": 3636
+          },
+          {
+            "rate": 1,
+            "real_delta_ms": 604,
+            "game_delta_ms": 604
+          }
+        ],
+        "monotonic_transitions": true,
+        "persisted_reload": [
+          6,
+          1
+        ],
+        "actual_saved_world_advanced_faster": {
+          "real_elapsed_ms": 1993.9216960001431,
+          "world_elapsed_ms": 15678
+        },
+        "intro_and_building_modal_access": true,
+        "mobile_in_viewport": true,
+        "no_game_fixture_or_setter": true,
+        "js_errors": []
+      },
+      {
+        "scope": "preprod",
+        "account": "admin1",
+        "controls_absent": true,
+        "api_cannot_set_rate": true
+      },
+      {
+        "scope": "preprod",
+        "account": "admin2",
+        "controls_absent": true,
+        "api_cannot_set_rate": true
+      },
+      {
+        "scope": "preprod",
+        "account": "admin3",
+        "rates": [
+          1,
+          2,
+          6,
+          1
+        ],
+        "clock_measures": [
+          {
+            "rate": 1,
+            "real_delta_ms": 616,
+            "game_delta_ms": 616
+          },
+          {
+            "rate": 2,
+            "real_delta_ms": 614,
+            "game_delta_ms": 1228
+          },
+          {
+            "rate": 6,
+            "real_delta_ms": 611,
+            "game_delta_ms": 3666
+          },
+          {
+            "rate": 1,
+            "real_delta_ms": 611,
+            "game_delta_ms": 611
+          }
+        ],
+        "monotonic_transitions": true,
+        "persisted_reload": [
+          6,
+          1
+        ],
+        "actual_saved_world_advanced_faster": {
+          "real_elapsed_ms": 2907.8702030001295,
+          "world_elapsed_ms": 21174
+        },
+        "intro_and_building_modal_access": true,
+        "mobile_in_viewport": true,
+        "no_game_fixture_or_setter": true,
+        "js_errors": []
+      }
+    ]
+  },
+  "final_LiveCAS_rerun": {
+    "source_sha": "96c211fd39826cf804ff286faeff219ac846827c",
+    "result": "PASS",
+    "source_logs": "/workspace/work/admin3-speed-browser-final/*-final.log"
+  },
+  "owner_first_game_read": {
+    "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+    "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+    "host": "https://harborlight-dev.web.app",
+    "account": "admin1",
+    "TLS_verified": true,
+    "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+    "auth_http_status": 200,
+    "expected_UID_matches": true,
+    "island_GET_HTTP_status": 200,
+    "account_generation": 2,
+    "account_expired": false,
+    "island_present": true,
+    "island_generation": 2,
+    "island_revision": 12,
+    "schema": 9,
+    "ruleset": 32,
+    "population": 19,
+    "onboarding": "complete",
+    "onboarding_pending": false,
+    "initialization_paused": false,
+    "writes": 0,
+    "existing_world_prerequisite_satisfied": true,
+    "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
+  }
+}

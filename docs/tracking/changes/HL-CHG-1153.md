@@ -8,10 +8,10 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `authorized_guarded_operation_pending` |
+| Implementacja | `completed` |
 | DEV | `published_source_86eb8d9` |
 | CI | `passed_source_86eb8d9` |
-| PRE-PROD | `reset_NOT_EXECUTED_owner_CloudShell_required_deployment_source_86eb8d9_verified` |
+| PRE-PROD | `reset_SUCCESS_independently_verified_generations2_null_islands` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
 
@@ -41,7 +41,7 @@ Data pierwotnej wiadomości: 2026-11-15. Najnowsze GO po zgłoszeniu starego UI;
 
 ## Dowody
 
-- **Dokumenty:** [docs/v32/GO-PREPROD-RULESET-RESET.md](../../v32/GO-PREPROD-RULESET-RESET.md), [docs/v32/PREPROD-RULESET-RESET-EVIDENCE.json](../../v32/PREPROD-RULESET-RESET-EVIDENCE.json), [docs/PREPROD-V32-PROMOTION.md](../../PREPROD-V32-PROMOTION.md), [docs/PREPROD-V32-EVIDENCE.json](../../PREPROD-V32-EVIDENCE.json), [docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json](../../v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json)
+- **Dokumenty:** [docs/v32/GO-PREPROD-RULESET-RESET.md](../../v32/GO-PREPROD-RULESET-RESET.md), [docs/v32/PREPROD-RULESET-RESET-EVIDENCE.json](../../v32/PREPROD-RULESET-RESET-EVIDENCE.json), [docs/PREPROD-V32-PROMOTION.md](../../PREPROD-V32-PROMOTION.md), [docs/PREPROD-V32-EVIDENCE.json](../../PREPROD-V32-EVIDENCE.json), [docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json](../../v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json), [docs/v32/PREPROD-RESET-INDEPENDENT-READ.json](../../v32/PREPROD-RESET-INDEPENDENT-READ.json)
 - **Kod:** [infra/google-cloud/reset-preprod-accounts.py](../../../infra/google-cloud/reset-preprod-accounts.py), [backend/starter-island.mjs](../../../backend/starter-island.mjs), [backend/server.mjs](../../../backend/server.mjs), [infra/google-cloud/reset-preprod-verified.sh](../../../infra/google-cloud/reset-preprod-verified.sh)
 - **Scenariusze automatyczne:** [tests/harborlight-preprod-reset.test.py](../../../tests/harborlight-preprod-reset.test.py), [tests/harborlight-runtime-config.test.py](../../../tests/harborlight-runtime-config.test.py)
 - **Kod dowodowy:** `86eb8d9a40dab073c17a1b0f96dca38f1a15e24c`.
@@ -49,7 +49,7 @@ Data pierwotnej wiadomości: 2026-11-15. Najnowsze GO po zgłoszeniu starego UI;
 - **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/43768861718.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-PRE-PROD86/0.15.0.1/cache11: własnyCI43766275390 SUCCESS26m17s, Pages43766275430 SUCCESS18s, standardowydeploy43768861718/1 SUCCESS2m12s. Natywna zalogowana gra32 PASS26s:108hashy,20funkcji,7markerów,4nakładki,19kart(9+10),21ikon,natywnyTeatr,ciemne wyrównaneUI,statek odsłonięty.3istniejące konta/3niepuste zapisy,0pustych;6obcych+3anon odmowy,3APIreads+3anonAPI401,0islandwrites. OryginalneZIP-y/innerreceiptv2/strict109verifierPASS;accountAPI=true/resetFence potwierdzone. Reset NOT_EXECUTED; wymagany CloudShell właściciela. PełnyTLS108plików+manifest/109archiwalnych PASS; tagpreprod-0.15.0.1-20261115 obiekt446347dab79ebc3e8c088d6d257adbdcd0f5f6e4→86 opublikowany/zdalniepotwierdzony. E0REOPENED,b268FAILURE i opcjonalnylatefoodINCOMPLETE pozostają historią; manualNOT_RUN,PROD/DNSodłożone.
+PRE-PROD86/0.15.0.1/cache11: własnyCI43766275390 SUCCESS26m17s, Pages43766275430 SUCCESS18s, standardowydeploy43768861718/1 SUCCESS2m12s. Natywna zalogowana gra32 PASS26s:108hashy,20funkcji,7markerów,4nakładki,19kart(9+10),21ikon,natywnyTeatr,ciemne wyrównaneUI,statek odsłonięty.3istniejące konta/3niepuste zapisy,0pustych;6obcych+3anon odmowy,3APIreads+3anonAPI401,0islandwrites. OryginalneZIP-y/innerreceiptv2/strict109verifierPASS;accountAPI=true/resetFence potwierdzone. Reset NOT_EXECUTED; wymagany CloudShell właściciela. PełnyTLS108plików+manifest/109archiwalnych PASS; tagpreprod-0.15.0.1-20261115 obiekt446347dab79ebc3e8c088d6d257adbdcd0f5f6e4→86 opublikowany/zdalniepotwierdzony. E0REOPENED,b268FAILURE i opcjonalnylatefoodINCOMPLETE pozostają historią; manualNOT_RUN,PROD/DNSodłożone. Aktualizacja16listopada: właścicielski RESET PASS43768861718/generacje2/2/2; niezależny odczyt oczekuje, nie jest to wynik niezależnego wykonania przez agenta. Niezależnyodczyt16listopada09:41:42UTC PASS normalTLS:3właściweUID/generacja2/expiredfalse/islandnull,3ownFirestore403,APItrue/resetFence,0zapisów; reset ukończony,bezpowtarzania. Nowychwysp nie tworzono; świeżyUI wymaga pierwszejgry właściciela.
 
 ## Relacje
 
@@ -64,6 +64,10 @@ PRE-PROD86/0.15.0.1/cache11: własnyCI43766275390 SUCCESS26m17s, Pages4376627543
 - Właściciel zgłosiłSUCCESS minimalnego roles/datastore.user dla runtimePRE-PROD:OWNER_REPORTED_APPLIED. Nie wykonano niezależnego odczytuIAM; pozostałe bramkiAPI/deploy/lock/600s/reset pozostająPENDING.
 - b268/cache10 własnyCI43763863333FAILURE8m54s:26pierwszychkrokówPASS,step27tutorial-v22reward_grid6oczekiwane/5widoczne,step28cloudSKIPPED; Pages43763863357SUCCESS. Beznowegodeploy/resetu, brak zaakceptowanego tagu. Następnycache11/0.15.0.1 potrzebuje własnegoCI;1410/155/20 są wcześniejszymi checkpointami.
 - Aktualizacja po wdrożeniu86:API/receipt/resetFence i3odczytyAPI potwierdzone. Grant nadal OWNER_REPORTED_APPLIED bez odczytuIAM; blokada/600s/reset pozostają niewykonane. Szczegółowe argumenty launchera w docs/PREPROD-RESET.md.
+- 16listopada: właściciel zgłosił uruchomienie launchera przypiętego do86/43768861718. Brak wyniku/generacji/odczytu końcowego; reset NOT_CONFIRMED. Nowa promocja PRE-PROD czeka, DEV może postępować niezależnie.
+- 16listopada: właściciel podał RESET PRE-PROD PASS run43768861718/generacjeadmin1=2,admin2=2,admin3=2. OWNER_REPORTED_SUCCESS; niezależny odczyt jeszcze PENDING, bez ponownego resetu.
+- Wcześniejsze NOT_EXECUTED/OWNER_REPORTED były checkpointami; niezależny odczyt potwierdził skutki resetu. Nie oznacza stworzenia3nowychświatów ani wykonaniaQAgry; wszystkie3wyspy sąnull.
+- Po resecie właściciel utworzyładmin1; niezależnyread10:21:40rules32/pop19/gen2/rev12PASS. QA nie tworzyłświata. Dawne3null dotycząodczytu09:41:42,nieobecnegoadmin1.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

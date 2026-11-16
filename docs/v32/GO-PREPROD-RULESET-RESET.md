@@ -1,6 +1,6 @@
 # Naprawa UI starych wysp i reset trzech kont PRE-PROD
 
-Status: **DEV i PRE-PROD0.15.0.1 odebrane; reset NOT_EXECUTED**. Cache `frontend-v32-11`. BugHL-CHG-1152 i OpsHL-CHG-1153; [dowody](PREPROD-RULESET-RESET-EVIDENCE.json).
+Status: **DEV i PRE-PROD0.15.0.1 odebrane; reset RESET_SUCCESS_INDEPENDENTLY_VERIFIED**. Cache `frontend-v32-11`. BugHL-CHG-1152 i OpsHL-CHG-1153; [dowody](PREPROD-RULESET-RESET-EVIDENCE.json).
 
 PRE-PROD **0.15.0.1 / frontend-v32-11** jest wdrożony i przeszedł rzeczywisty odbiór zalogowanej gry. Aplikacja `27f3ea4f08474329108724c68c97c340ecaa1914`, publikacja `86eb8d9a40dab073c17a1b0f96dca38f1a15e24c`. Własny CI43766275390 SUCCESS26m17s (32 kroki SUCCESS, 0 failed, 2 pominięte diagnostyki) i Pages43766275430 SUCCESS18s. Standardowy PRE-PROD43768861718/próba1 SUCCESS: gate8s, deploy22:21:58–22:24:10UTC, 2m12s, 31 kroków SUCCESS/0 failed/1 pominięta diagnostyka.
 
@@ -9,6 +9,12 @@ Natywny odbiór hostowanej gry z rzeczywistym logowaniem PASS26s: 108 dokładnyc
 Oba oryginalne ZIP-y pobrano i sprawdzono względem rozmiaru/SHA256 GitHub. Rzeczywisty wewnętrzny receiptv2 odczytano i zwalidowano: wszystkie4 checks=true; rygorystyczny weryfikator archiwum109 plików PASS. Pełny niezależny audyt HTTPS/TLS PASS: 108 plików treści/30 754 604 bajty oraz manifest, łącznie109 plików, są identyczne z niezmiennym archiwum; treść odpowiada źródłu86 i aplikacji27f. Tag `preprod-0.15.0.1-20261115` jest opublikowany i zdalnie potwierdzony: obiekt `446347dab79ebc3e8c088d6d257adbdcd0f5f6e4` →86. Bezpieczny raport: [audyt artefaktów i hostingu](PREPROD-CACHE11-ARTIFACT-AUDIT.json). TagDEV `dev-0.15.0.1-20261115` jest opublikowany i zdalnie potwierdzony: obiekt `1d7997a0074f0f34229807f0092aec808e716783` →86.
 
 **Reset admin1–3 pozostaje NOT_EXECUTED.** Zachowano loginy, hasła, UID i dotychczasowy postęp. W tej sesji brak właścicielskiego GCPADC; chroniony reset wymaga zalogowanego CloudShell właściciela, blokady bezpośrednich zapisów i minimum10min propagacji. Dokładne polecenie z pięcioma zweryfikowanymi argumentami jest w [procedurze resetu](../PREPROD-RESET.md). Grant runtime ma status OWNER_REPORTED_APPLIED bez niezależnego odczytu IAM; skuteczne odczyty API potwierdzono osobno. PROD i domena pozostają odłożone. Historyczne E0 REOPENED_USER_REPORT, nieudany b268 oraz opcjonalny late-food UI INCOMPLETE pozostają zapisane; ręczny odbiór użytkownika NOT_RUN.
+
+## Wynik resetu16listopada — niezależny odczyt PASS
+
+Reset właścicielski dla run43768861718/źródła **86eb8d9** jest **RESET_SUCCESS_INDEPENDENTLY_VERIFIED**. Niezależny odczyt16listopada09:41:42UTC z normalną weryfikacjąTLS potwierdził3 logowania z właściwymi UID, generację2 każdego konta, expired=false i island=null; trzy bezpośrednie odczyty własnegoFirestore odmówione403. ConfigAPI200 potwierdza accountAPI=true, projectharborlight-dev, environmentpreprod i resetFencecommunity-profile-v1. Audyt nie zapisał danych ani nie tworzył wysp. Nie powtarzać resetu. Przeszkoda trwającego resetu jest zamknięta; nowy PRE-PROD nadal wymaga odebranego nowegoDEV i własnych dowodów. Bezpośrednio po resecie3wyspy były puste; obecnie admin1 ma grę utworzoną przez właściciela i niezależnie potwierdzoną10:21:40UTC. Warunek istnienia świata jest spełniony, nowy natywny odbiór wdrożonegoUI pozostaje oczekujący, bez tworzenia świata przezQA.
+
+[Dowód odczytu](PREPROD-RESET-INDEPENDENT-READ.json). Starsze statusy NOT_EXECUTED lub OWNER_REPORTED opisują checkpointy przed tym audytem.
 
 ## Zakres i historia przygotowania
 

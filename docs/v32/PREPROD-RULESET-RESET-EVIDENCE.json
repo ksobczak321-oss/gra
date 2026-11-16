@@ -1,6 +1,6 @@
 {
   "scope": "Fix official-cloud legacy ruleset activation, then separately reset exactly three PRE-PROD accounts; PROD/domain postponed",
-  "status": "DEV_and_PREPROD_published_own_CI_and_live_functional_acceptance_SUCCESS_reset_NOT_EXECUTED",
+  "status": "DEV_and_PREPROD86_accepted_owner_reset_SUCCESS_independently_read_verified",
   "version": "0.15.0.1",
   "cache": "frontend-v32-11",
   "source_sha": "27f3ea4f08474329108724c68c97c340ecaa1914",
@@ -9,7 +9,7 @@
   "ci_conclusion": "success",
   "deployment_run_id": 43768861718,
   "deployment_conclusion": "success",
-  "reset_result": "NOT_EXECUTED_OWNER_CLOUDSHELL_REQUIRED_NO_LOCAL_ADC",
+  "reset_result": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
   "previous_release": {
     "source": "e0aa2ff3f60edeb6a55190ea8b16f0329692b303",
     "file_deployment": "SUCCESS",
@@ -157,11 +157,11 @@
     "new_matching_CI_deployment_receipt": "PASS_EXACT_86_CI43766275390_DEPLOY43768861718_RECEIPT_V2_VALID",
     "account_API_enabled": "PASS_PUBLIC_CONFIG_200_AND_THREE_AUTHENTICATED_API_READS",
     "runtime_roles_datastore_user": "OWNER_REPORTED_APPLIED_NOT_INDEPENDENTLY_READ_BACK",
-    "client_writes_denied": "PENDING",
+    "client_writes_denied": "OWNER_GUARDED_RESET_PASS; independent audit verified three direct GET403 responses and performed no write attempts",
     "minimum_propagation_seconds": 600,
-    "propagation_wait_completed": false,
-    "guarded_reset_executed": false,
-    "post_reset_read_verification": "PENDING",
+    "propagation_wait_completed": "GUARDED_RESET_OWNER_REPORTED_SUCCESS; elapsed propagation not independently timed by read audit",
+    "guarded_reset_executed": "OWNER_REPORTED_SUCCESS_INDEPENDENT_EFFECT_VERIFIED",
+    "post_reset_read_verification": "PASS_THREE_GENERATION2_NULL_ISLANDS_AUTH_UID_AND_API",
     "deployed_resetFence_attestation": "PASS_PUBLIC_CONFIG_community-profile-v1"
   },
   "configuration": {
@@ -285,7 +285,7 @@
     "revision_fences": "advance epoch and mutationRevision; include community and wallet roots inCAS even if absent; backend per-dispatch actor-root revision rejects late racing writes",
     "idempotency": "same reset receipt returns prior result before touching new progress",
     "tool_tests": "20/20 PASS",
-    "actual_cloud_reset_writes": 0
+    "actual_cloud_reset_writes_by_this_agent": 0
   },
   "candidate_history": [
     {
@@ -401,14 +401,14 @@
   },
   "owner_reset_launcher": {
     "path": "infra/google-cloud/reset-preprod-verified.sh",
-    "status": "added_not_executed_for_real_reset",
+    "status": "OWNER_EXECUTED_SUCCESS_EFFECT_INDEPENDENTLY_VERIFIED",
     "proof_arguments": "exact frozen source/worktree SHA plus original artifact ZIP digests and sizes required",
     "countdown_seconds": 30,
     "uses_same_guarded_reset_tool": true,
     "automatic_retry_after_minimum_propagation_minutes": 10,
     "malformed_arguments_rejected_before_network": "PASS",
     "CI_bash_n_check": "PASS_own_CI43766275390",
-    "actual_cloud_reset_executed": false
+    "actual_cloud_reset_executed": "OWNER_REPORTED_SUCCESS_INDEPENDENT_EFFECT_VERIFIED"
   },
   "optional_verification_gaps": [
     "late legacy-food tile/reload UI incomplete; model claim/receipt passed; not claimed as desktop/mobile UI coverage"
@@ -521,12 +521,14 @@
     "owner_CloudShell_required": true,
     "local_owner_ADC_available": false,
     "qualified_five_argument_command": "bash infra/google-cloud/reset-preprod-verified.sh \\\n  43768861718 \\\n  86eb8d9a40dab073c17a1b0f96dca38f1a15e24c \\\n  14183069464 616 \\\n  b4543fe43c26b5d7ee44423c95ef6bd8aec280f88fc121034dd1f749255fc348",
-    "actual_reset_executed": false,
     "proof_values_verified": true,
     "original_receipt_artifact_id": 14183069464,
     "original_receipt_ZIP_bytes": 616,
     "original_receipt_ZIP_sha256": "b4543fe43c26b5d7ee44423c95ef6bd8aec280f88fc121034dd1f749255fc348",
-    "promotion_gate_readonly": "PASS_actual_verify_promotion_no_GCP_private_IAM_rules_or_data_operations"
+    "promotion_gate_readonly": "PASS_actual_verify_promotion_no_GCP_private_IAM_rules_or_data_operations",
+    "owner_reported_success": true,
+    "actual_reset_executed_by_this_agent": false,
+    "independent_result_verified": true
   },
   "functional_acceptance": "SUCCESS_NATIVE_HOSTED_AUTHENTICATED_RULES32",
   "previous_deployed_observation": {
@@ -581,5 +583,69 @@
     ],
     "evidence_directory": "/workspace/work/preprod-cache11-20261115",
     "committable_safe_audit": "docs/v32/PREPROD-CACHE11-ARTIFACT-AUDIT.json"
+  },
+  "owner_reset_report": {
+    "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
+    "deployment_run_id": 43768861718,
+    "source_sha": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "owner_reported_output": "RESET PRE-PROD PASS",
+    "reported_generations": {
+      "admin1": 2,
+      "admin2": 2,
+      "admin3": 2
+    },
+    "independent_post_reset_read": "PASS",
+    "independent_generation_verification": true,
+    "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
+    "three_islands_null": true,
+    "three_accounts_expired": false,
+    "direct_own_Firestore_denied": 3,
+    "audit_writes": 0,
+    "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+    "repeat_reset_requested": false
+  },
+  "reset_independent_read": {
+    "result": "PASS",
+    "evidence": "docs/v32/PREPROD-RESET-INDEPENDENT-READ.json",
+    "checked_at_utc": "2026-11-16T09:41:42.829161+00:00",
+    "islands_null": 3,
+    "account_generation2": 3,
+    "island_or_Firestore_writes": 0
+  },
+  "post_reset_world_acceptance": {
+    "accounts": 3,
+    "islands_null": 3,
+    "new_worlds_created_by_QA": 0,
+    "actual_fresh_world_UI_acceptance": "PENDING_NEW_DEPLOYED_UI_PROOF",
+    "generation_verified": 2,
+    "no_repeat_reset": true,
+    "first_owner_created_world": "admin1 independently verified19people/rules32/generation2",
+    "first_owner_world_read_evidence": "docs/v32/PREPROD-OWNER-FIRST-GAME-READ.json"
+  },
+  "owner_first_game_after_reset": {
+    "status": "PASS_EXISTING_WORLD_PREREQUISITE_INDEPENDENTLY_VERIFIED",
+    "checked_at_utc": "2026-11-16T10:21:40.559456+00:00",
+    "host": "https://harborlight-dev.web.app",
+    "account": "admin1",
+    "TLS_verified": true,
+    "scope": "Sign-in plus GET island only; no creation/save/reset/activity mutation",
+    "auth_http_status": 200,
+    "expected_UID_matches": true,
+    "island_GET_HTTP_status": 200,
+    "account_generation": 2,
+    "account_expired": false,
+    "island_present": true,
+    "island_generation": 2,
+    "island_revision": 12,
+    "schema": 9,
+    "ruleset": 32,
+    "population": 19,
+    "onboarding": "complete",
+    "onboarding_pending": false,
+    "initialization_paused": false,
+    "writes": 0,
+    "existing_world_prerequisite_satisfied": true,
+    "source_RELEASE_still": "86eb8d9a40dab073c17a1b0f96dca38f1a15e24c",
+    "new_cache12_UI_acceptance": "PENDING_NEW_DEPLOYMENT"
   }
 }

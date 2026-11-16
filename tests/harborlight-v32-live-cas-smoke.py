@@ -32,7 +32,7 @@ try:
         page.wait_for_timeout(700)
         for _ in range(7):
             external=page.locator('dialog[open]:not(#island-dialog)')
-            if external.count():external.last.locator('button').last.click();page.wait_for_timeout(120)
+            if external.count():external.last.locator('button:not([data-v32-speed-normal]):not([data-v32-speed-fast])').last.click();page.wait_for_timeout(120)
             elif page.locator('#island-dialog[open]').count():page.locator('#island-dialog .dialog-close').click();page.wait_for_timeout(120)
             else:break
         def state(expression):return page.evaluate('window.__HARBORLIGHT_DEV_STATE__.'+expression)
