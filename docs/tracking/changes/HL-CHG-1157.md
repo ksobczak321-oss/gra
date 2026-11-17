@@ -9,9 +9,9 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `local_validation_PASS_55_games_110_documents_selected_complete_flows` |
-| CI | `pending_own_CI` |
-| PRE-PROD | `pending_standard_promotion_and_readback` |
+| DEV | `accepted_source_03f_CI_and_Pages_SUCCESS_remote_tag_verified` |
+| CI | `SUCCESS_44087431085_own_exact_source_03f` |
+| PRE-PROD | `FAILURE_44093734171_native_bootstrap_fix_1158_PENDING` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
 
@@ -43,16 +43,18 @@ Data pierwotnej wiadomości: 2026-11-17. GO obejmuje osobne uruchamianie minigie
 - **Dokumenty:** [docs/v32/GO-MINIGAMES-STANDALONE.md](../../v32/GO-MINIGAMES-STANDALONE.md), [docs/v32/MINIGAMES-STANDALONE-EVIDENCE.json](../../v32/MINIGAMES-STANDALONE-EVIDENCE.json), [docs/minigames/catalog.json](../../minigames/catalog.json), [minigames/documents.json](../../../minigames/documents.json), [minigames/linki.txt](../../../minigames/linki.txt)
 - **Kod:** [minigames/index.html](../../../minigames/index.html), [minigames/app.js](../../../minigames/app.js), [minigames/styles.css](../../../minigames/styles.css), [scripts/export_minigame_catalog.mjs](../../../scripts/export_minigame_catalog.mjs), [scripts/build_minigame_documents.py](../../../scripts/build_minigame_documents.py), [scripts/build_frontend.py](../../../scripts/build_frontend.py)
 - **Scenariusze automatyczne:** [tests/harborlight-minigames-standalone.test.mjs](../../../tests/harborlight-minigames-standalone.test.mjs), [tests/harborlight-minigames-standalone-smoke.py](../../../tests/harborlight-minigames-standalone-smoke.py), [tests/harborlight-frontend-bundle.test.py](../../../tests/harborlight-frontend-bundle.test.py)
-- **Kod dowodowy:** `6b40252ba4f57a035d6b624656c8fce735559b07`.
+- **Kod dowodowy:** `03f39a2e8e8854208548ba53dc842aae5955e2af`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/44087431085.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/44093734171.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Lokalny odbiór PASS: 55 gier, 55 DOCX i 55 TXT, 60 960 słów, 100 linków wariantów i 560 pomieszczeń. Browser sprawdził 110 plansz na 1440/390, 100 wariantów i 110 pobrań, bez błędów strony/HTTP, żądań kont lub storage/cookies. Ukończone wybrane ścieżki: dwie rundy trójek 24 → 30 kart i wypłata 150 monet RAM, mewa, pierwsze pomieszczenie opowieści, trzy listy, pauza i restart. Nie deklarujemy wygrania wszystkich 55 gier ani publicznego odbioru. Model 8/8, pakowanie 27/27, składnia workflow i świeży master PASS; 114 wcześniejszych odcisków, redakcyjny Excel i MERGE zachowane. Git/CI/PRE-PROD PENDING. Wersja gry 0.15.0.2 bez zmiany; bez resetu i PROD/DNS.
+DEV 03f ma własny CI 44087431085 SUCCESS 36 min 49 s i Pages 44087430928 SUCCESS 52 s oraz niezmienny tag DEV. Pierwszy PRE-PROD 44093734171/próba1 FAILURE 6 min 03 s: Hosting/manifest opublikowane, ale natywny test wykrył 221 HTTP404 dla /app.js?v=minigames-1. Odbiory głównej wyspy/kont i oba udane artefakty pominięte; brak udanego receipt i tagu PRE-PROD tej próby. Niezależny TLS 226 plików / 36 847 438 B PASS. Bug HL-CHG-1158 wymaga nowego źródła, własnego CI i standardowej promocji. Bez zmian modeli, katalogu, Word/TXT, Excel lub resetu.
 
 ## Relacje
 
 - **Zastępuje:** Brak.
 - **Zastąpione lub ograniczone przez:** Brak.
-- **Powiązane:** [HL-CHG-1142](HL-CHG-1142.md), [HL-CHG-1156](HL-CHG-1156.md)
+- **Powiązane:** [HL-CHG-1142](HL-CHG-1142.md), [HL-CHG-1156](HL-CHG-1156.md), [HL-CHG-1158](HL-CHG-1158.md)
 
 ## Uwagi
 

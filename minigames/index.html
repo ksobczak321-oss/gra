@@ -6,23 +6,48 @@
   <meta name="color-scheme" content="dark">
   <meta name="description" content="Wszystkie minigry HARBORLIGHT w osobnych próbach: zagadki, opowieści, przygody i ekspedycje. Zasady każdej gry do pobrania w Word i TXT.">
   <base id="practice-base" href="./">
+  <style>
+    html{background:#071d2a;color:#dfebec;font-family:system-ui,sans-serif;color-scheme:dark}
+    [hidden]{display:none!important}
+    html[data-practice-booting] body{visibility:hidden}
+    html[data-practice-booting]::after{content:'Otwieram przystań minigier…';position:fixed;inset:40% 20px auto;text-align:center;color:#f2d392;font-size:16px}
+  </style>
   <script>
-    // Hosting may remove a directory's trailing slash. Keep relative links
-    // inside this directory, including when the preview lives below /gra/.
+    // Firebase serves directory indexes without a trailing slash. The browser's
+    // speculative loader can discover static relative src/href before a script
+    // updates <base>, so all startup assets are created with absolute URLs here.
     {
+      document.documentElement.setAttribute('data-practice-booting', '');
       const directory = new URL(location.href);
       if (directory.pathname.endsWith('/index.html')) directory.pathname = directory.pathname.slice(0, -10);
       else if (!directory.pathname.endsWith('/')) directory.pathname += '/';
       directory.search = ''; directory.hash = '';
       document.getElementById('practice-base').href = directory.href;
+      const ready = document.readyState === 'loading'
+        ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true }))
+        : Promise.resolve();
+      const styles = ['./styles.css?v=minigames-2', '../harborlight-v1-minigame.css?v=frontend-v32-13', '../harborlight-v1-original-puzzles.css?v=frontend-v32-13'].map(path => new Promise(resolve => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet'; link.href = new URL(path, directory).href;
+        link.onload = link.onerror = resolve;
+        document.head.append(link);
+      }));
+      Promise.all([ready, ...styles]).then(() => {
+        const script = document.createElement('script');
+        script.type = 'module'; script.src = new URL('./app.js?v=minigames-2', directory).href;
+        script.addEventListener('error', () => {
+          document.getElementById('loading').hidden = true;
+          document.getElementById('error-message').textContent = 'Nie udało się pobrać gry. Odśwież stronę i spróbuj ponownie.';
+          document.getElementById('error').hidden = false;
+          document.getElementById('retry').onclick = () => location.reload();
+        });
+        document.documentElement.removeAttribute('data-practice-booting');
+        document.head.append(script);
+      });
     }
   </script>
   <title>Minigry — HARBORLIGHT</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230c2939'/%3E%3Cpath d='M22 52h20l-4-30H26Z' fill='%23f0d293'/%3E%3Cpath d='M23 22h18v-8H23Zm-4 0h26M32 7v7' stroke='%23f0d293' stroke-width='4'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./styles.css?v=minigames-1">
-  <link rel="stylesheet" href="../harborlight-v1-minigame.css?v=frontend-v32-13">
-  <link rel="stylesheet" href="../harborlight-v1-original-puzzles.css?v=frontend-v32-13">
-  <script type="module" src="./app.js?v=minigames-1"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Przejdź do treści</a>

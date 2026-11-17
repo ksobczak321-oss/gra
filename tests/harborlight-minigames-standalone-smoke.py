@@ -11,7 +11,7 @@ import json
 import os
 from pathlib import Path
 import threading
-from urllib.parse import urljoin, urlsplit
+from urllib.parse import urljoin, urlsplit, urlunsplit
 from zipfile import ZipFile
 from xml.etree import ElementTree
 
@@ -27,11 +27,39 @@ if not BASE:
     class Handler(SimpleHTTPRequestHandler):
         def log_message(self, *_):
             pass
+
+        def translate_path(self, path):
+            # Also reproduce the GitHub Pages /gra/ repository prefix while
+            # serving the exact same release files, without a model fixture.
+            if urlsplit(path).path.startswith('/gra/'):
+                path = path[4:]
+            return super().translate_path(path)
+
+        def send_head(self):
+            parsed = urlsplit(self.path)
+            if parsed.path in ('/minigames/', '/gra/minigames/'):
+                # Match Firebase trailingSlash:false, which the old local
+                # directory server reversed and therefore concealed.
+                self.send_response(308)
+                self.send_header('Location', urlunsplit(('', '', parsed.path.rstrip('/'), parsed.query, parsed.fragment)))
+                self.send_header('Content-Length', '0')
+                self.end_headers()
+                return None
+            if parsed.path in ('/minigames', '/gra/minigames'):
+                file = ROOT / 'minigames/index.html'
+                stream = file.open('rb')
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/html; charset=utf-8')
+                self.send_header('Content-Length', str(file.stat().st_size))
+                self.send_header('Cache-Control', 'no-cache')
+                self.end_headers()
+                return stream
+            return super().send_head()
     server = ThreadingHTTPServer(('127.0.0.1', 0), functools.partial(Handler, directory=str(ROOT)))
     threading.Thread(target=server.serve_forever, daemon=True).start()
     BASE = f'http://127.0.0.1:{server.server_port}'
 ORIGIN = urlsplit(BASE).netloc
-report = {'base': BASE, 'native': bool(os.environ.get('HARBORLIGHT_BASE_URL')), 'boards': [], 'story_variants': [], 'documents': [], 'interactions': [], 'blocked': [], 'errors': [], 'failed_requests': []}
+report = {'base': BASE, 'native': bool(os.environ.get('HARBORLIGHT_BASE_URL')), 'bootstrap_routes': [], 'boards': [], 'story_variants': [], 'documents': [], 'interactions': [], 'blocked': [], 'errors': [], 'failed_requests': []}
 
 
 def link(slug, variant=1, level=1):
@@ -89,6 +117,19 @@ try:
         page.set_default_timeout(15000)
         page.on('pageerror', lambda error: report['errors'].append(str(error)))
         page.on('response', lambda response: report['failed_requests'].append({'status': response.status, 'url': response.url}) if response.status >= 400 else None)
+        # Check slashless directory responses before the broad catalog sweep.
+        # Local /gra also proves compatibility with the repository preview.
+        prefixes = ['', '/gra'] if server else ['']
+        for prefix in prefixes:
+            for suffix in ('/minigames', '/minigames/', '/minigames/index.html'):
+                page.goto(BASE + prefix + suffix + '?game=expedition-triples', wait_until='networkidle')
+                expect(page.locator('#error')).to_be_hidden()
+                expect(page.locator('#board')).to_have_attribute('aria-busy', 'false')
+                expect(page.locator('[data-memory-card]')).to_have_count(24)
+                assert page.evaluate('document.baseURI').endswith(prefix + '/minigames/')
+                report['bootstrap_routes'].append({'path': prefix + suffix, 'passed': True})
+        assert not report['failed_requests'], report['failed_requests']
+        assert not report['errors'], report['errors']
         page.goto(BASE + '/minigames/', wait_until='networkidle')
         expect(page.locator('#catalog')).to_be_visible()
         catalog = page.evaluate('async()=>{const r=await fetch("./catalog.json");return r.json()}')
@@ -234,4 +275,4 @@ finally:
     if server:
         server.shutdown()
     (OUTPUT / 'report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
-print(json.dumps({'status': report['status'], 'boards': len(report['boards']), 'story_variants': len(report['story_variants']), 'documents': len(report['documents']), 'interactions': report['interactions'], 'native': report['native']}, ensure_ascii=False))
+print(json.dumps({'status': report['status'], 'bootstrap_routes': len(report['bootstrap_routes']), 'boards': len(report['boards']), 'story_variants': len(report['story_variants']), 'documents': len(report['documents']), 'interactions': report['interactions'], 'native': report['native']}, ensure_ascii=False))

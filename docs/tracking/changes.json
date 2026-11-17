@@ -29863,9 +29863,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_validation_PASS_55_games_110_documents_selected_complete_flows",
-        "ci": "pending_own_CI",
-        "preprod": "pending_standard_promotion_and_readback",
+        "dev": "accepted_source_03f_CI_and_Pages_SUCCESS_remote_tag_verified",
+        "ci": "SUCCESS_44087431085_own_exact_source_03f",
+        "preprod": "FAILURE_44093734171_native_bootstrap_fix_1158_PENDING",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -29883,7 +29883,8 @@
       "superseded_by": [],
       "related_changes": [
         "HL-CHG-1142",
-        "HL-CHG-1156"
+        "HL-CHG-1156",
+        "HL-CHG-1158"
       ],
       "issue_url": null,
       "published_to_github_issues": false,
@@ -29909,8 +29910,10 @@
           "tests/harborlight-frontend-bundle.test.py"
         ],
         "manual_execution": "NOT_RUN",
-        "source_sha": "6b40252ba4f57a035d6b624656c8fce735559b07",
-        "release_note": "Lokalny odbiór PASS: 55 gier, 55 DOCX i 55 TXT, 60 960 słów, 100 linków wariantów i 560 pomieszczeń. Browser sprawdził 110 plansz na 1440/390, 100 wariantów i 110 pobrań, bez błędów strony/HTTP, żądań kont lub storage/cookies. Ukończone wybrane ścieżki: dwie rundy trójek 24 → 30 kart i wypłata 150 monet RAM, mewa, pierwsze pomieszczenie opowieści, trzy listy, pauza i restart. Nie deklarujemy wygrania wszystkich 55 gier ani publicznego odbioru. Model 8/8, pakowanie 27/27, składnia workflow i świeży master PASS; 114 wcześniejszych odcisków, redakcyjny Excel i MERGE zachowane. Git/CI/PRE-PROD PENDING. Wersja gry 0.15.0.2 bez zmiany; bez resetu i PROD/DNS."
+        "source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
+        "release_note": "DEV 03f ma własny CI 44087431085 SUCCESS 36 min 49 s i Pages 44087430928 SUCCESS 52 s oraz niezmienny tag DEV. Pierwszy PRE-PROD 44093734171/próba1 FAILURE 6 min 03 s: Hosting/manifest opublikowane, ale natywny test wykrył 221 HTTP404 dla /app.js?v=minigames-1. Odbiory głównej wyspy/kont i oba udane artefakty pominięte; brak udanego receipt i tagu PRE-PROD tej próby. Niezależny TLS 226 plików / 36 847 438 B PASS. Bug HL-CHG-1158 wymaga nowego źródła, własnego CI i standardowej promocji. Bez zmian modeli, katalogu, Word/TXT, Excel lub resetu.",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44087431085",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44093734171"
       },
       "notes": [
         "Katalog nie dubluje oryginalnych silników sygnałów i tras portowych: są uwzględnione w 24 zagadkach wyspy.",
@@ -29928,6 +29931,77 @@
         "DOC:per-game-docx-and-txt",
         "OPS:standard-preprod-promotion",
         "DATA:practice-in-memory-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1158",
+      "epic": "HL-EPIC-OPS",
+      "area": "Uruchamianie osobnych minigier",
+      "type": "Bug",
+      "title": "Adres minigier bez końcowego ukośnika nie może pobierać modułu z katalogu głównego",
+      "source": {
+        "kind": "native_preprod_acceptance_failure",
+        "date": "2026-11-17",
+        "date_note": "Regresja wykryta w natywnym odbiorze zleconej publikacji osobnych minigier.",
+        "summary": "PRE-PROD 44093734171/próba1 opublikował Hosting, lecz natywny test odrzucił 221 HTTP404 dla /app.js?v=minigames-1. Naprawa pozostaje w zakresie zlecenia działających osobnych linków do wszystkich minigier.",
+        "reference": "workflow:44093734171:1:native-standalone-step22"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "six_real_slashless_HTTP200_routes_PASS_new_source_pending",
+        "ci": "pending_new_exact_source_CI",
+        "preprod": "first_attempt_FAILURE_new_standard_promotion_pending",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Osobne minigry uruchamiają moduł z bezwzględną ścieżką /minigames/app.js również przy adresie /minigames bez końcowego ukośnika.",
+        "Regresja odtwarza rzeczywiste HTTP200 dla adresu bez ukośnika; lokalne przekierowanie HTTP301 nie może maskować błędu.",
+        "Natywny odbiór kończy się bez odpowiedzi HTTP404 lub błędów strony; samo ukończenie wcześniejszych interakcji nie oznacza PASS końcowej asercji.",
+        "Nowe źródło wymaga własnego zielonego CI i standardowego PRE-PROD, z odbiorem minigier, istniejącej wyspy i kont oraz udanymi artefaktami.",
+        "Historia FAILURE44093734171 i własnego SUCCESS CI03f zostaje zachowana; niezmienny tag dev-minigames-20261117 nie jest przesuwany.",
+        "Modele gier, katalog, Word/TXT, Excel/MERGE, konta, PROD i DNS pozostają bez zmian; bez resetu i pomijania bramek promocji."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1157"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-MINIGAMES-STANDALONE.md",
+          "docs/v32/MINIGAMES-STANDALONE-EVIDENCE.json"
+        ],
+        "code": [
+          "minigames/index.html"
+        ],
+        "automated_tests": [
+          "tests/harborlight-minigames-standalone-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44087431085",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44093734171",
+        "release_note": "Źródło błędu 03f zachowuje CI SUCCESS; PRE-PROD 44093734171/próba1 ma FAILURE 6 min 03 s w końcowej asercji sieciowej testu minigier. Hosting i 226 plików są opublikowane i zgodne TLS, ale nie ma pełnego natywnego odbioru, udanego receipt ani tagu PRE-PROD tej próby. Dynamiczny bezwzględny bootstrap i regresja rzeczywistego slashless HTTP200 są przygotowywane. Nowe źródło/CI/deploy PENDING. Poprawka gotowa lokalnie: sześć tras root/prefiks /gra i 302 GET bez błędów, model 8/8 oraz pakowanie 27/27 PASS. Model, katalog i dokumenty bez zmian. Własny nowy CI i nowa promocja nadal PENDING."
+      },
+      "notes": [
+        "Odczyt 226 plików i poprawnego MIME dokumentów jest odrębnym dowodem od odbioru działającego interfejsu.",
+        "Nie wolno opisywać pierwszego przebiegu jako udanego lub traktować późniejszej poprawki jako zmiany jego historycznego wyniku."
+      ],
+      "tags": [
+        "v32",
+        "minigames",
+        "bootstrap",
+        "regression",
+        "preprod"
+      ],
+      "rules": [
+        "UI:absolute-minigame-bootstrap",
+        "TEST:real-slashless-HTTP200",
+        "OPS:failed-promotion-history-preserved",
+        "OPS:new-source-own-CI-required"
       ]
     }
   ],
@@ -30058,14 +30132,14 @@
     "preprod_bridge_duration": null,
     "preprod_deployment_duration": "2m22s_total;2m03s_deploy_job",
     "dev_application_version": "0.15.0.2",
-    "dev_status": "accepted_own_CI_Pages_TLS_public_bytes_transport_replay_and_remote_tag",
+    "dev_status": "accepted_standalone_minigames_own_CI_and_Pages_SUCCESS_main_game_models_unchanged",
     "dev_ci": "success",
-    "dev_source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+    "dev_source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
     "dev_implementation_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
-    "dev_ci_run_id": 43850690541,
-    "dev_pages_run_id": 43850690456,
+    "dev_ci_run_id": 44087431085,
+    "dev_pages_run_id": 44087430928,
     "dev_pages_conclusion": "success",
-    "dev_tag": "dev-0.15.0.2-20261116",
+    "dev_tag": "dev-minigames-20261117",
     "dev_cache": "frontend-v32-13",
     "previous_accepted_v32": {
       "source_sha": "fc2e87eec57c0388a16fb9b15a7d80ea0bc9c67c",
@@ -30154,7 +30228,7 @@
         "bran_and_feed"
       ]
     },
-    "dev_tag_remote_object": "9b07b4dd74f2e4dabda6e4eaf361832f411cb506",
+    "dev_tag_remote_object": "e1538ee8adb3e7801e0f47a3a4103eef7bc37b7b",
     "dev_tag_remote_verified": true,
     "dev_ci_completed_at": "2026-11-15T22:20:54Z",
     "dev_ci_duration": "24m31s",
@@ -30538,7 +30612,7 @@
       "bytes": 30781978,
       "evidence": "docs/v32/CACHE13-PREPROD-ARTIFACT-TLS-AUDIT.json"
     },
-    "preprod_next_promotion_status": "none_pending_current_requested_release_completed",
+    "preprod_next_promotion_status": "FIX1158_NEW_SOURCE_OWN_CI_AND_STANDARD_DEPLOY_PENDING",
     "owner_reset_report": {
       "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
       "deployment_run_id": 43768861718,
@@ -32957,7 +33031,7 @@
     },
     "standalone_minigames_task": {
       "as_of": "2026-11-17",
-      "status": "local_validation_PASS_Git_CI_deploy_pending",
+      "status": "DEV03f_ACCEPTED_FIRST_PREPROD_FAILURE_BOOTSTRAP_FIX_PENDING",
       "change": "HL-CHG-1157",
       "expected_entries": 55,
       "expected_docx": 55,
@@ -32982,7 +33056,36 @@
       "planned_tags": [
         "dev-minigames-20261117",
         "preprod-minigames-20261117"
-      ]
+      ],
+      "source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
+      "CI_run_id": 44087431085,
+      "CI_conclusion": "success",
+      "Pages_run_id": 44087430928,
+      "Pages_conclusion": "success",
+      "DEV_tag": "dev-minigames-20261117",
+      "DEV_tag_object": "e1538ee8adb3e7801e0f47a3a4103eef7bc37b7b",
+      "DEV_tag_remote_verified": true,
+      "PREPROD_run_id": 44093734171,
+      "PREPROD_attempt": 1,
+      "PREPROD_status": "FAILURE_NATIVE_STANDALONE_FINAL_NETWORK_ASSERTION",
+      "source_package_files": 226,
+      "source_package_bytes": 36847438,
+      "PREPROD_successful_receipt": false,
+      "PREPROD_tag_created": false,
+      "PREPROD_TLS_file_audit": "PASS_226_FILES_36847438_BYTES",
+      "fix_change": "HL-CHG-1158",
+      "new_fix_source": "PENDING",
+      "new_fix_CI": "PENDING",
+      "new_fix_deployment": "PENDING"
+    },
+    "preprod_observed_candidate": {
+      "source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
+      "run_id": 44093734171,
+      "attempt": 1,
+      "status": "FAILURE_HOSTING_PUBLISHED_NATIVE_ACCEPTANCE_REJECTED",
+      "previous_accepted_publication_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+      "successful_receipt": false,
+      "tag_created": false
     }
   }
 }

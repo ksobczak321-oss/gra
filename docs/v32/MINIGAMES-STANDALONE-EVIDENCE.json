@@ -3,7 +3,7 @@
   "as_of": "2026-11-17",
   "timezone": "Europe/Warsaw",
   "change_id": "HL-CHG-1157",
-  "status": "IMPLEMENTED_LOCAL_VALIDATION_PASS_GIT_CI_AND_DEPLOYMENT_PENDING",
+  "status": "BOOTSTRAP_FIX_IMPLEMENTED_FOCUSED_SIX_ROUTE_PASS_NEW_SOURCE_CI_PREPROD_PENDING",
   "base_source_sha": "6b40252ba4f57a035d6b624656c8fce735559b07",
   "accepted_main_game_application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
   "accepted_main_game_publication_source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
@@ -49,7 +49,7 @@
     "docx_pattern": "https://harborlight-dev.web.app/minigames/docs/<slug>.docx",
     "txt_pattern": "https://harborlight-dev.web.app/minigames/docs/<slug>.txt",
     "archive": "https://harborlight-dev.web.app/minigames/HARBORLIGHT-minigry-dokumentacja.zip",
-    "availability": "PENDING_DEPLOYMENT_AND_PUBLIC_READBACK"
+    "availability": "FILES_PUBLISHED_TLS_VERIFIED_NATIVE_GAME_ACCEPTANCE_FAILED_BOOTSTRAP_FIX_PENDING"
   },
   "practice_mode": {
     "actual_models_and_renderers_required": true,
@@ -120,12 +120,10 @@
     ],
     "packaged_browser": {
       "status": "PASS",
-      "report": "/workspace/work/minigames-packaged-final-qa/report.json",
-      "report_sha256": "bba548e14a5fbb69abbe9c59bb9338b330f59a9aa4d5f8d940bbf96054962814",
-      "scope": "exact immutable local frontend package",
       "boards": 110,
       "story_variants": 100,
-      "documents": 110,
+      "document_downloads": 110,
+      "real_flow_cases": 7,
       "interactions": [
         "expedition-memory-reveal-pause-reset",
         "expedition-triples-solved-and-next-round",
@@ -135,32 +133,110 @@
         "classic-letters-solved-through-real-ui",
         "selected-difficulty-form-starts-real-66-card-model"
       ],
-      "page_errors": 0,
-      "failed_requests": 0,
-      "blocked_requests": 0,
+      "report": "/workspace/work/minigames-packaged-final-qa/report.json",
+      "report_sha256": "bba548e14a5fbb69abbe9c59bb9338b330f59a9aa4d5f8d940bbf96054962814",
       "native_public_site": false
     }
   },
   "git_publication": {
-    "status": "PENDING",
-    "source_sha": null
+    "status": "PUSHED_MAIN_REMOTE_VERIFIED",
+    "source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af"
   },
   "ci": {
-    "status": "PENDING",
-    "run_id": null,
-    "conclusion": null
+    "status": "completed",
+    "run_id": 44087431085,
+    "job_id": 134053423705,
+    "conclusion": "success",
+    "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44087431085",
+    "run_elapsed_seconds": 2209,
+    "job_elapsed_seconds": 2204,
+    "successful_steps": 35,
+    "skipped_steps": 2,
+    "tests": {
+      "Node": {
+        "frontend": 1445,
+        "backend": 170,
+        "physical": 7,
+        "total": 1622
+      },
+      "Python": 167,
+      "Chromium_programs": {
+        "main": 48,
+        "DEV_cloud": 18,
+        "standalone": 1,
+        "total": 67
+      }
+    },
+    "source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
+    "summary": "/workspace/work/minigames-release-20261117/ci-final-summary.json"
   },
   "pages": {
-    "status": "PENDING",
-    "run_id": null,
-    "conclusion": null
+    "status": "completed",
+    "run_id": 44087430928,
+    "job_id": 134053423247,
+    "conclusion": "success",
+    "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44087430928",
+    "run_elapsed_seconds": 52,
+    "job_elapsed_seconds": 45,
+    "source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
+    "public_byte_readback": {
+      "status": "PASS",
+      "normal_TLS": true,
+      "files": 117,
+      "total_bytes": 6050275,
+      "docx": 55,
+      "txt": 55,
+      "all_match_committed_package": true,
+      "native_browser_claimed": false,
+      "report": "/workspace/work/minigames-release-20261117/pages-public-byte-audit.json"
+    }
   },
   "preprod": {
-    "status": "PENDING",
-    "run_id": null,
-    "attempt": null,
-    "source_sha": null,
-    "public_readback": "PENDING"
+    "status": "FAILURE_NATIVE_STANDALONE_FINAL_NETWORK_ASSERTION",
+    "run_id": 44093734171,
+    "attempt": 1,
+    "source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
+    "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44093734171",
+    "run_elapsed_seconds": 363,
+    "gate": {
+      "job_id": 134075306737,
+      "conclusion": "success",
+      "elapsed_seconds": 8
+    },
+    "deploy": {
+      "job_id": 134075407035,
+      "conclusion": "failure",
+      "elapsed_seconds": 346,
+      "successful_steps": 24,
+      "failed_steps": 1,
+      "skipped_steps": 8,
+      "hosting_publication_step": "success",
+      "manifest_step": "success"
+    },
+    "native_standalone_acceptance": {
+      "status": "FAILURE",
+      "failed_workflow_step": 22,
+      "final_assertion": "221 HTTP404 responses for /app.js?v=minigames-1; request path lacked /minigames",
+      "prior_boards_documents_and_interactions": "completed before final assertion; not a full native acceptance PASS"
+    },
+    "native_existing_island_check": "SKIPPED",
+    "permanent_accounts_and_isolation_check": "SKIPPED",
+    "successful_frontend_artifact": "SKIPPED",
+    "successful_receipt_artifact": "SKIPPED",
+    "successful_receipt_for_this_run": false,
+    "public_byte_readback": {
+      "status": "PASS",
+      "normal_TLS": true,
+      "files": 226,
+      "total_bytes": 36847438,
+      "docx": 55,
+      "txt": 55,
+      "correct_download_MIME": true,
+      "all_bytes_match_committed_package": true,
+      "native_browser_claimed": false,
+      "report": "/workspace/work/minigames-release-20261117/preprod-public-byte-audit.json"
+    },
+    "PREPROD_tag_created": false
   },
   "manual_user_acceptance": "NOT_RUN",
   "account_reset_executed": false,
@@ -174,14 +250,112 @@
     "max_archive_members": 256,
     "strict_allowlist": true,
     "source_sha_for_local_build": "6b40252ba4f57a035d6b624656c8fce735559b07",
-    "final_release_commit_and_digests": "PENDING_GIT_PUBLICATION",
+    "final_release_commit_and_digests": "COMMITTED_SOURCE_PACKAGE_VERIFIED",
     "local_candidate_archive_sha256": "7696ace3ee892b385e89c725be9cc5b779747cf4642ca24596fe7cd9595510fc",
-    "local_candidate_manifest_sha256": "2948dc9dc013adfc997349a44649d5a36e4111cd70879c0897a9ce0405a1e6db"
+    "local_candidate_manifest_sha256": "2948dc9dc013adfc997349a44649d5a36e4111cd70879c0897a9ce0405a1e6db",
+    "committed_source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
+    "files": 226,
+    "total_bytes": 36847438,
+    "archive_sha256": "4ecd56c2188e053b1ff270c7cbb4948923886b317b6161f9e9f0c2449380dd74",
+    "manifest_sha256": "b453ae71c438ba1e4e0f5ab285c9ff031f5a708d4d16575dc6109751b1f49cc5",
+    "receipt_artifact_digests": "PENDING_PREPROD_COMPLETION"
   },
   "game_version": "0.15.0.2",
-  "planned_new_tags": {
-    "dev": "dev-minigames-20261117",
-    "preprod": "preprod-minigames-20261117",
-    "publication": "PENDING"
+  "published_source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
+  "tags": {
+    "dev": {
+      "name": "dev-minigames-20261117",
+      "status": "PUBLISHED_REMOTE_VERIFIED",
+      "object": "e1538ee8adb3e7801e0f47a3a4103eef7bc37b7b",
+      "target": "03f39a2e8e8854208548ba53dc842aae5955e2af"
+    },
+    "preprod": {
+      "name": "preprod-minigames-20261117",
+      "status": "NOT_CREATED_FIRST_DEPLOYMENT_FAILED",
+      "object": null,
+      "target": null
+    }
+  },
+  "initial_source_acceptance": {
+    "source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
+    "CI_run": 44087431085,
+    "CI_conclusion": "success",
+    "CI_seconds": 2209,
+    "Pages_run": 44087430928,
+    "Pages_conclusion": "success",
+    "DEV_tag": "dev-minigames-20261117",
+    "DEV_tag_object": "e1538ee8adb3e7801e0f47a3a4103eef7bc37b7b",
+    "DEV_tag_immutable": true
+  },
+  "first_preprod_attempt": {
+    "status": "FAILURE_NATIVE_STANDALONE_FINAL_NETWORK_ASSERTION",
+    "run_id": 44093734171,
+    "attempt": 1,
+    "source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
+    "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44093734171",
+    "run_elapsed_seconds": 363,
+    "gate": {
+      "job_id": 134075306737,
+      "conclusion": "success",
+      "elapsed_seconds": 8
+    },
+    "deploy": {
+      "job_id": 134075407035,
+      "conclusion": "failure",
+      "elapsed_seconds": 346,
+      "successful_steps": 24,
+      "failed_steps": 1,
+      "skipped_steps": 8,
+      "hosting_publication_step": "success",
+      "manifest_step": "success"
+    },
+    "native_standalone_acceptance": {
+      "status": "FAILURE",
+      "failed_workflow_step": 22,
+      "final_assertion": "221 HTTP404 responses for /app.js?v=minigames-1; request path lacked /minigames",
+      "prior_boards_documents_and_interactions": "completed before final assertion; not a full native acceptance PASS"
+    },
+    "native_existing_island_check": "SKIPPED",
+    "permanent_accounts_and_isolation_check": "SKIPPED",
+    "successful_frontend_artifact": "SKIPPED",
+    "successful_receipt_artifact": "SKIPPED",
+    "successful_receipt_for_this_run": false,
+    "public_byte_readback": {
+      "status": "PASS",
+      "normal_TLS": true,
+      "files": 226,
+      "total_bytes": 36847438,
+      "docx": 55,
+      "txt": 55,
+      "correct_download_MIME": true,
+      "all_bytes_match_committed_package": true,
+      "native_browser_claimed": false,
+      "report": "/workspace/work/minigames-release-20261117/preprod-public-byte-audit.json"
+    },
+    "PREPROD_tag_created": false
+  },
+  "next_fix": {
+    "change_id": "HL-CHG-1158",
+    "status": "IN_PROGRESS_NEW_SOURCE_CI_AND_DEPLOYMENT_PENDING",
+    "cause": "Relative module URL may be speculatively requested as /app.js before base-path handling on a slashless /minigames HTTP200 document; local301 redirect masked the condition.",
+    "planned_fix": "Dynamic absolute bootstrap and regression against a genuine slashless HTTP200 response",
+    "new_source_sha": null,
+    "own_CI": "PENDING",
+    "new_standard_PREPROD_dispatch": "PENDING",
+    "model_catalog_DOCX_TXT_Excel_changes": false,
+    "gate_bypass": false,
+    "implementation": "completed",
+    "focused_real_slashless_HTTP200": "PASS",
+    "focused_routes": 6,
+    "focused_GET_requests": 302,
+    "focused_HTTP_failures": 0,
+    "focused_page_errors": 0,
+    "focused_report": "/workspace/work/minigames-bootstrap-fix-focus.json",
+    "focused_report_sha256": "aa862bdbaff3304eae0a18a4d72307dc688afeaca024dbe9988568b49e3accad",
+    "unchanged_model_sources": 114,
+    "unchanged_catalog_documents_Excel_MERGE": true,
+    "own_new_CI": "PENDING",
+    "new_DEV_tag": "dev-minigames-20261117-r2",
+    "new_PREPROD_tag": "preprod-minigames-20261117"
   }
 }
