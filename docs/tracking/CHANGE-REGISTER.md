@@ -216,7 +216,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1150 — Import zatwierdzonej redakcjiPL z sześciu arkuszy z pierwszeństwemC i zachowaniem prawdziwej logiki](changes/HL-CHG-1150.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1154 — Start pokazuje ekran ładowania zamiast starej mapy referencyjnej i HUD](changes/HL-CHG-1154.md) | Bug | `accepted` | `accepted_source_c4f7521_own_CI_Pages_tag` | `deployed_and_accepted_source_c4f7521_run43854387444` |
 | [HL-CHG-1155 — Admin3 steruje rzeczywistym tempem1×/2×/6× na DEV i PRE-PROD](changes/HL-CHG-1155.md) | Story | `accepted` | `accepted_source_c4f7521_own_CI_Pages_tag` | `deployed_and_accepted_source_c4f7521_run43854387444` |
-| [HL-CHG-1160 — Uwzględnij przejrzane Samouczek, Produkty i receptury, Badania oraz Nazwy poziomów Latarni](changes/HL-CHG-1160.md) | Story | `accepted` | `local_acceptance_in_progress` | `not_authorized_for_this_change` |
+| [HL-CHG-1160 — Uwzględnij przejrzane Samouczek, Produkty i receptury, Badania oraz Nazwy poziomów Latarni](changes/HL-CHG-1160.md) | Story | `accepted` | `local_UI_and_artifacts_PASS_publication_pending` | `not_authorized_for_this_change` |
 
 <a id="hl-epic-tut"></a>
 
@@ -269,7 +269,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1110 — Biblioteka zawiera zróżnicowane opowieści od prologu do poziomu 20](changes/HL-CHG-1110.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 | [HL-CHG-1113 — Zróżnicowane cele fabularne nie powtarzają zakupu mieszkańca w każdym rozdziale](changes/HL-CHG-1113.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 | [HL-CHG-1136 — Tutorial 48 i samouczek 25 objaśniają nowe produkty i budynki](changes/HL-CHG-1136.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
-| [HL-CHG-1159 — Dobrowolny doradca Królestwa i trzy kroki pierwszego tutoriala](changes/HL-CHG-1159.md) | Story | `accepted` | `local_acceptance_in_progress` | `not_authorized_for_this_change` |
+| [HL-CHG-1159 — Dobrowolny doradca Królestwa i trzy kroki pierwszego tutoriala](changes/HL-CHG-1159.md) | Story | `accepted` | `local_UI_and_artifacts_PASS_publication_pending` | `not_authorized_for_this_change` |
 
 <a id="hl-epic-eco"></a>
 

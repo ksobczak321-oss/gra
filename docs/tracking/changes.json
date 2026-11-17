@@ -30019,7 +30019,7 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_acceptance_in_progress",
+        "dev": "local_UI_and_artifacts_PASS_publication_pending",
         "ci": "pending_exact_source_CI",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
@@ -30061,7 +30061,8 @@
           "tests/harborlight-tour-route-v5-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Lokalne testy kierunkowe PASS; pełny odbiór i własny CI/publikacja DEV w toku."
+        "release_note": "Kod lokalnie zamrożony; kierunkowe29testów iUI doradcy/tekstu/3krokówPASS. PełnylokalnyNode1472/1473 z10swatchdogFAIL i osobnymretryPASS9515ms; niczego nie osłabiono. Master157/57/61923budowa i freshvalidatePASS; własnyCI/Pagesw toku. TylkoDEV; bez PRE-PROD/resetu/PROD/DNS.",
+        "application_source_sha": "2dbbb089917ef8816ce89265fcb9037513ec4a96"
       },
       "notes": [
         "Rozmowa korzysta z lokalnego planera zasad gry; nie wymaga płatnego zewnętrznego modelu ani kluczy. Nie obiecuje globalnie optymalnego planu.",
@@ -30095,7 +30096,7 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_acceptance_in_progress",
+        "dev": "local_UI_and_artifacts_PASS_publication_pending",
         "ci": "pending_exact_source_CI",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
@@ -30137,7 +30138,8 @@
           "tests/harborlight-purple-editorial-ui-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "165wybranychwierszy;35zmienionychtekstów; lokalne testy danych PASS, odbiórUI i publikacjaDEVw toku."
+        "release_note": "Kod lokalnie zamrożony; kierunkowe29testów iUI doradcy/tekstu/3krokówPASS. PełnylokalnyNode1472/1473 z10swatchdogFAIL i osobnymretryPASS9515ms; niczego nie osłabiono. Master157/57/61923budowa i freshvalidatePASS; własnyCI/Pagesw toku. TylkoDEV; bez PRE-PROD/resetu/PROD/DNS.",
+        "application_source_sha": "2dbbb089917ef8816ce89265fcb9037513ec4a96"
       },
       "notes": [
         "Plik wejściowy nie jest publikowany w całości. MERGE zawiera wyłącznie wybrane4zakładki.",
@@ -33242,7 +33244,7 @@
     "advisor_task": {
       "as_of": "2026-11-17",
       "version": "0.15.1.0",
-      "status": "local_acceptance_in_progress",
+      "status": "LOCAL_ACCEPTANCE_COMPLETE_PUBLICATION_PENDING",
       "DEV_only": true,
       "PREPROD_authorized": false,
       "reset": false,
@@ -33257,7 +33259,11 @@
         "nonempty_C": 31,
         "changed_rows": 35,
         "unselected_sheet_contents_read": false
-      }
+      },
+      "application_source_sha": "2dbbb089917ef8816ce89265fcb9037513ec4a96",
+      "master_source": "2dbbb089917ef8816ce89265fcb9037513ec4a96",
+      "master_validation": "BUILD_AND_FRESH_VALIDATE_PASS",
+      "local_frontend_full": "1472of1473PASS_one_watchdog_FAIL_isolated_retryPASS9515ms"
     }
   }
 }

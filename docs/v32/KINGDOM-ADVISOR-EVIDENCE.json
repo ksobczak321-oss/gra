@@ -14,7 +14,7 @@
   "browser_advisor": "PASS_1440x1000_390x844_390x480",
   "browser_first_introduction": "PASS_3_STEPS_1440_390",
   "browser_target_replacement": "PASS_1440_390",
-  "full_regression": "LATEST_SOURCE_NODE_RUNNING_FULL_CI_PENDING",
+  "full_regression": "LOCAL_FULL_RUN_FAILURE_PRESERVED_TARGETED_29_PASS_OWN_CI_PENDING",
   "source_sha": null,
   "CI": "PENDING",
   "Pages": "PENDING",
@@ -53,7 +53,7 @@
     "duration_ms": 315179.559317,
     "note": "Full suite includes22 planner cases; the added intro-index case also passed in separate23-case advisor rerun."
   },
-  "application_source_sha": "bf361d13fd725ea360445a4af359e292d4d09f66",
+  "application_source_sha": "2dbbb089917ef8816ce89265fcb9037513ec4a96",
   "latest_local_frontend_node": {
     "total": 1473,
     "pass": 1472,
@@ -83,5 +83,37 @@
     "onboarding_v20": "ALL_SCENARIOS_PASS_ACROSS_FOCUSED_RUNS_EARLIER_FAILED_FULL_RUN_PRESERVED"
   },
   "targeted_current_cases": 29,
-  "intent_regression": "PASS_EXPLICIT_NEW_PRODUCTION_GOAL_OVERRIDES_PRIOR_UPGRADE_CONTEXT"
+  "intent_regression": "PASS_EXPLICIT_NEW_PRODUCTION_GOAL_OVERRIDES_PRIOR_UPGRADE_CONTEXT",
+  "master": {
+    "source_git_commit": "2dbbb089917ef8816ce89265fcb9037513ec4a96",
+    "sha256": "6473fda0fdb6a3ddb4fa7bbe29f6827f6c7b8f38e95fd1bf59379b0e75355096",
+    "bytes": 7665723,
+    "sheets": 157,
+    "current_sheets": 57,
+    "rows_current": 61923,
+    "historical_sheets_unchanged": 100,
+    "historical_zip_parts_unchanged": 220,
+    "historical_comments_unchanged": 48,
+    "historical_cached_formulas_unchanged": 4982,
+    "new_cached_formulas": 12,
+    "formula_samples_against_code": 160,
+    "fresh_validate_only": "PASS",
+    "source_files": 117
+  },
+  "editorial_six": {
+    "source_git_commit": "2dbbb089917ef8816ce89265fcb9037513ec4a96",
+    "sha256": "f95ea4c9c74a1ebffd8c46bf3cf19d466b33df89adc38cd440e8d5d2a3f2f2ff",
+    "rows": 413,
+    "sheets": 6,
+    "C_all_blank": true,
+    "scope_unchanged": true
+  },
+  "minigame_documents": {
+    "catalog_model_source": "b1f9855fbcad1e85c4088d5ee8f1a22959c9c6db",
+    "games": 55,
+    "DOCX": 55,
+    "TXT": 55,
+    "actual_words": 60960,
+    "unchanged_rules_and_scenarios": true
+  }
 }

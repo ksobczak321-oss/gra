@@ -9,7 +9,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `local_acceptance_in_progress` |
+| DEV | `local_UI_and_artifacts_PASS_publication_pending` |
 | CI | `pending_exact_source_CI` |
 | PRE-PROD | `not_authorized_for_this_change` |
 | PROD | `postponed_by_user` |
@@ -46,7 +46,7 @@ Data pierwotnej wiadomości: 2026-11-17. Użytkownik wskazał wyłącznie zakła
 - **Scenariusze automatyczne:** [tests/harborlight-purple-editorial.test.mjs](../../../tests/harborlight-purple-editorial.test.mjs), [tests/harborlight-purple-editorial-ui-smoke.py](../../../tests/harborlight-purple-editorial-ui-smoke.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-165wybranychwierszy;35zmienionychtekstów; lokalne testy danych PASS, odbiórUI i publikacjaDEVw toku.
+Kod lokalnie zamrożony; kierunkowe29testów iUI doradcy/tekstu/3krokówPASS. PełnylokalnyNode1472/1473 z10swatchdogFAIL i osobnymretryPASS9515ms; niczego nie osłabiono. Master157/57/61923budowa i freshvalidatePASS; własnyCI/Pagesw toku. TylkoDEV; bez PRE-PROD/resetu/PROD/DNS.
 
 ## Relacje
 

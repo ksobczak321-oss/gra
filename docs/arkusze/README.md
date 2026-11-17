@@ -1,5 +1,10 @@
 # Arkusz zasad HARBORLIGHT
 
+Aktualizacja17listopada: bieżący master dla **0.15.1.0/cache14** pochodzi ze źródła `2dbbb089917ef8816ce89265fcb9037513ec4a96`. Ma157arkuszy,57bieżących i61923bieżącewiersze;7665723bajty, SHA256`6473fda0fdb6a3ddb4fa7bbe29f6827f6c7b8f38e95fd1bf59379b0e75355096`. Uwzględnia3kroki startu, dobrowolnego doradcę i teksty4fioletowychzakładek. Pełny katalog56kroków i25lekcji pozostaje jako Pomoc. Archiwum14/100arkuszy/220części/48komentarzy/4982starychwyników zachowane. Budowa i świeżevalidate-onlyPASS; własnyCI/publikacjaDEV wymagają osobnego potwierdzenia. Raport6zakładek nadal dotyczy wyłącznie pierwotnych413wierszy z pustąC; nowyMERGE4fioletowych jest [osobny](../v32/EDITORIAL-PURPLE-TABS-MERGE.json).
+
+Poniższy opis156arkuszy/e23 dokumentuje poprzednią zamrożoną generację, nie aktualną publikację.
+
+
 Bieżący pełny master to **[HARBORLIGHT15-zasady.xlsx](HARBORLIGHT15-zasady.xlsx)**, obejmujący zasady v32 gry 0.15.0.2 ze źródła `e23b713ddbaef3ea6b0507c56a466f23c1f0aa92`. Budowa i świeża walidacja: **PASS**. Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions. [Raport walidacji](HARBORLIGHT15-zasady-walidacja.json) · [Dokładne dowody](../v32/MASTER-WORKBOOK15-EVIDENCE.json).
 
 Plik ma **156 arkuszy: 100 archiwalnych i 56 bieżących (51 widocznych, 5 ukrytych)**, 61 262 bieżące wiersze oraz 7 581 368 bajtów. SHA-256: `b45a9f67ebcc1653ce2fc5413e5dbd9a42b32c103a52b4eda06db647b5dd1f11`.
