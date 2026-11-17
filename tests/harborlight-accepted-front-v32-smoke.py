@@ -66,10 +66,26 @@ def logical_point(page, point):
     return page.evaluate('''([x,y])=>{const stage=document.querySelector('#stage'),r=stage.getBoundingClientRect(),s=r.width/1672;return {x:r.x+x*s,y:r.y+y*s};}''', point)
 
 
+def advisor_clearance(page, width):
+    """The visible, collapsed advisor leaves the central map tap area free."""
+    launch = page.locator('[data-advisor-open]')
+    expect(launch).to_be_visible()
+    expect(launch).to_have_attribute('aria-expanded', 'false')
+    box = launch.bounding_box()
+    assert box['x'] >= 0 and box['x'] + box['width'] <= width / 2 - 19, (width, box)
+    title = launch.locator('strong').evaluate('''n=>{
+        const r=n.getBoundingClientRect(),p=n.closest('button').getBoundingClientRect();
+        return {right:r.right,buttonRight:p.right,height:r.height,line:parseFloat(getComputedStyle(n).lineHeight),overflow:n.scrollWidth>n.clientWidth+1};
+    }''')
+    assert not title['overflow'] and title['right'] <= title['buttonRight'] - 5, (width, title)
+    assert title['height'] <= title['line'] * 2 + 1, (width, title)
+    return box
+
+
 report = []
 with sync_playwright() as p:
     browser = p.chromium.launch(executable_path=os.environ.get('HARBORLIGHT_CHROMIUM','/usr/bin/chromium'), headless=True, args=['--no-sandbox'])
-    for width,height,touch in [(1672,941,False),(1440,1000,False),(390,844,True)]:
+    for width,height,touch in [(1672,941,False),(1440,1000,False),(390,844,True),(320,844,True)]:
         context = browser.new_context(viewport={'width':width,'height':height},has_touch=touch,reduced_motion='reduce')
         context.route(BASE+'/**',asset)
         page = context.new_page()
@@ -93,10 +109,13 @@ with sync_playwright() as p:
 
         # Real hit-testing catches overlapping areas that programmatic click()
         # would conceal, including the former decorative Leatherworks hut.
+        advisor_boxes = []
         for identity,point in CLICK_POINTS.items():
             region=CHANGED.get(identity,[439,506,98,79])
             page.evaluate('region=>window.dispatchEvent(new CustomEvent("island-tour-focus",{detail:{region}}))',region)
             location=logical_point(page,point)
+            if touch and identity == 'warehouse':
+                advisor_boxes.append({'state':'suggesting','box':advisor_clearance(page,width)})
             top=page.evaluate('p=>document.elementFromPoint(p.x,p.y)?.closest(".world-hotspot")?.id',location)
             assert top=='hit-world-'+identity,(width,identity,top,location)
             if touch:
@@ -112,6 +131,32 @@ with sync_playwright() as p:
                 expect(art.first).to_be_visible()
                 assert art.first.locator('svg image').get_attribute('href'),identity
             page.locator('#island-dialog .dialog-close').click()
+            if touch and identity == 'leatherworks':
+                # Wait for an actual throttled hint refresh after the preceding
+                # dialog closes. A quick loop used to test a hidden advisor and
+                # miss its later overlap with the Warehouse on narrow screens.
+                expect(page.locator('[data-advisor-open]')).to_be_visible()
+                page.evaluate('''()=>{
+                    window.acceptedFrontAdvisorRefreshes=0;
+                    window.acceptedFrontAdvisorObserver=new MutationObserver(()=>window.acceptedFrontAdvisorRefreshes++);
+                    window.acceptedFrontAdvisorObserver.observe(document.querySelector('[data-advisor-hint]'),{childList:true,characterData:true,subtree:true});
+                }''')
+                page.wait_for_function('window.acceptedFrontAdvisorRefreshes > 0',timeout=12000)
+                page.evaluate('window.acceptedFrontAdvisorObserver.disconnect()')
+            if touch and identity == 'warehouse':
+                # Muting changes the compact root's class and used to give it a
+                # separate width. Both states must permit a real Warehouse tap.
+                page.locator('[data-advisor-mute]').click()
+                expect(page.locator('[data-advisor-mute]')).to_have_attribute('aria-pressed','true')
+                advisor_boxes.append({'state':'muted','box':advisor_clearance(page,width)})
+                location=logical_point(page,point)
+                top=page.evaluate('p=>document.elementFromPoint(p.x,p.y)?.closest(".world-hotspot")?.id',location)
+                assert top=='hit-world-warehouse',(width,'warehouse-muted',top,location)
+                page.touchscreen.tap(location['x'],location['y'])
+                expect(panel.first).to_be_visible()
+                page.locator('#island-dialog .dialog-close').click()
+                page.locator('[data-advisor-mute]').click()
+                expect(page.locator('[data-advisor-mute]')).to_have_attribute('aria-pressed','false')
         page.evaluate('region=>window.dispatchEvent(new CustomEvent("island-tour-focus",{detail:{region}}))',[498,475,60,60])
         decoration=logical_point(page,[530,500])
         top=page.evaluate('p=>document.elementFromPoint(p.x,p.y)?.closest(".world-hotspot")?.id',decoration)
@@ -159,7 +204,7 @@ with sync_playwright() as p:
         assert not failed,failed
         assert page.evaluate('Object.keys(localStorage)')==['harborlight-language']
         assert page.evaluate('Object.keys(sessionStorage)')==[]
-        report.append({'width':width,'functions':20,'physical_map_clicks':8,'old_leatherworks_decorative':True,'all_tabs':checked_categories,'matching_economy_art':10,'levels_workers_unchanged':True,'right_edges_aligned':not touch,'errors':errors})
+        report.append({'width':width,'functions':20,'physical_map_clicks':9 if touch else 8,'advisor_after_real_refresh':advisor_boxes,'old_leatherworks_decorative':True,'all_tabs':checked_categories,'matching_economy_art':10,'levels_workers_unchanged':True,'right_edges_aligned':not touch,'errors':errors})
         context.close()
     browser.close()
 (OUTPUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')

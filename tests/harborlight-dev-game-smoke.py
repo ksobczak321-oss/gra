@@ -353,6 +353,7 @@ def run():
         assert cloud_state('dev-admin3')['population'] == 18
         assert len(cloud_state('dev-admin3')['residents']) == 18
         finish_onboarding(new_page)
+        dismiss_player_offers(new_page)
         settings(new_page)
         save_cloud(new_page)
         assert DOCUMENTS['dev-admin3']['revision'] >= 1
