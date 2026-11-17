@@ -33318,7 +33318,13 @@
       "PREPROD_authorized": false,
       "reset": false,
       "purple_editorial": {
-        "selected_sheets": "175wierszy,34niepusteC; ciemnofioletowyRGB7030A0 oraz jasnofioletowy theme7/tint0.6. 35tekstów poprawiono,10rekordów odkryć dodano do katalogu bez aktywacji nieuzgodnionych mechanik.",
+        "selected_sheets": [
+          "Samouczek",
+          "Produkty i receptury",
+          "Badania",
+          "Odłożone odkrycia",
+          "Nazwy poziomów Latarni"
+        ],
         "rows": 175,
         "nonempty_C": 34,
         "changed_rows": 45,

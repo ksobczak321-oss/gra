@@ -69,6 +69,15 @@ with sync_playwright() as playwright:
         bounded(page,'[data-advisor-send]')
         bounded(page,'[data-advisor-close]')
         assert answer.locator('[data-advisor-target]').count() > 0
+        if width == 390 and height == 844:
+            # A mobile keyboard reduces the viewport after the conversation is open.
+            page.set_viewport_size({'width':390,'height':350})
+            bounded(page,'[data-advisor-input]')
+            bounded(page,'[data-advisor-send]')
+            bounded(page,'[data-advisor-close]')
+            user_input.fill('Wpis podczas otwartej klawiatury')
+            expect(user_input).to_have_value('Wpis podczas otwartej klawiatury')
+            page.set_viewport_size({'width':width,'height':height})
         page.locator('[data-advisor-why]').click()
         expect(page.locator('[data-advisor-why]')).to_have_attribute('aria-expanded','true')
         expect(answer).to_contain_text('chronioną rezerwę')

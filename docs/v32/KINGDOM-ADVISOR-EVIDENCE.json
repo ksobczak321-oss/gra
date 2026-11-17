@@ -157,5 +157,10 @@
   "candidate_cache": "frontend-v32-15",
   "candidate_source_sha": null,
   "current_targeted_cases": 30,
-  "current_frontend_discoveries": 3
+  "current_frontend_discoveries": 3,
+  "candidate_model_source_sha": "44bc5381e9e29aaf5c9786492f54fdb996cda507",
+  "mobile_keyboard_reduced_viewport": "PASS_390x350_open_conversation_input_send_close",
+  "candidate_targeted_cases": 30,
+  "candidate_browser_advisor": "PASS_1440_390_480_and_keyboard350",
+  "candidate_browser_purple": "PASS_1440_390"
 }
