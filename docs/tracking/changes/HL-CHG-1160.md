@@ -1,6 +1,6 @@
-# HL-CHG-1160 — Uwzględnij przejrzane Samouczek, Produkty i receptury, Badania oraz Nazwy poziomów Latarni
+# HL-CHG-1160 — Uwzględnij pięć fioletowych zakładek, w tym jasnofioletowe Odłożone odkrycia
 
-**Typ:** Story · **Obszar:** Redakcja czterech fioletowych zakładek · **Epik:** `HL-EPIC-UI`
+**Typ:** Story · **Obszar:** Redakcja pięciu fioletowych zakładek · **Epik:** `HL-EPIC-UI`
 
 Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natywne GitHub Issue** (`issue_url: null`).
 
@@ -21,9 +21,9 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 
 ## Zakres i odbiór
 
-- Import czyta treści tylko4zakładek z tabColorFF7030A0; pozostałe treści załącznika nie są analizowane.
+- Import obejmuje4ciemnofioletowe zakładki RGBFF7030A0 i jasnofioletowe Odłożone odkrycia theme7/accent4/tint0.6. Pozostałe treści uploadu nie są analizowane.
 - C ma pierwszeństwo, pusteC zatwierdzaB. Pytania, skróty redakcyjne i nieaktualne odwołania do interfejsu mają jawne rozwiązanie w MERGE.
-- Wszystkie165wybranych rekordów są powiązane z działającym API tekstów, a25lekcji korzysta z zatwierdzonych opisów.
+- Wszystkie175wybranych rekordów są powiązane z działającym API tekstów, a25lekcji korzysta z zatwierdzonych opisów.
 - Opisy produktów można rozwinąć w rzeczywistych ekranach produkcji i wyżywienia. Badania pokazują efekt za poziom badania także w powiadomieniach.
 - Wszystkie8instrukcji uzupełniających jest dostępnych we właściwych kontekstach.
 - Nazwy Latarni16/18/19/46 mają czytelne redakcyjne odpowiedniki; pozostałe zatwierdzone nazwy są zachowane.
@@ -33,7 +33,7 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 
 ## Źródło
 
-165wierszy,31niepustychC; pytania i komentarze redakcyjne rozwiązane względem rzeczywistych ekranów i reguł gry.
+175wierszy,34niepusteC; ciemnofioletowyRGB7030A0 oraz jasnofioletowy theme7/tint0.6. 35tekstów poprawiono,10rekordów odkryć dodano do katalogu bez aktywacji nieuzgodnionych mechanik.
 
 Odniesienie: `upload-sha256:0253226de2712d22d5ab28098a40931f02e8be652089b0c3fcbd343b459037a7`.
 
@@ -46,7 +46,7 @@ Data pierwotnej wiadomości: 2026-11-17. Użytkownik wskazał wyłącznie zakła
 - **Scenariusze automatyczne:** [tests/harborlight-purple-editorial.test.mjs](../../../tests/harborlight-purple-editorial.test.mjs), [tests/harborlight-purple-editorial-ui-smoke.py](../../../tests/harborlight-purple-editorial-ui-smoke.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Kod lokalnie zamrożony; kierunkowe29testów iUI doradcy/tekstu/3krokówPASS. PełnylokalnyNode1472/1473 z10swatchdogFAIL i osobnymretryPASS9515ms; niczego nie osłabiono. Master157/57/61923budowa i freshvalidatePASS; własnyCI/Pagesw toku. TylkoDEV; bez PRE-PROD/resetu/PROD/DNS.
+Kandydatcache15:175wybranychwierszy/34niepusteC/35poprawionych+10dodanychrekordów. Targeted30/30PASS; kanoniczneAPI3CHECK+pakiet2PASS. Nowymaster i własnyCIw toku; pierwszy70dCI pozostajeFAILURE.
 
 ## Relacje
 
@@ -58,6 +58,7 @@ Kod lokalnie zamrożony; kierunkowe29testów iUI doradcy/tekstu/3krokówPASS. Pe
 
 - Plik wejściowy nie jest publikowany w całości. MERGE zawiera wyłącznie wybrane4zakładki.
 - PusteC nadal zatwierdzaB; jawne korekty nieaktualnych nazw przycisków zapobiegają publikacji niewykonalnych instrukcji.
+- Motyw Excela rozwiązuje theme7 do fioletu8064A2. Zakładka Odłożone odkrycia zmieniła kolor ze złotego w poprzednim uploadzie; jej10wierszy jest również w zakresie. Odkrycia bez zatwierdzonych parametrów pozostają projektami.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

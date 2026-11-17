@@ -1,4 +1,4 @@
-// Approved six-sheet and four-purple-sheet editorial merges: nonempty C overrides B; blank C accepts B.
+// Approved six-sheet and five-purple-sheet editorial merges: nonempty C overrides B; blank C accepts B.
 // Editorial notes are resolved against the current game, never shown literally.
 // Only the explicitly reviewed sheets are imported; game rules remain separate.
 export const DEVELOPMENT_COPY = Object.freeze({
@@ -481,7 +481,17 @@ export const DEVELOPMENT_COPY = Object.freeze({
   "UI-062": "Rozumiem",
   "UI-FOOD-BATCH-SET": "Ustaw nową partię",
   "UI-MEAL-CHANGE": "Zmień zestaw jedzenia",
-  "UI-TEACHER-REPLACE": "Wybierz zastępcę"
+  "UI-TEACHER-REPLACE": "Wybierz zastępcę",
+  "RES-18": "Odblokowuje przepis na wytrawne ciasto z warzywami.",
+  "RES-19": "Odblokowuje kolejny wypiek.",
+  "RES-20": "Odblokowuje uroczysty tort.",
+  "RES-21": "Odblokowuje warianty roślinnych dekoracji.",
+  "RES-22": "Odblokowuje nowe wzory fontann, rzeźb i lamp. Szczegółowa lista wariantów pozostaje do ustalenia.",
+  "RES-23": "Odblokowuje kolekcję dekoracji.",
+  "RES-24": "Zwiększa połów ryb.",
+  "RES-25": "Odblokowuje recepturę: 4 porcje kwaśnego mleka → 1 ser.",
+  "RES-26": "Odblokowuje ubieganie się o pożyczkę od Królestwa.",
+  "RES-27": "Odblokowuje dokładnie jeden kierunek i jeden produkt."
 });
 
 export const DEVELOPMENT_NAMES = Object.freeze({bakery:'Piekarnia',dairy:'Mleczarnia',slaughterhouse:'Rzeźnia',fisher:'Rybak',leatherworks:'Zakład skórzany',academy:'Akademia',barracks:'Koszary',farm:'Gospodarstwo',warehouse:'Magazyn',theatre:'Teatr',windmill:'Młyn',lumber:'Drwale',quarry:'Kamieniołom',sawmill:'Tartak'});

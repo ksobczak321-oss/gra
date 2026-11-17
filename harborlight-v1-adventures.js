@@ -2,16 +2,16 @@
 // All wins are derived from concrete inputs, physics or actual mini-game boards.
 // Rewarded-ad authorizations belong to the caller's verified provider flow;
 // an action's `verified` field is never accepted as proof.
-import { advanceOriginalAttempt } from './harborlight-v1-original-puzzles.js?v=frontend-v32-14';
-import { allocateExpeditionAttemptId,reserveExpeditionDifficulty,recordExpeditionOutcome,expeditionHourStatus } from './harborlight-v1-expedition-hour.js?v=frontend-v32-14';
-import { grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-14';
+import { advanceOriginalAttempt } from './harborlight-v1-original-puzzles.js?v=frontend-v32-15';
+import { allocateExpeditionAttemptId,reserveExpeditionDifficulty,recordExpeditionOutcome,expeditionHourStatus } from './harborlight-v1-expedition-hour.js?v=frontend-v32-15';
+import { grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-15';
 import { BRIDGE_NODES, BRIDGE_HINT, bridgeEdgeAllowed, normalizedBridgeEdges, testBridge,
-  createGardenPuzzle, gardenFlow, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v32-14';
-export { BRIDGE_NODES, BRIDGE_HINT, pipePorts, testBridge, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v32-14';
+  createGardenPuzzle, gardenFlow, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v32-15';
+export { BRIDGE_NODES, BRIDGE_HINT, pipePorts, testBridge, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v32-15';
 
-import * as Journey from './harborlight-v1-adventure-journey.js?v=frontend-v32-14';
-export { journeyStageStatus } from './harborlight-v1-adventure-journey.js?v=frontend-v32-14';
-export { getIslandPuzzleView, getCurrentStoryRoom, getStoryCatalog, ISLAND_PUZZLE_CATALOG, STORY_CATALOG, adventureRewardStatus, JOURNEY_RULES } from './harborlight-v1-adventure-journey.js?v=frontend-v32-14';
+import * as Journey from './harborlight-v1-adventure-journey.js?v=frontend-v32-15';
+export { journeyStageStatus } from './harborlight-v1-adventure-journey.js?v=frontend-v32-15';
+export { getIslandPuzzleView, getCurrentStoryRoom, getStoryCatalog, ISLAND_PUZZLE_CATALOG, STORY_CATALOG, adventureRewardStatus, JOURNEY_RULES } from './harborlight-v1-adventure-journey.js?v=frontend-v32-15';
 
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const GOODS = ['coins', ...MATERIALS];

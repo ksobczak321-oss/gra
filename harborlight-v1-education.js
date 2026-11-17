@@ -1,4 +1,4 @@
-import { developmentText, developmentResearchDescription } from './harborlight-v1-development-copy.js?v=frontend-v32-14';
+import { developmentText, developmentResearchDescription } from './harborlight-v1-development-copy.js?v=frontend-v32-15';
 // DEV v32. Pure education/research model; all persistent identity is keyed by personUid.
 // This module never advances the world's clock or calls a network service.
 const HOUR = 3600, DAY = 86400, EPS = 1e-8;
@@ -48,8 +48,8 @@ export const RESEARCH_CATALOG = Object.freeze([
   repeat('warehouse','Każda skrzynia na swoim miejscu',{planks:8,stone:4},'+5% pojemności Magazynu'),
   repeat('construction','Rusztowania dobrego budowniczego',{planks:6,stone:8},'+5% szybkości budowy'),
   Object.freeze({id:'fishProcessing',name:'Wędzenie i przetwory rybne',kind:'discovery',firstCost:{fish:24,planks:4},minimumAcademy:1,minimumBuilding:{fisher:5},effect:'Odblokowuje u Rybaka: 4 świeże ryby → 1 ryba wędzona oraz 6 świeżych ryb → 1 porcja przetworów rybnych; pożywienie III kategorii',devBalanceProposal:true}),
-  Object.freeze({id:'cheese',name:'Wyrób sera',kind:'discovery',firstCost:{sourMilk:4,planks:4},minimumAcademy:1,minimumBuilding:{farm:6},effect:'Odblokowuje 4 kwaśne mleka → 1 ser',devBalanceProposal:true}),
-  Object.freeze({id:'royalCredit',name:'Królewski kredyt',kind:'discovery',firstCost:{wood:40,stone:20,planks:10},minimumAcademy:1,minimumTownhall:5,effect:'Odblokowuje wniosek o pożyczkę',devBalanceProposal:true})
+  Object.freeze({id:'cheese',name:'Wyrób sera',kind:'discovery',firstCost:{sourMilk:4,planks:4},minimumAcademy:1,minimumBuilding:{farm:6},effect:developmentText('RES-25'),devBalanceProposal:true}),
+  Object.freeze({id:'royalCredit',name:'Królewski kredyt',kind:'discovery',firstCost:{wood:40,stone:20,planks:10},minimumAcademy:1,minimumTownhall:5,effect:developmentText('RES-26'),devBalanceProposal:true})
 ]);
 // Explicit DEV-only costs above make the selected mechanics testable. Their
 // proposal marker must be reviewed before any PRE-PROD promotion.
@@ -147,7 +147,7 @@ export function researchQuote(state,topic,context={},route=null) {
   if(!def&&typeof topic==='string'&&topic.startsWith('route:')&&route&&level(state,'warehouse')>=5){
     const valid=Object.values(route).every(x=>typeof x==='string'&&/^[A-Za-z0-9_-]{1,60}$/.test(x));
     if(!valid)return result(false,'Wskaż produkt oraz dwa budynki trasy.');
-    def={id:topic,name:`Bezpośrednie dostawy: ${route.source} → ${route.target}`,kind:'route',firstCost:{stone:12,planks:4},minimumAcademy:1,effect:'Odblokowuje jeden kierunek i jeden produkt'};
+    def={id:topic,name:`Bezpośrednie dostawy: ${route.source} → ${route.target}`,kind:'route',firstCost:{stone:12,planks:4},minimumAcademy:1,effect:developmentText('RES-27')};
   }
   if(!def||!l||level(state,'townhall')<4)return result(false,'To badanie nie jest jeszcze dostępne.');
   if(def.minimumTownhall&&level(state,'townhall')<def.minimumTownhall||Object.entries(def.minimumBuilding||{}).some(([id,v])=>level(state,id)<v))return result(false,'Nie spełniono wymagań budynków tego odkrycia.');
@@ -247,7 +247,7 @@ export function advanceEducation(state,elapsed,context={}) {
       const def=RESEARCH_CATALOG.find(x=>x.id===r.topic);
       if(def?.kind==='repeat')e.researchLevels[r.topic]=Math.max(integer(e.researchLevels[r.topic]),r.level);else e.discoveries[r.topic]=true;
       if(r.route){e.discoveries[r.topic]=true;e.routes ||= {};e.routes[r.topic]={...r.route};}
-      e.researches=e.researches.filter(x=>x!==r);notify(state,{...context,now:end},'Odkrycie ukończone',developmentText('MSG-RESEARCH-COMPLETE',{badanie:def?.name||'Bezpośrednia trasa',efekt:def?.effect||'Bezpośrednia trasa jest gotowa.'}));
+      e.researches=e.researches.filter(x=>x!==r);notify(state,{...context,now:end},'Odkrycie ukończone',developmentText('MSG-RESEARCH-COMPLETE',{badanie:def?.name||'Bezpośrednia trasa',efekt:def?.effect||developmentText('RES-27')}));
     }
   }
 }

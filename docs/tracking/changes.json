@@ -30084,14 +30084,14 @@
     {
       "id": "HL-CHG-1160",
       "epic": "HL-EPIC-UI",
-      "area": "Redakcja czterech fioletowych zakładek",
+      "area": "Redakcja pięciu fioletowych zakładek",
       "type": "Story",
-      "title": "Uwzględnij przejrzane Samouczek, Produkty i receptury, Badania oraz Nazwy poziomów Latarni",
+      "title": "Uwzględnij pięć fioletowych zakładek, w tym jasnofioletowe Odłożone odkrycia",
       "source": {
         "kind": "user_workbook",
         "date": "2026-11-17",
         "date_note": "Użytkownik wskazał wyłącznie zakładki fioletowe w nowym pliku ABC(1).",
-        "summary": "165wierszy,31niepustychC; pytania i komentarze redakcyjne rozwiązane względem rzeczywistych ekranów i reguł gry.",
+        "summary": "175wierszy,34niepusteC; ciemnofioletowyRGB7030A0 oraz jasnofioletowy theme7/tint0.6. 35tekstów poprawiono,10rekordów odkryć dodano do katalogu bez aktywacji nieuzgodnionych mechanik.",
         "reference": "upload-sha256:0253226de2712d22d5ab28098a40931f02e8be652089b0c3fcbd343b459037a7"
       },
       "status": {
@@ -30103,9 +30103,9 @@
         "decision": "accepted"
       },
       "acceptance": [
-        "Import czyta treści tylko4zakładek z tabColorFF7030A0; pozostałe treści załącznika nie są analizowane.",
+        "Import obejmuje4ciemnofioletowe zakładki RGBFF7030A0 i jasnofioletowe Odłożone odkrycia theme7/accent4/tint0.6. Pozostałe treści uploadu nie są analizowane.",
         "C ma pierwszeństwo, pusteC zatwierdzaB. Pytania, skróty redakcyjne i nieaktualne odwołania do interfejsu mają jawne rozwiązanie w MERGE.",
-        "Wszystkie165wybranych rekordów są powiązane z działającym API tekstów, a25lekcji korzysta z zatwierdzonych opisów.",
+        "Wszystkie175wybranych rekordów są powiązane z działającym API tekstów, a25lekcji korzysta z zatwierdzonych opisów.",
         "Opisy produktów można rozwinąć w rzeczywistych ekranach produkcji i wyżywienia. Badania pokazują efekt za poziom badania także w powiadomieniach.",
         "Wszystkie8instrukcji uzupełniających jest dostępnych we właściwych kontekstach.",
         "Nazwy Latarni16/18/19/46 mają czytelne redakcyjne odpowiedniki; pozostałe zatwierdzone nazwy są zachowane.",
@@ -30138,12 +30138,13 @@
           "tests/harborlight-purple-editorial-ui-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Kod lokalnie zamrożony; kierunkowe29testów iUI doradcy/tekstu/3krokówPASS. PełnylokalnyNode1472/1473 z10swatchdogFAIL i osobnymretryPASS9515ms; niczego nie osłabiono. Master157/57/61923budowa i freshvalidatePASS; własnyCI/Pagesw toku. TylkoDEV; bez PRE-PROD/resetu/PROD/DNS.",
+        "release_note": "Kandydatcache15:175wybranychwierszy/34niepusteC/35poprawionych+10dodanychrekordów. Targeted30/30PASS; kanoniczneAPI3CHECK+pakiet2PASS. Nowymaster i własnyCIw toku; pierwszy70dCI pozostajeFAILURE.",
         "application_source_sha": "2dbbb089917ef8816ce89265fcb9037513ec4a96"
       },
       "notes": [
         "Plik wejściowy nie jest publikowany w całości. MERGE zawiera wyłącznie wybrane4zakładki.",
-        "PusteC nadal zatwierdzaB; jawne korekty nieaktualnych nazw przycisków zapobiegają publikacji niewykonalnych instrukcji."
+        "PusteC nadal zatwierdzaB; jawne korekty nieaktualnych nazw przycisków zapobiegają publikacji niewykonalnych instrukcji.",
+        "Motyw Excela rozwiązuje theme7 do fioletu8064A2. Zakładka Odłożone odkrycia zmieniła kolor ze złotego w poprzednim uploadzie; jej10wierszy jest również w zakresie. Odkrycia bez zatwierdzonych parametrów pozostają projektami."
       ],
       "tags": [
         "v32",
@@ -33317,15 +33318,10 @@
       "PREPROD_authorized": false,
       "reset": false,
       "purple_editorial": {
-        "selected_sheets": [
-          "Samouczek",
-          "Produkty i receptury",
-          "Badania",
-          "Nazwy poziomów Latarni"
-        ],
-        "rows": 165,
-        "nonempty_C": 31,
-        "changed_rows": 35,
+        "selected_sheets": "175wierszy,34niepusteC; ciemnofioletowyRGB7030A0 oraz jasnofioletowy theme7/tint0.6. 35tekstów poprawiono,10rekordów odkryć dodano do katalogu bez aktywacji nieuzgodnionych mechanik.",
+        "rows": 175,
+        "nonempty_C": 34,
+        "changed_rows": 45,
         "unselected_sheet_contents_read": false
       },
       "application_source_sha": "2dbbb089917ef8816ce89265fcb9037513ec4a96",
@@ -33333,7 +33329,8 @@
       "master_validation": "BUILD_AND_FRESH_VALIDATE_PASS",
       "local_frontend_full": "1472of1473PASS_one_watchdog_FAIL_isolated_retryPASS9515ms",
       "first_CI": 44141264184,
-      "first_Pages": 44141263907
+      "first_Pages": 44141263907,
+      "candidate_cache": "frontend-v32-15"
     }
   }
 }

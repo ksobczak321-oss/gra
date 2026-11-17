@@ -1,10 +1,10 @@
 // Read-only advice. Model getters can normalize sidecars, so every public entry
 // works on its own snapshot and never receives the live world for an action.
-import { ALL_BUILDINGS, buildingCost, upgradeEligibility, workerLimit, freeWorkers } from './harborlight-v1-state.js?v=frontend-v32-14';
-import { centralAvailable, centralUnreserved } from './harborlight-v1-inventory.js?v=frontend-v32-14';
-import { constructionScheduleEstimate, activeWorkerIndices, plannedLevel, warehouseLimits, warehouseUsed, quoteTrade } from './harborlight-v1-logistics.js?v=frontend-v32-14';
-import { GOODS, NEW_BUILDINGS, RECIPE_CATALOG, availableRecipes, productionAssignments, crewCapacity, localStorageStatus, foodReservePlan } from './harborlight-v1-provisions.js?v=frontend-v32-14';
-import { quotePremiumBuilding } from './harborlight-v1-activities.js?v=frontend-v32-14';
+import { ALL_BUILDINGS, buildingCost, upgradeEligibility, workerLimit, freeWorkers } from './harborlight-v1-state.js?v=frontend-v32-15';
+import { centralAvailable, centralUnreserved } from './harborlight-v1-inventory.js?v=frontend-v32-15';
+import { constructionScheduleEstimate, activeWorkerIndices, plannedLevel, warehouseLimits, warehouseUsed, quoteTrade } from './harborlight-v1-logistics.js?v=frontend-v32-15';
+import { GOODS, NEW_BUILDINGS, RECIPE_CATALOG, availableRecipes, productionAssignments, crewCapacity, localStorageStatus, foodReservePlan } from './harborlight-v1-provisions.js?v=frontend-v32-15';
+import { quotePremiumBuilding } from './harborlight-v1-activities.js?v=frontend-v32-15';
 
 export const ADVISOR_BUILDING_NAMES = Object.freeze({ townhall:'Ratusz', house:'Dom', farm:'Gospodarstwo', lumber:'Drwale', quarry:'Kamieniołom', windmill:'Młyn', sawmill:'Tartak', warehouse:'Magazyn', dock:'Port', market:'Targ', lighthouse:'Latarnia', chapel:'Kaplica', theatre:'Teatr', bakery:'Piekarnia', dairy:'Mleczarnia', slaughterhouse:'Rzeźnia', fisher:'Rybak', leatherworks:'Zakład skórzany', academy:'Akademia', barracks:'Koszary' });
 const aliases = {townhall:'ratusz\\w*', house:'dom(?:u|em|y|ow)?|lozk\\w*', farm:'gospodarstw\\w*|rolnik\\w*', lumber:'drwal\\w*|lesnik\\w*', quarry:'kamieniolom\\w*|kamieniarz\\w*', windmill:'mlyn\\w*|mlynarz\\w*', sawmill:'tartak\\w*', warehouse:'magazyn\\w*|tragarz\\w*', dock:'port(?:u|em|y|ow)?|porcie|przystan\\w*', market:'targ\\w*', lighthouse:'latarn\\w*', chapel:'kaplic\\w*', theatre:'teatr\\w*', bakery:'piekarn\\w*|piekarz\\w*', dairy:'mleczarn\\w*', slaughterhouse:'rzezn\\w*|rzeznik\\w*', fisher:'rybak\\w*', leatherworks:'zaklad\\w*\\s+skorz\\w*', academy:'akadem\\w*', barracks:'koszar\\w*'};

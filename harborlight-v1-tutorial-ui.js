@@ -1,5 +1,5 @@
-import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v32-14';
-import { GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-14';
+import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v32-15';
+import { GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-15';
 
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const MATERIAL_NAMES = { en: ['Wood', 'Stone', 'Grain', 'Food', 'Planks'], pl: ['Drewno', 'Kamień', 'Zboże', 'Żywność', 'Deski'] };

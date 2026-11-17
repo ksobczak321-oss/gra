@@ -28,16 +28,20 @@
       "Samouczek",
       "Produkty i receptury",
       "Badania",
+      "Odłożone odkrycia",
       "Nazwy poziomów Latarni"
     ],
-    "rows": 165,
-    "nonempty_C": 31,
-    "changed_rows": 35,
+    "rows": 175,
+    "nonempty_C": 34,
+    "changed_rows": 45,
     "unselected_sheet_contents_read": false,
     "unit_test_cases": 4,
     "merge": "docs/v32/EDITORIAL-PURPLE-TABS-MERGE.json",
     "browser": "PASS_1440_390_ACTUAL_PRODUCTS_RESEARCH_ACADEMY_BARRACKS_FOOD",
-    "data_cases": 4
+    "data_cases": 5,
+    "edited_existing_records": 35,
+    "new_catalog_records": 10,
+    "theme_selection": "Includes light-purple theme7/8064A2/tint0.6, changed from gold in original workbook."
   },
   "cache": "frontend-v32-14_all_modules",
   "minigame_models_cache_only_audit": {
@@ -98,7 +102,8 @@
     "new_cached_formulas": 12,
     "formula_samples_against_code": 160,
     "fresh_validate_only": "PASS",
-    "source_files": 117
+    "source_files": 117,
+    "superseded_by_cache15_and_fifth_purple_sheet": true
   },
   "editorial_six": {
     "source_git_commit": "2dbbb089917ef8816ce89265fcb9037513ec4a96",
@@ -148,5 +153,9 @@
     "new_source_and_CI": "PENDING",
     "backend_cases": 170,
     "backend": "PASS"
-  }
+  },
+  "candidate_cache": "frontend-v32-15",
+  "candidate_source_sha": null,
+  "current_targeted_cases": 30,
+  "current_frontend_discoveries": 3
 }
