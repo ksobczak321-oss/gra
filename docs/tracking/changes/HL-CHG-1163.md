@@ -1,6 +1,6 @@
-# HL-CHG-1163 — Zwęż zwiniętą kartę doradcy, aby nie przejmowała kliknięcia Magazynu
+# HL-CHG-1163 — Odsuń zwiniętą kartę doradcy od mapy i dolnego menu
 
-**Typ:** Bug · **Obszar:** Doradca na małej mapie · **Epik:** `HL-EPIC-UI`
+**Typ:** Bug · **Obszar:** Doradca na mapie oraz w starszym układzie menu · **Epik:** `HL-EPIC-UI`
 
 Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natywne GitHub Issue** (`issue_url: null`).
 
@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `R4_mobile_CSS_fix_local_PASS_own_publication_pending` |
-| CI | `R3_FAILURE_mobile_warehouse_overlap_R4_pending` |
+| DEV | `R5_legacy_UI_and_helper_local_PASS_own_publication_pending` |
+| CI | `R5_exact_source_pending` |
 | PRE-PROD | `not_authorized_for_this_change` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
@@ -26,6 +26,7 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 - Pełna rozmowa, pole, wysłanie, zamknięcie i klawiatura350px pozostają dostępne; brak poziomego przepełnienia.
 - WyłącznieCSS i odrębna rewizja jegoURL; graf modułówJS/cache15, zatwierdzona grafika, reguły i zapisy bez zmiany.
 - Master iExcel6 mają aktualne źródłoHTML, zachowane arkusze historyczne i pustąC; nowy własnyCI wymagany.
+- Na starszych światach, od901px szerokości i501px wysokości, zwinięty moduł wraz z przyciskiemWycisz znajduje się nad dolnym menu. Pełna rozmowa oraz układ32 pozostają dostępne.
 
 ## Źródło
 
@@ -39,10 +40,10 @@ Data pierwotnej wiadomości: 2026-11-17. CI44154508808 i lokalne odtworzenie prz
 
 - **Dokumenty:** [docs/v32/KINGDOM-ADVISOR-EVIDENCE.json](../../v32/KINGDOM-ADVISOR-EVIDENCE.json), [docs/v32/GO-KINGDOM-ADVISOR.md](../../v32/GO-KINGDOM-ADVISOR.md)
 - **Kod:** [harborlight-v1-advisor.css](../../../harborlight-v1-advisor.css), [harborlight-v1-layered.html](../../../harborlight-v1-layered.html)
-- **Scenariusze automatyczne:** [tests/harborlight-accepted-front-v32-smoke.py](../../../tests/harborlight-accepted-front-v32-smoke.py), [tests/harborlight-advisor-ui-smoke.py](../../../tests/harborlight-advisor-ui-smoke.py)
+- **Scenariusze automatyczne:** [tests/harborlight-accepted-front-v32-smoke.py](../../../tests/harborlight-accepted-front-v32-smoke.py), [tests/harborlight-advisor-ui-smoke.py](../../../tests/harborlight-advisor-ui-smoke.py), [tests/harborlight-frontend-v17-smoke.py](../../../tests/harborlight-frontend-v17-smoke.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-KandydatR4 DEV0.15.1.0/cache15, CSSlayout2. R3e033 ma Pages44154508829SUCCESS24s iCI44154508808FAILURE po1652NodePASS; zwinięty doradca zasłonił fizyczny tapMagazynu na390px. PoprawkaCSS zachowuje pełną rozmowę; nowe prawdziwekliki po odświeżeniu doradcy i320px. Master/Excel6 odtworzone z76a663d. Pełny nowyCI/Pages oczekuje. BezPRE-PROD/resetu/PROD/DNS.
+R5: karta doradcy nie zasłania mapy ani starszego dolnego menu. Zwykłe oferty są zamykane realnymi przyciskami przed testowym wejściem do Pomocy. Pełny sweep26 dał24PASS/2FAIL; dwa poprawione scenariusze oraz accepted-front i advisorUI ponowniePASS. Wszystkie117odcisków i master76a pozostają zgodne; Excel6 ma aktualny odciskCSS i nadal413wierszy/pustąC. Nowy własnyCI/Pages oczekuje; zakres wyłącznieDEV.
 
 ## Relacje
 

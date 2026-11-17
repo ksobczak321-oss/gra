@@ -1,18 +1,29 @@
 {
-  "application_source": "76a663da9e093d909e6289286649c5c925139614",
-  "status": "LOCAL_PASS_OWN_CI_PENDING",
+  "application_source": "abacd3fffc7fe033fca6c3a1e9003bb688aa4afa",
+  "status": "LOCAL_ALL_COMPATIBILITY_FIXES_PASS_OWN_CI_PENDING",
   "master": {
     "source": "76a663da9e093d909e6289286649c5c925139614",
     "sha256": "ed53b12ff3b4ace2f49fd978a10074ce4b7715e3e8458da957ea7dc781769b1d",
     "rows": 61971
   },
   "editorial_six": {
-    "source": "76a663da9e093d909e6289286649c5c925139614",
-    "sha256": "06533a25d4203b4e2788b91deb14e02317299ca2f4b4317813fd7507b595a043",
+    "source": "abacd3fffc7fe033fca6c3a1e9003bb688aa4afa",
+    "sha256": "aca64c25f79964e6129cc1da09c65fb033e9993b7ce21d6b47d1ce6890f69b3a",
     "C_all_blank": true
   },
   "CSS_cache": "frontend-v32-15-layout2",
   "scope": "DEV_ONLY",
   "PREPROD_deployed": false,
-  "reset": false
+  "reset": false,
+  "master_source": "76a663da9e093d909e6289286649c5c925139614",
+  "master_117_source_hashes_unchanged": true,
+  "legacy_widths": [
+    1366,
+    1440,
+    1600,
+    1101,
+    1100,
+    901
+  ],
+  "legacy_geometry": "PASS_NORMAL_AND_MUTED"
 }

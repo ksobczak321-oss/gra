@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `R4_mobile_CSS_fix_local_PASS_own_publication_pending` |
-| CI | `R3_FAILURE_mobile_warehouse_overlap_R4_pending` |
+| DEV | `R5_legacy_UI_and_helper_local_PASS_own_publication_pending` |
+| CI | `R5_exact_source_pending` |
 | PRE-PROD | `not_authorized_for_this_change` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
@@ -28,6 +28,7 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 - WłasnyCI nowegoSHA i publicznyDEV wymagają osobnego potwierdzenia; poprzednieFAILURE pozostają historią.
 - Po krótkim wprowadzeniu test zapisu zamyka codzienną ofertę jej zwykłym przyciskiem, bez odbierania nagrody.
 - Ustawienia pokazują aktualną wersję0.15.1.0; zachowane sprawdzenie widoczności i PL/EN desktop/mobile.
+- Wspólny testowy helper zamyka zwykłą ofertę istniejącym przyciskiem przed jawnym otwarciem Pomocy; nie wyłącza ofert ani nie przyznaje nagród.
 
 ## Źródło
 
@@ -41,10 +42,10 @@ Data pierwotnej wiadomości: 2026-11-17. CI44148037986 zachowuje FAILURE po1475f
 
 - **Dokumenty:** [docs/v32/KINGDOM-ADVISOR-EVIDENCE.json](../../v32/KINGDOM-ADVISOR-EVIDENCE.json), [docs/v32/GO-KINGDOM-ADVISOR.md](../../v32/GO-KINGDOM-ADVISOR.md)
 - **Kod:** nie przypisano.
-- **Scenariusze automatyczne:** [tests/harborlight-editorial-six-tabs-v32-smoke.py](../../../tests/harborlight-editorial-six-tabs-v32-smoke.py), [tests/harborlight-release-v31-smoke.py](../../../tests/harborlight-release-v31-smoke.py), [scripts/test_frontend_v29_learning.py](../../../scripts/test_frontend_v29_learning.py), [tests/harborlight-dev-game-smoke.py](../../../tests/harborlight-dev-game-smoke.py), [tests/harborlight-settings-signout-smoke.py](../../../tests/harborlight-settings-signout-smoke.py)
+- **Scenariusze automatyczne:** [tests/harborlight-editorial-six-tabs-v32-smoke.py](../../../tests/harborlight-editorial-six-tabs-v32-smoke.py), [tests/harborlight-release-v31-smoke.py](../../../tests/harborlight-release-v31-smoke.py), [scripts/test_frontend_v29_learning.py](../../../scripts/test_frontend_v29_learning.py), [tests/harborlight-dev-game-smoke.py](../../../tests/harborlight-dev-game-smoke.py), [tests/harborlight-settings-signout-smoke.py](../../../tests/harborlight-settings-signout-smoke.py), [tests/helpers/browser_tutorial.py](../../../tests/helpers/browser_tutorial.py), [tests/harborlight-tutorial-v22-smoke.py](../../../tests/harborlight-tutorial-v22-smoke.py), [tests/harborlight-legacy-resident-labels-v32-smoke.py](../../../tests/harborlight-legacy-resident-labels-v32-smoke.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-KandydatR4 DEV0.15.1.0/cache15, CSSlayout2. R3e033 ma Pages44154508829SUCCESS24s iCI44154508808FAILURE po1652NodePASS; zwinięty doradca zasłonił fizyczny tapMagazynu na390px. PoprawkaCSS zachowuje pełną rozmowę; nowe prawdziwekliki po odświeżeniu doradcy i320px. Master/Excel6 odtworzone z76a663d. Pełny nowyCI/Pages oczekuje. BezPRE-PROD/resetu/PROD/DNS.
+R5: karta doradcy nie zasłania mapy ani starszego dolnego menu. Zwykłe oferty są zamykane realnymi przyciskami przed testowym wejściem do Pomocy. Pełny sweep26 dał24PASS/2FAIL; dwa poprawione scenariusze oraz accepted-front i advisorUI ponowniePASS. Wszystkie117odcisków i master76a pozostają zgodne; Excel6 ma aktualny odciskCSS i nadal413wierszy/pustąC. Nowy własnyCI/Pages oczekuje; zakres wyłącznieDEV.
 
 ## Relacje
 

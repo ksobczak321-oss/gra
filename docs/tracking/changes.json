@@ -30019,8 +30019,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "R4_mobile_CSS_fix_local_PASS_own_publication_pending",
-        "ci": "R3_FAILURE_mobile_warehouse_overlap_R4_pending",
+        "dev": "R5_legacy_UI_and_helper_local_PASS_own_publication_pending",
+        "ci": "R5_exact_source_pending",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30061,8 +30061,8 @@
           "tests/harborlight-tour-route-v5-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "KandydatR4 DEV0.15.1.0/cache15, CSSlayout2. R3e033 ma Pages44154508829SUCCESS24s iCI44154508808FAILURE po1652NodePASS; zwinięty doradca zasłonił fizyczny tapMagazynu na390px. PoprawkaCSS zachowuje pełną rozmowę; nowe prawdziwekliki po odświeżeniu doradcy i320px. Master/Excel6 odtworzone z76a663d. Pełny nowyCI/Pages oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
-        "application_source_sha": "76a663da9e093d909e6289286649c5c925139614",
+        "release_note": "R5: karta doradcy nie zasłania mapy ani starszego dolnego menu. Zwykłe oferty są zamykane realnymi przyciskami przed testowym wejściem do Pomocy. Pełny sweep26 dał24PASS/2FAIL; dwa poprawione scenariusze oraz accepted-front i advisorUI ponowniePASS. Wszystkie117odcisków i master76a pozostają zgodne; Excel6 ma aktualny odciskCSS i nadal413wierszy/pustąC. Nowy własnyCI/Pages oczekuje; zakres wyłącznieDEV.",
+        "application_source_sha": "abacd3fffc7fe033fca6c3a1e9003bb688aa4afa",
         "model_source_sha": "76a663da9e093d909e6289286649c5c925139614"
       },
       "notes": [
@@ -30097,8 +30097,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "R4_mobile_CSS_fix_local_PASS_own_publication_pending",
-        "ci": "R3_FAILURE_mobile_warehouse_overlap_R4_pending",
+        "dev": "R5_legacy_UI_and_helper_local_PASS_own_publication_pending",
+        "ci": "R5_exact_source_pending",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30139,8 +30139,8 @@
           "tests/harborlight-purple-editorial-ui-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "KandydatR4 DEV0.15.1.0/cache15, CSSlayout2. R3e033 ma Pages44154508829SUCCESS24s iCI44154508808FAILURE po1652NodePASS; zwinięty doradca zasłonił fizyczny tapMagazynu na390px. PoprawkaCSS zachowuje pełną rozmowę; nowe prawdziwekliki po odświeżeniu doradcy i320px. Master/Excel6 odtworzone z76a663d. Pełny nowyCI/Pages oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
-        "application_source_sha": "76a663da9e093d909e6289286649c5c925139614",
+        "release_note": "R5: karta doradcy nie zasłania mapy ani starszego dolnego menu. Zwykłe oferty są zamykane realnymi przyciskami przed testowym wejściem do Pomocy. Pełny sweep26 dał24PASS/2FAIL; dwa poprawione scenariusze oraz accepted-front i advisorUI ponowniePASS. Wszystkie117odcisków i master76a pozostają zgodne; Excel6 ma aktualny odciskCSS i nadal413wierszy/pustąC. Nowy własnyCI/Pages oczekuje; zakres wyłącznieDEV.",
+        "application_source_sha": "abacd3fffc7fe033fca6c3a1e9003bb688aa4afa",
         "model_source_sha": "76a663da9e093d909e6289286649c5c925139614"
       },
       "notes": [
@@ -30176,8 +30176,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "R4_mobile_CSS_fix_local_PASS_own_publication_pending",
-        "ci": "R3_FAILURE_mobile_warehouse_overlap_R4_pending",
+        "dev": "R5_legacy_UI_and_helper_local_PASS_own_publication_pending",
+        "ci": "R5_exact_source_pending",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30212,8 +30212,8 @@
           "tests/harborlight-backend-package.test.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "KandydatR4 DEV0.15.1.0/cache15, CSSlayout2. R3e033 ma Pages44154508829SUCCESS24s iCI44154508808FAILURE po1652NodePASS; zwinięty doradca zasłonił fizyczny tapMagazynu na390px. PoprawkaCSS zachowuje pełną rozmowę; nowe prawdziwekliki po odświeżeniu doradcy i320px. Master/Excel6 odtworzone z76a663d. Pełny nowyCI/Pages oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
-        "application_source_sha": "76a663da9e093d909e6289286649c5c925139614",
+        "release_note": "R5: karta doradcy nie zasłania mapy ani starszego dolnego menu. Zwykłe oferty są zamykane realnymi przyciskami przed testowym wejściem do Pomocy. Pełny sweep26 dał24PASS/2FAIL; dwa poprawione scenariusze oraz accepted-front i advisorUI ponowniePASS. Wszystkie117odcisków i master76a pozostają zgodne; Excel6 ma aktualny odciskCSS i nadal413wierszy/pustąC. Nowy własnyCI/Pages oczekuje; zakres wyłącznieDEV.",
+        "application_source_sha": "abacd3fffc7fe033fca6c3a1e9003bb688aa4afa",
         "model_source_sha": "76a663da9e093d909e6289286649c5c925139614"
       },
       "notes": [
@@ -30246,8 +30246,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "R4_mobile_CSS_fix_local_PASS_own_publication_pending",
-        "ci": "R3_FAILURE_mobile_warehouse_overlap_R4_pending",
+        "dev": "R5_legacy_UI_and_helper_local_PASS_own_publication_pending",
+        "ci": "R5_exact_source_pending",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30259,7 +30259,8 @@
         "Brak zmian aplikacji, limitów, modelu, generatorów, archiwów i117odcisków źródeł mastera.",
         "WłasnyCI nowegoSHA i publicznyDEV wymagają osobnego potwierdzenia; poprzednieFAILURE pozostają historią.",
         "Po krótkim wprowadzeniu test zapisu zamyka codzienną ofertę jej zwykłym przyciskiem, bez odbierania nagrody.",
-        "Ustawienia pokazują aktualną wersję0.15.1.0; zachowane sprawdzenie widoczności i PL/EN desktop/mobile."
+        "Ustawienia pokazują aktualną wersję0.15.1.0; zachowane sprawdzenie widoczności i PL/EN desktop/mobile.",
+        "Wspólny testowy helper zamyka zwykłą ofertę istniejącym przyciskiem przed jawnym otwarciem Pomocy; nie wyłącza ofert ani nie przyznaje nagród."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -30281,11 +30282,14 @@
           "tests/harborlight-release-v31-smoke.py",
           "scripts/test_frontend_v29_learning.py",
           "tests/harborlight-dev-game-smoke.py",
-          "tests/harborlight-settings-signout-smoke.py"
+          "tests/harborlight-settings-signout-smoke.py",
+          "tests/helpers/browser_tutorial.py",
+          "tests/harborlight-tutorial-v22-smoke.py",
+          "tests/harborlight-legacy-resident-labels-v32-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "KandydatR4 DEV0.15.1.0/cache15, CSSlayout2. R3e033 ma Pages44154508829SUCCESS24s iCI44154508808FAILURE po1652NodePASS; zwinięty doradca zasłonił fizyczny tapMagazynu na390px. PoprawkaCSS zachowuje pełną rozmowę; nowe prawdziwekliki po odświeżeniu doradcy i320px. Master/Excel6 odtworzone z76a663d. Pełny nowyCI/Pages oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
-        "application_source_sha": "76a663da9e093d909e6289286649c5c925139614",
+        "release_note": "R5: karta doradcy nie zasłania mapy ani starszego dolnego menu. Zwykłe oferty są zamykane realnymi przyciskami przed testowym wejściem do Pomocy. Pełny sweep26 dał24PASS/2FAIL; dwa poprawione scenariusze oraz accepted-front i advisorUI ponowniePASS. Wszystkie117odcisków i master76a pozostają zgodne; Excel6 ma aktualny odciskCSS i nadal413wierszy/pustąC. Nowy własnyCI/Pages oczekuje; zakres wyłącznieDEV.",
+        "application_source_sha": "abacd3fffc7fe033fca6c3a1e9003bb688aa4afa",
         "model_source_sha": "76a663da9e093d909e6289286649c5c925139614"
       },
       "notes": [
@@ -30306,9 +30310,9 @@
     {
       "id": "HL-CHG-1163",
       "epic": "HL-EPIC-UI",
-      "area": "Doradca na małej mapie",
+      "area": "Doradca na mapie oraz w starszym układzie menu",
       "type": "Bug",
-      "title": "Zwęż zwiniętą kartę doradcy, aby nie przejmowała kliknięcia Magazynu",
+      "title": "Odsuń zwiniętą kartę doradcy od mapy i dolnego menu",
       "source": {
         "kind": "exact_source_CI_failure",
         "date": "2026-11-17",
@@ -30318,8 +30322,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "R4_mobile_CSS_fix_local_PASS_own_publication_pending",
-        "ci": "R3_FAILURE_mobile_warehouse_overlap_R4_pending",
+        "dev": "R5_legacy_UI_and_helper_local_PASS_own_publication_pending",
+        "ci": "R5_exact_source_pending",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30329,7 +30333,8 @@
         "Fizyczny tapMagazynu jest sprawdzany po rzeczywistym odświeżeniu i pokazaniu doradcy, z zachowaniem wszystkich wcześniejszych hit-testów i kliknięć.",
         "Pełna rozmowa, pole, wysłanie, zamknięcie i klawiatura350px pozostają dostępne; brak poziomego przepełnienia.",
         "WyłącznieCSS i odrębna rewizja jegoURL; graf modułówJS/cache15, zatwierdzona grafika, reguły i zapisy bez zmiany.",
-        "Master iExcel6 mają aktualne źródłoHTML, zachowane arkusze historyczne i pustąC; nowy własnyCI wymagany."
+        "Master iExcel6 mają aktualne źródłoHTML, zachowane arkusze historyczne i pustąC; nowy własnyCI wymagany.",
+        "Na starszych światach, od901px szerokości i501px wysokości, zwinięty moduł wraz z przyciskiemWycisz znajduje się nad dolnym menu. Pełna rozmowa oraz układ32 pozostają dostępne."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -30350,11 +30355,12 @@
         ],
         "automated_tests": [
           "tests/harborlight-accepted-front-v32-smoke.py",
-          "tests/harborlight-advisor-ui-smoke.py"
+          "tests/harborlight-advisor-ui-smoke.py",
+          "tests/harborlight-frontend-v17-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "KandydatR4 DEV0.15.1.0/cache15, CSSlayout2. R3e033 ma Pages44154508829SUCCESS24s iCI44154508808FAILURE po1652NodePASS; zwinięty doradca zasłonił fizyczny tapMagazynu na390px. PoprawkaCSS zachowuje pełną rozmowę; nowe prawdziwekliki po odświeżeniu doradcy i320px. Master/Excel6 odtworzone z76a663d. Pełny nowyCI/Pages oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
-        "application_source_sha": "76a663da9e093d909e6289286649c5c925139614",
+        "release_note": "R5: karta doradcy nie zasłania mapy ani starszego dolnego menu. Zwykłe oferty są zamykane realnymi przyciskami przed testowym wejściem do Pomocy. Pełny sweep26 dał24PASS/2FAIL; dwa poprawione scenariusze oraz accepted-front i advisorUI ponowniePASS. Wszystkie117odcisków i master76a pozostają zgodne; Excel6 ma aktualny odciskCSS i nadal413wierszy/pustąC. Nowy własnyCI/Pages oczekuje; zakres wyłącznieDEV.",
+        "application_source_sha": "abacd3fffc7fe033fca6c3a1e9003bb688aa4afa",
         "model_source_sha": "76a663da9e093d909e6289286649c5c925139614"
       },
       "notes": [
@@ -33458,7 +33464,7 @@
     "advisor_task": {
       "as_of": "2026-11-17",
       "version": "0.15.1.0",
-      "status": "R4_MOBILE_CSS_FIX_CURRENT_WORKBOOKS_PASS_OWN_CI_PENDING",
+      "status": "R5_ALL_LOCAL_FIXES_PASS_OWN_CI_PENDING",
       "DEV_only": true,
       "PREPROD_authorized": false,
       "reset": false,
@@ -33475,7 +33481,7 @@
         "changed_rows": 45,
         "unselected_sheet_contents_read": false
       },
-      "application_source_sha": "76a663da9e093d909e6289286649c5c925139614",
+      "application_source_sha": "abacd3fffc7fe033fca6c3a1e9003bb688aa4afa",
       "master_source": "76a663da9e093d909e6289286649c5c925139614",
       "master_validation": "BUILD_AND_FRESH_VALIDATE_PASS",
       "local_frontend_full": "1472of1473PASS_one_watchdog_FAIL_isolated_retryPASS9515ms",
@@ -33496,7 +33502,13 @@
       "third_Pages_status": "SUCCESS",
       "mobile_fix": "HL-CHG-1163",
       "stylesheet_cache": "frontend-v32-15-layout2",
-      "isolated_cloud_latest": "18_PASS"
+      "isolated_cloud_latest": "18_PASS",
+      "fourth_CI": 44160545938,
+      "fourth_CI_status_snapshot": "completed",
+      "fourth_CI_conclusion_snapshot": "failure",
+      "fourth_Pages": 44160546037,
+      "fourth_Pages_status": "SUCCESS",
+      "master_117_sources_unchanged": true
     }
   }
 }

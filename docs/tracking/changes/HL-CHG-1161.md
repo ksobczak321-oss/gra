@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `R4_mobile_CSS_fix_local_PASS_own_publication_pending` |
-| CI | `R3_FAILURE_mobile_warehouse_overlap_R4_pending` |
+| DEV | `R5_legacy_UI_and_helper_local_PASS_own_publication_pending` |
+| CI | `R5_exact_source_pending` |
 | PRE-PROD | `not_authorized_for_this_change` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
@@ -42,7 +42,7 @@ Data pierwotnej wiadomości: 2026-11-17. CI44141264184 źródła70d wykrył pomi
 - **Scenariusze automatyczne:** [scripts/stage_backend_trade_rules.py](../../../scripts/stage_backend_trade_rules.py), [tests/harborlight-backend-package.test.py](../../../tests/harborlight-backend-package.test.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-KandydatR4 DEV0.15.1.0/cache15, CSSlayout2. R3e033 ma Pages44154508829SUCCESS24s iCI44154508808FAILURE po1652NodePASS; zwinięty doradca zasłonił fizyczny tapMagazynu na390px. PoprawkaCSS zachowuje pełną rozmowę; nowe prawdziwekliki po odświeżeniu doradcy i320px. Master/Excel6 odtworzone z76a663d. Pełny nowyCI/Pages oczekuje. BezPRE-PROD/resetu/PROD/DNS.
+R5: karta doradcy nie zasłania mapy ani starszego dolnego menu. Zwykłe oferty są zamykane realnymi przyciskami przed testowym wejściem do Pomocy. Pełny sweep26 dał24PASS/2FAIL; dwa poprawione scenariusze oraz accepted-front i advisorUI ponowniePASS. Wszystkie117odcisków i master76a pozostają zgodne; Excel6 ma aktualny odciskCSS i nadal413wierszy/pustąC. Nowy własnyCI/Pages oczekuje; zakres wyłącznieDEV.
 
 ## Relacje
 

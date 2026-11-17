@@ -14,10 +14,10 @@
   "browser_advisor": "PASS_1440x1000_390x844_390x480",
   "browser_first_introduction": "PASS_3_STEPS_1440_390",
   "browser_target_replacement": "PASS_1440_390",
-  "full_regression": "R3_1652_NODE_PASS_MOBILE_UI_FIX_R4_EXACT_CI_PENDING",
-  "source_sha": "e03364c7df8f217684850a2f3b2874823b4721b3",
-  "CI": "R3_FAILURE_MOBILE_ADVISOR_OVERLAP_R4_PENDING",
-  "Pages": "R3_SUCCESS_PUBLIC_BYTES_MATCH",
+  "full_regression": "R4_FROZEN_MAIN26_24_PASS_2_FAIL_FIXES_PASS_R5_OWN_CI_PENDING",
+  "source_sha": "b40b7d8dda33ec20b308e135bea813bdc4e7ccb1",
+  "CI": "R5_EXACT_SOURCE_PENDING",
+  "Pages": "R4_SUCCESS_R5_PENDING",
   "PREPROD": "NOT_AUTHORIZED_FOR_ADVISOR",
   "PROD_DNS": "NO_ACTION",
   "account_reset": false,
@@ -57,7 +57,7 @@
     "duration_ms": 315179.559317,
     "note": "Full suite includes22 planner cases; the added intro-index case also passed in separate23-case advisor rerun."
   },
-  "application_source_sha": "76a663da9e093d909e6289286649c5c925139614",
+  "application_source_sha": "abacd3fffc7fe033fca6c3a1e9003bb688aa4afa",
   "latest_local_frontend_node": {
     "total": 1473,
     "pass": 1472,
@@ -105,8 +105,8 @@
     "fresh_validate_only": "PASS"
   },
   "editorial_six": {
-    "source_git_commit": "76a663da9e093d909e6289286649c5c925139614",
-    "sha256": "06533a25d4203b4e2788b91deb14e02317299ca2f4b4317813fd7507b595a043",
+    "source_git_commit": "abacd3fffc7fe033fca6c3a1e9003bb688aa4afa",
+    "sha256": "aca64c25f79964e6129cc1da09c65fb033e9993b7ce21d6b47d1ce6890f69b3a",
     "rows": 413,
     "sheets": 6,
     "C_all_blank": true,
@@ -181,7 +181,7 @@
     "superseded_by_cache15_and_fifth_purple_sheet": true
   },
   "current_UI": "PASS_CACHE15_ADVISOR3_SCOPES_KEYBOARD350_AND_PURPLE2_SCOPES",
-  "next_CI": "R4_EXACT_SOURCE_PENDING",
+  "next_CI": "R5_EXACT_SOURCE_PENDING",
   "second_publication": {
     "source": "553db9bbd6a0cb1149e7684c40d314f14cf5add5",
     "CI_run": 44148037986,
@@ -215,7 +215,7 @@
     "application_bytes_changed": false,
     "master_117_source_hashes": "PASS_UNCHANGED",
     "master_regeneration_required": false,
-    "own_exact_CI": "PENDING"
+    "own_exact_CI": "FAILURE_44154508808"
   },
   "third_publication": {
     "source": "e03364c7df8f217684850a2f3b2874823b4721b3",
@@ -284,5 +284,57 @@
     "latest_program_results": "18_PASS_WITH_ONLY_TWO_CHANGED_SCENARIOS_RERUN",
     "real_cloud_writes": false,
     "note": "Local fake identity/storage and loopback API only. Full current publication still needs its own CI."
+  },
+  "fourth_publication": {
+    "source": "b40b7d8dda33ec20b308e135bea813bdc4e7ccb1",
+    "CI_run": 44160545938,
+    "CI_status_snapshot": "completed",
+    "CI_conclusion_snapshot": "failure",
+    "Pages_run": 44160546037,
+    "Pages_conclusion": "SUCCESS",
+    "public_TLS_files": 229,
+    "public_TLS_bytes": 36878852,
+    "local_main26_initial_pass": 24,
+    "local_main26_initial_fail": [
+      "tests/harborlight-frontend-v17-smoke.py",
+      "tests/harborlight-tutorial-v22-smoke.py"
+    ],
+    "accepted": false,
+    "actual_CI_failure": "legacy-resident-labels-v32: explicit scroll ElementHandle detached during a live dock update; real Locator.click retained."
+  },
+  "legacy_layout_fix": {
+    "application_source": "abacd3fffc7fe033fca6c3a1e9003bb688aa4afa",
+    "CSS_only": true,
+    "HTML_changed": false,
+    "stylesheet_URL_unchanged": "frontend-v32-15-layout2",
+    "actual_Pages_CSS_max_age_seconds": 600,
+    "master_source": "76a663da9e093d909e6289286649c5c925139614",
+    "master_source_files": 117,
+    "all_master_source_hashes_unchanged": true,
+    "master_workbook_bytes_unchanged": true,
+    "editorial_six_rebuilt_for_CSS_fingerprint_only": true,
+    "resident_label_click_test": "PASS_REAL_LOCATOR_CLICK_WITH_AUTO_SCROLL_AND_DETACH_RETRY_NO_ASSERTION_REMOVED",
+    "initial_main26": {
+      "pass": 24,
+      "fail": 2
+    },
+    "corrected_scenarios": [
+      "frontend-v17",
+      "tutorial-v22"
+    ],
+    "legacy_geometry_and_real_Town_Hall_clicks": "PASS_1366_1440_1600_1101_1100_901_NORMAL_AND_MUTED",
+    "mobile_accepted_front": "PASS_1672_1440_390_320_AFTER_REAL_ADVISOR_REFRESH",
+    "advisor_UI": "PASS_3_SCOPES_AND_KEYBOARD350",
+    "ordinary_offer_helper": "Close actual existing offer before opening Help; no reward injection",
+    "PREPROD_deployed": false,
+    "account_reset": false
+  },
+  "editorial_six_before_legacy_CSS_fix": {
+    "source_git_commit": "76a663da9e093d909e6289286649c5c925139614",
+    "sha256": "06533a25d4203b4e2788b91deb14e02317299ca2f4b4317813fd7507b595a043",
+    "rows": 413,
+    "sheets": 6,
+    "C_all_blank": true,
+    "scope_unchanged": true
   }
 }
