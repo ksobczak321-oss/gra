@@ -15,9 +15,9 @@
   "browser_first_introduction": "PASS_3_STEPS_1440_390",
   "browser_target_replacement": "PASS_1440_390",
   "full_regression": "LOCAL_FULL_RUN_FAILURE_PRESERVED_TARGETED_29_PASS_OWN_CI_PENDING",
-  "source_sha": null,
-  "CI": "PENDING",
-  "Pages": "PENDING",
+  "source_sha": "70d9ed4deebfdfe80fecaf6cdda5c96e14b5f3b9",
+  "CI": "FIRST_RUN_FAILURE_CANONICAL_COPIES_FIX_PENDING",
+  "Pages": "FIRST_RUN_SUCCESS_PUBLIC_BYTES_MATCH",
   "PREPROD": "NOT_AUTHORIZED_FOR_ADVISOR",
   "PROD_DNS": "NO_ACTION",
   "account_reset": false,
@@ -115,5 +115,38 @@
     "TXT": 55,
     "actual_words": 60960,
     "unchanged_rules_and_scenarios": true
+  },
+  "first_publication": {
+    "source": "70d9ed4deebfdfe80fecaf6cdda5c96e14b5f3b9",
+    "CI_run": 44141264184,
+    "CI_conclusion": "FAILURE",
+    "CI_failed_step": "Verify canonical API trade rules",
+    "CI_failure": "Staged API model differs from canonical source: harborlight-v1-provisions.js",
+    "frontend_Node_pass": 1474,
+    "frontend_Node_duration_ms": 152922.606,
+    "later_CI_checks": "SKIPPED",
+    "Pages_run": 44141263907,
+    "Pages_conclusion": "SUCCESS",
+    "Pages_seconds": 36
+  },
+  "public_byte_audit": {
+    "status": "PASS",
+    "files": 229,
+    "bytes": 36877692,
+    "normal_TLS": true,
+    "native_browser_claimed": false
+  },
+  "native_public_browser": {
+    "status": "BLOCKED_NATIVE_TRANSPORT",
+    "reason": "ERR_CERT_AUTHORITY_INVALID",
+    "TLS_bypass": false
+  },
+  "canonical_API_model_fix": {
+    "status": "LOCAL_STAGED_CHECK_PASS",
+    "files": 3,
+    "backend_package_cases": 2,
+    "new_source_and_CI": "PENDING",
+    "backend_cases": 170,
+    "backend": "PASS"
   }
 }

@@ -30019,8 +30019,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_UI_and_artifacts_PASS_publication_pending",
-        "ci": "pending_exact_source_CI",
+        "dev": "Pages70d_SUCCESS_229files_TLS_verified_fix_in_progress",
+        "ci": "first_source_CI_FAILURE_canonical_stage_new_source_pending",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30096,8 +30096,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "local_UI_and_artifacts_PASS_publication_pending",
-        "ci": "pending_exact_source_CI",
+        "dev": "Pages70d_SUCCESS_229files_TLS_verified_fix_in_progress",
+        "ci": "first_source_CI_FAILURE_canonical_stage_new_source_pending",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30156,6 +30156,74 @@
         "COPY:C-over-B",
         "COPY:resolve-editorial-notes",
         "OPS:DEV-only"
+      ]
+    },
+    {
+      "id": "HL-CHG-1161",
+      "epic": "HL-EPIC-OPS",
+      "area": "Kanoniczne modele API po redakcji i cache14",
+      "type": "Bug",
+      "title": "Zsynchronizuj trzy zamknięte kopie modeli API po zmianie cache i tekstów",
+      "source": {
+        "kind": "exact_source_CI_failure",
+        "date": "2026-11-17",
+        "date_note": "CI44141264184 źródła70d wykrył pominiętą synchronizację; frontend1474/1474PASS.",
+        "summary": "Stagebackendtradecheck odrzucił provisions.js, economy.js i development-copy.js, których kopie API nie odpowiadały zatwierdzonemu źródłu.",
+        "reference": "workflow:44141264184:Verify canonical API trade rules"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "canonical_stage_and_backend_package_PASS_new_CI_pending",
+        "ci": "first_run_FAILURE_new_exact_source_required",
+        "preprod": "not_authorized_for_this_change",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Kopie trzech plików API są bajtowo identyczne z kanonicznym frontendem; zamknięta lista zależności bez rozszerzenia.",
+        "Kontrola stage_backend_trade_rules.py --check i izolowany pakiet API przechodzą bez osłabiania testów.",
+        "Nowy master ma aktualne odciski117plików, w tym poprawionych kopii backendu, i zachowane rzeczywiste symulacje przy nowym zamrożonym źródle.",
+        "Własny nowy CI dokładnegoSHA musi objąć wszystkie kontrole; FAILURE44141264184 pozostaje w historii.",
+        "Działające publiczne pliki gry z70d nie zmieniają się samą synchronizacją kopii API; brak resetu i promocjiPRE-PROD/PROD."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1159",
+        "HL-CHG-1160"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/KINGDOM-ADVISOR-EVIDENCE.json",
+          "docs/v32/GO-KINGDOM-ADVISOR.md"
+        ],
+        "code": [
+          "backend/harborlight-v1-provisions.js",
+          "backend/harborlight-v1-economy.js",
+          "backend/harborlight-v1-development-copy.js"
+        ],
+        "automated_tests": [
+          "scripts/stage_backend_trade_rules.py",
+          "tests/harborlight-backend-package.test.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Bajtowe stage3CHECK i pakiet2/2PASS. Nowy master i CIw toku. PierwszyCI70dFAILEDpo1474/1474frontendNodePASS; PagesSUCCESS i229plikówTLSzgodne."
+      },
+      "notes": [
+        "Nie pomija się kontroli zgodności i nie przenosi zielonego kroku reguł gry na cały nieudany przebieg."
+      ],
+      "tags": [
+        "v32",
+        "canonical-api",
+        "regression",
+        "dev-only"
+      ],
+      "rules": [
+        "BUILD:exact-canonical-three-file-stage",
+        "OPS:preserve-failed-CI",
+        "OPS:new-source-own-CI"
       ]
     }
   ],
@@ -33244,7 +33312,7 @@
     "advisor_task": {
       "as_of": "2026-11-17",
       "version": "0.15.1.0",
-      "status": "LOCAL_ACCEPTANCE_COMPLETE_PUBLICATION_PENDING",
+      "status": "FIRST_CI_FAILURE_CANONICAL_BACKEND_FIX_IN_PROGRESS",
       "DEV_only": true,
       "PREPROD_authorized": false,
       "reset": false,
@@ -33263,7 +33331,9 @@
       "application_source_sha": "2dbbb089917ef8816ce89265fcb9037513ec4a96",
       "master_source": "2dbbb089917ef8816ce89265fcb9037513ec4a96",
       "master_validation": "BUILD_AND_FRESH_VALIDATE_PASS",
-      "local_frontend_full": "1472of1473PASS_one_watchdog_FAIL_isolated_retryPASS9515ms"
+      "local_frontend_full": "1472of1473PASS_one_watchdog_FAIL_isolated_retryPASS9515ms",
+      "first_CI": 44141264184,
+      "first_Pages": 44141263907
     }
   }
 }

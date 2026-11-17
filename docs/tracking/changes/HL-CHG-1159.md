@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `local_UI_and_artifacts_PASS_publication_pending` |
-| CI | `pending_exact_source_CI` |
+| DEV | `Pages70d_SUCCESS_229files_TLS_verified_fix_in_progress` |
+| CI | `first_source_CI_FAILURE_canonical_stage_new_source_pending` |
 | PRE-PROD | `not_authorized_for_this_change` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
