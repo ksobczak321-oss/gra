@@ -14,10 +14,10 @@
   "browser_advisor": "PASS_1440x1000_390x844_390x480",
   "browser_first_introduction": "PASS_3_STEPS_1440_390",
   "browser_target_replacement": "PASS_1440_390",
-  "full_regression": "LOCAL_FULL_RUN_FAILURE_PRESERVED_TARGETED_29_PASS_OWN_CI_PENDING",
-  "source_sha": "70d9ed4deebfdfe80fecaf6cdda5c96e14b5f3b9",
-  "CI": "FIRST_RUN_FAILURE_CANONICAL_COPIES_FIX_PENDING",
-  "Pages": "FIRST_RUN_SUCCESS_PUBLIC_BYTES_MATCH",
+  "full_regression": "R2_1475_FRONTEND_PASS_BROWSER_HARNESS_FIX_R3_EXACT_CI_PENDING",
+  "source_sha": "553db9bbd6a0cb1149e7684c40d314f14cf5add5",
+  "CI": "R2_FAILURE_OBSOLETE_AUTOMATIC_TUTORIAL_TEST_R3_PENDING",
+  "Pages": "R2_SUCCESS_PUBLIC_BYTES_MATCH",
   "PREPROD": "NOT_AUTHORIZED_FOR_ADVISOR",
   "PROD_DNS": "NO_ACTION",
   "account_reset": false,
@@ -35,7 +35,7 @@
     "nonempty_C": 34,
     "changed_rows": 45,
     "unselected_sheet_contents_read": false,
-    "unit_test_cases": 4,
+    "unit_test_cases": 5,
     "merge": "docs/v32/EDITORIAL-PURPLE-TABS-MERGE.json",
     "browser": "PASS_1440_390_ACTUAL_PRODUCTS_RESEARCH_ACADEMY_BARRACKS_FOOD",
     "data_cases": 5,
@@ -86,7 +86,7 @@
     "learning_flow_v27": "PASS_4_PL_EN_DESKTOP_MOBILE_SCOPES",
     "onboarding_v20": "ALL_SCENARIOS_PASS_ACROSS_FOCUSED_RUNS_EARLIER_FAILED_FULL_RUN_PRESERVED"
   },
-  "targeted_current_cases": 29,
+  "targeted_current_cases": 30,
   "intent_regression": "PASS_EXPLICIT_NEW_PRODUCTION_GOAL_OVERRIDES_PRIOR_UPGRADE_CONTEXT",
   "master": {
     "source_git_commit": "44bc5381e9e29aaf5c9786492f54fdb996cda507",
@@ -135,8 +135,9 @@
   },
   "public_byte_audit": {
     "status": "PASS",
+    "source": "553db9bbd6a0cb1149e7684c40d314f14cf5add5",
     "files": 229,
-    "bytes": 36877692,
+    "bytes": 36878716,
     "normal_TLS": true,
     "native_browser_claimed": false
   },
@@ -149,7 +150,7 @@
     "status": "CANONICAL_3_CHECK_PASS_CLOSED_PACKAGE_2_PASS",
     "files": 3,
     "backend_package_cases": 2,
-    "new_source_and_CI": "NEW_PUBLICATION_PENDING",
+    "new_source_and_CI": "R2_CANONICAL_STAGE_AND_BACKEND_PASS",
     "backend_cases": 170,
     "backend": "PASS"
   },
@@ -180,5 +181,40 @@
     "superseded_by_cache15_and_fifth_purple_sheet": true
   },
   "current_UI": "PASS_CACHE15_ADVISOR3_SCOPES_KEYBOARD350_AND_PURPLE2_SCOPES",
-  "next_CI": "PENDING_EXACT_NEW_SOURCE"
+  "next_CI": "R3_EXACT_SOURCE_PENDING",
+  "second_publication": {
+    "source": "553db9bbd6a0cb1149e7684c40d314f14cf5add5",
+    "CI_run": 44148037986,
+    "CI_conclusion": "FAILURE",
+    "CI_failed_step": "Test packaged game and both tutorial programs in Chromium",
+    "CI_failure": "editorial-six-tabs-v32 expected automatic full-tour construction after the approved three-stop introduction",
+    "frontend_Node_pass": 1475,
+    "canonical_API_stage": "PASS",
+    "backend_cases": 170,
+    "backend": "PASS",
+    "master_and_editorial_validation": "PASS",
+    "standalone_minigames_browser": "PASS",
+    "main_browser_programs_before_failure": 5,
+    "later_browser_groups": "SKIPPED",
+    "Pages_run": 44148037993,
+    "Pages_conclusion": "SUCCESS",
+    "Pages_seconds": 29
+  },
+  "third_publication_preparation": {
+    "scope": "TESTS_AND_DOCUMENTATION_ONLY",
+    "changed_test_files": [
+      "tests/harborlight-editorial-six-tabs-v32-smoke.py",
+      "tests/harborlight-release-v31-smoke.py",
+      "scripts/test_frontend_v29_learning.py"
+    ],
+    "editorial_20_buildings_19_long_guide_steps": "PASS_1672_1366_390_REAL_HELP_FULL_GUIDE_WORLD_FROZEN_ZERO_WRITES",
+    "release_v31_house_lesson14": "PASS_PL_EN_DESKTOP_MOBILE",
+    "v29_full_56_stop_route_and_construction": "PASS_PL_EN_DESKTOP_MOBILE",
+    "remaining_v32_browser_programs": 18,
+    "remaining_v32_browser_result": "PASS_ALL",
+    "application_bytes_changed": false,
+    "master_117_source_hashes": "PASS_UNCHANGED",
+    "master_regeneration_required": false,
+    "own_exact_CI": "PENDING"
+  }
 }

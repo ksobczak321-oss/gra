@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `canonical_stage_and_backend_package_PASS_new_CI_pending` |
-| CI | `first_run_FAILURE_new_exact_source_required` |
+| DEV | `Pages553_SUCCESS_229files_TLS_match_R3_test_only_pending` |
+| CI | `R2_FAILURE_automatic_tutorial_fixture_R3_exact_CI_pending` |
 | PRE-PROD | `not_authorized_for_this_change` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
@@ -42,7 +42,7 @@ Data pierwotnej wiadomości: 2026-11-17. CI44141264184 źródła70d wykrył pomi
 - **Scenariusze automatyczne:** [scripts/stage_backend_trade_rules.py](../../../scripts/stage_backend_trade_rules.py), [tests/harborlight-backend-package.test.py](../../../tests/harborlight-backend-package.test.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Cache15:5zakładek/175wierszy/34C;30targetedPASS; UI1440/390/480/keyboard350PASS; kanoniczneAPI3CHECK+pakiet2+backend170PASS. Master157/57/61971świeżyPASS117źródeł. PierwszyCI70d pozostajeFAILUREpo1474frontendPASS. Nowy CI/Pagesw toku, bezPRE-PROD/resetu/PROD/DNS.
+Cache15 opublikowany na DEV553: Pages44148037993 SUCCESS29s, 229 plików/36 878 716 bajtów zgodnych TLS. CI44148037986 FAILURE na przestarzałym oczekiwaniu pełnego tutoriala; wcześniej1475frontend,170backend,stage iExcelle PASS. Trzy poprawione testy używają rzeczywistej Pomocy;18dalszych v32PASS. R3 zmienia tylko testy/dokumentację, własnyCI oczekuje. BezPRE-PROD/resetu/PROD/DNS.
 
 ## Relacje
 

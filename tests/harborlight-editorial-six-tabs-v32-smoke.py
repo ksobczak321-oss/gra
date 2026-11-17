@@ -13,6 +13,7 @@ import subprocess
 from urllib.parse import unquote,urlsplit
 
 from playwright.sync_api import expect,sync_playwright
+from helpers.browser_offers import dismiss_player_offers
 
 SOURCE=Path(__file__).resolve().parents[1]
 ROOT=Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT',SOURCE)).resolve()
@@ -29,7 +30,7 @@ fixture=json.loads(subprocess.check_output(['node','--input-type=module','-e',""
 import {createState} from './harborlight-v1-state.js';
 import {APPROVED_TOUR_IDS} from './harborlight-v1-approved-copy.js';
 const now=Date.now(),make=onboarding=>{const s=createState(now,{ruleset:32,onboarding});s.settings.language='pl';s.islandName='Przystań redakcji';s.tutorial.autoOpenDisabled=true;for(const b of Object.values(s.buildings))b.level=6;s.capacity=216;s.highestTownhall=6;for(const id of Object.keys(s.resources))s.resources[id]=100000;s.education.discoveries.cheese=true;s.education.discoveries.cake=true;s.objective.repaired=true;return s};
-const normal=make(false),tour=make(true);tour.onboarding.stage='tour';tour.onboarding.index=APPROVED_TOUR_IDS.indexOf('construction');
+const normal=make(false),tour=make(true);tour.onboarding.stage='tour';tour.onboarding.index=0;
 const locked=createState(now,{ruleset:32});locked.settings.language='pl';locked.tutorial.autoOpenDisabled=true;
 console.log(JSON.stringify({normal,tour,locked,ids:APPROVED_TOUR_IDS}));
 """],cwd=SOURCE))
@@ -54,15 +55,21 @@ def bounded(page,locator,where):
     assert locator.evaluate('n=>n.scrollWidth<=n.clientWidth+1'),(where,'horizontal content overflow')
 
 
-def open_page(browser,width,height,state):
+def open_page(browser,width,height,state,*,fixed_time=False):
     page=browser.new_page(viewport={'width':width,'height':height},has_touch=width<600,reduced_motion='reduce')
     page.set_default_timeout(12000);page.route(BASE+'/**',asset)
-    errors=[];failed=[]
+    errors=[];failed=[];writes=[]
+    def read_only(route):
+        if route.request.method != 'GET':
+            writes.append((route.request.method,route.request.url));route.abort();return
+        route.fallback()
+    page.route('**/*',read_only)
+    if fixed_time:page.clock.set_fixed_time(state['worldTimeMs'])
     page.on('pageerror',lambda e:errors.append(str(e)))
     page.on('response',lambda r:failed.append((r.status,r.url)) if r.status>=400 else None)
     page.add_init_script('localStorage.setItem("harborlight-language","pl");window.__HARBORLIGHT_DEV_FIXTURE__='+json.dumps(state))
     page.goto(BASE+'/harborlight-v1-layered.html?profile=new-player',wait_until='networkidle')
-    return page,errors,failed
+    return page,errors,failed,writes
 
 
 report=[]
@@ -70,7 +77,7 @@ with sync_playwright() as p:
     browser=p.chromium.launch(executable_path=os.environ.get('HARBORLIGHT_CHROMIUM','/usr/bin/chromium'),headless=True,args=['--no-sandbox'])
     for width,height in [(1672,941),(1366,768),(390,844)]:
         mobile=width<600
-        page,errors,failed=open_page(browser,width,height,fixture['normal'])
+        page,errors,failed,writes=open_page(browser,width,height,fixture['normal'])
         tooltips={}
         for category,identity,expected in [('economy','fisher',FISHER_MENU),('administration','dock',PORT_MENU)]:
             page.locator('[data-mobile-category="'+category+'"]' if mobile else '#hit-category-'+category).click()
@@ -116,11 +123,27 @@ with sync_playwright() as p:
             page.locator('#island-dialog .dialog-close').click()
         assert not errors,errors
         assert not failed,failed
+        assert not writes,writes
         page.close()
 
-        # Resume the real initial tour around its longer reviewed paragraphs.
-        page,errors,failed=open_page(browser,width,height,fixture['tour'])
-        guide=page.locator('[data-island-onboarding]');start=fixture['ids'].index('construction');end=fixture['ids'].index('education')
+        # Finish the short introduction, then choose the preserved full guide
+        # through actual Help controls. Its longer reviewed copy stays optional.
+        # A fixed test Date prevents ordinary play time from changing the
+        # read-only snapshot; the product's manual guide still runs normally.
+        page,errors,failed,writes=open_page(browser,width,height,fixture['tour'],fixed_time=True)
+        guide=page.locator('[data-island-onboarding]')
+        for identity in ['home','category-administration','building-farm']:
+            expect(guide).to_have_attribute('data-onboarding-step',identity)
+            guide.locator('[data-onboarding-next]').click()
+        expect(guide).to_have_count(0)
+        dismiss_player_offers(page)
+        page.locator('[data-mobile-control="tutorial"]:visible,#hit-tutorial:visible').first.click()
+        page.locator('[data-help-tour-from-start]').click()
+        guide=page.locator('[data-onboarding-replay="true"]')
+        start=fixture['ids'].index('construction');end=fixture['ids'].index('education')
+        for identity in fixture['ids'][:start]:
+            expect(guide).to_have_attribute('data-onboarding-step',identity)
+            guide.locator('[data-onboarding-next]').click()
         tour_seen=[]
         frozen=page.evaluate('''()=>{const s=window.__HARBORLIGHT_DEV_STATE__;return {world:s.worldTimeMs,resources:s.resources,residents:s.residents,buildings:s.buildings,tutorial:s.tutorial}}''')
         for identity in fixture['ids'][start:end+1]:
@@ -138,9 +161,10 @@ with sync_playwright() as p:
         assert page.evaluate('''()=>{const s=window.__HARBORLIGHT_DEV_STATE__;return {world:s.worldTimeMs,resources:s.resources,residents:s.residents,buildings:s.buildings,tutorial:s.tutorial}}''')==frozen
         assert not errors,errors
         assert not failed,failed
+        assert not writes,writes
         page.close()
 
-        page,errors,failed=open_page(browser,width,height,fixture['locked'])
+        page,errors,failed,writes=open_page(browser,width,height,fixture['locked'])
         page.locator('#hit-world-academy').evaluate('n=>n.click()')
         expect(page.locator('[data-building-locked]')).to_be_visible()
         text=page.locator('#island-dialog').inner_text();clean(text,'locked Academy')
@@ -148,8 +172,9 @@ with sync_playwright() as p:
         bounded(page,page.locator('#island-dialog'),'locked Academy')
         assert not errors,errors
         assert not failed,failed
+        assert not writes,writes
         page.close()
-        report.append({'width':width,'info_buildings':info_checked,'approved_tooltips':tooltips,'production_labels':labels_checked,'long_tour_steps':tour_seen,'notes_and_placeholders_absent':True,'locked_message_resolved':True,'horizontal_overflow':False,'tour_world_frozen':True})
+        report.append({'width':width,'info_buildings':info_checked,'approved_tooltips':tooltips,'production_labels':labels_checked,'long_tour_steps':tour_seen,'notes_and_placeholders_absent':True,'locked_message_resolved':True,'horizontal_overflow':False,'tour_world_frozen':True,'network_writes':0,'full_guide_opened_through_help':True})
     browser.close()
 (OUTPUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False))

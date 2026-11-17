@@ -10,6 +10,7 @@ import re
 import subprocess
 from pathlib import Path
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_tutorial import request_practical_guidance
 
 SOURCE = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('release_v31_base', SOURCE / 'tests/harborlight-release-v28-smoke.py')
@@ -78,6 +79,7 @@ def house_guide_fixture():
 def house_guide_scenario(browser, language, mobile):
     context, page, errors, external = base.new_page(browser, house_guide_fixture(), language, mobile)
     try:
+        request_practical_guidance(page)
         # A later independently finished construction may have its own earned
         # reward. Acknowledge it normally, then follow the active lesson onto
         # the map. Closing the course with X would intentionally pause guidance.

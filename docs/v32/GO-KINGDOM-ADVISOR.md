@@ -32,3 +32,9 @@ CI44141264184 ma FAILURE2m45s: frontend1474/1474PASS152922ms, następnie kanonic
 
 
 Dziesięć opisów z jasnofioletowej zakładki nie tworzy nowych mechanik: siedem projektów pozostaje odłożonych. Działające już ser, kredyt i badania pojedynczych tras używają zatwierdzonych opisów. Przy „Kamień, woda i światło” wyjaśniono, że chodzi o nowe wyglądy fontann, rzeźb i lamp; konkretna lista wariantów wymaga dalszego ustalenia. Nie zmieniono kosztów, progów ani liczby aktywnych odkryć. Kandydatcache15 ma ponownie zsynchronizowane trzy kopie API przed zamrożeniem źródła.
+
+## DEV553 i poprawka testów R3
+
+DEV553/cache15 jest opublikowany: Pages44148037993 SUCCESS29s; 229plików/36 878 716bajtów odpowiada Git przez normalnyTLS. CI44148037986 pozostaje FAILURE na starym oczekiwaniu automatycznego pełnego tutoriala, po1475frontendPASS i170backendPASS; dalsze grupy pominięto. Poprawiono tylko trzy scenariusze testowe, zachowując pełne asercje i rzeczywiste wejście przez Pomoc. Lokalne18pozostałych programówv32 PASS; własny nowyCI R3 oczekuje. PierwszyCI44141264184 również pozostajeFAILURE. NatywnyChromium ma ograniczenie certyfikatu bez obchodzeniaTLS; odtworzenie opublikowanych bajtów lokalniePASS. **TylkoDEV: bez PRE-PROD, PROD, resetu i DNS.**
+
+R3 nie zmienia publicznych plików aplikacji ani117źródeł mastera. Editorial-six-tabs przechodzi na1672/1366/390 z20budynkami,19długimi opisami, zamrożonym światem i0zapisów. Dom/lekcja14 oraz pełna trasa56kroków wraz z naturalną budową przechodzą PL/EN desktop/mobile po jawnym wznowieniu kursu w Pomocy. [HL-CHG-1162](../tracking/changes/HL-CHG-1162.md).

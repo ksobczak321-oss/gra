@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `Pages70d_SUCCESS_229files_TLS_verified_fix_in_progress` |
-| CI | `first_source_CI_FAILURE_canonical_stage_new_source_pending` |
+| DEV | `Pages553_SUCCESS_229files_TLS_match_R3_test_only_pending` |
+| CI | `R2_FAILURE_automatic_tutorial_fixture_R3_exact_CI_pending` |
 | PRE-PROD | `not_authorized_for_this_change` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
@@ -28,7 +28,7 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 - Wszystkie8instrukcji uzupełniających jest dostępnych we właściwych kontekstach.
 - Nazwy Latarni16/18/19/46 mają czytelne redakcyjne odpowiedniki; pozostałe zatwierdzone nazwy są zachowane.
 - Nie dodaje się mechaniki otrębów samą zmianą opisu; parametry receptur, czasy, nagrody i warunki nie zmieniają się.
-- Nowycache14 obejmuje cały graf modułów. Master i pochodnyExcel6 są odświeżone przy zachowaniu archiwum14 i pierwotnego zakresu6zakładek.
+- Nowycache15 obejmuje cały graf modułów. Master i pochodnyExcel6 są odświeżone przy zachowaniu archiwum14 i pierwotnego zakresu6zakładek.
 - Publikacja wyłącznieDEV/Git/Pages bez resetu, PRE-PROD, PROD i DNS.
 
 ## Źródło
@@ -46,7 +46,7 @@ Data pierwotnej wiadomości: 2026-11-17. Użytkownik wskazał wyłącznie zakła
 - **Scenariusze automatyczne:** [tests/harborlight-purple-editorial.test.mjs](../../../tests/harborlight-purple-editorial.test.mjs), [tests/harborlight-purple-editorial-ui-smoke.py](../../../tests/harborlight-purple-editorial-ui-smoke.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Cache15:5zakładek/175wierszy/34C;30targetedPASS; UI1440/390/480/keyboard350PASS; kanoniczneAPI3CHECK+pakiet2+backend170PASS. Master157/57/61971świeżyPASS117źródeł. PierwszyCI70d pozostajeFAILUREpo1474frontendPASS. Nowy CI/Pagesw toku, bezPRE-PROD/resetu/PROD/DNS.
+Cache15 opublikowany na DEV553: Pages44148037993 SUCCESS29s, 229 plików/36 878 716 bajtów zgodnych TLS. CI44148037986 FAILURE na przestarzałym oczekiwaniu pełnego tutoriala; wcześniej1475frontend,170backend,stage iExcelle PASS. Trzy poprawione testy używają rzeczywistej Pomocy;18dalszych v32PASS. R3 zmienia tylko testy/dokumentację, własnyCI oczekuje. BezPRE-PROD/resetu/PROD/DNS.
 
 ## Relacje
 
@@ -56,7 +56,7 @@ Cache15:5zakładek/175wierszy/34C;30targetedPASS; UI1440/390/480/keyboard350PASS
 
 ## Uwagi
 
-- Plik wejściowy nie jest publikowany w całości. MERGE zawiera wyłącznie wybrane4zakładki.
+- Plik wejściowy nie jest publikowany w całości. MERGE zawiera wyłącznie wybrane5zakładek.
 - PusteC nadal zatwierdzaB; jawne korekty nieaktualnych nazw przycisków zapobiegają publikacji niewykonalnych instrukcji.
 - Motyw Excela rozwiązuje theme7 do fioletu8064A2. Zakładka Odłożone odkrycia zmieniła kolor ze złotego w poprzednim uploadzie; jej10wierszy jest również w zakresie. Odkrycia bez zatwierdzonych parametrów pozostają projektami.
 

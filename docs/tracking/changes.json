@@ -30019,8 +30019,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "Pages70d_SUCCESS_229files_TLS_verified_fix_in_progress",
-        "ci": "first_source_CI_FAILURE_canonical_stage_new_source_pending",
+        "dev": "Pages553_SUCCESS_229files_TLS_match_R3_test_only_pending",
+        "ci": "R2_FAILURE_automatic_tutorial_fixture_R3_exact_CI_pending",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30061,7 +30061,7 @@
           "tests/harborlight-tour-route-v5-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Cache15:5zakładek/175wierszy/34C;30targetedPASS; UI1440/390/480/keyboard350PASS; kanoniczneAPI3CHECK+pakiet2+backend170PASS. Master157/57/61971świeżyPASS117źródeł. PierwszyCI70d pozostajeFAILUREpo1474frontendPASS. Nowy CI/Pagesw toku, bezPRE-PROD/resetu/PROD/DNS.",
+        "release_note": "Cache15 opublikowany na DEV553: Pages44148037993 SUCCESS29s, 229 plików/36 878 716 bajtów zgodnych TLS. CI44148037986 FAILURE na przestarzałym oczekiwaniu pełnego tutoriala; wcześniej1475frontend,170backend,stage iExcelle PASS. Trzy poprawione testy używają rzeczywistej Pomocy;18dalszych v32PASS. R3 zmienia tylko testy/dokumentację, własnyCI oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
         "application_source_sha": "5ddba0a35a060b4fdca18c3b1394d0ef7f679df4",
         "model_source_sha": "44bc5381e9e29aaf5c9786492f54fdb996cda507"
       },
@@ -30097,8 +30097,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "Pages70d_SUCCESS_229files_TLS_verified_fix_in_progress",
-        "ci": "first_source_CI_FAILURE_canonical_stage_new_source_pending",
+        "dev": "Pages553_SUCCESS_229files_TLS_match_R3_test_only_pending",
+        "ci": "R2_FAILURE_automatic_tutorial_fixture_R3_exact_CI_pending",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30111,7 +30111,7 @@
         "Wszystkie8instrukcji uzupełniających jest dostępnych we właściwych kontekstach.",
         "Nazwy Latarni16/18/19/46 mają czytelne redakcyjne odpowiedniki; pozostałe zatwierdzone nazwy są zachowane.",
         "Nie dodaje się mechaniki otrębów samą zmianą opisu; parametry receptur, czasy, nagrody i warunki nie zmieniają się.",
-        "Nowycache14 obejmuje cały graf modułów. Master i pochodnyExcel6 są odświeżone przy zachowaniu archiwum14 i pierwotnego zakresu6zakładek.",
+        "Nowycache15 obejmuje cały graf modułów. Master i pochodnyExcel6 są odświeżone przy zachowaniu archiwum14 i pierwotnego zakresu6zakładek.",
         "Publikacja wyłącznieDEV/Git/Pages bez resetu, PRE-PROD, PROD i DNS."
       ],
       "supersedes": [],
@@ -30139,12 +30139,12 @@
           "tests/harborlight-purple-editorial-ui-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Cache15:5zakładek/175wierszy/34C;30targetedPASS; UI1440/390/480/keyboard350PASS; kanoniczneAPI3CHECK+pakiet2+backend170PASS. Master157/57/61971świeżyPASS117źródeł. PierwszyCI70d pozostajeFAILUREpo1474frontendPASS. Nowy CI/Pagesw toku, bezPRE-PROD/resetu/PROD/DNS.",
+        "release_note": "Cache15 opublikowany na DEV553: Pages44148037993 SUCCESS29s, 229 plików/36 878 716 bajtów zgodnych TLS. CI44148037986 FAILURE na przestarzałym oczekiwaniu pełnego tutoriala; wcześniej1475frontend,170backend,stage iExcelle PASS. Trzy poprawione testy używają rzeczywistej Pomocy;18dalszych v32PASS. R3 zmienia tylko testy/dokumentację, własnyCI oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
         "application_source_sha": "5ddba0a35a060b4fdca18c3b1394d0ef7f679df4",
         "model_source_sha": "44bc5381e9e29aaf5c9786492f54fdb996cda507"
       },
       "notes": [
-        "Plik wejściowy nie jest publikowany w całości. MERGE zawiera wyłącznie wybrane4zakładki.",
+        "Plik wejściowy nie jest publikowany w całości. MERGE zawiera wyłącznie wybrane5zakładek.",
         "PusteC nadal zatwierdzaB; jawne korekty nieaktualnych nazw przycisków zapobiegają publikacji niewykonalnych instrukcji.",
         "Motyw Excela rozwiązuje theme7 do fioletu8064A2. Zakładka Odłożone odkrycia zmieniła kolor ze złotego w poprzednim uploadzie; jej10wierszy jest również w zakresie. Odkrycia bez zatwierdzonych parametrów pozostają projektami."
       ],
@@ -30155,7 +30155,7 @@
         "dev-only"
       ],
       "rules": [
-        "COPY:four-purple-tabs-only",
+        "COPY:five-purple-tabs-only",
         "COPY:C-over-B",
         "COPY:resolve-editorial-notes",
         "OPS:DEV-only"
@@ -30176,8 +30176,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "canonical_stage_and_backend_package_PASS_new_CI_pending",
-        "ci": "first_run_FAILURE_new_exact_source_required",
+        "dev": "Pages553_SUCCESS_229files_TLS_match_R3_test_only_pending",
+        "ci": "R2_FAILURE_automatic_tutorial_fixture_R3_exact_CI_pending",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30212,7 +30212,7 @@
           "tests/harborlight-backend-package.test.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Cache15:5zakładek/175wierszy/34C;30targetedPASS; UI1440/390/480/keyboard350PASS; kanoniczneAPI3CHECK+pakiet2+backend170PASS. Master157/57/61971świeżyPASS117źródeł. PierwszyCI70d pozostajeFAILUREpo1474frontendPASS. Nowy CI/Pagesw toku, bezPRE-PROD/resetu/PROD/DNS.",
+        "release_note": "Cache15 opublikowany na DEV553: Pages44148037993 SUCCESS29s, 229 plików/36 878 716 bajtów zgodnych TLS. CI44148037986 FAILURE na przestarzałym oczekiwaniu pełnego tutoriala; wcześniej1475frontend,170backend,stage iExcelle PASS. Trzy poprawione testy używają rzeczywistej Pomocy;18dalszych v32PASS. R3 zmienia tylko testy/dokumentację, własnyCI oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
         "application_source_sha": "5ddba0a35a060b4fdca18c3b1394d0ef7f679df4",
         "model_source_sha": "44bc5381e9e29aaf5c9786492f54fdb996cda507"
       },
@@ -30229,6 +30229,74 @@
         "BUILD:exact-canonical-three-file-stage",
         "OPS:preserve-failed-CI",
         "OPS:new-source-own-CI"
+      ]
+    },
+    {
+      "id": "HL-CHG-1162",
+      "epic": "HL-EPIC-OPS",
+      "area": "Testy dobrowolnego tutoriala",
+      "type": "Bug",
+      "title": "Otwieraj zachowany pełny przewodnik i kurs przez rzeczywistą Pomoc w testach",
+      "source": {
+        "kind": "exact_source_CI_failure",
+        "date": "2026-11-17",
+        "date_note": "CI44148037986 zachowuje FAILURE po1475frontendPASS; nowy odbiór wymaga własnego CI.",
+        "summary": "Starszy test redakcji zakładał automatyczne pełne oprowadzanie. Trzy scenariusze otrzymują świadome uruchomienie istniejącej Pomocy zamiast zmiany produktu.",
+        "reference": "workflow:44148037986:packaged-browser-editorial-six-tabs-v32"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "Pages553_SUCCESS_229files_TLS_match_R3_test_only_pending",
+        "ci": "R2_FAILURE_automatic_tutorial_fixture_R3_exact_CI_pending",
+        "preprod": "not_authorized_for_this_change",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Pierwsze trzy kroki pozostają góra, dolne menu, Gospodarstwo; pełny przewodnik uruchamia test przez rzeczywisty przycisk Pomocy.",
+        "Zachowane asercje20budynków,19długich opisów,geometrii,pełnego zamrożonego świata i braku zapisów.",
+        "Scenariusze Domu/lekcji14 i pełnej56krokowej trasy wznawiają dobrowolny kurs przez Pomoc; nagrody i budowa nadal sprawdzane.",
+        "Brak zmian aplikacji, limitów, modelu, generatorów, archiwów i117odcisków źródeł mastera.",
+        "WłasnyCI nowegoSHA i publicznyDEV wymagają osobnego potwierdzenia; poprzednieFAILURE pozostają historią."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1159",
+        "HL-CHG-1160",
+        "HL-CHG-1161"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/KINGDOM-ADVISOR-EVIDENCE.json",
+          "docs/v32/GO-KINGDOM-ADVISOR.md"
+        ],
+        "code": [],
+        "automated_tests": [
+          "tests/harborlight-editorial-six-tabs-v32-smoke.py",
+          "tests/harborlight-release-v31-smoke.py",
+          "scripts/test_frontend_v29_learning.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Cache15 opublikowany na DEV553: Pages44148037993 SUCCESS29s, 229 plików/36 878 716 bajtów zgodnych TLS. CI44148037986 FAILURE na przestarzałym oczekiwaniu pełnego tutoriala; wcześniej1475frontend,170backend,stage iExcelle PASS. Trzy poprawione testy używają rzeczywistej Pomocy;18dalszych v32PASS. R3 zmienia tylko testy/dokumentację, własnyCI oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
+        "application_source_sha": "5ddba0a35a060b4fdca18c3b1394d0ef7f679df4",
+        "model_source_sha": "44bc5381e9e29aaf5c9786492f54fdb996cda507"
+      },
+      "notes": [
+        "Poprawiono sposób wejścia w opcjonalny przewodnik; nie pominięto kontroli ani nie zmieniono oczekiwanego zachowania gry."
+      ],
+      "tags": [
+        "v32",
+        "tutorial",
+        "regression",
+        "dev-only"
+      ],
+      "rules": [
+        "TEST:real-help-opt-in",
+        "OPS:preserve-failed-CI",
+        "OPS:no-gameplay-delta"
       ]
     }
   ],
@@ -33317,7 +33385,7 @@
     "advisor_task": {
       "as_of": "2026-11-17",
       "version": "0.15.1.0",
-      "status": "CACHE15_LOCAL_COMPLETE_NEW_CI_AND_PAGES_PENDING",
+      "status": "R2_PAGES_SUCCESS_CI_FAILURE_TEST_ONLY_R3_PENDING",
       "DEV_only": true,
       "PREPROD_authorized": false,
       "reset": false,
@@ -33341,7 +33409,14 @@
       "first_CI": 44141264184,
       "first_Pages": 44141263907,
       "candidate_cache": "frontend-v32-15",
-      "model_source_sha": "44bc5381e9e29aaf5c9786492f54fdb996cda507"
+      "model_source_sha": "44bc5381e9e29aaf5c9786492f54fdb996cda507",
+      "publication_source": "553db9bbd6a0cb1149e7684c40d314f14cf5add5",
+      "second_CI": 44148037986,
+      "second_CI_status": "FAILURE",
+      "second_Pages": 44148037993,
+      "second_Pages_status": "SUCCESS",
+      "remaining_v32_browser": "18_PASS",
+      "test_only_fix": "HL-CHG-1162"
     }
   }
 }

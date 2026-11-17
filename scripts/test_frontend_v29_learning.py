@@ -132,6 +132,8 @@ def scenario(browser, language, mobile, route):
         expect(tour).to_have_count(0)
         assert visited == route and len(visited) == len(set(visited)), visited
         assert 'building-theatre' in visited, visited
+        # Practical guidance is optional: explicitly resume it through Help.
+        open_help(page, mobile).locator('[data-help-return-lessons]').click()
         expect(page.locator('[data-tutorial-current="island-map"]')).to_be_visible()
         expect(page.locator('[data-tutorial-assignment-progress]')).to_contain_text('0 / 3')
         current = base.state_of(page)
@@ -168,7 +170,7 @@ def run():
                     scenario(browser, language, mobile, route)
         finally:
             browser.close()
-    print('PASS v29 learning: Help button edges, 3x question mark, %d-step approved route without duplicates, single Farm storage demonstration, Theatre, saved resume and automatic practical course; PL/EN desktop/mobile' % len(route))
+    print('PASS v29 learning: Help button edges, 3x question mark, %d-step approved route without duplicates, single Farm storage demonstration, Theatre, saved resume and explicitly resumed practical course; PL/EN desktop/mobile' % len(route))
 
 
 if __name__ == '__main__':
