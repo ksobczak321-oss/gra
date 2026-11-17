@@ -342,6 +342,11 @@ jobs:
           node infra/google-cloud/verify-hosted-release.mjs \
             build/frontend/release.json "$RUNNER_TEMP/harborlight-hosted-release.json"
 
+      - name: Test every separately hosted minigame and its downloads
+        env:
+          HARBORLIGHT_BASE_URL: https://harborlight-dev.web.app
+        run: python3 -u tests/harborlight-minigames-standalone-smoke.py
+
       - name: Test the actual hosted game in Chromium
         id: hosted_browser
         env:

@@ -1,0 +1,127 @@
+Kulki w labiryncie — ekspedycja
+
+HARBORLIGHT · Gra ekspedycyjna
+
+Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+
+Otwórz grę na PRE-PROD
+
+https://harborlight-dev.web.app/minigames/?game=expedition-tilt
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Cel gry
+
+Doprowadź wszystkie kulki do otworów, a potem zdecyduj o wypłacie puli lub kolejnej rundzie.
+
+Scenariusz i zadanie gracza
+
+Ekspedycja rozpoczyna się za darmo. Wygrane rundy budują pulę monet, która pozostaje zagrożona do momentu świadomej wypłaty. Jest to odrębny tryb od pojedynczej planszy użytej w opowieści.
+
+Kolejne rundy labiryntu z kulkami z decyzją o wypłacie lub ryzyku całej zgromadzonej puli.
+
+Przygotowanie rozgrywki
+
+1. Plansza o logicznym rozmiarze 600 × 600 zawiera ściany, kulki i otwory-cel. Na trudności 1 jest jedna kulka; wyższe trudności mogą mieć do sześciu.
+
+Sterowanie i wykonywanie ruchów
+
+1. Na komputerze poruszaj kursorem nad planszą albo użyj klawiszy strzałek.
+
+2. Na telefonie steruj dotykiem lub użyj dostępnego sterowania ruchem telefonu po udzieleniu zgody.
+
+3. Wycentruj sterowanie, aby przestać nadawać przyspieszenie.
+
+4. Po zwycięstwie użyj wypłaty albo przejścia do kolejnego poziomu.
+
+Zasady krok po kroku
+
+1. Nachylenie planszy przyspiesza kulki; bezwładność powoduje dalszy ruch po zmianie kierunku.
+
+2. Ściany i obramowanie blokują przejazd i odbijają kulki.
+
+3. Każda kulka musi osiąść w innym wolnym otworze; trafiona kulka przestaje się poruszać.
+
+4. Precyzyjne małe przechylenia pomagają wyhamować przy celu.
+
+5. Po wygranej runda zatrzymuje się w stanie decyzji. Możesz wypłacić całą pulę albo zaryzykować ją w następnej rundzie.
+
+6. Nie można uruchomić drugiej serii ekspedycji, dopóki pierwsza jest aktywna lub czeka na decyzję.
+
+Warunek zwycięstwa
+
+• Wszystkie kulki osiadły w celach.
+
+• Wygrana runda dodaje należne monety do puli. Dopiero wypłata kończy serię z zachowaniem wyniku.
+
+Błędy, niedozwolone ruchy i zakończenie próby
+
+• Koniec limitu lub rezygnacja powoduje utratę całej niewypłaconej puli, również z wcześniejszych rund.
+
+• Wyjście z aktywnej planszy kończy bieżącą próbę. W samodzielnej stronie wszystkie wartości są testowe i nie zmieniają konta.
+
+• Brak potwierdzenia obecności w ciągu 60 s kończy serię i powoduje utratę całej niewypłaconej puli.
+
+Czas i tempo rozgrywki
+
+• Limit kulek wynosi max(60 s, 180 s / (1 + 0,1 × (trudność − 1))). Pierwsza trudność trwa 180 s.
+
+• Liczba kulek rośnie co dwie trudności do sześciu; rozmiar labiryntu co trzy trudności od 3 × 3 do 8 × 8.
+
+• Po 300 s bez znaczącej aktywności w głównej grze pojawia się pytanie o obecność. Na potwierdzenie masz 60 s; zegar ekspedycji nadal działa.
+
+Punktacja i nagrody w głównej grze
+
+• Nagrody kolejnych wygranych rund wynoszą nominalnie 50, 100, 200, 400, następnie najwyżej 800 monet za rundę.
+
+• Pełna nagroda obowiązuje przez pierwsze 2/3 limitu. Potem każde pełne 1/12 limitu odejmuje 1 monetę od nagrody bieżącej rundy, do minimum zera.
+
+• Pula rośnie o nagrodę ukończonej rundy; decyzja o kontynuacji naraża całą dotychczasową pulę. Wypłata jest możliwa tylko po wygranej rundzie.
+
+• Powyższe monety opisują model gry. Samodzielny link pokazuje treningowy wynik, nie zasila portfela konta.
+
+Ponowna próba i pomoc
+
+• Nowa zwykła seria może wystartować po zakończeniu poprzedniej.
+
+• Po trzech porażkach danej odmiany dostępna jest jedna darmowa podpowiedź oraz łatwiejsza próba za połowę nagrody.
+
+• W grze głównej przed końcem czasu można otrzymać ofertę przedłużenia; monety i reklamy wymagają właściwego trybu i potwierdzenia.
+
+Rozwój trudności i dostępność
+
+• Trudność planszy bierze pod uwagę wygrane danej odmiany w godzinowym oknie konta. Runda serii i trudność planszy nie zawsze mają tę samą wartość.
+
+• W bibliotece testowej wybierz poziom, aby sprawdzić odpowiadającą mu generowaną planszę.
+
+Przykładowy przebieg
+
+1. Przed wąskim zakrętem zmniejsz wychylenie. Przy otworze hamuj przeciwnym kierunkiem zamiast długo utrzymywać silny przechył.
+
+2. Po dwóch terminowych wygranych rundach nominalna pula wynosi 50 + 100 = 150 monet. Kontynuacja stawia całe 150 na wynik następnej rundy.
+
+Warianty i osobne linki
+
+Ta gra ma jeden scenariusz podstawowy. Parametry kolejnych prób i rozwój trudności opisano powyżej; link podstawowy otwiera tę samą mechanikę.
+
+Zakres samodzielnej próby
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w panelu gry. Zmieniaj poziom i wariant między próbami; rozpoczęta próba korzysta z parametrów wybranych przy jej uruchomieniu.
+
+Źródła i wersja zasad
+
+Identyfikator gry: expedition-tilt.
+
+Źródło katalogu: 6b40252ba4f57a035d6b624656c8fce735559b07.
+
+Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+
+• harborlight-v1-activities.js:484 — Zegar, zmniejszanie nagrody, pula ekspedycji
+
+• harborlight-v1-activities.js:539 — Potwierdzenie obecności po bezczynności i utrata puli
+
+• harborlight-v1-minigames.js:3 — Rozmiary plansz, limity czasu i progresja
+
+• harborlight-v1-expedition-hour.js:80 — Nagroda 50/100/200/400/800 i limit 800 monet

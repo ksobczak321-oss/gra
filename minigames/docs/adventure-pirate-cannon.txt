@@ -1,0 +1,109 @@
+Kupiec w opałach
+
+HARBORLIGHT · Przygoda klasyczna
+
+Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+
+Otwórz grę na PRE-PROD
+
+https://harborlight-dev.web.app/minigames/?game=adventure-pirate-cannon
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Cel gry
+
+Każda wygrana runda z kulką daje jedną kulę do armaty. Wyceluj w piratów i utoruj kupcowi drogę do portu.
+
+Scenariusz i zadanie gracza
+
+Każda wygrana runda z kulką daje jedną kulę do armaty. Wyceluj w piratów i utoruj kupcowi drogę do portu.
+
+Przygotowanie rozgrywki
+
+1. Trzy pirackie statki poruszają się po morzu. Kule do armaty otrzymuje się za wygrane rundy z kulką; zapas mieści najwyżej 12.
+
+Sterowanie i wykonywanie ruchów
+
+1. Wskaż punkt na morzu, aby wycelować.
+
+2. Naciśnij strzał; w razie potrzeby przejdź do rundy z kulką po amunicję.
+
+Zasady krok po kroku
+
+1. Jedna wygrana runda z kulką daje jedną kulę.
+
+2. Wycelowanie wyznacza kierunek, ale nie strzela. Strzał zużywa jedną kulę.
+
+3. Pocisk startuje przy armacie i leci ze stałą prędkością; trzeba uwzględnić ruch celu.
+
+4. Jednocześnie mogą lecieć najwyżej trzy pociski. Trafienie jest sprawdzane przez symulację, a nie przez kliknięcie statku.
+
+Warunek zwycięstwa
+
+• Wszystkie trzy pirackie statki zostały trafione.
+
+Błędy, niedozwolone ruchy i zakończenie próby
+
+• Nietrafiony pocisk zużywa amunicję; bez kul trzeba najpierw zdobyć następną.
+
+Czas i tempo rozgrywki
+
+• Referencyjny limit etapu przy trudności 1 wynosi 420 s. Dalsza trudność skraca go według wzoru: czas katalogowy / (1 + 0,05 × (trudność − 1)), nie mniej niż 60 s.
+
+• Zmiana na kolejny etap przygody rozpoczyna jego odrębny zegar; limit nie jest jednym czasem całej wieloetapowej historii.
+
+• Po ukończeniu główna gra stosuje 900 s przerwy tej klasycznej przygody.
+
+Punktacja i nagrody w głównej grze
+
+• Bazowy pakiet ukończenia w modelu: monety: 75, mąka: 40.
+
+• Są to parametry obecnego balansu testowego. W głównej grze monety są dopisywane do portfela, a materiały trafiają do kolejki dostaw; techniczny klucz food jest w v32 zamieniany na mąkę. Łatwiejsza próba daje połowę wartości pakietu. Ten sam ukończony przebieg nie wypłaca nagrody drugi raz. Samodzielny link nie dopisuje nagród do konta.
+
+Ponowna próba i pomoc
+
+• Po przegranej można ponowić bieżący etap. Zdobyte wcześniej przedmioty i ukończone etapy są zachowywane przez model głównej gry.
+
+• Po trzech porażkach danej odmiany można skorzystać z jednej darmowej podpowiedzi oraz łatwiejszej próby: o 50% dłuższym czasie i połowie nagrody.
+
+Rozwój trudności i dostępność
+
+• Trudność jest powiązana z godzinowym licznikiem wygranych danej odmiany.
+
+• Ta klasyczna przygoda jest odrębnym scenariuszem od opowieści o podobnym tytule i od pojedynczej zagadki korzystającej z podobnej mechaniki.
+
+Przykładowy przebieg
+
+1. Celuj trochę przed poruszającym się statkiem, aby pocisk i cel znalazły się w tym samym miejscu w chwili zderzenia.
+
+Warianty i osobne linki
+
+Ta gra ma jeden scenariusz podstawowy. Parametry kolejnych prób i rozwój trudności opisano powyżej; link podstawowy otwiera tę samą mechanikę.
+
+Zakres samodzielnej próby
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w panelu gry. Zmieniaj poziom i wariant między próbami; rozpoczęta próba korzysta z parametrów wybranych przy jej uruchomieniu.
+
+Źródła i wersja zasad
+
+Identyfikator gry: adventure-pirate-cannon.
+
+Źródło katalogu: 6b40252ba4f57a035d6b624656c8fce735559b07.
+
+Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+
+• harborlight-v1-adventures.js:45 — Cel i opis scenariusza
+
+• harborlight-v1-adventures.js:511 — Legalne działania i warunki ukończenia
+
+• harborlight-v1-adventures.js:354 — Zegar etapów i łatwiejsze próby
+
+• harborlight-v1-adventure-puzzles.js:110 — Sprawdzanie plansz, przepływu i równowagi
+
+• harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
+
+• harborlight-v1-state.js:1127 — Rozliczenie nagród opowieści i konwersja mąki
+
+• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy

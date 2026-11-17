@@ -1,0 +1,427 @@
+Konwój przez mgłę
+
+HARBORLIGHT · Przygoda fabularna
+
+Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+
+Otwórz grę na PRE-PROD
+
+https://harborlight-dev.web.app/minigames/?game=story-fog-convoy
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Cel gry
+
+Połącz światło, pomiary i rozkład rejsów.
+
+Scenariusz i zadanie gracza
+
+Połącz światło, pomiary i rozkład rejsów. Opowieść łączy 7 kolejnych pomieszczeń w jeden łańcuch odkryć. Każdy ukończony pokój pozostawia kod, który wpływa na układ następnego.
+
+Przygotowanie rozgrywki
+
+1. W głównej grze opowieść jest odblokowana od 7. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+
+2. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
+
+Sterowanie i wykonywanie ruchów
+
+1. Sterowanie zmienia się zależnie od rodzaju pokoju: wybór obiektów, układanie, obracanie, sygnały, karty albo przechylenie planszy.
+
+2. Przycisk przejścia do następnego pomieszczenia działa dopiero po potwierdzonym rozwiązaniu bieżącego.
+
+Zasady krok po kroku
+
+1. Rozwiąż zagadkę bieżącego pomieszczenia zgodnie z jej własnymi zasadami.
+
+2. Po rozwiązaniu potwierdź przejście do kolejnego pomieszczenia. Sama wygrana plansza nie pomija dalszych pokoi.
+
+3. Znaleziony czterocyfrowy kod trafia do dziennika wiedzy i wpływa na generowanie kolejnej planszy.
+
+4. Finał pozostaje ostatnim mechanizmem we wszystkich pięciu wariantach.
+
+5. W głównej grze ukończone pokoje pozostają zapisane, gdy bieżąca próba się nie uda. Nie trzeba ponownie przechodzić całej historii.
+
+Warunek zwycięstwa
+
+• Rozwiązano wszystkie 7 pomieszczeń wybranego wariantu i potwierdzono finał.
+
+Błędy, niedozwolone ruchy i zakończenie próby
+
+• Nieukończona zagadka blokuje przejście dalej.
+
+• Wyjście lub koniec czasu kończy bieżącą próbę pokoju. Wcześniejsze rozwiązane pokoje pozostają częścią postępu głównej gry.
+
+Czas i tempo rozgrywki
+
+• Katalogowy czas opowieści 1470 s jest orientacyjną sumą 210 s na pokój, a nie jednym wspólnym limitem całej historii.
+
+• Każde pomieszczenie ma osobny zegar zależny od mechaniki i trudności. Patrz szczegółowe zasady użytych zagadek.
+
+• Gdy pozostaje 30 s, główna gra może wyświetlić pięciosekundowy wybór dodatkowego czasu. Akceptacja za monety kosztuje 10 × najwyższy poziom Ratusza; przedłużenie dodaje co najmniej 60 s lub połowę pozostałego czasu. Reklama wymaga uprawnionego potwierdzenia lub jawnej symulacji testowej.
+
+Punktacja i nagrody w głównej grze
+
+• Bazowa nagroda dla poziomu L to: 40+10×L monet, 15+2×L drewna i kamienia oraz po 10+L zboża, mąki i desek.
+
+• Rzeczywiste rozliczenie w głównej grze uwzględnia wspólny budżet, wcześniejsze odebranie wariantu i potwierdzenie. Ponowne przejście rozliczonego wariantu może być treningiem bez nagrody.
+
+• Samodzielna próba nie dodaje zasobów ani mieszkańców do prywatnego konta.
+
+• Po potwierdzeniu w głównej grze monety trafiają do portfela. Materiały są przyjmowane do Magazynu w granicach pojemności, a nadmiar pozostaje w dostawach; dawny klucz food oznacza w regułach v32 mąkę.
+
+Ponowna próba i pomoc
+
+• Nieprawidłowy ruch jest odrzucany; plansza nie przyjmuje samej deklaracji rozwiązania. Gdy ustawienie jest błędne, popraw je albo cofnij dostępny poprzedni ruch.
+
+• Po trzech porażkach danej odmiany dostępna jest jedna darmowa podpowiedź na próbę i łatwiejsza próba. W łatwiejszej próbie stosowana jest połowa trudności z zaokrągleniem w górę i połowa nagrody.
+
+• W głównej grze wyjście kończy aktywną próbę etapu jako porażkę, zachowując wcześniej ukończone pomieszczenia. Powtórka rozpoczyna bieżący etap od nowa.
+
+Rozwój trudności i dostępność
+
+• Pięć wariantów tego samego tytułu łączy 7 mechanik. Zobacz ich odrębne uporządkowane listy i bezpośrednie linki.
+
+• Wskazówki z wcześniejszych pokoi zmieniają ziarno kolejnego układu; znajomość starej planszy nie zastępuje rozwiązania nowej.
+
+Przykładowy przebieg
+
+1. Pierwszy wariant rozpoczyna się od „Język boi”, a kończy etapem „Port bez korków”.
+
+2. Przykład przebiegu: rozwiąż pokój → zachowaj kod w dzienniku → przejdź dalej → użyj zasad następnej mechaniki → potwierdź finał.
+
+Warianty i osobne linki
+
+Wariant 1
+
+https://harborlight-dev.web.app/minigames/?game=story-fog-convoy&variant=1
+
+1. Język boi — Użyj legendy, by odczytać komunikat i odpowiedzieć.
+
+2. Sieć latarnika — Przeprowadź sygnał przez każdy przewód jednym ruchem, bez ponownego użycia przewodu.
+
+3. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+4. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+5. Rejs we mgle — Wyznacz bezpieczny kurs przez boje i prądy.
+
+6. Konwoje na redzie — Wypraw konwoje w kolejności, która zwalnia drogę przed ich strzałkami.
+
+7. Port bez korków — Przydziel statkom nabrzeża i czasy rozładunku.
+
+Wariant 2
+
+https://harborlight-dev.web.app/minigames/?game=story-fog-convoy&variant=2
+
+1. Sieć latarnika — Przeprowadź sygnał przez każdy przewód jednym ruchem, bez ponownego użycia przewodu.
+
+2. Język boi — Użyj legendy, by odczytać komunikat i odpowiedzieć.
+
+3. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+4. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+5. Rejs we mgle — Wyznacz bezpieczny kurs przez boje i prądy.
+
+6. Konwoje na redzie — Wypraw konwoje w kolejności, która zwalnia drogę przed ich strzałkami.
+
+7. Port bez korków — Przydziel statkom nabrzeża i czasy rozładunku.
+
+Wariant 3
+
+https://harborlight-dev.web.app/minigames/?game=story-fog-convoy&variant=3
+
+1. Język boi — Użyj legendy, by odczytać komunikat i odpowiedzieć.
+
+2. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+3. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+4. Sieć latarnika — Przeprowadź sygnał przez każdy przewód jednym ruchem, bez ponownego użycia przewodu.
+
+5. Rejs we mgle — Wyznacz bezpieczny kurs przez boje i prądy.
+
+6. Konwoje na redzie — Wypraw konwoje w kolejności, która zwalnia drogę przed ich strzałkami.
+
+7. Port bez korków — Przydziel statkom nabrzeża i czasy rozładunku.
+
+Wariant 4
+
+https://harborlight-dev.web.app/minigames/?game=story-fog-convoy&variant=4
+
+1. Język boi — Użyj legendy, by odczytać komunikat i odpowiedzieć.
+
+2. Konwoje na redzie — Wypraw konwoje w kolejności, która zwalnia drogę przed ich strzałkami.
+
+3. Sieć latarnika — Przeprowadź sygnał przez każdy przewód jednym ruchem, bez ponownego użycia przewodu.
+
+4. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+5. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+6. Rejs we mgle — Wyznacz bezpieczny kurs przez boje i prądy.
+
+7. Port bez korków — Przydziel statkom nabrzeża i czasy rozładunku.
+
+Wariant 5
+
+https://harborlight-dev.web.app/minigames/?game=story-fog-convoy&variant=5
+
+1. Język boi — Użyj legendy, by odczytać komunikat i odpowiedzieć.
+
+2. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+3. Sieć latarnika — Przeprowadź sygnał przez każdy przewód jednym ruchem, bez ponownego użycia przewodu.
+
+4. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+5. Rejs we mgle — Wyznacz bezpieczny kurs przez boje i prądy.
+
+6. Konwoje na redzie — Wypraw konwoje w kolejności, która zwalnia drogę przed ich strzałkami.
+
+7. Port bez korków — Przydziel statkom nabrzeża i czasy rozładunku.
+
+Instrukcje wszystkich zagadek tej historii
+
+Poniższe instrukcje dotyczą mechanik wymienionych w sekwencjach pomieszczeń. Wariant historii zmienia ich kolejność lub układ planszy; cel danej mechaniki i warunek sprawdzenia poprawności pozostają opisane osobno.
+
+Język boi
+
+Cel: Użyj legendy, by odczytać komunikat i odpowiedzieć.
+
+Sterowanie
+
+1. Naciskaj przyciski 1, 2, 3 i 4 zgodnie z legendą.
+
+Zasady
+
+1. Każdy symbol tłumaczy się według aktualnej legendy, nie według zapamiętanej legendy z poprzedniej próby.
+
+2. Wprowadź liczby w kolejności symboli komunikatu.
+
+3. Nieprawidłowa liczba czyści całą dotychczasową odpowiedź.
+
+Zwycięstwo
+
+• Wprowadzono pełny poprawny komunikat.
+
+Błędy i ograniczenia
+
+• Błąd resetuje sekwencję odpowiedzi; upływ czasu kończy próbę.
+
+Przykład
+
+1. Przy legendzie „kotwica=3, latarnia=1” wiadomość „kotwica → latarnia” należy nadać jako 3, następnie 1.
+
+Sieć latarnika
+
+Cel: Przeprowadź sygnał przez każdy przewód jednym ruchem, bez ponownego użycia przewodu.
+
+Sterowanie
+
+1. Naciśnij oznaczony węzeł, a następnie prowadź wskaźnik lub palec po kolejnych połączonych węzłach.
+
+2. Użyj czyszczenia śladu, gdy odcięta część sieci uniemożliwia dalszy ruch.
+
+Zasady
+
+1. Zacznij od jednego z dwóch oznaczonych portów i prowadź ślad tylko wzdłuż istniejących połączeń.
+
+2. Każdy kolejny węzeł musi być bezpośrednio połączony z ostatnim. Nie można ponownie użyć tego samego przewodu.
+
+3. Możesz wielokrotnie przejść przez węzeł innym przewodem. Zakaz dotyczy przewodów, nie samych węzłów.
+
+4. Przerwanie niedokończonej kreski czyści bieżący ślad; ukończenie wymaga jednego ciągłego przejścia przez całą sieć.
+
+Zwycięstwo
+
+• Wszystkie przewody zostały użyte dokładnie raz w jednym ciągłym śladzie.
+
+Błędy i ograniczenia
+
+• Brak połączenia, ponowne użycie przewodu albo start poza kotwicą jest ruchem niedozwolonym.
+
+• Upływ limitu kończy próbę; sam wygląd niemal ukończonej sieci nie daje wygranej.
+
+Przykład
+
+1. Węzeł, z którego pozostał tylko jeden nieużyty przewód, może zamknąć drogę. Najpierw sprawdź, czy po jego użyciu dotrzesz jeszcze do reszty sieci.
+
+Fotograf wyspy
+
+Cel: Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+Sterowanie
+
+1. Używaj sześciu przycisków: poziom −/+, pion −/+ i zoom −/+.
+
+Zasady
+
+1. Każde naciśnięcie + lub − zmienia wybrane ustawienie o jeden.
+
+2. Poziom przesuwa znaki w poziomie, pion w pionie, a zoom zmienia wzajemny rozstaw znaków.
+
+3. Dopasowanie jednego znaku nie oznacza jeszcze poprawnego ustawienia wszystkich trzech parametrów.
+
+Zwycięstwo
+
+• Wszystkie trzy ustawienia aparatu odpowiadają celowi i trzy znaki pokrywają kontury.
+
+Błędy i ograniczenia
+
+• Próba wyjścia poza zakres ustawienia jest odrzucana.
+
+Przykład
+
+1. Najpierw wyrównaj wysokość środkowego symbolu, potem jego położenie poziome, a rozstaw skrajnych znaków skoryguj zoomem.
+
+Światło przez soczewki
+
+Cel: Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+Sterowanie
+
+1. Klikaj wyłącznie pola zwierciadeł i obserwuj drogę promienia.
+
+Zasady
+
+1. Kliknięcie zwierciadła przełącza jego ułożenie pomiędzy „/” i „\”.
+
+2. Promień odbija się zgodnie z orientacją lustra.
+
+3. Wyjście promienia poza planszę lub pętla bez odbiornika nie kończy zadania.
+
+Zwycięstwo
+
+• Promień dociera do pola odbiornika.
+
+Błędy i ograniczenia
+
+• Nieprawidłowe odbicia wymagają zmiany ustawień; brak połączenia nie jest zaliczany.
+
+Przykład
+
+1. Pierwsze lustro kieruje promień w górę albo w dół; drugie musi skierować go z powrotem w stronę odbiornika.
+
+Rejs we mgle
+
+Cel: Wyznacz bezpieczny kurs przez boje i prądy.
+
+Sterowanie
+
+1. Kliknij sąsiednie wolne pole, na które ma wpłynąć łódź.
+
+Zasady
+
+1. Poruszaj się po sąsiednich polach w czterech kierunkach.
+
+2. Rafy są niedostępne, a ruch po przekątnej nie jest dozwolony.
+
+3. Każde przejście zużywa krok; powrót na wcześniejsze pole również kosztuje krok. Cofnięcie dostępnego ruchu może przywrócić zapas.
+
+Zwycięstwo
+
+• Łódź dociera do portu na polu końcowym.
+
+Błędy i ograniczenia
+
+• Wyczerpanie zapasu kroków blokuje dalszą drogę; cofnij ruch lub zacznij próbę ponownie.
+
+Przykład
+
+1. Zwykła trasa bez objazdów wymaga dziesięciu kroków: pięć w prawo i pięć w dół. Omijanie raf wymaga wcześniejszego planu.
+
+Konwoje na redzie
+
+Cel: Wypraw konwoje w kolejności, która zwalnia drogę przed ich strzałkami.
+
+Sterowanie
+
+1. Kliknij lub dotknij konwoju, który chcesz wyprawić.
+
+2. Przed kliknięciem sprawdź przebieg strzałki aż do brzegu planszy.
+
+Zasady
+
+1. Wybierz konwój, którego droga od czoła do krawędzi planszy jest wolna.
+
+2. Konwojów nie obraca się i nie przestawia dowolnie. Wybrany konwój opuszcza planszę w swoim kierunku.
+
+3. Usunięty konwój zwalnia zajmowane pola, co może odblokować pozostałe jednostki.
+
+4. Nie można ponownie wyprawić konwoju, który już opuścił redę.
+
+Zwycięstwo
+
+• Wszystkie konwoje bezpiecznie opuściły planszę.
+
+Błędy i ograniczenia
+
+• Zablokowany konwój nie rusza; najpierw trzeba usunąć jednostkę stojącą na jego drodze.
+
+• Upływ limitu oznacza porażkę bieżącej próby.
+
+Przykład
+
+1. Jeżeli konwój A płynie w prawo, a przed jego czołem stoi B, wypraw najpierw B — o ile droga B jest już wolna.
+
+Port bez korków
+
+Cel: Przydziel statkom nabrzeża i czasy rozładunku.
+
+Sterowanie
+
+1. Wybierz kartę statku.
+
+2. Wskaż parę „nabrzeże · godzina”.
+
+Zasady
+
+1. Wybrany statek musi dostać swoje nabrzeże oraz godzinę z podanego zakresu.
+
+2. Przedział od startu do końca rozładunku nie może nakładać się na rozładunek innego statku przy tym samym nabrzeżu.
+
+3. Dwa różne nabrzeża mogą obsługiwać statki w tym samym czasie.
+
+Zwycięstwo
+
+• Wszystkie trzy statki mają legalnie przydzielone terminy.
+
+Błędy i ograniczenia
+
+• Złe nabrzeże, czas poza oknem lub nakładające się przedziały są odrzucane.
+
+Przykład
+
+1. Jeżeli okna statków na to pozwalają, rozładunki 0:00–2:00 i 2:00–4:00 mogą następować po sobie; start drugiego o 1:00 powodowałby kolizję.
+
+Zakres samodzielnej próby
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w panelu gry. Zmieniaj poziom i wariant między próbami; rozpoczęta próba korzysta z parametrów wybranych przy jej uruchomieniu.
+
+Źródła i wersja zasad
+
+Identyfikator gry: story-fog-convoy.
+
+Źródło katalogu: 6b40252ba4f57a035d6b624656c8fce735559b07.
+
+Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+
+• harborlight-v1-story-catalog.js:37 — Scenariusz, próg odblokowania i mechaniki
+
+• harborlight-v1-story-catalog.js:56 — Dokładna kolejność pięciu wariantów
+
+• harborlight-v1-adventure-journey.js:50 — Kody odkryć i powiązanie pokoi
+
+• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+
+• harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
+
+• harborlight-v1-state.js:1127 — Rozliczenie nagród opowieści i konwersja mąki
+
+• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy

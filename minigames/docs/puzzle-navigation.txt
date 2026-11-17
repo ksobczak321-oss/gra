@@ -1,0 +1,129 @@
+Rejs we mgle
+
+HARBORLIGHT · Zagadka wyspy
+
+Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+
+Otwórz grę na PRE-PROD
+
+https://harborlight-dev.web.app/minigames/?game=puzzle-navigation
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Cel gry
+
+Wyznacz bezpieczny kurs przez boje i prądy.
+
+Scenariusz i zadanie gracza
+
+Przeprowadź łódź przez mgłę i rafy do portu, mieszcząc się w ograniczonym zapasie drogi.
+
+Przygotowanie rozgrywki
+
+1. Plansza 6 × 6 ma start w lewym górnym i port w prawym dolnym rogu. Oznaczone rafy blokują ruch. Dostępnych jest maksymalnie 15 kroków.
+
+Sterowanie i wykonywanie ruchów
+
+1. Kliknij sąsiednie wolne pole, na które ma wpłynąć łódź.
+
+Zasady krok po kroku
+
+1. Poruszaj się po sąsiednich polach w czterech kierunkach.
+
+2. Rafy są niedostępne, a ruch po przekątnej nie jest dozwolony.
+
+3. Każde przejście zużywa krok; powrót na wcześniejsze pole również kosztuje krok. Cofnięcie dostępnego ruchu może przywrócić zapas.
+
+Warunek zwycięstwa
+
+• Łódź dociera do portu na polu końcowym.
+
+Błędy, niedozwolone ruchy i zakończenie próby
+
+• Wyczerpanie zapasu kroków blokuje dalszą drogę; cofnij ruch lub zacznij próbę ponownie.
+
+Czas i tempo rozgrywki
+
+• Referencyjny czas katalogowy tej zagadki: 480 s. Na pierwszej trudności rzeczywisty limit wynosi 480 s.
+
+• Dla tej zagadki limit wynosi max(60 s, czas katalogowy / (1 + 0,06 × (trudność − 1))). W łatwiejszej próbie zamiast zwykłej trudności stosowana jest połowa trudności zaokrąglona w górę, co najmniej 1.
+
+• Gdy pozostaje 30 s, główna gra może wyświetlić pięciosekundowy wybór dodatkowego czasu. Akceptacja za monety kosztuje 10 × najwyższy poziom Ratusza; przedłużenie dodaje co najmniej 60 s lub połowę pozostałego czasu. Reklama wymaga uprawnionego potwierdzenia lub jawnej symulacji testowej.
+
+Punktacja i nagrody w głównej grze
+
+• Zwycięstwo jest potwierdzane z rzeczywistego stanu planszy. Sama liczba kliknięć nie daje zaliczenia.
+
+• W głównej grze pojedyncza zagadka ma bazowy pakiet 5 + 2 × poziom monet oraz po 5 drewna i kamienia. Faktyczną wypłatę ogranicza wspólny budżet nagród i jednorazowe potwierdzenie; powtórka może być treningiem bez wypłaty.
+
+• Po potwierdzeniu w głównej grze monety trafiają do portfela. Materiały są przyjmowane do Magazynu w granicach pojemności, a nadmiar pozostaje w dostawach; dawny klucz food oznacza w regułach v32 mąkę.
+
+Ponowna próba i pomoc
+
+• Nieprawidłowy ruch jest odrzucany; plansza nie przyjmuje samej deklaracji rozwiązania. Gdy ustawienie jest błędne, popraw je albo cofnij dostępny poprzedni ruch.
+
+• Po trzech porażkach danej odmiany dostępna jest jedna darmowa podpowiedź na próbę i łatwiejsza próba. W łatwiejszej próbie stosowana jest połowa trudności z zaokrągleniem w górę i połowa nagrody.
+
+• W głównej grze wyjście kończy aktywną próbę etapu jako porażkę, zachowując wcześniej ukończone pomieszczenia. Powtórka rozpoczyna bieżący etap od nowa.
+
+Rozwój trudności i dostępność
+
+• Trudność danej odmiany rośnie z wygranymi w godzinowym oknie wspólnym dla konta.
+
+• Wariant 1–5 i ziarno są parametrami generatora planszy. Ich wybór może zmieniać układ, lecz skończona liczba ustawień nie gwarantuje, że każda para parametrów da inną planszę. Warunek zwycięstwa pozostaje ten sam.
+
+Pojedyncze zagadki są dostępne bez progów fabularnych opowieści.
+
+Przykładowy przebieg
+
+1. Zwykła trasa bez objazdów wymaga dziesięciu kroków: pięć w prawo i pięć w dół. Omijanie raf wymaga wcześniejszego planu.
+
+Warianty i osobne linki
+
+Wariant 1
+
+https://harborlight-dev.web.app/minigames/?game=puzzle-navigation&variant=1
+
+Wariant 2
+
+https://harborlight-dev.web.app/minigames/?game=puzzle-navigation&variant=2
+
+Wariant 3
+
+https://harborlight-dev.web.app/minigames/?game=puzzle-navigation&variant=3
+
+Wariant 4
+
+https://harborlight-dev.web.app/minigames/?game=puzzle-navigation&variant=4
+
+Wariant 5
+
+https://harborlight-dev.web.app/minigames/?game=puzzle-navigation&variant=5
+
+Zakres samodzielnej próby
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w panelu gry. Zmieniaj poziom i wariant między próbami; rozpoczęta próba korzysta z parametrów wybranych przy jej uruchomieniu.
+
+Źródła i wersja zasad
+
+Identyfikator gry: puzzle-navigation.
+
+Źródło katalogu: 6b40252ba4f57a035d6b624656c8fce735559b07.
+
+Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+
+• harborlight-v1-story-catalog.js:13 — Nazwa, cel i czas katalogowy
+
+• harborlight-v1-island-puzzles.js:75 — Legalne ruchy i warunek rozwiązania
+
+• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+
+• harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
+
+• harborlight-v1-state.js:1127 — Rozliczenie nagród opowieści i konwersja mąki
+
+• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy

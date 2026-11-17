@@ -1,0 +1,391 @@
+Przystań otwarta
+
+HARBORLIGHT · Przygoda fabularna
+
+Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+
+Otwórz grę na PRE-PROD
+
+https://harborlight-dev.web.app/minigames/?game=story-harbor-opening
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Cel gry
+
+Poprowadź pierwszy konwój od przygotowania do bezpiecznej dostawy.
+
+Scenariusz i zadanie gracza
+
+Poprowadź pierwszy konwój od przygotowania do bezpiecznej dostawy. Opowieść łączy 6 kolejnych pomieszczeń w jeden łańcuch odkryć. Każdy ukończony pokój pozostawia kod, który wpływa na układ następnego.
+
+Przygotowanie rozgrywki
+
+1. W głównej grze opowieść jest odblokowana od 4. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+
+2. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
+
+Sterowanie i wykonywanie ruchów
+
+1. Sterowanie zmienia się zależnie od rodzaju pokoju: wybór obiektów, układanie, obracanie, sygnały, karty albo przechylenie planszy.
+
+2. Przycisk przejścia do następnego pomieszczenia działa dopiero po potwierdzonym rozwiązaniu bieżącego.
+
+Zasady krok po kroku
+
+1. Rozwiąż zagadkę bieżącego pomieszczenia zgodnie z jej własnymi zasadami.
+
+2. Po rozwiązaniu potwierdź przejście do kolejnego pomieszczenia. Sama wygrana plansza nie pomija dalszych pokoi.
+
+3. Znaleziony czterocyfrowy kod trafia do dziennika wiedzy i wpływa na generowanie kolejnej planszy.
+
+4. Finał pozostaje ostatnim mechanizmem we wszystkich pięciu wariantach.
+
+5. W głównej grze ukończone pokoje pozostają zapisane, gdy bieżąca próba się nie uda. Nie trzeba ponownie przechodzić całej historii.
+
+Warunek zwycięstwa
+
+• Rozwiązano wszystkie 6 pomieszczeń wybranego wariantu i potwierdzono finał.
+
+Błędy, niedozwolone ruchy i zakończenie próby
+
+• Nieukończona zagadka blokuje przejście dalej.
+
+• Wyjście lub koniec czasu kończy bieżącą próbę pokoju. Wcześniejsze rozwiązane pokoje pozostają częścią postępu głównej gry.
+
+Czas i tempo rozgrywki
+
+• Katalogowy czas opowieści 1260 s jest orientacyjną sumą 210 s na pokój, a nie jednym wspólnym limitem całej historii.
+
+• Każde pomieszczenie ma osobny zegar zależny od mechaniki i trudności. Patrz szczegółowe zasady użytych zagadek.
+
+• Gdy pozostaje 30 s, główna gra może wyświetlić pięciosekundowy wybór dodatkowego czasu. Akceptacja za monety kosztuje 10 × najwyższy poziom Ratusza; przedłużenie dodaje co najmniej 60 s lub połowę pozostałego czasu. Reklama wymaga uprawnionego potwierdzenia lub jawnej symulacji testowej.
+
+Punktacja i nagrody w głównej grze
+
+• Bazowa nagroda dla poziomu L to: 40+10×L monet, 15+2×L drewna i kamienia oraz po 10+L zboża, mąki i desek.
+
+• Rzeczywiste rozliczenie w głównej grze uwzględnia wspólny budżet, wcześniejsze odebranie wariantu i potwierdzenie. Ponowne przejście rozliczonego wariantu może być treningiem bez nagrody.
+
+• Samodzielna próba nie dodaje zasobów ani mieszkańców do prywatnego konta.
+
+• Po potwierdzeniu w głównej grze monety trafiają do portfela. Materiały są przyjmowane do Magazynu w granicach pojemności, a nadmiar pozostaje w dostawach; dawny klucz food oznacza w regułach v32 mąkę.
+
+Ponowna próba i pomoc
+
+• Nieprawidłowy ruch jest odrzucany; plansza nie przyjmuje samej deklaracji rozwiązania. Gdy ustawienie jest błędne, popraw je albo cofnij dostępny poprzedni ruch.
+
+• Po trzech porażkach danej odmiany dostępna jest jedna darmowa podpowiedź na próbę i łatwiejsza próba. W łatwiejszej próbie stosowana jest połowa trudności z zaokrągleniem w górę i połowa nagrody.
+
+• W głównej grze wyjście kończy aktywną próbę etapu jako porażkę, zachowując wcześniej ukończone pomieszczenia. Powtórka rozpoczyna bieżący etap od nowa.
+
+Rozwój trudności i dostępność
+
+• Pięć wariantów tego samego tytułu łączy 6 mechanik. Zobacz ich odrębne uporządkowane listy i bezpośrednie linki.
+
+• Wskazówki z wcześniejszych pokoi zmieniają ziarno kolejnego układu; znajomość starej planszy nie zastępuje rozwiązania nowej.
+
+Przykładowy przebieg
+
+1. Pierwszy wariant rozpoczyna się od „Rozplącz cumy”, a kończy etapem „Wagi skarbca”.
+
+2. Przykład przebiegu: rozwiąż pokój → zachowaj kod w dzienniku → przejdź dalej → użyj zasad następnej mechaniki → potwierdź finał.
+
+Warianty i osobne linki
+
+Wariant 1
+
+https://harborlight-dev.web.app/minigames/?game=story-harbor-opening&variant=1
+
+1. Rozplącz cumy — Zamień miejsca mocowań tak, by liny się nie przecinały.
+
+2. Skrzynka ratunkowa — Spakuj cały sprzęt, obracając elementy i wykorzystując miejsce.
+
+3. Konwoje na redzie — Wypraw konwoje w kolejności, która zwalnia drogę przed ich strzałkami.
+
+4. Port bez korków — Przydziel statkom nabrzeża i czasy rozładunku.
+
+5. Rejs we mgle — Wyznacz bezpieczny kurs przez boje i prądy.
+
+6. Wagi skarbca — Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+Wariant 2
+
+https://harborlight-dev.web.app/minigames/?game=story-harbor-opening&variant=2
+
+1. Skrzynka ratunkowa — Spakuj cały sprzęt, obracając elementy i wykorzystując miejsce.
+
+2. Rozplącz cumy — Zamień miejsca mocowań tak, by liny się nie przecinały.
+
+3. Konwoje na redzie — Wypraw konwoje w kolejności, która zwalnia drogę przed ich strzałkami.
+
+4. Port bez korków — Przydziel statkom nabrzeża i czasy rozładunku.
+
+5. Rejs we mgle — Wyznacz bezpieczny kurs przez boje i prądy.
+
+6. Wagi skarbca — Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+Wariant 3
+
+https://harborlight-dev.web.app/minigames/?game=story-harbor-opening&variant=3
+
+1. Rozplącz cumy — Zamień miejsca mocowań tak, by liny się nie przecinały.
+
+2. Port bez korków — Przydziel statkom nabrzeża i czasy rozładunku.
+
+3. Konwoje na redzie — Wypraw konwoje w kolejności, która zwalnia drogę przed ich strzałkami.
+
+4. Skrzynka ratunkowa — Spakuj cały sprzęt, obracając elementy i wykorzystując miejsce.
+
+5. Rejs we mgle — Wyznacz bezpieczny kurs przez boje i prądy.
+
+6. Wagi skarbca — Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+Wariant 4
+
+https://harborlight-dev.web.app/minigames/?game=story-harbor-opening&variant=4
+
+1. Rozplącz cumy — Zamień miejsca mocowań tak, by liny się nie przecinały.
+
+2. Rejs we mgle — Wyznacz bezpieczny kurs przez boje i prądy.
+
+3. Skrzynka ratunkowa — Spakuj cały sprzęt, obracając elementy i wykorzystując miejsce.
+
+4. Konwoje na redzie — Wypraw konwoje w kolejności, która zwalnia drogę przed ich strzałkami.
+
+5. Port bez korków — Przydziel statkom nabrzeża i czasy rozładunku.
+
+6. Wagi skarbca — Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+Wariant 5
+
+https://harborlight-dev.web.app/minigames/?game=story-harbor-opening&variant=5
+
+1. Rozplącz cumy — Zamień miejsca mocowań tak, by liny się nie przecinały.
+
+2. Konwoje na redzie — Wypraw konwoje w kolejności, która zwalnia drogę przed ich strzałkami.
+
+3. Skrzynka ratunkowa — Spakuj cały sprzęt, obracając elementy i wykorzystując miejsce.
+
+4. Port bez korków — Przydziel statkom nabrzeża i czasy rozładunku.
+
+5. Rejs we mgle — Wyznacz bezpieczny kurs przez boje i prądy.
+
+6. Wagi skarbca — Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+Instrukcje wszystkich zagadek tej historii
+
+Poniższe instrukcje dotyczą mechanik wymienionych w sekwencjach pomieszczeń. Wariant historii zmienia ich kolejność lub układ planszy; cel danej mechaniki i warunek sprawdzenia poprawności pozostają opisane osobno.
+
+Rozplącz cumy
+
+Cel: Zamień miejsca mocowań tak, by liny się nie przecinały.
+
+Sterowanie
+
+1. Wybierz lewy zaczep.
+
+2. Kliknij docelowe prawe mocowanie.
+
+Zasady
+
+1. Wybierz lewą cumę i wskaż prawe mocowanie.
+
+2. Jeżeli mocowanie jest zajęte, dwie liny zamieniają się prawymi końcami.
+
+3. Cel dotyczy wszystkich par lin: żadna para nie może się przecinać.
+
+Zwycięstwo
+
+• Liczba przecięć pomiędzy linami wynosi zero.
+
+Błędy i ograniczenia
+
+• Samo uporządkowanie części lin nie kończy zadania.
+
+Przykład
+
+1. Kolejność mocowań po prawej musi odpowiadać kolejności zaczepów po lewej; zamiana dwóch odwróconych końców zmniejsza liczbę skrzyżowań.
+
+Skrzynka ratunkowa
+
+Cel: Spakuj cały sprzęt, obracając elementy i wykorzystując miejsce.
+
+Sterowanie
+
+1. Wybierz element.
+
+2. Użyj „Obróć wybrany element”, jeśli wymaga tego plan.
+
+3. Wskaż wolne pole początkowe albo użyj „Wyjmij wybrany element”.
+
+Zasady
+
+1. Każdy element musi w całości mieścić się na planszy i nie nachodzić na pozostałe.
+
+2. Wskazane pole jest lewym górnym rogiem elementu.
+
+3. Wybrany element można obrócić o ćwierć obrotu lub wyjąć bez kosztu. Obrót usuwa jego dotychczasowe położenie.
+
+Zwycięstwo
+
+• Wszystkie cztery elementy mają legalne położenie w skrzynce.
+
+Błędy i ograniczenia
+
+• Wyjście poza siatkę lub nakładanie elementów jest niedozwolone; należy poprawić plan.
+
+Przykład
+
+1. Dwa kwadraty 2 × 2 mogą zająć dwie górne połowy, a dwa paski 4 × 1 — pozostałe dolne rzędy.
+
+Konwoje na redzie
+
+Cel: Wypraw konwoje w kolejności, która zwalnia drogę przed ich strzałkami.
+
+Sterowanie
+
+1. Kliknij lub dotknij konwoju, który chcesz wyprawić.
+
+2. Przed kliknięciem sprawdź przebieg strzałki aż do brzegu planszy.
+
+Zasady
+
+1. Wybierz konwój, którego droga od czoła do krawędzi planszy jest wolna.
+
+2. Konwojów nie obraca się i nie przestawia dowolnie. Wybrany konwój opuszcza planszę w swoim kierunku.
+
+3. Usunięty konwój zwalnia zajmowane pola, co może odblokować pozostałe jednostki.
+
+4. Nie można ponownie wyprawić konwoju, który już opuścił redę.
+
+Zwycięstwo
+
+• Wszystkie konwoje bezpiecznie opuściły planszę.
+
+Błędy i ograniczenia
+
+• Zablokowany konwój nie rusza; najpierw trzeba usunąć jednostkę stojącą na jego drodze.
+
+• Upływ limitu oznacza porażkę bieżącej próby.
+
+Przykład
+
+1. Jeżeli konwój A płynie w prawo, a przed jego czołem stoi B, wypraw najpierw B — o ile droga B jest już wolna.
+
+Port bez korków
+
+Cel: Przydziel statkom nabrzeża i czasy rozładunku.
+
+Sterowanie
+
+1. Wybierz kartę statku.
+
+2. Wskaż parę „nabrzeże · godzina”.
+
+Zasady
+
+1. Wybrany statek musi dostać swoje nabrzeże oraz godzinę z podanego zakresu.
+
+2. Przedział od startu do końca rozładunku nie może nakładać się na rozładunek innego statku przy tym samym nabrzeżu.
+
+3. Dwa różne nabrzeża mogą obsługiwać statki w tym samym czasie.
+
+Zwycięstwo
+
+• Wszystkie trzy statki mają legalnie przydzielone terminy.
+
+Błędy i ograniczenia
+
+• Złe nabrzeże, czas poza oknem lub nakładające się przedziały są odrzucane.
+
+Przykład
+
+1. Jeżeli okna statków na to pozwalają, rozładunki 0:00–2:00 i 2:00–4:00 mogą następować po sobie; start drugiego o 1:00 powodowałby kolizję.
+
+Rejs we mgle
+
+Cel: Wyznacz bezpieczny kurs przez boje i prądy.
+
+Sterowanie
+
+1. Kliknij sąsiednie wolne pole, na które ma wpłynąć łódź.
+
+Zasady
+
+1. Poruszaj się po sąsiednich polach w czterech kierunkach.
+
+2. Rafy są niedostępne, a ruch po przekątnej nie jest dozwolony.
+
+3. Każde przejście zużywa krok; powrót na wcześniejsze pole również kosztuje krok. Cofnięcie dostępnego ruchu może przywrócić zapas.
+
+Zwycięstwo
+
+• Łódź dociera do portu na polu końcowym.
+
+Błędy i ograniczenia
+
+• Wyczerpanie zapasu kroków blokuje dalszą drogę; cofnij ruch lub zacznij próbę ponownie.
+
+Przykład
+
+1. Zwykła trasa bez objazdów wymaga dziesięciu kroków: pięć w prawo i pięć w dół. Omijanie raf wymaga wcześniejszego planu.
+
+Wagi skarbca
+
+Cel: Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+Sterowanie
+
+1. Wybierz ciężarek, potem lewą lub prawą szalę.
+
+Zasady
+
+1. Każdy ciężarek musi trafić na jedną z dwóch szal.
+
+2. Ciężarek można przenosić; jego wartość nie zmienia się.
+
+3. Liczy się suma wartości na każdej szali, a nie liczba elementów.
+
+4. Trzeba wykorzystać wszystkie cztery ciężarki.
+
+Zwycięstwo
+
+• Wszystkie ciężarki są ustawione, a obie sumy zgadzają się z celami.
+
+Błędy i ograniczenia
+
+• Poprawna suma tylko na jednej szali nie otwiera skarbca.
+
+Przykład
+
+1. Jeżeli cele wynoszą 3 i 7, pary 1+2 oraz 3+4 spełniają oba wymagania.
+
+Zakres samodzielnej próby
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w panelu gry. Zmieniaj poziom i wariant między próbami; rozpoczęta próba korzysta z parametrów wybranych przy jej uruchomieniu.
+
+Źródła i wersja zasad
+
+Identyfikator gry: story-harbor-opening.
+
+Źródło katalogu: 6b40252ba4f57a035d6b624656c8fce735559b07.
+
+Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+
+• harborlight-v1-story-catalog.js:34 — Scenariusz, próg odblokowania i mechaniki
+
+• harborlight-v1-story-catalog.js:56 — Dokładna kolejność pięciu wariantów
+
+• harborlight-v1-adventure-journey.js:50 — Kody odkryć i powiązanie pokoi
+
+• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+
+• harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
+
+• harborlight-v1-state.js:1127 — Rozliczenie nagród opowieści i konwersja mąki
+
+• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy

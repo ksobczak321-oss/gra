@@ -129,6 +129,77 @@ PUBLIC_FILES = (
     "harborlight-v1-v16-copy.js",
     "harborlight-v1-water.js",
 )
+# The standalone practice hub and its reviewed documents are a separate,
+# explicit public set. Never publish the docs tree or a recursive wildcard.
+MINIGAME_SLUGS = (
+    "puzzle-signal-line",
+    "puzzle-harbor-routes",
+    "puzzle-gull",
+    "puzzle-crabs",
+    "puzzle-hidden-objects",
+    "puzzle-parrot",
+    "puzzle-packing",
+    "puzzle-untangle",
+    "puzzle-navigation",
+    "puzzle-scheduling",
+    "puzzle-gears",
+    "puzzle-optics",
+    "puzzle-tides",
+    "puzzle-hotel",
+    "puzzle-magnets",
+    "puzzle-paper-fold",
+    "puzzle-invention",
+    "puzzle-photo",
+    "puzzle-deduction",
+    "puzzle-cooking",
+    "puzzle-signals-decode",
+    "puzzle-balance",
+    "puzzle-memory-triples",
+    "puzzle-marble-maze",
+    "story-first-light",
+    "story-star-guests",
+    "story-captainless-ship",
+    "story-harbor-opening",
+    "story-storm-shelter",
+    "story-bottle-message",
+    "story-fog-convoy",
+    "story-keeper-map",
+    "story-supply-voyage",
+    "story-second-shore",
+    "story-closed-lighthouse",
+    "story-lost-performance",
+    "story-ocean-visitors",
+    "story-nothing-wasted",
+    "story-sea-festival",
+    "story-merchant-rescue",
+    "story-cliff-treasury",
+    "story-above-storm",
+    "story-sail-gathering",
+    "story-homecoming",
+    "adventure-cargo-rain",
+    "adventure-treasure-map",
+    "adventure-pirate-cannon",
+    "adventure-bridge",
+    "adventure-signals",
+    "adventure-letters",
+    "adventure-rhythm",
+    "adventure-garden",
+    "adventure-cargo-balance",
+    "expedition-tilt",
+    "expedition-triples",
+)
+MINIGAME_PUBLIC_FILES = (
+    "minigames/index.html",
+    "minigames/app.js",
+    "minigames/styles.css",
+    "minigames/catalog.json",
+    "minigames/documents.json",
+    "minigames/linki.txt",
+    "minigames/HARBORLIGHT-minigry-dokumentacja.zip",
+    *(f"minigames/docs/{slug}.{extension}"
+      for slug in MINIGAME_SLUGS for extension in ("docx", "txt")),
+)
+PUBLIC_FILES += MINIGAME_PUBLIC_FILES
 CONTENT_FILES = frozenset((*PUBLIC_FILES, "index.html"))
 ARCHIVE_FILES = CONTENT_FILES | {"release.json"}
 # Only current-main-reviewed profiles can select a historical public file set.
@@ -136,8 +207,10 @@ ARCHIVE_FILES = CONTENT_FILES | {"release.json"}
 VERIFICATION_PROFILES = {
     "preprod-0.14.0.0-20261104": ROOT / "infra/google-cloud/frontend-profiles/preprod-0.14.0.0-20261104.json",
 }
-MAX_BYTES = 32 * 1024 * 1024
-MAX_MEMBERS = 128
+# 55 separately downloadable Word/TXT documents plus their convenience ZIP.
+# Keep finite size/member limits around the expanded exact allowlist.
+MAX_BYTES = 48 * 1024 * 1024
+MAX_MEMBERS = 256
 MAX_TAR_BYTES = MAX_BYTES + MAX_MEMBERS * 1024
 COMMIT = re.compile(r"[a-f0-9]{40}\Z")
 DIGEST = re.compile(r"[a-f0-9]{64}\Z")

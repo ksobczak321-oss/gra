@@ -1366,3 +1366,11 @@ Rzeczywiste symulacje obejmują 24 h bezczynności, 24 h produkcji i 72 h rozwoj
 Gra, konta, wdrożenia, archiwum 14 i redakcyjny Excel z sześcioma zakładkami pozostają bez zmian. Ser nadal powstaje w Gospodarstwie od poziomu 6; otręby i pasza nie są zaimplementowane. Zadanie obejmuje pełne repozytoryjne źródła mastera; nie obejmuje niewybranych zakładek oryginalnego uploadu redakcyjnego. Odebrana aplikacja to nadal 37061c, publikacja c4 i cache13. Ręczny odbiór użytkownika: NOT_RUN. PROD i DNS są odłożone.
 
 [Dowody](v32/MASTER-WORKBOOK15-EVIDENCE.json) · [Raport](arkusze/HARBORLIGHT15-zasady-walidacja.json).
+
+## 2026-11-17 — osobne minigry i instrukcje: lokalny odbiór PASS
+
+Gotowe 55 aktywnych gier, 55 DOCX i 55 TXT (60 960 słów), 100 linków wariantów i 560 pomieszczeń. Budowa i świeże sprawdzenie dokumentów PASS. ZIP ma 2 390 888 bajtów / SHA-256 b81651037d0c97c1a76bda328ebf2d46063f95e20403e52faff2694d232f9fd2; katalog 773 894 bajty / SHA-256 0a2cb1fb8fd93aabca2a3bfa273c8140c972c3432b905ddc48a3ecb2026579fe, ze zgodnymi 12 źródłami bazowego 6b40252.
+
+Końcowy lokalny browser PASS: 110 plansz (55 × 1440/390), 100 wariantów i 110 pobrań, zero błędów strony/HTTP, żądań kont i zapisów storage/cookies. Rzeczywiste ścieżki objęły dwie rundy trójek 24 → 30 kart, wypłatę 150 monet tylko w pamięci próby, ukończenie mewy, pierwsze pomieszczenie opowieści i przejście dalej, dostarczenie trzech listów, pauzę i restart. To nie dowód wygrania wszystkich 55 gier lub publicznego odbioru. Model 8/8, pakowanie 27/27 i składnia workflow PASS. Zachowano wszystkie 114 odcisków wcześniejszych źródeł; świeży master --validate-only PASS, redakcyjny Excel/MERGE bez zmian. Lokalny pakiet: 226 plików / 36847438 bajtów.
+
+Git, własny CI i standardowe wdrożenie PRE-PROD pozostają PENDING. Główna wersja to nadal 0.15.0.2, planowane osobne tagi wymagają potwierdzenia. Bez resetu kont, PROD/DNS lub zmiany wcześniejszych arkuszy i dowodów. Karta HL-CHG-1157. [Zakres](v32/GO-MINIGAMES-STANDALONE.md) · [Dowody](v32/MINIGAMES-STANDALONE-EVIDENCE.json).

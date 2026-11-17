@@ -1,5 +1,13 @@
 # HARBORLIGHT — stan środowisk
 
+## Osobne minigry i instrukcje — lokalny odbiór PASS, Git/CI/PRE-PROD oczekują
+
+Katalog ma **55 aktywnych gier**: 24 zagadki wyspy, 20 opowieści z pięcioma wariantami, 9 klasycznych przygód i 2 tryby ekspedycji. Gotowe 55 DOCX i 55 TXT (60 960 słów, 100 linków wariantów, 560 pomieszczeń) przeszły budowę i świeżą kontrolę PASS. Indeks docelowy: <https://harborlight-dev.web.app/minigames/>; publiczna dostępność wymaga nowego wdrożenia i odbioru.
+
+Końcowy lokalny browser PASS: 110 plansz na 1440/390, 100 wariantów i 110 pobrań, bez błędów strony/HTTP, żądań kont lub zapisów storage/cookies. Ukończono wybrane rzeczywiste ścieżki: dwie rundy trójek 24 → 30 kart i wypłatę 150 monet RAM, zagadkę mewy, pierwsze pomieszczenie opowieści oraz trzy listy; sprawdzono pauzę i restart. Nie deklarujemy wygrania wszystkich 55 gier lub publicznego odbioru. Model 8/8, pakowanie 27/27, składnia workflow i świeża walidacja mastera PASS. Zachowano 114 odcisków wcześniejszych źródeł i redakcyjne artefakty.
+
+Nowy Git/CI i standardowy PRE-PROD są PENDING. Wersja gry pozostaje 0.15.0.2; planowane tagi dev-minigames-20261117 i preprod-minigames-20261117 wymagają potwierdzenia. Ćwiczenia działają w pamięci karty, bez logowania lub nagród na kontach. Bez resetu i PROD/DNS. [Zakres](v32/GO-MINIGAMES-STANDALONE.md) · [Dowody](v32/MINIGAMES-STANDALONE-EVIDENCE.json) · [HL-CHG-1157](tracking/changes/HL-CHG-1157.md).
+
 ## MASTER Excel 15 — gotowy artefakt, gra bez zmian
 
 **MASTER Excel 15 jest gotowy i przeszedł budowę oraz świeżą walidację PASS.** Ma 156 arkuszy: 100 archiwalnych i 56 bieżących (51 widocznych, 5 ukrytych), 61 262 bieżące wiersze oraz 7 581 368 bajtów. SHA-256: `b45a9f67ebcc1653ce2fc5413e5dbd9a42b32c103a52b4eda06db647b5dd1f11`. Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions.

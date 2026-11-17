@@ -1,0 +1,101 @@
+Łap dostawę z nieba
+
+HARBORLIGHT · Przygoda klasyczna
+
+Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+
+Otwórz grę na PRE-PROD
+
+https://harborlight-dev.web.app/minigames/?game=adventure-cargo-rain
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Cel gry
+
+Złap jak najwięcej ładunków w ciągu 45 sekund.
+
+Scenariusz i zadanie gracza
+
+Samolot transportowy zgubił część ładunku. Masz 45 sekund, aby odzyskać spadające monety i materiały, zanim wpadną do morza.
+
+Złap ładunki zgubione przez samolot, zanim wpadną do morza. Liczy się każdy faktycznie złapany ładunek.
+
+Przygotowanie rozgrywki
+
+1. W ciągu 45 s pojawia się 30 ładunków. Pierwszy po 1 s, kolejne co 1,15 s; każdy spada przez 5–7 s.
+
+Sterowanie i wykonywanie ruchów
+
+1. Klikaj lub dotykaj spadających ikon.
+
+Zasady krok po kroku
+
+1. Złap widoczny ładunek, zanim skończy się jego czas spadania.
+
+2. Ładunki cyklicznie zawierają monety, drewno, kamień, zboże, mąkę i deski. Techniczny klucz „food” jest w aktualnych regułach v32 zamieniany na mąkę.
+
+3. Monet jest po 5 na ładunek; materiałów po 10. Tego samego ładunku nie można odebrać drugi raz.
+
+Warunek zwycięstwa
+
+• Sesja kończy się po 45 s i podsumowuje faktycznie złapany ładunek. Nie trzeba złapać wszystkich elementów, aby zachować złapane.
+
+Błędy, niedozwolone ruchy i zakończenie próby
+
+• Ładunek niezłapany przed końcem spadania przepada.
+
+Czas i tempo rozgrywki
+
+• Sesja trwa dokładnie 45 s; każdy ładunek ma dodatkowo własny czas dostępności 5–7 s.
+
+• W głównej grze po sesji obowiązuje 1800 s przerwy przed kolejnym uruchomieniem tej przygody.
+
+Punktacja i nagrody w głównej grze
+
+• Wynik to suma faktycznie złapanych ładunków. W modelu gry monety są przyznawane po złapaniu, a materiały trafiają do kolejki dostaw; nie trzeba złapać kompletu. Techniczna kategoria „food” zasila mąkę w regułach v32.
+
+• Samodzielna strona pokazuje wynik testowy bez zapisu do konta.
+
+Ponowna próba i pomoc
+
+• Możesz rozpocząć nową izolowaną sesję przyciskiem ponownej gry.
+
+Rozwój trudności i dostępność
+
+• Sesja ma jeden stały etap i stopniowo pojawiające się ładunki.
+
+Przykładowy przebieg
+
+1. Z pięciu złapanych ładunków monet otrzymuje się 25 monet w modelu gry; w izolowanej próbie wynik pozostaje testowy.
+
+Warianty i osobne linki
+
+Ta gra ma jeden scenariusz podstawowy. Parametry kolejnych prób i rozwój trudności opisano powyżej; link podstawowy otwiera tę samą mechanikę.
+
+Zakres samodzielnej próby
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w panelu gry. Zmieniaj poziom i wariant między próbami; rozpoczęta próba korzysta z parametrów wybranych przy jej uruchomieniu.
+
+Źródła i wersja zasad
+
+Identyfikator gry: adventure-cargo-rain.
+
+Źródło katalogu: 6b40252ba4f57a035d6b624656c8fce735559b07.
+
+Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+
+• harborlight-v1-adventures.js:41 — Cel i opis scenariusza
+
+• harborlight-v1-adventures.js:490 — Legalne działania i warunki ukończenia
+
+• harborlight-v1-adventures.js:354 — Zegar etapów i łatwiejsze próby
+
+• harborlight-v1-adventure-puzzles.js:110 — Sprawdzanie plansz, przepływu i równowagi
+
+• harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
+
+• harborlight-v1-state.js:1127 — Rozliczenie nagród opowieści i konwersja mąki
+
+• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy

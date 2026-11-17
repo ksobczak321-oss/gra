@@ -1,0 +1,381 @@
+HARBORLIGHT — wszystkie minigry i dokumentacja
+Stan opisu: 17 listopada 2026
+
+Biblioteka: https://harborlight-dev.web.app/minigames/
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+01. Sieć latarnika
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-signal-line
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-signal-line.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-signal-line.txt
+
+02. Konwoje na redzie
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-harbor-routes
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-harbor-routes.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-harbor-routes.txt
+
+03. Mewa-złodziejka
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-gull
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-gull.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-gull.txt
+
+04. Parada krabów
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-crabs
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-crabs.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-crabs.txt
+
+05. Okulary latarnika
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-hidden-objects
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-hidden-objects.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-hidden-objects.txt
+
+06. Papuga kapitana
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-parrot
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-parrot.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-parrot.txt
+
+07. Skrzynka ratunkowa
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-packing
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-packing.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-packing.txt
+
+08. Rozplącz cumy
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-untangle
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-untangle.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-untangle.txt
+
+09. Rejs we mgle
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-navigation
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-navigation.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-navigation.txt
+
+10. Port bez korków
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-scheduling
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-scheduling.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-scheduling.txt
+
+11. Mechanizm Latarni
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-gears
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-gears.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-gears.txt
+
+12. Światło przez soczewki
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-optics
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-optics.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-optics.txt
+
+13. Brama przypływu
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-tides
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-tides.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-tides.txt
+
+14. Hotel dla rozbitków
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-hotel
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-hotel.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-hotel.txt
+
+15. Magnetyczny wrak
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-magnets
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-magnets.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-magnets.txt
+
+16. Testament szkutnika
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-paper-fold
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-paper-fold.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-paper-fold.txt
+
+17. Pracownia wynalazków
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-invention
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-invention.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-invention.txt
+
+18. Fotograf wyspy
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-photo
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-photo.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-photo.txt
+
+19. Plotka w porcie
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-deduction
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-deduction.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-deduction.txt
+
+20. Kuchnia na święto
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-cooking
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-cooking.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-cooking.txt
+
+21. Język boi
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-signals-decode
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-signals-decode.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-signals-decode.txt
+
+22. Wagi skarbca
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-balance
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-balance.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-balance.txt
+
+23. Fragmenty dziennika
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-memory-triples
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-memory-triples.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-memory-triples.txt
+
+24. Kula mechanizmu
+Gra: https://harborlight-dev.web.app/minigames/?game=puzzle-marble-maze
+Word: https://harborlight-dev.web.app/minigames/docs/puzzle-marble-maze.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/puzzle-marble-maze.txt
+
+25. Pierwszy blask
+Gra: https://harborlight-dev.web.app/minigames/?game=story-first-light
+Word: https://harborlight-dev.web.app/minigames/docs/story-first-light.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-first-light.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-first-light&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-first-light&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-first-light&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-first-light&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-first-light&variant=5
+
+26. Goście spod gwiazd
+Gra: https://harborlight-dev.web.app/minigames/?game=story-star-guests
+Word: https://harborlight-dev.web.app/minigames/docs/story-star-guests.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-star-guests.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-star-guests&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-star-guests&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-star-guests&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-star-guests&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-star-guests&variant=5
+
+27. Statek bez kapitana
+Gra: https://harborlight-dev.web.app/minigames/?game=story-captainless-ship
+Word: https://harborlight-dev.web.app/minigames/docs/story-captainless-ship.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-captainless-ship.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-captainless-ship&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-captainless-ship&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-captainless-ship&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-captainless-ship&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-captainless-ship&variant=5
+
+28. Przystań otwarta
+Gra: https://harborlight-dev.web.app/minigames/?game=story-harbor-opening
+Word: https://harborlight-dev.web.app/minigames/docs/story-harbor-opening.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-harbor-opening.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-harbor-opening&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-harbor-opening&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-harbor-opening&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-harbor-opening&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-harbor-opening&variant=5
+
+29. Noc sztormowa
+Gra: https://harborlight-dev.web.app/minigames/?game=story-storm-shelter
+Word: https://harborlight-dev.web.app/minigames/docs/story-storm-shelter.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-storm-shelter.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-storm-shelter&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-storm-shelter&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-storm-shelter&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-storm-shelter&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-storm-shelter&variant=5
+
+30. Wiadomość w butelce
+Gra: https://harborlight-dev.web.app/minigames/?game=story-bottle-message
+Word: https://harborlight-dev.web.app/minigames/docs/story-bottle-message.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-bottle-message.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-bottle-message&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-bottle-message&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-bottle-message&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-bottle-message&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-bottle-message&variant=5
+
+31. Konwój przez mgłę
+Gra: https://harborlight-dev.web.app/minigames/?game=story-fog-convoy
+Word: https://harborlight-dev.web.app/minigames/docs/story-fog-convoy.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-fog-convoy.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-fog-convoy&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-fog-convoy&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-fog-convoy&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-fog-convoy&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-fog-convoy&variant=5
+
+32. Mapa starego latarnika
+Gra: https://harborlight-dev.web.app/minigames/?game=story-keeper-map
+Word: https://harborlight-dev.web.app/minigames/docs/story-keeper-map.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-keeper-map.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-keeper-map&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-keeper-map&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-keeper-map&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-keeper-map&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-keeper-map&variant=5
+
+33. Zapasy na dalszą drogę
+Gra: https://harborlight-dev.web.app/minigames/?game=story-supply-voyage
+Word: https://harborlight-dev.web.app/minigames/docs/story-supply-voyage.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-supply-voyage.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-supply-voyage&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-supply-voyage&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-supply-voyage&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-supply-voyage&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-supply-voyage&variant=5
+
+34. Światło na drugim brzegu
+Gra: https://harborlight-dev.web.app/minigames/?game=story-second-shore
+Word: https://harborlight-dev.web.app/minigames/docs/story-second-shore.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-second-shore.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-second-shore&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-second-shore&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-second-shore&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-second-shore&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-second-shore&variant=5
+
+35. Tajemnica zamkniętej Latarni
+Gra: https://harborlight-dev.web.app/minigames/?game=story-closed-lighthouse
+Word: https://harborlight-dev.web.app/minigames/docs/story-closed-lighthouse.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-closed-lighthouse.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-closed-lighthouse&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-closed-lighthouse&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-closed-lighthouse&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-closed-lighthouse&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-closed-lighthouse&variant=5
+
+36. Zaginiony spektakl
+Gra: https://harborlight-dev.web.app/minigames/?game=story-lost-performance
+Word: https://harborlight-dev.web.app/minigames/docs/story-lost-performance.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-lost-performance.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-lost-performance&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-lost-performance&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-lost-performance&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-lost-performance&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-lost-performance&variant=5
+
+37. Cisi goście oceanu
+Gra: https://harborlight-dev.web.app/minigames/?game=story-ocean-visitors
+Word: https://harborlight-dev.web.app/minigames/docs/story-ocean-visitors.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-ocean-visitors.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-ocean-visitors&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-ocean-visitors&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-ocean-visitors&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-ocean-visitors&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-ocean-visitors&variant=5
+
+38. Nic się nie marnuje
+Gra: https://harborlight-dev.web.app/minigames/?game=story-nothing-wasted
+Word: https://harborlight-dev.web.app/minigames/docs/story-nothing-wasted.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-nothing-wasted.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-nothing-wasted&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-nothing-wasted&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-nothing-wasted&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-nothing-wasted&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-nothing-wasted&variant=5
+
+39. Święto ludzi morza
+Gra: https://harborlight-dev.web.app/minigames/?game=story-sea-festival
+Word: https://harborlight-dev.web.app/minigames/docs/story-sea-festival.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-sea-festival.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-sea-festival&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-sea-festival&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-sea-festival&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-sea-festival&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-sea-festival&variant=5
+
+40. Kupiec w opałach
+Gra: https://harborlight-dev.web.app/minigames/?game=story-merchant-rescue
+Word: https://harborlight-dev.web.app/minigames/docs/story-merchant-rescue.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-merchant-rescue.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-merchant-rescue&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-merchant-rescue&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-merchant-rescue&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-merchant-rescue&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-merchant-rescue&variant=5
+
+41. Skarbiec pod klifem
+Gra: https://harborlight-dev.web.app/minigames/?game=story-cliff-treasury
+Word: https://harborlight-dev.web.app/minigames/docs/story-cliff-treasury.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-cliff-treasury.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-cliff-treasury&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-cliff-treasury&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-cliff-treasury&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-cliff-treasury&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-cliff-treasury&variant=5
+
+42. Światło ponad burzą
+Gra: https://harborlight-dev.web.app/minigames/?game=story-above-storm
+Word: https://harborlight-dev.web.app/minigames/docs/story-above-storm.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-above-storm.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-above-storm&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-above-storm&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-above-storm&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-above-storm&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-above-storm&variant=5
+
+43. Wielki zlot żagli
+Gra: https://harborlight-dev.web.app/minigames/?game=story-sail-gathering
+Word: https://harborlight-dev.web.app/minigames/docs/story-sail-gathering.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-sail-gathering.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-sail-gathering&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-sail-gathering&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-sail-gathering&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-sail-gathering&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-sail-gathering&variant=5
+
+44. Wyspa, do której się wraca
+Gra: https://harborlight-dev.web.app/minigames/?game=story-homecoming
+Word: https://harborlight-dev.web.app/minigames/docs/story-homecoming.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/story-homecoming.txt
+Wariant 1: https://harborlight-dev.web.app/minigames/?game=story-homecoming&variant=1
+Wariant 2: https://harborlight-dev.web.app/minigames/?game=story-homecoming&variant=2
+Wariant 3: https://harborlight-dev.web.app/minigames/?game=story-homecoming&variant=3
+Wariant 4: https://harborlight-dev.web.app/minigames/?game=story-homecoming&variant=4
+Wariant 5: https://harborlight-dev.web.app/minigames/?game=story-homecoming&variant=5
+
+45. Łap dostawę z nieba
+Gra: https://harborlight-dev.web.app/minigames/?game=adventure-cargo-rain
+Word: https://harborlight-dev.web.app/minigames/docs/adventure-cargo-rain.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/adventure-cargo-rain.txt
+
+46. Mapa zapomnianego skarbu
+Gra: https://harborlight-dev.web.app/minigames/?game=adventure-treasure-map
+Word: https://harborlight-dev.web.app/minigames/docs/adventure-treasure-map.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/adventure-treasure-map.txt
+
+47. Kupiec w opałach
+Gra: https://harborlight-dev.web.app/minigames/?game=adventure-pirate-cannon
+Word: https://harborlight-dev.web.app/minigames/docs/adventure-pirate-cannon.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/adventure-pirate-cannon.txt
+
+48. Most na drugą stronę
+Gra: https://harborlight-dev.web.app/minigames/?game=adventure-bridge
+Word: https://harborlight-dev.web.app/minigames/docs/adventure-bridge.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/adventure-bridge.txt
+
+49. Nocne sygnały Latarni
+Gra: https://harborlight-dev.web.app/minigames/?game=adventure-signals
+Word: https://harborlight-dev.web.app/minigames/docs/adventure-signals.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/adventure-signals.txt
+
+50. Listy z przemokniętej torby
+Gra: https://harborlight-dev.web.app/minigames/?game=adventure-letters
+Word: https://harborlight-dev.web.app/minigames/docs/adventure-letters.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/adventure-letters.txt
+
+51. Orkiestra z portu
+Gra: https://harborlight-dev.web.app/minigames/?game=adventure-rhythm
+Word: https://harborlight-dev.web.app/minigames/docs/adventure-rhythm.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/adventure-rhythm.txt
+
+52. Ogród przypływu
+Gra: https://harborlight-dev.web.app/minigames/?game=adventure-garden
+Word: https://harborlight-dev.web.app/minigames/docs/adventure-garden.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/adventure-garden.txt
+
+53. Ładunek pod kontrolą
+Gra: https://harborlight-dev.web.app/minigames/?game=adventure-cargo-balance
+Word: https://harborlight-dev.web.app/minigames/docs/adventure-cargo-balance.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/adventure-cargo-balance.txt
+
+54. Kulki w labiryncie — ekspedycja
+Gra: https://harborlight-dev.web.app/minigames/?game=expedition-tilt
+Word: https://harborlight-dev.web.app/minigames/docs/expedition-tilt.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/expedition-tilt.txt
+
+55. Znajdź trójki — ekspedycja
+Gra: https://harborlight-dev.web.app/minigames/?game=expedition-triples
+Word: https://harborlight-dev.web.app/minigames/docs/expedition-triples.docx
+TXT: https://harborlight-dev.web.app/minigames/docs/expedition-triples.txt

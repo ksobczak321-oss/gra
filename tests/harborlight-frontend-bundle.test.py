@@ -90,6 +90,25 @@ class FrontendBundleTests(unittest.TestCase):
         self.assertEqual(first, self.archive.read_bytes())
         self.assertEqual(metadata, next_metadata)
 
+    def test_every_catalog_game_has_both_downloads_in_the_public_release(self):
+        catalog = json.loads((ROOT / "docs/minigames/catalog.json").read_text())
+        slugs = [entry["slug"] for entry in catalog["entries"]]
+        self.assertEqual(len(slugs), 55)
+        self.assertEqual(tuple(slugs), BUNDLE.MINIGAME_SLUGS)
+        BUNDLE.build(SHA, self.output, self.archive, ROOT)
+        manifest = json.loads((self.output / "release.json").read_bytes())
+        for slug in slugs:
+            for extension in ("docx", "txt"):
+                name = f"minigames/docs/{slug}.{extension}"
+                self.assertIn(name, manifest["files"])
+                self.assertTrue((self.output / name).is_file())
+                self.assertGreater((self.output / name).stat().st_size, 100)
+        self.assertEqual((self.output / "minigames/catalog.json").read_bytes(),
+                         (ROOT / "docs/minigames/catalog.json").read_bytes())
+        self.assertNotIn("docs/minigames/catalog.json", manifest["files"])
+        self.assertNotIn("scripts/build_minigame_documents.py", manifest["files"])
+        self.assertLessEqual(len(manifest["files"]) + 1, BUNDLE.MAX_MEMBERS)
+
     def test_index_preserves_query_hash_and_existing_profile(self):
         self.build()
         script = r'''
@@ -300,7 +319,7 @@ class HistoricalFrontendProfileTests(unittest.TestCase):
 
     def test_no_profile_keeps_default_current_allowlist_strict(self):
         self.reject(name=None)
-        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 109)
+        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 109 + len(BUNDLE.MINIGAME_PUBLIC_FILES))
         self.assertIn("harborlight-v1-runtime-upgrade.js", BUNDLE.CONTENT_FILES)
 
     def test_unknown_or_path_supplied_profile_is_rejected(self):

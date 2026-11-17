@@ -1,0 +1,383 @@
+Skarbiec pod klifem
+
+HARBORLIGHT · Przygoda fabularna
+
+Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+
+Otwórz grę na PRE-PROD
+
+https://harborlight-dev.web.app/minigames/?game=story-cliff-treasury
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Cel gry
+
+Przeprowadź wodę i ciężarki tak, aby zachować drogę powrotną.
+
+Scenariusz i zadanie gracza
+
+Przeprowadź wodę i ciężarki tak, aby zachować drogę powrotną. Opowieść łączy 6 kolejnych pomieszczeń w jeden łańcuch odkryć. Każdy ukończony pokój pozostawia kod, który wpływa na układ następnego.
+
+Przygotowanie rozgrywki
+
+1. W głównej grze opowieść jest odblokowana od 17. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+
+2. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
+
+Sterowanie i wykonywanie ruchów
+
+1. Sterowanie zmienia się zależnie od rodzaju pokoju: wybór obiektów, układanie, obracanie, sygnały, karty albo przechylenie planszy.
+
+2. Przycisk przejścia do następnego pomieszczenia działa dopiero po potwierdzonym rozwiązaniu bieżącego.
+
+Zasady krok po kroku
+
+1. Rozwiąż zagadkę bieżącego pomieszczenia zgodnie z jej własnymi zasadami.
+
+2. Po rozwiązaniu potwierdź przejście do kolejnego pomieszczenia. Sama wygrana plansza nie pomija dalszych pokoi.
+
+3. Znaleziony czterocyfrowy kod trafia do dziennika wiedzy i wpływa na generowanie kolejnej planszy.
+
+4. Finał pozostaje ostatnim mechanizmem we wszystkich pięciu wariantach.
+
+5. W głównej grze ukończone pokoje pozostają zapisane, gdy bieżąca próba się nie uda. Nie trzeba ponownie przechodzić całej historii.
+
+Warunek zwycięstwa
+
+• Rozwiązano wszystkie 6 pomieszczeń wybranego wariantu i potwierdzono finał.
+
+Błędy, niedozwolone ruchy i zakończenie próby
+
+• Nieukończona zagadka blokuje przejście dalej.
+
+• Wyjście lub koniec czasu kończy bieżącą próbę pokoju. Wcześniejsze rozwiązane pokoje pozostają częścią postępu głównej gry.
+
+Czas i tempo rozgrywki
+
+• Katalogowy czas opowieści 1260 s jest orientacyjną sumą 210 s na pokój, a nie jednym wspólnym limitem całej historii.
+
+• Każde pomieszczenie ma osobny zegar zależny od mechaniki i trudności. Patrz szczegółowe zasady użytych zagadek.
+
+• Gdy pozostaje 30 s, główna gra może wyświetlić pięciosekundowy wybór dodatkowego czasu. Akceptacja za monety kosztuje 10 × najwyższy poziom Ratusza; przedłużenie dodaje co najmniej 60 s lub połowę pozostałego czasu. Reklama wymaga uprawnionego potwierdzenia lub jawnej symulacji testowej.
+
+Punktacja i nagrody w głównej grze
+
+• Bazowa nagroda dla poziomu L to: 40+10×L monet, 15+2×L drewna i kamienia oraz po 10+L zboża, mąki i desek.
+
+• Rzeczywiste rozliczenie w głównej grze uwzględnia wspólny budżet, wcześniejsze odebranie wariantu i potwierdzenie. Ponowne przejście rozliczonego wariantu może być treningiem bez nagrody.
+
+• Samodzielna próba nie dodaje zasobów ani mieszkańców do prywatnego konta.
+
+• Po potwierdzeniu w głównej grze monety trafiają do portfela. Materiały są przyjmowane do Magazynu w granicach pojemności, a nadmiar pozostaje w dostawach; dawny klucz food oznacza w regułach v32 mąkę.
+
+Ponowna próba i pomoc
+
+• Nieprawidłowy ruch jest odrzucany; plansza nie przyjmuje samej deklaracji rozwiązania. Gdy ustawienie jest błędne, popraw je albo cofnij dostępny poprzedni ruch.
+
+• Po trzech porażkach danej odmiany dostępna jest jedna darmowa podpowiedź na próbę i łatwiejsza próba. W łatwiejszej próbie stosowana jest połowa trudności z zaokrągleniem w górę i połowa nagrody.
+
+• W głównej grze wyjście kończy aktywną próbę etapu jako porażkę, zachowując wcześniej ukończone pomieszczenia. Powtórka rozpoczyna bieżący etap od nowa.
+
+Rozwój trudności i dostępność
+
+• Pięć wariantów tego samego tytułu łączy 6 mechanik. Zobacz ich odrębne uporządkowane listy i bezpośrednie linki.
+
+• Wskazówki z wcześniejszych pokoi zmieniają ziarno kolejnego układu; znajomość starej planszy nie zastępuje rozwiązania nowej.
+
+Przykładowy przebieg
+
+1. Pierwszy wariant rozpoczyna się od „Testament szkutnika”, a kończy etapem „Okulary latarnika”.
+
+2. Przykład przebiegu: rozwiąż pokój → zachowaj kod w dzienniku → przejdź dalej → użyj zasad następnej mechaniki → potwierdź finał.
+
+Warianty i osobne linki
+
+Wariant 1
+
+https://harborlight-dev.web.app/minigames/?game=story-cliff-treasury&variant=1
+
+1. Testament szkutnika — Złóż plan według znaków, aby odczytać wiadomość.
+
+2. Brama przypływu — Przepuść wodę przez śluzy w bezpiecznej kolejności.
+
+3. Magnetyczny wrak — Ustaw bieguny i przeprowadź kapsułę do zamka.
+
+4. Wagi skarbca — Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+5. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+6. Okulary latarnika — Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+Wariant 2
+
+https://harborlight-dev.web.app/minigames/?game=story-cliff-treasury&variant=2
+
+1. Brama przypływu — Przepuść wodę przez śluzy w bezpiecznej kolejności.
+
+2. Testament szkutnika — Złóż plan według znaków, aby odczytać wiadomość.
+
+3. Magnetyczny wrak — Ustaw bieguny i przeprowadź kapsułę do zamka.
+
+4. Wagi skarbca — Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+5. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+6. Okulary latarnika — Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+Wariant 3
+
+https://harborlight-dev.web.app/minigames/?game=story-cliff-treasury&variant=3
+
+1. Testament szkutnika — Złóż plan według znaków, aby odczytać wiadomość.
+
+2. Wagi skarbca — Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+3. Magnetyczny wrak — Ustaw bieguny i przeprowadź kapsułę do zamka.
+
+4. Brama przypływu — Przepuść wodę przez śluzy w bezpiecznej kolejności.
+
+5. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+6. Okulary latarnika — Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+Wariant 4
+
+https://harborlight-dev.web.app/minigames/?game=story-cliff-treasury&variant=4
+
+1. Testament szkutnika — Złóż plan według znaków, aby odczytać wiadomość.
+
+2. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+3. Brama przypływu — Przepuść wodę przez śluzy w bezpiecznej kolejności.
+
+4. Magnetyczny wrak — Ustaw bieguny i przeprowadź kapsułę do zamka.
+
+5. Wagi skarbca — Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+6. Okulary latarnika — Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+Wariant 5
+
+https://harborlight-dev.web.app/minigames/?game=story-cliff-treasury&variant=5
+
+1. Testament szkutnika — Złóż plan według znaków, aby odczytać wiadomość.
+
+2. Magnetyczny wrak — Ustaw bieguny i przeprowadź kapsułę do zamka.
+
+3. Brama przypływu — Przepuść wodę przez śluzy w bezpiecznej kolejności.
+
+4. Wagi skarbca — Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+5. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+6. Okulary latarnika — Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+Instrukcje wszystkich zagadek tej historii
+
+Poniższe instrukcje dotyczą mechanik wymienionych w sekwencjach pomieszczeń. Wariant historii zmienia ich kolejność lub układ planszy; cel danej mechaniki i warunek sprawdzenia poprawności pozostają opisane osobno.
+
+Testament szkutnika
+
+Cel: Złóż plan według znaków, aby odczytać wiadomość.
+
+Sterowanie
+
+1. Kliknij okienko/narożnik, którego stronę chcesz zmienić.
+
+Zasady
+
+1. Każde kliknięcie przełącza jeden narożnik między złożeniem a rozłożeniem.
+
+2. Dopasuj zawartość każdego okienka do odpowiadającej mu pozycji wiadomości.
+
+3. Wszystkie narożniki można przestawiać wielokrotnie.
+
+Zwycięstwo
+
+• Wszystkie cztery ułożenia zgadzają się z wiadomością.
+
+Błędy i ograniczenia
+
+• Pasujący napis w złym okienku nie jest poprawnym rozwiązaniem.
+
+Przykład
+
+1. Porównuj pierwsze okienko z pierwszym słowem wskazówki, drugie z drugim itd.; nie trzeba zamieniać okienek miejscami.
+
+Brama przypływu
+
+Cel: Przepuść wodę przez śluzy w bezpiecznej kolejności.
+
+Sterowanie
+
+1. Użyj przycisków kierunków 1→2, 2→1, 2→3 i 3→2.
+
+Zasady
+
+1. Jedno naciśnięcie przelewa dokładnie jedną jednostkę wody.
+
+2. Przelewać można tylko między sąsiednimi komorami: 1↔2 i 2↔3.
+
+3. Źródło musi zawierać wodę, a cel nie może być pełny.
+
+4. Wszystkie trzy poziomy muszą jednocześnie odpowiadać oznaczonym wartościom.
+
+Zwycięstwo
+
+• Wektor poziomów wody jest identyczny z podanym celem.
+
+Błędy i ograniczenia
+
+• Próba przelewania z pustej lub do pełnej komory jest niedozwolona.
+
+Przykład
+
+1. Aby dostarczyć jednostkę z komory pierwszej do trzeciej, potrzeba dwóch działań: 1→2, a następnie 2→3.
+
+Magnetyczny wrak
+
+Cel: Ustaw bieguny i przeprowadź kapsułę do zamka.
+
+Sterowanie
+
+1. Klikaj magnesy, aby zmieniać ich bieguny.
+
+2. Naciśnij „Wyślij impuls”, aby przesunąć kapsułę.
+
+Zasady
+
+1. Odwrócenie magnesu zmienia znak jego siły.
+
+2. Wypadkowa jest sumą sił ze znakami; legalny impuls ma wartość +1 lub −1.
+
+3. W kierunku celu potrzebna jest wypadkowa +1. Zbyt silny impuls albo ruch poza tor jest odrzucany.
+
+Zwycięstwo
+
+• Kapsuła dociera do pozycji 5.
+
+Błędy i ograniczenia
+
+• Wypadkowa o module innym niż jeden blokuje impuls.
+
+Przykład
+
+1. 4 − 2 − 1 = +1. Takie ustawienie pozwala wykonać pięć kolejnych impulsów od startu do zamka.
+
+Wagi skarbca
+
+Cel: Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+Sterowanie
+
+1. Wybierz ciężarek, potem lewą lub prawą szalę.
+
+Zasady
+
+1. Każdy ciężarek musi trafić na jedną z dwóch szal.
+
+2. Ciężarek można przenosić; jego wartość nie zmienia się.
+
+3. Liczy się suma wartości na każdej szali, a nie liczba elementów.
+
+4. Trzeba wykorzystać wszystkie cztery ciężarki.
+
+Zwycięstwo
+
+• Wszystkie ciężarki są ustawione, a obie sumy zgadzają się z celami.
+
+Błędy i ograniczenia
+
+• Poprawna suma tylko na jednej szali nie otwiera skarbca.
+
+Przykład
+
+1. Jeżeli cele wynoszą 3 i 7, pary 1+2 oraz 3+4 spełniają oba wymagania.
+
+Światło przez soczewki
+
+Cel: Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+Sterowanie
+
+1. Klikaj wyłącznie pola zwierciadeł i obserwuj drogę promienia.
+
+Zasady
+
+1. Kliknięcie zwierciadła przełącza jego ułożenie pomiędzy „/” i „\”.
+
+2. Promień odbija się zgodnie z orientacją lustra.
+
+3. Wyjście promienia poza planszę lub pętla bez odbiornika nie kończy zadania.
+
+Zwycięstwo
+
+• Promień dociera do pola odbiornika.
+
+Błędy i ograniczenia
+
+• Nieprawidłowe odbicia wymagają zmiany ustawień; brak połączenia nie jest zaliczany.
+
+Przykład
+
+1. Pierwsze lustro kieruje promień w górę albo w dół; drugie musi skierować go z powrotem w stronę odbiornika.
+
+Okulary latarnika
+
+Cel: Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+Sterowanie
+
+1. Dotknij zakrytego pola, aby je obejrzeć.
+
+2. Wybierz przycisk „Tu są okulary?” odpowiadający właściwemu obejrzanemu polu.
+
+Zasady
+
+1. Oglądaj miejsca, aby odsłaniać ich kolor i symbol.
+
+2. Do właściwego miejsca muszą pasować obie cechy, nie tylko kolor albo sam znak.
+
+3. Potwierdzić można wyłącznie miejsce już obejrzane.
+
+Zwycięstwo
+
+• Gracz potwierdził miejsce o obu wymaganych cechach.
+
+Błędy i ograniczenia
+
+• Nietrafny wybór nie kończy zagadki; należy dalej porównać obiekty.
+
+Przykład
+
+1. Jeśli wskazówka mówi „niebieski, kotwica”, zielona kotwica i niebieska muszla są błędnymi odpowiedziami.
+
+Zakres samodzielnej próby
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w panelu gry. Zmieniaj poziom i wariant między próbami; rozpoczęta próba korzysta z parametrów wybranych przy jej uruchomieniu.
+
+Źródła i wersja zasad
+
+Identyfikator gry: story-cliff-treasury.
+
+Źródło katalogu: 6b40252ba4f57a035d6b624656c8fce735559b07.
+
+Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+
+• harborlight-v1-story-catalog.js:47 — Scenariusz, próg odblokowania i mechaniki
+
+• harborlight-v1-story-catalog.js:56 — Dokładna kolejność pięciu wariantów
+
+• harborlight-v1-adventure-journey.js:50 — Kody odkryć i powiązanie pokoi
+
+• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+
+• harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
+
+• harborlight-v1-state.js:1127 — Rozliczenie nagród opowieści i konwersja mąki
+
+• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy

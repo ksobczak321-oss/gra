@@ -1,0 +1,111 @@
+Orkiestra z portu
+
+HARBORLIGHT · Przygoda klasyczna
+
+Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+
+Otwórz grę na PRE-PROD
+
+https://harborlight-dev.web.app/minigames/?game=adventure-rhythm
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Cel gry
+
+Odszukaj trzy instrumenty, posłuchaj melodii i wystukaj rytm powitalnego koncertu.
+
+Scenariusz i zadanie gracza
+
+Odszukaj trzy instrumenty, posłuchaj melodii i wystukaj rytm powitalnego koncertu.
+
+Przygotowanie rozgrywki
+
+1. Najpierw trzeba znaleźć bęben przy Magazynie, flet przy Gospodarstwie i dzwon przy Latarni. Po zebraniu instrumentów trwa sześciusekundowy pokaz.
+
+Sterowanie i wykonywanie ruchów
+
+1. Wybieraj miejsca poszukiwania instrumentów.
+
+2. Po odsłuchu naciskaj odpowiednie przyciski instrumentów w rytmie.
+
+Zasady krok po kroku
+
+1. Odszukaj wszystkie trzy instrumenty.
+
+2. Zapamiętaj kolejność pięciu uderzeń i odstępy między nimi.
+
+3. Wystukaj sekwencję bęben–dzwon–flet–dzwon–bęben.
+
+4. Kolejne uderzenia są oddalone o 0,7 s; tolerancja czasu wynosi ±0,35 s.
+
+5. Pomyłka instrumentu lub rytmu cofa wykonanie do etapu odsłuchu.
+
+Warunek zwycięstwa
+
+• Pięć kolejnych uderzeń ma prawidłowy instrument i czas.
+
+Błędy, niedozwolone ruchy i zakończenie próby
+
+• Błędna kolejność albo uderzenie poza tolerancją wymaga ponownego odsłuchu.
+
+Czas i tempo rozgrywki
+
+• Referencyjny limit etapu przy trudności 1 wynosi 300 s. Dalsza trudność skraca go według wzoru: czas katalogowy / (1 + 0,05 × (trudność − 1)), nie mniej niż 60 s.
+
+• Zmiana na kolejny etap przygody rozpoczyna jego odrębny zegar; limit nie jest jednym czasem całej wieloetapowej historii.
+
+• Po ukończeniu główna gra stosuje 900 s przerwy tej klasycznej przygody.
+
+Punktacja i nagrody w głównej grze
+
+• Bazowy pakiet ukończenia w modelu: monety: 40, zboże: 30.
+
+• Są to parametry obecnego balansu testowego. W głównej grze monety są dopisywane do portfela, a materiały trafiają do kolejki dostaw; techniczny klucz food jest w v32 zamieniany na mąkę. Łatwiejsza próba daje połowę wartości pakietu. Ten sam ukończony przebieg nie wypłaca nagrody drugi raz. Samodzielny link nie dopisuje nagród do konta.
+
+Ponowna próba i pomoc
+
+• Po przegranej można ponowić bieżący etap. Zdobyte wcześniej przedmioty i ukończone etapy są zachowywane przez model głównej gry.
+
+• Po trzech porażkach danej odmiany można skorzystać z jednej darmowej podpowiedzi oraz łatwiejszej próby: o 50% dłuższym czasie i połowie nagrody.
+
+Rozwój trudności i dostępność
+
+• Trudność jest powiązana z godzinowym licznikiem wygranych danej odmiany.
+
+• Ta klasyczna przygoda jest odrębnym scenariuszem od opowieści o podobnym tytule i od pojedynczej zagadki korzystającej z podobnej mechaniki.
+
+Przykładowy przebieg
+
+1. Po pierwszym uderzeniu kolejne przypadają po około 0,7 s, 1,4 s, 2,1 s i 2,8 s.
+
+Warianty i osobne linki
+
+Ta gra ma jeden scenariusz podstawowy. Parametry kolejnych prób i rozwój trudności opisano powyżej; link podstawowy otwiera tę samą mechanikę.
+
+Zakres samodzielnej próby
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w panelu gry. Zmieniaj poziom i wariant między próbami; rozpoczęta próba korzysta z parametrów wybranych przy jej uruchomieniu.
+
+Źródła i wersja zasad
+
+Identyfikator gry: adventure-rhythm.
+
+Źródło katalogu: 6b40252ba4f57a035d6b624656c8fce735559b07.
+
+Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+
+• harborlight-v1-adventures.js:53 — Cel i opis scenariusza
+
+• harborlight-v1-adventures.js:556 — Legalne działania i warunki ukończenia
+
+• harborlight-v1-adventures.js:354 — Zegar etapów i łatwiejsze próby
+
+• harborlight-v1-adventure-puzzles.js:110 — Sprawdzanie plansz, przepływu i równowagi
+
+• harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
+
+• harborlight-v1-state.js:1127 — Rozliczenie nagród opowieści i konwersja mąki
+
+• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy

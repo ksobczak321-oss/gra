@@ -1,0 +1,355 @@
+Nic się nie marnuje
+
+HARBORLIGHT · Przygoda fabularna
+
+Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+
+Otwórz grę na PRE-PROD
+
+https://harborlight-dev.web.app/minigames/?game=story-nothing-wasted
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Cel gry
+
+Połącz odzyskane przedmioty w sprawny łańcuch dostaw.
+
+Scenariusz i zadanie gracza
+
+Połącz odzyskane przedmioty w sprawny łańcuch dostaw. Opowieść łączy 5 kolejnych pomieszczeń w jeden łańcuch odkryć. Każdy ukończony pokój pozostawia kod, który wpływa na układ następnego.
+
+Przygotowanie rozgrywki
+
+1. W głównej grze opowieść jest odblokowana od 14. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+
+2. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
+
+Sterowanie i wykonywanie ruchów
+
+1. Sterowanie zmienia się zależnie od rodzaju pokoju: wybór obiektów, układanie, obracanie, sygnały, karty albo przechylenie planszy.
+
+2. Przycisk przejścia do następnego pomieszczenia działa dopiero po potwierdzonym rozwiązaniu bieżącego.
+
+Zasady krok po kroku
+
+1. Rozwiąż zagadkę bieżącego pomieszczenia zgodnie z jej własnymi zasadami.
+
+2. Po rozwiązaniu potwierdź przejście do kolejnego pomieszczenia. Sama wygrana plansza nie pomija dalszych pokoi.
+
+3. Znaleziony czterocyfrowy kod trafia do dziennika wiedzy i wpływa na generowanie kolejnej planszy.
+
+4. Finał pozostaje ostatnim mechanizmem we wszystkich pięciu wariantach.
+
+5. W głównej grze ukończone pokoje pozostają zapisane, gdy bieżąca próba się nie uda. Nie trzeba ponownie przechodzić całej historii.
+
+Warunek zwycięstwa
+
+• Rozwiązano wszystkie 5 pomieszczeń wybranego wariantu i potwierdzono finał.
+
+Błędy, niedozwolone ruchy i zakończenie próby
+
+• Nieukończona zagadka blokuje przejście dalej.
+
+• Wyjście lub koniec czasu kończy bieżącą próbę pokoju. Wcześniejsze rozwiązane pokoje pozostają częścią postępu głównej gry.
+
+Czas i tempo rozgrywki
+
+• Katalogowy czas opowieści 1050 s jest orientacyjną sumą 210 s na pokój, a nie jednym wspólnym limitem całej historii.
+
+• Każde pomieszczenie ma osobny zegar zależny od mechaniki i trudności. Patrz szczegółowe zasady użytych zagadek.
+
+• Gdy pozostaje 30 s, główna gra może wyświetlić pięciosekundowy wybór dodatkowego czasu. Akceptacja za monety kosztuje 10 × najwyższy poziom Ratusza; przedłużenie dodaje co najmniej 60 s lub połowę pozostałego czasu. Reklama wymaga uprawnionego potwierdzenia lub jawnej symulacji testowej.
+
+Punktacja i nagrody w głównej grze
+
+• Bazowa nagroda dla poziomu L to: 40+10×L monet, 15+2×L drewna i kamienia oraz po 10+L zboża, mąki i desek.
+
+• Rzeczywiste rozliczenie w głównej grze uwzględnia wspólny budżet, wcześniejsze odebranie wariantu i potwierdzenie. Ponowne przejście rozliczonego wariantu może być treningiem bez nagrody.
+
+• Samodzielna próba nie dodaje zasobów ani mieszkańców do prywatnego konta.
+
+• Po potwierdzeniu w głównej grze monety trafiają do portfela. Materiały są przyjmowane do Magazynu w granicach pojemności, a nadmiar pozostaje w dostawach; dawny klucz food oznacza w regułach v32 mąkę.
+
+Ponowna próba i pomoc
+
+• Nieprawidłowy ruch jest odrzucany; plansza nie przyjmuje samej deklaracji rozwiązania. Gdy ustawienie jest błędne, popraw je albo cofnij dostępny poprzedni ruch.
+
+• Po trzech porażkach danej odmiany dostępna jest jedna darmowa podpowiedź na próbę i łatwiejsza próba. W łatwiejszej próbie stosowana jest połowa trudności z zaokrągleniem w górę i połowa nagrody.
+
+• W głównej grze wyjście kończy aktywną próbę etapu jako porażkę, zachowując wcześniej ukończone pomieszczenia. Powtórka rozpoczyna bieżący etap od nowa.
+
+Rozwój trudności i dostępność
+
+• Pięć wariantów tego samego tytułu łączy 5 mechanik. Zobacz ich odrębne uporządkowane listy i bezpośrednie linki.
+
+• Wskazówki z wcześniejszych pokoi zmieniają ziarno kolejnego układu; znajomość starej planszy nie zastępuje rozwiązania nowej.
+
+Przykładowy przebieg
+
+1. Pierwszy wariant rozpoczyna się od „Pracownia wynalazków”, a kończy etapem „Port bez korków”.
+
+2. Przykład przebiegu: rozwiąż pokój → zachowaj kod w dzienniku → przejdź dalej → użyj zasad następnej mechaniki → potwierdź finał.
+
+Warianty i osobne linki
+
+Wariant 1
+
+https://harborlight-dev.web.app/minigames/?game=story-nothing-wasted&variant=1
+
+1. Pracownia wynalazków — Dobierz części, które wspólnie rozwiążą problem.
+
+2. Skrzynka ratunkowa — Spakuj cały sprzęt, obracając elementy i wykorzystując miejsce.
+
+3. Kuchnia na święto — Przygotuj posiłki według przepisów i potrzeb gości.
+
+4. Wagi skarbca — Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+5. Port bez korków — Przydziel statkom nabrzeża i czasy rozładunku.
+
+Wariant 2
+
+https://harborlight-dev.web.app/minigames/?game=story-nothing-wasted&variant=2
+
+1. Skrzynka ratunkowa — Spakuj cały sprzęt, obracając elementy i wykorzystując miejsce.
+
+2. Pracownia wynalazków — Dobierz części, które wspólnie rozwiążą problem.
+
+3. Kuchnia na święto — Przygotuj posiłki według przepisów i potrzeb gości.
+
+4. Wagi skarbca — Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+5. Port bez korków — Przydziel statkom nabrzeża i czasy rozładunku.
+
+Wariant 3
+
+https://harborlight-dev.web.app/minigames/?game=story-nothing-wasted&variant=3
+
+1. Pracownia wynalazków — Dobierz części, które wspólnie rozwiążą problem.
+
+2. Wagi skarbca — Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+3. Kuchnia na święto — Przygotuj posiłki według przepisów i potrzeb gości.
+
+4. Skrzynka ratunkowa — Spakuj cały sprzęt, obracając elementy i wykorzystując miejsce.
+
+5. Port bez korków — Przydziel statkom nabrzeża i czasy rozładunku.
+
+Wariant 4
+
+https://harborlight-dev.web.app/minigames/?game=story-nothing-wasted&variant=4
+
+1. Pracownia wynalazków — Dobierz części, które wspólnie rozwiążą problem.
+
+2. Wagi skarbca — Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+3. Skrzynka ratunkowa — Spakuj cały sprzęt, obracając elementy i wykorzystując miejsce.
+
+4. Kuchnia na święto — Przygotuj posiłki według przepisów i potrzeb gości.
+
+5. Port bez korków — Przydziel statkom nabrzeża i czasy rozładunku.
+
+Wariant 5
+
+https://harborlight-dev.web.app/minigames/?game=story-nothing-wasted&variant=5
+
+1. Pracownia wynalazków — Dobierz części, które wspólnie rozwiążą problem.
+
+2. Kuchnia na święto — Przygotuj posiłki według przepisów i potrzeb gości.
+
+3. Skrzynka ratunkowa — Spakuj cały sprzęt, obracając elementy i wykorzystując miejsce.
+
+4. Wagi skarbca — Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+5. Port bez korków — Przydziel statkom nabrzeża i czasy rozładunku.
+
+Instrukcje wszystkich zagadek tej historii
+
+Poniższe instrukcje dotyczą mechanik wymienionych w sekwencjach pomieszczeń. Wariant historii zmienia ich kolejność lub układ planszy; cel danej mechaniki i warunek sprawdzenia poprawności pozostają opisane osobno.
+
+Pracownia wynalazków
+
+Cel: Dobierz części, które wspólnie rozwiążą problem.
+
+Sterowanie
+
+1. Zaznacz lub odznacz części.
+
+2. Naciśnij „Sprawdź wynalazek”.
+
+Zasady
+
+1. Wynalazek wymaga dokładnie trzech ról: zasięgu, chwytu i podnoszenia.
+
+2. Ponowne kliknięcie zaznaczonej części usuwa ją z zestawu.
+
+3. Dzwonek, tafla szkła i wiadro nie zastępują wymaganych ról.
+
+4. Po wybraniu kompletu trzeba nacisnąć przycisk sprawdzenia.
+
+Zwycięstwo
+
+• Zestaw dokładnie trzech części realizuje wszystkie wymagane role i został sprawdzony.
+
+Błędy i ograniczenia
+
+• Niekompletny lub zły zestaw nie wygrywa; można go poprawić.
+
+Przykład
+
+1. Długi kij daje zasięg, hak chwyt, a lina z bloczkiem podnoszenie. Samo wybranie trzech dowolnych przedmiotów nie wystarczy.
+
+Skrzynka ratunkowa
+
+Cel: Spakuj cały sprzęt, obracając elementy i wykorzystując miejsce.
+
+Sterowanie
+
+1. Wybierz element.
+
+2. Użyj „Obróć wybrany element”, jeśli wymaga tego plan.
+
+3. Wskaż wolne pole początkowe albo użyj „Wyjmij wybrany element”.
+
+Zasady
+
+1. Każdy element musi w całości mieścić się na planszy i nie nachodzić na pozostałe.
+
+2. Wskazane pole jest lewym górnym rogiem elementu.
+
+3. Wybrany element można obrócić o ćwierć obrotu lub wyjąć bez kosztu. Obrót usuwa jego dotychczasowe położenie.
+
+Zwycięstwo
+
+• Wszystkie cztery elementy mają legalne położenie w skrzynce.
+
+Błędy i ograniczenia
+
+• Wyjście poza siatkę lub nakładanie elementów jest niedozwolone; należy poprawić plan.
+
+Przykład
+
+1. Dwa kwadraty 2 × 2 mogą zająć dwie górne połowy, a dwa paski 4 × 1 — pozostałe dolne rzędy.
+
+Kuchnia na święto
+
+Cel: Przygotuj posiłki według przepisów i potrzeb gości.
+
+Sterowanie
+
+1. Dodawaj wskazane składniki.
+
+2. Użyj „Przygotuj porcję” albo „Opróżnij garnek”.
+
+Zasady
+
+1. Kliknięcie składnika dodaje jedną jednostkę do garnka.
+
+2. W garnku mieszczą się najwyżej trzy jednostki.
+
+3. Przycisk przygotowania porównuje skład z bieżącym przepisem i po każdej próbie opróżnia garnek.
+
+4. Tylko poprawna porcja zwiększa licznik podanych dań; błędna nie przechodzi do następnego przepisu.
+
+5. Składniki tej zagadki nie zużywają rzeczywistych zasobów wyspy.
+
+Zwycięstwo
+
+• Poprawnie zrealizowano wszystkie trzy przepisy; błędna próba nie odbiera już podanych porcji.
+
+Błędy i ograniczenia
+
+• Błędny skład zostaje opróżniony bez zaliczenia porcji.
+
+Przykład
+
+1. Przepis „zboże ×2, zioła ×1, jagody ×0” wymaga dwóch kliknięć zboża i jednego ziół przed gotowaniem.
+
+Wagi skarbca
+
+Cel: Rozłóż ciężarki, by uruchomić zapadnie jednocześnie.
+
+Sterowanie
+
+1. Wybierz ciężarek, potem lewą lub prawą szalę.
+
+Zasady
+
+1. Każdy ciężarek musi trafić na jedną z dwóch szal.
+
+2. Ciężarek można przenosić; jego wartość nie zmienia się.
+
+3. Liczy się suma wartości na każdej szali, a nie liczba elementów.
+
+4. Trzeba wykorzystać wszystkie cztery ciężarki.
+
+Zwycięstwo
+
+• Wszystkie ciężarki są ustawione, a obie sumy zgadzają się z celami.
+
+Błędy i ograniczenia
+
+• Poprawna suma tylko na jednej szali nie otwiera skarbca.
+
+Przykład
+
+1. Jeżeli cele wynoszą 3 i 7, pary 1+2 oraz 3+4 spełniają oba wymagania.
+
+Port bez korków
+
+Cel: Przydziel statkom nabrzeża i czasy rozładunku.
+
+Sterowanie
+
+1. Wybierz kartę statku.
+
+2. Wskaż parę „nabrzeże · godzina”.
+
+Zasady
+
+1. Wybrany statek musi dostać swoje nabrzeże oraz godzinę z podanego zakresu.
+
+2. Przedział od startu do końca rozładunku nie może nakładać się na rozładunek innego statku przy tym samym nabrzeżu.
+
+3. Dwa różne nabrzeża mogą obsługiwać statki w tym samym czasie.
+
+Zwycięstwo
+
+• Wszystkie trzy statki mają legalnie przydzielone terminy.
+
+Błędy i ograniczenia
+
+• Złe nabrzeże, czas poza oknem lub nakładające się przedziały są odrzucane.
+
+Przykład
+
+1. Jeżeli okna statków na to pozwalają, rozładunki 0:00–2:00 i 2:00–4:00 mogą następować po sobie; start drugiego o 1:00 powodowałby kolizję.
+
+Zakres samodzielnej próby
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w panelu gry. Zmieniaj poziom i wariant między próbami; rozpoczęta próba korzysta z parametrów wybranych przy jej uruchomieniu.
+
+Źródła i wersja zasad
+
+Identyfikator gry: story-nothing-wasted.
+
+Źródło katalogu: 6b40252ba4f57a035d6b624656c8fce735559b07.
+
+Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+
+• harborlight-v1-story-catalog.js:44 — Scenariusz, próg odblokowania i mechaniki
+
+• harborlight-v1-story-catalog.js:56 — Dokładna kolejność pięciu wariantów
+
+• harborlight-v1-adventure-journey.js:50 — Kody odkryć i powiązanie pokoi
+
+• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+
+• harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
+
+• harborlight-v1-state.js:1127 — Rozliczenie nagród opowieści i konwersja mąki
+
+• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy

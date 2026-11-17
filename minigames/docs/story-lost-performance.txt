@@ -1,0 +1,379 @@
+Zaginiony spektakl
+
+HARBORLIGHT · Przygoda fabularna
+
+Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+
+Otwórz grę na PRE-PROD
+
+https://harborlight-dev.web.app/minigames/?game=story-lost-performance
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Cel gry
+
+Odzyskaj scenariusz i uruchom ukryty mechanizm sceny.
+
+Scenariusz i zadanie gracza
+
+Odzyskaj scenariusz i uruchom ukryty mechanizm sceny. Opowieść łączy 6 kolejnych pomieszczeń w jeden łańcuch odkryć. Każdy ukończony pokój pozostawia kod, który wpływa na układ następnego.
+
+Przygotowanie rozgrywki
+
+1. W głównej grze opowieść jest odblokowana od 12. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+
+2. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
+
+Sterowanie i wykonywanie ruchów
+
+1. Sterowanie zmienia się zależnie od rodzaju pokoju: wybór obiektów, układanie, obracanie, sygnały, karty albo przechylenie planszy.
+
+2. Przycisk przejścia do następnego pomieszczenia działa dopiero po potwierdzonym rozwiązaniu bieżącego.
+
+Zasady krok po kroku
+
+1. Rozwiąż zagadkę bieżącego pomieszczenia zgodnie z jej własnymi zasadami.
+
+2. Po rozwiązaniu potwierdź przejście do kolejnego pomieszczenia. Sama wygrana plansza nie pomija dalszych pokoi.
+
+3. Znaleziony czterocyfrowy kod trafia do dziennika wiedzy i wpływa na generowanie kolejnej planszy.
+
+4. Finał pozostaje ostatnim mechanizmem we wszystkich pięciu wariantach.
+
+5. W głównej grze ukończone pokoje pozostają zapisane, gdy bieżąca próba się nie uda. Nie trzeba ponownie przechodzić całej historii.
+
+Warunek zwycięstwa
+
+• Rozwiązano wszystkie 6 pomieszczeń wybranego wariantu i potwierdzono finał.
+
+Błędy, niedozwolone ruchy i zakończenie próby
+
+• Nieukończona zagadka blokuje przejście dalej.
+
+• Wyjście lub koniec czasu kończy bieżącą próbę pokoju. Wcześniejsze rozwiązane pokoje pozostają częścią postępu głównej gry.
+
+Czas i tempo rozgrywki
+
+• Katalogowy czas opowieści 1260 s jest orientacyjną sumą 210 s na pokój, a nie jednym wspólnym limitem całej historii.
+
+• Każde pomieszczenie ma osobny zegar zależny od mechaniki i trudności. Patrz szczegółowe zasady użytych zagadek.
+
+• Gdy pozostaje 30 s, główna gra może wyświetlić pięciosekundowy wybór dodatkowego czasu. Akceptacja za monety kosztuje 10 × najwyższy poziom Ratusza; przedłużenie dodaje co najmniej 60 s lub połowę pozostałego czasu. Reklama wymaga uprawnionego potwierdzenia lub jawnej symulacji testowej.
+
+Punktacja i nagrody w głównej grze
+
+• Bazowa nagroda dla poziomu L to: 40+10×L monet, 15+2×L drewna i kamienia oraz po 10+L zboża, mąki i desek.
+
+• Rzeczywiste rozliczenie w głównej grze uwzględnia wspólny budżet, wcześniejsze odebranie wariantu i potwierdzenie. Ponowne przejście rozliczonego wariantu może być treningiem bez nagrody.
+
+• Samodzielna próba nie dodaje zasobów ani mieszkańców do prywatnego konta.
+
+• Po potwierdzeniu w głównej grze monety trafiają do portfela. Materiały są przyjmowane do Magazynu w granicach pojemności, a nadmiar pozostaje w dostawach; dawny klucz food oznacza w regułach v32 mąkę.
+
+Ponowna próba i pomoc
+
+• Nieprawidłowy ruch jest odrzucany; plansza nie przyjmuje samej deklaracji rozwiązania. Gdy ustawienie jest błędne, popraw je albo cofnij dostępny poprzedni ruch.
+
+• Po trzech porażkach danej odmiany dostępna jest jedna darmowa podpowiedź na próbę i łatwiejsza próba. W łatwiejszej próbie stosowana jest połowa trudności z zaokrągleniem w górę i połowa nagrody.
+
+• W głównej grze wyjście kończy aktywną próbę etapu jako porażkę, zachowując wcześniej ukończone pomieszczenia. Powtórka rozpoczyna bieżący etap od nowa.
+
+Rozwój trudności i dostępność
+
+• Pięć wariantów tego samego tytułu łączy 6 mechanik. Zobacz ich odrębne uporządkowane listy i bezpośrednie linki.
+
+• Wskazówki z wcześniejszych pokoi zmieniają ziarno kolejnego układu; znajomość starej planszy nie zastępuje rozwiązania nowej.
+
+Przykładowy przebieg
+
+1. Pierwszy wariant rozpoczyna się od „Okulary latarnika”, a kończy etapem „Światło przez soczewki”.
+
+2. Przykład przebiegu: rozwiąż pokój → zachowaj kod w dzienniku → przejdź dalej → użyj zasad następnej mechaniki → potwierdź finał.
+
+Warianty i osobne linki
+
+Wariant 1
+
+https://harborlight-dev.web.app/minigames/?game=story-lost-performance&variant=1
+
+1. Okulary latarnika — Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+2. Papuga kapitana — Rozpoznaj słowa papugi i odtwórz ich prawdziwą kolejność.
+
+3. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+4. Mechanizm Latarni — Połącz napęd i ustaw właściwy kierunek oraz prędkość.
+
+5. Język boi — Użyj legendy, by odczytać komunikat i odpowiedzieć.
+
+6. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+Wariant 2
+
+https://harborlight-dev.web.app/minigames/?game=story-lost-performance&variant=2
+
+1. Papuga kapitana — Rozpoznaj słowa papugi i odtwórz ich prawdziwą kolejność.
+
+2. Okulary latarnika — Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+3. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+4. Mechanizm Latarni — Połącz napęd i ustaw właściwy kierunek oraz prędkość.
+
+5. Język boi — Użyj legendy, by odczytać komunikat i odpowiedzieć.
+
+6. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+Wariant 3
+
+https://harborlight-dev.web.app/minigames/?game=story-lost-performance&variant=3
+
+1. Okulary latarnika — Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+2. Mechanizm Latarni — Połącz napęd i ustaw właściwy kierunek oraz prędkość.
+
+3. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+4. Papuga kapitana — Rozpoznaj słowa papugi i odtwórz ich prawdziwą kolejność.
+
+5. Język boi — Użyj legendy, by odczytać komunikat i odpowiedzieć.
+
+6. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+Wariant 4
+
+https://harborlight-dev.web.app/minigames/?game=story-lost-performance&variant=4
+
+1. Okulary latarnika — Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+2. Język boi — Użyj legendy, by odczytać komunikat i odpowiedzieć.
+
+3. Papuga kapitana — Rozpoznaj słowa papugi i odtwórz ich prawdziwą kolejność.
+
+4. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+5. Mechanizm Latarni — Połącz napęd i ustaw właściwy kierunek oraz prędkość.
+
+6. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+Wariant 5
+
+https://harborlight-dev.web.app/minigames/?game=story-lost-performance&variant=5
+
+1. Okulary latarnika — Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+2. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+3. Papuga kapitana — Rozpoznaj słowa papugi i odtwórz ich prawdziwą kolejność.
+
+4. Mechanizm Latarni — Połącz napęd i ustaw właściwy kierunek oraz prędkość.
+
+5. Język boi — Użyj legendy, by odczytać komunikat i odpowiedzieć.
+
+6. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+Instrukcje wszystkich zagadek tej historii
+
+Poniższe instrukcje dotyczą mechanik wymienionych w sekwencjach pomieszczeń. Wariant historii zmienia ich kolejność lub układ planszy; cel danej mechaniki i warunek sprawdzenia poprawności pozostają opisane osobno.
+
+Okulary latarnika
+
+Cel: Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+Sterowanie
+
+1. Dotknij zakrytego pola, aby je obejrzeć.
+
+2. Wybierz przycisk „Tu są okulary?” odpowiadający właściwemu obejrzanemu polu.
+
+Zasady
+
+1. Oglądaj miejsca, aby odsłaniać ich kolor i symbol.
+
+2. Do właściwego miejsca muszą pasować obie cechy, nie tylko kolor albo sam znak.
+
+3. Potwierdzić można wyłącznie miejsce już obejrzane.
+
+Zwycięstwo
+
+• Gracz potwierdził miejsce o obu wymaganych cechach.
+
+Błędy i ograniczenia
+
+• Nietrafny wybór nie kończy zagadki; należy dalej porównać obiekty.
+
+Przykład
+
+1. Jeśli wskazówka mówi „niebieski, kotwica”, zielona kotwica i niebieska muszla są błędnymi odpowiedziami.
+
+Papuga kapitana
+
+Cel: Rozpoznaj słowa papugi i odtwórz ich prawdziwą kolejność.
+
+Sterowanie
+
+1. Naciskaj kolejne przyciski nazw.
+
+Zasady
+
+1. Odwróć litery każdego słowa osobno.
+
+2. Naciskaj nazwy w tej samej kolejności, w jakiej występują zakodowane słowa.
+
+3. Błąd czyści dotychczasową sekwencję odpowiedzi; trzeba wprowadzić ją od początku.
+
+Zwycięstwo
+
+• Cała odtworzona lista słów odpowiada ukrytej sekwencji.
+
+Błędy i ograniczenia
+
+• Błędne słowo resetuje odpowiedź, a upływ czasu kończy próbę.
+
+Przykład
+
+1. „aciwtoK” oznacza „Kotwica”. Kolejności samych słów nie odwracaj.
+
+Fotograf wyspy
+
+Cel: Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+Sterowanie
+
+1. Używaj sześciu przycisków: poziom −/+, pion −/+ i zoom −/+.
+
+Zasady
+
+1. Każde naciśnięcie + lub − zmienia wybrane ustawienie o jeden.
+
+2. Poziom przesuwa znaki w poziomie, pion w pionie, a zoom zmienia wzajemny rozstaw znaków.
+
+3. Dopasowanie jednego znaku nie oznacza jeszcze poprawnego ustawienia wszystkich trzech parametrów.
+
+Zwycięstwo
+
+• Wszystkie trzy ustawienia aparatu odpowiadają celowi i trzy znaki pokrywają kontury.
+
+Błędy i ograniczenia
+
+• Próba wyjścia poza zakres ustawienia jest odrzucana.
+
+Przykład
+
+1. Najpierw wyrównaj wysokość środkowego symbolu, potem jego położenie poziome, a rozstaw skrajnych znaków skoryguj zoomem.
+
+Mechanizm Latarni
+
+Cel: Połącz napęd i ustaw właściwy kierunek oraz prędkość.
+
+Sterowanie
+
+1. Wybierz mnożnik dla każdego z trzech kół.
+
+2. Przyciskiem strzałki odwróć kierunek wskazanego koła.
+
+Zasady
+
+1. Łączna prędkość jest iloczynem trzech ustawionych mnożników.
+
+2. Parzysta liczba odwróconych kół daje kierunek podstawowy, nieparzysta — przeciwny.
+
+3. Prędkość i kierunek muszą być właściwe jednocześnie.
+
+Zwycięstwo
+
+• Iloczyn mnożników oraz parzystość odwróceń odpowiadają celowi.
+
+Błędy i ograniczenia
+
+• Sama poprawna prędkość przy złym kierunku nie uruchamia mechanizmu.
+
+Przykład
+
+1. Dla mnożnika ×6 ustawienia 1 × 2 × 3 są poprawne; kierunek ustalasz osobno liczbą odwróconych kół.
+
+Język boi
+
+Cel: Użyj legendy, by odczytać komunikat i odpowiedzieć.
+
+Sterowanie
+
+1. Naciskaj przyciski 1, 2, 3 i 4 zgodnie z legendą.
+
+Zasady
+
+1. Każdy symbol tłumaczy się według aktualnej legendy, nie według zapamiętanej legendy z poprzedniej próby.
+
+2. Wprowadź liczby w kolejności symboli komunikatu.
+
+3. Nieprawidłowa liczba czyści całą dotychczasową odpowiedź.
+
+Zwycięstwo
+
+• Wprowadzono pełny poprawny komunikat.
+
+Błędy i ograniczenia
+
+• Błąd resetuje sekwencję odpowiedzi; upływ czasu kończy próbę.
+
+Przykład
+
+1. Przy legendzie „kotwica=3, latarnia=1” wiadomość „kotwica → latarnia” należy nadać jako 3, następnie 1.
+
+Światło przez soczewki
+
+Cel: Obracaj zwierciadła, aby światło dotarło do odbiornika.
+
+Sterowanie
+
+1. Klikaj wyłącznie pola zwierciadeł i obserwuj drogę promienia.
+
+Zasady
+
+1. Kliknięcie zwierciadła przełącza jego ułożenie pomiędzy „/” i „\”.
+
+2. Promień odbija się zgodnie z orientacją lustra.
+
+3. Wyjście promienia poza planszę lub pętla bez odbiornika nie kończy zadania.
+
+Zwycięstwo
+
+• Promień dociera do pola odbiornika.
+
+Błędy i ograniczenia
+
+• Nieprawidłowe odbicia wymagają zmiany ustawień; brak połączenia nie jest zaliczany.
+
+Przykład
+
+1. Pierwsze lustro kieruje promień w górę albo w dół; drugie musi skierować go z powrotem w stronę odbiornika.
+
+Zakres samodzielnej próby
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w panelu gry. Zmieniaj poziom i wariant między próbami; rozpoczęta próba korzysta z parametrów wybranych przy jej uruchomieniu.
+
+Źródła i wersja zasad
+
+Identyfikator gry: story-lost-performance.
+
+Źródło katalogu: 6b40252ba4f57a035d6b624656c8fce735559b07.
+
+Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+
+• harborlight-v1-story-catalog.js:42 — Scenariusz, próg odblokowania i mechaniki
+
+• harborlight-v1-story-catalog.js:56 — Dokładna kolejność pięciu wariantów
+
+• harborlight-v1-adventure-journey.js:50 — Kody odkryć i powiązanie pokoi
+
+• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+
+• harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
+
+• harborlight-v1-state.js:1127 — Rozliczenie nagród opowieści i konwersja mąki
+
+• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy

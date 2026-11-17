@@ -1,0 +1,187 @@
+{
+  "scope": "Separate playable PRE-PROD links and DOCX/TXT instructions for all active HARBORLIGHT minigames",
+  "as_of": "2026-11-17",
+  "timezone": "Europe/Warsaw",
+  "change_id": "HL-CHG-1157",
+  "status": "IMPLEMENTED_LOCAL_VALIDATION_PASS_GIT_CI_AND_DEPLOYMENT_PENDING",
+  "base_source_sha": "6b40252ba4f57a035d6b624656c8fce735559b07",
+  "accepted_main_game_application_source_sha": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
+  "accepted_main_game_publication_source_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+  "catalog": {
+    "expected_entries": 55,
+    "island_puzzles": 24,
+    "stories": 20,
+    "story_variants_each": 5,
+    "classic_adventures": 9,
+    "classic_expedition_modes": 2,
+    "original_signal_and_harbor_engines_included_in_island_puzzles": true,
+    "historical_prototypes_excluded": [
+      "BLACKOUT",
+      "PANIC PETS",
+      "unused mockups"
+    ],
+    "validation": "PASS",
+    "entries": 55,
+    "source_files": 12,
+    "frozen_source_hashes_match": true,
+    "sha256": "0a2cb1fb8fd93aabca2a3bfa273c8140c972c3432b905ddc48a3ecb2026579fe",
+    "bytes": 773894,
+    "path": "docs/minigames/catalog.json",
+    "published_copy": "minigames/catalog.json"
+  },
+  "documents": {
+    "expected_docx": 55,
+    "expected_txt": 55,
+    "each_story_document_covers_all_five_variants": true,
+    "validation": "PASS_BUILD_AND_FRESH_CHECK",
+    "docx": 55,
+    "txt": 55,
+    "words_total": 60960,
+    "story_variant_links": 100,
+    "story_rooms": 560,
+    "manifest": "minigames/documents.json",
+    "archive_bytes": 2390888,
+    "archive_sha256": "b81651037d0c97c1a76bda328ebf2d46063f95e20403e52faff2694d232f9fd2"
+  },
+  "planned_public_urls": {
+    "index": "https://harborlight-dev.web.app/minigames/",
+    "game_pattern": "https://harborlight-dev.web.app/minigames/?game=<slug>",
+    "docx_pattern": "https://harborlight-dev.web.app/minigames/docs/<slug>.docx",
+    "txt_pattern": "https://harborlight-dev.web.app/minigames/docs/<slug>.txt",
+    "archive": "https://harborlight-dev.web.app/minigames/HARBORLIGHT-minigry-dokumentacja.zip",
+    "availability": "PENDING_DEPLOYMENT_AND_PUBLIC_READBACK"
+  },
+  "practice_mode": {
+    "actual_models_and_renderers_required": true,
+    "in_memory_only": true,
+    "account_login_required": false,
+    "island_save_or_rewards_to_main_game": false,
+    "behavior_validation": "PASS_REAL_UI_SELECTED_COMPLETE_FLOWS_AND_NO_ACCOUNT_OR_STORAGE_WRITES"
+  },
+  "local_tests": {
+    "status": "PASS",
+    "catalog_and_documents": "PASS_BUILD_AND_FRESH_CHECK",
+    "standalone_model_tests": {
+      "status": "PASS",
+      "cases": 8,
+      "includes_cashout": true
+    },
+    "frontend_package_tests": {
+      "status": "PASS",
+      "cases": 27
+    },
+    "workflow_yaml_and_shell_syntax": "PASS",
+    "browser": {
+      "status": "PASS",
+      "boards": 110,
+      "viewports": [
+        1440,
+        390
+      ],
+      "distinct_games": 55,
+      "story_variants": 100,
+      "document_downloads": 110,
+      "page_errors": 0,
+      "failed_HTTP_requests": 0,
+      "blocked_account_requests": 0,
+      "storage_and_cookie_writes": 0,
+      "native_public_site": false,
+      "interactions": [
+        "expedition-memory-reveal-pause-reset",
+        "expedition-triples-solved-and-next-round",
+        "expedition-cashout-settles-only-practice-pot",
+        "gull-solved-through-real-ui-and-finished",
+        "story-first-room-solved-and-next-room",
+        "classic-letters-solved-through-real-ui"
+      ],
+      "report": "/workspace/work/minigames-launcher-final-qa/report.json",
+      "report_sha256": "52d54aa5403ae46c067c094260acc423a933e6f202ed71895a8f55b8f420644e",
+      "complete_flow_details": [
+        "Two expedition triples rounds with 24 then 30 cards",
+        "Cashout of 150 practice coins in RAM only",
+        "Gull puzzle solved and finished",
+        "First story room solved and next room opened",
+        "Three classic letters delivered",
+        "Pause and restart"
+      ]
+    },
+    "accepted_source_preservation": {
+      "status": "PASS",
+      "source_hashes_unchanged": 114,
+      "fresh_master_validate_only": "PASS",
+      "editorial_XLSX_and_MERGE_bytes_unchanged": true
+    },
+    "coverage_limit": "All 55 games were opened at two viewports; selected games were played through complete flows. This is not a claim that all 55 games were won.",
+    "evidence": [
+      "/workspace/work/minigames-launcher-final-qa/report.json",
+      "/workspace/work/minigames-package-build.json",
+      "/workspace/work/minigames-master-preserved-check.log",
+      "/workspace/work/minigames-packaged-final-qa/report.json"
+    ],
+    "packaged_browser": {
+      "status": "PASS",
+      "report": "/workspace/work/minigames-packaged-final-qa/report.json",
+      "report_sha256": "bba548e14a5fbb69abbe9c59bb9338b330f59a9aa4d5f8d940bbf96054962814",
+      "scope": "exact immutable local frontend package",
+      "boards": 110,
+      "story_variants": 100,
+      "documents": 110,
+      "interactions": [
+        "expedition-memory-reveal-pause-reset",
+        "expedition-triples-solved-and-next-round",
+        "expedition-cashout-settles-only-practice-pot",
+        "gull-solved-through-real-ui-and-finished",
+        "story-first-room-solved-and-next-room",
+        "classic-letters-solved-through-real-ui",
+        "selected-difficulty-form-starts-real-66-card-model"
+      ],
+      "page_errors": 0,
+      "failed_requests": 0,
+      "blocked_requests": 0,
+      "native_public_site": false
+    }
+  },
+  "git_publication": {
+    "status": "PENDING",
+    "source_sha": null
+  },
+  "ci": {
+    "status": "PENDING",
+    "run_id": null,
+    "conclusion": null
+  },
+  "pages": {
+    "status": "PENDING",
+    "run_id": null,
+    "conclusion": null
+  },
+  "preprod": {
+    "status": "PENDING",
+    "run_id": null,
+    "attempt": null,
+    "source_sha": null,
+    "public_readback": "PENDING"
+  },
+  "manual_user_acceptance": "NOT_RUN",
+  "account_reset_executed": false,
+  "main_game_model_changes": false,
+  "existing_master_and_editorial_artifacts_changed": false,
+  "PROD_and_DNS": "POSTPONED_NO_ACTION",
+  "frontend_package": {
+    "local_candidate_files": 226,
+    "local_candidate_total_bytes": 36847438,
+    "max_public_bytes": 50331648,
+    "max_archive_members": 256,
+    "strict_allowlist": true,
+    "source_sha_for_local_build": "6b40252ba4f57a035d6b624656c8fce735559b07",
+    "final_release_commit_and_digests": "PENDING_GIT_PUBLICATION",
+    "local_candidate_archive_sha256": "7696ace3ee892b385e89c725be9cc5b779747cf4642ca24596fe7cd9595510fc",
+    "local_candidate_manifest_sha256": "2948dc9dc013adfc997349a44649d5a36e4111cd70879c0897a9ce0405a1e6db"
+  },
+  "game_version": "0.15.0.2",
+  "planned_new_tags": {
+    "dev": "dev-minigames-20261117",
+    "preprod": "preprod-minigames-20261117",
+    "publication": "PENDING"
+  }
+}

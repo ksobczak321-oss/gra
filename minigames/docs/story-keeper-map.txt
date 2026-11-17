@@ -1,0 +1,343 @@
+Mapa starego latarnika
+
+HARBORLIGHT · Przygoda fabularna
+
+Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+
+Otwórz grę na PRE-PROD
+
+https://harborlight-dev.web.app/minigames/?game=story-keeper-map
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Cel gry
+
+Fragmenty dziennika prowadzą do zapomnianej zatoczki.
+
+Scenariusz i zadanie gracza
+
+Fragmenty dziennika prowadzą do zapomnianej zatoczki. Opowieść łączy 5 kolejnych pomieszczeń w jeden łańcuch odkryć. Każdy ukończony pokój pozostawia kod, który wpływa na układ następnego.
+
+Przygotowanie rozgrywki
+
+1. W głównej grze opowieść jest odblokowana od 8. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+
+2. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
+
+Sterowanie i wykonywanie ruchów
+
+1. Sterowanie zmienia się zależnie od rodzaju pokoju: wybór obiektów, układanie, obracanie, sygnały, karty albo przechylenie planszy.
+
+2. Przycisk przejścia do następnego pomieszczenia działa dopiero po potwierdzonym rozwiązaniu bieżącego.
+
+Zasady krok po kroku
+
+1. Rozwiąż zagadkę bieżącego pomieszczenia zgodnie z jej własnymi zasadami.
+
+2. Po rozwiązaniu potwierdź przejście do kolejnego pomieszczenia. Sama wygrana plansza nie pomija dalszych pokoi.
+
+3. Znaleziony czterocyfrowy kod trafia do dziennika wiedzy i wpływa na generowanie kolejnej planszy.
+
+4. Finał pozostaje ostatnim mechanizmem we wszystkich pięciu wariantach.
+
+5. W głównej grze ukończone pokoje pozostają zapisane, gdy bieżąca próba się nie uda. Nie trzeba ponownie przechodzić całej historii.
+
+Warunek zwycięstwa
+
+• Rozwiązano wszystkie 5 pomieszczeń wybranego wariantu i potwierdzono finał.
+
+Błędy, niedozwolone ruchy i zakończenie próby
+
+• Nieukończona zagadka blokuje przejście dalej.
+
+• Wyjście lub koniec czasu kończy bieżącą próbę pokoju. Wcześniejsze rozwiązane pokoje pozostają częścią postępu głównej gry.
+
+Czas i tempo rozgrywki
+
+• Katalogowy czas opowieści 1050 s jest orientacyjną sumą 210 s na pokój, a nie jednym wspólnym limitem całej historii.
+
+• Każde pomieszczenie ma osobny zegar zależny od mechaniki i trudności. Patrz szczegółowe zasady użytych zagadek.
+
+• Gdy pozostaje 30 s, główna gra może wyświetlić pięciosekundowy wybór dodatkowego czasu. Akceptacja za monety kosztuje 10 × najwyższy poziom Ratusza; przedłużenie dodaje co najmniej 60 s lub połowę pozostałego czasu. Reklama wymaga uprawnionego potwierdzenia lub jawnej symulacji testowej.
+
+Punktacja i nagrody w głównej grze
+
+• Bazowa nagroda dla poziomu L to: 40+10×L monet, 15+2×L drewna i kamienia oraz po 10+L zboża, mąki i desek.
+
+• Rzeczywiste rozliczenie w głównej grze uwzględnia wspólny budżet, wcześniejsze odebranie wariantu i potwierdzenie. Ponowne przejście rozliczonego wariantu może być treningiem bez nagrody.
+
+• Samodzielna próba nie dodaje zasobów ani mieszkańców do prywatnego konta.
+
+• Po potwierdzeniu w głównej grze monety trafiają do portfela. Materiały są przyjmowane do Magazynu w granicach pojemności, a nadmiar pozostaje w dostawach; dawny klucz food oznacza w regułach v32 mąkę.
+
+Ponowna próba i pomoc
+
+• Nieprawidłowy ruch jest odrzucany; plansza nie przyjmuje samej deklaracji rozwiązania. Gdy ustawienie jest błędne, popraw je albo cofnij dostępny poprzedni ruch.
+
+• Po trzech porażkach danej odmiany dostępna jest jedna darmowa podpowiedź na próbę i łatwiejsza próba. W łatwiejszej próbie stosowana jest połowa trudności z zaokrągleniem w górę i połowa nagrody.
+
+• W głównej grze wyjście kończy aktywną próbę etapu jako porażkę, zachowując wcześniej ukończone pomieszczenia. Powtórka rozpoczyna bieżący etap od nowa.
+
+Rozwój trudności i dostępność
+
+• Pięć wariantów tego samego tytułu łączy 5 mechanik. Zobacz ich odrębne uporządkowane listy i bezpośrednie linki.
+
+• Wskazówki z wcześniejszych pokoi zmieniają ziarno kolejnego układu; znajomość starej planszy nie zastępuje rozwiązania nowej.
+
+Przykładowy przebieg
+
+1. Pierwszy wariant rozpoczyna się od „Fragmenty dziennika”, a kończy etapem „Okulary latarnika”.
+
+2. Przykład przebiegu: rozwiąż pokój → zachowaj kod w dzienniku → przejdź dalej → użyj zasad następnej mechaniki → potwierdź finał.
+
+Warianty i osobne linki
+
+Wariant 1
+
+https://harborlight-dev.web.app/minigames/?game=story-keeper-map&variant=1
+
+1. Fragmenty dziennika — Odkrywaj trójki, aby odzyskać wskazówki tej przygody.
+
+2. Testament szkutnika — Złóż plan według znaków, aby odczytać wiadomość.
+
+3. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+4. Rejs we mgle — Wyznacz bezpieczny kurs przez boje i prądy.
+
+5. Okulary latarnika — Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+Wariant 2
+
+https://harborlight-dev.web.app/minigames/?game=story-keeper-map&variant=2
+
+1. Testament szkutnika — Złóż plan według znaków, aby odczytać wiadomość.
+
+2. Fragmenty dziennika — Odkrywaj trójki, aby odzyskać wskazówki tej przygody.
+
+3. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+4. Rejs we mgle — Wyznacz bezpieczny kurs przez boje i prądy.
+
+5. Okulary latarnika — Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+Wariant 3
+
+https://harborlight-dev.web.app/minigames/?game=story-keeper-map&variant=3
+
+1. Fragmenty dziennika — Odkrywaj trójki, aby odzyskać wskazówki tej przygody.
+
+2. Rejs we mgle — Wyznacz bezpieczny kurs przez boje i prądy.
+
+3. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+4. Testament szkutnika — Złóż plan według znaków, aby odczytać wiadomość.
+
+5. Okulary latarnika — Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+Wariant 4
+
+https://harborlight-dev.web.app/minigames/?game=story-keeper-map&variant=4
+
+1. Fragmenty dziennika — Odkrywaj trójki, aby odzyskać wskazówki tej przygody.
+
+2. Rejs we mgle — Wyznacz bezpieczny kurs przez boje i prądy.
+
+3. Testament szkutnika — Złóż plan według znaków, aby odczytać wiadomość.
+
+4. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+5. Okulary latarnika — Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+Wariant 5
+
+https://harborlight-dev.web.app/minigames/?game=story-keeper-map&variant=5
+
+1. Fragmenty dziennika — Odkrywaj trójki, aby odzyskać wskazówki tej przygody.
+
+2. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+3. Testament szkutnika — Złóż plan według znaków, aby odczytać wiadomość.
+
+4. Rejs we mgle — Wyznacz bezpieczny kurs przez boje i prądy.
+
+5. Okulary latarnika — Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+Instrukcje wszystkich zagadek tej historii
+
+Poniższe instrukcje dotyczą mechanik wymienionych w sekwencjach pomieszczeń. Wariant historii zmienia ich kolejność lub układ planszy; cel danej mechaniki i warunek sprawdzenia poprawności pozostają opisane osobno.
+
+Fragmenty dziennika
+
+Cel: Odkrywaj trójki, aby odzyskać wskazówki tej przygody.
+
+Sterowanie
+
+1. Klikaj lub dotykaj zakrytych kart.
+
+Zasady
+
+1. Odkrywaj po jednej karcie; jednocześnie sprawdzana jest trójka odkrytych pól.
+
+2. Trzy takie same symbole zostają dopasowane i usunięte z dalszego wyboru.
+
+3. Niedopasowana trójka zakrywa się po 0,8 s.
+
+4. Od trudności 4 zakryte, niedopasowane karty są okresowo przetasowywane.
+
+5. Jest to plansza w przygodzie: nie prowadzi osobnej wypłacanej puli ekspedycji.
+
+Zwycięstwo
+
+• Wszystkie karty należą do poprawnie dopasowanych trójek.
+
+Błędy i ograniczenia
+
+• Pojedyncza niedopasowana trójka nie oznacza przegranej; porażkę etapu powoduje koniec czasu.
+
+Przykład
+
+1. Zapamiętaj trzy pozycje z identycznym symbolem, a następnie odkryj je w jednej trójce. Po przetasowaniu ponownie rozpoznaj pozycje.
+
+Testament szkutnika
+
+Cel: Złóż plan według znaków, aby odczytać wiadomość.
+
+Sterowanie
+
+1. Kliknij okienko/narożnik, którego stronę chcesz zmienić.
+
+Zasady
+
+1. Każde kliknięcie przełącza jeden narożnik między złożeniem a rozłożeniem.
+
+2. Dopasuj zawartość każdego okienka do odpowiadającej mu pozycji wiadomości.
+
+3. Wszystkie narożniki można przestawiać wielokrotnie.
+
+Zwycięstwo
+
+• Wszystkie cztery ułożenia zgadzają się z wiadomością.
+
+Błędy i ograniczenia
+
+• Pasujący napis w złym okienku nie jest poprawnym rozwiązaniem.
+
+Przykład
+
+1. Porównuj pierwsze okienko z pierwszym słowem wskazówki, drugie z drugim itd.; nie trzeba zamieniać okienek miejscami.
+
+Fotograf wyspy
+
+Cel: Znajdź perspektywę, z której znaki tworzą wspólny obraz.
+
+Sterowanie
+
+1. Używaj sześciu przycisków: poziom −/+, pion −/+ i zoom −/+.
+
+Zasady
+
+1. Każde naciśnięcie + lub − zmienia wybrane ustawienie o jeden.
+
+2. Poziom przesuwa znaki w poziomie, pion w pionie, a zoom zmienia wzajemny rozstaw znaków.
+
+3. Dopasowanie jednego znaku nie oznacza jeszcze poprawnego ustawienia wszystkich trzech parametrów.
+
+Zwycięstwo
+
+• Wszystkie trzy ustawienia aparatu odpowiadają celowi i trzy znaki pokrywają kontury.
+
+Błędy i ograniczenia
+
+• Próba wyjścia poza zakres ustawienia jest odrzucana.
+
+Przykład
+
+1. Najpierw wyrównaj wysokość środkowego symbolu, potem jego położenie poziome, a rozstaw skrajnych znaków skoryguj zoomem.
+
+Rejs we mgle
+
+Cel: Wyznacz bezpieczny kurs przez boje i prądy.
+
+Sterowanie
+
+1. Kliknij sąsiednie wolne pole, na które ma wpłynąć łódź.
+
+Zasady
+
+1. Poruszaj się po sąsiednich polach w czterech kierunkach.
+
+2. Rafy są niedostępne, a ruch po przekątnej nie jest dozwolony.
+
+3. Każde przejście zużywa krok; powrót na wcześniejsze pole również kosztuje krok. Cofnięcie dostępnego ruchu może przywrócić zapas.
+
+Zwycięstwo
+
+• Łódź dociera do portu na polu końcowym.
+
+Błędy i ograniczenia
+
+• Wyczerpanie zapasu kroków blokuje dalszą drogę; cofnij ruch lub zacznij próbę ponownie.
+
+Przykład
+
+1. Zwykła trasa bez objazdów wymaga dziesięciu kroków: pięć w prawo i pięć w dół. Omijanie raf wymaga wcześniejszego planu.
+
+Okulary latarnika
+
+Cel: Obejrzyj przedmioty i znajdź zgubę według wskazówki.
+
+Sterowanie
+
+1. Dotknij zakrytego pola, aby je obejrzeć.
+
+2. Wybierz przycisk „Tu są okulary?” odpowiadający właściwemu obejrzanemu polu.
+
+Zasady
+
+1. Oglądaj miejsca, aby odsłaniać ich kolor i symbol.
+
+2. Do właściwego miejsca muszą pasować obie cechy, nie tylko kolor albo sam znak.
+
+3. Potwierdzić można wyłącznie miejsce już obejrzane.
+
+Zwycięstwo
+
+• Gracz potwierdził miejsce o obu wymaganych cechach.
+
+Błędy i ograniczenia
+
+• Nietrafny wybór nie kończy zagadki; należy dalej porównać obiekty.
+
+Przykład
+
+1. Jeśli wskazówka mówi „niebieski, kotwica”, zielona kotwica i niebieska muszla są błędnymi odpowiedziami.
+
+Zakres samodzielnej próby
+
+Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej karty przeglądarki: nie zmienia mieszkańców, zasobów, misji ani zapisanej wyspy. Monety i nagrody opisane w zasadach głównej gry nie są wypłacane na konto za tę próbę. Odświeżenie strony rozpoczyna nową sesję.
+
+Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w panelu gry. Zmieniaj poziom i wariant między próbami; rozpoczęta próba korzysta z parametrów wybranych przy jej uruchomieniu.
+
+Źródła i wersja zasad
+
+Identyfikator gry: story-keeper-map.
+
+Źródło katalogu: 6b40252ba4f57a035d6b624656c8fce735559b07.
+
+Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+
+• harborlight-v1-story-catalog.js:38 — Scenariusz, próg odblokowania i mechaniki
+
+• harborlight-v1-story-catalog.js:56 — Dokładna kolejność pięciu wariantów
+
+• harborlight-v1-adventure-journey.js:50 — Kody odkryć i powiązanie pokoi
+
+• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+
+• harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
+
+• harborlight-v1-state.js:1127 — Rozliczenie nagród opowieści i konwersja mąki
+
+• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy

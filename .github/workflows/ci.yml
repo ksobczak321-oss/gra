@@ -105,6 +105,24 @@ jobs:
       - name: Verify current DEV editorial Excel and empty correction column
         run: python3 scripts/validate_dev_copy_workbook.py
 
+      - name: Verify every standalone minigame and its Word and TXT instructions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check python-docx==1.2.0
+          minigame_source_sha="$(python3 - <<'PY'
+          import json
+          import re
+          from pathlib import Path
+          source = json.loads(Path('docs/minigames/catalog.json').read_text())['sourceCommit']
+          assert re.fullmatch(r'[a-f0-9]{40}', source)
+          print(source)
+          PY
+          )"
+          git fetch --no-tags --depth=1 origin "$minigame_source_sha"
+          node scripts/export_minigame_catalog.mjs --check
+          python3 scripts/build_minigame_documents.py --check
+
       - name: Verify full current master Excel and preserved historical rules
         shell: bash
         run: |
@@ -146,6 +164,11 @@ jobs:
           set -euo pipefail
           python3 scripts/build_frontend.py --commit "$GITHUB_SHA" \
             --output build/frontend --archive build/harborlight-frontend.tar.gz
+
+      - name: Test every standalone minigame and download in Chromium
+        env:
+          HARBORLIGHT_FRONTEND_ROOT: ${{ github.workspace }}/build/frontend
+        run: python3 -u tests/harborlight-minigames-standalone-smoke.py
 
       - name: Test packaged game and both tutorial programs in Chromium
         id: browser

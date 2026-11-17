@@ -1,5 +1,7 @@
 # HARBORLIGHT
 
+**Osobne minigry i instrukcje — lokalny odbiór PASS, publikacja oczekuje.** Gotowe 55 gier, 55 instrukcji Word i 55 TXT, ze 100 wariantami opowieści. Lokalnie sprawdzono wszystkie plansze na komputerze i telefonie, pobieranie dokumentów i wybrane pełne rozgrywki. Nowy Git/CI, wdrożenie i publiczny odbiór PRE-PROD są PENDING. Docelowy indeks: <https://harborlight-dev.web.app/minigames/>. [Zakres](docs/v32/GO-MINIGAMES-STANDALONE.md) · [Dokładne wyniki i ograniczenia](docs/v32/MINIGAMES-STANDALONE-EVIDENCE.json).
+
 **DEV i PRE-PROD0.15.0.2/cache13 odebrane — 16listopada2026.** Aplikacja37061c, publikacja/wdrożenie `c4f752142c0421aad1dc0490a2f5139c277e6ee5`. WłasnyCI43850690541 SUCCESS24m31s (1614Node,166Python,66programówChromium), Pages43850690456 SUCCESS22s i PRE-PROD43854387444/1 SUCCESS2m22s. Start bez starej mapy/HUD; tempo1×/2×/6× tylkoadmin3. Natywny odbiór zalogowanej istniejącej wyspy i wszystkie109bajtowo zgodne plikiTLS PASS. TagiDEV/PRE-PROD0.15.0.2 opublikowane i zdalnie potwierdzone na c4.
 
 [Graj w PRE-PROD](https://harborlight-dev.web.app/harborlight-auth.html?mode=login&v=frontend-v32-13) · [Podgląd DEV bez konta](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-13) · [Dowody odbioru](docs/v32/CACHE13-ACCEPTANCE.json) · [MASTER 15 — pełne zasady](docs/arkusze/HARBORLIGHT15-zasady.xlsx) · [Teksty6arkuszy do redakcji](docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx).

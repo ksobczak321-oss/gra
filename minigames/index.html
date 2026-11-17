@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Wszystkie minigry HARBORLIGHT w osobnych próbach: zagadki, opowieści, przygody i ekspedycje. Zasady każdej gry do pobrania w Word i TXT.">
+  <base id="practice-base" href="./">
+  <script>
+    // Hosting may remove a directory's trailing slash. Keep relative links
+    // inside this directory, including when the preview lives below /gra/.
+    {
+      const directory = new URL(location.href);
+      if (directory.pathname.endsWith('/index.html')) directory.pathname = directory.pathname.slice(0, -10);
+      else if (!directory.pathname.endsWith('/')) directory.pathname += '/';
+      directory.search = ''; directory.hash = '';
+      document.getElementById('practice-base').href = directory.href;
+    }
+  </script>
+  <title>Minigry — HARBORLIGHT</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230c2939'/%3E%3Cpath d='M22 52h20l-4-30H26Z' fill='%23f0d293'/%3E%3Cpath d='M23 22h18v-8H23Zm-4 0h26M32 7v7' stroke='%23f0d293' stroke-width='4'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css?v=minigames-1">
+  <link rel="stylesheet" href="../harborlight-v1-minigame.css?v=frontend-v32-13">
+  <link rel="stylesheet" href="../harborlight-v1-original-puzzles.css?v=frontend-v32-13">
+  <script type="module" src="./app.js?v=minigames-1"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Przejdź do treści</a>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="HARBORLIGHT — wszystkie minigry"><span class="brand-mark" aria-hidden="true">♜</span><span>HARBORLIGHT<small>Przystań minigier</small></span></a>
+    <nav aria-label="Nawigacja minigier"><a href="./" data-all-games>Wszystkie gry</a><a href="../harborlight-auth.html?mode=login">Wróć do HARBORLIGHT</a></nav>
+  </header>
+  <main id="main" tabindex="-1">
+    <section class="hero" id="hero">
+      <p class="eyebrow">Zagadki · opowieści · przygody</p>
+      <h1>Twoja chwila na wyspie</h1>
+      <p>Wybierz grę i zagraj od razu. Każda ma własny link, instrukcję Word i plik TXT.</p>
+      <p class="practice-note"><span aria-hidden="true">◇</span> Osobne próby, bez logowania. Postęp i nagrody z tych plansz nie trafiają na Twoje konto. Odświeżenie strony rozpoczyna nową próbę.</p>
+    </section>
+    <div id="loading" class="loading" role="status">Otwieram przystań minigier…</div>
+    <section id="catalog" hidden aria-labelledby="catalog-title">
+      <div class="catalog-heading"><h2 id="catalog-title">Wszystkie gry <span id="total-count" class="count"></span></h2><label class="search-label">Szukaj gry<input id="search" type="search" placeholder="Tytuł, cel lub rodzaj gry" autocomplete="off"></label></div>
+      <div id="filters" class="filters" role="group" aria-label="Rodzaj gry"></div>
+      <p id="result-count" class="result-count" role="status"></p>
+      <div id="games" class="game-grid"></div>
+      <p id="empty" class="empty" hidden>Nie ma takiej gry. Spróbuj krótszego hasła lub wybierz inny rodzaj.</p>
+      <div class="all-documents"><div><h3>Wszystkie opisy razem</h3><p>Osobne instrukcje każdej gry w jednym archiwum.</p></div><a class="button secondary" href="./HARBORLIGHT-minigry-dokumentacja.zip" download>Pobierz pakiet Word + TXT</a></div>
+    </section>
+    <section id="player" hidden aria-labelledby="game-title">
+      <a class="back-link" href="./">← Wszystkie gry</a>
+      <div class="player-heading"><div><p id="game-family" class="eyebrow"></p><h1 id="game-title"></h1><p id="game-objective"></p></div><div class="document-links"><a id="word" class="button secondary" download>Instrukcja Word</a><a id="txt" class="button secondary" download>Instrukcja TXT</a></div></div>
+      <div class="practice-note player-note">Grasz poza swoją wyspą. Ta próba nie zapisuje postępu ani nagród na koncie.</div>
+      <div class="player-toolbar">
+        <form id="settings" class="settings"><label id="variant-label">Wariant<select id="variant" name="variant" aria-label="Wariant gry"></select></label><label>Trudność<input id="level" type="number" name="level" min="1" max="100" step="1" value="1" aria-label="Trudność gry"></label><button type="submit" class="button secondary">Otwórz wybraną próbę</button></form>
+        <div class="practice-controls"><button id="pause" type="button" class="button secondary" aria-pressed="false">Wstrzymaj</button><button id="restart" type="button" class="button">Zagraj od początku</button></div>
+      </div>
+      <p id="session-status" class="session-status" role="status" aria-live="polite"></p>
+      <div id="variant-links" class="variant-links" aria-label="Linki do wariantów"></div>
+      <div id="board" class="board" aria-busy="true"></div>
+      <div id="expedition-controls" class="expedition-controls" hidden></div>
+      <details class="rules-details"><summary>Cel, scenariusz i zasady tej gry</summary><div id="inline-rules"></div></details>
+    </section>
+    <section id="error" class="error" hidden role="alert"><h2>Nie udało się otworzyć gry</h2><p id="error-message"></p><div><button class="button" type="button" id="retry">Spróbuj ponownie</button><a class="button secondary" href="./">Wszystkie gry</a></div></section>
+    <noscript><p class="error">Do uruchomienia gier potrzebny jest JavaScript. Włącz go w przeglądarce i odśwież stronę.</p></noscript>
+  </main>
+  <footer class="site-footer"><span>HARBORLIGHT · minigry</span><span>Każda plansza to osobna próba. Zasady głównej gry opisano w instrukcjach.</span></footer>
+</body>
+</html>
