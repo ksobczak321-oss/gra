@@ -9,7 +9,7 @@
   ],
   "preserved_help_catalog_steps": 56,
   "preserved_practical_lessons": 25,
-  "planner_cases": 24,
+  "planner_cases": 25,
   "planner": "PASS",
   "browser_advisor": "PASS_1440x1000_390x844_390x480",
   "browser_first_introduction": "PASS_3_STEPS_1440_390",
@@ -52,5 +52,36 @@
     "failed": 0,
     "duration_ms": 315179.559317,
     "note": "Full suite includes22 planner cases; the added intro-index case also passed in separate23-case advisor rerun."
-  }
+  },
+  "application_source_sha": "bf361d13fd725ea360445a4af359e292d4d09f66",
+  "latest_local_frontend_node": {
+    "total": 1473,
+    "pass": 1472,
+    "fail": 1,
+    "duration_ms": 405204.169734,
+    "failure": "One unchanged ten-second 96-hour catch-up watchdog failed under load, also first isolated retry. Latest isolated retry PASS9515ms; old08e baselinePASS8674ms. The failed full run remains FAILURE; exact-source CI still required.",
+    "test_or_watchdog_weakened": false,
+    "isolated_retry": {
+      "result": "PASS",
+      "duration_ms": 9515.372169,
+      "cases": 1,
+      "watchdog_ms": 10000
+    },
+    "previous_08e_baseline_same_case": {
+      "result": "PASS",
+      "duration_ms": 8674.277402,
+      "watchdog_ms": 10000
+    },
+    "first_isolated_retry": "FAIL_UNCHANGED_10_SECOND_WATCHDOG"
+  },
+  "legacy_browser_compatibility": {
+    "frontend_v18": "PASS",
+    "tutorial_v21": "PASS",
+    "starter_v28": "PASS_4_PL_EN_DESKTOP_MOBILE_SCOPES",
+    "learning_flow_v26": "PASS",
+    "learning_flow_v27": "PASS_4_PL_EN_DESKTOP_MOBILE_SCOPES",
+    "onboarding_v20": "ALL_SCENARIOS_PASS_ACROSS_FOCUSED_RUNS_EARLIER_FAILED_FULL_RUN_PRESERVED"
+  },
+  "targeted_current_cases": 29,
+  "intent_regression": "PASS_EXPLICIT_NEW_PRODUCTION_GOAL_OVERRIDES_PRIOR_UPGRADE_CONTEXT"
 }

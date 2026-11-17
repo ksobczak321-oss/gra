@@ -171,3 +171,15 @@ test('specific Polish product names take precedence over generic milk, fish and 
  assert.equal(advisorPlan(s,'Potrzebuję wędzonych ryb').title,'Cel: Ryba wędzona');
  assert.equal(advisorPlan(s,'Potrzebuję strojów wojskowych').title,'Cel: Strój wojskowy');
 });
+
+
+test('an explicit new production goal overrides prior upgrade context and a named producer',()=>{
+ const s=world();
+ for(const input of ['Jak najszybciej zdobyć więcej desek?','Jak najszybciej produkować mąkę w Młynie?']) {
+  const plan=advisorPlan(s,input,{goal:'dock'});
+  assert.equal(plan.kind,'resource');
+  assert.ok(plan.steps.some(row=>row.target===(input.includes('desek')?'sawmill':'windmill')));
+ }
+ assert.equal(advisorPlan(s,'Jak najszybciej rozbudować Młyn do produkcji mąki?',{goal:'dock'}).goal,'windmill');
+ assert.equal(advisorPlan(s,'A czy można szybciej?',{goal:'dock'}).goal,'dock');
+});

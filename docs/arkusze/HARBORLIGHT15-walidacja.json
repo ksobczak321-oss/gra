@@ -1,10 +1,10 @@
 {
   "file": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
-  "sha256": "39bed051d1063d244ee2daa37172cc80ff117118e0837bba7c629fc417545e21",
+  "sha256": "b10c1d448f1e2e3fe32e7e91e43652810b09f199a109fed3917a25877c2e7eaa",
   "version": "DEV 0.15.1.0 / v32 — redakcja sześciu zakładek",
   "base_git_commit": "485f46664c35643813c37506a1561cecf84986de",
-  "source_git_commit": "b1f9855fbcad1e85c4088d5ee8f1a22959c9c6db",
-  "source_fingerprint": "7f5d58ca8c79f3c0e5e7eb1b1a121e4c40aac40570226a7236af2ae713eb00ba",
+  "source_git_commit": "bf361d13fd725ea360445a4af359e292d4d09f66",
+  "source_fingerprint": "6d978accfad7217332a5a88b739ed0f373ecdc91797ee443692c3810a6567caf",
   "source_sha256": {
     "backend/island-name.mjs": "d84d85d93a922017a4d160ae98adcced18a7b455cc4e44e0606fc36695c2efb1",
     "backend/league-rules.mjs": "b8b81f16e12fc9b981e3b310efd049460e83dbef31ae58b533d3f1b8ebbe592c",
@@ -30,7 +30,7 @@
     "harborlight-v1-advisor-intro.js": "7e76ec1c60a254d01a36c69acee9e499362d6f9cdbf66de2da20aea6b4252f60",
     "harborlight-v1-advisor-ui.js": "677c876a311fccb800284f808da0f398746afb7e854229e5daa2a2a845bb5c7f",
     "harborlight-v1-advisor.css": "4f9c460c8ae2900d0ac61931333f55920fe3786264104d9831104c47344c09dc",
-    "harborlight-v1-advisor.js": "fba71c0e78be1cdcf44b066ea2967aa8d8aa57060cfb6c746a88d9a2f1793280",
+    "harborlight-v1-advisor.js": "749e7fd9cf503971503396268c9dc9219d313090d1fadb154313b7625dbe47c6",
     "harborlight-v1-ambient.js": "f927a5d5487f34b490f83fb5d3651b78b1bbd1b01d29dac392e74afa80210193",
     "harborlight-v1-approved-copy.js": "4df3eb80d42abfa3382361c8b7c2e04c772af149c9522d290f46ee45609e2e4b",
     "harborlight-v1-archipelago.js": "9982e768c7dc11d9ee5d0390d475957c6131b81c4fe8e10edd49637d972890c2",

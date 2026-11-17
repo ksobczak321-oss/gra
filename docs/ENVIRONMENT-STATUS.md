@@ -4,7 +4,7 @@
 
 GO17listopada obejmuje doradcę w lewym dolnym rogu, rozmowę o celach według aktualnej wyspy i **trzy kroki pierwszego oprowadzania: górny pasek → dolne menu → Gospodarstwo**. Podpowiedzi można ignorować i wyciszyć. Pełne opisy i25lekcji pozostają w Pomocy; nie są automatycznie narzucane po wprowadzeniu. Historia nagród i kont pozostaje zachowana.
 
-Planer24/24PASS; rzeczywistyUI doradcy1440×1000/390×844/390×480PASS; krótki tutorial i wymiana podświetlanego DOM1440/390PASS; pakowanie27/27PASS. Cztery fioletowe zakładki165wierszy/31niepustychC/35zmienionychtekstów mają test danych4/4 i rzeczywistyUI1440/390PASS. Kod aplikacji `b1f9855fbcad1e85c4088d5ee8f1a22959c9c6db` jest zamrożony lokalnie; pełna regresja, odświeżenie arkuszy, własnyCI i publikacjaPages są W TOKU. **Doradca nie jest autoryzowany na PRE-PROD ani PROD.** Bez resetu i DNS. Wcześniejszy bootstrap minigier08e ma CI44096593096SUCCESS, co nie jest odbiorem nowego doradcy ani kolejną promocją.
+Planer25/25PASS; rzeczywistyUI doradcy1440×1000/390×844/390×480PASS; krótki tutorial i wymiana podświetlanego DOM1440/390PASS; pakowanie27/27PASS. Cztery fioletowe zakładki165wierszy/31niepustychC/35zmienionychtekstów mają test danych4/4 i rzeczywistyUI1440/390PASS. Kod aplikacji `b1f9855fbcad1e85c4088d5ee8f1a22959c9c6db` jest zamrożony lokalnie; pełna regresja, odświeżenie arkuszy, własnyCI i publikacjaPages są W TOKU. **Doradca nie jest autoryzowany na PRE-PROD ani PROD.** Bez resetu i DNS. Wcześniejszy bootstrap minigier08e ma CI44096593096SUCCESS, co nie jest odbiorem nowego doradcy ani kolejną promocją.
 
 [Zakres](v32/GO-KINGDOM-ADVISOR.md) · [Dowody](v32/KINGDOM-ADVISOR-EVIDENCE.json) · [HL-CHG-1159](tracking/changes/HL-CHG-1159.md).
 
